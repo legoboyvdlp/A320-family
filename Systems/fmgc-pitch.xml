@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- IT-AUTOFLIGHT -->
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
@@ -69,49 +69,36 @@
 				<property>/it-autoflight/internal/flch-active</property>
 			</condition>
 		</enable>
-		<input>
-			<condition>
-				<equals>
-					<property>/it-autoflight/input/kts-mach</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<property>/it-autoflight/internal/kts-predicted-15</property>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/it-autoflight/input/kts-mach</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<property>/it-autoflight/internal/mach-predicted-15</property>
-			<scale>750</scale>
-		</input>
-		<reference>
-			<condition>
-				<equals>
-					<property>/it-autoflight/input/kts-mach</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<property>/it-autoflight/internal/flch-kts</property>
-		</reference>
-		<reference>
-			<condition>
-				<equals>
-					<property>/it-autoflight/input/kts-mach</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<property>/it-autoflight/internal/flch-mach</property>
-			<scale>750</scale>
-		</reference>
+		<input>/it-autoflight/internal/kts-rate</input>
+		<reference>/it-autoflight/internal/flch-kts-error</reference>
 		<output>/it-autoflight/internal/target-fpm-flch</output>
 		<config>
-			<Kp>-55</Kp>
-			<Ti>2.5</Ti>        
-			<Td>0.001</Td>
+			<Kp>
+				<expression>
+					<table>
+						<property>/velocities/airspeed-kt</property>
+						<entry><ind>140</ind><dep>-390</dep></entry>
+						<entry><ind>360</ind><dep>-430</dep></entry>
+					</table>
+				</expression>
+			</Kp>
+			<Ti>1.3</Ti>
+			<Td>0.0</Td>
+			<u_min>
+				<condition>
+					<or>
+						<equals>
+							<property>/gear/gear[1]/wow</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/gear/gear[2]/wow</property>
+							<value>1</value>
+						</equals>
+					</or>
+				</condition>
+				<value>0</value>
+			</u_min>
 			<u_min>
 				<condition>
 					<equals>
@@ -119,34 +106,36 @@
 						<value>2</value>
 					</equals>
 				</condition>
-				<value>120</value>
+				<expression>
+					<max>
+						<value>120</value>
+						<difference>
+							<property>/it-autoflight/internal/vert-speed-fpm</property>
+							<value>2000</value>
+						</difference>
+					</max>
+				</expression>
 			</u_min>
 			<u_min>
 				<expression>
 					<difference>
 						<property>/it-autoflight/internal/vert-speed-fpm</property>
-						<value>2500</value>
+						<value>2000</value>
 					</difference>
 				</expression>
 			</u_min>
 			<u_max>
 				<condition>
-					<and>
+					<or>
 						<equals>
-							<property>/it-autoflight/output/thr-mode</property>
-							<value>2</value>
+							<property>/gear/gear[1]/wow</property>
+							<value>1</value>
 						</equals>
-						<or>
-							<equals>
-								<property>/gear/gear[1]/wow</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/gear/gear[2]/wow</property>
-								<value>1</value>
-							</equals>
-						</or>
-					</and>
+						<equals>
+							<property>/gear/gear[2]/wow</property>
+							<value>1</value>
+						</equals>
+					</or>
 				</condition>
 				<value>1000</value>
 			</u_max>
@@ -157,13 +146,21 @@
 						<value>1</value>
 					</equals>
 				</condition>
-				<value>-120</value>
+				<expression>
+					<min>
+						<value>-120</value>
+						<sum>
+							<property>/it-autoflight/internal/vert-speed-fpm</property>
+							<value>2000</value>
+						</sum>
+					</min>
+				</expression>
 			</u_max>
 			<u_max>
 				<expression>
 					<sum>
 						<property>/it-autoflight/internal/vert-speed-fpm</property>
-						<value>2500</value>
+						<value>2000</value>
 					</sum>
 				</expression>
 			</u_max>
@@ -489,7 +486,7 @@
 				</condition>
 				<expression>
 					<table>
-						<property>/fdm/jsbsim/velocities/vc-kts</property>
+						<property>/velocities/airspeed-kt</property>
 						<entry><ind>140</ind><dep>0.0029</dep></entry>
 						<entry><ind>360</ind><dep>0.0009</dep></entry>
 					</table>

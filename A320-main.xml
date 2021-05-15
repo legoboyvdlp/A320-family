@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
-<!-- Copyright (c) 2020 Matthew Maring (mattmaring) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) and Matthew Maring (mattmaring) -->
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
@@ -43,8 +42,9 @@
 				<nick>CaptB</nick>
 			</author>
 			<author>
-				<name>vezza</name>
+				<name>Andrea Vezzali</name>
 				<description>Systems, Displays</description>
+				<nick>vezza</nick>
 			</author>
 		</authors>
 		
@@ -224,35 +224,33 @@
 			<electrical>
 				<path></path>
 			</electrical>
-			<!-- 0 is FADEC -->
-			<autopilot n="1">
+			<autopilot n="0">
 				<path>Aircraft/A320-family/Systems/fbw-pitch.xml</path>
 			</autopilot>
-			<autopilot n="2">
+			<autopilot n="1">
 				<path>Aircraft/A320-family/Systems/fmgc-drivers.xml</path>
 			</autopilot>
-			<autopilot n="3">
+			<autopilot n="2">
 				<path>Aircraft/A320-family/Systems/fmgc-roll-yaw.xml</path>
 			</autopilot>
-			<autopilot n="4">
+			<autopilot n="3">
 				<path>Aircraft/A320-family/Systems/fmgc-pitch.xml</path>
 			</autopilot>
-			<autopilot n="5">
+			<autopilot n="4">
 				<path>Aircraft/A320-family/Systems/fmgc-thrust.xml</path>
 			</autopilot>
-			<autopilot n="6">
+			<autopilot n="5">
 				<path>Aircraft/A320-family/Systems/libraries.xml</path>
 			</autopilot>
-			<autopilot n="7">
+			<autopilot n="6">
 				<path>Aircraft/A320-family/Systems/upper-ecam.xml</path>
 			</autopilot>
-			<autopilot n="8">
+			<autopilot n="7">
 				<path>Aircraft/A320-family/Systems/lower-ecam.xml</path>
 			</autopilot>
-			<autopilot n="9">
+			<autopilot n="8">
 				<path>Aircraft/A320-family/Systems/pfd.xml</path>
 			</autopilot>
-			<!-- 10 is sound -->
 			<property-rule n="101">
 				<path>Aircraft/A320-family/Systems/sound-common.xml</path>
 			</property-rule>
@@ -690,20 +688,46 @@
 		</aircraft-effects>
 	</environment>	
 	
-	<fdm>
-		<jsbsim>
-			<aero>
+	<fdm n="0">
+		<jsbsim n="0">
+			<aero n="0">
 				<alpha-deg-norm type="double">0</alpha-deg-norm>
 			</aero>
-			<external_reactions>
+			<external_reactions n="0">
 				<tractor>
 					<magnitude alias="/sim/model/autopush/force-lbf"/>
 					<x alias="/sim/model/autopush/force-x"/>
 					<y alias="/sim/model/autopush/force-y"/>
 				</tractor>
 			</external_reactions>
-			<fbw>
-				<yaw>
+			<fadec n="0">
+				<alpha-floor type="bool">0</alpha-floor>
+				<clbreduc-ft type="double">1500</clbreduc-ft>
+				<control-1 n="0">
+					<detent-text type="string">IDLE</detent-text>
+				</control-1>
+				<control-2 n="0">
+					<detent-text type="string">IDLE</detent-text>
+				</control-2>
+				<eng-out type="bool">0</eng-out>
+				<limit n="0">
+					<active-mode type="string">T/O</active-mode>
+					<active-mode-int type="int">0</active-mode-int>
+					<flex-active type="bool">0</flex-active>
+					<flex-active-cmd type="bool">0</flex-active-cmd>
+					<flex-temp type="int">30</flex-temp>
+				</limit>
+				<lvrclb type="bool">0</lvrclb>
+				<toga-lk type="bool">0</toga-lk>
+				<thr-locked type="bool">0</thr-locked>
+				<thr-locked-alert type="bool">0</thr-locked-alert>
+				<thr-lock-cmd n="0" type="double">0</thr-lock-cmd>
+				<thr-lock-cmd n="1" type="double">0</thr-lock-cmd>
+				<thr-locked-flash type="bool">0</thr-locked-flash>
+				<thr-locked-time type="double">0</thr-locked-time>
+			</fadec>
+			<fbw n="0">
+				<yaw n="0">
 					<max-deg-switch type="double">25</max-deg-switch>
 				</yaw>
 			</fbw>
@@ -858,11 +882,8 @@
 				<emer-elec-man-on type="bool">0</emer-elec-man-on>
 			</switches>
 		</electrical>
-		<engines>
+		<engines n="0">
 			<engine-start-switch type="int">1</engine-start-switch>
-			<epr-limit type="double">0.0</epr-limit>
-			<n1-limit type="double">0.0</n1-limit>
-			<thrust-limit type="string">TOGA</thrust-limit>
 			<engine n="0">
 				<cutoff type="bool">true</cutoff>
 				<cutoff-switch type="bool">true</cutoff-switch>
@@ -872,11 +893,8 @@
 				<man-start type="bool">0</man-start>
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
-				<max-athr-thrust type="double">0.94</max-athr-thrust>
-				<throttle-output type="double">0</throttle-output>
-				<throttle-fdm type="double">0</throttle-fdm>
-				<throttle-rev type="double">0</throttle-rev>
-				<reverser type="double">0</reverser>
+				<reverse-cmd type="bool">0</reverse-cmd>
+				<reverse-lever type="double">0</reverse-lever>
 				<igniter-a type="bool">0</igniter-a>
 				<igniter-b type="bool">0</igniter-b>
 				<last-igniter type="string">B</last-igniter>
@@ -890,11 +908,8 @@
 				<man-start type="bool">0</man-start>
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
-				<max-athr-thrust type="double">0.94</max-athr-thrust>
-				<throttle-output type="double">0</throttle-output>
-				<throttle-fdm type="double">0</throttle-fdm>
-				<throttle-rev type="double">0</throttle-rev>
-				<reverser type="double">0</reverser>
+				<reverse-cmd type="bool">0</reverse-cmd>
+				<reverse-lever type="double">0</reverse-lever>
 				<igniter-a type="bool">0</igniter-a>
 				<igniter-b type="bool">0</igniter-b>
 				<last-igniter type="string">B</last-igniter>
@@ -902,8 +917,6 @@
 			<engine n="2">
 				<cutoff type="bool">true</cutoff>
 				<starter type="bool">0</starter>
-				<throttle-output type="double">0</throttle-output>
-				<throttle-fdm type="double">0</throttle-fdm>
 			</engine>
 		</engines>
 		<fctl>
@@ -923,9 +936,12 @@
 			<test-btn-2 type="bool">0</test-btn-2>
 		</fire>
 		<flight>
+			<aileron n="1" type="double">0</aileron>
 			<aileron-drives-tiller type="bool">0</aileron-drives-tiller>
 			<aileron-input type="double">0</aileron-input>
+			<elevator n="1" type="double">0</elevator>
 			<elevator-input type="double">0</elevator-input>
+			<rudder n="1" type="double">0</rudder>
 			<speedbrake-arm type="bool">0</speedbrake-arm>
 			<slats type="double">0</slats>
 		</flight>
@@ -1127,6 +1143,8 @@
 		<engine n="0">
 			<egt-actual type="double">0</egt-actual>
 			<epr-actual type="double">1</epr-actual>
+			<ff-actual type="double">0</ff-actual>
+			<fuel-flow_pph type="double">0</fuel-flow_pph>
 			<n1-actual type="double">0</n1-actual>
 			<n2-actual type="double">0</n2-actual>
 			<on-fire type="bool">0</on-fire>
@@ -1137,6 +1155,8 @@
 		<engine n="1">
 			<egt-actual type="double">0</egt-actual>
 			<epr-actual type="double">1</epr-actual>
+			<ff-actual type="double">0</ff-actual>
+			<fuel-flow_pph type="double">0</fuel-flow_pph>
 			<n1-actual type="double">0</n1-actual>
 			<n2-actual type="double">0</n2-actual>
 			<on-fire type="bool">0</on-fire>
@@ -1197,6 +1217,14 @@
 		<acconfig n="0">
 			<autoconfig-running type="bool">0</autoconfig-running>
 			<options n="0">
+				<fadec n="0"> <!-- Configurable Detents -->
+					<climb-b type="double">0.6</climb-b>
+					<climb-t type="double">0.65</climb-t>
+					<idle-t type="double">0.01</idle-t>
+					<mct-b type="double">0.78</mct-b>
+					<mct-t type="double">0.83</mct-t>
+					<toga-b type="double">0.95</toga-b>
+				</fadec>
 				<seperate-tiller-axis type="bool">0</seperate-tiller-axis>
 			</options>
 		</acconfig>
@@ -1571,23 +1599,6 @@
 		<static n="2">
 			<serviceable type="bool">1</serviceable>
 		</static>
-		
-		<thrust>
-			<alpha-floor type="bool">0</alpha-floor>
-			<clbreduc-ft type="double">1500</clbreduc-ft>
-			<eng-out type="bool">0</eng-out>
-			<lim-flex type="bool">0</lim-flex>
-			<lvrclb type="bool">0</lvrclb>
-			<state1 type="string">IDLE</state1>
-			<state2 type="string">IDLE</state2>
-			<toga-lk type="bool">0</toga-lk>
-			<thr-locked type="bool">0</thr-locked>
-			<thr-locked-alert type="bool">0</thr-locked-alert>
-			<thr-lock-cmd n="0" type="double">0</thr-lock-cmd>
-			<thr-lock-cmd n="1" type="double">0</thr-lock-cmd>
-			<thr-locked-flash type="bool">0</thr-locked-flash>
-			<thr-locked-time type="double">0</thr-locked-time>
-		</thrust>
 		
 		<navigation>
 			<aligned-1 type="bool">0</aligned-1>
@@ -1968,7 +1979,7 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					systems.doMCTThrust();
+					systems.doMctThrust();
 					</script>
 				</binding>
 			</key>
@@ -2239,9 +2250,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>0</value>
+					<command>nasal</command>
+					<script>libraries.setView(1);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2277,9 +2287,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>8</value>
+					<command>nasal</command>
+					<script>libraries.setView(2);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2316,9 +2325,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>9</value>
+					<command>nasal</command>
+					<script>libraries.setView(3);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2355,9 +2363,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>10</value>
+					<command>nasal</command>
+					<script>libraries.setView(4);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2394,9 +2401,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>11</value>
+					<command>nasal</command>
+					<script>libraries.setView(5);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2435,9 +2441,8 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
 					</condition>
-					<command>property-assign</command>
-					<property>/sim/current-view/view-number</property>
-					<value>12</value>
+					<command>nasal</command>
+					<script>libraries.setView(6);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2865,7 +2870,7 @@
 					</condition>
 					<command>nasal</command>
 					<script>
-					systems.doCLThrust();
+					systems.doClThrust();
 					</script>
 				</binding>
 			</key>
@@ -3701,7 +3706,7 @@
 					</condition>
 					<command>nasal</command>
 					<script>
-					systems.doTOGAThrust();
+					systems.doTogaThrust();
 					</script>
 				</binding>
 			</key>
@@ -4652,10 +4657,9 @@
 			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/controls-override.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/custom-views.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/sounds.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/zoom-views.nas</file>
+			<file>Aircraft/A320-family/Nasal/Libraries/view-controller.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
@@ -4671,7 +4675,8 @@
 			<file>Aircraft/A320-family/Nasal/Systems/pneumatics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fuel.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/FADEC/engines-common.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/Engines/engines-common.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/fadec-common.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Panels/SwitchingPanel.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/Comm/HF.nas</file>
@@ -4689,9 +4694,6 @@
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-messages.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
 		</ecam>
-		<fadec>
-			<file>Aircraft/A320-family/Nasal/Systems/FADEC/fadec-common.nas</file>
-		</fadec>
 		<fbw>
 			<file>Aircraft/A320-family/Nasal/FBW/it-fbw.nas</file>
 		</fbw>

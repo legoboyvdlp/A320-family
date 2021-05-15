@@ -254,7 +254,7 @@ var canvas_upperECAM = {
 					obj["N1Lim-XX2"].show();
 				}
 				
-				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit != "MREV") {
+				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
 					obj["N1Lim"].show();
 					obj["N1Lim-decpnt"].show();
 					obj["N1Lim-decimal"].show();
@@ -295,7 +295,7 @@ var canvas_upperECAM = {
 					obj["EPRLim-XX2"].show();
 				}
 				
-				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit != "MREV") {
+				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
 					obj["EPRLim"].show();
 					obj["EPRLim-decpnt"].show();
 					obj["EPRLim-decimal"].show();
@@ -314,7 +314,7 @@ var canvas_upperECAM = {
 				}
 			}),
 			props.UpdateManager.FromHashValue("N1_mode_1", nil, func(val) {
-				if (fadec.FADEC.Eng1.n1.getValue() == 1 and val) {
+				if (systems.FADEC_S.Eng1.n1.getValue() == 1 and val) {
 					obj["N11-thr"].show();
 					obj["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
 				} else {
@@ -323,7 +323,7 @@ var canvas_upperECAM = {
 				}
 			}),
 			props.UpdateManager.FromHashValue("N1_mode_2", nil, func(val) {
-				if (fadec.FADEC.Eng2.n1.getValue() == 1 and val) {
+				if (systems.FADEC_S.Eng2.n1.getValue() == 1 and val) {
 					obj["N12-thr"].show();
 					obj["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
 				} else {
@@ -526,24 +526,24 @@ var canvas_upperECAM = {
 			me.updateN12(notification);
 		}
 		
-		if (fadec.FADEC.Eng1.n2 != me._cachedN2[0]) {
+		if (systems.FADEC_S.Eng1.n2 != me._cachedN2[0]) {
 			me.updateN21();
 		}
-		if (fadec.FADEC.Eng2.n2 != me._cachedN2[1]) {
+		if (systems.FADEC_S.Eng2.n2 != me._cachedN2[1]) {
 			me.updateN22();
 		}
 		
-		if (fadec.FADEC.Eng1.egt != me._cachedEGT[0]) {
+		if (systems.FADEC_S.Eng1.egt != me._cachedEGT[0]) {
 			me.updateEGT1();
 		}
-		if (fadec.FADEC.Eng2.egt != me._cachedEGT[1]) {
+		if (systems.FADEC_S.Eng2.egt != me._cachedEGT[1]) {
 			me.updateEGT2();
 		}
 		
-		if (fadec.FADEC.Eng1.ff != me._cachedFF[0]) {
+		if (systems.FADEC_S.Eng1.ff != me._cachedFF[0]) {
 			me.updateFF1();
 		}
-		if (fadec.FADEC.Eng2.ff != me._cachedFF[1]) {
+		if (systems.FADEC_S.Eng2.ff != me._cachedFF[1]) {
 			me.updateFF2();
 		}
 		
@@ -554,21 +554,21 @@ var canvas_upperECAM = {
 			}
 		}
 		
-		if (fadec.FADEC.Eng1.n2 or fadec.FADEC.Eng2.n2) {
+		if (systems.FADEC_S.Eng1.n2 or systems.FADEC_S.Eng2.n2) {
 			foreach(var update_item; me.update_items_fadec_powered_n2)
 			{
 				update_item.update(notification);
 			}
 		}
 		
-		if (fadec.FADEC.Eng1.egt or fadec.FADEC.Eng2.egt) {
+		if (systems.FADEC_S.Eng1.egt or systems.FADEC_S.Eng2.egt) {
 			foreach(var update_item; me.update_items_fadec_powered_egt)
 			{
 				update_item.update(notification);
 			}
 		}
 		
-		if (fadec.FADEC.Eng1.ff or fadec.FADEC.Eng2.ff) {
+		if (systems.FADEC_S.Eng1.ff or systems.FADEC_S.Eng2.ff) {
 			foreach(var update_item; me.update_items_fadec_powered_ff)
 			{
 				update_item.update(notification);
@@ -699,8 +699,8 @@ var canvas_upperECAM = {
 	},
 	
 	updateN21: func() {
-		me._cachedN2[0] = fadec.FADEC.Eng1.n2;
-		if (fadec.FADEC.Eng1.n2 == 1) {
+		me._cachedN2[0] = systems.FADEC_S.Eng1.n2;
+		if (systems.FADEC_S.Eng1.n2 == 1) {
 			me["N21"].show();
 			me["N21-decimal"].show();
 			me["N21-decpnt"].show();
@@ -713,8 +713,8 @@ var canvas_upperECAM = {
 		}
 	},
 	updateN22: func() {
-		me._cachedN2[1] = fadec.FADEC.Eng2.n2;
-		if (fadec.FADEC.Eng2.n2 == 1) {
+		me._cachedN2[1] = systems.FADEC_S.Eng2.n2;
+		if (systems.FADEC_S.Eng2.n2 == 1) {
 			me["N22"].show();
 			me["N22-decimal"].show();
 			me["N22-decpnt"].show();
@@ -728,8 +728,8 @@ var canvas_upperECAM = {
 	},
 	
 	updateEGT1: func() {
-		me._cachedEGT[0] = fadec.FADEC.Eng1.egt;
-		if (fadec.FADEC.Eng1.egt == 1) {
+		me._cachedEGT[0] = systems.FADEC_S.Eng1.egt;
+		if (systems.FADEC_S.Eng1.egt == 1) {
 			me["EGT1-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EGT1-scale2"].setColor(1,0,0);
 			me["EGT1"].show();
@@ -748,8 +748,8 @@ var canvas_upperECAM = {
 		}
 	},
 	updateEGT2: func() {
-		me._cachedEGT[1] = fadec.FADEC.Eng2.egt;
-		if (fadec.FADEC.Eng2.egt == 1) {
+		me._cachedEGT[1] = systems.FADEC_S.Eng2.egt;
+		if (systems.FADEC_S.Eng2.egt == 1) {
 			me["EGT2-scale"].setColor(0.8078,0.8039,0.8078);
 			me["EGT2-scale2"].setColor(1,0,0);
 			me["EGT2"].show();
@@ -825,8 +825,8 @@ var canvas_upperECAM = {
 		}
 	},
 	updateFF1: func() {
-		me._cachedFF[0] = fadec.FADEC.Eng1.ff;
-		if (fadec.FADEC.Eng1.ff == 1) {
+		me._cachedFF[0] = systems.FADEC_S.Eng1.ff;
+		if (systems.FADEC_S.Eng1.ff == 1) {
 			me["FF1"].show();
 			me["FF1-XX"].hide();
 		} else {
@@ -835,8 +835,8 @@ var canvas_upperECAM = {
 		}
 	},
 	updateFF2: func() {
-		me._cachedFF[1] = fadec.FADEC.Eng2.ff;
-		if (fadec.FADEC.Eng2.ff == 1) {
+		me._cachedFF[1] = systems.FADEC_S.Eng2.ff;
+		if (systems.FADEC_S.Eng2.ff == 1) {
 			me["FF2"].show();
 			me["FF2-XX"].hide();
 		} else {
@@ -996,13 +996,13 @@ input = {
 	slatLocked: "/fdm/jsbsim/fcs/slat-locked",
 	
 	# N1 parameters
-	N1_1: "/ECAM/Upper/N1[0]",
-	N1_2: "/ECAM/Upper/N1[1]",
+	N1_1: "/instrumentation/upper-ecam/n1[0]",
+	N1_2: "/instrumentation/upper-ecam/n1[1]",
 	N1_actual_1: "/engines/engine[0]/n1-actual",
 	N1_actual_2: "/engines/engine[1]/n1-actual",
-	N1_lim: "/ECAM/Upper/N1ylim",
-	N1thr_1: "/ECAM/Upper/N1thr[0]",
-	N1thr_2: "/ECAM/Upper/N1thr[1]",
+	N1_lim: "/instrumentation/upper-ecam/n1-limit",
+	N1thr_1: "/instrumentation/upper-ecam/n1-thr[0]",
+	N1thr_2: "/instrumentation/upper-ecam/n1-thr[1]",
 	
 	# N2 parameters
 	N2_actual_1: "/engines/engine[0]/n2-actual",
@@ -1028,8 +1028,8 @@ input = {
 	EPRthr_2: "/ECAM/Upper/EPRthr[1]",
 	
 	# fuel flow
-	fuelflow_1: "/engines/engine[0]/fuel-flow_actual",
-	fuelflow_2: "/engines/engine[1]/fuel-flow_actual",
+	fuelflow_1: "/engines/engine[0]/ff-actual",
+	fuelflow_2: "/engines/engine[1]/ff-actual",
 	
 	# flaps
 	flapsPos: "/controls/flight/flaps-pos",
@@ -1043,16 +1043,16 @@ input = {
 	slatyOffsetTrans: "/ECAM/Upper/SlatYtrans",
 	
 	# fadec
-	alphaFloor: "/systems/thrust/alpha-floor",
-	eprLimit: "/controls/engines/epr-limit",
-	thrustLimit: "/controls/engines/thrust-limit",
-	n1Limit: "/controls/engines/n1-limit",
-	flexTemp: "/FMGC/internal/flex",
+	alphaFloor: "/fdm/jsbsim/fadec/alpha-floor",
+	eprLimit: "/fdm/jsbsim/fadec/limit/active-epr",
+	thrustLimit: "/fdm/jsbsim/fadec/limit/active-mode",
+	n1Limit: "/fdm/jsbsim/fadec/limit/active-n1",
+	flexTemp: "/fdm/jsbsim/fadec/limit/flex-temp",
 	fadecPower1: "/systems/fadec/powered1",
 	fadecPower2: "/systems/fadec/powered2",
 	fadecPowerStart: "/systems/fadec/powerup",
-	N1_mode_1: "/systems/fadec/n1mode1",
-	N1_mode_2: "/systems/fadec/n1mode2",
+	N1_mode_1: "/fdm/jsbsim/fadec/control-1/n1-mode",
+	N1_mode_2: "/fdm/jsbsim/fadec/control-2/n1-mode",
 	eng1_epr: "/systems/fadec/eng1/epr",
 	eng2_epr: "/systems/fadec/eng2/epr",
 	eng1_n1: "/systems/fadec/eng1/n1",

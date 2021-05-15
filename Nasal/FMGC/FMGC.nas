@@ -1,5 +1,5 @@
 # A3XX FMGC/Autoflight
-# Copyright (c) 2020 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), and Matthew Maring (mattmaring)
+# Copyright (c) 2021 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), and Matthew Maring (mattmaring)
 
 ##################
 # Init Functions #
@@ -247,8 +247,6 @@ var postInit = func() {
 
 var FMGCNodes = {
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
-	flexSet: props.globals.initNode("/FMGC/internal/flex-set", 0, "BOOL"),
-	flexTemp: props.globals.initNode("/FMGC/internal/flex", 45, "INT"),
 	mngSpdAlt: props.globals.getNode("/FMGC/internal/mng-alt-spd"),
 	mngMachAlt: props.globals.getNode("/FMGC/internal/mng-alt-mach"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
@@ -604,13 +602,13 @@ var masterFMGC = maketimer(0.2, func {
 	n1_right = pts.Engines.Engine.n1Actual[1].getValue();
 	modelat = Modes.PFD.FMA.rollMode.getValue();
 	mode = Modes.PFD.FMA.pitchMode.getValue();
-	gs = pts.Velocities.groundspeed.getValue();
+	gs = pts.Velocities.groundspeedKt.getValue();
 	alt = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 	# cruiseft = FMGCInternal.crzFt;
 	# cruiseft_b = FMGCInternal.crzFt - 200;
-	state1 = pts.Systems.Thrust.state[0].getValue();
-	state2 = pts.Systems.Thrust.state[1].getValue();
-	accel_agl_ft = Setting.reducAglFt.getValue();
+	state1 = systems.FADEC.detentText[0].getValue();
+	state2 = systems.FADEC.detentText[1].getValue();
+	accel_agl_ft = Settings.reducAglFt.getValue();
 	gear0 = pts.Gear.wow[0].getBoolValue();
 	altSel = Input.alt.getValue();
 	

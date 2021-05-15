@@ -1,7 +1,7 @@
 # A3XX High Frequency Radio
 # Jonathan Redpath
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 var highFrequencyRadio = {
 	overrideDataLink: 0,

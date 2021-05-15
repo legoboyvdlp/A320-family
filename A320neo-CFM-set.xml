@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList include="A320-main.xml">
 
@@ -203,16 +203,13 @@
 		</view>
 		
 		<systems n="0">
-			<autopilot n="0">
-				<path>Aircraft/A320-family/Systems/fadec-cfm.xml</path>
-			</autopilot>
 			<property-rule n="100">
 				<path>Aircraft/A320-family/Systems/leapx-sound.xml</path>
 			</property-rule>
 		</systems>
 
 	</sim>
-		
+	
 	<limits>
 		<mass-and-balance> <!--Data source: TCDS WV 55 -->
 			<maximum-takeoff-mass-lbs>174200</maximum-takeoff-mass-lbs>

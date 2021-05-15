@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	<name>A320-200</name>
@@ -563,13 +563,13 @@
 		</position>
 		<direction>
 			<x>-1.0</x>
-			<y>0</y>
-			<z>-0.055</z>
+			<y>-0.175</y>
+			<z>-0.095</z>
 		</direction>
 		<ambient>
-			<r>0.05</r>
-			<g>0.05</g>
-			<b>0.05</b>
+			<r>0.25</r>
+			<g>0.25</g>
+			<b>0.25</b>
 			<a>1</a>
 		</ambient>
 		<diffuse>
@@ -585,13 +585,13 @@
 			<a>1.0</a>
 		</specular>
 		<attenuation>
-			<c>1.0</c>
-			<l>0.0009</l>
-			<q>0.000003</q>
+			<c>0.1</c>
+			<l>0.01</l>
+			<q>0.0</q>
 		</attenuation>
-		<spot-exponent>200.0</spot-exponent>
-		<spot-cutoff>12.0</spot-cutoff>
-		<range-m>5000.0</range-m>
+		<spot-exponent>100.0</spot-exponent>
+		<spot-cutoff>21.5</spot-cutoff>
+		<range-m>2500.0</range-m>
 	</light>
 	
 	<light>
@@ -604,13 +604,13 @@
 		</position>
 		<direction>
 			<x>-1.0</x>
-			<y>0</y>
-			<z>-0.055</z>
+			<y> 0.175</y>
+			<z>-0.095</z>
 		</direction>
 		<ambient>
-			<r>0.05</r>
-			<g>0.05</g>
-			<b>0.05</b>
+			<r>0.25</r>
+			<g>0.25</g>
+			<b>0.25</b>
 			<a>1</a>
 		</ambient>
 		<diffuse>
@@ -626,13 +626,13 @@
 			<a>1.0</a>
 		</specular>
 		<attenuation>
-			<c>1.0</c>
-			<l>0.0009</l>
-			<q>0.000003</q>
+			<c>0.1</c>
+			<l>0.01</l>
+			<q>0.0</q>
 		</attenuation>
-		<spot-exponent>200.0</spot-exponent>
-		<spot-cutoff>12.0</spot-cutoff>
-		<range-m>5000.0</range-m>
+		<spot-exponent>100.0</spot-exponent>
+		<spot-cutoff>21.5</spot-cutoff>
+		<range-m>2500.0</range-m>
 	</light>
 	
 	<light>
@@ -646,12 +646,12 @@
 		<direction>
 			<x>-1.0</x>
 			<y>0</y>
-			<z>0</z>
+			<z>-0.2</z>
 		</direction>
 		<ambient>
-			<r>0.05</r>
-			<g>0.05</g>
-			<b>0.05</b>
+			<r>0.30</r>
+			<g>0.30</g>
+			<b>0.30</b>
 			<a>1</a>
 		</ambient>
 		<diffuse>
@@ -667,13 +667,13 @@
 			<a>1.0</a>
 		</specular>
 		<attenuation>
-			<c>1.0</c>
-			<l>0.0015</l>
-			<q>0.00000833333</q>
+			<c>0.1</c>
+			<l>0.01</l>
+			<q>0.0</q>
 		</attenuation>
-		<spot-exponent>200.0</spot-exponent>
-		<spot-cutoff>12.0</spot-cutoff>
-		<range-m>3000.0</range-m>
+		<spot-exponent>100.0</spot-exponent>
+		<spot-cutoff>25.0</spot-cutoff>
+		<range-m>2000.0</range-m>
 	</light>
 	
 	<light>
@@ -687,12 +687,12 @@
 		<direction>
 			<x>-1.0</x>
 			<y>-0.571953125</y>
-			<z>0</z>
+			<z>-0.15</z>
 		</direction>
 		<ambient>
-			<r>0.05</r>
-			<g>0.05</g>
-			<b>0.05</b>
+			<r>0.50</r>
+			<g>0.50</g>
+			<b>0.50</b>
 			<a>1</a>
 		</ambient>
 		<diffuse>
@@ -707,14 +707,14 @@
 			<b>1.0</b>
 			<a>1.0</a>
 		</specular>
-		<attenuation>
+	    <attenuation>
 			<c>1.0</c>
-			<l>0.0015</l>
-			<q>0.00000833333</q>
+			<l>0.045</l>
+			<q>0.002</q>
 		</attenuation>
-		<spot-exponent>200.0</spot-exponent>
-		<spot-cutoff>12.0</spot-cutoff>
-		<range-m>3000.0</range-m>
+		<spot-exponent>20.0</spot-exponent>
+		<spot-cutoff>25.0</spot-cutoff>
+		<range-m>250.0</range-m>
 	</light>
 	
 	<light>
@@ -728,12 +728,12 @@
 		<direction>
 			<x>-1.0</x>
 			<y>0.571953125</y>
-			<z>0</z>
+			<z>-0.15</z>
 		</direction>
 		<ambient>
-			<r>0.05</r>
-			<g>0.05</g>
-			<b>0.05</b>
+			<r>0.50</r>
+			<g>0.50</g>
+			<b>0.50</b>
 			<a>1</a>
 		</ambient>
 		<diffuse>
@@ -748,14 +748,14 @@
 			<b>1.0</b>
 			<a>1.0</a>
 		</specular>
-		<attenuation>
+	    <attenuation>
 			<c>1.0</c>
-			<l>0.0015</l>
-			<q>0.00000833333</q>
+			<l>0.045</l>
+			<q>0.002</q>
 		</attenuation>
-		<spot-exponent>200.0</spot-exponent>
-		<spot-cutoff>12.0</spot-cutoff>
-		<range-m>3000.0</range-m>
+		<spot-exponent>20.0</spot-exponent>
+		<spot-cutoff>25.0</spot-cutoff>
+		<range-m>250.0</range-m>
 	</light>
 	
 	<light>
@@ -769,12 +769,12 @@
 		<direction>
 			<x>-1.0</x>
 			<y>0</y>
-			<z>0</z>
+			<z>-0.15</z>
 		</direction>
 		<ambient>
-			<r>0.05</r>
-			<g>0.05</g>
-			<b>0.05</b>
+			<r>0.30</r>
+			<g>0.30</g>
+			<b>0.30</b>
 			<a>1</a>
 		</ambient>
 		<diffuse>
@@ -790,13 +790,13 @@
 			<a>1.0</a>
 		</specular>
 		<attenuation>
-			<c>1.0</c>
-			<l>0.0009</l>
-			<q>0.000003</q>
+			<c>0.1</c>
+			<l>0.01</l>
+			<q>0.0</q>
 		</attenuation>
-		<spot-exponent>200.0</spot-exponent>
-		<spot-cutoff>12.0</spot-cutoff>
-		<range-m>5000.0</range-m>
+		<spot-exponent>100.0</spot-exponent>
+		<spot-cutoff>25.0</spot-cutoff>
+		<range-m>2000.0</range-m>
 	</light>
 	
 	<animation>

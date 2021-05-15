@@ -2219,7 +2219,7 @@
 				<test logic="OR">
 					<test logic="AND">
 						/it-fbw/law eq 0
-						/fdm/jsbsim/fcs/slat-pos-deg lt 15
+						fcs/slat-pos-deg lt 15
 						<test logic="OR">
 							<test logic="AND">
 								/systems/navigation/adr/output/aoa-1 ge 13.5
@@ -2237,7 +2237,7 @@
 					</test>
 					<test logic="AND">
 						/it-fbw/law eq 0
-						/fdm/jsbsim/fcs/slat-pos-deg ge 15
+						fcs/slat-pos-deg ge 15
 						<test logic="AND">
 							/systems/navigation/adr/output/aoa-1 ge 22
 							/systems/navigation/adr/operating-1 eq 1
@@ -2253,7 +2253,7 @@
 					</test>
 					<test logic="AND">
 						/it-fbw/law ne 0
-						/fdm/jsbsim/fcs/slat-pos-deg lt 15
+						fcs/slat-pos-deg lt 15
 						<test logic="OR">
 							<test logic="AND">
 								/systems/navigation/adr/output/aoa-1 ge 8
@@ -2271,7 +2271,7 @@
 					</test>
 					<test logic="AND">
 						/it-fbw/law ne 0
-						/fdm/jsbsim/fcs/slat-pos-deg ge 15
+						fcs/slat-pos-deg ge 15
 						<test logic="AND">
 							/systems/navigation/adr/output/aoa-1 ge 14
 							/systems/navigation/adr/operating-1 eq 1
@@ -2309,8 +2309,8 @@
 		<switch name="/ECAM/warnings/logic/eng/ground-spoilers">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/fdm/jsbsim/spoilers/max-spoiler eq 1
-				/fdm/jsbsim/spoilers/main-cmd gt 0
+				spoilers/max-spoiler eq 1
+				spoilers/main-cmd gt 0
 			</test>
 		</switch>
 		
@@ -2341,14 +2341,14 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/controls/engines/engine[0]/throttle-lever ge 0.13333333333
+				fadec/control-1/lever/angle ge 6
 			</test>
 		</switch>
 		
 		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6-2">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/controls/engines/engine[0]/throttle-lever ge 0.13333333333
+				fadec/control-1/lever/angle ge 6
 				/ECAM/phases/phase-calculation/takeoff-power eq 0
 			</test>
 		</switch>
@@ -2368,7 +2368,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-idle">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/controls/engines/engine[0]/throttle-lever lt 0.055
+				fadec/control-1/lever/angle lt 2.6
 			</test>
 		</switch>
 		
@@ -2394,14 +2394,14 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/controls/engines/engine[1]/throttle-lever ge 0.13333333333
+				fadec/control-2/lever/angle ge 6
 			</test>
 		</switch>
 		
 		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/controls/engines/engine[1]/throttle-lever ge 0.13333333333
+				fadec/control-2/lever/angle ge 6
 				/ECAM/phases/phase-calculation/takeoff-power eq 0
 			</test>
 		</switch>
@@ -2421,7 +2421,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-idle">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/controls/engines/engine[1]/throttle-lever lt 0.055
+				fadec/control-2/lever/angle lt 2.6
 			</test>
 		</switch>
 		
@@ -2578,8 +2578,10 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[0]/n2-actual ge 59.4
-				/controls/engines/engine[0]/throttle-pos ge 0.60
-				/controls/engines/engine[0]/throttle-pos lt 0.78
+				<test logic="OR">
+					fadec/control-1/detent eq 2
+					fadec/control-1/detent eq 3
+				</test>
 			</test>
 		</switch>
 		
@@ -2593,8 +2595,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[0]/n2-actual ge 59.4
-				/controls/engines/engine[0]/throttle-pos ge 0.60
-				/controls/engines/engine[0]/throttle-pos lt 0.83
+				<test logic="OR">
+					fadec/control-1/detent eq 2
+					fadec/control-1/detent eq 3
+					fadec/control-1/detent eq 4
+				</test>
 			</test>
 		</switch>
 		
@@ -2608,8 +2613,10 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[1]/n2-actual ge 59.4
-				/controls/engines/engine[1]/throttle-pos ge 0.60
-				/controls/engines/engine[1]/throttle-pos lt 0.78
+				<test logic="OR">
+					fadec/control-2/detent eq 2
+					fadec/control-2/detent eq 3
+				</test>
 			</test>
 		</switch>
 		
@@ -2623,8 +2630,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[1]/n2-actual ge 59.4
-				/controls/engines/engine[1]/throttle-pos ge 0.60
-				/controls/engines/engine[1]/throttle-pos lt 0.83
+				<test logic="OR">
+					fadec/control-2/detent eq 2
+					fadec/control-2/detent eq 3
+					fadec/control-2/detent eq 4
+				</test>
 			</test>
 		</switch>
 		
@@ -2640,25 +2650,25 @@
 				/ECAM/warnings/logic/eng/new-retard-logic ne 1
 				<test logic="OR">
 					<test logic="AND">
-						/systems/thrust/lim-flex eq 0
+						fadec/limit/flex-active eq 0
 						<test logic="OR">
 							/ECAM/warnings/logic/eng/thr-lever-2-mct-output eq 1
 							/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
 						</test>
 					</test>
 					<test logic="AND">
-						/systems/thrust/lim-flex eq 1
+						fadec/limit/flex-active eq 1
 						/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
 					</test>
 					<test logic="AND">
-						/systems/thrust/lim-flex eq 0
+						fadec/limit/flex-active eq 0
 						<test logic="OR">
 							/ECAM/warnings/logic/eng/thr-lever-1-mct-output eq 1
 							/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
 						</test>
 					</test>
 					<test logic="AND">
-						/systems/thrust/lim-flex eq 1
+						fadec/limit/flex-active eq 1
 						/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
 					</test>
 				</test>
@@ -2674,8 +2684,8 @@
 					/ECAM/warning-phase ne 7
 				</test>
 				<test logic="OR">
-					/controls/engines/engine[0]/throttle-rev gt 0.0
-					/controls/engines/engine[1]/throttle-rev gt 0.0
+					/controls/engines/engine[0]/reverse-lever gt 0.0
+					/controls/engines/engine[1]/reverse-lever gt 0.0
 				</test>
 			</test>
 		</switch>
@@ -2727,7 +2737,7 @@
 			<test logic="AND" value="1">
 				/controls/engines/engine[0]/cutoff-switch eq 0
 				/controls/engines/engine[0]/fire-btn eq 0
-				/engines/engine[0]/n2-actual lt 59.4
+				/engines/engine[0]/n2-actual lt 59.39
 				/ECAM/warnings/logic/eng/eng-1-fail-cond eq 1
 			</test>
 		</switch>
@@ -2737,7 +2747,7 @@
 			<test logic="AND" value="1">
 				/controls/engines/engine[1]/cutoff-switch eq 0
 				/controls/engines/engine[1]/fire-btn eq 0
-				/engines/engine[1]/n2-actual lt 59.4
+				/engines/engine[1]/n2-actual lt 59.39
 				/ECAM/warnings/logic/eng/eng-2-fail-cond eq 1
 			</test>
 		</switch>
@@ -3305,7 +3315,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/fctl/spd-brk-still-out-50-seconds eq 1
-				/engines/both-at-idle eq 1
+				fadec/both-at-idle eq 1
 			</test>
 		</switch>
 		
@@ -3643,7 +3653,7 @@
 					</test>
 					<test logic="AND">
 						/controls/gear/gear-down eq 1
-						/fdm/jsbsim/fcs/slat-pos-deg ge 4
+						fcs/slat-pos-deg ge 4
 					</test>
 				</test>
 				/it-autoflight/output/lat eq 4

@@ -1,6 +1,6 @@
 # A3XX ND Canvas
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 io.include("A3XX_ND.nas");
 

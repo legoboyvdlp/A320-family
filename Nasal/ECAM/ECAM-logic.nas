@@ -141,7 +141,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(allEngFailAPU);
 		}
 		
-		if (allEngFailLevers.clearFlag == 0 and (pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 or pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01)) {
+		if (allEngFailLevers.clearFlag == 0 and (systems.FADEC.detent[0].getValue() != 0 or systems.FADEC.detent[1].getValue() != 0)) {
 			allEngFailLevers.active = 1;
 		} else {
 			ECAM_controller.warningReset(allEngFailLevers);
@@ -231,7 +231,7 @@ var messages_priority_3 = func {
 	
 	if (eng1Fire.active == 1) {
 		if (phaseVar3 >= 5 and phaseVar3 <= 7) {
-			if (eng1FireFllever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01) {
+			if (eng1FireFllever.clearFlag == 0 and systems.FADEC.detent[0].getValue() != 0) {
 				eng1FireFllever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireFllever);
@@ -297,7 +297,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (phaseVar3 < 5 or phaseVar3 > 7) {
-			if (eng1FireGnlever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
+			if (eng1FireGnlever.clearFlag == 0 and systems.FADEC.detent[0].getValue() != 0 and systems.FADEC.detent[1].getValue() != 0) {
 				eng1FireGnlever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FireGnlever);
@@ -386,7 +386,7 @@ var messages_priority_3 = func {
 	
 	if (eng2Fire.active == 1) {
 		if (phaseVar3 >= 5 and phaseVar3 <= 7) {
-			if (eng2FireFllever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
+			if (eng2FireFllever.clearFlag == 0 and systems.FADEC.detent[1].getValue() != 0) {
 				eng2FireFllever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireFllever);
@@ -452,7 +452,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (phaseVar3 < 5 or phaseVar3 > 7) {
-			if (eng2FireGnlever.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
+			if (eng2FireGnlever.clearFlag == 0 and systems.FADEC.detent[0].getValue() != 0 and systems.FADEC.detent[1].getValue() != 0) {
 				eng2FireGnlever.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FireGnlever);
@@ -1167,7 +1167,7 @@ var messages_priority_2 = func {
 	if ((phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 9) and warningNodes.Logic.thrLeversNotSet.getValue() and engThrustLvrNotSet.clearFlag == 0) {
 		engThrustLvrNotSet.active = 1;
 		
-		if (fadec.Thrust.limFlex.getValue()) {
+		if (systems.FADEC.Limit.flexActive.getBoolValue()) {
 			engThrustLvrNotSetMCT.active = 1;
 			ECAM_controller.warningReset(engThrustLvrNotSetMCT);
 		} else {
@@ -1215,7 +1215,7 @@ var messages_priority_2 = func {
 		}
 		
 		if (phaseVar2 != 4 and warningNodes.Logic.phase5Trans.getValue() == 1) {
-			if (eng1FailThrLvrIdle.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[0].getValue() > 0.01) {
+			if (eng1FailThrLvrIdle.clearFlag == 0 and systems.FADEC.detent[0].getValue() != 0) {
 				eng1FailThrLvrIdle.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1FailThrLvrIdle);
@@ -1422,7 +1422,7 @@ var messages_priority_2 = func {
 		}
 		
 		if (phaseVar2 != 4 and warningNodes.Logic.phase5Trans.getValue() == 1) {
-			if (eng2FailThrLvrIdle.clearFlag == 0 and pts.Controls.Engines.Engine.throttleLever[1].getValue() > 0.01) {
+			if (eng2FailThrLvrIdle.clearFlag == 0 and systems.FADEC.detent[1].getValue() != 0) {
 				eng2FailThrLvrIdle.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2FailThrLvrIdle);
@@ -1619,7 +1619,7 @@ var messages_priority_2 = func {
 	} else {
 		_SATval = nil;
 	}
-	if (satAbvFlexTemp.clearFlag == 0 and phaseVar2 == 2 and fadec.Thrust.limFlex.getValue() and _SATval != nil and _SATval > fmgc.FMGCNodes.flexTemp.getValue() and !warningNodes.Logic.thrLeversNotSet.getValue()) {
+	if (satAbvFlexTemp.clearFlag == 0 and phaseVar2 == 2 and systems.FADEC.Limit.flexActive.getBoolValue() and _SATval != nil and _SATval > systems.FADEC.Limit.flexTemp.getValue() and !warningNodes.Logic.thrLeversNotSet.getValue()) {
 		satAbvFlexTemp.active = 1;
 		
 		if (satAbvFlexTempCheck.clearFlag == 0) {
@@ -2133,8 +2133,8 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(athr_offw_1);
 	}
 	
-	if ((athr_lock.clearFlag == 0) and phaseVar2 >= 5 and phaseVar2 <= 7 and getprop("/systems/thrust/thr-locked-alert") == 1) {
-		if (getprop("/systems/thrust/thr-locked-flash") == 0) {
+	if ((athr_lock.clearFlag == 0) and phaseVar2 >= 5 and phaseVar2 <= 7 and getprop("/fdm/jsbsim/fadec/thr-locked-alert") == 1) {
+		if (getprop("/fdm/jsbsim/fadec/thr-locked-flash") == 0) {
 			athr_lock.msg = " ";
 		} else {
 			athr_lock.msg = msgSave
@@ -2147,7 +2147,7 @@ var messages_priority_2 = func {
 	}
 	
 	
-	if ((athr_lim.clearFlag == 0) and getprop("it-autoflight/output/athr") == 1 and ((getprop("/systems/thrust/eng-out") != 1 and (pts.Systems.Thrust.state[0].getValue() == "MAN" or pts.Systems.Thrust.state[1].getValue() == "MAN")) or (getprop("/systems/thrust/eng-out") == 1 and (pts.Systems.Thrust.state[0].getValue() == "MAN" or pts.Systems.Thrust.state[1].getValue() == "MAN" or (pts.Systems.Thrust.state[0].getValue() == "MAN THR" and getprop("/controls/engines/engine[0]/throttle-pos") <= 0.83) or (pts.Systems.Thrust.state[1].getValue() == "MAN THR" and getprop("/controls/engines/engine[0]/throttle-pos") <= 0.83)))) and (phaseVar2 >= 5 and phaseVar2 <= 7)) {
+	if ((athr_lim.clearFlag == 0) and getprop("it-autoflight/output/athr") == 1 and ((getprop("/fdm/jsbsim/fadec/eng-out") != 1 and (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN")) or (getprop("/fdm/jsbsim/fadec/eng-out") == 1 and (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN" or (systems.FADEC.detentText[0].getValue() == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (systems.FADEC.detentText[1].getValue() == "MAN THR" and !systems.FADEC.manThrAboveMct[1])))) and (phaseVar2 >= 5 and phaseVar2 <= 7)) {
 		athr_lim.active = 1;
 		athr_lim_1.active = 1;
 	} else {
@@ -3444,7 +3444,7 @@ var messages_right_memo = func {
 		spd_brk.active = 0;
 	}
 	
-	thrustState = [pts.Systems.Thrust.state[0].getValue(), pts.Systems.Thrust.state[1].getValue()];
+	thrustState = [systems.FADEC.detentText[0].getValue(), systems.FADEC.detentText[1].getValue()];
 	if (thrustState[0] == "IDLE" and thrustState[1] == "IDLE" and phaseVarMemo3 >= 6 and phaseVarMemo3 <= 7) {
 		spd_brk.colour = "g";
 	} else if ((phaseVarMemo3 >= 2 and phaseVarMemo3 <= 5) or ((thrustState[0] != "IDLE" or thrustState[1]) != "IDLE") and (phaseVarMemo3 >= 6 and phaseVarMemo3 <= 7)) {

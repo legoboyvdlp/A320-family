@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -41,7 +41,7 @@
 		
 		<text>
 			<halign>left</halign>
-			<label>Flight Dyanmics: Josh Davidson (Octal450)</label>
+			<label>Flight Dynamics: Josh Davidson (Octal450)</label>
 		</text>
 		<text>
 			<halign>left</halign>

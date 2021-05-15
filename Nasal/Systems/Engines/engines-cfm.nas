@@ -1,7 +1,7 @@
 # A3XX IAE V2500 Engine
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 #####################
 # Initializing Vars #
@@ -17,7 +17,6 @@ var egt_lightdn_time = 10;
 var shutdown_time = 20;
 var egt_shutdown_time = 20;
 
-
 var eng_init = func {
 	eng_common_init();
 }
@@ -30,7 +29,7 @@ setlistener("/controls/engines/engine[0]/cutoff-switch", func {
 		} else {
 			if (!manStart[0].getValue()) {
 				start_one_check();
-			} else if (manStart[0].getValue()) {
+			} else {
 				eng_one_man_start.start();
 			}
 		}
@@ -102,7 +101,7 @@ var start_one_check = func {
 }
 
 var start_one_check_b = func {
-	if (pts.Controls.Engines.startSw.getValue() == 2 and systems.PNEU.Psi.engine1.getValue() >= 25 and !pts.Controls.Engines.Engine.cutoffSw[0].getValue()) {
+	if (pts.Controls.Engines.startSw.getValue() == 2 and systems.PNEU.Psi.engine1.getValue() >= 25and !pts.Controls.Engines.Engine.cutoffSw[0].getValue()) {
 		auto_start_one();
 	}
 }
@@ -114,7 +113,7 @@ setlistener("/controls/engines/engine[1]/cutoff-switch", func {
 		} else {
 			if (!manStart[1].getValue()) {
 				start_two_check();
-			} else if (manStart[1].getValue()) {
+			} else {
 				eng_two_man_start.start();
 			}
 		}
@@ -171,7 +170,7 @@ var start_two_mancheck = func {
 }
 
 var start_two_mancheck_b = func {
-	if (systems.PNEU.Psi.engine1.getValue() >= 25) {
+	if (systems.PNEU.Psi.engine2.getValue() >= 25) {
 		pts.Engines.Engine.state[1].setValue(1);
 		pts.Controls.Engines.Engine.starter[1].setValue(1);
 	}
@@ -198,7 +197,7 @@ var auto_start_one = func {
 }
 
 var eng_one_auto_start = maketimer(0.5, func {
-	if (pts.Engines.Engine.n1Actual[0].getValue() >= 4.7) {
+	if (pts.Engines.Engine.n2Actual[0].getValue() >= 22) {
 		eng_one_auto_start.stop();
 		pts.Engines.Engine.state[0].setValue(2);
 		pts.Controls.Engines.Engine.cutoff[0].setValue(0);
@@ -235,7 +234,7 @@ var eng_one_egt_check = maketimer(0.5, func {
 		eng_one_egt_check.stop();
 		interpolate(engines[0].getNode("egt-actual"), egt_min, egt_lightdn_time);
 	}
-});
+}); 
 
 var eng_one_n2_check = maketimer(0.5, func {
 	if (pts.Engines.Engine.n2Actual[0].getValue() >= 43.0) {
@@ -261,7 +260,7 @@ var auto_start_two = func {
 }
 
 var eng_two_auto_start = maketimer(0.5, func {
-	if (pts.Engines.Engine.n1Actual[1].getValue() >= 4.7) {
+	if (pts.Engines.Engine.n2Actual[1].getValue() >= 22) {
 		eng_two_auto_start.stop();
 		pts.Engines.Engine.state[1].setValue(2);
 		pts.Controls.Engines.Engine.cutoff[1].setValue(0);
@@ -301,7 +300,7 @@ var eng_two_egt_check = maketimer(0.5, func {
 });
 
 var eng_two_n2_check = maketimer(0.5, func {
-	if (pts.Engines.Engine.n2Actual[1].getValue() >= 43.0) {
+	if (pts.Engines.Engine.n2Actual[1].getValue() >= 50.0) {
 		if (igniterA[1].getValue() != 0) {
 			igniterA[1].setValue(0);
 		}

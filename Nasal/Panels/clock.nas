@@ -222,9 +222,9 @@ var start_loop = maketimer(0.1, func {
 		chrono.etString.setValue("88 88");
 		clock.elapsedString.setValue("88:88");
 	} else {
-		day = pts.Sim.Time.UTC.day.getValue();
-		month = pts.Sim.Time.UTC.month.getValue();
-		year = pts.Sim.Time.UTC.year.getValue();
+		day = pts.Sim.Time.Utc.day.getValue();
+		month = pts.Sim.Time.Utc.month.getValue();
+		year = pts.Sim.Time.Utc.year.getValue();
 		
 		# Clock
 		UTC_date = sprintf("%02d %02d %02d", month, day, substr(sprintf("%2d", year),1,2));

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<!-- Airbus A320 Cockpit -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+
+<system name="A320: Cockpit"> <!-- Everything here is after all systems -->
+	
+	<channel name="Animations">
+		
+		<fcs_function name="fadec/throttle-lever[0]">
+			<function>
+				<quotient>
+					<property>fadec/control-1/lever/angle</property>
+					<value>45</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/throttle-lever[1]">
+			<function>
+				<quotient>
+					<property>fadec/control-2/lever/angle</property>
+					<value>45</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="fadec/reverse-lever[0]">
+			<input>/controls/engines/engine[0]/reverse-lever</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="fadec/reverse-lever[1]">
+			<input>/controls/engines/engine[1]/reverse-lever</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="fcs/engine-cutoff[0]">
+			<input>/controls/engines/engine[0]/cutoff-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="fcs/engine-cutoff[1]">
+			<input>/controls/engines/engine[1]/cutoff-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+	
+	</channel>
+
+</system>

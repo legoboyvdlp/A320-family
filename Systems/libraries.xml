@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -31,22 +31,6 @@
 		<seconds>2.0</seconds>
 		<filter-gain>0.0</filter-gain>
 	</predict-simple>
-	
-	<filter>
-		<name>FF 1</name>
-		<type>exponential</type>
-		<input>/engines/engine[0]/fuel-flow_pph</input>
-		<output>/engines/engine[0]/fuel-flow_actual</output>
-		<filter-time>0.32</filter-time>
-	</filter>
-	
-	<filter>
-		<name>FF 2</name>
-		<type>exponential</type>
-		<input>/engines/engine[1]/fuel-flow_pph</input>
-		<output>/engines/engine[1]/fuel-flow_actual</output>
-		<filter-time>0.32</filter-time>
-	</filter>
 	
 	<filter>
 		<name>OIL PSI 1</name>
@@ -228,62 +212,6 @@
 		<max-rate-of-change>50</max-rate-of-change>
 		<min>0</min>
 		<max>99</max>
-	</filter>
-
-	<filter>
-		<name>Throttle L</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[0]/reverser</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<property>/controls/engines/engine[0]/throttle</property>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[0]/reverser</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<value>0</value>
-		</input>
-		<output>
-			<property>/controls/engines/engine[0]/throttle-lever</property>
-			<property>/controls/engines/engine[0]/throttle-pos</property>
-		</output>
-	</filter>
-
-	<filter>
-		<name>Throttle R</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[1]/reverser</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<property>/controls/engines/engine[1]/throttle</property>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[1]/reverser</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<value>0</value>
-		</input>
-		<output>
-			<property>/controls/engines/engine[1]/throttle-lever</property>
-			<property>/controls/engines/engine[1]/throttle-pos</property>
-		</output>
 	</filter>
 
 	<filter>

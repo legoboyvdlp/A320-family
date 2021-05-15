@@ -1,7 +1,7 @@
 # A3XX CPDLC
 # Jonathan Redpath
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 var CPDLCmessage = {
 	new: func(text, response = 0) {
 		var cpdlcMessage = {parents: [CPDLCmessage] };

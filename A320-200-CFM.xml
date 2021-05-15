@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <fdm_config name="A320" version="2.0" release="BETA">
 
@@ -97,7 +97,7 @@
 		<engine file="cfm56-5b4_1">
 			<location unit="M">
 				<x>-5.34904</x>
-				<y>-5.755</y>
+				<y>-2.8775</y>
 				<z>-1.04768</z>
 			</location>
 			<orient unit="DEG">
@@ -109,7 +109,7 @@
 			<thruster file="direct">
 				<location unit="M">
 					<x>-5.34904</x>
-					<y>-5.755</y>
+					<y>-2.8775</y>
 					<z>-1.04768</z>
 				</location>
 				<orient unit="DEG">
@@ -123,7 +123,7 @@
 		<engine file="cfm56-5b4_2">
 			<location unit="M">
 				<x>-5.34904</x>
-				<y>5.755</y>
+				<y>2.8775</y>
 				<z>-1.04768</z>
 			</location>
 			<orient unit="DEG">
@@ -135,7 +135,7 @@
 			<thruster file="direct">
 				<location unit="M">
 					<x>-5.34904</x>
-					<y>5.755</y>
+					<y>2.8775</y>
 					<z>-1.04768</z>
 				</location>
 				<orient unit="DEG">
@@ -291,6 +291,7 @@
 	<system file="a320-apu"/>
 	<system file="a320-fmgc"/>
 	<system file="a320-misc"/>
+	<system file="a320-cockpit"/>
 	
 	<flight_control name="none"/>
 	<aerodynamics file="Systems/a320-aerodynamics.xml"/>

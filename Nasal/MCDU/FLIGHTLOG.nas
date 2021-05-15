@@ -135,7 +135,7 @@ var lastgsrestart = 0;
 var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
 
     var phase = fmgc.FMGCInternal.phase;
-    var gs = pts.Velocities.groundspeed.getValue();
+    var gs = pts.Velocities.groundspeedKt.getValue();
     var gear0 = pts.Gear.wow[0].getBoolValue();
 	
 	#print(sprintf("OOOI check: %d %d %.2f %s",expectedOOOIState,phase,gs,gear0));

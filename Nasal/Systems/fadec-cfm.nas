@@ -1,6 +1,5 @@
-# A3XX CFM FADEC by Joshua Davidson (Octal450)
-
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# A3XX CFM FADEC
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 var powerAvailTemp = nil;
 var master1 = nil;
@@ -16,7 +15,7 @@ var N12 = nil;
 var N21 = nil;
 var N22 = nil;
 
-var FADEC = {
+var FADEC_S = {
 	Power: {
 		powered1: props.globals.initNode("/systems/fadec/powered1", 0, "BOOL"),
 		powered2: props.globals.initNode("/systems/fadec/powered2", 0, "BOOL"),
@@ -49,8 +48,8 @@ var FADEC = {
 		n1ModeSwitch2: props.globals.initNode("/controls/fadec/n1mode2", 0, "BOOL"),
 	},
 	Modes: {
-		n1Mode1: props.globals.initNode("/systems/fadec/n1mode1", 0, "BOOL"),  # 0 == EPR, 1 == N1 Rated, 2 == N1 Unrated #
-		n1Mode2: props.globals.initNode("/systems/fadec/n1mode2", 0, "BOOL"),
+		n1Mode1: props.globals.initNode("/fdm/jsbsim/fadec/control-1/n1-mode", 0, "BOOL"),  # 0 == EPR, 1 == N1 Rated, 2 == N1 Unrated #
+		n1Mode2: props.globals.initNode("/fdm/jsbsim/fadec/control-2/n1-mode", 0, "BOOL"),
 	},
 	init: func() {
 		me.Power.poweredTime.setValue(-300);

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -1167,6 +1167,10 @@
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
+		<object-name>prio_capt.arrow</object-name>
+		<object-name>prio_capt.capt</object-name>
+		<object-name>prio_fo.arrow</object-name>
+		<object-name>prio_fo_fo</object-name>
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/dc-ess</property>
@@ -5370,6 +5374,208 @@
 		</condition>
 	</animation>
 
+	<!-- Sidestick Priority Lights -->
+	<animation>
+		<type>select</type>
+		<object-name>prio_capt.arrow</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>/fdm/jsbsim/fbw/sidestick/active[0]</property>
+					<value>0</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>prio_fo.arrow</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>/fdm/jsbsim/fbw/sidestick/active[1]</property>
+					<value>0</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>prio_capt.capt</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<and>
+					<equals>
+						<property>/fdm/jsbsim/fbw/sidestick/active[1]</property>
+						<value>0</value>
+					</equals>
+					<or>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/aileron[1]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/elevator[1]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+					</or>
+				</and>
+				<and>
+					<and>
+						<equals>
+							<property>/fdm/jsbsim/fbw/sidestick/active[0]</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/fdm/jsbsim/fbw/sidestick/active[1]</property>
+							<value>1</value>
+						</equals>
+					</and>
+					<or>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/aileron[0]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/elevator[0]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+					</or>
+					<or>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/aileron[1]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/elevator[1]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+					</or>
+				</and>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>prio_fo_fo</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<and>
+					<equals>
+						<property>/fdm/jsbsim/fbw/sidestick/active[0]</property>
+						<value>0</value>
+					</equals>
+					<or>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/aileron[0]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/elevator[0]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+					</or>
+				</and>
+				<and>
+					<and>
+						<equals>
+							<property>/fdm/jsbsim/fbw/sidestick/active[0]</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/fdm/jsbsim/fbw/sidestick/active[1]</property>
+							<value>1</value>
+						</equals>
+					</and>
+					<or>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/aileron[0]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/elevator[0]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+					</or>
+					<or>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/aileron[1]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<expression>
+								<abs>
+									<property>/controls/flight/elevator[1]</property>
+								</abs>
+							</expression>
+							<value>0.1</value>
+						</greater-than-equals>
+					</or>
+				</and>
+			</or>
+		</condition>
+	</animation>
+
 	<!-- Flap Lever -->
 	<animation>
 		<type>pick</type>
@@ -6810,7 +7016,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/engines/engine[0]/throttle</property>
-				<step type="double">0.01</step>
+				<step>0.01</step>
 				<max>1</max>
 			</binding>
 		</action>
@@ -6821,7 +7027,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/engines/engine[0]/throttle</property>
-				<step type="double">-0.01</step>
+				<step>-0.01</step>
 				<min>0</min>
 			</binding>
 		</action>
@@ -6830,23 +7036,8 @@
 		<name>Engine 1 throttle lever</name>
 		<type>rotate</type>
 		<object-name>thr_l</object-name>
-		<property>fdm/jsbsim/fcs/throttle-lever[0]</property>
-		<interpolation>
-			<entry><ind>0.00000</ind><dep> 0</dep></entry>
-			<entry><ind>0.00999</ind><dep> 0</dep></entry>
-			<entry><ind>0.01000</ind><dep> 2</dep></entry>
-			<entry><ind>0.59999</ind><dep>24</dep></entry>
-			<entry><ind>0.60000</ind><dep>26</dep></entry>
-			<entry><ind>0.64999</ind><dep>26</dep></entry>
-			<entry><ind>0.65000</ind><dep>28</dep></entry>
-			<entry><ind>0.77999</ind><dep>33</dep></entry>
-			<entry><ind>0.78000</ind><dep>35</dep></entry>
-			<entry><ind>0.82999</ind><dep>35</dep></entry>
-			<entry><ind>0.83000</ind><dep>37</dep></entry>
-			<entry><ind>0.94999</ind><dep>43</dep></entry>
-			<entry><ind>0.95000</ind><dep>45</dep></entry>
-			<entry><ind>1.00000</ind><dep>45</dep></entry>
-		</interpolation>
+		<property>fdm/jsbsim/fadec/throttle-lever[0]</property>
+		<factor>45</factor>
 		<axis>
 			<object-name>trim.axis</object-name>
 		</axis>
@@ -6855,20 +7046,11 @@
 		<name>Engine 1 throttle lever rev</name>
 		<type>rotate</type>
 		<object-name>thr_l</object-name>
-		<property>fdm/jsbsim/fcs/reverse-lever[0]</property>
-		<factor>-3.5</factor>
-		<axis>
-			<object-name>trim.axis</object-name>
-		</axis>
-	</animation>
-	<animation>
-		<name>Engine 1 throttle lever rev 2</name>
-		<type>rotate</type>
-		<object-name>thr_l</object-name>
-		<property>fdm/jsbsim/fcs/reverse-thr-lever[0]</property>
+		<property>fdm/jsbsim/fadec/reverse-lever[0]</property>
 		<interpolation>
-			<entry><ind>0.00</ind><dep>  0</dep></entry>
-			<entry><ind>0.50</ind><dep>-20</dep></entry>
+			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
+			<entry><ind>0.25</ind><dep> -3.5</dep></entry>
+			<entry><ind>1.00</ind><dep>-23.5</dep></entry>
 		</interpolation>
 		<axis>
 			<object-name>trim.axis</object-name>
@@ -6885,7 +7067,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/engines/engine[1]/throttle</property>
-				<step type="double">0.01</step>
+				<step>0.01</step>
 				<max>1</max>
 			</binding>
 		</action>
@@ -6896,7 +7078,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/engines/engine[1]/throttle</property>
-				<step type="double">-0.01</step>
+				<step>-0.01</step>
 				<min>0</min>
 			</binding>
 		</action>
@@ -6905,23 +7087,8 @@
 		<name>Engine 2 throttle lever</name>
 		<type>rotate</type>
 		<object-name>thr_r</object-name>
-		<property>fdm/jsbsim/fcs/throttle-lever[1]</property>
-		<interpolation>
-			<entry><ind>0.00000</ind><dep> 0</dep></entry>
-			<entry><ind>0.00999</ind><dep> 0</dep></entry>
-			<entry><ind>0.01000</ind><dep> 2</dep></entry>
-			<entry><ind>0.59999</ind><dep>24</dep></entry>
-			<entry><ind>0.60000</ind><dep>26</dep></entry>
-			<entry><ind>0.64999</ind><dep>26</dep></entry>
-			<entry><ind>0.65000</ind><dep>28</dep></entry>
-			<entry><ind>0.77999</ind><dep>33</dep></entry>
-			<entry><ind>0.78000</ind><dep>35</dep></entry>
-			<entry><ind>0.82999</ind><dep>35</dep></entry>
-			<entry><ind>0.83000</ind><dep>37</dep></entry>
-			<entry><ind>0.94999</ind><dep>43</dep></entry>
-			<entry><ind>0.95000</ind><dep>45</dep></entry>
-			<entry><ind>1.00000</ind><dep>45</dep></entry>
-		</interpolation>
+		<property>fdm/jsbsim/fadec/throttle-lever[1]</property>
+		<factor>45</factor>
 		<axis>
 			<object-name>trim.axis</object-name>
 		</axis>
@@ -6930,20 +7097,11 @@
 		<name>Engine 2 throttle lever rev</name>
 		<type>rotate</type>
 		<object-name>thr_r</object-name>
-		<property>fdm/jsbsim/fcs/reverse-lever[1]</property>
-		<factor>-3.5</factor>
-		<axis>
-			<object-name>trim.axis</object-name>
-		</axis>
-	</animation>
-	<animation>
-		<name>Engine 2 throttle lever rev 2</name>
-		<type>rotate</type>
-		<object-name>thr_r</object-name>
-		<property>fdm/jsbsim/fcs/reverse-thr-lever[1]</property>
+		<property>fdm/jsbsim/fadec/reverse-lever[1]</property>
 		<interpolation>
-			<entry><ind>0.00</ind><dep> 0</dep></entry>
-			<entry><ind>0.50</ind><dep>-20</dep></entry>
+			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
+			<entry><ind>0.25</ind><dep> -3.5</dep></entry>
+			<entry><ind>1.00</ind><dep>-23.5</dep></entry>
 		</interpolation>
 		<axis>
 			<object-name>trim.axis</object-name>
@@ -8198,8 +8356,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.050</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8229,8 +8387,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8260,8 +8418,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8291,8 +8449,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.1</character-aspect-ratio>
+		<character-size>0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.1</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8322,8 +8480,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8353,8 +8511,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8384,8 +8542,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.010</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.040</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8561,8 +8719,8 @@
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
 		<font>led.txf</font>
-		<character-size type="double">0.007</character-size>
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.007</character-size>
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height>
 		<max-width>0.040</max-width>
 		<font-resolution>
@@ -8592,8 +8750,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.040</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8625,8 +8783,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.040</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -8656,8 +8814,8 @@
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
 		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<character-size>0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio>1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.040</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
