@@ -1266,6 +1266,73 @@
 			</clipto>
 		</pure_gain>
 		
+		<!-- Keep Out Zone Logic -->
+		<switch name="fadec/control-1/koz-mode">
+			<default value="fadec/control-1/koz-mode"/>
+			<test value="0">
+				fadec/control-1/lever-norm le 0.4847938144329898
+			</test>
+			<test value="1">
+				fadec/control-1/lever-norm ge 0.6652061855670103
+			</test>
+		</switch>
+		
+		<switch name="fadec/control-1/koz-min">
+			<default value="0"/>
+			<test value="0.6652061855670103">
+				fadec/control-1/koz-mode eq 1
+			</test>
+		</switch>
+		
+		<switch name="fadec/control-1/koz-max">
+			<default value="0.4847938144329898"/>
+			<test value="1">
+				fadec/control-1/koz-mode eq 1
+			</test>
+		</switch>
+		
+		<pure_gain name="fadec/control-1/koz">
+			<input>fadec/control-1/lever-norm</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>fadec/control-1/koz-min</min>
+				<max>fadec/control-1/koz-max</max>
+			</clipto>
+		</pure_gain>
+		
+		<switch name="fadec/control-2/koz-mode">
+			<default value="fadec/control-2/koz-mode"/>
+			<test value="0">
+				fadec/control-2/lever-norm le 0.4847938144329898
+			</test>
+			<test value="1">
+				fadec/control-2/lever-norm ge 0.6652061855670103
+			</test>
+		</switch>
+		
+		<switch name="fadec/control-2/koz-min">
+			<default value="0"/>
+			<test value="0.6652061855670103">
+				fadec/control-2/koz-mode eq 1
+			</test>
+		</switch>
+		
+		<switch name="fadec/control-2/koz-max">
+			<default value="0.4847938144329898"/>
+			<test value="1">
+				fadec/control-2/koz-mode eq 1
+			</test>
+		</switch>
+		
+		<pure_gain name="fadec/control-2/koz">
+			<input>fadec/control-2/lever-norm</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>fadec/control-2/koz-min</min>
+				<max>fadec/control-2/koz-max</max>
+			</clipto>
+		</pure_gain>
+		
 		<!-- Throttle Finals -->
 		<fcs_function name="fadec/thr-locked-n1">
 			<function>
@@ -1318,6 +1385,10 @@
 			<test value="fadec/athr/output">
 				fadec/athr/active eq 1
 			</test>
+			<test logic="OR" value="fadec/control-1/koz"> <!-- Second to last -->
+				position/wow eq 1
+				velocities/mach le 0.1
+			</test>
 			<test value="fadec/control-1/throttle-clamped"> <!-- Last -->
 				/gear/gear[0]/wow eq 0
 			</test>
@@ -1351,6 +1422,10 @@
 			</test>
 			<test value="fadec/athr/output">
 				fadec/athr/active eq 1
+			</test>
+			<test logic="OR" value="fadec/control-2/koz"> <!-- Second to last -->
+				position/wow eq 1
+				velocities/mach le 0.1
 			</test>
 			<test value="fadec/control-2/throttle-clamped"> <!-- Last -->
 				/gear/gear[0]/wow eq 0
