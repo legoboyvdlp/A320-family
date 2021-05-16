@@ -1223,5 +1223,66 @@
 		</input>
 		<output>/instrumentation/mk-viii/inputs/discretes/landing-flaps</output>
 	</logic>
+	
+	<!-- Redo this sh*t later -->
+	<filter>
+		<name>EGT L</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>
+			<condition>
+				<and>
+					<equals>
+						<property>/engines/engine[0]/state</property>
+						<value>3</value>
+					</equals>
+					<greater-than-equals>
+						<property>/engines/engine[0]/n1-actual</property>
+						<property>/fdm/jsbsim/fadec/limit/min-n1</property>
+					</greater-than-equals>
+				</and>
+			</condition>
+		</enable>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[0]/n1-actual</property> 
+					<entry><ind> 18.9</ind><dep>434</dep></entry>
+					<entry><ind>110.0</ind><dep>620</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/engines/engine[0]/egt-actual</output>
+	</filter>
+	
+	<filter>
+		<name>EGT R</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>
+			<condition>
+				<and>
+					<equals>
+						<property>/engines/engine[1]/state</property>
+						<value>3</value>
+					</equals>
+					<greater-than-equals>
+						<property>/engines/engine[1]/n1-actual</property>
+						<property>/fdm/jsbsim/fadec/limit/min-n1</property>
+					</greater-than-equals>
+				</and>
+			</condition>
+		</enable>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[1]/n1-actual</property> 
+					<entry><ind> 18.9</ind><dep>434</dep></entry>
+					<entry><ind>110.0</ind><dep>620</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/engines/engine[1]/egt-actual</output>
+	</filter>
 
 </PropertyList>

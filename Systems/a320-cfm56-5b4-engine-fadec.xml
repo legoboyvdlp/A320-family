@@ -1428,6 +1428,32 @@
 				</table>
 			</function>
 		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/egt[0]">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[0]/egt-actual</independentVar>
+					<tableData>
+						   0 -90
+						 500   0
+						1000  90
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/egt[1]">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[1]/egt-actual</independentVar>
+					<tableData>
+						   0 -90
+						 500   0
+						1000  90
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
 	
 	</channel>
 

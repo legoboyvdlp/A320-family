@@ -1015,8 +1015,8 @@ input = {
 	# EGT
 	egt_1: "/engines/engine[0]/egt-actual",
 	egt_2: "/engines/engine[1]/egt-actual",
-	egt_1_needle: "/ECAM/Upper/EGT[0]",
-	egt_2_needle: "/ECAM/Upper/EGT[1]",
+	egt_1_needle: "/instrumentation/upper-ecam/egt[0]",
+	egt_2_needle: "/instrumentation/upper-ecam/egt[1]",
 	
 	# N1 parameters
 	EPR_1: "/ECAM/Upper/EPR[0]",
