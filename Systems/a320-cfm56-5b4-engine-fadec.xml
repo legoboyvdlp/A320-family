@@ -253,12 +253,18 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/climb-ref">
+		<fcs_function name="fadec/limit/climb-ref"> <!-- Ref MCT, Vs 99.5 -->
 			<function>
-				<product> <!-- TEMPORARY REPLACE WITH TABLE LATER -->
-					<property>fadec/limit/mct-ref</property>
-					<value>0.945</value>
-				</product>
+				<table>
+					<independentVar lookup="row">/position/altitude-ft</independentVar>
+					<independentVar lookup="column">propulsion/tat-c</independentVar>
+					<tableData>
+						      -65   -35   -5     25    55
+						    0  70.3  74.9  79.3  83.5  82.0
+						10000  80.1  84.3  88.4  91.4  90.1
+						43000  81.4  81.8  83.6  88.1  86.5
+					</tableData>
+				</table>
 			</function>
 		</fcs_function>
 		
