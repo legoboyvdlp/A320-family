@@ -727,6 +727,10 @@
 				<thr-locked-time type="double">0</thr-locked-time>
 			</fadec>
 			<fbw n="0">
+				<sidestick n="0">
+					<active type="bool" n="0">1</active>
+					<active type="bool" n="1">1</active>
+				</sidestick>
 				<yaw n="0">
 					<max-deg-switch type="double">25</max-deg-switch>
 				</yaw>

@@ -10,8 +10,6 @@
 	<property value="0">fbw/pitch/pid</property>
 	<property value="0">fbw/yaw/tc-pd</property>
 	<property value="1">fbw/mixer/sidestick-gain-feedback</property>
-	<property value="1">fbw/sidestick/active[0]</property>
-	<property value="1">fbw/sidestick/active[1]</property>
 	<property value="0">fbw/spoiler-output</property>
 	
 	<!-- Default gains for tuning -->
