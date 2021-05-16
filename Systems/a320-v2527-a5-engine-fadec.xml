@@ -33,6 +33,18 @@
 			</test-->
 		</switch>
 		
+		<fcs_function name="fadec/limit/mach-factor-schedule"> <!-- For some reason it does this -->
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/mach</independentVar>
+					<tableData>
+						0.080  0.973269699530
+						0.090  1.000000000000
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="fadec/limit/rated-thrust-n1">
 			<function>
 				<table>
@@ -154,16 +166,19 @@
 		
 		<fcs_function name="fadec/limit/toga-ref">
 			<function>
-				<table>
-					<independentVar lookup="row">/position/altitude-ft</independentVar>
-					<independentVar lookup="column">propulsion/tat-c</independentVar>
-					<tableData>
-						      -44   -14    16    46    76
-						    0  77.7  82.3  86.5  90.7  86.4
-						10000  87.3  91.6  95.5  96.9  92.9
-						43000  86.0  86.4  91.1  99.3  93.8
-					</tableData>
-				</table>
+				<product>
+					<table>
+						<independentVar lookup="row">/position/altitude-ft</independentVar>
+						<independentVar lookup="column">propulsion/tat-c</independentVar>
+						<tableData>
+							      -44   -14    16    46    76
+							    0  77.7  82.3  86.5  90.7  86.4
+							10000  87.3  91.6  95.5  96.9  92.9
+							43000  86.0  86.4  91.1  99.3  93.8
+						</tableData>
+					</table>
+					<property>fadec/limit/mach-factor-schedule</property>
+				</product>
 			</function>
 		</fcs_function>
 		
@@ -206,32 +221,38 @@
 			<function>
 				<min> <!-- FLEX can not increase thrust past TOGA -->
 					<property>fadec/limit/toga-ref</property>
-					<table>
-						<independentVar lookup="row">/position/altitude-ft</independentVar>
-						<independentVar lookup="column">fadec/limit/flex-temp-input</independentVar>
-						<tableData>
-							      -44   -14    16    46    76
-								0  77.7  82.3  86.5  90.7  86.4
-							10000  87.3  91.6  95.5  96.9  92.9
-							43000  86.0  86.4  91.1  99.3  93.8
-						</tableData>
-					</table>
+					<product>
+						<table>
+							<independentVar lookup="row">/position/altitude-ft</independentVar>
+							<independentVar lookup="column">fadec/limit/flex-temp-input</independentVar>
+							<tableData>
+								      -44   -14    16    46    76
+								    0  77.7  82.3  86.5  90.7  86.4
+								10000  87.3  91.6  95.5  96.9  92.9
+								43000  86.0  86.4  91.1  99.3  93.8
+							</tableData>
+						</table>
+						<property>fadec/limit/mach-factor-schedule</property>
+					</product>
 				</min>
 			</function>
 		</fcs_function>
 		
 		<fcs_function name="fadec/limit/mct-ref">
 			<function>
-				<table>
-					<independentVar lookup="row">/position/altitude-ft</independentVar>
-					<independentVar lookup="column">propulsion/tat-c</independentVar>
-					<tableData>
-						      -65   -35   -5     25    55
-						    0  71.9  76.3  80.6  84.6  83.1
-						10000  81.3  85.4  89.3  92.2  91.7
-						43000  82.6  82.9  84.7  89.1  87.5
-					</tableData>
-				</table>
+				<product>
+					<table>
+						<independentVar lookup="row">/position/altitude-ft</independentVar>
+						<independentVar lookup="column">propulsion/tat-c</independentVar>
+						<tableData>
+							      -65   -35   -5     25    55
+							    0  71.9  76.3  80.6  84.6  83.1
+							10000  81.3  85.4  89.3  92.2  91.7
+							43000  82.6  82.9  84.7  89.1  87.5
+						</tableData>
+					</table>
+					<property>fadec/limit/mach-factor-schedule</property>
+				</product>
 			</function>
 		</fcs_function>
 		
@@ -273,16 +294,19 @@
 		
 		<fcs_function name="fadec/limit/climb-ref">
 			<function>
-				<table>
-					<independentVar lookup="row">/position/altitude-ft</independentVar>
-					<independentVar lookup="column">propulsion/tat-c</independentVar>
-					<tableData>
-						      -65   -35   -5     25    55
-						    0  69.3  73.5  77.5  81.3  79.9
-						10000  78.2  82.0  85.8  88.5  87.3
-						43000  79.4  79.8  81.4  85.5  84.0
-					</tableData>
-				</table>
+				<product>
+					<table>
+						<independentVar lookup="row">/position/altitude-ft</independentVar>
+						<independentVar lookup="column">propulsion/tat-c</independentVar>
+						<tableData>
+							      -65   -35   -5     25    55
+							    0  69.3  73.5  77.5  81.3  79.9
+							10000  78.2  82.0  85.8  88.5  87.3
+							43000  79.4  79.8  81.4  85.5  84.0
+						</tableData>
+					</table>
+					<property>fadec/limit/mach-factor-schedule</property>
+				</product>
 			</function>
 		</fcs_function>
 		
@@ -322,21 +346,24 @@
 						<property>position/wow</property>
 						<value>0</value>
 					</eq>
-					<table>
-						<independentVar lookup="row">velocities/mach</independentVar>
-						<independentVar lookup="column">/controls/flight/flaps-input</independentVar>
-						<independentVar lookup="table">/position/altitude-ft</independentVar>
-						<tableData breakPoint="0">
-							      0     1
-							0.21  27.9  33.6
-							0.70  35.3  39.7
-						</tableData>
-						<tableData breakPoint="43000">
-							      0     1
-							0.55  44.2  50.0
-							0.90  49.7  51.8
-						</tableData>
-					</table>
+					<product>
+						<table>
+							<independentVar lookup="row">velocities/mach</independentVar>
+							<independentVar lookup="column">/controls/flight/flaps-input</independentVar>
+							<independentVar lookup="table">/position/altitude-ft</independentVar>
+							<tableData breakPoint="0">
+								      0     1
+								0.21  27.9  33.6
+								0.70  35.3  39.7
+							</tableData>
+							<tableData breakPoint="43000">
+								      0     1
+								0.55  44.2  50.0
+								0.90  49.7  51.8
+							</tableData>
+						</table>
+						<property>fadec/limit/mach-factor-schedule</property>
+					</product>
 					<value>0</value>
 				</ifthen>
 			</function>
@@ -373,15 +400,18 @@
 		
 		<fcs_function name="fadec/limit/mrev-ref">
 			<function>
-				<table>
-					<independentVar lookup="row">/position/altitude-ft</independentVar>
-					<independentVar lookup="column">propulsion/tat-c</independentVar>
-					<tableData>
-						      -65   -35   -5     25    55
-						    0  62.1  65.5  68.9  72.2  71.0
-						10000  69.5  72.8  75.9  78.3  77.8
-					</tableData>
-				</table>
+				<product>
+					<table>
+						<independentVar lookup="row">/position/altitude-ft</independentVar>
+						<independentVar lookup="column">propulsion/tat-c</independentVar>
+						<tableData>
+							      -65   -35   -5     25    55
+							    0  62.1  65.5  68.9  72.2  71.0
+							10000  69.5  72.8  75.9  78.3  77.8
+						</tableData>
+					</table>
+					<property>fadec/limit/mach-factor-schedule</property>
+				</product>
 			</function>
 		</fcs_function>
 		
