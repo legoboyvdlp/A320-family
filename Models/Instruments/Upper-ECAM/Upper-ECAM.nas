@@ -1019,13 +1019,13 @@ input = {
 	egt_2_needle: "/instrumentation/upper-ecam/egt[1]",
 	
 	# N1 parameters
-	EPR_1: "/ECAM/Upper/EPR[0]",
-	EPR_2: "/ECAM/Upper/EPR[1]",
+	EPR_1: "/instrumentation/upper-ecam/epr[0]",
+	EPR_2: "/instrumentation/upper-ecam/epr[1]",
 	EPR_actual_1: "/engines/engine[0]/epr-actual",
 	EPR_actual_2: "/engines/engine[1]/epr-actual",
-	EPR_lim: "/ECAM/Upper/EPRylim",
-	EPRthr_1: "/ECAM/Upper/EPRthr[0]",
-	EPRthr_2: "/ECAM/Upper/EPRthr[1]",
+	EPR_lim: "/instrumentation/upper-ecam/epr-limit",
+	EPRthr_1: "/instrumentation/upper-ecam/epr-thr[0]",
+	EPRthr_2: "/instrumentation/upper-ecam/epr-thr[1]",
 	
 	# fuel flow
 	fuelflow_1: "/engines/engine[0]/ff-actual",
@@ -1051,8 +1051,8 @@ input = {
 	fadecPower1: "/systems/fadec/powered1",
 	fadecPower2: "/systems/fadec/powered2",
 	fadecPowerStart: "/systems/fadec/powerup",
-	N1_mode_1: "/fdm/jsbsim/fadec/control-1/n1-mode",
-	N1_mode_2: "/fdm/jsbsim/fadec/control-2/n1-mode",
+	N1_mode_1: "/fdm/jsbsim/fadec/control-1/n1-mode-sw",
+	N1_mode_2: "/fdm/jsbsim/fadec/control-2/n1-mode-sw",
 	eng1_epr: "/systems/fadec/eng1/epr",
 	eng2_epr: "/systems/fadec/eng2/epr",
 	eng1_n1: "/systems/fadec/eng1/n1",

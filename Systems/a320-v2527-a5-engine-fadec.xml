@@ -1,32 +1,48 @@
 <?xml version="1.0"?>
 
-<!-- Airbus A320 CFM56-5B4 Engine -->
+<!-- Airbus A320 V2527-A5 Engine -->
 <!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
-<system name="A320: CFM56 Engine">
+<system name="A320: V2500 Engine">
 	
-	<property value="45">fadec/limit/rated-temp</property>
+	<property value="46">fadec/limit/rated-temp</property>
 	<property value="30">fadec/limit/flex-rated-temp</property>
-	<property value="27000">fadec/limit/rated-thrust</property>
-	<property value="18.9">fadec/limit/min-n1</property>
-	<property value="104">fadec/limit/max-n1</property>
+	<property value="26600">fadec/limit/rated-thrust</property>
+	<property value="22.4">fadec/limit/min-n1</property>
+	<property value="100">fadec/limit/max-n1</property>
 	<property value="0">fadec/athr/cmd</property>
 	<property value="1">fadec/limit/active-epr</property> <!-- Unused in this engine -->
-	<property value="0">fadec/control-1/n1-mode</property> <!-- Unused in this engine -->
-	<property value="0">fadec/control-2/n1-mode</property> <!-- Unused in this engine -->
 	
 	<channel name="Thrust Limits">
 		
-		<fcs_function name="fadec/limit/rated-thrust-n1"> <!-- Vs 98.7, 104.8 (-15 bias + 1), 103.2 -->
+		<switch name="fadec/control-1/n1-mode">
+			<default value="0"/> <!-- EPR -->
+			<test value="1"> <!-- N1 Rated -->
+				fadec/control-1/n1-mode-sw eq 1
+			</test>
+			<!--test value="2"> N1 Unrated
+			</test-->
+		</switch>
+		
+		<switch name="fadec/control-2/n1-mode">
+			<default value="0"/> <!-- EPR -->
+			<test value="1"> <!-- N1 Rated -->
+				fadec/control-2/n1-mode-sw eq 1
+			</test>
+			<!--test value="2"> N1 Unrated
+			</test-->
+		</switch>
+		
+		<fcs_function name="fadec/limit/rated-thrust-n1">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">propulsion/tat-c</independentVar>
 					<tableData>
-						      -45   -15    15    45     75
-						    0  79.5  84.6  89.2   93.8   98.3
-						10000  90.1  94.8  99.1  100.6   99.3
-						43000  88.7  89.1  94.2   99.3  104.3
+						      -44   -14    16    46    76
+						    0  77.7  82.3  86.5  90.7   94.8
+						10000  87.3  91.6  95.5  96.9   95.7
+						43000  86.0  86.4  91.1  99.3  100.3
 					</tableData>
 				</table>
 			</function>
@@ -97,16 +113,16 @@
 						<quotient>
 							<difference>
 								<property>fadec/limit/rated-thrust-n1</property>
-								<value>18.9</value>
+								<value>22.4</value>
 							</difference>
-							<value>85.1</value>
+							<value>77.6</value>
 						</quotient>
 						<quotient>
 							<difference>
 								<property>fadec/limit/rated-thrust-n1</property>
-								<value>18.9</value>
+								<value>22.4</value>
 							</difference>
-							<value>85.1</value>
+							<value>77.6</value>
 						</quotient>
 					</product>
 				</sum>
@@ -136,16 +152,16 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/toga-ref"> <!-- Vs 98.7, 104.8 (-15 bias + 1), 103.2 -->
+		<fcs_function name="fadec/limit/toga-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">propulsion/tat-c</independentVar>
 					<tableData>
-						      -45   -15    15    45     75
-						    0  79.5  84.6  89.2   93.8  89.1
-						10000  90.1  94.8  99.1  100.6  96.2
-						43000  88.7  89.1  94.2   99.3  97.2
+						      -44   -14    16    46    76
+						    0  77.7  82.3  86.5  90.7  86.4
+						10000  87.3  91.6  95.5  96.9  92.9
+						43000  86.0  86.4  91.1  99.3  93.8
 					</tableData>
 				</table>
 			</function>
@@ -173,8 +189,8 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/toga</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 22.4  0
+						100.0  1
 					</tableData>
 				</table>
 			</function>
@@ -194,26 +210,26 @@
 						<independentVar lookup="row">/position/altitude-ft</independentVar>
 						<independentVar lookup="column">fadec/limit/flex-temp-input</independentVar>
 						<tableData>
-							      -45   -15    15    45     75
-							    0  79.5  84.6  89.2   93.8  89.1
-							10000  90.1  94.8  99.1  100.6  96.2
-							43000  88.7  89.1  94.2   99.3  97.2
+							      -44   -14    16    46    76
+								0  77.7  82.3  86.5  90.7  86.4
+							10000  87.3  91.6  95.5  96.9  92.9
+							43000  86.0  86.4  91.1  99.3  93.8
 						</tableData>
 					</table>
 				</min>
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mct-ref"> <!-- Ref TOGA, Vs 99.7, 25C Corner, Limit 102.6 -->
+		<fcs_function name="fadec/limit/mct-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">propulsion/tat-c</independentVar>
 					<tableData>
 						      -65   -35   -5     25    55
-						    0  73.2  78.0  82.7  87.1  85.5
-						10000  83.5  88.0  92.3  95.5  94.9
-						43000  84.9  85.3  87.2  92.0  90.3
+						    0  71.9  76.3  80.6  84.6  83.1
+						10000  81.3  85.4  89.3  92.2  91.7
+						43000  82.6  82.9  84.7  89.1  87.5
 					</tableData>
 				</table>
 			</function>
@@ -248,23 +264,23 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/mct</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 22.4  0
+						100.0  1
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/climb-ref"> <!-- Ref MCT, Vs 99.5 -->
+		<fcs_function name="fadec/limit/climb-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">propulsion/tat-c</independentVar>
 					<tableData>
 						      -65   -35   -5     25    55
-						    0  70.3  74.9  79.3  83.5  82.0
-						10000  80.1  84.3  88.4  91.4  90.1
-						43000  81.4  81.8  83.6  88.1  86.5
+						    0  69.3  73.5  77.5  81.3  79.9
+						10000  78.2  82.0  85.8  88.5  87.3
+						43000  79.4  79.8  81.4  85.5  84.0
 					</tableData>
 				</table>
 			</function>
@@ -292,8 +308,8 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/climb</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 22.4  0
+						100.0  1
 					</tableData>
 				</table>
 			</function>
@@ -312,13 +328,13 @@
 						<independentVar lookup="table">/position/altitude-ft</independentVar>
 						<tableData breakPoint="0">
 							      0     1
-							0.21  24.9  31.2
-							0.70  33.1  37.9
+							0.21  27.9  33.6
+							0.70  35.3  39.7
 						</tableData>
 						<tableData breakPoint="43000">
 							      0     1
-							0.55  42.8  49.2
-							0.90  48.8  51.1
+							0.55  44.2  50.0
+							0.90  49.7  51.8
 						</tableData>
 					</table>
 					<value>0</value>
@@ -348,22 +364,22 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/idle</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 22.4  0
+						100.0  1
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mrev-ref"> <!-- Ref MCT, Vs 87 -->
+		<fcs_function name="fadec/limit/mrev-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">propulsion/tat-c</independentVar>
 					<tableData>
 						      -65   -35   -5     25    55
-						    0  62.4  66.2  69.9  73.5  72.2
-						10000  70.6  74.2  77.6  80.2  79.7
+						    0  62.1  65.5  68.9  72.2  71.0
+						10000  69.5  72.8  75.9  78.3  77.8
 					</tableData>
 				</table>
 			</function>
@@ -391,8 +407,8 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/mrev</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 22.4  0
+						100.0  1
 					</tableData>
 				</table>
 			</function>
@@ -624,8 +640,8 @@
 				<table>
 					<independentVar lookup="row">fadec/control-1/lever-n1</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 22.4  0
+						100.0  1
 					</tableData>
 				</table>
 			</function>
@@ -871,8 +887,8 @@
 				<table>
 					<independentVar lookup="row">fadec/control-2/lever-n1</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 22.4  0
+						100.0  1
 					</tableData>
 				</table>
 			</function>
@@ -1042,6 +1058,8 @@
 			<test logic="OR" value="0"> <!-- Reset -->
 				position/wow eq 1
 				/it-fbw/law ne 0
+				fadec/control-1/n1-mode eq 1
+				fadec/control-2/n1-mode eq 1
 			</test>
 			<test logic="AND" value="0"> <!-- Reset -->
 				fadec/eng-out eq 1
@@ -1188,8 +1206,10 @@
 		
 		<switch name="fadec/athr/active">
 			<default value="0"/>
-			<test value="0">
+			<test logic="OR" value="0">
 				fadec/alpha-floor-switch gt 0
+				fadec/control-1/n1-mode eq 1
+				fadec/control-2/n1-mode eq 1
 			</test>
 			<test logic="AND" value="1">
 				/it-autoflight/output/athr eq 1
@@ -1238,8 +1258,8 @@
 				<table>
 					<independentVar lookup="row">fadec/thr-locked-n1</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 22.4  0
+						100.0  1
 					</tableData>
 				</table>
 			</function>
@@ -1361,15 +1381,95 @@
 	
 	<channel name="Upper ECAM Needles" execrate="4">
 		
+		<fcs_function name="/instrumentation/upper-ecam/epr[0]">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[0]/epr-actual</independentVar>
+					<tableData>
+						0.97 -139
+						1.00 -125
+						1.20  -55
+						1.40   16
+						1.60   87
+						1.65   98
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/epr[1]">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[0]/epr-actual</independentVar>
+					<tableData>
+						0.97 -139
+						1.00 -125
+						1.20  -55
+						1.40   16
+						1.60   87
+						1.65   98
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/epr-thr[0]">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[0]/epr-actual</independentVar> <!-- Fix prop -->
+					<tableData>
+						0.97 -139
+						1.00 -125
+						1.20  -55
+						1.40   16
+						1.60   87
+						1.65   98
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/epr-thr[1]">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[1]/epr-actual</independentVar> <!-- Fix prop -->
+					<tableData>
+						0.97 -139
+						1.00 -125
+						1.20  -55
+						1.40   16
+						1.60   87
+						1.65   98
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/epr-limit">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[0]/epr-actual</independentVar> <!-- Fix prop -->
+					<tableData>
+						0.97 -139
+						1.00 -125
+						1.20  -55
+						1.40   16
+						1.60   87
+						1.65   98
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="/instrumentation/upper-ecam/n1[0]">
 			<function>
 				<table>
 					<independentVar lookup="row">/engines/engine[0]/n1-actual</independentVar>
 					<tableData>
-						 20 -131
-						 50  -64
-						100   48
-						110   65
+						 20 -112.5
+						 40  -67.5
+						100   67.5
+						110   90.0
 					</tableData>
 				</table>
 			</function>
@@ -1380,10 +1480,10 @@
 				<table>
 					<independentVar lookup="row">/engines/engine[1]/n1-actual</independentVar>
 					<tableData>
-						 20 -131
-						 50  -64
-						100   48
-						110   65
+						 20 -112.5
+						 40  -67.5
+						100   67.5
+						110   90.0
 					</tableData>
 				</table>
 			</function>
@@ -1394,10 +1494,10 @@
 				<table>
 					<independentVar lookup="row">fadec/control-1/lever-n1</independentVar>
 					<tableData>
-						 20 -131
-						 50  -64
-						100   48
-						110   65
+						 20 -112.5
+						 40  -67.5
+						100   67.5
+						110   90.0
 					</tableData>
 				</table>
 			</function>
@@ -1408,10 +1508,10 @@
 				<table>
 					<independentVar lookup="row">fadec/control-2/lever-n1</independentVar>
 					<tableData>
-						 20 -131
-						 50  -64
-						100   48
-						110   65
+						 20 -112.5
+						 40  -67.5
+						100   67.5
+						110   90.0
 					</tableData>
 				</table>
 			</function>
@@ -1422,10 +1522,10 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/toga</independentVar>
 					<tableData>
-						 20 -131
-						 50  -64
-						100   48
-						110   65
+						 20 -112.5
+						 40  -67.5
+						100   67.5
+						110   90.0
 					</tableData>
 				</table>
 			</function>
@@ -1436,9 +1536,9 @@
 				<table>
 					<independentVar lookup="row">/engines/engine[0]/egt-actual</independentVar>
 					<tableData>
-						   0 -90
-						 500   0
-						1000  90
+						  0 -90
+						400   0
+						800  90
 					</tableData>
 				</table>
 			</function>
@@ -1449,9 +1549,9 @@
 				<table>
 					<independentVar lookup="row">/engines/engine[1]/egt-actual</independentVar>
 					<tableData>
-						   0 -90
-						 500   0
-						1000  90
+						  0 -90
+						400   0
+						800  90
 					</tableData>
 				</table>
 			</function>

@@ -43,14 +43,6 @@ var FADEC_S = {
 		n2: 0,
 		ff: 0,
 	},
-	Switches: {
-		n1ModeSwitch1: props.globals.initNode("/controls/fadec/n1mode1", 0, "BOOL"),
-		n1ModeSwitch2: props.globals.initNode("/controls/fadec/n1mode2", 0, "BOOL"),
-	},
-	Modes: {
-		n1Mode1: props.globals.initNode("/fdm/jsbsim/fadec/control-1/n1-mode", 0, "BOOL"),  # 0 == EPR, 1 == N1 Rated, 2 == N1 Unrated #
-		n1Mode2: props.globals.initNode("/fdm/jsbsim/fadec/control-2/n1-mode", 0, "BOOL"),
-	},
 	init: func() {
 		me.Power.poweredTime.setValue(-300);
 		me.Eng1.eng1Time.setValue(-300);
@@ -146,7 +138,7 @@ var FADEC_S = {
 		powerup = me.Power.powerup.getValue();
 		
 		if (powered1 or powerup or me.Eng1.eng1Off.getValue()) {
-			if (me.Modes.n1Mode1.getValue() == 0) {
+			if (FADEC.n1Mode[0].getValue() == 0) {
 				me.Eng1.epr.setValue(1);
 			} else {
 				me.Eng1.epr.setValue(0);
@@ -160,7 +152,7 @@ var FADEC_S = {
 		}
 		
 		if (powered2 or powerup or me.Eng2.eng2Off.getValue()) {
-			if (me.Modes.n1Mode2.getValue() == 0) {
+			if (FADEC.n1Mode[1].getValue() == 0) {
 				me.Eng2.epr.setValue(1);
 			} else {
 				me.Eng2.epr.setValue(0);
@@ -203,19 +195,3 @@ var FADEC_S = {
 		}
 	},
 };
-
-setlistener("/controls/fadec/n1mode1", func() {
-	if (FADEC.Switches.n1ModeSwitch1.getValue()) {
-		FADEC.Modes.n1Mode1.setValue(1);
-	} else {
-		FADEC.Modes.n1Mode1.setValue(0);
-	}
-}, 0, 0);
-
-setlistener("/controls/fadec/n1mode2", func() {
-	if (FADEC.Switches.n1ModeSwitch2.getValue()) {
-		FADEC.Modes.n1Mode2.setValue(1);
-	} else {
-		FADEC.Modes.n1Mode2.setValue(0);
-	}
-}, 0, 0);

@@ -705,9 +705,11 @@
 				<clbreduc-ft type="double">1500</clbreduc-ft>
 				<control-1 n="0">
 					<detent-text type="string">IDLE</detent-text>
+					<n1-mode-sw type="bool">0</n1-mode-sw>
 				</control-1>
 				<control-2 n="0">
 					<detent-text type="string">IDLE</detent-text>
+					<n1-mode-sw type="bool">0</n1-mode-sw>
 				</control-2>
 				<eng-out type="bool">0</eng-out>
 				<limit n="0">
@@ -1320,11 +1322,6 @@
 				</bat-2>
 			</sources>
 		</electrical>
-		
-		<fadec>
-			<n1mode1 type="bool">0</n1mode1>
-			<n1mode2 type="bool">0</n1mode2>
-		</fadec>
 		
 		<failures n="0">
 			<aileron-left type="bool">0</aileron-left>

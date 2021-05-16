@@ -355,6 +355,10 @@ var ITAF = {
 				fcu.apOff("hard", 0);
 			}
 		}
+		
+		if ((systems.FADEC.n1Mode[0].getValue() > 0 or systems.FADEC.n1Mode[1].getValue() > 0) and Output.athr.getBoolValue()) {
+			fcu.athrOff("hard");
+		}
 	},
 	slowLoop: func() {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
@@ -476,7 +480,7 @@ var ITAF = {
 	},
 	athrMaster: func(s) {
 		if (s == 1) {
-			if (systems.ELEC.Bus.acEss.getValue() >= 110 and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.apOff == 0) {
+			if (systems.ELEC.Bus.acEss.getValue() >= 110 and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.apOff == 0 and systems.FADEC.n1Mode[0].getValue() == 0 and systems.FADEC.n1Mode[1].getValue() == 0) {
 				Output.athr.setBoolValue(1);
 				Custom.ThrLock.setValue(0);
 				Custom.Sound.enableAthrOff = 1;
