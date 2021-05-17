@@ -243,27 +243,23 @@ var canvas_upperECAM = {
 				obj["N1Lim"].setText(sprintf("%s", math.floor(val + 0.05)));
 				obj["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
 			}),
-			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart","thrustLimit"], nil, func(val) {
+			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart", "thrustLimit"], nil, func(val) {
 				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
+					obj["N1Lim"].show();
+					obj["N1Lim-decimal"].show();
+					obj["N1Lim-decpnt"].show();
+					obj["N1Lim-percent"].show();
 					obj["N1Lim-mode"].show();
 					obj["N1Lim-XX"].hide();
 					obj["N1Lim-XX2"].hide();
 				} else {
+					obj["N1Lim"].hide();
+					obj["N1Lim-decimal"].hide();
+					obj["N1Lim-decpnt"].hide();
+					obj["N1Lim-percent"].hide();
 					obj["N1Lim-mode"].hide();
 					obj["N1Lim-XX"].show();
 					obj["N1Lim-XX2"].show();
-				}
-				
-				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
-					obj["N1Lim"].show();
-					obj["N1Lim-decpnt"].show();
-					obj["N1Lim-decimal"].show();
-					obj["N1Lim-percent"].show();
-				} else {
-					obj["N1Lim"].hide();
-					obj["N1Lim-decpnt"].hide();
-					obj["N1Lim-decimal"].hide();
-					obj["N1Lim-percent"].hide();
 				}
 				
 				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit == "FLX") {
@@ -279,56 +275,65 @@ var canvas_upperECAM = {
 		obj.update_items_iae_only = [
 			props.UpdateManager.FromHashValue("thrustLimit", nil, func(val) {
 				obj["EPRLim-mode"].setText(sprintf("%s", val));
+				obj["N1Lim-mode"].setText(sprintf("%s", val));
 			}),
 			props.UpdateManager.FromHashValue("eprLimit", 0.0005, func(val) {
 				obj["EPRLim"].setText(sprintf("%1.0f", math.floor(val)));
 				obj["EPRLim-decimal"].setText(sprintf("%03d", (val - int(val)) * 1000));
 			}),
-			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart","thrustLimit"], nil, func(val) {
+			props.UpdateManager.FromHashValue("n1Limit", 0.01, func(val) {
+				obj["N1Lim"].setText(sprintf("%s", math.floor(val + 0.05)));
+				obj["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
+			}),
+			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart", "thrustLimit", "N1_mode_1", "N1_mode_2"], nil, func(val) {
 				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
-					obj["EPRLim-mode"].show();
-					obj["EPRLim-XX"].hide();
-					obj["EPRLim-XX2"].hide();
+					if (val.N1_mode_1 > 0 and val.N1_mode_2 > 0) {
+						if (val.N1_mode_1 == 2 and val.N1_mode_2 == 2) {
+							obj["N1Lim"].hide();
+							obj["N1Lim-decimal"].hide();
+							obj["N1Lim-decpnt"].hide();
+							obj["N1Lim-percent"].hide();
+							obj["N1Lim-mode"].hide();
+							obj["N1Lim-XX"].show();
+							obj["N1Lim-XX2"].show();
+						} else {
+							obj["N1Lim"].show();
+							obj["N1Lim-decimal"].show();
+							obj["N1Lim-decpnt"].show();
+							obj["N1Lim-percent"].show();
+							obj["N1Lim-mode"].show();
+							obj["N1Lim-XX"].hide();
+							obj["N1Lim-XX2"].hide();
+						}
+						obj["EPRMode"].hide();
+						obj["N1Mode"].show();
+					} else {
+						obj["EPRLim"].show();
+						obj["EPRLim-decimal"].show();
+						obj["EPRLim-decpnt"].show();
+						obj["EPRLim-mode"].show();
+						obj["EPRLim-XX"].hide();
+						obj["EPRLim-XX2"].hide();
+						obj["EPRMode"].show();
+						obj["N1Mode"].hide();
+					}
 				} else {
+					obj["EPRLim"].hide();
+					obj["EPRLim-decimal"].hide();
+					obj["EPRLim-decpnt"].hide();
 					obj["EPRLim-mode"].hide();
 					obj["EPRLim-XX"].show();
 					obj["EPRLim-XX2"].show();
+					obj["EPRMode"].show();
+					obj["N1Mode"].hide();
 				}
 				
-				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
-					obj["EPRLim"].show();
-					obj["EPRLim-decpnt"].show();
-					obj["EPRLim-decimal"].show();
-				} else {
-					obj["EPRLim"].hide();
-					obj["EPRLim-decpnt"].hide();
-					obj["EPRLim-decimal"].hide();
-				}
-				
-				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit == "FLX") {
+				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit == "FLX" and val.N1_mode_1 == 0 and val.N1_mode_2 == 0) {
 					obj["FlxLimDegreesC"].show();
 					obj["FlxLimTemp"].show();
 				} else {
 					obj["FlxLimDegreesC"].hide();
 					obj["FlxLimTemp"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashValue("N1_mode_1", nil, func(val) {
-				if (systems.FADEC_S.Eng1.n1.getValue() == 1 and val) {
-					obj["N11-thr"].show();
-					obj["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
-				} else {
-					obj["N11-thr"].hide();
-					obj["N11-ylim"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashValue("N1_mode_2", nil, func(val) {
-				if (systems.FADEC_S.Eng2.n1.getValue() == 1 and val) {
-					obj["N12-thr"].show();
-					obj["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
-				} else {
-					obj["N12-thr"].hide();
-					obj["N12-ylim"].hide();
 				}
 			}),
 		];
@@ -467,16 +472,16 @@ var canvas_upperECAM = {
 		return ["N11-needle","N11-thr","N11-ylim","N11","N11-decpnt","N11-decimal","N11-box","N11-scale","N11-scale2","N11-scaletick","N11-scalenum","N11-XX","N11-XX2","N11-XX-box","EGT1-needle","EGT1","EGT1-scale","EGT1-box","EGT1-scale2","EGT1-scaletick",
 		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
 		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
-		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
-		"FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp"];
+		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1","ECAMR2","ECAMR3","ECAMR4","ECAMR5","ECAMR6","ECAMR7","ECAMR8","ECAM_Right","FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock",
+		"SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp"];
 	},
 	getKeysIAE: func() {
 		return ["EPR1-needle","EPR1-thr","EPR1-ylim","EPR1","EPR1-decpnt","EPR1-decimal","EPR1-box","EPR1-scale","EPR1-scaletick","EPR1-scalenum","EPR1-XX","EPR1-XX2","EGT1-needle","EGT1","EGT1-scale","EGT1-box","EGT1-scale2","EGT1-scaletick","EGT1-XX",
 		"N11-needle","N11-thr","N11-ylim","N11","N11-decpnt","N11-decimal","N11-scale","N11-scale2","N11-scaletick","N11-scalenum","N11-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","EPR2-needle","EPR2-thr","EPR2-ylim","EPR2","EPR2-decpnt",
 		"EPR2-decimal","EPR2-box","EPR2-scale","EPR2-scaletick","EPR2-scalenum","EPR2-XX","EPR2-XX2","EGT2-needle","EGT2","EGT2-scale","EGT2-scale2","EGT2-box","EGT2-scaletick","EGT2-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal",
-		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","REV1","REV1-box",
-		"REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8", "ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right",
-		"FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp"];
+		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","EPRMode",
+		"N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","N1Mode","REV1","REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1","ECAMR2","ECAMR3",
+		"ECAMR4","ECAMR5","ECAMR6","ECAMR7","ECAMR8","ECAM_Right","FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp"];
 	},
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
@@ -844,13 +849,29 @@ var canvas_upperECAM = {
 			me["FF2-XX"].show();
 		}
 	},
-			
+	
 	updateFadecN1Power1: func(val) {
 		if (me.typeString == "IAE") {
-			if (val.reverser_1 < 0.01 and val.eng1_epr == 1 and val.N1_mode_1 != 1) {
+			if (val.reverser_1 < 0.01 and val.eng1_epr == 1 and val.N1_mode_1 == 0) {
 				me["EPR1-thr"].show();
+				me["N11-thr"].hide();
+				me["N11-ylim"].hide();
+			} else if (val.reverser_1 < 0.01 and val.eng1_n1 == 1) {
+				me["EPR1-thr"].hide();
+				me["N11-thr"].show();
+				if (val.N1_mode_1 == 1) {
+					me["N11-ylim"].show();
+				} else {
+					me["N11-ylim"].hide();
+				}
 			} else {
 				me["EPR1-thr"].hide();
+				me["N11-thr"].hide();
+				if (val.N1_mode_1 == 1) {
+					me["N11-ylim"].show();
+				} else {
+					me["N11-ylim"].hide();
+				}
 			}
 		} else {
 			if (val.reverser_1 < 0.01 and val.eng1_n1 == 1) {
@@ -876,10 +897,26 @@ var canvas_upperECAM = {
 	},
 	updateFadecN1Power2: func(val) {
 		if (me.typeString == "IAE") {
-			if (val.reverser_2 < 0.01 and val.eng2_epr == 1 and val.N1_mode_2 != 1) {
+			if (val.reverser_2 < 0.01 and val.eng2_epr == 1 and val.N1_mode_2 == 0) {
 				me["EPR2-thr"].show();
+				me["N12-thr"].hide();
+				me["N12-ylim"].hide();
+			} else if (val.reverser_2 < 0.01 and val.eng2_n1 == 1) {
+				me["EPR2-thr"].hide();
+				me["N12-thr"].show();
+				if (val.N1_mode_2 == 1) {
+					me["N12-ylim"].show();
+				} else {
+					me["N12-ylim"].hide();
+				}
 			} else {
 				me["EPR2-thr"].hide();
+				me["N12-thr"].hide();
+				if (val.N1_mode_2 == 1) {
+					me["N12-ylim"].show();
+				} else {
+					me["N12-ylim"].hide();
+				}
 			}
 		} else {
 			if (val.reverser_2 < 0.01 and val.eng2_n1 == 1) {
