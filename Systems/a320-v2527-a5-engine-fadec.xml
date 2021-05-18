@@ -5,6 +5,8 @@
 
 <system name="A320: V2500 Engine">
 	
+	<property value="1">fadec/epr/c1</property> <!-- Done in property rule because its easier to tune -->
+	<property value="1">fadec/epr/c2</property> <!-- Done in property rule because its easier to tune -->
 	<property value="46">fadec/limit/rated-temp</property>
 	<property value="30">fadec/limit/flex-rated-temp</property>
 	<property value="26600">fadec/limit/rated-thrust</property>
@@ -195,6 +197,51 @@
 						</sum>
 					</integer>
 					<value>10</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/toga-epr-input">
+			<function>
+				<pow>
+					<property>fadec/limit/toga-ref</property>
+					<value>3.5</value>
+				</pow>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/toga-epr-ref">
+			<function>
+				<sum>
+					<product>
+						<table>
+							<independentVar lookup="row">fadec/limit/toga-epr-input</independentVar>
+							<tableData>
+								   24743.1  0.00
+								   53194.6  0.03
+								10000000.0  1.00
+							</tableData>
+						</table>
+						<property>fadec/epr/c1</property>
+					</product>
+					<property>fadec/epr/c2</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/toga-epr">
+			<function>
+				<quotient>
+					<integer>
+						<sum>
+							<product>
+								<property>fadec/limit/toga-epr-ref</property>
+								<value>1000</value>
+							</product>
+							<value>0.5</value> <!-- Make it round correctly -->
+						</sum>
+					</integer>
+					<value>1000</value>
 				</quotient>
 			</function>
 		</fcs_function>
@@ -677,6 +724,34 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="fadec/control-1/lever-epr-ref">
+			<function>
+				<pow>
+					<property>fadec/control-1/lever-n1</property>
+					<value>3.5</value>
+				</pow>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/control-1/lever-epr">
+			<function>
+				<sum>
+					<product>
+						<table>
+							<independentVar lookup="row">fadec/control-1/lever-epr-ref</independentVar>
+							<tableData>
+								   24743.1  0.00
+								   53194.6  0.03
+								10000000.0  1.00
+							</tableData>
+						</table>
+						<property>fadec/epr/c1</property>
+					</product>
+					<property>fadec/epr/c2</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
 		<switch name="fadec/control-1/detent">
 			<default value="0"/> <!-- IDLE -->
 			<test value="6"> <!-- TOGA -->
@@ -921,6 +996,34 @@
 						100.0  1
 					</tableData>
 				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/control-2/lever-epr-ref">
+			<function>
+				<pow>
+					<property>fadec/control-2/lever-n1</property>
+					<value>3.5</value>
+				</pow>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/control-2/lever-epr">
+			<function>
+				<sum>
+					<product>
+						<table>
+							<independentVar lookup="row">fadec/control-2/lever-epr-ref</independentVar>
+							<tableData>
+								   24743.1  0.00
+								   53194.6  0.03
+								10000000.0  1.00
+							</tableData>
+						</table>
+						<property>fadec/epr/c1</property>
+					</product>
+					<property>fadec/epr/c2</property>
+				</sum>
 			</function>
 		</fcs_function>
 		
@@ -1456,6 +1559,64 @@
 			<output>/engines/engine[4]/n1</output>
 		</lag_filter>
 		
+		<fcs_function name="fadec/epr-actual-1-ref">
+			<function>
+				<pow>
+					<property>fadec/n1-actual-1</property>
+					<value>3.5</value>
+				</pow>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/epr-actual-1">
+			<function>
+				<sum>
+					<product>
+						<table>
+							<independentVar lookup="row">fadec/epr-actual-1-ref</independentVar>
+							<tableData>
+								   24743.1  0.00
+								   53194.6  0.03
+								10000000.0  1.00
+							</tableData>
+						</table>
+						<property>fadec/epr/c1</property>
+					</product>
+					<property>fadec/epr/c2</property>
+				</sum>
+			</function>
+			<output>/engines/engine[0]/epr-actual</output>
+		</fcs_function>
+		
+		<fcs_function name="fadec/epr-actual-2-ref">
+			<function>
+				<pow>
+					<property>fadec/n1-actual-2</property>
+					<value>3.5</value>
+				</pow>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/epr-actual-2">
+			<function>
+				<sum>
+					<product>
+						<table>
+							<independentVar lookup="row">fadec/epr-actual-2-ref</independentVar>
+							<tableData>
+								   24743.1  0.00
+								   53194.6  0.03
+								10000000.0  1.00
+							</tableData>
+						</table>
+						<property>fadec/epr/c1</property>
+					</product>
+					<property>fadec/epr/c2</property>
+				</sum>
+			</function>
+			<output>/engines/engine[1]/epr-actual</output>
+		</fcs_function>
+		
 		<lag_filter name="fadec/n2-actual-1">
 			<input>/engines/engine[0]/n2</input>
 			<c1>2.25</c1>
@@ -1521,7 +1682,7 @@
 		<fcs_function name="/instrumentation/upper-ecam/epr-thr[0]">
 			<function>
 				<table>
-					<independentVar lookup="row">/engines/engine[0]/epr-actual</independentVar> <!-- Fix prop -->
+					<independentVar lookup="row">fadec/control-1/lever-epr</independentVar>
 					<tableData>
 						0.97 -139
 						1.00 -125
@@ -1537,7 +1698,7 @@
 		<fcs_function name="/instrumentation/upper-ecam/epr-thr[1]">
 			<function>
 				<table>
-					<independentVar lookup="row">/engines/engine[1]/epr-actual</independentVar> <!-- Fix prop -->
+					<independentVar lookup="row">fadec/control-1/lever-epr</independentVar>
 					<tableData>
 						0.97 -139
 						1.00 -125
@@ -1553,7 +1714,7 @@
 		<fcs_function name="/instrumentation/upper-ecam/epr-limit">
 			<function>
 				<table>
-					<independentVar lookup="row">/engines/engine[0]/epr-actual</independentVar> <!-- Fix prop -->
+					<independentVar lookup="row">fadec/limit/toga-epr</independentVar>
 					<tableData>
 						0.97 -139
 						1.00 -125

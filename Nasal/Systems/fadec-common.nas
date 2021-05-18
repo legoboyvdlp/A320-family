@@ -47,13 +47,8 @@ var FADEC = {
 		me.Limit.activeModeInt.setValue(0);
 		me.Limit.flexActive.setBoolValue(0);
 		me.Limit.flexActiveCmd.setBoolValue(0);
-		if (pts.Options.eng.getValue() == "IAE") {
-			me.n1ModeSw[0].setBoolValue(1);
-			me.n1ModeSw[1].setBoolValue(1);
-		} else {
-			me.n1ModeSw[0].setBoolValue(0);
-			me.n1ModeSw[1].setBoolValue(0);
-		}
+		me.n1ModeSw[0].setBoolValue(0);
+		me.n1ModeSw[1].setBoolValue(0);
 		systems.FADEC_S.init();
 		thrustFlashT.start();
 	},
