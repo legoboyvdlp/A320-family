@@ -897,30 +897,26 @@
 							</or>
 						</and>
 					</or>
-					<greater-than>
-						<property>controls/engines/engine[0]/throttle</property>
-						<value>0.0</value>
-					</greater-than>
-					<greater-than>
-						<property>controls/engines/engine[1]/throttle</property>
-						<value>0.0</value>
-					</greater-than>
+					<not-equals>
+						<property>/fdm/jsbsim/fadec/control-1/detent</property>
+						<value>0</value>
+					</not-equals>
+					<not-equals>
+						<property>/fdm/jsbsim/fadec/control-2/detent</property>
+						<value>0</value>
+					</not-equals>
 					<less-than>
-						<property>controls/engines/engine[0]/throttle</property>
-						<value>0.80</value>
+						<property>/fdm/jsbsim/fadec/control-1/detent</property>
+						<value>5</value>
 					</less-than>
 					<less-than>
-						<property>controls/engines/engine[1]/throttle</property>
-						<value>0.80</value>
+						<property>/fdm/jsbsim/fadec/control-2/detent</property>
+						<value>5</value>
 					</less-than>
 					<not>
 						<property>/gear/gear[1]/wow</property>
 						<property>/gear/gear[2]/wow</property>
 					</not>
-					<less-than>
-						<property>velocities/airspeed-kt</property>
-						<value>160</value>
-					</less-than>
 					<greater-than-equals>
 						<property>/systems/electrical/outputs/mk-viii</property>
 						<value>25</value>
