@@ -633,6 +633,6 @@ setlistener("/modes/pfd/fma/pitch-mode2-armed", func {
 	}
 });
 
-setlistener("sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func {
 	init();
 });

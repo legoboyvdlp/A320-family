@@ -343,7 +343,7 @@ var fbw_loop = func {
 	}
 }
 
-setlistener("systems/fctl/sec1", func() {
+setlistener("/systems/fctl/sec1", func() {
 	if (FBW.Computers.sec1.getBoolValue()) {
 		FBW.Failures.spoilerl3.setBoolValue(0);
 		FBW.Failures.spoilerr3.setBoolValue(0);
@@ -357,7 +357,7 @@ setlistener("systems/fctl/sec1", func() {
 	}
 }, 0, 0);
 
-setlistener("systems/fctl/sec2", func() {
+setlistener("/systems/fctl/sec2", func() {
 	if (FBW.Computers.sec2.getBoolValue()) {
 		FBW.Failures.spoilerl5.setBoolValue(0);
 		FBW.Failures.spoilerr5.setBoolValue(0);
@@ -367,7 +367,7 @@ setlistener("systems/fctl/sec2", func() {
 	}
 }, 0, 0);
 
-setlistener("systems/fctl/sec3", func() {
+setlistener("/systems/fctl/sec3", func() {
 	if (FBW.Computers.sec3.getBoolValue()) {
 		FBW.Failures.spoilerl1.setBoolValue(0);
 		FBW.Failures.spoilerr1.setBoolValue(0);
