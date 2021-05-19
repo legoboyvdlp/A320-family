@@ -882,11 +882,9 @@ var ITAF = {
 	},
 	disarmLoc: func() {
 		me.updateLocArm(0);
-		ITAF.armTextCheck();
 	},
 	disarmAppr: func() {
 		me.updateApprArm(0);
-		ITAF.armTextCheck();
 	},
 	toggleTrkFpa: func() {
 		if (Custom.trkFpa.getBoolValue()) {

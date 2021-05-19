@@ -61,10 +61,9 @@
 		</hud>
 
 		<model>
-			<fallback-model-index>212</fallback-model-index>
-
 			<autopush include="AircraftConfig/autopush-config.xml"/>
-			<display-contrast type="double">0.7</display-contrast>
+			<display-contrast type="double">0.9</display-contrast>
+			<fallback-model-index>212</fallback-model-index>
 			<door>
 				<position-x-m type="float">-13.8008</position-x-m>
 				<position-y-m type="float">-1.91254</position-y-m>
