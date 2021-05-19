@@ -62,7 +62,7 @@
 
 		<model>
 			<autopush include="AircraftConfig/autopush-config.xml"/>
-			<display-contrast type="double">0.9</display-contrast>
+			<display-contrast type="double">0.7</display-contrast>
 			<fallback-model-index>212</fallback-model-index>
 			<door>
 				<position-x-m type="float">-13.8008</position-x-m>
