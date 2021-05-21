@@ -22,7 +22,7 @@ It is highly reccomended to purchase a NAVIGRAPH subscription and download their
 To install navdata, create a folder FMSDATA, and add it to your additional scenery folders, at the top of the list. Inside that folder, place all the XXXX.procedures.xml files, in the format FMSDATA/X/X/X/XXXX.procedures.xml. For instance, FMSDATA/Airports/E/G/K/EGKK.procedures.xml. 
 
 ## Remote MCDU
-If you want to run the MCDU on a phone or tablet for better realism and easier input, put mcdu.html into the FGDATA/Phi folder, run FlightGear with enabled HTTP server (i.e. command line --httpd=[Port; e.g. 8080]) and open http://[FlightGear Computer IP/Hostname]:[Port]/mcdu.html in the browser on your phone or tablet.
+If you want to run the MCDU on a phone or tablet for better realism and easier input, put mcdu.html into the FGDATA/Phi folder, run FlightGear with enabled HTTP server (i.e. command line --httpd=<Port; e.g. 8080>) and open http://<FlightGear Computer IP/Hostname; e.g. localhost/127.0.0.1>:<Port; e.g. 8080>/mcdu.html in the browser on your phone or tablet.
 
 ## Installation
 If you have issues installing, please check INSTALL.MD!
