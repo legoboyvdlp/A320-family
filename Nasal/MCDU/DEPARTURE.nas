@@ -33,8 +33,10 @@ var departurePage = {
 	computer: nil,
 	enableScrollRwy: 0,
 	enableScrollSids: 0,
+	enableScrollTrans: 0,
 	scrollRwy: 0,
 	scrollSids: 0,
+	scrollTrans: 0,
 	activePage: 0, # runways, sids, trans
 	_runways: nil,
 	_sids: nil,
@@ -404,8 +406,8 @@ var departurePage = {
 		append(me.transitions, "NO TRANS");
 		
 		if (size(me.transitions) >= 1) {
-			me.R2 = [me.transitions[0] ~ " ", "TRANS", "blu"];
-			if (me.transitions[0] != me.selectedTransition) {
+			me.R2 = [me.transitions[0 + me.scrollTrans] ~ " ", "TRANS", "blu"];
+			if (me.transitions[0 + me.scrollTrans] != me.selectedTransition) {
 				me.arrowsMatrix[1][1] = 1;
 				me.arrowsColour[1][1] = "blu";
 			} else {
@@ -414,8 +416,8 @@ var departurePage = {
 			}
 		} 
 		if (size(me.transitions) >= 2) {
-			me.R3 = [me.transitions[1] ~ " ", nil, "blu"];
-			if (me.transitions[1] != me.selectedTransition) {
+			me.R3 = [me.transitions[1 + me.scrollTrans] ~ " ", nil, "blu"];
+			if (me.transitions[1 + me.scrollTrans] != me.selectedTransition) {
 				me.arrowsMatrix[1][2] = 1;
 				me.arrowsColour[1][2] = "blu";
 			} else {
@@ -424,8 +426,8 @@ var departurePage = {
 			}
 		} 
 		if (size(me.transitions) >= 3) {
-			me.R4 = [me.transitions[2] ~ " ", nil, "blu"];
-			if (me.transitions[2] != me.selectedTransition) {
+			me.R4 = [me.transitions[2 + me.scrollTrans] ~ " ", nil, "blu"];
+			if (me.transitions[2 + me.scrollTrans] != me.selectedTransition) {
 				me.arrowsMatrix[1][3] = 1;
 				me.arrowsColour[1][3] = "blu";
 			} else {
@@ -434,14 +436,18 @@ var departurePage = {
 			}
 		} 
 		if (size(me.transitions) >= 4) {
-			me.R5 = [me.transitions[3] ~ " ", nil, "blu"];
-			if (me.transitions[3] != me.selectedTransition) {
+			me.R5 = [me.transitions[3 + me.scrollTrans] ~ " ", nil, "blu"];
+			if (me.transitions[3 + me.scrollTrans] != me.selectedTransition) {
 				me.arrowsMatrix[1][4] = 1;
 				me.arrowsColour[1][4] = "blu";
 			} else {
 				me.arrowsMatrix[1][4] = 0;
 				me.arrowsColour[1][4] = "ack";
 			}
+		}
+		
+		if (size(me.transitions) > 4) {
+			me.enableScrollTrans = 1;
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
@@ -467,15 +473,25 @@ var departurePage = {
 				me.updateRunways();
 			}
 		} else {
-			if (me.enableScrollSids) {
-				me.scrollSids += 1;
-				if (me.scrollSids > size(me.sids) - 4) {
-					me.scrollSids = 0;
+			if (me.selectedSID == nil) {
+				if (me.enableScrollSids) {
+					me.scrollSids += 1;
+					if (me.scrollSids > size(me.sids) - 4) {
+						me.scrollSids = 0;
+					}
+					me.updateSIDs();
+					if (me.selectedSID == nil or me.selectedSID == "NO SID") {
+						me.clearTransitions();
+					} else {
+						me.updateTransitions();
+					}
 				}
-				me.updateSIDs();
-				if (me.selectedSID == nil or me.selectedSID == "NO SID") {
-					me.clearTransitions();
-				} else {
+			} else {
+				if (me.enableScrollTrans) {
+					me.scrollTrans += 1;
+					if (me.scrollTrans > size(me.transitions) - 4) {
+						me.scrollTrans = 0;
+					}
 					me.updateTransitions();
 				}
 			}
@@ -491,15 +507,25 @@ var departurePage = {
 				me.updateRunways();
 			}
 		} else {
-			if (me.enableScrollSids) {
-				me.scrollSids -= 1;
-				if (me.scrollSids < 0) {
-					me.scrollSids = size(me.sids) - 4;
+			if (me.selectedSID == nil) {
+				if (me.enableScrollSids) {
+					me.scrollSids -= 1;
+					if (me.scrollSids < 0) {
+						me.scrollSids = size(me.sids) - 4;
+					}
+					me.updateSIDs();
+					if (me.selectedSID == nil or me.selectedSID == "NO SID") {
+						me.clearTransitions();
+					} else {
+						me.updateTransitions();
+					}
 				}
-				me.updateSIDs();
-				if (me.selectedSID == nil or me.selectedSID == "NO SID") {
-					me.clearTransitions();
-				} else {
+			} else {
+				if (me.enableScrollTrans) {
+					me.scrollTrans -= 1;
+					if (me.scrollTrans < 0) {
+						me.scrollTrans = size(me.transitions) - 4;
+					}
 					me.updateTransitions();
 				}
 			}
@@ -518,6 +544,11 @@ var departurePage = {
 			if (size(me.runways) >= (index - 1)) {
 				if (!dirToFlag) {
 					me.selectedSID = nil;
+					fmgc.flightPlanController.flightplans[me.computer].sid  = nil;
+					me.scrollSids = 0;
+					me.selectedTransition = nil;
+					fmgc.flightPlanController.flightplans[me.computer].sid_trans = nil;
+					me.scrollTrans = 0;
 					isNoSid[me.computer] = 0;
 					isNoTransDep[me.computer] = 0;
 					me.selectedRunway = me.depAirport[0].runway(me.runways[index - 2 + me.scrollRwy]);
@@ -547,8 +578,11 @@ var departurePage = {
 						fmgc.flightPlanController.insertNOSID(me.computer);
 					}
 					me.updateSIDs();
+					me.scrollTrans = 0;
 					if (me.selectedSID != "NO SID") {
 						isNoTransDep[me.computer] = 0;
+						me.selectedTransition = nil;
+						fmgc.flightPlanController.flightplans[me.computer].sid_trans = nil;
 					} else {
 						isNoTransDep[me.computer] = 1;
 						me.selectedTransition = "NO TRANS";
@@ -566,7 +600,7 @@ var departurePage = {
 	depPushbuttonRight: func(index) {
 		if (size(me.transitions) >= (index -  1)) {
 			if (!dirToFlag) {
-				me.selectedTransition = me.transitions[index - 2];
+				me.selectedTransition = me.transitions[index - 2 + me.scrollTrans];
 				me.makeTmpy();
 				if (me.selectedTransition != "NO TRANS") {
 					isNoTransDep[me.computer] = 0;
