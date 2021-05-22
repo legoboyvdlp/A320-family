@@ -151,7 +151,9 @@ var updateTerrain = func {
 					}
 				}
 			} else {
-				grad = 11; #water/cyan
+				if (elev <= 0) {
+					grad = 11; #water/cyan
+				}
 			}
 			append(elevft,grad); # 0-5
 		} else {
