@@ -401,7 +401,6 @@ var departurePage = {
 		} else {
 			me._transitions = me.depAirport[0].getSid(me.selectedSID).transitions;
 		}
-		me._transitions = me.depAirport[0].getSid(me.selectedSID).transitions;
 		me.transitions = sort(me._transitions,func(a,b) cmp(a,b));
 		append(me.transitions, "NO TRANS");
 		
@@ -532,10 +531,18 @@ var departurePage = {
 		}
 	},
 	scrollLeft: func() {
+		if (me.activePage == 0 and me.selectedRunway == nil) {
+			mcdu_message(me.computer, "NOT ALLOWED");
+			return;
+		}
 		me.activePage = !me.activePage;
 		me.updatePage();
 	},
 	scrollRight: func() {
+		if (me.activePage == 0 and me.selectedRunway == nil) {
+			mcdu_message(me.computer, "NOT ALLOWED");
+			return;
+		}
 		me.activePage = !me.activePage;
 		me.updatePage();
 	},
