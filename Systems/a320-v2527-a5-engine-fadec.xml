@@ -13,7 +13,6 @@
 	<property value="22.4">fadec/limit/min-n1</property>
 	<property value="100">fadec/limit/max-n1</property>
 	<property value="0">fadec/athr/cmd</property>
-	<property value="1">fadec/limit/active-epr</property> <!-- Unused in this engine -->
 	
 	<channel name="Thrust Limits">
 		
