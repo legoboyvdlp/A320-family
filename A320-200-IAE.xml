@@ -192,7 +192,7 @@
 				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">12272.9</capacity>
-			<contents unit="LBS">6000</contents>
+			<contents unit="LBS">4477</contents>
 			<unusable-volume unit="LTR">28</unusable-volume>
 			<priority>1</priority>
 			<density unit="LBS/GAL">6.71</density>
@@ -218,7 +218,7 @@
 				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">12272.9</capacity>
-			<contents unit="LBS">6000</contents>
+			<contents unit="LBS">4477</contents>
 			<unusable-volume unit="LTR">28</unusable-volume>
 			<priority>1</priority>
 			<density unit="LBS/GAL">6.71</density>
