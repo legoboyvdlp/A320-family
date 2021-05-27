@@ -39,8 +39,8 @@ var canvas_upperECAM = {
 		});
 		
 		obj.canvas.addPlacement({"node": "uecam.screen"});
-        obj.group = obj.canvas.createGroup();
-        obj.test = obj.canvas.createGroup();
+		obj.group = obj.canvas.createGroup();
+		obj.test = obj.canvas.createGroup();
 		
 		obj.typeString = type;
 		
@@ -50,7 +50,7 @@ var canvas_upperECAM = {
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
 		obj.keysHash = (type == "IAE" ? obj.getKeysIAE() : obj.getKeysCFM());
- 		foreach(var key; obj.keysHash) {
+		foreach(var key; obj.keysHash) {
 			obj[key] = obj.group.getElementById(key);
 			
 			var clip_el = obj.group.getElementById(key ~ "_clip");
@@ -295,12 +295,23 @@ var canvas_upperECAM = {
 							obj["N1Lim-percent"].hide();
 							obj["N1Lim-mode"].hide();
 							obj["N1Lim-XX"].show();
-							obj["N1Lim-XX2"].show();
+							if (val.thrustLimit != "MREV") {
+								obj["N1Lim-XX2"].show();
+							} else {
+								obj["N1Lim-XX2"].hide();
+							}
 						} else {
-							obj["N1Lim"].show();
-							obj["N1Lim-decimal"].show();
-							obj["N1Lim-decpnt"].show();
-							obj["N1Lim-percent"].show();
+							if (val.thrustLimit != "MREV") {
+								obj["N1Lim"].show();
+								obj["N1Lim-decimal"].show();
+								obj["N1Lim-decpnt"].show();
+								obj["N1Lim-percent"].show();
+							} else {
+								obj["N1Lim"].hide();
+								obj["N1Lim-decimal"].hide();
+								obj["N1Lim-decpnt"].hide();
+								obj["N1Lim-percent"].hide();
+							}
 							obj["N1Lim-mode"].show();
 							obj["N1Lim-XX"].hide();
 							obj["N1Lim-XX2"].hide();
@@ -308,9 +319,15 @@ var canvas_upperECAM = {
 						obj["EPRMode"].hide();
 						obj["N1Mode"].show();
 					} else {
-						obj["EPRLim"].show();
-						obj["EPRLim-decimal"].show();
-						obj["EPRLim-decpnt"].show();
+						if (val.thrustLimit != "MREV") {
+							obj["EPRLim"].show();
+							obj["EPRLim-decimal"].show();
+							obj["EPRLim-decpnt"].show();
+						} else {
+							obj["EPRLim"].hide();
+							obj["EPRLim-decimal"].hide();
+							obj["EPRLim-decpnt"].hide();
+						}
 						obj["EPRLim-mode"].show();
 						obj["EPRLim-XX"].hide();
 						obj["EPRLim-XX2"].hide();
@@ -520,9 +537,9 @@ var canvas_upperECAM = {
 		}
 		
 		foreach(var update_item; me.update_items)
-        {
-            update_item.update(notification);
-        }
+		{
+			update_item.update(notification);
+		}
 		
 		if (notification.eng1_n1 != me._cachedN1[0]) {
 			me.updateN11(notification);
@@ -852,6 +869,14 @@ var canvas_upperECAM = {
 	
 	updateFadecN1Power1: func(val) {
 		if (me.typeString == "IAE") {
+			if (val.N1_mode_1 != 0) {
+				me["REV1"].setTranslation(0, 310);
+				me["REV1-box"].setTranslation(0, 310);
+			} else {
+				me["REV1"].setTranslation(0, 0);
+				me["REV1-box"].setTranslation(0, 0);
+			}
+			
 			if (val.reverser_1 < 0.01 and val.eng1_epr == 1 and val.N1_mode_1 == 0) {
 				me["EPR1-thr"].show();
 				me["N11-thr"].hide();
@@ -897,6 +922,14 @@ var canvas_upperECAM = {
 	},
 	updateFadecN1Power2: func(val) {
 		if (me.typeString == "IAE") {
+			if (val.N1_mode_2 != 0) {
+				me["REV2"].setTranslation(0, 310);
+				me["REV2-box"].setTranslation(0, 310);
+			} else {
+				me["REV2"].setTranslation(0, 0);
+				me["REV2-box"].setTranslation(0, 0);
+			}
+			
 			if (val.reverser_2 < 0.01 and val.eng2_epr == 1 and val.N1_mode_2 == 0) {
 				me["EPR2-thr"].show();
 				me["N12-thr"].hide();
