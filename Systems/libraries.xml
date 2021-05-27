@@ -4,22 +4,22 @@
 
 <PropertyList>
 	
+	<!-- Not in JSBsim, cause then it takes too long to tune -->
 	<filter>
-		<name>EPR Scale</name>
+		<name>EPR C1</name>
 		<type>gain</type>
-		<gain>
-			<expression>
-				<table>
-					<property>/fdm/jsbsim/velocities/mach</property>
-					<entry><ind>0.09</ind><dep>0.95</dep></entry>
-					<entry><ind>0.15</ind><dep>1.00</dep></entry>
-				</table>
-			</expression>
-		</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>
-					<property>/position/altitude-ft</property>
+					<product>
+						<property>/position/altitude-ft</property>
+						<table>
+							<property>/fdm/jsbsim/velocities/mach</property>
+							<entry><ind>0.09</ind><dep>0.1</dep></entry>
+							<entry><ind>0.15</ind><dep>1.0</dep></entry>
+						</table>
+					</product>
 					<entry><ind>    0</ind><dep>0.674</dep></entry>
 					<entry><ind>43000</ind><dep>1.120</dep></entry>
 				</table>
@@ -29,7 +29,7 @@
 	</filter>
 	
 	<filter>
-		<name>EPR Scale 2 Sum/Difference</name>
+		<name>EPR C2</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
