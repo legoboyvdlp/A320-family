@@ -406,7 +406,7 @@
 	
 	<!-- Effect -->
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-CFM</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-LEAP</inherits-from>
 		<object-name>EngineLEAPL</object-name>
 		<object-name>EngineLEAPR</object-name>
 		<object-name>ReverserLDoorLEAP</object-name>
@@ -414,13 +414,13 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-CFM</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-LEAP</inherits-from>
 		<object-name>PylonLEAPL</object-name>
 		<object-name>PylonLEAPR</object-name>
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-CFM</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-LEAP</inherits-from>
 		<object-name>IntakeLEAPL</object-name>
 		<object-name>IntakeLEAPR</object-name>
 		<object-name>Exhaust3LEAPL</object-name>
