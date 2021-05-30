@@ -4535,8 +4535,8 @@
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">text-value</type>
-		<format type="string">%s</format>
+		<type type="string">number-value</type>
+		<format type="string">%03.0f</format>
 		<property>it-autoflight/input/hdg</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
@@ -4587,8 +4587,8 @@
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">text-value</type>
-		<format type="string">%s</format>
+		<type type="string">number-value</type>
+		<format type="string">%05.0f</format>
 		<property>it-autoflight/input/alt</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
