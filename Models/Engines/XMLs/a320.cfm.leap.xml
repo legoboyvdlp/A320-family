@@ -382,7 +382,8 @@
 	
 	<animation>
 		<type>translate</type>
-		<object-name>ReverserLDoorLEAPL</object-name>
+		<object-name>ReverserLDoorLEAP</object-name>
+		<object-name>ReverserLDoorLEAP.Inner</object-name>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
@@ -394,7 +395,8 @@
 
 	<animation>
 		<type>translate</type>
-		<object-name>ReverserLDoorLEAPR</object-name>
+		<object-name>ReverserRDoorLEAP</object-name>
+		<object-name>ReverserRDoorLEAP.Inner</object-name>
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
@@ -409,14 +411,18 @@
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-LEAP</inherits-from>
 		<object-name>EngineLEAPL</object-name>
 		<object-name>EngineLEAPR</object-name>
-		<object-name>ReverserLDoorLEAPL</object-name>
-		<object-name>ReverserLDoorLEAPR</object-name>
+		<object-name>ReverserLDoorLEAP</object-name>
+		<object-name>ReverserRDoorLEAP</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-LEAP</inherits-from>
+		<object-name>EngineLEAPL.Inner</object-name>
+                <object-name>EngineLEAPR.Inner</object-name>
 		<object-name>PylonLEAPL</object-name>
 		<object-name>PylonLEAPR</object-name>
+		<object-name>ReverserLDoorLEAP.Inner</object-name>
+		<object-name>ReverserRDoorLEAP.Inner</object-name>
 	</effect>
 	
 	<effect>
