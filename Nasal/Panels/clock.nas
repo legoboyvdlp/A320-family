@@ -72,7 +72,7 @@ var rudderTrim = {
 	rudderTrimDisplayLetter: props.globals.initNode("/controls/flight/rudder-trim-letter-display", "", "STRING"),
 };
 
-setlistener("sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func {
 	chr.stop();
 	chr.reset();
 	clk.stop();

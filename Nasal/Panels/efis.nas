@@ -4,7 +4,7 @@
 var mode = "NAV";
 var rng = 20;
 
-setlistener("sim/signals/fdm-initialized", func { # Fix completely retarded shit on the ND
+setlistener("/sim/signals/fdm-initialized", func { # Fix completely retarded shit on the ND
 	pts.Instrumentation.Efis.Mfd.pnlModeNum[0].setValue(2);
 	pts.Instrumentation.Efis.Mfd.pnlModeNum[1].setValue(2);
 	pts.Instrumentation.Efis.Nd.displayMode[0].setValue("NAV");
