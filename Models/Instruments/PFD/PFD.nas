@@ -274,6 +274,7 @@ var canvas_PFD_base = {
 			PFD_1_mismatch.page.hide();
 			PFD_2_mismatch.page.hide();
 			if (systems.ELEC.Bus.acEss.getValue() >= 110 and du1_lgt.getValue() > 0.01) {
+				pts.Instrumentation.Du.du1On.setBoolValue(1);
 				if (du1_test_time.getValue() + du1_test_amount.getValue() >= elapsedtime_act and cpt_du_xfr.getValue() != 1) {
 					PFD_1_test.update();
 					PFD_1.page.hide();
@@ -290,8 +291,10 @@ var canvas_PFD_base = {
 			} else {
 				PFD_1_test.page.hide();
 				PFD_1.page.hide();
+				pts.Instrumentation.Du.du1On.setBoolValue(0);
 			}
 			if (systems.ELEC.Bus.ac2.getValue() >= 110 and du6_lgt.getValue() > 0.01) {
+				pts.Instrumentation.Du.du6On.setBoolValue(1);
 				if (du6_test_time.getValue() + du6_test_amount.getValue() >= elapsedtime_act and fo_du_xfr.getValue() != 1) {
 					PFD_2_test.update();
 					PFD_2.page.hide();
@@ -308,6 +311,7 @@ var canvas_PFD_base = {
 			} else {
 				PFD_2_test.page.hide();
 				PFD_2.page.hide();
+				pts.Instrumentation.Du.du6On.setBoolValue(0);
 			}
 		} else {
 			PFD_1_test.page.hide();
@@ -316,6 +320,8 @@ var canvas_PFD_base = {
 			PFD_2.page.hide();
 			PFD_1_mismatch.update();
 			PFD_2_mismatch.update();
+			pts.Instrumentation.Du.du1On.setBoolValue(1);
+			pts.Instrumentation.Du.du6On.setBoolValue(1);
 			PFD_1_mismatch.page.show();
 			PFD_2_mismatch.page.show();
 		}

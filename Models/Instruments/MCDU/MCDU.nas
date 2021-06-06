@@ -263,15 +263,19 @@ var canvas_MCDU_base = {
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
 			MCDU_1.update();
+			pts.Instrumentation.Mcdu.mcdu1On.setBoolValue(1);
 			MCDU_1.page.show();
 		} else {
 			MCDU_1.page.hide();
+			pts.Instrumentation.Mcdu.mcdu1On.setBoolValue(0);
 		}
 		if (systems.ELEC.Bus.ac2.getValue() >= 110 and mcdu2_lgt.getValue() > 0.01) {
 			MCDU_2.update();
+			pts.Instrumentation.Mcdu.mcdu2On.setBoolValue(1);
 			MCDU_2.page.show();
 		} else {
 			MCDU_2.page.hide();
+			pts.Instrumentation.Mcdu.mcdu2On.setBoolValue(0);
 		}
 	},
 	defaultHide: func() {

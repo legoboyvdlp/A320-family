@@ -1015,6 +1015,7 @@ var canvas_upperECAM = {
 	},
 	updatePower: func() {
 		if (du3_lgt.getValue() > 0.01 and systems.ELEC.Bus.acEss.getValue() >= 110) {
+			pts.Instrumentation.Du.du3On.setBoolValue(1);
 			if (du3_test_time.getValue() + du3_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
 				me.group.setVisible(0);
 				me.test.setVisible(1);
@@ -1025,6 +1026,7 @@ var canvas_upperECAM = {
 		} else {
 			me.group.setVisible(0);
 			me.test.setVisible(0);
+			pts.Instrumentation.Du.du3On.setBoolValue(0);
 		}
 	},
 };

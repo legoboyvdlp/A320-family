@@ -62,7 +62,6 @@
 
 		<model>
 			<autopush include="AircraftConfig/autopush-config.xml"/>
-			<display-contrast type="double">0.7</display-contrast>
 			<fallback-model-index>212</fallback-model-index>
 			<door>
 				<position-x-m type="float">-13.8008</position-x-m>
@@ -1222,6 +1221,7 @@
 		<acconfig n="0">
 			<autoconfig-running type="bool">0</autoconfig-running>
 			<options n="0">
+				<enable-shaders type="bool">true</enable-shaders>
 				<fadec n="0"> <!-- Configurable Detents -->
 					<climb-b type="double">0.6</climb-b>
 					<climb-t type="double">0.65</climb-t>

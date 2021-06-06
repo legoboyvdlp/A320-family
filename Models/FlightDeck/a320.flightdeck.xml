@@ -9189,7 +9189,14 @@
 	</animation>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/display-less-dirt</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/displays/lcd</inherits-from>
+		<parameters>
+			<inner-angle>90</inner-angle> <!-- 0-90, use 90 for LED or plasma display-->
+			<outer-angle>90</outer-angle> <!-- 0-90, but greater than inner -->
+			<black-angle>90</black-angle> <!-- 0-90, but greater than outer -->
+			<dirt-factor>0.09</dirt-factor>
+			<contrast><use>instrumentation/dcdu/lcd-contrast</use></contrast>
+		</parameters>
 		<object-name>dcduScreenL</object-name>
 		<object-name>dcduScreenR</object-name>
 	</effect>

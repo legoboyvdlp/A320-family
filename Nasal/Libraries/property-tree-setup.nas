@@ -154,6 +154,17 @@ var Instrumentation = {
 		indicatedString: props.globals.getNode("/instrumentation/clock/indicated-string"),
 		indicatedStringShort: props.globals.getNode("/instrumentation/clock/indicated-short-string"),
 	},
+	Dcdu: {
+		lcdOn: props.globals.initNode("/instrumentation/dcdu/lcd-on", 0, "BOOL"),
+	},
+	Du: {
+		du1On: props.globals.initNode("/instrumentation/du/du1-on", 0, "BOOL"),
+		du2On: props.globals.initNode("/instrumentation/du/du2-on", 0, "BOOL"),
+		du3On: props.globals.initNode("/instrumentation/du/du3-on", 0, "BOOL"),
+		du4On: props.globals.initNode("/instrumentation/du/du4-on", 0, "BOOL"),
+		du5On: props.globals.initNode("/instrumentation/du/du5-on", 0, "BOOL"),
+		du6On: props.globals.initNode("/instrumentation/du/du6-on", 0, "BOOL"),
+	},
 	Efis: {
 		Inputs: {
 			arpt: [props.globals.initNode("/instrumentation/efis[0]/inputs/arpt", 0, "BOOL"), props.globals.initNode("/instrumentation/efis[1]/inputs/arpt", 0, "BOOL")],
@@ -178,6 +189,13 @@ var Instrumentation = {
 		longitude: props.globals.getNode("/instrumentation/gps/indicated-longitude-deg"),
 		trackMag: props.globals.getNode("/instrumentation/gps/indicated-track-magnetic-deg"),
 		gs: props.globals.getNode("/instrumentation/gps/indicated-ground-speed-kt"),
+	},
+	Iesi: {
+		lcdOn: props.globals.initNode("/instrumentation/iesi/lcd-on", 0, "BOOL"),
+	},
+	Mcdu: {
+		mcdu1On: props.globals.initNode("/instrumentation/mcdu/mcdu1-on", 0, "BOOL"),
+		mcdu2On: props.globals.initNode("/instrumentation/mcdu/mcdu2-on", 0, "BOOL"),
 	},
 	MKVII: {
 		Inputs: {

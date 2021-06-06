@@ -219,9 +219,11 @@ var canvas_IESI = {
 		}
 		
 		if (_showIESI and notification.iesiBrt > 0.01) {
+			pts.Instrumentation.Iesi.lcdOn.setBoolValue(1);
 			me.group.setVisible(1);
 		} else {
 			me.group.setVisible(0);
+			pts.Instrumentation.Iesi.lcdOn.setBoolValue(0);
 		}
 	},
 };

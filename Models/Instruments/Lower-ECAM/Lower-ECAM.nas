@@ -233,6 +233,7 @@ var canvas_lowerECAM_base = {
 		var elapsedtime = pts.Sim.Time.elapsedSec.getValue();
 		
 		if (systems.ELEC.Bus.ac2.getValue() >= 110 and lighting_du4.getValue() > 0.01) {
+			pts.Instrumentation.Du.du4On.setBoolValue(1);
 			if (du4_test_time.getValue() + du4_test_amount.getValue() >= elapsedtime) {
 				lowerECAM_apu.page.hide();
 				lowerECAM_bleed.page.hide();
@@ -477,6 +478,7 @@ var canvas_lowerECAM_base = {
 			lowerECAM_status.page.hide();
 			lowerECAM_hyd.page.hide();
 			lowerECAM_wheel.page.hide();
+			pts.Instrumentation.Du.du4On.setBoolValue(0);
 		}
 	},
 	displayedGForce: 0,
