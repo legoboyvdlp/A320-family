@@ -32,8 +32,6 @@ var flightPlanController = {
 	
 	# These flags are only for the main flgiht-plan
 	active: props.globals.initNode("/FMGC/flightplan[2]/active", 0, "BOOL"),
-
-	changed: props.globals.initNode("/FMGC/flightplan[2]/changed", 0, "BOOL"),
 	
 	currentToWpt: nil, # container for the current TO waypoint ghost
 	currentToWptIndex: props.globals.initNode("/FMGC/flightplan[2]/current-wp", 0, "INT"),
@@ -767,9 +765,6 @@ var flightPlanController = {
 			fmgc.FMGCInternal.fuelCalculating = 1;
 			fmgc.fuelCalculating.setValue(1);
 		}
-
-		if (n == 2) flightPlanController.changed.setBoolValue(1);
-
 		canvas_nd.A3XXRouteDriver.triggerSignal("fp-added");
 	},
 	

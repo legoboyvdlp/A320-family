@@ -411,13 +411,8 @@ var canvas_MCDU_base = {
 		}
 		return irsstatus;
 	},
-	onPageUpdate: func(p) {
-
-	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
-		var phase = fmgc.FMGCInternal.phase;
-
 		if (page != "NOTIFICATION") {
 			me["NOTIFY"].hide();
 			me["NOTIFY_FLTNBR"].hide();
@@ -2119,7 +2114,7 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "grn", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				if (phase == 0 or phase == 7) {  # only on preflight and done phases
+				if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 7) {  # only on preflight and done phases
 					me["Simple_L5S"].setText("CHG CODE");
 					me["Simple_L5S"].show();
 					me["Simple_L5"].setText("[   ]");
@@ -2169,7 +2164,7 @@ var canvas_MCDU_base = {
 				me["arrow5R"].setColor(getprop("/MCDUC/colors/blu/r"),getprop("/MCDUC/colors/blu/g"),getprop("/MCDUC/colors/blu/b"));
 			}
 			
-			if (phase == 0 or phase == 7) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 7) {
 				me["Simple_L5"].show();
 				me["Simple_L5S"].show();
 			} else {
@@ -2481,7 +2476,7 @@ var canvas_MCDU_base = {
 				}
 			}				
 			
-			if (phase == 7) { # DONE phase
+			if (fmgc.FMGCInternal.phase == 7) { # DONE phase
 				if (fmgc.FMGCInternal.arrApt != nil and fmgc.flightPlanController.flightplans[2].departure_runway != nil) {
 					me["Simple_R1S"].setText(sprintf("DRIFT AT %7s     ",fmgc.FMGCInternal.arrApt ~ fmgc.flightPlanController.flightplans[2].departure_runway.id));
 				}
@@ -2833,7 +2828,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_R6S"].setText("GND TEMP");
-			if (phase == 0 and !fmgc.FMGCInternal.gndTempSet) {
+			if (fmgc.FMGCInternal.phase == 0 and !fmgc.FMGCInternal.gndTempSet) {
 				fmgc.FMGCInternal.gndTemp = 15 - (2 * getprop("/position/gear-agl-ft") / 1000);
 				me["Simple_R6"].setText(sprintf("%.0fg", fmgc.FMGCInternal.gndTemp));
 				me["Simple_R6"].setFontSize(small); 
@@ -3839,25 +3834,25 @@ var canvas_MCDU_base = {
 			
 		} else if (page == "PROGPREF" or page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES" or page == "PROGAPPR" or page == "PROGDONE") {
 
-			if (phase == 0) {
+			if (fmgc.FMGCInternal.phase == 0) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGPREF");
 				page = "PROGPREF";
-			} else if (phase == 1) {
+			} else if (fmgc.FMGCInternal.phase == 1) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGTO");
 				page = "PROGTO";
-			} else if (phase == 2) {
+			} else if (fmgc.FMGCInternal.phase == 2) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGCLB");
 				page = "PROGCLB";
-			} else if (phase == 3) {
+			} else if (fmgc.FMGCInternal.phase == 3) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGCRZ");
 				page = "PROGCRZ";
-			} else if (phase == 4) {
+			} else if (fmgc.FMGCInternal.phase == 4) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGDES");
 				page = "PROGDES";
-			} else if (phase == 5 or phase == 6) {
+			} else if (fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGAPPR");
 				page = "PROGAPPR";
-			} else if (phase == 7) {
+			} else if (fmgc.FMGCInternal.phase == 7) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGDONE");
 				page = "PROGDONE";
 			}			
@@ -4136,7 +4131,7 @@ var canvas_MCDU_base = {
 				me["Simple_L4"].setFontSize(small);
 			}
 			
-			if (phase == 0 or phase == 7) {
+			if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 7) {
 				me["Simple_L6_Arrow"].show(); 
 				me["Simple_L6"].show();
 				me["Simple_L6S"].show();
@@ -4146,7 +4141,7 @@ var canvas_MCDU_base = {
 				me["Simple_L6S"].hide();
 			}
 
-			if (phase == 1) {  # GREEN title and not modifiable on TO phase
+			if (fmgc.FMGCInternal.phase == 1) {  # GREEN title and not modifiable on TO phase
 				me["Simple_Title"].setColor(GREEN);
 				me.colorLeft("grn", "grn", "grn", "blu", "grn", "wht");
 				me.colorRight("grn", "blu", "grn", "grn", "grn", "wht");
@@ -4226,7 +4221,7 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or phase == 1) {
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 1) {
 				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_to));
 				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_to));
 				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_to));
@@ -4285,7 +4280,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (phase == 2) {
+			if (fmgc.FMGCInternal.phase == 2) {
 				me["Simple_Title"].setColor(GREEN);
 				me.showLeft(0, 0, 0, 0, 1, 0);
 				me.showLeftS(0, 0, 0, 0, 1, 0);
@@ -4315,7 +4310,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (phase == 5) {
+				} else if (fmgc.FMGCInternal.phase == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -4439,7 +4434,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (phase == 3) {
+			if (fmgc.FMGCInternal.phase == 3) {
 				me["Simple_Title"].setColor(GREEN);
 
 				if (managedSpeed.getValue() == 1) {
@@ -4463,7 +4458,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (phase == 5) {
+				} else if (fmgc.FMGCInternal.phase == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -4577,7 +4572,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (phase == 4) {
+			if (fmgc.FMGCInternal.phase == 4) {
 				me["Simple_Title"].setColor(GREEN);
 				me.showLeft(0, 0, 0, 0, 1, 0);
 				me.showRight(0, 1, 0, 1, 0, 0);
@@ -4606,7 +4601,7 @@ var canvas_MCDU_base = {
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
 					me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
-				} else if (phase == 5) {
+				} else if (fmgc.FMGCInternal.phase == 5) {
 					me["Simple_L6S"].setText("");
 					me["Simple_L6"].setText("");
 					me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
@@ -4734,7 +4729,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (phase == 5) {
+			if (fmgc.FMGCInternal.phase == 5) {
 				me["Simple_Title"].setColor(GREEN);
 			} else {
 				me["Simple_Title"].setColor(WHITE);
@@ -4842,7 +4837,7 @@ var canvas_MCDU_base = {
 			me["Simple_R6"].setText("PHASE ");
 			
 			me["Simple_L5S"].setText(" VAPP");
-			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or phase == 5) {
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 5) {
 				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_appr));
 				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_appr));
 				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_appr));
@@ -4918,7 +4913,7 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (phase == 6) {
+			if (fmgc.FMGCInternal.phase == 6) {
 				me["Simple_Title"].setColor(GREEN);
 			} else {
 				me["Simple_Title"].setColor(WHITE);
@@ -4942,7 +4937,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
-			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or phase == 6) {
+			if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 6) {
 				me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_appr));
 				me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_appr));
 				me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_appr));
@@ -6597,31 +6592,12 @@ setlistener("/sim/signals/fdm-initialized", func {
 	
 	mcdu.mcdu_message(0, "SELECT DESIRED SYSTEM");
 	mcdu.mcdu_message(1, "SELECT DESIRED SYSTEM");
-
-	#setlistener("/MCDU[0]/page", func(v) {
-	#	pageSwitch[0].setBoolValue(0);
-	#	MCDU_1.onPageChanged(0);
-	#}, 1, 0);
-
-	#setlistener("/MCDU[1]/page", func(v) {
-	#	pageSwitch[1].setBoolValue(0);
-	#	MCDU_2.onPageChanged(1);
-	#}, 1, 0);
-
+	
 	MCDU_update.start();
-
 });
 
 var MCDU_update = maketimer(0.125, func {
 	canvas_MCDU_base.update();
-});
-
-var MCDU1_update = maketimer(0.125, func {
-	MCDU1.update();
-});
-
-var MCDU2_update = maketimer(0.125, func {
-	MCDU2.update();
 });
 	
 var showMCDU1 = func {
@@ -6632,3 +6608,10 @@ var showMCDU2 = func {
 	gui.showDialog("mcdu2");
 }
 
+setlistener("/MCDU[0]/page", func {
+	pageSwitch[0].setBoolValue(0);
+}, 0, 0);
+
+setlistener("/MCDU[1]/page", func {
+	pageSwitch[1].setBoolValue(0);
+}, 0, 0);
