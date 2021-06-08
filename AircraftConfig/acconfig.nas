@@ -23,39 +23,15 @@ var spinning = maketimer(0.05, func {
 var failReset = func {
 	systems.ELEC.resetFail();
 	systems.PNEU.resetFail();
+	fbw.FBW.resetFail();
+	systems.HYD.resetFail();
 }
 
 var failResetOld = func {
-	setprop("/systems/failures/fctl/elac1", 0);
-	setprop("/systems/failures/fctl/elac2", 0);
-	setprop("/systems/failures/fctl/sec1", 0);
-	setprop("/systems/failures/fctl/sec2", 0);
-	setprop("/systems/failures/fctl/sec3", 0);
-	setprop("/systems/failures/fctl/fac1", 0);
-	setprop("/systems/failures/fctl/fac2", 0);
-	setprop("/systems/failures/fctl/rtlu-1", 0);
-	setprop("/systems/failures/fctl/rtlu-2", 0);
 	setprop("/systems/failures/aileron-left", 0);
 	setprop("/systems/failures/aileron-right", 0);
 	setprop("/systems/failures/elevator-left", 0);
 	setprop("/systems/failures/elevator-right", 0);
-	setprop("/systems/failures/spoilers/spoiler-l1", 0);
-	setprop("/systems/failures/spoilers/spoiler-l2", 0);
-	setprop("/systems/failures/spoilers/spoiler-l3", 0);
-	setprop("/systems/failures/spoilers/spoiler-l4", 0);
-	setprop("/systems/failures/spoilers/spoiler-l5", 0);
-	setprop("/systems/failures/spoilers/spoiler-r1", 0);
-	setprop("/systems/failures/spoilers/spoiler-r2", 0);
-	setprop("/systems/failures/spoilers/spoiler-r3", 0);
-	setprop("/systems/failures/spoilers/spoiler-r4", 0);
-	setprop("/systems/failures/spoilers/spoiler-r5", 0);
-	setprop("/systems/failures/hyd-blue", 0);
-	setprop("/systems/failures/hyd-green", 0);
-	setprop("/systems/failures/hyd-yellow", 0);
-	setprop("/systems/failures/pump-blue", 0);
-	setprop("/systems/failures/pump-green", 0);
-	setprop("/systems/failures/pump-yellow-eng", 0);
-	setprop("/systems/failures/pump-yellow-elec", 0);
 	setprop("/systems/failures/fire/cargo-aft-fire", 0);
 	setprop("/systems/failures/fire/cargo-fwd-fire", 0);
 	setprop("/systems/failures/fire/engine-left-fire", 0);
@@ -65,6 +41,7 @@ var failResetOld = func {
 }
 
 failResetOld();
+
 setprop("/systems/acconfig/autoconfig-running", 0);
 setprop("/systems/acconfig/spinning", 0);
 setprop("/systems/acconfig/spin", "-");

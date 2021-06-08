@@ -360,7 +360,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>systems/hydraulic/brakes/pressure-left-psi-output</property>
+						<property>systems/hydraulic/brakes/pressure-left-psi</property>
 						<value>0</value>
 					</equals>
 				</and>
@@ -392,7 +392,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>systems/hydraulic/brakes/pressure-right-psi-output</property>
+						<property>systems/hydraulic/brakes/pressure-right-psi</property>
 						<value>0</value>
 					</equals>
 				</and>

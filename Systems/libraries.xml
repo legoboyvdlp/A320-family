@@ -1325,33 +1325,4 @@
 		</input>
 		<output>/instrumentation/mk-viii/inputs/discretes/landing-flaps</output>
 	</logic>
-
-
-	<!-- Brake Pressure Guague -->
-	<filter>
-		<type>noise-spike</type>
-		<input>
-			<property>/systems/hydraulic/yellow-accumulator-psi</property>
-		</input>
-		<output>/systems/hydraulic/yellow-accumulator-psi-output</output>
-		<max-rate-of-change>3000</max-rate-of-change>
-	</filter>
-	
-	<filter>
-		<type>noise-spike</type>
-		<input>
-			<property>/systems/hydraulic/brakes/pressure-left-psi</property>
-		</input>
-		<output>/systems/hydraulic/brakes/pressure-left-psi-output</output>
-		<max-rate-of-change>3000</max-rate-of-change>
-	</filter>
-	
-	<filter>
-		<type>noise-spike</type>
-		<input>
-			<property>/systems/hydraulic/brakes/pressure-right-psi</property>
-		</input>
-		<output>/systems/hydraulic/brakes/pressure-right-psi-output</output>
-		<max-rate-of-change>3000</max-rate-of-change>
-	</filter>
 </PropertyList>
