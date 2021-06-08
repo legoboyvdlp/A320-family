@@ -192,6 +192,7 @@ var Instrumentation = {
 		locDeflection: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm"),
 	},
 	TCAS: {
+		servicable: props.globals.getNode("/instrumentation/tcas/serviceable"),
 		Inputs: {
 			mode: props.globals.getNode("/instrumentation/tcas/inputs/mode"),
 		},

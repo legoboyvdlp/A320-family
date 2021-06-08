@@ -92,7 +92,8 @@ var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
 print("A320-family Revision: " ~ current_revision);
 setprop("/systems/acconfig/revision", current_revision);
-setprop("/systems/acconfig/options/fo-view", 0);
+
+var foViewNode = props.globals.initNode("/systems/acconfig/options/fo-view", 0, "BOOL");
 setprop("/systems/acconfig/options/simbrief-username", "");
 
 setlistener("/systems/acconfig/new-revision", func {
@@ -209,7 +210,7 @@ var readSettings = func {
 	setprop("/systems/apu/oil/allow-oil-consumption", getprop("/systems/acconfig/options/allow-oil-consumption"));
 	setprop("/sim/model/autopush/route/show", getprop("/systems/acconfig/options/autopush/show-route"));
 	setprop("/sim/model/autopush/route/show-wingtip", getprop("/systems/acconfig/options/autopush/show-wingtip"));
-	setprop("/options/system/fo-view", getprop("/systems/acconfig/options/fo-view"));
+	setprop("/options/system/fo-view", foViewNode.getValue());
 	setprop("/FMGC/simbrief-username", getprop("/systems/acconfig/options/simbrief-username"));
 	setprop("/systems/atsu/atis-server", getprop("/systems/acconfig/options/atis-server"));
 	setprop("/systems/atsu/wxr-server", getprop("/systems/acconfig/options/wxr-server"));
@@ -223,7 +224,7 @@ var writeSettings = func {
 	setprop("/systems/acconfig/options/allow-oil-consumption", getprop("/systems/apu/oil/allow-oil-consumption"));
 	setprop("/systems/acconfig/options/autopush/show-route", getprop("/sim/model/autopush/route/show"));
 	setprop("/systems/acconfig/options/autopush/show-wingtip", getprop("/sim/model/autopush/route/show-wingtip"));
-	setprop("/systems/acconfig/options/fo-view", getprop("/options/system/fo-view"));
+	foViewNode.setValue(getprop("/options/system/fo-view"));
 	setprop("/systems/acconfig/options/simbrief-username", getprop("/FMGC/simbrief-username"));
 	setprop("/systems/acconfig/options/atis-server", getprop("/systems/atsu/atis-server"));
 	setprop("/systems/acconfig/options/wxr-server", getprop("/systems/atsu/wxr-server"));

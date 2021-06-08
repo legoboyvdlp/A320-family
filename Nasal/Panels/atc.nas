@@ -141,10 +141,11 @@ var transponderPanel = {
 	code: "2000",
 	codeDisp: "2000",
 	codeProp: props.globals.initNode("/systems/atc/transponder-code", "2000", "STRING"),
+	failNode: props.globals.getNode("/systems/atc/failed"),
 	failLight: 0,
 	clearFlag: 0,
 	keypad: func(keyNum) {
-		if (props.globals.getNode("/controls/switches/annun-test", 1).getBoolValue() or props.globals.getNode("/systems/electrical/bus/dc-ess", 1).getValue() < 25) {
+		if (pts.Controls.Switches.annunTest.getBoolValue() or systems.ELEC.Bus.dcEss.getValue() < 25) {
 			return;
 		}
 		if (keyNum < 0 or keyNum > 7) {
@@ -162,7 +163,7 @@ var transponderPanel = {
 		}
 	},
 	clearKey: func() {
-		if (props.globals.getNode("/controls/switches/annun-test", 1).getBoolValue() or props.globals.getNode("/systems/electrical/bus/dc-ess", 1).getValue() < 25) {
+		if (pts.Controls.Switches.annunTest.getBoolValue() or systems.ELEC.Bus.dcEss.getValue() < 25) {
 			return;
 		}
 		if (me.codeDisp != "") {
@@ -214,7 +215,7 @@ var transponderPanel = {
 			return;
 		}
 		me.failLight = newFail;
-		props.globals.getNode("/systems/atc/failed").setBoolValue(me.failLight);
+		me.failNode.setBoolValue(me.failLight);
 	},
 	identSwitch: func() {
 		Transponders.vector[me.atcSel - 1].ident();
@@ -255,27 +256,27 @@ var transponderPanel = {
 	updateADR1: func(val) {
 		if (Transponders.vector[me.atcSel - 1].activeADIRS == 1) {
 			if (val) {
-				setprop("/instrumentation/tcas/serviceable", 1);
+				pts.Instrumentation.TCAS.servicable.setValue(1);
 			} else {
-				setprop("/instrumentation/tcas/serviceable", 0);
+				pts.Instrumentation.TCAS.servicable.setValue(0);
 			}
 		}
 	},
 	updateADR2: func(val) {
 		if (Transponders.vector[me.atcSel - 1].activeADIRS == 2) {
 			if (val) {
-				setprop("/instrumentation/tcas/serviceable", 1);
+				pts.Instrumentation.TCAS.servicable.setValue(1);
 			} else {
-				setprop("/instrumentation/tcas/serviceable", 0);
+				pts.Instrumentation.TCAS.servicable.setValue(0);
 			}
 		}
 	},
 	updateADR3: func(val) {
 		if (Transponders.vector[me.atcSel - 1].activeADIRS == 3) {
 			if (val) {
-				setprop("/instrumentation/tcas/serviceable", 1);
+				pts.Instrumentation.TCAS.servicable.setValue(1);
 			} else {
-				setprop("/instrumentation/tcas/serviceable", 0);
+				pts.Instrumentation.TCAS.servicable.setValue(0);
 			}
 		}
 	},
@@ -295,7 +296,6 @@ setlistener("/instrumentation/transponder/id-code", func {
 
 var Transponders = std.Vector.new([Transponder.new("/systems/electrical/bus/ac-ess-shed", 1), Transponder.new("/systems/electrical/bus/ac-2", 2)]);
 	
-
 setlistener("/systems/navigation/adr/operating-1", func() {
 	transponderPanel.updateADR1(systems.ADIRS.Operating.adr[0].getValue());
 }, 1, 0);
