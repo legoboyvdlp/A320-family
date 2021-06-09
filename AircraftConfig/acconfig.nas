@@ -158,7 +158,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	writeSettings();
 	if (getprop("/options/system/save-state") == 1)
 	{
-		save.restore(save.default, getprop("/sim/fg-home") ~ "/Export/" ~ getprop("/sim/aircraft") ~ "-save.xml");
+		save.restore(save.default, pts.Sim.fgHome.getValue() ~ "/Export/" ~ pts.Sim.aircraft.getValue() ~ "-save.xml");
 	}
 	
 	if (getprop("/options/system/fo-view") == 1) {
@@ -169,7 +169,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 });
 
 setlistener("/sim/signals/exit", func {
-	save.save(save.default, getprop("/sim/fg-home") ~ "/Export/" ~ getprop("/sim/aircraft") ~ "-save.xml");
+	save.save(save.default, pts.Sim.fgHome.getValue() ~ "/Export/" ~ pts.Sim.aircraft.getValue() ~ "-save.xml");
 });
 
 var renderingSettings = {
@@ -202,7 +202,7 @@ var renderingSettings = {
 };
 
 var readSettings = func {
-	io.read_properties(getprop("/sim/fg-home") ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
+	io.read_properties(pts.Sim.fgHome.getValue() ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 	setprop("/options/system/keyboard-mode", getprop("/systems/acconfig/options/keyboard-mode"));
 	setprop("/options/system/weight-kgs", getprop("/systems/acconfig/options/weight-kgs"));
 	setprop("/options/system/save-state", getprop("/systems/acconfig/options/save-state"));
@@ -228,7 +228,7 @@ var writeSettings = func {
 	setprop("/systems/acconfig/options/simbrief-username", getprop("/FMGC/simbrief-username"));
 	setprop("/systems/acconfig/options/atis-server", getprop("/systems/atsu/atis-server"));
 	setprop("/systems/acconfig/options/wxr-server", getprop("/systems/atsu/wxr-server"));
-	io.write_properties(getprop("/sim/fg-home") ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
+	io.write_properties(pts.Sim.fgHome.getValue() ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 }
 
 ################

@@ -217,6 +217,7 @@ var Position = {
 
 var Sim = {
 	aero: props.globals.getNode("/sim/aero"),
+	aircraft: props.globals.getNode("/sim/aircraft"),
 	CurrentView: {
 		fieldOfView: props.globals.getNode("/sim/current-view/field-of-view", 1),
 		headingOffsetDeg: props.globals.getNode("/sim/current-view/heading-offset-deg", 1),
@@ -232,6 +233,7 @@ var Sim = {
 		zOffsetMaxM: props.globals.getNode("/sim/current-view/z-offset-max-m", 1),
 		zOffsetMinM: props.globals.getNode("/sim/current-view/z-offset-min-m", 1),
 	},
+	fgHome: props.globals.getNode("/sim/fg-home"),
 	Input: {
 		Selected: {
 			engine: [props.globals.getNode("/sim/input/selected/engine[0]", 1),props.globals.getNode("/sim/input/selected/engine[1]", 1)],
