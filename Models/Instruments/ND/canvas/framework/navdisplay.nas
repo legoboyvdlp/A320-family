@@ -41,7 +41,6 @@ var easeArrow = {
 		#me.element.hide();
 		me.duration = 0;
 		me.changed = 1;		
-		print("VOR reset");
 	},
 	setzero: func {
 		me.duration = 0;

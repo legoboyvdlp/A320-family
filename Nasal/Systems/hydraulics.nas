@@ -2,10 +2,10 @@
 # Jonathan Redpath
 
 # Copyright (c) 2019 Jonathan Redpath
-var lcont = 0;
-var rcont = 0;
 
 var HYD = {
+	lcont: 0,
+	rcont: 0,
 	Brakes: {
 		accumPressPsi: props.globals.initNode("/systems/hydraulic/yellow-accumulator-psi-cmd", 0, "INT"),
 		leftPressPsi: props.globals.initNode("/systems/hydraulic/brakes/pressure-left-psi", 0, "INT"),
@@ -86,23 +86,24 @@ var HYD = {
 		me.Fail.yellowLeak.setBoolValue(0);
 	},
 	loop: func(notification) {
-		# Decrease accumPressPsi when green and yellow hydraulic's aren't pressurized
+		# Decrease accumPressPsi when green and yellow hydraulics aren't pressurized
 		if (me.Brakes.leftbrake.getValue() > 0 or notification.brakesMode == 0) {
-			lcont = lcont + 1;
+			me.lcont = me.lcont + 1;
 		} else {
-			lcont = 0;
+			me.lcont = 0;
 		}
 		if (me.Brakes.rightbrake.getValue() > 0 or notification.brakesMode == 0) {
-			rcont = rcont + 1;
+			me.rcont = me.rcont + 1;
 		} else {
-			rcont = 0;
+			me.rcont = 0;
 		}
+		
 		if (notification.yellow < notification.accumPressPsi and notification.accumPressPsi > 0) {
-			if  (lcont == 1) {
-					me.Brakes.accumPressPsi.setValue(notification.accumPressPsi - 200);
+			if (me.lcont == 1) {
+				me.Brakes.accumPressPsi.setValue(notification.accumPressPsi - 200);
 			}
-			if  (rcont == 1) {
-					me.Brakes.accumPressPsi.setValue(notification.accumPressPsi - 200);
+			if (me.rcont == 1) {
+				me.Brakes.accumPressPsi.setValue(notification.accumPressPsi - 200);
 			}
 			if (notification.accumPressPsi < 0) {
 				me.Brakes.accumPressPsi.setValue(0);
@@ -181,6 +182,7 @@ var HYD = {
 	},
 };
 
+# Restrict gear raising on the ground
 setlistener("/controls/gear/gear-down", func {
 	if (!pts.Controls.Gear.gearDown.getValue() and (pts.Gear.wow[0].getValue() or pts.Gear.wow[1].getValue() or pts.Gear.wow[2].getValue())) {
 		pts.Controls.Gear.gearDown.setValue(1);

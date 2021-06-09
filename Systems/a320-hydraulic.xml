@@ -602,6 +602,36 @@
 				/systems/hydraulic/yellow-accumulator-psi-cmd ge 0
 			</test>
 		</switch>
+		
+		<lag_filter name="/systems/hydraulic/yellow-accumulator-psi-output">
+			<input>/systems/hydraulic/yellow-accumulator-psi</input>
+			<c1>9</c1>
+		</lag_filter>
+		
+		<switch name="/systems/hydraulic/brakes/pressure-left-psi-input">
+			<default value="0"/>
+			<test logic="AND" value="/systems/hydraulic/brakes/pressure-left-psi">
+				/systems/hydraulic/brakes/mode ne 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/brakes/pressure-right-psi-input">
+			<default value="0"/>
+			<test logic="AND" value="/systems/hydraulic/brakes/pressure-right-psi">
+				/systems/hydraulic/brakes/mode ne 1
+			</test>
+		</switch>
+		
+		<lag_filter name="/systems/hydraulic/brakes/pressure-left-psi-output">
+			<input>/systems/hydraulic/brakes/pressure-left-psi-input</input>
+			<c1>9</c1>
+		</lag_filter>
+		
+		<lag_filter name="/systems/hydraulic/brakes/pressure-right-psi-output">
+			<input>/systems/hydraulic/brakes/pressure-right-psi-input</input>
+			<c1>9</c1>
+		</lag_filter>
+		
 	</channel>
 	
 	<channel name="Lights" execrate="8">
