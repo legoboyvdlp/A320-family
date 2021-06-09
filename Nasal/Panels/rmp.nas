@@ -489,6 +489,21 @@ var change_nav_mode = func(rmp_nr, nav_mode) {
 	}
 }
 
+# ADF Radio: Implement BFO such that you will hear audio
+var BFOActive = [props.globals.getNode("/systems/radio/rmp[0]/bfo-active"),props.globals.getNode("/systems/radio/rmp[1]/bfo-active")];
+var ADFIdent = [props.globals.getNode("/instrumentation/adf[0]/ident-audible"),props.globals.getNode("/instrumentation/adf[1]/ident-audible")];
+var ADFMode = [props.globals.getNode("/instrumentation/adf[0]/mode"),props.globals.getNode("/instrumentation/adf[1]/mode")];
+
+setlistener("/systems/radio/rmp[0]/bfo-active", func (val) {
+	ADFIdent[0].setValue(val.getValue());
+	ADFMode[0].setValue(val.getValue() == 1 ? "bfo" : "adf");
+},0,0);
+
+setlistener("/systems/radio/rmp[1]/bfo-active", func (val) {
+	ADFIdent[1].setValue(val.getValue());
+	ADFMode[1].setValue(val.getValue() == 1 ? "bfo" : "adf");
+},0,0);
+
 setlistener("/systems/radio/rmp[0]/vhf1-standby", func {
 	update_stby_freq(0, 1);
 });
@@ -627,9 +642,11 @@ setlistener("/instrumentation/nav[3]/radials/selected-deg", func {
 
 setlistener("/systems/radio/rmp[0]/nav", func(nav_mode) {
 	change_nav_mode(1, nav_mode);
+	if (nav_mode.getValue() == 0) { BFOActive[0].setValue(0); }
 });
 
 setlistener("/systems/radio/rmp[1]/nav", func(nav_mode) {
 	change_nav_mode(2, nav_mode);
+	if (nav_mode.getValue() == 0) { BFOActive[1].setValue(0); }
 });
 
