@@ -63,6 +63,8 @@ var crzFl = 0;
 var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
+var tempOverspeed = nil;
+
 setprop("position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-agl-ft", 1500); #eventually set to 1500 above runway
 setprop("/it-autoflight/internal/vert-speed-fpm", 0);
@@ -279,9 +281,9 @@ var trimReset = func {
 ###############
 
 var updateARPT = func {
-	setprop("autopilot/route-manager/departure/airport", FMGCInternal.depApt);
-	setprop("autopilot/route-manager/destination/airport", FMGCInternal.arrApt);
-	setprop("autopilot/route-manager/alternate/airport", FMGCInternal.altAirport);
+	setprop("/autopilot/route-manager/departure/airport", FMGCInternal.depApt);
+	setprop("/autopilot/route-manager/destination/airport", FMGCInternal.arrApt);
+	setprop("/autopilot/route-manager/alternate/airport", FMGCInternal.altAirport);
 	if (getprop("/autopilot/route-manager/active") != 1) {
 		fgcommand("activate-flightplan", props.Node.new({"activate": 1}));
 	}
@@ -310,7 +312,7 @@ var updateArptLatLon = func {
 }
 
 updateRouteManagerAlt = func() {
-	setprop("autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
+	setprop("/autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
 	# TODO - update FMGCInternal.phase when DES to re-enter in CLIMB/CRUIZE
 };
 
@@ -674,8 +676,9 @@ var masterFMGC = maketimer(0.2, func {
 		FMGCInternal.phase = 2;
 	}
 	
-	if (getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") != 1024) {
-		FMGCInternal.maxspeed = getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") - 4;
+	tempOverspeed = systems.ADIRS.overspeedVFE.getValue();
+	if (tempOverspeed != 1024) {
+		FMGCInternal.maxspeed = tempOverspeed - 4;
 	} elsif (pts.Gear.position[0].getValue() != 0 or pts.Gear.position[1].getValue() != 0 or pts.Gear.position[2].getValue() != 0) {
 		FMGCInternal.maxspeed = 284;
 	} else {
