@@ -4,6 +4,13 @@
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
 
+var Autopilot = {
+	Settings: {
+		headingBugDeg: props.globals.getNode("/autopilot/settings/heading-bug-deg",1),
+		targetAltitudeFt: props.globals.getNode("/autopilot/settings/target-altitude-ft",1),
+	},
+};
+
 var Accelerations = {
 	pilotGDamped: props.globals.getNode("/accelerations/pilot-gdamped"),
 };

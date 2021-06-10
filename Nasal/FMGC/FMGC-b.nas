@@ -952,35 +952,35 @@ setlistener("/it-autoflight/input/ap1", func() {
 	if (Input.ap1Temp != Output.ap1.getBoolValue()) {
 		ITAF.ap1Master(Input.ap1Temp);
 	}
-});
+}, 0, 0);
 
 setlistener("/it-autoflight/input/ap2", func() {
 	Input.ap2Temp = Input.ap2.getBoolValue();
 	if (Input.ap2Temp != Output.ap2.getBoolValue()) {
 		ITAF.ap2Master(Input.ap2Temp);
 	}
-});
+}, 0, 0);
 
 setlistener("/it-autoflight/input/athr", func() {
 	Input.athrTemp = Input.athr.getBoolValue();
 	if (Input.athrTemp != Output.athr.getBoolValue()) {
 		ITAF.athrMaster(Input.athrTemp);
 	}
-});
+}, 0, 0);
 
 setlistener("/it-autoflight/input/fd1", func() {
 	Input.fd1Temp = Input.fd1.getBoolValue();
 	if (Input.fd1Temp != Output.fd1.getBoolValue()) {
 		ITAF.fd1Master(Input.fd1Temp);
 	}
-});
+}, 0, 0);
 
 setlistener("/it-autoflight/input/fd2", func() {
 	Input.fd2Temp = Input.fd2.getBoolValue();
 	if (Input.fd2Temp != Output.fd2.getBoolValue()) {
 		ITAF.fd2Master(Input.fd2Temp);
 	}
-});
+}, 0, 0);
 
 	
 setlistener("/it-autoflight/input/kts-mach", func() {
@@ -1002,7 +1002,7 @@ setlistener("/it-autoflight/input/toga", func() {
 		ITAF.takeoffGoAround();
 		Input.toga.setBoolValue(0);
 	}
-});
+}, 0, 0);
 
 setlistener("/it-autoflight/input/lat", func() {
 	Input.latTemp = Input.lat.getValue();
@@ -1010,6 +1010,7 @@ setlistener("/it-autoflight/input/lat", func() {
 	Output.ap2Temp = Output.ap2.getBoolValue();
 	Output.fd1Temp = Output.fd1.getBoolValue();
 	Output.fd2Temp = Output.fd2.getBoolValue();
+	
 	if (!Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue()) {
 		if (Output.ap1Temp or Output.ap2Temp or Output.fd1Temp or Output.fd2Temp) {
 			ITAF.setLatMode(Input.latTemp);
@@ -1023,7 +1024,7 @@ setlistener("/it-autoflight/input/lat", func() {
 			ITAF.setLatArm(0);
 		}
 	}
-});
+}, 0, 0);
 
 setlistener("/it-autoflight/input/vert", func() {
 	if (!Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and (Output.ap1.getBoolValue() or Output.ap2.getBoolValue() or Output.fd1.getBoolValue() or Output.fd2.getBoolValue())) {
@@ -1031,19 +1032,19 @@ setlistener("/it-autoflight/input/vert", func() {
 	} else {
 		ITAF.setVertMode(9);
 	}
-});
+}, 0, 0);
 
 setlistener("/sim/signals/fdm-initialized", func() {
 	ITAF.init();
-});
+}, 0, 0);
 
 # For Canvas Nav Display.
 setlistener("/it-autoflight/input/hdg", func() {
-	setprop("/autopilot/settings/heading-bug-deg", Input.hdg.getValue());
+	pts.Autopilot.Settings.headingBugDeg.setValue(Input.hdg.getValue());
 }, 0, 0);
 
 setlistener("/it-autoflight/internal/alt", func() {
-	setprop("/autopilot/settings/target-altitude-ft", Internal.alt.getValue());
+	pts.Autopilot.Settings.targetAltitudeFt.setValue(Internal.alt.getValue());
 }, 0, 0);
 
 var loopTimer = maketimer(0.1, ITAF, ITAF.loop);
