@@ -457,6 +457,16 @@
 							]]></script>
 						</binding>
 					</item>
+					<item>
+						<label>MCDU (web)</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							var mcduweb_dlg = gui.Dialog.new("sim/gui/dialogs/mcduweb/dialog", "Aircraft/A320-family/gui/dialogs/mcduweb.xml");
+							mcduweb_dlg.open();
+							</script>
+						</binding>
+					</item>					
 				</menu>
 				<menu n="105">
 					<label>Utilities</label>

@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" translate="no">
 
 <head>
 	<title>MCDU</title>
 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="manifest" href="mcdu_manifest.json" />
+	<meta name="apple-mobile-web-app-status-bar" content="#db4938" />
+	<meta name="theme-color" content="#db4938" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<script>
 		let screen;
 		let screen_src;
+		let blank_src;
 		let loading = 0;
 		let scheduled_load = 0;
 		function refresh_screen() {
@@ -44,6 +50,7 @@
 			let tds = document.querySelectorAll('.input td');
 			for (const td of tds) {
 				td.addEventListener('click', function () {
+				    if (td.className == "disabled") return;
 					press_button("button", td.textContent);
 				}, true);
 			}
@@ -55,7 +62,7 @@
 			}
 			tds = document.querySelectorAll('.menu td');
 			for (const td of tds) {
-				td.addEventListener('click', function () {
+				td.addEventListener('click', function () {				
 					press_button("pagebutton", td.className);
 				}, true);
 			}
@@ -73,8 +80,9 @@
 					refresh_screen();
 				}
 			});
-			screen_src = screen.src;
-			window.setInterval(refresh_screen, 1000);
+			blank_src = screen_src;			
+			screen_src = "/screenshot?canvasindex=10&type=png";
+			setInterval(refresh_screen, 1000);
 		}, true);
 	</script>
 	<style>
@@ -89,12 +97,15 @@
 
 		table {
 			margin: 0;
-			padding: 0
+			padding: 0;
+			touch-action: none;
+			word-wrap: normal;
+			overflow-wrap: normal;
 		}
 
 		tr {
 			margin: 0;
-			padding: 0
+			padding: 0;
 		}
 
 		td {
@@ -102,23 +113,32 @@
 			padding: 0;
 			text-align: center;
 			outline: 1px solid gray;
+			touch-action: manipulation;
+			-ms-user-select: none;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-webkit-touch-callout: none;
+			-khtml-user-select: none;
+			user-select: none;
+			overflow: hidden;
+			text-overflow: clip;
 		}
 
 		td:active {
 			background-color: white;
-			color: black
+			color: black;
 		}
 
 		.enter {
-			font-size: 60%
+			font-size: 60%;
 		}
 
 		.enter tr:first-child {
-			font-size: 70%
+			font-size: 70%;
 		}
 
 		.enter tr:last-child {
-			font-size: 50%
+			font-size: 50%;
 		}
 
 		.enter td:first-child,
@@ -148,11 +168,11 @@
 	</style>
 </head>
 
-<body style="width: 100%">
+<body style="width: 100%" oncontextmenu="return false;">
 	<table class="enter" style="width: 100%">
 		<tr>
 			<td><br></td>
-			<td rowspan="8" style="vertical-align: top"><img src="/screenshot?canvasindex=10&type=png"
+			<td rowspan="8" style="vertical-align: top"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAANgAQMAAACIgIgUAAAAA1BMVEUAAACnej3aAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAgklEQVR42u3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wazbwABRxu5owAAAABJRU5ErkJggg=="
 					style="width: 100%" /></td>
 			<td><br></td>
 		</tr>
@@ -245,7 +265,7 @@
 			<td>Z</td>
 			<td>/</td>
 			<td style="font-size: 50%">SP</td>
-			<td style="font-size: 33%">OVFY<br>△</td>
+			<td style="font-size: 33%" class="disabled">OVFY<br>△</td>
 			<td style="font-size: 33%">CLR</td>
 		</tr>
 	</table>
@@ -283,7 +303,7 @@
 			<td>.</td>
 			<td>0</td>
 			<td
-				style="font-size: 3vw; width: 33.333333333333333333333333333333333333333333333333333333333333333333333%; /* :) */">
+				style="font-size: 3vw; width: 33.333333333333333333333333333333333333333333333333333333333333333333333%; /* :) */" class="disabled">
 				+/-
 			</td>
 		</tr>
