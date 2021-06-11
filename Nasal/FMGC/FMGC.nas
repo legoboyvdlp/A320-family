@@ -69,8 +69,8 @@ setprop("position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-agl-ft", 1500); #eventually set to 1500 above runway
 setprop("/it-autoflight/internal/vert-speed-fpm", 0);
 setprop("/it-autoflight/output/fma-pwr", 0);
-setprop("instrumentation/nav[0]/nav-id", "XXX");
-setprop("instrumentation/nav[1]/nav-id", "XXX");
+setprop("/instrumentation/nav[0]/nav-id", "XXX");
+setprop("/instrumentation/nav[1]/nav-id", "XXX");
 setprop("/FMGC/internal/ils1-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/ils2-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/vor1-mcdu", "XXX/999.99");
@@ -78,6 +78,9 @@ setprop("/FMGC/internal/vor2-mcdu", "999.99/XXX");
 setprop("/FMGC/internal/adf1-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/adf2-mcdu", "999.99/XXX");
 
+var FMGCAlignDone = [props.globals.getNode("/FMGC/internal/align1-done"),props.globals.getNode("/FMGC/internal/align2-done"),props.globals.getNode("/FMGC/internal/align3-done")];
+var FMGCAlignTime = [props.globals.getNode("/FMGC/internal/align1-time"),props.globals.getNode("/FMGC/internal/align2-time"),props.globals.getNode("/FMGC/internal/align3-time")];
+var adirsSkip = props.globals.getNode("/systems/acconfig/options/adirs-skip");
 var blockCalculating = props.globals.initNode("/FMGC/internal/block-calculating", 0, "BOOL");
 var fuelCalculating = props.globals.initNode("/FMGC/internal/fuel-calculating", 0, "BOOL");
 
@@ -93,9 +96,9 @@ var FMGCinit = func {
 	setprop("/FMGC/internal/loc-source", "NAV0");
 	setprop("/FMGC/internal/optalt", 0);
 	setprop("/FMGC/internal/landing-time", -99);
-	setprop("/FMGC/internal/align1-time", -99);
-	setprop("/FMGC/internal/align2-time", -99);
-	setprop("/FMGC/internal/align3-time", -99);
+	FMGCAlignTime[0].setValue(-99);
+	FMGCAlignTime[1].setValue(-99);
+	FMGCAlignTime[2].setValue(-99);
 	setprop("/FMGC/internal/block-fuel-time", -99);
 	setprop("/FMGC/internal/fuel-pred-time", -99); 
 	masterFMGC.start();
@@ -942,26 +945,26 @@ var masterFMGC = maketimer(0.2, func {
 		runway_ils = destination_rwy.ils_frequency_mhz;
 		if (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set") and !getprop("/FMGC/internal/ils1crs-set")) {
 			setprop("/FMGC/internal/ils1freq-calculated", runway_ils);
-			setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
-			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+			setprop("/instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
+			setprop("/instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 		} else if (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set")) {
 			setprop("/FMGC/internal/ils1freq-calculated", runway_ils);
-			setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
+			setprop("/instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
 		} else if (!getprop("/FMGC/internal/ils1crs-set")) {
-			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+			setprop("/instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 		}
 	} else if (departure_rwy != nil and FMGCInternal.phase <= 1) {
 		magnetic_hdg = geo.normdeg(departure_rwy.heading - getprop("/environment/magnetic-variation-deg"));
 		runway_ils = departure_rwy.ils_frequency_mhz;
 		if (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set") and !getprop("/FMGC/internal/ils1crs-set")) {
 			setprop("/FMGC/internal/ils1freq-calculated", runway_ils);
-			setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
-			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+			setprop("/instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
+			setprop("/instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 		} else if (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set")) {
 			setprop("/FMGC/internal/ils1freq-calculated", runway_ils);
-			setprop("instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
+			setprop("/instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
 		} else if (!getprop("/FMGC/internal/ils1crs-set")) {
-			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+			setprop("/instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 		}
 	}
 });
@@ -1158,9 +1161,9 @@ setlistener("/systems/navigation/adr/operating-1", func() {
 		timer48gpsAlign1.stop();
 	}
 	
-	if (getprop("/FMGC/internal/align1-time") == -99) {
+	if (FMGCAlignTime[0].getValue() == -99) {
 		timer48gpsAlign1.start();
-		setprop("/FMGC/internal/align1-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCAlignTime[0].setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
@@ -1170,9 +1173,9 @@ setlistener("/systems/navigation/adr/operating-2", func() {
 		timer48gpsAlign2.stop();
 	}
 	
-	if (getprop("/FMGC/internal/align2-time") == -99) {
+	if (FMGCAlignTime[1].getValue() == -99) {
 		timer48gpsAlign2.start();
-		setprop("/FMGC/internal/align2-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCAlignTime[1].setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
@@ -1182,9 +1185,9 @@ setlistener("/systems/navigation/adr/operating-3", func() {
 		timer48gpsAlign3.stop();
 	}
 	
-	if (getprop("/FMGC/internal/align3-time") == -99) {
+	if (FMGCAlignTime[2].getValue() == -99) {
 		timer48gpsAlign3.start();
-		setprop("/FMGC/internal/align3-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCAlignTime[2].setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
@@ -1231,25 +1234,25 @@ var timer30secLanding = maketimer(1, func() {
 });
 
 var timer48gpsAlign1 = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/align1-time") + 48 or getprop("/systems/acconfig/options/adirs-skip")) {
-		setprop("/FMGC/internal/align1-done", 1);
-		setprop("/FMGC/internal/align1-time", -99);
+	if (pts.Sim.Time.elapsedSec.getValue() > (FMGCAlignTime[0].getValue() + 48) or adirsSkip.getValue()) {
+		FMGCAlignDone[0].setValue(1);
+		FMGCAlignTime[0].setValue(-99);
 		timer48gpsAlign1.stop();
 	}
 });
 
 var timer48gpsAlign2 = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/align2-time") + 48 or getprop("/systems/acconfig/options/adirs-skip")) {
-		setprop("/FMGC/internal/align2-done", 1);
-		setprop("/FMGC/internal/align2-time", -99);
+	if (pts.Sim.Time.elapsedSec.getValue() > (FMGCAlignTime[1].getValue() + 48) or adirsSkip.getValue()) {
+		FMGCAlignDone[1].setValue(1);
+		FMGCAlignTime[1].setValue(-99);
 		timer48gpsAlign2.stop();
 	}
 });
 
 var timer48gpsAlign3 = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/align3-time") + 48 or getprop("/systems/acconfig/options/adirs-skip")) {
-		setprop("/FMGC/internal/align3-done", 1);
-		setprop("/FMGC/internal/align3-time", -99);
+	if (pts.Sim.Time.elapsedSec.getValue() > (FMGCAlignTime[2].getValue() + 48) or adirsSkip.getValue()) {
+		FMGCAlignDone[2].setValue(1);
+		FMGCAlignTime[2].setValue(-99);
 		timer48gpsAlign3.stop();
 	}
 });
