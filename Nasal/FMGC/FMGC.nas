@@ -63,6 +63,8 @@ var crzFl = 0;
 var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
+var tempOverspeed = nil;
+
 setprop("position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-agl-ft", 1500); #eventually set to 1500 above runway
 setprop("/it-autoflight/internal/vert-speed-fpm", 0);
@@ -84,7 +86,6 @@ var FMGCinit = func {
 	FMGCInternal.minspeed = 0;
 	FMGCInternal.maxspeed = 338;
 	FMGCInternal.phase = 0; # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
-	FMGCNodes.phase.setValue(0);
 	FMGCInternal.mngSpd = 157;
 	FMGCInternal.mngSpdCmd = 157;
 	FMGCInternal.mngKtsMach = 0;
@@ -258,7 +259,6 @@ var FMGCNodes = {
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
 	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
-	phase: props.globals.initNode("/FMGC/internal/phase", 0, "INT"),
 };
 
 ############
@@ -281,9 +281,9 @@ var trimReset = func {
 ###############
 
 var updateARPT = func {
-	setprop("autopilot/route-manager/departure/airport", FMGCInternal.depApt);
-	setprop("autopilot/route-manager/destination/airport", FMGCInternal.arrApt);
-	setprop("autopilot/route-manager/alternate/airport", FMGCInternal.altAirport);
+	setprop("/autopilot/route-manager/departure/airport", FMGCInternal.depApt);
+	setprop("/autopilot/route-manager/destination/airport", FMGCInternal.arrApt);
+	setprop("/autopilot/route-manager/alternate/airport", FMGCInternal.altAirport);
 	if (getprop("/autopilot/route-manager/active") != 1) {
 		fgcommand("activate-flightplan", props.Node.new({"activate": 1}));
 	}
@@ -312,7 +312,7 @@ var updateArptLatLon = func {
 }
 
 updateRouteManagerAlt = func() {
-	setprop("autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
+	setprop("/autopilot/route-manager/cruise/altitude-ft", FMGCInternal.crzFt);
 	# TODO - update FMGCInternal.phase when DES to re-enter in CLIMB/CRUIZE
 };
 
@@ -603,15 +603,93 @@ var radios = maketimer(1, func() {
 	adf1();
 });
 
-var fuelUpdateFMGC = maketimer(0.5, func {
+var masterFMGC = maketimer(0.2, func {
+	n1_left = pts.Engines.Engine.n1Actual[0].getValue();
+	n1_right = pts.Engines.Engine.n1Actual[1].getValue();
+	modelat = Modes.PFD.FMA.rollMode.getValue();
+	mode = Modes.PFD.FMA.pitchMode.getValue();
+	gs = pts.Velocities.groundspeed.getValue();
+	alt = pts.Instrumentation.Altimeter.indicatedFt.getValue();
+	# cruiseft = FMGCInternal.crzFt;
+	# cruiseft_b = FMGCInternal.crzFt - 200;
+	state1 = pts.Systems.Thrust.state[0].getValue();
+	state2 = pts.Systems.Thrust.state[1].getValue();
+	accel_agl_ft = Setting.reducAglFt.getValue();
+	gear0 = pts.Gear.wow[0].getBoolValue();
+	altSel = Input.alt.getValue();
+	
+	if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " " and gear0 and FMGCInternal.phase == 1) { # rejected takeoff
+		FMGCInternal.phase = 0;
+		systems.PNEU.pressMode.setValue("GN");
+	}
+	
+	if (gear0 and FMGCInternal.phase == 0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
+		FMGCInternal.phase = 1;
+		systems.PNEU.pressMode.setValue("TO");
+	}
+	
+	if (FMGCInternal.phase == 1 and ((mode != "SRS" and mode != " ") or alt >= accel_agl_ft)) {
+		FMGCInternal.phase = 2;
+		systems.PNEU.pressMode.setValue("TO");
+	}
+	
+	if (FMGCInternal.phase == 2 and (mode == "ALT CRZ" or mode == "ALT CRZ*")) {
+		FMGCInternal.phase = 3;
+		systems.PNEU.pressMode.setValue("CR");
+	}
+	
+	if (FMGCInternal.crzFl >= 200) {
+		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
+			FMGCInternal.phase = 4;
+			systems.PNEU.pressMode.setValue("DE");
+		}
+	} else {
+		if (FMGCInternal.phase == 3 and (flightPlanController.arrivalDist <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
+			FMGCInternal.phase = 4;
+			systems.PNEU.pressMode.setValue("DE");
+		}
+	}
+	
+	if (FMGCInternal.phase == 4) {
+		if (getprop("/FMGC/internal/decel")) {
+			FMGCInternal.phase = 5;
+		}
+		else if (altSel == (FMGCInternal.crzFl * 100)) {  # back to CRZ state
+			FMGCInternal.phase = 3;
+			systems.PNEU.pressMode.setValue("CR");
+		}
+	} 
+
+	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
+		setprop("/FMGC/internal/decel", 1);
+	} else if (getprop("/FMGC/internal/decel") == 1 and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
+		setprop("/FMGC/internal/decel", 0);
+	}
+	
+	if ((FMGCInternal.phase == 5) and state1 == "TOGA" and state2 == "TOGA") {
+		FMGCInternal.phase = 6;
+		systems.PNEU.pressMode.setValue("TO");
+		Input.toga.setValue(1);
+	}
+	
+	if (FMGCInternal.phase == 6 and alt >= accel_agl_ft) { # todo when insert altn or new dest
+		FMGCInternal.phase = 2;
+	}
+	
+	tempOverspeed = systems.ADIRS.overspeedVFE.getValue();
+	if (tempOverspeed != 1024) {
+		FMGCInternal.maxspeed = tempOverspeed - 4;
+	} elsif (pts.Gear.position[0].getValue() != 0 or pts.Gear.position[1].getValue() != 0 or pts.Gear.position[2].getValue() != 0) {
+		FMGCInternal.maxspeed = 284;
+	} else {
+		FMGCInternal.maxspeed = fmgc.FMGCInternal.vmo_mmo;
+	}
+	
 	############################
 	# fuel
 	############################
 	updateFuel();
-});
-
-var windUpdateFMGC = maketimer(1, func {
-
+	
 	############################
 	# wind
 	############################
@@ -655,142 +733,6 @@ var windUpdateFMGC = maketimer(1, func {
 			fmgc.windController.write();
 		}
 	}
-
-});
-
-var prop_n1_left = pts.Engines.Engine.n1Actual[0];
-var prop_n1_right = pts.Engines.Engine.n1Actual[1];
-#var prop_nmodelat = Modes.PFD.FMA.rollMode;
-#var prop_mode = Modes.PFD.FMA.pitchMode;
-var prop_gs = pts.Velocities.groundspeed;
-var prop_alt = pts.Instrumentation.Altimeter.indicatedFt;
-var prop_state1 = pts.Systems.Thrust.state[0];
-var prop_state2 = pts.Systems.Thrust.state[1];
-#var prop_accel_agl_ft = Setting.reducAglFt;
-var prop_gear0 = pts.Gear.wow[0];
-#var prop_altSel = Input.alt;
-
-var masterFMGC = maketimer(0.2, func {
-
-	n1_left = prop_n1_left.getValue();
-	n1_right = prop_n1_right.getValue();
-	modelat = Modes.PFD.FMA.rollMode.getValue();
-	mode = Modes.PFD.FMA.pitchMode.getValue();
-	gs = prop_gs.getValue();
-	alt = prop_alt.getValue();
-	# cruiseft = FMGCInternal.crzFt;
-	# cruiseft_b = FMGCInternal.crzFt - 200;
-	state1 = prop_state1.getValue();
-	state2 = prop_state2.getValue();
-	accel_agl_ft = Setting.reducAglFt.getValue();
-	gear0 = prop_gear0.getBoolValue();
-	altSel = Input.alt.getValue();
-	
-    var phase = FMGCInternal.phase;
-	var newphase = phase;
-
-	if (phase == 0) {
-
-		if (gear0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
-			newphase = 1;
-			systems.PNEU.pressMode.setValue("TO");
-		}
-
-	}
-
-	else if (phase == 1) {
-
-		if (gear0) {
-
-			if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " ") { # rejected takeoff
-				newphase = 0;
-				systems.PNEU.pressMode.setValue("GN");
-			}
-
-		} 
-        else if (((mode != "SRS" and mode != " ") or alt >= accel_agl_ft)) {
-			newphase = 2;
-			systems.PNEU.pressMode.setValue("TO");
-		}
-
-	}
-
-	else if (phase == 2) {
-
-		if ((mode == "ALT CRZ" or mode == "ALT CRZ*")) {
-			newphase = 3;
-			systems.PNEU.pressMode.setValue("CR");
-		}
-
-	}
-
-	else if (phase == 3) {
-
-		if (FMGCInternal.crzFl >= 200) {
-			if ((flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
-				newphase = 4;
-				systems.PNEU.pressMode.setValue("DE");
-			}
-		} else {
-			if ((flightPlanController.arrivalDist <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
-				newphase = 4;
-				systems.PNEU.pressMode.setValue("DE");
-			}
-		}
-
-	}
-
-	else if (phase == 4) {
-
-		if (getprop("/FMGC/internal/decel")) {
-			newphase = 5;
-		}
-		else if (altSel == (FMGCInternal.crzFl * 100)) {  # back to CRZ state
-			newphase = 3;
-			systems.PNEU.pressMode.setValue("CR");
-		}
-
-	}
-
-	else if (phase == 5) {
-
-		if (state1 == "TOGA" and state2 == "TOGA") {
-			newphase = 6;
-			systems.PNEU.pressMode.setValue("TO");
-			Input.toga.setValue(1);
-		}
-
-	}
-		
-	else if (phase == 6) {
-
-		if (alt >= accel_agl_ft) { # todo when insert altn or new dest
-			newphase = 2;
-		}
-
-	}
-
-
-	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and 
-	   flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
-		setprop("/FMGC/internal/decel", 1);
-	} else if (getprop("/FMGC/internal/decel") == 1 and (phase == 0 or phase == 6)) {
-		setprop("/FMGC/internal/decel", 0);
-	}
-	
-	
-	if (getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") != 1024) {
-		FMGCInternal.maxspeed = getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") - 4;
-	} elsif (pts.Gear.position[0].getValue() != 0 or pts.Gear.position[1].getValue() != 0 or pts.Gear.position[2].getValue() != 0) {
-		FMGCInternal.maxspeed = 284;
-	} else {
-		FMGCInternal.maxspeed = fmgc.FMGCInternal.vmo_mmo;
-	}
-
-	if (newphase != phase) {  # phase changed
-		FMGCInternal.phase = newphase;
-		FMGCNodes.phase.setValue(newphase);
-	}
 	
 	############################
 	# calculate speeds
@@ -832,7 +774,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	# predicted takeoff speeds
-	if (phase == 1) {
+	if (FMGCInternal.phase == 1) {
 		FMGCInternal.clean_to = FMGCInternal.clean;
 		FMGCInternal.vs1g_clean_to = FMGCInternal.vs1g_clean;
 		FMGCInternal.vs1g_conf_2_to = FMGCInternal.vs1g_conf_2;
@@ -854,7 +796,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	# predicted approach (temp go-around) speeds
-	if (phase == 5 or phase == 6) {
+	if (FMGCInternal.phase == 5 or FMGCInternal.phase == 6) {
 		FMGCInternal.clean_appr = FMGCInternal.clean;
 		FMGCInternal.vs1g_clean_appr = FMGCInternal.vs1g_clean;
 		FMGCInternal.vs1g_conf_2_appr = FMGCInternal.vs1g_conf_2;
@@ -975,8 +917,7 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	}
 	
-	#if (gear0 and pts.Controls.Flight.flapsPos.getValue() < 5 and (state1 == "MCT" or state1 == "MAN THR" or state1 == "TOGA") and (state2 == "MCT" or state2 == "MAN THR" or state2 == "TOGA")) {
-	if (gear0 and flap < 5 and (state1 == "MCT" or state1 == "MAN THR" or state1 == "TOGA") and (state2 == "MCT" or state2 == "MAN THR" or state2 == "TOGA")) {
+	if (gear0 and pts.Controls.Flight.flapsPos.getValue() < 5 and (state1 == "MCT" or state1 == "MAN THR" or state1 == "TOGA") and (state2 == "MCT" or state2 == "MAN THR" or state2 == "TOGA")) {
 		if (!FMGCInternal.takeoffState) {
 			fmgc.FMGCNodes.toState.setValue(1);
 		}
@@ -992,15 +933,9 @@ var masterFMGC = maketimer(0.2, func {
 	#handle radios, runways, v1/vr/v2
 	############################
 	
-});
-
-var updateAirportRadios = func {
-
-	var phase = FMGCInternal.phase;
-
 	departure_rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
 	destination_rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
-	if (destination_rwy != nil and phase >= 2) {
+	if (destination_rwy != nil and FMGCInternal.phase >= 2) {
 		var airport = airportinfo(FMGCInternal.arrApt);
 		setprop("/FMGC/internal/ldg-elev", airport.elevation * M2FT); # eventually should be runway elevation
 		magnetic_hdg = geo.normdeg(destination_rwy.heading - getprop("/environment/magnetic-variation-deg"));
@@ -1015,7 +950,7 @@ var updateAirportRadios = func {
 		} else if (!getprop("/FMGC/internal/ils1crs-set")) {
 			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 		}
-	} else if (departure_rwy != nil and phase <= 1) {
+	} else if (departure_rwy != nil and FMGCInternal.phase <= 1) {
 		magnetic_hdg = geo.normdeg(departure_rwy.heading - getprop("/environment/magnetic-variation-deg"));
 		runway_ils = departure_rwy.ils_frequency_mhz;
 		if (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set") and !getprop("/FMGC/internal/ils1crs-set")) {
@@ -1029,15 +964,10 @@ var updateAirportRadios = func {
 			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 		}
 	}
-
-};
-
-setlistener(FMGCNodes.phase, updateAirportRadios);
-setlistener(flightPlanController.changed, updateAirportRadios);
+});
 
 var reset_FMGC = func {
 	FMGCInternal.phase = 0;
-	FMGCNodes.phase.serValue(0);
 	fd1 = Input.fd1.getValue();
 	fd2 = Input.fd2.getValue();
 	spd = Input.kts.getValue();

@@ -998,6 +998,7 @@ setlistener("/it-autoflight/input/lat", func {
 	Output.ap2Temp = Output.ap2.getBoolValue();
 	Output.fd1Temp = Output.fd1.getBoolValue();
 	Output.fd2Temp = Output.fd2.getBoolValue();
+	
 	if (!Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue()) {
 		if (Output.ap1Temp or Output.ap2Temp or Output.fd1Temp or Output.fd2Temp) {
 			ITAF.setLatMode(Input.latTemp);
@@ -1026,12 +1027,12 @@ setlistener("/sim/signals/fdm-initialized", func {
 });
 
 # For Canvas Nav Display.
-setlistener("/it-autoflight/input/hdg", func {
-	setprop("/autopilot/settings/heading-bug-deg", Input.hdg.getValue());
+setlistener("/it-autoflight/input/hdg", func() {
+	pts.Autopilot.Settings.headingBugDeg.setValue(Input.hdg.getValue());
 }, 0, 0);
 
-setlistener("/it-autoflight/internal/alt", func {
-	setprop("/autopilot/settings/target-altitude-ft", Internal.alt.getValue());
+setlistener("/it-autoflight/internal/alt", func() {
+	pts.Autopilot.Settings.targetAltitudeFt.setValue(Internal.alt.getValue());
 }, 0, 0);
 
 var loopTimer = maketimer(0.1, ITAF, ITAF.loop);
