@@ -2326,7 +2326,7 @@
 					/it-autoflight/output/ap1 eq 0
 					/it-autoflight/output/ap2 eq 0			    
 			    </test>
-				/instrumentation/radar-altimeter-difference gt 15
+				/instrumentation/radar-altimeter-difference-ft gt 15
 				<!-- TODO 
 				- Localizer deviation excessive
 				- Loss of localizer signal

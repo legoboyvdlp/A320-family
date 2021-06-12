@@ -923,7 +923,7 @@
 			</clipto>
 		</pure_gain>
 
-		<fcs_function name="/instrumentation/radar-altimeter-difference">
+		<fcs_function name="/instrumentation/radar-altimeter-difference-ft">
 			<function>
 			   <abs>
 					<difference>
