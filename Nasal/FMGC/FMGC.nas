@@ -78,8 +78,8 @@ setprop("/FMGC/internal/vor2-mcdu", "999.99/XXX");
 setprop("/FMGC/internal/adf1-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/adf2-mcdu", "999.99/XXX");
 
-var FMGCAlignDone = [props.globals.getNode("/FMGC/internal/align1-done"),props.globals.getNode("/FMGC/internal/align2-done"),props.globals.getNode("/FMGC/internal/align3-done")];
-var FMGCAlignTime = [props.globals.getNode("/FMGC/internal/align1-time"),props.globals.getNode("/FMGC/internal/align2-time"),props.globals.getNode("/FMGC/internal/align3-time")];
+var FMGCAlignDone = [props.globals.initNode("/FMGC/internal/align1-done", 0, "BOOL"), props.globals.initNode("/FMGC/internal/align2-done", 0, "BOOL"), props.globals.initNode("/FMGC/internal/align3-done", 0, "BOOL")];
+var FMGCAlignTime = [props.globals.initNode("/FMGC/internal/align1-time", 0, "DOUBLE"), props.globals.initNode("/FMGC/internal/align2-time", 0, "DOUBLE"), props.globals.initNode("/FMGC/internal/align3-time", 0, "DOUBLE")];
 var adirsSkip = props.globals.getNode("/systems/acconfig/options/adirs-skip");
 var blockCalculating = props.globals.initNode("/FMGC/internal/block-calculating", 0, "BOOL");
 var fuelCalculating = props.globals.initNode("/FMGC/internal/fuel-calculating", 0, "BOOL");

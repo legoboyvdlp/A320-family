@@ -258,7 +258,7 @@ var colddark = func {
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
 		setprop("/controls/flight/flaps", 0);
-		setprop("/controls/flight/speedbrake-arm", 0);
+		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
@@ -317,7 +317,7 @@ var beforestart = func {
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
 		setprop("/controls/flight/flaps", 0);
-		setprop("/controls/flight/speedbrake-arm", 0);
+		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
@@ -380,9 +380,9 @@ var beforestart_b = func {
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
-	setprop("/controls/switches/no-smoking-sign", 0.5);
-	setprop("/controls/switches/seatbelt-sign", 1);
-	setprop("/controls/switches/emer-lights", 0.5);
+	libraries.noSmokingSwitch.setValue(0.5);
+	libraries.seatbeltSwitch.setValue(1.0);
+	libraries.emerLtsSwitch.setValue(0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
@@ -412,7 +412,7 @@ var taxi = func {
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
 		setprop("/controls/flight/flaps", 0);
-		setprop("/controls/flight/speedbrake-arm", 0);
+		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
 		setprop("/controls/gear/gear-down", 1);
 		setprop("/controls/flight/elevator-trim", 0);
@@ -476,9 +476,9 @@ var taxi_b = func {
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/switches/wing-lights", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
-	setprop("/controls/switches/no-smoking-sign", 0.5);
-	setprop("/controls/switches/seatbelt-sign", 1);
-	setprop("/controls/switches/emer-lights", 0.5);
+	libraries.noSmokingSwitch.setValue(0.5);
+	libraries.seatbeltSwitch.setValue(1.0);
+	libraries.emerLtsSwitch.setValue(0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
@@ -537,7 +537,7 @@ var takeoff = func {
 				setprop("/controls/lighting/taxi-light-switch", 1);
 				setprop("/controls/switches/landing-lights-l", 1);
 				setprop("/controls/switches/landing-lights-r", 1);
-				setprop("/controls/flight/speedbrake-arm", 1);
+				pts.Controls.Flight.speedbrakeArm.setValue(1);
 				setprop("/controls/flight/flaps", 0.2);
 				setprop("/controls/atc/mode-knob", 4);
 				atc.transponderPanel.modeSwitch(5);
