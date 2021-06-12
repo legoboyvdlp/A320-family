@@ -1035,7 +1035,7 @@ var updateAirportRadios = func {
 
 };
 
-setlistener(FMGCNodes.phase, updateAirportRadios);
+setlistener(FMGCNodes.phase, updateAirportRadios,0,0);
 setlistener(flightPlanController.changed, updateAirportRadios);
 
 var reset_FMGC = func {
