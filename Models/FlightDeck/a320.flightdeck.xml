@@ -1206,7 +1206,7 @@
 		<object-name>audio_call_vhf2_led</object-name>
 		<object-name>audio_call_vhf3_led</object-name>
 		<object-name>audio_mech_sgn</object-name>
-		<object-name>autoland_light_on</object-name>
+		<!-- <object-name>autoland_light_on</object-name> -->
 		<object-name>ecam_c_b_led</object-name>
 		<object-name>ecam_el_dc_led</object-name>
 		<object-name>ecam_sts_led</object-name>
@@ -6156,6 +6156,29 @@
 			<blue>0.20</blue>
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>autoland_light_on</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<and>
+					<equals>
+						<property>instrumentation/pfd/lights/autoland-armed</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>instrumentation/pfd/lights/autoland-on</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</or>
+		</condition>
 	</animation>
 
 	<!-- Master Warning and Caution -->
