@@ -10,11 +10,17 @@
 	<layout>vbox</layout>
 	<pref-width>480</pref-width>
 
+	<nasal>
+		<open>
+			props.globals.initNode("/sim/http/mcduweb/local-ip", "", "STRING");
+		</open>
+	</nasal>	
+
     <group>
         <layout>hbox</layout>
         <text>
             <halign>left</halign>
-            <label>MCDU web on browser/tablet/smartphone</label>
+            <label>Remote MCDU for browser/tablet/smartphone</label>
         </text>
 
         <button>
@@ -56,7 +62,7 @@
 		</text>
 
     </group>
-	
+
 	<group>
 		<layout>vbox</layout>
 
@@ -95,7 +101,38 @@
 		</text>
 
 	</group>
-		
+
+	<group>
+		<layout>hbox</layout>
+		<input>
+			<width>220</width>
+			<height>25</height>	
+			<padding>5</padding>
+			<label>Local IP</label>
+			<property>/sim/http/mcduweb/local-ip</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>			
+			<live type="bool">true</live>
+		</input>
+		<button>
+			<legend>get qrcode</legend>
+			<pref-height>25</pref-height>
+			<pref-width>180</pref-width>
+			<padding>5</padding>
+			<binding>
+				<command>nasal</command>
+				<script>
+					var _url = "";
+					if (size(getprop("/sim/http/mcduweb/local-ip"))>6) {
+						if ( getprop("sim/http/running",0) == 1 ) _url = "http://" ~ getprop("/sim/http/mcduweb/local-ip") ~ ":" ~ getprop("/sim/http/options/listening-port") ~ "/aircraft-dir/WebPanel/mcdu.html";
+						root.createChild("image").set("src", "https://qr.eletto.dev/" ~ _url).setSize(300,300).setTranslation(10,10); 					
+					}
+				</script>
+			</binding>
+		</button>
+	</group>
+
 	<canvas>
 		<name>mcduwebqr</name>
 		<valign>center</valign>
@@ -110,9 +147,6 @@
 					var mcdu_canvas_dlg = canvas.get(cmdarg());
 					var root = mcdu_canvas_dlg.createGroup();
 					mcdu_canvas_dlg.setColorBackground(1, 1, 1, 1);
-					var _url = "";
-					if( getprop("sim/http/running",0) == 1 ) _url = "http://localhost:" ~ getprop("/sim/http/options/listening-port") ~ "/aircraft-dir/WebPanel/mcdu.html";
-					root.createChild("image").set("src", "https://qr.eletto.dev/" ~ _url).setSize(300,300).setTranslation(10,10); 					
 				]]>
 			</load>
 			<unload>

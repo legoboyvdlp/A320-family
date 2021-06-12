@@ -2,13 +2,12 @@
 <html lang="en" translate="no">
 
 <head>
-	<title>MCDU</title>
+	<title>A320 MCDU</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 	<link rel="manifest" href="mcdu_manifest.json" />
 	<meta name="apple-mobile-web-app-status-bar" content="#db4938" />
 	<meta name="theme-color" content="#db4938" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<script>
 		let screen;
 		let screen_src;
@@ -46,31 +45,50 @@
 				refresh_screen();
 			}, true);
 		}
+
+		var preventzoomaction = function(e) {  //https://exceptionshub.com/disable-double-tap-zoom-option-in-browser-on-touch-devices.html
+				var t2 = e.timeStamp;
+				var t1 = e.currentTarget.dataset.lastTouch || t2;
+				var dt = t2 - t1;
+				var fingers = e.touches.length;
+				e.currentTarget.dataset.lastTouch = t2;
+
+				if (!dt || dt > 500 || fingers > 1) return; // not double-tap
+
+				e.preventDefault();
+				e.target.click();
+			};
+
 		window.addEventListener('load', function () {
+
 			let tds = document.querySelectorAll('.input td');
 			for (const td of tds) {
 				td.addEventListener('click', function () {
 				    if (td.className == "disabled") return;
 					press_button("button", td.textContent);
 				}, true);
+				td.addEventListener('touchstart', preventzoomaction, true);
 			}
 			tds = document.querySelectorAll('.enter td');
 			for (const td of tds) {
 				td.addEventListener('click', function () {
 					press_button(td.getAttribute("button-side") == "l" ? "lskbutton" : "rskbutton", td.getAttribute("button-id"));
 				}, true);
+				td.addEventListener('touchstart', preventzoomaction, true);
 			}
 			tds = document.querySelectorAll('.menu td');
 			for (const td of tds) {
-				td.addEventListener('click', function () {				
+				td.addEventListener('click', function () {
 					press_button("pagebutton", td.className);
 				}, true);
+				td.addEventListener('touchstart', preventzoomaction, true);
 			}
 			tds = document.querySelectorAll('.arrows td');
 			for (const td of tds) {
 				td.addEventListener('click', function () {
 					press_button(td.className == 'airport' ? "pagebutton" : "arrowbutton", td.className);
 				}, true);
+				td.addEventListener('touchstart', preventzoomaction, true);
 			}
 			screen = document.querySelector('img');
 			screen.addEventListener('load', function () {
@@ -98,7 +116,6 @@
 		table {
 			margin: 0;
 			padding: 0;
-			touch-action: none;
 			word-wrap: normal;
 			overflow-wrap: normal;
 		}
@@ -113,7 +130,7 @@
 			padding: 0;
 			text-align: center;
 			outline: 1px solid gray;
-			touch-action: manipulation;
+			
 			-ms-user-select: none;
 			-moz-user-select: none;
 			-webkit-user-select: none;

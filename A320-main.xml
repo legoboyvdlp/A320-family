@@ -458,7 +458,7 @@
 						</binding>
 					</item>
 					<item>
-						<label>MCDU (web)</label>
+						<label>Remote MCDU</label>
 						<binding>
 							<command>nasal</command>
 							<script>
