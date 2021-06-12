@@ -728,8 +728,9 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	
-	if (getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") != 1024) {
-		FMGCInternal.maxspeed = getprop("/systems/navigation/adr/computation/overspeed-vfe-spd") - 4;
+	tempOverspeed = systems.ADIRS.overspeedVFE.getValue();
+	if (tempOverspeed != 1024) {
+		FMGCInternal.maxspeed = tempOverspeed - 4;
 	} elsif (pts.Gear.position[0].getValue() != 0 or pts.Gear.position[1].getValue() != 0 or pts.Gear.position[2].getValue() != 0) {
 		FMGCInternal.maxspeed = 284;
 	} else {
