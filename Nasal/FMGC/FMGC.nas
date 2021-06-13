@@ -997,16 +997,14 @@ var masterFMGC = maketimer(0.2, func {
 ############################
 #handle radios, runways, v1/vr/v2
 ############################
-
+var airportRadiosPhase = nil;
 var updateAirportRadios = func {
 
-	var phase = FMGCInternal.phase;
-	
-	print("# Update airport radios");
+	airportRadiosPhase = FMGCInternal.phase;
 
 	departure_rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
 	destination_rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
-	if (phase >= 2 and destination_rwy != nil) {
+	if (airportRadiosPhase >= 2 and destination_rwy != nil) {
 		var airport = airportinfo(FMGCInternal.arrApt);
 		setprop("/FMGC/internal/ldg-elev", airport.elevation * M2FT); # eventually should be runway elevation
 		magnetic_hdg = geo.normdeg(destination_rwy.heading - getprop("/environment/magnetic-variation-deg"));
@@ -1021,7 +1019,7 @@ var updateAirportRadios = func {
 		} else if (!getprop("/FMGC/internal/ils1crs-set")) {
 			setprop("instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
 		}
-	} else if (phase <= 1 and departure_rwy != nil) {
+	} else if (airportRadiosPhase <= 1 and departure_rwy != nil) {
 		magnetic_hdg = geo.normdeg(departure_rwy.heading - getprop("/environment/magnetic-variation-deg"));
 		runway_ils = departure_rwy.ils_frequency_mhz;
 		if (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set") and !getprop("/FMGC/internal/ils1crs-set")) {
@@ -1039,7 +1037,7 @@ var updateAirportRadios = func {
 };
 
 setlistener(FMGCNodes.phase, updateAirportRadios,0,0);
-setlistener(flightPlanController.changed, updateAirportRadios);
+setlistener(flightPlanController.changed, updateAirportRadios,0,0);
 
 var reset_FMGC = func {
 	FMGCInternal.phase = 0;
