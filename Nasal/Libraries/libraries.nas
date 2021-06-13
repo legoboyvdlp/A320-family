@@ -253,8 +253,8 @@ setlistener("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", func{   
 
 # Replay
 var replayState = props.globals.getNode("/sim/replay/replay-state");
-setlistener("/sim/replay/replay-state", func() {
-	if (replayState.getBoolValue()) {
+setlistener(replayState, func(v) {
+	if (v.getBoolValue()) {
 	} else {
 		acconfig.colddark();
 		gui.popupTip("Replay Ended: Setting Cold and Dark state...");
