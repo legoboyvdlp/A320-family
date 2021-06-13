@@ -164,6 +164,9 @@ var amberFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/
 var amberFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-2", 0, "BOOL");
 var dhFlash = props.globals.initNode("/instrumentation/pfd/flash-indicators/dh-flash", 0, "BOOL");
 
+var light_autoland_armed = props.globals.initNode("/instrumentation/pfd/lights/autoland-armed", 0, "BOOL");
+var light_autoland_on = props.globals.initNode("/instrumentation/pfd/lights/autoland-on", 0, "BOOL");
+
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
