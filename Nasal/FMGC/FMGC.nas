@@ -31,6 +31,7 @@ var hdg = 0;
 var alt = 0;
 var altitude = 0;
 var flap = 0;
+var flaps = 0;
 var freqnav0uf = 0;
 var freqnav0 = 0;
 var namenav0 = "XX";
