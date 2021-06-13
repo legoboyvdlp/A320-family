@@ -984,6 +984,7 @@ var reset_FMGC = func {
 	windController.init();
 	mcdu.MCDU_reset(0);
 	mcdu.MCDU_reset(1);
+	Simbrief.SimbriefParser.inhibit = 0;
 	mcdu.ReceivedMessagesDatabase.clearDatabase();
 	mcdu.FlightLogDatabase.reset(); # track reset events without loosing recorded data
 	
