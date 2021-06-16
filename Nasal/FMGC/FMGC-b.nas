@@ -174,6 +174,7 @@ var Custom = {
 	},
 	Output: {
 		fmaPower: props.globals.initNode("/it-autoflight/output/fma-pwr", 0, "BOOL"),
+		vsFCU: props.globals.initNode("/it-autoflight/output/vs-fcu-display", "", "STRING"),
 	},
 	Sound: {
 		athrOff: props.globals.initNode("/it-autoflight/sound/athrsound", 0, "BOOL"),
@@ -196,6 +197,7 @@ var ITAF = {
 		Input.hdg.setValue(360);
 		Input.alt.setValue(10000);
 		Input.vs.setValue(0);
+		Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",0),3));
 		Input.fpa.setValue(0);
 		Input.lat.setValue(9);
 		Input.vert.setValue(9);
@@ -861,8 +863,11 @@ var ITAF = {
 		Input.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 		Internal.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 	},
+	tempVS: 0,
 	syncVs: func() {
-		Input.vs.setValue(math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000));
+		me.tempVS = math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000);
+		Input.vs.setValue(me.tempVS);
+		fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",me.tempVS),3));
 	},
 	syncFpa: func() {
 		Input.fpa.setValue(math.clamp(math.round(Internal.fpa.getValue(), 0.1), -9.9, 9.9));

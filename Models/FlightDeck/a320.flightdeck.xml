@@ -1158,6 +1158,7 @@
 		<object-name>vord_led</object-name>
 		<object-name>vord_led.001</object-name>
 		<object-name>vs-text</object-name>
+		<object-name>vs-text-last-2-digits</object-name>
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
@@ -4393,6 +4394,7 @@
 	<animation>
 		<type>select</type>
 		<object-name>vs-text</object-name>
+		<object-name>vs-text-last-2-digits</object-name>
 		<condition>
 			<and>
 				<not-equals>
@@ -4631,16 +4633,42 @@
 		<name>vs-text</name>
 		<offsets>
 			<x-m>-0.377</x-m>
-			<y-m>0.09043</y-m>
+			<y-m>0.0850</y-m>
 			<z-m>0.50254</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">number-value</type>
-		<format type="string">%4.0f</format>
-		<property>it-autoflight/input/vs</property>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>it-autoflight/output/vs-fcu-display</property>
+		<truncate>false</truncate>
+		<font type="string">led.txf</font>
+		<draw-text>true</draw-text>
+		<draw-alignment>false</draw-alignment>
+		<draw-boundingbox>false</draw-boundingbox>
+		<character-size>0.008</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<text>
+		<name>vs-text-last-2-digits</name>
+		<offsets>
+			<x-m>-0.377</x-m>
+			<y-m>0.0977</y-m>
+			<z-m>0.5028</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">oo</format>
+		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -4657,7 +4685,7 @@
 		<name>fpa-text</name>
 		<offsets>
 			<x-m>-0.377</x-m>
-			<y-m>0.09043</y-m>
+			<y-m>0.0860</y-m>
 			<z-m>0.50254</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
@@ -4665,7 +4693,7 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
-		<format type="string">%2.1f</format>
+		<format type="string">%+2.1f</format>
 		<property>it-autoflight/input/fpa</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
@@ -7235,6 +7263,7 @@
 		<object-name>hdg-text</object-name>
 		<object-name>alt-text</object-name>
 		<object-name>vs-text</object-name>
+		<object-name>vs-text-last-2-digits</object-name>
 		<object-name>spd-text-test</object-name>
 		<object-name>hdg-text-test</object-name>
 		<object-name>alt-text-test</object-name>

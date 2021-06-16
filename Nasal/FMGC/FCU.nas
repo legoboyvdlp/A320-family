@@ -379,6 +379,7 @@ var FCUController = {
 			} else {
 				fmgc.Input.vert.setValue(1);
 				fmgc.Input.vs.setValue(0);
+				fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",0),3));
 			}
 		}
 	},
@@ -413,6 +414,7 @@ var FCUController = {
 				} else {
 					fmgc.Input.vs.setValue(me.vsTemp);
 				}
+				fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",fmgc.Input.vs.getValue()),3));
 			} else if (fmgc.Output.vert.getValue() == 5) {
 				me.fpaTemp = fmgc.Input.fpa.getValue();
 				if (d == 1) {
