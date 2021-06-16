@@ -136,7 +136,7 @@ var lastgsrestart = 0;
 # Check for A/C state change - advice me for a better method, please :/
 var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
     phase = fmgc.FMGCInternal.phase;
-    gs = pts.Velocities.groundspeed.getValue();
+    gs = pts.Velocities.groundspeedKt.getValue();
     gear0 = pts.Gear.wow[0].getBoolValue();
 	
 	#print(sprintf("OOOI check: %d %d %.2f %s",expectedOOOIState,phase,gs,gear0));
