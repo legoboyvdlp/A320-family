@@ -848,13 +848,13 @@ var ITAF = {
 		}
 	},
 	syncKts: func() {
-		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 350));
+		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 399));
 	},
 	syncKtsGa: func() { # Same as syncKts, except doesn't go below V2
-		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.v2, 350));
+		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.v2, 399));
 	},
 	syncMach: func() {
-		Input.mach.setValue(math.clamp(math.round(Velocities.indicatedMach.getValue(), 0.001), 0.5, 0.82));
+		Input.mach.setValue(math.clamp(math.round(Velocities.indicatedMach.getValue(), 0.001), 0.1, 0.99));
 	},
 	syncHdg: func() {
 		Input.hdg.setValue(math.round(Internal.hdgPredicted.getValue())); # Switches to track automatically

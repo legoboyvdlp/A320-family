@@ -4312,23 +4312,6 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>lvlch.ind</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>it-autoflight/output/vert</property>
-					<value>4</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
 		<object-name>alt-text</object-name>
 		<condition>
 			<not-equals>
@@ -7278,9 +7261,9 @@
 		<object-name>rudder-trim</object-name>
 		<object-name>rudder-trim-letter</object-name>
 		<diffuse>
-			<red>0.89</red>
-			<green>0.37</green>
-			<blue>0.08</blue>
+			<red>0.75</red>
+			<green>0.30</green>
+			<blue>0.0</blue>
 		</diffuse>
 		<ambient>
 			<red>0</red>
@@ -7293,9 +7276,9 @@
 			<blue>0</blue>
 		</specular>
 		<emission>
-			<red>0.89</red>
-			<green>0.37</green>
-			<blue>0.08</blue>
+			<red>0.75</red>
+			<green>0.30</green>
+			<blue>0.0</blue>
 		</emission>
 	</animation>
 
