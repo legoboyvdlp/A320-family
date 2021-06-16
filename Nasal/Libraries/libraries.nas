@@ -139,6 +139,9 @@ var groundspeed = 0;
 var stateL = 0;
 var stateR = 0;
 
+var seatbeltSwitch = props.globals.getNode("/controls/switches/seatbelt-sign");
+var noSmokingSwitch = props.globals.getNode("/controls/switches/no-smoking-sign");
+var emerLtsSwitch = props.globals.getNode("/controls/switches/emer-lights");
 var seatbeltLight = props.globals.getNode("/controls/lighting/seatbelt-sign");
 var noSmokingLight = props.globals.getNode("/controls/lighting/no-smoking-sign");
 
@@ -247,8 +250,8 @@ setlistener("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", func{   
 
 # Replay
 var replayState = props.globals.getNode("/sim/replay/replay-state");
-setlistener("/sim/replay/replay-state", func() {
-	if (replayState.getBoolValue()) {
+setlistener(replayState, func(v) {
+	if (v.getBoolValue()) {
 	} else {
 		acconfig.colddark();
 		gui.popupTip("Replay Ended: Setting Cold and Dark state...");

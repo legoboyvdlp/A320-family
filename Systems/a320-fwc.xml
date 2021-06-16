@@ -2212,7 +2212,7 @@
 				/ECAM/warnings/logic/stall/phase-flipflop eq 1
 			</test>
 		</switch>
-		
+				
 		<switch name="/ECAM/warnings/logic/stall/stall-warn">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -2301,7 +2301,41 @@
 				/ECAM/warnings/logic/stall/stall-warn-inhibit eq 0
 			</test>
 		</switch>
-		
+
+		<switch name="/instrumentation/pfd/lights/autoland-armed">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<!-- /gear/gear[0]/wow eq 0 -->				
+			    <test logic="AND">
+				  /modes/pfd/ILS1 eq 1
+				  /instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected le 200
+				</test>				
+			    <test logic="AND">
+				  /modes/pfd/ILS2 eq 1
+				  /instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected le 200
+				</test>				
+				<!-- /instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected le 200 -->
+			</test>
+		</switch>		
+
+		<switch name="/instrumentation/pfd/lights/autoland-on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+			  /instrumentation/pfd/lights/autoland-armed eq 1
+			  <test logic="OR">
+				<test logic="AND">
+					/it-autoflight/output/ap1 eq 0
+					/it-autoflight/output/ap2 eq 0			    
+			    </test>
+				/instrumentation/radar-altimeter-difference-ft gt 15
+				<!-- TODO 
+				- Localizer deviation excessive
+				- Loss of localizer signal
+				-->
+			  </test>
+		    </test>
+		</switch>		
+
 	</channel>
 	
 	<channel name="ENG" execrate="16">

@@ -922,6 +922,17 @@
 				<max>5000</max>
 			</clipto>
 		</pure_gain>
+
+		<fcs_function name="/instrumentation/radar-altimeter-difference-ft">
+			<function>
+			   <abs>
+					<difference>
+						<property>/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected</property>
+						<property>/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected</property>				
+					</difference>
+				</abs>
+			</function>
+		</fcs_function>
 		
 		<switch name="/instrumentation/transponder/altimeter-input/mode-c-alt-ft">
 			<test logic="AND" value="/instrumentation/altimeter[0]/mode-c-alt-ft">

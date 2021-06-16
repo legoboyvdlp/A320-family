@@ -3158,7 +3158,7 @@ var messages_config_memo = func {
 		toMemoLine1.colour = "c";
 	}
 	
-	if (getprop("/controls/switches/seatbelt-sign") and getprop("/controls/switches/no-smoking-sign")) {
+	if (libraries.seatbeltSwitch.getValue() and libraries.noSmokingSwitch.getValue() ) {
 		toMemoLine2.msg = "    SIGNS ON";
 		toMemoLine2.colour = "g";
 	} else {
@@ -3166,7 +3166,7 @@ var messages_config_memo = func {
 		toMemoLine2.colour = "c";
 	}
 	
-	if (getprop("/controls/flight/speedbrake-arm")) {
+	if (pts.Controls.Flight.speedbrakeArm.getValue()) {
 		toMemoLine3.msg = "    SPLRS ARM";
 		toMemoLine3.colour = "g";
 	} else {
@@ -3202,7 +3202,7 @@ var messages_config_memo = func {
 		setprop("/ECAM/to-memo-reset", 0);
 	}
 	
-	if ((phaseVarMemo == 2 and getprop("/ECAM/engine-start-time") != 0 and getprop("/ECAM/engine-start-time") + 120 < pts.Sim.Time.elapsedSec.getValue()) or getprop("/ECAM/to-memo-flipflop")) {
+	if ((phaseVarMemo == 2 and engStrtTime.getValue() != 0 and engStrtTime.getValue() + 120 < pts.Sim.Time.elapsedSec.getValue()) or getprop("/ECAM/to-memo-flipflop")) {
 		toMemoLine1.active = 1;
 		toMemoLine2.active = 1;
 		toMemoLine3.active = 1;
@@ -3224,7 +3224,7 @@ var messages_config_memo = func {
 		ldgMemoLine1.colour = "c";
 	}
 	
-	if (getprop("/controls/switches/seatbelt-sign") and getprop("/controls/switches/no-smoking-sign")) {
+	if (libraries.seatbeltSwitch.getValue() and libraries.noSmokingSwitch.getValue()) {
 		ldgMemoLine2.msg = "    SIGNS ON";
 		ldgMemoLine2.colour = "g";
 	} else {
@@ -3232,7 +3232,7 @@ var messages_config_memo = func {
 		ldgMemoLine2.colour = "c";
 	}
 	
-	if (getprop("/controls/flight/speedbrake-arm")) {
+	if (pts.Controls.Flight.speedbrakeArm.getValue()) {
 		ldgMemoLine3.msg = "    SPLRS ARM";
 		ldgMemoLine3.colour = "g";
 	} else {
@@ -3343,19 +3343,19 @@ var messages_memo = func {
 		}
 	}
 	
-	if (getprop("/controls/flight/speedbrake-arm") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
+	if (pts.Controls.Flight.speedbrakeArm.getValue() == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		gnd_splrs.active = 1;
 	} else {
 		gnd_splrs.active = 0;
 	}
 	
-	if (getprop("/controls/lighting/seatbelt-sign") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
+	if (libraries.seatbeltLight.getValue() == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		seatbelts.active = 1;
 	} else {
 		seatbelts.active = 0;
 	}
 	
-	if (getprop("/controls/lighting/no-smoking-sign") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # should go off after takeoff assuming switch is in auto due to old logic from the days when smoking was allowed!
+	if (libraries.noSmokingLight.getValue() == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # should go off after takeoff assuming switch is in auto due to old logic from the days when smoking was allowed!
 		nosmoke.active = 1;
 	} else {
 		nosmoke.active = 0;

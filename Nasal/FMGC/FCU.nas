@@ -218,20 +218,20 @@ var FCUController = {
 			me.ias = fmgc.Velocities.indicatedAirspeedKt.getValue();
 			me.mach = fmgc.Velocities.indicatedMach.getValue();
 			if (!fmgc.Input.ktsMach.getBoolValue()) {
-				if (me.ias >= 100 and me.ias <= 350) {
+				if (me.ias >= 100 and me.ias <= 399) {
 					fmgc.Input.kts.setValue(math.round(me.ias));
 				} else if (me.ias < 100) {
 					fmgc.Input.kts.setValue(100);
-				} else if (me.ias > 350) {
-					fmgc.Input.kts.setValue(350);
+				} else if (me.ias > 399) {
+					fmgc.Input.kts.setValue(399);
 				}
 			} else if (fmgc.Input.ktsMach.getBoolValue()) {
-				if (me.mach >= 0.50 and me.mach <= 0.82) {
+				if (me.mach >= 0.10 and me.mach <= 0.99) {
 					fmgc.Input.mach.setValue(math.round(me.mach, 0.001));
-				} else if (me.mach < 0.50) {
-					fmgc.Input.mach.setValue(0.50);
-				} else if (me.mach > 0.82) {
-					fmgc.Input.mach.setValue(0.82);
+				} else if (me.mach < 0.10) {
+					fmgc.Input.mach.setValue(0.10);
+				} else if (me.mach > 0.99) {
+					fmgc.Input.mach.setValue(0.99);
 				}
 			}
 		}
@@ -252,10 +252,10 @@ var FCUController = {
 					} else if (d == -10) {
 						me.machTemp = math.round(me.machTemp - 0.01, 0.01); # Kill floating point error
 					}
-					if (me.machTemp < 0.50) {
-						fmgc.Input.mach.setValue(0.50);
-					} else if (me.machTemp > 0.82) {
-						fmgc.Input.mach.setValue(0.82);
+					if (me.machTemp < 0.10) {
+						fmgc.Input.mach.setValue(0.10);
+					} else if (me.machTemp > 0.99) {
+						fmgc.Input.mach.setValue(0.99);
 					} else {
 						fmgc.Input.mach.setValue(me.machTemp);
 					}
@@ -272,8 +272,8 @@ var FCUController = {
 					}
 					if (me.iasTemp < 100) {
 						fmgc.Input.kts.setValue(100);
-					} else if (me.iasTemp > 350) {
-						fmgc.Input.kts.setValue(350);
+					} else if (me.iasTemp > 399) {
+						fmgc.Input.kts.setValue(399);
 					} else {
 						fmgc.Input.kts.setValue(me.iasTemp);
 					}
@@ -410,6 +410,7 @@ var FCUController = {
 			} else {
 				fmgc.Input.vert.setValue(1);
 				fmgc.Input.vs.setValue(0);
+				fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",0),3));
 			}
 		}
 	},
@@ -444,6 +445,7 @@ var FCUController = {
 				} else {
 					fmgc.Input.vs.setValue(me.vsTemp);
 				}
+				fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",fmgc.Input.vs.getValue()),3));
 			} else if (fmgc.Output.vert.getValue() == 5) {
 				me.fpaTemp = fmgc.Input.fpa.getValue();
 				if (d == 1) {
