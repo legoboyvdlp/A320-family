@@ -700,15 +700,12 @@ var masterFMGC = maketimer(0.2, func {
 	} else {
 		FMGCInternal.maxspeed = fmgc.FMGCInternal.vmo_mmo;
 	}
-	FMGCNodes.vmax.setValue(FMGCInternal.maxspeed);
 	
 	if (newphase != FMGCInternal.phase) {  # phase changed
 		FMGCInternal.phase = newphase;
 		FMGCNodes.phase.setValue(newphase);
 	}
 	
-
-
 	############################
 	# fuel
 	############################
@@ -940,7 +937,6 @@ var masterFMGC = maketimer(0.2, func {
 			FMGCInternal.vls_min = FMGCInternal.vs1g_conf_full * 1.23;
 		}
 	}
-	FMGCNodes.vlsMin.setValue(FMGCInternal.vls_min);
 	
 	if (gear0 and flap < 5 and (state1 == "MCT" or state1 == "MAN THR" or state1 == "TOGA") and (state2 == "MCT" or state2 == "MAN THR" or state2 == "TOGA")) {
 		if (!FMGCInternal.takeoffState) {
