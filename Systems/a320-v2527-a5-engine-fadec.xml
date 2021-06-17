@@ -1993,7 +1993,7 @@
 		<fcs_function name="/instrumentation/upper-ecam/epr[1]">
 			<function>
 				<table>
-					<independentVar lookup="row">/engines/engine[0]/epr-actual</independentVar>
+					<independentVar lookup="row">/engines/engine[1]/epr-actual</independentVar>
 					<tableData>
 						0.97 -139
 						1.00 -125
