@@ -221,7 +221,7 @@ var canvas_PFD_base = {
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
 		"ALT_digit_DN","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
-		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError"];
+		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError","vsFMArate"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -876,7 +876,18 @@ var canvas_PFD_base = {
 		}
 		
 		# FMA Pitch
-		me["FMA_pitch"].setText(sprintf("%s", pitch_mode_act));
+		if (pitch_mode_act == "V/S") {
+			me["FMA_pitch"].setText(sprintf("%s         ", pitch_mode_act));
+			me["vsFMArate"].setText(sprintf("%+4.0f",fmgc.Input.vs.getValue()));
+			me["vsFMArate"].show();
+		} elsif (pitch_mode_act == "FPA") {
+			me["FMA_pitch"].setText(sprintf("%s         ", pitch_mode_act));
+			me["vsFMArate"].setText(sprintf("%+3.1f°",fmgc.Input.fpa.getValue()));
+			me["vsFMArate"].show();
+		}else {
+			me["FMA_pitch"].setText(sprintf("%s", pitch_mode_act));
+			me["vsFMArate"].hide();
+		}
 		me["FMA_pitcharm"].setText(sprintf("%s", pitch_mode_armed_act));
 		me["FMA_pitcharm2"].setText(sprintf("%s", pitch_mode2_armed_act));
 		
