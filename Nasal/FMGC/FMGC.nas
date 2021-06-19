@@ -265,6 +265,8 @@ var FMGCNodes = {
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
 	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
 	phase: props.globals.initNode("/FMGC/internal/phase", 0, "INT"),
+	vlsMin: props.globals.initNode("/FMGC/internal/vls-min", 0, "DOUBLE"),
+	vmax: props.globals.initNode("/FMGC/internal/vmax", 0, "DOUBLE"),
 };
 
 ############
@@ -636,7 +638,6 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	} elsif (FMGCInternal.phase == 1) {
 		if (gear0) {
-
 			if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " ") { # rejected takeoff
 				newphase = 0;
 				systems.PNEU.pressMode.setValue("GN");
@@ -680,7 +681,6 @@ var masterFMGC = maketimer(0.2, func {
 		if (alt >= accel_agl_ft) { # todo when insert altn or new dest
 			newphase = 2;
 		}
-
 	}
 
 
@@ -706,8 +706,6 @@ var masterFMGC = maketimer(0.2, func {
 		FMGCNodes.phase.setValue(newphase);
 	}
 	
-
-
 	############################
 	# fuel
 	############################

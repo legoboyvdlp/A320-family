@@ -5,33 +5,29 @@
 
 var ap_active = 0;
 var athr_active = 0;
-var aileron = 0;
-var elevator = 0;
 var engModeSel = 0;
 var APUMaster = 0;
 var APURPM = 0;
-var gearDown = 0;
-var apOffTime = 0;
-var athrOffTime = 0;
-var apWarnNode = 0;
-var athrWarnNode = 0;
-var engStrtTimeSw = 0;
-var engStrtTime = 0;
-var page = 0;
+var apOffTime = props.globals.initNode("/ECAM/warnings/ap-off-time", 0, "INT");
+var athrOffTime = props.globals.initNode("/ECAM/warnings/athr-off-time", 0, "INT");
+var engStrtTimeSw = props.globals.initNode("/ECAM/engine-start-time-switch", 0, "BOOL");
+var engStrtTime = props.globals.initNode("/ECAM/engine-start-time", 0.0, "DOUBLE");
+var apWarnNode = props.globals.initNode("/it-autoflight/output/ap-warning", 0, "INT");
+var athrWarnNode = props.globals.initNode("/it-autoflight/output/athr-warning", 0, "INT");
+var page = props.globals.initNode("/ECAM/Lower/page", "door", "STRING");
 
 var gearWarnLight = props.globals.initNode("/ECAM/warnings/landing-gear-warning-light", 0, "BOOL");
 
 var ECAM = {
 	_cachePage: "",
 	init: func() {
-		page = props.globals.initNode("/ECAM/Lower/page", "door", "STRING");
-		
-		apOffTime = props.globals.initNode("/ECAM/warnings/ap-off-time", 0, "INT");
-		athrOffTime = props.globals.initNode("/ECAM/warnings/athr-off-time", 0, "INT");
-		engStrtTimeSw = props.globals.initNode("/ECAM/engine-start-time-switch", 0, "BOOL");
-		engStrtTime = props.globals.initNode("/ECAM/engine-start-time", 0.0, "DOUBLE");
-		apWarnNode = props.globals.initNode("/it-autoflight/output/ap-warning", 0, "INT");
-		athrWarnNode = props.globals.initNode("/it-autoflight/output/athr-warning", 0, "INT");
+		page.setValue("door");
+		apOffTime.setValue(0);
+		athrOffTime.setValue(0);
+		engStrtTimeSw.setValue(0);
+		engStrtTime.setValue(0);
+		apWarnNode.setValue(0);
+		athrWarnNode.setValue(0);
 		me.reset();
 	},
 	update_items: [

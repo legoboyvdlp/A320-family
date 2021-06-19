@@ -174,6 +174,7 @@ var Custom = {
 	},
 	Output: {
 		fmaPower: props.globals.initNode("/it-autoflight/output/fma-pwr", 0, "BOOL"),
+		vsFCU: props.globals.initNode("/it-autoflight/output/vs-fcu-display", "", "STRING"),
 	},
 	Sound: {
 		athrOff: props.globals.initNode("/it-autoflight/sound/athrsound", 0, "BOOL"),
@@ -196,6 +197,7 @@ var ITAF = {
 		Input.hdg.setValue(360);
 		Input.alt.setValue(10000);
 		Input.vs.setValue(0);
+		Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",0),3));
 		Input.fpa.setValue(0);
 		Input.lat.setValue(9);
 		Input.vert.setValue(9);
@@ -251,6 +253,10 @@ var ITAF = {
 		Position.gearAglFtTemp = Position.gearAglFt.getValue();
 		Internal.vsTemp = Internal.vs.getValue();
 		Position.indicatedAltitudeFtTemp = Position.indicatedAltitudeFt.getValue();
+		
+		# Update VLS / VMAX for autothrust
+		FMGCNodes.vmax.setValue(FMGCInternal.maxspeed);
+		FMGCNodes.vlsMin.setValue(FMGCInternal.vls_min);
 		
 		# LNAV Engagement
 		if (Output.lnavArm.getBoolValue()) {
@@ -846,13 +852,13 @@ var ITAF = {
 		}
 	},
 	syncKts: func() {
-		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 350));
+		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 399));
 	},
 	syncKtsGa: func() { # Same as syncKts, except doesn't go below V2
-		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.v2, 350));
+		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.v2, 399));
 	},
 	syncMach: func() {
-		Input.mach.setValue(math.clamp(math.round(Velocities.indicatedMach.getValue(), 0.001), 0.5, 0.82));
+		Input.mach.setValue(math.clamp(math.round(Velocities.indicatedMach.getValue(), 0.001), 0.1, 0.99));
 	},
 	syncHdg: func() {
 		Input.hdg.setValue(math.round(Internal.hdgPredicted.getValue())); # Switches to track automatically
@@ -861,8 +867,11 @@ var ITAF = {
 		Input.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 		Internal.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 	},
+	tempVS: 0,
 	syncVs: func() {
-		Input.vs.setValue(math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000));
+		me.tempVS = math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000);
+		Input.vs.setValue(me.tempVS);
+		fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",me.tempVS),3));
 	},
 	syncFpa: func() {
 		Input.fpa.setValue(math.clamp(math.round(Internal.fpa.getValue(), 0.1), -9.9, 9.9));
@@ -1021,6 +1030,19 @@ setlistener("/it-autoflight/input/vert", func {
 		ITAF.setVertMode(9);
 	}
 });
+
+# Mode Reversions
+setlistener(pts.Systems.Navigation.ADR.Output.overspeed, func(v) {
+	if (v.getBoolValue() and !Output.ap1.getBoolValue() and !Output.ap2.getBoolValue() and Output.athr.getBoolValue() and Modes.PFD.FMA.pitchMode.getValue() == "OP CLB" and Modes.PFD.FMA.throttle.getValue() == "THR CLB") {
+		Input.fd1.setValue(0);
+		Input.fd2.setValue(0);
+		ecam.aural[5].setBoolValue(0);
+		settimer(func() {
+			ecam.aural[5].setBoolValue(1);
+		}, 0.15);
+	}
+}, 0, 0);
+
 
 setlistener("/sim/signals/fdm-initialized", func {
 	ITAF.init();

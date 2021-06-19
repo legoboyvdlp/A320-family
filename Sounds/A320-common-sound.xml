@@ -1915,6 +1915,21 @@
 		
 		<chime>
 			<name>Chime</name>
+			<path>Aircraft/A320-family/Sounds/Cockpit/click.wav</path>
+			<mode>once</mode>
+			<type>avionics</type>
+			<condition>
+				<property>/sim/sound/warnings/click</property>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
+			<reference-dist>10</reference-dist>
+			<max-dist>100</max-dist>
+		</chime>
+		
+		<chime>
+			<name>Chime</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/chime.wav</path>
 			<mode>once</mode>
 			<type>avionics</type>

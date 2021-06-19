@@ -142,6 +142,9 @@ var groundspeed = 0;
 var stateL = 0;
 var stateR = 0;
 
+var seatbeltSwitch = props.globals.getNode("/controls/switches/seatbelt-sign");
+var noSmokingSwitch = props.globals.getNode("/controls/switches/no-smoking-sign");
+var emerLtsSwitch = props.globals.getNode("/controls/switches/emer-lights");
 var seatbeltLight = props.globals.getNode("/controls/lighting/seatbelt-sign");
 var noSmokingLight = props.globals.getNode("/controls/lighting/no-smoking-sign");
 
