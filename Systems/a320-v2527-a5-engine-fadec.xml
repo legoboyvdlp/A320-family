@@ -1501,6 +1501,7 @@
 			<test logic="OR" value="0"> <!-- Reset -->
 				position/wow eq 1
 				/it-fbw/law ne 0
+				/FMGC/FCU-working eq 0
 				fadec/control-1/n1-mode eq 1
 				fadec/control-2/n1-mode eq 1
 			</test>

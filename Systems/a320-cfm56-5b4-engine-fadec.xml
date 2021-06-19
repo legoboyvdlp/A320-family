@@ -1042,6 +1042,7 @@
 			<test logic="OR" value="0"> <!-- Reset -->
 				position/wow eq 1
 				/it-fbw/law ne 0
+				/FMGC/FCU-working eq 0
 			</test>
 			<test logic="AND" value="0"> <!-- Reset -->
 				fadec/eng-out eq 1

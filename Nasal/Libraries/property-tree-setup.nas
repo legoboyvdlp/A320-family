@@ -295,6 +295,21 @@ var Sim = {
 	},
 };
 
+var Systems = {
+	Navigation: {
+		ADR: {
+			Output: {
+				overspeed: props.globals.getNode("/systems/navigation/adr/output/overspeed"),
+				underspeed: props.globals.getNode("/systems/navigation/adr/output/underspeed"),
+			},
+		},
+	},
+	Thrust: {
+		engOut: props.globals.getNode("/systems/thrust/eng-out"),
+		state: [props.globals.getNode("/systems/thrust/state1"), props.globals.getNode("/systems/thrust/state2")],
+	},
+};
+
 var Velocities = {
 	airspeedKt: props.globals.getNode("/velocities/airspeed-kt"),
 	groundspeedKt: props.globals.getNode("/velocities/groundspeed-kt"),

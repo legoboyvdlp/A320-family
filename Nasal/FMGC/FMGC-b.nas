@@ -1043,7 +1043,31 @@ setlistener("/it-autoflight/input/vert", func() {
 	}
 });
 
-setlistener("/sim/signals/fdm-initialized", func() {
+# Mode Reversions
+setlistener(pts.Systems.Navigation.ADR.Output.overspeed, func(v) {
+	if (v.getBoolValue() and !Output.ap1.getBoolValue() and !Output.ap2.getBoolValue() and Output.athr.getBoolValue() and Modes.PFD.FMA.pitchMode.getValue() == "OP CLB" and Modes.PFD.FMA.throttle.getValue() == "THR CLB") {
+		Input.fd1.setValue(0);
+		Input.fd2.setValue(0);
+		ecam.aural[5].setBoolValue(0);
+		settimer(func() {
+			ecam.aural[5].setBoolValue(1);
+		}, 0.15);
+	}
+}, 0, 0);
+
+setlistener(pts.Systems.Navigation.ADR.Output.underspeed, func(v) {
+	if (v.getBoolValue() and !Output.ap1.getBoolValue() and !Output.ap2.getBoolValue() and Output.athr.getBoolValue() and Modes.PFD.FMA.pitchMode.getValue() == "OP DES" and Modes.PFD.FMA.throttle.getValue() == "THR IDLE") {
+		Input.fd1.setValue(0);
+		Input.fd2.setValue(0);
+		ecam.aural[5].setBoolValue(0);
+		settimer(func() {
+			ecam.aural[5].setBoolValue(1);
+		}, 0.15);
+	}
+}, 0, 0);
+
+
+setlistener("/sim/signals/fdm-initialized", func {
 	ITAF.init();
 });
 
