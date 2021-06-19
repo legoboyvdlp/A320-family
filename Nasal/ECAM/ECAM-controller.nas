@@ -14,7 +14,7 @@ var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
-var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/retard", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cchord", 0, "BOOL")];
+var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/retard", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cchord", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/click", 0, "BOOL")];
 var warningFlash = props.globals.initNode("/ECAM/warnings/master-warning-flash", 0, "BOOL");
 
 var lineIndex = 0;
@@ -223,7 +223,7 @@ var warning = {
 		me.noRepeat = 1;
 	},
 	sound: func() {
-		if (me.aural > 3) { return; }
+		if (me.aural == 9) { return; }
 		if (me.active == 0 and me.wasActive == 1) {
 			aural[me.aural].setBoolValue(0); 
 			me.wasActive = 0;

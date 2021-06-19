@@ -278,6 +278,13 @@ var Sim = {
 };
 
 var Systems = {
+	Navigation: {
+		ADR: {
+			Output: {
+				overspeed: props.globals.getNode("/systems/navigation/adr/output/overspeed"),
+			},
+		},
+	},
 	Thrust: {
 		engOut: props.globals.getNode("/systems/thrust/eng-out"),
 		state: [props.globals.getNode("/systems/thrust/state1"), props.globals.getNode("/systems/thrust/state2")],

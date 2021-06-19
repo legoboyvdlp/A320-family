@@ -105,18 +105,18 @@ var FCUController = {
 	FD1: func() {
 		if (me.FCUworking) {
 			if (!fmgc.Output.fd1.getBoolValue()) {
-				fd1Input.setValue(1);
+				fmgc.Input.fd1.setValue(1);
 			} else {
-				fd1Input.setValue(0);
+				fmgc.Input.fd1.setValue(0);
 			}
 		}
 	},
 	FD2: func() {
 		if (me.FCUworking) {
 			if (!fmgc.Output.fd2.getBoolValue()) {
-				fd2Input.setValue(1);
+				fmgc.Input.fd2.setValue(1);
 			} else {
-				fd2Input.setValue(0);
+				fmgc.Input.fd2.setValue(0);
 			}
 		}
 	},
