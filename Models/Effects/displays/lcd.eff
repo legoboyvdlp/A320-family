@@ -3,7 +3,7 @@ License: GPL v2
 Author: Nikolai V. Chr.
 -->
 <PropertyList>
-	<name>Aircraft/MD-11/Models/Effects/displays/lcd</name>
+	<name>Aircraft/A320-family/Models/Effects/displays/lcd</name>
 	<parameters>
 		<inner-angle type="float">35</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
 		<outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
@@ -24,7 +24,7 @@ Author: Nikolai V. Chr.
 			<wrap-s>clamp</wrap-s>
 			<wrap-t>clamp</wrap-t>
 			<internal-format>normalized</internal-format>
-			<image>Aircraft/MD-11/Models/Effects/dust-effect-overlay.png</image>
+			<image>Aircraft/A320-family/Models/Effects/dust-effect-overlay.png</image>
 		</texture>
 
 		<vertex-program-two-side type="bool">false</vertex-program-two-side>
@@ -254,8 +254,8 @@ Author: Nikolai V. Chr.
 		   		<use>vertex-program-two-side</use>
 			</vertex-program-two-side>
 			<program>
-				<vertex-shader n="0">Aircraft/MD-11/Models/Effects/displays/lcd.vert</vertex-shader>
-				<fragment-shader n="0">Aircraft/MD-11/Models/Effects/displays/lcd.frag</fragment-shader>
+				<vertex-shader n="0">Aircraft/A320-family/Models/Effects/displays/lcd.vert</vertex-shader>
+				<fragment-shader n="0">Aircraft/A320-family/Models/Effects/displays/lcd.frag</fragment-shader>
 				<fragment-shader n="1">Shaders/noise.frag</fragment-shader>
 				<fragment-shader n="2">Shaders/filters-ALS.frag</fragment-shader>
 			</program>
