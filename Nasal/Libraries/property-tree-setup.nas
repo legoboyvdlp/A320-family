@@ -282,6 +282,7 @@ var Systems = {
 		ADR: {
 			Output: {
 				overspeed: props.globals.getNode("/systems/navigation/adr/output/overspeed"),
+				underspeed: props.globals.getNode("/systems/navigation/adr/output/underspeed"),
 			},
 		},
 	},

@@ -736,6 +736,33 @@
 			</function>
 		</fcs_function>
 		
+		<switch name="/systems/navigation/adr/computation/underspeed-difference">
+			<default value="2"/>
+			<test logic="OR" value="19">
+				/controls/flight/speedbrake eq 1.0
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/navigation/adr/computation/underspeed">
+			<function>
+				<ifthen>
+					<lt>
+						<max>
+							<property>/systems/navigation/adr/output/cas-1</property>
+							<property>/systems/navigation/adr/output/cas-2</property>
+							<property>/systems/navigation/adr/output/cas-3</property>
+						</max>
+						<difference>
+							<property>/FMGC/internal/vls-min</property>
+							<property>/systems/navigation/adr/computation/underspeed-difference</property>
+						</difference>
+					</lt>
+					<value>1</value>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
 	</channel>
 	
 	<channel name="ADR Output" execrate="2"> <!-- todo - need lowpass? -->
@@ -902,6 +929,11 @@
 		
 		<pure_gain name="/systems/navigation/adr/output/overspeed">
 			<input>/systems/navigation/adr/computation/overspeed</input>
+			<gain>/systems/navigation/adr/any-adr-on</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/navigation/adr/output/underspeed">
+			<input>/systems/navigation/adr/computation/underspeed</input>
 			<gain>/systems/navigation/adr/any-adr-on</gain>
 		</pure_gain>
 		
