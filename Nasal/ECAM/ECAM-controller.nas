@@ -352,6 +352,7 @@ var ECAM_controller = {
 					if (counter < 9) {
 						w.write();
 						counter += 1;
+						w.callPage();
 					}
 					w.warnlight();
 					w.sound();

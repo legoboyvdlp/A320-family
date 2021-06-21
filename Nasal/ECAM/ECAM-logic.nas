@@ -211,19 +211,19 @@ var messages_priority_3 = func {
 	}
 	
 	# ENG FIRE
-	if ((eng1FireFlAgent2.clearFlag == 0 and systems.eng1FireWarn.getValue() == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng1FireGnEvac.clearFlag == 0 and systems.eng1FireWarn.getValue() == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
+	if ((eng1Fire.clearFlag == 0 and systems.eng1FireWarn.getValue() == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng1FireGnEvac.clearFlag == 0 and systems.eng1FireWarn.getValue() == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
 		eng1Fire.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng1Fire);
 	}
 	
-	if ((eng2FireFlAgent2.clearFlag == 0 and systems.eng2FireWarn.getValue() == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng2FireGnEvac.clearFlag == 0 and systems.eng2FireWarn.getValue() == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
+	if ((eng2Fire.clearFlag == 0 and systems.eng2FireWarn.getValue() == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) or (eng2FireGnEvac.clearFlag == 0 and systems.eng2FireWarn.getValue() == 1 and (phaseVar3 < 5 or phaseVar3 > 7))) {
 		eng2Fire.active = 1;
 	} else {
 		ECAM_controller.warningReset(eng2Fire);
 	}
 	
-	if (apuFireMaster.clearFlag == 0 and systems.apuFireWarn.getValue() == 1) {
+	if (apuFire.clearFlag == 0 and systems.apuFireWarn.getValue() == 1) {
 		apuFire.active = 1;
 	} else {
 		ECAM_controller.warningReset(apuFire);
