@@ -478,9 +478,14 @@ var ECAM_controller = {
 			}
 		}
 		
-		if (statusFlag == 1 and lines[0].getValue() == "") {
-			ecam.SystemDisplayController.manCall("statusPage");
+		if (!hasCleared and statusFlag) {
 			statusFlag = 0;
+			ecam.SystemDisplayController.manCall("statusPage");
+			return;
+		}
+		
+		if (!hasCleared and !statusFlag) {
+			SystemDisplayController.manCall("CLR");
 		}
 	},
 	recall: func() {

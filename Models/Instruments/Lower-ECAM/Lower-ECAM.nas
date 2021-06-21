@@ -296,7 +296,7 @@ var canvas_lowerECAM_base = {
 					lowerECAM_hyd.page.hide();
 					lowerECAM_wheel.page.hide();
 					lowerECAM_cond.update();
-				} else if (page == "crz") {
+				} else if (page == "cruise") {
 					lowerECAM_apu.page.hide();
 					lowerECAM_bleed.page.hide();
 					lowerECAM_cond.page.hide();

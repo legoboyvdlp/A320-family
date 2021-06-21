@@ -259,11 +259,11 @@ var SystemDisplayController = {
 	},
 	failureCall: func(newPage) {
 		if (contains(me.PageList, newPage)) {
+			ECAMControlPanel.lightOff(me.displayedPage.name);
 			me.lastDisplayedPage = me.displayedPage;
 			me.displayedPage = me.PageList[newPage];
 			me.lastMode = me.mode;
 			me.mode = 1;
-			ECAMControlPanel.lightOff(me.lastDisplayedPage.name);
 			ECAMControlPanel.lightOn(me.displayedPage.name);
 		} else {
 			debug.dump("Attempted to set page to unknown page", newPage);

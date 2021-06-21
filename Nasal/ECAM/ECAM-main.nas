@@ -154,7 +154,6 @@ var ECAMControlPanel = {
 			return;
 		}
 		
-		SystemDisplayController.manCall("CLR");
 		ecam.ECAM_controller.clear();
 	},
 	stsBtn: func() {
@@ -172,11 +171,11 @@ var ECAMControlPanel = {
 		# todo
 	},
 	lightOff: func(pageLightOff) {
-		if (pageLightOff == "crz") { return; }
+		if (pageLightOff == "cruise") { return; }
 		ECAM.lights[pageLightOff].setBoolValue(0);
 	},
 	lightOn: func(pageLightOn) {
-		if (pageLightOn == "crz") { return; }
+		if (pageLightOn == "cruise") { return; }
 		ECAM.lights[pageLightOn].setBoolValue(1);
 	},
 };
