@@ -5,9 +5,6 @@
 
 var ap_active = 0;
 var athr_active = 0;
-var engModeSel = 0;
-var APUMaster = 0;
-var APURPM = 0;
 var apOffTime = props.globals.initNode("/ECAM/warnings/ap-off-time", 0, "INT");
 var athrOffTime = props.globals.initNode("/ECAM/warnings/athr-off-time", 0, "INT");
 var engStrtTimeSw = props.globals.initNode("/ECAM/engine-start-time-switch", 0, "BOOL");
@@ -28,6 +25,7 @@ var ECAM = {
 		engStrtTime.setValue(0);
 		apWarnNode.setValue(0);
 		athrWarnNode.setValue(0);
+		SystemDisplayController.init();
 		me.reset();
 	},
 	update_items: [
@@ -77,7 +75,6 @@ var ECAM = {
 			setprop("ECAM/rightmsg/linec" ~ i, "w");
 		}
 		
-		page.setValue("door");
 		me.lights.apu.setValue(0);
 		me.lights.bleed.setValue(0);
 		me.lights.cond.setValue(0);
@@ -124,10 +121,8 @@ var ECAM = {
 			update_item.update(notification);
 		}
 		
-		SystemDisplay.update(notification);
-		
-		if (me._cachePage != SystemDisplay.page) {
-			me.updateSDPage(SystemDisplay.page);
+		if (me._cachePage != SystemDisplayController.displayedPage.name) {
+			me.updateSDPage(SystemDisplayController.displayedPage.name);
 		}
 	},
 	updateSDPage: func(newPage) {
@@ -139,128 +134,9 @@ var ECAM = {
 	},
 };
 
-var SystemDisplay = {
-	page: "",
-	
-	manShownPage: 0,
-	failShownPage: 0,
-	APU10sec: 9,
-	eng10sec: 9,
-	fctl20sc: 9,
-	_apuTime: 0,
-	_engTime: 0,
-	_fctlTime: 0,
-	
-	failCall: func(page) {
-		if (me.manShownPage) {
-			me.manShownPage = 0;
-			ECAMControlPanel.lightOff(me.page);
-		}
-		ECAMControlPanel.lightOn(page);
-		me.page = page;
-		me.failShownPage = 1;
-	},
-	manCall: func(page) {
-		ECAMControlPanel.lightOff(me.page);
-		ECAMControlPanel.lightOn(page);
-		me.page = page;
-		me.manShownPage = 1;
-	},
-	autoCall: func(page) {
-		if (me.manShownPage or me.failShownPage) { return; }
-		if (me.page != page) {
-			me.page = page;
-		}
-	},
-	update: func(notification) {
-		APUMaster = systems.APUNodes.Controls.master.getValue();
-		APURPM = pts.APU.rpm.getValue();
-		engModeSel = pts.Controls.Engines.startSw.getValue();
-		
-		if (APUMaster == 1 and me.APU10sec != 1) {
-			me.autoCall("apu");
-			me.fctl20sec = 0;
-			
-			if (me.APU10sec == 9 and APURPM >= 95.0) {
-				me.APU10sec = 0;
-				me._apuTime = notification.elapsedTime;
-			}
-			
-			if (me.APU10sec != 9 and notification.elapsedTime > me._apuTime + 10) {
-				me.APU10sec = 1;
-			}
-		} elsif (engModeSel == 0 or engModeSel == 2 or (engModeSel == 1 and me.eng10sec == 0)) {
-			me.autoCall("eng");
-			me.fctl20sec = 0;
-			
-			if (me.eng10sec == 9 and engModeSel == 1) {
-				me.eng10sec = 0;
-				me._engTime = notification.elapsedTime;
-			}
-			
-			if (me.eng10sec != 9 and notification.elapsedTime > me._engTime + 10) {
-				me.eng10sec = 1;
-			}
-		} else {
-			# Reset variables
-			if (APUMaster == 0) {
-				me.APU10sec = 9;
-			}
-			me.eng10sec = 9;
-			
-			# Phase logic
-			if (notification.FWCPhase == 1) {
-				me.autoCall("door");
-				me.fctl20sec = 9;
-			} elsif (notification.FWCPhase == 2) {
-				if (notification.aileronFBW >= 0.15 or notification.elevatorFBW >= 0.15 and me.fctl20sec == 9) {
-					me.autoCall("fctl");
-					
-					if (me.fctl20sec == 9) {
-						me.fctl20sec = 0;
-						me._fctlTime = notification.elapsedTime;
-					}
-					
-					if (me.fctl20sec != 9 and notification.elapsedTime > me._fctlTime + 20) {
-						me.fctl20sec = 1;
-					}
-				} elsif (me.fctl20sec == 0) {
-					if (me.fctl20sec != 9 and notification.elapsedTime > me._fctlTime + 20) {
-						me.fctl20sec = 1;
-					}
-				} else {
-					me.autoCall("wheel");
-					me.fctl20sec = 9;
-				}
-			} elsif (notification.FWCPhase >= 3 and notification.FWCPhase <= 5) {
-				me.autoCall("eng");
-				me.fctl20sec = 9;
-			} elsif (notification.FWCPhase == 6) {
-				if (notification.gearLever and notification.agl <= 16000) {
-					me.autoCall("wheel");
-				} else {
-					me.autoCall("crz");
-				}
-				me.fctl20sec = 9;
-			} elsif (notification.FWCPhase >= 7 and notification.FWCPhase <= 9) {
-				me.autoCall("wheel");
-				me.fctl20sec = 9;
-			} elsif (notification.FWCPhase == 10) {
-				me.autoCall("door");
-				me.fctl20sec = 9;
-			}
-		}
-	},
-};
-
 var ECAMControlPanel = {
 	sysPageBtn: func(page) {
-		if (SystemDisplay.page != page) {
-			SystemDisplay.manCall(page);
-		} else {
-			me.lightOff(SystemDisplay.page);
-			SystemDisplay.manShownPage = 0;
-		}
+		SystemDisplayController.manCall(page);
 	},
 	rclBtn: func() {
 		ecam.ECAM_controller.recall();
@@ -278,22 +154,13 @@ var ECAMControlPanel = {
 			return;
 		}
 		
-		if (SystemDisplay.manShownPage) {
-			me.lightOff(SystemDisplay.page);
-			SystemDisplay.manShownPage = 0;
-			return;
-		}
-		
-		if (SystemDisplay.failShownPage) {
-			me.lightOff(SystemDisplay.page);
-			SystemDisplay.failShownPage = 0;
-			return;
-		}
-		
+		SystemDisplayController.manCall("CLR");
 		ecam.ECAM_controller.clear();
 	},
 	stsBtn: func() {
-		SystemDisplay.manCall("sts");
+		if (SystemDisplayController.displayedPage.name != "statusPage") {
+			SystemDisplayController.manCall("statusPage");
+		}
 	},
 	allBtn: func() {
 		# todo

@@ -50,6 +50,7 @@ var Controls = {
 		aileron: props.globals.getNode("/controls/flight/aileron"),
 		aileronDrivesTiller: props.globals.getNode("/controls/flight/aileron-drives-tiller"),
 		autoCoordination: props.globals.getNode("/controls/flight/auto-coordination"),
+		elevator: props.globals.getNode("/controls/flight/elevator"),
 		elevatorTrim: props.globals.getNode("/controls/flight/elevator-trim"),
 		flaps: props.globals.getNode("/controls/flight/flaps"),
 		flapsTemp: 0,
@@ -57,6 +58,7 @@ var Controls = {
 		flapsPos: props.globals.getNode("/controls/flight/flaps-pos"),
 		speedbrake: props.globals.getNode("/controls/flight/speedbrake"),
 		speedbrakeArm: props.globals.getNode("/controls/flight/speedbrake-arm"),
+		rudder: props.globals.getNode("/controls/flight/rudder"),
 		rudderTrim: props.globals.getNode("/controls/flight/rudder-trim"),
 	},
 	Gear: {
@@ -217,6 +219,7 @@ var Orientation = {
 };
 
 var Position = {
+	altitudeFt: props.globals.getNode("/position/altitude-ft"),
 	gearAglFt: props.globals.getNode("/position/gear-agl-ft"),
 	latitude: props.globals.getNode("/position/latitude-deg"),
 	longitude: props.globals.getNode("/position/longitude-deg"),
