@@ -478,7 +478,7 @@ var ECAM_controller = {
 		}
 		
 		if (statusFlag == 1 and lines[0].getValue() == "") {
-			ecam.SystemDisplay.manCall("statusPage");
+			ecam.SystemDisplayController.manCall("statusPage");
 			statusFlag = 0;
 		}
 	},
