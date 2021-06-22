@@ -3,14 +3,6 @@
 # Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
 
 var currentPhase = nil;
-var eng = nil;
-var eng1epr = nil;
-var eng2epr = nil;
-var eng1n1 = nil;
-var eng2n1 = nil;
-var master1 = nil;
-var master2 = nil;
-var gear_agl_cur = nil;
 
 var FWC = {
 	Btn: {
@@ -98,7 +90,6 @@ var phaseLoop = func() {
 		FWC.Flipflop.recallReset.setValue(0);
 	}
 		
-	gear_agl_cur = pts.Position.gearAglFt.getValue();
 	FWC.toPowerTemp = FWC.toPower.getBoolValue();
 	FWC.Timer.eng1and2OffTemp = FWC.Timer.eng1and2Off.getValue();
 	FWC.Timer.eng1or2OutputTemp = FWC.Timer.eng1or2Output.getBoolValue();
@@ -180,7 +171,3 @@ var setPhase = func(newPhase) {
 setlistener("/ECAM/buttons/recall-btn", func() {
 	FWC.Flipflop.recallSet.setValue(FWC.Btn.recall.getBoolValue());
 }, 0, 0);
-
-var clrBtn = func(btn) {
-	FWC.Btn.clr.setValue(btn);
-}
