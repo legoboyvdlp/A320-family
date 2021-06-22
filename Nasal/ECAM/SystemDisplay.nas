@@ -1,3 +1,6 @@
+# A3XX System Display Controller
+# Copyright (c) 2021 Jonathan Redpath (legoboyvdlp)
+
 var Page = {
 	new: func(name) {
 		var page = {parents:[Page]};
