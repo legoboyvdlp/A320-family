@@ -69,10 +69,10 @@ var ECAM = {
 	},
 	reset: func() {
 		for (var i = 0; i <= 8; i = i + 1) {
-			setprop("ECAM/msg/line" ~ i, "");
-			setprop("ECAM/rightmsg/line" ~ i, "");
-			setprop("ECAM/msg/linec" ~ i, "w");
-			setprop("ECAM/rightmsg/linec" ~ i, "w");
+			setprop("/ECAM/msg/line" ~ i, "");
+			setprop("/ECAM/rightmsg/line" ~ i, "");
+			setprop("/ECAM/msg/linec" ~ i, "w");
+			setprop("/ECAM/rightmsg/linec" ~ i, "w");
 		}
 		
 		me.lights.apu.setValue(0);
@@ -128,9 +128,6 @@ var ECAM = {
 	updateSDPage: func(newPage) {
 		me._cachePage = newPage;
 		page.setValue(newPage);
-	},
-	clrLight: func() {
-		me.lights.clr.setValue(1);
 	},
 };
 
