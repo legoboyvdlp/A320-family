@@ -67,6 +67,9 @@ var Controls = {
 		parkingBrake: props.globals.getNode("/controls/gear/brake-parking"),
 		chocks: props.globals.getNode("/services/chocks/enable"),
 	},
+	Lighting: {
+		landingLights: [props.globals.getNode("/controls/lighting/landing-lights[0]"),props.globals.getNode("/controls/lighting/landing-lights[1]"),props.globals.getNode("/controls/lighting/landing-lights[2]")],
+	},
 	Switches: {
 		annunTest: props.globals.getNode("/controls/switches/annun-test"),
 	},
@@ -213,6 +216,7 @@ var Options = {
 };
 
 var Orientation = {
+	heading: props.globals.getNode("/orientation/heading-deg"),
 	pitch: props.globals.getNode("/orientation/pitch-deg"),
 	roll: props.globals.getNode("/orientation/roll-deg"),
 	yaw: props.globals.getNode("/orientation/yaw-deg"),
@@ -249,6 +253,12 @@ var Sim = {
 			engine: [props.globals.getNode("/sim/input/selected/engine[0]", 1),props.globals.getNode("/sim/input/selected/engine[1]", 1)],
 		}
 	},
+	Model: {
+		Lights: {
+			navLights: props.globals.getNode("/sim/model/lights/nav-lights"),
+			noseLights: props.globals.getNode("/sim/model/lights/nose-lights"),
+		},
+	},
 	Multiplay: {
 		online: props.globals.getNode("/sim/multiplay/online"),
 	},
@@ -256,6 +266,9 @@ var Sim = {
 	Rendering: {
 		Headshake: {
 			enabled: props.globals.getNode("/sim/rendering/headshake/enabled"),
+		},
+		Shaders: {
+			skydome: props.globals.getNode("/sim/rendering/shaders/skydome"),
 		},
 	},
 	replayState: props.globals.getNode("/sim/freeze/replay-state"),

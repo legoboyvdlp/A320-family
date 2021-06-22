@@ -88,7 +88,7 @@ var A320Libraries = nil;
 var systemsInit = func() {
 	systemsInitialized = 0;
 	fbw.FBW.init();
-	effects.light_manager.init();
+	effects.lightManager.init();
 	systems.ELEC.init();
 	systems.PNEU.init();
 	systems.HYD.init();
