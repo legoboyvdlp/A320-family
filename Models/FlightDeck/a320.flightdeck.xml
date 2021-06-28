@@ -2167,7 +2167,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("sts");</script>
+				<script>ecam.ECAMControlPanel.stsBtn();</script>
 			</binding>
 		</action>
 	</animation>
@@ -2186,7 +2186,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("apu");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("apuPage");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2205,7 +2205,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("bleed");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("bleedPage");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2224,7 +2224,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("press");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("cabPressPage");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2243,7 +2243,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("elec");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("elecPage");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2262,7 +2262,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("hyd");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("hydraulicPage");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2281,7 +2281,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("fuel");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("fuelPage");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2300,7 +2300,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("eng");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("enginePage");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2319,7 +2319,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("cond");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("condPage");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2338,7 +2338,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("door");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("doorPage");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2357,7 +2357,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("wheel");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("wheelPage");</script>
 			</binding>
 		</action>
 	</animation>
@@ -2376,7 +2376,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("fctl");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("fctlPage");</script>
 			</binding>
 		</action>
 	</animation>

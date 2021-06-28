@@ -1,6 +1,5 @@
 # A3XX Electronic Centralised Aircraft Monitoring System
-
-# Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2021 Jonathan Redpath (legoboyvdlp)
 
 # messages stored in vectors
 
@@ -101,7 +100,7 @@ var warnings				  = std.Vector.new([
 	var ADR123FaultPROC       = warning.new(msg: " -ALL ADR OFF PROC.APPLY",  colour: "c"),
 	
 	# APU FIRE
-	var apuFire               = warning.new(msg: "APU FIRE                ",  colour: "r", aural: 0, light: 0, isMainMsg: 1, sdPage: "apu"),
+	var apuFire               = warning.new(msg: "APU FIRE                ",  colour: "r", aural: 0, light: 0, isMainMsg: 1, sdPage: "apuPage"),
 	var apuFirePB             = warning.new(msg: " -APU FIRE P/B......PUSH",  colour: "c"),
 	var apuFireAgentTimer     = warning.new(msg: " -AGENT AFT 10 S...DISCH",  colour: "c"),
 	var apuFireAgent          = warning.new(msg: " -AGENT............DISCH",  colour: "c"),

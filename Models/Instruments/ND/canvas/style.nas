@@ -1095,6 +1095,16 @@ canvas.NDStyles["Airbus"] = {
 			}, # of planArcs.impl
 		}, # of planArcs
 		{
+			id:"rangeRingPlan",
+			impl: {
+			init: func(nd,symbol),
+				predicate: func(nd) (((nd.in_mode("toggle_display_mode", ["PLAN"])) or ((nd.get_switch("toggle_display_mode") == "MAP") and (nd.get_switch("toggle_centered"))))
+					and (pts.Instrumentation.TCAS.Inputs.mode.getValue() >= 2) and (nd.rangeNm() <= 20) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
+				is_true: func(nd) nd.symbols.rangeRingPlan.show(),
+				is_false: func(nd) nd.symbols.rangeRingPlan.hide(),
+			}, # of rangeRingPlan.impl
+		}, # of rangeRingPlan
+		{
 			id:"rangeArcs",
 			impl: {
 				init: func(nd,symbol),
@@ -1104,6 +1114,16 @@ canvas.NDStyles["Airbus"] = {
 				is_false: func(nd) nd.symbols.rangeArcs.hide(),
 			}, # of rangeArcs.impl
 		}, # of rangeArcs
+		{
+			id:"rangeRingMap",
+			impl: {
+				init: func(nd,symbol),
+				predicate: func(nd) ((nd.get_switch("toggle_display_mode") == "MAP") and (!nd.get_switch("toggle_centered"))
+					and (pts.Instrumentation.TCAS.Inputs.mode.getValue() >= 2) and (nd.rangeNm() <= 20) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
+				is_true: func(nd) nd.symbols.rangeRingMap.show(),
+				is_false: func(nd) nd.symbols.rangeRingMap.hide(),
+			}, # of rangeRingMap.impl
+		}, # of rangeRingMap
 		{
 			id:"rangePln1",
 			impl: {

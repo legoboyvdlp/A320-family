@@ -4698,6 +4698,8 @@
 			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 		</systems>
 		<ecam>
+			<file>Aircraft/A320-family/Nasal/ECAM/SystemDisplay.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-nodes.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
