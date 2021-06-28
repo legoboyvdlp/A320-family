@@ -108,7 +108,6 @@ var lightManager = {
 		
 		me.Lights.light1.setStretch(6);
 		me.Lights.light2.setStretch(6);
->>>>>>> dev
 		me.update();
 	},
 	apos: 0,
