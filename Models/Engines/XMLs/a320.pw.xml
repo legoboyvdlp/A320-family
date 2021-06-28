@@ -396,7 +396,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>ReverserRDoorPWPP.Inner</object-name>
-		<object-name>ReverserRDoorLPWPP</object-name>
+		<object-name>ReverserLDoorRPWPP</object-name>
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
@@ -412,7 +412,7 @@
 		<object-name>EnginePWPP</object-name>
 		<object-name>EnginePWPPR</object-name>
 		<object-name>ReverserLDoorLPWPP</object-name>
-		<object-name>ReverserRDoorLPWPP</object-name>
+		<object-name>ReverserLDoorRPWPP</object-name>
 	</effect>
 	
 	<effect>
