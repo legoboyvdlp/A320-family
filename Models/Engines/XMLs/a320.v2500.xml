@@ -404,7 +404,49 @@
 		</axis>
 	</animation>
 	
-
+	<animation>
+		<name>EngineLFairing</name>
+		<type>rotate</type>
+		<object-name>EngineFairingL</object-name>
+		<property>sim/multiplay/generic/float[12]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.25</ind><dep>7.0</dep></entry>
+			<entry><ind>0.375</ind><dep>9.5</dep></entry>
+			<entry><ind>0.50</ind><dep>13.5</dep></entry>
+			<entry><ind>1.0</ind><dep>22.5</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.05276</x1-m>
+			<y1-m>-5.72562</y1-m>
+			<z1-m>-1.06509</z1-m>
+			<x2-m>-1.05297</x2-m>
+			<y2-m>-5.53733</y2-m>
+			<z2-m>-1.07666</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>EngineRFairing</name>
+		<type>rotate</type>
+		<object-name>EngineFairingR</object-name>
+		<property>sim/multiplay/generic/float[12]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.25</ind><dep>-7.0</dep></entry>
+			<entry><ind>0.375</ind><dep>-9.5</dep></entry>
+			<entry><ind>0.50</ind><dep>-13.5</dep></entry>
+			<entry><ind>1.0</ind><dep>-22.5</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.05276</x1-m>
+			<y1-m>5.72562</y1-m>
+			<z1-m>-1.06509</z1-m>
+			<x2-m>-1.05297</x2-m>
+			<y2-m>5.53733</y2-m>
+			<z2-m>-1.07666</z2-m>
+		</axis>
+	</animation>
 	
 	<!-- Effect -->
 	<effect>
@@ -413,6 +455,12 @@
 		<object-name>EngineIAEV2500R</object-name>
 		<object-name>ReverserLDoor</object-name>
 		<object-name>ReverserRDoor</object-name>
+	</effect>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-wing</inherits-from>
+		<object-name>EngineFairingL</object-name>
+		<object-name>EngineFairingR</object-name>
 	</effect>
 	
 	<effect>

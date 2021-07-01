@@ -34,10 +34,12 @@
 		<object-name>OutflowValveDoor2</object-name>
 		<object-name>GPUServiceDoor</object-name>
 	</effect>
+	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-rudder</inherits-from>
 		<object-name>Rudder</object-name>
 	</effect>
+	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-wing</inherits-from>
 		<object-name>Wings</object-name>
@@ -75,8 +77,6 @@
 		<object-name>FairingR1</object-name>
 		<object-name>FairingR2</object-name>
 		<object-name>FairingR3</object-name>
-		<object-name>EngineFairingL</object-name>
-		<object-name>EngineFairingR</object-name>
 		<object-name>MLGWingDoorL1</object-name>
 		<object-name>MLGWingDoorL2</object-name>
 		<object-name>MLGWingDoorR1</object-name>
@@ -1719,28 +1719,6 @@
 	</animation>
 	
 	<animation>
-		<name>EngineLFairing</name>
-		<type>rotate</type>
-		<object-name>EngineFairingL</object-name>
-		<property>sim/multiplay/generic/float[12]</property>
-		<interpolation>
-			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.25</ind><dep>7.0</dep></entry>
-			<entry><ind>0.375</ind><dep>9.5</dep></entry>
-			<entry><ind>0.50</ind><dep>13.5</dep></entry>
-			<entry><ind>1.0</ind><dep>22.5</dep></entry>
-		</interpolation>
-		<axis>
-			<x1-m>-1.05276</x1-m>
-			<y1-m>-5.72562</y1-m>
-			<z1-m>-1.06509</z1-m>
-			<x2-m>-1.05297</x2-m>
-			<y2-m>-5.53733</y2-m>
-			<z2-m>-1.07666</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
 		<name>FlapR1</name>
 		<type>rotate</type>
 		<object-name>FlapR1</object-name>
@@ -1869,28 +1847,6 @@
 			<x2-m>0.60609</x2-m>
 			<y2-m>11.7946</y2-m>
 			<z2-m>-0.374512</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<name>EngineRFairing</name>
-		<type>rotate</type>
-		<object-name>EngineFairingR</object-name>
-		<property>sim/multiplay/generic/float[12]</property>
-		<interpolation>
-			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.25</ind><dep>-7.0</dep></entry>
-			<entry><ind>0.375</ind><dep>-9.5</dep></entry>
-			<entry><ind>0.50</ind><dep>-13.5</dep></entry>
-			<entry><ind>1.0</ind><dep>-22.5</dep></entry>
-		</interpolation>
-		<axis>
-			<x1-m>-1.05276</x1-m>
-			<y1-m>5.72562</y1-m>
-			<z1-m>-1.06509</z1-m>
-			<x2-m>-1.05297</x2-m>
-			<y2-m>5.53733</y2-m>
-			<z2-m>-1.07666</z2-m>
 		</axis>
 	</animation>
 	
