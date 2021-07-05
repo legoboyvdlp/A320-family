@@ -990,7 +990,7 @@ var UpperECAMRecipient =
 var A320EWD = UpperECAMRecipient.new("A320 E/WD");
 emesary.GlobalTransmitter.Register(A320EWD);
 
-input = {
+var input = {
 	fuelTotalLbs: "/consumables/fuel/total-fuel-lbs",
 	acconfigUnits: "/systems/acconfig/options/weight-kgs",
 	slatLocked: "/fdm/jsbsim/fcs/slat-locked",
