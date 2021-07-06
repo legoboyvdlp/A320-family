@@ -116,7 +116,7 @@ var doorR4_pos = props.globals.getNode("/sim/model/door-positions/doorr4/positio
 var cargobulk_pos = props.globals.getNode("/sim/model/door-positions/cargobulk/position-norm", 1);
 var cargofwd_pos = props.globals.getNode("/sim/model/door-positions/cargofwd/position-norm", 1);
 var cargoaft_pos = props.globals.getNode("/sim/model/door-positions/cargoaft/position-norm", 1);
-var gLoad = props.globals.getNode("/ECAM/Lower/g-force-display", 1);
+var gLoad = props.globals.getNode("", 1);
 
 # Hydraulic
 var blue_psi = 0;
@@ -445,91 +445,13 @@ var canvas_lowerECAM_base = {
 			lowerECAM_wheel.page.hide();
 		}
 	},
-	displayedGForce: 0,
 	updateBottomStatus: func() {
-		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
-			me["SAT"].setText(sprintf("%2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
-			me["SAT"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["SAT"].setText(sprintf("%s", "XX"));
-			me["SAT"].setColor(0.7333,0.3803,0);
-		}
 		
-		if (dmc.DMController.DMCs[1].outputs[5] != nil) {
-			me["TAT"].setText(sprintf("%2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
-			me["TAT"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["TAT"].setText(sprintf("%s", "XX"));
-			me["TAT"].setColor(0.7333,0.3803,0);
-		}
 		
-		me.gloadStore = gLoad.getValue();
-		if ((me.gloadStore == 1 and !me.displayedGForce) or (me.gloadStore != 0 and me.displayedGForce)) {
-			me.displayedGForce = 1;
-			me["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", pts.Accelerations.pilotGDamped.getValue()));
-			me["GLoad"].show();
-		} else {
-			me.displayedGForce = 0;
-			me["GLoad"].hide();
-		}
 		
-		me["UTCh"].setText(sprintf("%02d", hour.getValue()));
-		me["UTCm"].setText(sprintf("%02d", minute.getValue()));
 		
-		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and ecam.phaseNode.getValue() != 1) {
-			if (acconfig_weight_kgs.getValue()) {
-				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
-			} else {
-				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
-			}
-			me["GW"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["GW"].setText(sprintf("%s", "-----"));
-			me["GW"].setColor(0.0901,0.6039,0.7176);
-		}
-		
-		if (acconfig_weight_kgs.getValue()) {
-			me["GW-weight-unit"].setText("KG");
-		} else {
-			me["GW-weight-unit"].setText("LBS");
-		}
 	},
 };
-
-var canvas_lowerECAM_apu = {
-	new: func(canvas_group, file) {
-		var m = {parents: [canvas_lowerECAM_apu, canvas_lowerECAM_base]};
-		m.init(canvas_group, file);
-
-		return m;
-	},
-	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit","APUN-needle","APUEGT-needle","APUN","APUEGT","APUAvail","APUFlapOpen","APUBleedValve","APUBleedOnline","APUGenOnline","APUGentext","APUGenLoad","APUGenbox","APUGenVolt","APUGenHz","APUBleedPSI","APUfuelLO","APU-low-oil",
-		"text3724","text3728","text3732"];
-	},
-	update: func() {
-		
-
-
-		var apu_valve_state2 = apu_valve_state.getValue();
-		if (apu_valve_state2 == 1) {
-			me["APUBleedValve"].setRotation(90 * D2R);
-		} else {
-			me["APUBleedValve"].setRotation(0);
-		}
-		
-		if (apu_valve_state2 == apu_valve_state.getValue()) {
-			me["APUBleedValve"].setColor(0.0509,0.7529,0.2941);
-			me["APUBleedOnline"].show();
-		} else {
-			me["APUBleedValve"].setColor(0.7333,0.3803,0);
-			me["APUBleedOnline"].hide();
-		}
-		
-		me.updateBottomStatus();
-	},
-};
-
 var canvas_lowerECAM_bleed = {
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_lowerECAM_bleed, canvas_lowerECAM_base]};

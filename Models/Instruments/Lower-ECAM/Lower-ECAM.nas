@@ -30,9 +30,12 @@ var canvas_lowerECAMPage =
 		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
-		obj.keysHash = obj.getKeys();
 		
- 		foreach(var key; obj.keysHash) {
+ 		foreach(var key; obj.getKeys()) {
+			obj[key] = obj.group.getElementById(key);
+		};
+		
+		foreach(var key; obj.getKeysBottom()) {
 			obj[key] = obj.group.getElementById(key);
 		};
 		
@@ -193,14 +196,76 @@ var canvas_lowerECAMPage =
 				}
 			}),
 		];
+		
+		obj.displayedGForce = 0;
+		obj.updateItemsBottom = [
+			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
+				if (val) {
+					obj["GW-weight-unit"].setText("KG");
+				} else {
+					obj["GW-weight-unit"].setText("LBS");
+				}
+			}),
+			props.UpdateManager.FromHashValue("hour", nil, func(val) {
+				obj["UTCh"].setText(sprintf("%02d", val));
+			}),
+			props.UpdateManager.FromHashValue("minute", nil, func(val) {
+				obj["UTCm"].setText(sprintf("%02d", val));
+			}),
+			props.UpdateManager.FromHashValue("gForce", 0.05, func(val) {
+				if (obj.displayedGForce) {
+					obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
+				}
+			}),
+			props.UpdateManager.FromHashValue("gForceDisplay", nil, func(val) {
+				if ((val == 1 and !obj.displayedGForce) or (val != 0 and obj.displayedGForce)) {
+					obj.displayedGForce = 1;
+					obj["GLoad"].show();
+				} else {
+					obj.displayedGForce = 0;
+					obj["GLoad"].hide();
+				}
+			}),
+		];
 		return obj;
 	},
+	getKeysBottom: func() {
+		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit"];
+	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit","APUN-needle","APUEGT-needle","APUN","APUEGT","APUAvail","APUFlapOpen","APUBleedValve","APUBleedOnline","APUBleedValveCrossBar","APUGenOnline","APUGenOff","APUGentext","APUGenLoad","APUGenbox","APUGenVolt","APUGenHz","APUBleedPSI","APUfuelLO","APU-low-oil",
-		"text3724","text3728","text3732"];
+		return ["APUN-needle","APUEGT-needle","APUN","APUEGT","APUAvail","APUFlapOpen","APUBleedValve","APUBleedOnline","APUBleedValveCrossBar","APUGenOnline","APUGenOff","APUGentext","APUGenLoad","APUGenbox","APUGenVolt","APUGenHz","APUBleedPSI","APUfuelLO","APU-low-oil","text3724","text3728","text3732"];
 	},
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
+	},
+	updateTemperatures: func() {
+		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
+			me["SAT"].setText(sprintf("%2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
+			me["SAT"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["SAT"].setText(sprintf("%s", "XX"));
+			me["SAT"].setColor(0.7333,0.3803,0);
+		}
+		
+		if (dmc.DMController.DMCs[1].outputs[5] != nil) {
+			me["TAT"].setText(sprintf("%2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
+			me["TAT"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["TAT"].setText(sprintf("%s", "XX"));
+			me["TAT"].setColor(0.7333,0.3803,0);
+		}
+		
+		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and ecam.phaseNode.getValue() != 1) {
+			if (acconfig_weight_kgs.getValue()) {
+				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
+			} else {
+				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
+			}
+			me["GW"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["GW"].setText(sprintf("%s", "-----"));
+			me["GW"].setColor(0.0901,0.6039,0.7176);
+		}
 	},
 	update: func(notification) {
 		me.updatePower();
@@ -217,6 +282,13 @@ var canvas_lowerECAMPage =
         {
             update_item.update(notification);
         }
+		
+		foreach(var update_item_bottom; me.updateItemsBottom)
+        {
+            update_item_bottom.update(notification);
+        }
+		
+		me.updateTemperatures();
 	},
 	updateTest: func(notification) {
 		if (du4_test_time.getValue() + 1 >= notification.elapsedTime) {
@@ -319,6 +391,11 @@ var input = {
 	apuLoad: "/systems/electrical/extra/apu-load",
 	apuHertz: "/systems/electrical/sources/apu/output-hertz",
 	apuVolt: "/systems/electrical/sources/apu/output-volt",
+	
+	gForce: "/accelerations/pilot-gdamped",
+	gForceDisplay: "/ECAM/Lower/g-force-display",
+	hour: "/sim/time/utc/hour",
+	minute: "/sim/time/utc/minute",
 };
 
 foreach (var name; keys(input)) {
