@@ -10,25 +10,77 @@ var du4_test_time = props.globals.initNode("/instrumentation/du/du4-test-time", 
 var du4_test_amount = props.globals.initNode("/instrumentation/du/du4-test-amount", 0, "DOUBLE");
 var du4_offtime = props.globals.initNode("/instrumentation/du/du4-off-time", 0.0, "DOUBLE");
 
-var canvas_lowerECAMPage =
+var canvas_lowerECAM_base =
 {
-	new: func(svg) {
-		var obj = {parents: [canvas_lowerECAMPage] };
-		obj.canvas = canvas.new({
+	init: func() {
+		me.canvas = canvas.new({
 			"name": "lowerECAM",
 			"size": [1024, 1024],
 			"view": [1024, 1024],
 			"mipmapping": 1
 		});
+		me.canvas.addPlacement({"node": "lecam.screen"});
 		
-		obj.canvas.addPlacement({"node": "lecam.screen"});
-        obj.group = obj.canvas.createGroup();
-        obj.test = obj.canvas.createGroup();
-		
-		obj.font_mapper = func(family, weight) {
+		me.font_mapper = func(family, weight) {
 			return "LiberationFonts/LiberationSans-Regular.ttf";
 		};
 		
+		me.test = me.canvas.createGroup();
+		
+		canvas.parsesvg(me.test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg", {"font-mapper": me.font_mapper} );
+		foreach(var key; me.getKeysTest()) {
+			me[key] = me.test.getElementById(key);
+		};
+	},
+	getKeysTest: func() {
+		return ["Test_white","Test_text"];
+	},
+	powerTransient: func() {
+		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
+			if (du4_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
+				if (pts.Gear.wow[0].getValue()) {
+					if (!acconfig.getBoolValue() and !du4_test.getBoolValue()) {
+						du4_test.setValue(1);
+						du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du4_test_time.setValue(pts.Sim.Time.elapsedSec.getValue());
+					} else if (acconfig.getBoolValue() and !du4_test.getBoolValue()) {
+						du4_test.setValue(1);
+						du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+						du4_test_time.setValue(pts.Sim.Time.elapsedSec.getValue() - 30);
+					}
+				} else {
+					du4_test.setValue(1);
+					du4_test_amount.setValue(0);
+					du4_test_time.setValue(-100);
+				}
+			}
+		} else {
+			du4_test.setValue(0);
+			du4_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		}
+	},
+	# Due to weirdness of the parents hash / me reference
+	# you need to access it using me.Test_white rather than
+	# me["Test_white"]
+	updateTest: func(notification) {
+		if (du4_test_time.getValue() + 1 >= notification.elapsedTime) {
+			me.Test_white.show();
+			me.Test_text.hide();
+		} else {
+			me.Test_white.hide();
+			me.Test_text.show();
+		}
+	},
+};
+
+canvas_lowerECAM_base.init();
+
+var canvas_lowerECAMPage =
+{
+	new: func(svg) {
+		var obj = {parents: [canvas_lowerECAMPage,canvas_lowerECAM_base] };
+        obj.group = obj.canvas.createGroup();
+        
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
 		
  		foreach(var key; obj.getKeys()) {
@@ -37,11 +89,6 @@ var canvas_lowerECAMPage =
 		
 		foreach(var key; obj.getKeysBottom()) {
 			obj[key] = obj.group.getElementById(key);
-		};
-		
-		canvas.parsesvg(obj.test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg", {"font-mapper": obj.font_mapper} );
-		foreach(var key; obj.getKeysTest()) {
-			obj[key] = obj.test.getElementById(key);
 		};
 		
 		obj.units = acconfig_weight_kgs.getValue();
@@ -236,9 +283,6 @@ var canvas_lowerECAMPage =
 	getKeys: func() {
 		return ["APUN-needle","APUEGT-needle","APUN","APUEGT","APUAvail","APUFlapOpen","APUBleedValve","APUBleedOnline","APUBleedValveCrossBar","APUGenOnline","APUGenOff","APUGentext","APUGenLoad","APUGenbox","APUGenVolt","APUGenHz","APUBleedPSI","APUfuelLO","APU-low-oil","text3724","text3728","text3732"];
 	},
-	getKeysTest: func() {
-		return ["Test_white","Test_text"];
-	},
 	updateTemperatures: func() {
 		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
 			me["SAT"].setText(sprintf("%2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
@@ -291,39 +335,6 @@ var canvas_lowerECAMPage =
 		
 		me.updateTemperatures();
 	},
-	updateTest: func(notification) {
-		if (du4_test_time.getValue() + 1 >= notification.elapsedTime) {
-			me["Test_white"].show();
-			me["Test_text"].hide();
-		} else {
-			me["Test_white"].hide();
-			me["Test_text"].show();
-		}
-	},
-	powerTransient: func() {
-		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
-			if (du4_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
-				if (pts.Gear.wow[0].getValue()) {
-					if (!acconfig.getBoolValue() and !du4_test.getBoolValue()) {
-						du4_test.setValue(1);
-						du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du4_test_time.setValue(pts.Sim.Time.elapsedSec.getValue());
-					} else if (acconfig.getBoolValue() and !du4_test.getBoolValue()) {
-						du4_test.setValue(1);
-						du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du4_test_time.setValue(pts.Sim.Time.elapsedSec.getValue() - 30);
-					}
-				} else {
-					du4_test.setValue(1);
-					du4_test_amount.setValue(0);
-					du4_test_time.setValue(-100);
-				}
-			}
-		} else {
-			du4_test.setValue(0);
-			du4_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
-		}
-	},
 	updatePower: func() {
 		if (du4_lgt.getValue() > 0.01 and systems.ELEC.Bus.ac2.getValue() >= 110) {
 			if (du4_test_time.getValue() + du4_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
@@ -342,22 +353,20 @@ var canvas_lowerECAMPage =
 
 var SystemDisplayPageRecipient =
 {
-	new: func(_ident, page)
+	new: func(_ident)
 	{
 		var SDRecipient = emesary.Recipient.new(_ident);
-		SDRecipient.MainScreen = nil;
-		SDRecipient.Page = page;
+		SDRecipient.MainScreen = canvas_lowerECAM_base;
+		SDRecipient.Page = nil;
 		SDRecipient.Receive = func(notification)
 		{
 			if (notification.NotificationType == "FrameNotification")
 			{
-				if (SDRecipient.MainScreen == nil) {
-					SDRecipient.MainScreen = canvas_lowerECAMPage.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/" ~ SDRecipient.Page ~ ".svg");
+				if (SDRecipient.Page == nil) {
+					SDRecipient.Page = SystemDisplayPageRecipient.pageList.apu;
 				}
 				if (math.mod(notifications.frameNotification.FrameCount,2) == 0) {
-					#if (ecam.SystemDisplayController.displayedPage.name == SDRecipient.Page) {
-						SDRecipient.MainScreen.update(notification);
-					#}
+					SDRecipient.Page.update(notification);
 				}
 				return emesary.Transmitter.ReceiptStatus_OK;
 			}
@@ -365,10 +374,13 @@ var SystemDisplayPageRecipient =
 		};
 		return SDRecipient;
 	},
+	pageList: {
+		apu: canvas_lowerECAMPage.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/apu.svg"),
+	},
 };
 
-var A320SDAPU = SystemDisplayPageRecipient.new("A320 SD", "apu");
-emesary.GlobalTransmitter.Register(A320SDAPU);
+var A320SD = SystemDisplayPageRecipient.new("A320 SD");
+emesary.GlobalTransmitter.Register(A320SD);
 
 
 var input = {
@@ -400,9 +412,9 @@ var input = {
 };
 
 foreach (var name; keys(input)) {
-	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Lower ECAM", name, input[name]));
+	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 System Display", name, input[name]));
 }
 
 setlistener("/systems/electrical/bus/ac-2", func() {
-	if (A320SDAPU.MainScreen != nil) { A320SDAPU.MainScreen.powerTransient() }
+	A320SD.MainScreen.powerTransient();
 }, 0, 0);
