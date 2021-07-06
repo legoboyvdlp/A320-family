@@ -200,6 +200,7 @@ var canvas_lowerECAMPage =
 		obj.displayedGForce = 0;
 		obj.updateItemsBottom = [
 			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
+				obj.units = val;
 				if (val) {
 					obj["GW-weight-unit"].setText("KG");
 				} else {
@@ -254,18 +255,6 @@ var canvas_lowerECAMPage =
 			me["TAT"].setText(sprintf("%s", "XX"));
 			me["TAT"].setColor(0.7333,0.3803,0);
 		}
-		
-		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and ecam.phaseNode.getValue() != 1) {
-			if (acconfig_weight_kgs.getValue()) {
-				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
-			} else {
-				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
-			}
-			me["GW"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["GW"].setText(sprintf("%s", "-----"));
-			me["GW"].setColor(0.0901,0.6039,0.7176);
-		}
 	},
 	update: func(notification) {
 		me.updatePower();
@@ -287,6 +276,18 @@ var canvas_lowerECAMPage =
         {
             update_item_bottom.update(notification);
         }
+		
+		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
+			if (me.units) {
+				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
+			} else {
+				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
+			}
+			me["GW"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["GW"].setText(sprintf("%s", "-----"));
+			me["GW"].setColor(0.0901,0.6039,0.7176);
+		}
 		
 		me.updateTemperatures();
 	},
