@@ -13,10 +13,21 @@ var SystemDisplayPageRecipient =
 			if (notification.NotificationType == "FrameNotification")
 			{
 				if (SDRecipient.Page == nil) {
-					SDRecipient.Page = SystemDisplayPageRecipient.pageList.apu;
+					SDRecipient.Page = SystemDisplayPageRecipient.pageList.door;
 				}
 				if (math.mod(notifications.frameNotification.FrameCount,2) == 0) {
-					SDRecipient.Page.update(notification);
+					SystemDisplayPageRecipient.pageList.apu.update(notification);
+					SystemDisplayPageRecipient.pageList.bleed.update(notification);
+					SystemDisplayPageRecipient.pageList.cond.update(notification);
+					SystemDisplayPageRecipient.pageList.door.update(notification);
+					SystemDisplayPageRecipient.pageList.elec.update(notification);
+					SystemDisplayPageRecipient.pageList.eng.update(notification);
+					SystemDisplayPageRecipient.pageList.fctl.update(notification);
+					SystemDisplayPageRecipient.pageList.fuel.update(notification);
+					SystemDisplayPageRecipient.pageList.hyd.update(notification);
+					SystemDisplayPageRecipient.pageList.press.update(notification);
+					SystemDisplayPageRecipient.pageList.sts.update(notification);
+					SystemDisplayPageRecipient.pageList.wheel.update(notification);
 				}
 				return emesary.Transmitter.ReceiptStatus_OK;
 			}
@@ -25,7 +36,18 @@ var SystemDisplayPageRecipient =
 		return SDRecipient;
 	},
 	pageList: {
-		apu: canvas_lowerECAMPageApu.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/apu.svg"),
+		apu: canvas_lowerECAMPageApu.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/apu.svg","apu"),
+		bleed: canvas_lowerECAMPageBleed.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/bleed.svg","bleed"),
+		cond: canvas_lowerECAMPageCond.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/cond.svg","cond"),
+		door: canvas_lowerECAMPageDoor.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/door.svg","door"),
+		elec: canvas_lowerECAMPageElec.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/elec.svg","elec"),
+		eng: canvas_lowerECAMPageEng.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/eng.svg","eng"),
+		fctl: canvas_lowerECAMPageFctl.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/fctl.svg","fctl"),
+		fuel: canvas_lowerECAMPageFuel.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/fuel.svg","fuel"),
+		hyd: canvas_lowerECAMPageHyd.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/hyd.svg","hyd"),
+		press: canvas_lowerECAMPagePress.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/press.svg","press"),
+		sts: canvas_lowerECAMPageSts.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/status.svg","sts"),
+		wheel: canvas_lowerECAMPageWheel.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/wheel.svg","wheel")
 	},
 };
 

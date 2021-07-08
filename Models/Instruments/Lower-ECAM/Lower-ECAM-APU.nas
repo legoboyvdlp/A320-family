@@ -7,9 +7,10 @@ var gen2_load = props.globals.initNode("/systems/electrical/extra/gen2-load", 0,
 
 var canvas_lowerECAMPageApu =
 {
-	new: func(svg) {
+	new: func(svg,name) {
 		var obj = {parents: [canvas_lowerECAMPageApu,canvas_lowerECAM_base] };
         obj.group = obj.canvas.createGroup();
+		obj.name = name;
         
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
 		
@@ -266,12 +267,17 @@ var canvas_lowerECAMPageApu =
 		me.updateBottom(notification);
 	},
 	updatePower: func() {
-		if (du4_lgt.getValue() > 0.01 and systems.ELEC.Bus.ac2.getValue() >= 110) {
-			if (du4_test_time.getValue() + du4_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
-				me.group.setVisible(0);
-				me.test.setVisible(1);
+		if (me.name == ecam.SystemDisplayController.displayedPage.name) {
+			if (du4_lgt.getValue() > 0.01 and systems.ELEC.Bus.ac2.getValue() >= 110) {
+				if (du4_test_time.getValue() + du4_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
+					me.group.setVisible(0);
+					me.test.setVisible(1);
+				} else {
+					me.group.setVisible(1);
+					me.test.setVisible(0);
+				}
 			} else {
-				me.group.setVisible(1);
+				me.group.setVisible(0);
 				me.test.setVisible(0);
 			}
 		} else {
