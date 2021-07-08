@@ -67,6 +67,11 @@ foreach (var name; keys(input)) {
 	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 System Display", name, input[name]));
 }
 
+var showLowerECAM = func {
+	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
+	dlg.setCanvas(canvas_lowerECAM_base.canvas);
+}
+
 setlistener("/systems/electrical/bus/ac-2", func() {
 	A320SD.MainScreen.powerTransient();
 }, 0, 0);

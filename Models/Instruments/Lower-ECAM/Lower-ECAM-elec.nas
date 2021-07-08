@@ -134,7 +134,7 @@ var canvas_lowerECAMPageElec =
 			}
 		} else {
 			me.group.setVisible(0);
-			me.test.setVisible(0);
+			# don't hide the test group; just let whichever page is active control it
 		}
 	},
 };

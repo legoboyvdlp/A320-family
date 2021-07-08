@@ -37,6 +37,7 @@ var SystemDisplayController = {
 		ECAMTimer.start();
 	},
 	autoCallLoop: func() {
+		if (me.mode != 3) { return; }
 		me.tempFWCPhase = pts.ECAM.fwcWarningPhase.getValue();
 		
 		if (me.Display.APU) {

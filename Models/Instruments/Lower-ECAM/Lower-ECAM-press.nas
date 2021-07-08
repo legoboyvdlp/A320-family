@@ -80,7 +80,7 @@ var canvas_lowerECAMPagePress =
 					obj["PRESS-Sys-1"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("flowCtlValve1", 0.1, func(val) {
+			props.UpdateManager.FromHashValue("flowCtlValve1", nil, func(val) {
 				if (val == 0) {
 					obj["PRESS-Pack-1-Triangle"].setColor(0.7333,0.3803,0);
 					obj["PRESS-Pack-1"].setColor(0.7333,0.3803,0);
@@ -89,7 +89,7 @@ var canvas_lowerECAMPagePress =
 					obj["PRESS-Pack-1"].setColor(0.8078,0.8039,0.8078);
 				}
 			}),
-			props.UpdateManager.FromHashValue("flowCtlValve2", 0.1, func(val) {
+			props.UpdateManager.FromHashValue("flowCtlValve2", nil, func(val) {
 				if (val == 0) {
 					obj["PRESS-Pack-2-Triangle"].setColor(0.7333,0.3803,0);
 					obj["PRESS-Pack-2"].setColor(0.7333,0.3803,0);
@@ -209,7 +209,7 @@ var canvas_lowerECAMPagePress =
 			}
 		} else {
 			me.group.setVisible(0);
-			me.test.setVisible(0);
+			# don't hide the test group; just let whichever page is active control it
 		}
 	},
 };

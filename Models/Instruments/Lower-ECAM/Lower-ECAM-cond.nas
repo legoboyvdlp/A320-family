@@ -21,8 +21,59 @@ var canvas_lowerECAMPageCond =
 		obj.units = acconfig_weight_kgs.getValue();
 		
 		# init
+		obj["CONDFanFwdFault"].hide();
+		obj["CONDFanAftFault"].hide();
+		
+		# aft cargo ventilation disabled
+		obj["CargoCond"].hide();
 		
 		obj.update_items = [
+			props.UpdateManager.FromHashValue("condDuctTempCockpit", 0.5, func(val) {
+				obj["CONDDuctTempCKPT"].setText(sprintf("%2.0f",val));
+			}),
+			props.UpdateManager.FromHashValue("condDuctTempAft", 0.5, func(val) {
+				obj["CONDDuctTempAFT"].setText(sprintf("%2.0f",val));
+			}),
+			props.UpdateManager.FromHashValue("condDuctTempFwd", 0.5, func(val) {
+				obj["CONDDuctTempFWD"].setText(sprintf("%2.0f",val));
+			}),
+			props.UpdateManager.FromHashValue("condTempCockpit", 0.5, func(val) {
+				obj["CONDTempCKPT"].setText(sprintf("%2.0f",val));
+			}),
+			props.UpdateManager.FromHashValue("condTempAft", 0.5, func(val) {
+				obj["CONDTempAFT"].setText(sprintf("%2.0f",val));
+			}),
+			props.UpdateManager.FromHashValue("condTempFwd", 0.5, func(val) {
+				obj["CONDTempFWD"].setText(sprintf("%2.0f",val));
+			}),
+			props.UpdateManager.FromHashValue("condTrimCockpit", 0.01, func(val) {
+				obj["CONDTrimValveCKPT"].setRotation(val * D2R);
+			}),
+			props.UpdateManager.FromHashValue("condTrimAft", 0.01, func(val) {
+				obj["CONDTrimValveAFT"].setRotation(val * D2R);
+			}),
+			props.UpdateManager.FromHashValue("condTrimFwd", 0.01, func(val) {
+				obj["CONDTrimValveFWD"].setRotation(val * D2R);
+			}),
+			props.UpdateManager.FromHashList(["condHotAirSwitch","condHotAirValve","condHotAirCmd"], nil, func(val) {
+				if (!val.condHotAirSwitch or (val.condHotAirCmd == 1 and val.condHotAirValve == 0)) {
+					obj["CONDHotAirValve"].setRotation(90 * D2R);
+					obj["CONDHotAirValve"].setColor(0.7333,0.3803,0);
+					obj["CONDHotAirValveCross"].setColorFill(0.7333,0.3803,0);
+				} elsif (val.condHotAirCmd == 0 and val.condHotAirValve == 0) {
+					obj["CONDHotAirValve"].setRotation(90 * D2R);
+					obj["CONDHotAirValve"].setColor(0.0509,0.7529,0.2941);
+					obj["CONDHotAirValveCross"].setColorFill(0.0509,0.7529,0.2941);
+				} elsif (val.condHotAirCmd == 0 and val.condHotAirValve != 0) {
+					obj["CONDHotAirValve"].setRotation(0);
+					obj["CONDHotAirValve"].setColor(0.7333,0.3803,0);
+					obj["CONDHotAirValveCross"].setColorFill(0.7333,0.3803,0);
+				} else {
+					obj["CONDHotAirValve"].setRotation(0);
+					obj["CONDHotAirValve"].setColor(0.0509,0.7529,0.2941);
+					obj["CONDHotAirValveCross"].setColorFill(0.0509,0.7529,0.2941);
+				}
+			}),
 		];
 		
 		obj.displayedGForce = 0;
@@ -62,10 +113,9 @@ var canvas_lowerECAMPageCond =
 		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit"];
 	},
 	getKeys: func() {
-		return["Bulk","BulkLine","BulkLbl","Exit1L","Exit1R","Cabin1Left","Cabin1LeftLbl","Cabin1LeftLine","Cabin1LeftSlide","Cabin1Right","Cabin1RightLbl","Cabin1RightLine","Cabin1RightSlide","Cabin2Left","Cabin2LeftLbl",
-		"Cabin2LeftLine","Cabin2LeftSlide","Cabin2Right","Cabin2RightLbl","Cabin2RightLine","Cabin2RightSlide","Cabin3Left","Cabin3LeftLbl","Cabin3LeftLine","Cabin3LeftSlide","Cabin3Right","Cabin3RightLbl","Cabin3RightLine","Cabin3RightSlide","AvionicsLine1",
-		"AvionicsLbl1","AvionicsLine2","AvionicsLbl2","Cargo1Line","Cargo1Lbl","Cargo1Door","Cargo2Line","Cargo2Lbl","Cargo2Door","ExitLSlide","ExitLLine","ExitLLbl","ExitRSlide","ExitRLine","ExitRLbl","Cabin4Left","Cabin4LeftLbl","Cabin4LeftLine",
-		"Cabin4LeftSlide","Cabin4Right","Cabin4RightLbl","Cabin4RightLine","Cabin4RightSlide","DOOROXY-REGUL-LO-PR"];},
+		return["CargoCond","CONDHotAirValve","CONDFanFwdFault","CONDFanAftFault","CONDTrimValveCKPT","CONDTrimValveAFT","CONDTrimValveFWD","CONDDuctTempCKPT",
+		"CONDDuctTempAFT","CONDDuctTempFWD","CONDTempCKPT","CONDTempAFT","CONDTempFWD","CONDHotAirValveCross"];
+	},
 	updateBottom: func(notification) {
 		foreach(var update_item_bottom; me.updateItemsBottom)
         {
@@ -134,12 +184,24 @@ var canvas_lowerECAMPageCond =
 			}
 		} else {
 			me.group.setVisible(0);
-			me.test.setVisible(0);
+			# don't hide the test group; just let whichever page is active control it
 		}
 	},
 };
 
 var input = {
+	condDuctTempCockpit: "/systems/air-conditioning/temperatures/cockpit-duct",
+	condDuctTempAft: "/systems/air-conditioning/temperatures/cabin-aft-duct",
+	condDuctTempFwd: "/systems/air-conditioning/temperatures/cabin-fwd-duct",
+	condTempCockpit: "/systems/air-conditioning/temperatures/cockpit-temp",
+	condTempAft: "/systems/air-conditioning/temperatures/cabin-aft-temp",
+	condTempFwd: "/systems/air-conditioning/temperatures/cabin-fwd-temp",
+	condTrimCockpit: "/ECAM/Lower/trim-cockpit-output",
+	condTrimAft: "/ECAM/Lower/trim-aft-output",
+	condTrimFwd: "/ECAM/Lower/trim-fwd-output",
+	condHotAirCmd: "/systems/air-conditioning/valves/hot-air-cmd",
+	condHotAirSwitch: "/controls/pneumatics/switches/hot-air",
+	condHotAirValve: "/systems/air-conditioning/valves/hot-air"
 };
 
 foreach (var name; keys(input)) {

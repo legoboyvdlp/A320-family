@@ -800,55 +800,6 @@ var canvas_lowerECAM_bleed = {
 	},
 };
 
-var canvas_lowerECAM_cond = {
-	new: func(canvas_group, file) {
-		var m = {parents: [canvas_lowerECAM_cond, canvas_lowerECAM_base]};
-		m.init(canvas_group, file);
-
-		return m;
-	},
-	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit","CargoCond","CONDHotAirValve","CONDFanFwdFault","CONDFanAftFault",
-		"CONDTrimValveCKPT","CONDTrimValveAFT","CONDTrimValveFWD","CONDDuctTempCKPT","CONDDuctTempAFT","CONDDuctTempFWD","CONDTempCKPT","CONDTempAFT","CONDTempFWD"];
-	},
-	update: func() {
-		if (systems.PNEU.Valves.hotAir.getValue() == 0) {
-			me["CONDHotAirValve"].setRotation(90 * D2R);
-			if (systems.PNEU.Switch.hotAir.getBoolValue()) {
-				me["CONDHotAirValve"].setColor(0.7333,0.3803,0);
-			} else {
-				me["CONDHotAirValve"].setColor(0.0509,0.7529,0.2941);
-			}
-		} else {
-			me["CONDHotAirValve"].setRotation(0); # doesn't show rotation in transit
-			if (systems.PNEU.Switch.hotAir.getBoolValue()) {
-				me["CONDHotAirValve"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["CONDHotAirValve"].setColor(0.7333,0.3803,0);
-			}
-		}
-		
-		me["CONDTrimValveCKPT"].setRotation(systems.PNEU.Packs.trimCockpit.getValue() * D2R);
-		me["CONDTrimValveAFT"].setRotation(systems.PNEU.Packs.trimAft.getValue() * D2R);
-		me["CONDTrimValveFWD"].setRotation(systems.PNEU.Packs.trimFwd.getValue() * D2R);
-		
-		me["CONDDuctTempCKPT"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cockpitDuctTemp.getValue())));
-		me["CONDDuctTempAFT"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cabinAftDuctTemp.getValue())));
-		me["CONDDuctTempFWD"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cabinFwdDuctTemp.getValue())));
-		
-		me["CONDTempCKPT"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cockpitTemp.getValue())));
-		me["CONDTempAFT"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cabinAftTemp.getValue())));
-		me["CONDTempFWD"].setText(sprintf("%2.0f",math.round(systems.PNEU.Packs.cabinFwdTemp.getValue())));
-		
-		# fans faults not implemented
-		me["CONDFanFwdFault"].hide();
-		me["CONDFanAftFault"].hide();
-		
-		# aft cargo ventilation disabled
-		me["CargoCond"].hide();
-		me.updateBottomStatus();
-	},
-};
 
 var canvas_lowerECAM_crz = {
 	new: func(canvas_group, file) {
@@ -2466,41 +2417,6 @@ var canvas_lowerECAM_fuel = {
 	},
 };
 
-var canvas_lowerECAM_press = {
-	new: func(canvas_group, file) {
-		var m = {parents: [canvas_lowerECAM_press, canvas_lowerECAM_base]};
-		m.init(canvas_group, file);
-
-		return m;
-	},
-	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit"];
-	},
-	update: func() {
-		me["PRESS-Cab-VS"].setText(sprintf("%4.0f", press_vs_norm.getValue()));
-		me["PRESS-Cab-Alt"].setText(sprintf("%4.0f", cabinalt.getValue()));
-
-
-		me.updateBottomStatus();
-	},
-};
-
-var canvas_lowerECAM_status = {
-	new: func(canvas_group, file) {
-		var m = {parents: [canvas_lowerECAM_status, canvas_lowerECAM_base]};
-		m.init(canvas_group, file);
-
-		return m;
-	},
-	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit"];
-	},
-	update: func() {
-
-		me.updateBottomStatus();
-	},
-};
-
 var canvas_lowerECAM_hyd = {
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_lowerECAM_hyd, canvas_lowerECAM_base]};
@@ -3400,11 +3316,6 @@ var l_rateApply = func {
 var lowerECAM_update = maketimer(0.05, func {
 	canvas_lowerECAM_base.update();
 });
-
-var showLowerECAM = func {
-	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
-	dlg.setCanvas(lowerECAM_display);
-}
 
 setlistener("/systems/electrical/bus/ac-2", func() {
 	canvas_lowerECAM_base.updateDu4();
