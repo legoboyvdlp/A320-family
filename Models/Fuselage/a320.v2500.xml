@@ -3,13 +3,13 @@
 <!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
-	<path>Aircraft/A320-family/Models/Engines/Models/CFMLEAP1A.ac</path>
+	<path>res/IAEV2500.ac</path>
 	
 	<params>
 		<contrail1>engines/engine[0]/contrail</contrail1>
 		<contrail2>engines/engine[1]/contrail</contrail2>
 	</params>
-	
+
 	<!-- Particle Effects -->
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
@@ -73,7 +73,7 @@
 		<offsets>
 			<x-m>-7.432</x-m>
 			<y-m>-5.63029</y-m>
-			<z-m>-2.46943</z-m>
+			<z-m>-2.76465</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -104,7 +104,7 @@
 		<offsets>
 			<x-m>-7.432</x-m>
 			<y-m> 5.63029</y-m>
-			<z-m>-2.46943</z-m>
+			<z-m>-2.76465</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -241,7 +241,7 @@
 		<name>Engine fire left</name>
 		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
 		<offsets>
-			<x-m>-3.96705</x-m>
+			<x-m>-2.76705</x-m>
 			<y-m>-5.63029</y-m>
 			<z-m>-2.22295</z-m>
 		</offsets>
@@ -254,7 +254,7 @@
 		<name>Engine fire right</name>
 		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
 		<offsets>
-			<x-m>-3.96705</x-m>
+			<x-m>-2.76705</x-m>
 			<y-m> 5.63029</y-m>
 			<z-m>-2.22295</z-m>
 		</offsets>
@@ -267,8 +267,8 @@
 	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
-		<object-name>FanLEAPL</object-name>
-		<factor>50</factor> <!-- TCDS sourced - don't tune! -->
+		<object-name>FanLIAEL</object-name>
+		<factor>56.5</factor>
 		<property>engines/engine[3]/n1</property>
 		<axis>
 			<x>-1</x>
@@ -276,17 +276,17 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.73265</x-m>
-			<y-m>-5.63098</y-m>
-			<z-m>-2.33038</z-m>
+			<x-m>-6.71594</x-m>
+			<y-m>-5.63028</y-m>
+			<z-m>-2.28545</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
-		<object-name>FanLEAPR</object-name>
-		<factor>50</factor>
+		<object-name>FanLIAER</object-name>
+		<factor>56.5</factor>
 		<property>engines/engine[4]/n1</property>
 		<axis>
 			<x>-1</x>
@@ -294,17 +294,17 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.73265</x-m>
-			<y-m> 5.63098</y-m>
-			<z-m>-2.33038</z-m>
+			<x-m>-6.71594</x-m>
+			<y-m> 5.63028</y-m>
+			<z-m>-2.28545</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (fast)</name>
 		<type>spin</type>
-		<object-name>FanSpinningLEAPL</object-name>
-		<factor>5</factor>
+		<object-name>FanSpinningIAEL</object-name>
+		<factor>5.65</factor>
 		<property>engines/engine[3]/n1</property>
 		<axis>
 			<x>-1</x>
@@ -312,17 +312,17 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.73265</x-m>
-			<y-m>-5.63098</y-m>
-			<z-m>-2.33038</z-m>
+			<x-m>-6.71594</x-m>
+			<y-m>-5.63028</y-m>
+			<z-m>-2.28545</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (fast)</name>
 		<type>spin</type>
-		<object-name>FanSpinningLEAPR</object-name>
-		<factor>5</factor>
+		<object-name>FanSpinningIAER</object-name>
+		<factor>5.65</factor>
 		<property>engines/engine[4]/n1</property>
 		<axis>
 			<x>-1</x>
@@ -330,15 +330,15 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.73265</x-m>
-			<y-m> 5.63098</y-m>
-			<z-m>-2.33038</z-m>
+			<x-m>-6.71594</x-m>
+			<y-m> 5.63028</y-m>
+			<z-m>-2.28545</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanSpinningLEAPL</object-name>
+		<object-name>FanSpinningIAEL</object-name>
 		<condition>
 			<greater-than>
 				<property>engines/engine[3]/n1</property>
@@ -349,7 +349,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanSpinningLEAPR</object-name>
+		<object-name>FanSpinningIAER</object-name>
 		<condition>
 			<greater-than>
 				<property>engines/engine[4]/n1</property>
@@ -360,7 +360,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanLEAPL</object-name>
+		<object-name>FanLIAEL</object-name>
 		<condition>
 			<less-than-equals>
 				<property>engines/engine[3]/n1</property>
@@ -371,7 +371,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanLEAPR</object-name>
+		<object-name>FanLIAER</object-name>
 		<condition>
 			<less-than-equals>
 				<property>engines/engine[4]/n1</property>
@@ -382,8 +382,7 @@
 	
 	<animation>
 		<type>translate</type>
-		<object-name>ReverserLDoorLEAP</object-name>
-		<object-name>ReverserLDoorLEAP.Inner</object-name>
+		<object-name>ReverserLDoor</object-name>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
@@ -395,8 +394,7 @@
 
 	<animation>
 		<type>translate</type>
-		<object-name>ReverserRDoorLEAP</object-name>
-		<object-name>ReverserRDoorLEAP.Inner</object-name>
+		<object-name>ReverserRDoor</object-name>
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
@@ -406,32 +404,74 @@
 		</axis>
 	</animation>
 	
+	<animation>
+		<name>EngineLFairing</name>
+		<type>rotate</type>
+		<object-name>EngineFairingL</object-name>
+		<property>sim/multiplay/generic/float[12]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.25</ind><dep>7.0</dep></entry>
+			<entry><ind>0.375</ind><dep>9.5</dep></entry>
+			<entry><ind>0.50</ind><dep>13.5</dep></entry>
+			<entry><ind>1.0</ind><dep>22.5</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.05276</x1-m>
+			<y1-m>-5.72562</y1-m>
+			<z1-m>-1.06509</z1-m>
+			<x2-m>-1.05297</x2-m>
+			<y2-m>-5.53733</y2-m>
+			<z2-m>-1.07666</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>EngineRFairing</name>
+		<type>rotate</type>
+		<object-name>EngineFairingR</object-name>
+		<property>sim/multiplay/generic/float[12]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.25</ind><dep>-7.0</dep></entry>
+			<entry><ind>0.375</ind><dep>-9.5</dep></entry>
+			<entry><ind>0.50</ind><dep>-13.5</dep></entry>
+			<entry><ind>1.0</ind><dep>-22.5</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-1.05276</x1-m>
+			<y1-m>5.72562</y1-m>
+			<z1-m>-1.06509</z1-m>
+			<x2-m>-1.05297</x2-m>
+			<y2-m>5.53733</y2-m>
+			<z2-m>-1.07666</z2-m>
+		</axis>
+	</animation>
+	
 	<!-- Effect -->
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-LEAP</inherits-from>
-		<object-name>EngineLEAPL</object-name>
-		<object-name>EngineLEAPR</object-name>
-		<object-name>ReverserLDoorLEAP</object-name>
-		<object-name>ReverserRDoorLEAP</object-name>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-IAE</inherits-from>
+		<object-name>EngineIAEV2500L</object-name>
+		<object-name>EngineIAEV2500R</object-name>
+		<object-name>ReverserLDoor</object-name>
+		<object-name>ReverserRDoor</object-name>
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-LEAP</inherits-from>
-		<object-name>EngineLEAPL.Inner</object-name>
-                <object-name>EngineLEAPR.Inner</object-name>
-		<object-name>PylonLEAPL</object-name>
-		<object-name>PylonLEAPR</object-name>
-		<object-name>ReverserLDoorLEAP.Inner</object-name>
-		<object-name>ReverserRDoorLEAP.Inner</object-name>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-wing</inherits-from>
+		<object-name>EngineFairingL</object-name>
+		<object-name>EngineFairingR</object-name>
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-LEAP</inherits-from>
-		<object-name>IntakeLEAPL</object-name>
-		<object-name>IntakeLEAPR</object-name>
-		<object-name>Exhaust3LEAPL</object-name>
-		<object-name>Exhaust2LEAPL</object-name>
-		<object-name>Exhaust3LEAPR</object-name>
-		<object-name>Exhaust2LEAPR</object-name>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-IAE</inherits-from>
+		<object-name>PylonIAEV2500L</object-name>
+		<object-name>PylonIAEV2500R</object-name>
+	</effect>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-IAE</inherits-from>
+		<object-name>IntakeIAEV2500L</object-name>
+		<object-name>IntakeIAEV2500R</object-name>
 	</effect>
 </PropertyList>

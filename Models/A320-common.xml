@@ -79,7 +79,7 @@
 
 	<model>
 		<name>FuselageContainer</name>
-		<path>Aircraft/A320-family/Models/Fuselages/A320/fuselage.xml</path>
+		<path>Aircraft/A320-family/Models/Fuselage/fuselage.xml</path>
 	</model>
 	
 	<model>

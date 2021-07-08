@@ -3,13 +3,13 @@
 <!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
-	<path>Aircraft/A320-family/Models/Engines/Models/IAEV2500.ac</path>
+	<path>res/CFM56.ac</path>
 	
 	<params>
 		<contrail1>engines/engine[0]/contrail</contrail1>
 		<contrail2>engines/engine[1]/contrail</contrail2>
 	</params>
-
+	
 	<!-- Particle Effects -->
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
@@ -73,7 +73,7 @@
 		<offsets>
 			<x-m>-7.432</x-m>
 			<y-m>-5.63029</y-m>
-			<z-m>-2.76465</z-m>
+			<z-m>-2.46943</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -104,7 +104,7 @@
 		<offsets>
 			<x-m>-7.432</x-m>
 			<y-m> 5.63029</y-m>
-			<z-m>-2.76465</z-m>
+			<z-m>-2.46943</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
@@ -241,7 +241,7 @@
 		<name>Engine fire left</name>
 		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
 		<offsets>
-			<x-m>-2.76705</x-m>
+			<x-m>-3.96705</x-m>
 			<y-m>-5.63029</y-m>
 			<z-m>-2.22295</z-m>
 		</offsets>
@@ -254,7 +254,7 @@
 		<name>Engine fire right</name>
 		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
 		<offsets>
-			<x-m>-2.76705</x-m>
+			<x-m>-3.96705</x-m>
 			<y-m> 5.63029</y-m>
 			<z-m>-2.22295</z-m>
 		</offsets>
@@ -267,8 +267,8 @@
 	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
-		<object-name>FanLIAEL</object-name>
-		<factor>56.5</factor>
+		<object-name>FanLCFM56L</object-name>
+		<factor>50</factor> <!-- TCDS sourced - don't tune! -->
 		<property>engines/engine[3]/n1</property>
 		<axis>
 			<x>-1</x>
@@ -276,17 +276,17 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.71594</x-m>
-			<y-m>-5.63028</y-m>
-			<z-m>-2.28545</z-m>
+			<x-m>-6.66773</x-m>
+			<y-m>-5.63082</y-m>
+			<z-m>-2.26943</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
-		<object-name>FanLIAER</object-name>
-		<factor>56.5</factor>
+		<object-name>FanLCFM56R</object-name>
+		<factor>50</factor>
 		<property>engines/engine[4]/n1</property>
 		<axis>
 			<x>-1</x>
@@ -294,17 +294,17 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.71594</x-m>
-			<y-m> 5.63028</y-m>
-			<z-m>-2.28545</z-m>
+			<x-m>-6.66773</x-m>
+			<y-m> 5.62871</y-m>
+			<z-m>-2.26943</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (fast)</name>
 		<type>spin</type>
-		<object-name>FanSpinningIAEL</object-name>
-		<factor>5.65</factor>
+		<object-name>FanSpinningCFM56L</object-name>
+		<factor>5</factor>
 		<property>engines/engine[3]/n1</property>
 		<axis>
 			<x>-1</x>
@@ -312,17 +312,17 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.71594</x-m>
-			<y-m>-5.63028</y-m>
-			<z-m>-2.28545</z-m>
+			<x-m>-6.66773</x-m>
+			<y-m>-5.63082</y-m>
+			<z-m>-2.26943</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<name>Fan spinning animation (fast)</name>
 		<type>spin</type>
-		<object-name>FanSpinningIAER</object-name>
-		<factor>5.65</factor>
+		<object-name>FanSpinningCFM56R</object-name>
+		<factor>5</factor>
 		<property>engines/engine[4]/n1</property>
 		<axis>
 			<x>-1</x>
@@ -330,15 +330,15 @@
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-6.71594</x-m>
-			<y-m> 5.63028</y-m>
-			<z-m>-2.28545</z-m>
+			<x-m>-6.66773</x-m>
+			<y-m> 5.62871</y-m>
+			<z-m>-2.26943</z-m>
 		</center>
 	</animation>
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanSpinningIAEL</object-name>
+		<object-name>FanSpinningCFM56L</object-name>
 		<condition>
 			<greater-than>
 				<property>engines/engine[3]/n1</property>
@@ -349,7 +349,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanSpinningIAER</object-name>
+		<object-name>FanSpinningCFM56R</object-name>
 		<condition>
 			<greater-than>
 				<property>engines/engine[4]/n1</property>
@@ -360,7 +360,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanLIAEL</object-name>
+		<object-name>FanLCFM56L</object-name>
 		<condition>
 			<less-than-equals>
 				<property>engines/engine[3]/n1</property>
@@ -371,7 +371,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FanLIAER</object-name>
+		<object-name>FanLCFM56R</object-name>
 		<condition>
 			<less-than-equals>
 				<property>engines/engine[4]/n1</property>
@@ -381,26 +381,138 @@
 	</animation>
 	
 	<animation>
-		<type>translate</type>
-		<object-name>ReverserLDoor</object-name>
+		<name>Reverser Door LH 1</name>
+		<type>rotate</type>
+		<object-name>ReverserLDoor1</object-name>
+		<object-name>ReverserLDoor1.Inner</object-name>
+		<factor>-70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
-		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
-			<x>1</x>
-			<y>0</y>
-			<z>0</z>
+			<x1-m>-4.7738</x1-m>
+			<y1-m>-6.25156</y1-m>
+			<z1-m>-1.65547</z1-m>
+			<x2-m>-4.77475</x2-m>
+			<y2-m>-6.29771</y2-m>
+			<z2-m>-1.71849</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Reverser Door LH 2</name>
+		<type>rotate</type>
+		<object-name>ReverserLDoor2</object-name>
+		<object-name>ReverserLDoor2.Inner</object-name>
+		<factor>-70</factor>
+		<property>engines/engine[0]/reverser-pos-norm</property>
+		<axis>
+			<x1-m>-4.77785</x1-m>
+			<y1-m>-6.29253</y1-m>
+			<z1-m>-2.82287</z1-m>
+			<x2-m>-4.77731</x2-m>
+			<y2-m>-6.2496</y2-m>
+			<z2-m>-2.88363</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Reverser Door LH 3</name>
+		<type>rotate</type>
+		<object-name>ReverserLDoor3</object-name>
+		<object-name>ReverserLDoor3.Inner</object-name>
+		<factor>70</factor>
+		<property>engines/engine[0]/reverser-pos-norm</property>
+		<axis>
+			<x1-m>-4.7738</x1-m>
+			<y1-m>-5.01022</y1-m>
+			<z1-m>-1.6555</z1-m>
+			<x2-m>-4.77475</x2-m>
+			<y2-m>-4.96408</y2-m>
+			<z2-m>-1.71852</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Reverser Door LH 4</name>
+		<type>rotate</type>
+		<object-name>ReverserLDoor4</object-name>
+		<object-name>ReverserLDoor4.Inner</object-name>
+		<factor>70</factor>
+		<property>engines/engine[0]/reverser-pos-norm</property>
+		<axis>
+			<x1-m>-4.778</x1-m>
+			<y1-m>-4.96919</y1-m>
+			<z1-m>-2.82264</z1-m>
+			<x2-m>-4.77746</x2-m>
+			<y2-m>-5.01209</y2-m>
+			<z2-m>-2.8834</z2-m>
 		</axis>
 	</animation>
 
 	<animation>
-		<type>translate</type>
-		<object-name>ReverserRDoor</object-name>
+		<name>Reverser Door RH 1</name>
+		<type>rotate</type>
+		<object-name>ReverserRDoor1</object-name>
+		<object-name>ReverserRDoor1.Inner</object-name>
+		<factor>-70</factor>
 		<property>engines/engine[1]/reverser-pos-norm</property>
-		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
-			<x>1</x>
-			<y>0</y>
-			<z>0</z>
+			<x1-m>-4.7738</x1-m>
+			<y1-m> 5.01008</y1-m>
+			<z1-m>-1.65547</z1-m>
+			<x2-m>-4.77475</x2-m>
+			<y2-m> 4.96393</y2-m>
+			<z2-m>-1.71849</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Reverser Door RH 2</name>
+		<type>rotate</type>
+		<object-name>ReverserRDoor2</object-name>
+		<object-name>ReverserRDoor2.Inner</object-name>
+		<factor>-70</factor>
+		<property>engines/engine[1]/reverser-pos-norm</property>
+		<axis>
+			<x1-m>-4.77785</x1-m>
+			<y1-m> 4.96912</y1-m>
+			<z1-m>-2.82287</z1-m>
+			<x2-m>-4.77731</x2-m>
+			<y2-m> 5.01204</y2-m>
+			<z2-m>-2.88363</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Reverser Door RH 3</name>
+		<type>rotate</type>
+		<object-name>ReverserRDoor3</object-name>
+		<object-name>ReverserRDoor3.Inner</object-name>
+		<factor>70</factor>
+		<property>engines/engine[1]/reverser-pos-norm</property>
+		<axis>
+			<x1-m>-4.7738</x1-m>
+			<y1-m> 6.25142</y1-m>
+			<z1-m>-1.6555</z1-m>
+			<x2-m>-4.77475</x2-m>
+			<y2-m> 6.29756</y2-m>
+			<z2-m>-1.71852</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<name>Reverser Door RH 4</name>
+		<type>rotate</type>
+		<object-name>ReverserRDoor4</object-name>
+		<object-name>ReverserRDoor4.Inner</object-name>
+		<factor>70</factor>
+		<property>engines/engine[1]/reverser-pos-norm</property>
+		<axis>
+			<x1-m>-4.778</x1-m>
+			<y1-m> 6.29245</y1-m>
+			<z1-m>-2.82264</z1-m>
+			<x2-m>-4.77746</x2-m>
+			<y2-m> 6.24955</y2-m>
+			<z2-m>-2.8834</z2-m>
 		</axis>
 	</animation>
 	
@@ -450,11 +562,17 @@
 	
 	<!-- Effect -->
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-IAE</inherits-from>
-		<object-name>EngineIAEV2500L</object-name>
-		<object-name>EngineIAEV2500R</object-name>
-		<object-name>ReverserLDoor</object-name>
-		<object-name>ReverserRDoor</object-name>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-CFM</inherits-from>
+		<object-name>EngineCFM56L</object-name>
+		<object-name>EngineCFM56R</object-name>
+		<object-name>ReverserLDoor1</object-name>
+		<object-name>ReverserLDoor2</object-name>
+		<object-name>ReverserLDoor3</object-name>
+		<object-name>ReverserLDoor4</object-name>
+		<object-name>ReverserRDoor1</object-name>
+		<object-name>ReverserRDoor2</object-name>
+		<object-name>ReverserRDoor3</object-name>
+		<object-name>ReverserRDoor4</object-name>
 	</effect>
 	
 	<effect>
@@ -464,14 +582,14 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-IAE</inherits-from>
-		<object-name>PylonIAEV2500L</object-name>
-		<object-name>PylonIAEV2500R</object-name>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-CFM</inherits-from>
+		<object-name>PylonCFM56L</object-name>
+		<object-name>PylonCFM56R</object-name>
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-IAE</inherits-from>
-		<object-name>IntakeIAEV2500L</object-name>
-		<object-name>IntakeIAEV2500R</object-name>
+		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-CFM</inherits-from>
+		<object-name>IntakeCFM56L</object-name>
+		<object-name>IntakeCFM56R</object-name>
 	</effect>
 </PropertyList>

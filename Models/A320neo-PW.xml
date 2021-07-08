@@ -13,7 +13,7 @@
 	
 	<model>
 		<name>EnginesPWLeap</name>
-		<path>Aircraft/A320-family/Models/Engines/XMLs/a320.pw.xml</path>
+		<path>Aircraft/A320-family/Models/Fuselage/a320.pw.xml</path>
 	</model>
 	
 	<!-- Nasal code -->
