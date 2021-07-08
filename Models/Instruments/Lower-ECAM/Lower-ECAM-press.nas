@@ -21,8 +21,83 @@ var canvas_lowerECAMPagePress =
 		obj.units = acconfig_weight_kgs.getValue();
 		
 		# init
+		obj["PRESS-Sys-2"].hide();
+		obj["PRESS-Outlet-Transit-Failed"].hide();
+		obj["PRESS-Inlet-Transit-Failed"].hide();
 		
 		obj.update_items = [
+			props.UpdateManager.FromHashValue("pressDelta", 0.05, func(val) {
+				if (val > 31.9) {
+					obj["PRESS-deltaP"].setText(sprintf("%2.1f", 31.9));
+				} else if (val < -9.9) {
+					obj["PRESS-deltaP"].setText(sprintf("%2.1f", -9.9));
+				} else {
+					obj["PRESS-deltaP"].setText(sprintf("%2.1f", val));
+				}
+				
+				if (val < -0.4 or val > 8.5) {
+					obj["PRESS-deltaP"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["PRESS-deltaP"].setColor(0.0509,0.7529,0.2941);
+				}
+			}),
+			props.UpdateManager.FromHashValue("pressVS", 25, func(val) {
+				if (val > 9950) {
+					obj["PRESS-Cab-VS"].setText(sprintf("%4.0f", 9950));
+				} else if (val < -9950) {
+					obj["PRESS-Cab-VS"].setText(sprintf("%4.0f", -9950));
+				} else {
+					obj["PRESS-Cab-VS"].setText(sprintf("%-4.0f", math.round(val,50)));
+				}
+				
+				if (abs(val) > 2000) {
+					obj["PRESS-Cab-VS"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["PRESS-Cab-VS"].setColor(0.0509,0.7529,0.2941);
+				}
+			}),
+			props.UpdateManager.FromHashValue("pressAlt", 25, func(val) {
+				if (val > 32750) {
+					obj["PRESS-Cab-Alt"].setText(sprintf("%5.0f", 32750));
+				} else if (val < -9950) {
+					obj["PRESS-Cab-Alt"].setText(sprintf("%5.0f", -9950));
+				} else {
+					obj["PRESS-Cab-Alt"].setText(sprintf("%5.0f", math.round(val,50)));
+				}
+				
+				if (val > 9550) {
+					obj["PRESS-Cab-Alt"].setColor(1,0,0);
+				} else {
+					obj["PRESS-Cab-Alt"].setColor(0.0509,0.7529,0.2941);
+				}
+			}),
+			props.UpdateManager.FromHashValue("pressAuto", nil, func(val) {
+				if (val) {
+					obj["PRESS-Man"].hide();
+					obj["PRESS-Sys-1"].show();
+				} else {
+					obj["PRESS-Man"].show();
+					obj["PRESS-Sys-1"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("flowCtlValve1", 0.1, func(val) {
+				if (val == 0) {
+					obj["PRESS-Pack-1-Triangle"].setColor(0.7333,0.3803,0);
+					obj["PRESS-Pack-1"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["PRESS-Pack-1-Triangle"].setColor(0.0509,0.7529,0.2941);
+					obj["PRESS-Pack-1"].setColor(0.8078,0.8039,0.8078);
+				}
+			}),
+			props.UpdateManager.FromHashValue("flowCtlValve2", 0.1, func(val) {
+				if (val == 0) {
+					obj["PRESS-Pack-2-Triangle"].setColor(0.7333,0.3803,0);
+					obj["PRESS-Pack-2"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["PRESS-Pack-2-Triangle"].setColor(0.0509,0.7529,0.2941);
+					obj["PRESS-Pack-2"].setColor(0.8078,0.8039,0.8078);
+				}
+			}),
 		];
 		
 		obj.displayedGForce = 0;
@@ -62,10 +137,10 @@ var canvas_lowerECAMPagePress =
 		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit"];
 	},
 	getKeys: func() {
-		return["Bulk","BulkLine","BulkLbl","Exit1L","Exit1R","Cabin1Left","Cabin1LeftLbl","Cabin1LeftLine","Cabin1LeftSlide","Cabin1Right","Cabin1RightLbl","Cabin1RightLine","Cabin1RightSlide","Cabin2Left","Cabin2LeftLbl",
-		"Cabin2LeftLine","Cabin2LeftSlide","Cabin2Right","Cabin2RightLbl","Cabin2RightLine","Cabin2RightSlide","Cabin3Left","Cabin3LeftLbl","Cabin3LeftLine","Cabin3LeftSlide","Cabin3Right","Cabin3RightLbl","Cabin3RightLine","Cabin3RightSlide","AvionicsLine1",
-		"AvionicsLbl1","AvionicsLine2","AvionicsLbl2","Cargo1Line","Cargo1Lbl","Cargo1Door","Cargo2Line","Cargo2Lbl","Cargo2Door","ExitLSlide","ExitLLine","ExitLLbl","ExitRSlide","ExitRLine","ExitRLbl","Cabin4Left","Cabin4LeftLbl","Cabin4LeftLine",
-		"Cabin4LeftSlide","Cabin4Right","Cabin4RightLbl","Cabin4RightLine","Cabin4RightSlide","DOOROXY-REGUL-LO-PR"];},
+		return["PRESS-Cab-VS", "PRESS-Cab-VS-neg", "PRESS-Cab-Alt", "PRESS-deltaP", "PRESS-LDG-Elev", "PRESS-deltaP-needle", "PRESS-VS-needle", "PRESS-Alt-needle",
+		"PRESS-Man", "PRESS-Sys-1", "PRESS-Sys-2", "PRESS-Outlet-Transit-Failed", "PRESS-Inlet-Transit-Failed", "PRESS-LDG-Elev-mode","PRESS-Pack-1-Triangle","PRESS-Pack-2-Triangle",
+		"PRESS-Pack-1","PRESS-Pack-2"];
+	},
 	updateBottom: func(notification) {
 		foreach(var update_item_bottom; me.updateItemsBottom)
         {
@@ -140,6 +215,13 @@ var canvas_lowerECAMPagePress =
 };
 
 var input = {
+	pressAlt: "/systems/pressurization/cabinalt-norm",
+	pressAuto: "/systems/pressurization/auto",
+	pressDelta: "/systems/pressurization/deltap-norm",
+	pressVS: "/systems/pressurization/vs-norm",
+	
+	flowCtlValve1: "/systems/air-conditioning/valves/flow-control-valve-1",
+	flowCtlValve2: "/systems/air-conditioning/valves/flow-control-valve-2",
 };
 
 foreach (var name; keys(input)) {

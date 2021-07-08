@@ -19,6 +19,7 @@ var SystemDisplayPageRecipient =
 					SystemDisplayPageRecipient.pageList.apu.update(notification);
 					SystemDisplayPageRecipient.pageList.bleed.update(notification);
 					SystemDisplayPageRecipient.pageList.cond.update(notification);
+					SystemDisplayPageRecipient.pageList.cruise.update(notification);
 					SystemDisplayPageRecipient.pageList.door.update(notification);
 					SystemDisplayPageRecipient.pageList.elec.update(notification);
 					SystemDisplayPageRecipient.pageList.eng.update(notification);
