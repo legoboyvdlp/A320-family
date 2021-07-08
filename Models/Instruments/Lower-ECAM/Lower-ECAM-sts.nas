@@ -85,7 +85,7 @@ var canvas_lowerECAMPageSts =
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
-			me["SAT"].setText(sprintf("%2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
+			me["SAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
 			me["SAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["SAT"].setText(sprintf("%s", "XX"));
@@ -93,7 +93,7 @@ var canvas_lowerECAMPageSts =
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[5] != nil) {
-			me["TAT"].setText(sprintf("%2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
+			me["TAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
 			me["TAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["TAT"].setText(sprintf("%s", "XX"));

@@ -4738,6 +4738,7 @@
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-APU.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-bleed.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-cond.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-cruise.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-door.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-elec.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-eng.nas</file>

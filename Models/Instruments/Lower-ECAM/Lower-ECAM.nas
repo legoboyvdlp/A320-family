@@ -39,6 +39,7 @@ var SystemDisplayPageRecipient =
 		apu: canvas_lowerECAMPageApu.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/apu.svg","apu"),
 		bleed: canvas_lowerECAMPageBleed.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/bleed.svg","bleed"),
 		cond: canvas_lowerECAMPageCond.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/cond.svg","cond"),
+		cruise: canvas_lowerECAMPageCruise.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/crz.svg","cruise"),
 		door: canvas_lowerECAMPageDoor.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/door.svg","door"),
 		elec: canvas_lowerECAMPageElec.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/elec.svg","elec"),
 		eng: canvas_lowerECAMPageEng.new("Aircraft/A320-family/Models/Instruments/Lower-ECAM/res/eng.svg","eng"),

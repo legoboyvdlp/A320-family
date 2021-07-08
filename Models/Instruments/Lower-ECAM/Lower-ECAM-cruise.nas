@@ -1,10 +1,10 @@
 # A3XX Lower ECAM Canvas
 # Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
 
-var canvas_lowerECAMPageBleed =
+var canvas_lowerECAMPageCruise =
 {
 	new: func(svg,name) {
-		var obj = {parents: [canvas_lowerECAMPageBleed,canvas_lowerECAM_base] };
+		var obj = {parents: [canvas_lowerECAMPageCruise,canvas_lowerECAM_base] };
         obj.group = obj.canvas.createGroup();
 		obj.name = name;
         
