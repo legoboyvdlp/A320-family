@@ -80,8 +80,8 @@ var canvas_lowerECAMPagePress =
 					obj["PRESS-Sys-1"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("flowCtlValve1", nil, func(val) {
-				if (val == 0) {
+			props.UpdateManager.FromHashList(["flowCtlValve1","engine1State"], nil, func(val) {
+				if (val.flowCtlValve1 == 0 and val.engine1State == 3) {
 					obj["PRESS-Pack-1-Triangle"].setColor(0.7333,0.3803,0);
 					obj["PRESS-Pack-1"].setColor(0.7333,0.3803,0);
 				} else {
@@ -89,8 +89,8 @@ var canvas_lowerECAMPagePress =
 					obj["PRESS-Pack-1"].setColor(0.8078,0.8039,0.8078);
 				}
 			}),
-			props.UpdateManager.FromHashValue("flowCtlValve2", nil, func(val) {
-				if (val == 0) {
+			props.UpdateManager.FromHashList(["flowCtlValve2","engine2State"], nil, func(val) {
+				if (val.flowCtlValve2 == 0 and val.engine2State == 3) {
 					obj["PRESS-Pack-2-Triangle"].setColor(0.7333,0.3803,0);
 					obj["PRESS-Pack-2"].setColor(0.7333,0.3803,0);
 				} else {
