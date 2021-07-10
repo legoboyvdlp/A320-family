@@ -1,6 +1,11 @@
 # A3XX Lower ECAM Canvas
 # Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
 
+var fuel_used_lbs1 = props.globals.getNode("/systems/fuel/fuel-used-1", 1);
+var fuel_used_lbs2 = props.globals.getNode("/systems/fuel/fuel-used-2", 1);
+
+var QT2LTR = 0.946353;
+
 var canvas_lowerECAMPageEng =
 {
 	new: func(svg,name) {
@@ -21,8 +26,108 @@ var canvas_lowerECAMPageEng =
 		obj.units = acconfig_weight_kgs.getValue();
 		
 		# init
+		obj["FUEL-clog-1"].hide();
+		obj["FUEL-clog-2"].hide();
+		obj["OIL-clog-1"].hide();
+		obj["OIL-clog-2"].hide();
+		
+		obj.quantity = [nil, nil];
 		
 		obj.update_items = [
+			props.UpdateManager.FromHashValue("engOilQt1", 0.005, func(val) {
+				if (obj.units) {
+					obj.quantity[0] = sprintf("%2.1f",(0.1 * math.round(val * QT2LTR * 10,5)));
+					obj["OilQT1"].setText(sprintf("%s", left(obj.quantity[0], (size(obj.quantity[0]) == 4 ? 2 : 1))));
+					obj["OilQT1-decimal"].setText(sprintf("%s", right(obj.quantity[0],1)));
+					obj["OilQT1-needle"].setRotation(((val * QT2LTR) + 90) * D2R);
+				} else {
+					obj.quantity[0] = sprintf("%2.1f",(0.1 * math.round(val * 10,5)));
+					obj["OilQT1"].setText(sprintf("%s", left(obj.quantity[0], (size(obj.quantity[0]) == 4 ? 2 : 1))));
+					obj["OilQT1-decimal"].setText(sprintf("%s", right(obj.quantity[0],1)));
+					obj["OilQT1-needle"].setRotation((val + 90) * D2R);
+				}
+			}),
+			props.UpdateManager.FromHashValue("engOilQt2", 0.005, func(val) {
+				if (obj.units) {
+					obj.quantity[1] = sprintf("%2.1f",(0.1 * math.round(val * QT2LTR * 10,5)));
+					obj["OilQT2"].setText(sprintf("%s", left(obj.quantity[1], (size(obj.quantity[1]) == 4 ? 2 : 1))));
+					obj["OilQT2-decimal"].setText(sprintf("%s", right(obj.quantity[1],1)));
+					obj["OilQT2-needle"].setRotation(((val * QT2LTR) + 90) * D2R);
+				} else {
+					obj.quantity[1] = sprintf("%2.1f",(0.1 * math.round(val * 10,5)));
+					obj["OilQT2"].setText(sprintf("%s", left(obj.quantity[1], (size(obj.quantity[1]) == 4 ? 2 : 1))));
+					obj["OilQT2-decimal"].setText(sprintf("%s", right(obj.quantity[1],1)));
+					obj["OilQT2-needle"].setRotation((val + 90) * D2R);
+				}
+			}),
+			props.UpdateManager.FromHashValue("engOilPsi1", 0.25, func(val) {
+				if (val >= 13) {
+					obj["OilPSI1"].setColor(0.0509,0.7529,0.2941);
+					obj["OilPSI1-needle"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["OilPSI1"].setColor(1,0,0);
+					obj["OilPSI1-needle"].setColor(1,0,0);
+				}
+
+				obj["OilPSI1"].setText(sprintf("%s", math.round(val)));
+				obj["OilPSI1-needle"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("engOilPsi2", 0.25, func(val) {
+				if (val >= 13) {
+					obj["OilPSI2"].setColor(0.0509,0.7529,0.2941);
+					obj["OilPSI2-needle"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["OilPSI2"].setColor(1,0,0);
+					obj["OilPSI2-needle"].setColor(1,0,0);
+				}
+				
+				obj["OilPSI2"].setText(sprintf("%s", math.round(val)));
+				obj["OilPSI2-needle"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
+				if (val) {
+					obj["Fused-weight-unit"].setText("KG");
+					obj["Fused-oil-unit"].setText("LTR");
+					# immediately update parameters
+					obj.quantity[0] = sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[0].getValue() * QT2LTR * 10,5)));
+					obj["OilQT1"].setText(sprintf("%s", left(obj.quantity[0], (size(obj.quantity[0]) == 4 ? 2 : 1))));
+					obj["OilQT1-decimal"].setText(sprintf("%s", right(obj.quantity[0],1)));
+					obj["OilQT1-needle"].setRotation(((pts.Engines.Engine.oilQt[0].getValue() * QT2LTR) + 90) * D2R);
+					obj.quantity[1] = sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[1].getValue() * QT2LTR * 10,5)));
+					obj["OilQT2"].setText(sprintf("%s", left(obj.quantity[1], (size(obj.quantity[1]) == 4 ? 2 : 1))));
+					obj["OilQT2-decimal"].setText(sprintf("%s", right(obj.quantity[1],1)));
+					obj["OilQT2-needle"].setRotation(((pts.Engines.Engine.oilQt[1].getValue() * QT2LTR) + 90) * D2R);
+					obj["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
+					obj["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
+				} else {
+					obj["Fused-weight-unit"].setText("LBS");
+					obj["Fused-oil-unit"].setText("QT");
+					obj.quantity[0] = sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[0].getValue() * 10,5)));
+					obj["OilQT1"].setText(sprintf("%s", left(obj.quantity[0], (size(obj.quantity[0]) == 4 ? 2 : 1))));
+					obj["OilQT1-decimal"].setText(sprintf("%s", right(obj.quantity[0],1)));
+					obj["OilQT1-needle"].setRotation((pts.Engines.Engine.oilQt[0].getValue() + 90) * D2R);
+					obj.quantity[1] = sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[1].getValue() * 10,5)));
+					obj["OilQT2"].setText(sprintf("%s", left(obj.quantity[1], (size(obj.quantity[1]) == 4 ? 2 : 1))));
+					obj["OilQT2-decimal"].setText(sprintf("%s", right(obj.quantity[1],1)));
+					obj["OilQT2-needle"].setRotation((pts.Engines.Engine.oilQt[1].getValue() + 90) * D2R);
+					obj["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+					obj["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+				}
+			}),
+			props.UpdateManager.FromHashValue("engFuelUsed1", 1, func(val) {
+				if (obj.units) {
+					obj["FUEL-used-1"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+				} else {
+					obj["FUEL-used-1"].setText(sprintf("%s", math.round(val, 10)));
+				}
+			}),
+			props.UpdateManager.FromHashValue("engFuelUsed2", 1, func(val) {
+				if (obj.units) {
+					obj["FUEL-used-2"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+				} else {
+					obj["FUEL-used-2"].setText(sprintf("%s", math.round(val, 10)));
+				}
+			}),
 		];
 		
 		obj.displayedGForce = 0;
@@ -62,10 +167,10 @@ var canvas_lowerECAMPageEng =
 		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit"];
 	},
 	getKeys: func() {
-		return["Bulk","BulkLine","BulkLbl","Exit1L","Exit1R","Cabin1Left","Cabin1LeftLbl","Cabin1LeftLine","Cabin1LeftSlide","Cabin1Right","Cabin1RightLbl","Cabin1RightLine","Cabin1RightSlide","Cabin2Left","Cabin2LeftLbl",
-		"Cabin2LeftLine","Cabin2LeftSlide","Cabin2Right","Cabin2RightLbl","Cabin2RightLine","Cabin2RightSlide","Cabin3Left","Cabin3LeftLbl","Cabin3LeftLine","Cabin3LeftSlide","Cabin3Right","Cabin3RightLbl","Cabin3RightLine","Cabin3RightSlide","AvionicsLine1",
-		"AvionicsLbl1","AvionicsLine2","AvionicsLbl2","Cargo1Line","Cargo1Lbl","Cargo1Door","Cargo2Line","Cargo2Lbl","Cargo2Door","ExitLSlide","ExitLLine","ExitLLbl","ExitRSlide","ExitRLine","ExitRLbl","Cabin4Left","Cabin4LeftLbl","Cabin4LeftLine",
-		"Cabin4LeftSlide","Cabin4Right","Cabin4RightLbl","Cabin4RightLine","Cabin4RightSlide","DOOROXY-REGUL-LO-PR"];},
+		return["OilQT1-needle","OilQT2-needle","OilQT1","OilQT2","OilQT1-decimal","OilQT2-decimal","OilPSI1-needle","OilPSI2-needle","OilPSI1","OilPSI2",
+		"FUEL-used-1","FUEL-used-2", "Fused-weight-unit","Fused-oil-unit","FUEL-clog-1","FUEL-clog-2","OIL-clog-1","OIL-clog-2","OilTemp1","OilTemp2",
+		"VIB-N1-1","VIB-N1-2","VIB-N2-1","VIB-N2-2"];
+	},
 	updateBottom: func(notification) {
 		foreach(var update_item_bottom; me.updateItemsBottom)
         {
@@ -140,6 +245,12 @@ var canvas_lowerECAMPageEng =
 };
 
 var input = {
+	engFuelUsed1: "/systems/fuel/fuel-used-1",
+	engFuelUsed2: "/systems/fuel/fuel-used-2",
+	engOilQt1: "/engines/engine[0]/oil-qt-actual",
+	engOilQt2: "/engines/engine[1]/oil-qt-actual",
+	engOilPsi1: "/engines/engine[0]/oil-psi-actual",
+	engOilPsi2: "/engines/engine[1]/oil-psi-actual",
 };
 
 foreach (var name; keys(input)) {

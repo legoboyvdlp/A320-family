@@ -46,9 +46,6 @@ var hp_valve_state = 0;
 var xbleedcmdstate = 0;
 var ramAirState = 0;
 
-# Conversion factor pounds to kilogram
-LBS2KGS = 0.4535924;
-
 # Fetch Nodes
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var rate = props.globals.getNode("/systems/acconfig/options/lecam-rate", 1);
@@ -105,10 +102,9 @@ var gs_kt = props.globals.getNode("/velocities/groundspeed-kt", 1);
 var switch_wing_aice = props.globals.getNode("/controls/ice-protection/wing", 1);
 var pack1_bypass = props.globals.getNode("/systems/pneumatics/pack-1-bypass", 1);
 var pack2_bypass = props.globals.getNode("/systems/pneumatics/pack-2-bypass", 1);
-var oil_qt1_actual = props.globals.getNode("/engines/engine[0]/oil-qt-actual", 1);
+var oil_qt1_actual = props.globals.getNode("", 1);
 var oil_qt2_actual = props.globals.getNode("/engines/engine[1]/oil-qt-actual", 1);
-var fuel_used_lbs1 = props.globals.getNode("/systems/fuel/fuel-used-1", 1);
-var fuel_used_lbs2 = props.globals.getNode("/systems/fuel/fuel-used-2", 1);
+var fuel_used_lbs1 = props.globals.getNode("", 1);
 var doorL1_pos = props.globals.getNode("/sim/model/door-positions/doorl1/position-norm", 1);
 var doorR1_pos = props.globals.getNode("/sim/model/door-positions/doorr1/position-norm", 1);
 var doorL4_pos = props.globals.getNode("/sim/model/door-positions/doorl4/position-norm", 1);
@@ -1657,50 +1653,18 @@ var canvas_lowerECAM_eng = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit","OilQT1-needle","OilQT2-needle","OilQT1","OilQT2","OilQT1-decimal","OilQT2-decimal","OilPSI1-needle","OilPSI2-needle","OilPSI1","OilPSI2","FUEL-used-1","FUEL-used-2", "Fused-weight-unit"];
+		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit",];
 	},
 	update: func() {
 		# Oil Quantity
-		me["OilQT1"].setText(sprintf("%s", int(oil_qt1_actual.getValue())));
-		me["OilQT2"].setText(sprintf("%s", int(oil_qt2_actual.getValue())));
-		me["OilQT1-decimal"].setText(sprintf("%s", int(10*math.mod(oil_qt1_actual.getValue(),1))));
-		me["OilQT2-decimal"].setText(sprintf("%s", int(10*math.mod(oil_qt2_actual.getValue(),1))));
-
-		me["OilQT1-needle"].setRotation((oil_qt1.getValue() + 90) * D2R);
-		me["OilQT2-needle"].setRotation((oil_qt2.getValue() + 90) * D2R);
+		
 
 		# Oil Pressure
-		if (pts.Engines.Engine.oilPsi[0].getValue() >= 20) {
-			me["OilPSI1"].setColor(0.0509,0.7529,0.2941);
-			me["OilPSI1-needle"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["OilPSI1"].setColor(1,0,0);
-			me["OilPSI1-needle"].setColor(1,0,0);
-		}
-
-		if (pts.Engines.Engine.oilPsi[1].getValue() >= 20) {
-			me["OilPSI2"].setColor(0.0509,0.7529,0.2941);
-			me["OilPSI2-needle"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["OilPSI2"].setColor(1,0,0);
-			me["OilPSI2-needle"].setColor(1,0,0);
-		}
-
-		me["OilPSI1"].setText(sprintf("%s", math.round(pts.Engines.Engine.oilPsi[0].getValue())));
-		me["OilPSI2"].setText(sprintf("%s", math.round(pts.Engines.Engine.oilPsi[1].getValue())));
-
-		me["OilPSI1-needle"].setRotation((oil_psi1.getValue() + 90) * D2R);
-		me["OilPSI2-needle"].setRotation((oil_psi2.getValue() + 90) * D2R);
+		
 
 		# Fuel Used
 		if (acconfig_weight_kgs.getValue()) {
-			me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
-			me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
-			me["Fused-weight-unit"].setText("KG");
 		} else {
-			me["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
-			me["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
-			me["Fused-weight-unit"].setText("LBS");
 		}
 		
 		me.updateBottomStatus();
