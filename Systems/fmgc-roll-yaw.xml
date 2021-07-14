@@ -117,7 +117,7 @@
 	<filter>
 		<name>IT-CONTROLLER: Align/Rollout/Takeoff</name>
 		<debug>false</debug>
-		<type>noise-spike</type>
+		<type>gain</type>
 		<enable>
 			<condition>
 				<or>
