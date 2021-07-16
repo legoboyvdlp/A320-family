@@ -395,6 +395,8 @@ var input = {
 	"seatbelt": "/controls/switches/seatbelt-sign",
 	"noSmoking": "/controls/switches/no-smoking-sign",
 	"gearPosNorm": "/gear/gear[0]/position-norm",
+	"gearPosNorm1": "/gear/gear[1]/position-norm",
+	"gearPosNorm2": "/gear/gear[2]/position-norm",
 };
 
 foreach (var name; keys(input)) {
