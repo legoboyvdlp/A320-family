@@ -67,7 +67,7 @@ var FBW = {
 		rtlu1: props.globals.getNode("/systems/failures/fctl/rtlu-1"),
 		rtlu2: props.globals.getNode("/systems/failures/fctl/rtlu-2"),
 		rtlu2: props.globals.getNode("/systems/failures/fctl/rtlu-2"),
-		ths: props.globals.getNode("/systems/failures/fctl/ths-jam"),
+		ths: props.globals.getNode(""),
 		spoilerl1: props.globals.getNode(""),
 		spoilerl2: props.globals.getNode("/systems/failures/spoilers/spoiler-l2"),
 		spoilerl3: props.globals.getNode("/systems/failures/spoilers/spoiler-l3"),

@@ -84,6 +84,12 @@ var canvas_lowerECAMPageCruise =
 				} else {
 					obj["deltaPSI"].setText(sprintf("%2.1f", val));
 				}
+				
+				if (val < -0.4 or val > 8.5) {
+					obj["deltaPSI"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["deltaPSI"].setColor(0.0509,0.7529,0.2941);
+				}
 			}),
 			props.UpdateManager.FromHashValue("pressVS", 25, func(val) {
 				if (val > 9950) {
@@ -92,6 +98,32 @@ var canvas_lowerECAMPageCruise =
 					obj["CABVS"].setText(sprintf("%4.0f", -9950));
 				} else {
 					obj["CABVS"].setText(sprintf("%-4.0f", math.round(val,50)));
+				}
+				
+				if (val >= 25) {
+					obj["VS-Arrow-UP"].show();
+					obj["VS-Arrow-DN"].hide();
+				} elsif (val <= -25) {
+					obj["VS-Arrow-UP"].hide();
+					obj["VS-Arrow-DN"].show();
+				} else {
+					obj["VS-Arrow-UP"].hide();
+					obj["VS-Arrow-DN"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("pressAlt", 25, func(val) {
+				if (val > 32750) {
+					obj["CABALT"].setText(sprintf("%5.0f", 32750));
+				} else if (val < -9950) {
+					obj["CABALT"].setText(sprintf("%5.0f", -9950));
+				} else {
+					obj["CABALT"].setText(sprintf("%5.0f", math.round(val,50)));
+				}
+				
+				if (val > 9550) {
+					obj["CABALT"].setColor(1,0,0);
+				} else {
+					obj["CABALT"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
 			props.UpdateManager.FromHashValue("condTempCockpit", 0.5, func(val) {
@@ -142,7 +174,7 @@ var canvas_lowerECAMPageCruise =
 		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit"];
 	},
 	getKeys: func() {
-		return["Oil1","Oil2","FUsed1","FUsed2","FUsed","VIB1N1","VIB1N2","VIB2N1","VIB2N2","deltaPSI","LDGELEV-AUTO","LDGELEV","CABVS","CABALT","VS-Arrow-UP","VS-Arrow-DN","CKPT-TEMP","FWD-TEMP","AFT-TEMP","Fused-weight-unit"];
+		return["Oil1","Oil2","OilUnit","FUsed1","FUsed2","FUsed","VIB1N1","VIB1N2","VIB2N1","VIB2N2","deltaPSI","LDGELEV-AUTO","LDGELEV","CABVS","CABALT","VS-Arrow-UP","VS-Arrow-DN","CKPT-TEMP","FWD-TEMP","AFT-TEMP","Fused-weight-unit"];
 	},
 	updateBottom: func(notification) {
 		foreach(var update_item_bottom; me.updateItemsBottom)

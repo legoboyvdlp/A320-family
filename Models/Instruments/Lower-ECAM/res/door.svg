@@ -42,7 +42,7 @@
      id="namedview371"
      showgrid="true"
      inkscape:zoom="0.35355339"
-     inkscape:cx="361.49345"
+     inkscape:cx="354.52267"
      inkscape:cy="1842.4796"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -853,16 +853,16 @@
        style="font-size:30.04800034px;line-height:0">REGUL LO PR</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:32px;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.14905465;text-anchor:end;text-align:end;"
+     style="font-style:normal;font-weight:normal;font-size:32px;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.14905465;"
      x="918.81921"
      y="103.75028"
      id="DOOROXY-PR"
      transform="scale(0.91130679,1.0973253)"
      inkscape:label="#text4651"><tspan
        sodipodi:role="line"
-       x="842.82898"
+       x="918.81921"
        y="103.75028"
-       style="font-size:36px;line-height:1.25;fill:#0dc04b;fill-opacity:1;stroke-width:1.14905465;text-anchor:end;text-align:end;"
+       style="font-size:36px;line-height:1.25;text-align:end;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke-width:1.14905465;"
        id="tspan4653">1300</tspan></text>
   <text
      xml:space="preserve"
@@ -897,12 +897,12 @@
        transform="scale(1.0181905,0.98213449)"
        id="DOOR-VS"
        y="183.35246"
-       x="752.12054"
+       x="737.38855"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.57906288"
        xml:space="preserve"><tspan
          style="font-size:36px;line-height:1.25;stroke-width:0.57906288"
          y="183.35246"
-         x="752.12054"
+         x="737.38855"
          id="tspan4643"
          sodipodi:role="line">1650</tspan></text>
     <text

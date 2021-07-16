@@ -67,12 +67,12 @@ var oil_qt2 = props.globals.getNode("/ECAM/Lower/Oil-QT[1]", 1);
 var oil_psi1 = props.globals.getNode("/ECAM/Lower/Oil-PSI[0]", 1);
 var oil_psi2 = props.globals.getNode("/ECAM/Lower/Oil-PSI[1]", 1);
 var bleedapu = props.globals.getNode("", 1);
-var aileron_ind_left = props.globals.getNode("/ECAM/Lower/aileron-ind-left", 1);
+var aileron_ind_left = props.globals.getNode("", 1);
 var aileron_ind_right = props.globals.getNode("/ECAM/Lower/aileron-ind-right", 1);
-var elevator_ind_left = props.globals.getNode("/ECAM/Lower/elevator-ind-left", 1);
+var elevator_ind_left = props.globals.getNode("", 1);
 var elevator_ind_right = props.globals.getNode("/ECAM/Lower/elevator-ind-right", 1);
-var elevator_trim_deg = props.globals.getNode("/ECAM/Lower/elevator-trim-deg", 1);
-var final_deg = props.globals.getNode("/fdm/jsbsim/hydraulics/rudder/final-deg", 1);
+var elevator_trim_deg = props.globals.getNode("", 1);
+var final_deg = props.globals.getNode("", 1);
 var temperature_degc = props.globals.getNode("/environment/temperature-degc", 1);
 var tank3_content_lbs = props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs", 1);
 var ir2_knob = props.globals.getNode("/controls/adirs/ir[1]/knob", 1);
@@ -1487,318 +1487,16 @@ var canvas_lowerECAM_eng = {
 	},
 };
 
-var canvas_lowerECAM_fctl = {
-	new: func(canvas_group, file) {
-		var m = {parents: [canvas_lowerECAM_fctl, canvas_lowerECAM_base]};
-		m.init(canvas_group, file);
-
-		return m;
-	},
-	getKeys: func() {
-		return["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit","ailL","ailR","elevL","elevR","PTcc","PT","PTupdn","elac1","elac2","sec1","sec2","sec3","ailLblue","ailRblue","elevLblue","elevRblue","rudderblue","ailLgreen","ailRgreen","elevLgreen","ruddergreen","PTgreen",
-		"elevRyellow","rudderyellow","PTyellow","rudder","spdbrkblue","spdbrkgreen","spdbrkyellow","spoiler1Rex","spoiler1Rrt","spoiler2Rex","spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex",
-		"spoiler1Lrt","spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf","spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf",
-		"spoiler5Lf","ailLscale","ailRscale","path4249","path4249-3","path4249-3-6-7","path4249-3-6-7-5","path4249-3-6","text4343"];
-	},
-	update: func() {
-		blue_psi = systems.HYD.Psi.blue.getValue();
-		green_psi = systems.HYD.Psi.green.getValue();
-		yellow_psi = systems.HYD.Psi.yellow.getValue();
-		elac1Node = fbw.FBW.Computers.elac1.getValue();
-		elac2Node = fbw.FBW.Computers.elac2.getValue();
-		sec1Node = fbw.FBW.Computers.sec1.getValue();
-		sec2Node = fbw.FBW.Computers.sec2.getValue();
-
-		# Pitch Trim
-		me["PT"].setText(sprintf("%2.1f", math.round(elevator_trim_deg.getValue(), 0.1)));
-
-		if (math.round(elevator_trim_deg.getValue(), 0.1) >= 0) {
-			me["PTupdn"].setText(sprintf("UP"));
-		} else if (math.round(elevator_trim_deg.getValue(), 0.1) < 0) {
-			me["PTupdn"].setText(sprintf("DN"));
-		}
-
-		if (green_psi < 1500 and yellow_psi < 1500) {
-			me["PT"].setColor(0.7333,0.3803,0);
-			me["PTupdn"].setColor(0.7333,0.3803,0);
-			me["PTcc"].setColor(0.7333,0.3803,0);
-		} else {
-			me["PT"].setColor(0.0509,0.7529,0.2941);
-			me["PTupdn"].setColor(0.0509,0.7529,0.2941);
-			me["PTcc"].setColor(0.0509,0.7529,0.2941);
-		}
 		
-		if (fbw.FBW.Failures.ths.getBoolValue()) {
-			me["text4343"].setColor(0.7333,0.3803,0);
-		} else {
-			me["text4343"].setColor(0.8078,0.8039,0.8078);
-		}
-
-		# Ailerons
-		me["ailL"].setTranslation(0, aileron_ind_left.getValue() * 100);
-		me["ailR"].setTranslation(0, aileron_ind_right.getValue() * (-100));
-
-		if ((blue_psi < 1500 or !elac1Node) and (green_psi < 1500 or !elac2Node)) {
-			me["ailL"].setColor(0.7333,0.3803,0);
-		} else {
-			me["ailL"].setColor(0.0509,0.7529,0.2941);
-		}
 		
-		if ((green_psi < 1500 or !elac1Node) and (blue_psi < 1500 or !elac2Node)) {
-			me["ailR"].setColor(0.7333,0.3803,0);
-		} else {
-			me["ailR"].setColor(0.0509,0.7529,0.2941);
-		}
 
 		# Elevators
-		me["elevL"].setTranslation(0, elevator_ind_left.getValue() * 100);
-		me["elevR"].setTranslation(0, elevator_ind_right.getValue() * 100);
 
-		if ((blue_psi < 1500 or (!elac1Node and !sec1Node)) and (green_psi < 1500 or (!elac2Node and !sec2Node))) {
-			me["elevL"].setColor(0.7333,0.3803,0);
-		} else {
-			me["elevL"].setColor(0.0509,0.7529,0.2941);
-		}
-
-		if ((blue_psi < 1500 or (!elac1Node and !sec1Node)) and (yellow_psi < 1500 or (!elac2Node and !sec2Node))) {
-			me["elevR"].setColor(0.7333,0.3803,0);
-		} else {
-			me["elevR"].setColor(0.0509,0.7529,0.2941);
-		}
-
-		# Rudder
-		me["rudder"].setRotation(final_deg.getValue() * -0.024);
-
-		if (blue_psi < 1500 and yellow_psi < 1500 and green_psi < 1500) {
-			me["rudder"].setColor(0.7333,0.3803,0);
-		} else {
-			me["rudder"].setColor(0.0509,0.7529,0.2941);
-		}
-
-		# Spoilers
-		if (spoiler_L1.getValue() < 1.5) {
-			
-		} else {
-			
-		}
-
-		if (spoiler_L2.getValue() < 1.5) {
-			me["spoiler2Lex"].hide();
-			me["spoiler2Lrt"].show();
-		} else {
-			me["spoiler2Lrt"].hide();
-			me["spoiler2Lex"].show();
-		}
-
-		if (spoiler_L3.getValue() < 1.5) {
-			me["spoiler3Lex"].hide();
-			me["spoiler3Lrt"].show();
-		} else {
-			me["spoiler3Lrt"].hide();
-			me["spoiler3Lex"].show();
-		}
-
-		if (spoiler_L4.getValue() < 1.5) {
-			me["spoiler4Lex"].hide();
-			me["spoiler4Lrt"].show();
-		} else {
-			me["spoiler4Lrt"].hide();
-			me["spoiler4Lex"].show();
-		}
-
-		if (spoiler_L5.getValue() < 1.5) {
-			me["spoiler5Lex"].hide();
-			me["spoiler5Lrt"].show();
-		} else {
-			me["spoiler5Lrt"].hide();
-			me["spoiler5Lex"].show();
-		}
-
-		if (spoiler_R1.getValue() < 1.5) {
-			me["spoiler1Rex"].hide();
-			me["spoiler1Rrt"].show();
-		} else {
-			me["spoiler1Rrt"].hide();
-			me["spoiler1Rex"].show();
-		}
-
-		if (spoiler_R2.getValue() < 1.5) {
-			me["spoiler2Rex"].hide();
-			me["spoiler2Rrt"].show();
-		} else {
-			me["spoiler2Rrt"].hide();
-			me["spoiler2Rex"].show();
-		}
-
-		if (spoiler_R3.getValue() < 1.5) {
-			me["spoiler3Rex"].hide();
-			me["spoiler3Rrt"].show();
-		} else {
-			me["spoiler3Rrt"].hide();
-			me["spoiler3Rex"].show();
-		}
-
-		if (spoiler_R4.getValue() < 1.5) {
-			me["spoiler4Rex"].hide();
-			me["spoiler4Rrt"].show();
-		} else {
-			me["spoiler4Rrt"].hide();
-			me["spoiler4Rex"].show();
-		}
-
-		if (spoiler_R5.getValue() < 1.5) {
-			me["spoiler5Rex"].hide();
-			me["spoiler5Rrt"].show();
-		} else {
-			me["spoiler5Rrt"].hide();
-			me["spoiler5Rex"].show();
-		}
-
-		# Spoiler Fail
-		if (fbw.FBW.Failures.spoilerl1.getValue() or green_psi < 1500) {
-			me["spoiler1Lex"].setColor(0.7333,0.3803,0);
-			me["spoiler1Lrt"].setColor(0.7333,0.3803,0);
-			if (spoiler_L1.getValue() < 1.5) {
-				me["spoiler1Lf"].show();
-			} else {
-				me["spoiler1Lf"].hide();
-			}
-		} else {
-			me["spoiler1Lex"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler1Lrt"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler1Lf"].hide();
-		}
-
-		if (fbw.FBW.Failures.spoilerl2.getValue() or yellow_psi < 1500) {
-			me["spoiler2Lex"].setColor(0.7333,0.3803,0);
-			me["spoiler2Lrt"].setColor(0.7333,0.3803,0);
-			if (spoiler_L2.getValue() < 1.5) {
-				me["spoiler2Lf"].show();
-			} else {
-				me["spoiler2Lf"].hide();
-			}
-		} else {
-			me["spoiler2Lex"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler2Lrt"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler2Lf"].hide();
-		}
-
-		if (fbw.FBW.Failures.spoilerl3.getValue() or blue_psi < 1500) {
-			me["spoiler3Lex"].setColor(0.7333,0.3803,0);
-			me["spoiler3Lrt"].setColor(0.7333,0.3803,0);
-			if (spoiler_L3.getValue() < 1.5) {
-				me["spoiler3Lf"].show();
-			} else {
-				me["spoiler3Lf"].hide();
-			}
-		} else {
-			me["spoiler3Lex"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler3Lrt"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler3Lf"].hide();
-		}
-
-		if (fbw.FBW.Failures.spoilerl4.getValue() or yellow_psi < 1500) {
-			me["spoiler4Lex"].setColor(0.7333,0.3803,0);
-			me["spoiler4Lrt"].setColor(0.7333,0.3803,0);
-			if (spoiler_L4.getValue() < 1.5) {
-				me["spoiler4Lf"].show();
-			} else {
-				me["spoiler4Lf"].hide();
-			}
-		} else {
-			me["spoiler4Lex"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler4Lrt"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler4Lf"].hide();
-		}
-
-		if (fbw.FBW.Failures.spoilerl5.getValue() or green_psi < 1500) {
-			me["spoiler5Lex"].setColor(0.7333,0.3803,0);
-			me["spoiler5Lrt"].setColor(0.7333,0.3803,0);
-			if (spoiler_L5.getValue() < 1.5) {
-				me["spoiler5Lf"].show();
-			} else {
-				me["spoiler5Lf"].hide();
-			}
-		} else {
-			me["spoiler5Lex"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler5Lrt"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler5Lf"].hide();
-		}
-
-		if (fbw.FBW.Failures.spoilerr1.getValue() or green_psi < 1500) {
-			me["spoiler1Rex"].setColor(0.7333,0.3803,0);
-			me["spoiler1Rrt"].setColor(0.7333,0.3803,0);
-			if (spoiler_R1.getValue() < 1.5) {
-				me["spoiler1Rf"].show();
-			} else {
-				me["spoiler1Rf"].hide();
-			}
-		} else {
-			me["spoiler1Rex"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler1Rrt"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler1Rf"].hide();
-		}
-
-		if (fbw.FBW.Failures.spoilerr2.getValue() or yellow_psi < 1500) {
-			me["spoiler2Rex"].setColor(0.7333,0.3803,0);
-			me["spoiler2Rrt"].setColor(0.7333,0.3803,0);
-			if (spoiler_R2.getValue() < 1.5) {
-				me["spoiler2Rf"].show();
-			} else {
-				me["spoiler2Rf"].hide();
-			}
-		} else {
-			me["spoiler2Rex"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler2Rrt"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler2Rf"].hide();
-		}
-
-		if (fbw.FBW.Failures.spoilerr3.getValue() or blue_psi < 1500) {
-			me["spoiler3Rex"].setColor(0.7333,0.3803,0);
-			me["spoiler3Rrt"].setColor(0.7333,0.3803,0);
-			if (spoiler_R3.getValue() < 1.5) {
-				me["spoiler3Rf"].show();
-			} else {
-				me["spoiler3Rf"].hide();
-			}
-		} else {
-			me["spoiler3Rex"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler3Rrt"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler3Rf"].hide();
-		}
-
-		if (fbw.FBW.Failures.spoilerr4.getValue() or yellow_psi < 1500) {
-			me["spoiler4Rex"].setColor(0.7333,0.3803,0);
-			me["spoiler4Rrt"].setColor(0.7333,0.3803,0);
-			if (spoiler_R4.getValue() < 1.5) {
-				me["spoiler4Rf"].show();
-			} else {
-				me["spoiler4Rf"].hide();
-			}
-		} else {
-			me["spoiler4Rex"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler4Rrt"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler4Rf"].hide();
-		}
-
-		if (fbw.FBW.Failures.spoilerr5.getValue() or green_psi < 1500) {
-			me["spoiler5Rex"].setColor(0.7333,0.3803,0);
-			me["spoiler5Rrt"].setColor(0.7333,0.3803,0);
-			if (spoiler_R5.getValue() < 1.5) {
-				me["spoiler5Rf"].show();
-			} else {
-				me["spoiler5Rf"].hide();
-			}
-		} else {
-			me["spoiler5Rex"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler5Rrt"].setColor(0.0509,0.7529,0.2941);
-			me["spoiler5Rf"].hide();
-		}
-
+		
 		# Flight Computers
 		if (elac1Node) {
 			me["elac1"].setColor(0.0509,0.7529,0.2941);
-			me["path4249"].setColor(0.0509,0.7529,0.2941);
+			me.setColor(0.0509,0.7529,0.2941);
 		} else if (!elac1Node or fbw.FBW.Failures.elac1.getValue()) {
 			me["elac1"].setColor(0.7333,0.3803,0);
 			me["path4249"].setColor(0.7333,0.3803,0);
@@ -1806,7 +1504,7 @@ var canvas_lowerECAM_fctl = {
 
 		if (elac2Node) {
 			me["elac2"].setColor(0.0509,0.7529,0.2941);
-			me["path4249-3"].setColor(0.0509,0.7529,0.2941);
+			me.setColor(0.0509,0.7529,0.2941);
 		} else if (!elac2Node or fbw.FBW.Failures.elac2.getValue()) {
 			me["elac2"].setColor(0.7333,0.3803,0);
 			me["path4249-3"].setColor(0.7333,0.3803,0);
@@ -1837,79 +1535,8 @@ var canvas_lowerECAM_fctl = {
 		}
 
 		# Hydraulic Indicators
-		if (blue_psi >= 1500) {
-			if (elac1Node) {
-				me["ailLblue"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["ailLblue"].setColor(0.7333,0.3803,0);
-			}
-			if (elac1Node or sec1Node) {
-				me["elevLblue"].setColor(0.0509,0.7529,0.2941);
-				me["elevRblue"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["elevLblue"].setColor(0.7333,0.3803,0);
-				me["elevRblue"].setColor(0.7333,0.3803,0);
-			}
-			if (elac2Node) {
-				me["ailRblue"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["ailRblue"].setColor(0.7333,0.3803,0);
-			}
-			me["rudderblue"].setColor(0.0509,0.7529,0.2941);
-			me["spdbrkblue"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["ailLblue"].setColor(0.7333,0.3803,0);
-			me["ailRblue"].setColor(0.7333,0.3803,0);
-			me["elevLblue"].setColor(0.7333,0.3803,0);
-			me["elevRblue"].setColor(0.7333,0.3803,0);
-			me["rudderblue"].setColor(0.7333,0.3803,0);
-			me["spdbrkblue"].setColor(0.7333,0.3803,0);
-		}
+		
 
-		if (green_psi >= 1500) {
-			if (elac2Node or sec2Node) {
-				me["elevLgreen"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["elevLgreen"].setColor(0.7333,0.3803,0);
-			}
-			
-			if (elac2Node) {
-				me["ailLgreen"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["ailLgreen"].setColor(0.7333,0.3803,0);
-			}
-			if (elac1Node) {
-				me["ailRgreen"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["ailRgreen"].setColor(0.7333,0.3803,0);
-			}
-			me["ruddergreen"].setColor(0.0509,0.7529,0.2941);
-			me["PTgreen"].setColor(0.0509,0.7529,0.2941);
-			me["spdbrkgreen"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["ailLgreen"].setColor(0.7333,0.3803,0);
-			me["ailRgreen"].setColor(0.7333,0.3803,0);
-			me["elevLgreen"].setColor(0.7333,0.3803,0);
-			me["ruddergreen"].setColor(0.7333,0.3803,0);
-			me["PTgreen"].setColor(0.7333,0.3803,0);
-			me["spdbrkgreen"].setColor(0.7333,0.3803,0);
-		}
-
-		if (yellow_psi >= 1500) {
-			if (elac2Node or sec2Node) {
-				me["elevRyellow"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["elevRyellow"].setColor(0.7333,0.3803,0);
-			}
-			me["rudderyellow"].setColor(0.0509,0.7529,0.2941);
-			me["PTyellow"].setColor(0.0509,0.7529,0.2941);
-			me["spdbrkyellow"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["elevRyellow"].setColor(0.7333,0.3803,0);
-			me["rudderyellow"].setColor(0.7333,0.3803,0);
-			me["PTyellow"].setColor(0.7333,0.3803,0);
-			me["spdbrkyellow"].setColor(0.7333,0.3803,0);
-		}
 
 		me.updateBottomStatus();
 	},

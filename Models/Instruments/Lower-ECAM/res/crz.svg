@@ -41,9 +41,9 @@
      inkscape:window-height="705"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="242.38307"
-     inkscape:cy="680.25272"
+     inkscape:zoom="1"
+     inkscape:cx="470.5927"
+     inkscape:cy="1012.5262"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -337,14 +337,14 @@
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:-1.60000002px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:4.02423px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="399.71744"
-     y="631.84998"
+     y="628.96643"
      id="ELEC-IDG-2-num-label"
      inkscape:label="#text5149"
      transform="scale(0.96119963,1.0403666)"><tspan
        sodipodi:role="line"
        id="tspan3714"
        x="398.91745"
-       y="631.84998"
+       y="628.96643"
        style="font-size:36px;line-height:0;text-align:center;letter-spacing:-1.60000002px;text-anchor:middle">P</tspan></text>
   <text
      xml:space="preserve"
@@ -414,7 +414,7 @@
      d="m 776.33019,117.10687 12.494,-21.584521 12.44575,21.612381 z"
      inkscape:transform-center-x="0.023774226"
      inkscape:transform-center-y="-3.0226495"
-     transform="matrix(-0.55570012,0,0,0.85384443,799.83103,554.6097)" />
+     transform="matrix(-0.55570012,0,0,0.85384443,799.83103,551.6097)" />
   <path
      sodipodi:nodetypes="cc"
      inkscape:connector-curvature="0"
@@ -572,13 +572,13 @@
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:-1.60000002px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:4.02423px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="568.92786"
-     y="396.86365"
+     y="398.48981"
      id="text3891-3-0"
      inkscape:label="#text5149"
      transform="scale(0.96119964,1.0403666)"><tspan
        sodipodi:role="line"
        x="568.12787"
-       y="396.86365"
+       y="398.48981"
        style="font-size:36.00000381px;line-height:0;text-align:center;letter-spacing:-1.60000002px;text-anchor:middle;stroke-width:4.02423px"
        id="tspan4870-6-6">N1</tspan></text>
   <text
@@ -707,15 +707,15 @@
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:'Liberation Sans';text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="848.42493"
+     x="822.92493"
      y="600.46124"
      id="LDGELEV"
      inkscape:label="#text5149"><tspan
        sodipodi:role="line"
        id="tspan3739-2"
-       x="848.42493"
+       x="822.92493"
        y="600.46124"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:start;text-anchor:start;fill:#0dc04b;stroke-width:1px">0</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:start;text-anchor:start;fill:#0dc04b;stroke-width:1px">500</tspan></text>
   <text
      transform="scale(0.89169395,1.121461)"
      inkscape:label="#text4495"
