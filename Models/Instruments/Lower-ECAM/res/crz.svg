@@ -12,7 +12,7 @@
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="0.92.1 r15371"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="crz.svg">
   <metadata
      id="metadata375">
@@ -37,16 +37,16 @@
      guidetolerance="10"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1047"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="0.5"
-     inkscape:cx="703.8872"
-     inkscape:cy="827.31856"
-     inkscape:window-x="3840"
-     inkscape:window-y="33"
-     inkscape:window-maximized="0"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="242.38307"
+     inkscape:cy="680.25272"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg2"
      inkscape:snap-nodes="false"
      inkscape:snap-global="false"
@@ -298,13 +298,13 @@
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="555.73187"
+     x="543.46399"
      y="220.23506"
      id="FUsed"
      inkscape:label="#text5149"><tspan
        sodipodi:role="line"
        id="tspan4506"
-       x="555.73187"
+       x="543.46399"
        y="220.23506"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b">400</tspan></text>
   <text
@@ -543,7 +543,7 @@
      d="M 642.63812,444.15624 H 601.42434"
      style="fill:none;stroke:#4d4d4d;stroke-width:2.68409395;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <text
-     id="text3907-0"
+     id="OilUnit"
      y="298.28555"
      x="549.48846"
      style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -629,7 +629,7 @@
        y="416.89258"
        x="340.44434"
        id="tspan3905-8-0"
-       sodipodi:role="line">0.0</tspan></text>
+       sodipodi:role="line">0.2</tspan></text>
   <text
      inkscape:label="#text5149"
      id="VIB2N1"
@@ -641,7 +641,7 @@
        y="419.89258"
        x="745.04004"
        id="tspan3905-8-0-3"
-       sodipodi:role="line">0.0</tspan></text>
+       sodipodi:role="line">0.3</tspan></text>
   <text
      inkscape:label="#text5149"
      id="VIB1N2"
@@ -653,7 +653,7 @@
        y="464.89258"
        x="340.04004"
        id="tspan3905-8-0-5"
-       sodipodi:role="line">0.0</tspan></text>
+       sodipodi:role="line">0.1</tspan></text>
   <text
      inkscape:label="#text5149"
      id="VIB2N2"
@@ -665,7 +665,7 @@
        y="460.39258"
        x="742.04004"
        id="tspan3905-8-0-5-2"
-       sodipodi:role="line">0.0</tspan></text>
+       sodipodi:role="line">0.2</tspan></text>
   <text
      inkscape:label="#text5149"
      id="CABALT"

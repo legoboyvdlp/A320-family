@@ -23,6 +23,86 @@ var canvas_lowerECAMPageCruise =
 		# init
 		
 		obj.update_items = [
+			props.UpdateManager.FromHashValue("engOil1", 0.005, func(val) {
+				if (obj.units) {
+					obj["Oil1"].setText(sprintf("%2.1f",(0.1 * math.round(val * QT2LTR * 10,5))));
+				} else {
+					obj["Oil1"].setText(sprintf("%2.1f",(0.1 * math.round(val * 10,5))));
+				}
+			}),
+			props.UpdateManager.FromHashValue("engOil2", 0.005, func(val) {
+				if (obj.units) {
+					obj["Oil2"].setText(sprintf("%2.1f",(0.1 * math.round(val * QT2LTR * 10,5))));
+				} else {
+					obj["Oil2"].setText(sprintf("%2.1f",(0.1 * math.round(val * 10,5))));
+				}
+			}),
+			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
+				if (val) {
+					obj["Fused-weight-unit"].setText("KG");
+					obj["OilUnit"].setText("LTR");
+					# immediately update parameters
+					obj["Oil1"].setText(sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[0].getValue() * QT2LTR * 10,5))));
+					obj["Oil2"].setText(sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[1].getValue() * QT2LTR * 10,5))));
+					obj["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
+					obj["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
+				} else {
+					obj["Fused-weight-unit"].setText("LBS");
+					obj["OilUnit"].setText("QT");
+					obj["Oil1"].setText(sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[0].getValue() * 10,5))));
+					obj["Oil2"].setText(sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[1].getValue() * 10,5))));
+					obj["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
+					obj["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
+				}
+			}),
+			props.UpdateManager.FromHashValue("engFuelUsed1", 1, func(val) {
+				if (obj.units) {
+					obj["FUsed1"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+				} else {
+					obj["FUsed1"].setText(sprintf("%s", math.round(val, 10)));
+				}
+			}),
+			props.UpdateManager.FromHashValue("engFuelUsed2", 1, func(val) {
+				if (obj.units) {
+					obj["FUsed2"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+				} else {
+					obj["FUsed2"].setText(sprintf("%s", math.round(val, 10)));
+				}
+			}),
+			props.UpdateManager.FromHashList(["engFuelUsed1","engFuelUsed2"], 1, func(val) {
+				if (obj.units) {
+					obj["FUsed"].setText(sprintf("%s", math.round((val.engFuelUsed1 + val.engFuelUsed2) * LBS2KGS, 10)));
+				} else {
+					obj["FUsed"].setText(sprintf("%s", math.round((val.engFuelUsed1 + val.engFuelUsed2), 10)));
+				}
+			}),
+			props.UpdateManager.FromHashValue("pressDelta", 0.05, func(val) {
+				if (val > 31.9) {
+					obj["deltaPSI"].setText(sprintf("%2.1f", 31.9));
+				} else if (val < -9.9) {
+					obj["deltaPSI"].setText(sprintf("%2.1f", -9.9));
+				} else {
+					obj["deltaPSI"].setText(sprintf("%2.1f", val));
+				}
+			}),
+			props.UpdateManager.FromHashValue("pressVS", 25, func(val) {
+				if (val > 9950) {
+					obj["CABVS"].setText(sprintf("%4.0f", 9950));
+				} else if (val < -9950) {
+					obj["CABVS"].setText(sprintf("%4.0f", -9950));
+				} else {
+					obj["CABVS"].setText(sprintf("%-4.0f", math.round(val,50)));
+				}
+			}),
+			props.UpdateManager.FromHashValue("condTempCockpit", 0.5, func(val) {
+				obj["CKPT-TEMP"].setText(sprintf("%2.0f",val));
+			}),
+			props.UpdateManager.FromHashValue("condTempAft", 0.5, func(val) {
+				obj["AFT-TEMP"].setText(sprintf("%2.0f",val));
+			}),
+			props.UpdateManager.FromHashValue("condTempFwd", 0.5, func(val) {
+				obj["FWD-TEMP"].setText(sprintf("%2.0f",val));
+			}),
 		];
 		
 		obj.displayedGForce = 0;
@@ -62,10 +142,8 @@ var canvas_lowerECAMPageCruise =
 		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit"];
 	},
 	getKeys: func() {
-		return["Bulk","BulkLine","BulkLbl","Exit1L","Exit1R","Cabin1Left","Cabin1LeftLbl","Cabin1LeftLine","Cabin1LeftSlide","Cabin1Right","Cabin1RightLbl","Cabin1RightLine","Cabin1RightSlide","Cabin2Left","Cabin2LeftLbl",
-		"Cabin2LeftLine","Cabin2LeftSlide","Cabin2Right","Cabin2RightLbl","Cabin2RightLine","Cabin2RightSlide","Cabin3Left","Cabin3LeftLbl","Cabin3LeftLine","Cabin3LeftSlide","Cabin3Right","Cabin3RightLbl","Cabin3RightLine","Cabin3RightSlide","AvionicsLine1",
-		"AvionicsLbl1","AvionicsLine2","AvionicsLbl2","Cargo1Line","Cargo1Lbl","Cargo1Door","Cargo2Line","Cargo2Lbl","Cargo2Door","ExitLSlide","ExitLLine","ExitLLbl","ExitRSlide","ExitRLine","ExitRLbl","Cabin4Left","Cabin4LeftLbl","Cabin4LeftLine",
-		"Cabin4LeftSlide","Cabin4Right","Cabin4RightLbl","Cabin4RightLine","Cabin4RightSlide","DOOROXY-REGUL-LO-PR"];},
+		return["Oil1","Oil2","FUsed1","FUsed2","FUsed","VIB1N1","VIB1N2","VIB2N1","VIB2N2","deltaPSI","LDGELEV-AUTO","LDGELEV","CABVS","CABALT","VS-Arrow-UP","VS-Arrow-DN","CKPT-TEMP","FWD-TEMP","AFT-TEMP","Fused-weight-unit"];
+	},
 	updateBottom: func(notification) {
 		foreach(var update_item_bottom; me.updateItemsBottom)
         {
