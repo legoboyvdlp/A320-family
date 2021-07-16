@@ -339,10 +339,10 @@
 			<condition>
 				<and>
 					<property>/instrumentation/efis/mfd/true-north</property>
-					<greater-than>
+					<greater-than-equals>
 						<property>/velocities/groundspeed-kt</property>
 						<value>1</value>
-					</greater-than>
+					</greater-than-equals>
 				</and>
 			</condition>
 			<property>/orientation/track-deg</property>
@@ -351,10 +351,10 @@
 			<condition>
 				<and>
 					<not><property>/instrumentation/efis/mfd/true-north</property></not>
-					<greater-than>
+					<greater-than-equals>
 						<property>/velocities/groundspeed-kt</property>
 						<value>1</value>
-					</greater-than>
+					</greater-than-equals>
 				</and>
 			</condition>
 			<property>/orientation/track-magnetic-deg</property>
