@@ -371,10 +371,10 @@
 		<gain>1.0</gain>
 		<input>
 			<condition>
-				<less-than-equals>
+				<less-than>
 					<property>/velocities/groundspeed-kt</property>
 					<value>1</value>
-				</less-than-equals>
+				</less-than>
 			</condition>
 			<property>/orientation/heading-magnetic-deg</property>
 		</input>
