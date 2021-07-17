@@ -297,6 +297,7 @@ var input = {
 	apuEgtRot: "/ECAM/Lower/APU-EGT",
 	apuGenPB: "/controls/electrical/switches/apu",
 	apuGLC: "/systems/electrical/relay/apu-glc/contact-pos",
+	apuFireBtn: "/controls/apu/fire-btn",
 	apuFlap: "/controls/apu/inlet-flap/position-norm",
 	apuFuelPump: "/systems/fuel/pumps/apu-operate",
 	apuFuelPumpsOff: "/systems/fuel/pumps/all-eng-pump-off",
