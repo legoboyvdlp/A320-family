@@ -2,7 +2,7 @@
 
 <!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
-<turbine_engine name="CFM56-5B4">
+<turbine_engine name="PW1127G-JM">
 	
 	<milthrust>27000</milthrust>
 	<tsfc>0.445</tsfc>

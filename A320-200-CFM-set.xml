@@ -220,8 +220,10 @@
 	
 	<options n="0">
 		<eng type="string">CFM</eng>
+		<engine-name type="string">CFM56-5B4</engine-name>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">35</maxflap>
+		<model-number type="string">A320-214</model-number>
 	</options>
 	
 </PropertyList>
