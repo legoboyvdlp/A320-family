@@ -1,6 +1,15 @@
 # A3XX Lower ECAM Canvas
 # Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
 
+var elec_pump_y_ovht = props.globals.initNode("/systems/hydraulic/elec-pump-yellow-ovht", 0, "BOOL");
+var elec_pump_b_ovht = props.globals.initNode("/systems/hydraulic/elec-pump-blue-ovht", 0, "BOOL");
+var y_resv_ovht = props.globals.initNode("/systems/hydraulic/yellow-resv-ovht", 0, "BOOL");
+var b_resv_ovht = props.globals.initNode("/systems/hydraulic/blue-resv-ovht", 0, "BOOL");
+var g_resv_ovht = props.globals.initNode("/systems/hydraulic/green-resv-ovht", 0, "BOOL");
+var y_resv_lo_press = props.globals.initNode("/systems/hydraulic/yellow-resv-lo-air-press", 0, "BOOL");
+var b_resv_lo_press = props.globals.initNode("/systems/hydraulic/blue-resv-lo-air-press", 0, "BOOL");
+var g_resv_lo_press = props.globals.initNode("/systems/hydraulic/green-resv-lo-air-press", 0, "BOOL");
+
 var canvas_lowerECAMPageHyd =
 {
 	new: func(svg,name) {
@@ -23,6 +32,298 @@ var canvas_lowerECAMPageHyd =
 		# init
 		
 		obj.update_items = [
+			props.UpdateManager.FromHashValue("blue", 25, func(val) {
+				obj["Press-Blue"].setText(sprintf("%s", math.round(val, 50)));
+				
+				if (val >= 1500) {
+					obj["Blue-Line"].setColor(0.0509,0.7529,0.2941);
+					obj["Blue-Line"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Blue-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Blue-Line-Bottom"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Blue-Indicator"].setColor(0.0509,0.7529,0.2941);
+					obj["Press-Blue"].setColor(0.0509,0.7529,0.2941);
+					obj["Blue-label"].setColor(0.8078,0.8039,0.8078);
+				} else {
+					obj["Blue-Line"].setColor(0.7333,0.3803,0);
+					obj["Blue-Line"].setColorFill(0.7333,0.3803,0);
+					obj["Blue-Line-Top"].setColorFill(0.7333,0.3803,0);
+					obj["Blue-Line-Bottom"].setColorFill(0.7333,0.3803,0);
+					obj["Blue-Indicator"].setColor(0.7333,0.3803,0);
+					obj["Press-Blue"].setColor(0.7333,0.3803,0);
+					obj["Blue-label"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("yellow", 25, func(val) {
+				obj["Press-Yellow"].setText(sprintf("%s", math.round(val, 50)));
+				
+				if (val >= 1500) {
+					obj["Yellow-Line"].setColor(0.0509,0.7529,0.2941);
+					obj["Yellow-Line"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Yellow-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Yellow-Line-Middle"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Yellow-Line-Bottom"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Yellow-Indicator"].setColor(0.0509,0.7529,0.2941);
+					obj["Press-Yellow"].setColor(0.0509,0.7529,0.2941);
+					obj["Yellow-label"].setColor(0.8078,0.8039,0.8078);
+				} else {
+					obj["Yellow-Line"].setColor(0.7333,0.3803,0);
+					obj["Yellow-Line"].setColorFill(0.7333,0.3803,0);
+					obj["Yellow-Line-Top"].setColorFill(0.7333,0.3803,0);
+					obj["Yellow-Line-Middle"].setColorFill(0.7333,0.3803,0);
+					obj["Yellow-Line-Bottom"].setColorFill(0.7333,0.3803,0);
+					obj["Yellow-Indicator"].setColor(0.7333,0.3803,0);
+					obj["Press-Yellow"].setColor(0.7333,0.3803,0);
+					obj["Yellow-label"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("green", 25, func(val) {
+				obj["Press-Green"].setText(sprintf("%s", math.round(val, 50)));
+				
+				if (val >= 1500) {
+					obj["Green-Line"].setColor(0.0509,0.7529,0.2941);
+					obj["Green-Line"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Green-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Green-Line-Middle"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Green-Line-Bottom"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Green-Indicator"].setColor(0.0509,0.7529,0.2941);
+					obj["Press-Green"].setColor(0.0509,0.7529,0.2941);
+					obj["Green-label"].setColor(0.8078,0.8039,0.8078);
+				} else {
+					obj["Green-Line"].setColor(0.7333,0.3803,0);
+					obj["Green-Line"].setColorFill(0.7333,0.3803,0);
+					obj["Green-Line-Top"].setColorFill(0.7333,0.3803,0);
+					obj["Green-Line-Middle"].setColorFill(0.7333,0.3803,0);
+					obj["Green-Line-Bottom"].setColorFill(0.7333,0.3803,0);
+					obj["Green-Indicator"].setColor(0.7333,0.3803,0);
+					obj["Press-Green"].setColor(0.7333,0.3803,0);
+					obj["Green-label"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("N2_actual_1", 0.5, func(val) {
+				if (val >= 59) {
+					obj["Pump-Green-label"].setColor(0.8078,0.8039,0.8078);
+				} else {
+					obj["Pump-Green-label"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("N2_actual_2", 0.5, func(val) {
+				if (val >= 59) {
+					obj["Pump-Yellow-label"].setColor(0.8078,0.8039,0.8078);
+				} else {
+					obj["Pump-Yellow-label"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydBlueResvLoPrs", nil, func(val) {
+				if (val) {
+					obj["LO-AIR-PRESS-Blue"].show();
+				} else {
+					obj["LO-AIR-PRESS-Blue"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydGreenResvLoPrs", nil, func(val) {
+				if (val) {
+					obj["LO-AIR-PRESS-Green"].show();
+				} else {
+					obj["LO-AIR-PRESS-Green"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydYellowResvLoPrs", nil, func(val) {
+				if (val) {
+					obj["LO-AIR-PRESS-Yellow"].show();
+				} else {
+					obj["LO-AIR-PRESS-Yellow"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydYellowElecPumpOvht", nil, func(val) {
+				if (val) {
+					obj["ELEC-OVHT-Yellow"].show();
+				} else {
+					obj["ELEC-OVHT-Yellow"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydBlueElecPumpOvht", nil, func(val) {
+				if (val) {
+					obj["ELEC-OVHT-Blue"].show();
+				} else {
+					obj["ELEC-OVHT-Blue"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydBlueResvOvht", nil, func(val) {
+				if (val) {
+					obj["OVHT-Blue"].show();
+				} else {
+					obj["OVHT-Blue"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydGreenResvOvht", nil, func(val) {
+				if (val) {
+					obj["OVHT-Green"].show();
+				} else {
+					obj["OVHT-Green"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydYellowResvOvht", nil, func(val) {
+				if (val) {
+					obj["OVHT-Yellow"].show();
+				} else {
+					obj["OVHT-Yellow"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydRATPosition", 0.01, func(val) {
+				if (val) {
+					obj["RAT-stowed"].hide();
+					obj["RAT-not-stowed"].show();
+				} else {
+					obj["RAT-stowed"].show();
+					obj["RAT-not-stowed"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydGreenFireValve", 0.01, func(val) {
+				if (val != 0) {
+					obj["Fire-Valve-Green"].setColor(0.7333,0.3803,0);
+					obj["Fire-Valve-Green-Cross"].setColorFill(0.7333,0.3803,0);
+					obj["Fire-Valve-Green"].setRotation(90 * D2R);
+				} else {
+					obj["Fire-Valve-Green"].setColor(0.0509,0.7529,0.2941);
+					obj["Fire-Valve-Green-Cross"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Fire-Valve-Green"].setRotation(0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydYellowFireValve", 0.01, func(val) {
+				if (val != 0) {
+					obj["Fire-Valve-Yellow"].setColor(0.7333,0.3803,0);
+					obj["Fire-Valve-Yellow-Cross"].setColorFill(0.7333,0.3803,0);
+					obj["Fire-Valve-Yellow"].setRotation(90 * D2R);
+				} else {
+					obj["Fire-Valve-Yellow"].setColor(0.0509,0.7529,0.2941);
+					obj["Fire-Valve-Yellow-Cross"].setColorFill(0.0509,0.7529,0.2941);
+					obj["Fire-Valve-Yellow"].setRotation(0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("elecAC1", 1, func(val) {
+				if (val >= 110) {
+					obj["ELEC-Blue-label"].setColor(0.8078,0.8039,0.8078);
+				} else {
+					obj["ELEC-Blue-label"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("elecAC2", 1, func(val) {
+				if (val >= 110) {
+					obj["ELEC-Yellow-label"].setColor(0.8078,0.8039,0.8078);
+				} else {
+					obj["ELEC-Yellow-label"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashList(["yellow","hydYellowElecPumpSwitch"], nil, func(val) {
+				if (!val.hydYellowElecPumpSwitch) {
+					obj["ELEC-Yellow-on"].hide();
+					obj["ELEC-Yellow-off"].show();
+				} else {
+					obj["ELEC-Yellow-on"].show();
+					obj["ELEC-Yellow-off"].hide();
+					if (val.yellow >= 1500) {
+						obj["ELEC-Yellow-on"].setColor(0.0509,0.7529,0.2941);
+					} else {
+						obj["ELEC-Yellow-on"].setColor(0.7333,0.3803,0);
+					}
+				}
+			}),
+			props.UpdateManager.FromHashList(["blue","hydBlueElecPumpSwitch"], nil, func(val) {
+				if (val.hydBlueElecPumpSwitch) {
+					obj["Pump-Blue-off"].hide();
+					if (val.blue >= 1500) {
+						obj["Pump-Blue-on"].show();
+						obj["Pump-Blue-off"].hide();
+						obj["Pump-Blue"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Pump-Blue"].setColor(0.0509,0.7529,0.2941);
+					} else {
+						obj["Pump-Blue-off"].show();
+						obj["Pump-Blue-on"].hide();
+						obj["Pump-Blue"].setColorFill(0.7333,0.3803,0);
+						obj["Pump-Blue"].setColor(0.7333,0.3803,0);
+					}
+				} else {
+					obj["Pump-Blue-off"].show();
+					obj["Pump-Blue-on"].hide();
+					obj["Pump-Blue"].setColorFill(0.7333,0.3803,0);
+					obj["Pump-Blue"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashList(["yellow","hydYellowEDPPumpSwitch"], nil, func(val) {
+				if (val.hydYellowEDPPumpSwitch) {
+					obj["Pump-Yellow-off"].hide();
+					if (val.yellow >= 1500) {
+						obj["Pump-Yellow-on"].show();
+						obj["Pump-LOPR-Yellow"].hide();
+						obj["Pump-Yellow"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Pump-Yellow"].setColor(0.0509,0.7529,0.2941);
+					} else {
+						obj["Pump-Yellow-on"].hide();
+						obj["Pump-LOPR-Yellow"].show();
+						obj["Pump-Yellow"].setColorFill(0.7333,0.3803,0);
+						obj["Pump-Yellow"].setColor(0.7333,0.3803,0);
+					}
+				} else {
+					obj["Pump-Yellow-off"].show();
+					obj["Pump-Yellow-on"].hide();
+					obj["Pump-LOPR-Yellow"].hide();
+					obj["Pump-Yellow"].setColorFill(0.7333,0.3803,0);
+					obj["Pump-Yellow"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashList(["green","hydGreenEDPPumpSwitch"], nil, func(val) {
+				if (val.hydGreenEDPPumpSwitch) {
+					obj["Pump-Green-off"].hide();
+					if (val.green >= 1500) {
+						obj["Pump-Green-on"].show();
+						obj["Pump-LOPR-Green"].hide();
+						obj["Pump-Green"].setColor(0.0509,0.7529,0.2941);
+						obj["Pump-Green"].setColorFill(0.0509,0.7529,0.2941);
+					} else {
+						obj["Pump-Green-on"].hide();
+						obj["Pump-LOPR-Green"].show();
+						obj["Pump-Green"].setColor(0.7333,0.3803,0);
+						obj["Pump-Green"].setColorFill(0.7333,0.3803,0);
+					}
+				} else {
+					obj["Pump-Green-off"].show();
+					obj["Pump-Green-on"].hide();
+					obj["Pump-LOPR-Green"].hide();
+					obj["Pump-Green"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashList(["hydPTUSwitch","hydPTUDiff","hydPTUActive","hydPTUFault"], nil, func(val) {
+				if (val.hydPTUSwitch and !val.hydPTUFault) {
+					obj["PTU-connection"].setColor(0.0509,0.7529,0.2941);
+
+					if (val.hydPTUActive) {
+						if (val.hydPTUDiff < 0) {
+							obj["PTU-Supply-Line"].show();
+							obj["PTU-supply-yellow"].show();
+							obj["PTU-supply-green"].hide();
+							obj["PTU-Auto-or-off"].hide();
+						} else {
+							obj["PTU-Supply-Line"].show();
+							obj["PTU-supply-yellow"].hide();
+							obj["PTU-supply-green"].show();
+							obj["PTU-Auto-or-off"].hide();
+						}
+					} else {
+						obj["PTU-Auto-or-off"].setColor(0.0509,0.7529,0.2941);
+						obj["PTU-Supply-Line"].hide();
+						obj["PTU-supply-yellow"].hide();
+						obj["PTU-supply-green"].hide();
+						obj["PTU-Auto-or-off"].show();
+					}
+				} else {
+					obj["PTU-connection"].setColor(0.7333,0.3803,0);
+					obj["PTU-Auto-or-off"].setColor(0.7333,0.3803,0);
+					obj["PTU-Supply-Line"].hide();
+					obj["PTU-supply-yellow"].hide();
+					obj["PTU-supply-green"].hide();
+					obj["PTU-Auto-or-off"].show();
+				}
+			}),
 		];
 		
 		obj.displayedGForce = 0;
@@ -62,10 +363,11 @@ var canvas_lowerECAMPageHyd =
 		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit"];
 	},
 	getKeys: func() {
-		return["Bulk","BulkLine","BulkLbl","Exit1L","Exit1R","Cabin1Left","Cabin1LeftLbl","Cabin1LeftLine","Cabin1LeftSlide","Cabin1Right","Cabin1RightLbl","Cabin1RightLine","Cabin1RightSlide","Cabin2Left","Cabin2LeftLbl",
-		"Cabin2LeftLine","Cabin2LeftSlide","Cabin2Right","Cabin2RightLbl","Cabin2RightLine","Cabin2RightSlide","Cabin3Left","Cabin3LeftLbl","Cabin3LeftLine","Cabin3LeftSlide","Cabin3Right","Cabin3RightLbl","Cabin3RightLine","Cabin3RightSlide","AvionicsLine1",
-		"AvionicsLbl1","AvionicsLine2","AvionicsLbl2","Cargo1Line","Cargo1Lbl","Cargo1Door","Cargo2Line","Cargo2Lbl","Cargo2Door","ExitLSlide","ExitLLine","ExitLLbl","ExitRSlide","ExitRLine","ExitRLbl","Cabin4Left","Cabin4LeftLbl","Cabin4LeftLine",
-		"Cabin4LeftSlide","Cabin4Right","Cabin4RightLbl","Cabin4RightLine","Cabin4RightSlide","DOOROXY-REGUL-LO-PR"];},
+		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit","Green-Indicator","Blue-Indicator","Yellow-Indicator","Press-Green","Press-Blue","Press-Yellow","Green-Line","Blue-Line","Yellow-Line","Green-Line-Top","Blue-Line-Top","Yellow-Line-Middle","Green-Line-Middle","Yellow-Line-Bottom","Green-Line-Bottom","Blue-Line-Bottom","Yellow-Line-Top","PTU-Supply-Line","PTU-supply-yellow","PTU-supply-green","PTU-connection",
+		"PTU-Auto-or-off","RAT-label","RAT-stowed","RAT-not-stowed","ELEC-Yellow-off","ELEC-Yellow-on","ELEC-Yellow-label","ELEC-OVTH-Yellow","ELEC-Blue-label","ELEC-OVHT-Blue","ELEC-OVHT-Yellow","Pump-Green-label","Pump-Yellow-label","Pump-Green",
+		"Pump-LOPR-Green","Pump-Green-off","Pump-Green-on","Pump-Yellow","Pump-LOPR-Yellow","Pump-Yellow-off","Pump-Yellow-on","Pump-Blue", "Pump-Blue-off","Pump-Blue-on","Fire-Valve-Green","Fire-Valve-Yellow","LO-AIR-PRESS-Green",
+		"LO-AIR-PRESS-Yellow","LO-AIR-PRESS-Blue","OVHT-Green","OVHT-Blue","OVHT-Yellow","Quantity-Indicator-Green","Quantity-Indicator-Blue","Quantity-Indicator-Yellow","Green-label","Blue-label","Yellow-label","Fire-Valve-Yellow-Cross","Fire-Valve-Green-Cross"];
+	},
 	updateBottom: func(notification) {
 		foreach(var update_item_bottom; me.updateItemsBottom)
         {
@@ -140,6 +442,25 @@ var canvas_lowerECAMPageHyd =
 };
 
 var input = {
+	hydBlueResvOvht: "/systems/hydraulic/blue-resv-ovht",
+	hydGreenResvOvht: "/systems/hydraulic/green-resv-ovht",
+	hydYellowResvOvht: "/systems/hydraulic/yellow-resv-ovht",
+	hydBlueResvLoPrs: "/systems/hydraulic/blue-resv-lo-air-press",
+	hydGreenResvLoPrs: "/systems/hydraulic/green-resv-lo-air-press",
+	hydYellowResvLoPrs: "/systems/hydraulic/yellow-resv-lo-air-press",
+	hydYellowElecPumpOvht: "/systems/hydraulic/elec-pump-yellow-ovht",
+	hydBlueElecPumpOvht: "/systems/hydraulic/elec-pump-blue-ovht",
+	hydRATPosition: "/systems/hydraulic/sources/rat/position",
+	hydGreenFireValve: "/systems/hydraulic/sources/green-edp/fire-valve",
+	hydYellowFireValve: "/systems/hydraulic/sources/yellow-edp/fire-valve",
+	hydBlueElecPumpSwitch: "/controls/hydraulic/switches/blue-elec",
+	hydGreenEDPPumpSwitch: "/controls/hydraulic/switches/green-edp",
+	hydYellowElecPumpSwitch: "/controls/hydraulic/switches/yellow-elec",
+	hydYellowEDPPumpSwitch: "/controls/hydraulic/switches/yellow-edp",
+	hydPTUSwitch: "/controls/hydraulic/switches/ptu",
+	hydPTUFault: "/systems/failures/hydraulic/ptu",
+	hydPTUActive: "/systems/hydraulic/sources/ptu/ptu-hydraulic-condition",
+	hydPTUDiff: "/systems/hydraulic/yellow-psi-diff",
 };
 
 foreach (var name; keys(input)) {
