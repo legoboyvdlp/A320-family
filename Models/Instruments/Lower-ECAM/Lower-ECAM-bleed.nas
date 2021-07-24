@@ -142,7 +142,11 @@ var canvas_lowerECAMPageBleed =
 			}),
 			props.UpdateManager.FromHashList(["BleedBMC1Working","BleedPreCoolerPSI1"], nil, func(val) {
 				if (val.BleedBMC1Working) {
-					obj["BLEED-Precooler-1-Inlet-Press"].setText(sprintf("%s", math.round(val.BleedPreCoolerPSI1)));
+					if (val.BleedPreCoolerPSI1 >= 98) {
+						obj["BLEED-Precooler-1-Inlet-Press"].setText(sprintf("%s", 98));
+					} else {
+						obj["BLEED-Precooler-1-Inlet-Press"].setText(sprintf("%s", math.round(val.BleedPreCoolerPSI1,2)));
+					}
 					if (val.BleedPreCoolerPSI1 < 4 or val.BleedPreCoolerPSI1 > 57) {
 						obj["BLEED-Precooler-1-Inlet-Press"].setColor(0.7333,0.3803,0);
 					} else {
@@ -155,7 +159,12 @@ var canvas_lowerECAMPageBleed =
 			}),
 			props.UpdateManager.FromHashList(["BleedBMC2Working","BleedPreCoolerPSI2"], nil, func(val) {
 				if (val.BleedBMC2Working) {
-					obj["BLEED-Precooler-2-Inlet-Press"].setText(sprintf("%s", math.round(val.BleedPreCoolerPSI2)));
+					if (val.BleedPreCoolerPSI2 >= 98) {
+						obj["BLEED-Precooler-2-Inlet-Press"].setText(sprintf("%s", 98));
+					} else {
+						obj["BLEED-Precooler-2-Inlet-Press"].setText(sprintf("%s", math.round(val.BleedPreCoolerPSI2,2)));
+					}
+					
 					if (val.BleedPreCoolerPSI2 < 4 or val.BleedPreCoolerPSI2 > 57) {
 						obj["BLEED-Precooler-2-Inlet-Press"].setColor(0.7333,0.3803,0);
 					} else {
@@ -168,7 +177,12 @@ var canvas_lowerECAMPageBleed =
 			}),
 			props.UpdateManager.FromHashList(["BleedBMC1Working","BleedPreCoolerTemp1","BleedPRVValve1Cmd","BleedPreCoolerOvht1"], nil, func(val) {
 				if (val.BleedBMC1Working) {
-					obj["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", math.round(val.BleedPreCoolerTemp1, 5)));
+					if (val.BleedPreCoolerTemp1 >= 510) {
+						obj["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", 510));
+					} else {
+						obj["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", math.round(val.BleedPreCoolerTemp1, 5)));
+					}
+					
 					if (val.BleedPRVValve1Cmd and (val.BleedPreCoolerTemp1 < 150 or val.BleedPreCoolerOvht1)) {
 						obj["BLEED-Precooler-1-Outlet-Temp"].setColor(0.7333,0.3803,0);
 					} else {
@@ -181,7 +195,12 @@ var canvas_lowerECAMPageBleed =
 			}),
 			props.UpdateManager.FromHashList(["BleedBMC2Working","BleedPreCoolerTemp2","BleedPRVValve2Cmd","BleedPreCoolerOvht2"], nil, func(val) {
 				if (val.BleedBMC2Working) {
-					obj["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", math.round(val.BleedPreCoolerTemp2, 5)));
+					if (val.BleedPreCoolerTemp2 >= 510) {
+						obj["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", 510));
+					} else {
+						obj["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", math.round(val.BleedPreCoolerTemp2, 5)));
+					}
+					
 					if (val.BleedPRVValve2Cmd and (val.BleedPreCoolerTemp2 < 150 or val.BleedPreCoolerOvht2)) {
 						obj["BLEED-Precooler-2-Outlet-Temp"].setColor(0.7333,0.3803,0);
 					} else {
@@ -284,10 +303,14 @@ var canvas_lowerECAMPageBleed =
 						obj["BLEED-Ram-Air"].setColor(0.7333,0.3803,0);
 						obj["BLEED-Ram-Air"].setColorFill(0.7333,0.3803,0);
 						obj["BLEED-Ram-Air-Cross"].setColorFill(0.7333,0.3803,0);
+						obj["BLEED-Ram-Air-connection"].setColorFill(0.7333,0.3803,0);
+						obj["BLEED-Ram-Air-connection"].setColorFill(0.7333,0.3803,0);
 					} else {
 						obj["BLEED-Ram-Air"].setColor(0.0509,0.7529,0.2941);
 						obj["BLEED-Ram-Air"].setColorFill(0.0509,0.7529,0.2941);
 						obj["BLEED-Ram-Air-Cross"].setColorFill(0.0509,0.7529,0.2941);
+						obj["BLEED-Ram-Air-connection"].setColor(0.0509,0.7529,0.2941);
+						obj["BLEED-Ram-Air-connection"].setColorFill(0.0509,0.7529,0.2941);
 					}
 					obj["BLEED-Ram-Air-connection"].show();
 				} else {
@@ -295,6 +318,8 @@ var canvas_lowerECAMPageBleed =
 					obj["BLEED-Ram-Air"].setColor(0.7333,0.3803,0);
 					obj["BLEED-Ram-Air"].setColorFill(0.7333,0.3803,0);
 					obj["BLEED-Ram-Air-Cross"].setColorFill(0.7333,0.3803,0);
+					obj["BLEED-Ram-Air-connection"].setColorFill(0.7333,0.3803,0);
+					obj["BLEED-Ram-Air-connection"].setColorFill(0.7333,0.3803,0);
 					obj["BLEED-Ram-Air-connection"].show();
 				}
 				
@@ -312,6 +337,22 @@ var canvas_lowerECAMPageBleed =
 					obj["BLEED-cond-1"].setColor(0.0509,0.7529,0.2941);
 					obj["BLEED-cond-2"].setColor(0.0509,0.7529,0.2941);
 					obj["BLEED-cond-3"].setColor(0.0509,0.7529,0.2941);
+				}
+				
+				if (val.flowCtlValve1 == 0) {
+					obj["BLEED-Pack-1-connection"].setColor(0.7333,0.3803,0);
+					obj["BLEED-Pack-1-connection"].setColorFill(0.7333,0.3803,0);
+				} else {
+					obj["BLEED-Pack-1-connection"].setColor(0.0509,0.7529,0.2941);
+					obj["BLEED-Pack-1-connection"].setColorFill(0.0509,0.7529,0.2941);
+				}
+				
+				if (val.flowCtlValve2 == 0) {
+					obj["BLEED-Pack-2-connection"].setColor(0.7333,0.3803,0);
+					obj["BLEED-Pack-2-connection"].setColorFill(0.7333,0.3803,0);
+				} else {
+					obj["BLEED-Pack-2-connection"].setColor(0.0509,0.7529,0.2941);
+					obj["BLEED-Pack-2-connection"].setColorFill(0.0509,0.7529,0.2941);
 				}
 			}),
 			props.UpdateManager.FromHashList(["BleedCrossbleed","apuMaster","apuBleedValvePos","ApuBleedNotOn"], nil, func(val) {
@@ -392,7 +433,7 @@ var canvas_lowerECAMPageBleed =
 		"BLEED-Pack-2-Bypass-needle", "BLEED-Pack-2-Comp-Out-Temp", "BLEED-Pack-2-Packflow-needle", "BLEED-Anti-Ice-Left",
 		"BLEED-Anti-Ice-Right", "BLEED-HP-2-connection", "BLEED-HP-1-connection", "BLEED-ANTI-ICE-ARROW-LEFT", "BLEED-ANTI-ICE-ARROW-RIGHT",
 		"BLEED-xbleedLeft","BLEED-xbleedCenter","BLEED-xbleedRight","BLEED-cond-1","BLEED-cond-2","BLEED-cond-3","BLEED-Ram-Air-connection","BLEED-ENG-1-Cross","BLEED-ENG-2-Cross",
-		"BLEED-Pack-1-Flow-Valve-Cross","BLEED-Pack-2-Flow-Valve-Cross"];
+		"BLEED-Pack-1-Flow-Valve-Cross","BLEED-Pack-2-Flow-Valve-Cross","BLEED-Pack-1-connection","BLEED-Pack-2-connection"];
 	},
 	updateBottom: func(notification) {
 		foreach(var update_item_bottom; me.updateItemsBottom)
