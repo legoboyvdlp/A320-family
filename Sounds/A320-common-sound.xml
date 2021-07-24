@@ -2002,7 +2002,7 @@
 		</announcements>
 		
 		<chime>
-			<name>Chime</name>
+			<name>Click</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/click.wav</path>
 			<mode>once</mode>
 			<type>avionics</type>
