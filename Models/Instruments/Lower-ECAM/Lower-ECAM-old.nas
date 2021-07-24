@@ -117,8 +117,6 @@ var L2BrakeTempc = props.globals.getNode("/gear/gear[1]/L2brake-temp-degc", 1);
 var R3BrakeTempc = props.globals.getNode("/gear/gear[2]/R3brake-temp-degc", 1);
 var R4BrakeTempc = props.globals.getNode("/gear/gear[2]/R4brake-temp-degc", 1);
 
-var eng1_running = props.globals.getNode("/engines/engine[0]/running", 1);
-var eng2_running = props.globals.getNode("/engines/engine[1]/running", 1);
 var switch_cart = props.globals.getNode("/controls/electrical/ground-cart", 1);
 var fuel_flow1 = props.globals.getNode("/engines/engine[0]/fuel-flow_actual", 1);
 var fuel_flow2 = props.globals.getNode("/engines/engine[1]/fuel-flow_actual", 1);
@@ -137,147 +135,6 @@ var cabinalt = props.globals.getNode("", 1);
 var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
 
 		
-
-		# BAT1
-		if (systems.ELEC.Switch.bat1.getValue() == 0) {
-			me["BAT1-OFF"].show();
-			me["BAT1-content"].hide();
-			me["BAT1-discharge"].hide();
-			me["BAT1-charge"].hide();
-		} else {
-			me["BAT1-OFF"].hide();
-			me["BAT1-content"].show();
-			me["Bat1Ampere"].setText(sprintf("%s", math.round(systems.ELEC.Source.Bat1.amps.getValue())));
-			me["Bat1Volt"].setText(sprintf("%s", math.round(systems.ELEC.Source.Bat1.volt.getValue())));
-
-			if (systems.ELEC.Source.Bat1.volt.getValue() >= 24.95 and systems.ELEC.Source.Bat1.volt.getValue() <= 31.05) {
-				me["Bat1Volt"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["Bat1Volt"].setColor(0.7333,0.3803,0);
-			}
-
-			if (systems.ELEC.Source.Bat1.amps.getValue() > 5) {
-				me["Bat1Ampere"].setColor(0.7333,0.3803,0);
-			} else {
-				me["Bat1Ampere"].setColor(0.0509,0.7529,0.2941);
-			}
-
-			if (systems.ELEC.Source.Bat1.direction.getValue() == 0) {
-				me["BAT1-discharge"].hide();
-				me["BAT1-charge"].hide();
-			} else {
-				if (systems.ELEC.Source.Bat1.direction.getValue() == -1) {
-					me["BAT1-charge"].show();
-					me["BAT1-discharge"].hide();
-				} else {
-					me["BAT1-discharge"].show();
-					me["BAT1-charge"].hide();
-				}
-			}
-		}
-
-		if (systems.ELEC.Light.bat1Fault.getValue() or systems.ELEC.Source.Bat1.volt.getValue() < 25 or systems.ELEC.Source.Bat1.volt.getValue() > 31 or systems.ELEC.Source.Bat1.amps.getValue() > 5) {
-			me["BAT1-label"].setColor(0.7333,0.3803,0);
-		} else {
-			me["BAT1-label"].setColor(0.8078,0.8039,0.8078);
-		}
-
-		# BAT2
-		if (systems.ELEC.Switch.bat2.getValue() == 0) {
-			me["BAT2-OFF"].show();
-			me["BAT2-content"].hide();
-			me["BAT2-discharge"].hide();
-			me["BAT2-charge"].hide();
-		} else {
-			me["BAT2-OFF"].hide();
-			me["BAT2-content"].show();
-			me["Bat2Ampere"].setText(sprintf("%s", math.round(systems.ELEC.Source.Bat2.amps.getValue())));
-			me["Bat2Volt"].setText(sprintf("%s", math.round(systems.ELEC.Source.Bat2.volt.getValue())));
-
-			if (systems.ELEC.Source.Bat2.volt.getValue() >= 24.95 and systems.ELEC.Source.Bat2.volt.getValue() <= 31.05) {
-				me["Bat2Volt"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["Bat2Volt"].setColor(0.7333,0.3803,0);
-			}
-
-			if (systems.ELEC.Source.Bat2.amps.getValue() > 5) {
-				me["Bat2Ampere"].setColor(0.7333,0.3803,0);
-			} else {
-				me["Bat2Ampere"].setColor(0.0509,0.7529,0.2941);
-			}
-			
-			if (systems.ELEC.Source.Bat2.direction.getValue() == 0) {
-				me["BAT2-discharge"].hide();
-				me["BAT2-charge"].hide();
-			} else {
-				if (systems.ELEC.Source.Bat2.direction.getValue() == -1) {
-					me["BAT2-charge"].show();
-					me["BAT2-discharge"].hide();
-				} else {
-					me["BAT2-discharge"].show();
-					me["BAT2-charge"].hide();
-				}
-			}
-		}
-
-		if (systems.ELEC.Light.bat2Fault.getValue() or systems.ELEC.Source.Bat2.volt.getValue() < 25 or systems.ELEC.Source.Bat2.volt.getValue() > 31 or systems.ELEC.Source.Bat2.amps.getValue() > 5) {
-			me["BAT2-label"].setColor(0.7333,0.3803,0);
-		} else {
-			me["BAT2-label"].setColor(0.8078,0.8039,0.8078);
-		}
-
-		# TR1
-		# is only powered when ac1 has power
-		tr1_v = systems.ELEC.Source.tr1.outputVolt.getValue();
-		tr1_a = systems.ELEC.Source.tr1.outputAmp.getValue();
-
-		me["TR1Volt"].setText(sprintf("%s", math.round(tr1_v)));
-		me["TR1Ampere"].setText(sprintf("%s", math.round(tr1_a)));
-
-		if (tr1_v < 25 or tr1_v > 31 or tr1_a < 5) {
-			me["TR1-label"].setColor(0.7333,0.3803,0);
-		} else {
-			me["TR1-label"].setColor(0.8078,0.8039,0.8078);
-		}
-
-		if (tr1_v < 25 or tr1_v > 31) {
-			me["TR1Volt"].setColor(0.7333,0.3803,0);
-		} else {
-			me["TR1Volt"].setColor(0.0509,0.7529,0.2941);
-		}
-
-		if (tr1_a < 5) {
-			me["TR1Ampere"].setColor(0.7333,0.3803,0);
-		} else {
-			me["TR1Ampere"].setColor(0.0509,0.7529,0.2941);
-		}
-
-		# TR2
-		# is only powered when ac2 has power
-		tr2_v = systems.ELEC.Source.tr2.outputVolt.getValue();
-		tr2_a = systems.ELEC.Source.tr2.outputAmp.getValue();
-
-		me["TR2Volt"].setText(sprintf("%s", math.round(tr2_v)));
-		me["TR2Ampere"].setText(sprintf("%s", math.round(tr2_a)));
-
-		if (tr2_v < 25 or tr2_v > 31 or tr2_a < 5) {
-			me["TR2-label"].setColor(0.7333,0.3803,0);
-		} else {
-			me["TR2-label"].setColor(0.8078,0.8039,0.8078);
-		}
-
-		if (tr2_v < 25 or tr2_v > 31) {
-			me["TR2Volt"].setColor(0.7333,0.3803,0);
-		} else {
-			me["TR2Volt"].setColor(0.0509,0.7529,0.2941);
-		}
-
-		if (tr2_a < 5) {
-			me["TR2Ampere"].setColor(0.7333,0.3803,0);
-		} else {
-			me["TR2Ampere"].setColor(0.0509,0.7529,0.2941);
-		}
-
 		# ESS TR
 		essTrvolts = systems.ELEC.Source.trEss.outputVoltRelay.getValue();
 		essTramps = systems.ELEC.Source.trEss.outputAmpRelay.getValue();
@@ -341,35 +198,7 @@ var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
 			}
 		}
 		
-		# IDG 1
-		if (!systems.ELEC.Switch.idg1Disc.getBoolValue()) {
-			me["IDG1-DISC"].show();
-			me["ELEC-IDG-1-label"].setColor(0.7333,0.3803,0);
-		} else {
-			me["IDG1-DISC"].hide();
-			me["ELEC-IDG-1-label"].setColor(0.8078,0.8039,0.8078);
-		}
-
-		if (eng1_running.getValue() == 0) {
-			me["ELEC-IDG-1-num-label"].setColor(0.7333,0.3803,0);
-		} else {
-			me["ELEC-IDG-1-num-label"].setColor(0.8078,0.8039,0.8078);
-		}
 		
-		if (eng2_running.getValue() == 0) {
-			me["ELEC-IDG-2-num-label"].setColor(0.7333,0.3803,0);
-		} else {
-			me["ELEC-IDG-2-num-label"].setColor(0.8078,0.8039,0.8078);
-		}
-			
-		# IDG 2
-		if (!systems.ELEC.Switch.idg2Disc.getBoolValue()) {
-			me["IDG2-DISC"].show();
-			me["ELEC-IDG-2-label"].setColor(0.7333,0.3803,0);
-		} else {
-			me["IDG2-DISC"].hide();
-			me["ELEC-IDG-2-label"].setColor(0.8078,0.8039,0.8078);
-		}
 		
 		# GEN1
 		if (systems.ELEC.Switch.gen1.getValue() == 0) {
@@ -487,144 +316,6 @@ var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
 			}
 		}
 
-		# APU
-		if (systems.APUNodes.Controls.master.getValue() == 0) {
-			me["APU-content"].hide();
-			me["APUGEN-off"].hide();
-			me["APU-border"].hide();
-			me["APUGentext"].setColor(0.8078,0.8039,0.8078);
-		} else {
-			me["APU-border"].show();
-			if (systems.ELEC.Source.APU.contact.getValue() == 0) {
-				me["APU-content"].hide();
-				me["APUGEN-off"].show();
-				me["APUGentext"].setColor(0.7333,0.3803,0);
-			} else {
-				me["APU-content"].show();
-				me["APUGEN-off"].hide();
-				# me["APUGenLoad"].setText(sprintf("%s", math.round(apu_load.getValue())));
-				me["APUGenVolt"].setText(sprintf("%s", math.round(systems.ELEC.Source.APU.volts.getValue())));
-
-				if (systems.ELEC.Source.APU.hertz.getValue() == 0) {
-					me["APUGenHz"].setText(sprintf("XX"));
-				} else {
-					me["APUGenHz"].setText(sprintf("%s", math.round(systems.ELEC.Source.APU.hertz.getValue())));
-				}
-
-				if (systems.ELEC.Source.APU.volts.getValue() > 120 or systems.ELEC.Source.APU.volts.getValue() < 110 or systems.ELEC.Source.APU.hertz.getValue() > 410 or systems.ELEC.Source.APU.hertz.getValue() < 390 or apu_load.getValue() >= 110) {
-					me["APUGentext"].setColor(0.7333,0.3803,0);
-				} else {
-					me["APUGentext"].setColor(0.8078,0.8039,0.8078);
-				}
-
-				if(apu_load.getValue() >= 110) {
-					me["APUGenLoad"].setColor(0.7333,0.3803,0);
-				} else {
-					me["APUGenLoad"].setColor(0.0509,0.7529,0.2941);
-				}
-
-				if (systems.ELEC.Source.APU.volts.getValue() > 120 or systems.ELEC.Source.APU.volts.getValue() < 110) {
-					me["APUGenVolt"].setColor(0.7333,0.3803,0);
-				} else {
-					me["APUGenVolt"].setColor(0.0509,0.7529,0.2941);
-				}
-
-				if (systems.ELEC.Source.APU.hertz.getValue() > 410 or systems.ELEC.Source.APU.hertz.getValue() < 390) {
-					me["APUGenHz"].setColor(0.7333,0.3803,0);
-				} else {
-					me["APUGenHz"].setColor(0.0509,0.7529,0.2941);
-				}
-			}
-		}
-
-		# EXT PWR
-
-		if (switch_cart.getValue() == 0) {
-			me["EXTPWR-group"].hide();
-		} else {
-			me["EXTPWR-group"].show();
-			me["ExtVolt"].setText(sprintf("%s", math.round(systems.ELEC.Source.Ext.volts.getValue())));
-			me["ExtHz"].setText(sprintf("%s", math.round(systems.ELEC.Source.Ext.hertz.getValue())));
-
-			if (systems.ELEC.Source.Ext.hertz.getValue() > 410 or systems.ELEC.Source.Ext.hertz.getValue() < 390 or systems.ELEC.Source.Ext.volts.getValue() > 120 or systems.ELEC.Source.Ext.volts.getValue() < 110) {
-				me["EXTPWR-label"].setColor(0.7333,0.3803,0);
-			} else {
-				me["EXTPWR-label"].setColor(0.0509,0.7529,0.2941);
-			}
-
-			if (systems.ELEC.Source.Ext.hertz.getValue() > 410 or systems.ELEC.Source.Ext.hertz.getValue() < 390) {
-				me["ExtHz"].setColor(0.7333,0.3803,0);
-			} else {
-				me["ExtHz"].setColor(0.0509,0.7529,0.2941);
-			}
-
-			if (systems.ELEC.Source.Ext.volts.getValue() > 120 or systems.ELEC.Source.Ext.volts.getValue() < 110) {
-				me["ExtVolt"].setColor(0.7333,0.3803,0);
-			} else {
-				me["ExtVolt"].setColor(0.0509,0.7529,0.2941);
-			}
-		}
-
-		if (systems.ELEC.SomeThing.galley.getValue()) {
-			me["GalleyShed"].show();
-		} else {
-			me["GalleyShed"].hide();
-		}
-
-		# Bus indicators
-		if (systems.ELEC.Switch.bat1.getValue() or systems.ELEC.Switch.bat2.getValue()) {
-			me["ELEC-DCBAT-label"].setText("DC BAT");
-			if (systems.ELEC.Bus.dcBat.getValue() > 25) {
-				me["ELEC-DCBAT-label"].setColor(0.0509,0.7529,0.2941);
-			} else {
-				me["ELEC-DCBAT-label"].setColor(0.7333,0.3803,0);
-			}
-		} else {
-			me["ELEC-DCBAT-label"].setText("XX"); # BCL not powered hence no voltage info supplied from BCL
-			me["ELEC-DCBAT-label"].setColor(0.7333,0.3803,0);
-		}
-
-		if (systems.ELEC.Bus.dc1.getValue() > 25) {
-			me["ELEC-DC1-label"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["ELEC-DC1-label"].setColor(0.7333,0.3803,0);
-		}
-
-		if (systems.ELEC.Bus.dc2.getValue() > 25) {
-			me["ELEC-DC2-label"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["ELEC-DC2-label"].setColor(0.7333,0.3803,0);
-		}
-
-		if (systems.ELEC.Bus.dcEss.getValue() > 25) {
-			me["ELEC-DCESS-label"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["ELEC-DCESS-label"].setColor(0.7333,0.3803,0);
-		}
-
-		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
-			me["ELEC-ACESS-label"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["ELEC-ACESS-label"].setColor(0.7333,0.3803,0);
-		}
-
-		if (systems.ELEC.Bus.acEssShed.getValue() >= 110) {
-			me["ACESS-SHED"].hide();
-		} else {
-			me["ACESS-SHED"].show();
-		}
-
-		if (systems.ELEC.Bus.ac1.getValue() >= 110) {
-			me["ELEC-AC1-label"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["ELEC-AC1-label"].setColor(0.7333,0.3803,0);
-		}
-
-		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
-			me["ELEC-AC2-label"].setColor(0.0509,0.7529,0.2941);
-		} else {
-			me["ELEC-AC2-label"].setColor(0.7333,0.3803,0);
-		}
 
 
 		# Managment of the connecting lines between the components
@@ -650,18 +341,6 @@ var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
 			me["ELEC-Line-GEN2-AC2"].show();
 		} else {
 			me["ELEC-Line-GEN2-AC2"].hide();
-		}
-
-		if (systems.ELEC.Bus.ac1.getValue() >= 110) {
-			me["AC1-in"].show();
-		} else {
-			me["AC1-in"].hide();
-		}
-
-		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
-			me["AC2-in"].show();
-		} else {
-			me["AC2-in"].hide();
 		}
 
 		if (systems.ELEC.Relay.acTie1.getValue() and systems.ELEC.Relay.acTie2.getValue()) {
@@ -733,53 +412,8 @@ var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
 			me["ELEC-Line-TR2-DC2"].hide();
 		}
 		
-		if (systems.ELEC.Relay.dcTie1.getValue()) {
-			me["ELEC-Line-DC1-DCESS_DCBAT"].show();
-		} else {
-			me["ELEC-Line-DC1-DCESS_DCBAT"].hide();
-		}
-		
-		if (systems.ELEC.Relay.dcEssFeedBat.getValue()) {
-			me["ELEC-Line-DC1-DCESS"].show();
-		} else {
-			me["ELEC-Line-DC1-DCESS"].hide();
-		}
-		
-		if (systems.ELEC.Relay.dcEssFeedBat.getValue() or systems.ELEC.Relay.dcTie1.getValue()) {
-			me["ELEC-Line-DC1-DCBAT"].show();
-		} else {
-			me["ELEC-Line-DC1-DCBAT"].hide();
-		}
-		
-		if (systems.ELEC.Relay.dcTie2.getValue()) {
-			me["ELEC-Line-DC2-DCBAT"].show();
-			me["ELEC-Line-DC2-DCESS_DCBAT"].show();
-		} else {
-			me["ELEC-Line-DC2-DCBAT"].hide();
-			me["ELEC-Line-DC2-DCESS_DCBAT"].hide();
-		}
-		
-		if (systems.ELEC.Relay.acEssEmerGenFeed.getValue()) {
-			me["EMERGEN-out"].show();
-			me["ELEC-Line-Emergen-ESSTR"].show();
-		} else {
-			me["EMERGEN-out"].hide();
-			me["ELEC-Line-Emergen-ESSTR"].hide();
-		}
-		
 		if (systems.ELEC.Bus.acEss.getValue() >= 110 and !systems.ELEC.Relay.acEssEmerGenFeed.getValue() and (!systems.ELEC.Relay.tr1Contactor.getValue() or !systems.ELEC.Relay.tr2Contactor.getValue())) {
 			me["ELEC-Line-ACESS-TRESS"].show();
 		} else {
 			me["ELEC-Line-ACESS-TRESS"].hide();
 		}
-		
-		if (systems.ELEC.Relay.essTrContactor.getValue()) {
-			me["ELEC-Line-ESSTR-DCESS"].show();
-		} else {
-			me["ELEC-Line-ESSTR-DCESS"].hide();
-		}
-		
-		# hide not yet implemented items
-		me.updateBottomStatus();
-	},
-};

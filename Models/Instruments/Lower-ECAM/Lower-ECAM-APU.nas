@@ -130,7 +130,11 @@ var canvas_lowerECAMPageApu =
 				}
 			}),
 			props.UpdateManager.FromHashValue("apuHertz", 1, func(val) {
-				obj["APUGenHz"].setText(sprintf("%s", math.round(val)));
+				if (val == 0) {
+					obj["APUGenHz"].setText(sprintf("XX"));
+				} else {
+					obj["APUGenHz"].setText(sprintf("%s", math.round(val)));
+				}
 				
 				if (val >= 390 and val <= 410) {
 					obj["APUGenHz"].setColor(0.0509,0.7529,0.2941);

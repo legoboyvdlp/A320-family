@@ -397,6 +397,8 @@ var input = {
 	"gearPosNorm": "/gear/gear[0]/position-norm",
 	"gearPosNorm1": "/gear/gear[1]/position-norm",
 	"gearPosNorm2": "/gear/gear[2]/position-norm",
+	"engine1Running": "/engines/engine[0]/running",
+	"engine2Running": "/engines/engine[1]/running",
 };
 
 foreach (var name; keys(input)) {
