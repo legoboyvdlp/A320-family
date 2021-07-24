@@ -21,6 +21,20 @@ var canvas_lowerECAMPageHyd =
 		
  		foreach(var key; obj.getKeys()) {
 			obj[key] = obj.group.getElementById(key);
+			
+			var clip_el = obj.group.getElementById(key ~ "_clip");
+			if (clip_el != nil) {
+				clip_el.setVisible(0);
+				var tran_rect = clip_el.getTransformedBounds();
+
+				var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
+				tran_rect[1],
+				tran_rect[2],
+				tran_rect[3],
+				tran_rect[0]);
+				obj[key].set("clip", clip_rect);
+				obj[key].set("clip-frame", canvas.Element.PARENT);
+			}
 		};
 		
 		foreach(var key; obj.getKeysBottom()) {
@@ -33,9 +47,13 @@ var canvas_lowerECAMPageHyd =
 		
 		obj.update_items = [
 			props.UpdateManager.FromHashValue("blue", 25, func(val) {
-				obj["Press-Blue"].setText(sprintf("%s", math.round(val, 50)));
+				if (val >= 100) {
+					obj["Press-Blue"].setText(sprintf("%s", math.round(val, 50)));
+				} else {
+					obj["Press-Blue"].setText(sprintf("%s", 0));
+				}
 				
-				if (val >= 1500) {
+				if (val > 1450) {
 					obj["Blue-Line"].setColor(0.0509,0.7529,0.2941);
 					obj["Blue-Line"].setColorFill(0.0509,0.7529,0.2941);
 					obj["Blue-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
@@ -54,9 +72,13 @@ var canvas_lowerECAMPageHyd =
 				}
 			}),
 			props.UpdateManager.FromHashValue("yellow", 25, func(val) {
-				obj["Press-Yellow"].setText(sprintf("%s", math.round(val, 50)));
+				if (val >= 100) {
+					obj["Press-Yellow"].setText(sprintf("%s", math.round(val, 50)));
+				} else {
+					obj["Press-Yellow"].setText(sprintf("%s", 0));
+				}
 				
-				if (val >= 1500) {
+				if (val > 1450) {
 					obj["Yellow-Line"].setColor(0.0509,0.7529,0.2941);
 					obj["Yellow-Line"].setColorFill(0.0509,0.7529,0.2941);
 					obj["Yellow-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
@@ -77,9 +99,13 @@ var canvas_lowerECAMPageHyd =
 				}
 			}),
 			props.UpdateManager.FromHashValue("green", 25, func(val) {
-				obj["Press-Green"].setText(sprintf("%s", math.round(val, 50)));
+				if (val >= 100) {
+					obj["Press-Green"].setText(sprintf("%s", math.round(val, 50)));
+				} else {
+					obj["Press-Green"].setText(sprintf("%s", 0));
+				}
 				
-				if (val >= 1500) {
+				if (val > 1450) {
 					obj["Green-Line"].setColor(0.0509,0.7529,0.2941);
 					obj["Green-Line"].setColorFill(0.0509,0.7529,0.2941);
 					obj["Green-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
@@ -169,7 +195,7 @@ var canvas_lowerECAMPageHyd =
 					obj["OVHT-Yellow"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydRATPosition", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("hydRATPosition", nil, func(val) {
 				if (val) {
 					obj["RAT-stowed"].hide();
 					obj["RAT-not-stowed"].show();
@@ -178,7 +204,7 @@ var canvas_lowerECAMPageHyd =
 					obj["RAT-not-stowed"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydGreenFireValve", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("hydGreenFireValve", nil, func(val) {
 				if (val != 0) {
 					obj["Fire-Valve-Green"].setColor(0.7333,0.3803,0);
 					obj["Fire-Valve-Green-Cross"].setColorFill(0.7333,0.3803,0);
@@ -189,7 +215,7 @@ var canvas_lowerECAMPageHyd =
 					obj["Fire-Valve-Green"].setRotation(0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydYellowFireValve", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("hydYellowFireValve", nil, func(val) {
 				if (val != 0) {
 					obj["Fire-Valve-Yellow"].setColor(0.7333,0.3803,0);
 					obj["Fire-Valve-Yellow-Cross"].setColorFill(0.7333,0.3803,0);
@@ -200,15 +226,15 @@ var canvas_lowerECAMPageHyd =
 					obj["Fire-Valve-Yellow"].setRotation(0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecAC1", 1, func(val) {
-				if (val >= 110) {
+			props.UpdateManager.FromHashList(["elecAC1","dcEss"], 1, func(val) {
+				if (val.elecAC1 >= 110 and val.dcEss >= 25) {
 					obj["ELEC-Blue-label"].setColor(0.8078,0.8039,0.8078);
 				} else {
 					obj["ELEC-Blue-label"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecAC2", 1, func(val) {
-				if (val >= 110) {
+			props.UpdateManager.FromHashList(["elecAC2","dc2"], 1, func(val) {
+				if (val.elecAC2 >= 110 and val.dc2 >= 25) {
 					obj["ELEC-Yellow-label"].setColor(0.8078,0.8039,0.8078);
 				} else {
 					obj["ELEC-Yellow-label"].setColor(0.7333,0.3803,0);
@@ -221,7 +247,7 @@ var canvas_lowerECAMPageHyd =
 				} else {
 					obj["ELEC-Yellow-on"].show();
 					obj["ELEC-Yellow-off"].hide();
-					if (val.yellow >= 1500) {
+					if (val.yellow > 1450) {
 						obj["ELEC-Yellow-on"].setColor(0.0509,0.7529,0.2941);
 					} else {
 						obj["ELEC-Yellow-on"].setColor(0.7333,0.3803,0);
@@ -231,20 +257,21 @@ var canvas_lowerECAMPageHyd =
 			props.UpdateManager.FromHashList(["blue","hydBlueElecPumpSwitch"], nil, func(val) {
 				if (val.hydBlueElecPumpSwitch) {
 					obj["Pump-Blue-off"].hide();
-					if (val.blue >= 1500) {
+					if (val.blue > 1450) {
 						obj["Pump-Blue-on"].show();
-						obj["Pump-Blue-off"].hide();
+						obj["Pump-LOPR-Blue"].hide();
 						obj["Pump-Blue"].setColorFill(0.0509,0.7529,0.2941);
 						obj["Pump-Blue"].setColor(0.0509,0.7529,0.2941);
 					} else {
-						obj["Pump-Blue-off"].show();
 						obj["Pump-Blue-on"].hide();
+						obj["Pump-LOPR-Blue"].show();
 						obj["Pump-Blue"].setColorFill(0.7333,0.3803,0);
 						obj["Pump-Blue"].setColor(0.7333,0.3803,0);
 					}
 				} else {
 					obj["Pump-Blue-off"].show();
 					obj["Pump-Blue-on"].hide();
+					obj["Pump-LOPR-Blue"].hide();
 					obj["Pump-Blue"].setColorFill(0.7333,0.3803,0);
 					obj["Pump-Blue"].setColor(0.7333,0.3803,0);
 				}
@@ -252,7 +279,7 @@ var canvas_lowerECAMPageHyd =
 			props.UpdateManager.FromHashList(["yellow","hydYellowEDPPumpSwitch"], nil, func(val) {
 				if (val.hydYellowEDPPumpSwitch) {
 					obj["Pump-Yellow-off"].hide();
-					if (val.yellow >= 1500) {
+					if (val.yellow > 1450) {
 						obj["Pump-Yellow-on"].show();
 						obj["Pump-LOPR-Yellow"].hide();
 						obj["Pump-Yellow"].setColorFill(0.0509,0.7529,0.2941);
@@ -274,7 +301,7 @@ var canvas_lowerECAMPageHyd =
 			props.UpdateManager.FromHashList(["green","hydGreenEDPPumpSwitch"], nil, func(val) {
 				if (val.hydGreenEDPPumpSwitch) {
 					obj["Pump-Green-off"].hide();
-					if (val.green >= 1500) {
+					if (val.green > 1450) {
 						obj["Pump-Green-on"].show();
 						obj["Pump-LOPR-Green"].hide();
 						obj["Pump-Green"].setColor(0.0509,0.7529,0.2941);
@@ -324,6 +351,36 @@ var canvas_lowerECAMPageHyd =
 					obj["PTU-Auto-or-off"].show();
 				}
 			}),
+			props.UpdateManager.FromHashValue("hydBlueQTY", 0.05, func(val) {
+				obj["Quantity-Indicator-Blue"].setTranslation(0,((val / 8) * -140) + 140);
+				if (val >= 2.4) {
+					obj["Quantity-Indicator-Blue"].setColor(0.0509,0.7529,0.2941);
+					obj["path5561-4"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["Quantity-Indicator-Blue"].setColor(0.7333,0.3803,0);
+					obj["path5561-4"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydGreenQTY", 0.05, func(val) {
+				obj["Quantity-Indicator-Green"].setTranslation(0,((val / 18) * -140) + 140);
+				if (val >= 3.5) {
+					obj["Quantity-Indicator-Green"].setColor(0.0509,0.7529,0.2941);
+					obj["path5561-5"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["Quantity-Indicator-Green"].setColor(0.7333,0.3803,0);
+					obj["path5561-5"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("hydYellowQTY", 0.05, func(val) {
+				obj["Quantity-Indicator-Yellow"].setTranslation(0,((val / 15) * -140) + 140);
+				if (val >= 3.5) {
+					obj["Quantity-Indicator-Yellow"].setColor(0.0509,0.7529,0.2941);
+					obj["path5561"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["Quantity-Indicator-Yellow"].setColor(0.7333,0.3803,0);
+					obj["path5561"].setColor(0.7333,0.3803,0);
+				}
+			}),
 		];
 		
 		obj.displayedGForce = 0;
@@ -363,10 +420,10 @@ var canvas_lowerECAMPageHyd =
 		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit"];
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit","Green-Indicator","Blue-Indicator","Yellow-Indicator","Press-Green","Press-Blue","Press-Yellow","Green-Line","Blue-Line","Yellow-Line","Green-Line-Top","Blue-Line-Top","Yellow-Line-Middle","Green-Line-Middle","Yellow-Line-Bottom","Green-Line-Bottom","Blue-Line-Bottom","Yellow-Line-Top","PTU-Supply-Line","PTU-supply-yellow","PTU-supply-green","PTU-connection",
+		return ["TAT","SAT","GW","UTCh","UTCm","GLoad","GW-weight-unit","Green-Indicator","HYD-Quantity-Group-Blue","HYD-Quantity-Group-Yellow","HYD-Quantity-Group-Green","Blue-Indicator","Yellow-Indicator","Press-Green","Press-Blue","Press-Yellow","Green-Line","Blue-Line","Yellow-Line","Green-Line-Top","Blue-Line-Top","Yellow-Line-Middle","Green-Line-Middle","Yellow-Line-Bottom","Green-Line-Bottom","Blue-Line-Bottom","Yellow-Line-Top","PTU-Supply-Line","PTU-supply-yellow","PTU-supply-green","PTU-connection",
 		"PTU-Auto-or-off","RAT-label","RAT-stowed","RAT-not-stowed","ELEC-Yellow-off","ELEC-Yellow-on","ELEC-Yellow-label","ELEC-OVTH-Yellow","ELEC-Blue-label","ELEC-OVHT-Blue","ELEC-OVHT-Yellow","Pump-Green-label","Pump-Yellow-label","Pump-Green",
-		"Pump-LOPR-Green","Pump-Green-off","Pump-Green-on","Pump-Yellow","Pump-LOPR-Yellow","Pump-Yellow-off","Pump-Yellow-on","Pump-Blue", "Pump-Blue-off","Pump-Blue-on","Fire-Valve-Green","Fire-Valve-Yellow","LO-AIR-PRESS-Green",
-		"LO-AIR-PRESS-Yellow","LO-AIR-PRESS-Blue","OVHT-Green","OVHT-Blue","OVHT-Yellow","Quantity-Indicator-Green","Quantity-Indicator-Blue","Quantity-Indicator-Yellow","Green-label","Blue-label","Yellow-label","Fire-Valve-Yellow-Cross","Fire-Valve-Green-Cross"];
+		"Pump-LOPR-Green","Pump-Green-off","Pump-Green-on","Pump-Yellow","Pump-LOPR-Yellow","Pump-Yellow-off","Pump-Yellow-on","Pump-Blue","Pump-LOPR-Blue","Pump-Blue-off","Pump-Blue-on","Fire-Valve-Green","Fire-Valve-Yellow","LO-AIR-PRESS-Green",
+		"LO-AIR-PRESS-Yellow","LO-AIR-PRESS-Blue","OVHT-Green","OVHT-Blue","OVHT-Yellow","Quantity-Indicator-Green","Quantity-Indicator-Blue","Quantity-Indicator-Yellow","Green-label","Blue-label","Yellow-label","Fire-Valve-Yellow-Cross","Fire-Valve-Green-Cross","path5561","path5561-4","path5561-5"];
 	},
 	updateBottom: func(notification) {
 		foreach(var update_item_bottom; me.updateItemsBottom)
@@ -461,6 +518,9 @@ var input = {
 	hydPTUFault: "/systems/failures/hydraulic/ptu",
 	hydPTUActive: "/systems/hydraulic/sources/ptu/ptu-hydraulic-condition",
 	hydPTUDiff: "/systems/hydraulic/yellow-psi-diff",
+	hydBlueQTY: "/systems/hydraulic/blue-qty",
+	hydGreenQTY: "/systems/hydraulic/green-qty",
+	hydYellowQTY: "/systems/hydraulic/yellow-qty",
 };
 
 foreach (var name; keys(input)) {
