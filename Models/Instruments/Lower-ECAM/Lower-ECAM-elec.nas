@@ -74,14 +74,14 @@ var canvas_lowerECAMPageElec =
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["apuMaster","apuGLC"], nil, func(val) {
+			props.UpdateManager.FromHashList(["apuMaster","apuGenPB"], nil, func(val) {
 				if (val.apuMaster == 0) {
 					obj["APU-content"].hide();
 					obj["APUGEN-off"].hide();
 					obj["APU-border"].hide();
 				} else {
 					obj["APU-border"].show();
-					if (val.apuGLC == 0) {
+					if (val.apuGenPB == 0) {
 						obj["APU-content"].hide();
 						obj["APUGEN-off"].show();
 					} else {
@@ -151,18 +151,22 @@ var canvas_lowerECAMPageElec =
 				if (val >= 110) {
 					obj["ELEC-AC1-label"].setColor(0.0509,0.7529,0.2941);
 					obj["AC1-in"].show();
+					obj["ELEC-Line-AC1-TR1"].show();
 				} else {
 					obj["ELEC-AC1-label"].setColor(0.7333,0.3803,0);
 					obj["AC1-in"].hide();
+					obj["ELEC-Line-AC1-TR1"].hide();
 				}
 			}),
 			props.UpdateManager.FromHashValue("elecAC2", 0.5, func(val) {
 				if (val >= 110) {
 					obj["ELEC-AC2-label"].setColor(0.0509,0.7529,0.2941);
 					obj["AC2-in"].show();
+					obj["ELEC-Line-AC2-TR2"].show();
 				} else {
 					obj["ELEC-AC2-label"].setColor(0.7333,0.3803,0);
 					obj["AC2-in"].hide();
+					obj["ELEC-Line-AC2-TR2"].hide();
 				}
 			}),
 			props.UpdateManager.FromHashValue("elecACEss", 0.5, func(val) {
@@ -209,6 +213,7 @@ var canvas_lowerECAMPageElec =
 					obj["BAT1-OFF"].hide();
 					obj["BAT1-content"].show();
 					obj["Bat1Ampere"].setText(sprintf("%2.0f", val.elecBat1Amp));
+					
 					obj["Bat1Volt"].setText(sprintf("%2.0f", val.elecBat1Volt));
 
 					if (val.elecBat1Volt >= 24.95 and val.elecBat1Volt <= 31.05) {
@@ -217,7 +222,7 @@ var canvas_lowerECAMPageElec =
 						obj["Bat1Volt"].setColor(0.7333,0.3803,0);
 					}
 
-					if (val.elecBat1Amp > 5) {
+					if (val.elecBat1Amp > 5 and val.elecBat1Direction == 1) {
 						obj["Bat1Ampere"].setColor(0.7333,0.3803,0);
 					} else {
 						obj["Bat1Ampere"].setColor(0.0509,0.7529,0.2941);
@@ -253,6 +258,7 @@ var canvas_lowerECAMPageElec =
 					obj["BAT2-OFF"].hide();
 					obj["BAT2-content"].show();
 					obj["Bat2Ampere"].setText(sprintf("%2.0f", val.elecBat2Amp));
+					
 					obj["Bat2Volt"].setText(sprintf("%2.0f", val.elecBat2Volt));
 
 					if (val.elecBat2Volt >= 24.95 and val.elecBat2Volt <= 31.05) {
@@ -261,7 +267,7 @@ var canvas_lowerECAMPageElec =
 						obj["Bat2Volt"].setColor(0.7333,0.3803,0);
 					}
 
-					if (val.elecBat2Amp > 5) {
+					if (val.elecBat2Amp > 5 and val.elecBat2Direction == 1) {
 						obj["Bat2Ampere"].setColor(0.7333,0.3803,0);
 					} else {
 						obj["Bat2Ampere"].setColor(0.0509,0.7529,0.2941);
@@ -371,7 +377,7 @@ var canvas_lowerECAMPageElec =
 					obj["ELEC-Line-DC2-DCBAT"].show();
 				} else {
 					obj["ELEC-Line-DC2-DCESS_DCBAT"].hide();
-					obj["ELEC-Line-DC2-DCBAT"].show();
+					obj["ELEC-Line-DC2-DCBAT"].hide();
 				}
 			}),
 			props.UpdateManager.FromHashList(["elecDcEssFeedBat","elecDCTie1"], nil, func(val) {
@@ -550,10 +556,8 @@ var canvas_lowerECAMPageElec =
 					} else {
 						obj["ELEC-Line-AC1-TR1"].setColorFill(0.0509,0.7529,0.2941);
 					}
-					obj["ELEC-Line-AC1-TR1"].show();
 					obj["ELEC-Line-TR1-DC1"].show();
 				} else {
-					obj["ELEC-Line-AC1-TR1"].hide();
 					obj["ELEC-Line-TR1-DC1"].hide();
 				}
 			}),
@@ -564,10 +568,8 @@ var canvas_lowerECAMPageElec =
 					} else {
 						obj["ELEC-Line-AC2-TR2"].setColorFill(0.0509,0.7529,0.2941);
 					}
-					obj["ELEC-Line-AC2-TR2"].show();
 					obj["ELEC-Line-TR2-DC2"].show();
 				} else {
-					obj["ELEC-Line-AC2-TR2"].hide();
 					obj["ELEC-Line-TR2-DC2"].hide();
 				}
 			}),
@@ -643,7 +645,7 @@ var canvas_lowerECAMPageElec =
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecACEss"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecACEss","ELEC-Line-ACESS-TRESS","elecTR1Contact","elecTR2Contact"], nil, func(val) {
 				if (val.elecACEss >= 110 and !val.elecAcEssEmerGenFeed and (!val.elecTR1Contact or !val.elecTR2Contact)) {
 					obj["ELEC-Line-ACESS-TRESS"].show();
 				} else {
