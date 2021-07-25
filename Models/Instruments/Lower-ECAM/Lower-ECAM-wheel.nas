@@ -162,14 +162,13 @@ var canvas_lowerECAMPageWheel =
 					}
 				}
 
-				# TODO check the parking brake with nws switch off
 				if (val.brakesMode == 2 and val.accumPressPsi < 200 and val.yellow < 1500) {
 					obj["accuonlyarrow"].hide();
 					obj["accuonly"].hide();
 					obj["accupress_text"].show();
 					obj["brakearrow"].hide();
 					obj["accupress_text"].setColor(0.7333,0.3803,0);
-				} else if (val.brakesMode == 2 and val.accumPressPsi > 200 and val.yellow >= 1500){
+				} else if (val.brakesMode == 2 and val.NWSSwitch and val.accumPressPsi > 200 and val.yellow >= 1500){
 					obj["accuonlyarrow"].hide();
 					obj["accuonly"].hide();
 					obj["accupress_text"].show();
