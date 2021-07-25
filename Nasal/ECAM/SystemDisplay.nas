@@ -28,7 +28,7 @@ var SystemDisplayController = {
 	displayedPage: nil,
 	lastDisplayedPage: nil,
 	lastMode: nil,
-	mode: 0, # 0 = man, 1 = warning, 2 = advisory (not used yet), 3 = auto
+	mode: 3, # 0 = man, 1 = warning, 2 = advisory (not used yet), 3 = auto
 	tempFWCPhase: nil,
 	tempElapsedTime: nil,
 	tempEngineModeSel: nil,
@@ -37,6 +37,7 @@ var SystemDisplayController = {
 		ECAMTimer.start();
 	},
 	autoCallLoop: func() {
+		if (me.mode != 3) { return; }
 		me.tempFWCPhase = pts.ECAM.fwcWarningPhase.getValue();
 		
 		if (me.Display.APU) {

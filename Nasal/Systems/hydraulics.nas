@@ -64,9 +64,9 @@ var HYD = {
 	},
 	init: func() {
 		me.resetFail();
-		me.Qty.blueInput.setValue(math.round((rand() * 4) + 8 , 0.1)); # Random between 8 and 12
-		me.Qty.greenInput.setValue(math.round((rand() * 4) + 8 , 0.1)); # Random between 8 and 12
-		me.Qty.yellowInput.setValue(math.round((rand() * 4) + 8 , 0.1)); # Random between 8 and 12
+		me.Qty.blueInput.setValue(math.round((rand() * 2) + 6 , 0.1)); # Random between 6 and 8
+		me.Qty.greenInput.setValue(math.round((rand() * 4) + 14 , 0.1)); # Random between 14 and 18
+		me.Qty.yellowInput.setValue(math.round((rand() * 4) + 10 , 0.1)); # Random between 10 and 14
 		me.Switch.blueElec.setValue(1);
 		me.Switch.blueElecOvrd.setValue(0);
 		me.Switch.greenEDP.setValue(1);

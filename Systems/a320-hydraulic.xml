@@ -29,12 +29,24 @@
 		</actuator>
 		
 		<!-- Green -->
-		<switch name="/systems/hydraulic/green-qty-cmd">
+		<switch name="/systems/hydraulic/green-qty-cmd-cmd">
 			<default value="/systems/hydraulic/green-qty-input"/>
 			<test value="0">
 				/systems/failures/hydraulic/green-leak eq 1
 			</test>
 		</switch>
+		
+		<fcs_function name="/systems/hydraulic/green-qty-cmd">
+			<function>
+				<sum>
+					<property>/systems/hydraulic/green-qty-cmd-cmd</property>
+					<product>
+						<value>2.1</value>
+						<property>/gear/gear[0]/position-norm</property>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
 		
 		<switch name="/systems/hydraulic/green-qty-decr-rate">
 			<default value="100"/> <!-- Instant -->

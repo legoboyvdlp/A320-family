@@ -83,6 +83,7 @@ var Engines = {
 		n1Actual: [props.globals.getNode("/engines/engine[0]/n1-actual"), props.globals.getNode("/engines/engine[1]/n1-actual")],
 		n2Actual: [props.globals.getNode("/engines/engine[0]/n2-actual"), props.globals.getNode("/engines/engine[1]/n2-actual")],
 		oilPsi: [props.globals.getNode("/engines/engine[0]/oil-psi-actual"), props.globals.getNode("/engines/engine[1]/oil-psi-actual")],
+		oilQt: [props.globals.getNode("/engines/engine[0]/oil-qt-actual"), props.globals.getNode("/engines/engine[1]/oil-qt-actual")],
 		thrust: [props.globals.getNode("/engines/engine[0]/thrust-lb"), props.globals.getNode("/engines/engine[1]/thrust-lb")],
 		reverser: [props.globals.getNode("/engines/engine[0]/reverser-pos-norm"), props.globals.getNode("/engines/engine[1]/reverser-pos-norm")],
 		state: [props.globals.getNode("/engines/engine[0]/state"), props.globals.getNode("/engines/engine[1]/state")],

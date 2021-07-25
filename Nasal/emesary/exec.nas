@@ -42,6 +42,7 @@ input = {
 	frame_rate: "/sim/frame-rate",
 	elapsedTime: "/sim/time/elapsed-sec",
 	FWCPhase: "/ECAM/warning-phase",
+	acconfigUnits: "/systems/acconfig/options/weight-kgs",
 	
 	# Just about everything uses these properties at some stage, lets add them here!
 	gear0Wow: "/gear/gear[0]/wow",

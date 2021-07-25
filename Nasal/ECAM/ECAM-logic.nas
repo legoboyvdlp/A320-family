@@ -4,7 +4,6 @@
 # props.nas:
 
 var dualFailNode = props.globals.initNode("/ECAM/dual-failure-enabled", 0, "BOOL");
-var phaseNode    = props.globals.getNode("/ECAM/warning-phase", 1);
 var apWarn       = props.globals.getNode("/it-autoflight/output/ap-warning", 1);
 var athrWarn     = props.globals.getNode("/it-autoflight/output/athr-warning", 1);
 var emerGen      = props.globals.getNode("/controls/electrical/switches/emer-gen", 1);
@@ -46,7 +45,7 @@ var _SATval = nil;
 var ecamConfigTest = props.globals.initNode("/ECAM/to-config-test", 0, "BOOL");
 
 var messages_priority_3 = func {
-	phaseVar3 = phaseNode.getValue();
+	phaseVar3 = pts.ECAM.fwcWarningPhase.getValue();
 	
 	# Stall
 	# todo - altn law and emer cancel flipflops page 2440
@@ -1161,7 +1160,7 @@ var messages_priority_3 = func {
 }
 
 var messages_priority_2 = func {
-	phaseVar2 = phaseNode.getValue();
+	phaseVar2 = pts.ECAM.fwcWarningPhase.getValue();
 	
 	if ((phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 9) and warningNodes.Logic.thrLeversNotSet.getValue() and engThrustLvrNotSet.clearFlag == 0) {
 		engThrustLvrNotSet.active = 1;
@@ -3130,7 +3129,7 @@ var messages_priority_0 = func {
 }
 
 var messages_config_memo = func {
-	phaseVarMemo = phaseNode.getValue();
+	phaseVarMemo = pts.ECAM.fwcWarningPhase.getValue();
 	if (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4 or pts.Controls.Flight.speedbrake.getValue() != 0 or getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") < -3.65 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
 		setprop("/ECAM/to-config-normal", 0);
 	} else {
@@ -3296,7 +3295,7 @@ var messages_config_memo = func {
 }
 
 var messages_memo = func {
-	phaseVarMemo2 = phaseNode.getValue();
+	phaseVarMemo2 = pts.ECAM.fwcWarningPhase.getValue();
 	if (getprop("/services/fuel-truck/enable") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		refuelg.active = 1;
 	} else {
@@ -3399,7 +3398,7 @@ var messages_memo = func {
 }
 
 var messages_right_memo = func {
-	phaseVarMemo3 = phaseNode.getValue();
+	phaseVarMemo3 = pts.ECAM.fwcWarningPhase.getValue();
 	if (FWC.Timer.toInhibitOutput.getValue() == 1) {
 		to_inhibit.active = 1;
 	} else {

@@ -50,8 +50,8 @@
      id="namedview371"
      showgrid="false"
      inkscape:zoom="0.68"
-     inkscape:cx="817.73616"
-     inkscape:cy="1022.6281"
+     inkscape:cx="434.43172"
+     inkscape:cy="1022.8371"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -148,8 +148,9 @@
        x="817.61298"
        height="5.1203089"
        width="53.195583"
-       id="rect5105-2-5-3"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       id="FUEL-XFEED-Cross"
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="#rect5105-2-5-3" />
   </g>
   <rect
      style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:6.70764637;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -231,7 +232,7 @@
      y="405.25" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
      x="315.9696"
      y="468.43625"
      id="FUEL-Left-Inner-quantity"
@@ -239,26 +240,26 @@
      transform="scale(0.9562547,1.0457465)"><tspan
        sodipodi:role="line"
        id="tspan4819"
-       x="315.9696"
+       x="279.51846"
        y="468.43625"
-       style="font-size:30.1989994px;line-height:0">0000</tspan></text>
+       style="font-size:30.1989994px;line-height:0;text-align:end;text-anchor:end;">0000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
      x="827.31793"
      y="468.59464"
      id="FUEL-Right-Inner-quantity"
      inkscape:label="#text5149"
      transform="scale(0.9562547,1.0457465)"><tspan
-       style="font-size:30.19900131px;line-height:0;stroke-width:2.5165925px"
+       style="font-size:30.19900131px;line-height:0;text-align:end;text-anchor:end;stroke-width:2.5165925px;"
        y="468.59464"
-       x="827.31793"
+       x="790.86682"
        sodipodi:role="line"
        id="tspan4819-8">0000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="1008.5436"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+     x="981.7066"
      y="468.28946"
      id="FUEL-Right-Outer-quantity"
      inkscape:label="#text5149"
@@ -267,10 +268,10 @@
        id="tspan4857"
        x="1008.5436"
        y="468.28946"
-       style="font-size:30.1989994px;line-height:0">000</tspan></text>
+       style="font-size:30.1989994px;line-height:0;text-anchor:middle;text-align:center;">000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
      x="106.37531"
      y="468.35995"
      id="FUEL-Left-Outer-quantity"
@@ -278,9 +279,9 @@
      transform="scale(0.9562547,1.0457465)"><tspan
        sodipodi:role="line"
        id="tspan4877"
-       x="106.37531"
+       x="79.538307"
        y="468.35995"
-       style="font-size:30.1989994px;line-height:0">000</tspan></text>
+       style="font-size:30.1989994px;line-height:0;text-align:end;text-anchor:end;">000</tspan></text>
   <rect
      style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.17700815;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect5105-6-0-7-8-6-8-8-7-3-8-3"
@@ -374,8 +375,9 @@
        x="817.61298"
        height="5.1203089"
        width="53.195583"
-       id="rect5105-2-5-3-4"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       id="FUEL-ENG-Master-1-Cross"
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="#rect5105-2-5-3-4" />
   </g>
   <g
      id="FUEL-ENG-Master-2"
@@ -392,8 +394,9 @@
        x="817.61298"
        height="5.1203089"
        width="53.195583"
-       id="rect5105-2-5-3-4-3"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       id="FUEL-ENG-Master-2-Cross"
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="#rect5105-2-5-3-4-3" />
   </g>
   <text
      xml:space="preserve"
@@ -654,42 +657,46 @@
      transform="translate(0,-6.6012608e-5)">
     <rect
        y="345.25"
-       x="710.85443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
-       x="654.60443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
        x="682.5"
        height="63.750004"
        width="5.3955846"
        id="FUEL-Pump-Right-1-Open"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:label="#rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="403.6044"
-       height="56.249981"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="345.25"
-       height="57.895527"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <g
+       id="FUEL-Pump-Right-1-Square"
+       inkscape:label="#g1037">
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6"
+         width="5.3955846"
+         height="63.750004"
+         x="710.85443"
+         y="345.25" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7"
+         width="5.3955846"
+         height="63.750004"
+         x="654.60443"
+         y="345.25" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6"
+         width="5.3955846"
+         height="56.249981"
+         x="403.6044"
+         y="-712.5"
+         transform="rotate(90)" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9"
+         width="5.3955846"
+         height="57.895527"
+         x="345.25"
+         y="-712.5"
+         transform="rotate(90)" />
+    </g>
     <rect
        transform="rotate(90)"
        y="-708.75"
@@ -706,42 +713,46 @@
      inkscape:label="#g5620">
     <rect
        y="345.25"
-       x="710.85443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-2"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
-       x="654.60443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-8"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
        x="682.5"
        height="63.750004"
        width="5.3955846"
        id="FUEL-Pump-Right-2-Open"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:label="#rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="403.6044"
-       height="56.249981"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-99"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="345.25"
-       height="57.895527"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-6"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <g
+       id="FUEL-Pump-Right-2-Square"
+       inkscape:label="#g1043">
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-2"
+         width="5.3955846"
+         height="63.750004"
+         x="710.85443"
+         y="345.25" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-8"
+         width="5.3955846"
+         height="63.750004"
+         x="654.60443"
+         y="345.25" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-99"
+         width="5.3955846"
+         height="56.249981"
+         x="403.6044"
+         y="-712.5"
+         transform="rotate(90)" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-6"
+         width="5.3955846"
+         height="57.895527"
+         x="345.25"
+         y="-712.5"
+         transform="rotate(90)" />
+    </g>
     <rect
        transform="rotate(90)"
        y="-708.75"
@@ -758,42 +769,45 @@
      inkscape:label="#g5620">
     <rect
        y="345.25"
-       x="710.85443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-76"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
-       x="654.60443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-1"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
        x="682.5"
        height="63.750004"
        width="5.3955846"
        id="FUEL-Pump-Left-1-Open"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:label="#rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="403.6044"
-       height="56.249981"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-2"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="345.25"
-       height="57.895527"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-1"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <g
+       id="FUEL-Pump-Left-1-Square">
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-76"
+         width="5.3955846"
+         height="63.750004"
+         x="710.85443"
+         y="345.25" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-1"
+         width="5.3955846"
+         height="63.750004"
+         x="654.60443"
+         y="345.25" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-2"
+         width="5.3955846"
+         height="56.249981"
+         x="403.6044"
+         y="-712.5"
+         transform="rotate(90)" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-1"
+         width="5.3955846"
+         height="57.895527"
+         x="345.25"
+         y="-712.5"
+         transform="rotate(90)" />
+    </g>
     <rect
        transform="rotate(90)"
        y="-708.75"
@@ -808,20 +822,39 @@
      transform="translate(-355.50001,-4.5998985e-6)"
      id="FUEL-Pump-Left-2"
      inkscape:label="#g5620">
-    <rect
-       y="345.25"
-       x="710.85443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-2-9"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
-       x="654.60443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-8-1"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <g
+       id="FUEL-Pump-Left-2-Square">
+      <rect
+         y="345.25"
+         x="710.85443"
+         height="63.750004"
+         width="5.3955846"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-2-9"
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         y="345.25"
+         x="654.60443"
+         height="63.750004"
+         width="5.3955846"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-8-1"
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="rotate(90)"
+         y="-712.5"
+         x="403.6044"
+         height="56.249981"
+         width="5.3955846"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-99-9"
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="rotate(90)"
+         y="-712.5"
+         x="345.25"
+         height="57.895527"
+         width="5.3955846"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-6-1"
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
     <rect
        y="345.25"
        x="682.5"
@@ -830,22 +863,6 @@
        id="FUEL-Pump-Left-2-Open"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:label="#rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="403.6044"
-       height="56.249981"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-99-9"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="345.25"
-       height="57.895527"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-6-1"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        transform="rotate(90)"
        y="-708.75"
@@ -863,42 +880,46 @@
      style="stroke:none;stroke-opacity:1">
     <rect
        y="345.25"
-       x="710.85443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-76-5"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
-       x="654.60443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-1-8"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
        x="682.5"
        height="63.750004"
        width="5.3955846"
        id="FUEL-Pump-Center-1-Open"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:label="#rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="403.6044"
-       height="56.249981"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-2-0"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="345.25"
-       height="57.895527"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-1-4"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <g
+       id="FUEL-Pump-Center-1-Square"
+       inkscape:label="#g1025">
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-76-5"
+         width="5.3955846"
+         height="63.750004"
+         x="710.85443"
+         y="345.25" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-1-8"
+         width="5.3955846"
+         height="63.750004"
+         x="654.60443"
+         y="345.25" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-2-0"
+         width="5.3955846"
+         height="56.249981"
+         x="403.6044"
+         y="-712.5"
+         transform="rotate(90)" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-1-4"
+         width="5.3955846"
+         height="57.895527"
+         x="345.25"
+         y="-712.5"
+         transform="rotate(90)" />
+    </g>
     <rect
        transform="rotate(90)"
        y="-708.75"
@@ -915,42 +936,45 @@
      inkscape:label="#g5620">
     <rect
        y="345.25"
-       x="710.85443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-76-5-4"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
-       x="654.60443"
-       height="63.750004"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-1-8-2"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="345.25"
        x="682.5"
        height="63.750004"
        width="5.3955846"
        id="FUEL-Pump-Center-2-Open"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:label="#rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="403.6044"
-       height="56.249981"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-2-0-6"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       transform="rotate(90)"
-       y="-712.5"
-       x="345.25"
-       height="57.895527"
-       width="5.3955846"
-       id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-1-4-1"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <g
+       id="FUEL-Pump-Center-2-Square">
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-76-5-4"
+         width="5.3955846"
+         height="63.750004"
+         x="710.85443"
+         y="345.25" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.7053628;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-1-8-2"
+         width="5.3955846"
+         height="63.750004"
+         x="654.60443"
+         y="345.25" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.60190916;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-2-0-6"
+         width="5.3955846"
+         height="56.249981"
+         x="403.6044"
+         y="-712.5"
+         transform="rotate(90)" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.62517166;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-1-4-1"
+         width="5.3955846"
+         height="57.895527"
+         x="345.25"
+         y="-712.5"
+         transform="rotate(90)" />
+    </g>
     <rect
        transform="rotate(90)"
        y="-708.75"
@@ -962,56 +986,56 @@
        inkscape:label="#rect5105-6-0-7-8-6-8-8-6-6-6-4-6-7-5-6-9-8" />
   </g>
   <rect
-   ry="0"
-   transform="matrix(0,1,-1,0,0,0)"
-   y="-261.75253"
-   x="232.60442"
-   height="18.894773"
-   width="5.3955846"
-   id="FUEL-APU-line"
-   style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.09431255;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     ry="0"
+     transform="matrix(0,1,-1,0,0,0)"
+     y="-261.75253"
+     x="232.60442"
+     height="18.894773"
+     width="5.3955846"
+     id="FUEL-APU-line"
+     style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.09431255;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <path
-   sodipodi:nodetypes="cccccsc"
-   inkscape:connector-curvature="0"
-   id="FUEL-APU-arrow"
-   d="m 209.24999,234.99999 15.75,-7.5 16.5,-8.25 v 17.25 l 0,15.30854 c 0,0 -1.69343,-0.68362 -19.69533,-10.2091 -11.05467,-5.84944 -12.55467,-6.59944 -12.55467,-6.59944 z"
-   style="fill:none;stroke:#0dc04b;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1" />
+     sodipodi:nodetypes="cccccsc"
+     inkscape:connector-curvature="0"
+     id="FUEL-APU-arrow"
+     d="m 209.24999,234.99999 15.75,-7.5 16.5,-8.25 v 17.25 l 0,15.30854 c 0,0 -1.69343,-0.68362 -19.69533,-10.2091 -11.05467,-5.84944 -12.55467,-6.59944 -12.55467,-6.59944 z"
+     style="fill:none;stroke:#0dc04b;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
-     x="714.24243"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75;"
+     x="786.66431"
      y="105.24868"
      id="FUEL-used-2"
      inkscape:label="#text5832"><tspan
        sodipodi:role="line"
        id="tspan5830"
-       x="714.24243"
+       x="750.45337"
        y="105.24868"
-       style="font-size:30px;line-height:1.25;fill:#0dc04b;fill-opacity:1;stroke-width:0.75">0000</tspan></text>
+       style="font-size:30px;line-height:1.25;text-align:end;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke-width:0.75;">0000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
-     x="470.07513"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75;"
+     x="542.49701"
      y="106.80015"
      id="FUEL-used-both"
      inkscape:label="#text5832"><tspan
        sodipodi:role="line"
        id="tspan5830-5"
-       x="470.07513"
+       x="506.28607"
        y="106.80015"
-       style="font-size:30.00000191px;line-height:1.25;fill:#0dc04b;fill-opacity:1;stroke-width:0.75">0000</tspan></text>
+       style="font-size:30.00000191px;line-height:1.25;text-align:end;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke-width:0.75;">0000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
-     x="228.69138"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75;"
+     x="301.11325"
      y="105.37296"
      id="FUEL-used-1"
      inkscape:label="#text5832"><tspan
        sodipodi:role="line"
        id="tspan5830-5-2"
-       x="228.69138"
+       x="264.90231"
        y="105.37296"
-       style="font-size:30.00000191px;line-height:1.25;fill:#0dc04b;fill-opacity:1;stroke-width:0.75">0000</tspan></text>
+       style="font-size:30.00000191px;line-height:1.25;text-align:end;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke-width:0.75;">0000</tspan></text>
   <rect
      style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.82722223;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="FUEL-ENG-1-pipe"
