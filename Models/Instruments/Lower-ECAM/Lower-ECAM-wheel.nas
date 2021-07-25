@@ -43,7 +43,7 @@ var canvas_lowerECAMPageWheel =
 				}
 			}),
 			props.UpdateManager.FromHashValue("gearPosNorm", nil, func(val) {
-				if (val < 0.2 and val > 0.8) {
+				if (val < 0.2 or val > 0.8) {
 					obj["Triangle-Nose1"].hide();
 					obj["Triangle-Nose2"].hide();
 				} else {
@@ -60,7 +60,7 @@ var canvas_lowerECAMPageWheel =
 				}
 			}),
 			props.UpdateManager.FromHashValue("gearPosNorm1", nil, func(val) {
-				if (val < 0.2 and val > 0.8) {
+				if (val < 0.2 or val > 0.8) {
 					obj["Triangle-Left1"].hide();
 					obj["Triangle-Left2"].hide();
 				} else {
@@ -77,7 +77,7 @@ var canvas_lowerECAMPageWheel =
 				}
 			}),
 			props.UpdateManager.FromHashValue("gearPosNorm2", nil, func(val) {
-				if (val < 0.2 and val > 0.8) {
+				if (val < 0.2 or val > 0.8) {
 					obj["Triangle-Right1"].hide();
 					obj["Triangle-Right2"].hide();
 				} else {
