@@ -406,13 +406,11 @@ var internal = props.globals.getNode("/sim/current-view/internal");
 var toggleScreen = func() {
 	if (!internal.getValue() and hideCanvas.getValue()) {
 		canvas_pfd.PFD_update.stop();
-		canvas_ecam.lowerECAM_update.stop();
 		canvas_nd.nd_update.stop();
 		canvas_dcdu.DCDU_update.stop();
 		canvas_mcdu.MCDU_update.stop();
 	} else {
 		canvas_pfd.rateApply();
-		canvas_ecam.l_rateApply();
 		canvas_nd.rateApply();
 		canvas_dcdu.rateApply();
 		canvas_mcdu.MCDU_update.start();
