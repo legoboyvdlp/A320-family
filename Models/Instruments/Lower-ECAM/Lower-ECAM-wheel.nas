@@ -42,8 +42,8 @@ var canvas_lowerECAMPageWheel =
 					obj["lgctltext"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("gearPosNorm", 0.01, func(val) {
-				if (val < 0.2 or val > 0.8) {
+			props.UpdateManager.FromHashValue("gearPosNorm", nil, func(val) {
+				if (val == 0) {
 					obj["Triangle-Nose1"].hide();
 					obj["Triangle-Nose2"].hide();
 				} else {
@@ -59,8 +59,8 @@ var canvas_lowerECAMPageWheel =
 					obj["Triangle-Nose2"].setColor(1,0,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("gearPosNorm1", 0.01, func(val) {
-				if (val < 0.2 or val > 0.8) {
+			props.UpdateManager.FromHashValue("gearPosNorm1", nil, func(val) {
+				if (val == 0) {
 					obj["Triangle-Left1"].hide();
 					obj["Triangle-Left2"].hide();
 				} else {
@@ -76,8 +76,8 @@ var canvas_lowerECAMPageWheel =
 					obj["Triangle-Left2"].setColor(1,0,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("gearPosNorm2", 0.01, func(val) {
-				if (val < 0.2 or val > 0.8) {
+			props.UpdateManager.FromHashValue("gearPosNorm2", nil, func(val) {
+				if (val == 0) {
 					obj["Triangle-Right1"].hide();
 					obj["Triangle-Right2"].hide();
 				} else {
@@ -93,75 +93,85 @@ var canvas_lowerECAMPageWheel =
 					obj["Triangle-Right2"].setColor(1,0,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["yellow","green","NWSSwitch","brakesMode","val.accumPressPsiPressPsi"], nil, func(val) {
+			props.UpdateManager.FromHashList(["yellow","green","NWSSwitch","brakesMode","val.accumPressPsiPressPsi","leftBrakeFCS","rightBrakeFCS"], nil, func(val) {
 				if (val.NWSSwitch and val.yellow >= 1500) {
 					obj["NWStext"].hide();
 					obj["NWS"].hide();
 					obj["NWSrect"].hide();
-					obj["antiskidtext"].hide();
-					obj["BSCUrect1"].hide();
-					obj["BSCUrect2"].hide();
-					obj["BSCU1"].hide();
-					obj["BSCU2"].hide();
 				} else if (!val.NWSSwitch and val.yellow >= 1500) {
 					obj["NWStext"].show();
 					obj["NWS"].show();
 					obj["NWS"].setColor(0.0509,0.7529,0.2941);
 					obj["NWSrect"].show();
-					obj["antiskidtext"].show();
-					obj["antiskidtext"].setColor(0.7333,0.3803,0);
-					obj["BSCUrect1"].show();
-					obj["BSCUrect2"].show();
-					obj["BSCU1"].show();
-					obj["BSCU2"].show();
 				} else {
 					obj["NWStext"].show();
 					obj["NWS"].show();
 					obj["NWS"].setColor(0.7333,0.3803,0);
 					obj["NWSrect"].show();
+				}
+				
+				if ((val.yellow < 1500 and val.brakesMode == 1) or !val.NWSSwitch) {
 					obj["antiskidtext"].show();
 					obj["antiskidtext"].setColor(0.7333,0.3803,0);
 					obj["BSCUrect1"].show();
 					obj["BSCUrect2"].show();
 					obj["BSCU1"].show();
 					obj["BSCU2"].show();
+				} else {
+					obj["antiskidtext"].hide();
+					obj["BSCUrect1"].hide();
+					obj["BSCUrect2"].hide();
+					obj["BSCU1"].hide();
+					obj["BSCU2"].hide();
 				}
-
-				if (val.green >= 1500 and val.brakesMode == 1) {
+				
+				if (val.green >= 1500) {
+					obj["normbrkhyd"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["normbrkhyd"].setColor(0.7333,0.3803,0);
+				}
+				
+				if (val.yellow >= 1500) {
+					obj["altnbrkhyd"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["altnbrkhyd"].setColor(0.7333,0.3803,0);
+				}
+				
+				if (!val.NWSSwitch or val.green < 1500) {
+					obj["NORMbrk"].show();
+					obj["normbrk-rect"].show();
+					obj["normbrkhyd"].show();
+				} else {
 					obj["NORMbrk"].hide();
 					obj["normbrk-rect"].hide();
 					obj["normbrkhyd"].hide();
-				} else if (val.green >= 1500 and val.NWSSwitch) {
-					obj["NORMbrk"].show();
-					obj["normbrk-rect"].show();
-					obj["NORMbrk"].setColor(0.7333,0.3803,0);
-					obj["normbrkhyd"].setColor(0.0509,0.7529,0.2941);
-				} else if (val.green < 1500 or !val.NWSSwitch) {
-					obj["NORMbrk"].show();
-					obj["normbrk-rect"].show();
-					obj["NORMbrk"].setColor(0.7333,0.3803,0);
-					obj["normbrkhyd"].setColor(0.7333,0.3803,0);
 				}
-
-				if (val.brakesMode != 2) {
+				
+				if (val.brakesMode != 2 or val.green < 1500 or val.yellow < 1500 or !val.NWSSwitch) {
 					obj["ALTNbrk"].hide();
 					obj["altnbrk-rect"].hide();
 					obj["altnbrkhyd"].hide();
-				} else if (val.yellow >= 1500) {
-					obj["ALTNbrk"].show();
-					obj["altnbrk-rect"].show();
-					obj["altnbrkhyd"].setColor(0.0509,0.7529,0.2941);
 				} else {
 					obj["ALTNbrk"].show();
 					obj["altnbrk-rect"].show();
-					obj["altnbrkhyd"].setColor(0.7333,0.3803,0);
+					obj["altnbrkhyd"].show();
+					if (val.yellow < 1500 and val.accumPressPsi < 1500) {
+						obj["ALTNbrk"].setColor(0.7333,0.3803,0);
+					} else {
+						obj["ALTNbrk"].setColor(0.0509,0.7529,0.2941);
+					}
 				}
 
+				# TODO check the parking brake with nws switch off
 				if (val.brakesMode == 2 and val.accumPressPsi < 200 and val.yellow < 1500) {
+					obj["accuonlyarrow"].hide();
+					obj["accuonly"].hide();
 					obj["accupress_text"].show();
 					obj["brakearrow"].hide();
 					obj["accupress_text"].setColor(0.7333,0.3803,0);
 				} else if (val.brakesMode == 2 and val.accumPressPsi > 200 and val.yellow >= 1500){
+					obj["accuonlyarrow"].hide();
+					obj["accuonly"].hide();
 					obj["accupress_text"].show();
 					obj["brakearrow"].show();
 					obj["accupress_text"].setColor(0.0509,0.7529,0.2941);
@@ -176,8 +186,43 @@ var canvas_lowerECAMPageWheel =
 					obj["brakearrow"].hide();
 					obj["accupress_text"].hide();
 				}
+				
+				if (val.brakesMode == 1) {
+					obj["releaseL1"].hide();
+					obj["releaseL2"].hide();
+					obj["releaseL3"].hide();
+					obj["releaseL4"].hide();
+					obj["releaseR1"].hide();
+					obj["releaseR2"].hide();
+					obj["releaseR3"].hide();
+					obj["releaseR4"].hide();
+				} else { # Display if the brakes are released and in alternate braking
+					if (val.leftBrakeFCS == 0) {
+						obj["releaseL1"].show();
+						obj["releaseL2"].show();
+						obj["releaseL3"].show();
+						obj["releaseL4"].show();
+					} else {
+						obj["releaseL1"].hide();
+						obj["releaseL2"].hide();
+						obj["releaseL3"].hide();
+						obj["releaseL4"].hide();
+					}
+					
+					if (val.rightBrakeFCS == 0) {
+						obj["releaseR1"].show();
+						obj["releaseR2"].show();
+						obj["releaseR3"].show();
+						obj["releaseR4"].show();
+					} else {
+						obj["releaseR1"].hide();
+						obj["releaseR2"].hide();
+						obj["releaseR3"].hide();
+						obj["releaseR4"].hide();
+					}
+				}
 			}),
-			props.UpdateManager.FromHashList(["brakeAutobrkMode"], nil, func(val) {
+			props.UpdateManager.FromHashList(["brakeAutobrkMode","NWSSwitch"], nil, func(val) {
 				if (val.brakeAutobrkMode == 0) {
 					obj["autobrkind"].hide();
 				} elsif (val.brakeAutobrkMode == 1) {
@@ -191,10 +236,16 @@ var canvas_lowerECAMPageWheel =
 					obj["autobrkind"].setText(sprintf("%s", "MAX"));
 				}
 
-				if (val.brakeAutobrkMode != 0) {
+				if (val.brakeAutobrkMode != 0 or !val.NWSSwitch) {
 					obj["autobrk"].show();
 				} else {
 					obj["autobrk"].hide();
+				}
+				
+				if (!val.NWSSwitch) {
+					obj["autobrk"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["autobrk"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
 			props.UpdateManager.FromHashValue("brakeLeft1", 0.5, func(val) {
@@ -578,7 +629,8 @@ var canvas_lowerECAMPageWheel =
 		"spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf","spoiler5Lf","ALTNbrk","altnbrkhyd","altnbrk-rect","antiskidtext","brakearrow","accupress_text",
 		"accuonlyarrow","accuonly","braketemp1","normbrkhyd","braketemp2","braketemp3","braketemp4","toparc1","toparc2","toparc3","toparc4","leftuplock",
 		"noseuplock","rightuplock","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2","BSCUrect1",
-		"BSCUrect2","BSCU1","BSCU2","tirepress1","tirepress2","tirepress3","tirepress4","tirepress5","tirepress6"];
+		"BSCUrect2","BSCU1","BSCU2","tirepress1","tirepress2","tirepress3","tirepress4","tirepress5","tirepress6","releaseL1","releaseL2","releaseR1","releaseR2",
+		"releaseL3","releaseL4","releaseR3","releaseR4"];
 	},
 	updateBottom: func(notification) {
 		foreach(var update_item_bottom; me.updateItemsBottom)
