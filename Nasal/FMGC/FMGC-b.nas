@@ -667,8 +667,8 @@ var ITAF = {
 			Internal.altCaptureActive = 0;
 			me.updateApprArm(0);
 			Output.vert.setValue(6);
-			me.updateThrustMode();
 			me.updateVertText("FLARE");
+			me.updateThrustMode();
 		} else if (n == 7) { # T/O CLB or G/A CLB, text is set by TOGA selector
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
