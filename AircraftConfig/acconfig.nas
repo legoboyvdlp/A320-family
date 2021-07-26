@@ -327,6 +327,7 @@ var beforestart = func {
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		libraries.variousReset();
+		setprop("/controls/oxygen/crewOxyPB", 1);
 		failResetOld();
 		
 		# Now the Startup!
@@ -422,6 +423,7 @@ var taxi = func {
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		libraries.variousReset();
+		setprop("/controls/oxygen/crewOxyPB", 1);
 		failResetOld();
 		
 		# Now the Startup!
