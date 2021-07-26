@@ -285,7 +285,7 @@ var thrust_loop = maketimer(0.04, func {
 	
 	togaLock = alphaProt - 1;
 	if (!pts.Gear.wow[1].getValue() and !pts.Gear.wow[2].getValue() and fbw.FBW.activeLaw.getValue() == 0 and (!pts.Systems.Thrust.engOut.getValue() or (pts.Systems.Thrust.engOut.getValue() and flaps == 0)) and !Fadec.n1Mode[0].getValue() 
-	and !Fadec.n1Mode[1].getValue()) {
+	and !Fadec.n1Mode[1].getValue() and fcu.FCUworkingNode.getBoolValue()) {
 		if (alpha > alphaProt and pts.Position.gearAglFt.getValue() >= 100) {
 			Thrust.alphaFloor.setValue(1);
 			Thrust.togaLk.setValue(0);

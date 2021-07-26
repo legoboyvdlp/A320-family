@@ -91,9 +91,9 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/align-ref-long-sign", "");
 	setprop("/FMGC/internal/align-ref-lat-edit", 0);
 	setprop("/FMGC/internal/align-ref-long-edit", 0);
-	setprop("/FMGC/internal/align1-done", 0);
-	setprop("/FMGC/internal/align2-done", 0);
-	setprop("/FMGC/internal/align3-done", 0);
+	fmgc.FMGCAlignDone[0].setValue(0);
+	fmgc.FMGCAlignDone[1].setValue(0);
+	fmgc.FMGCAlignDone[2].setValue(0);
 
 	# ROUTE SELECTION
 	fmgc.FMGCInternal.altSelected = 0;

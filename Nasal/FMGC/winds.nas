@@ -226,7 +226,7 @@ var windController = {
 	},
 	# read - read from hist wind file, create one if it doesn't exist
 	read: func() {
-		var path = getprop("/sim/fg-home") ~ "/Export/A320SavedWinds.txt";
+		var path = pts.Sim.fgHome.getValue() ~ "/Export/A320SavedWinds.txt";
 		# create file if it doesn't exist
 		if (io.stat(path) == nil) {
 			me.write();
@@ -267,7 +267,7 @@ var windController = {
 	# write - write to hist wind file, called whenever winds changed
 	write: func() {
 		if (me.des_winds[2] != 0) {
-			var path = getprop("/sim/fg-home") ~ "/Export/A320SavedWinds.txt";
+			var path = pts.Sim.fgHome.getValue() ~ "/Export/A320SavedWinds.txt";
 			var file = io.open(path, "wb");
 			var winds_added = 0;
 			
