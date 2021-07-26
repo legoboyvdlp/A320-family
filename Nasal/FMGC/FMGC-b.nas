@@ -291,14 +291,11 @@ var ITAF = {
 			if (Position.gearAglFtTemp <= 400 and Position.gearAglFtTemp >= 5) {
 				me.updateVertText("LAND");
 
-				if (Position.gearAglFtTemp <= 100) { # switch to internal flare logic at 100 feet -- but on FMA at 50!
+				if (Position.gearAglFtTemp <= 50) {
 					me.setVertMode(6);
 				}
 			}
 		} else if (Output.vertTemp == 6) {
-			if (Position.gearAglFtTemp <= 50 and Position.gearAglFtTemp >= 5 and Text.vert.getValue() != "FLARE") {
-				me.updateVertText("FLARE");
-			}
 			if (Gear.wow1Temp and Gear.wow2Temp and Text.vert.getValue() != "ROLLOUT") {
 				me.updateLatText("RLOU");
 				me.updateVertText("ROLLOUT");
@@ -671,6 +668,7 @@ var ITAF = {
 			me.updateApprArm(0);
 			Output.vert.setValue(6);
 			me.updateThrustMode();
+			me.updateVertText("FLARE");
 		} else if (n == 7) { # T/O CLB or G/A CLB, text is set by TOGA selector
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;

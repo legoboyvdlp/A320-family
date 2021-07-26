@@ -588,6 +588,32 @@
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
+		<input> <!-- Under 110ft glideslope data starts to become unusable -->
+			<condition>
+				<and>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>2</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>6</value>
+						</equals>
+					</or>
+					<less-than-equals>
+						<property>/position/gear-agl-ft</property>
+						<value>110</value>
+					</less-than-equals>
+				</and>
+			</condition>
+			<expression>
+				<min>
+					<property>/it-autoflight/internal/nav-rate-of-climb-fpm</property>
+					<value>-500</value>
+				</min>
+			</expression>
+		</input>
 		<input>/instrumentation/nav[0]/gs-rate-of-climb-fpm</input>
 		<output>/it-autoflight/internal/nav-rate-of-climb-fpm</output>
 		<min>
