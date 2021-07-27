@@ -113,7 +113,7 @@ var canvas_nd_base = {
 		} elsif (me.du2OffTimer == 0) {
 			du2_test.setValue(0);
 			me.du2OffTimer = 1;
-			du2_offtime.setValue(elapsedtime_act);
+			du2_offtime.setValue(elapsedtime);
 		}
 	},
 	du5OffTimer: 0,
@@ -142,7 +142,7 @@ var canvas_nd_base = {
 		} elsif (me.du5OffTimer == 0) {
 			du5_test.setValue(0);
 			me.du5OffTimer = 1;
-			du5_offtime.setValue(elapsedtime_act);
+			du5_offtime.setValue(elapsedtime);
 		}
 	},
 	update: func() {
