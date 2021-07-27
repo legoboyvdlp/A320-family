@@ -82,6 +82,6 @@ var ground_message = func (string) {
 	setprop("/sim/messages/ground", string);
 }
 
-setlistener("sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func {
 	ground_services.init();
 });

@@ -457,6 +457,16 @@
 							]]></script>
 						</binding>
 					</item>
+					<item>
+						<label>Remote MCDU</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							var mcduweb_dlg = gui.Dialog.new("sim/gui/dialogs/mcduweb/dialog", "Aircraft/A320-family/gui/dialogs/mcduweb.xml");
+							mcduweb_dlg.open();
+							</script>
+						</binding>
+					</item>					
 				</menu>
 				<menu n="105">
 					<label>Utilities</label>
@@ -4647,6 +4657,8 @@
 			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 		</systems>
 		<ecam>
+			<file>Aircraft/A320-family/Nasal/ECAM/SystemDisplay.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-nodes.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
@@ -4723,6 +4735,20 @@
 		<canvas_ecam>
 			<file>Aircraft/A320-family/Nasal/emesary/exec.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-base.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-APU.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-bleed.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-cond.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-cruise.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-door.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-elec.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-eng.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-fctl.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-fuel.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-hyd.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-press.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-sts.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-wheel.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
 		</canvas_ecam>
 		<canvas_iesi>

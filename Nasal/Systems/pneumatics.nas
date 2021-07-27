@@ -233,14 +233,12 @@ setlistener("/controls/oxygen/masksDeployMan", func {
 
 setlistener("/controls/oxygen/masksDeployMan", func {
 	masks = getprop("/controls/oxygen/masksDeployMan");
-	autoMasks = getprop("/controls/oxygen/masksDeploy");
 	if (!masks) { 
 		setprop("/controls/oxygen/masksDeployMan", 1);
 	}
 }, 0, 0);
 
 setlistener("/controls/oxygen/masksDeploy", func {
-	masks = getprop("/controls/oxygen/masksDeployMan");
 	autoMasks = getprop("/controls/oxygen/masksDeploy");
 	if (!autoMasks) { 
 		setprop("/controls/oxygen/masksDeploy", 1);

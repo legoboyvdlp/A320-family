@@ -2,407 +2,253 @@
 # in east/north/up coordinates the renderer uses
 # Thanks to BAWV12 / Thorsten
 
-
-var als_on = props.globals.getNode("/sim/rendering/shaders/skydome");
+var als_on = props.globals.getNode("");
 var alt_agl = props.globals.getNode("position/gear-agl-ft");
 var cur_alt = 0;
 
-var light_manager = {
+var Light = {
+	new: func(n) {
+		var light = {parents: [Light]};
+		light.isOn = 0;
+		
+		light.Pos = {
+			x: 0,
+			y: 0,
+			z: 0,
+		};
+		
+		light.Color = {
+			r: 0,
+			g: 0,
+			b: 0,
+		};
+		
+		light.colorr = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-r[" ~ n ~ "]", 1);
+		light.colorg = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-g[" ~ n ~ "]", 1);
+		light.colorb = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/lightspot-b[" ~ n ~ "]", 1);
+		light.dir = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/dir[" ~ n ~ "]", 1);
+		light.size = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/size[" ~ n ~ "]", 1);
+		light.posx = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-x-m[" ~ n ~ "]", 1);
+		light.posy = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-y-m[" ~ n ~ "]", 1);
+		light.posz = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-z-m[" ~ n ~ "]", 1);
+		
+		if (n <= 1) {
+			light.stretch = props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/stretch[" ~ n ~ "]", 1);
+		}
+		return light;
+	},
+	setColor: func(r,g,b) {
+		me.Color.r = r;
+		me.Color.g = g;
+		me.Color.b = b;
+	},
+	setDir: func(dir) {
+		me.dir.setValue(dir);
+	},
+	setSize: func(size) {
+		me.size.setValue(size);
+	},
+	setStretch: func(stretch) {
+		me.stretch.setValue(stretch);
+	},
+	setPos: func(x,y,z) {
+		me.Pos.x = x;
+		me.Pos.y = y;
+		me.Pos.z = z;
+	},
+	on: func() {
+		if (me.isOn) { return; }
+		me.colorr.setValue(me.Color.r);
+		me.colorg.setValue(me.Color.g);
+		me.colorb.setValue(me.Color.b);
+		me.isOn = 1;
+	},
+	off: func() {
+		if (!me.isOn) { return; }
+		me.colorr.setValue(0);
+		me.colorg.setValue(0);
+		me.colorb.setValue(0);
+		me.isOn = 0;
+	},
+};
 
-	run: 0,
-	
+var lightManager = {
 	lat_to_m: 110952.0,
 	lon_to_m: 0.0,
-
-	light1_xpos: 0.0,
-	light1_ypos: 0.0,
-	light1_zpos: 0.0,
-	light1_r: 0.0,
-	light1_g: 0.0,
-	light1_b: 0.0,
-	light1_size: 0.0,
-	light1_stretch: 0.0,
-	light1_is_on: 0,
-
-	light2_xpos: 0.0,
-	light2_ypos: 0.0,
-	light2_zpos: 0.0,
-	light2_r: 0.0,
-	light2_g: 0.0,
-	light2_b: 0.0,
-	light2_size: 0.0,
-	light2_stretch: 0.0,
-	light2_is_on: 0,
 	
-	light3_xpos: 0.0,
-	light3_ypos: 0.0,
-	light3_zpos: 0.0,
-	light3_r: 0.0,
-	light3_g: 0.0,
-	light3_b: 0.0,
-	light3_size: 0.0,
-	light3_stretch: 0.0,
-	light3_is_on: 0,
-	
-	light4_xpos: 0.0,
-	light4_ypos: 0.0,
-	light4_zpos: 0.0,
-	light4_r: 0.0,
-	light4_g: 0.0,
-	light4_b: 0.0,
-	light4_size: 0.0,
-	light4_stretch: 0.0,
-	light4_is_on: 0,
-	
-	light5_xpos: 0.0,
-	light5_ypos: 0.0,
-	light5_zpos: 0.0,
-	light5_r: 0.0,
-	light5_g: 0.0,
-	light5_b: 0.0,
-	light5_size: 0.0,
-	light5_stretch: 0.0,
-	light5_is_on: 0,
-	
-	flcpt: 0,
-	prev_view : 1,
-	
-	nd_ref_light1_x:  props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-x-m", 1),
-	nd_ref_light1_y:  props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-y-m", 1),
-	nd_ref_light1_z: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-z-m", 1),
-	nd_ref_light1_dir: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/dir", 1),
-
-	nd_ref_light2_x: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-x-m[1]", 1),
-	nd_ref_light2_y: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-y-m[1]", 1),
-	nd_ref_light2_z: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-z-m[1]", 1),
-	nd_ref_light2_dir: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/dir[1]", 1),
-
-	nd_ref_light3_x: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-x-m[2]", 1),
-	nd_ref_light3_y: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-y-m[2]", 1),
-	nd_ref_light3_z: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-z-m[2]", 1),
-	nd_ref_light3_dir: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/dir[2]", 1),
-
-	nd_ref_light4_x: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-x-m[3]", 1),
-	nd_ref_light4_y: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-y-m[3]", 1),
-	nd_ref_light4_z: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-z-m[3]", 1),
-	nd_ref_light4_dir: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/dir[3]", 1),
-	
-	nd_ref_light5_x: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-x-m[4]", 1),
-	nd_ref_light5_y: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-y-m[4]", 1),
-	nd_ref_light5_z: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-z-m[4]", 1),
-	nd_ref_light5_dir: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/dir[4]", 1),
-	
-	init: func {
-		# define your lights here
-
-		# lights ########
-		# offsets to aircraft center
- 
-		me.light1_xpos =  100.0;
-		me.light1_ypos =  0.0;
-		me.light1_zpos =  2.0;
-		
-		me.light2_xpos =  60.0;
-		me.light2_ypos =  0.0;
-		me.light2_zpos =  2.0;
-		
-		me.light3_xpos =  -2.0;
-		me.light3_ypos =  18.0;
-		me.light3_zpos =  2.0;
-		
-		me.light4_xpos =  -2.0;
-		me.light4_ypos =  -18.0;
-		me.light4_zpos =  2.0;
-		
-		me.light5_xpos =  -25.0;
-		me.light5_ypos =  0.0;
-		me.light5_zpos =  2.0;
-		
- 
-		# color values
-		me.light1_r = 0.7;
-		me.light1_g = 0.7;
-		me.light1_b = 0.7;
-		me.light2_r = 0.6;
-		me.light2_g = 0.6;
-		me.light2_b = 0.6;
-		me.light3_r = 0.4;
-		me.light3_g = 0.0;
-		me.light3_b = 0.0;
-		me.light4_r = 0.0;
-		me.light4_g = 0.4;
-		me.light4_b = 0.0;
-		me.light5_r = 0.4;
-		me.light5_g = 0.4;
-		me.light5_b = 0.4;
-
-		# spot size
-		me.light1_size = 12;
-		me.light1_stretch = 6;
-		me.light2_size = 6;
-		me.light2_stretch = 6;
-		me.light3_size = 4;
-		me.light4_size = 4;
-		me.light5_size = 5;
-		
-		
-		setprop("/sim/rendering/als-secondary-lights/flash-radius", 13);
-
-		me.start();
+	Lights: {
+		light1: Light.new(0),
+		light2: Light.new(1),
+		light3: Light.new(2),
+		light4: Light.new(3),
+		light5: Light.new(4),
 	},
-
-	start: func {
+	
+	init: func() {
+		setprop("/sim/rendering/als-secondary-lights/flash-radius", 13);
 		setprop("/sim/rendering/als-secondary-lights/num-lightspots", 5);
- 
-		setprop("/sim/rendering/als-secondary-lights/lightspot/size", me.light1_size);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/size[1]", me.light2_size);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/size[2]", me.light3_size);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/size[3]", me.light4_size);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/size[4]", me.light5_size);
- 
-		setprop("/sim/rendering/als-secondary-lights/lightspot/stretch", me.light1_stretch);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/stretch[1]", me.light2_stretch);
- 
-		me.run = 1;		
+		
+		me.Lights.light1.setPos(100,0,2);
+		me.Lights.light2.setPos(60,0,2);
+		me.Lights.light3.setPos(-2,18,2);
+		me.Lights.light4.setPos(-2,-18,2);
+		me.Lights.light5.setPos(-25,0,2);
+		
+		me.Lights.light1.setColor(0.7,0.7,0.7);
+		me.Lights.light2.setColor(0.7,0.7,0.7);
+		me.Lights.light3.setColor(0.4,0.0,0.0);
+		me.Lights.light4.setColor(0.0,0.4,0.0);
+		me.Lights.light5.setColor(0.4,0.4,0.4);
+		
+		me.Lights.light1.setSize(12);
+		me.Lights.light2.setSize(6);
+		me.Lights.light3.setSize(4);
+		me.Lights.light4.setSize(4);
+		me.Lights.light5.setSize(5);
+		
+		me.Lights.light1.setStretch(6);
+		me.Lights.light2.setStretch(6);
 		me.update();
 	},
-
-	stop: func {
-		me.run = 0;
+	apos: 0,
+	curAlt: 0,
+	ELEC: [0, 0],
+	ll1: 0,
+	ll2: 0,
+	ll3: 0,
+	nav: 0,
+	run: 0,
+	vpos: 0,
+	Pos: {
+		alt: 0,
+		heading: 0,
+		headingSine: 0,
+		headingCosine: 0,
+		lat: 0,
+		lon: 0,
 	},
-
-	update: func {
-		if (me.run == 0) {
+	update: func() {
+		if (!me.run) {
+			settimer ( func me.update(), 0.00);
 			return;
 		}
 		
-		cur_alt = alt_agl.getValue();
-		if (als_on.getValue() == 1 and alt_agl.getValue() < 100.0) {
-			ll1 = getprop("/controls/lighting/landing-lights[1]");
-			ll2 = getprop("/controls/lighting/landing-lights[2]");
-			ll3 = getprop("/sim/model/lights/nose-lights");
-			nav = getprop("/sim/model/lights/nav-lights");
-			
-			var apos = geo.aircraft_position();
-			var vpos = geo.viewer_position();
-
-			me.lon_to_m = math.cos(apos.lat()*math.pi/180.0) * me.lat_to_m;
-
-			var heading = getprop("orientation/heading-deg") * math.pi/180.0;
-
-			var lat = apos.lat();
-			var lon = apos.lon();
-			var alt = apos.alt();
-
-			var sh = math.sin(heading);
-			var ch = math.cos(heading);
-			
-			if ((ll1 == 1 and systems.ELEC.Bus.ac1.getValue() != 0) and (ll2 == 1 and systems.ELEC.Bus.ac2.getValue() != 0)) {
-				me.light1_ypos =  0.0;
-				me.light1_setSize(16);
-				me.light1_on();
-			} else if (ll1 == 1 and systems.ELEC.Bus.ac1.getValue() != 0) {
-				me.light1_ypos =  3.0;
-				me.light1_setSize(12);
-				me.light1_on();
-			} else if (ll2 == 1 and systems.ELEC.Bus.ac2.getValue() != 0) {
-				me.light1_ypos =  -3.0;
-				me.light1_setSize(12);
-				me.light1_on();
-			} else {
-				me.light1_off();
-			}
-			
-			if (ll3 != 0) {
-				me.light2_on();
-			} else {
-				me.light2_off();
-			}
-			
-			if (ll3 == 1) {
-				me.light2_setSize(8);
-				me.light2_xpos =  65.0;
-			} else {
-				me.light2_setSize(6);
-				me.light2_xpos =  60.0;
-			}
-			
-			if (nav == 1) {
-				me.light3_on();
-				me.light4_on();
-				me.light5_on();
-			} else {
-				me.light3_off();
-				me.light4_off();
-				me.light5_off();
-			}
-			
-
-			# light 1 position
-			var proj_x = cur_alt;
-			var proj_z = cur_alt/10.0;
-	 
-			apos.set_lat(lat + ((me.light1_xpos + proj_x) * ch + me.light1_ypos * sh) / me.lat_to_m);
-			apos.set_lon(lon + ((me.light1_xpos + proj_x)* sh - me.light1_ypos * ch) / me.lon_to_m);
-	 
-			delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
-			delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
-			var delta_z = apos.alt()- proj_z - vpos.alt();
-	 
-			me.nd_ref_light1_x.setValue(delta_x);
-			me.nd_ref_light1_y.setValue(delta_y);
-			me.nd_ref_light1_z.setValue(delta_z);
-			me.nd_ref_light1_dir.setValue(heading);			
-
-
-	 
-			# light 2 position
-	 
-			apos.set_lat(lat + (me.light2_xpos * ch + me.light2_ypos * sh) / me.lat_to_m);
-			apos.set_lon(lon + (me.light2_xpos * sh - me.light2_ypos * ch) / me.lon_to_m);
-	 
-			delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
-			delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
-			delta_z = apos.alt() - vpos.alt();
-	 
-			me.nd_ref_light2_x.setValue(delta_x);
-			me.nd_ref_light2_y.setValue(delta_y);
-			me.nd_ref_light2_z.setValue(delta_z);
-			me.nd_ref_light2_dir.setValue(heading);
-
-	 
-			# light 3 position
-	 
-			apos.set_lat(lat + (me.light3_xpos * ch + me.light3_ypos * sh) / me.lat_to_m);
-			apos.set_lon(lon + (me.light3_xpos * sh - me.light3_ypos * ch) / me.lon_to_m);
-	 
-			delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
-			delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
-			delta_z = apos.alt() - vpos.alt();
-	 
-			me.nd_ref_light3_x.setValue(delta_x);
-			me.nd_ref_light3_y.setValue(delta_y);
-			me.nd_ref_light3_z.setValue(delta_z);
-			me.nd_ref_light3_dir.setValue(heading);	
-		
-
-			# light 4 position
-	 
-			apos.set_lat(lat + (me.light4_xpos * ch + me.light4_ypos * sh) / me.lat_to_m);
-			apos.set_lon(lon + (me.light4_xpos * sh - me.light4_ypos * ch) / me.lon_to_m);
-	 
-			delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
-			delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
-			delta_z = apos.alt() - vpos.alt();
-	 
-			me.nd_ref_light4_x.setValue(delta_x);
-			me.nd_ref_light4_y.setValue(delta_y);
-			me.nd_ref_light4_z.setValue(delta_z);
-			me.nd_ref_light4_dir.setValue(heading);
-			
-			# light 5 position
-	 
-			apos.set_lat(lat + (me.light5_xpos * ch + me.light5_ypos * sh) / me.lat_to_m);
-			apos.set_lon(lon + (me.light5_xpos * sh - me.light5_ypos * ch) / me.lon_to_m);
-	 
-			delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
-			delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
-			delta_z = apos.alt() - vpos.alt();
-	 
-			me.nd_ref_light5_x.setValue(delta_x);
-			me.nd_ref_light5_y.setValue(delta_y);
-			me.nd_ref_light5_z.setValue(delta_z);
-			me.nd_ref_light5_dir.setValue(heading);
+		me.curAlt = pts.Position.gearAglFt.getValue();
+		if (me.curAlt > 100) {
+			settimer ( func me.update(), 1);
+			return;
 		}
+		
+		me.ll1 = pts.Controls.Lighting.landingLights[1].getValue();
+		me.ll2 = pts.Controls.Lighting.landingLights[2].getValue();
+		me.ll3 = pts.Sim.Model.Lights.noseLights.getValue();
+		me.nav = pts.Sim.Model.Lights.navLights.getValue();
+			
+		me.apos = geo.aircraft_position();
+		me.vpos = geo.viewer_position();
+
+
+		me.Pos.lat = me.apos.lat();
+		me.Pos.lon = me.apos.lon();
+		me.Pos.alt = me.apos.alt();
+		me.Pos.heading = pts.Orientation.heading.getValue() * D2R;
+		me.Pos.headingSine = math.sin(me.Pos.heading);
+		me.Pos.headingCosine = math.cos(me.Pos.heading);
+		me.lon_to_m = math.cos(me.Pos.lat*D2R) * me.lat_to_m;
+
+		me.ELEC[0] = systems.ELEC.Bus.ac1.getValue();
+		me.ELEC[1] = systems.ELEC.Bus.ac2.getValue();
+			
+		if ((me.ll1 == 1 and me.ELEC[0] >= 110) and (me.ll2 == 1 and me.ELEC[1] >= 110)) {
+			me.Lights.light1.setPos(100,0,2);
+			me.Lights.light1.setSize(16);
+			me.Lights.light1.on();
+		} else if (me.ll1 == 1 and me.ELEC[0] >= 110) {
+			me.Lights.light1.setPos(100,3,2);
+			me.Lights.light1.setSize(12);
+			me.Lights.light1.on();
+		} else if (me.ll2 == 1 and me.ELEC[1] >= 110) {
+			me.Lights.light1.setPos(100,-3,2);
+			me.Lights.light1.setSize(12);
+			me.Lights.light1.on();
+		} else {
+			me.Lights.light1.off();
+		}
+			
+		if (me.ll3 != 0) {
+			me.Lights.light2.on();
+		} else {
+			me.Lights.light2.off();
+		}
+			
+		if (me.ll3 == 1) {
+			me.Lights.light2.setSize(8);
+			me.Lights.light2.setPos(65,0,2);
+		} else {
+			me.Lights.light2.setSize(6);
+			me.Lights.light2.setPos(60,0,2);
+		}
+			
+		if (me.nav == 1) {
+			me.Lights.light3.on();
+			me.Lights.light4.on();
+			me.Lights.light5.on();
+		} else {
+			me.Lights.light3.off();
+			me.Lights.light4.off();
+			me.Lights.light5.off();
+		}
+		
+		
+		# light 1 position
+		me.apos.set_lat(me.Pos.lat + ((me.Lights.light1.Pos.x + me.curAlt) * me.Pos.headingCosine + me.Lights.light1.Pos.y * me.Pos.headingSine) / me.lat_to_m);
+		me.apos.set_lon(me.Pos.lon + ((me.Lights.light1.Pos.x + me.curAlt) * me.Pos.headingSine - me.Lights.light1.Pos.y * me.Pos.headingCosine) / me.lon_to_m);
+ 
+		me.Lights.light1.posx.setValue((me.apos.lat() - me.vpos.lat()) * me.lat_to_m);
+		me.Lights.light1.posy.setValue(-(me.apos.lon() - me.vpos.lon()) * me.lon_to_m);
+		me.Lights.light1.posz.setValue(me.apos.alt()- (me.curAlt / 10) - me.vpos.alt());
+		me.Lights.light1.dir.setValue(me.Pos.heading);			
+
+		# light 2 position
+		me.apos.set_lat(me.Pos.lat + ((me.Lights.light2.Pos.x + me.curAlt) * me.Pos.headingCosine + me.Lights.light2.Pos.y * me.Pos.headingSine) / me.lat_to_m);
+		me.apos.set_lon(me.Pos.lon + ((me.Lights.light2.Pos.x + me.curAlt) * me.Pos.headingSine - me.Lights.light2.Pos.y * me.Pos.headingCosine) / me.lon_to_m);
+ 
+		me.Lights.light2.posx.setValue((me.apos.lat() - me.vpos.lat()) * me.lat_to_m);
+		me.Lights.light2.posy.setValue(-(me.apos.lon() - me.vpos.lon()) * me.lon_to_m);
+		me.Lights.light2.posz.setValue(me.apos.alt()- (me.curAlt / 10) - me.vpos.alt());
+		me.Lights.light2.dir.setValue(me.Pos.heading);		
+ 
+		# light 3 position
+		me.apos.set_lat(me.Pos.lat + ((me.Lights.light3.Pos.x + me.curAlt) * me.Pos.headingCosine + me.Lights.light3.Pos.y * me.Pos.headingSine) / me.lat_to_m);
+		me.apos.set_lon(me.Pos.lon + ((me.Lights.light3.Pos.x + me.curAlt) * me.Pos.headingSine - me.Lights.light3.Pos.y * me.Pos.headingCosine) / me.lon_to_m);
+ 
+		me.Lights.light3.posx.setValue((me.apos.lat() - me.vpos.lat()) * me.lat_to_m);
+		me.Lights.light3.posy.setValue(-(me.apos.lon() - me.vpos.lon()) * me.lon_to_m);
+		me.Lights.light3.posz.setValue(me.apos.alt()- (me.curAlt / 10) - me.vpos.alt());
+		me.Lights.light3.dir.setValue(me.Pos.heading);		
+	
+		# light 4 position
+		me.apos.set_lat(me.Pos.lat + ((me.Lights.light4.Pos.x + me.curAlt) * me.Pos.headingCosine + me.Lights.light4.Pos.y * me.Pos.headingSine) / me.lat_to_m);
+		me.apos.set_lon(me.Pos.lon + ((me.Lights.light4.Pos.x + me.curAlt) * me.Pos.headingSine - me.Lights.light4.Pos.y * me.Pos.headingCosine) / me.lon_to_m);
+ 
+		me.Lights.light4.posx.setValue((me.apos.lat() - me.vpos.lat()) * me.lat_to_m);
+		me.Lights.light4.posy.setValue(-(me.apos.lon() - me.vpos.lon()) * me.lon_to_m);
+		me.Lights.light4.posz.setValue(me.apos.alt()- (me.curAlt / 10) - me.vpos.alt());
+		me.Lights.light4.dir.setValue(me.Pos.heading);		
+		
+		# light 5 position
+		me.apos.set_lat(me.Pos.lat + ((me.Lights.light5.Pos.x + me.curAlt) * me.Pos.headingCosine + me.Lights.light5.Pos.y * me.Pos.headingSine) / me.lat_to_m);
+		me.apos.set_lon(me.Pos.lon + ((me.Lights.light5.Pos.x + me.curAlt) * me.Pos.headingSine - me.Lights.light5.Pos.y * me.Pos.headingCosine) / me.lon_to_m);
+ 
+		me.Lights.light5.posx.setValue((me.apos.lat() - me.vpos.lat()) * me.lat_to_m);
+		me.Lights.light5.posy.setValue(-(me.apos.lon() - me.vpos.lon()) * me.lon_to_m);
+		me.Lights.light5.posz.setValue(me.apos.alt()- (me.curAlt / 10) - me.vpos.alt());
+		me.Lights.light5.dir.setValue(me.Pos.heading);		
 		
 		settimer ( func me.update(), 0.00);
 	},
-
-	light1_on : func {
- 		if (me.light1_is_on == 1) {return;}
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-r", me.light1_r);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-g", me.light1_g);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-b", me.light1_b);
- 		me.light1_is_on = 1;
-		},
- 
-	light1_off : func {
-  		if (me.light1_is_on == 0) {return;}
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-r", 0.0);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-g", 0.0);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-b", 0.0);
-  		me.light1_is_on = 0;
-		},
-	
-	light1_setSize : func(size) {
-		setprop("/sim/rendering/als-secondary-lights/lightspot/size[0]", size);
-	},
- 
-	light2_on : func {
-  		if (me.light2_is_on == 1) {return;}
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-r[1]", me.light2_r);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-g[1]", me.light2_g);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-b[1]", me.light2_b);
-  		me.light2_is_on = 1;
-		},
- 
-	light2_off : func {
-  		if (me.light2_is_on == 0) {return;}
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-r[1]", 0.0);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-g[1]", 0.0);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-b[1]", 0.0);
-  		me.light2_is_on = 0;
-		},
-		
-	light2_setSize : func(size) {
-		setprop("/sim/rendering/als-secondary-lights/lightspot/size[1]", size);
-	},
-	
-	light3_on : func {
-  		if (me.light3_is_on == 1) {return;}
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-r[2]", me.light3_r);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-g[2]", me.light3_g);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-b[2]", me.light3_b);
-  		me.light3_is_on = 1;
-		},
- 
-	light3_off : func {
-  		if (me.light3_is_on == 0) {return;}
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-r[2]", 0.0);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-g[2]", 0.0);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-b[2]", 0.0);
-  		me.light3_is_on = 0;
-		},
-
-	light4_on : func {
-  		if (me.light4_is_on == 1) {return;}
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-r[3]", me.light4_r);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-g[3]", me.light4_g);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-b[3]", me.light4_b);
-  		me.light4_is_on = 1;
-		},
- 
-	light4_off : func {
-  		if (me.light4_is_on == 0) {return;}
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-r[3]", 0.0);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-g[3]", 0.0);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-b[3]", 0.0);
-  		me.light4_is_on = 0;
-		},
-		
-	light5_on : func {
-  		if (me.light5_is_on == 1) {return;}
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-r[4]", me.light5_r);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-g[4]", me.light5_g);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-b[4]", me.light5_b);
-  		me.light5_is_on = 1;
-		},
- 
-	light5_off : func {
-  		if (me.light5_is_on == 0) {return;}
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-r[4]", 0.0);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-g[4]", 0.0);
-		setprop("/sim/rendering/als-secondary-lights/lightspot/lightspot-b[4]", 0.0);
-  		me.light5_is_on = 0;
-		},
 };
+
+setlistener(pts.Sim.Rendering.Shaders.skydome, func(v) {
+	lightManager.run = v.getValue() ? 1 : 0;
+}, 1, 0);

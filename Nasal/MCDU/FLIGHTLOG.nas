@@ -128,15 +128,17 @@ var doorR4_pos = props.globals.getNode("/sim/model/door-positions/doorr4/positio
 
 # Detect OFF without IN
 var lastgs0 = 0;	
-#var lastgear0 = 0;
+var phase = 0;
+var gs = 0;
+var gear0 = 0;
 var lastgsrestart = 0;
 
 # Check for A/C state change - advice me for a better method, please :/
 var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
 
-    var phase = fmgc.FMGCInternal.phase;
-    var gs = pts.Velocities.groundspeed.getValue();
-    var gear0 = pts.Gear.wow[0].getBoolValue();
+    phase = fmgc.FMGCInternal.phase;
+    gs = pts.Velocities.groundspeed.getValue();
+    gear0 = pts.Gear.wow[0].getBoolValue();
 	
 	#print(sprintf("OOOI check: %d %d %.2f %s",expectedOOOIState,phase,gs,gear0));
 
@@ -183,14 +185,14 @@ var waitingOOOIChange = maketimer(1, func(){  # 1sec precision
 			expectedOOOIState = 1; # go on to OFF state
 		}
 		else if (gs > 9 and lastgsrestart == 0) { # try to detect OFF without IN
-			lastgsrestart = int(getprop("/sim/time/elapsed-sec"));
+			lastgsrestart = int(pts.Sim.Time.elapsedSec.getValue());
 		}
 	}
 
 });
 
 var engine_one_chk_OOOI = setlistener("/engines/engine[0]/state", func {
-	if (getprop("/engines/engine[0]/state") == 3) {
+	if (pts.Engines.Engine.state[0].getValue() == 3) {
 		removelistener(engine_one_chk_OOOI);
 		waitingOOOIChange.start();
 	}

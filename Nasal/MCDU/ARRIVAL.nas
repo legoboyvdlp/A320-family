@@ -2,8 +2,6 @@ var isNoStar = [0, 0, 0];
 var isNoTransArr = [0, 0, 0];
 var isNoVia = [0, 0, 0];
 
-var version = nil;
-
 var arrivalPage = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
@@ -42,9 +40,11 @@ var arrivalPage = {
 	enableScrollApproach: 0,
 	enableScrollStars: 0,
 	enableScrollVias: 0,
+	enableScrollTrans: 0,
 	scrollApproach: 0,
 	scrollStars: 0,
 	scrollVias: 0,
+	scrollTrans: 0,
 	activePage: 0, # runways, stars, vias
 	oldPage: 0,
 	_approaches: nil,
@@ -76,13 +76,10 @@ var arrivalPage = {
 			if (fmgc.flightPlanController.flightplans[2].approach != nil) {
 				me.selectedApproach = fmgc.flightPlanController.flightplans[2].approach;
 				
-				version = pts.Sim.Version.getValue();
-				if (version == "2020.2.0" or version == "2020.2.1" or version == "2020.3.0") {
-					if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
-						me.selectedVIA = fmgc.flightPlanController.flightplans[2].approach_trans;
-					} elsif (isNoVia[2] == 1) {
-						me.selectedVIA = "NO VIA";
-					}
+				if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
+					me.selectedVIA = fmgc.flightPlanController.flightplans[2].approach_trans;
+				} elsif (isNoVia[2] == 1) {
+					me.selectedVIA = "NO VIA";
 				}
 			}
 			
@@ -101,21 +98,15 @@ var arrivalPage = {
 		} else {
 			if (fmgc.flightPlanController.flightplans[me.computer].approach != nil) {
 				me.selectedApproach = fmgc.flightPlanController.flightplans[me.computer].approach;
-				version = pts.Sim.Version.getValue();
-				if (version == "2020.2.0" or version == "2020.2.1" or version == "2020.3.0") {
-					if (fmgc.flightPlanController.flightplans[me.computer].approach_trans != nil) {
-						me.selectedVIA = fmgc.flightPlanController.flightplans[me.computer].approach_trans;
-					} elsif (isNoVia[me.computer] == 1) {
-						me.selectedVIA = "NO VIA";
-					}
+				if (fmgc.flightPlanController.flightplans[me.computer].approach_trans != nil) {
+					me.selectedVIA = fmgc.flightPlanController.flightplans[me.computer].approach_trans;
+				} elsif (isNoVia[me.computer] == 1) {
+					me.selectedVIA = "NO VIA";
 				}
 			} elsif (fmgc.flightPlanController.flightplans[2].approach != nil) {
 				me.selectedApproach = fmgc.flightPlanController.flightplans[2].approach;
-				version = pts.Sim.Version.getValue();
-				if (version == "2020.2.0" or version == "2020.2.1" or version == "2020.3.0") {
-					if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
-						me.selectedVIA = fmgc.flightPlanController.flightplans[2].approach_trans;
-					}
+				if (fmgc.flightPlanController.flightplans[2].approach_trans != nil) {
+					me.selectedVIA = fmgc.flightPlanController.flightplans[2].approach_trans;
 				}
 			}
 			if (fmgc.flightPlanController.flightplans[me.computer].star != nil) {
@@ -237,9 +228,6 @@ var arrivalPage = {
 	},
 	
 	updateActiveVIAs: func() {
-		version = pts.Sim.Version.getValue();
-		if (version != "2020.2.0" and version != "2020.2.1" and version != "2020.3.0") { return; }
-				
 		if (me.selectedVIA == "NO VIA") {
 			if (!fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				me.C1 = ["NONE", "VIA", "grn"];
@@ -509,8 +497,6 @@ var arrivalPage = {
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	updateVIAs: func() {
-		version = pts.Sim.Version.getValue();
-		if (version != "2020.2.0" and version != "2020.2.1" and version != "2020.3.0") { return; }
 		if (me.selectedApproach == nil or me.activePage != 2) {
 			me.clearVias();
 			return;
@@ -617,8 +603,8 @@ var arrivalPage = {
 		append(me.transitions, "NO TRANS");
 		
 		if (size(me.transitions) >= 1) {
-			me.R3 = [me.transitions[0] ~ " ", "TRANS", "blu"];
-			if (me.transitions[0] != me.selectedTransition) {
+			me.R3 = [me.transitions[0 + me.scrollTrans] ~ " ", "TRANS", "blu"];
+			if (me.transitions[0 + me.scrollTrans] != me.selectedTransition) {
 				me.arrowsMatrix[1][2] = 1;
 				me.arrowsColour[1][2] = "blu";
 			} else {
@@ -627,8 +613,8 @@ var arrivalPage = {
 			}
 		}
 		if (size(me.transitions) >= 2) {
-			me.R4 = [me.transitions[1] ~ " ", nil, "blu"];
-			if (me.transitions[1] != me.selectedTransition) {
+			me.R4 = [me.transitions[1 + me.scrollTrans] ~ " ", nil, "blu"];
+			if (me.transitions[1 + me.scrollTrans] != me.selectedTransition) {
 				me.arrowsMatrix[1][3] = 1;
 				me.arrowsColour[1][3] = "blu";
 			} else {
@@ -637,8 +623,8 @@ var arrivalPage = {
 			}
 		} 
 		if (size(me.transitions) >= 3) {
-			me.R5 = [me.transitions[2] ~ " ", nil, "blu"];
-			if (me.transitions[2] != me.selectedTransition) {
+			me.R5 = [me.transitions[2 + me.scrollTrans] ~ " ", nil, "blu"];
+			if (me.transitions[2 + me.scrollTrans] != me.selectedTransition) {
 				me.arrowsMatrix[1][4] = 1;
 				me.arrowsColour[1][4] = "blu";
 			} else {
@@ -647,7 +633,9 @@ var arrivalPage = {
 			}
 		}
 		
-		# no indication it is scrollable...
+		if (size(me.transitions) > 3) {
+			me.enableScrollTrans = 1;
+		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
@@ -683,15 +671,25 @@ var arrivalPage = {
 				me.updateApproaches();
 			}
 		} elsif (me.activePage == 1) {
-			if (me.enableScrollStars) {
-				me.scrollStars += 1;
-				if (me.scrollStars > size(me.stars) - 3) {
-					me.scrollStars = 0;
+			if (me.selectedSTAR == nil) {
+				if (me.enableScrollStars) {
+					me.scrollStars += 1;
+					if (me.scrollStars > size(me.stars) - 3) {
+						me.scrollStars = 0;
+					}
+					me.updateSTARs();
+					if (me.selectedSTAR == nil or me.selectedSTAR == "NO STAR") {
+						me.clearTransitions();
+					} else {
+						me.updateTransitions();
+					}
 				}
-				me.updateSTARs();
-				if (me.selectedSTAR == nil or me.selectedSTAR == "NO STAR") {
-					me.clearTransitions();
-				} else {
+			} else {
+				if (me.enableScrollTrans) {
+					me.scrollTrans += 1;
+					if (me.scrollTrans > size(me.transitions) - 4) {
+						me.scrollTrans = 0;
+					}
 					me.updateTransitions();
 				}
 			}
@@ -716,15 +714,25 @@ var arrivalPage = {
 				me.updateApproaches();
 			}
 		} elsif (me.activePage == 1) {
-			if (me.enableScrollStars) {
-				me.scrollStars -= 1;
-				if (me.scrollStars < 0) {
-					me.scrollStars = size(me.stars) - 3;
+			if (me.selectedSTAR == nil) {
+				if (me.enableScrollStars) {
+					me.scrollStars -= 1;
+					if (me.scrollStars < 0) {
+						me.scrollStars = size(me.stars) - 3;
+					}
+					me.updateSTARs();
+					if (me.selectedSTAR == nil or me.selectedSTAR == "NO STAR") {
+						me.clearTransitions();
+					} else {
+						me.updateTransitions();
+					}
 				}
-				me.updateSTARs();
-				if (me.selectedSTAR == nil or me.selectedSTAR == "NO STAR") {
-					me.clearTransitions();
-				} else {
+			} else {
+				if (me.enableScrollTrans) {
+					me.scrollTrans -= 1;
+					if (me.scrollTrans < 0) {
+						me.scrollTrans = size(me.transitions) - 4;
+					}
 					me.updateTransitions();
 				}
 			}
@@ -753,8 +761,6 @@ var arrivalPage = {
 	},
 	arrPushbuttonLeft: func(index) {
 		if (index == 2 and me.activePage == 1 and me.selectedApproach != nil) {
-			version = pts.Sim.Version.getValue();
-			if (version != "2020.2.0" and version != "2020.2.1" and version != "2020.3.0") { return; }
 			me.oldPage = me.activePage;
 			me.activePage = 2;
 			me.updatePage();
@@ -773,6 +779,14 @@ var arrivalPage = {
 			if (size(me.approaches) >= (index - 2) and index != 2) { # index = 3, size = 1
 				if (!dirToFlag) {
 					me.selectedVIA = nil;
+					fmgc.flightPlanController.flightplans[me.computer].approach_trans = nil;
+					me.scrollVias = 0;
+					me.selectedSTAR = nil;
+					fmgc.flightPlanController.flightplans[me.computer].star = nil;
+					me.scrollStars = 0;
+					me.selectedTransition = nil;
+					fmgc.flightPlanController.flightplans[me.computer].star_trans = nil;
+					me.scrollTrans = 0;
 					isNoTransArr[me.computer] = 0;
 					isNoStar[me.computer] = 0;
 					me.makeTmpy();
@@ -815,8 +829,11 @@ var arrivalPage = {
 						}
 					}
 					me.updateSTARs();
+					me.scrollTrans = 0;
 					if (me.selectedSTAR != "NO STAR") {
 						isNoTransArr[me.computer] = 0;
+						me.selectedTransition = nil;
+						fmgc.flightPlanController.flightplans[me.computer].star_trans = nil;
 					} else {
 						isNoTransArr[me.computer] = 1;
 						me.selectedTransition = "NO TRANS";
@@ -857,7 +874,7 @@ var arrivalPage = {
 	arrPushbuttonRight: func(index) {
 		if (size(me.transitions) >= (index - 2)) {
 			if (!dirToFlag) {
-				me.selectedTransition = me.transitions[index - 3];
+				me.selectedTransition = me.transitions[index - 3 + me.scrollTrans];
 				me.makeTmpy();
 				if (me.selectedTransition != "NO TRANS") {
 					isNoTransArr[me.computer] = 0;
