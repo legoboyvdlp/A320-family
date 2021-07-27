@@ -1,6 +1,11 @@
 # A3XX Lower ECAM Canvas
 # Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
 
+var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3");
+var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");
+var du3_test_time = props.globals.initNode("/instrumentation/du/du3-test-time", 0.0, "DOUBLE");
+var du3_test_amount = props.globals.initNode("/instrumentation/du/du3-test-amount", 0.0, "DOUBLE");
+var du3_offtime = props.globals.initNode("/instrumentation/du/du3-off-time", 0.0, "DOUBLE");
 var du4_lgt = props.globals.getNode("/controls/lighting/DU/du4", 1);
 var du4_test = props.globals.initNode("/instrumentation/du/du4-test", 0, "BOOL");
 var du4_test_time = props.globals.initNode("/instrumentation/du/du4-test-time", 0, "DOUBLE");

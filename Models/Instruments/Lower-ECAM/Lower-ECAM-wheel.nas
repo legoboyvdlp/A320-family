@@ -694,8 +694,23 @@ var canvas_lowerECAMPageWheel =
 					me.test.setVisible(0);
 				}
 			} else {
-				me.group.setVisible(0);
-				me.test.setVisible(0);
+				if (pts.Modes.EcamDuXfr.getBoolValue()) {
+					if (du3_lgt.getValue() > 0.01 and systems.ELEC.Bus.acEss.getValue() >= 110) {
+						if (du3_test_time.getValue() + du3_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
+							me.group.setVisible(0);
+							me.test.setVisible(1);
+						} else {
+							me.group.setVisible(1);
+							me.test.setVisible(0);
+						}
+					} else {
+						me.group.setVisible(0);
+						me.test.setVisible(0);
+					}
+				} else {
+					me.group.setVisible(0);
+					me.test.setVisible(0);
+				}
 			}
 		} else {
 			me.group.setVisible(0);
