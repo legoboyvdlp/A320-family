@@ -2159,6 +2159,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.stsBtn();</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2178,6 +2190,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("apuPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2197,6 +2221,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("bleedPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2216,6 +2252,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("cabPressPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2235,6 +2283,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("elecPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2254,6 +2314,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("hydraulicPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2273,6 +2345,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("fuelPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2292,6 +2376,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("enginePage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2311,6 +2407,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("condPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2330,6 +2438,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("doorPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2349,6 +2469,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("wheelPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2368,6 +2500,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("fctlPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 

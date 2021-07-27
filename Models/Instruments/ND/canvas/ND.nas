@@ -14,22 +14,22 @@ var ND_2_test = nil;
 var elapsedtime = 0;
 
 # Fetch nodes:
-var du1_test = props.globals.getNode("instrumentation/du/du1-test");
-var du1_test_time = props.globals.getNode("instrumentation/du/du1-test-time");
-var du1_test_amount = props.globals.getNode("instrumentation/du/du1-test-amount");
-var du2_test = props.globals.getNode("instrumentation/du/du2-test");
-var du2_test_time = props.globals.getNode("instrumentation/du/du2-test-time");
-var du2_test_amount = props.globals.getNode("instrumentation/du/du2-test-amount");
+var du1_test = props.globals.getNode("/instrumentation/du/du1-test");
+var du1_test_time = props.globals.getNode("/instrumentation/du/du1-test-time");
+var du1_test_amount = props.globals.getNode("/instrumentation/du/du1-test-amount");
+var du2_test = props.globals.getNode("/instrumentation/du/du2-test");
+var du2_test_time = props.globals.getNode("/instrumentation/du/du2-test-time");
+var du2_test_amount = props.globals.getNode("/instrumentation/du/du2-test-amount");
 var du2_offtime = props.globals.initNode("/instrumentation/du/du2-off-time", 0.0, "DOUBLE");
-var du5_test = props.globals.getNode("instrumentation/du/du5-test");
-var du5_test_time = props.globals.getNode("instrumentation/du/du5-test-time");
+var du5_test = props.globals.getNode("/instrumentation/du/du5-test");
+var du5_test_time = props.globals.getNode("/instrumentation/du/du5-test-time");
 var du5_offtime = props.globals.initNode("/instrumentation/du/du5-off-time", 0.0, "DOUBLE");
-var du5_test_amount = props.globals.getNode("instrumentation/du/du5-test-amount");
-var du6_test = props.globals.getNode("instrumentation/du/du6-test");
-var du6_test_time = props.globals.getNode("instrumentation/du/du6-test-time");
-var du6_test_amount = props.globals.getNode("instrumentation/du/du6-test-amount");
-var cpt_du_xfr = props.globals.getNode("modes/cpt-du-xfr");
-var fo_du_xfr = props.globals.getNode("modes/fo-du-xfr");
+var du5_test_amount = props.globals.getNode("/instrumentation/du/du5-test-amount");
+var du6_test = props.globals.getNode("/instrumentation/du/du6-test");
+var du6_test_time = props.globals.getNode("/instrumentation/du/du6-test-time");
+var du6_test_amount = props.globals.getNode("/instrumentation/du/du6-test-amount");
+var cpt_du_xfr = props.globals.getNode("/modes/cpt-du-xfr");
+var fo_du_xfr = props.globals.getNode("/modes/fo-du-xfr");
 var wow0 = props.globals.getNode("gear/gear[0]/wow");
 
 var nd_display = {};
@@ -204,7 +204,7 @@ var canvas_ND_1 = {
 		m.init(canvas_group);
 
 		# here we make the ND:
-		me.NDCpt = ND.new("instrumentation/efis", myCockpit_switches, "Airbus");
+		me.NDCpt = ND.new("/instrumentation/efis", myCockpit_switches, "Airbus");
 		me.NDCpt.attitude_heading_setting = -1;
 		me.NDCpt.adirs_property = props.globals.getNode("/instrumentation/efis[0]/nd/ir-1",1);
 		me.NDCpt.newMFD(canvas_group);
@@ -229,7 +229,7 @@ var canvas_ND_2 = {
 
 		# here we make the ND:
 		myCockpit_switches["ADIRS"]= {path: "/nd/ir-2", value: 0, type: "BOOL"};
-		me.NDFo = ND.new("instrumentation/efis[1]", myCockpit_switches, "Airbus");
+		me.NDFo = ND.new("/instrumentation/efis[1]", myCockpit_switches, "Airbus");
 		me.NDFo.attitude_heading_setting = 1;
 		me.NDFo.adirs_property = props.globals.getNode("/instrumentation/efis[1]/nd/ir-2",1);
 		me.NDFo.newMFD(canvas_group);
@@ -275,11 +275,11 @@ var canvas_ND_1_test = {
 	},
 	update: func() {
 		elapsedtime = getprop("sim/time/elapsed-sec") or 0;
-		if ((du2_test_time.getValue() + 1 >= elapsedtime) and getprop("modes/cpt-du-xfr") != 1) {
+		if ((du2_test_time.getValue() + 1 >= elapsedtime) and getprop("/modes/cpt-du-xfr") != 1) {
 			me["Test_white"].show();
 			me["Test_text"].hide();
-		} else if ((du1_test_time.getValue() + 1 >= elapsedtime) and getprop("modes/cpt-du-xfr") != 0) {
-			print(getprop("modes/cpt-du-xfr"));
+		} else if ((du1_test_time.getValue() + 1 >= elapsedtime) and getprop("/modes/cpt-du-xfr") != 0) {
+			print(getprop("/modes/cpt-du-xfr"));
 			me["Test_white"].show();
 			me["Test_text"].hide();
 		} else {
@@ -317,10 +317,10 @@ var canvas_ND_2_test = {
 	},
 	update: func() {
 		elapsedtime = getprop("sim/time/elapsed-sec") or 0;
-		if ((du5_test_time.getValue() + 1 >= elapsedtime) and getprop("modes/cpt-du-xfr") != 1) {
+		if ((du5_test_time.getValue() + 1 >= elapsedtime) and getprop("/modes/cpt-du-xfr") != 1) {
 			me["Test_white"].show();
 			me["Test_text"].hide();
-		} else if ((du6_test_time.getValue() + 1 >= elapsedtime) and getprop("modes/cpt-du-xfr") != 0) {
+		} else if ((du6_test_time.getValue() + 1 >= elapsedtime) and getprop("/modes/cpt-du-xfr") != 0) {
 			me["Test_white"].show();
 			me["Test_text"].hide();
 		} else {
@@ -331,8 +331,8 @@ var canvas_ND_2_test = {
 };
 
 setlistener("/sim/signals/fdm-initialized", func {
-	setprop("instrumentation/efis[0]/inputs/plan-wpt-index", -1);
-	setprop("instrumentation/efis[1]/inputs/plan-wpt-index", -1);
+	setprop("/instrumentation/efis[0]/inputs/plan-wpt-index", -1);
+	setprop("/instrumentation/efis[1]/inputs/plan-wpt-index", -1);
 
 	nd_display.main = canvas.new({
 		"name": "ND1",
@@ -430,7 +430,7 @@ for (i = 0; i < 2; i = i + 1 ) {
 		var idx = par.getIndex();
 		var canvas_mode = "/instrumentation/efis["~idx~"]/nd/canvas-display-mode";
 		var nd_centered = "/instrumentation/efis["~idx~"]/inputs/nd-centered";
-		var mode = getprop("instrumentation/efis["~idx~"]/nd/display-mode");
+		var mode = getprop("/instrumentation/efis["~idx~"]/nd/display-mode");
 		var cvs_mode = "NAV";
 		var centered = 1;
 		if (mode == "ILS") {
@@ -463,7 +463,7 @@ var startChangePhase = func(nd,txt) {
 }
 
 #setlistener("/instrumentation/efis[0]/nd/terrain-on-nd", func{
-#	var terr_on_hd = getprop("instrumentation/efis[0]/nd/terrain-on-nd");
+#	var terr_on_hd = getprop("/instrumentation/efis[0]/nd/terrain-on-nd");
 #	var alpha = 1;
 #	if (terr_on_hd) {
 #		alpha = 0.5;
@@ -473,10 +473,10 @@ var startChangePhase = func(nd,txt) {
 
 setlistener("/flight-management/control/capture-leg", func(n) {
 	var capture_leg = n.getValue();
-	setprop("instrumentation/efis[0]/nd/xtrk-error", capture_leg);
-	setprop("instrumentation/efis[1]/nd/xtrk-error", capture_leg);
-	setprop("instrumentation/efis[0]/nd/trk-line", capture_leg);
-	setprop("instrumentation/efis[1]/nd/trk-line", capture_leg);
+	setprop("/instrumentation/efis[0]/nd/xtrk-error", capture_leg);
+	setprop("/instrumentation/efis[1]/nd/xtrk-error", capture_leg);
+	setprop("/instrumentation/efis[0]/nd/trk-line", capture_leg);
+	setprop("/instrumentation/efis[1]/nd/trk-line", capture_leg);
 }, 0, 0);
 
 var showNd = func(nd = nil) {

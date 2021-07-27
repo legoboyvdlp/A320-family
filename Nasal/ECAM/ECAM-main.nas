@@ -133,7 +133,12 @@ var ECAM = {
 
 var ECAMControlPanel = {
 	sysPageBtn: func(page) {
-		SystemDisplayController.manCall(page);
+		if (page == "REL") {
+			pts.Modes.EcamDuXfr.setBoolValue(0);
+		} else {
+			pts.Modes.EcamDuXfr.setBoolValue(1);
+			SystemDisplayController.manCall(page);
+		}
 	},
 	rclBtn: func() {
 		ecam.ECAM_controller.recall();

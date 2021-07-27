@@ -17,6 +17,7 @@ var canvas_lowerECAM_base =
 			"mipmapping": 1
 		});
 		me.canvas.addPlacement({"node": "lecam.screen"});
+		me.canvas.addPlacement({"node": "uecam.screen2"});
 		
 		me.font_mapper = func(family, weight) {
 			return "LiberationFonts/LiberationSans-Regular.ttf";
