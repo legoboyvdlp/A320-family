@@ -645,7 +645,7 @@ var canvas_lowerECAMPageWheel =
 			}
 			me["GW"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["GW"].setText(sprintf("%s", " - - "));
+			me["GW"].setText(sprintf("%s", " --    "));
 			me["GW"].setColor(0.0901,0.6039,0.7176);
 		}
 		
