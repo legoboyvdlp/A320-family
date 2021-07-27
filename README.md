@@ -39,4 +39,4 @@ NOTE: These are external tools so make sure to check their terms of use
 * [Air Berlin Normal Checklist](https://forums.flightsimlabs.com/index.php?/files/file/778-airberlin-normal-procedures-checklist/)
 * [Navdata hosted by pinto](https://github.com/l0k1/fg-navaiddata)
 * [A320 Normal Procedures](https://www.theairlinepilots.com/forumarchive/a320/a320-normal-procedures.pdf)
-* [A319/A320 Concise Checklist](https://forums.x-plane.org/index.php?/files/file/50904-toliss-a319-concise-checklist-pdf/)
+* [A319/A320 Concise Checklist](https://forums.x-plane.org/index.php?/files/file/50904-toliss-a319-concise-checklist-pdf/) (you will need a free xplane.org account)
