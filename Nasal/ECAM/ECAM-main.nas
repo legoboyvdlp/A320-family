@@ -131,12 +131,15 @@ var ECAM = {
 	},
 };
 
+var du4_lgt = props.globals.getNode("/controls/lighting/DU/du4", 1);
 var ECAMControlPanel = {
 	sysPageBtn: func(page) {
 		if (page == "REL") {
 			pts.Modes.EcamDuXfr.setBoolValue(0);
 		} else {
-			pts.Modes.EcamDuXfr.setBoolValue(1);
+			if (du4_lgt.getValue() < 0.01 or systems.ELEC.Bus.ac2.getValue() < 110) {
+				pts.Modes.EcamDuXfr.setBoolValue(1);
+			}
 			SystemDisplayController.manCall(page);
 		}
 	},
