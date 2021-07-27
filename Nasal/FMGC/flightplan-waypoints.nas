@@ -1,5 +1,5 @@
 # A3XX FMGC Waypoint database
-# Copyright (c) 2020 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var nilTree = {
 	"latitude": 0,
@@ -160,7 +160,7 @@ var WaypointDatabase = {
 	},
 	# write - write to file, as a hash structure
 	write: func() {
-		var path = getprop("/sim/fg-home") ~ "/Export/A320SavedWaypoints.xml";
+		var path = pts.Sim.fgHome.getValue() ~ "/Export/A320SavedWaypoints.xml";
 		var tree = {
 			waypoints: {
 			
@@ -177,7 +177,7 @@ var WaypointDatabase = {
 	},
 	# read - read from a file, extract using props interface
 	read: func() {
-		var path = getprop("/sim/fg-home") ~ "/Export/A320SavedWaypoints.xml";
+		var path = pts.Sim.fgHome.getValue() ~ "/Export/A320SavedWaypoints.xml";
 		# create file if it doesn't exist
 		if (io.stat(path) == nil) {
 			me.write();

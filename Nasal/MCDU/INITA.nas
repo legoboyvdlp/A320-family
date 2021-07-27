@@ -1,6 +1,6 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var initInputA = func(key, i) {
@@ -138,10 +138,10 @@ var initInputA = func(key, i) {
 		} else if (find("/", scratchpad) != -1) {
 			var crztemp = split("/", scratchpad);
 			if (find("FL", crztemp[0]) != -1) {
-				var crz = int(substr(crztemp[0], 2));
+				var crz = substr(crztemp[0], 2);
 				var crzs = size(substr(crztemp[0], 2));
 			} else {
-				var crz = int(crztemp[0]);
+				var crz = crztemp[0];
 				var crzs = size(crztemp[0]);
 			}
 			var temp = int(crztemp[1]);
@@ -160,17 +160,17 @@ var initInputA = func(key, i) {
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
-			} else if (crzs >= 1 and crzs <= 3 and crz != nil and temps >= 1 and temps <= 3 and temp != nil) {
+			} else if (find(".", crz) == -1 and crzs >= 1 and crzs <= 3 and crz != nil and temps >= 1 and temps <= 3 and temp != nil) {
 				if (crz > 0 and crz <= 390 and temp >= -99 and temp <= 99) {
-					fmgc.FMGCInternal.crzFt = crz * 100;
-					fmgc.FMGCInternal.crzFl = crz;
+					fmgc.FMGCInternal.crzFt = int(crz) * 100;
+					fmgc.FMGCInternal.crzFl = int(crz);
 					fmgc.altvert();
 					fmgc.updateRouteManagerAlt();
 					fmgc.FMGCInternal.crzSet = 1;
 					updateCrzLvlCallback();
 					fmgc.FMGCInternal.crzTemp = temp;
 					fmgc.FMGCInternal.crzTempSet = 1;
-					fmgc.FMGCInternal.crzProg = crz;
+					fmgc.FMGCInternal.crzProg = int(crz);
 					if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 0;
 						fmgc.fuelCalculating.setValue(0);
@@ -186,21 +186,21 @@ var initInputA = func(key, i) {
 			}
 		} else {
 			if (find("FL", scratchpad) != -1) {
-				var crz = int(substr(scratchpad, 2));
+				var crz = substr(scratchpad, 2);
 				var crzs = size(substr(scratchpad, 2));
 			} else {
-				var crz = int(scratchpad);
+				var crz = scratchpad;
 				var crzs = size(scratchpad);
 			}
-			if (crzs >= 1 and crzs <= 3 and crz != nil) {
+			if (find(".", crz) == -1 and crzs >= 1 and crzs <= 3 and crz != nil) {
 				if (crz > 0 and crz <= 390) {
-					fmgc.FMGCInternal.crzFt = crz * 100;
-					fmgc.FMGCInternal.crzFl = crz;
+					fmgc.FMGCInternal.crzFt = int(crz) * 100;
+					fmgc.FMGCInternal.crzFl = int(crz);
 					fmgc.altvert();
 					fmgc.updateRouteManagerAlt();
 					fmgc.FMGCInternal.crzSet = 1;
 					updateCrzLvlCallback();
-					fmgc.FMGCInternal.crzProg = crz;
+					fmgc.FMGCInternal.crzProg = int(crz);
 					if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 0;
 						fmgc.fuelCalculating.setValue(0);
@@ -279,7 +279,7 @@ var initInputA = func(key, i) {
 			}
 		}
 	} else if (key == "R2") {
-		if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
+		if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3 and fmgc.FMGCInternal.toFromSet == 0) {
 			if (!ecam.vhf3_voice.active) {
 				if (atsu.ATSU.working) {
 					if (getprop("/FMGC/simbrief-username") == "") {

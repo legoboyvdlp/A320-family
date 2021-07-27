@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <fdm_config name="A320" version="2.0" release="BETA">
 
@@ -97,7 +97,7 @@
 		<engine file="pw1127g_1">
 			<location unit="M">
 				<x>-5.34904</x>
-				<y>-5.755</y>
+				<y>-2.8775</y>
 				<z>-1.04768</z>
 			</location>
 			<orient unit="DEG">
@@ -109,7 +109,7 @@
 			<thruster file="direct">
 				<location unit="M">
 					<x>-5.34904</x>
-					<y>-5.755</y>
+					<y>-2.8775</y>
 					<z>-1.04768</z>
 				</location>
 				<orient unit="DEG">
@@ -123,7 +123,7 @@
 		<engine file="pw1127g_2">
 			<location unit="M">
 				<x>-5.34904</x>
-				<y>5.755</y>
+				<y>2.8775</y>
 				<z>-1.04768</z>
 			</location>
 			<orient unit="DEG">
@@ -135,7 +135,7 @@
 			<thruster file="direct">
 				<location unit="M">
 					<x>-5.34904</x>
-					<y>5.755</y>
+					<y>2.8775</y>
 					<z>-1.04768</z>
 				</location>
 				<orient unit="DEG">
@@ -192,7 +192,7 @@
 				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">12155.9</capacity>
-			<contents unit="LBS"> 6000</contents>
+			<contents unit="LBS">4477</contents>
 			<unusable-volume unit="LTR">28</unusable-volume>
 			<priority>1</priority>
 			<density unit="LBS/GAL">6.71</density>
@@ -218,7 +218,7 @@
 				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">12155.9</capacity>
-			<contents unit="LBS"> 6000</contents>
+			<contents unit="LBS">4477</contents>
 			<unusable-volume unit="LTR">28</unusable-volume>
 			<priority>1</priority>
 			<density unit="LBS/GAL">6.71</density>
@@ -276,6 +276,7 @@
 	<system file="glass-effect"/>
 	<system file="a320-fbw"/>
 	<system file="a320-fcs"/>
+	<system file="a320-cfm56-5b4-engine-fadec"/>
 	<system file="a320-fuel"/>
 	<system file="a320-fwc"/>
 	<system file="a320-fwc-phases"/>
@@ -290,6 +291,7 @@
 	<system file="a320-apu"/>
 	<system file="a320-fmgc"/>
 	<system file="a320-misc"/>
+	<system file="a320-cockpit"/>
 	
 	<flight_control name="none"/>
 	<aerodynamics file="Systems/a320-aerodynamics.xml"/>

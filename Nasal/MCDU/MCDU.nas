@@ -1,6 +1,6 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var pageNode = [props.globals.getNode("/MCDU[0]/page"), props.globals.getNode("/MCDU[1]/page")];
@@ -91,9 +91,9 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/align-ref-long-sign", "");
 	setprop("/FMGC/internal/align-ref-lat-edit", 0);
 	setprop("/FMGC/internal/align-ref-long-edit", 0);
-	setprop("/FMGC/internal/align1-done", 0);
-	setprop("/FMGC/internal/align2-done", 0);
-	setprop("/FMGC/internal/align3-done", 0);
+	fmgc.FMGCAlignDone[0].setValue(0);
+	fmgc.FMGCAlignDone[1].setValue(0);
+	fmgc.FMGCAlignDone[2].setValue(0);
 
 	# ROUTE SELECTION
 	fmgc.FMGCInternal.altSelected = 0;
@@ -163,8 +163,8 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/to-flap", 0);
 	setprop("/FMGC/internal/to-ths", "0.0");
 	setprop("/FMGC/internal/flap-ths-set", 0);
-	setprop("/FMGC/internal/flex", 0);
-	setprop("/FMGC/internal/flex-set", 0);
+	setprop("/fdm/jsbsim/fadec/limit/flex-temp", 0);
+	setprop("/fdm/jsbsim/fadec/limit/flex-active-cmd", 0);
 	setprop("/FMGC/internal/eng-out-reduc", "1500");
 	setprop("/MCDUC/reducacc-set", 0);
 	fmgc.FMGCInternal.transAlt = 18000;

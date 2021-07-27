@@ -1,9 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
-
+	
+	<!-- Not in JSBsim, cause then it takes too long to tune -->
+	<filter>
+		<name>EPR C1</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<product>
+						<property>/position/altitude-ft</property>
+						<table>
+							<property>/fdm/jsbsim/velocities/mach</property>
+							<entry><ind>0.09</ind><dep>0.1</dep></entry>
+							<entry><ind>0.15</ind><dep>1.0</dep></entry>
+						</table>
+					</product>
+					<entry><ind>    0</ind><dep>0.674</dep></entry>
+					<entry><ind>43000</ind><dep>1.120</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/fdm/jsbsim/fadec/epr/c1</output>
+	</filter>
+	
+	<filter>
+		<name>EPR C2</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<table>
+						<product>
+							<property>/position/altitude-ft</property>
+							<table>
+								<property>/fdm/jsbsim/velocities/mach</property>
+								<entry><ind>0.09</ind><dep>0.1</dep></entry>
+								<entry><ind>0.15</ind><dep>1.0</dep></entry>
+							</table>
+						</product>
+						<entry><ind>    0</ind><dep>0.9852</dep></entry>
+						<entry><ind>43000</ind><dep>0.8584</dep></entry>
+					</table>
+					<table>
+						<property>/fdm/jsbsim/velocities/mach</property>
+						<entry><ind>0.09</ind><dep>0.000</dep></entry>
+						<entry><ind>0.15</ind><dep>0.016</dep></entry>
+						<entry><ind>0.22</ind><dep>0.022</dep></entry>
+						<entry><ind>1.00</ind><dep>0.010</dep></entry>
+					</table>
+					<table>
+						<property>/fdm/jsbsim/aero/alpha-deg-norm</property>
+						<entry><ind> 0.0</ind><dep>0.00</dep></entry>
+						<entry><ind> 7.5</ind><dep>0.01</dep></entry>
+						<entry><ind>17.0</ind><dep>0.03</dep></entry>
+					</table>
+				</difference>
+			</expression>
+		</input>
+		<output>/fdm/jsbsim/fadec/epr/c2-raw</output>
+	</filter>
+	
+	<filter>
+		<name>EPR Scale 2 Sum/Difference Exponential</name>
+		<type>exponential</type>
+		<gain>1.0</gain>
+		<input>/fdm/jsbsim/fadec/epr/c2-raw</input>
+		<output>/fdm/jsbsim/fadec/epr/c2</output>
+		<filter-time>0.32</filter-time>
+	</filter>
+	
 	<filter>
 		<name>Groundspeed Meters Per Second</name>
 		<type>gain</type>
@@ -31,22 +102,6 @@
 		<seconds>2.0</seconds>
 		<filter-gain>0.0</filter-gain>
 	</predict-simple>
-	
-	<filter>
-		<name>FF 1</name>
-		<type>exponential</type>
-		<input>/engines/engine[0]/fuel-flow_pph</input>
-		<output>/engines/engine[0]/fuel-flow_actual</output>
-		<filter-time>0.32</filter-time>
-	</filter>
-	
-	<filter>
-		<name>FF 2</name>
-		<type>exponential</type>
-		<input>/engines/engine[1]/fuel-flow_pph</input>
-		<output>/engines/engine[1]/fuel-flow_actual</output>
-		<filter-time>0.32</filter-time>
-	</filter>
 	
 	<filter>
 		<name>OIL PSI 1</name>
@@ -228,62 +283,6 @@
 		<max-rate-of-change>50</max-rate-of-change>
 		<min>0</min>
 		<max>99</max>
-	</filter>
-
-	<filter>
-		<name>Throttle L</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[0]/reverser</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<property>/controls/engines/engine[0]/throttle</property>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[0]/reverser</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<value>0</value>
-		</input>
-		<output>
-			<property>/controls/engines/engine[0]/throttle-lever</property>
-			<property>/controls/engines/engine[0]/throttle-pos</property>
-		</output>
-	</filter>
-
-	<filter>
-		<name>Throttle R</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[1]/reverser</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<property>/controls/engines/engine[1]/throttle</property>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[1]/reverser</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<value>0</value>
-		</input>
-		<output>
-			<property>/controls/engines/engine[1]/throttle-lever</property>
-			<property>/controls/engines/engine[1]/throttle-pos</property>
-		</output>
 	</filter>
 
 	<filter>
@@ -1295,5 +1294,446 @@
 		</input>
 		<output>/instrumentation/mk-viii/inputs/discretes/landing-flaps</output>
 	</logic>
+	
+	<!-- Redo this sh*t later -->
+	<filter>
+		<name>EGT L</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>
+			<condition>
+				<and>
+					<equals>
+						<property>/engines/engine[0]/state</property>
+						<value>3</value>
+					</equals>
+					<greater-than-equals>
+						<property>/engines/engine[0]/n1-actual</property>
+						<property>/fdm/jsbsim/fadec/limit/min-n1</property>
+					</greater-than-equals>
+				</and>
+			</condition>
+		</enable>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[0]/n1-actual</property> 
+					<entry><ind> 18.9</ind><dep>434</dep></entry>
+					<entry><ind>110.0</ind><dep>620</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/engines/engine[0]/egt-actual</output>
+	</filter>
+	
+	<filter>
+		<name>EGT R</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>
+			<condition>
+				<and>
+					<equals>
+						<property>/engines/engine[1]/state</property>
+						<value>3</value>
+					</equals>
+					<greater-than-equals>
+						<property>/engines/engine[1]/n1-actual</property>
+						<property>/fdm/jsbsim/fadec/limit/min-n1</property>
+					</greater-than-equals>
+				</and>
+			</condition>
+		</enable>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[1]/n1-actual</property> 
+					<entry><ind> 18.9</ind><dep>434</dep></entry>
+					<entry><ind>110.0</ind><dep>620</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/engines/engine[1]/egt-actual</output>
+	</filter>
+	
+	<filter>
+		<name>DU1 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/systems/acconfig/options/du/enable-shaders</property>
+				</not>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du1-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du1-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DU2 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/systems/acconfig/options/du/enable-shaders</property>
+				</not>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du2-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du2-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DU3 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/systems/acconfig/options/du/enable-shaders</property>
+				</not>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du3-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du3-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DU4 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/systems/acconfig/options/du/enable-shaders</property>
+				</not>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du4-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du4-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DU5 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/systems/acconfig/options/du/enable-shaders</property>
+				</not>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du5-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du5-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DU6 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/systems/acconfig/options/du/enable-shaders</property>
+				</not>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du6-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du6-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>IESI LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/systems/acconfig/options/du/enable-shaders</property>
+				</not>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/iesi/lcd-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/iesi/lcd-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>MCDU1 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/systems/acconfig/options/du/enable-shaders</property>
+				</not>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/mcdu/mcdu1-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/mcdu/mcdu1-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>MCDU2 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/systems/acconfig/options/du/enable-shaders</property>
+				</not>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/mcdu/mcdu2-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/mcdu/mcdu2-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DCDU LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/systems/acconfig/options/du/enable-shaders</property>
+				</not>
+			</condition>
+			<value>1</value>
+		</input>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/dcdu-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/dcdu/lcd-contrast</output>
+	</filter>
 
 </PropertyList>

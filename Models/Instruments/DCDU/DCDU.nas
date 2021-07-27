@@ -1,6 +1,6 @@
 # A3XX DCDU
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 var DCDU = nil;
 var DCDU_test = nil;
@@ -84,6 +84,7 @@ var canvas_DCDU_base = {
 	update: func() {
 		et = pts.Sim.Time.elapsedSec.getValue();
 		if (systems.ELEC.Bus.dc1.getValue() >= 25 or systems.ELEC.Bus.ac1.getValue() >= 110) {
+			pts.Instrumentation.Dcdu.lcdOn.setBoolValue(1);
 			if (dcdu_test_time.getValue() + dcdu_test_amount.getValue() >= et) {
 				DCDU.page.hide();
 				DCDU_test.page.show();
@@ -95,6 +96,7 @@ var canvas_DCDU_base = {
 		} else {
 			DCDU.page.hide();
 			DCDU_test.page.hide();
+			pts.Instrumentation.Dcdu.lcdOn.setBoolValue(0);
 		}
 	},
 };

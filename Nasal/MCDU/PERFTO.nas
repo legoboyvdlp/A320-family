@@ -1,6 +1,6 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 # VMCA 109.5 at 0ft
@@ -112,7 +112,7 @@ var perfTOInput = func(key, i) {
 		}
 	} else if (key == "L5" and modifiable) {
 		if (scratchpad == "CLR") {
-			setprop("/systems/thrust/clbreduc-ft", 1500);
+			setprop("/fdm/jsbsim/fadec/clbreduc-ft", 1500);
 			setprop("/FMGC/internal/accel-agl-ft", 1500);
 			setprop("MCDUC/thracc-set", 0);
 			mcdu_scratchpad.scratchpads[i].empty();
@@ -130,7 +130,7 @@ var perfTOInput = func(key, i) {
 				if (int(thrred) != nil and (thrreds >= 3 and thrreds <= 5) and thrred >= 400 and thrred <= 39000 and int(acc) != nil and (accs == 3 or accs == 4 or accs == 5) and acc >= 400 and acc <= 39000) {
 
 					if (thrred<=acc) { # validation
-						setprop("/systems/thrust/clbreduc-ft", int(thrred / 10) * 10);
+						setprop("/fdm/jsbsim/fadec/clbreduc-ft", int(thrred / 10) * 10);
 						setprop("/FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 						setprop("MCDUC/thracc-set", 1);
 						mcdu_scratchpad.scratchpads[i].empty();
@@ -144,7 +144,7 @@ var perfTOInput = func(key, i) {
 					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else if (num(scratchpad) != nil and (tfs >= 3 and tfs <= 5) and scratchpad >= 400 and scratchpad <= 39000) {
-				setprop("/systems/thrust/clbreduc-ft", int(scratchpad / 10) * 10);
+				setprop("/fdm/jsbsim/fadec/clbreduc-ft", int(scratchpad / 10) * 10);
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -222,15 +222,15 @@ var perfTOInput = func(key, i) {
 		}
 	} else if (key == "R4" and modifiable) {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/flex", 45);
-			setprop("/FMGC/internal/flex-set", 0);
+			systems.FADEC.Limit.flexTemp.setValue(30);
+			systems.FADEC.Limit.flexActiveCmd.setBoolValue(0);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 1 or tfs == 2) {
 				if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 99) {
-					setprop("/FMGC/internal/flex", scratchpad);
-					setprop("/FMGC/internal/flex-set", 1);
+					systems.FADEC.Limit.flexTemp.setValue(scratchpad);
+					systems.FADEC.Limit.flexActiveCmd.setBoolValue(1);
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");

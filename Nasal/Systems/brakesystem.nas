@@ -1,7 +1,7 @@
 # A3XX Autobrake and Braking
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 
 ##########################################################################
@@ -169,7 +169,7 @@ var BrakeSystem =
 			R_Thrust = 0;
 
 			if (notification.gear1Wow) {
-				var V1 = pts.Velocities.groundspeed.getValue();
+				var V1 = pts.Velocities.groundspeedKt.getValue();
 				var Mass = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() * me.ScalingDivisor;
 
 				# absorb some kinetic energy:
@@ -376,7 +376,7 @@ var Autobrake = {
 	},
 	arm_autobrake: func(mode) {
 		me._wow0 = pts.Gear.wow[0].getBoolValue();
-		me._gnd_speed = pts.Velocities.groundspeed.getValue();
+		me._gnd_speed = pts.Velocities.groundspeedKt.getValue();
 		if (mode == 0) { # OFF
 			absChk.stop();
 			if (me.active.getBoolValue()) {
@@ -402,11 +402,11 @@ var Autobrake = {
 	},
 	loop: func() {
 		me._wow0 = pts.Gear.wow[0].getBoolValue();
-		me._gnd_speed = pts.Velocities.groundspeed.getValue();
+		me._gnd_speed = pts.Velocities.groundspeedKt.getValue();
 		me._mode = me.mode.getValue();
 		me._active = me.active.getBoolValue();
 		if (me._gnd_speed > 72) {
-			if (me._mode != 0 and pts.Controls.Engines.Engine.throttle[0].getValue() < 0.15 and pts.Controls.Engines.Engine.throttle[1].getValue() < 0.15 and me._wow0 and systems.HYD.Switch.nwsSwitch.getBoolValue() and systems.HYD.Psi.green.getValue() >= 2500 ) {
+			if (me._mode != 0 and systems.FADEC.detent[0].getValue() == 0 and systems.FADEC.detent[1].getValue() == 0 and me._wow0 and systems.HYD.Switch.nwsSwitch.getBoolValue() and systems.HYD.Psi.green.getValue() >= 2500 ) {
 				me.active.setBoolValue(1);
 			} elsif (me._active) {
 				me.active.setBoolValue(0);

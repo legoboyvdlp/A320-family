@@ -1,6 +1,5 @@
 # A3XX PFD
-
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 var PFD_1 = nil;
 var PFD_2 = nil;
@@ -16,8 +15,8 @@ var track_diff = 0;
 var AICenter = nil;
 
 # Fetch nodes:
-var state1 = props.globals.getNode("/systems/thrust/state1", 1);
-var state2 = props.globals.getNode("/systems/thrust/state2", 1);
+var state1 = props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent-text", 1);
+var state2 = props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent-text", 1);
 var throttle_mode = props.globals.getNode("/modes/pfd/fma/throttle-mode", 1);
 var pitch_mode = props.globals.getNode("/modes/pfd/fma/pitch-mode", 1);
 var pitch_mode_armed = props.globals.getNode("/modes/pfd/fma/pitch-mode-armed", 1);
@@ -28,8 +27,6 @@ var roll_mode = props.globals.getNode("/modes/pfd/fma/roll-mode", 1);
 var roll_mode_armed = props.globals.getNode("/modes/pfd/fma/roll-mode-armed", 1);
 var roll_mode_box = props.globals.getNode("/modes/pfd/fma/roll-mode-box", 1);
 var roll_mode_armed_box = props.globals.getNode("/modes/pfd/fma/roll-mode-armed-box", 1);
-var thr1 = props.globals.getNode("/controls/engines/engine[0]/throttle-pos", 1);
-var thr2 = props.globals.getNode("/controls/engines/engine[1]/throttle-pos", 1);
 var wow0 = props.globals.getNode("/gear/gear[0]/wow");
 var wow1 = props.globals.getNode("/gear/gear[1]/wow");
 var wow2 = props.globals.getNode("/gear/gear[2]/wow");
@@ -42,14 +39,14 @@ var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var acconfig_mismatch = props.globals.getNode("/systems/acconfig/mismatch-code", 1);
 var cpt_du_xfr = props.globals.getNode("/modes/cpt-du-xfr", 1);
 var fo_du_xfr = props.globals.getNode("/modes/fo-du-xfr", 1);
-var eng_out = props.globals.getNode("/systems/thrust/eng-out", 1);
+var eng_out = props.globals.getNode("/fdm/jsbsim/fadec/eng-out", 1);
 var eng0_state = props.globals.getNode("/engines/engine[0]/state", 1);
 var eng1_state = props.globals.getNode("/engines/engine[1]/state", 1);
-var alpha_floor = props.globals.getNode("/systems/thrust/alpha-floor", 1);
-var toga_lk = props.globals.getNode("/systems/thrust/toga-lk", 1);
-var thrust_limit = props.globals.getNode("/controls/engines/thrust-limit", 1);
-var flex = props.globals.getNode("/FMGC/internal/flex", 1);
-var lvr_clb = props.globals.getNode("/systems/thrust/lvrclb", 1);
+var alpha_floor = props.globals.getNode("/fdm/jsbsim/fadec/alpha-floor", 1);
+var toga_lk = props.globals.getNode("/fdm/jsbsim/fadec/toga-lk", 1);
+var thrust_limit = props.globals.getNode("/fdm/jsbsim/fadec/limit/active-mode", 1);
+var flex = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-temp", 1);
+var lvr_clb = props.globals.getNode("/fdm/jsbsim/fadec/lvrclb", 1);
 var throt_box = props.globals.getNode("/modes/pfd/fma/throttle-mode-box", 1);
 var pitch_box = props.globals.getNode("/modes/pfd/fma/pitch-mode-box", 1);
 var ap_box = props.globals.getNode("/modes/pfd/fma/ap-mode-box", 1);
@@ -164,6 +161,9 @@ var amberFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/
 var amberFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-2", 0, "BOOL");
 var dhFlash = props.globals.initNode("/instrumentation/pfd/flash-indicators/dh-flash", 0, "BOOL");
 
+var light_autoland_armed = props.globals.initNode("/instrumentation/pfd/lights/autoland-armed", 0, "BOOL");
+var light_autoland_on = props.globals.initNode("/instrumentation/pfd/lights/autoland-on", 0, "BOOL");
+
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
@@ -218,7 +218,7 @@ var canvas_PFD_base = {
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
 		"ALT_digit_DN","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
-		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError"];
+		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError","vsFMArate"];
 	},
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
@@ -277,6 +277,7 @@ var canvas_PFD_base = {
 			PFD_1_mismatch.page.hide();
 			PFD_2_mismatch.page.hide();
 			if (systems.ELEC.Bus.acEss.getValue() >= 110 and du1_lgt.getValue() > 0.01) {
+				pts.Instrumentation.Du.du1On.setBoolValue(1);
 				if (du1_test_time.getValue() + du1_test_amount.getValue() >= elapsedtime_act and cpt_du_xfr.getValue() != 1) {
 					PFD_1_test.update();
 					PFD_1.page.hide();
@@ -293,8 +294,10 @@ var canvas_PFD_base = {
 			} else {
 				PFD_1_test.page.hide();
 				PFD_1.page.hide();
+				pts.Instrumentation.Du.du1On.setBoolValue(0);
 			}
 			if (systems.ELEC.Bus.ac2.getValue() >= 110 and du6_lgt.getValue() > 0.01) {
+				pts.Instrumentation.Du.du6On.setBoolValue(1);
 				if (du6_test_time.getValue() + du6_test_amount.getValue() >= elapsedtime_act and fo_du_xfr.getValue() != 1) {
 					PFD_2_test.update();
 					PFD_2.page.hide();
@@ -311,6 +314,7 @@ var canvas_PFD_base = {
 			} else {
 				PFD_2_test.page.hide();
 				PFD_2.page.hide();
+				pts.Instrumentation.Du.du6On.setBoolValue(0);
 			}
 		} else {
 			PFD_1_test.page.hide();
@@ -319,6 +323,8 @@ var canvas_PFD_base = {
 			PFD_2.page.hide();
 			PFD_1_mismatch.update();
 			PFD_2_mismatch.update();
+			pts.Instrumentation.Du.du1On.setBoolValue(1);
+			pts.Instrumentation.Du.du6On.setBoolValue(1);
 			PFD_1_mismatch.page.show();
 			PFD_2_mismatch.page.show();
 		}
@@ -331,8 +337,6 @@ var canvas_PFD_base = {
 		thrust_limit_act = thrust_limit.getValue();
 		alpha_floor_act = alpha_floor.getValue();
 		toga_lk_act = toga_lk.getValue();
-		thr1_act = thr1.getValue();
-		thr2_act = thr2.getValue();
 		
 		# Attitude Indicator
 		pitch_cur = pitch.getValue();
@@ -362,10 +366,10 @@ var canvas_PFD_base = {
 		fd_roll_cur = fd_roll.getValue();
 		fd_pitch_cur = fd_pitch.getValue();
 		if (fd_roll_cur != nil) {
-			me["FD_roll"].setTranslation((fd_roll_cur) * 2.2, 0);
+			me["FD_roll"].setTranslation(fd_roll_cur * 2.2, 0);
 		}
 		if (fd_pitch_cur != nil) {
-			me["FD_pitch"].setTranslation(0, -(fd_pitch_cur) * 3.8);
+			me["FD_pitch"].setTranslation(0, fd_pitch_cur * -11.825);
 		}
 		
 		gear_agl_cur = gear_agl.getValue();
@@ -648,7 +652,7 @@ var canvas_PFD_base = {
 				me["FMA_flxmode"].hide();
 				me["FMA_manmode"].setText("TOGA");
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-			} else if ((state1_act == "MAN THR" and thr1_act >= 0.83) or (state2_act == "MAN THR" and thr2_act >= 0.83)) {
+			} else if ((state1_act == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2_act == "MAN THR" and systems.FADEC.manThrAboveMct[1])) {
 				me["FMA_flx_box"].hide();
 				me["FMA_flxtemp"].hide();
 				me["FMA_man_box"].show();
@@ -672,7 +676,7 @@ var canvas_PFD_base = {
 				me["FMA_manmode"].hide();
 				me["FMA_flxmode"].show();
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-			} else if ((state1_act == "MAN THR" and thr1_act < 0.83) or (state2_act == "MAN THR" and thr2_act < 0.83)) {
+			} else if ((state1_act == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (state2_act == "MAN THR" and !systems.FADEC.manThrAboveMct[1])) {
 				me["FMA_flx_box"].hide();
 				me["FMA_flxtemp"].hide();
 				me["FMA_man_box"].show();
@@ -681,8 +685,8 @@ var canvas_PFD_base = {
 				me["FMA_manmode"].setText("THR");
 				me["FMA_man_box"].setColor(0.7333,0.3803,0);
 			}
-		} else if (athr.getValue() == 1 and (state1_act == "TOGA" or (state1_act == "MCT" and thrust_limit_act == "FLX") or (state1_act == "MAN THR" and thr1_act >= 0.83) or state2_act == "TOGA" or (state2_act == "MCT" and 
-		thrust_limit_act == "FLX") or (state2_act == "MAN THR" and thr2_act >= 0.83)) and eng_out.getValue() == 1 and alpha_floor_act != 1 and toga_lk_act != 1) {
+		} else if (athr.getValue() == 1 and (state1_act == "TOGA" or (state1_act == "MCT" and thrust_limit_act == "FLX") or (state1_act == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or state2_act == "TOGA" or (state2_act == "MCT" and 
+		thrust_limit_act == "FLX") or (state2_act == "MAN THR" and systems.FADEC.manThrAboveMct[1])) and eng_out.getValue() == 1 and alpha_floor_act != 1 and toga_lk_act != 1) {
 			me["FMA_man"].show();
 			if (state1_act == "TOGA" or state2_act == "TOGA") {
 				me["FMA_flx_box"].hide();
@@ -692,7 +696,7 @@ var canvas_PFD_base = {
 				me["FMA_flxmode"].hide();
 				me["FMA_manmode"].setText("TOGA");
 				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-			} else if ((state1_act == "MAN THR" and thr1_act >= 0.83) or (state2_act == "MAN THR" and thr2_act >= 0.83)) {
+			} else if ((state1_act == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2_act == "MAN THR" and systems.FADEC.manThrAboveMct[1])) {
 				me["FMA_flx_box"].hide();
 				me["FMA_flxtemp"].hide();
 				me["FMA_man_box"].show();
@@ -718,17 +722,8 @@ var canvas_PFD_base = {
 			me["FMA_flxmode"].hide();
 		}
 		
-		if ((state1_act == "CL" and state2_act != "CL") or (state1_act != "CL" and state2_act == "CL") and eng_out.getValue() != 1) {
-			me["FMA_lvrclb"].setText("LVR ASYM");
-		} else {
-			if (eng_out.getValue() == 1) {
-				me["FMA_lvrclb"].setText("LVR MCT");
-			} else {
-				me["FMA_lvrclb"].setText("LVR CLB");
-			}
-		}
-		
 		if (athr.getValue() == 1 and lvr_clb.getValue() == 1) {
+			me["FMA_lvrclb"].setText(systems.FADEC.lvrClbType);
 			me["FMA_lvrclb"].show();
 		} else {
 			me["FMA_lvrclb"].hide();
@@ -743,8 +738,8 @@ var canvas_PFD_base = {
 				} else {
 					me["FMA_thrust_box"].hide();
 				}
-			} else if (athr.getValue() == 1 and eng_out.getValue() == 1 and (state1_act == "MAN" or state1_act == "CL" or (state1_act == "MAN THR" and thr1_act < 0.83) or (state1_act == "MCT" and thrust_limit_act != "FLX")) and 
-			(state2_act == "MAN" or state2_act == "CL" or (state2_act == "MAN THR" and thr2_act < 0.83) or (state2_act == "MCT" and thrust_limit_act != "FLX"))) {
+			} else if (athr.getValue() == 1 and eng_out.getValue() == 1 and (state1_act == "MAN" or state1_act == "CL" or (state1_act == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (state1_act == "MCT" and thrust_limit_act != "FLX")) and 
+			(state2_act == "MAN" or state2_act == "CL" or (state2_act == "MAN THR" and !systems.FADEC.manThrAboveMct[1]) or (state2_act == "MCT" and thrust_limit_act != "FLX"))) {
 				me["FMA_thrust"].show();
 				if (throt_box.getValue() == 1 and throttle_mode.getValue() != " ") {
 					me["FMA_thrust_box"].show();
@@ -873,7 +868,18 @@ var canvas_PFD_base = {
 		}
 		
 		# FMA Pitch
-		me["FMA_pitch"].setText(sprintf("%s", pitch_mode_act));
+		if (pitch_mode_act == "V/S") {
+			me["FMA_pitch"].setText(sprintf("%s         ", pitch_mode_act));
+			me["vsFMArate"].setText(sprintf("%+4.0f",fmgc.Input.vs.getValue()));
+			me["vsFMArate"].show();
+		} elsif (pitch_mode_act == "FPA") {
+			me["FMA_pitch"].setText(sprintf("%s         ", pitch_mode_act));
+			me["vsFMArate"].setText(sprintf("%+3.1f°",fmgc.Input.fpa.getValue()));
+			me["vsFMArate"].show();
+		}else {
+			me["FMA_pitch"].setText(sprintf("%s", pitch_mode_act));
+			me["vsFMArate"].hide();
+		}
 		me["FMA_pitcharm"].setText(sprintf("%s", pitch_mode_armed_act));
 		me["FMA_pitcharm2"].setText(sprintf("%s", pitch_mode2_armed_act));
 		
@@ -2719,7 +2725,7 @@ var canvas_PFD_2_mismatch = {
 	},
 };
 
-setlistener("sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func {
 	PFD1_display = canvas.new({
 		"name": "PFD1",
 		"size": [1024, 1024],

@@ -2,7 +2,7 @@
 # Joshua Davidson (Octal450)
 # Based on work by artix
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 var ALWAYS = func 1;
 var NOTHING = func nil;
@@ -12,9 +12,6 @@ var adirs_3 = props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1);
 
 var vhdg_bug = props.globals.getNode("/it-autoflight/input/hdg",0); # ND compass position deg
 
-var terrain_minalt = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/min-altitude", 0);
-var terrain_maxalt = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-altitude", -9999);
-var terrain_maxcol = props.globals.getNode("/instrumentation/efis[0]/nd/terrain-on-nd/max-color", 0);
 var terrain_alert = props.globals.getNode("/instrumentation/mk-viii/outputs/alert-mode",0);
 
 var GREEN = [0.0509,0.7529,0.2941];
@@ -97,14 +94,15 @@ canvas.NDStyles["Airbus"] = {
 			isMapStructure: 1,
 			update_on:[ {rate_hz: 10}, "toggle_range","toggle_display_mode","toggle_terrain"],
 			predicate: func(nd, layer) {
-				#print("TERRAIN TOGGLE: " ~ nd.get_switch("toggle_terrain"));
+				#print("TERRAIN TOGGLE: " ~ nd.get_switch("toggle_terrain"));				
 				var visible = nd.get_switch("toggle_terrain") and 
 					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and 
 					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));				
-				if (visible) {
+				if (visible) {					
 					layer.update(); 
 				} else {
-					layer.display_changed = 1;
+					layer.efis_path = nd.efis_path;
+					layer.display_hidden = 1;
 				}
 				layer.group.setVisible(visible);
 			}, # end of layer update predicate
@@ -1097,6 +1095,16 @@ canvas.NDStyles["Airbus"] = {
 			}, # of planArcs.impl
 		}, # of planArcs
 		{
+			id:"rangeRingPlan",
+			impl: {
+			init: func(nd,symbol),
+				predicate: func(nd) (((nd.in_mode("toggle_display_mode", ["PLAN"])) or ((nd.get_switch("toggle_display_mode") == "MAP") and (nd.get_switch("toggle_centered"))))
+					and (pts.Instrumentation.TCAS.Inputs.mode.getValue() >= 2) and (nd.rangeNm() <= 20) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
+				is_true: func(nd) nd.symbols.rangeRingPlan.show(),
+				is_false: func(nd) nd.symbols.rangeRingPlan.hide(),
+			}, # of rangeRingPlan.impl
+		}, # of rangeRingPlan
+		{
 			id:"rangeArcs",
 			impl: {
 				init: func(nd,symbol),
@@ -1106,6 +1114,16 @@ canvas.NDStyles["Airbus"] = {
 				is_false: func(nd) nd.symbols.rangeArcs.hide(),
 			}, # of rangeArcs.impl
 		}, # of rangeArcs
+		{
+			id:"rangeRingMap",
+			impl: {
+				init: func(nd,symbol),
+				predicate: func(nd) ((nd.get_switch("toggle_display_mode") == "MAP") and (!nd.get_switch("toggle_centered"))
+					and (pts.Instrumentation.TCAS.Inputs.mode.getValue() >= 2) and (nd.rangeNm() <= 20) and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
+				is_true: func(nd) nd.symbols.rangeRingMap.show(),
+				is_false: func(nd) nd.symbols.rangeRingMap.hide(),
+			}, # of rangeRingMap.impl
+		}, # of rangeRingMap
 		{
 			id:"rangePln1",
 			impl: {
@@ -2003,28 +2021,39 @@ canvas.NDStyles["Airbus"] = {
 					nd.get_switch("toggle_display_mode") != "PLAN" and  (nd.rangeNm() <= 40) and 
 					(nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) ),
 				is_true: func(nd){
+					var terrain_maxalt = props.globals.initNode(nd.efis_path ~ "/nd/terrain-on-nd/max-altitude", -9999,"INT");
+					var alert = terrain_alert.getValue();
+					if (alert == 0) {
+						nd.symbols.TerrLabel.setVisible(1);
+						nd.symbols.terrAhead.setVisible(0);
+					} else {
+						nd.symbols.TerrLabel.setVisible(0);
+						nd.symbols.terrAhead.setVisible(1);
+						if (alert == 1) nd.symbols.terrAhead.setColor(YELLOW[0],YELLOW[1],YELLOW[2]);
+						else nd.symbols.terrAhead.setColor(RED[0],RED[1],RED[2]);
+					}
+					
 					if (terrain_maxalt.getValue() != -9999) {
-						var alert = terrain_alert.getValue();
-						if (alert == 0) {
-							nd.symbols.TerrLabel.setVisible(1);
-							nd.symbols.terrAhead.setVisible(0);
-						} else {
-							nd.symbols.TerrLabel.setVisible(0);
-							nd.symbols.terrAhead.setVisible(1);
-							if (alert == 1) nd.symbols.terrAhead.setColor(YELLOW[0],YELLOW[1],YELLOW[2]);
-							else nd.symbols.terrAhead.setColor(RED[0],RED[1],RED[2]);
-						}
-						nd.symbols.terrLO.setText(sprintf("%03d",math.round(terrain_minalt.getValue()/100)));
+						var terrain_minalt = getprop(nd.efis_path ~ "/nd/terrain-on-nd/min-altitude");
+						var terrain_maxcol = getprop(nd.efis_path ~ "/nd/terrain-on-nd/max-color");
+						nd.symbols.terrLO.setText(sprintf("%03d",math.round(terrain_minalt/100)));
 						nd.symbols.terrHI.setText(sprintf("%03d",math.round(terrain_maxalt.getValue()/100)));
-						if (terrain_maxcol.getValue() == 0) nd.symbols.terrHI.setColor(GREEN[0],GREEN[1],GREEN[2]);
-						else if (terrain_maxcol.getValue() == 1) nd.symbols.terrHI.setColor(YELLOW[0],YELLOW[1],YELLOW[2]);
-						else nd.symbols.terrHI.setColor(RED[0],RED[1],RED[2]);
-						nd.symbols.terrGroup.show();
+						if (terrain_maxcol == 0) nd.symbols.terrHI.setColor(GREEN[0],GREEN[1],GREEN[2]);
+						else if (terrain_maxcol == 1) nd.symbols.terrHI.setColor(YELLOW[0],YELLOW[1],YELLOW[2]);
+						else nd.symbols.terrHI.setColor(RED[0],RED[1],RED[2]);							
 						terrain_maxalt.setValue(-9999); #update visual at radar cycle
-					}											
+						nd.symbols.terrAltGroup.show();
+					}
+
+					if (nd.change_phase == 1) {
+						nd.symbols.terrAltGroup.hide();
+					}
+
+					nd.symbols.terrGroup.show();
 				},
 				is_false: func(nd){
 					nd.symbols.terrGroup.hide();
+					nd.symbols.terrAltGroup.hide();
 				}
 			}
 		},

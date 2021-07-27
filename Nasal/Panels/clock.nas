@@ -1,10 +1,12 @@
 #
 # ﻿Chrono - Clock - ET
 #
-var chr = aircraft.timer.new("instrumentation/chrono[0]/elapsetime-sec",1);
-var clk = aircraft.timer.new("instrumentation/clock/elapsetime-sec",1);
-var chrono_cpt = aircraft.timer.new("instrumentation/ndchrono[0]/elapsetime-sec",1);
-var chrono_fo = aircraft.timer.new("instrumentation/ndchrono[1]/elapsetime-sec",1);
+var chr = aircraft.timer.new("/instrumentation/chrono[0]/elapsetime-sec",1);
+var clk = aircraft.timer.new("/instrumentation/clock/elapsetime-sec",1);
+var chrono_cpt = aircraft.timer.new("/instrumentation/ndchrono[0]/elapsetime-sec",1);
+var chrono_fo = aircraft.timer.new("/instrumentation/ndchrono[1]/elapsetime-sec",1);
+var chrono_cpt_node = props.globals.getNode("/instrumentation/ndchrono[0]/elapsetime-sec");
+var chrono_fo_node = props.globals.getNode("/instrumentation/ndchrono[1]/elapsetime-sec");
 
 var chr_min = nil;
 var chr_sec = nil;
@@ -71,7 +73,7 @@ var rudderTrim = {
 	rudderTrimDisplayLetter: props.globals.initNode("/controls/flight/rudder-trim-letter-display", "", "STRING"),
 };
 
-setlistener("sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func {
 	chr.stop();
 	chr.reset();
 	clk.stop();
@@ -140,7 +142,7 @@ setlistener("/instrumentation/chrono[0]/chrono-reset", func(et){
 }, 0, 0);
 
 #Chrono
-setlistener("instrumentation/efis[0]/inputs/CHRONO", func(et){
+setlistener("/instrumentation/efis[0]/inputs/CHRONO", func(et){
 		chrono0 = et.getValue();
 		if (chrono0 == 1){
 			chrono_cpt.start();
@@ -148,11 +150,11 @@ setlistener("instrumentation/efis[0]/inputs/CHRONO", func(et){
 			chrono_cpt.stop();
 		} elsif (chrono0 == 0) {
 			chrono_cpt.reset();
-			setprop("instrumentation/ndchrono[0]/elapsetime-sec", 0);
+			chrono_cpt_node.setValue(0);
 		}
 }, 0, 0);
 
-setlistener("instrumentation/efis[1]/inputs/CHRONO", func(et){
+setlistener("/instrumentation/efis[1]/inputs/CHRONO", func(et){
 		chrono1 = et.getValue();
 		if (chrono1 == 1){
 			chrono_fo.start();
@@ -160,11 +162,11 @@ setlistener("instrumentation/efis[1]/inputs/CHRONO", func(et){
 			chrono_fo.stop();
 		} elsif (chrono1 == 0) {
 			chrono_fo.reset();
-			setprop("instrumentation/ndchrono[1]/elapsetime-sec", 0);
+			chrono_fo_node.setValue(0);
 		}
 }, 0, 0);
 
-setlistener("instrumentation/clock/et-selector", func(et){
+setlistener("/instrumentation/clock/et-selector", func(et){
 	tmp1 = et.getValue();
 	if (tmp1 == 2){
 		clk.reset();
@@ -222,9 +224,9 @@ var start_loop = maketimer(0.1, func {
 		chrono.etString.setValue("88 88");
 		clock.elapsedString.setValue("88:88");
 	} else {
-		day = pts.Sim.Time.UTC.day.getValue();
-		month = pts.Sim.Time.UTC.month.getValue();
-		year = pts.Sim.Time.UTC.year.getValue();
+		day = pts.Sim.Time.Utc.day.getValue();
+		month = pts.Sim.Time.Utc.month.getValue();
+		year = pts.Sim.Time.Utc.year.getValue();
 		
 		# Clock
 		UTC_date = sprintf("%02d %02d %02d", month, day, substr(sprintf("%2d", year),1,2));
@@ -296,37 +298,39 @@ var start_loop = maketimer(0.1, func {
 	}
 	
 	#Cpt Chrono
-	chr0_tmp = getprop("instrumentation/ndchrono[0]/elapsetime-sec");
+	chr0_tmp = chrono_cpt_node.getValue();
 	if (chr0_tmp >= 360000) {
-		setprop("instrumentation/ndchrono[0]/elapsetime-sec", getprop("instrumentation/ndchrono[0]/elapsetime-sec") - 360000);
-	};
+		chrono_cpt_node.setValue(chrono_cpt_node.getValue() - 360000);
+	}
+	
 	chr0_hh = int(chr0_tmp * 0.000277777777778);		
 	chr0_min = int((chr0_tmp * 0.0166666666667) - (chr0_hh * 60));
 	chr0_sec = int(chr0_tmp - (chr0_min * 60) - (chr0_hh * 3600));
-	setprop("instrumentation/ndchrono[0]/etHh_cpt", chr0_hh);
-	setprop("instrumentation/ndchrono[0]/etMin_cpt", chr0_min);
-	setprop("instrumentation/ndchrono[0]/etSec_cpt", chr0_sec);
+	cpt_chrono.etHh_cpt.setValue(chr0_hh);
+	cpt_chrono.etMin_cpt.setValue(chr0_min);
+	cpt_chrono.etSec_cpt.setValue(chr0_sec);
 	if (chr0_tmp >= 3600) {
-		setprop("instrumentation/ndchrono[0]/text", sprintf("%02d H %02d'", chr0_hh, chr0_min));
+		cpt_chrono.text.setValue(sprintf("%02d H %02d'", chr0_hh, chr0_min));
 	} else {
-		setprop("instrumentation/ndchrono[0]/text", sprintf("%02d' %02d''", chr0_min, chr0_sec));
+		cpt_chrono.text.setValue(sprintf("%02d' %02d''", chr0_min, chr0_sec));
 	}
 	
 	#Fo Chrono
-	chr1_tmp = getprop("instrumentation/ndchrono[1]/elapsetime-sec");
+	chr1_tmp = chrono_fo_node.getValue();
 	if (chr1_tmp >= 360000) {
-		setprop("instrumentation/ndchrono[1]/elapsetime-sec", getprop("instrumentation/ndchrono[1]/elapsetime-sec") - 360000);
-	};
+		chrono_fo_node.setValue(chrono_fo_node.getValue() - 360000);
+	}
+	
 	chr1_hh = int(chr1_tmp * 0.000277777777778);		
 	chr1_min = int(chr1_tmp * 0.0166666666667);
 	chr1_sec = int(chr1_tmp - (chr1_min * 60) - (chr1_hh * 3600));
-	setprop("instrumentation/ndchrono[1]/etHh_fo", chr1_hh);
-	setprop("instrumentation/ndchrono[1]/etMin_fo", chr1_min);
-	setprop("instrumentation/ndchrono[1]/etSec_fo", chr1_sec);
+	fo_chrono.etHh_fo.setValue(chr1_hh);
+	fo_chrono.etMin_fo.setValue(chr1_min);
+	fo_chrono.etSec_fo.setValue(chr1_sec);
 	if (chr1_tmp >= 3600) {
-		setprop("instrumentation/ndchrono[1]/text", sprintf("%02d H %02d'", chr1_hh, chr1_min));
+		fo_chrono.text.setValue(sprintf("%02d H %02d'", chr1_hh, chr1_min));
 	} else {
-		setprop("instrumentation/ndchrono[1]/text", sprintf("%02d' %02d''", chr1_min, chr1_sec));
+		fo_chrono.text.setValue(sprintf("%02d' %02d''", chr1_min, chr1_sec));
 	}
 });
 

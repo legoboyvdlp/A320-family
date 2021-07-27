@@ -1,18 +1,17 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
 	<!-- Thrust Axis -->
 	<filter>
-		<name>A/THR Knots Input Filter</name>
+		<name>A/THR Knots Input Gain</name>
 		<debug>false</debug>
-		<type>noise-spike</type>
-		<feedback-if-disabled>true</feedback-if-disabled>
-		<initialize-to>output</initialize-to>
+		<type>gain</type>
+		<gain>1.0</gain>
 		<input>/it-autoflight/input/kts</input>
-		<output>/it-autoflight/internal/athr-kts</output>
+		<output>/it-autoflight/internal/athr-kts-cmd</output>
 		<min>
 			<expression>
 				<difference>
@@ -29,11 +28,20 @@
 				</sum>
 			</expression>
 		</max>
+	</filter>
+	
+	<filter>
+		<name>A/THR Knots Input Filter</name>
+		<debug>false</debug>
+		<type>noise-spike</type>
+		<initialize-to>output</initialize-to>
+		<input>/it-autoflight/internal/athr-kts-cmd</input>
+		<output>/it-autoflight/internal/athr-kts</output>
 		<max-rate-of-change>
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -52,10 +60,6 @@
 						<property>/gear/gear[2]/wow</property>
 						<value>0</value>
 					</equals>
-					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
-						<value>1</value>
-					</not-equals>
 				</and>
 			</condition>
 			<value>10</value>
@@ -64,13 +68,12 @@
 	</filter>
 	
 	<filter>
-		<name>A/THR Mach Input Filter</name>
+		<name>A/THR Mach Input Gain</name>
 		<debug>false</debug>
-		<type>noise-spike</type>
-		<feedback-if-disabled>true</feedback-if-disabled>
-		<initialize-to>output</initialize-to>
+		<type>gain</type>
+		<gain>1.0</gain>
 		<input>/it-autoflight/input/mach</input>
-		<output>/it-autoflight/internal/athr-mach</output>
+		<output>/it-autoflight/internal/athr-mach-cmd</output>
 		<min>
 			<expression>
 				<difference>
@@ -87,11 +90,21 @@
 				</sum>
 			</expression>
 		</max>
+	</filter>
+	
+	<filter>
+		<name>A/THR Mach Input Filter</name>
+		<debug>false</debug>
+		<type>noise-spike</type>
+		<feedback-if-disabled>true</feedback-if-disabled>
+		<initialize-to>output</initialize-to>
+		<input>/it-autoflight/internal/athr-mach-cmd</input>
+		<output>/it-autoflight/internal/athr-mach</output>
 		<max-rate-of-change>
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -110,30 +123,11 @@
 						<property>/gear/gear[2]/wow</property>
 						<value>0</value>
 					</equals>
-					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
-						<value>1</value>
-					</not-equals>
 				</and>
 			</condition>
 			<value>0.08</value>
 		</max-rate-of-change>
 		<max-rate-of-change>2</max-rate-of-change>
-	</filter>
-	
-	<filter>
-		<name>Throttle Comparator</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<max>
-					<property>/controls/engines/engine[0]/throttle-man</property>
-					<property>/controls/engines/engine[1]/throttle-man</property>
-				</max>
-			</expression>
-		</input>
-		<output>/controls/engines/throttle-pid-max</output>
 	</filter>
 	
 	<pid-controller>
@@ -143,119 +137,29 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
 						<property>/it-autoflight/input/kts-mach</property>
 						<value>0</value>
 					</equals>
-					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
-						<value>1</value>
-					</not-equals>
-					<or>
-						<and>
-							<equals>
-								<property>/it-autoflight/output/fd1</property>
-								<value>0</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/fd2</property>
-								<value>0</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/ap1</property>
-								<value>0</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/ap2</property>
-								<value>0</value>
-							</equals>
-						</and>
-						<equals>
-							<property>/it-autoflight/output/thr-mode</property>
-							<value>0</value>
-						</equals>
-					</or>
-					<or>
-						<and>
-							<equals>
-								<property>/systems/thrust/eng-out</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/systems/thrust/lim-flex</property>
-								<value>0</value>
-							</equals>
-							<or>
-								<equals>
-									<property>/systems/thrust/state1</property>
-									<value>MCT</value>
-								</equals>
-								<equals>
-									<property>/systems/thrust/state2</property>
-									<value>MCT</value>
-								</equals>
-							</or>
-						</and>
-						<and>
-							<equals>
-								<property>/systems/thrust/eng-out</property>
-								<value>1</value>
-							</equals>
-							<or>
-								<and>
-									<less-than>
-										<property>/controls/engines/engine[0]/throttle-pos</property>
-										<value>0.83</value>
-									</less-than>
-									<equals>
-										<property>/systems/thrust/state1</property>
-										<value>MAN THR</value>
-									</equals>
-								</and>
-								<and>
-									<less-than>
-										<property>/controls/engines/engine[1]/throttle-pos</property>
-										<value>0.83</value>
-									</less-than>
-									<equals>
-										<property>/systems/thrust/state2</property>
-										<value>MAN THR</value>
-									</equals>
-								</and>
-							</or>
-						</and>
-						<equals>
-							<property>/systems/thrust/state1</property>
-							<value>MAN</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state1</property>
-							<value>CL</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state2</property>
-							<value>MAN</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state2</property>
-							<value>CL</value>
-						</equals>
-					</or>
+					<equals>
+						<property>/it-autoflight/output/thr-mode</property>
+						<value>0</value>
+					</equals>
 				</and>
 			</condition>
 		</enable>
 		<input>/it-autoflight/internal/current-speed-input</input>
 		<reference>/it-autoflight/internal/athr-kts</reference>
-		<output>/controls/engines/throttle-cmd-pid</output>
+		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 		<config>
 			<Kp>0.055</Kp>
 			<Ti>9.0</Ti>
 			<Td>0.00001</Td>
-			<u_min>/controls/engines/idle-limit</u_min>
-			<u_max>/controls/engines/throttle-pid-max</u_max>
+			<u_min>/fdm/jsbsim/fadec/limit/idle-norm</u_min>
+			<u_max>/fdm/jsbsim/fadec/athr/max</u_max>
 		</config>
 	</pid-controller>
 	
@@ -266,107 +170,17 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
 						<property>/it-autoflight/input/kts-mach</property>
 						<value>1</value>
 					</equals>
-					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
-						<value>1</value>
-					</not-equals>
-					<or>
-						<and>
-							<equals>
-								<property>/it-autoflight/output/fd1</property>
-								<value>0</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/fd2</property>
-								<value>0</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/ap1</property>
-								<value>0</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/ap2</property>
-								<value>0</value>
-							</equals>
-						</and>
-						<equals>
-							<property>/it-autoflight/output/thr-mode</property>
-							<value>0</value>
-						</equals>
-					</or>
-					<or>
-						<and>
-							<equals>
-								<property>/systems/thrust/eng-out</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/systems/thrust/lim-flex</property>
-								<value>0</value>
-							</equals>
-							<or>
-								<equals>
-									<property>/systems/thrust/state1</property>
-									<value>MCT</value>
-								</equals>
-								<equals>
-									<property>/systems/thrust/state2</property>
-									<value>MCT</value>
-								</equals>
-							</or>
-						</and>
-						<and>
-							<equals>
-								<property>/systems/thrust/eng-out</property>
-								<value>1</value>
-							</equals>
-							<or>
-								<and>
-									<less-than>
-										<property>/controls/engines/engine[0]/throttle-pos</property>
-										<value>0.83</value>
-									</less-than>
-									<equals>
-										<property>/systems/thrust/state1</property>
-										<value>MAN THR</value>
-									</equals>
-								</and>
-								<and>
-									<less-than>
-										<property>/controls/engines/engine[1]/throttle-pos</property>
-										<value>0.83</value>
-									</less-than>
-									<equals>
-										<property>/systems/thrust/state2</property>
-										<value>MAN THR</value>
-									</equals>
-								</and>
-							</or>
-						</and>
-						<equals>
-							<property>/systems/thrust/state1</property>
-							<value>MAN</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state1</property>
-							<value>CL</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state2</property>
-							<value>MAN</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state2</property>
-							<value>CL</value>
-						</equals>
-					</or>
+					<equals>
+						<property>/it-autoflight/output/thr-mode</property>
+						<value>0</value>
+					</equals>
 				</and>
 			</condition>
 		</enable>
@@ -378,13 +192,13 @@
 			<property>/it-autoflight/internal/athr-mach</property>
 			<scale>1000</scale>
 		</reference>
-		<output>/controls/engines/throttle-cmd-pid</output>
+		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 		<config>
 			<Kp>0.055</Kp>
 			<Ti>9.0</Ti>
 			<Td>0.00001</Td>
-			<u_min>/controls/engines/idle-limit</u_min>
-			<u_max>/controls/engines/throttle-pid-max</u_max>
+			<u_min>/fdm/jsbsim/fadec/limit/idle-norm</u_min>
+			<u_max>/fdm/jsbsim/fadec/athr/max</u_max>
 		</config>
 	</pid-controller>
 	
@@ -397,106 +211,18 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
-					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
-						<value>1</value>
-					</not-equals>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/fd1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd2</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-					</or>
 					<equals>
 						<property>/it-autoflight/output/thr-mode</property>
 						<value>1</value>
 					</equals>
-					<or>
-						<and>
-							<equals>
-								<property>/systems/thrust/eng-out</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/systems/thrust/lim-flex</property>
-								<value>0</value>
-							</equals>
-							<or>
-								<equals>
-									<property>/systems/thrust/state1</property>
-									<value>MCT</value>
-								</equals>
-								<equals>
-									<property>/systems/thrust/state2</property>
-									<value>MCT</value>
-								</equals>
-							</or>
-						</and>
-						<and>
-							<equals>
-								<property>/systems/thrust/eng-out</property>
-								<value>1</value>
-							</equals>
-							<or>
-								<and>
-									<less-than>
-										<property>/controls/engines/engine[0]/throttle-pos</property>
-										<value>0.83</value>
-									</less-than>
-									<equals>
-										<property>/systems/thrust/state1</property>
-										<value>MAN THR</value>
-									</equals>
-								</and>
-								<and>
-									<less-than>
-										<property>/controls/engines/engine[1]/throttle-pos</property>
-										<value>0.83</value>
-									</less-than>
-									<equals>
-										<property>/systems/thrust/state2</property>
-										<value>MAN THR</value>
-									</equals>
-								</and>
-							</or>
-						</and>
-						<equals>
-							<property>/systems/thrust/state1</property>
-							<value>MAN</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state1</property>
-							<value>CL</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state2</property>
-							<value>MAN</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state2</property>
-							<value>CL</value>
-						</equals>
-					</or>
 				</and>
 			</condition>
 		</enable>
 		<input>0</input>
-		<output>/controls/engines/throttle-cmd-pid</output>
+		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 	</filter>
 	
 	<filter>
@@ -508,232 +234,34 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/it-autoflight/output/athr</property>
+						<property>/fdm/jsbsim/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
-					<not-equals>
-						<property>/systems/thrust/thr-locked</property>
-						<value>1</value>
-					</not-equals>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/fd1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd2</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-					</or>
 					<equals>
 						<property>/it-autoflight/output/thr-mode</property>
 						<value>2</value>
 					</equals>
-					<or>
-						<and>
-							<equals>
-								<property>/systems/thrust/eng-out</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/systems/thrust/lim-flex</property>
-								<value>0</value>
-							</equals>
-							<or>
-								<equals>
-									<property>/systems/thrust/state1</property>
-									<value>MCT</value>
-								</equals>
-								<equals>
-									<property>/systems/thrust/state2</property>
-									<value>MCT</value>
-								</equals>
-							</or>
-						</and>
-						<and>
-							<equals>
-								<property>/systems/thrust/eng-out</property>
-								<value>1</value>
-							</equals>
-							<or>
-								<and>
-									<less-than>
-										<property>/controls/engines/engine[0]/throttle-pos</property>
-										<value>0.83</value>
-									</less-than>
-									<equals>
-										<property>/systems/thrust/state1</property>
-										<value>MAN THR</value>
-									</equals>
-								</and>
-								<and>
-									<less-than>
-										<property>/controls/engines/engine[1]/throttle-pos</property>
-										<value>0.83</value>
-									</less-than>
-									<equals>
-										<property>/systems/thrust/state2</property>
-										<value>MAN THR</value>
-									</equals>
-								</and>
-							</or>
-						</and>
-						<equals>
-							<property>/systems/thrust/state1</property>
-							<value>MAN</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state1</property>
-							<value>CL</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state2</property>
-							<value>MAN</value>
-						</equals>
-						<equals>
-							<property>/systems/thrust/state2</property>
-							<value>CL</value>
-						</equals>
-					</or>
 				</and>
 			</condition>
 		</enable>
 		<input>1</input>
-		<output>/controls/engines/throttle-cmd-pid</output>
+		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 	</filter>
 	
 	<filter>
-		<name>IT-CONTROLLER: Throttle Inactive Sync</name>
-		<debug>false</debug>
+		<name>System Command: Throttle Inactive Sync</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>
 			<condition>
-				<or>
-					<equals>
-						<property>/it-autoflight/output/athr</property>
-						<value>0</value>
-					</equals>
-					<equals>
-						<property>/systems/thrust/thr-locked</property>
-						<value>1</value>
-					</equals>
-					<and>
-						<not>
-							<equals>
-								<property>/systems/thrust/eng-out</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/systems/thrust/lim-flex</property>
-								<value>0</value>
-							</equals>
-							<or>
-								<equals>
-									<property>/systems/thrust/state1</property>
-									<value>MCT</value>
-								</equals>
-								<equals>
-									<property>/systems/thrust/state2</property>
-									<value>MCT</value>
-								</equals>
-							</or>
-						</not>
-						<not>
-							<equals>
-								<property>/systems/thrust/eng-out</property>
-								<value>1</value>
-							</equals>
-							<or>
-								<and>
-									<less-than>
-										<property>/controls/engines/engine[0]/throttle-pos</property>
-										<value>0.83</value>
-									</less-than>
-									<equals>
-										<property>/systems/thrust/state1</property>
-										<value>MAN THR</value>
-									</equals>
-								</and>
-								<and>
-									<less-than>
-										<property>/controls/engines/engine[1]/throttle-pos</property>
-										<value>0.83</value>
-									</less-than>
-									<equals>
-										<property>/systems/thrust/state2</property>
-										<value>MAN THR</value>
-									</equals>
-								</and>
-							</or>
-						</not>
-						<not-equals>
-							<property>/systems/thrust/state1</property>
-							<value>MAN</value>
-						</not-equals>
-						<not-equals>
-							<property>/systems/thrust/state1</property>
-							<value>CL</value>
-						</not-equals>
-						<not-equals>
-							<property>/systems/thrust/state2</property>
-							<value>MAN</value>
-						</not-equals>
-						<not-equals>
-							<property>/systems/thrust/state2</property>
-							<value>CL</value>
-						</not-equals>
-					</and>
-				</or>
+				<not-equals>
+					<property>/fdm/jsbsim/fadec/athr/active</property>
+					<value>1</value>
+				</not-equals>
 			</condition>
 		</enable>
-		<input>
-			<condition>
-				<equals>
-					<property>/systems/thrust/thr-locked</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<expression>
-				<div>
-					<max>
-						<property>/systems/thrust/thr-lock-cmd[0]</property>
-						<property>/systems/thrust/thr-lock-cmd[1]</property>
-					</max>
-					<table>
-						<property>/environment/temperature-degc</property>
-						<entry><ind> 70</ind><dep>0.797</dep></entry>
-						<entry><ind> 40</ind><dep>0.822</dep></entry>
-						<entry><ind>-60</ind><dep>1.000</dep></entry>
-					</table>
-				</div>
-			</expression>
-		</input>
-		<input>
-			<condition>
-				<and>
-					<not-equals>
-						<property>/systems/thrust/state1</property>
-						<value>IDLE</value>
-					</not-equals>
-					<not-equals>
-						<property>/systems/thrust/state2</property>
-						<value>IDLE</value>
-					</not-equals>
-				</and>
-			</condition>
-			<value>1.0</value>
-		</input>
-		<input>0.0</input>
-		<output>/controls/engines/throttle-cmd-pid</output>
+		<input>/fdm/jsbsim/fadec/athr/max</input> <!-- Highest throttle -->
+		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 	</filter>
 
 </PropertyList>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <!-- Custom Instrumentation -->
 
@@ -164,11 +164,6 @@
 		<number>0</number>
 		<suction>/systems/vacuum/suction-inhg</suction>
 	</heading-indicator>
-	
-	<KT-70>
-		<name>kt-70</name>
-		<number>0</number>
-	</KT-70>
 	
 	<magnetic-compass>
 		<name>magnetic-compass</name>

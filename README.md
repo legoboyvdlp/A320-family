@@ -22,11 +22,109 @@ It is highly reccomended to purchase a NAVIGRAPH subscription and download their
 To install navdata, create a folder FMSDATA, and add it to your additional scenery folders, at the top of the list. Inside that folder, place all the XXXX.procedures.xml files, in the format FMSDATA/X/X/X/XXXX.procedures.xml. For instance, FMSDATA/Airports/E/G/K/EGKK.procedures.xml. 
 
 ## Remote MCDU
-If you want to run the MCDU on a phone or tablet for better realism and easier input, put mcdu.html into the FGDATA/Phi folder, run FlightGear with enabled HTTP server (i.e. command line --httpd=8080) and open http://your-flightgear-computer:8080/mcdu.html in the browser on your phone or tablet.
+If you want to run the MCDU on a your smarthphone or tablet for better realism and easier input, run FlightGear with enabled HTTP server (i.e. command line --httpd=<Port; e.g. 8080>) then go to main menu -> Instruments -> Remote MCDU.
+You can generate a QR-code to lauch directly on your smartphone/tablet, first insert your local ip. Your device must run on the same local network of your computer.
 
 ## Installation
 If you have issues installing, please check INSTALL.MD!
 Specifically, make sure you remove -dev from the folder name!
+
+## Hardware configuration
+Here are bindings for commonly used buttons
+
+### FO Sidestick
+Bind the axis to:
+* elevator: `/controls/flight/elevator[1]`
+* aileron: `/controls/flight/aileron[1]`
+
+### AP Disconnect
+```
+  <button n="X">
+    <desc type="string">Custom</desc>
+    <binding>
+      <command type="string">nasal</command>
+      <script type="string">
+        fcu.FCUController.APDisc(side=1, press=1);
+        </script>
+      <module type="string">__js3</module>
+      <offset type="double">1</offset>
+    </binding>
+    <mod-up>
+         <binding>
+           <command type="string">nasal</command>
+                <script type="string">
+                  fcu.FCUController.APDisc(side=1, press=0);
+                  </script>
+           <module type="string">__js3</module>
+           <offset type="double">1</offset>
+         </binding>
+    </mod-up>
+    <repeatable type="double">0</repeatable>
+  </button>
+```
+For the FO Sidestick, use `side=2`
+
+### A/THR Disconnect
+```
+  <button n="X">
+    <desc type="string">A/THR Disc</desc>
+    <binding>
+      <command type="string">nasal</command>
+      <script type="string">
+        fcu.FCUController.ATDisc();
+      </script>
+    </binding>
+  </button>
+```
+
+### ENG Mode Selector
+```
+	<button n="6">
+		<desc type="string">ENG Mode Crank</desc>
+		<repeatable type="string">false</repeatable>
+		<binding>
+			<command>property-assign</command>
+			<property>controls/engines/engine-start-switch</property>
+			<value>0</value>
+		</binding>
+		<mod-up>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/engines/engine-start-switch</property>
+				<value>1</value>
+			</binding>
+		</mod-up>
+	</button>
+	<button n="7">
+		<desc type="string">ENG Mode Start</desc>
+		<repeatable type="string">false</repeatable>
+		<binding>
+			<command>property-assign</command>
+			<property>controls/engines/engine-start-switch</property>
+			<value>2</value>
+		</binding>
+		<mod-up>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/engines/engine-start-switch</property>
+				<value>1</value>
+			</binding>
+		</mod-up>
+	</button>
+```
+
+If you only want these bindings for the A320 family,
+add the following to the script:
+```
+if (string.match(getprop("/sim/aero"), "A3[12][0189]*"))
+{
+	<command-above>
+}
+else
+{
+	<other-command>
+}
+```
 
 ## External tools
 Some external tools you might want to checkout and use with this Model.  
@@ -35,5 +133,7 @@ NOTE: These are external tools so make sure to check their terms of use
 * [Take off performance calculator (excel)](https://forums.flightsimlabs.com/index.php?/files/file/763-a320-takeoff-and-landing-performance-calculator/)
 * [Take off performance calculator (.exe -- different to above) ](http://www.avsimrus.com/f/for-pilots-19/popular-calculator-to-calculate-takeoff-parameters-in-from-airbus-type-36340.html)
 * [Take off performance calculator (online)](http://wabpro.cz/A320/)
-* [Air Berlin Norm. Checklist](https://forums.flightsimlabs.com/index.php?/files/file/778-airberlin-normal-procedures-checklist/)
+* [Air Berlin Normal Checklist](https://forums.flightsimlabs.com/index.php?/files/file/778-airberlin-normal-procedures-checklist/)
 * [Navdata hosted by pinto](https://github.com/l0k1/fg-navaiddata)
+* [A320 Normal Procedures](https://www.theairlinepilots.com/forumarchive/a320/a320-normal-procedures.pdf)
+* [A319/A320 Concise Checklist](https://forums.x-plane.org/index.php?/files/file/50904-toliss-a319-concise-checklist-pdf/)

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- IT-AUTOFLIGHT -->
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
@@ -13,7 +13,7 @@
 		<gain>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/velocities/vc-kts</property>
+					<property>/velocities/airspeed-kt</property>
 					<entry><ind>140</ind><dep>1.8</dep></entry>
 					<entry><ind>360</ind><dep>2.8</dep></entry>
 				</table>
@@ -70,7 +70,7 @@
 		<gain>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/velocities/vc-kts</property>
+					<property>/velocities/airspeed-kt</property>
 					<entry><ind>140</ind><dep>1.8</dep></entry>
 					<entry><ind>360</ind><dep>2.8</dep></entry>
 				</table>
@@ -117,7 +117,8 @@
 	<filter>
 		<name>IT-CONTROLLER: Align/Rollout/Takeoff</name>
 		<debug>false</debug>
-		<type>noise-spike</type>
+		<type>gain</type>
+		<gain>1.0</gain>
 		<enable>
 			<condition>
 				<or>

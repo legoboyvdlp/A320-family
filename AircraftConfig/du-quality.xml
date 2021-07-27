@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -238,6 +238,22 @@
 		</group>
 	
 	</group>
+	
+	<hrule/>
+	
+	<checkbox>
+		<label>Enable Display Shaders</label>
+		<halign>center</halign>
+		<property>/systems/acconfig/options/du/enable-shaders</property>
+		<binding>
+			<command>dialog-apply</command>
+		</binding>
+		<binding>
+			<command>nasal</command>
+			<script>acconfig.writeSettings();</script>
+		</binding>
+		<live>true</live>
+	</checkbox>
 	
 	<hrule/>
 

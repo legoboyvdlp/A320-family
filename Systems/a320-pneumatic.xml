@@ -746,7 +746,7 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+	
 	</channel>
 	
 	<channel name="System PSI" execrate="8">

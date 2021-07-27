@@ -41,9 +41,9 @@
      inkscape:window-height="705"
      id="namedview371"
      showgrid="false"
-     inkscape:zoom="163.84"
-     inkscape:cx="931.44175"
-     inkscape:cy="894.81836"
+     inkscape:zoom="0.64"
+     inkscape:cx="695.07573"
+     inkscape:cy="944.3933"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -116,8 +116,9 @@
        x="817.61298"
        height="5.1203089"
        width="53.195583"
-       id="rect5105-2"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       id="CONDHotAirValveCross"
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="#rect5105-2" />
   </g>
   <text
      xml:space="preserve"
@@ -987,7 +988,7 @@
        x="560.88452"
        y="976.25214"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:36px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#0dc04b">00</tspan></text>
-	   <text
+  <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="512.93152"

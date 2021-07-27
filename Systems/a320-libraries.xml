@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 Libraries -->
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <system name="A320: Libraries">
 	
@@ -13,6 +13,11 @@
 				gear/unit[0]/WOW eq 0
 			</test>
 		</switch>
+		
+		<lag_filter name="aero/alpha-deg-damped">
+			<input>aero/alpha-deg-norm</input>
+			<c1>10</c1>
+		</lag_filter>
 		
 		<switch name="position/wow">
 			<default value="0"/>

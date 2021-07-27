@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 Aerodynamics -->
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <aerodynamics> <!-- WIP REWORK 2020 by Josh Davidson (Octal450) -->
 	
@@ -61,27 +61,28 @@
 				<property>aero/function/kCLge</property>
 				<table>
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
+					<independentVar lookup="column">atmosphere/density-altitude</independentVar>
 					<tableData>
-						-9.8475 -0.5652
-						-2.0912  0.0625
-						-0.0098  0.2386
-						 2.2280  0.4260
-						 4.2779  0.5779
-						 6.4218  0.7470
-						 8.4561  0.8911
-						 9.2699  0.9472
-						10.7094  1.0413
-						11.6170  1.1038
-						12.6496  1.1684
-						13.7292  1.2411
-						14.7930  1.3048
-						15.6981  1.3344
-						16.6352  1.1882
-						17.5725  1.1064
-						18.6045  1.0311
-						19.6052  1.0347
-						20.4658  1.0526
-						30.1264  0.6376
+						         0       43000
+						-9.8475 -0.5652 -0.5935
+						-2.0912  0.0625  0.0656
+						-0.0098  0.2386  0.2505
+						 2.2280  0.4260  0.4473
+						 4.2779  0.5779  0.6068
+						 6.4218  0.7540  0.7917
+						 8.4561  0.9163  0.9621
+						 9.2699  0.9842  0.8076
+						10.7094  1.0843  0.6617
+						11.6170  1.1538  0.5827
+						12.6496  1.2184  0.5949
+						13.7292  1.2911  0.6074
+						14.7930  1.3444  0.5648
+						15.6981  1.1882  0.5285
+						16.6352  1.1064  0.4910
+						17.5725  1.0311  0.4535
+						18.6045  1.0447  0.4121
+						19.6052  1.0479  0.3720
+						30.1264  0.6376 -0.0494
 					</tableData>
 				</table>
 			</product>
@@ -119,10 +120,10 @@
 					<independentVar lookup="row">fcs/flap-pos-deg</independentVar>
 					<tableData>
 						 0  0.0000
-						10  0.0948
-						15  0.1617
-						20  0.2704
-						40  0.3466
+						10  0.1334
+						15  0.2314
+						20  0.3044
+						40  0.3766
 					</tableData>
 				</table>
 			</product>
@@ -138,9 +139,9 @@
 					<independentVar lookup="row">fcs/slat-pos-deg</independentVar>
 					<tableData>
 						 0  0.0000
-						18  0.2334
-						22  0.2809
-						27  0.3323
+						18  0.2734
+						22  0.3187
+						27  0.3523
 					</tableData>
 				</table>
 			</product>
@@ -259,7 +260,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<value>0.0125</value>
+				<value>0.016</value>
 			</product>
 		</function>
 		

@@ -1,10 +1,10 @@
 # A320 Main Libraries
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 print("------------------------------------------------");
-print("Copyright (c) 2016-2020 Josh Davidson (Octal450)");
+print("Copyright (c) 2016-2021 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
 # Disable specific menubar items
@@ -84,20 +84,21 @@ var A320Libraries = nil;
 var systemsInit = func() {
 	systemsInitialized = 0;
 	fbw.FBW.init();
-	effects.light_manager.init();
+	effects.lightManager.init();
 	systems.ELEC.init();
 	systems.PNEU.init();
 	systems.HYD.init();
 	systems.FUEL.init();
 	systems.ADIRS.init();
 	systems.eng_init();
+	systems.ENGINE.init();
+	systems.FADEC.init();
 	systems.APUController.init();
 	systems.BrakeSys.reset();
 	systems.Autobrake.init();
 	systems.fire_init();
 	fmgc.flightPlanController.reset();
 	fmgc.windController.reset();
-	fadec.FADEC.init();
 	fmgc.ITAF.init();
 	fmgc.FMGCinit();
 	mcdu.MCDU_init(0);
@@ -138,6 +139,9 @@ var groundspeed = 0;
 var stateL = 0;
 var stateR = 0;
 
+var seatbeltSwitch = props.globals.getNode("/controls/switches/seatbelt-sign");
+var noSmokingSwitch = props.globals.getNode("/controls/switches/no-smoking-sign");
+var emerLtsSwitch = props.globals.getNode("/controls/switches/emer-lights");
 var seatbeltLight = props.globals.getNode("/controls/lighting/seatbelt-sign");
 var noSmokingLight = props.globals.getNode("/controls/lighting/no-smoking-sign");
 
@@ -175,7 +179,7 @@ var systemsLoop = func(notification) {
 	systems.BrakeSys.update(notification);
 	systems.HFLoop(notification);
 	systems.APUController.loop();
-	fadec.FADEC.loop();
+	systems.FADEC.loop();
 	rmp.rmpUpdate();
 	fcu.FCUController.loop(notification);
 	atc.Transponders.vector[atc.transponderPanel.atcSel - 1].update(notification);
@@ -246,8 +250,8 @@ setlistener("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", func{   
 
 # Replay
 var replayState = props.globals.getNode("/sim/replay/replay-state");
-setlistener("/sim/replay/replay-state", func() {
-	if (replayState.getBoolValue()) {
+setlistener(replayState, func(v) {
+	if (v.getBoolValue()) {
 	} else {
 		acconfig.colddark();
 		gui.popupTip("Replay Ended: Setting Cold and Dark state...");
@@ -387,6 +391,10 @@ var input = {
 	"seatbelt": "/controls/switches/seatbelt-sign",
 	"noSmoking": "/controls/switches/no-smoking-sign",
 	"gearPosNorm": "/gear/gear[0]/position-norm",
+	"gearPosNorm1": "/gear/gear[1]/position-norm",
+	"gearPosNorm2": "/gear/gear[2]/position-norm",
+	"engine1Running": "/engines/engine[0]/running",
+	"engine2Running": "/engines/engine[1]/running",
 };
 
 foreach (var name; keys(input)) {
@@ -398,13 +406,11 @@ var internal = props.globals.getNode("/sim/current-view/internal");
 var toggleScreen = func() {
 	if (!internal.getValue() and hideCanvas.getValue()) {
 		canvas_pfd.PFD_update.stop();
-		canvas_ecam.lowerECAM_update.stop();
 		canvas_nd.nd_update.stop();
 		canvas_dcdu.DCDU_update.stop();
 		canvas_mcdu.MCDU_update.stop();
 	} else {
 		canvas_pfd.rateApply();
-		canvas_ecam.l_rateApply();
 		canvas_nd.rateApply();
 		canvas_dcdu.rateApply();
 		canvas_mcdu.MCDU_update.start();

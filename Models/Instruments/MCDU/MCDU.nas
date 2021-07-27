@@ -1,5 +1,5 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 var MCDU_1 = nil;
 var MCDU_2 = nil;
@@ -111,14 +111,14 @@ var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
 # PERF
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 # TO PERF
-var clbReducFt = props.globals.getNode("/systems/thrust/clbreduc-ft", 1);
+var clbReducFt = props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft", 1);
 var reducFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
 var thrAccSet = props.globals.getNode("/MCDUC/thracc-set", 1);
 var flapTO = props.globals.getNode("/FMGC/internal/to-flap", 1);
 var THSTO = props.globals.getNode("/FMGC/internal/to-ths", 1);
 var flapTHSSet = props.globals.getNode("/FMGC/internal/flap-ths-set", 1);
-var flex = props.globals.getNode("/FMGC/internal/flex", 1);
-var flexSet = props.globals.getNode("/FMGC/internal/flex-set", 1);
+var flex = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-temp", 1);
+var flexSet = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active-cmd", 1);
 var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
 var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
 var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
@@ -231,15 +231,19 @@ var canvas_MCDU_base = {
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
 			MCDU_1.update();
+			pts.Instrumentation.Mcdu.mcdu1On.setBoolValue(1);
 			MCDU_1.page.show();
 		} else {
 			MCDU_1.page.hide();
+			pts.Instrumentation.Mcdu.mcdu1On.setBoolValue(0);
 		}
 		if (systems.ELEC.Bus.ac2.getValue() >= 110 and mcdu2_lgt.getValue() > 0.01) {
 			MCDU_2.update();
+			pts.Instrumentation.Mcdu.mcdu2On.setBoolValue(1);
 			MCDU_2.page.show();
 		} else {
 			MCDU_2.page.hide();
+			pts.Instrumentation.Mcdu.mcdu2On.setBoolValue(0);
 		}
 	},
 	defaultHide: func() {
@@ -817,7 +821,7 @@ var canvas_MCDU_base = {
 			me["Simple_R2"].setText(sprintf("%-10s",(doorR1_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
 			me["Simple_R3S"].setText(sprintf("%-10s",(doorL4_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
 			me["Simple_R3"].setText(sprintf("%-10s",(doorR4_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
-			me["Simple_R4S"].setText(sprintf("%-10s",sprintf("%03.3f",pts.Velocities.groundspeed.getValue())));
+			me["Simple_R4S"].setText(sprintf("%-10s",sprintf("%03.3f",pts.Velocities.groundspeedKt.getValue())));
 			me["Simple_R4"].setText(sprintf("%-10s",sprintf("%03.1f",fmgc.FMGCInternal.fob)));
 		} else if (page == "AOCCONFIG") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -6664,7 +6668,8 @@ var canvas_MCDU_2 = {
 		me.updateScratchpad(1);
 	},
 };
-setlistener("sim/signals/fdm-initialized", func {
+
+setlistener("/sim/signals/fdm-initialized", func {
 	MCDU1_display = canvas.new({
 		"name": "MCDU1",
 		"size": [1024, 864],

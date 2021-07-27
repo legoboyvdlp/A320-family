@@ -1,6 +1,6 @@
 # A3XX ND Canvas
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 io.include("A3XX_ND.nas");
 
@@ -142,40 +142,44 @@ var canvas_nd_base = {
 		var elapsedtime = getprop("sim/time/elapsed-sec");
 		
 		if (getprop("systems/electrical/bus/ac-ess-shed") >= 110 and getprop("controls/lighting/DU/du2") > 0) {
+			pts.Instrumentation.Du.du2On.setBoolValue(1);
 			if (du2_test_time.getValue() + du2_test_amount.getValue() >= elapsedtime and cpt_du_xfr.getValue() != 1) {
 				ND_1.page.hide();
-				ND_1_test.page.show();
 				ND_1_test.update();
+				ND_1_test.page.show();
 			} else if (du1_test_time.getValue() + du1_test_amount.getValue() >= elapsedtime and cpt_du_xfr.getValue() == 1) {
 				ND_1.page.hide();
-				ND_1_test.page.show();
 				ND_1_test.update();
+				ND_1_test.page.show();
 			} else {
 				ND_1_test.page.hide();
-				ND_1.page.show();
 				ND_1.NDCpt.update();
+				ND_1.page.show();
 			}
 		} else {
 			ND_1_test.page.hide();
 			ND_1.page.hide();
+			pts.Instrumentation.Du.du2On.setBoolValue(0);
 		}
 		if (getprop("systems/electrical/bus/ac-2") >= 110 and getprop("controls/lighting/DU/du5") > 0) {
+			pts.Instrumentation.Du.du5On.setBoolValue(1);
 			if (du5_test_time.getValue() + du5_test_amount.getValue() >= elapsedtime and fo_du_xfr.getValue() != 1) {
 				ND_2.page.hide();
-				ND_2_test.page.show();
 				ND_2_test.update();
+				ND_2_test.page.show();
 			} else if (du6_test_time.getValue() + du6_test_amount.getValue() >= elapsedtime and fo_du_xfr.getValue() == 1) {
 				ND_2.page.hide();
-				ND_2_test.page.show();
 				ND_2_test.update();
+				ND_2_test.page.show();
 			} else {
 				ND_2_test.page.hide();
-				ND_2.page.show();
 				ND_2.NDFo.update();
+				ND_2.page.show();
 			}
 		} else {
 			ND_2_test.page.hide();
 			ND_2.page.hide();
+			pts.Instrumentation.Du.du5On.setBoolValue(0);
 		}
 	},
 };
@@ -323,7 +327,7 @@ var canvas_ND_2_test = {
 	},
 };
 
-setlistener("sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func {
 	setprop("instrumentation/efis[0]/inputs/plan-wpt-index", -1);
 	setprop("instrumentation/efis[1]/inputs/plan-wpt-index", -1);
 

@@ -1,7 +1,7 @@
 # Airbus A3XX FBW/Flight Control Computer System
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 var mmoIAS = 0;
 var cas = 0;
@@ -64,8 +64,11 @@ var FBW = {
 		sec3: props.globals.getNode("/systems/failures/fctl/sec3"),
 		fac1: props.globals.getNode("/systems/failures/fctl/fac1"),
 		fac2: props.globals.getNode("/systems/failures/fctl/fac2"),
-		ths: props.globals.getNode("/systems/failures/fctl/ths-jam"),
-		spoilerl1: props.globals.getNode("/systems/failures/spoilers/spoiler-l1"),
+		rtlu1: props.globals.getNode("/systems/failures/fctl/rtlu-1"),
+		rtlu2: props.globals.getNode("/systems/failures/fctl/rtlu-2"),
+		rtlu2: props.globals.getNode("/systems/failures/fctl/rtlu-2"),
+		ths: props.globals.getNode(""),
+		spoilerl1: props.globals.getNode(""),
 		spoilerl2: props.globals.getNode("/systems/failures/spoilers/spoiler-l2"),
 		spoilerl3: props.globals.getNode("/systems/failures/spoilers/spoiler-l3"),
 		spoilerl4: props.globals.getNode("/systems/failures/spoilers/spoiler-l4"),
@@ -90,6 +93,9 @@ var FBW = {
 	Protections: {
 		overspeedRoll: props.globals.getNode("/it-fbw/protections/overspeed-roll-back"),
 		overspeed: props.globals.getNode("/it-fbw/protections/overspeed"),
+	},
+	Sidestick: {
+		active: [props.globals.getNode("/fdm/jsbsim/fbw/sidestick/active[0]"), props.globals.getNode("/fdm/jsbsim/fbw/sidestick/active[1]")],
 	},
 	Switches: {
 		elac1Sw: props.globals.getNode("/controls/fctl/switches/elac1"),
@@ -124,6 +130,8 @@ var FBW = {
 		me.Computers.sec3.setBoolValue(0);
 		me.Computers.fac1.setBoolValue(0);
 		me.Computers.fac2.setBoolValue(0);
+		me.Sidestick.active[0].setBoolValue(1); # Change to reset stick priority?
+		me.Sidestick.active[1].setBoolValue(1); # Change to reset stick priority?
 		me.degradeLaw.setValue(0);
 		me.activeLaw.setValue(0);
 		me.override.setValue(0);
@@ -338,7 +346,7 @@ var fbw_loop = func {
 	}
 }
 
-setlistener("systems/fctl/sec1", func() {
+setlistener("/systems/fctl/sec1", func() {
 	if (FBW.Computers.sec1.getBoolValue()) {
 		FBW.Failures.spoilerl3.setBoolValue(0);
 		FBW.Failures.spoilerr3.setBoolValue(0);
@@ -352,7 +360,7 @@ setlistener("systems/fctl/sec1", func() {
 	}
 }, 0, 0);
 
-setlistener("systems/fctl/sec2", func() {
+setlistener("/systems/fctl/sec2", func() {
 	if (FBW.Computers.sec2.getBoolValue()) {
 		FBW.Failures.spoilerl5.setBoolValue(0);
 		FBW.Failures.spoilerr5.setBoolValue(0);
@@ -362,7 +370,7 @@ setlistener("systems/fctl/sec2", func() {
 	}
 }, 0, 0);
 
-setlistener("systems/fctl/sec3", func() {
+setlistener("/systems/fctl/sec3", func() {
 	if (FBW.Computers.sec3.getBoolValue()) {
 		FBW.Failures.spoilerl1.setBoolValue(0);
 		FBW.Failures.spoilerr1.setBoolValue(0);

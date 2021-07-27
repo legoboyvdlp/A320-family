@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>Qatar Airways (A7-AHW)</name>
+				<texture-fuselage>Liveries/A320/IAE/QTR-fuselage.png</texture-fuselage>
+				<texture-engine>Liveries/A320/IAE/QTR-engine.png</texture-engine>
+			</livery>
+		</model>
+	</sim>
+	
+	<options>
+		<engine-name type="string">V2527-A5</engine-name>
+		<model-number type="string">A320-232</model-number>
+		<EIS2 type="bool">1</EIS2>
+		<company-options>
+			<idle-factor>+0.0</idle-factor>
+			<perf-factor>+0.0</perf-factor>
+		</company-options>
+		<model-options>
+			<registration type="string">A7-AHW</registration>
+			<three-letter type="string">QTR</three-letter>
+			<two-letter type="string">QR</two-letter>
+			<sharklet type="bool">0</sharklet>
+			<wifi-aft type="bool">0</wifi-aft>
+			<wifi-fwd type="bool">0</wifi-fwd>
+		</model-options>
+	</options>
+</PropertyList>

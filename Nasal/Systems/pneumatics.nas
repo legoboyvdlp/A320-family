@@ -170,8 +170,8 @@ var PNEU = {
 		targetalt = getprop("/systems/pressurization/targetalt");
 		ambient = getprop("/systems/pressurization/ambientpsi");
 		cabinpsi = getprop("/systems/pressurization/cabinpsi");
-		state1 = pts.Systems.Thrust.state[0].getValue();
-		state2 = pts.Systems.Thrust.state[1].getValue();
+		state1 = systems.FADEC.detentText[0].getValue();
+		state2 = systems.FADEC.detentText[1].getValue();
 		pressmode = getprop("/systems/pressurization/mode");
 		vs = getprop("/systems/pressurization/vs-norm");
 		manvs = getprop("/systems/pressurization/manvs-cmd");
@@ -233,14 +233,12 @@ setlistener("/controls/oxygen/masksDeployMan", func {
 
 setlistener("/controls/oxygen/masksDeployMan", func {
 	masks = getprop("/controls/oxygen/masksDeployMan");
-	autoMasks = getprop("/controls/oxygen/masksDeploy");
 	if (!masks) { 
 		setprop("/controls/oxygen/masksDeployMan", 1);
 	}
 }, 0, 0);
 
 setlistener("/controls/oxygen/masksDeploy", func {
-	masks = getprop("/controls/oxygen/masksDeployMan");
 	autoMasks = getprop("/controls/oxygen/masksDeploy");
 	if (!autoMasks) { 
 		setprop("/controls/oxygen/masksDeploy", 1);

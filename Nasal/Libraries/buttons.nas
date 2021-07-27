@@ -1,7 +1,7 @@
 # A3XX Buttons
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 var OnLt = props.globals.getNode("/controls/switches/emerCallLtO");
 var CallLt = props.globals.getNode("/controls/switches/emerCallLtC");
@@ -14,8 +14,6 @@ var cvr_tone = props.globals.getNode("/controls/CVR/tone");
 var variousReset = func() {
 	setprop("/modes/cpt-du-xfr", 0);
 	setprop("/modes/fo-du-xfr", 0);
-	setprop("/controls/fadec/n1mode1", 0);
-	setprop("/controls/fadec/n1mode2", 0);
 	setprop("/instrumentation/mk-viii/serviceable", 1);
 	setprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", 0);
 	setprop("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit", 0);
@@ -24,7 +22,7 @@ var variousReset = func() {
 	setprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", 0);
 	setprop("/controls/switches/cabinCall", 0);
 	setprop("/controls/switches/mechCall", 0);
-	setprop("/controls/switches/emer-lights", 0.5);
+	libraries.emerLtsSwitch.setValue(0.5);
 	# cockpit voice recorder stuff
 	setprop("/controls/CVR/power", 0);
 	setprop("/controls/CVR/test", 0);
@@ -62,9 +60,9 @@ var variousReset = func() {
 	setprop("/modes/fcu/hdg-time", -45);
 	setprop("/controls/navigation/switching/att-hdg", 0);
 	setprop("/controls/navigation/switching/air-data", 0);
-	setprop("/controls/switches/no-smoking-sign", 0.0);
-	setprop("/controls/switches/seatbelt-sign", 0);
-	setprop("/controls/switches/emer-lights", 0);
+	libraries.noSmokingSwitch.setValue(0.0);
+	libraries.seatbeltSwitch.setValue(0.0);
+	libraries.emerLtsSwitch.setValue(0.0);
 }
 
 var BUTTONS = {
