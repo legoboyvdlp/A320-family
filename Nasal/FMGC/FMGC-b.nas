@@ -56,14 +56,12 @@ var Position = {
 };
 
 var Radio = {
-	gsDefl: [props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm", 1), props.globals.getNode("instrumentation/nav[1]/gs-needle-deflection-norm", 1)],
+	gsDefl: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm", 1),
 	gsDeflTemp: 0,
-	inRange: [props.globals.getNode("/instrumentation/nav[0]/in-range", 1), props.globals.getNode("instrumentation/nav[1]/in-range", 1)],
-	inRangeTemp: 0,
-	locDefl: [props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm", 1), props.globals.getNode("instrumentation/nav[1]/heading-needle-deflection-norm", 1)],
+	inRange: props.globals.getNode("/instrumentation/nav[0]/in-range", 1),
+	locDefl: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm", 1),
 	locDeflTemp: 0,
-	radioSel: 0,
-	signalQuality: [props.globals.getNode("/instrumentation/nav[0]/signal-quality-norm", 1), props.globals.getNode("instrumentation/nav[1]/signal-quality-norm", 1)],
+	signalQuality: props.globals.getNode("/instrumentation/nav[0]/signal-quality-norm", 1),
 	signalQualityTemp: 0,
 };
 
@@ -105,10 +103,10 @@ var Input = {
 	toga: props.globals.initNode("/it-autoflight/input/toga", 0, "BOOL"),
 	trk: props.globals.initNode("/it-autoflight/input/trk", 0, "BOOL"),
 	trueCourse: props.globals.initNode("/it-autoflight/input/true-course", 0, "BOOL"),
-	vs: props.globals.initNode("/it-autoflight/input/vs", 0, "INT"),
-	vsAbs: props.globals.initNode("/it-autoflight/input/vs-abs", 0, "INT"), # Set by property rule
 	vert: props.globals.initNode("/it-autoflight/input/vert", 7, "INT"),
 	vertTemp: 7,
+	vs: props.globals.initNode("/it-autoflight/input/vs", 0, "INT"),
+	vsAbs: props.globals.initNode("/it-autoflight/input/vs-abs", 0, "INT"), # Set by property rule
 };
 
 var Internal = {
@@ -129,6 +127,8 @@ var Internal = {
 	lnavAdvanceNm: props.globals.initNode("/it-autoflight/internal/lnav-advance-nm", 0, "DOUBLE"),
 	minVs: props.globals.initNode("/it-autoflight/internal/min-vs", -500, "INT"),
 	maxVs: props.globals.initNode("/it-autoflight/internal/max-vs", 500, "INT"),
+	navHeadingErrorDeg: props.globals.initNode("/it-autoflight/internal/nav-heading-error-deg", 0, "DOUBLE"),
+	navHeadingErrorDegTemp: 0,
 	vs: props.globals.initNode("/it-autoflight/internal/vert-speed-fpm", 0, "DOUBLE"),
 	vsTemp: 0,
 };
@@ -758,11 +758,23 @@ var ITAF = {
 		}
 	},
 	checkLoc: func(t) {
-		if (Radio.inRange[Radio.radioSel].getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
-			Radio.locDeflTemp = Radio.locDefl[Radio.radioSel].getValue();
-			Radio.signalQualityTemp = Radio.signalQuality[Radio.radioSel].getValue();
+		if (Radio.inRange.getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
+			Internal.navHeadingErrorDegTemp = Internal.navHeadingErrorDeg.getValue();
+			Radio.locDeflTemp = Radio.locDefl.getValue();
+			Radio.signalQualityTemp = Radio.signalQuality.getValue();
 			if (abs(Radio.locDeflTemp) <= 0.95 and Radio.locDeflTemp != 0 and Radio.signalQualityTemp >= 0.99) {
-				me.activateLoc();
+				if (Radio.locDeflTemp >= 0 and Internal.navHeadingErrorDegTemp <= 0) {
+					me.activateLoc();
+				} else if (Radio.locDeflTemp < 0 and Internal.navHeadingErrorDegTemp >= 0) {
+					me.activateLoc();
+				}
+				
+				if (t != 1) { # Do not do this if loop calls it
+					if (Output.lat.getValue() != 2) {
+						me.updateLnavArm(0);
+						me.updateLocArm(1);
+					}
+				}
 			} else if (t != 1) { # Do not do this if loop calls it
 				if (Output.lat.getValue() != 2) {
 					me.updateLnavArm(0);
@@ -770,14 +782,14 @@ var ITAF = {
 				}
 			}
 		} else {
-			Radio.signalQuality[Radio.radioSel].setValue(0); # Prevent bad behavior due to FG not updating it when not in range
+			Radio.signalQuality.setValue(0); # Prevent bad behavior due to FG not updating it when not in range
 			me.updateLocArm(0);
 		}
 	},
 	checkAppr: func(t) {
-		if (Radio.inRange[Radio.radioSel].getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
-			Radio.gsDeflTemp = Radio.gsDefl[Radio.radioSel].getValue();
-			if (abs(Radio.gsDeflTemp) <= 0.2 and Radio.gsDeflTemp != 0 and Output.lat.getValue()  == 2) { # Only capture if LOC is active
+		if (Radio.inRange.getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
+			Radio.gsDeflTemp = Radio.gsDefl.getValue();
+			if (abs(Radio.gsDeflTemp) <= 0.2 and Radio.gsDeflTemp != 0 and Output.lat.getValue() == 2) { # Only capture if LOC is active
 				me.activateGs();
 			} else if (t != 1) { # Do not do this if loop calls it
 				if (Output.vert.getValue() != 2) {
@@ -785,13 +797,12 @@ var ITAF = {
 				}
 			}
 		} else {
-			Radio.signalQuality[Radio.radioSel].setValue(0); # Prevent bad behavior due to FG not updating it when not in range
+			Radio.signalQuality.setValue(0); # Prevent bad behavior due to FG not updating it when not in range
 			me.updateApprArm(0);
 		}
 	},
 	checkRadioRevision: func(l, v) { # Revert mode if signal lost
-		Radio.inRangeTemp = Radio.inRange[Radio.radioSel].getBoolValue();
-		if (!Radio.inRangeTemp) {
+		if (!Radio.inRange.getBoolValue()) {
 			if (l == 4 or v == 6) {
 				me.ap1Master(0);
 				me.ap2Master(0);

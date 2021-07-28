@@ -26,6 +26,7 @@ If applicable, add screenshots to help explain your problem.
 **System (please complete the following information):**
  - OS: 
  - FlightGear version: 
+ - A320 Version: (FGAddon/Laucher or branch with commit)
 
 
 **Additional context**

@@ -229,6 +229,10 @@ var Instrumentation = {
 	},
 };
 
+var Modes = {
+	EcamDuXfr: props.globals.getNode("/modes/ecam-du-xfr"),
+};
+
 var Options = {
 	eng: props.globals.getNode("/options/eng"),
 };

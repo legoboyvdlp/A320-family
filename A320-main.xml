@@ -1927,8 +1927,9 @@
 	</instrumentation>
 	
 	<modes>
-		<cpt-du-xfr>0</cpt-du-xfr>
-		<fo-du-xfr>0</fo-du-xfr>
+		<cpt-du-xfr type="bool">0</cpt-du-xfr>
+		<ecam-du-xfr type="bool">0</ecam-du-xfr>
+		<fo-du-xfr type="bool">0</fo-du-xfr>
 		<pfd>
 			<ILS1>0</ILS1>
 			<ILS2>0</ILS2>

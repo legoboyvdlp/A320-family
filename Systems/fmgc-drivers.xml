@@ -575,6 +575,25 @@
 	</filter>
 	
 	<filter>
+		<name>Nav Course Error Deg</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<property>/instrumentation/nav[0]/radials/selected-deg</property>
+			<offset>
+				<property>/orientation/track-magnetic-deg</property>
+				<scale>-1.0</scale>
+			</offset>
+		</input>
+		<output>/it-autoflight/internal/nav-course-track-error-deg</output>
+		<period>
+			<min>-180</min>
+			<max>180</max>
+		</period>
+	</filter>
+	
+	<filter>
 		<name>Internal Vertical Speed</name>
 		<debug>false</debug>
 		<type>gain</type>

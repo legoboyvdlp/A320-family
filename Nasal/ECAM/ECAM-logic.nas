@@ -105,17 +105,17 @@ var messages_priority_3 = func {
 		}
 		
 		if (allEngFailSPD1.clearFlag == 0 and allEngFailSPD2.clearFlag == 0 and allEngFailSPD3.clearFlag == 0 and allEngFailSPD4.clearFlag == 0) {
-			if (find("LEAP", getprop("/MCDUC/eng"))) {
+			if (find("LEAP", getprop("/options/engine-name"))) {
 				allEngFailSPD2.active = 1;
 				ECAM_controller.warningReset(allEngFailSPD1);
 				ECAM_controller.warningReset(allEngFailSPD3);
 				ECAM_controller.warningReset(allEngFailSPD4);
-			} elsif (find("V2527", getprop("/MCDUC/eng"))) {
+			} elsif (find("V2527", getprop("/options/engine-name"))) {
 				allEngFailSPD3.active = 1;
 				ECAM_controller.warningReset(allEngFailSPD1);
 				ECAM_controller.warningReset(allEngFailSPD2);
 				ECAM_controller.warningReset(allEngFailSPD4);
-			} elsif (find("PW11", getprop("/MCDUC/eng"))) {
+			} elsif (find("PW11", getprop("/options/engine-name"))) {
 				allEngFailSPD1.active = 1;
 				ECAM_controller.warningReset(allEngFailSPD2);
 				ECAM_controller.warningReset(allEngFailSPD3);

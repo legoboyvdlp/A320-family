@@ -364,7 +364,7 @@
 			<test logic="AND" value="1">
 				<test logic="OR">
 					/systems/electrical/bus/dc-2 ge 25
-					/systems/electrical/relay/dc-ess-feed-bat/contact-pos eq 1
+					/systems/electrical/relay/dc-bat-tie-dc-ess/contact-pos eq 1
 				</test>
 				<test logic="OR">
 					<test logic="AND">
@@ -1342,8 +1342,8 @@
 			<test logic="AND" value="1">
 				/systems/navigation/adr/operating-1 eq 1
 				/systems/navigation/adr/operating-3 eq 1
-				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/electrical/bus/dc-ess ge 25
+				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/electrical/bus/ac-ess ge 110
 				/systems/fctl/fac1-healthy-signal eq 0
 				/systems/fctl/fac2-healthy-signal eq 1
