@@ -59,8 +59,8 @@ var autopilotView = func() {
 		pts.Sim.CurrentView.pitchOffsetDeg.setValue(-16.4);
 		pts.Sim.CurrentView.rollOffsetDeg.setValue(0);
 		pts.Sim.CurrentView.xOffsetM.setValue(-0.45); 
-		pts.Sim.CurrentView.yOffsetM.setValue(2.34); 
-		pts.Sim.CurrentView.zOffsetM.setValue(-13.75);
+		pts.Sim.CurrentView.yOffsetM.setValue(0.545);
+		pts.Sim.CurrentView.zOffsetM.setValue(-16.193);
 		
 		if (shakeFlag) {
 			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
@@ -78,12 +78,12 @@ var overheadView = func() {
 		}
 		
 		pts.Sim.CurrentView.fieldOfView.setValue(105.8);
-		pts.Sim.CurrentView.headingOffsetDeg.setValue(348);
-		pts.Sim.CurrentView.pitchOffsetDeg.setValue(65.25);
-		pts.Sim.CurrentView.rollOffsetDeg.setValue(0,0.66);
-		pts.Sim.CurrentView.xOffsetM.setValue(-0.12); 
-		pts.Sim.CurrentView.yOffsetM.setValue(2.34); 
-		pts.Sim.CurrentView.zOffsetM.setValue(-13.75);
+		pts.Sim.CurrentView.headingOffsetDeg.setValue(360);
+		pts.Sim.CurrentView.pitchOffsetDeg.setValue(63.7);
+		pts.Sim.CurrentView.rollOffsetDeg.setValue(0);
+		pts.Sim.CurrentView.xOffsetM.setValue(0); 
+		pts.Sim.CurrentView.yOffsetM.setValue(0.545); 
+		pts.Sim.CurrentView.zOffsetM.setValue(-16.193);
 		
 		if (shakeFlag) {
 			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
@@ -100,13 +100,13 @@ var pedestalView = func() {
 			shakeFlag = 0;
 		}
 		
-		pts.Sim.CurrentView.fieldOfView.setValue(63);
+		pts.Sim.CurrentView.fieldOfView.setValue(63.0);
 		pts.Sim.CurrentView.headingOffsetDeg.setValue(315);
 		pts.Sim.CurrentView.pitchOffsetDeg.setValue(-46.3);
 		pts.Sim.CurrentView.rollOffsetDeg.setValue(0);
 		pts.Sim.CurrentView.xOffsetM.setValue(-0.45); 
-		pts.Sim.CurrentView.yOffsetM.setValue(2.34); 
-		pts.Sim.CurrentView.zOffsetM.setValue(-13.75);
+		pts.Sim.CurrentView.yOffsetM.setValue(0.545); 
+		pts.Sim.CurrentView.zOffsetM.setValue(-16.193);
 		
 		if (shakeFlag) {
 			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
@@ -128,8 +128,8 @@ var lightsView = func() {
 		pts.Sim.CurrentView.pitchOffsetDeg.setValue(17.533);
 		pts.Sim.CurrentView.rollOffsetDeg.setValue(0);
 		pts.Sim.CurrentView.xOffsetM.setValue(-0.45); 
-		pts.Sim.CurrentView.yOffsetM.setValue(2.34); 
-		pts.Sim.CurrentView.zOffsetM.setValue(-13.75);
+		pts.Sim.CurrentView.yOffsetM.setValue(0.545); 
+		pts.Sim.CurrentView.zOffsetM.setValue(-16.193);
 		
 		if (shakeFlag) {
 			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
