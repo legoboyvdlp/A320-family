@@ -913,32 +913,38 @@ var canvas_upperECAM = {
 			me["Test_text"].show();
 		}
 	},
-	du3OffTimer: 0,
+	off: 0,
+	on: 0,
 	powerTransient: func() {
 		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
-			if (du3_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
-				if (pts.Gear.wow[0].getValue()) {
-					if (!acconfig.getBoolValue() and !du3_test.getBoolValue()) {
+			if (!me.on) {
+				if (du3_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
+					if (pts.Gear.wow[0].getValue()) {
+						if (!acconfig.getBoolValue() and !du3_test.getBoolValue()) {
+							du3_test.setValue(1);
+							du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue());
+						} else if (acconfig.getBoolValue() and !du3_test.getBoolValue()) {
+							du3_test.setValue(1);
+							du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue() - 30);
+						}
+					} else {
 						du3_test.setValue(1);
-						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue());
-					} else if (acconfig.getBoolValue() and !du3_test.getBoolValue()) {
-						du3_test.setValue(1);
-						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue() - 30);
+						du3_test_amount.setValue(0);
+						du3_test_time.setValue(-100);
 					}
-				} else {
-					du3_test.setValue(1);
-					du3_test_amount.setValue(0);
-					du3_test_time.setValue(-100);
 				}
+				me.off = 0;
+				me.on = 1;
 			}
-			me.du3OffTimer = 0;
-			du3_offtime.setValue(0);
-		} elsif (me.du3OffTimer == 0) {
-			du3_test.setValue(0);
-			me.du3OffTimer = 1;
-			du3_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		} else {
+			if (!me.off) {
+				du3_test.setValue(0);
+				du3_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
+				me.off = 1;
+				me.on = 0;
+			}
 		}
 	},
 	updatePower: func() {

@@ -223,7 +223,7 @@ var canvas_IESI = {
 						iesi_init.setBoolValue(0);
 						me._transientVar = 0;
 					}
-				}, 0.2);
+				}, 0.2); # 200ms delay power transients
 			}
 		}
 		

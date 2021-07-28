@@ -87,62 +87,74 @@ var canvas_nd_base = {
 	getKeys: func() {
 		return [];
 	},
-	du2OffTimer: 0,
+	off2: 0,
+	on2: 0,
 	updateDu2: func() {
 		var elapsedtime = getprop("sim/time/elapsed-sec");
 		if (getprop("systems/electrical/bus/ac-ess-shed") >= 110) {
-			if (du2_offtime.getValue() + 3 < elapsedtime) {
-				if (wow0.getValue() == 1) {
-					if (getprop("systems/acconfig/autoconfig-running") != 1 and du2_test.getValue() != 1) {
+			if (!me.on2) {
+				if (du2_offtime.getValue() + 3 < elapsedtime) {
+					if (wow0.getValue() == 1) {
+						if (getprop("systems/acconfig/autoconfig-running") != 1 and du2_test.getValue() != 1) {
+							du2_test.setValue(1);
+							du2_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du2_test_time.setValue(getprop("sim/time/elapsed-sec"));
+						} else if (getprop("systems/acconfig/autoconfig-running") == 1 and du2_test.getValue() != 1) {
+							du2_test.setValue(1);
+							du2_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du2_test_time.setValue(getprop("sim/time/elapsed-sec") - 30);
+						}
+					} else {
 						du2_test.setValue(1);
-						du2_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du2_test_time.setValue(getprop("sim/time/elapsed-sec"));
-					} else if (getprop("systems/acconfig/autoconfig-running") == 1 and du2_test.getValue() != 1) {
-						du2_test.setValue(1);
-						du2_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du2_test_time.setValue(getprop("sim/time/elapsed-sec") - 30);
+						du2_test_amount.setValue(0);
+						du2_test_time.setValue(-100);
 					}
-				} else {
-					du2_test.setValue(1);
-					du2_test_amount.setValue(0);
-					du2_test_time.setValue(-100);
 				}
+				me.off2 = 0;
+				me.on2 = 1;
 			}
-			me.du2OffTimer = 0;
-			du2_offtime.setValue(0);
-		} elsif (me.du2OffTimer == 0) {
-			du2_test.setValue(0);
-			me.du2OffTimer = 1;
-			du2_offtime.setValue(elapsedtime);
+		} else {
+			if (!me.off2) {
+				du2_test.setValue(0);
+				du2_offtime.setValue(elapsedtime);
+				me.off2 = 1;
+				me.on2 = 0;
+			}
 		}
 	},
-	du5OffTimer: 0,
+	off: 0,
+	on: 0,
 	updateDu5: func() {
 		var elapsedtime = getprop("sim/time/elapsed-sec");
 		if (getprop("systems/electrical/bus/ac-2") >= 110) {
-			if (du5_offtime.getValue() + 3 < elapsedtime) {
-				if (wow0.getValue() == 1) {
-					if (getprop("systems/acconfig/autoconfig-running") != 1 and du5_test.getValue() != 1) {
+			if (!me.on) {
+				if (du5_offtime.getValue() + 3 < elapsedtime) {
+					if (wow0.getValue() == 1) {
+						if (getprop("systems/acconfig/autoconfig-running") != 1 and du5_test.getValue() != 1) {
+							du5_test.setValue(1);
+							du5_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du5_test_time.setValue(getprop("sim/time/elapsed-sec"));
+						} else if (getprop("systems/acconfig/autoconfig-running") == 1 and du5_test.getValue() != 1) {
+							du5_test.setValue(1);
+							du5_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du5_test_time.setValue(getprop("sim/time/elapsed-sec") - 30);
+						}
+					} else {
 						du5_test.setValue(1);
-						du5_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du5_test_time.setValue(getprop("sim/time/elapsed-sec"));
-					} else if (getprop("systems/acconfig/autoconfig-running") == 1 and du5_test.getValue() != 1) {
-						du5_test.setValue(1);
-						du5_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du5_test_time.setValue(getprop("sim/time/elapsed-sec") - 30);
+						du5_test_amount.setValue(0);
+						du5_test_time.setValue(-100);
 					}
-				} else {
-					du5_test.setValue(1);
-					du5_test_amount.setValue(0);
-					du5_test_time.setValue(-100);
 				}
+				me.off = 0;
+				me.on = 1;
 			}
-			me.du5OffTimer = 0;
-			du5_offtime.setValue(0);
-		} elsif (me.du5OffTimer == 0) {
-			du5_test.setValue(0);
-			me.du5OffTimer = 1;
-			du5_offtime.setValue(elapsedtime);
+		} else {
+			if (!me.off) {
+				du5_test.setValue(0);
+				du5_offtime.setValue(elapsedtime);
+				me.off = 1;
+				me.on = 0;
+			}
 		}
 	},
 	update: func() {

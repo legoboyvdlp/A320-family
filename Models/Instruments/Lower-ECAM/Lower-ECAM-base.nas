@@ -38,28 +38,38 @@ var canvas_lowerECAM_base =
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
 	},
+	off: 0,
+	on: 0,
 	powerTransient: func() {
 		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
-			if (du4_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
-				if (pts.Gear.wow[0].getValue()) {
-					if (!acconfig.getBoolValue() and !du4_test.getBoolValue()) {
+			if (!me.on) {
+				if (du4_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
+					if (pts.Gear.wow[0].getValue()) {
+						if (!acconfig.getBoolValue() and !du4_test.getBoolValue()) {
+							du4_test.setValue(1);
+							du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du4_test_time.setValue(pts.Sim.Time.elapsedSec.getValue());
+						} else if (acconfig.getBoolValue() and !du4_test.getBoolValue()) {
+							du4_test.setValue(1);
+							du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du4_test_time.setValue(pts.Sim.Time.elapsedSec.getValue() - 30);
+						}
+					} else {
 						du4_test.setValue(1);
-						du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du4_test_time.setValue(pts.Sim.Time.elapsedSec.getValue());
-					} else if (acconfig.getBoolValue() and !du4_test.getBoolValue()) {
-						du4_test.setValue(1);
-						du4_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du4_test_time.setValue(pts.Sim.Time.elapsedSec.getValue() - 30);
+						du4_test_amount.setValue(0);
+						du4_test_time.setValue(-100);
 					}
-				} else {
-					du4_test.setValue(1);
-					du4_test_amount.setValue(0);
-					du4_test_time.setValue(-100);
 				}
+				me.off = 0;
+				me.on = 1;
 			}
 		} else {
-			du4_test.setValue(0);
-			du4_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
+			if (!me.off) {
+				du4_test.setValue(0);
+				du4_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
+				me.off = 1;
+				me.on = 0;
+			}
 		}
 	},
 	# Due to weirdness of the parents hash / me reference
