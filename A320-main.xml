@@ -986,6 +986,8 @@
 			<dome-norm type="double">0</dome-norm>
 			<fcu-panel-knb type="double">0</fcu-panel-knb>
 			<fcu-panel-norm type="double">0</fcu-panel-norm>
+			<fcu-digit-knb type="double">1</fcu-digit-knb>
+			<fcu-digit-norm type="double">1</fcu-digit-norm>
 			<landing-lights n="0" type="double">0</landing-lights>
 			<landing-lights n="1" type="double">0</landing-lights>
 			<landing-lights n="2" type="double">0</landing-lights>
