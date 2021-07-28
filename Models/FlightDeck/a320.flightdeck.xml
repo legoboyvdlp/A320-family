@@ -2157,7 +2157,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.stsBtn();</script>
+				<script>ecam.ECAMControlPanel.stsBtn(nil);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -2168,7 +2168,7 @@
 						</greater-than-equals>
 					</condition>
 					<command>nasal</command>
-					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+					<script>ecam.ECAMControlPanel.stsBtn("REL");</script>
 				</binding>
 			</mod-up>
 		</action>
