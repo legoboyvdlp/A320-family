@@ -113,8 +113,8 @@ var relayExt = func {
 	settimer(func {setprop("/sim/sounde/relay-ext",0);},0.35);
 }
 
-setlistener("/systems/electrical/sources/bat-1/contact", relayBatt1, nil, 0);
-setlistener("/systems/electrical/sources/bat-2/contact", relayBatt2, nil, 0);
+setlistener("/systems/electrical/sources/bat-1/bcl-supply", relayBatt1, nil, 0);
+setlistener("/systems/electrical/sources/bat-2/bcl-supply", relayBatt2, nil, 0);
 setlistener("/systems/electrical/relay/apu-glc/contact-pos", relayApu, nil, 0);
 setlistener("/systems/electrical/relay/ext-epc/contact-pos", relayExt, nil, 0);
 

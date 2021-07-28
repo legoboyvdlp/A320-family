@@ -722,7 +722,15 @@ canvas.NDStyles["Airbus"] = {
 			},
 		},
 		{
-			# TODO: taOnly doesn"t need to use getprop polling in update(), use a listener instead!
+			id: "taOnlyBox",
+			impl: {
+				init: func(nd, symbol),
+				predicate: func(nd) getprop("/instrumentation/tcas/inputs/mode") == 2,
+				is_true:   func(nd) nd.symbols.taOnlyBox.show(),
+				is_false:   func(nd) nd.symbols.taOnlyBox.hide(),
+			},
+		},
+		{
 			id: "taOnly", # the SVG ID
 			impl: { # implementation hash
 				init: func(nd, symbol), # for updateCenter stuff, called during initialization in the ctor

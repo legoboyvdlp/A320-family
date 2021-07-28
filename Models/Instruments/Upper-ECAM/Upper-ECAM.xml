@@ -20,6 +20,22 @@
 	</animation>
 	
 	<animation>
+		<type>select</type>
+		<object-name>uecam.screen</object-name>
+		<condition>
+			<not><property>modes/ecam-du-xfr</property></not>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>uecam.screen2</object-name>
+		<condition>
+			<property>modes/ecam-du-xfr</property>
+		</condition>
+	</animation>
+
+	<animation>
 		<type>material</type>
 		<object-name>uecam.screen</object-name>
 		<emission>
