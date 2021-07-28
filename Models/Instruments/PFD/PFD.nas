@@ -223,54 +223,74 @@ var canvas_PFD_base = {
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
 		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError","vsFMArate"];
 	},
+	off: 0,
+	on: 0,
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
 		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
-			if (du1_offtime.getValue() + 3 < elapsedtime_act) { 
-				if (wow0.getValue() == 1) {
-					if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+			if (!me.on) {
+				if (du1_offtime.getValue() + 3 < elapsedtime_act) { 
+					if (wow0.getValue() == 1) {
+						if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+							du1_test.setValue(1);
+							du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du1_test_time.setValue(elapsedtime_act);
+						} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
+							du1_test.setValue(1);
+							du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du1_test_time.setValue(elapsedtime_act - 30);
+						}
+					} else {
 						du1_test.setValue(1);
-						du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du1_test_time.setValue(elapsedtime_act);
-					} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
-						du1_test.setValue(1);
-						du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du1_test_time.setValue(elapsedtime_act - 30);
+						du1_test_amount.setValue(0);
+						du1_test_time.setValue(-100);
 					}
-				} else {
-					du1_test.setValue(1);
-					du1_test_amount.setValue(0);
-					du1_test_time.setValue(-100);
 				}
+				me.off = 0;
+				me.on = 1;
 			}
 		} else {
-			du1_test.setValue(0);
-			du1_offtime.setValue(elapsedtime_act);
+			if (!me.off) {
+				du1_test.setValue(0);
+				du1_offtime.setValue(elapsedtime_act);
+				me.off = 1;
+				me.on = 0;
+			}
 		}
 	},
+	off6: 0,
+	on6: 0,
 	updateDu6: func() {
 		var elapsedtime_act = elapsedtime.getValue();
 		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
-			if (du6_offtime.getValue() + 3 < elapsedtime_act) { 
-				if (wow0.getValue() == 1) {
-					if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+			if (!me.on6) {
+				if (du6_offtime.getValue() + 3 < elapsedtime_act) { 
+					if (wow0.getValue() == 1) {
+						if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+							du6_test.setValue(1);
+							du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du6_test_time.setValue(elapsedtime_act);
+						} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
+							du6_test.setValue(1);
+							du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du6_test_time.setValue(elapsedtime_act - 30);
+						}
+					} else {
 						du6_test.setValue(1);
-						du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du6_test_time.setValue(elapsedtime_act);
-					} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
-						du6_test.setValue(1);
-						du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du6_test_time.setValue(elapsedtime_act - 30);
+						du6_test_amount.setValue(0);
+						du6_test_time.setValue(-100);
 					}
-				} else {
-					du6_test.setValue(1);
-					du6_test_amount.setValue(0);
-					du6_test_time.setValue(-100);
 				}
+				me.off6 = 0;
+				me.on6 = 1;
 			}
 		} else {
-			du6_test.setValue(0);
-			du6_offtime.setValue(elapsedtime_act);
+			if (!me.off6) {
+				du6_test.setValue(0);
+				du6_offtime.setValue(elapsedtime_act);
+				me.off6 = 1;
+				me.on6 = 0;
+			}
 		}
 	},
 	update: func() {

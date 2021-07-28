@@ -645,7 +645,7 @@ var canvas_lowerECAMPageWheel =
 			}
 			me["GW"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["GW"].setText(sprintf("%s", "-----"));
+			me["GW"].setText(sprintf("%s", " --    "));
 			me["GW"].setColor(0.0901,0.6039,0.7176);
 		}
 		
@@ -694,8 +694,23 @@ var canvas_lowerECAMPageWheel =
 					me.test.setVisible(0);
 				}
 			} else {
-				me.group.setVisible(0);
-				me.test.setVisible(0);
+				if (pts.Modes.EcamDuXfr.getBoolValue()) {
+					if (du3_lgt.getValue() > 0.01 and systems.ELEC.Bus.acEss.getValue() >= 110) {
+						if (du3_test_time.getValue() + du3_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
+							me.group.setVisible(0);
+							me.test.setVisible(1);
+						} else {
+							me.group.setVisible(1);
+							me.test.setVisible(0);
+						}
+					} else {
+						me.group.setVisible(0);
+						me.test.setVisible(0);
+					}
+				} else {
+					me.group.setVisible(0);
+					me.test.setVisible(0);
+				}
 			}
 		} else {
 			me.group.setVisible(0);

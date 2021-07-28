@@ -20,6 +20,14 @@
 	</animation>
 	
 	<animation>
+		<type>select</type>
+		<object-name>lecam.screen</object-name>
+		<condition>
+			<not><property>modes/ecam-du-xfr</property></not>
+		</condition>
+	</animation>
+	
+	<animation>
 		<type>material</type>
 		<object-name>lecam.screen</object-name>
 		<emission>

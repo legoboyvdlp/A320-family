@@ -186,9 +186,8 @@ var canvas_IESI = {
 			me["QNH_std"].hide();
 		}
 	},
+	_transientVar: 0,
 	updatePower: func(notification) {
-		# todo consider relay 7XB for power of DC HOT 1
-		# todo transient max 0.2s
 		# todo 20W power consumption
 		if (notification.attReset == 1) {
 			if (notification.iesiInit and _IESITime + 90 >= notification.elapsedTime) {
@@ -199,7 +198,7 @@ var canvas_IESI = {
 			iesi_init.setBoolValue(0);
 		}
 		
-		if (notification.dcEss >= 25 or (notification.dcHot1 >= 25 and notification.airspeed >= 50 and notification.elapsedTime >= 5)) {
+		if (notification.dcEss >= 25 or (notification.relay7XB and notification.dcHot1 >= 25)) {
 			_showIESI = 1;
 			if (notification.acconfig != 1 and notification.iesiInit != 1) {
 				iesi_init.setBoolValue(1);
@@ -213,9 +212,19 @@ var canvas_IESI = {
 				iesi_init.setBoolValue(1);
 				_IESITime = notification.elapsedTime - 87;
 			}
-		} else {
-			_showIESI = 0;
-			iesi_init.setBoolValue(0);
+		} elsif (notification.iesiInit) {
+			if (!me._transientVar) {
+				me._transientVar = 1;
+				settimer(func() {
+					if (systems.ELEC.Bus.dcEss.getValue() >= 25 or (systems.ELEC.Bus.dcHot1.getValue() >= 25 and systems.ELEC.Relay.relay7XB.getValue())) {
+						me._transientVar = 0;
+					} else {
+						_showIESI = 0;
+						iesi_init.setBoolValue(0);
+						me._transientVar = 0;
+					}
+				}, 0.2); # 200ms delay power transients
+			}
 		}
 		
 		if (_showIESI and notification.iesiBrt > 0.01) {
@@ -269,6 +278,7 @@ var input = {
 	"qnh_inhg": "/instrumentation/altimeter[0]/setting-inhg",
 	"roll": "/orientation/roll-deg",
 	"skid": "/instrumentation/iesi/slip-skid",
+	"relay7XB": "/systems/electrical/sources/si-1/inverter-control/relay-7xb",
 };
 
 foreach (var name; keys(input)) {
