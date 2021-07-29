@@ -7314,6 +7314,10 @@
 				<command>nasal</command>
 				<script>libraries.MechCallFunc();</script>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
 		</action>
 	</animation>
 
@@ -7332,6 +7336,33 @@
 				</condition>
 				<command>nasal</command>
 				<script>libraries.CabinCallFunc();</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>AftCabinCall</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.CabinCallFunc();</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
