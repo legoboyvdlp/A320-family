@@ -20,7 +20,7 @@
 		<switch name="/systems/oxygen/cockpit-oxygen/supply-valve-cmd">
 			<default value="0"/>
 			<test logic="AND" value="1"> <!-- solenoid valve; when not energized, it shuts -->
-				/controls/oxygen/crewOxyPB eq 1
+				/controls/oxygen/cockpit-oxygen-supply-pb eq 1
 				/systems/electrical/bus/dc-ess-shed ge 25
 			</test>
 		</switch>
@@ -287,19 +287,43 @@
 	
 	<channel name="Passenger Oxygen" execrate="8">
 	
-		<!-- Chemical generators
-		Masks drop automatically if altitude > 14000 or 16000 if HI ALT
-		or MAN ON button
-		Taped message + SYS ON comes online
-		15 minutes supply
-		SYS ON goes off only when TIMER RESET
+		<switch name="/systems/oxygen/passenger-oxygen/pressure-switch">
+			<defualt value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/cabinalt ge 14000
+				/systems/electrical/bus/dc-ess ge 25
+			</test>
+			<!-- HI ALT 16000 -->
+		</switch>
 		
-		Door actuators AC ESS SHED 801PP
-		Pressure switch for 14K feet powered by 401PP (DC ESS)
-		Reset + taped msg + sys on light powred by 401PP
+		<switch name="/systems/oxygen/passenger-oxygen/masks-deploy-cmd">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/oxygen/passenger-oxygen/pressure-switch eq 1
+				/controls/oxygen/passenger-mask-deploy-man eq 1
+			</test>
+		</switch>
 		
-		Regulators: below 10k zero flow
-		-->
+		<switch name="/systems/oxygen/passenger-oxygen/masks-deploy">
+			<default value="/systems/oxygen/passenger-oxygen/masks-deploy"/>
+			<test logic="AND" value="1">
+				/systems/oxygen/passenger-oxygen/masks-deploy-cmd eq 1
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+		
+		<switch name="Sys On Light">
+			<default value="/systems/oxygen/passenger-oxygen/sys-on-light"/>
+			<test logic="OR" value="0">
+				/controls/oxygen/passenger-mask-reset eq 1
+				/systems/electrical/bus/dc-ess lt 25
+			</test>
+			<test logic="AND" value="1">
+				/systems/oxygen/passenger-oxygen/masks-deploy-cmd eq 1
+				/systems/electrical/bus/dc-ess ge 25
+			</test>
+			<output>/systems/oxygen/passenger-oxygen/sys-on-light</output>
+		</switch>
 	</channel>
 
 </system>

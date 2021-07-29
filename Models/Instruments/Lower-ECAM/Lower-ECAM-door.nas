@@ -339,7 +339,7 @@ var input = {
 	cargoAft: "/sim/model/door-positions/cargoaft/position-norm",
 	cargoBulk: "/sim/model/door-positions/cargobulk/position-norm",
 	cargoFwd: "/sim/model/door-positions/cargofwd/position-norm",
-	oxyPB: "/controls/oxygen/crewOxyPB",
+	oxyPB: "/controls/oxygen/cockpit-oxygen-supply-pb",
 	oxyBottlePress: "/systems/oxygen/cockpit-oxygen/bottle-psi",
 	oxyBottleRegulLoPr: "/systems/oxygen/cockpit-oxygen/regul-lo-pr",
 };

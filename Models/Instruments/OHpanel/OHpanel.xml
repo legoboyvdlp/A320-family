@@ -7503,36 +7503,12 @@
 	</animation-->
 
 	<animation>
-		<type>pick</type>
-		<object-name>PassOxyInd</object-name>
-		<object-name>PassOxyInd1S</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>controls/oxygen/masksSys</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
 		<type>select</type>
 		<object-name>PassOxyInd1S</object-name>
 		<condition>
 			<or>
 				<equals>
-					<property>controls/oxygen/masksSys</property>
+					<property>/systems/oxygen/passenger-oxygen/sys-on-light</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -7558,7 +7534,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/oxygen/crewOxyPB</property>
+				<property>controls/oxygen/cockpit-oxygen-supply-pb</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -7573,7 +7549,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/oxygen/crewOxyPB</property>
+					<property>controls/oxygen/cockpit-oxygen-supply-pb</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -7603,8 +7579,9 @@
 						</greater-than-equals>
 					</and>
 				</condition>
-				<command>property-toggle</command>
-				<property>controls/oxygen/masksDeployMan</property>
+				<command>property-assign</command>
+				<property>controls/oxygen/passenger-mask-deploy-man</property>
+				<value>1</value>
 			</binding>
 			<binding>
 				<condition>
@@ -7616,17 +7593,36 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>controls/OH/protectors/maskman</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>property-assign</command>
-				<property>controls/OH/protectors/maskman</property>
-				<value>0</value>
-			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<and>
+							<equals>
+								<property>controls/OH/protectors/maskman</property>
+								<value>1</value>
+							</equals>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-ess</property>
+								<value>25</value>
+							</greater-than-equals>
+						</and>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/oxygen/passenger-mask-deploy-man</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/maskman</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/OH/protectors/maskman</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 

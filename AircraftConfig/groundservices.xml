@@ -378,6 +378,20 @@
                 <value>2183</value>
             </binding>
         </button>
+		
+        <button>
+            <legend>Reset Pax Oxy Masks</legend>
+            <halign>center</halign>
+            <padding>5</padding>
+			<enable>
+				<property>/gear/gear[1]/wow</property>
+			</enable>
+            <binding>
+                <command>property-assign</command>
+                <property>/systems/oxygen/passenger-oxygen/masks-deploy</property>
+                <value>0</value>
+            </binding>
+        </button>
     </group>
 
 </PropertyList>
