@@ -3437,6 +3437,10 @@
 				<command>property-toggle</command>
 				<property>modes/pfd/ILS1</property>
 			</binding>
+			<binding>
+				<command>script</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
 		</action>
 	</animation>
 	<animation>
@@ -3471,6 +3475,10 @@
 				</condition>
 				<command>property-toggle</command>
 				<property>modes/pfd/ILS2</property>
+			</binding>
+			<binding>
+				<command>script</command>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>

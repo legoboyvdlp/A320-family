@@ -72,6 +72,7 @@ var FCUController = {
 		me.FCU2.restore();
 	},
 	AP1: func() {
+		libraries.pushbutton();
 		if (me.FCUworking) {
 			if (!fmgc.Output.ap1.getBoolValue() and fbw.FBW.apOff == 0) {
 				fmgc.Input.ap1.setValue(1);
@@ -83,6 +84,7 @@ var FCUController = {
 		}
 	},
 	AP2: func() {
+		libraries.pushbutton();
 		if (me.FCUworking) {
 			if (!fmgc.Output.ap2.getBoolValue() and fbw.FBW.apOff == 0) {
 				fmgc.Input.ap2.setValue(1);
@@ -94,6 +96,7 @@ var FCUController = {
 		}
 	},
 	ATHR: func() {
+		libraries.pushbutton();
 		if (me.FCUworking) {
 			if (!fmgc.Output.athr.getBoolValue() and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.apOff == 0) {
 				fmgc.Input.athr.setValue(1);
@@ -103,6 +106,7 @@ var FCUController = {
 		}
 	},
 	FD1: func() {
+		libraries.pushbutton();
 		if (me.FCUworking) {
 			if (!fmgc.Output.fd1.getBoolValue()) {
 				fmgc.Input.fd1.setValue(1);
@@ -112,6 +116,7 @@ var FCUController = {
 		}
 	},
 	FD2: func() {
+		libraries.pushbutton();
 		if (me.FCUworking) {
 			if (!fmgc.Output.fd2.getBoolValue()) {
 				fmgc.Input.fd2.setValue(1);
@@ -162,6 +167,7 @@ var FCUController = {
 		}
 	},
 	IASMach: func() {
+		libraries.pushbutton();
 		if (me.FCUworking) {
 			if (fmgc.Input.ktsMach.getBoolValue()) {
 				fmgc.Input.ktsMach.setBoolValue(0);
@@ -297,6 +303,7 @@ var FCUController = {
 	},
 	vertTemp: nil,
 	LOCButton: func() {
+		libraries.pushbutton();
 		if (me.FCUworking) {
 			me.vertTemp = fmgc.Output.vert.getValue();
 			if ((fmgc.Output.locArm.getBoolValue() or fmgc.Output.lat.getValue() == 2) and !fmgc.Output.apprArm.getBoolValue() and me.vertTemp != 2 and me.vertTemp != 6) {
@@ -323,6 +330,7 @@ var FCUController = {
 		}
 	},
 	TRKFPA: func() {
+		libraries.pushbutton();
 		if (me.FCUworking) {
 			fmgc.ITAF.toggleTrkFpa();
 		}
@@ -440,6 +448,7 @@ var FCUController = {
 		}
 	},
 	APPRButton: func() {
+		libraries.pushbutton();
 		if (me.FCUworking) {
 			me.vertTemp = fmgc.Output.vert.getValue();
 			if ((fmgc.Output.locArm.getBoolValue() or fmgc.Output.lat.getValue() == 2) and (fmgc.Output.apprArm.getBoolValue() or me.vertTemp == 2 or me.vertTemp == 6)) {

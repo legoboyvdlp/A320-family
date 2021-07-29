@@ -94,6 +94,7 @@ var setNDRange = func(n, d) {
 }
 
 var cpt_efis_btns = func(i) {
+	libraries.pushbutton();
 	if (i == "cstr") {
 		setEfisOptions(0, 0, 1, 0, 0, 0, 0);
 	} else if (i == "wpt") {
@@ -110,6 +111,7 @@ var cpt_efis_btns = func(i) {
 }
 
 var fo_efis_btns = func(i) {
+	libraries.pushbutton();
 	if (i == "cstr") {
 		setEfisOptions(1, 0, 1, 0, 0, 0, 0);
 	} else if (i == "wpt") {
