@@ -574,4 +574,15 @@
 		<output>/instrumentation/iesi/pitch-deg</output>
 	</filter>
 
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.5</value>
+        </time>
+        <S>
+			<property>/instrumentation/pfd/lights/autoland-armed</property>
+        </S>
+        <output>/instrumentation/pfd/lights/autoland-sw-pulse</output>
+    </flipflop>
+
 </PropertyList>

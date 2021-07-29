@@ -1009,6 +1009,22 @@
 				<factor>40.0</factor>
 			</volume>
 		</apoff>
+
+		<autolandwarning>
+			<name>autolandwarning-single</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-once.wav</path>
+			<condition>
+				<equals>
+					<property>/instrumentation/pfd/lights/autoland-alarm</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>40.0</factor>
+			</volume>
+		</autolandwarning>
 		
 		<gear>
 			<name>gear0</name>
