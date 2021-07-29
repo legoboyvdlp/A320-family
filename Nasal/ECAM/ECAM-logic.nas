@@ -3460,12 +3460,6 @@ var messages_right_memo = func {
 		park_brk.colour = "g";
 	}
 	
-	if (getprop("/controls/gear/brake-fans") == 1) {
-		brk_fan.active = 1;
-	} else {
-		brk_fan.active = 0;
-	}
-	
 	if (systems.HYD.Switch.ptu.getValue() == 1 and ((systems.HYD.Psi.yellow.getValue() < 1450 and systems.HYD.Psi.green.getValue() > 1450 and getprop("/controls/hydraulic/elec-pump-yellow") == 0) or (systems.HYD.Psi.yellow.getValue() > 1450 and systems.HYD.Psi.green.getValue() < 1450))) {
 		ptu.active = 1;
 	} else {
@@ -3507,7 +3501,13 @@ var messages_right_memo = func {
 	} else {
 		ram_air.active = 0;
 	}
-
+	
+	if (getprop("/systems/oxygen/passenger-oxygen/sys-on-light") == 1) {
+		pax_oxy.active = 1;
+	} else {
+		pax_oxy.active = 0;
+	}
+	
 	if (getprop("/controls/engines/engine[0]/igniter-a") == 1 or getprop("/controls/engines/engine[0]/igniter-b") == 1 or getprop("/controls/engines/engine[1]/igniter-a") == 1 or getprop("/controls/engines/engine[1]/igniter-b") == 1) {
 		ignition.active = 1;
 	} else {
@@ -3531,6 +3531,24 @@ var messages_right_memo = func {
 		company_call.active = 0;
 	}
 	
+	if (mcdu.ReceivedMessagesDatabase.firstUnviewed() != -99 and (phaseVarMemo2 <= 2 or phaseVarMemo2 == 6 or phaseVarMemo2 >= 9)) {
+		company_msg.active = 1;
+	} else {
+		company_msg.active = 0;
+	}
+	
+	if (getprop("/controls/ice-protection/leng") == 1 or getprop("/controls/ice-protection/reng") == 1 or getprop("/systems/electrical/bus/dc-1") == 0 or getprop("/systems/electrical/bus/dc-2") == 0) {
+		eng_aice.active = 1;
+	} else {
+		eng_aice.active = 0;
+	}
+	
+	if (wing_pb.getValue() == 1) {
+		wing_aice.active = 1;
+	} else {
+		wing_aice.active = 0;
+	}
+	
 	if (getprop("/controls/pneumatics/switches/apu") == 1 and pts.APU.rpm.getValue() >= 95) {
 		apu_bleed.active = 1;
 	} else {
@@ -3549,22 +3567,16 @@ var messages_right_memo = func {
 		ldg_lt.active = 0;
 	}
 	
-	if (mcdu.ReceivedMessagesDatabase.firstUnviewed() != -99 and (phaseVarMemo2 <= 2 or phaseVarMemo2 == 6 or phaseVarMemo2 >= 9)) {
-		company_msg.active = 1;
+	if (getprop("/controls/gear/brake-fans") == 1) {
+		brk_fan.active = 1;
 	} else {
-		company_msg.active = 0;
+		brk_fan.active = 0;
 	}
 	
-	if (getprop("/controls/ice-protection/leng") == 1 or getprop("/controls/ice-protection/reng") == 1 or getprop("/systems/electrical/bus/dc-1") == 0 or getprop("/systems/electrical/bus/dc-2") == 0) {
-		eng_aice.active = 1;
+	if (getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override") == 1) { # todo: emer elec
+		gpws_flap3.active = 1;
 	} else {
-		eng_aice.active = 0;
-	}
-	
-	if (wing_pb.getValue() == 1) {
-		wing_aice.active = 1;
-	} else {
-		wing_aice.active = 0;
+		gpws_flap3.active = 0;
 	}
 	
 	if (!getprop("/systems/radio/vhf3-data-mode") and (phaseVarMemo3 == 1 or phaseVarMemo3 == 2 or phaseVarMemo3 == 6 or phaseVarMemo3 == 9 or phaseVarMemo3 == 10)) {
@@ -3591,6 +3603,12 @@ var messages_right_memo = func {
 		auto_brk_max.active = 0;
 	}
 	
+	if (phaseVarMemo3 >= 2 and phaseVarMemo3 <= 9 and systems.ELEC.Bus.ac1.getValue() >= 110 and systems.ELEC.Bus.ac2.getValue() >= 110 and (getprop("/systems/fuel/feed-center-1") or getprop("/systems/fuel/feed-center-2"))) {
+		ctr_tk_feedg.active = 1;
+	} else {
+		ctr_tk_feedg.active = 0;
+	}
+	
 	if (systems.FUEL.Valves.crossfeed.getValue() != 0 and systems.FUEL.Switches.crossfeed.getValue()) {
 		fuelx.active = 1;
 	} else {
@@ -3603,16 +3621,10 @@ var messages_right_memo = func {
 		fuelx.colour = "g";
 	}
 	
-	if (getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override") == 1) { # todo: emer elec
-		gpws_flap3.active = 1;
+	if (systems.SwitchingPanel.Switches.airData.getValue() != 0 or systems.SwitchingPanel.Switches.attHdg.getValue() != 0) {
+		adirs_switch.active = 1;
 	} else {
-		gpws_flap3.active = 0;
-	}
-	
-	if (phaseVarMemo3 >= 2 and phaseVarMemo3 <= 9 and systems.ELEC.Bus.ac1.getValue() >= 110 and systems.ELEC.Bus.ac2.getValue() >= 110 and (getprop("/systems/fuel/feed-center-1") or getprop("/systems/fuel/feed-center-2"))) {
-		ctr_tk_feedg.active = 1;
-	} else {
-		ctr_tk_feedg.active = 0;
+		adirs_switch.active = 0;
 	}
 }
 
