@@ -140,10 +140,8 @@ var PNEU = {
 		#setprop("/systems/ventilation/cabin/fans", 0); # aircon fans
 		#setprop("/systems/ventilation/avionics/extractvalve", "0");
 		#setprop("/systems/ventilation/avionics/inletvalve", "0");
-		setprop("/controls/oxygen/masksDeploy", 0);
-		setprop("/controls/oxygen/masksDeployMan", 0);
-		setprop("/controls/oxygen/masksReset", 0); # this is the TMR RESET pb on the maintenance panel, needs 3D model
-		setprop("/controls/oxygen/masksSys", 0);
+		setprop("/controls/oxygen/passenger-mask-deploy-man", 0);
+		setprop("/controls/oxygen/passenger-mask-reset", 0); # this is the TMR RESET pb on the maintenance panel, needs 3D model
 	},
 	resetFail: func() {
 		me.Fail.apu.setBoolValue(0);
@@ -206,41 +204,5 @@ var PNEU = {
 			#setprop("/systems/ventilation/avionics/extractvalve", "1");
 			#setprop("/systems/ventilation/avionics/inletvalve", "1");
 		#}
-		
-		# Oxygen
-		if (cabinalt > 13500) { 
-			setprop("/controls/oxygen/masksDeploy", 1);
-			setprop("/controls/oxygen/masksSys", 1);
-		}
 	},
 };
-
-
-# Oxygen (Cabin)
-
-setlistener("/controls/oxygen/masksDeployMan", func {
-	guard = getprop("/controls/oxygen/masksGuard");
-	masks = getprop("/controls/oxygen/masksDeployMan");
-	
-	if (guard and masks) {
-		setprop("/controls/oxygen/masksDeployMan", 0);
-	} else if (!guard and masks) {
-		setprop("/controls/oxygen/masksDeployMan", 1);
-		setprop("/controls/oxygen/masksDeploy", 1);
-		setprop("/controls/oxygen/masksSys", 1);
-	}
-}, 0, 0);
-
-setlistener("/controls/oxygen/masksDeployMan", func {
-	masks = getprop("/controls/oxygen/masksDeployMan");
-	if (!masks) { 
-		setprop("/controls/oxygen/masksDeployMan", 1);
-	}
-}, 0, 0);
-
-setlistener("/controls/oxygen/masksDeploy", func {
-	autoMasks = getprop("/controls/oxygen/masksDeploy");
-	if (!autoMasks) { 
-		setprop("/controls/oxygen/masksDeploy", 1);
-	}
-}, 0, 0);

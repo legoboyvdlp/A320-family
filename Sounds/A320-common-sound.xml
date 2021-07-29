@@ -2001,6 +2001,22 @@
 			</volume>
 		</announcements>
 		
+		<announcements>
+			<name>depressurization</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Announce/depressurization.wav</path>
+			<condition>
+				<equals>
+					<property>/systems/oxygen/passenger-oxygen/sys-on-light</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>2.0</factor>
+			</volume>
+		</announcements>
+		
 		<chime>
 			<name>Click</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/click.wav</path>

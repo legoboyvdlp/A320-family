@@ -631,14 +631,16 @@ var canvas_lowerECAMPageElec =
 				} else {
 					obj["ELEC-Line-APU-EXT"].hide();
 				}
-				
-				if (val.elecExtEPC and (val.elecAcTie1 or val.elecAcTie2)) {
+			}),
+			props.UpdateManager.FromHashValue("elecExtEPC", nil, func(val) {
+				if (val) {
 					obj["EXT-out"].show();
 				} else {
 					obj["EXT-out"].hide();
 				}
-				
-				if (val.apuGLC and (val.elecAcTie1 or val.elecAcTie2)) {
+			}),
+			props.UpdateManager.FromHashValue("apuGLC", nil, func(val) {
+				if (val) {
 					obj["APU-out"].show();
 				} else {
 					obj["APU-out"].hide();
