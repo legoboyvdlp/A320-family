@@ -342,6 +342,42 @@
                 <value>1</value>
             </binding>
         </button>
+
+        <group>
+            <layout>hbox</layout>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
+            <text>
+                <label>Oxygen</label>
+            </text>
+            <hrule>
+                <stretch type="bool">true</stretch>
+            </hrule>
+        </group>
+		
+		<text>
+			<x>10</x>
+			<y>200</y>
+			<label>8888 litres</label><!-- placeholder for width -->
+			<format>%4.0f litres</format>
+			<property>/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
+			<live>true</live>
+		</text>
+		
+        <button>
+            <legend>Replace Oxygen Bottle</legend>
+            <halign>center</halign>
+            <padding>5</padding>
+			<enable>
+				<property>/gear/gear[1]/wow</property>
+			</enable>
+            <binding>
+                <command>property-assign</command>
+                <property>/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
+                <value>2183</value>
+            </binding>
+        </button>
     </group>
 
 </PropertyList>

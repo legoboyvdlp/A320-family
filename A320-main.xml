@@ -1058,6 +1058,16 @@
 				<ratman type="bool">0</ratman>
 			</protectors>
 		</OH>
+		<oxygen>
+			<cockpit-mask-1-on type="bool">0</cockpit-mask-1-on>
+			<cockpit-mask-2-on type="bool">0</cockpit-mask-2-on>
+			<cockpit-mask-3-on type="bool">0</cockpit-mask-3-on>
+			<cockpit-mask-4-on type="bool">0</cockpit-mask-4-on>
+			<cockpit-mask-1-selector type="bool">0</cockpit-mask-1-selector>
+			<cockpit-mask-2-selector type="bool">0</cockpit-mask-2-selector>
+			<cockpit-mask-3-selector type="bool">0</cockpit-mask-3-selector>
+			<cockpit-mask-4-selector type="bool">0</cockpit-mask-4-selector>
+		</oxygen>
 		<pneumatics n="0">
 			<switches n="0">
 				<apu type="bool">0</apu>
@@ -1580,6 +1590,7 @@
 				<operating-3 type="bool">0</operating-3>
 			</adr>
 		</navigation>
+		
 	</systems>
 	
 	<options n="0">

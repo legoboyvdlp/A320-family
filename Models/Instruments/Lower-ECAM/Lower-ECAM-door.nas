@@ -26,7 +26,6 @@ var canvas_lowerECAMPageDoor =
 		obj["Cabin3LeftSlide"].hide();
 		obj["Cabin3RightSlide"].hide();
 
-		obj["DOOROXY-REGUL-LO-PR"].hide();
 		obj["AvionicsLine1"].hide();
 		obj["AvionicsLine2"].hide();
 		obj["AvionicsLbl1"].hide();
@@ -153,16 +152,23 @@ var canvas_lowerECAMPageDoor =
 					obj["Cargo1Line"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("oxyPB", nil, func(val) {
-				if (val) {
-					obj["DOOROXY-OxyIndicator"].setColor(0.8078,0.8039,0.8078);
-					obj["DOOROXY-PR"].setColor(0.0509,0.7529,0.2941);
-					obj["DOOROXY-PR"].setText("1300");
+			props.UpdateManager.FromHashList(["oxyPB","oxyBottlePress","oxyBottleRegulLoPr"], nil, func(val) {
+				if (val.oxyPB) {
+					if (val.oxyBottlePress < 300 or val.oxyBottleRegulLoPr) {
+						obj["DOOROXY-OxyIndicator"].setColor(0.7333,0.3803,0);
+					} else {
+						obj["DOOROXY-OxyIndicator"].setColor(0.8078,0.8039,0.8078);
+					}
 				} else {
 					obj["DOOROXY-OxyIndicator"].setColor(0.7333,0.3803,0);
-					obj["DOOROXY-PR"].setColor(0.7333,0.3803,0);
-					obj["DOOROXY-PR"].setText("0");
 				}
+				
+				if (val.oxyBottlePress < 300) {
+					obj["DOOROXY-PR"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["DOOROXY-PR"].setColor(0.0509,0.7529,0.2941);
+				}
+				obj["DOOROXY-PR"].setText(sprintf("%4.0f", math.round(val.oxyBottlePress, 10)));
 			}),
 			props.UpdateManager.FromHashValue("pressVS", nil, func(val) {
 				if (val > 9950) {
@@ -184,6 +190,13 @@ var canvas_lowerECAMPageDoor =
 					obj["DOOR-VS-Container"].show();
 				} else {
 					obj["DOOR-VS-Container"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("oxyBottleRegulLoPr", nil, func(val) {
+				if (val) {
+					obj["DOOROXY-REGUL-LO-PR"].show();
+				} else {
+					obj["DOOROXY-REGUL-LO-PR"].hide();
 				}
 			}),
 		];
@@ -327,6 +340,8 @@ var input = {
 	cargoBulk: "/sim/model/door-positions/cargobulk/position-norm",
 	cargoFwd: "/sim/model/door-positions/cargofwd/position-norm",
 	oxyPB: "/controls/oxygen/crewOxyPB",
+	oxyBottlePress: "/systems/oxygen/cockpit-oxygen/bottle-psi",
+	oxyBottleRegulLoPr: "/systems/oxygen/cockpit-oxygen/regul-lo-pr",
 };
 
 foreach (var name; keys(input)) {
