@@ -3438,7 +3438,7 @@
 				<property>modes/pfd/ILS1</property>
 			</binding>
 			<binding>
-				<command>script</command>
+				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
@@ -3477,7 +3477,7 @@
 				<property>modes/pfd/ILS2</property>
 			</binding>
 			<binding>
-				<command>script</command>
+				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
