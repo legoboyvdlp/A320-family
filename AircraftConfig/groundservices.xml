@@ -172,25 +172,28 @@
             </hrule>
         </group>
 
-        <checkbox>
-            <label>Front Left</label>
-            <halign>left</halign>
-            <property>/services/stairs/l1</property>
-            <binding>
-                <command>dialog-apply</command>
-            </binding>
-            <live>true</live>
-        </checkbox>
+		<group>
+            <layout>hbox</layout>
+			<checkbox>
+				<label>Front Left</label>
+				<halign>left</halign>
+				<property>/services/stairs/l1</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
 
-        <checkbox>
-            <label>Rear Left</label>
-            <halign>left</halign>
-            <property>/services/stairs/l4</property>
-            <binding>
-                <command>dialog-apply</command>
-            </binding>
-            <live>true</live>
-        </checkbox>
+			<checkbox>
+				<label>Rear Left</label>
+				<halign>left</halign>
+				<property>/services/stairs/l4</property>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<live>true</live>
+			</checkbox>
+		</group>
 
         <checkbox>
             <label>Stairway Cover</label>
@@ -356,28 +359,31 @@
             </hrule>
         </group>
 		
-		<text>
-			<x>10</x>
-			<y>200</y>
-			<label>8888 litres</label><!-- placeholder for width -->
-			<format>%4.0f litres</format>
-			<property>/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
-			<live>true</live>
-		</text>
-		
-        <button>
-            <legend>Replace Oxygen Bottle</legend>
-            <halign>center</halign>
-            <padding>5</padding>
-			<enable>
-				<property>/gear/gear[1]/wow</property>
-			</enable>
-            <binding>
-                <command>property-assign</command>
-                <property>/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
-                <value>2183</value>
-            </binding>
-        </button>
+		<group>
+			<layout>hbox</layout>
+			<button>
+				<legend>Replace Oxygen Bottle</legend>
+				<halign>center</halign>
+				<padding>5</padding>
+				<enable>
+					<property>/gear/gear[1]/wow</property>
+				</enable>
+				<binding>
+					<command>property-assign</command>
+					<property>/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
+					<value>2183</value>
+				</binding>
+			</button>
+			
+			<text>
+				<x>10</x>
+				<y>200</y>
+				<label>8888 litres</label><!-- placeholder for width -->
+				<format>%4.0f litres</format>
+				<property>/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
+				<live>true</live>
+			</text>
+		</group>
 		
         <button>
             <legend>Reset Pax Oxy Masks</legend>
