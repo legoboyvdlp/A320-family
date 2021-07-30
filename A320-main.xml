@@ -147,6 +147,9 @@
 				<ambient-correction-wing type="double">0.00</ambient-correction-wing>
 				<reflection-correction-wing type="double">-0.15</reflection-correction-wing>
 			</reflection>
+			<livery>
+				<max-resolution type="int" userarchive="y">4096</max-resolution>
+			</livery>
 		</model>
 		
 		<previews>
@@ -4698,6 +4701,9 @@
 		<pts>
 			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
 		</pts>
+		<aircraft>
+			<file>Aircraft/A320-family/Nasal/Libraries/canvasLiv.nas</file>
+		</aircraft>
 		<libraries>
 			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
 			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
