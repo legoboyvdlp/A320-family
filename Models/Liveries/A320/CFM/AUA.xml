@@ -5,8 +5,8 @@
 		<model>
 			<livery>
 				<name>Austrian Airlines (OE-LBU)</name>
-				<texture-fuselage>Liveries/A320/CFM/AUA-fuselage.png</texture-fuselage>
-				<texture-engine>Liveries/A320/CFM/CFM56-white.png</texture-engine>
+				<texture-fuselage>AUA-fuselage.png</texture-fuselage>
+				<texture-engine>CFM56-white.png</texture-engine>
 			</livery>
 		</model>
 	</sim>
