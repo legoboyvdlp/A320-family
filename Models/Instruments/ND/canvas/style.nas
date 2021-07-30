@@ -708,9 +708,19 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd, symbol),
 				predicate: func(nd) {
-					!systems.ADIRS.Operating.aligned[0].getBoolValue() and !systems.ADIRS.Operating.aligned[1].getBoolValue() and !systems.ADIRS.Operating.aligned[2].getBoolValue()
+					(!systems.ADIRS.Operating.aligned[0].getBoolValue() and !systems.ADIRS.Operating.aligned[1].getBoolValue() and !systems.ADIRS.Operating.aligned[2].getBoolValue())
+					or (mcdu_scratchpad.scratchpads[nd.number].showTypeIIMsg and mcdu_scratchpad.scratchpads[nd.number].scratchpad == "GPS PRIMARY")
 				},
-				is_true: func(nd) nd.symbols.nd_warn_memo.show(),
+				is_true: func(nd) {
+					nd.symbols.nd_warn_memo.show();
+					if (mcdu_scratchpad.scratchpads[nd.number].showTypeIIMsg and mcdu_scratchpad.scratchpads[nd.number].scratchpad == "GPS PRIMARY") {
+						nd.symbols.nd_warn_memo.setText("GPS PRIMARY");
+						nd.symbols.nd_warn_memo.setColor(0.8078,0.8039,0.8078);
+					} else {
+						nd.symbols.nd_warn_memo.setText("GPS PRIMARY LOST");
+						nd.symbols.nd_warn_memo.setColor(0.7333,0.3803,0);
+					}
+				},
 				is_false: func(nd) nd.symbols.nd_warn_memo.hide(),
 			},
 		},
@@ -719,7 +729,8 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd, symbol),
 				predicate: func(nd) {
-					!systems.ADIRS.Operating.aligned[0].getBoolValue() and !systems.ADIRS.Operating.aligned[1].getBoolValue() and !systems.ADIRS.Operating.aligned[2].getBoolValue()
+					(!systems.ADIRS.Operating.aligned[0].getBoolValue() and !systems.ADIRS.Operating.aligned[1].getBoolValue() and !systems.ADIRS.Operating.aligned[2].getBoolValue())
+					or (mcdu_scratchpad.scratchpads[nd.number].showTypeIIMsg and mcdu_scratchpad.scratchpads[nd.number].scratchpad == "GPS PRIMARY")
 				},
 				is_true: func(nd) nd.symbols.nd_warn_msgbox.show(),
 				is_false: func(nd) nd.symbols.nd_warn_msgbox.hide(),

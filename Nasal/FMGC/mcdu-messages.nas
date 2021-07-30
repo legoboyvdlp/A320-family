@@ -47,6 +47,13 @@ var MessageQueueController = {
 			me.messages.pop(index);
 		}
 	},
+	deleteWithText: func(text) {
+		foreach (var message; me.messages.vector) {
+			if (message.msgText == text) {
+				me.messages.remove(message);
+			}
+		}
+	},
 	clearQueue: func() {
 		me.messages.clear();
 	},

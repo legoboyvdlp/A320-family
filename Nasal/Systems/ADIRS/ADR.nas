@@ -153,7 +153,6 @@ var ADIRU = {
 		if (me._gs > 5 or abs(me._pitch) > 5 or abs(me._roll) > 10) {
 			me.stopAlignNoAlign();
 			me._excessMotion = 1;
-			print("Excessive motion, restarting");
 			me.update(); # update operative
 			me.align(calcAlignTime(pts.Position.latitude.getValue()));
 		} elsif (me.operative == 0) {
@@ -324,6 +323,7 @@ var ADIRS = {
 		),
 	],
 	_hasGPSPrimLost: 0,
+	_hasGPSPrim: 0,
 	loop: func(notification) {
 		if (me._init) {
 			for (i = 0; i < _NUMADIRU; i = i + 1) {
@@ -350,10 +350,24 @@ var ADIRS = {
 					if (!me._hasGPSPrimLost) {
 						mcdu_scratchpad.messageQueues[0].addNewMsg(mcdu_scratchpad.MessageController.getTypeIIMsgByText("GPS PRIMARY LOST"));
 						mcdu_scratchpad.messageQueues[1].addNewMsg(mcdu_scratchpad.MessageController.getTypeIIMsgByText("GPS PRIMARY LOST"));
+						me._hasGPSPrimLost = 1;
 					}
-					me._hasGPSPrimLost = 1;
 				} else {
-					me._hasGPSPrimLost = 0;
+					if (me._hasGPSPrimLost) {
+						mcdu_scratchpad.messageQueues[0].deleteWithText("GPS PRIMARY LOST");
+						mcdu_scratchpad.messageQueues[1].deleteWithText("GPS PRIMARY LOST");
+						me._hasGPSPrimLost = 0;
+					}
+				}
+				
+				if (me.Operating.aligned[0].getBoolValue() or me.Operating.aligned[1].getBoolValue() or me.Operating.aligned[2].getBoolValue()) {
+					if (!me._hasGPSPrim) {
+						mcdu_scratchpad.messageQueues[0].addNewMsg(mcdu_scratchpad.MessageController.getTypeIIMsgByText("GPS PRIMARY"));
+						mcdu_scratchpad.messageQueues[1].addNewMsg(mcdu_scratchpad.MessageController.getTypeIIMsgByText("GPS PRIMARY"));
+						me._hasGPSPrim = 1;
+					}
+				} else {
+					me._hasGPSPrim = 0;
 				}
 			}
 			
