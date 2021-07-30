@@ -1033,6 +1033,8 @@
 			<dome-norm type="double">0</dome-norm>
 			<fcu-panel-knb type="double">0</fcu-panel-knb>
 			<fcu-panel-norm type="double">0</fcu-panel-norm>
+			<fcu-digit-knb type="double">1</fcu-digit-knb>
+			<fcu-digit-norm type="double">1</fcu-digit-norm>
 			<landing-lights n="0" type="double">0</landing-lights>
 			<landing-lights n="1" type="double">0</landing-lights>
 			<landing-lights n="2" type="double">0</landing-lights>
@@ -1105,6 +1107,19 @@
 				<ratman type="bool">0</ratman>
 			</protectors>
 		</OH>
+		<oxygen>
+			<cockpit-oxygen-supply-pb type="bool">0</cockpit-oxygen-supply-pb>
+			<cockpit-mask-1-on type="bool">0</cockpit-mask-1-on>
+			<cockpit-mask-2-on type="bool">0</cockpit-mask-2-on>
+			<cockpit-mask-3-on type="bool">0</cockpit-mask-3-on>
+			<cockpit-mask-4-on type="bool">0</cockpit-mask-4-on>
+			<cockpit-mask-1-selector type="bool">0</cockpit-mask-1-selector>
+			<cockpit-mask-2-selector type="bool">0</cockpit-mask-2-selector>
+			<cockpit-mask-3-selector type="bool">0</cockpit-mask-3-selector>
+			<cockpit-mask-4-selector type="bool">0</cockpit-mask-4-selector>
+			<passenger-mask-deploy-man type="bool">0</passenger-mask-deploy-man>
+			<passenger-mask-reset type="bool">0</passenger-mask-reset>
+		</oxygen>
 		<pneumatics n="0">
 			<switches n="0">
 				<apu type="bool">0</apu>
@@ -1620,6 +1635,7 @@
 				<operating-3 type="bool">0</operating-3>
 			</adr>
 		</navigation>
+		
 	</systems>
 	
 	<options n="0">

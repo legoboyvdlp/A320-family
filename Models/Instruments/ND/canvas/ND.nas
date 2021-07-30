@@ -222,6 +222,7 @@ var canvas_ND_1 = {
 		# here we make the ND:
 		me.NDCpt = ND.new("/instrumentation/efis", myCockpit_switches, "Airbus");
 		me.NDCpt.attitude_heading_setting = -1;
+		me.NDCpt.number = 0;
 		me.NDCpt.adirs_property = props.globals.getNode("/instrumentation/efis[0]/nd/ir-1",1);
 		me.NDCpt.newMFD(canvas_group);
 		me.NDCpt.change_phase = 0;
@@ -247,6 +248,7 @@ var canvas_ND_2 = {
 		myCockpit_switches["ADIRS"]= {path: "/nd/ir-2", value: 0, type: "BOOL"};
 		me.NDFo = ND.new("/instrumentation/efis[1]", myCockpit_switches, "Airbus");
 		me.NDFo.attitude_heading_setting = 1;
+		me.NDFo.number = 1;
 		me.NDFo.adirs_property = props.globals.getNode("/instrumentation/efis[1]/nd/ir-2",1);
 		me.NDFo.newMFD(canvas_group);
 		me.NDFo.change_phase = 0;
