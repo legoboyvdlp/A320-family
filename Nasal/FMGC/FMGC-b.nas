@@ -763,11 +763,11 @@ var ITAF = {
 			Radio.locDeflTemp = Radio.locDefl.getValue();
 			Radio.signalQualityTemp = Radio.signalQuality.getValue();
 			if (abs(Radio.locDeflTemp) <= 0.95 and Radio.locDeflTemp != 0 and Radio.signalQualityTemp >= 0.99) {
-				if (abs(Radio.locDeflTemp[Input.radioSelTemp]) <= 0.25) {
+				if (abs(Radio.locDeflTemp) <= 0.25) {
 					me.activateLoc();
-				} else if (Radio.locDeflTemp[Input.radioSelTemp] >= 0 and Internal.navHeadingErrorDegTemp[Input.radioSelTemp] <= 0) {
+				} else if (Radio.locDeflTemp >= 0 and Internal.navHeadingErrorDegTemp <= 0) {
 					me.activateLoc();
-				} else if (Radio.locDeflTemp[Input.radioSelTemp] < 0 and Internal.navHeadingErrorDegTemp[Input.radioSelTemp] >= 0) {
+				} else if (Radio.locDeflTemp < 0 and Internal.navHeadingErrorDegTemp >= 0) {
 					me.activateLoc();
 				} else if (t != 1) { # Do not do this if loop calls it
 					if (Output.lat.getValue() != 2) {
