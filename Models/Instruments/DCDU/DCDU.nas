@@ -120,6 +120,7 @@ var canvas_DCDU = {
 	},
 	cache: {
 		adsCount: 0,
+		adsState: 0,
 	},
 	currentMessage: nil,
 	update: func() {
@@ -128,8 +129,9 @@ var canvas_DCDU = {
 		me["Recall"].hide();
 		
 		if (!me.showingMessage) {
-			if (atsu.ADS.getCount() != me.cache.adsCount) {
+			if (atsu.ADS.getCount() != me.cache.adsCount or atsu.ADS.state != me.cache.adsState) {
 				me.cache.adsCount = atsu.ADS.getCount();
+				me.cache.adsState = atsu.ADS.state;
 				# FANS A+: status of ADS seems to be independent of connection to CPDLC: confirm in GTG document
 				if (atsu.ADS.state == 2) {
 					me["ADSConnection"].setText("ADS CONNECTED(" ~ atsu.ADS.getCount() ~ ")");

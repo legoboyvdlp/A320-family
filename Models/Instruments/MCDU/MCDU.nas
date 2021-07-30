@@ -2039,7 +2039,7 @@ var canvas_MCDU_base = {
 				me["Simple_C1"].setText("----------        ");
 			} else {
 				me["Simple_R1"].setText("NOTIFIED ");
-				me["Simple_C1"].setText("-------------     ");
+				me["Simple_C1"].setText("------------      ");
 			}
 			
 			if (atsu.notificationSystem.notifyAirport != nil) {
