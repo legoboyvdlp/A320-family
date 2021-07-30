@@ -21,12 +21,6 @@
 				<value>1</value>
 			</equals>
 		</condition>
-		<offsets>
-			<x-m>26.11094</x-m>
-			<y-m>-29.16832</y-m>
-			<z-m>0.95</z-m>
-			<heading-deg>170</heading-deg>
-		</offsets>
 	</model>
 	
 	<animation>
