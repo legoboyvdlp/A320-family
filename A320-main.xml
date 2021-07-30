@@ -1229,6 +1229,24 @@
 		</gear>
 	</gear>
 	
+	<network>
+        <cpdlc>
+            <link>
+                <status type="int">0</status>
+                <data-authority type="string"></data-authority>
+            </link>
+            <rx>
+                <message type="string"/> 
+                <new-message type="bool">0</new-message> 
+            </rx>
+        </cpdlc>
+        <mpirc>
+            <irc-ready type="bool">0</irc-ready>
+            <msg-count-in type="int">0</msg-count-in>
+            <msg-count-out type="int">0</msg-count-out>
+        </mpirc>
+    </network>
+	
 	<services n="0">
 		<chocks n="0">
 			<enable type="bool">0</enable>
