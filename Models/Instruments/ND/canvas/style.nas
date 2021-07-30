@@ -707,18 +707,22 @@ canvas.NDStyles["Airbus"] = {
 			id: "nd_warn_memo",
 			impl: {
 				init: func(nd, symbol),
-				predicate: ALWAYS,
-				is_true: func(nd) nd.symbols.nd_warn_memo.hide(),
-				is_false: func(nd),
+				predicate: func(nd) {
+					!systems.ADIRS.Operating.aligned[0].getBoolValue() and !systems.ADIRS.Operating.aligned[1].getBoolValue() and !systems.ADIRS.Operating.aligned[2].getBoolValue()
+				},
+				is_true: func(nd) nd.symbols.nd_warn_memo.show(),
+				is_false: func(nd) nd.symbols.nd_warn_memo.hide(),
 			},
 		},
 		{
 			id: "nd_warn_msgbox",
 			impl: {
 				init: func(nd, symbol),
-				predicate: ALWAYS,
-				is_true: func(nd) nd.symbols.nd_warn_msgbox.hide(),
-				is_false: func(nd),
+				predicate: func(nd) {
+					!systems.ADIRS.Operating.aligned[0].getBoolValue() and !systems.ADIRS.Operating.aligned[1].getBoolValue() and !systems.ADIRS.Operating.aligned[2].getBoolValue()
+				},
+				is_true: func(nd) nd.symbols.nd_warn_msgbox.show(),
+				is_false: func(nd) nd.symbols.nd_warn_msgbox.hide(),
 			},
 		},
 		{
