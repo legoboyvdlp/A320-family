@@ -222,8 +222,10 @@
 	
 	<options n="0">
 		<eng type="string">IAE</eng>
+		<engine-name type="string">V2527-A5</engine-name>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">40</maxflap>
+		<model-number type="string">A320-232</model-number>
 	</options>
 
 </PropertyList>

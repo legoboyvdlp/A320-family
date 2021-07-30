@@ -568,26 +568,26 @@ setlistener("/modes/pfd/fma/ap-mode", func {
 	if (Modes.PFD.FMA.apMode.getValue() != " ") {
 		Modes.PFD.FMA.apModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-});
+}, 0, 0);
 
 setlistener("/modes/pfd/fma/fd-mode", func {
 	if (Modes.PFD.FMA.fdMode.getValue() != " ") {
 		Modes.PFD.FMA.fdModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-});
+}, 0, 0);
 
 setlistener("/modes/pfd/fma/at-mode", func {
 	if (Modes.PFD.FMA.athrMode.getValue() != " ") {
 		Modes.PFD.FMA.throttleModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 		Modes.PFD.FMA.athrModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-});
+}, 0, 0);
 
 setlistener("/modes/pfd/fma/athr-armed", func {
 	if (Modes.PFD.FMA.athrMode.getValue() != " ") {
 		Modes.PFD.FMA.athrModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-});
+}, 0, 0);
 
 setlistener("/modes/pfd/fma/throttle-mode", func {
 	state1 = systems.FADEC.detentText[0].getValue();
@@ -601,38 +601,38 @@ setlistener("/modes/pfd/fma/throttle-mode", func {
 			Modes.PFD.FMA.throttleModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 		}
 	}
-});
+}, 0, 0);
 
 setlistener("/modes/pfd/fma/roll-mode", func {
 	if (Modes.PFD.FMA.rollMode.getValue() != " ") {
 		Modes.PFD.FMA.rollModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-});
+}, 0, 0);
 
 setlistener("/modes/pfd/fma/pitch-mode", func {
 	if (Modes.PFD.FMA.pitchMode.getValue() != " ") {
 		Modes.PFD.FMA.pitchModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-});
+}, 0, 0);
 
 setlistener("/modes/pfd/fma/roll-mode-armed", func {
 	if (Modes.PFD.FMA.rollModeArmed.getValue() != " ") {
 		Modes.PFD.FMA.rollModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-});
+}, 0, 0);
 
 setlistener("/modes/pfd/fma/pitch-mode-armed", func {
 	if (Modes.PFD.FMA.pitchModeArmed.getValue() != " ") {
 		Modes.PFD.FMA.pitchModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-});
+}, 0, 0);
 
 setlistener("/modes/pfd/fma/pitch-mode2-armed", func {
 	if (Modes.PFD.FMA.pitchMode2Armed != " ") {
 		Modes.PFD.FMA.pitchMode2ArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
-});
+}, 0, 0);
 
-setlistener("sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func {
 	init();
 });

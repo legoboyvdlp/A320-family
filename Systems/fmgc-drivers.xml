@@ -339,10 +339,10 @@
 			<condition>
 				<and>
 					<property>/instrumentation/efis/mfd/true-north</property>
-					<greater-than>
+					<greater-than-equals>
 						<property>/velocities/groundspeed-kt</property>
 						<value>1</value>
-					</greater-than>
+					</greater-than-equals>
 				</and>
 			</condition>
 			<property>/orientation/track-deg</property>
@@ -351,10 +351,10 @@
 			<condition>
 				<and>
 					<not><property>/instrumentation/efis/mfd/true-north</property></not>
-					<greater-than>
+					<greater-than-equals>
 						<property>/velocities/groundspeed-kt</property>
 						<value>1</value>
-					</greater-than>
+					</greater-than-equals>
 				</and>
 			</condition>
 			<property>/orientation/track-magnetic-deg</property>
@@ -371,10 +371,10 @@
 		<gain>1.0</gain>
 		<input>
 			<condition>
-				<less-than-equals>
+				<less-than>
 					<property>/velocities/groundspeed-kt</property>
 					<value>1</value>
-				</less-than-equals>
+				</less-than>
 			</condition>
 			<property>/orientation/heading-magnetic-deg</property>
 		</input>
@@ -575,6 +575,25 @@
 	</filter>
 	
 	<filter>
+		<name>Nav Course Error Deg</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<property>/instrumentation/nav[0]/radials/selected-deg</property>
+			<offset>
+				<property>/orientation/track-magnetic-deg</property>
+				<scale>-1.0</scale>
+			</offset>
+		</input>
+		<output>/it-autoflight/internal/nav-course-track-error-deg</output>
+		<period>
+			<min>-180</min>
+			<max>180</max>
+		</period>
+	</filter>
+	
+	<filter>
 		<name>Internal Vertical Speed</name>
 		<debug>false</debug>
 		<type>gain</type>
@@ -588,6 +607,32 @@
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
+		<input> <!-- Under 110ft glideslope data starts to become unusable -->
+			<condition>
+				<and>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>2</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>6</value>
+						</equals>
+					</or>
+					<less-than-equals>
+						<property>/position/gear-agl-ft</property>
+						<value>110</value>
+					</less-than-equals>
+				</and>
+			</condition>
+			<expression>
+				<min>
+					<property>/it-autoflight/internal/nav-rate-of-climb-fpm</property>
+					<value>-500</value>
+				</min>
+			</expression>
+		</input>
 		<input>/instrumentation/nav[0]/gs-rate-of-climb-fpm</input>
 		<output>/it-autoflight/internal/nav-rate-of-climb-fpm</output>
 		<min>

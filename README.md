@@ -22,7 +22,8 @@ It is highly reccomended to purchase a NAVIGRAPH subscription and download their
 To install navdata, create a folder FMSDATA, and add it to your additional scenery folders, at the top of the list. Inside that folder, place all the XXXX.procedures.xml files, in the format FMSDATA/X/X/X/XXXX.procedures.xml. For instance, FMSDATA/Airports/E/G/K/EGKK.procedures.xml. 
 
 ## Remote MCDU
-If you want to run the MCDU on a phone or tablet for better realism and easier input, put mcdu.html into the FGDATA/Phi folder, run FlightGear with enabled HTTP server (i.e. command line --httpd=8080) and open http://your-flightgear-computer:8080/mcdu.html in the browser on your phone or tablet.
+If you want to run the MCDU on a your smarthphone or tablet for better realism and easier input, run FlightGear with enabled HTTP server (i.e. command line --httpd=<Port; e.g. 8080>) then go to main menu -> Instruments -> Remote MCDU.
+You can generate a QR-code to lauch directly on your smartphone/tablet, first insert your local ip. Your device must run on the same local network of your computer.
 
 ## Installation
 If you have issues installing, please check INSTALL.MD!
@@ -131,8 +132,8 @@ NOTE: These are external tools so make sure to check their terms of use
 * [Trim Calculator (for FSLabs, but will work for us)](https://forums.flightsimlabs.com/index.php?/files/file/675-a320x-trim-calculation-tool/)
 * [Take off performance calculator (excel)](https://forums.flightsimlabs.com/index.php?/files/file/763-a320-takeoff-and-landing-performance-calculator/)
 * [Take off performance calculator (.exe -- different to above) ](http://www.avsimrus.com/f/for-pilots-19/popular-calculator-to-calculate-takeoff-parameters-in-from-airbus-type-36340.html)
-* [Take off performance calculator (online)](http://wabpro.cz/A320/)
 * [Air Berlin Normal Checklist](https://forums.flightsimlabs.com/index.php?/files/file/778-airberlin-normal-procedures-checklist/)
 * [Navdata hosted by pinto](https://github.com/l0k1/fg-navaiddata)
 * [A320 Normal Procedures](https://www.theairlinepilots.com/forumarchive/a320/a320-normal-procedures.pdf)
-* [A319/A320 Concise Checklist](https://forums.x-plane.org/index.php?/files/file/50904-toliss-a319-concise-checklist-pdf/)
+* [A319/A320 Concise Checklist](https://forums.x-plane.org/index.php?/files/file/50904-toliss-a319-concise-checklist-pdf/) (you will need a free xplane.org account)
+<!--* [Take off performance calculator (online)](http://wabpro.cz/A320/)-->

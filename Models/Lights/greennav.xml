@@ -1,35 +1,47 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0"?>
 
 <!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
-	<path>res/greennav.ac</path>
-
-	<!-- ANIMATIONS -->
-	<!-- On/off -->
-	<animation>
-		<name>On/off</name>
-		<type>select</type>
-		<object-name>Light</object-name>
-		<condition>
-			<equals>
-				<property>sim/model/lights/nav-lights</property>
-				<value>1</value>
-			</equals>
-		</condition>
-	</animation>
+	<path>green-navlight.ac</path>
+	<nopreview/>
 
 	<animation>
 		<type>noshadow</type>
-		<object-name>Light</object-name>
+		<object-name>green-navlightals</object-name>
 	</animation>
 
-	<!-- Billboard animation -->
+	<effect>
+			<inherits-from>Aircraft/A320-family/Models/lights/ALS/green-navlight</inherits-from>
+			<object-name>green-navlightals</object-name>
+	</effect>
+	
 	<animation>
-		<name>Billboard</name>
-		<type>billboard</type>
-		<object-name>Light</object-name>
+		<type>scale</type>
+		<x-offset>0.5</x-offset>
+		<y-offset>0.5</y-offset>
+		<z-offset>0.5</z-offset>
 	</animation>
+	
+	<animation>
+		<type>dist-scale</type>
+		<object-name>green-navlightals</object-name>
+		<interpolation>
+			<entry>
+				<ind>0</ind>
+				<dep>1</dep>
+			</entry>
+			<entry>
+				<ind>300</ind>
+				<dep>4</dep>
+			</entry>
+			<entry>
+				<ind>1500</ind>
+				<dep>8</dep>
+			</entry>
+		</interpolation>
+	</animation>
+
 
 </PropertyList>

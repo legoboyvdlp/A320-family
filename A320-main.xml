@@ -61,10 +61,8 @@
 		</hud>
 
 		<model>
-			<fallback-model-index>212</fallback-model-index>
-
 			<autopush include="AircraftConfig/autopush-config.xml"/>
-			<display-contrast type="double">0.7</display-contrast>
+			<fallback-model-index>212</fallback-model-index>
 			<door>
 				<position-x-m type="float">-13.8008</position-x-m>
 				<position-y-m type="float">-1.91254</position-y-m>
@@ -473,6 +471,16 @@
 							]]></script>
 						</binding>
 					</item>
+					<item>
+						<label>Remote MCDU</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							var mcduweb_dlg = gui.Dialog.new("sim/gui/dialogs/mcduweb/dialog", "Aircraft/A320-family/gui/dialogs/mcduweb.xml");
+							mcduweb_dlg.open();
+							</script>
+						</binding>
+					</item>					
 				</menu>
 				<menu n="105">
 					<label>Utilities</label>
@@ -705,9 +713,11 @@
 				<clbreduc-ft type="double">1500</clbreduc-ft>
 				<control-1 n="0">
 					<detent-text type="string">IDLE</detent-text>
+					<n1-mode-sw type="bool">0</n1-mode-sw>
 				</control-1>
 				<control-2 n="0">
 					<detent-text type="string">IDLE</detent-text>
+					<n1-mode-sw type="bool">0</n1-mode-sw>
 				</control-2>
 				<eng-out type="bool">0</eng-out>
 				<limit n="0">
@@ -727,6 +737,10 @@
 				<thr-locked-time type="double">0</thr-locked-time>
 			</fadec>
 			<fbw n="0">
+				<sidestick n="0">
+					<active type="bool" n="0">1</active>
+					<active type="bool" n="1">1</active>
+				</sidestick>
 				<yaw n="0">
 					<max-deg-switch type="double">25</max-deg-switch>
 				</yaw>
@@ -1019,6 +1033,8 @@
 			<dome-norm type="double">0</dome-norm>
 			<fcu-panel-knb type="double">0</fcu-panel-knb>
 			<fcu-panel-norm type="double">0</fcu-panel-norm>
+			<fcu-digit-knb type="double">1</fcu-digit-knb>
+			<fcu-digit-norm type="double">1</fcu-digit-norm>
 			<landing-lights n="0" type="double">0</landing-lights>
 			<landing-lights n="1" type="double">0</landing-lights>
 			<landing-lights n="2" type="double">0</landing-lights>
@@ -1091,6 +1107,19 @@
 				<ratman type="bool">0</ratman>
 			</protectors>
 		</OH>
+		<oxygen>
+			<cockpit-oxygen-supply-pb type="bool">0</cockpit-oxygen-supply-pb>
+			<cockpit-mask-1-on type="bool">0</cockpit-mask-1-on>
+			<cockpit-mask-2-on type="bool">0</cockpit-mask-2-on>
+			<cockpit-mask-3-on type="bool">0</cockpit-mask-3-on>
+			<cockpit-mask-4-on type="bool">0</cockpit-mask-4-on>
+			<cockpit-mask-1-selector type="bool">0</cockpit-mask-1-selector>
+			<cockpit-mask-2-selector type="bool">0</cockpit-mask-2-selector>
+			<cockpit-mask-3-selector type="bool">0</cockpit-mask-3-selector>
+			<cockpit-mask-4-selector type="bool">0</cockpit-mask-4-selector>
+			<passenger-mask-deploy-man type="bool">0</passenger-mask-deploy-man>
+			<passenger-mask-reset type="bool">0</passenger-mask-reset>
+		</oxygen>
 		<pneumatics n="0">
 			<switches n="0">
 				<apu type="bool">0</apu>
@@ -1200,6 +1229,24 @@
 		</gear>
 	</gear>
 	
+	<network>
+        <cpdlc>
+            <link>
+                <status type="int">0</status>
+                <data-authority type="string"></data-authority>
+            </link>
+            <rx>
+                <message type="string"/> 
+                <new-message type="bool">0</new-message> 
+            </rx>
+        </cpdlc>
+        <mpirc>
+            <irc-ready type="bool">0</irc-ready>
+            <msg-count-in type="int">0</msg-count-in>
+            <msg-count-out type="int">0</msg-count-out>
+        </mpirc>
+    </network>
+	
 	<services n="0">
 		<chocks n="0">
 			<enable type="bool">0</enable>
@@ -1217,6 +1264,7 @@
 		<acconfig n="0">
 			<autoconfig-running type="bool">0</autoconfig-running>
 			<options n="0">
+				<enable-shaders type="bool">true</enable-shaders>
 				<fadec n="0"> <!-- Configurable Detents -->
 					<climb-b type="double">0.6</climb-b>
 					<climb-t type="double">0.65</climb-t>
@@ -1316,11 +1364,6 @@
 				</bat-2>
 			</sources>
 		</electrical>
-		
-		<fadec>
-			<n1mode1 type="bool">0</n1mode1>
-			<n1mode2 type="bool">0</n1mode2>
-		</fadec>
 		
 		<failures n="0">
 			<aileron-left type="bool">0</aileron-left>
@@ -1610,6 +1653,7 @@
 				<operating-3 type="bool">0</operating-3>
 			</adr>
 		</navigation>
+		
 	</systems>
 	
 	<options n="0">
@@ -1917,8 +1961,9 @@
 	</instrumentation>
 	
 	<modes>
-		<cpt-du-xfr>0</cpt-du-xfr>
-		<fo-du-xfr>0</fo-du-xfr>
+		<cpt-du-xfr type="bool">0</cpt-du-xfr>
+		<ecam-du-xfr type="bool">0</ecam-du-xfr>
+		<fo-du-xfr type="bool">0</fo-du-xfr>
 		<pfd>
 			<ILS1>0</ILS1>
 			<ILS2>0</ILS2>
@@ -4688,6 +4733,8 @@
 			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 		</systems>
 		<ecam>
+			<file>Aircraft/A320-family/Nasal/ECAM/SystemDisplay.nas</file>
+			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-nodes.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-main.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-controller.nas</file>
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-logic.nas</file>
@@ -4761,6 +4808,20 @@
 		<canvas_ecam>
 			<file>Aircraft/A320-family/Nasal/emesary/exec.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-base.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-APU.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-bleed.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-cond.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-cruise.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-door.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-elec.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-eng.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-fctl.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-fuel.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-hyd.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-press.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-sts.nas</file>
+			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-wheel.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
 		</canvas_ecam>
 		<canvas_iesi>
@@ -4794,6 +4855,10 @@
 		<autopush_route>
 			<file>Aircraft/A320-family/Nasal/Autopush/route.nas</file>
 		</autopush_route>
+		<!-- cpdlc library by henning -->
+		<cpdlc>
+			<file>Aircraft/A320-family/Nasal/Systems/Comm/cpdlc-library.nas</file>
+		</cpdlc>
 		<!-- Panels -->
 		<rmp>
 			<file>Aircraft/A320-family/Nasal/Panels/rmp.nas</file>

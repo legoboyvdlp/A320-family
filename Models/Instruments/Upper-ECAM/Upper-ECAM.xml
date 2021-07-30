@@ -20,6 +20,22 @@
 	</animation>
 	
 	<animation>
+		<type>select</type>
+		<object-name>uecam.screen</object-name>
+		<condition>
+			<not><property>modes/ecam-du-xfr</property></not>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>uecam.screen2</object-name>
+		<condition>
+			<property>modes/ecam-du-xfr</property>
+		</condition>
+	</animation>
+
+	<animation>
 		<type>material</type>
 		<object-name>uecam.screen</object-name>
 		<emission>
@@ -31,7 +47,14 @@
 	</animation>
 
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/display</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/displays/lcd</inherits-from>
+		<parameters>
+			<inner-angle>90</inner-angle> <!-- 0-90, use 90 for LED or plasma display-->
+			<outer-angle>90</outer-angle> <!-- 0-90, but greater than inner -->
+			<black-angle>90</black-angle> <!-- 0-90, but greater than outer -->
+			<dirt-factor>0.07</dirt-factor>
+			<contrast><use>instrumentation/du/du3-contrast</use></contrast>
+		</parameters>
 		<object-name>uecam.screen</object-name>
 	</effect>
 

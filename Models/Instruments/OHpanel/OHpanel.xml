@@ -25,16 +25,12 @@
 		<object-name>BatteryBtn21F</object-name>
 		<object-name>BusTieBtn2O</object-name>
 		<object-name>DitchBtn2O</object-name>
-		<object-name>ELAC1Btn1F</object-name>
-		<object-name>ELAC1Btn2O</object-name>
 		<object-name>EmerExtLtBtn2O</object-name>
 		<object-name>Eng1AntiIceBtn1F</object-name>
 		<object-name>Eng1AntiIceBtn2O</object-name>
 		<object-name>Eng2AntiIceBtn1F</object-name>
 		<object-name>Eng2AntiIceBtn2O</object-name>
 		<object-name>ExtPwrBtn2O</object-name>
-		<object-name>FAC1Btn1F</object-name>
-		<object-name>FAC1Btn2O</object-name>
 		<object-name>IR1Btn1F</object-name>
 		<object-name>IR1Btn2O</object-name>
 		<object-name>IR2Btn1F</object-name>
@@ -42,8 +38,6 @@
 		<object-name>IR3Btn1F</object-name>
 		<object-name>IR3Btn2O</object-name>
 		<object-name>RamAirBtn2O</object-name>
-		<object-name>SEC1Btn1F</object-name>
-		<object-name>SEC1Btn2O</object-name>
 		<object-name>WingAntiIceBtn1F</object-name>
 		<object-name>WingAntiIceBtn2O</object-name>
 		<object-name>VentBlowBtn1F</object-name>
@@ -73,10 +67,16 @@
 		<object-name>Eng1FireAgt2Btn2D</object-name>
 		<object-name>Eng2FireAgt2Btn1S</object-name>
 		<object-name>Eng2FireAgt2Btn2D</object-name>
+		<object-name>ELAC1Btn1F</object-name>
+		<object-name>ELAC1Btn2O</object-name>
+		<object-name>FAC1Btn1F</object-name>
+		<object-name>FAC1Btn2O</object-name>
 		<object-name>Gen1Btn1F</object-name>
 		<object-name>Gen1Btn2O</object-name>
 		<object-name>Gen2Btn1F</object-name>
 		<object-name>Gen2Btn2O</object-name>
+		<object-name>SEC1Btn1F</object-name>
+		<object-name>SEC1Btn2O</object-name>
 		<condition>
 			<or>
 				<greater-than-equals>
@@ -7314,6 +7314,10 @@
 				<command>nasal</command>
 				<script>libraries.MechCallFunc();</script>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
 		</action>
 	</animation>
 
@@ -7332,6 +7336,33 @@
 				</condition>
 				<command>nasal</command>
 				<script>libraries.CabinCallFunc();</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>AftCabinCall</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.CabinCallFunc();</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7525,36 +7556,12 @@
 	</animation>
 
 	<animation>
-		<type>pick</type>
-		<object-name>PassOxyInd</object-name>
-		<object-name>PassOxyInd1S</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>controls/oxygen/masksSys</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
 		<type>select</type>
 		<object-name>PassOxyInd1S</object-name>
 		<condition>
 			<or>
 				<equals>
-					<property>controls/oxygen/masksSys</property>
+					<property>/systems/oxygen/passenger-oxygen/sys-on-light</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -7580,7 +7587,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/oxygen/crewOxyPB</property>
+				<property>controls/oxygen/cockpit-oxygen-supply-pb</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -7595,7 +7602,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/oxygen/crewOxyPB</property>
+					<property>controls/oxygen/cockpit-oxygen-supply-pb</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -7625,8 +7632,9 @@
 						</greater-than-equals>
 					</and>
 				</condition>
-				<command>property-toggle</command>
-				<property>controls/oxygen/masksDeployMan</property>
+				<command>property-assign</command>
+				<property>controls/oxygen/passenger-mask-deploy-man</property>
+				<value>1</value>
 			</binding>
 			<binding>
 				<condition>
@@ -7638,17 +7646,36 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>controls/OH/protectors/maskman</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>property-assign</command>
-				<property>controls/OH/protectors/maskman</property>
-				<value>0</value>
-			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<and>
+							<equals>
+								<property>controls/OH/protectors/maskman</property>
+								<value>1</value>
+							</equals>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-ess</property>
+								<value>25</value>
+							</greater-than-equals>
+						</and>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/oxygen/passenger-mask-deploy-man</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/maskman</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/OH/protectors/maskman</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 

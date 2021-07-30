@@ -53,7 +53,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fadec/n1mode1</property>
+				<property>fdm/jsbsim/fadec/control-1/n1-mode-sw</property>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -116,7 +116,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fadec/n1mode1</property>
+					<property>fdm/jsbsim/fadec/control-1/n1-mode-sw</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -154,7 +154,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/fadec/n1mode2</property>
+				<property>fdm/jsbsim/fadec/control-2/n1-mode-sw</property>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -217,7 +217,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/fadec/n1mode2</property>
+					<property>fdm/jsbsim/fadec/control-2/n1-mode-sw</property>
 					<value>1</value>
 				</equals>
 				<equals>

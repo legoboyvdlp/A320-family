@@ -1,8 +1,6 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
-
 # Copyright (c) 2021 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
-
 var MCDU_1 = nil;
 var MCDU_2 = nil;
 var MCDU1_display = nil;
@@ -69,13 +67,11 @@ var BLUE = [0.0901,0.6039,0.7176];
 var AMBER = [0.7333,0.3803,0.0000];
 var YELLOW = [0.9333,0.9333,0.0000];
 var MAGENTA = [0.6902,0.3333,0.7541];
-
 # Fetch nodes:
 var mcdu_keyboard_left = props.globals.getNode("/FMGC/keyboard-left", 0);
 var mcdu_keyboard_right = props.globals.getNode("/FMGC/keyboard-right", 0);
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var engRdy = props.globals.getNode("/engines/ready");
-
 #ACCONFIG
 var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
 var mcdu2_lgt = props.globals.getNode("/controls/lighting/DU/mcdu2", 1);
@@ -86,7 +82,6 @@ var perfFactor = props.globals.getNode("/options/company-options/perf-factor", 1
 var database1 = props.globals.getNode("/FMGC/internal/navdatabase", 1);
 var database2 = props.globals.getNode("/FMGC/internal/navdatabase2", 1);
 var databaseCode = props.globals.getNode("/FMGC/internal/navdatabasecode", 1);
-
 # RADNAV
 var vor1 = props.globals.getNode("/FMGC/internal/vor1-mcdu", 1);
 var vor2 = props.globals.getNode("/FMGC/internal/vor2-mcdu", 1);
@@ -104,24 +99,17 @@ var adf2FreqSet = props.globals.getNode("/FMGC/internal/adf2freq-set", 1);
 var ils1CRS = props.globals.getNode("/instrumentation/nav[0]/radials/selected-deg", 1);
 var vor1CRS = props.globals.getNode("/instrumentation/nav[2]/radials/selected-deg", 1);
 var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-deg", 1);
-
 # INT-A
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
-
 # IRSINIT variables
 var align_set = props.globals.getNode("/FMGC/internal/align-set", 1);
-
 # ROUTE SELECTION
-
 # INT-B
-
 # FUELPRED
 var state1 = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
-
 # PERF
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
-
 # TO PERF
 var clbReducFt = props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft", 1);
 var reducFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
@@ -134,46 +122,34 @@ var flexSet = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active-cmd", 1
 var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
 var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
 var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
-
 # CLB PERF
 var activate_once = props.globals.getNode("/FMGC/internal/activate-once", 1);
 var activate_twice = props.globals.getNode("/FMGC/internal/activate-twice", 1);
-
 # CRZ PERF
-
 # DES PERF
-
 # APPR PERF
 var dest_qnh = props.globals.getNode("/FMGC/internal/dest-qnh", 1);
 var dest_temp = props.globals.getNode("/FMGC/internal/dest-temp", 1);
 var final = props.globals.getNode("/FMGC/internal/final", 1);
 var radio = props.globals.getNode("/FMGC/internal/radio", 1);
 var baro = props.globals.getNode("/FMGC/internal/baro", 1);
-
 # GA PERF
-
 # AOC - SENSORS
 var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
 var doorL1_pos = props.globals.getNode("/sim/model/door-positions/doorl1/position-norm", 1); #FWD door
 var doorR1_pos = props.globals.getNode("/sim/model/door-positions/doorr1/position-norm", 1); #FWD door
 var doorL4_pos = props.globals.getNode("/sim/model/door-positions/doorl4/position-norm", 1); #AFT door
 var doorR4_pos = props.globals.getNode("/sim/model/door-positions/doorr4/position-norm", 1); #AFT door
-
 # Fetch nodes into vectors
 var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode("/MCDU[1]/page", 1)];
 var active = [props.globals.getNode("/MCDU[0]/active", 1), props.globals.getNode("/MCDU[1]/active", 1)];
 var activeAtsu = [props.globals.getNode("/MCDU[0]/atsu-active", 1), props.globals.getNode("/MCDU[1]/atsu-active", 1)];
 props.globals.initNode("/MCDU[0]/active-system", "", "STRING");
 props.globals.initNode("/MCDU[1]/active-system", "", "STRING");
-
-
 # Conversion factor pounds to kilogram
 var LBS2KGS = 0.4535924;
-
-
 # Create Nodes:
 var pageSwitch = [props.globals.initNode("/MCDU[0]/internal/switch", 0, "BOOL"), props.globals.initNode("/MCDU[1]/internal/switch", 0, "BOOL")];
-
 # Page freeze on POSMON
 var pageFreezed = [nil,nil];
 var togglePageFreeze = func(i) {
@@ -183,29 +159,22 @@ var togglePageFreeze = func(i) {
 		pageFreezed[i] = nil;
 	}
 }
-
-
 var canvas_MCDU_base = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
 			return "BoeingCDU-Large.ttf";
 		};
-
 		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
-
 		var svg_keys = me.getKeys();
 		foreach(var key; svg_keys) {
 			me[key] = canvas_group.getElementById(key);
 			var svg_keys = me.getKeys();
-
 			foreach (var key; svg_keys) {
 				me[key] = canvas_group.getElementById(key);
-
 				var clip_el = canvas_group.getElementById(key ~ "_clip");
 				if (clip_el != nil) {
 					clip_el.setVisible(0);
 					var tran_rect = clip_el.getTransformedBounds();
-
 					var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
 					tran_rect[1], # 0 ys
 					tran_rect[2], # 1 xe
@@ -240,7 +209,6 @@ var canvas_MCDU_base = {
 		me["PERFGA_OE"].setColor(BLUE);
 		
 		me.page = canvas_group;
-
 		me.updateretard = 0; # skip a few page update to save CPU
 		
 		return me;
@@ -263,15 +231,19 @@ var canvas_MCDU_base = {
 	update: func() {
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
 			MCDU_1.update();
+			pts.Instrumentation.Mcdu.mcdu1On.setBoolValue(1);
 			MCDU_1.page.show();
 		} else {
 			MCDU_1.page.hide();
+			pts.Instrumentation.Mcdu.mcdu1On.setBoolValue(0);
 		}
 		if (systems.ELEC.Bus.ac2.getValue() >= 110 and mcdu2_lgt.getValue() > 0.01) {
 			MCDU_2.update();
+			pts.Instrumentation.Mcdu.mcdu2On.setBoolValue(1);
 			MCDU_2.page.show();
 		} else {
 			MCDU_2.page.hide();
+			pts.Instrumentation.Mcdu.mcdu2On.setBoolValue(0);
 		}
 	},
 	defaultHide: func() {
@@ -413,6 +385,49 @@ var canvas_MCDU_base = {
 		}
 		return irsstatus;
 	},
+	standardFont: func() {
+		me.fontLeft(default, default, default, default, default, default);
+		me.fontLeftS(default, default, default, default, default, default);
+		me.fontRight(default, default, default, default, default, default);
+		me.fontRightS(default, default, default, default, default, default);
+	},
+	standardColor: func() {
+		me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+		me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+		me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+		me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+	},
+	doIRSFunc: func(i,degrees,minutes,sign,degrees2,minutes2,sign2) {
+		if (systems.ADIRS.ADIRunits[i].operative and getprop("/FMGC/internal/align" ~ (i + 1) ~ "-done")) {
+			me["Simple_C" ~ (3 + i)].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
+		} else {
+			me["Simple_C" ~ (3 + i)].setText("-----.--/-----.--");
+		}
+		if (align_set.getValue() == 1) {
+			me["Simple_R6"].setText("CONFIRM ALIGN ");
+			me.colorRight("ack", "ack", "ack", "ack", "ack", "amb");
+			me["IRSINIT_star"].show();
+			me.showRightArrow(0, 0, 0, 0, 0, -1);
+		} else {
+			me["Simple_R6"].setText("ALIGN ON REF ");
+			me["IRSINIT_star"].hide();
+			me.showRightArrow(0, 0, 0, 0, 0, 1);
+		}
+		if (systems.ADIRS.Operating.aligned[i].getValue()) {
+			if (systems.ADIRS.ADIRunits[i].mode == 2) {
+				me["Simple_C" ~ (3 + i) ~ "S"].setText("IRS" ~ (i + 1) ~ " IN ATT");
+			} else {
+				me["Simple_C" ~ (3 + i) ~ "S"].setText("IRS" ~ (i + 1) ~ " ALIGNED ON GPS");
+			}
+		} else {
+			me["Simple_C" ~ (3 + i) ~ "S"].setText("IRS" ~ (i + 1) ~ " ALIGNING ON GPS");
+		}
+	},
+	standardHideExcess: func() {
+		me["Simple_L0S"].hide();
+		me["Simple_C3B"].hide();
+		me["Simple_C4B"].hide();
+	},
 	updateCommon: func(i) {
 		page = pageProp[i].getValue();
 		if (page != "NOTIFICATION") {
@@ -447,9 +462,7 @@ var canvas_MCDU_base = {
 				me["PRINTPAGE"].setColor(WHITE);
 			}
 		}
-
 		if (!pageSwitch[i].getBoolValue()) me.defaultHide();
-
 		if (page != "ATIS") {
 			me["ATISSend1"].hide();
 			me["ATISSend2"].hide();
@@ -480,16 +493,11 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].show();
 				me["arrowsDepArr"].hide();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
 				me.hideAllArrows();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -505,28 +513,21 @@ var canvas_MCDU_base = {
 				} else {
 					me["FPLN_Callsign"].hide();
 				}
-
-				me.dynamicPageFunc(myFpln[i].L1, "Simple_L1");
-				me.dynamicPageFunc(myFpln[i].L2, "Simple_L2");
-				me.dynamicPageFunc(myFpln[i].L3, "Simple_L3");
-				me.dynamicPageFunc(myFpln[i].L4, "Simple_L4");
-				me.dynamicPageFunc(myFpln[i].L5, "Simple_L5");
+				for (var x = 1; x < 7; x = x + 1) {
+					me.dynamicPageFunc(myFpln[i]["L" ~ x], "Simple_L" ~ x);
+				}
 				
 				me.colorLeft(myFpln[i].L1[2],myFpln[i].L2[2],myFpln[i].L3[2],myFpln[i].L4[2],myFpln[i].L5[2],myFpln[i].L6[2]);
 				
-				me.dynamicPageFunc(myFpln[i].C1, "Simple_C1");
-				me.dynamicPageFunc(myFpln[i].C2, "Simple_C2");
-				me.dynamicPageFunc(myFpln[i].C3, "Simple_C3");
-				me.dynamicPageFunc(myFpln[i].C4, "Simple_C4");
-				me.dynamicPageFunc(myFpln[i].C5, "Simple_C5");
+				for (var x = 1; x < 7; x = x + 1) {
+					me.dynamicPageFunc(myFpln[i]["C" ~ x], "Simple_C" ~ x);
+				}
 				
 				me.colorCenter(myFpln[i].C1[2],myFpln[i].C2[2],myFpln[i].C3[2],myFpln[i].C4[2],myFpln[i].C5[2],myFpln[i].C6[2]);
 					
-				me.dynamicPageFunc(myFpln[i].R1, "Simple_R1");
-				me.dynamicPageFunc(myFpln[i].R2, "Simple_R2");
-				me.dynamicPageFunc(myFpln[i].R3, "Simple_R3");
-				me.dynamicPageFunc(myFpln[i].R4, "Simple_R4");
-				me.dynamicPageFunc(myFpln[i].R5, "Simple_R5");
+				for (var x = 1; x < 7; x = x + 1) {
+					me.dynamicPageFunc(myFpln[i]["R" ~ x], "Simple_R" ~ x);
+				}
 				
 				me.colorRight(myFpln[i].R1[2],myFpln[i].R2[2],myFpln[i].R3[2],myFpln[i].R4[2],myFpln[i].R5[2],myFpln[i].R6[2]);
 				
@@ -583,7 +584,6 @@ var canvas_MCDU_base = {
 				me.standardFontColour();
 				me["Simple_L3"].setText(" AIDS");
 				me["Simple_L4"].setText(" CFDS");
-
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -684,11 +684,9 @@ var canvas_MCDU_base = {
 		} else if (page == "FLTLOG") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
-
 				me["Simple_L0S"].hide();
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();				
-
 				me.showLeft(1, 1, 1, 1, 1, -1);								
 				me.showLeftS(1, -1, 1, 1, 1, -1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
@@ -704,52 +702,38 @@ var canvas_MCDU_base = {
 				me.standardFontColour();
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorCenter("wht", "wht", "wht", "wht", "wht", "wht");
-
 				#me["PRINTPAGE"] - TODO missing asterisk at 5L - only useful when printing available
-
 				me["Simple_L1S"].setText(" FLT NUM-DATE");				
 				me["Simple_R1S"].setText("ORIG-DEST ");
-				me["Simple_L1"].setFontSize(small);				
+				
+				me["Simple_L1"].setFontSize(small);
 				me["Simple_R1"].setFontSize(small);
-				me["Simple_L2"].setFontSize(small);
-				me["Simple_C2"].setFontSize(small);
-				me["Simple_R2"].setFontSize(small);
-				me["Simple_L3"].setFontSize(small);
-				me["Simple_C3"].setFontSize(small);
-				me["Simple_R3"].setFontSize(small);
-
+				for (var x = 2; x <= 4; x = x + 1) {
+					me["Simple_L" ~ x].setFontSize(small);	
+					me["Simple_C" ~ x].setFontSize(small);			
+					me["Simple_R" ~ x].setFontSize(small);
+				}
 				me["Simple_L5"].setText(" PRINT");
 				me["Simple_L5"].setColor(BLUE);
-
 				me["Simple_R5"].setText("SENSORS ");
 				me["Simple_R5"].setColor(WHITE);
-
-				me["Simple_L4"].setFontSize(small);
 				me["Simple_L4"].setText(" FLIGHT");
-				me["Simple_C4"].setFontSize(small);
 				me["Simple_C4"].setText("--TIMES--");
-				me["Simple_R4"].setFontSize(small);
 				me["Simple_R4"].setText("BLOCK ");
-
 				me["Simple_C2S"].setText("TIME");
 				me["Simple_R2S"].setText("FOB ");
-
 				me["Simple_L2"].setText( "   OUT   -");
 				me["Simple_L3S"].setText("   OFF   -");
 				me["Simple_L3"].setText( "    ON   -");
 				me["Simple_L4S"].setText("    IN   -");
 				
 				me["Simple_C5"].setFontSize(small);
-
 				pageSwitch[i].setBoolValue(1);
 			}
-
 			var logid = 1; #mcdu.FlightLogDatabase.getPageSize(); - one page only - TODO:  multi pages
 			if (logid == 0) logid = 1;
-
 			me.showPageNumbersOnly(1,1);
 			me["Simple_Title"].setText(sprintf("FLT LOG.%04d",logid));
-
 			me["Simple_C2"].setText( "--.--"); #TODO - missing ":" char on fontset
 			me["Simple_C3S"].setText("--.--");
 			me["Simple_C3"].setText( "--.--");
@@ -763,7 +747,6 @@ var canvas_MCDU_base = {
 			me.colorLeftS("wht", "wht", "wht", "wht", "grn", "wht");
 			me.colorCenterS("wht", "wht", "grn", "grn", "grn", "wht");
 			me.colorRightS("wht", "wht", "grn", "grn", "grn", "wht");
-
 			var rowsC = ["Simple_C2","Simple_C3S","Simple_C3","Simple_C4S"];
 			var rowsR = ["Simple_R2","Simple_R3S","Simple_R3","Simple_R4S"];
 			var logs = mcdu.FlightLogDatabase.getLogByPage(logid);
@@ -778,23 +761,18 @@ var canvas_MCDU_base = {
 					me[rowsR[p]].setText(sprintf("%3.1f ",logs[i].fob));
 				}
 			}
-
 			var logpage = mcdu.FlightLogDatabase.getPage(logid);
-
 			me["Simple_L1"].setText(sprintf("%8s- ",logpage.fltnum) ~ logpage.date);
 			me["Simple_R1"].setText(logpage.tofrom ~ " ");
-
 			me["Simple_L5S"].setText( " " ~ logpage.flttime );
 			me["Simple_C5S"].setText(sprintf("%02.0f", getprop("/sim/time/utc/hour")) ~ "." ~ sprintf("%02.0f", getprop("/sim/time/utc/minute")) ~ "." ~ sprintf("%02.0f", getprop("/sim/time/utc/second")));
 			me["Simple_R5S"].setText( logpage.blktime ~ " " );
-
 			var fltstate = logpage.fltstate;
 			if (fltstate == "") {
 			  fltstate = (fmgc.FMGCInternal.toFromSet) ? "BEGIN" : "RESET";  #CHECKME - my best guess, only ready when plan inserted
 			  #TODO Pushback detection -> WPUSH state???
 			}   
 			me["Simple_C5"].setText(fltstate); 
-
 		} else if (page == "SENSORS") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
@@ -802,7 +780,6 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setText("SENSORS       ");
 				me.defaultPageNumbers();
 				me["Simple_L0S"].hide();
-
 				me.showLeft(1, 1, 1, 1, 1, 1);
 				me.showLeftS(1, 1, 1, 1, -1, -1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
@@ -812,10 +789,8 @@ var canvas_MCDU_base = {
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				
 				#me["PRINTPAGE"] - TODO missing asterisk at 5L - only useful when printing available
-
 				me.standardFontSize();
 				me.standardFontColour();
-
 				me["Simple_L1"].setFontSize(small);				
 				me["Simple_R1"].setFontSize(small);
 				me["Simple_L2"].setFontSize(small);
@@ -827,7 +802,6 @@ var canvas_MCDU_base = {
 				
 				me.colorRight("grn", "grn", "grn", "grn", "grn", "grn");
 				me.colorRightS("grn", "grn", "grn", "grn", "grn", "grn");
-
 				me["Simple_L1S"].setText("  PARK BRAKE");
 				me["Simple_L1"].setText( "  NOSE STRUT");
 				me["Simple_L2S"].setText( "  L FWD DOOR");
@@ -836,15 +810,11 @@ var canvas_MCDU_base = {
 				me["Simple_L3"].setText( "  R AFT DOOR");
 				me["Simple_L4S"].setText( "  GND SPEED");
 				me["Simple_L4"].setText( "  FOB");
-
 				me["Simple_L5"].setText(" PRINT");
 				me["Simple_L5"].setColor(BLUE);
-
 				me["Simple_L6"].setText(" RETURN");
-
 				pageSwitch[i].setBoolValue(1);
 			}
-
 			me["Simple_R1S"].setText(sprintf("%-10s",(pts.Controls.Gear.parkingBrake.getValue() == 1) ? "SET" : "RELEASED"));
 			me["Simple_R1"].setText(sprintf("%-10s",(pts.Gear.wow[0].getValue() == 1) ? "GROUND" : "FLIGHT"));
 			me["Simple_R2S"].setText(sprintf("%-10s",(doorL1_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
@@ -853,7 +823,6 @@ var canvas_MCDU_base = {
 			me["Simple_R3"].setText(sprintf("%-10s",(doorR4_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
 			me["Simple_R4S"].setText(sprintf("%-10s",sprintf("%03.3f",pts.Velocities.groundspeedKt.getValue())));
 			me["Simple_R4"].setText(sprintf("%-10s",sprintf("%03.1f",fmgc.FMGCInternal.fob)));
-
 		} else if (page == "AOCCONFIG") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -1011,10 +980,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -1046,11 +1012,9 @@ var canvas_MCDU_base = {
 					me.dynamicPageFontFunc(myReceivedMessages[i]);
 					me.dynamicPageArrowFunc(myReceivedMessages[i]);
 					
-					me.dynamicPageFunc(myReceivedMessages[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myReceivedMessages[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myReceivedMessages[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myReceivedMessages[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myReceivedMessages[i].L5, "Simple_L5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myReceivedMessages[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					me.colorLeft(myReceivedMessages[i].L1[2],myReceivedMessages[i].L2[2],myReceivedMessages[i].L3[2],myReceivedMessages[i].L4[2],myReceivedMessages[i].L5[2],myReceivedMessages[i].L6[2]);
 					me["Simple_L6"].setColor(WHITE);
 				}
@@ -1077,10 +1041,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(small, small, small, small, small, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -1220,6 +1181,328 @@ var canvas_MCDU_base = {
 				me["Simple_R6"].setText("EMERGENCY ");
 				pageSwitch[i].setBoolValue(1);
 			}
+		} else if (page == "LATREQ") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("ATC LAT REQ");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, 1, -1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, 1, -1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, 1, 1, 1, 1, 1);
+				me.showRightS(1, 1, 1, 1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				me["arrowsDepArr"].show();
+				me["arrow1L"].hide();
+				me["arrow2L"].hide();
+				me["arrow3L"].hide();
+				me["arrow4L"].hide();
+				me["arrow5L"].hide();
+				me["arrow1R"].hide();
+				me["arrow2R"].hide();
+				me["arrow3R"].hide();
+				me["arrow4R"].show();
+				me["arrow4R"].setColor(BLUE);
+				me["arrow5R"].hide();
+				
+				me.standardFontSize();
+				
+				me.colorLeft("blu", "blu", "blu", "wht", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "blu", "wht", "wht", "blu");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+			
+				me["Simple_L1S"].setText(" DIR TO");
+				me["Simple_L2S"].setText(" SID");
+				me["Simple_L3S"].setText(" HEADING");
+				me["Simple_L1"].setText("[    ]");
+				me["Simple_L2"].setText("[   ]");
+				me["Simple_L3"].setText("[  ]°");
+				me["Simple_L1"].setFont(symbol);
+				me["Simple_L2"].setFont(symbol);
+				me["Simple_L3"].setFont(symbol);
+				me["Simple_L5S"].setText(" INPUTS");
+				me["Simple_L5"].setText(" ERASE");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_R1S"].setText("WX DEV UP TO ");
+				me["Simple_R2S"].setText("OFFSET/START AT ");
+				me["Simple_R3S"].setText("GROUND TRK ");
+				me["Simple_R1"].setText("[  ]");
+				me["Simple_R2"].setText("[  ]/[    ]");
+				me["Simple_R3"].setText("[  ]°");
+				me["Simple_R1"].setFont(symbol);
+				me["Simple_R2"].setFont(symbol);
+				me["Simple_R3"].setFont(symbol);
+				me["Simple_R4S"].setText("WHEN CAN WE EXPECT ");
+				me["Simple_R4"].setText("BACK ON ROUTE ");
+				me["Simple_R5"].setText("ADD TEXT ");
+				me["Simple_R6S"].setText("ATC ");
+				me["Simple_R6"].setText("REQ DISPL ");
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "WHENCAN") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("WHEN CAN WE EXPECT");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, -1, -1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, 1, -1, -1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, 1, 1, 1, 1, 1);
+				me.showRightS(-1, 1, 1, 1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				me["arrowsDepArr"].show();
+				me["arrow1L"].show();
+				me["arrow1L"].setColor(BLUE);
+				for (var x = 2; x <= 5; x = x + 1) {
+					me["arrow" ~ x ~ "L"].hide();
+				}
+				me["arrow1R"].show();
+				me["arrow1R"].setColor(BLUE);
+				me["arrow2R"].hide();
+				me["arrow3R"].hide();
+				me["arrow4R"].show();
+				me["arrow4R"].setColor(BLUE);
+				me["arrow5R"].hide();
+				
+				me.standardFontSize();
+				
+				me.colorLeft("blu", "blu", "blu", "wht", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "blu", "wht", "wht", "blu");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_L2S"].setText(" CRZ CLB TO");
+				me["Simple_L1"].setText(" HIGHER ALT");
+				me["Simple_L2"].setText("[    ]");
+				me["Simple_L2"].setFont(symbol);
+				me["Simple_L5S"].setText(" INPUTS");
+				me["Simple_L5"].setText(" ERASE");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_R2S"].setText("SPEED ");
+				me["Simple_R3S"].setText("SPEED / RANGE  ");
+				me["Simple_R1"].setText("LOWER ALT ");
+				me["Simple_R2"].setText("[  ]");
+				me["Simple_R3"].setText("[  ]/[  ]");
+				me["Simple_R2"].setFont(symbol);
+				me["Simple_R3"].setFont(symbol);
+				me["Simple_R4S"].setText("WHEN CAN WE EXPECT ");
+				me["Simple_R4"].setText("BACK ON ROUTE ");
+				me["Simple_R5"].setText("ADD TEXT ");
+				me["Simple_R6S"].setText("ATC ");
+				me["Simple_R6"].setText("REQ DISPL ");
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "VERTREQ1") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("ATC VERT REQ ");
+				me["Simple_Title"].setColor(WHITE);
+				me["Simple_PageNum"].setText("1/2");
+				me["Simple_PageNum"].show();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				
+				me.showLeft(1, 1, 1, -1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, 1, -1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, 1, 1, 1, 1, 1);
+				me.showRightS(1, 1, -1, 1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				me["arrowsDepArr"].show();
+				for (var x = 1; x <= 5; x = x + 1) {
+					if (x == 3) { continue; }
+					me["arrow" ~ x ~ "L"].hide();
+					me["arrow" ~ x ~ "R"].hide();
+				}
+				me["arrow3L"].show();
+				me["arrow3L"].setColor(BLUE);
+				me["arrow3R"].show();
+				me["arrow3R"].setColor(BLUE);
+				
+				me.standardFontSize();
+				
+				me.colorLeft("blu", "blu", "blu", "wht", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "blu", "blu", "wht", "blu");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+			
+				me["Simple_L1S"].setText(" CLB TO/START AT");
+				me["Simple_L2S"].setText(" DES TO/START AT");
+				me["Simple_L3S"].setText("   ..WHEN CAN WE EXPECT..   ");
+				me["Simple_L1"].setText("[    ]/[     ]");
+				me["Simple_L2"].setText("[    ]/[     ]");
+				me["Simple_L3"].setText(" HIGHER ALT");
+				me["Simple_L1"].setFont(symbol);
+				me["Simple_L2"].setFont(symbol);
+				me["Simple_L5S"].setText(" INPUTS");
+				me["Simple_L5"].setText(" ERASE");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_R1S"].setText("ALT ");
+				me["Simple_R2S"].setText("SPD ");
+				me["Simple_R1"].setText("[   ]");
+				me["Simple_R2"].setText("[   ]");
+				me["Simple_R3"].setText("LOWER ALT ");
+				me["Simple_R1"].setFont(symbol);
+				me["Simple_R2"].setFont(symbol);
+				me["Simple_R4S"].setText("WHEN CAN SPD ");
+				me["Simple_R4"].setText("[    ]");
+				me["Simple_R4"].setFont(symbol);
+				me["Simple_R5"].setText("ADD TEXT ");
+				me["Simple_R6S"].setText("ATC ");
+				me["Simple_R6"].setText("REQ DISPL ");
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "VERTREQ2") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("ATC VERT REQ ");
+				me["Simple_Title"].setColor(WHITE);
+				me["Simple_PageNum"].setText("2/2");
+				me["Simple_PageNum"].show();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				
+				me.showLeft(1, 1, 1, -1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, 1, 1, -1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, 1, 1, 1, 1, 1);
+				me.showRightS(1, 1, -1, 1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				me["arrowsDepArr"].show();
+				for (var x = 1; x <= 5; x = x + 1) {
+					if (x == 3) { continue; }
+					me["arrow" ~ x ~ "L"].hide();
+					if (x == 1) { continue; }
+					me["arrow" ~ x ~ "R"].hide();
+				}
+				me["arrow1R"].show();
+				me["arrow1R"].setColor(BLUE);
+				me["arrow3R"].show();
+				me["arrow3R"].setColor(BLUE);
+				
+				me.standardFontSize();
+				
+				me.colorLeft("blu", "blu", "blu", "wht", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "blu", "blu", "wht", "blu");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+			
+				me["Simple_L1S"].setText(" BLOCK ALT/START AT");
+				me["Simple_L2S"].setText(" CRZ CLB TO");
+				me["Simple_L3S"].setText("   ..WHEN CAN WE EXPECT..   ");
+				me["Simple_L1"].setText("[    ]/[     ]");
+				me["Simple_L2"].setText("[    ]");
+				me["Simple_L3"].setText(" HIGHER ALT");
+				me["Simple_L1"].setFont(symbol);
+				me["Simple_L2"].setFont(symbol);
+				me["Simple_L4S"].setText(" CRZ CLB TO");
+				me["Simple_L4"].setText("[    ]");
+				me["Simple_L4"].setFont(symbol);
+				me["Simple_L5S"].setText(" INPUTS");
+				me["Simple_L5"].setText(" ERASE");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_R1S"].setText("VMC ");
+				me["Simple_R2S"].setText("SPD RANGE ");
+				me["Simple_R1"].setText("DESCENT ");
+				me["Simple_R2"].setText("[   ]/[   ]");
+				me["Simple_R3"].setText("LOWER ALT ");
+				me["Simple_R2"].setFont(symbol);
+				me["Simple_R4S"].setText("SPD RANGE ");
+				me["Simple_R4"].setText("[   ]/[   ]");
+				me["Simple_R4"].setFont(symbol);
+				me["Simple_R5"].setText("ADD TEXT ");
+				me["Simple_R6S"].setText("ATC ");
+				me["Simple_R6"].setText("REQ DISPL ");
+				pageSwitch[i].setBoolValue(1);
+			}
+		} else if (page == "OTHERREQ") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("ATC OTHER REQ");
+				me.defaultPageNumbers();
+				
+				me.showLeft(1, 1, 1, -1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(1, -1, -1, -1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(-1, -1, -1, -1, 1, 1);
+				me.showRightS(-1, -1, -1, -1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				me["arrowsDepArr"].show();
+				me["arrow1L"].show();
+				me["arrow1L"].setColor(BLUE);
+				me["arrow2L"].show();
+				me["arrow2L"].setColor(BLUE);
+				me["arrow3L"].show();
+				me["arrow3L"].setColor(BLUE);
+				me["arrow4L"].hide();
+				me["arrow5L"].hide();
+				for (var x = 1; x <= 5; x = x + 1) {
+					me["arrow" ~ x ~ "R"].hide();
+				}
+				
+				me.standardFontSize();
+				
+				me.colorLeft("blu", "blu", "blu", "wht", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "blu", "wht", "wht", "blu");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_L1S"].setText(" VOICE");
+				me["Simple_L1"].setText(" CONTACT----[       ]");
+				me["Simple_L1"].setFont(symbol);
+				me["Simple_L2"].setText(" OWN SEPARATION & VMC");
+				me["Simple_L2"].setFont(symbol);
+				me["Simple_L3"].setText(" CLEARANCE");
+				me["Simple_L3"].setFont(symbol);
+				me["Simple_L5S"].setText(" INPUTS");
+				me["Simple_L5"].setText(" ERASE");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_R5"].setText("ADD TEXT ");
+				me["Simple_R6S"].setText("ATC ");
+				me["Simple_R6"].setText("REQ DISPL ");
+				pageSwitch[i].setBoolValue(1);
+			}
 		} else if (page == "MCDUTEXT") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -1233,7 +1516,7 @@ var canvas_MCDU_base = {
 				me.showLeft(1, 1, 1, 1, 1, 1);
 				me["Simple_L0S"].hide();
 				me.showLeftS(1, 1, 1, -1, 1, 1);
-				me.showLeftArrow(1, 1, 1, -1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, 1, 1);
 				me.showCenter(-1, -1, -1, -1, -1, -1);
 				me.showCenterS(-1, -1, -1, 1, -1, -1);
 				me.showRightS(1, 1, 1, -1, -1, 1);
@@ -1242,14 +1525,31 @@ var canvas_MCDU_base = {
 				me.showRightArrow(1, 1, 1, -1, -1, 1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
+				me["arrowsDepArr"].show();
+				me["arrow1L"].show();
+				me["arrow1L"].setColor(BLUE);
+				me["arrow2L"].show();
+				me["arrow2L"].setColor(BLUE);
+				me["arrow3L"].show();
+				me["arrow3L"].setColor(BLUE);
+				me["arrow4L"].hide();
+				me["arrow5L"].hide();
+				me["arrow1R"].show();
+				me["arrow1R"].setColor(BLUE);
+				me["arrow2R"].show();
+				me["arrow2R"].setColor(BLUE);
+				me["arrow3R"].show();
+				me["arrow3R"].setColor(BLUE);
+				me["arrow4R"].hide();
+				me["arrow5R"].hide();
 				
 				me.standardFontSize();
 				me["Simple_L4"].setFont(symbol);
 				
-				me.colorLeft("wht", "wht", "wht", "blu", "wht", "wht");
+				me.colorLeft("blu", "blu", "blu", "blu", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("blu", "blu", "blu", "wht", "wht", "wht");
-				me.colorRight("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRight("blu", "blu", "blu", "wht", "wht", "blu");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
 				me.colorRightArrow("blu", "blu", "blu", "wht", "wht", "blu");
 				
@@ -1263,13 +1563,13 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText("MEDICAL ");
 				me["Simple_R1S"].setText("DUE TO ");
 				me["Simple_R2"].setText("TECHNICAL ");
-				me["Simple_R2S"].setText("DUE TO" );
+				me["Simple_R2S"].setText("DUE TO ");
 				me["Simple_R3"].setText("DISCRETION ");
 				me["Simple_R3S"].setText("AT PILOTS ");
 				me["Simple_C4S"].setText("-------- FREE TEXT --------");
 				me["Simple_L4"].setText("[                      ]");
 				me["Simple_L5"].setText(" ERASE");
-				me["Simple_L5S"].setText(" ALL FIELDS");
+				me["Simple_L5S"].setText(" INPUTS");
 				me["Simple_L6S"].setText(" ATC MENU");
 				me["Simple_L6"].setText(" RETURN");
 				me["Simple_R6S"].setText("ATC ");
@@ -1279,37 +1579,154 @@ var canvas_MCDU_base = {
 			
 			if (atsu.freeTexts[i].selection == 0) {
 				pageSwitch[i].setBoolValue(0);
-				me["Simple_L1_Arrow"].hide();
+				me["arrow1L"].hide();
 				me["Simple_L1"].setColor(BLUE);
 				me["Simple_L1S"].setColor(BLUE);
 			} elsif (atsu.freeTexts[i].selection == 1) {
 				pageSwitch[i].setBoolValue(0);
-				me["Simple_L2_Arrow"].hide();
+				me["arrow2L"].hide();
 				me["Simple_L2"].setColor(BLUE);
 				me["Simple_L2S"].setColor(BLUE);
 			} elsif (atsu.freeTexts[i].selection == 2) {
 				pageSwitch[i].setBoolValue(0);
-				me["Simple_L3_Arrow"].hide();
+				me["arrow3L"].hide();
 				me["Simple_L3"].setColor(BLUE);
 				me["Simple_L3S"].setColor(BLUE);
 			} elsif (atsu.freeTexts[i].selection == 3) {
 				pageSwitch[i].setBoolValue(0);
-				me["Simple_R1_Arrow"].hide();
+				me["arrow1R"].hide();
 				me["Simple_R1"].setColor(BLUE);
 				me["Simple_R1S"].setColor(BLUE);
 			} elsif (atsu.freeTexts[i].selection == 4) {
-				pageSwitch[i].setBoolValue(0);
+				me["arrow2R"].hide();
 				me["Simple_R2_Arrow"].hide();
 				me["Simple_R2"].setColor(BLUE);
 				me["Simple_R2S"].setColor(BLUE);
 			} elsif (atsu.freeTexts[i].selection == 5) {
-				pageSwitch[i].setBoolValue(0);
+				me["arrow3R"].hide();
 				me["Simple_R3_Arrow"].hide();
 				me["Simple_R3"].setColor(BLUE);
 				me["Simple_R3S"].setColor(BLUE);
 			} elsif (atsu.freeTexts[i].selection == 9) {
 				pageSwitch[i].setBoolValue(0);
 				me["Simple_L5_Arrow"].hide();
+			}
+		} else if (page == "MCDUTEXT2") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHideWithCenter();
+				me["Simple_Title"].setText("TEXT");
+				me["Simple_Title"].setColor(WHITE);
+				me["Simple_PageNum"].setText("2/2");
+				me["Simple_PageNum"].show();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				
+				me.showLeft(1, 1, 1, 1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, -1, -1, -1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, 1, 1);
+				me.showCenter(-1, -1, -1, -1, -1, -1);
+				me.showCenterS(-1, -1, -1, 1, -1, -1);
+				me.showRightS(-1, -1, -1, -1, -1, 1);
+				me.showRight(-1, -1, -1, -1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, -1, 1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				me["arrowsDepArr"].hide();
+				
+				me.standardFontSize();
+				me["Simple_L4"].setFont(symbol);
+				
+				me.colorLeft("blu", "blu", "blu", "blu", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("blu", "blu", "blu", "wht", "wht", "wht");
+				me.colorRight("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightArrow("blu", "blu", "blu", "wht", "wht", "blu");
+				
+				for (var x = 1; x <= 4; x = x + 1) {
+					me["Simple_L" ~ x].setText("[                      ]");
+					me["Simple_L" ~ x].setFont(symbol);
+				}
+				me["Simple_C4S"].hide();
+				me["Simple_L5"].setText(" ERASE");
+				me["Simple_L5S"].setText(" INPUTS");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L6"].setText(" RETURN");
+				me["Simple_R6S"].setText("ATC ");
+				me["Simple_R6"].setText("TEXT DISPL ");
+				pageSwitch[i].setBoolValue(1);
+			}
+			
+			if (atsu.freeTexts[i].selection == 9) {
+				pageSwitch[i].setBoolValue(0);
+				me["Simple_L5_Arrow"].hide();
+			}
+		} else if (page == "EMERGREQ1") {
+			if (!pageSwitch[i].getBoolValue()) {
+				me.defaultHide();
+				me["Simple_Title"].setText("EMERGENCY");
+				me["Simple_Title"].setColor(WHITE);
+				me["Simple_PageNum"].setText("1/2");
+				me["Simple_PageNum"].show();
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+				
+				me.showLeft(1, 1, -1, 1, 1, 1);
+				me["Simple_L0S"].hide();
+				me.showLeftS(-1, -1, -1, 1, 1, 1);
+				me.showLeftArrow(-1, -1, -1, -1, -1, 1);
+				me.showRight(1, 1, 1, 1, 1, 1);
+				me.showRightS(1, 1, 1, 1, -1, 1);
+				me.showRightArrow(-1, -1, -1, -1, 1, -1);
+				me["Simple_C3B"].hide();
+				me["Simple_C4B"].hide();
+				me["arrowsDepArr"].show();
+				me["arrow1L"].show();
+				me["arrow1L"].setColor(AMBER);
+				me["arrow2L"].show();
+				me["arrow2L"].setColor(AMBER);
+				me["arrow3L"].hide();
+				me["arrow4L"].show();
+				me["arrow4L"].setColor(BLUE);
+				me["arrow5L"].hide();
+				for (var x = 1; x <= 5; x = x + 1) {
+					me["arrow" ~ x ~ "R"].hide();
+				}
+				
+				me.standardFontSize();
+				
+				me.colorLeft("amb", "amb", "ack", "blu", "wht", "wht");
+				me.colorLeftS("wht", "wht", "wht", "blu", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "blu", "blu", "wht", "blu");
+				me.colorRightS("wht", "wht", "wht", "wht", "wht", "blu");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				
+				me["Simple_L1"].setText(" MAYDAY");
+				me["Simple_L2"].setText(" PANPAN");
+				me["Simple_L4S"].setText(" VOICE");
+				me["Simple_L4"].setText(" CONTACT");
+				me["Simple_L5S"].setText(" INPUTS");
+				me["Simple_L5"].setText(" ERASE");
+				me["Simple_L6S"].setText(" ATC MENU");
+				me["Simple_L6"].setText(" RETURN");
+				
+				me["Simple_R1"].setText("SET ON ");
+				me["Simple_R1S"].setText("EMERG ADS:OFF ");
+				me["Simple_R2S"].setText("DESCENDING TO ");
+				me["Simple_R2"].setText("[   ] ");
+				me["Simple_R2"].setFont(symbol);
+				me["Simple_R3S"].setText("DIVERTING/VIA ");
+				me["Simple_R3"].setText("[   ]/[   ] ");
+				me["Simple_R3"].setFont(symbol);
+				me["Simple_R4S"].setText("FREQ ");
+				me["Simple_R4"].setText("[      ] ");
+				me["Simple_R4"].setFont(symbol);
+				me["Simple_R5"].setText("ADD TEXT ");
+				me["Simple_R6S"].setText("ATC ");
+				me["Simple_R6"].setText("REQ DISPL ");
+				pageSwitch[i].setBoolValue(1);
 			}
 		} else if (page == "ATCMENU2") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -1354,14 +1771,9 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(small, small, small, small, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -1378,21 +1790,15 @@ var canvas_MCDU_base = {
 					me.colorLeftArrow(myAtis[i].arrowsColour[0][0],myAtis[i].arrowsColour[0][1],myAtis[i].arrowsColour[0][2],myAtis[i].arrowsColour[0][3],myAtis[i].arrowsColour[0][4],myAtis[i].arrowsColour[0][5]);
 					me.colorRightArrow(myAtis[i].arrowsColour[1][0],myAtis[i].arrowsColour[1][1],myAtis[i].arrowsColour[1][2],myAtis[i].arrowsColour[1][3],myAtis[i].arrowsColour[1][4],myAtis[i].arrowsColour[1][5]);
 					
-					me.dynamicPageFunc(myAtis[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myAtis[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myAtis[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myAtis[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myAtis[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myAtis[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myAtis[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myAtis[i].L1[2],myAtis[i].L2[2],myAtis[i].L3[2],myAtis[i].L4[2],myAtis[i].L5[2],myAtis[i].L6[2]);
 					
-					me.dynamicPageFunc(myAtis[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myAtis[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myAtis[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myAtis[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myAtis[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myAtis[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myAtis[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myAtis[i].R1[2],myAtis[i].R2[2],myAtis[i].R3[2],myAtis[i].R4[2],myAtis[i].R5[2],myAtis[i].R6[2]);
 				}
@@ -1467,96 +1873,29 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (atsu.ATISInstances[0].station != nil) {	
-				me["Simple_L1"].setText(" " ~ atsu.ATISInstances[0].station ~ "/" ~ (atsu.ATISInstances[0].type == 0 ? "ARR" : "DEP"));
-				me["Simple_L1"].setFont(default);
-				me["Simple_L1_Arrow"].show();
-			} else {
-				me["Simple_L1"].setText(" [  ]/[  ]");
-				me["Simple_L1"].setFont(symbol);
-				me["Simple_L1_Arrow"].hide();
-			}
-			
-			if (atsu.ATISInstances[0].received) {
-				me["Simple_C1"].setText(" " ~ atsu.ATISInstances[0].receivedCode ~ " " ~ atsu.ATISInstances[0].receivedTime);
-				me["Simple_C1"].show();
-			} else {
-				me["Simple_C1"].hide();
-			}
-			
-			if (atsu.ATISInstances[1].station != nil) {
-				me["Simple_L2"].setText(" " ~ atsu.ATISInstances[1].station ~ "/" ~ (atsu.ATISInstances[1].type == 0 ? "ARR" : "DEP"));
-				me["Simple_L2"].setFont(default);
-				me["Simple_L2_Arrow"].show();
-			} else {
-				me["Simple_L2"].setText(" [  ]/[  ]");
-				me["Simple_L2"].setFont(symbol);
-				me["Simple_L2_Arrow"].hide();
-			}
-			
-			if (atsu.ATISInstances[1].received) {
-				me["Simple_C2"].setText(" " ~ atsu.ATISInstances[1].receivedCode ~ " " ~ atsu.ATISInstances[1].receivedTime);
-				me["Simple_C2"].show();
-			} else {
-				me["Simple_C2"].hide();
-			}
-			
-			if (atsu.ATISInstances[2].station != nil) {
-				me["Simple_L3"].setText(" " ~ atsu.ATISInstances[2].station ~ "/" ~ (atsu.ATISInstances[2].type == 0 ? "ARR" : "DEP"));
-				me["Simple_L3"].setFont(default);
-				me["Simple_L3_Arrow"].show();
-			} else {
-				me["Simple_L3"].setText(" [  ]/[  ]");
-				me["Simple_L3"].setFont(symbol);
-				me["Simple_L3_Arrow"].hide();
-			}
-			
-			if (atsu.ATISInstances[2].received) {
-				me["Simple_C3"].setText(" " ~ atsu.ATISInstances[2].receivedCode ~ " " ~ atsu.ATISInstances[2].receivedTime);
-				me["Simple_C3"].show();
-			} else {
-				me["Simple_C3"].hide();
-			}
-			
-			if (atsu.ATISInstances[3].station != nil) {
-				me["Simple_L4"].setText(" " ~ atsu.ATISInstances[3].station ~ "/" ~ (atsu.ATISInstances[3].type == 0 ? "ARR" : "DEP"));
-				me["Simple_L4"].setFont(default);
-				me["Simple_L4_Arrow"].show();
-			} else {
-				me["Simple_L4"].setText(" [  ]/[  ]");
-				me["Simple_L4"].setFont(symbol);
-				me["Simple_L4_Arrow"].hide();
-			}
-			
-			if (atsu.ATISInstances[3].received) {
-				me["Simple_C4"].setText(" " ~ atsu.ATISInstances[3].receivedCode ~ " " ~ atsu.ATISInstances[3].receivedTime);
-				me["Simple_C4"].show();
-			} else {
-				me["Simple_C4"].hide();
-			}
-			
-			if (atsu.ATISInstances[0].sent) {
-				me["ATISSend1"].hide();
-			} else {
-				me["ATISSend1"].show();
-			}
-			
-			if (atsu.ATISInstances[1].sent) {
-				me["ATISSend2"].hide();
-			} else {
-				me["ATISSend2"].show();
-			}
-			
-			if (atsu.ATISInstances[2].sent) {
-				me["ATISSend3"].hide();
-			} else {
-				me["ATISSend3"].show();
-			}
-			
-			if (atsu.ATISInstances[3].sent) {
-				me["ATISSend4"].hide();
-			} else {
-				me["ATISSend4"].show();
+			for (var x = 0; x <= 3; x = x + 1) {
+				if (atsu.ATISInstances[x].station != nil) {	
+					me["Simple_L" ~ (x + 1)].setText(" " ~ atsu.ATISInstances[x].station ~ "/" ~ (atsu.ATISInstances[x].type == 0 ? "ARR" : "DEP"));
+					me["Simple_L" ~ (x + 1)].setFont(default);
+					me["Simple_L" ~ (x + 1) ~ "_Arrow"].show();
+				} else {
+					me["Simple_L" ~ (x + 1)].setText(" [  ]/[  ]");
+					me["Simple_L" ~ (x + 1)].setFont(symbol);
+					me["Simple_L" ~ (x + 1) ~ "_Arrow"].hide();
+				}
+				
+				if (atsu.ATISInstances[x].received) {
+					me["Simple_C" ~ (x + 1)].setText(" " ~ atsu.ATISInstances[x].receivedCode ~ " " ~ atsu.ATISInstances[x].receivedTime);
+					me["Simple_C" ~ (x + 1)].show();
+				} else {
+					me["Simple_C" ~ (x + 1)].hide();
+				}
+				
+				if (atsu.ATISInstances[x].sent) {
+					me["ATISSend" ~ (x + 1)].hide();
+				} else {
+					me["ATISSend" ~ (x + 1)].show();
+				}
 			}
 		} else if (page == "NOTIFICATION") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -1580,10 +1919,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(small, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, small, normal);
@@ -1669,10 +2005,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(small, normal, small, normal, normal, normal);
@@ -1690,7 +2023,6 @@ var canvas_MCDU_base = {
 				me["Simple_L2S"].setText("NEXT ATC");
 				me["Simple_L2"].setText("----");
 				me["Simple_C1"].setText("-------------     ");
-				me["Simple_R1"].setText("NOTIFIED ");
 				me["Simple_R3S"].setText("MAX UPLINK DELAY");
 				me["Simple_R3"].setText("NONE");
 				
@@ -1702,9 +2034,19 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 			
+			if (canvas_dcdu.CPDLCstatusNode.getValue() == 2) {
+				me["Simple_R1"].setText("DISCONNECT ");
+				me["Simple_C1"].setText("----------        ");
+			} else {
+				me["Simple_R1"].setText("NOTIFIED ");
+				me["Simple_C1"].setText("------------      ");
+			}
+			
 			if (atsu.notificationSystem.notifyAirport != nil) {
 				if (atsu.notificationSystem.hasNotified) {
 					me["Simple_L1"].setText(atsu.notificationSystem.notifyAirport);
+					me["Simple_C1"].show();
+					me["Simple_R1"].show();
 				} else {
 					me["Simple_L1"].setText("----");
 					me["Simple_C1"].hide();
@@ -1742,10 +2084,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeRight(normal, normal, normal, normal, small, normal);
@@ -1905,10 +2244,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeRight(normal, normal, normal, normal, small, normal);
@@ -1950,10 +2286,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, small, normal, normal, small, normal);
 				me.fontSizeRight(normal, small, normal, small, small, normal);
@@ -2005,10 +2338,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, small, normal, normal, small, normal);
 				me.fontSizeRight(normal, small, normal, small, small, normal);
@@ -2124,7 +2454,6 @@ var canvas_MCDU_base = {
 				} else {
 					me["Simple_L5"].hide();
 				}
-
 				me["Simple_L6"].setText(sprintf("%s/%s",idleFactor.getValue(),perfFactor.getValue()));
 				me["Simple_L1S"].setText(" ENG");
 				me["Simple_L2S"].setText(" ACTIVE NAV DATA BASE");
@@ -2263,9 +2592,7 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].show();
 				me["ArrowRight"].show();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -2284,21 +2611,15 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myPilotWP[i]);
 					
-					me.dynamicPageFunc(myPilotWP[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myPilotWP[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myPilotWP[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myPilotWP[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myPilotWP[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myPilotWP[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myPilotWP[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myPilotWP[i].L1[2],myPilotWP[i].L2[2],myPilotWP[i].L3[2],myPilotWP[i].L4[2],myPilotWP[i].L5[2],myPilotWP[i].L6[2]);
 					
-					me.dynamicPageFunc(myPilotWP[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myPilotWP[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myPilotWP[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myPilotWP[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myPilotWP[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myPilotWP[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myPilotWP[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myPilotWP[i].R1[2],myPilotWP[i].R2[2],myPilotWP[i].R3[2],myPilotWP[i].R4[2],myPilotWP[i].R5[2],myPilotWP[i].R6[2]);
 				}
@@ -2338,17 +2659,13 @@ var canvas_MCDU_base = {
 				me["Simple_L5"].setFontSize(small);
 				me["Simple_C5"].setFontSize(small);
 				me["Simple_R5"].setFontSize(small);
-
 				pageFreezed[i] = nil;
-
 				me.updateretard = 0;
 				
 				pageSwitch[i].setBoolValue(1);
 			}
-
             if (me.updateretard <= 0) {
 				if (pageFreezed[i] == nil) {
-
 					me["Simple_Title"].setText("POSITION MONITOR");
 					me["Simple_Title2"].hide();
 					me["Simple_L6"].setText(" FREEZE");
@@ -2362,10 +2679,8 @@ var canvas_MCDU_base = {
 					me["Simple_R6S"].setText("SEL ");
 					me["Simple_R6"].setText("NAVAIDS ");
 					me["Simple_C5S"].setText("IRS2");
-
 					var latlog = me.getLatLogFormatted("/position/"); # current sim lat/log (formatted) cached for fast excecution
 					#TODO - IRS emulation
-
 					if (systems.ADIRS.Operating.aligned[0].getValue()) { # TODO real FMGC1 GPS data
 						me["Simple_R1"].setText(latlog);
 						me["Simple_R1"].setColor(GREEN);
@@ -2375,7 +2690,6 @@ var canvas_MCDU_base = {
 						me["Simple_R1"].setColor(WHITE);
 						me["Simple_L2S"].setText("");	
 					}
-
 					if (systems.ADIRS.Operating.aligned[1].getValue()) { # TODO real FMGC2 GPS data
 						me["Simple_R2"].setText(latlog);
 						me["Simple_R2"].setColor(GREEN);
@@ -2385,7 +2699,6 @@ var canvas_MCDU_base = {
 						me["Simple_R2"].setColor(WHITE);
 						me["Simple_L3S"].setText("");
 					}
-
 					if (systems.ADIRS.Operating.aligned[0].getValue() or systems.ADIRS.Operating.aligned[1].getValue() or systems.ADIRS.Operating.aligned[2].getValue()) {
 						me["Simple_R3"].setText(latlog); # GPIRS
 						me["Simple_R3"].setColor(GREEN);
@@ -2397,9 +2710,7 @@ var canvas_MCDU_base = {
 						me["Simple_R4"].setText("----.--/-----.--"); # MIXIRS not available
 						me["Simple_R4"].setColor(WHITE);
 					}
-
 					var Simple_row5 = ["Simple_L5","Simple_C5","Simple_R5"];
-
 					for ( var a=0; a<3; a+=1 ) {
 						if (systems.ADIRS.Operating.aligned[a].getValue()) {
 							me[Simple_row5[a]].setText(sprintf("%-8s",(systems.ADIRS.ADIRunits[a].mode == 2) ? "ATT" : "NAV 0.0"));
@@ -2407,29 +2718,21 @@ var canvas_MCDU_base = {
 							me[Simple_row5[a]].setText(sprintf("%-8s",me.getIRSStatus(a)));
 						}
 					}			
-
 				} else {
-
 					me["Simple_Title"].setText("POSITION FROZEN AT      ");
 					me["Simple_Title2"].setText(sprintf("%23s ",pageFreezed[i]));
 					me["Simple_Title2"].show();
 					me["Simple_L6"].setText(" UNFREEZE");
-
 				}
-
 			}
-
 			if (me.updateretard < 0) me.updateretard = 2;
 			else me.updateretard -= 1;
-
 		} else if (page == "IRSMON") {
 			if (!pageSwitch[i].getBoolValue()) {
 				
 				me.defaultHideWithCenter();
 				me.standardFontSize();
-
 				me.defaultPageNumbers();
-
 				me.showLeft(1, 1, 1, -1, -1, -1);
 				me.showLeftS(-1, 1, 1, 1, -1, -1);
 				me.showLeftArrow(1, 1, 1, -1, -1, -1);
@@ -2438,7 +2741,6 @@ var canvas_MCDU_base = {
 				me.showRight(-1, -1, -1, -1, -1, -1);
 				me.showRightS(1, 1, 1, 1, -1, -1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
-
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();				
@@ -2452,7 +2754,6 @@ var canvas_MCDU_base = {
 				me.colorLeftArrow("wht", "wht", "wht", "ack", "ack", "ack");
 				
 				me["Simple_Title"].setText("IRS MONITOR");
-
 				me["Simple_L1"].setText(" IRS1");
 				me["Simple_L2"].setText(" IRS2");
 				me["Simple_L3"].setText(" IRS3");
@@ -2463,9 +2764,7 @@ var canvas_MCDU_base = {
 				me["Simple_C2"].setFontSize(small);
 				me["Simple_C3"].setFontSize(small);
 				me["Simple_R1S"].setText("");
-
 				#TODO - Missing SET HDG on degraded operations
-
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -2498,9 +2797,7 @@ var canvas_MCDU_base = {
 				
 				me.defaultHideWithCenter();
 				me.standardFontSize();
-
 				me.defaultPageNumbers();
-
 				me.showLeft(1, 1, 1, 1, 1, 1);
 				me.showLeftS(1, 1, 1, 1, 1, 1);
 				me.showLeftArrow(-1, -1, -1, -1, -1, -1);
@@ -2509,7 +2806,6 @@ var canvas_MCDU_base = {
 				me.showRight(-1, 1, 1, -1, 1, 1);
 				me.showRightS(-1, 1, 1, -1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
-
 				me["arrowsDepArr"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();				
@@ -2524,7 +2820,6 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				
 				me["Simple_Title"].setText("GPS MONITOR");
-
 				me["Simple_L1S"].setText("GPS1 POSITION");
 				me["Simple_L2S"].setText("TTRK");
 				me["Simple_L3S"].setText("MERIT");
@@ -2718,10 +3013,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeRight(normal, normal, normal, normal, normal, 0);
@@ -2777,7 +3069,6 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].setColor(AMBER);
 				me["Simple_L6"].setText("         g");
 			}
-
 			if (fmgc.FMGCInternal.coRouteSet) { # show coRoute when valid
 				me["INITA_CoRoute"].hide();
 				me["Simple_L1"].setText(fmgc.FMGCInternal.coRoute);
@@ -2788,7 +3079,6 @@ var canvas_MCDU_base = {
 				me["INITA_CoRoute"].show();				
 				me["Simple_L1"].setText("NONE");
 			}
-
 			if (fmgc.FMGCInternal.toFromSet) {
 				me["INITA_CoRoute"].hide();
 				me["INITA_FromTo"].hide();
@@ -2972,21 +3262,9 @@ var canvas_MCDU_base = {
 			minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
 			sign2 = degrees2 >= 0 ? "E" : "W";
 			me["Simple_R2"].setText(abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			if (systems.ADIRS.ADIRunits[0].operative and getprop("/FMGC/internal/align1-done")) {
-				me["Simple_C3"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			} else {
-				me["Simple_C3"].setText("-----.--/-----.--");
-			}
-			if (systems.ADIRS.ADIRunits[1].operative and getprop("/FMGC/internal/align2-done")) {
-				me["Simple_C4"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			} else {
-				me["Simple_C4"].setText("-----.--/-----.--");
-			}
-			if (systems.ADIRS.ADIRunits[2].operative and getprop("/FMGC/internal/align3-done")) {
-				me["Simple_C5"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
-			} else {
-				me["Simple_C5"].setText("-----.--/-----.--");
-			}
+			me.doIRSFunc(0,degrees,minutes,sign,degrees2,minutes2,sign2);
+			me.doIRSFunc(1,degrees,minutes,sign,degrees2,minutes2,sign2);
+			me.doIRSFunc(2,degrees,minutes,sign,degrees2,minutes2,sign2);
 			
 			if (align_set.getValue() == 1) {
 				me["Simple_R6"].setText("CONFIRM ALIGN ");
@@ -2999,42 +3277,11 @@ var canvas_MCDU_base = {
 				me.showRightArrow(0, 0, 0, 0, 0, 1);
 			}
 			
-			if (systems.ADIRS.Operating.aligned[0].getValue()) {
-				if (systems.ADIRS.ADIRunits[0].mode == 2) {
-					me["Simple_C3S"].setText("IRS1 IN ATT");
-				} else {
-					me["Simple_C3S"].setText("IRS1 ALIGNED ON GPS");
-				}
-			} else {
-				me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
-			}
-			
-			if (systems.ADIRS.Operating.aligned[1].getValue()) {
-				if (systems.ADIRS.ADIRunits[1].mode == 2) {
-					me["Simple_C4S"].setText("IRS2 IN ATT");
-				} else {
-					me["Simple_C4S"].setText("IRS2 ALIGNED ON GPS");
-				}
-			} else {
-				me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
-			}
-			
-			if (systems.ADIRS.Operating.aligned[2].getValue()) {
-				if (systems.ADIRS.ADIRunits[2].mode == 2) {
-					me["Simple_C5S"].setText("IRS3 IN ATT");
-				} else {
-					me["Simple_C5S"].setText("IRS3 ALIGNED ON GPS");
-				}
-			} else {
-				me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
-			}
-			
 			me["Simple_L2S"].setText("LAT");
 			me["Simple_L6"].setText(" RETURN");
 			me["Simple_R2S"].setText("LONG");
 			me["Simple_C1S"].setText("REFERENCE");
 			me["Simple_C2S"].setText("GPS POSITION");
-
 		} else if (page == "ROUTESELECTION") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHide();
@@ -3061,17 +3308,13 @@ var canvas_MCDU_base = {
 				me.colorLeftS("grn", "grn", "grn", "grn", "grn", "wht");
 				me.colorRight("ack", "wht", "wht", "wht", "wht", "amb");
 				me.colorRightS("ack", "wht", "wht", "wht", "wht", "wht");
-
 				me["Simple_L1"].setText("NONE");
 				me["Simple_L6"].setText(" RETURN");
 				me["Simple_R6"].setText("INSERT ");
 				me["PRINTPAGE"].show();
 				me["PRINTPAGE"].setColor(AMBER);
-
 				var rows = ["2S","2","3S","3","4S","4","5S","5"];
-
 				me["Simple_L1"].setText("DUBLHR1");
-
 				var r = 0;
 				#for ( ; r < 8; r +=  1) {   # Example how formats rows with 4 cols
 				#	me["Simple_L" ~ rows[r]].setText(sprintf("%11s %11s","SELKA","NUGRA"));
@@ -3082,7 +3325,6 @@ var canvas_MCDU_base = {
 					me["Simple_R" ~ rows[r]].setText("");
 					r+=1;
 				}
-
 				if (fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.altSelected) {
 					me["Simple_Title"].setText(sprintf("%s", fmgc.FMGCInternal.depApt ~ "/" ~ fmgc.FMGCInternal.arrApt));
 				} else if (!fmgc.FMGCInternal.toFromSet and fmgc.FMGCInternal.altAirport != "" and fmgc.FMGCInternal.altSelected) {
@@ -3092,7 +3334,6 @@ var canvas_MCDU_base = {
 				} else {
 					me["Simple_Title"].setText("ROUTE SELECTION");
 				}
-
 				pageSwitch[i].setBoolValue(1);	# update on request only (left/right arrows)
 			}
 			
@@ -3130,10 +3371,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, 1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, 1, -1, -1, -1);
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(small, small, small, small, small, small);
 				me.fontSizeCenter(normal, small, small, small, small, small);
@@ -3500,7 +3738,6 @@ var canvas_MCDU_base = {
 				me["Simple_C1"].hide();
 				me["INITB_ZFW"].show();
 			}
-
 			if (fmgc.FMGCInternal.taxiFuelSet) {
 				me["Simple_L1"].setFontSize(normal);
 			} else {
@@ -3580,10 +3817,7 @@ var canvas_MCDU_base = {
 				me.showRightS(1, -1, 1, 1, 1, 1);
 				me.showRightArrow(-1, -1, -1, -1, -1, -1);
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, small, small, small, small);
 				me.fontSizeCenter(small, small, normal, small, small, small);
@@ -3837,7 +4071,6 @@ var canvas_MCDU_base = {
 			}
 			
 		} else if (page == "PROGPREF" or page == "PROGTO" or page == "PROGCLB" or page == "PROGCRZ" or page == "PROGDES" or page == "PROGAPPR" or page == "PROGDONE") {
-
 			if (fmgc.FMGCInternal.phase == 0) {
 				setprop("/MCDU[" ~ i ~ "]/page", "PROGPREF");
 				page = "PROGPREF";
@@ -3878,7 +4111,6 @@ var canvas_MCDU_base = {
 				me["PERFGA"].hide();
 				
                 var colortext = ["",""];
-
 				if (page == "PROGPREF") {
 					colortext[0] = "PREFLIGHT";
 				} else if (page == "PROGTO") {
@@ -3894,9 +4126,7 @@ var canvas_MCDU_base = {
 				} else if (page == "PROGDONE") {
 					colortext[0] = "DONE";
 				}
-
 				colortext[1] = (fmgc.FMGCInternal.flightNumSet and page != "PROGDONE") ? fmgc.FMGCInternal.flightNum : "";  #CHECKME - condition useful?
-
 				me["Simple_Title"].setText(sprintf("   %-21s",colortext[0]));
 				me["Simple_Title2"].setText(sprintf("%12s %-11s","",colortext[1]));
 				
@@ -3925,7 +4155,6 @@ var canvas_MCDU_base = {
 				me.fontLeftS(default, default, default, default, default, default);
 				me.fontRight(default, symbol, symbol, symbol, default, default);
 				me.fontRightS(default, default, default, default, default, default);
-
 				me.fontSizeLeft(normal, normal, small, small, normal, small);
 				me.fontSizeLeftS(small, small, small, small, small, small);
 				me.fontSizeRight(normal, small, small, small, normal, small);
@@ -3934,7 +4163,6 @@ var canvas_MCDU_base = {
 				me.fontSizeCenterS(normal, small, small, small, small, small);				
 				
 				me["Simple_C1S"].setFontSize(small);
-
 				me.colorLeft("blu", "wht", "blu", "wht", "wht", "blu");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
@@ -3943,7 +4171,6 @@ var canvas_MCDU_base = {
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorCenter("grn", "grn", "wht", "wht", "wht", "grn");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
-
 				if (page == "PROGCRZ") {
 					me.showLeftS(0, 0, -1, 0, 0, 0);
 					me.showCenterS(0, 0, 1, 0, 0, 0);
@@ -3996,7 +4223,6 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("  BRG /DIST");
 			me["Simple_L5S"].setText(" PREDICTIVE");
 			me["Simple_L6S"].setText("REQUIRED");
-
 			if (page != "PROGDONE") {			
 				me["Simple_R1"].setText("FL398 ");
 			} else {
@@ -4007,7 +4233,6 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setColor(WHITE);
 				me["Simple_R5"].hide();
 			}
-
 			if (page == "PROGDES" or page == "PROGAPPR") {			
 				var vdev = 750; #CHECKME i dunno the meaning, but I found this value in the source
 				var vdev_sign = (vdev>=0) ? "+" : "-";			
@@ -4044,7 +4269,6 @@ var canvas_MCDU_base = {
 			me["Simple_C6S"].setText("ACCUR");
 			if (systems.ADIRS.Operating.aligned[0].getValue() or systems.ADIRS.Operating.aligned[1].getValue()) me["Simple_C6"].setText("HIGH");
 			else  me["Simple_C6"].setText("LOW");
-
 			#if (page == "PROGAPPR") {  # A/C without GPS
 			#	me["Simple_L5"].setText(sprintf(" DIR  DIST  TO  DEST=%6d",0));
 			#	me["Simple_L5S"].setText(sprintf("REQD  DIST  TO  LAND=%6d",0));
@@ -4104,7 +4328,6 @@ var canvas_MCDU_base = {
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorCenter("grn", "grn", "grn", "wht", "wht", "wht");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
-
 				me["Simple_Title"].setText("TAKE OFF");
 				
 				pageSwitch[i].setBoolValue(1);
@@ -4144,7 +4367,6 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].hide();
 				me["Simple_L6S"].hide();
 			}
-
 			if (fmgc.FMGCInternal.phase == 1) {  # GREEN title and not modifiable on TO phase
 				me["Simple_Title"].setColor(GREEN);
 				me.colorLeft("grn", "grn", "grn", "blu", "grn", "wht");
@@ -4161,7 +4383,6 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_R1"].hide();
 			}
-
 			
 			
 			if (fmgc.FMGCInternal.v1set) {
@@ -4238,7 +4459,6 @@ var canvas_MCDU_base = {
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
-
 		} else if (page == "PERFCLB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -4390,10 +4610,8 @@ var canvas_MCDU_base = {
 			me["Simple_C3"].setText("----");
 			me["Simple_C4"].setText("----");
 			me["Simple_C5S"].setText("----");
-
 			me["Simple_R6S"].setText("NEXT ");
 			me["Simple_R6"].setText("PHASE ");
-
 		} else if (page == "PERFCRZ") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -4440,7 +4658,6 @@ var canvas_MCDU_base = {
 			
 			if (fmgc.FMGCInternal.phase == 3) {
 				me["Simple_Title"].setColor(GREEN);
-
 				if (managedSpeed.getValue() == 1) {
 					me.showLeft(0, 0, 0, -1, 0, 0);
 					me.showLeftS(0, 0, 0, -1, 0, 0);
@@ -4583,7 +4800,6 @@ var canvas_MCDU_base = {
 				me.showRightS(0, 0, 1, 0, 0, 0);
 				me.showCenter(0, 1, 0, 1, 1, 0);
 				me.showCenterS(0, 0, 1, 0, 0, 0);
-
 				if (managedSpeed.getValue() == 1) {
 					me.showLeft(0, 0, 0, -1, 0, 0);
 					me.showLeftS(0, 0, 0, -1, 0, 0);
@@ -4686,10 +4902,8 @@ var canvas_MCDU_base = {
 			me["Simple_C3"].setText("----");
 			me["Simple_C4"].setText("----");
 			me["Simple_C5"].setText("----");
-
 			me["Simple_R6S"].setText("NEXT ");
 			me["Simple_R6"].setText("PHASE ");
-
 		} else if (page == "PERFAPPR") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -4833,7 +5047,6 @@ var canvas_MCDU_base = {
 				me["PERFAPPR_LDG_F"].hide();
 				me.fontSizeRight(0, 0, 0, small, normal, 0);
 			}
-
 			me["Simple_L6S"].setText(" PREV");
 			me["Simple_L6"].setText(" PHASE");
 			
@@ -4873,7 +5086,6 @@ var canvas_MCDU_base = {
 			me["Simple_C2S"].setText("SLT RETR");
 			me["Simple_C3S"].setText("CLEAN  ");
 			me["Simple_C5S"].setText("VLS   ");
-
 		} else if (page == "PERFGA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -4964,14 +5176,9 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				
@@ -5045,30 +5252,20 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myWind[i]);
 					
-					me.dynamicPageFunc(myWind[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myWind[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myWind[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myWind[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myWind[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myWind[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myWind[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myWind[i].L1[2],myWind[i].L2[2],myWind[i].L3[2],myWind[i].L4[2],myWind[i].L5[2],myWind[i].L6[2]);
 					
-					me.dynamicPageFunc(myWind[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myWind[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myWind[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myWind[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myWind[i].C5, "Simple_C5");
-					me.dynamicPageFunc(myWind[i].C6, "Simple_C6");
-					
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myWind[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					me.colorCenter(myWind[i].C1[2],myWind[i].C2[2],myWind[i].C3[2],myWind[i].C4[2],myWind[i].C5[2],myWind[i].C6[2]);
 					
-					me.dynamicPageFunc(myWind[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myWind[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myWind[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myWind[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myWind[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myWind[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myWind[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myWind[i].R1[2],myWind[i].R2[2],myWind[i].R3[2],myWind[i].R4[2],myWind[i].R5[2],myWind[i].R6[2]);
 				}
@@ -5084,9 +5281,7 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -5125,21 +5320,15 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myLatRev[i]);
 					
-					me.dynamicPageFunc(myLatRev[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myLatRev[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myLatRev[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myLatRev[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myLatRev[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myLatRev[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myLatRev[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myLatRev[i].L1[2],myLatRev[i].L2[2],myLatRev[i].L3[2],myLatRev[i].L4[2],myLatRev[i].L5[2],myLatRev[i].L6[2]);
-						
-					me.dynamicPageFunc(myLatRev[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myLatRev[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myLatRev[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myLatRev[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myLatRev[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myLatRev[i].R6, "Simple_R6");
+					
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myLatRev[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myLatRev[i].R1[2],myLatRev[i].R2[2],myLatRev[i].R3[2],myLatRev[i].R4[2],myLatRev[i].R5[2],myLatRev[i].R6[2]);
 				}
@@ -5155,9 +5344,7 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -5174,17 +5361,12 @@ var canvas_MCDU_base = {
 						me["Simple_Center"].show();
 						me["Simple_C1S"].setText(sprintf("%s", myVertRev[i].subtitle[0] ~ "/" ~ myVertRev[i].subtitle[1]));
 						me["Simple_C1S"].show();
-						me["Simple_C1"].hide();
-						me["Simple_C2"].hide();
-						me["Simple_C3"].hide();
-						me["Simple_C4"].hide();
-						me["Simple_C5"].hide();
-						me["Simple_C6"].hide();
-						me["Simple_C2S"].hide();
-						me["Simple_C3S"].hide();
-						me["Simple_C4S"].hide();
-						me["Simple_C5S"].hide();
-						me["Simple_C6S"].hide();
+						for (var y = 1; y <= 6; y = y + 1) {
+							me["Simple_C" ~ y].hide();
+						}
+						for (var y = 2; y <= 6; y = y + 1) {
+							me["Simple_C" ~ y ~ "S"].hide();
+						}
 					} else {
 						me["Simple_Center"].hide();
 					}
@@ -5196,21 +5378,15 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myVertRev[i]);
 					
-					me.dynamicPageFunc(myVertRev[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myVertRev[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myVertRev[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myVertRev[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myVertRev[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myVertRev[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myVertRev[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myVertRev[i].L1[2],myVertRev[i].L2[2],myVertRev[i].L3[2],myVertRev[i].L4[2],myVertRev[i].L5[2],myVertRev[i].L6[2]);
-						
-					me.dynamicPageFunc(myVertRev[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myVertRev[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myVertRev[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myVertRev[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myVertRev[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myVertRev[i].R6, "Simple_R6");
+					
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myVertRev[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myVertRev[i].R1[2],myVertRev[i].R2[2],myVertRev[i].R3[2],myVertRev[i].R4[2],myVertRev[i].R5[2],myVertRev[i].R6[2]);
 				}
@@ -5227,9 +5403,7 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].show();
 				me.hideAllArrowsButL6();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -5243,32 +5417,24 @@ var canvas_MCDU_base = {
 					me.dynamicPageArrowFuncDepArr(myDeparture[i]);
 					me.dynamicPageFontFunc(myDeparture[i]);
 					
-					me.dynamicPageFunc(myDeparture[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myDeparture[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myDeparture[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myDeparture[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myDeparture[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myDeparture[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDeparture[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myDeparture[i].L1[2],myDeparture[i].L2[2],myDeparture[i].L3[2],myDeparture[i].L4[2],myDeparture[i].L5[2],myDeparture[i].L6[2]);
 					
-					me.dynamicPageFunc(myDeparture[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myDeparture[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myDeparture[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myDeparture[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myDeparture[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDeparture[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myDeparture[i].C1[2],myDeparture[i].C2[2],myDeparture[i].C3[2],myDeparture[i].C4[2],myDeparture[i].C5[2],myDeparture[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
 						
-					me.dynamicPageFunc(myDeparture[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myDeparture[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myDeparture[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myDeparture[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myDeparture[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myDeparture[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDeparture[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myDeparture[i].R1[2],myDeparture[i].R2[2],myDeparture[i].R3[2],myDeparture[i].R4[2],myDeparture[i].R5[2],myDeparture[i].R6[2]);
 				}
@@ -5284,16 +5450,11 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
-				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.standardColor();
 				
 				
 				if (myDuplicate[i] != nil) {
@@ -5304,32 +5465,24 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myDuplicate[i]);
 					
-					me.dynamicPageFunc(myDuplicate[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myDuplicate[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myDuplicate[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myDuplicate[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myDuplicate[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myDuplicate[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDuplicate[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myDuplicate[i].L1[2],myDuplicate[i].L2[2],myDuplicate[i].L3[2],myDuplicate[i].L4[2],myDuplicate[i].L5[2],myDuplicate[i].L6[2]);
 					
-					me.dynamicPageFunc(myDuplicate[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myDuplicate[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myDuplicate[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myDuplicate[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myDuplicate[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDuplicate[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myDuplicate[i].C1[2],myDuplicate[i].C2[2],myDuplicate[i].C3[2],myDuplicate[i].C4[2],myDuplicate[i].C5[2],myDuplicate[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
 						
-					me.dynamicPageFunc(myDuplicate[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myDuplicate[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myDuplicate[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myDuplicate[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myDuplicate[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myDuplicate[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDuplicate[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myDuplicate[i].R1[2],myDuplicate[i].R2[2],myDuplicate[i].R3[2],myDuplicate[i].R4[2],myDuplicate[i].R5[2],myDuplicate[i].R6[2]);
 				}
@@ -5347,9 +5500,7 @@ var canvas_MCDU_base = {
 				me.hideAllArrowsButL6();
 				me["arrow2L"].hide();
 				me["arrow2R"].hide();
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -5369,32 +5520,24 @@ var canvas_MCDU_base = {
 					me.dynamicPageArrowFuncDepArr(myArrival[i]);
 					me.dynamicPageFontFunc(myArrival[i]);
 					
-					me.dynamicPageFunc(myArrival[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myArrival[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myArrival[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myArrival[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myArrival[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myArrival[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myArrival[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myArrival[i].L1[2],myArrival[i].L2[2],myArrival[i].L3[2],myArrival[i].L4[2],myArrival[i].L5[2],myArrival[i].L6[2]);
 					
-					me.dynamicPageFunc(myArrival[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myArrival[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myArrival[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myArrival[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myArrival[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myArrival[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myArrival[i].C1[2],myArrival[i].C2[2],myArrival[i].C3[2],myArrival[i].C4[2],myArrival[i].C5[2],myArrival[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
 						
-					me.dynamicPageFunc(myArrival[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myArrival[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myArrival[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myArrival[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myArrival[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myArrival[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myArrival[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myArrival[i].R1[2],myArrival[i].R2[2],myArrival[i].R3[2],myArrival[i].R4[2],myArrival[i].R5[2],myArrival[i].R6[2]);
 				}
@@ -5411,14 +5554,9 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].show();
 				me.hideAllArrowsButL6();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, small, normal, normal); # if updating watch out - this is needed
@@ -5435,32 +5573,24 @@ var canvas_MCDU_base = {
 					me.dynamicPageArrowFuncDepArr(myHold[i]);
 					me.dynamicPageFontFunc(myHold[i]);
 					
-					me.dynamicPageFunc(myHold[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myHold[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myHold[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myHold[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myHold[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myHold[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myHold[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myHold[i].L1[2],myHold[i].L2[2],myHold[i].L3[2],myHold[i].L4[2],myHold[i].L5[2],myHold[i].L6[2]);
 					
-					me.dynamicPageFunc(myHold[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myHold[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myHold[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myHold[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myHold[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myHold[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myHold[i].C1[2],myHold[i].C2[2],myHold[i].C3[2],myHold[i].C4[2],myHold[i].C5[2],myHold[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
-						
-					me.dynamicPageFunc(myHold[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myHold[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myHold[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myHold[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myHold[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myHold[i].R6, "Simple_R6");
+					
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myHold[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myHold[i].R1[2],myHold[i].R2[2],myHold[i].R3[2],myHold[i].R4[2],myHold[i].R5[2],myHold[i].R6[2]);
 				}
@@ -5477,14 +5607,9 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].show();
 				me.hideAllArrowsButL6();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, small, normal, normal); # if updating watch out - this is needed
@@ -5501,32 +5626,24 @@ var canvas_MCDU_base = {
 					me.dynamicPageArrowFuncDepArr(myAirways[i]);
 					me.dynamicPageFontFunc(myAirways[i]);
 					
-					me.dynamicPageFunc(myAirways[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myAirways[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myAirways[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myAirways[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myAirways[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myAirways[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myAirways[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myAirways[i].L1[2],myAirways[i].L2[2],myAirways[i].L3[2],myAirways[i].L4[2],myAirways[i].L5[2],myAirways[i].L6[2]);
 					
-					me.dynamicPageFunc(myAirways[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myAirways[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myAirways[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myAirways[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myAirways[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myAirways[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myAirways[i].C1[2],myAirways[i].C2[2],myAirways[i].C3[2],myAirways[i].C4[2],myAirways[i].C5[2],myAirways[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
-						
-					me.dynamicPageFunc(myAirways[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myAirways[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myAirways[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myAirways[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myAirways[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myAirways[i].R6, "Simple_R6");
+					
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myAirways[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myAirways[i].R1[2],myAirways[i].R2[2],myAirways[i].R3[2],myAirways[i].R4[2],myAirways[i].R5[2],myAirways[i].R6[2]);
 				}
@@ -5554,14 +5671,9 @@ var canvas_MCDU_base = {
 				me["Simple_R5_Arrow"].hide();
 				me["Simple_R6_Arrow"].show();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
-				me.fontLeft(default, default, default, default, default, default);
-				me.fontLeftS(default, default, default, default, default, default);
-				me.fontRight(default, default, default, default, default, default);
-				me.fontRightS(default, default, default, default, default, default);
+				me.standardFont();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
@@ -5579,32 +5691,24 @@ var canvas_MCDU_base = {
 					
 					me.dynamicPageFontFunc(myClosestAirport[i]);
 					
-					me.dynamicPageFunc(myClosestAirport[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myClosestAirport[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myClosestAirport[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myClosestAirport[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myClosestAirport[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myClosestAirport[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myClosestAirport[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myClosestAirport[i].L1[2],myClosestAirport[i].L2[2],myClosestAirport[i].L3[2],myClosestAirport[i].L4[2],myClosestAirport[i].L5[2],myClosestAirport[i].L6[2]);
 					
-					me.dynamicPageFunc(myClosestAirport[i].C1, "Simple_C1");
-					me.dynamicPageFunc(myClosestAirport[i].C2, "Simple_C2");
-					me.dynamicPageFunc(myClosestAirport[i].C3, "Simple_C3");
-					me.dynamicPageFunc(myClosestAirport[i].C4, "Simple_C4");
-					me.dynamicPageFunc(myClosestAirport[i].C5, "Simple_C5");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myClosestAirport[i]["C" ~ x], "Simple_C" ~ x);
+					}
 					
 					me.colorCenter(myClosestAirport[i].C1[2],myClosestAirport[i].C2[2],myClosestAirport[i].C3[2],myClosestAirport[i].C4[2],myClosestAirport[i].C5[2],myClosestAirport[i].C6[2]);
 					
 					me["Simple_C6"].hide();
 					me["Simple_C6S"].hide();
 						
-					me.dynamicPageFunc(myClosestAirport[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myClosestAirport[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myClosestAirport[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myClosestAirport[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myClosestAirport[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myClosestAirport[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myClosestAirport[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myClosestAirport[i].R1[2],myClosestAirport[i].R2[2],myClosestAirport[i].R3[2],myClosestAirport[i].R4[2],myClosestAirport[i].R5[2],myClosestAirport[i].R6[2]);
 				}
@@ -5633,9 +5737,7 @@ var canvas_MCDU_base = {
 				me["ArrowRight"].hide();
 				me.hideAllArrows();
 				
-				me["Simple_L0S"].hide();
-				me["Simple_C3B"].hide();
-				me["Simple_C4B"].hide();
+				me.standardHideExcess();
 				
 				me.standardFontSize();
 				
@@ -5657,21 +5759,15 @@ var canvas_MCDU_base = {
 						me["DIRTO_TMPY_group"].hide();
 					}
 					
-					me.dynamicPageFunc(myDirTo[i].L1, "Simple_L1");
-					me.dynamicPageFunc(myDirTo[i].L2, "Simple_L2");
-					me.dynamicPageFunc(myDirTo[i].L3, "Simple_L3");
-					me.dynamicPageFunc(myDirTo[i].L4, "Simple_L4");
-					me.dynamicPageFunc(myDirTo[i].L5, "Simple_L5");
-					me.dynamicPageFunc(myDirTo[i].L6, "Simple_L6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDirTo[i]["L" ~ x], "Simple_L" ~ x);
+					}
 					
 					me.colorLeft(myDirTo[i].L1[2],myDirTo[i].L2[2],myDirTo[i].L3[2],myDirTo[i].L4[2],myDirTo[i].L5[2],myDirTo[i].L6[2]);
 					
-					me.dynamicPageFunc(myDirTo[i].R1, "Simple_R1");
-					me.dynamicPageFunc(myDirTo[i].R2, "Simple_R2");
-					me.dynamicPageFunc(myDirTo[i].R3, "Simple_R3");
-					me.dynamicPageFunc(myDirTo[i].R4, "Simple_R4");
-					me.dynamicPageFunc(myDirTo[i].R5, "Simple_R5");
-					me.dynamicPageFunc(myDirTo[i].R6, "Simple_R6");
+					for (var x = 1; x < 7; x = x + 1) {
+						me.dynamicPageFunc(myDirTo[i]["R" ~ x], "Simple_R" ~ x);
+					}
 					
 					me.colorRight(myDirTo[i].R1[2],myDirTo[i].R2[2],myDirTo[i].R3[2],myDirTo[i].R4[2],myDirTo[i].R5[2],myDirTo[i].R6[2]);
 				}
@@ -6455,6 +6551,11 @@ var canvas_MCDU_base = {
 		}
 	},
 	dynamicPageFunc: func (dynamic, string) {
+		if (dynamic == nil) {
+			me[string].hide();
+			me[string ~ "S"].hide();
+			return;
+		}
 		if (dynamic[0] == nil) {
 			me[string].hide();
 			me[string ~ "S"].hide();
@@ -6545,7 +6646,6 @@ var canvas_MCDU_1 = {
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_MCDU_1, canvas_MCDU_base]};
 		m.init(canvas_group, file);
-
 		return m;
 	},
 	update: func() {
@@ -6555,12 +6655,10 @@ var canvas_MCDU_1 = {
 		me.updateScratchpad(0);
 	},
 };
-
 var canvas_MCDU_2 = {
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_MCDU_2, canvas_MCDU_base]};
 		m.init(canvas_group, file);
-
 		return m;
 	},
 	update: func() {
@@ -6571,7 +6669,7 @@ var canvas_MCDU_2 = {
 	},
 };
 
-setlistener("sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func {
 	MCDU1_display = canvas.new({
 		"name": "MCDU1",
 		"size": [1024, 864],
@@ -6588,7 +6686,6 @@ setlistener("sim/signals/fdm-initialized", func {
 	MCDU2_display.addPlacement({"node": "mcdu2.screen"});
 	var group_MCDU1 = MCDU1_display.createGroup();
 	var group_MCDU2 = MCDU2_display.createGroup();
-
 	MCDU_1 = canvas_MCDU_1.new(group_MCDU1, "Aircraft/A320-family/Models/Instruments/MCDU/res/mcdu.svg");
 	MCDU_2 = canvas_MCDU_2.new(group_MCDU2, "Aircraft/A320-family/Models/Instruments/MCDU/res/mcdu.svg");
 	MCDU_1.updateScratchpadCall();
@@ -6599,7 +6696,6 @@ setlistener("sim/signals/fdm-initialized", func {
 	
 	MCDU_update.start();
 });
-
 var MCDU_update = maketimer(0.125, func {
 	canvas_MCDU_base.update();
 });
@@ -6607,15 +6703,12 @@ var MCDU_update = maketimer(0.125, func {
 var showMCDU1 = func {
 	gui.showDialog("mcdu1");
 }
-
 var showMCDU2 = func {
 	gui.showDialog("mcdu2");
 }
-
 setlistener("/MCDU[0]/page", func {
 	pageSwitch[0].setBoolValue(0);
 }, 0, 0);
-
 setlistener("/MCDU[1]/page", func {
 	pageSwitch[1].setBoolValue(0);
 }, 0, 0);

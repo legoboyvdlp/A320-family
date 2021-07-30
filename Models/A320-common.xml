@@ -7,7 +7,7 @@
 
 	<model>
 		<name>FuselageContainer</name>
-		<path>Aircraft/A320-family/Models/Fuselages/A320/fuselage.xml</path>
+		<path>Aircraft/A320-family/Models/Fuselage/fuselage.xml</path>
 	</model>
 	
 	<model>
@@ -215,21 +215,9 @@
 	</model>
 	
 	<!-- Lights -->
-	<!-- Lights -->
-	
-	<model>
-		<name>Left nav light</name>
-		<path>Aircraft/A320-family/Models/Lights/rednav.xml</path>
-		<offsets>
-			<x-m>1.89364</x-m>
-			<y-m>-16.6504</y-m>
-			<z-m>0.317012</z-m>
-		</offsets>
-	</model>
-	
 	<model>
 		<name>Left nav light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/rednav.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/rednav.xml</path>
 		<offsets>
 			<x-m>1.89364</x-m>
 			<y-m>-16.6504</y-m>
@@ -239,7 +227,6 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>Left nav light</object-name>
 		<object-name>Left nav light ALS</object-name>
 		<condition>
 			<not><property>sim/multiplay/generic/int[12]</property></not>
@@ -248,7 +235,7 @@
 
 	<model>
 		<name>Left nav light ALS sharklet</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/rednav.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/rednav.xml</path>
 		<offsets>
 			<x-m>1.54364</x-m>
 			<y-m>-16.38</y-m>
@@ -265,18 +252,8 @@
 	</animation>
 
 	<model>
-		<name>Right nav light</name>
-		<path>Aircraft/A320-family/Models/Lights/greennav.xml</path>
-		<offsets>
-			<x-m>1.89364</x-m>
-			<y-m>16.648</y-m>
-			<z-m>0.317018</z-m>
-		</offsets>
-	</model>
-	
-	<model>
 		<name>Right nav light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/greennav.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/greennav.xml</path>
 		<offsets>
 			<x-m>1.89364</x-m>
 			<y-m>16.648</y-m>
@@ -286,7 +263,6 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>Right nav light</object-name>
 		<object-name>Right nav light ALS</object-name>
 		<condition>
 			<not><property>sim/multiplay/generic/int[12]</property></not>
@@ -295,7 +271,7 @@
 
 	<model>
 		<name>Right nav light ALS sharklet</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/greennav.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/greennav.xml</path>
 		<offsets>
 			<x-m>1.54364</x-m>
 			<y-m>16.38</y-m>
@@ -312,7 +288,7 @@
 	</animation>
 	
 	<model>
-		<name>Tail nav light</name>
+		<name>Tail nav light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/tailnav.xml</path>
 		<offsets>
 			<x-m>18.8029</x-m>
@@ -322,28 +298,8 @@
 	</model>
 	
 	<model>
-		<name>Tail nav light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/tailnav.xml</path>
-		<offsets>
-			<x-m>18.8029</x-m>
-			<y-m>0.0495674</y-m>
-			<z-m>0.670205</z-m>
-		</offsets>
-	</model>
-
-	<model>
-		<name>Left strobe light</name>
-		<path>Aircraft/A320-family/Models/Lights/strobe.xml</path>
-		<offsets>
-			<x-m>2.03967</x-m>
-			<y-m>-16.7246</y-m>
-			<z-m>0.319212</z-m>
-		</offsets>
-	</model>
-	
-	<model>
 		<name>Left strobe light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/left-strobe.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/left-strobe.xml</path>
 		<offsets>
 			<x-m>2.03967</x-m>
 			<y-m>-16.7246</y-m>
@@ -353,7 +309,6 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>Left strobe light</object-name>
 		<object-name>Left strobe light ALS</object-name>
 		<condition>
 			<not><property>sim/multiplay/generic/int[12]</property></not>
@@ -362,7 +317,7 @@
 
 	<model>
 		<name>Left strobe light ALS sharklet</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/right-strobe.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/right-strobe.xml</path>
 		<offsets>
 			<x-m>2.31</x-m>
 			<y-m>-17.1</y-m>
@@ -377,20 +332,10 @@
 			<property>sim/multiplay/generic/int[12]</property>
 		</condition>
 	</animation>
-
-	<model>
-		<name>Right strobe light</name>
-		<path>Aircraft/A320-family/Models/Lights/strobe.xml</path>
-		<offsets>
-			<x-m>2.03967</x-m>
-			<y-m>16.7222</y-m>
-			<z-m>0.319218</z-m>
-		</offsets>
-	</model>
 	
 	<model>
 		<name>Right strobe light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/right-strobe.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/right-strobe.xml</path>
 		<offsets>
 			<x-m>2.03967</x-m>
 			<y-m>16.7222</y-m>
@@ -400,7 +345,6 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>Right strobe light</object-name>
 		<object-name>Right strobe light ALS</object-name>
 		<condition>
 			<not><property>sim/multiplay/generic/int[12]</property></not>
@@ -409,7 +353,7 @@
 
 	<model>
 		<name>Right strobe light ALS sharklet</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/right-strobe.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/right-strobe.xml</path>
 		<offsets>
 			<x-m>2.31</x-m>
 			<y-m>17.1</y-m>
@@ -426,18 +370,8 @@
 	</animation>
 	
 	<model>
-		<name>Tail strobe light</name>
-		<path>Aircraft/A320-family/Models/Lights/tailstrobe.xml</path>
-		<offsets>
-			<x-m>18.8029</x-m>
-			<y-m>-0.0495674</y-m>
-			<z-m>0.670205</z-m>
-		</offsets>
-	</model>
-	
-	<model>
 		<name>Tail strobe light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/tail-strobe.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/tail-strobe.xml</path>
 		<offsets>
 			<x-m>18.8029</x-m>
 			<y-m>-0.0495674</y-m>
@@ -446,18 +380,28 @@
 	</model>
 	
 	<model>
-		<name>Top beacon light</name>
-		<path>Aircraft/A320-family/Models/Lights/beacon.xml</path>
+		<name>Left Wing Light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/winglightL.xml</path>
 		<offsets>
-			<x-m>-3.58595</x-m>
-			<y-m>-0.001033</y-m>
-			<z-m>1.94988</z-m>
+			<x-m>-9.99483</x-m>
+			<y-m>-1.97792</y-m>
+			<z-m>-0.202625</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>Right Wing Light ALS</name>
+		<path>Aircraft/A320-family/Models/Lights/winglightR.xml</path>
+		<offsets>
+			<x-m>-9.99483</x-m>
+			<y-m> 1.97792</y-m>
+			<z-m>-0.202625</z-m>
 		</offsets>
 	</model>
 	
 	<model>
 		<name>Top beacon light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/beacon.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/beacon.xml</path>
 		<offsets>
 			<x-m>-3.58595</x-m>
 			<y-m>-0.001033</y-m>
@@ -466,18 +410,8 @@
 	</model>
 
 	<model>
-		<name>Bottom beacon light</name>
-		<path>Aircraft/A320-family/Models/Lights/beacon.xml</path>
-		<offsets>
-			<x-m>-3.97011</x-m>
-			<y-m>-0.001032</y-m>
-			<z-m>-2.50394</z-m>
-		</offsets>
-	</model>
-
-	<model>
 		<name>Bottom beacon light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/beacon.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/beacon.xml</path>
 		<offsets>
 			<x-m>-3.97011</x-m>
 			<y-m>-0.001032</y-m>
@@ -884,7 +818,7 @@
 	
 	<model>
 		<name>Port landing light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/landinglightL.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/landinglightL.xml</path>
 		<offsets>
 			<x-m>-2.080</x-m>
 			<y-m>-2.22016</y-m>
@@ -894,7 +828,7 @@
 
 	<model>
 		<name>Starboard landing light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/landinglightR.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/landinglightR.xml</path>
 		<offsets>
 			<x-m>-2.080</x-m>
 			<y-m> 2.22016</y-m>
@@ -904,7 +838,7 @@
 
 	<model>
 		<name>Nosegear landing light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/taxilight.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/taxilight.xml</path>
 		<offsets>
 			<x-m>-13.5119</x-m>
 			<y-m>-0.185175</y-m>
@@ -914,7 +848,7 @@
 	
 	<model>
 		<name>Second Nosegear landing light ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/taxilight.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/taxilight.xml</path>
 		<offsets>
 			<x-m>-13.461</x-m>
 			<y-m>0.20414</y-m>
@@ -924,7 +858,7 @@
 	
 	<model>
 		<name>Left Turnoff ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/turnoffL.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/turnoffL.xml</path>
 		<offsets>
 			<x-m>-13.5034</x-m>
 			<y-m>-0.20993</y-m>
@@ -934,7 +868,7 @@
 	
 	<model>
 		<name>Right Turnoff ALS</name>
-		<path>Aircraft/A320-family/Models/Lights/ALS/turnoffR.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/turnoffR.xml</path>
 		<offsets>
 			<x-m>-13.5034</x-m>
 			<y-m> 0.208994</y-m>

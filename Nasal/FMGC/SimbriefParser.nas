@@ -13,11 +13,11 @@ var SimbriefParser = {
 	fetch: func(username, i) {
 		me.inhibit = 1;
 		var stamp = systime();
-		http.save("https://www.simbrief.com/api/xml.fetcher.php?username=" ~ username, getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml")
+		http.save("https://www.simbrief.com/api/xml.fetcher.php?username=" ~ username, pts.Sim.fgHome.getValue() ~ "/Export/A320-family-simbrief.xml")
 			.fail(func { me.failure(i) })
 			.done(func {
 				var errs = [];
-				call(me.read, [(getprop('/sim/fg-home') ~ "/Export/A320-family-simbrief.xml"),i], SimbriefParser, {}, errs);
+				call(me.read, [(pts.Sim.fgHome.getValue() ~ "/Export/A320-family-simbrief.xml"),i], SimbriefParser, {}, errs);
 				if (size(errs) > 0) {
 					debug.printerror(errs);
 					me.failure(i);

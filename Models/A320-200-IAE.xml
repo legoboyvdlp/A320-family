@@ -13,7 +13,7 @@
 	
 	<model>
 		<name>EnginesIAE</name>
-		<path>Aircraft/A320-family/Models/Engines/XMLs/a320.v2500.xml</path>
+		<path>Aircraft/A320-family/Models/Fuselage/a320.v2500.xml</path>
 	</model>
 
 	<!-- Nasal code -->

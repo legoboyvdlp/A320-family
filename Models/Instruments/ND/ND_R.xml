@@ -31,7 +31,14 @@
 	</animation>
    
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/display</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/displays/lcd</inherits-from>
+		<parameters>
+			<inner-angle>90</inner-angle> <!-- 0-90, use 90 for LED or plasma display-->
+			<outer-angle>90</outer-angle> <!-- 0-90, but greater than inner -->
+			<black-angle>90</black-angle> <!-- 0-90, but greater than outer -->
+			<dirt-factor>0.07</dirt-factor>
+			<contrast><use>instrumentation/du/du5-contrast</use></contrast>
+		</parameters>
 		<object-name>ND_R.screen</object-name>
 	</effect>
    

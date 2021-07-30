@@ -897,30 +897,26 @@
 							</or>
 						</and>
 					</or>
-					<greater-than>
-						<property>controls/engines/engine[0]/throttle</property>
-						<value>0.0</value>
-					</greater-than>
-					<greater-than>
-						<property>controls/engines/engine[1]/throttle</property>
-						<value>0.0</value>
-					</greater-than>
+					<not-equals>
+						<property>/fdm/jsbsim/fadec/control-1/detent</property>
+						<value>0</value>
+					</not-equals>
+					<not-equals>
+						<property>/fdm/jsbsim/fadec/control-2/detent</property>
+						<value>0</value>
+					</not-equals>
 					<less-than>
-						<property>controls/engines/engine[0]/throttle</property>
-						<value>0.80</value>
+						<property>/fdm/jsbsim/fadec/control-1/detent</property>
+						<value>5</value>
 					</less-than>
 					<less-than>
-						<property>controls/engines/engine[1]/throttle</property>
-						<value>0.80</value>
+						<property>/fdm/jsbsim/fadec/control-2/detent</property>
+						<value>5</value>
 					</less-than>
 					<not>
 						<property>/gear/gear[1]/wow</property>
 						<property>/gear/gear[2]/wow</property>
 					</not>
-					<less-than>
-						<property>velocities/airspeed-kt</property>
-						<value>160</value>
-					</less-than>
 					<greater-than-equals>
 						<property>/systems/electrical/outputs/mk-viii</property>
 						<value>25</value>
@@ -2005,6 +2001,53 @@
 			</volume>
 		</announcements>
 		
+		<announcements>
+			<name>depressurization</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Announce/depressurization.wav</path>
+			<condition>
+				<equals>
+					<property>/systems/oxygen/passenger-oxygen/sys-on-light</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>2.0</factor>
+			</volume>
+		</announcements>
+		
+		<atc-msg>
+			<name>ATC MSG</name>
+			<path>Aircraft/A320-family/Sounds/Cockpit/ATC-msg-ring.wav</path>
+			<mode>once</mode>
+			<type>avionics</type>
+			<condition>
+				<property>/network/cpdlc/new-message-ringtone</property>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>1.5</factor>
+			</volume>
+			<reference-dist>10</reference-dist>
+			<max-dist>100</max-dist>
+		</atc-msg>
+		
+		<chime>
+			<name>Click</name>
+			<path>Aircraft/A320-family/Sounds/Cockpit/click.wav</path>
+			<mode>once</mode>
+			<type>avionics</type>
+			<condition>
+				<property>/sim/sound/warnings/click</property>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+			</volume>
+			<reference-dist>10</reference-dist>
+			<max-dist>100</max-dist>
+		</chime>
+		
 		<chime>
 			<name>Chime</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/chime.wav</path>
@@ -2038,7 +2081,7 @@
 			<reference-dist>10</reference-dist>
 			<max-dist>100</max-dist>
 		</crc>
-	
+		
 		<cricket>
 			<name>Cricket</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/cricket.wav</path>

@@ -10,8 +10,6 @@
 	<property value="0">fbw/pitch/pid</property>
 	<property value="0">fbw/yaw/tc-pd</property>
 	<property value="1">fbw/mixer/sidestick-gain-feedback</property>
-	<property value="1">fbw/sidestick/active[0]</property>
-	<property value="1">fbw/sidestick/active[1]</property>
 	<property value="0">fbw/spoiler-output</property>
 	
 	<!-- Default gains for tuning -->
@@ -396,7 +394,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/fctl/fac1-healthy">
+		<switch name="/systems/fctl/fac1-healthy-inp">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/fctl/switches/fac1 eq 1
@@ -407,6 +405,12 @@
 				</test>
 			</test>
 		</switch>
+		
+		<actuator name="/systems/fctl/fac1-healthy">
+			<input>/systems/fctl/fac1-healthy-inp</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">10</rate_limit>
+		</actuator>
 		
 		<switch name="/systems/fctl/fac1-healthy-latch-set">
 			<default value="0"/>
@@ -437,7 +441,7 @@
 		<switch name="/systems/fctl/fac1-healthy-signal">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/fctl/fac1-healthy eq 1
+				/systems/fctl/fac1-healthy ne 0
 				<test logic="OR">
 					/systems/fctl/fac1-healthy-latch eq 0
 					/gear/gear[0]/wow eq 1
@@ -457,11 +461,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/fctl/switches/fac1 eq 1
-				/systems/fctl/fac1-healthy eq 1
+				/systems/fctl/fac1-healthy-signal eq 1
 			</test>
 		</switch>
 		
-		<switch name="/systems/fctl/fac2-healthy">
+		<switch name="/systems/fctl/fac2-healthy-inp">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/fctl/switches/fac2 eq 1
@@ -472,6 +476,12 @@
 				</test>
 			</test>
 		</switch>
+		
+		<actuator name="/systems/fctl/fac2-healthy">
+			<input>/systems/fctl/fac2-healthy-inp</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">10</rate_limit>
+		</actuator>
 		
 		<switch name="/systems/fctl/fac2-healthy-latch-set">
 			<default value="0"/>
@@ -502,7 +512,7 @@
 		<switch name="/systems/fctl/fac2-healthy-signal">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/fctl/fac2-healthy eq 1
+				/systems/fctl/fac2-healthy ne 0
 				<test logic="OR">
 					/systems/fctl/fac2-healthy-latch eq 0
 					/gear/gear[0]/wow eq 1
@@ -522,7 +532,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/fctl/switches/fac2 eq 1
-				/systems/fctl/fac2-healthy eq 1
+				/systems/fctl/fac2-healthy-signal eq 1
 			</test>
 		</switch>
 		

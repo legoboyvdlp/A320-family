@@ -12,8 +12,8 @@
 	</model>
 	
 	<model>
-		<name>EnginesCFM</name>
-		<path>Aircraft/A320-family/Models/Engines/XMLs/a320.cfm.xml</path>
+		<name>EnginesPWLeap</name>
+		<path>Aircraft/A320-family/Models/Fuselage/a320.pw.xml</path>
 	</model>
 	
 	<!-- Nasal code -->

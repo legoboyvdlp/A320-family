@@ -192,7 +192,7 @@
 				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">12272.9</capacity>
-			<contents unit="LBS">6000</contents>
+			<contents unit="LBS">4477</contents>
 			<unusable-volume unit="LTR">28</unusable-volume>
 			<priority>1</priority>
 			<density unit="LBS/GAL">6.71</density>
@@ -218,7 +218,7 @@
 				<z>-0.75</z>
 			</location>
 			<capacity unit="LBS">12272.9</capacity>
-			<contents unit="LBS">6000</contents>
+			<contents unit="LBS">4477</contents>
 			<unusable-volume unit="LTR">28</unusable-volume>
 			<priority>1</priority>
 			<density unit="LBS/GAL">6.71</density>
@@ -276,7 +276,7 @@
 	<system file="glass-effect"/>
 	<system file="a320-fbw"/>
 	<system file="a320-fcs"/>
-	<system file="a320-cfm56-5b4-engine-fadec"/>
+	<system file="a320-v2527-a5-engine-fadec"/>
 	<system file="a320-fuel"/>
 	<system file="a320-fwc"/>
 	<system file="a320-fwc-phases"/>
@@ -289,6 +289,7 @@
 	<system file="a320-engine-fire"/>
 	<system file="a320-adr"/>
 	<system file="a320-apu"/>
+	<system file="a320-oxygen"/>
 	<system file="a320-fmgc"/>
 	<system file="a320-misc"/>
 	<system file="a320-cockpit"/>

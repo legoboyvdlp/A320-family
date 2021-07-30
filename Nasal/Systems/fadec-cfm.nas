@@ -43,14 +43,6 @@ var FADEC_S = {
 		n2: 0,
 		ff: 0,
 	},
-	Switches: {
-		n1ModeSwitch1: props.globals.initNode("/controls/fadec/n1mode1", 0, "BOOL"),
-		n1ModeSwitch2: props.globals.initNode("/controls/fadec/n1mode2", 0, "BOOL"),
-	},
-	Modes: {
-		n1Mode1: props.globals.initNode("/fdm/jsbsim/fadec/control-1/n1-mode", 0, "BOOL"),  # 0 == EPR, 1 == N1 Rated, 2 == N1 Unrated #
-		n1Mode2: props.globals.initNode("/fdm/jsbsim/fadec/control-2/n1-mode", 0, "BOOL"),
-	},
 	init: func() {
 		me.Power.poweredTime.setValue(-300);
 		me.Eng1.eng1Time.setValue(-300);

@@ -56,14 +56,12 @@ var Position = {
 };
 
 var Radio = {
-	gsDefl: [props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm", 1), props.globals.getNode("instrumentation/nav[1]/gs-needle-deflection-norm", 1)],
+	gsDefl: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm", 1),
 	gsDeflTemp: 0,
-	inRange: [props.globals.getNode("/instrumentation/nav[0]/in-range", 1), props.globals.getNode("instrumentation/nav[1]/in-range", 1)],
-	inRangeTemp: 0,
-	locDefl: [props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm", 1), props.globals.getNode("instrumentation/nav[1]/heading-needle-deflection-norm", 1)],
+	inRange: props.globals.getNode("/instrumentation/nav[0]/in-range", 1),
+	locDefl: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm", 1),
 	locDeflTemp: 0,
-	radioSel: 0,
-	signalQuality: [props.globals.getNode("/instrumentation/nav[0]/signal-quality-norm", 1), props.globals.getNode("instrumentation/nav[1]/signal-quality-norm", 1)],
+	signalQuality: props.globals.getNode("/instrumentation/nav[0]/signal-quality-norm", 1),
 	signalQualityTemp: 0,
 };
 
@@ -105,10 +103,10 @@ var Input = {
 	toga: props.globals.initNode("/it-autoflight/input/toga", 0, "BOOL"),
 	trk: props.globals.initNode("/it-autoflight/input/trk", 0, "BOOL"),
 	trueCourse: props.globals.initNode("/it-autoflight/input/true-course", 0, "BOOL"),
-	vs: props.globals.initNode("/it-autoflight/input/vs", 0, "INT"),
-	vsAbs: props.globals.initNode("/it-autoflight/input/vs-abs", 0, "INT"), # Set by property rule
 	vert: props.globals.initNode("/it-autoflight/input/vert", 7, "INT"),
 	vertTemp: 7,
+	vs: props.globals.initNode("/it-autoflight/input/vs", 0, "INT"),
+	vsAbs: props.globals.initNode("/it-autoflight/input/vs-abs", 0, "INT"), # Set by property rule
 };
 
 var Internal = {
@@ -129,6 +127,8 @@ var Internal = {
 	lnavAdvanceNm: props.globals.initNode("/it-autoflight/internal/lnav-advance-nm", 0, "DOUBLE"),
 	minVs: props.globals.initNode("/it-autoflight/internal/min-vs", -500, "INT"),
 	maxVs: props.globals.initNode("/it-autoflight/internal/max-vs", 500, "INT"),
+	navHeadingErrorDeg: props.globals.initNode("/it-autoflight/internal/nav-heading-error-deg", 0, "DOUBLE"),
+	navHeadingErrorDegTemp: 0,
 	vs: props.globals.initNode("/it-autoflight/internal/vert-speed-fpm", 0, "DOUBLE"),
 	vsTemp: 0,
 };
@@ -182,6 +182,7 @@ var Custom = {
 	},
 	Output: {
 		fmaPower: props.globals.initNode("/it-autoflight/output/fma-pwr", 0, "BOOL"),
+		vsFCU: props.globals.initNode("/it-autoflight/output/vs-fcu-display", "", "STRING"),
 	},
 	Sound: {
 		athrOff: props.globals.initNode("/it-autoflight/sound/athrsound", 0, "BOOL"),
@@ -204,6 +205,7 @@ var ITAF = {
 		Input.hdg.setValue(360);
 		Input.alt.setValue(10000);
 		Input.vs.setValue(0);
+		Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",0),3));
 		Input.fpa.setValue(0);
 		Input.lat.setValue(9);
 		Input.vert.setValue(9);
@@ -260,6 +262,10 @@ var ITAF = {
 		Internal.vsTemp = Internal.vs.getValue();
 		Position.indicatedAltitudeFtTemp = Position.indicatedAltitudeFt.getValue();
 		
+		# Update VLS / VMAX for autothrust
+		FMGCNodes.vmax.setValue(FMGCInternal.maxspeed);
+		FMGCNodes.vlsMin.setValue(FMGCInternal.vls_min);
+		
 		# LNAV Engagement
 		if (Output.lnavArm.getBoolValue()) {
 			me.checkLnav(1);
@@ -285,14 +291,11 @@ var ITAF = {
 			if (Position.gearAglFtTemp <= 400 and Position.gearAglFtTemp >= 5) {
 				me.updateVertText("LAND");
 
-				if (Position.gearAglFtTemp <= 100) { # switch to internal flare logic at 100 feet -- but on FMA at 50!
+				if (Position.gearAglFtTemp <= 50) {
 					me.setVertMode(6);
 				}
 			}
 		} else if (Output.vertTemp == 6) {
-			if (Position.gearAglFtTemp <= 50 and Position.gearAglFtTemp >= 5 and Text.vert.getValue() != "FLARE") {
-				me.updateVertText("FLARE");
-			}
 			if (Gear.wow1Temp and Gear.wow2Temp and Text.vert.getValue() != "ROLLOUT") {
 				me.updateLatText("RLOU");
 				me.updateVertText("ROLLOUT");
@@ -354,6 +357,10 @@ var ITAF = {
 			if (abs(Controls.aileron.getValue()) >= 0.2 or abs(Controls.elevator.getValue()) >= 0.2 or abs(Controls.rudder.getValue()) >= 0.2 or abs(Controls.aileron2.getValue()) >= 0.2 or abs(Controls.elevator2.getValue()) >= 0.2 or abs(Controls.rudder2.getValue()) >= 0.2) {
 				fcu.apOff("hard", 0);
 			}
+		}
+		
+		if ((systems.FADEC.n1Mode[0].getValue() > 0 or systems.FADEC.n1Mode[1].getValue() > 0) and Output.athr.getBoolValue()) {
+			fcu.athrOff("hard");
 		}
 	},
 	slowLoop: func() {
@@ -476,7 +483,7 @@ var ITAF = {
 	},
 	athrMaster: func(s) {
 		if (s == 1) {
-			if (systems.ELEC.Bus.acEss.getValue() >= 110 and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.apOff == 0) {
+			if (systems.ELEC.Bus.acEss.getValue() >= 110 and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.apOff == 0 and systems.FADEC.n1Mode[0].getValue() == 0 and systems.FADEC.n1Mode[1].getValue() == 0) {
 				Output.athr.setBoolValue(1);
 				Custom.ThrLock.setValue(0);
 				Custom.Sound.enableAthrOff = 1;
@@ -660,6 +667,7 @@ var ITAF = {
 			Internal.altCaptureActive = 0;
 			me.updateApprArm(0);
 			Output.vert.setValue(6);
+			me.updateVertText("FLARE");
 			me.updateThrustMode();
 		} else if (n == 7) { # T/O CLB or G/A CLB, text is set by TOGA selector
 			Internal.flchActive = 0;
@@ -750,11 +758,23 @@ var ITAF = {
 		}
 	},
 	checkLoc: func(t) {
-		if (Radio.inRange[Radio.radioSel].getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
-			Radio.locDeflTemp = Radio.locDefl[Radio.radioSel].getValue();
-			Radio.signalQualityTemp = Radio.signalQuality[Radio.radioSel].getValue();
+		if (Radio.inRange.getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
+			Internal.navHeadingErrorDegTemp = Internal.navHeadingErrorDeg.getValue();
+			Radio.locDeflTemp = Radio.locDefl.getValue();
+			Radio.signalQualityTemp = Radio.signalQuality.getValue();
 			if (abs(Radio.locDeflTemp) <= 0.95 and Radio.locDeflTemp != 0 and Radio.signalQualityTemp >= 0.99) {
-				me.activateLoc();
+				if (abs(Radio.locDeflTemp) <= 0.25) {
+					me.activateLoc();
+				} else if (Radio.locDeflTemp >= 0 and Internal.navHeadingErrorDegTemp <= 0) {
+					me.activateLoc();
+				} else if (Radio.locDeflTemp < 0 and Internal.navHeadingErrorDegTemp >= 0) {
+					me.activateLoc();
+				} else if (t != 1) { # Do not do this if loop calls it
+					if (Output.lat.getValue() != 2) {
+						me.updateLnavArm(0);
+						me.updateLocArm(1);
+					}
+				}
 			} else if (t != 1) { # Do not do this if loop calls it
 				if (Output.lat.getValue() != 2) {
 					me.updateLnavArm(0);
@@ -762,14 +782,14 @@ var ITAF = {
 				}
 			}
 		} else {
-			Radio.signalQuality[Radio.radioSel].setValue(0); # Prevent bad behavior due to FG not updating it when not in range
+			Radio.signalQuality.setValue(0); # Prevent bad behavior due to FG not updating it when not in range
 			me.updateLocArm(0);
 		}
 	},
 	checkAppr: func(t) {
-		if (Radio.inRange[Radio.radioSel].getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
-			Radio.gsDeflTemp = Radio.gsDefl[Radio.radioSel].getValue();
-			if (abs(Radio.gsDeflTemp) <= 0.2 and Radio.gsDeflTemp != 0 and Output.lat.getValue()  == 2) { # Only capture if LOC is active
+		if (Radio.inRange.getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
+			Radio.gsDeflTemp = Radio.gsDefl.getValue();
+			if (abs(Radio.gsDeflTemp) <= 0.2 and Radio.gsDeflTemp != 0 and Output.lat.getValue() == 2) { # Only capture if LOC is active
 				me.activateGs();
 			} else if (t != 1) { # Do not do this if loop calls it
 				if (Output.vert.getValue() != 2) {
@@ -777,13 +797,12 @@ var ITAF = {
 				}
 			}
 		} else {
-			Radio.signalQuality[Radio.radioSel].setValue(0); # Prevent bad behavior due to FG not updating it when not in range
+			Radio.signalQuality.setValue(0); # Prevent bad behavior due to FG not updating it when not in range
 			me.updateApprArm(0);
 		}
 	},
 	checkRadioRevision: func(l, v) { # Revert mode if signal lost
-		Radio.inRangeTemp = Radio.inRange[Radio.radioSel].getBoolValue();
-		if (!Radio.inRangeTemp) {
+		if (!Radio.inRange.getBoolValue()) {
 			if (l == 4 or v == 6) {
 				me.ap1Master(0);
 				me.ap2Master(0);
@@ -829,13 +848,13 @@ var ITAF = {
 		}
 	},
 	syncKts: func() {
-		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 350));
+		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), 100, 399));
 	},
 	syncKtsGa: func() { # Same as syncKts, except doesn't go below V2
-		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.v2, 350));
+		Input.kts.setValue(math.clamp(math.round(Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.v2, 399));
 	},
 	syncMach: func() {
-		Input.mach.setValue(math.clamp(math.round(Velocities.indicatedMach.getValue(), 0.001), 0.5, 0.82));
+		Input.mach.setValue(math.clamp(math.round(Velocities.indicatedMach.getValue(), 0.001), 0.1, 0.99));
 	},
 	syncHdg: func() {
 		Input.hdg.setValue(math.round(Internal.hdgPredicted.getValue())); # Switches to track automatically
@@ -844,8 +863,11 @@ var ITAF = {
 		Input.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 		Internal.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 	},
+	tempVS: 0,
 	syncVs: func() {
-		Input.vs.setValue(math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000));
+		me.tempVS = math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000);
+		Input.vs.setValue(me.tempVS);
+		fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",me.tempVS),3));
 	},
 	syncFpa: func() {
 		Input.fpa.setValue(math.clamp(math.round(Internal.fpa.getValue(), 0.1), -9.9, 9.9));
@@ -878,11 +900,9 @@ var ITAF = {
 	},
 	disarmLoc: func() {
 		me.updateLocArm(0);
-		ITAF.armTextCheck();
 	},
 	disarmAppr: func() {
 		me.updateApprArm(0);
-		ITAF.armTextCheck();
 	},
 	toggleTrkFpa: func() {
 		if (Custom.trkFpa.getBoolValue()) {
@@ -1008,6 +1028,7 @@ setlistener("/it-autoflight/input/lat", func() {
 	Output.ap2Temp = Output.ap2.getBoolValue();
 	Output.fd1Temp = Output.fd1.getBoolValue();
 	Output.fd2Temp = Output.fd2.getBoolValue();
+	
 	if (!Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue()) {
 		if (Output.ap1Temp or Output.ap2Temp or Output.fd1Temp or Output.fd2Temp) {
 			ITAF.setLatMode(Input.latTemp);
@@ -1031,17 +1052,41 @@ setlistener("/it-autoflight/input/vert", func() {
 	}
 });
 
-setlistener("/sim/signals/fdm-initialized", func() {
+# Mode Reversions
+setlistener(pts.Systems.Navigation.ADR.Output.overspeed, func(v) {
+	if (v.getBoolValue() and !Output.ap1.getBoolValue() and !Output.ap2.getBoolValue() and Output.athr.getBoolValue() and Modes.PFD.FMA.pitchMode.getValue() == "OP CLB" and Modes.PFD.FMA.throttle.getValue() == "THR CLB") {
+		Input.fd1.setValue(0);
+		Input.fd2.setValue(0);
+		ecam.aural[5].setBoolValue(0);
+		settimer(func() {
+			ecam.aural[5].setBoolValue(1);
+		}, 0.15);
+	}
+}, 0, 0);
+
+setlistener(pts.Systems.Navigation.ADR.Output.underspeed, func(v) {
+	if (v.getBoolValue() and !Output.ap1.getBoolValue() and !Output.ap2.getBoolValue() and Output.athr.getBoolValue() and Modes.PFD.FMA.pitchMode.getValue() == "OP DES" and Modes.PFD.FMA.throttle.getValue() == "THR IDLE") {
+		Input.fd1.setValue(0);
+		Input.fd2.setValue(0);
+		ecam.aural[5].setBoolValue(0);
+		settimer(func() {
+			ecam.aural[5].setBoolValue(1);
+		}, 0.15);
+	}
+}, 0, 0);
+
+
+setlistener("/sim/signals/fdm-initialized", func {
 	ITAF.init();
 });
 
 # For Canvas Nav Display.
 setlistener("/it-autoflight/input/hdg", func() {
-	setprop("/autopilot/settings/heading-bug-deg", Input.hdg.getValue());
+	pts.Autopilot.Settings.headingBugDeg.setValue(Input.hdg.getValue());
 }, 0, 0);
 
 setlistener("/it-autoflight/internal/alt", func() {
-	setprop("/autopilot/settings/target-altitude-ft", Internal.alt.getValue());
+	pts.Autopilot.Settings.targetAltitudeFt.setValue(Internal.alt.getValue());
 }, 0, 0);
 
 var loopTimer = maketimer(0.1, ITAF, ITAF.loop);

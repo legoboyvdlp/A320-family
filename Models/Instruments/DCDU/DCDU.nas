@@ -16,6 +16,8 @@ var dcdu_test_time = props.globals.initNode("/instrumentation/du/dcdu-test-time"
 var dcdu_offtime = props.globals.initNode("/instrumentation/du/dcdu-off-time", 0.0, "DOUBLE");
 var dcdu_test_amount = props.globals.initNode("/instrumentation/du/dcdu-test-amount", 0.0, "DOUBLE");
 
+# todo 16.5 watts
+
 var canvas_DCDU_base = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
@@ -82,6 +84,7 @@ var canvas_DCDU_base = {
 	update: func() {
 		et = pts.Sim.Time.elapsedSec.getValue();
 		if (systems.ELEC.Bus.dc1.getValue() >= 25 or systems.ELEC.Bus.ac1.getValue() >= 110) {
+			pts.Instrumentation.Dcdu.lcdOn.setBoolValue(1);
 			if (dcdu_test_time.getValue() + dcdu_test_amount.getValue() >= et) {
 				DCDU.page.hide();
 				DCDU_test.page.show();
@@ -93,46 +96,156 @@ var canvas_DCDU_base = {
 		} else {
 			DCDU.page.hide();
 			DCDU_test.page.hide();
+			pts.Instrumentation.Dcdu.lcdOn.setBoolValue(0);
 		}
 	},
 };
 
+var CPDLCstatusNode = props.globals.getNode("/network/cpdlc/link/status");
+var CPDLCauthority = props.globals.getNode("/network/cpdlc/link/data-authority");
+
 var canvas_DCDU = {
+	showingMessage: 0,
 	new: func(canvas_group, file) {
 		var m = {parents: [canvas_DCDU, canvas_DCDU_base]};
 		m.init(canvas_group, file);
+		m.updateActiveATC();
+		m["MessageTimeStamp"].hide();
+		m.hideResponses();
 		return m;
 	},
 	getKeys: func() {
-		return ["ActiveATC","MessageTimeStamp","ADSConnection","RecallMode","LinkLost","Recall","Close"];
+		return ["Line1","Line2","Line3","Line4","MessageTimeStamp","ADSConnection","RecallMode","LinkLost","Recall","Close","STBY","WILCO",
+		"UNABLE","OTHER"];
 	},
+	cache: {
+		adsCount: 0,
+		adsState: 0,
+	},
+	currentMessage: nil,
 	update: func() {
-		me["MessageTimeStamp"].hide();
 		me["RecallMode"].hide();
 		me["LinkLost"].hide();
 		me["Recall"].hide();
-		me["Close"].hide();
 		
-		if (atsu.ADS.state == 2) {
-			me["ADSConnection"].setText("ADS CONNECTED(" ~ atsu.ADS.getCount() ~ ")");
-			me["ADSConnection"].show();
+		if (!me.showingMessage) {
+			if (atsu.ADS.getCount() != me.cache.adsCount or atsu.ADS.state != me.cache.adsState) {
+				me.cache.adsCount = atsu.ADS.getCount();
+				me.cache.adsState = atsu.ADS.state;
+				# FANS A+: status of ADS seems to be independent of connection to CPDLC: confirm in GTG document
+				if (atsu.ADS.state == 2) {
+					me["ADSConnection"].setText("ADS CONNECTED(" ~ atsu.ADS.getCount() ~ ")");
+					me["ADSConnection"].show();
+				} else {
+					me["ADSConnection"].hide();
+				}
+			}
 		} else {
 			me["ADSConnection"].hide();
 		}
-		
-		if (atsu.notificationSystem.notifyAirport != nil and atsu.notificationSystem.hasNotified) {
-			me["ActiveATC"].setText("ACTIVE ATC : " ~ atsu.notificationSystem.notifyAirport ~ " CTL");
-			me["ActiveATC"].show();
+	},
+	replyOpts: 0,
+	showNextMessage: func() {
+		me.showingMessage = 1;
+		me.currentMessage = atsu.DCDUBuffer.popMessage();
+		me["MessageTimeStamp"].show();
+		me["MessageTimeStamp"].setText(me.currentMessage.receivedTime ~ " FROM " ~ CPDLCauthority.getValue() ~ " CTL");
+		if (size(me.currentMessage.text) > 28) {
+			var tempStore = left(me.currentMessage.text,28);
+			me["Line1"].setText(tempStore);
+			me["Line1"].show();
+			me["Line2"].show();
 		} else {
-			me["ActiveATC"].hide();
+			me["Line1"].setText(me.currentMessage.text);
+			me["Line1"].show();
+			me["Line2"].hide();
+			me["Line3"].hide();
+			me["Line4"].hide();
 		}
-	}
+		
+		me.replyOpts = std.Vector.new(me.currentMessage.responses);
+		if (me.replyOpts.contains("w")) {
+			me["WILCO"].show();
+			me["Close"].hide();
+		} else {
+			me["WILCO"].hide();
+			me["Close"].show();
+		}
+		
+		if (me.replyOpts.contains("s")) {
+			me["STBY"].show();
+		} else {
+			me["STBY"].hide();
+		}
+		
+		if (me.replyOpts.contains("u")) {
+			me["UNABLE"].show();
+		} else {
+			me["UNABLE"].hide();
+		}
+	},
+	hideResponses: func() {
+		me["Close"].hide();
+		me["WILCO"].hide();
+		me["STBY"].hide();
+		me["UNABLE"].hide();
+		me["OTHER"].hide();
+	},
+	clearMessage: func() {
+		if (me.showingMessage) {
+			me.currentMessage = nil;
+			me.hideResponses();
+			me["MessageTimeStamp"].hide();
+			me.updateActiveATC();
+			me.showingMessage = 0;
+		}
+	},
+	updateActiveATC: func() {
+		if (CPDLCstatusNode.getValue() == 2) {
+			me["Line1"].setText("ACTIVE ATC : " ~ CPDLCauthority.getValue() ~ " CTL");
+			me["Line1"].show();
+			me["Line2"].hide();
+			me["Line3"].hide();
+			me["Line4"].hide();
+		} else {
+			me["Line1"].hide();
+			me["Line2"].hide();
+			me["Line3"].hide();
+			me["Line4"].hide();
+		}
+	},
+	btnL1: func() {
+	
+	},
+	btnL2: func() {
+	
+	},
+	btnR1: func() {
+	
+	},
+	btnR2: func() {
+		if (me.showingMessage) {
+			me.clearMessage();
+		}
+	},
 };
+
+setlistener("/network/cpdlc/link/status", func() {
+	if (DCDU != nil) {
+		DCDU.updateActiveATC();
+	}
+}, 0, 0);
+
+setlistener("/network/cpdlc/link/data-authority", func() {
+	if (DCDU != nil) {
+		DCDU.updateActiveATC();
+	}
+}, 0, 0);
 
 var canvas_DCDU_test = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "LiberationMonoCustom.ttf";
 		};
 
 		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
@@ -180,10 +293,10 @@ setlistener("sim/signals/fdm-initialized", func {
 });
 
 var rateApply = func {
-	DCDU_update.restart(0.05 * dcdu_rate.getValue());
+	DCDU_update.restart(0.15 * dcdu_rate.getValue());
 }
 
-var DCDU_update = maketimer(0.05, func {
+var DCDU_update = maketimer(0.15, func {
 	canvas_DCDU_base.update();
 });
 

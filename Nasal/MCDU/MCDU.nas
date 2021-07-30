@@ -91,9 +91,9 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/align-ref-long-sign", "");
 	setprop("/FMGC/internal/align-ref-lat-edit", 0);
 	setprop("/FMGC/internal/align-ref-long-edit", 0);
-	setprop("/FMGC/internal/align1-done", 0);
-	setprop("/FMGC/internal/align2-done", 0);
-	setprop("/FMGC/internal/align3-done", 0);
+	fmgc.FMGCAlignDone[0].setValue(0);
+	fmgc.FMGCAlignDone[1].setValue(0);
+	fmgc.FMGCAlignDone[2].setValue(0);
 
 	# ROUTE SELECTION
 	fmgc.FMGCInternal.altSelected = 0;
@@ -217,14 +217,14 @@ var lskbutton = func(btn, i) {
 					setprop("/MCDU[" ~ i ~ "]/active", 1);
 					settimer(func(){
 						pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
-						mcdu_scratchpad.scratchpads[i].empty();
+						mcdu_scratchpad.scratchpads[i].clear();
 						setprop("/MCDU[" ~ i ~ "]/active", 2);
 						setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
 					}, 2);
 				} else {					
 					pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
 					setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
-					mcdu_scratchpad.scratchpads[i].empty();
+					mcdu_scratchpad.scratchpads[i].clear();
 				}
 			}
 		} else if (page == "IRSINIT") {
@@ -288,7 +288,9 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (page == "WEATHERREQ") {
 			pageNode[i].setValue("WEATHERTYPE");
-		}  else if (page == "WEATHERTYPE") {
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("LATREQ");
+		} else if (page == "WEATHERTYPE") {
 			atsu.AOC.selectedType = "HOURLY WX";
 			pageNode[i].setValue("WEATHERREQ");
 		} else if (page == "RECEIVEDMSGS") {
@@ -377,14 +379,14 @@ var lskbutton = func(btn, i) {
 					setprop("/MCDU[" ~ i ~ "]/atsu-active", 1);
 					settimer(func(){
 						pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
-						mcdu_scratchpad.scratchpads[i].empty();
+						mcdu_scratchpad.scratchpads[i].clear();
 						setprop("/MCDU[" ~ i ~ "]/atsu-active", 2);
 						setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
 					}, 2);
 				} else {
 					pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
 					setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
-					mcdu_scratchpad.scratchpads[i].empty();
+					mcdu_scratchpad.scratchpads[i].clear();
 				}
 			}
 		} else if (page == "INITA") {
@@ -423,6 +425,8 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDirTo[i].leftFieldBtn(2);
 		} else if (page == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(2);
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("WHENCAN");
 		} else if (page == "NOTIFICATION") {
 			var result = atsu.notificationSystem.inputAirport(mcdu_scratchpad.scratchpads[i].scratchpad);
 			if (result == 1) {
@@ -810,7 +814,7 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("NOTIFICATION");
 		} else if (page == "FLTLOG") {
 			mcdu_message(i, "NOT ALLOWED");
-		} else if (page == "MCDUTEXT") {
+		} else if (page == "MCDUTEXT" or page == "MCDUTEXT2") {
 			atsu.freeTexts[i].selection = 9;
 			atsu.freeTexts[i].changed = 1;
 		} else if (page == "RECEIVEDMSGS") {
@@ -899,6 +903,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("AOCMENU");
 		} else if (page == "POSMON") {
 			canvas_mcdu.togglePageFreeze(i);
+		} else if (page == "WHENCAN" or page == "LATREQ" or page == "VERTREQ1" or page == "VERTREQ2" or page == "OTHERREQ" or page == "TEXTREQ") {
+			pageNode[i].setValue("ATCMENU");
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -993,6 +999,15 @@ var rskbutton = func(btn, i) {
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 3;
 			atsu.freeTexts[i].changed = 1;
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("VERTREQ1");
+		} else if (page == "CONNECTSTATUS") {
+			if (canvas_dcdu.CPDLCstatusNode.getValue() == 2) {
+				atsu.notificationSystem.hasNotified = 0;
+				fgcommand("cpdlc-disconnect");
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
@@ -1024,6 +1039,8 @@ var rskbutton = func(btn, i) {
 			pageNode[i].setValue("COMPANYCALL");
 		} else if (page == "AOCMENU") {
 			pageNode[i].setValue("WEATHERREQ");
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("OTHERREQ");
 		} else if (page == "DATAMODE") {
 			atsu.AOC.server.setValue("noaa");
 			acconfig.writeSettings();
@@ -1036,7 +1053,7 @@ var rskbutton = func(btn, i) {
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 4;
 			atsu.freeTexts[i].changed = 1;
-		}  else {
+		} else {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 	} else if (btn == "3") {
@@ -1303,13 +1320,15 @@ var rskbutton = func(btn, i) {
 			}
 		} else if (page == "NOTIFICATION") {
 			pageNode[i].setValue("CONNECTSTATUS");
-		} else if (page == "MCDUTEXT") {
+		} else if (page == "OTHERREQ" or page == "VERTREQ1" or page == "VERTREQ2" or page == "LATREQ" or page == "WHENCAN" or page == "MCDUTEXT" or page == "MCDUTEXT2") {
 			# todo transfer to DCDU
 			pageNode[i].setValue("ATCMENU");
 		} else if (page == "ATSUDLINK") {
 			pageNode[i].setValue("COMMMENU");
 		} else if (page == "CONNECTSTATUS") {
 			pageNode[i].setValue("NOTIFICATION");
+		} else if (page == "ATCMENU") {
+			pageNode[i].setValue("EMERGREQ1");
 		} else if (page == "AOCMENU") {
 			msg = mcdu.ReceivedMessagesDatabase.firstUnviewed();
 			if (msg != -99) {
@@ -1356,7 +1375,19 @@ var arrowbutton = func(btn, i) {
 			pageNode[i].setValue("ATCMENU2");
 		} else if (page == "ATCMENU2") {
 			pageNode[i].setValue("ATCMENU");
-		}
+		} else if (page == "VERTREQ1") {
+			pageNode[i].setValue("VERTREQ2");
+		} else if (page == "VERTREQ2") {
+			pageNode[i].setValue("VERTREQ1");
+		} else if (page == "MCDUTEXT") {
+			pageNode[i].setValue("MCDUTEXT2");
+		} else if (page == "MCDUTEXT2") {
+			pageNode[i].setValue("MCDUTEXT");
+		} else if (page == "EMERGREQ1") {
+			pageNode[i].setValue("EMERGREQ2");
+		} else if (page == "EMERGREQ2") {
+			pageNode[i].setValue("EMERGREQ1");
+		} 
 	} else if (btn == "right") {
 		if (page == "DATA") {
 			pageNode[i].setValue("DATA2");
@@ -1388,7 +1419,19 @@ var arrowbutton = func(btn, i) {
 			pageNode[i].setValue("ATCMENU2");
 		} else if (page == "ATCMENU2") {
 			pageNode[i].setValue("ATCMENU");
-		}
+		} else if (page == "VERTREQ1") {
+			pageNode[i].setValue("VERTREQ2");
+		} else if (page == "VERTREQ2") {
+			pageNode[i].setValue("VERTREQ1");
+		} else if (page == "MCDUTEXT") {
+			pageNode[i].setValue("MCDUTEXT2");
+		} else if (page == "MCDUTEXT2") {
+			pageNode[i].setValue("MCDUTEXT");
+		} else if (page == "EMERGREQ1") {
+			pageNode[i].setValue("EMERGREQ2");
+		} else if (page == "EMERGREQ2") {
+			pageNode[i].setValue("EMERGREQ1");
+		} 
 	} else if (btn == "up") {
 		if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].scrollUp();
@@ -1477,13 +1520,6 @@ var pagebutton = func(btn, i) {
 		} else if (btn == "data") {
 			pageNode[i].setValue("DATA");
 		} else if (btn == "mcdu") {
-			#var page = page;
-			#if (page != "ATSUDLINK" and page != "AOCMENU" and page != "AOCCONFIG" and page != "WEATHERREQ" and page != "WEATHERTYPE" and page != "RECEIVEDMSGS" and page != "RECEIVEDMSG" and page != "ATCMENU" and page != "ATCMENU2" and page != "MCDUTEXT" and page != "NOTIFICATION" and page != "CONNECTSTATUS" and page != "COMPANYCALL" and page != "VOICEDIRECTORY" and page != "DATAMODE" and page != "COMMMENU" and page != "COMMSTATUS" and page != "COMMINIT" and page != "ATIS" and page != "ATISDETAIL") {
-			#if (getprop("/MCDU[0]/active-system") == "fmgc") {
-			#	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", page);
-			#} else {
-			#	#setprop("/MCDU[" ~ i ~ "]/last-atsu-page", page);
-			#}
 			mcdu_message(i, "SELECT DESIRED SYSTEM");
 			pageNode[i].setValue("MCDU");
 		} else if (btn == "f-pln" or btn == "airport") {

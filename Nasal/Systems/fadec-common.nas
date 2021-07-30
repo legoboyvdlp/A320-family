@@ -9,6 +9,7 @@ if (pts.Options.eng.getValue() == "IAE") {
 
 var FADEC = {
 	alphaFloor: props.globals.getNode("/fdm/jsbsim/fadec/alpha-floor"),
+	alphaFloorSwitch: props.globals.getNode("/fdm/jsbsim/fadec/alpha-floor-switch"),
 	clbReduc: props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft"),
 	detent: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent", 1), props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent", 1)],
 	detentTemp: [0, 0],
@@ -38,6 +39,7 @@ var FADEC = {
 	manThrAboveMct: [0, 0],
 	maxDetent: props.globals.getNode("/fdm/jsbsim/fadec/max-detent"),
 	n1Mode: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/n1-mode"), props.globals.getNode("/fdm/jsbsim/fadec/control-2/n1-mode")],
+	n1ModeSw: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/n1-mode-sw"), props.globals.getNode("/fdm/jsbsim/fadec/control-2/n1-mode-sw")],
 	togaLk: props.globals.getNode("/fdm/jsbsim/fadec/toga-lk"),
 	init: func() {
 		me.engOut.setBoolValue(0);
@@ -45,6 +47,8 @@ var FADEC = {
 		me.Limit.activeModeInt.setValue(0);
 		me.Limit.flexActive.setBoolValue(0);
 		me.Limit.flexActiveCmd.setBoolValue(0);
+		me.n1ModeSw[0].setBoolValue(0);
+		me.n1ModeSw[1].setBoolValue(0);
 		systems.FADEC_S.init();
 		thrustFlashT.start();
 	},
@@ -116,7 +120,7 @@ var FADEC = {
 		pts.Gear.wowTemp[1] = pts.Gear.wow[1].getValue();
 		pts.Gear.wowTemp[2] = pts.Gear.wow[2].getValue();
 		
-		if (me.Limit.flexActiveCmd.getBoolValue() and !me.n1Mode[0].getValue() and !me.n1Mode[1].getValue() and pts.Gear.wowTemp[1] and pts.Gear.wowTemp[2] and pts.Velocities.groundspeedKt.getValue() < 40 and (pts.Engines.Engine.stateTemp[0] == 3 or pts.Engines.Engine.stateTemp[1] == 3)) {
+		if (me.Limit.flexActiveCmd.getBoolValue() and me.n1Mode[0].getValue() == 0 and me.n1Mode[1].getValue() == 0 and pts.Gear.wowTemp[1] and pts.Gear.wowTemp[2] and pts.Velocities.groundspeedKt.getValue() < 40 and (pts.Engines.Engine.stateTemp[0] == 3 or pts.Engines.Engine.stateTemp[1] == 3)) {
 			if (!me.Limit.flexActive.getBoolValue()) {
 				me.Limit.flexActive.setBoolValue(1);
 			}
@@ -140,7 +144,9 @@ var FADEC = {
 		
 		me.engOutTemp = me.engOut.getValue();
 		
-		if (me.detentTextTemp[0] == "CL" and me.detentTextTemp[1] == "CL" and !me.engOutTemp) {
+		if (me.alphaFloorSwitch.getValue() > 0) {
+			me.lvrClb.setValue(0);
+		} else if (me.detentTextTemp[0] == "CL" and me.detentTextTemp[1] == "CL" and !me.engOutTemp) {
 			me.lvrClb.setValue(0);
 		} else if (((me.detentTextTemp[0] == "MCT" and pts.Engines.Engine.stateTemp[0] == 3) or (me.detentTextTemp[1] == "MCT" and pts.Engines.Engine.stateTemp[1] == 3)) and !me.Limit.flexActive.getBoolValue() and me.engOut.getValue()) {
 			me.lvrClb.setValue(0);
@@ -192,6 +198,11 @@ setlistener("/fdm/jsbsim/fadec/control-2/detent", func() {
 }, 0, 0);
 setlistener("/fdm/jsbsim/fadec/limit/active-mode-int", func() {
 	FADEC.updateTxt();
+}, 0, 0);
+setlistener("/fdm/jsbsim/fadec/alpha-floor-switch", func() {
+	if (FADEC.alphaFloorSwitch.getValue() == 2) {
+		fmgc.ITAF.athrMaster(1);
+	}
 }, 0, 0);
 
 var lockThr = func() {

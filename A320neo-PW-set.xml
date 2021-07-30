@@ -220,8 +220,10 @@
 	
 	<options n="0">
 		<eng type="string">CFM</eng> <!-- Apparently PW PurePower uses N1, not EPR.... sooo I use CFM ECAM, and no N1 mode switches -->
+		<engine-name type="string">PW1127G-JM</engine-name>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">35</maxflap>
+		<model-number type="string">A320-271N</model-number>
 	</options>
 
 </PropertyList>

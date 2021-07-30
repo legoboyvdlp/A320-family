@@ -282,29 +282,31 @@
 		<gain>1.0</gain>
 		<input>
 			<expression>
-				<sum>
-					<difference> <!-- Fix an issue with the calculation -->
-						<property>/it-autoflight/internal/vert-speed-fpm</property>
+				<max>
+					<property>/it-autoflight/internal/nav-rate-of-climb-fpm</property>
+					<sum>
+						<difference> <!-- Fix an issue with the calculation -->
+							<property>/it-autoflight/internal/vert-speed-fpm</property>
+							<product>
+								<property>/velocities/vertical-speed-fps</property>
+								<value>60</value>
+							</product>
+						</difference>
 						<product>
-							<property>/velocities/vertical-speed-fps</property>
-							<value>60</value>
+							<sin>
+								<deg2rad>
+									<table>
+										<property>/position/gear-agl-ft</property>
+										<entry><ind>50</ind><dep>-3.0</dep></entry>
+										<entry><ind>45</ind><dep>-0.7</dep></entry>
+									</table>
+								</deg2rad>
+							</sin>
+							<property>/instrumentation/airspeed-indicator/true-speed-kt</property>
+							<value>101.26859142607174</value> <!-- FPM to Knot -->
 						</product>
-					</difference>
-					<product>
-						<sin>
-							<deg2rad>
-								<table>
-									<property>/position/gear-agl-ft</property>
-									<entry><ind>100</ind><dep>-2.80</dep></entry>
-									<entry><ind> 50</ind><dep>-2.12</dep></entry>
-									<entry><ind> 45</ind><dep>-0.61</dep></entry>
-								</table>
-							</deg2rad>
-						</sin>
-						<property>/instrumentation/airspeed-indicator/true-speed-kt</property>
-						<value>101.26859142607174</value> <!-- FPM to Knot -->
-					</product>
-				</sum>
+					</sum>
+				</max>
 			</expression>
 		</input>
 		<output>/it-autoflight/internal/target-fpm-land-fd</output>
@@ -318,32 +320,34 @@
 		<gain>1.0</gain>
 		<input>
 			<expression>
-				<sum>
-					<difference> <!-- Fix an issue with the calculation -->
-						<property>/it-autoflight/internal/vert-speed-fpm</property>
+				<max>
+					<property>/it-autoflight/internal/nav-rate-of-climb-fpm</property>
+					<sum>
+						<difference> <!-- Fix an issue with the calculation -->
+							<property>/it-autoflight/internal/vert-speed-fpm</property>
+							<product>
+								<property>/velocities/vertical-speed-fps</property>
+								<value>60</value>
+							</product>
+						</difference>
 						<product>
-							<property>/velocities/vertical-speed-fps</property>
-							<value>60</value>
+							<sin>
+								<deg2rad>
+									<table>
+										<property>/position/gear-agl-ft</property>
+										<entry><ind>50</ind><dep>-3.0</dep></entry>
+										<entry><ind>40</ind><dep>-1.8</dep></entry>
+										<entry><ind>30</ind><dep>-1.5</dep></entry>
+										<entry><ind>20</ind><dep>-1.2</dep></entry>
+										<entry><ind> 5</ind><dep>-0.7</dep></entry>
+									</table>
+								</deg2rad>
+							</sin>
+							<property>/instrumentation/airspeed-indicator/true-speed-kt</property>
+							<value>101.26859142607174</value> <!-- FPM to Knot -->
 						</product>
-					</difference>
-					<product>
-						<sin>
-							<deg2rad>
-								<table>
-									<property>/position/gear-agl-ft</property>
-									<entry><ind>100</ind><dep>-2.80</dep></entry>
-									<entry><ind> 50</ind><dep>-2.12</dep></entry>
-									<entry><ind> 40</ind><dep>-1.58</dep></entry>
-									<entry><ind> 30</ind><dep>-1.23</dep></entry>
-									<entry><ind> 20</ind><dep>-0.92</dep></entry>
-									<entry><ind> 10</ind><dep>-0.61</dep></entry>
-								</table>
-							</deg2rad>
-						</sin>
-						<property>/instrumentation/airspeed-indicator/true-speed-kt</property>
-						<value>101.26859142607174</value> <!-- FPM to Knot -->
-					</product>
-				</sum>
+					</sum>
+				</max>
 			</expression>
 		</input>
 		<output>/it-autoflight/internal/target-fpm-land</output>

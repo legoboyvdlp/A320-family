@@ -346,7 +346,7 @@
 	<animation>
     	<type>rotate</type>
     	<object-name>brakes_lb_psi</object-name>
-    	<property>systems/hydraulic/brakes/pressure-left-psi</property>
+    	<property>systems/hydraulic/brakes/pressure-left-psi-output</property>
     	<factor>-0.03</factor>
 		<condition>
 			<or>
@@ -378,7 +378,7 @@
     <animation>
     	<type>rotate</type>
     	<object-name>brakes_rb_psi</object-name>
-    	<property>systems/hydraulic/brakes/pressure-right-psi</property>
+    	<property>systems/hydraulic/brakes/pressure-right-psi-output</property>
     	<factor>0.03</factor>
 		<condition>
 			<or>
@@ -410,7 +410,7 @@
     <animation>
     	<type>rotate</type>
     	<object-name>brakes_accum_psi</object-name>
-    	<property>systems/hydraulic/yellow-accumulator-psi</property>
+    	<property>systems/hydraulic/yellow-accumulator-psi-output</property>
     	<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
 			<entry><ind>700</ind><dep>-20</dep></entry>
@@ -1164,6 +1164,7 @@
 		<object-name>vord_led</object-name>
 		<object-name>vord_led.001</object-name>
 		<object-name>vs-text</object-name>
+		<object-name>vs-text-last-2-digits</object-name>
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
@@ -1216,7 +1217,6 @@
 		<object-name>audio_call_vhf2_led</object-name>
 		<object-name>audio_call_vhf3_led</object-name>
 		<object-name>audio_mech_sgn</object-name>
-		<object-name>autoland_light_on</object-name>
 		<object-name>ecam_c_b_led</object-name>
 		<object-name>ecam_el_dc_led</object-name>
 		<object-name>ecam_sts_led</object-name>
@@ -2167,8 +2167,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("sts");</script>
+				<script>ecam.ECAMControlPanel.stsBtn(nil);</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.stsBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2186,8 +2198,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("apu");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("apuPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2205,8 +2229,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("bleed");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("bleedPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2224,8 +2260,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("press");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("cabPressPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2243,8 +2291,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("elec");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("elecPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2262,8 +2322,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("hyd");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("hydraulicPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2281,8 +2353,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("fuel");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("fuelPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2300,8 +2384,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("eng");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("enginePage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2319,8 +2415,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("cond");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("condPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2338,8 +2446,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("door");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("doorPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2357,8 +2477,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("wheel");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("wheelPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2376,8 +2508,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.sysPageBtn("fctl");</script>
+				<script>ecam.ECAMControlPanel.sysPageBtn("fctlPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2939,6 +3083,10 @@
 				<value>0</value>
 				<value>1</value>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
 		</action>
 	</animation>
 
@@ -3303,6 +3451,10 @@
 				<command>property-toggle</command>
 				<property>modes/pfd/ILS1</property>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
 		</action>
 	</animation>
 	<animation>
@@ -3337,6 +3489,10 @@
 				</condition>
 				<command>property-toggle</command>
 				<property>modes/pfd/ILS2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3410,8 +3566,11 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3452,8 +3611,11 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3494,8 +3656,11 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3536,8 +3701,11 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3578,8 +3746,11 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3620,8 +3791,11 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3662,8 +3836,11 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3704,8 +3881,11 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3746,8 +3926,11 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3788,8 +3971,11 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3977,6 +4163,10 @@
 				<value>1</value> <!-- VOR -->
 				<value>-1</value> <!-- ADF -->
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
 		</action>
 		<action>
 			<button>1</button>
@@ -3987,6 +4177,10 @@
 				<value>-1</value> <!-- ADF -->
 				<value>1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4017,6 +4211,10 @@
 				<value>1</value> <!-- VOR -->
 				<value>-1</value> <!-- ADF -->
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
 		</action>
 		<action>
 			<button>1</button>
@@ -4027,6 +4225,10 @@
 				<value>-1</value> <!-- ADF -->
 				<value>1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4057,6 +4259,10 @@
 				<value>1</value> <!-- VOR -->
 				<value>-1</value> <!-- ADF -->
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
 		</action>
 		<action>
 			<button>1</button>
@@ -4067,6 +4273,10 @@
 				<value>-1</value> <!-- ADF -->
 				<value>1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4097,6 +4307,10 @@
 				<value>1</value> <!-- VOR -->
 				<value>-1</value> <!-- ADF -->
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
 		</action>
 		<action>
 			<button>1</button>
@@ -4107,6 +4321,10 @@
 				<value>-1</value> <!-- ADF -->
 				<value>1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4322,23 +4540,6 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>lvlch.ind</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>it-autoflight/output/vert</property>
-					<value>4</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
 		<object-name>alt-text</object-name>
 		<condition>
 			<not-equals>
@@ -4404,6 +4605,7 @@
 	<animation>
 		<type>select</type>
 		<object-name>vs-text</object-name>
+		<object-name>vs-text-last-2-digits</object-name>
 		<condition>
 			<and>
 				<not-equals>
@@ -4545,8 +4747,8 @@
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">text-value</type>
-		<format type="string">%s</format>
+		<type type="string">number-value</type>
+		<format type="string">%03.0f</format>
 		<property>it-autoflight/input/hdg</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
@@ -4597,8 +4799,8 @@
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">text-value</type>
-		<format type="string">%s</format>
+		<type type="string">number-value</type>
+		<format type="string">%05.0f</format>
 		<property>it-autoflight/input/alt</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
@@ -4642,16 +4844,42 @@
 		<name>vs-text</name>
 		<offsets>
 			<x-m>-0.377</x-m>
-			<y-m>0.09043</y-m>
+			<y-m>0.0850</y-m>
 			<z-m>0.50254</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">number-value</type>
-		<format type="string">%4.0f</format>
-		<property>it-autoflight/input/vs</property>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>it-autoflight/output/vs-fcu-display</property>
+		<truncate>false</truncate>
+		<font type="string">led.txf</font>
+		<draw-text>true</draw-text>
+		<draw-alignment>false</draw-alignment>
+		<draw-boundingbox>false</draw-boundingbox>
+		<character-size>0.008</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<text>
+		<name>vs-text-last-2-digits</name>
+		<offsets>
+			<x-m>-0.377</x-m>
+			<y-m>0.0977</y-m>
+			<z-m>0.5028</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">oo</format>
+		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
 		<draw-text>true</draw-text>
@@ -4668,7 +4896,7 @@
 		<name>fpa-text</name>
 		<offsets>
 			<x-m>-0.377</x-m>
-			<y-m>0.09043</y-m>
+			<y-m>0.0860</y-m>
 			<z-m>0.50254</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
@@ -4676,7 +4904,7 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
-		<format type="string">%2.1f</format>
+		<format type="string">%+2.1f</format>
 		<property>it-autoflight/input/fpa</property>
 		<truncate>false</truncate>
 		<font type="string">led.txf</font>
@@ -6110,6 +6338,47 @@
 			<object-name>fcu_integ_knb.axis</object-name>
 		</axis>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>lt_knb_1.001</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/fcu-digit-knb</property>
+				<step>0.05</step>
+				<max>1</max>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/fcu-digit-knb</property>
+				<step>-0.05</step>
+				<min>0</min>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>lt_knb_1.001</object-name>
+		<property>controls/lighting/fcu-digit-knb</property>
+		<factor>10</factor>
+		<axis>
+			<x1-m>-0.450412</x1-m>
+			<y1-m>0.06869</y1-m>
+			<z1-m>0.375016</z1-m>
+			<x2-m>-0.45531</x2-m>
+			<y2-m>0.068899</y2-m>
+			<z2-m>0.385331</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<name>Main Panel and Pedestal lighting</name>
@@ -6372,6 +6641,29 @@
 		</emission>
 	</animation>
 
+	<animation>
+		<type>select</type>
+		<object-name>autoland_light_on</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<and>
+					<equals>
+						<property>instrumentation/pfd/lights/autoland-armed</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>instrumentation/pfd/lights/autoland-on</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</or>
+		</condition>
+	</animation>
+
 	<!-- Master Warning and Caution -->
 	<animation>
 		<type>select</type>
@@ -6457,6 +6749,10 @@
 					}
 				</script>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
 		</action>
 	</animation>
 
@@ -6490,6 +6786,10 @@
 						setprop("it-autoflight/output/athr-warning", 0);
 					}
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -7375,14 +7675,32 @@
 	<animation>
 		<type>material</type>
 		<object-name>spd-text</object-name>
+		<object-name>spd.ind</object-name>
+		<object-name>spd.fmgc</object-name>
 		<object-name>mach-text</object-name>
+		<object-name>mach.ind</object-name>
 		<object-name>hdg-text</object-name>
+		<object-name>hdg.ind</object-name>
+		<object-name>trk.ind</object-name>
+		<object-name>lat.fmgc</object-name>
+		<object-name>hdg2.ind</object-name>
+		<object-name>trk2.ind</object-name>
 		<object-name>alt-text</object-name>
+		<object-name>vs.dash</object-name>
 		<object-name>vs-text</object-name>
+		<object-name>vs-text-last-2-digits</object-name>
 		<object-name>spd-text-test</object-name>
 		<object-name>hdg-text-test</object-name>
 		<object-name>alt-text-test</object-name>
 		<object-name>vs-text-test</object-name>
+		<object-name>vs.ind.001</object-name>
+		<object-name>vs.ind.002</object-name>
+		<object-name>ver.fmgc</object-name>
+		<object-name>lvlch.ind</object-name>
+		<object-name>alt.ind</object-name>
+		<object-name>vs.ind</object-name>
+		<object-name>fpa.ind</object-name>
+		<object-name>fpa.ind.001</object-name>
 		<object-name>atc-code</object-name>
 		<object-name>atc-test</object-name>
 		<object-name>fpa-text</object-name>
@@ -7393,9 +7711,10 @@
 		<object-name>rudder-trim</object-name>
 		<object-name>rudder-trim-letter</object-name>
 		<diffuse>
-			<red>0.89</red>
-			<green>0.37</green>
-			<blue>0.08</blue>
+			<red>0.75</red>
+			<green>0.30</green>
+			<blue>0.0</blue>
+			<factor-prop>controls/lighting/fcu-digit-norm</factor-prop>
 		</diffuse>
 		<ambient>
 			<red>0</red>
@@ -7408,9 +7727,36 @@
 			<blue>0</blue>
 		</specular>
 		<emission>
-			<red>0.89</red>
-			<green>0.37</green>
-			<blue>0.08</blue>
+			<red>0.75</red>
+			<green>0.30</green>
+			<blue>0.0</blue>
+			<factor-prop>controls/lighting/fcu-digit-norm</factor-prop>
+		</emission>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>rudder-trim</object-name>
+		<object-name>rudder-trim-letter</object-name>
+		<diffuse>
+			<red>0.75</red>
+			<green>0.30</green>
+			<blue>0.0</blue>
+		</diffuse>
+		<ambient>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</ambient>
+		<specular>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</specular>
+		<emission>
+			<red>0.75</red>
+			<green>0.30</green>
+			<blue>0.0</blue>
 		</emission>
 	</animation>
 
@@ -9015,10 +9361,14 @@
 				<value>1</value>
 				<value>2</value>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
 		</action>
 	</animation>
 	
-		<!-- ND_R chrono -->
+	<!-- ND_R chrono -->
 	<animation>
 		<type>pick</type>
 		<object-name>chrono_fo</object-name>
@@ -9031,6 +9381,10 @@
 				<value>0</value>
 				<value>1</value>
 				<value>2</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -9189,7 +9543,14 @@
 	</animation>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/display-less-dirt</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/displays/lcd</inherits-from>
+		<parameters>
+			<inner-angle>90</inner-angle> <!-- 0-90, use 90 for LED or plasma display-->
+			<outer-angle>90</outer-angle> <!-- 0-90, but greater than inner -->
+			<black-angle>90</black-angle> <!-- 0-90, but greater than outer -->
+			<dirt-factor>0.09</dirt-factor>
+			<contrast><use>instrumentation/dcdu/lcd-contrast</use></contrast>
+		</parameters>
 		<object-name>dcduScreenL</object-name>
 		<object-name>dcduScreenR</object-name>
 	</effect>
@@ -9398,6 +9759,34 @@
 				<max>1.0</max>
 				<step>-0.05</step>
 				<wrap>false</wrap>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>dcduBtnL.R2</object-name>
+		<object-name>dcduBtnR.R2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-1</property>
+							<value>110</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-1</property>
+							<value>110</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>nasal</command>
+				<script>
+					canvas_dcdu.DCDU.btnR2();
+				</script>
 			</binding>
 		</action>
 	</animation>

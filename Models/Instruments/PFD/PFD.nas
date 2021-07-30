@@ -161,6 +161,9 @@ var amberFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/
 var amberFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-2", 0, "BOOL");
 var dhFlash = props.globals.initNode("/instrumentation/pfd/flash-indicators/dh-flash", 0, "BOOL");
 
+var light_autoland_armed = props.globals.initNode("/instrumentation/pfd/lights/autoland-armed", 0, "BOOL");
+var light_autoland_on = props.globals.initNode("/instrumentation/pfd/lights/autoland-on", 0, "BOOL");
+
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
@@ -215,56 +218,76 @@ var canvas_PFD_base = {
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
 		"ALT_digit_DN","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
-		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError"];
+		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError","vsFMArate"];
 	},
+	off: 0,
+	on: 0,
 	updateDu1: func() {
 		var elapsedtime_act = elapsedtime.getValue();
 		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
-			if (du1_offtime.getValue() + 3 < elapsedtime_act) { 
-				if (wow0.getValue() == 1) {
-					if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+			if (!me.on) {
+				if (du1_offtime.getValue() + 3 < elapsedtime_act) { 
+					if (wow0.getValue() == 1) {
+						if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+							du1_test.setValue(1);
+							du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du1_test_time.setValue(elapsedtime_act);
+						} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
+							du1_test.setValue(1);
+							du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du1_test_time.setValue(elapsedtime_act - 30);
+						}
+					} else {
 						du1_test.setValue(1);
-						du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du1_test_time.setValue(elapsedtime_act);
-					} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
-						du1_test.setValue(1);
-						du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du1_test_time.setValue(elapsedtime_act - 30);
+						du1_test_amount.setValue(0);
+						du1_test_time.setValue(-100);
 					}
-				} else {
-					du1_test.setValue(1);
-					du1_test_amount.setValue(0);
-					du1_test_time.setValue(-100);
 				}
+				me.off = 0;
+				me.on = 1;
 			}
 		} else {
-			du1_test.setValue(0);
-			du1_offtime.setValue(elapsedtime_act);
+			if (!me.off) {
+				du1_test.setValue(0);
+				du1_offtime.setValue(elapsedtime_act);
+				me.off = 1;
+				me.on = 0;
+			}
 		}
 	},
+	off6: 0,
+	on6: 0,
 	updateDu6: func() {
 		var elapsedtime_act = elapsedtime.getValue();
 		if (systems.ELEC.Bus.ac2.getValue() >= 110) {
-			if (du6_offtime.getValue() + 3 < elapsedtime_act) { 
-				if (wow0.getValue() == 1) {
-					if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+			if (!me.on6) {
+				if (du6_offtime.getValue() + 3 < elapsedtime_act) { 
+					if (wow0.getValue() == 1) {
+						if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+							du6_test.setValue(1);
+							du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du6_test_time.setValue(elapsedtime_act);
+						} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
+							du6_test.setValue(1);
+							du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du6_test_time.setValue(elapsedtime_act - 30);
+						}
+					} else {
 						du6_test.setValue(1);
-						du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du6_test_time.setValue(elapsedtime_act);
-					} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
-						du6_test.setValue(1);
-						du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du6_test_time.setValue(elapsedtime_act - 30);
+						du6_test_amount.setValue(0);
+						du6_test_time.setValue(-100);
 					}
-				} else {
-					du6_test.setValue(1);
-					du6_test_amount.setValue(0);
-					du6_test_time.setValue(-100);
 				}
+				me.off6 = 0;
+				me.on6 = 1;
 			}
 		} else {
-			du6_test.setValue(0);
-			du6_offtime.setValue(elapsedtime_act);
+			if (!me.off6) {
+				du6_test.setValue(0);
+				du6_offtime.setValue(elapsedtime_act);
+				me.off6 = 1;
+				me.on6 = 0;
+			}
 		}
 	},
 	update: func() {
@@ -274,6 +297,7 @@ var canvas_PFD_base = {
 			PFD_1_mismatch.page.hide();
 			PFD_2_mismatch.page.hide();
 			if (systems.ELEC.Bus.acEss.getValue() >= 110 and du1_lgt.getValue() > 0.01) {
+				pts.Instrumentation.Du.du1On.setBoolValue(1);
 				if (du1_test_time.getValue() + du1_test_amount.getValue() >= elapsedtime_act and cpt_du_xfr.getValue() != 1) {
 					PFD_1_test.update();
 					PFD_1.page.hide();
@@ -290,8 +314,10 @@ var canvas_PFD_base = {
 			} else {
 				PFD_1_test.page.hide();
 				PFD_1.page.hide();
+				pts.Instrumentation.Du.du1On.setBoolValue(0);
 			}
 			if (systems.ELEC.Bus.ac2.getValue() >= 110 and du6_lgt.getValue() > 0.01) {
+				pts.Instrumentation.Du.du6On.setBoolValue(1);
 				if (du6_test_time.getValue() + du6_test_amount.getValue() >= elapsedtime_act and fo_du_xfr.getValue() != 1) {
 					PFD_2_test.update();
 					PFD_2.page.hide();
@@ -308,6 +334,7 @@ var canvas_PFD_base = {
 			} else {
 				PFD_2_test.page.hide();
 				PFD_2.page.hide();
+				pts.Instrumentation.Du.du6On.setBoolValue(0);
 			}
 		} else {
 			PFD_1_test.page.hide();
@@ -316,6 +343,8 @@ var canvas_PFD_base = {
 			PFD_2.page.hide();
 			PFD_1_mismatch.update();
 			PFD_2_mismatch.update();
+			pts.Instrumentation.Du.du1On.setBoolValue(1);
+			pts.Instrumentation.Du.du6On.setBoolValue(1);
 			PFD_1_mismatch.page.show();
 			PFD_2_mismatch.page.show();
 		}
@@ -859,7 +888,18 @@ var canvas_PFD_base = {
 		}
 		
 		# FMA Pitch
-		me["FMA_pitch"].setText(sprintf("%s", pitch_mode_act));
+		if (pitch_mode_act == "V/S") {
+			me["FMA_pitch"].setText(sprintf("%s         ", pitch_mode_act));
+			me["vsFMArate"].setText(sprintf("%+4.0f",fmgc.Input.vs.getValue()));
+			me["vsFMArate"].show();
+		} elsif (pitch_mode_act == "FPA") {
+			me["FMA_pitch"].setText(sprintf("%s         ", pitch_mode_act));
+			me["vsFMArate"].setText(sprintf("%+3.1f°",fmgc.Input.fpa.getValue()));
+			me["vsFMArate"].show();
+		}else {
+			me["FMA_pitch"].setText(sprintf("%s", pitch_mode_act));
+			me["vsFMArate"].hide();
+		}
 		me["FMA_pitcharm"].setText(sprintf("%s", pitch_mode_armed_act));
 		me["FMA_pitcharm2"].setText(sprintf("%s", pitch_mode2_armed_act));
 		
@@ -2705,7 +2745,7 @@ var canvas_PFD_2_mismatch = {
 	},
 };
 
-setlistener("sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func {
 	PFD1_display = canvas.new({
 		"name": "PFD1",
 		"size": [1024, 1024],

@@ -12,6 +12,8 @@
 	<property value="104">fadec/limit/max-n1</property>
 	<property value="0">fadec/athr/cmd</property>
 	<property value="1">fadec/limit/active-epr</property> <!-- Unused in this engine -->
+	<property value="0">fadec/control-1/n1-mode</property> <!-- Unused in this engine -->
+	<property value="0">fadec/control-2/n1-mode</property> <!-- Unused in this engine -->
 	
 	<channel name="Thrust Limits">
 		
@@ -253,12 +255,18 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/climb-ref">
+		<fcs_function name="fadec/limit/climb-ref"> <!-- Ref MCT, Vs 99.5 -->
 			<function>
-				<product> <!-- TEMPORARY REPLACE WITH TABLE LATER -->
-					<property>fadec/limit/mct-ref</property>
-					<value>0.945</value>
-				</product>
+				<table>
+					<independentVar lookup="row">/position/altitude-ft</independentVar>
+					<independentVar lookup="column">propulsion/tat-c</independentVar>
+					<tableData>
+						      -65   -35   -5     25    55
+						    0  70.3  74.9  79.3  83.5  82.0
+						10000  80.1  84.3  88.4  91.4  90.1
+						43000  81.4  81.8  83.6  88.1  86.5
+					</tableData>
+				</table>
 			</function>
 		</fcs_function>
 		
@@ -998,6 +1006,75 @@
 			</test>
 		</switch>
 		
+		<!-- Alpha Floor and Toga Lk -->
+		<switch name="fadec/alpha-floor-engage">
+			<default value="9.5"/>
+			<test logic="OR" value="15">
+				/controls/flight/flaps-pos eq 1
+				/controls/flight/flaps-pos eq 2
+				/controls/flight/flaps-pos eq 3
+			</test>
+			<test value="14">
+				/controls/flight/flaps-pos eq 4
+			</test>
+			<test value="13">
+				/controls/flight/flaps-pos eq 5
+			</test>
+		</switch>
+		
+		<switch name="fadec/alpha-floor-disengage">
+			<default value="8"/>
+			<test logic="OR" value="13">
+				/controls/flight/flaps-pos eq 1
+				/controls/flight/flaps-pos eq 2
+				/controls/flight/flaps-pos eq 3
+			</test>
+			<test value="12">
+				/controls/flight/flaps-pos eq 4
+			</test>
+			<test value="11">
+				/controls/flight/flaps-pos eq 5
+			</test>
+		</switch>
+		
+		<switch name="fadec/alpha-floor-switch">
+			<default value="fadec/alpha-floor-switch"/>
+			<test logic="OR" value="0"> <!-- Reset -->
+				position/wow eq 1
+				/it-fbw/law ne 0
+				/FMGC/FCU-working eq 0
+			</test>
+			<test logic="AND" value="0"> <!-- Reset -->
+				fadec/eng-out eq 1
+				/controls/flight/flaps-pos ne 0
+			</test>
+			<test logic="AND" value="0"> <!-- Reset only in Toga Lk -->
+				fadec/alpha-floor-switch eq 1
+				/it-autoflight/output/athr eq 0
+			</test>
+			<test value="2"> <!-- Alpha Floor -->
+				aero/alpha-deg-damped gt fadec/alpha-floor-engage
+			</test>
+			<test logic="AND" value="1"> <!-- Toga Lk -->
+				fadec/alpha-floor-switch eq 2
+				aero/alpha-deg-damped lt fadec/alpha-floor-disengage
+			</test>
+		</switch>
+		
+		<switch name="fadec/alpha-floor">
+			<default value="0"/>
+			<test value="1">
+				fadec/alpha-floor-switch eq 2
+			</test>
+		</switch>
+		
+		<switch name="fadec/toga-lk">
+			<default value="0"/>
+			<test value="1">
+				fadec/alpha-floor-switch eq 1
+			</test>
+		</switch>
+		
 		<!-- Common Control Logic -->
 		<fcs_function name="fadec/both-at-idle">
 			<function>
@@ -1044,9 +1121,9 @@
 				/controls/engines/engine[0]/reverse-cmd eq 1
 				/controls/engines/engine[1]/reverse-cmd eq 1
 			</test>
-			<!--test logic="OR" value="0"> TOGA
-				alpha floor or toga lk
-			</test-->
+			<test value="0"> <!-- TOGA -->
+				fadec/alpha-floor-switch gt 0
+			</test>
 			<test logic="AND" value="2"> <!-- CLB -->
 				fadec/max-detent le 2
 				fadec/limit/eng-off-wow-switch eq 0
@@ -1112,6 +1189,9 @@
 		
 		<switch name="fadec/athr/active">
 			<default value="0"/>
+			<test value="0">
+				fadec/alpha-floor-switch gt 0
+			</test>
 			<test logic="AND" value="1">
 				/it-autoflight/output/athr eq 1
 				fadec/eng-out eq 1
@@ -1180,6 +1260,9 @@
 			<test value="fadec/reverse-1/throttle-rev">
 				fadec/reverse-1/position-norm ne 0
 			</test>
+			<test value="fadec/limit/toga-norm">
+				fadec/alpha-floor-switch gt 0
+			</test>
 			<test value="fadec/thr-locked-norm">
 				fadec/thr-locked eq 1
 			</test>
@@ -1210,6 +1293,9 @@
 			<default value="fadec/control-2/lever-norm"/>
 			<test value="fadec/reverse-2/throttle-rev">
 				fadec/reverse-2/position-norm ne 0
+			</test>
+			<test value="fadec/limit/toga-norm">
+				fadec/alpha-floor-switch gt 0
 			</test>
 			<test value="fadec/thr-locked-norm">
 				fadec/thr-locked eq 1
@@ -1341,6 +1427,32 @@
 						 50  -64
 						100   48
 						110   65
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/egt[0]">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[0]/egt-actual</independentVar>
+					<tableData>
+						   0 -90
+						 500   0
+						1000  90
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/instrumentation/upper-ecam/egt[1]">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[1]/egt-actual</independentVar>
+					<tableData>
+						   0 -90
+						 500   0
+						1000  90
 					</tableData>
 				</table>
 			</function>
