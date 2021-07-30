@@ -217,14 +217,14 @@ var lskbutton = func(btn, i) {
 					setprop("/MCDU[" ~ i ~ "]/active", 1);
 					settimer(func(){
 						pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
-						mcdu_scratchpad.scratchpads[i].empty();
+						mcdu_scratchpad.scratchpads[i].clear();
 						setprop("/MCDU[" ~ i ~ "]/active", 2);
 						setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
 					}, 2);
 				} else {					
 					pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
 					setprop("/MCDU[" ~ i ~ "]/active-system","fmgc");
-					mcdu_scratchpad.scratchpads[i].empty();
+					mcdu_scratchpad.scratchpads[i].clear();
 				}
 			}
 		} else if (page == "IRSINIT") {
@@ -377,14 +377,14 @@ var lskbutton = func(btn, i) {
 					setprop("/MCDU[" ~ i ~ "]/atsu-active", 1);
 					settimer(func(){
 						pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
-						mcdu_scratchpad.scratchpads[i].empty();
+						mcdu_scratchpad.scratchpads[i].clear();
 						setprop("/MCDU[" ~ i ~ "]/atsu-active", 2);
 						setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
 					}, 2);
 				} else {
 					pageNode[i].setValue(getprop("/MCDU[" ~ i ~ "]/last-atsu-page"));
 					setprop("/MCDU[" ~ i ~ "]/active-system","atsu");
-					mcdu_scratchpad.scratchpads[i].empty();
+					mcdu_scratchpad.scratchpads[i].clear();
 				}
 			}
 		} else if (page == "INITA") {
