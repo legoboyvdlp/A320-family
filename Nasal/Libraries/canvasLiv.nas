@@ -79,13 +79,23 @@ var canvas_livery = {
 			resolution = maxSupportedRes;
 			me.targets[name].resolution = maxSupportedRes;
 		}
-		me.targets[name].canvas = canvas.new({
-			"name": name,
-			"size": [resolution, resolution],
-			"view": [resolution, resolution],
-			"mipmapping": 1,
-			"anisotropy": 32.0
-		});
+		var (major, minor, patch) = split(".", getprop("/sim/version/flightgear"));
+		if (num(major) == 2020 and num(minor) < 4) {
+			me.targets[name].canvas = canvas.new({
+				"name": name,
+				"size": [resolution, resolution],
+				"view": [resolution, resolution],
+				"mipmapping": 1,
+			});
+		} else {
+			me.targets[name].canvas = canvas.new({
+				"name": name,
+				"size": [resolution, resolution],
+				"view": [resolution, resolution],
+				"mipmapping": 1,
+				"anisotropy": 32.0
+			});
+		}
 		foreach (var object; objects) {
 			me.targets[name].canvas.addPlacement({"node": object});
 		}
@@ -158,13 +168,23 @@ var canvas_livery_update = {
 			resolution = maxSupportedRes;
 			me.targets[name].resolution = maxSupportedRes;
 		}
-		me.targets[name].canvas = canvas.new({
-			"name": name,
-			"size": [resolution, resolution],
-			"view": [resolution, resolution],
-			"mipmapping": 1,
-			"anisotropy": 32.0
-		});
+		var (major, minor, patch) = split(".", getprop("/sim/version/flightgear"));
+		if (num(major) == 2020 and num(minor) < 4) {
+			me.targets[name].canvas = canvas.new({
+				"name": name,
+				"size": [resolution, resolution],
+				"view": [resolution, resolution],
+				"mipmapping": 1,
+			});
+		} else {
+			me.targets[name].canvas = canvas.new({
+				"name": name,
+				"size": [resolution, resolution],
+				"view": [resolution, resolution],
+				"mipmapping": 1,
+				"anisotropy": 32.0
+			});
+		}
 		foreach (var object; objects) {
 			me.targets[name].canvas.addPlacement({"module-id": me.module_id, "type": "scenery-object", "node": object});
 		}
