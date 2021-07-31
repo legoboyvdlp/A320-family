@@ -39,17 +39,17 @@ aircraft.rain.init();
 var aero = getprop("/sim/aero");
 if (aero == "A320-200-CFM") {
 	var livery = aircraft.canvas_livery.init("Models/Liveries/A320/CFM");
-	elements = ["EngineCFM56R", "EngineCFM56L", "PylonCFM56R", "PylonCFM56L", "ReverserRDoor1", "ReverserRDoor2", "ReverserRDoor3", "ReverserRDoor4", "ReverserLDoor1", "ReverserLDoor2", "ReverserLDoor3", "ReverserLDoor4"];
+	elements = ["EngineCFM56L","EngineCFM56R","ReverserLDoor1","ReverserLDoor2","ReverserLDoor3","ReverserLDoor4","ReverserRDoor1","ReverserRDoor2","ReverserRDoor3","ReverserRDoor4","PylonCFM56L","PylonCFM56R","IntakeCFM56L","IntakeCFM56R"];
 	livery.createTarget("engines", elements, "sim/model/livery/texture-engine");
 	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/A320/CFM/engine-dirt.png");
 } else if (aero == "A320-200-IAE") {
 	var livery = aircraft.canvas_livery.init("Models/Liveries/A320/IAE");
-	elements = ["EngineIAEV2500R", "EngineIAEV2500L", "PylonIAEV2500R", "PylonIAEV2500R", "ReverserRDoor", "ReverserLDoor"];
+	elements = ["EngineIAEV2500L","EngineIAEV2500R","ReverserLDoor","ReverserRDoor","PylonIAEV2500L","PylonIAEV2500R","IntakeIAEV2500L","IntakeIAEV2500R"];
 	livery.createTarget("engines", elements, "sim/model/livery/texture-engine");
 	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/A320/IAE/engine-dirt.png");
 }
 
-var elements = ["Fuselage", "Wings", "Hstabs", "ElevatorL", "ElevatorR", "FlapL1", "FlapL2", "FlapR1", "FlapR2", "SpoilerL1", "SpoilerL2", "SpoilerL3", "SpoilerL4", "SpoilerL5", "SpoilerR1", "SpoilerR2", "SpoilerR3", "SpoilerR4", "SpoilerR5", "DoorL1", "DoorL4", "DoorR1", "DoorR4", "Cargo1", "Cargo2", "Cargo3", "MLGGearDoorR", "MLGGearDoorL", "MLGWingDoorR1", "MLGWingDoorL1", "MLGWingDoorR2", "MLGWingDoorL2", "NLGForewardDoorL", "NLGForewardDoorR", "NLGAftDoorL", "NLGAftDoorR", "GPUServiceDoor", "AvionicsVentDoor", "OutflowValveDoor1", "OutflowValveDoor2", "ApuFlap", "Rudder", "Sharklet", "WingtipFence", "RatDoorL", "RatDoorR"];
+var elements = ["AileronL","AileronR","Antenna1","Antenna2","ApuFlap","AvionicsVentDoor","Cargo1","Cargo2","Cargo3","DoorL1","DoorL4","DoorR1","DoorR4","ElevatorL","ElevatorR","EngineFairingL","EngineFairingR","FairingL1","FairingL2","FairingL3","FairingR1","FairingR2","FairingR3","FlapL1","FlapL2","FlapR1","FlapR2","Fuselage","GPUServiceDoor","Hstabs","MLGGearDoorL","MLGGearDoorR","MLGWingDoorL1","MLGWingDoorL2","MLGWingDoorR1","MLGWingDoorR2","NLGAftDoorL","NLGAftDoorR","NLGFittingPanel","NLGForewardDoorL","NLGForewardDoorR","OutflowValveDoor1","OutflowValveDoor2","RatDoorL","RatDoorR","Rudder","Sharklet","SlatL1","SlatL2","SlatR1","SlatR2","SpoilerL1","SpoilerL2","SpoilerL3","SpoilerL4","SpoilerL5","SpoilerR1","SpoilerR2","SpoilerR3","SpoilerR4","SpoilerR5","Wings","WingtipFence"];
 livery.createTarget("fuselage", elements, "sim/model/livery/texture-fuselage", resolution=16384);
 livery.addLayer("fuselage", "dirt", "Aircraft/A320-family/Models/Liveries/A320/fuselage-dirt.png");
 
