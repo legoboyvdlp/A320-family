@@ -84,7 +84,7 @@ var canvas_livery = {
 			"size": [resolution, resolution],
 			"view": [resolution, resolution],
 			"mipmapping": 1,
-		#	"anisotropy": 32.0
+			"anisotropy": 32.0
 		});
 		foreach (var object; objects) {
 			me.targets[name].canvas.addPlacement({"node": object});
@@ -163,7 +163,7 @@ var canvas_livery_update = {
 			"size": [resolution, resolution],
 			"view": [resolution, resolution],
 			"mipmapping": 1,
-		#	"anisotropy": 32.0
+			"anisotropy": 32.0
 		});
 		foreach (var object; objects) {
 			me.targets[name].canvas.addPlacement({"module-id": me.module_id, "type": "scenery-object", "node": object});
