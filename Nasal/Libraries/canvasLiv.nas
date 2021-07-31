@@ -174,7 +174,7 @@ var canvas_livery_update = {
 			return nil;
 		}
 		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)).setSize(resolution,resolution);
-		me.targets[name].listener = setlistener(property, func(property) {
+		me.targets[name].listener = setlistener("/ai/models/multiplayer[" ~ me.module_id ~ "]/" ~ property, func(property) {
 			resStr = findTexByRes(me.liveriesdir, property.getValue(), resolution);
 			if (resStr == nil) {
 				return nil;
