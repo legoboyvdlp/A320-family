@@ -591,7 +591,7 @@
 			<z-offset-max-m type="float">300.0</z-offset-max-m>
 		</current-view>
 		
-		<minimum-fg-version>2019.2.0</minimum-fg-version>
+		<minimum-fg-version>2020.3.1</minimum-fg-version>
 
 		<navdb>
 			<min-runway-length-ft>3000</min-runway-length-ft>
