@@ -104,14 +104,30 @@ setlistener("/systems/acconfig/new-revision", func {
 	}
 });
 
+var fgfsMin = split(".", getprop("/sim/minimum-fg-version"));
+var fgfsVer = split(".", getprop("/sim/version/flightgear"));
+
+var versionCheck = func() {
+	if (fgfsVer[0] < fgfsMin[0] or fgfsVer[1] < fgfsMin[1]) {
+		return 0;
+	} else if (fgfsVer[1] == fgfsMin[1]) {
+		if (fgfsVer[2] < fgfsMin[2]) {
+			return 0;
+		} else {
+			return 1;
+		}
+	} else {
+		return 1;
+	}
+}
+
 var mismatch_chk = func {
-	if (num(string.replace(getprop("/sim/version/flightgear"),".","")) < 201920) {
+	if (!versionCheck()) {
 		setprop("/systems/acconfig/mismatch-code", "0x121");
-		setprop("/systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least 2019.2.0.");
+		setprop("/systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least " ~ getprop("/sim/minimum-fg-version") ~ ".");
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
-		libraries.systemsLoop.stop();
 		print("Mismatch: 0x121");
 		welcome_dlg.close();
 	} else if (getprop("/gear/gear[0]/wow") == 0 or getprop("/position/altitude-ft") >= 15000) {
@@ -120,7 +136,6 @@ var mismatch_chk = func {
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
-		libraries.systemsLoop.stop();
 		print("Mismatch: 0x223");
 		welcome_dlg.close();
 	} else if (getprop("/systems/acconfig/libraries-loaded") != 1) {
@@ -129,7 +144,6 @@ var mismatch_chk = func {
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
-		libraries.systemsLoop.stop();
 		print("Mismatch: 0x247");
 		welcome_dlg.close();
 	}
