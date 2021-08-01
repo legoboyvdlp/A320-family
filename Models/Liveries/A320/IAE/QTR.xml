@@ -4,7 +4,7 @@
 	<sim>
 		<model>
 			<livery>
-				<name>QTR Qatar Airways (A7-AHW)</name>
+				<name>Qatar Airways (A7-AHW)</name>
 				<texture-fuselage>Liveries/A320/IAE/QTR-fuselage.png</texture-fuselage>
 				<texture-engine>Liveries/A320/IAE/QTR-engine.png</texture-engine>
 			</livery>
