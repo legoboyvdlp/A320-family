@@ -173,7 +173,7 @@ var update_items = [
 ];
 
 var systemsLoop = func(notification) {
-	if (!systemsInitialized) { return; }
+	if (!systemsInitialized and getprop("/systems/acconfig/mismatch-code") != "0x000") { return; }
 	systems.PNEU.loop(notification);
 	systems.ADIRS.loop(notification);
 	systems.BrakeSys.update(notification);
