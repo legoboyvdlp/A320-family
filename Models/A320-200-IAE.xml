@@ -18,7 +18,6 @@
 
 	<animation>
 		<type>material</type>
-		<!-- Fuselage -->
 		<object-name>EngineIAEV2500L</object-name>
 		<object-name>EngineIAEV2500R</object-name>
 		<object-name>ReverserLDoor</object-name>
@@ -32,6 +31,14 @@
 		<texture>engine-IAE-V2500.png</texture>
 	</animation>
 
+	<animation>
+		<type>material</type>
+		<object-name>EngineIAEV2500L.Placards</object-name>
+		<property-base>sim/model/livery/</property-base>
+		<texture-prop>texture-placards</texture-prop>
+		<texture>placards.png</texture>
+	</animation>
+	
 	<!-- Nasal code -->
 	<nasal>
 		<load>

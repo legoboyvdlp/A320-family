@@ -18,7 +18,6 @@
 
 	<animation>
 		<type>material</type>
-		<!-- Fuselage -->
 		<object-name>EngineCFM56L</object-name>
 		<object-name>EngineCFM56R</object-name>
 		<object-name>ReverserLDoor1</object-name>
@@ -36,6 +35,14 @@
 		<property-base>sim/model/livery/</property-base>
 		<texture-prop>texture-engine</texture-prop>
 		<texture>engine-CFM56.png</texture>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>EngineCFM56R.Placards</object-name>
+		<property-base>sim/model/livery/</property-base>
+		<texture-prop>texture-placards</texture-prop>
+		<texture>placards.png</texture>
 	</animation>
 	
 	<!-- Nasal code -->
