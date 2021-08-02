@@ -1298,8 +1298,6 @@
 				<ac-ess-bus type="bool">0</ac-ess-bus>
 				<ac-1-bus type="bool">0</ac-1-bus>
 				<ac-2-bus type="bool">0</ac-2-bus>
-				<bat-1 type="bool">0</bat-1>
-				<bat-2 type="bool">0</bat-2>
 				<dc-bat-bus type="bool">0</dc-bat-bus>
 				<dc-ess-bus type="bool">0</dc-ess-bus>
 				<dc-1-bus type="bool">0</dc-1-bus>
