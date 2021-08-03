@@ -168,6 +168,7 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/internal/eng-out-reduc", "1500");
 	setprop("/MCDUC/reducacc-set", 0);
 	fmgc.FMGCInternal.transAlt = 18000;
+	fmgc.FMGCInternal.transAltSet = 0;
 	
 	# CLB PERF
 	setprop("/FMGC/internal/activate-once", 0);
