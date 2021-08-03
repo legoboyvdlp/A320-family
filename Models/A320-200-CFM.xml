@@ -17,6 +17,14 @@
 		<path>Aircraft/A320-family/Models/Fuselage/a320.cfm.xml</path>
 	</model>
 
+	<animation>
+		<type>material</type>
+		<object-name>EngineCFM56R.Placards</object-name>
+		<property-base>sim/model/livery/</property-base>
+		<texture-prop>texture-placards</texture-prop>
+		<texture>placards.png</texture>
+	</animation>
+	
 	<!-- Nasal code -->
 	<nasal>
 		<load><![CDATA[

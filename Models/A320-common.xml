@@ -878,42 +878,6 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>Top beacon light</object-name>
-		<object-name>Bottom beacon light</object-name>
-		<object-name>Left nav light</object-name>
-		<object-name>Right nav light</object-name>
-		<object-name>Left strobe light</object-name>
-		<object-name>Right strobe light</object-name>
-		<object-name>Tail strobe light</object-name>
-		<object-name>Tail nav light</object-name>
-		<condition>
-			<not>
-				<property>sim/rendering/shaders/skydome</property>
-			</not>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>select</type>
-		<object-name>Top beacon light ALS</object-name>
-		<object-name>Bottom beacon light ALS</object-name>
-		<object-name>Left nav light ALS</object-name>
-		<object-name>Right nav light ALS</object-name>
-		<object-name>Left strobe light ALS</object-name>
-		<object-name>Right strobe light ALS</object-name>
-		<object-name>Port landing light ALS</object-name>
-		<object-name>Nosegear landing light ALS</object-name>
-		<object-name>Second Nosegear landing light ALS</object-name>
-		<object-name>Starboard landing light ALS</object-name>
-		<object-name>Tail strobe light ALS</object-name>
-		<object-name>Tail nav light ALS</object-name>
-		<condition>
-				<property>sim/rendering/shaders/skydome</property>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>select</type>
 		<object-name>Nosegear landing light ALS</object-name>
 		<condition>
 			<and>
