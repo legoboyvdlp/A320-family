@@ -196,7 +196,7 @@ var Instrumentation = {
 	MKVII: {
 		Inputs: {
 			Discretes: {
-				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override"),
+				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override"),
 			},
 		},
 	},
