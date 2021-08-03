@@ -413,26 +413,6 @@
 			</checkbox>
 			
 			<checkbox>
-				<label>BATTERY 1</label>
-				<halign>left</halign>
-				<property>/systems/failures/electrical/bat-1</property>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
-				<live>true</live>
-			</checkbox>
-			
-			<checkbox>
-				<label>BATTERY 2</label>
-				<halign>left</halign>
-				<property>/systems/failures/electrical/bat-2</property>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
-				<live>true</live>
-			</checkbox>
-			
-			<checkbox>
 				<label>DC ESS BUS</label>
 				<halign>left</halign>
 				<property>/systems/failures/electrical/dc-ess-bus</property>

@@ -25,14 +25,12 @@
 					</difference>
 					<table>
 						<independentVar lookup="row">/systems/electrical/sources/bat-1/percent</independentVar>
-						<independentVar lookup="column">/systems/failures/electrical/bat-1</independentVar>
 						<tableData>
-								  0    1
-							  0   0.0  0.0
-							 10  24.0  4.0
-							 50  25.5  5.0
-							 85  26.5  6.0
-							100  31.0  7.0
+							  0   0.0
+							 10  24.0
+							 50  25.5
+							 85  26.5
+							100  31.0
 						</tableData>
 					</table>
 				</sum>
@@ -270,14 +268,12 @@
 					</difference>
 					<table>
 						<independentVar lookup="row">/systems/electrical/sources/bat-2/percent</independentVar>
-						<independentVar lookup="column">/systems/failures/electrical/bat-2</independentVar>
 						<tableData>
-								  0    1
-							  0   0.0  0.0
-							 10  24.0  4.0
-							 50  25.5  5.0
-							 85  26.5  6.0
-							100  31.0  7.0
+							  0   0.0
+							 10  24.0
+							 50  25.5
+							 85  26.5
+							100  31.0
 						</tableData>
 					</table>
 				</sum>
