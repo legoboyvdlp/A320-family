@@ -491,6 +491,12 @@ var FCUController = {
 			}
 		}
 	},
+	MetricAlt: func() {
+		if (me.FCUworking) {
+			canvas_pfd.PFD_1.showMetricAlt = !canvas_pfd.PFD_1.showMetricAlt;
+			canvas_pfd.PFD_2.showMetricAlt = !canvas_pfd.PFD_2.showMetricAlt;
+		}
+	},
 };
 
 # Master / slave principle of operation depending on the autopilot / flight director engagement

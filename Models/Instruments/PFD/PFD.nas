@@ -216,9 +216,9 @@ var canvas_PFD_base = {
 		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
-		"ALT_digit_DN","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
+		"ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
 		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
-		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError","vsFMArate","tailstrikeInd"];
+		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt"];
 	},
 	off: 0,
 	on: 0,
@@ -349,6 +349,7 @@ var canvas_PFD_base = {
 			PFD_2_mismatch.page.show();
 		}
 	},
+	showMetricAlt: 0,
 	updateCommon: func () {
 		# FMA MAN TOGA MCT FLX THR
 		# Set properties used a lot to a variable to avoid calling getValue() multiple times
@@ -1031,7 +1032,6 @@ var canvas_PFD_base = {
 			me["QNH_std"].hide();
 			me["QNH_box"].hide();
 		}
-	
 	},
 
 	# Get Angle of Attack from ADR1 or, depending on Switching panel, ADR3
@@ -1694,6 +1694,18 @@ var canvas_PFD_1 = {
 			me["ALT_scale"].show();
 			
 			me.altitude = dmc.DMController.DMCs[0].outputs[1].getValue();
+		
+			if (me.showMetricAlt) {
+				me["Metric_box"].show();
+				me["Metric_letter"].show();
+				me["Metric_cur_alt"].show();
+				me["Metric_cur_alt"].setText(sprintf("%5.0f", me.altitude * 0.3048));
+			} else {
+				me["Metric_box"].hide();
+				me["Metric_letter"].hide();
+				me["Metric_cur_alt"].hide();
+			}
+			
 			me.altOffset = me.altitude / 500 - int(me.altitude / 500);
 			me.middleAltText = roundaboutAlt(me.altitude / 100);
 			me.middleAltOffset = nil;
@@ -1721,6 +1733,14 @@ var canvas_PFD_1 = {
 			me["ALT_tens"].setTranslation(0, altTens * 1.392);
 			
 			ap_alt_cur = ap_alt.getValue();
+			
+			if (me.showMetricAlt) {
+				me["ALT_digit_UP_metric"].show();
+				me["ALT_digit_UP_metric"].setText(sprintf("%5.0fM", ap_alt_cur * 0.3048));
+			} else {
+				me["ALT_digit_UP_metric"].hide();
+			}
+			
 			alt_diff_cur = dmc.DMController.DMCs[0].outputs[7].getValue();
 			if (alt_diff_cur >= -565 and alt_diff_cur <= 565) {
 				me["ALT_target"].setTranslation(0, (alt_diff_cur / 100) * -48.66856);
@@ -1830,6 +1850,10 @@ var canvas_PFD_1 = {
 			me["ALT_box_flash"].hide();
 			me["ALT_box_amber"].hide();
 			me["ALT_box"].hide();
+			me["Metric_box"].hide();
+			me["Metric_letter"].hide();
+			me["Metric_cur_alt"].hide();
+			me["ALT_digit_UP_metric"].hide();
 		}
 		
 		me.updateCommon();
@@ -2465,6 +2489,18 @@ var canvas_PFD_2 = {
 			me["ALT_scale"].show();
 			
 			me.altitude = dmc.DMController.DMCs[1].outputs[1].getValue();
+			
+			if (me.showMetricAlt) {
+				me["Metric_box"].show();
+				me["Metric_letter"].show();
+				me["Metric_cur_alt"].show();
+				me["Metric_cur_alt"].setText(sprintf("%5.0f", me.altitude * 0.3048));
+			} else {
+				me["Metric_box"].hide();
+				me["Metric_letter"].hide();
+				me["Metric_cur_alt"].hide();
+			}
+			
 			me.altOffset = me.altitude / 500 - int(me.altitude / 500);
 			me.middleAltText = roundaboutAlt(me.altitude / 100);
 			me.middleAltOffset = nil;
@@ -2492,6 +2528,14 @@ var canvas_PFD_2 = {
 			me["ALT_tens"].setTranslation(0, altTens * 1.392);
 			
 			ap_alt_cur = ap_alt.getValue();
+			
+			if (me.showMetricAlt) {
+				me["ALT_digit_UP_metric"].show();
+				me["ALT_digit_UP_metric"].setText(sprintf("%5.0fM", ap_alt_cur * 0.3048));
+			} else {
+				me["ALT_digit_UP_metric"].hide();
+			}
+			
 			alt_diff_cur = dmc.DMController.DMCs[1].outputs[7].getValue();
 			if (alt_diff_cur >= -565 and alt_diff_cur <= 565) {
 				me["ALT_target"].setTranslation(0, (alt_diff_cur / 100) * -48.66856);
@@ -2601,6 +2645,10 @@ var canvas_PFD_2 = {
 			me["ALT_box_flash"].hide();
 			me["ALT_box_amber"].hide();
 			me["ALT_box"].hide();
+			me["Metric_box"].hide();
+			me["Metric_letter"].hide();
+			me["Metric_cur_alt"].hide();
+			me["ALT_digit_UP_metric"].hide();
 		}
 		
 		me.updateCommon();
