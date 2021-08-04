@@ -36,6 +36,7 @@ var altAlertInhibit = nil;
 var alt200 = nil;
 var alt750 = nil;
 var bigThree = nil;
+var fltCtlLandAsap = 0;
 
 var altAlertSteady = 0;
 var altAlertFlash = 0;
@@ -3411,14 +3412,20 @@ var messages_right_memo = func {
 		ldg_inhibit.active = 0;
 	}
 	
-	if ((!pts.Gear.wow[1].getValue()) and (systems.ELEC.EmerElec.getValue() or systems.eng1FireWarn.getValue() == 1 or systems.eng2FireWarn.getValue() == 1 or systems.apuFireWarn.getValue() == 1 or systems.aftCargoFireWarn.getValue() == 1 or systems.fwdCargoFireWarn.getValue() == 1) or (((systems.HYD.Psi.green.getValue() < 1500 and pts.Engines.Engine.state[0].getValue() == 3) and (systems.HYD.Psi.yellow.getValue() < 1500 and pts.Engines.Engine.state[1].getValue() == 3)) or ((systems.HYD.Psi.green.getValue() < 1500 or systems.HYD.Psi.yellow.getValue() < 1500) and pts.Engines.Engine.state[0].getValue() == 3 and pts.Engines.Engine.state[1].getValue() == 3) and phaseVarMemo3 >= 3 and phaseVarMemo3 <= 8)) {
-		# todo: emer elec
+	if (!(FWC.Timer.gnd.getValue() == 1) and (systems.ELEC.EmerElec.getValue() or dualFailNode.getValue() == 1 or systems.eng1FireWarn.getValue() == 1 or systems.eng2FireWarn.getValue() == 1 or systems.apuFireWarn.getValue() == 1 or systems.aftCargoFireWarn.getValue() == 1 or systems.fwdCargoFireWarn.getValue() == 1 or (getprop("/ECAM/warnings/hyd/green-abnorm-lo-pr") and getprop("/ECAM/warnings/hyd/yellow-abnorm-lo-pr")) or (getprop("/ECAM/warnings/hyd/green-abnorm-lo-pr") and getprop("/ECAM/warnings/hyd/blue-abnorm-lo-pr")) or (getprop("/ECAM/warnings/hyd/blue-abnorm-lo-pr") and getprop("/ECAM/warnings/hyd/yellow-abnorm-lo-pr")))) {
 		land_asap_r.active = 1;
 	} else {
 		land_asap_r.active = 0;
 	}
 	
-	if (land_asap_r.active == 0 and !pts.Gear.wow[1].getValue() and ((getprop("/fdm/jsbsim/propulsion/tank[0]/contents-lbs") < 1650 and getprop("/fdm/jsbsim/propulsion/tank[1]/contents-lbs") < 1650) or ((systems.ELEC.Bus.dc2.getValue() < 25 and (fbw.FBW.Failures.elac1.getValue() == 1 or fbw.FBW.Failures.sec1.getValue() == 1)) or (systems.HYD.Psi.green.getValue() < 1500 and (fbw.FBW.Failures.elac1.getValue() == 1 and fbw.FBW.Failures.sec1.getValue() == 1)) or (systems.HYD.Psi.yellow.getValue() < 1500 and (fbw.FBW.Failures.elac1.getValue() == 1 and fbw.FBW.Failures.sec1.getValue() == 1)) or (systems.HYD.Psi.blue.getValue() < 1500 and (fbw.FBW.Failures.elac2.getValue() == 1 and fbw.FBW.Failures.sec2.getValue() == 1))) or (phaseVarMemo3 >= 3 and phaseVarMemo3 <= 8 and (pts.Engines.Engine.state[0].getValue() != 3 or pts.Engines.Engine.state[1].getValue() != 3)))) {
+	if ((systems.ELEC.Bus.dc2.getValue() < 25 and (fbw.FBW.Failures.elac1.getValue() == 1 or fbw.FBW.Failures.sec1.getValue() == 1)) or ((systems.HYD.Psi.yellow.getValue() < 1500 or systems.HYD.Psi.green.getValue() < 1500) and (fbw.FBW.Failures.elac1.getValue() == 1 and fbw.FBW.Failures.sec1.getValue() == 1)) or (systems.HYD.Psi.blue.getValue() < 1500 and (fbw.FBW.Failures.elac2.getValue() == 1 and fbw.FBW.Failures.sec2.getValue() == 1))) {
+		fltCtlLandAsap = 1;
+	} else {
+		fltCtlLandAsap = 0;
+	}
+	
+	if (land_asap_r.active == 0 and !(FWC.Timer.gnd.getValue() == 1) and (warningNodes.Timers.lowLevelBoth.getValue() == 1 or warningNodes.Logic.eng1Shutdown.getValue() or warningNodes.Logic.eng2Shutdown.getValue() or warningNodes.Logic.eng1Fail.getValue() or warningNodes.Logic.eng2Fail.getValue() or warningNodes.Timers.dcEmerConfig.getValue() == 1 or fltCtlLandAsap)) {
+		# todo avionics smoke and reverse unlocked
 		land_asap_a.active = 1;
 	} else {
 		land_asap_a.active = 0;
