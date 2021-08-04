@@ -7,6 +7,7 @@
 				<name>N680AW(Unpainted)</name>
 				<texture-fuselage>Fuselages\A320\res\Fuse-Main.png</texture-fuselage>
 				<texture-engine>Engines\Models\engine-IAE-V2500.png</texture-engine>
+				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 		</model>
 	</sim>

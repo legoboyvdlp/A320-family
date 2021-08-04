@@ -7,6 +7,7 @@
 				<name>Scandinavian (OY-KAM)</name>
 				<texture-fuselage>Liveries/A320/IAE/SAS-fuselage.png</texture-fuselage>
 				<texture-engine>Liveries/A320/IAE/SAS-engine.png</texture-engine>
+				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 		</model>
 	</sim>
