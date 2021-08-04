@@ -41,9 +41,9 @@
      inkscape:window-maximized="1"
      inkscape:window-y="-8"
      inkscape:window-x="-8"
-     inkscape:cy="876.13786"
-     inkscape:cx="522.86542"
-     inkscape:zoom="5.6568542"
+     inkscape:cy="1074.3176"
+     inkscape:cx="955.3885"
+     inkscape:zoom="2"
      showgrid="true"
      id="namedview371"
      inkscape:window-height="705"
@@ -2269,11 +2269,11 @@
        id="QNH_setting"
        y="885.26117"
        x="907.61713"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-opacity:1;"
        xml:space="preserve"
        transform="scale(1.0000144,0.9999856)"
        inkscape:label="#text979"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3994px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#179ab7;fill-opacity:1;stroke-width:0.75"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3994px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#179ab7;fill-opacity:1;stroke-width:0.75;stroke:none;stroke-opacity:1;"
          y="885.26117"
          x="907.61713"
          id="tspan977"
@@ -6276,4 +6276,50 @@
        x="417.56354"
        y="34.634907"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35.99950027px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#179ab7;fill-opacity:1;stroke-width:0.65757698">-800</tspan></text>
+  <rect
+     inkscape:label="#rect4290"
+     y="896.48456"
+     x="788.52734"
+     height="36.03083"
+     width="153.94527"
+     id="Metric_box"
+     style="fill:none;fill-opacity:1;stroke:#c9d121;stroke-width:3.20831394;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+  <text
+     id="Metric_cur_alt"
+     y="928.04248"
+     x="847.62854"
+     style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
+     xml:space="preserve"
+     transform="scale(1.0000144,0.9999856)"
+     inkscape:label="#text979"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3993988px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#0dc04b;fill-opacity:1;stroke-width:0.75"
+       y="928.04248"
+       x="852.95343"
+       id="tspan977-3"
+       sodipodi:role="line">11070 </tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3993988px;line-height:1.25;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';letter-spacing:0px;word-spacing:0px;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.75"
+     x="909.43152"
+     y="928.62128"
+     id="Metric_letter"
+     inkscape:label="#text1815"><tspan
+       sodipodi:role="line"
+       id="tspan1813"
+       x="909.43152"
+       y="928.62128"
+       style="font-size:38.3993988px;fill:#179ab7;fill-opacity:1;stroke-width:0.75">M</tspan></text>
+  <text
+     inkscape:label="#text975"
+     transform="scale(0.95382559,1.0484097)"
+     id="ALT_digit_UP_metric"
+     y="218.16887"
+     x="604.67737"
+     style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.75"
+     xml:space="preserve"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:start;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke-width:0.75"
+       y="218.16887"
+       x="604.67737"
+       id="tspan5116-2"
+       sodipodi:role="line">10000M</tspan></text>
 </svg>

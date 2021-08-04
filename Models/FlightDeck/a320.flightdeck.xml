@@ -5591,6 +5591,22 @@
 			</or>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>metric_alt</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.FCUController.MetricAlt();
+					setprop("sim/sounde/btn1", 1);
+				</script>
+			</binding>
+		</action>
+	</animation>
 
 	<!-- Flap Lever -->
 	<animation>
