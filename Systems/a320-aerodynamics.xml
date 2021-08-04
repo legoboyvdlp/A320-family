@@ -3,12 +3,10 @@
 <!-- Airbus A320 Aerodynamics -->
 <!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
 
-<aerodynamics> <!-- WIP REWORK 2020 by Josh Davidson (Octal450) -->
+<aerodynamics>
 	
 	<property value="0">ice/wingL</property>
 	<property value="0">ice/wingR</property>
-	<property value="0">tuneF</property>
-	<property value="0">tuneS</property>
 	
 	<function name="aero/function/kCLge">
 		<description>Lift factor due to ground effect</description>
@@ -497,7 +495,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>aero/beta-rad</property>
-				<value>-0.8887</value>
+				<value>-0.6457</value>
 			</product>
 		</function>
 		
@@ -527,7 +525,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>aero/bi2vel</property>
 				<property>velocities/r-aero-rad_sec</property>
-				<value>0.8709</value>
+				<value>0.6983</value>
 			</product>
 		</function>
 		
@@ -537,7 +535,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<toradians><property>hydraulics/rudder/final-deg</property></toradians>
-				<value>-0.214</value>
+				<value>-0.145</value>
 			</product>
 		</function>
 	
@@ -575,7 +573,7 @@
 				<property>metrics/bw-ft</property>
 				<property>aero/bi2vel</property>
 				<property>velocities/p-aero-rad_sec</property>
-				<value>-0.58</value>
+				<value>-0.53</value>
 			</product>
 		</function>
 		
@@ -598,7 +596,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
 				<toradians><property>hydraulics/aileron-l/final-deg</property></toradians>
-				<value>0.044</value>
+				<value>0.031</value>
 			</product>
 		</function>
 		
@@ -609,7 +607,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
 				<toradians><property>hydraulics/aileron-r/final-deg</property></toradians>
-				<value>-0.044</value>
+				<value>-0.031</value>
 			</product>
 		</function>
 		
@@ -620,7 +618,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
 				<toradians><property>fcs/spoiler-left-deg</property></toradians>
-				<value>-0.033</value>
+				<value>-0.023</value>
 			</product>
 		</function>
 		
@@ -631,7 +629,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
 				<toradians><property>fcs/spoiler-right-deg</property></toradians>
-				<value>0.033</value>
+				<value>0.023</value>
 			</product>
 		</function>
 		
@@ -713,7 +711,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
 				<toradians><property>hydraulics/elevator-l/final-deg</property></toradians>
-				<value>-0.557175</value>
+				<value>-0.345</value>
 			</product>
 		</function>
 		
@@ -724,7 +722,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
 				<toradians><property>hydraulics/elevator-r/final-deg</property></toradians>
-				<value>-0.557175</value>
+				<value>-0.345</value>
 			</product>
 		</function>
 		
@@ -735,7 +733,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
 				<toradians><property>hydraulics/stabilizer/final-deg</property></toradians>
-				<value>-1.975</value>
+				<value>-2.575</value>
 			</product>
 		</function>
 	
@@ -773,7 +771,7 @@
 				<property>metrics/bw-ft</property>
 				<property>aero/bi2vel</property>
 				<property>velocities/r-aero-rad_sec</property>
-				<value>-0.3</value>
+				<value>-0.25</value>
 			</product>
 		</function>
 		
@@ -784,7 +782,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
 				<toradians><property>hydraulics/rudder/final-deg</property></toradians>
-				<value>0.061</value>
+				<value>0.042</value>
 			</product>
 		</function>
 	

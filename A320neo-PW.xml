@@ -13,18 +13,18 @@
 	<metrics file="Systems/a320-metrics"/>
 	
 	<mass_balance>
-		<ixx unit="SLUG*FT2">611903</ixx>
-		<iyy unit="SLUG*FT2">1735389</iyy>
-		<izz unit="SLUG*FT2">1401293</izz>
+		<ixx unit="SLUG*FT2">414659</ixx>
+		<iyy unit="SLUG*FT2">895647</iyy>
+		<izz unit="SLUG*FT2">678957</izz>
 		<ixy unit="SLUG*FT2">0</ixy>
 		<ixz unit="SLUG*FT2">0</ixz>
 		<iyz unit="SLUG*FT2">0</iyz>
-		<emptywt unit="LBS">97497.7</emptywt>
+		<emptywt unit="LBS">95409.5</emptywt>
 		
 		<location name="CG" unit="M">
 			<x>-2.4335</x> <!-- 28.5% MAC -->
 			<y>0</y>
-			<z>-0.75</z>
+			<z>-0.934</z>
 		</location>
 		
 		<pointmass name="Crew">
@@ -32,34 +32,32 @@
 			<location name="POINTMASS" unit="M">
 				<x>-15.44</x>
 				<y>0</y>
-				<z>0.3</z>
+				<z>0.39</z>
 			</location>
 		</pointmass>
 		
 		<pointmass name="Forward Cabin">
-			<weight unit="LBS">3722</weight>
+			<weight unit="LBS">5896</weight>
 			<location name="POINTMASS" unit="M">
 				<x>-10.8</x>
 				<y>0</y>
-				<z>0.3</z>
+				<z>0.39</z>
 			</location>
 		</pointmass>
-		
 		<pointmass name="Center Cabin">
-			<weight unit="LBS">11361</weight>
+			<weight unit="LBS">7256</weight>
 			<location name="POINTMASS" unit="M">
-				<x>-4.3</x>
+				<x>-3.3</x>
 				<y>0</y>
-				<z>0.3</z>
+				<z>0.39</z>
 			</location>
 		</pointmass>
-		
 		<pointmass name="Aft Cabin">
-			<weight unit="LBS">8422</weight>
+			<weight unit="LBS">6651</weight>
 			<location name="POINTMASS" unit="M">
-				<x>-5.3</x>
+				<x>4.9</x>
 				<y>0</y>
-				<z>0.3</z>
+				<z>0.39</z>
 			</location>
 		</pointmass>
 		
@@ -71,20 +69,18 @@
 				<z>-1</z>
 			</location>
 		</pointmass>
-		
 		<pointmass name="Aft Cargo">
 			<weight unit="LBS">3000</weight>
 			<location name="POINTMASS" unit="M">
-				<x>-3.1</x>
+				<x>4.2</x>
 				<y>0</y>
 				<z>-1</z>
 			</location>
 		</pointmass>
-		
 		<pointmass name="Aft Bulk Cargo">
 			<weight unit="LBS">0</weight>
 			<location name="POINTMASS" unit="M">
-				<x>-8.1</x>
+				<x>8.2</x>
 				<y>0</y>
 				<z>-1</z>
 			</location>
