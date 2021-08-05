@@ -1432,10 +1432,10 @@ var canvas_MCDU_base = {
 				me.colorLeft("blu", "blu", "blu", "blu", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "grn", "grn", "grn", "wht", "wht");
+				me.colorCenter("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "blu", "blu", "wht", "blu");
+				me.colorRightS("blu", "blu", "blu", "blu", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
 			
@@ -1468,7 +1468,11 @@ var canvas_MCDU_base = {
 			if (atsu.ATISInstances[0].station != nil) {	
 				me["Simple_L1"].setText(" " ~ atsu.ATISInstances[0].station ~ "/" ~ (atsu.ATISInstances[0].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L1"].setFont(default);
-				me["Simple_L1_Arrow"].show();
+				if (atsu.ATISInstances[0].received) {
+					me["Simple_L1_Arrow"].show();
+				} else {
+					me["Simple_L1_Arrow"].hide();
+				}
 			} else {
 				me["Simple_L1"].setText(" [  ]/[  ]");
 				me["Simple_L1"].setFont(symbol);
@@ -1486,6 +1490,11 @@ var canvas_MCDU_base = {
 				me["Simple_L2"].setText(" " ~ atsu.ATISInstances[1].station ~ "/" ~ (atsu.ATISInstances[1].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L2"].setFont(default);
 				me["Simple_L2_Arrow"].show();
+				if (atsu.ATISInstances[1].received) {
+					me["Simple_L2_Arrow"].show();
+				} else {
+					me["Simple_L2_Arrow"].hide();
+				}
 			} else {
 				me["Simple_L2"].setText(" [  ]/[  ]");
 				me["Simple_L2"].setFont(symbol);
@@ -1502,7 +1511,11 @@ var canvas_MCDU_base = {
 			if (atsu.ATISInstances[2].station != nil) {
 				me["Simple_L3"].setText(" " ~ atsu.ATISInstances[2].station ~ "/" ~ (atsu.ATISInstances[2].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L3"].setFont(default);
-				me["Simple_L3_Arrow"].show();
+				if (atsu.ATISInstances[2].received) {
+					me["Simple_L3_Arrow"].show();
+				} else {
+					me["Simple_L3_Arrow"].hide();
+				}
 			} else {
 				me["Simple_L3"].setText(" [  ]/[  ]");
 				me["Simple_L3"].setFont(symbol);
@@ -1519,7 +1532,11 @@ var canvas_MCDU_base = {
 			if (atsu.ATISInstances[3].station != nil) {
 				me["Simple_L4"].setText(" " ~ atsu.ATISInstances[3].station ~ "/" ~ (atsu.ATISInstances[3].type == 0 ? "ARR" : "DEP"));
 				me["Simple_L4"].setFont(default);
-				me["Simple_L4_Arrow"].show();
+				if (atsu.ATISInstances[3].received) {
+					me["Simple_L4_Arrow"].show();
+				} else {
+					me["Simple_L4_Arrow"].hide();
+				}
 			} else {
 				me["Simple_L4"].setText(" [  ]/[  ]");
 				me["Simple_L4"].setFont(symbol);
