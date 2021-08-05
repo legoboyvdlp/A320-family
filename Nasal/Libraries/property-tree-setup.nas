@@ -104,6 +104,9 @@ var Fdm = {
 			alpha: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg"),
 			alphaNorm: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg-norm"),
 		},
+		Fadec: {
+			detent: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent"),props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent")],
+		},
 		Fcs: {
 			brake: [props.globals.getNode("/fdm/jsbsim/fcs/left-brake-cmd-norm"),props.globals.getNode("/fdm/jsbsim/fcs/right-brake-cmd-norm")],
 			flapDeg: props.globals.getNode("/fdm/jsbsim/fcs/flap-pos-deg"),

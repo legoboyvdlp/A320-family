@@ -397,7 +397,7 @@ var canvas_PFD_base = {
 		
 		me["AI_agl"].setText(sprintf("%s", math.round(math.clamp(gear_agl_cur, 0, 2500))));
 		
-		if (gear_agl_cur < 400 and pts.Velocities.groundspeedKt.getValue() > 50 and pts.Controls.Engines.Engine.throttlePos[0].getValue() < 0.78 and pts.Controls.Engines.Engine.throttlePos[1].getValue() < 0.78) {
+		if (gear_agl_cur < 400 and pts.Velocities.groundspeedKt.getValue() > 50 and pts.Fdm.JSBsim.Fadec.detent[0].getValue() <= 3 and pts.Fdm.JSBsim.Fadec.detent[1].getValue() <= 3) {
 			me["tailstrikeInd"].show();
 		} else {
 			me["tailstrikeInd"].hide();
