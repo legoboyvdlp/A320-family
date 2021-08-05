@@ -62,6 +62,11 @@ var HYD = {
 		yellowFire: props.globals.getNode("/systems/hydraulic/sources/yellow-edp/fire-valve"),
 		greenFire: props.globals.getNode("/systems/hydraulic/sources/green-edp/fire-valve"),
 	},
+	Warnings: {
+		blueAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/blue-abnorm-lo-pr"),
+		greenAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/green-abnorm-lo-pr"),
+		yellowAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/yellow-abnorm-lo-pr"),
+	},
 	init: func() {
 		me.resetFail();
 		me.Qty.blueInput.setValue(math.round((rand() * 2) + 6 , 0.1)); # Random between 6 and 8

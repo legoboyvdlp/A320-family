@@ -2099,7 +2099,7 @@ var messages_priority_2 = func {
 		altnLaw.active = 1;
 		altnLawProt.active = 1;
 		if (altnLawMaxSpeed.clearFlag == 0 and altnLawMaxSpeed2.clearFlag == 0 and !fbw.tripleADRFail) {
-			if (!(getprop("/ECAM/warnings/hyd/green-abnorm-lo-pr") and (getprop("/ECAM/warnings/hyd/blue-abnorm-lo-pr") or getprop("/ECAM/warnings/hyd/yellow-abnorm-lo-pr")))) {
+			if (!(systems.HYD.Warnings.greenAbnormLoPr.getValue() and (systems.HYD.Warnings.blueAbnormLoPr.getValue() or systems.HYD.Warnings.yellowAbnormLoPr.getValue()))) {
 				altnLawMaxSpeed.active = 1;
 				ECAM_controller.warningReset(altnLawMaxSpeed2);
 			} else {
@@ -3412,7 +3412,7 @@ var messages_right_memo = func {
 		ldg_inhibit.active = 0;
 	}
 	
-	if (!(FWC.Timer.gnd.getValue() == 1) and (systems.ELEC.EmerElec.getValue() or dualFailNode.getValue() == 1 or systems.eng1FireWarn.getValue() == 1 or systems.eng2FireWarn.getValue() == 1 or systems.apuFireWarn.getValue() == 1 or systems.aftCargoFireWarn.getValue() == 1 or systems.fwdCargoFireWarn.getValue() == 1 or (getprop("/ECAM/warnings/hyd/green-abnorm-lo-pr") and getprop("/ECAM/warnings/hyd/yellow-abnorm-lo-pr")) or (getprop("/ECAM/warnings/hyd/green-abnorm-lo-pr") and getprop("/ECAM/warnings/hyd/blue-abnorm-lo-pr")) or (getprop("/ECAM/warnings/hyd/blue-abnorm-lo-pr") and getprop("/ECAM/warnings/hyd/yellow-abnorm-lo-pr")))) {
+	if (!(FWC.Timer.gnd.getValue() == 1) and (systems.ELEC.EmerElec.getValue() or dualFailNode.getValue() == 1 or systems.eng1FireWarn.getValue() == 1 or systems.eng2FireWarn.getValue() == 1 or systems.apuFireWarn.getValue() == 1 or systems.aftCargoFireWarn.getValue() == 1 or systems.fwdCargoFireWarn.getValue() == 1 or (systems.HYD.Warnings.greenAbnormLoPr.getValue() and systems.HYD.Warnings.yellowAbnormLoPr.getValue()) or (systems.HYD.Warnings.greenAbnormLoPr.getValue() and systems.HYD.Warnings.blueAbnormLoPr.getValue()) or (systems.HYD.Warnings.blueAbnormLoPr.getValue() and systems.HYD.Warnings.yellowAbnormLoPr.getValue()))) {
 		land_asap_r.active = 1;
 	} else {
 		land_asap_r.active = 0;
