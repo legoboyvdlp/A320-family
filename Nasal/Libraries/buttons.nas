@@ -32,7 +32,6 @@ var variousReset = func() {
 	setprop("/controls/CVR/gndctl", 0);
 	setprop("/controls/CVR/erase", 0);
 	setprop("/controls/switches/pneumatics/cabin-fans", 1);
-	setprop("/controls/oxygen/crewOxyPB", 0); # 0 = OFF 1 = AUTO
 	setprop("/controls/switches/emerCallLtO", 0); # ON light, flashes white for 10s
 	setprop("/controls/switches/emerCallLtC", 0); # CALL light, flashes amber for 10s
 	setprop("/controls/switches/emerCall", 0);

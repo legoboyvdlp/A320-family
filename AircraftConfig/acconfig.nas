@@ -95,25 +95,46 @@ setprop("/systems/acconfig/revision", current_revision);
 var foViewNode = props.globals.initNode("/systems/acconfig/options/fo-view", 0, "BOOL");
 setprop("/systems/acconfig/options/simbrief-username", "");
 
-setprop("systems/acconfig/out-of-date", 0);
+var fgfsMin = split(".", getprop("/sim/minimum-fg-version"));
+var fgfsVer = split(".", getprop("/sim/version/flightgear"));
+
+var versionCheck = func() {
+	if (fgfsVer[0] < fgfsMin[0] or fgfsVer[1] < fgfsMin[1]) {
+		return 0;
+	} else if (fgfsVer[1] == fgfsMin[1]) {
+		if (fgfsVer[2] < fgfsMin[2]) {
+			return 0;
+		} else {
+			return 1;
+		}
+	} else {
+		return 1;
+	}
+}
 
 var mismatch_chk = func {
-	if (num(string.replace(getprop("/sim/version/flightgear"),".","")) < 201920) {
+	if (!versionCheck()) {
 		setprop("/systems/acconfig/mismatch-code", "0x121");
-		setprop("/systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least 2019.2.0.");
+		setprop("/systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least " ~ getprop("/sim/minimum-fg-version") ~ ".");
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
-		libraries.systemsLoop.stop();
 		print("Mismatch: 0x121");
 		welcome_dlg.close();
-	} else if (getprop("systems/acconfig/libraries-loaded") != 1) {
-		setprop("systems/acconfig/mismatch-code", "0x247");
-		setprop("systems/acconfig/mismatch-reason", "System files are missing or damaged. Please download a new copy of the aircraft.");
-		if (getprop("systems/acconfig/out-of-date") != 1) {
+	} else if (getprop("/gear/gear[0]/wow") == 0 or getprop("/position/altitude-ft") >= 15000) {
+		setprop("/systems/acconfig/mismatch-code", "0x223");
+		setprop("/systems/acconfig/mismatch-reason", "Preposterous configuration detected for initialization. Check your position or scenery.");
+		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
-		libraries.systemsLoop.stop();
+		print("Mismatch: 0x223");
+		welcome_dlg.close();
+	} else if (getprop("/systems/acconfig/libraries-loaded") != 1) {
+		setprop("/systems/acconfig/mismatch-code", "0x247");
+		setprop("/systems/acconfig/mismatch-reason", "System files are missing or damaged. Please download a new copy of the aircraft.");
+		if (getprop("/systems/acconfig/out-of-date") != 1) {
+			error_mismatch.open();
+		}
 		print("Mismatch: 0x247");
 		welcome_dlg.close();
 	}
@@ -303,7 +324,7 @@ var beforestart = func {
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		libraries.variousReset();
-		setprop("/controls/oxygen/crewOxyPB", 1);
+		setprop("/controls/oxygen/cockpit-oxygen-supply-pb", 1);
 		failResetOld();
 		
 		# Now the Startup!
@@ -399,7 +420,7 @@ var taxi = func {
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		libraries.variousReset();
-		setprop("/controls/oxygen/crewOxyPB", 1);
+		setprop("/controls/oxygen/cockpit-oxygen-supply-pb", 1);
 		failResetOld();
 		
 		# Now the Startup!

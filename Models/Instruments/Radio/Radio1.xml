@@ -2176,9 +2176,9 @@
 		<object-name>rmp-standby</object-name>
 		<object-name>rmp-standby-test</object-name>
 		<diffuse>
-			<red>0.89</red>
-			<green>0.37</green>
-			<blue>0.08</blue>
+			<red>1.00</red>
+			<green>0.355</green>
+			<blue>0.00</blue>
 		</diffuse>
 		<ambient>
 			<red>0</red>
@@ -2191,9 +2191,9 @@
 			<blue>0</blue>
 		</specular>
 		<emission>
-			<red>0.89</red>
-			<green>0.37</green>
-			<blue>0.08</blue>
+			<red>1.00</red>
+			<green>0.355</green>
+			<blue>0.00</blue>
 		</emission>
 	</animation>
 	

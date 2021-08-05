@@ -131,9 +131,17 @@ var ECAM = {
 	},
 };
 
+var du4_lgt = props.globals.getNode("/controls/lighting/DU/du4", 1);
 var ECAMControlPanel = {
 	sysPageBtn: func(page) {
-		SystemDisplayController.manCall(page);
+		if (page == "REL") {
+			pts.Modes.EcamDuXfr.setBoolValue(0);
+		} else {
+			if (du4_lgt.getValue() < 0.01 or systems.ELEC.Bus.ac2.getValue() < 110) {
+				pts.Modes.EcamDuXfr.setBoolValue(1);
+			}
+			SystemDisplayController.manCall(page);
+		}
 	},
 	rclBtn: func() {
 		ecam.ECAM_controller.recall();
@@ -153,9 +161,14 @@ var ECAMControlPanel = {
 		
 		ecam.ECAM_controller.clear();
 	},
-	stsBtn: func() {
-		if (SystemDisplayController.displayedPage.name != "statusPage") {
-			SystemDisplayController.manCall("statusPage");
+	stsBtn: func(rel) {
+		if (rel == "REL") {
+			pts.Modes.EcamDuXfr.setBoolValue(0);
+		} else {
+			if (du4_lgt.getValue() < 0.01 or systems.ELEC.Bus.ac2.getValue() < 110) {
+				pts.Modes.EcamDuXfr.setBoolValue(1);
+			}
+			SystemDisplayController.manCall("statusPage");	
 		}
 	},
 	allBtn: func() {

@@ -2157,8 +2157,20 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.ECAMControlPanel.stsBtn();</script>
+				<script>ecam.ECAMControlPanel.stsBtn(nil);</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.stsBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2178,6 +2190,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("apuPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2197,6 +2221,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("bleedPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2216,6 +2252,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("cabPressPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2235,6 +2283,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("elecPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2254,6 +2314,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("hydraulicPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2273,6 +2345,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("fuelPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2292,6 +2376,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("enginePage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2311,6 +2407,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("condPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2330,6 +2438,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("doorPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2349,6 +2469,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("wheelPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2368,6 +2500,18 @@
 				<command>nasal</command>
 				<script>ecam.ECAMControlPanel.sysPageBtn("fctlPage");</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</condition>
+					<command>nasal</command>
+					<script>ecam.ECAMControlPanel.sysPageBtn("REL");</script>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -2929,6 +3073,10 @@
 				<value>0</value>
 				<value>1</value>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
 		</action>
 	</animation>
 
@@ -3293,6 +3441,10 @@
 				<command>property-toggle</command>
 				<property>modes/pfd/ILS1</property>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
 		</action>
 	</animation>
 	<animation>
@@ -3327,6 +3479,10 @@
 				</condition>
 				<command>property-toggle</command>
 				<property>modes/pfd/ILS2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3400,8 +3556,11 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3442,8 +3601,11 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3484,8 +3646,11 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3526,8 +3691,11 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3568,8 +3736,11 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3610,8 +3781,11 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3652,8 +3826,11 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3694,8 +3871,11 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3736,8 +3916,11 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3778,8 +3961,11 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -3967,6 +4153,10 @@
 				<value>1</value> <!-- VOR -->
 				<value>-1</value> <!-- ADF -->
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
 		</action>
 		<action>
 			<button>1</button>
@@ -3977,6 +4167,10 @@
 				<value>-1</value> <!-- ADF -->
 				<value>1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4007,6 +4201,10 @@
 				<value>1</value> <!-- VOR -->
 				<value>-1</value> <!-- ADF -->
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
 		</action>
 		<action>
 			<button>1</button>
@@ -4017,6 +4215,10 @@
 				<value>-1</value> <!-- ADF -->
 				<value>1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4047,6 +4249,10 @@
 				<value>1</value> <!-- VOR -->
 				<value>-1</value> <!-- ADF -->
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
 		</action>
 		<action>
 			<button>1</button>
@@ -4057,6 +4263,10 @@
 				<value>-1</value> <!-- ADF -->
 				<value>1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -4087,6 +4297,10 @@
 				<value>1</value> <!-- VOR -->
 				<value>-1</value> <!-- ADF -->
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
 		</action>
 		<action>
 			<button>1</button>
@@ -4097,6 +4311,10 @@
 				<value>-1</value> <!-- ADF -->
 				<value>1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -5373,6 +5591,22 @@
 			</or>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>metric_alt</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.FCUController.MetricAlt();
+					setprop("sim/sounde/btn1", 1);
+				</script>
+			</binding>
+		</action>
+	</animation>
 
 	<!-- Flap Lever -->
 	<animation>
@@ -5908,6 +6142,47 @@
 			<object-name>fcu_integ_knb.axis</object-name>
 		</axis>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>lt_knb_1.001</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/fcu-digit-knb</property>
+				<step>0.05</step>
+				<max>1</max>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/fcu-digit-knb</property>
+				<step>-0.05</step>
+				<min>0</min>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>lt_knb_1.001</object-name>
+		<property>controls/lighting/fcu-digit-knb</property>
+		<factor>10</factor>
+		<axis>
+			<x1-m>-0.450412</x1-m>
+			<y1-m>0.06869</y1-m>
+			<z1-m>0.375016</z1-m>
+			<x2-m>-0.45531</x2-m>
+			<y2-m>0.068899</y2-m>
+			<z2-m>0.385331</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<name>Main Panel and Pedestal lighting</name>
@@ -6276,6 +6551,10 @@
 					}
 				</script>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
 		</action>
 	</animation>
 
@@ -6309,6 +6588,10 @@
 						setprop("it-autoflight/output/athr-warning", 0);
 					}
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -7242,28 +7525,42 @@
 	<animation>
 		<type>material</type>
 		<object-name>spd-text</object-name>
+		<object-name>spd.ind</object-name>
+		<object-name>spd.fmgc</object-name>
 		<object-name>mach-text</object-name>
+		<object-name>mach.ind</object-name>
 		<object-name>hdg-text</object-name>
+		<object-name>hdg.ind</object-name>
+		<object-name>trk.ind</object-name>
+		<object-name>lat.fmgc</object-name>
+		<object-name>hdg2.ind</object-name>
+		<object-name>trk2.ind</object-name>
 		<object-name>alt-text</object-name>
+		<object-name>vs.dash</object-name>
 		<object-name>vs-text</object-name>
 		<object-name>vs-text-last-2-digits</object-name>
 		<object-name>spd-text-test</object-name>
 		<object-name>hdg-text-test</object-name>
 		<object-name>alt-text-test</object-name>
 		<object-name>vs-text-test</object-name>
-		<object-name>atc-code</object-name>
-		<object-name>atc-test</object-name>
+		<object-name>vs.ind.001</object-name>
+		<object-name>vs.ind.002</object-name>
+		<object-name>ver.fmgc</object-name>
+		<object-name>lvlch.ind</object-name>
+		<object-name>alt.ind</object-name>
+		<object-name>vs.ind</object-name>
+		<object-name>fpa.ind</object-name>
+		<object-name>fpa.ind.001</object-name>
 		<object-name>fpa-text</object-name>
 		<object-name>qnh-inhg</object-name>
 		<object-name>qnh-hpa</object-name>
 		<object-name>qnh-std</object-name>
 		<object-name>qnh-test</object-name>
-		<object-name>rudder-trim</object-name>
-		<object-name>rudder-trim-letter</object-name>
 		<diffuse>
-			<red>0.75</red>
-			<green>0.30</green>
-			<blue>0.0</blue>
+			<red>1.00</red>
+			<green>0.515</green>
+			<blue>0.00</blue>
+			<factor-prop>controls/lighting/fcu-digit-norm</factor-prop>
 		</diffuse>
 		<ambient>
 			<red>0</red>
@@ -7276,9 +7573,38 @@
 			<blue>0</blue>
 		</specular>
 		<emission>
-			<red>0.75</red>
-			<green>0.30</green>
-			<blue>0.0</blue>
+			<red>1.00</red>
+			<green>0.515</green>
+			<blue>0.00</blue>
+			<factor-prop>controls/lighting/fcu-digit-norm</factor-prop>
+		</emission>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>rudder-trim</object-name>
+		<object-name>rudder-trim-letter</object-name>
+		<object-name>atc-code</object-name>
+		<object-name>atc-test</object-name>
+		<diffuse>
+			<red>1.00</red>
+			<green>0.355</green>
+			<blue>0.00</blue>
+		</diffuse>
+		<ambient>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</ambient>
+		<specular>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</specular>
+		<emission>
+			<red>1.00</red>
+			<green>0.355</green>
+			<blue>0.00</blue>
 		</emission>
 	</animation>
 
@@ -8679,9 +9005,9 @@
 		<object-name>dme1</object-name>
 <!--		<object-name>dme1_20</object-name>-->
 		<diffuse>
-			<red>0.89</red>
-			<green>0.37</green>
-			<blue>0.08</blue>
+			<red>1.00</red>
+			<green>0.355</green>
+			<blue>0.00</blue>
 		</diffuse>
 		<ambient>
 			<red>0</red>
@@ -8694,9 +9020,9 @@
 			<blue>0</blue>
 		</specular>
 		<emission>
-			<red>0.89</red>
-			<green>0.37</green>
-			<blue>0.08</blue>
+			<red>1.00</red>
+			<green>0.355</green>
+			<blue>0.00</blue>
 		</emission>
 	</animation>
 	
@@ -8826,10 +9152,14 @@
 				<value>1</value>
 				<value>2</value>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
 		</action>
 	</animation>
 	
-		<!-- ND_R chrono -->
+	<!-- ND_R chrono -->
 	<animation>
 		<type>pick</type>
 		<object-name>chrono_fo</object-name>
@@ -8842,6 +9172,10 @@
 				<value>0</value>
 				<value>1</value>
 				<value>2</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
