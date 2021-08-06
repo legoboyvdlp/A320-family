@@ -230,10 +230,10 @@ var canvas_lowerECAMPagePress =
 };
 
 var input = {
-	pressAlt: "/systems/pressurization/cabinalt-norm",
+	pressAlt: "/systems/pressurization/cabin-altitude",
 	pressAuto: "/systems/pressurization/auto",
-	pressDelta: "/systems/pressurization/deltap-norm",
-	pressVS: "/systems/pressurization/vs-norm",
+	pressDelta: "/systems/pressurization/cabin-delta-p",
+	pressVS: "/systems/pressurization/cabin-rate-fpm",
 	
 	flowCtlValve1: "/systems/air-conditioning/valves/flow-control-valve-1",
 	flowCtlValve2: "/systems/air-conditioning/valves/flow-control-valve-2",
