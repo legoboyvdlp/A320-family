@@ -530,7 +530,7 @@
 					<property>/systems/navigation/probes/tat-1/tat</property>
 					<quotient>
 						<pow>
-							<property>/velocities/TAS</property>
+							<property>/instrumentation/airspeed-indicator/true-speed-kt</property>
 							<value>2</value>
 						</pow>
 						<value>7569</value>
@@ -736,6 +736,33 @@
 			</function>
 		</fcs_function>
 		
+		<switch name="/systems/navigation/adr/computation/underspeed-difference">
+			<default value="2"/>
+			<test logic="OR" value="19">
+				/controls/flight/speedbrake eq 1.0
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/navigation/adr/computation/underspeed">
+			<function>
+				<ifthen>
+					<lt>
+						<max>
+							<property>/systems/navigation/adr/output/cas-1</property>
+							<property>/systems/navigation/adr/output/cas-2</property>
+							<property>/systems/navigation/adr/output/cas-3</property>
+						</max>
+						<difference>
+							<property>/FMGC/internal/vls-min</property>
+							<property>/systems/navigation/adr/computation/underspeed-difference</property>
+						</difference>
+					</lt>
+					<value>1</value>
+					<value>0</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
 	</channel>
 	
 	<channel name="ADR Output" execrate="2"> <!-- todo - need lowpass? -->
@@ -905,6 +932,11 @@
 			<gain>/systems/navigation/adr/any-adr-on</gain>
 		</pure_gain>
 		
+		<pure_gain name="/systems/navigation/adr/output/underspeed">
+			<input>/systems/navigation/adr/computation/underspeed</input>
+			<gain>/systems/navigation/adr/any-adr-on</gain>
+		</pure_gain>
+		
 		<pure_gain name="/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected">
 			<input>/instrumentation/radar-altimeter[0]/radar-altitude-ft</input>
 			<gain>1</gain>
@@ -914,7 +946,7 @@
 			</clipto>
 		</pure_gain>
 		
-		<pure_gain name="/instrumentation/radar-altimeter[1]/radar-altitude-ft">
+		<pure_gain name="/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected">
 			<input>/instrumentation/radar-altimeter[1]/radar-altitude-ft</input>
 			<gain>1</gain>
 			<clipto>
@@ -922,6 +954,17 @@
 				<max>5000</max>
 			</clipto>
 		</pure_gain>
+
+		<fcs_function name="/instrumentation/radar-altimeter-difference-ft">
+			<function>
+			   <abs>
+					<difference>
+						<property>/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected</property>
+						<property>/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected</property>				
+					</difference>
+				</abs>
+			</function>
+		</fcs_function>
 		
 		<switch name="/instrumentation/transponder/altimeter-input/mode-c-alt-ft">
 			<test logic="AND" value="/instrumentation/altimeter[0]/mode-c-alt-ft">

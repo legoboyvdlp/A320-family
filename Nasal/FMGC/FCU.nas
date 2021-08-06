@@ -2,37 +2,11 @@
 # Copyright (c) 2020 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
 
 # Nodes
-var fd1 = props.globals.getNode("/it-autoflight/output/fd1", 1);
-var fd2 = props.globals.getNode("/it-autoflight/output/fd2", 1);
-var ap1 = props.globals.getNode("/it-autoflight/output/ap1", 1);
-var ap2 = props.globals.getNode("/it-autoflight/output/ap2", 1);
-var athr = props.globals.getNode("/it-autoflight/output/athr", 1);
-var fd1Input = props.globals.getNode("/it-autoflight/input/fd1", 1);
-var fd2Input = props.globals.getNode("/it-autoflight/input/fd2", 1);
-var ap1Input = props.globals.getNode("/it-autoflight/input/ap1", 1);
-var ap2Input = props.globals.getNode("/it-autoflight/input/ap2", 1);
-var athrInput = props.globals.getNode("/it-autoflight/input/athr", 1);
-var ktsMach = props.globals.getNode("/it-autoflight/input/kts-mach", 1);
-var iasSet = props.globals.getNode("/it-autoflight/input/kts", 1);
-var machSet = props.globals.getNode("/it-autoflight/input/mach", 1);
-var hdgSet = props.globals.getNode("/it-autoflight/input/hdg", 1);
-var altSet = props.globals.getNode("/it-autoflight/input/alt", 1);
 var altSetMode = props.globals.getNode("/it-autoflight/config/altitude-dial-mode", 1);
-var vsSet = props.globals.getNode("/it-autoflight/input/vs", 1);
-var fpaSet = props.globals.getNode("/it-autoflight/input/fpa", 1);
-var iasNow = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt", 1);
-var machNow = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach", 1);
-var spdManaged = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
-var showHDG = props.globals.getNode("/it-autoflight/custom/show-hdg", 1);
-var trkFpaSW = props.globals.getNode("/it-autoflight/custom/trk-fpa", 1);
-var latMode = props.globals.getNode("/it-autoflight/output/lat", 1);
-var vertMode = props.globals.getNode("/it-autoflight/output/vert", 1);
-var fpaModeInput = props.globals.getNode("/it-autoflight/input/fpa", 1);
-var latModeInput = props.globals.getNode("/it-autoflight/input/lat", 1);
-var vertModeInput = props.globals.getNode("/it-autoflight/input/vert", 1);
-var vsModeInput = props.globals.getNode("/it-autoflight/input/vs", 1);
-var locArm = props.globals.getNode("/it-autoflight/output/loc-armed", 1);
-var apprArm = props.globals.getNode("/it-autoflight/output/appr-armed", 1);
+var apOffSound = [props.globals.getNode("/it-autoflight/sound/apoffsound"),props.globals.getNode("/it-autoflight/sound/apoffsound2")];
+var apWarningNode = props.globals.getNode("/it-autoflight/output/ap-warning");
+var athrWarningNode = props.globals.getNode("/it-autoflight/output/athr-warning");
+var apDiscBtn = props.globals.getNode("/sim/sounde/apdiscbtn");
 var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
 
 var FCU = {
@@ -58,7 +32,7 @@ var FCU = {
 var FCUController = {
 	FCU1: nil,
 	FCU2: nil,
-	activeFMGC: props.globals.getNode("FMGC/active-fmgc-channel"),
+	activeFMGC: props.globals.getNode("/FMGC/active-fmgc-channel"),
 	FCUworking: 0,
 	_init: 0,
 	init: func() {
@@ -66,7 +40,7 @@ var FCUController = {
 		me.FCU2 = FCU.new(systems.ELEC.Bus.dc2);
 		me._init = 1;
 	},
-	loop: func() {
+	loop: func(notification) {
 		if (me._init == 0) { return; }
 		
 		# Update FCU Power
@@ -81,13 +55,12 @@ var FCUController = {
 			FCUworkingNode.setValue(0);
 		}
 		
-		notification = nil;
 		foreach (var update_item; me.update_items) {
 			update_item.update(notification);
 		}
 	},
 	update_items: [
-		props.UpdateManager.FromPropertyHashList(["/it-autoflight/output/fd1","/it-autoflight/output/fd2", "/it-autoflight/output/ap1", "/it-autoflight/output/ap2"], 1, func(notification)
+		props.UpdateManager.FromPropertyHashList(["/it-autoflight/output/fd1","/it-autoflight/output/fd2", "/it-autoflight/output/ap1", "/it-autoflight/output/ap2"], nil, func(notification)
 			{
 				updateActiveFMGC();
 			}
@@ -99,9 +72,9 @@ var FCUController = {
 		me.FCU2.restore();
 	},
 	AP1: func() {
-		if (me.FCUworking and fbw.FBW.activeLaw.getValue() == 0) {
-			if (!ap1.getBoolValue()) {
-				ap1Input.setValue(1);
+		if (me.FCUworking) {
+			if (!fmgc.Output.ap1.getBoolValue() and fbw.FBW.apOff == 0) {
+				fmgc.Input.ap1.setValue(1);
 				ecam.apWarnNode.setValue(0);
 				pts.Controls.Flight.rudderTrim.setValue(0);
 			} else {
@@ -110,9 +83,10 @@ var FCUController = {
 		}
 	},
 	AP2: func() {
-		if (me.FCUworking and fbw.FBW.activeLaw.getValue() == 0) {
-			if (!ap2.getBoolValue()) {
-				ap2Input.setValue(1);
+		if (me.FCUworking) {
+			if (!fmgc.Output.ap2.getBoolValue() and fbw.FBW.apOff == 0) {
+				fmgc.Input.ap2.setValue(1);
+				ecam.apWarnNode.setValue(0);
 				pts.Controls.Flight.rudderTrim.setValue(0);
 			} else {
 				apOff("hard", 2);
@@ -120,9 +94,9 @@ var FCUController = {
 		}
 	},
 	ATHR: func() {
-		if (me.FCUworking and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.activeLaw.getValue() == 0) {
-			if (!athr.getBoolValue()) {
-				athrInput.setValue(1);
+		if (me.FCUworking) {
+			if (!fmgc.Output.athr.getBoolValue() and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.apOff == 0) {
+				fmgc.Input.athr.setValue(1);
 			} else {
 				athrOff("hard");
 			}
@@ -130,39 +104,39 @@ var FCUController = {
 	},
 	FD1: func() {
 		if (me.FCUworking) {
-			if (!fd1.getBoolValue()) {
-				fd1Input.setValue(1);
+			if (!fmgc.Output.fd1.getBoolValue()) {
+				fmgc.Input.fd1.setValue(1);
 			} else {
-				fd1Input.setValue(0);
+				fmgc.Input.fd1.setValue(0);
 			}
 		}
 	},
 	FD2: func() {
 		if (me.FCUworking) {
-			if (!fd2.getBoolValue()) {
-				fd2Input.setValue(1);
+			if (!fmgc.Output.fd2.getBoolValue()) {
+				fmgc.Input.fd2.setValue(1);
 			} else {
-				fd2Input.setValue(0);
+				fmgc.Input.fd2.setValue(0);
 			}
 		}
 	},
 	APDisc: func() {
 		# physical button sound - so put it outside here as you get a sound even if it doesn't work!
-		setprop("/sim/sounde/apdiscbtn", 1);
+		apDiscBtn.setValue(1);
 		settimer(func {
-			setprop("/sim/sounde/apdiscbtn", 0);
+			apDiscBtn.setValue(0);
 		}, 0.5);
 		
 		if (me.FCUworking) {
-			if (ap1.getBoolValue() or ap2.getBoolValue()) {
+			if (fmgc.Output.ap1.getBoolValue() or fmgc.Output.ap2.getBoolValue()) {
 				apOff("soft", 0);
 			} else {
-				if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1) {
-					setprop("/it-autoflight/sound/apoffsound", 0);
-					setprop("/it-autoflight/sound/apoffsound2", 0);
+				if (apOffSound[0].getValue() or apOffSound[1].getValue()) {
+					apOffSound[0].setValue(0);
+					apOffSound[1].setValue(0);
 				}
-				if (getprop("/it-autoflight/output/ap-warning") != 0) {
-					setprop("/it-autoflight/output/ap-warning", 0);
+				if (apWarningNode.getValue() != 0) {
+					apWarningNode.setValue(0);
 					ecam.lights[0].setValue(0);
 				}
 			}
@@ -170,18 +144,18 @@ var FCUController = {
 	},
 	ATDisc: func() {
 		# physical button sound - so put it outside here as you get a sound even if it doesn't work!
-		setprop("/sim/sounde/apdiscbtn", 1);
+		apDiscBtn.setValue(1);
 		settimer(func {
-			setprop("/sim/sounde/apdiscbtn", 0);
+			apDiscBtn.setValue(0);
 		}, 0.5);
 		
 		if (me.FCUworking) {
-			if (athr.getBoolValue()) {
+			if (fmgc.Output.athr.getBoolValue()) {
 				athrOff("soft");
 				ecam.lights[1].setValue(1);
 			} else {
-				if (getprop("/it-autoflight/output/athr-warning") == 1) {
-					setprop("/it-autoflight/output/athr-warning", 0);
+				if (athrWarningNode.getValue() == 1) {
+					athrWarningNode.setValue(0);
 					ecam.lights[1].setValue(0);
 				}
 			}
@@ -189,84 +163,88 @@ var FCUController = {
 	},
 	IASMach: func() {
 		if (me.FCUworking) {
-			if (ktsMach.getBoolValue()) {
-				ktsMach.setBoolValue(0);
+			if (fmgc.Input.ktsMach.getBoolValue()) {
+				fmgc.Input.ktsMach.setBoolValue(0);
 			} else {
-				ktsMach.setBoolValue(1);
+				fmgc.Input.ktsMach.setBoolValue(1);
 			}
 		}
 	},
 	SPDPush: func() {
 		if (me.FCUworking) {
 			if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.costIndexSet) {
-				spdManaged.setBoolValue(1);
+				fmgc.Custom.Input.spdManaged.setBoolValue(1);
 				fmgc.ManagedSPD.start();
 			}
 		}
 	},
+	ias: nil,
+	mach: nil,
 	SPDPull: func() {
 		if (me.FCUworking) {
-			spdManaged.setBoolValue(0);
+			fmgc.Custom.Input.spdManaged.setBoolValue(0);
 			fmgc.ManagedSPD.stop();
-			var ias = iasNow.getValue();
-			var mach = machNow.getValue();
-			if (!ktsMach.getBoolValue()) {
-				if (ias >= 100 and ias <= 350) {
-					iasSet.setValue(math.round(ias));
-				} else if (ias < 100) {
-					iasSet.setValue(100);
-				} else if (ias > 350) {
-					iasSet.setValue(350);
+			me.ias = fmgc.Velocities.indicatedAirspeedKt.getValue();
+			me.mach = fmgc.Velocities.indicatedMach.getValue();
+			if (!fmgc.Input.ktsMach.getBoolValue()) {
+				if (me.ias >= 100 and me.ias <= 399) {
+					fmgc.Input.kts.setValue(math.round(me.ias));
+				} else if (me.ias < 100) {
+					fmgc.Input.kts.setValue(100);
+				} else if (me.ias > 399) {
+					fmgc.Input.kts.setValue(399);
 				}
-			} else if (ktsMach.getBoolValue()) {
-				if (mach >= 0.50 and mach <= 0.82) {
-					machSet.setValue(math.round(mach, 0.001));
-				} else if (mach < 0.50) {
-					machSet.setValue(0.50);
-				} else if (mach > 0.82) {
-					machSet.setValue(0.82);
+			} else if (fmgc.Input.ktsMach.getBoolValue()) {
+				if (me.mach >= 0.10 and me.mach <= 0.99) {
+					fmgc.Input.mach.setValue(math.round(me.mach, 0.001));
+				} else if (me.mach < 0.10) {
+					fmgc.Input.mach.setValue(0.10);
+				} else if (me.mach > 0.99) {
+					fmgc.Input.mach.setValue(0.99);
 				}
 			}
 		}
 	},
+	machTemp: nil,
+	iasTemp: nil,
 	SPDAdjust: func(d) {
 		if (me.FCUworking) {
-			if (!spdManaged.getBoolValue()) {
-				if (ktsMach.getBoolValue()) {
-					var machTemp = machSet.getValue();
+			if (!fmgc.Custom.Input.spdManaged.getBoolValue()) {
+				if (fmgc.Input.ktsMach.getBoolValue()) {
+					me.machTemp = fmgc.Input.mach.getValue();
 					if (d == 1) {
-						machTemp = math.round(machTemp + 0.001, 0.001); # Kill floating point error
+						me.machTemp = math.round(me.machTemp + 0.001, 0.001); # Kill floating point error
 					} else if (d == -1) {
-						machTemp = math.round(machTemp - 0.001, 0.001); # Kill floating point error
+						me.machTemp = math.round(me.machTemp - 0.001, 0.001); # Kill floating point error
 					} else if (d == 10) {
-						machTemp = math.round(machTemp + 0.01, 0.01); # Kill floating point error
+						me.machTemp = math.round(me.machTemp + 0.01, 0.01); # Kill floating point error
 					} else if (d == -10) {
-						machTemp = math.round(machTemp - 0.01, 0.01); # Kill floating point error
+						me.machTemp = math.round(me.machTemp - 0.01, 0.01); # Kill floating point error
 					}
-					if (machTemp < 0.50) {
-						machSet.setValue(0.50);
-					} else if (machTemp > 0.82) {
-						machSet.setValue(0.82);
+					if (me.machTemp < 0.10) {
+						fmgc.Input.mach.setValue(0.10);
+					} else if (me.machTemp > 0.99) {
+						fmgc.Input.mach.setValue(0.99);
 					} else {
-						machSet.setValue(machTemp);
+						fmgc.Input.mach.setValue(me.machTemp);
 					}
 				} else {
-					var iasTemp = iasSet.getValue();
+					me.iasTemp = fmgc.Input.kts.getValue();
 					if (d == 1) {
-						iasTemp = iasTemp + 1;
+						me.iasTemp = me.iasTemp + 1;
 					} else if (d == -1) {
-						iasTemp = iasTemp - 1;
+						me.iasTemp = me.iasTemp - 1;
 					} else if (d == 10) {
-						iasTemp = iasTemp + 10;
+						me.iasTemp = me.iasTemp + 10;
 					} else if (d == -10) {
-						iasTemp = iasTemp - 10;
+						me.iasTemp = me.iasTemp - 10;
 					}
-					if (iasTemp < 100) {
-						iasSet.setValue(100);
-					} else if (iasTemp > 350) {
-						iasSet.setValue(350);
+					if (me.iasTemp < 100) {
+						fmgc.Input.kts.setValue(100);
+					} else if (me.iasTemp > 399) {
+						fmgc.Input.kts.setValue(399);
 					} else {
-						iasSet.setValue(iasTemp);
+						fmgc.Input.kts.setValue(me.iasTemp);
 					}
 				}
 			}
@@ -274,66 +252,68 @@ var FCUController = {
 	},
 	HDGPush: func() {
 		if (me.FCUworking) {
-			if (fd1.getBoolValue() or fd2.getBoolValue() or ap1.getBoolValue() or ap2.getBoolValue()) {
-				latModeInput.setValue(1);
+			if (fmgc.Output.fd1.getBoolValue() or fmgc.Output.fd2.getBoolValue() or fmgc.Output.ap1.getBoolValue() or fmgc.Output.ap2.getBoolValue()) {
+				fmgc.Input.lat.setValue(1);
 			}
 		}
 	},
 	HDGPull: func() {
 		if (me.FCUworking) {
-			if (fd1.getBoolValue() or fd2.getBoolValue() or ap1.getBoolValue() or ap2.getBoolValue()) {
-				if (latMode.getValue() == 0 or !showHDG.getBoolValue()) {
-					latModeInput.setValue(3);
+			if (fmgc.Output.fd1.getBoolValue() or fmgc.Output.fd2.getBoolValue() or fmgc.Output.ap1.getBoolValue() or fmgc.Output.ap2.getBoolValue()) {
+				if (fmgc.Output.lat.getValue() == 0 or !fmgc.Custom.showHdg.getBoolValue()) {
+					fmgc.Input.lat.setValue(3);
 				} else {
-					latModeInput.setValue(0);
+					fmgc.Input.lat.setValue(0);
 				}
 			}
 		}
 	},
+	hdgTemp: nil,
 	HDGAdjust: func(d) {
 		if (me.FCUworking) {
-			if (latMode.getValue() != 0) {
+			if (fmgc.Output.lat.getValue() != 0) {
 				hdgInput();
 			}
-			if (showHDG.getBoolValue()) {
-				var hdgTemp = hdgSet.getValue();
+			if (fmgc.Custom.showHdg.getBoolValue()) {
+				me.hdgTemp = fmgc.Input.hdg.getValue();
 				if (d == 1) {
-					hdgTemp = hdgTemp + 1;
+					me.hdgTemp = me.hdgTemp + 1;
 				} else if (d == -1) {
-					hdgTemp = hdgTemp - 1;
+					me.hdgTemp = me.hdgTemp - 1;
 				} else if (d == 10) {
-					hdgTemp = hdgTemp + 10;
+					me.hdgTemp = me.hdgTemp + 10;
 				} else if (d == -10) {
-					hdgTemp = hdgTemp - 10;
+					me.hdgTemp = me.hdgTemp - 10;
 				}
-				if (hdgTemp < 0.5) {
-					hdgSet.setValue(hdgTemp + 360);
-				} else if (hdgTemp >= 360.5) {
-					hdgSet.setValue(hdgTemp - 360);
+				if (me.hdgTemp < 0.5) {
+					fmgc.Input.hdg.setValue(me.hdgTemp + 360);
+				} else if (me.hdgTemp >= 360.5) {
+					fmgc.Input.hdg.setValue(me.hdgTemp - 360);
 				} else {
-					hdgSet.setValue(hdgTemp);
+					fmgc.Input.hdg.setValue(me.hdgTemp);
 				}
 			}
 		}
 	},
+	vertTemp: nil,
 	LOCButton: func() {
 		if (me.FCUworking) {
-			var vertTemp = vertMode.getValue();
-			if ((locArm.getBoolValue() or latMode.getValue() == 2) and !apprArm.getBoolValue() and vertTemp != 2 and vertTemp != 6) {
-				if (latMode.getValue() == 2) {
-					latModeInput.setValue(0);
+			me.vertTemp = fmgc.Output.vert.getValue();
+			if ((fmgc.Output.locArm.getBoolValue() or fmgc.Output.lat.getValue() == 2) and !fmgc.Output.apprArm.getBoolValue() and me.vertTemp != 2 and me.vertTemp != 6) {
+				if (fmgc.Output.lat.getValue() == 2) {
+					fmgc.Input.lat.setValue(0);
 				} else {
 					fmgc.ITAF.disarmLOC();
 				}
-				if (vertTemp == 2 or vertTemp == 6) {
+				if (me.vertTemp == 2 or me.vertTemp == 6) {
 					me.VSPull();
 				} else {
 					fmgc.ITAF.disarmGS();
 				}
 			} else {
-				if (pts.Position.gearAglFt.getValue() >= 400 and vertTemp != 7) {
-					latModeInput.setValue(2);
-					if (vertTemp == 2 or vertTemp == 6) {
+				if (pts.Position.gearAglFt.getValue() >= 400 and me.vertTemp != 7) {
+					fmgc.Input.lat.setValue(2);
+					if (me.vertTemp == 2 or me.vertTemp == 6) {
 						me.VSPull();
 					} else {
 						fmgc.ITAF.disarmGS();
@@ -354,138 +334,149 @@ var FCUController = {
 	},
 	ALTPull: func() {
 		if (me.FCUworking) {
-			vertModeInput.setValue(4);
+			fmgc.Input.vert.setValue(4);
 		}
 	},
+	altTemp: nil,
 	ALTAdjust: func(d) {
 		if (me.FCUworking) {
-			var altTemp = altSet.getValue();
+			me.altTemp = fmgc.Input.alt.getValue();
 			if (d == 1) {
 				if (altSetMode.getBoolValue()) {
-					altTemp = altTemp + 1000;
+					me.altTemp = me.altTemp + 1000;
 				} else {
-					altTemp = altTemp + 100;
+					me.altTemp = me.altTemp + 100;
 				}
 			} else if (d == -1) {
 				if (altSetMode.getBoolValue()) {
-					altTemp = altTemp - 1000;
+					me.altTemp = me.altTemp - 1000;
 				} else {
-					altTemp = altTemp - 100;
+					me.altTemp = me.altTemp - 100;
 				}
 			} else if (d == 2) {
-				altTemp = altTemp + 100;
+				me.altTemp = me.altTemp + 100;
 			} else if (d == -2) {
-				altTemp = altTemp - 100;
+				me.altTemp = me.altTemp - 100;
 			} else if (d == 10) {
-				altTemp = altTemp + 1000;
+				me.altTemp = me.altTemp + 1000;
 			} else if (d == -10) {
-				altTemp = altTemp - 1000;
+				me.altTemp = me.altTemp - 1000;
 			}
-			if (altTemp < 0) {
-				altSet.setValue(0);
-			} else if (altTemp > 50000) {
-				altSet.setValue(50000);
+			if (me.altTemp < 100) {
+				fmgc.Input.alt.setValue(100);
+			} else if (me.altTemp > 49000) {
+				fmgc.Input.alt.setValue(49000);
 			} else {
-				altSet.setValue(altTemp);
+				fmgc.Input.alt.setValue(me.altTemp);
 			}
 		}
 	},
 	VSPush: func() {
 		if (me.FCUworking) {
-			if (trkFpaSW.getBoolValue()) {
-				vertModeInput.setValue(5);
-				fpaModeInput.setValue(0);
+			if (fmgc.Custom.trkFpa.getBoolValue()) {
+				fmgc.Input.vert.setValue(5);
+				fmgc.Input.fpa.setValue(0);
 			} else {
-				vertModeInput.setValue(1);
-				vsModeInput.setValue(0);
+				fmgc.Input.vert.setValue(1);
+				fmgc.Input.vs.setValue(0);
+				fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",0),3));
 			}
 		}
 	},
 	VSPull: func() {
 		if (me.FCUworking) {
-			if (trkFpaSW.getBoolValue()) {
-				vertModeInput.setValue(5);
+			if (fmgc.Custom.trkFpa.getBoolValue()) {
+				fmgc.Input.vert.setValue(5);
 			} else {
-				vertModeInput.setValue(1);
+				fmgc.Input.vert.setValue(1);
 			}
 		}
 	},
+	vsTemp: nil,
+	fpaTemp: nil,
 	VSAdjust: func(d) {
 		if (me.FCUworking) {
-			if (vertMode.getValue() == 1) {
-				var vsTemp = vsSet.getValue();
+			if (fmgc.Output.vert.getValue() == 1) {
+				me.vsTemp = fmgc.Input.vs.getValue();
 				if (d == 1) {
-					vsTemp = vsTemp + 100;
+					me.vsTemp = me.vsTemp + 100;
 				} else if (d == -1) {
-					vsTemp = vsTemp - 100;
+					me.vsTemp = me.vsTemp - 100;
 				} else if (d == 10) {
-					vsTemp = vsTemp + 1000;
+					me.vsTemp = me.vsTemp + 1000;
 				} else if (d == -10) {
-					vsTemp = vsTemp - 1000;
+					me.vsTemp = me.vsTemp - 1000;
 				}
-				if (vsTemp < -6000) {
-					vsSet.setValue(-6000);
-				} else if (vsTemp > 6000) {
-					vsSet.setValue(6000);
+				if (me.vsTemp < -6000) {
+					fmgc.Input.vs.setValue(-6000);
+				} else if (me.vsTemp > 6000) {
+					fmgc.Input.vs.setValue(6000);
 				} else {
-					vsSet.setValue(vsTemp);
+					fmgc.Input.vs.setValue(me.vsTemp);
 				}
-			} else if (vertMode.getValue() == 5) {
-				var fpaTemp = fpaSet.getValue();
+				fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",fmgc.Input.vs.getValue()),3));
+			} else if (fmgc.Output.vert.getValue() == 5) {
+				me.fpaTemp = fmgc.Input.fpa.getValue();
 				if (d == 1) {
-					fpaTemp = math.round(fpaTemp + 0.1, 0.1);
+					me.fpaTemp = math.round(me.fpaTemp + 0.1, 0.1);
 				} else if (d == -1) {
-					fpaTemp = math.round(fpaTemp - 0.1, 0.1);
+					me.fpaTemp = math.round(me.fpaTemp - 0.1, 0.1);
 				} else if (d == 10) {
-					fpaTemp = fpaTemp + 1;
+					me.fpaTemp = me.fpaTemp + 1;
 				} else if (d == -10) {
-					fpaTemp = fpaTemp - 1;
+					me.fpaTemp = me.fpaTemp - 1;
 				}
-				if (fpaTemp < -9.9) {
-					fpaSet.setValue(-9.9);
-				} else if (fpaTemp > 9.9) {
-					fpaSet.setValue(9.9);
+				if (me.fpaTemp < -9.9) {
+					fmgc.Input.fpa.setValue(-9.9);
+				} else if (me.fpaTemp > 9.9) {
+					fmgc.Input.fpa.setValue(9.9);
 				} else {
-					fpaSet.setValue(fpaTemp);
+					fmgc.Input.fpa.setValue(me.fpaTemp);
 				}
 			}
-			if ((vertMode.getValue() != 1 and !trkFpaSW.getBoolValue()) or (vertMode.getValue() != 5 and trkFpaSW.getBoolValue())) {
+			if ((fmgc.Output.vert.getValue() != 1 and !fmgc.Custom.trkFpa.getBoolValue()) or (fmgc.Output.vert.getValue() != 5 and fmgc.Custom.trkFpa.getBoolValue())) {
 				me.VSPull();
 			}
 		}
 	},
 	APPRButton: func() {
 		if (me.FCUworking) {
-			var vertTemp = vertMode.getValue();
-			if ((locArm.getBoolValue() or latMode.getValue() == 2) and (apprArm.getBoolValue() or vertTemp == 2 or vertTemp == 6)) {
-				if (latMode.getValue() == 2) {
-					latModeInput.setValue(0);
+			me.vertTemp = fmgc.Output.vert.getValue();
+			if ((fmgc.Output.locArm.getBoolValue() or fmgc.Output.lat.getValue() == 2) and (fmgc.Output.apprArm.getBoolValue() or me.vertTemp == 2 or me.vertTemp == 6)) {
+				if (fmgc.Output.lat.getValue() == 2) {
+					fmgc.Input.lat.setValue(0);
 				} else {
 					fmgc.ITAF.disarmLOC();
 				}
-				if (vertTemp == 2 or vertTemp == 6) {
+				if (me.vertTemp == 2 or me.vertTemp == 6) {
 					me.VSPull();
 				} else {
 					fmgc.ITAF.disarmGS();
 				}
 			} else {
-				if (pts.Position.gearAglFt.getValue() >= 400 and vertTemp != 7) {
-					vertModeInput.setValue(2);
+				if (pts.Position.gearAglFt.getValue() >= 400 and me.vertTemp != 7) {
+					fmgc.Input.vert.setValue(2);
 				}
 			}
+		}
+	},
+	MetricAlt: func() {
+		if (me.FCUworking) {
+			canvas_pfd.PFD_1.showMetricAlt = !canvas_pfd.PFD_1.showMetricAlt;
+			canvas_pfd.PFD_2.showMetricAlt = !canvas_pfd.PFD_2.showMetricAlt;
 		}
 	},
 };
 
 # Master / slave principle of operation depending on the autopilot / flight director engagement
 var updateActiveFMGC = func {
-	if (ap1.getBoolValue()) {
+	if (fmgc.Output.ap1.getBoolValue()) {
 		FCUController.activeFMGC.setValue(1);
-	} elsif (ap2.getBoolValue()) {
+	} elsif (fmgc.Output.ap2.getBoolValue()) {
 		FCUController.activeFMGC.setValue(2);
-	} elsif (fd1.getBoolValue()) {
+	} elsif (fmgc.Output.fd1.getBoolValue()) {
 		FCUController.activeFMGC.setValue(1);
-	} elsif (fd2.getBoolValue()) {
+	} elsif (fmgc.Output.fd2.getBoolValue()) {
 		FCUController.activeFMGC.setValue(2);
 	} else {
 		FCUController.activeFMGC.setValue(1);
@@ -494,36 +485,35 @@ var updateActiveFMGC = func {
 
 # Autopilot Disconnection
 var apOff = func(type, side) {
-	if ((ap1Input.getValue() and (side == 1 or side == 0)) or (ap2Input.getValue() and (side == 2 or side == 0))) {
+	if ((fmgc.Input.ap1.getValue() and (side == 1 or side == 0)) or (fmgc.Input.ap2.getValue() and (side == 2 or side == 0))) {
 		ecam.doApWarn(type);
 	}
 	
 	if (side == 0) {
-		ap1Input.setValue(0);
-		ap2Input.setValue(0);
+		fmgc.Input.ap1.setValue(0);
+		fmgc.Input.ap2.setValue(0);
 	} elsif (side == 1) {
-		ap1Input.setValue(0);
+		fmgc.Input.ap1.setValue(0);
 	} elsif (side == 2) {
-		ap2Input.setValue(0);
+		fmgc.Input.ap2.setValue(0);
 	}
 }
 
 # Autothrust Disconnection
 var athrOff = func(type) {
-	if (athrInput.getValue() == 1) {
+	if (fmgc.Input.athr.getValue() == 1) {
 		if (type == "hard") {
 			fadec.lockThr();
 		}
-		athrInput.setValue(0);
+		fmgc.Input.athr.setValue(0);
 		ecam.doAthrWarn(type);
 	}
 }
 
 # If the heading knob is turned while in nav mode, it will display heading for a period of time
 var hdgInput = func {
-	if (latMode.getValue() != 0) {
-		showHDG.setBoolValue(1);
-		var hdgnow = fmgc.Input.hdg.getValue();
+	if (fmgc.Output.lat.getValue() != 0) {
+		fmgc.Custom.showHdg.setBoolValue(1);
 		fmgc.Custom.hdgTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }

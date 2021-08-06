@@ -1,5 +1,5 @@
 # A3XX Electronic Centralised Aircraft Monitoring System
-# Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2021 Jonathan Redpath (legoboyvdlp)
 
 var lines = [props.globals.getNode("ECAM/msg/line1", 1), props.globals.getNode("ECAM/msg/line2", 1), props.globals.getNode("ECAM/msg/line3", 1), props.globals.getNode("ECAM/msg/line4", 1), props.globals.getNode("ECAM/msg/line5", 1), props.globals.getNode("ECAM/msg/line6", 1), props.globals.getNode("ECAM/msg/line7", 1), props.globals.getNode("ECAM/msg/line8", 1)];
 var linesCol = [props.globals.getNode("ECAM/msg/linec1", 1), props.globals.getNode("ECAM/msg/linec2", 1), props.globals.getNode("ECAM/msg/linec3", 1), props.globals.getNode("ECAM/msg/linec4", 1), props.globals.getNode("ECAM/msg/linec5", 1), props.globals.getNode("ECAM/msg/linec6", 1), props.globals.getNode("ECAM/msg/linec7", 1), props.globals.getNode("ECAM/msg/linec8", 1)];
@@ -12,10 +12,9 @@ var leftOverflow  = props.globals.initNode("/ECAM/warnings/overflow-left", 0, "B
 var rightOverflow = props.globals.initNode("/ECAM/warnings/overflow-right", 0, "BOOL");
 var overflow = props.globals.initNode("/ECAM/warnings/overflow", 0, "BOOL");
 
-var dc_ess = props.globals.getNode("/systems/electrical/bus/dc-ess", 1);
 
 var lights = [props.globals.initNode("/ECAM/warnings/master-warning-light", 0, "BOOL"), props.globals.initNode("/ECAM/warnings/master-caution-light", 0, "BOOL")]; 
-var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/retard", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cchord", 0, "BOOL")];
+var aural = [props.globals.initNode("/sim/sound/warnings/crc", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/chime", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cricket", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/retard", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/cchord", 0, "BOOL"), props.globals.initNode("/sim/sound/warnings/click", 0, "BOOL")];
 var warningFlash = props.globals.initNode("/ECAM/warnings/master-warning-flash", 0, "BOOL");
 
 var lineIndex = 0;
@@ -26,100 +25,9 @@ var flash = 0;
 var hasCleared = 0;
 var statusFlag = 0;
 var counter = 0;
+var counterClear = 0;
 var noMainMsg = 0;
 var storeFirstWarning = nil;
-
-var warningNodes = {
-	Logic: {
-		altitudeAlert: props.globals.initNode("/ECAM/warnings/altitude-alert/c-chord"),
-		altitudeAlertSteady: props.globals.initNode("/ECAM/warnings/altitude-alert/altitude-alert-steady"),
-		altitudeAlertFlash: props.globals.initNode("/ECAM/warnings/altitude-alert/altitude-alert-flash"),
-		crossbleedFault: props.globals.initNode("/ECAM/warnings/logic/crossbleed-fault"),
-		crossbleedWai: props.globals.initNode("/ECAM/warnings/logic/crossbleed-wai"),
-		bleed1LoTempUnsuc: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-unsucc"),
-		bleed1LoTempXbleed: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-xbleed"),
-		bleed1LoTempBleed: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-bleed"),
-		bleed1LoTempPack: props.globals.initNode("/ECAM/warnings/logic/bleed-1-lo-temp-pack"),
-		bleed1WaiAvail: props.globals.initNode("/ECAM/warnings/logic/bleed-1-wai-avail"),
-		bleed2LoTempUnsuc: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-unsucc"),
-		bleed2LoTempXbleed: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-xbleed"),
-		bleed2LoTempBleed: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-bleed"),
-		bleed2LoTempPack: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-pack"),
-		bleed2WaiAvail: props.globals.initNode("/ECAM/warnings/logic/bleed-2-wai-avail"),
-		waiSysfault: props.globals.initNode("/ECAM/warnings/logic/wing-anti-ice-sys-fault"),
-		waiLclosed: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-left-closed"),
-		waiRclosed: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-right-closed"),
-		procWaiShutdown: props.globals.initNode("/ECAM/warnings/logic/proc-wai-shutdown-output"),
-		waiGndFlight: props.globals.initNode("/ECAM/warnings/logic/wing-anti-ice-gnd-fault"),
-		pack12Fault: props.globals.initNode("/ECAM/warnings/logic/pack-1-2-fault"),
-		pack1ResetPb: props.globals.initNode("/ECAM/warnings/logic/reset-pack-1-switch-cmd"),
-		pack2ResetPb: props.globals.initNode("/ECAM/warnings/logic/reset-pack-2-switch-cmd"),
-		cabinFans: props.globals.initNode("/ECAM/warnings/logic/cabin-fans-fault"),
-		rtlu1Fault: props.globals.initNode("/ECAM/warnings/logic/rud-trav-lim-sys-1-fault"),
-		rtlu2Fault: props.globals.initNode("/ECAM/warnings/logic/rud-trav-lim-sys-2-fault"),
-		rtlu12Fault: props.globals.initNode("/ECAM/warnings/logic/rud-trav-lim-sys-fault"),
-		fac12Fault: props.globals.initNode("/ECAM/warnings/logic/fac-12-fault"),
-		fac1Fault: props.globals.initNode("/ECAM/warnings/logic/fac-1-fault"),
-		fac2Fault: props.globals.initNode("/ECAM/warnings/logic/fac-2-fault"),
-		stallWarn: props.globals.initNode("/ECAM/warnings/logic/stall/stall-warn-on"),
-		yawDamper12Fault: props.globals.initNode("/ECAM/warnings/logic/yaw-damper-12-fault"),
-		gearNotDown1: props.globals.initNode("/ECAM/warnings/fctl/gear-not-down-not-cancellable"),
-		gearNotDown2: props.globals.initNode("/ECAM/warnings/fctl/gear-not-down-cancellable"),
-		gearNotDownLocked: props.globals.initNode("/ECAM/warnings/fctl/gear-not-down-locked"),
-		gearNotDownLockedFlipflop: props.globals.initNode("/ECAM/warnings/fctl/gear-not-downlocked-output"),
-		blueGreen: props.globals.initNode("/ECAM/warnings/hyd/blue-green-failure"),
-		blueGreenFuel: props.globals.initNode("/ECAM/warnings/hyd/blue-green-fuel-consumpt"),
-		blueYellow: props.globals.initNode("/ECAM/warnings/hyd/blue-yellow-failure"),
-		blueYellowFuel: props.globals.initNode("/ECAM/warnings/hyd/blue-yellow-fuel-consumpt"),
-		greenYellow: props.globals.initNode("/ECAM/warnings/hyd/green-yellow-failure"),
-		greenYellowFuel: props.globals.initNode("/ECAM/warnings/hyd/green-yellow-fuel-consumpt"),
-	},
-	Timers: {
-		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
-		bleed1Fault: props.globals.initNode("/ECAM/warnings/timer/bleed-1-fault"),
-		bleed1FaultOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-1-fault-output"),
-		bleed2Fault: props.globals.initNode("/ECAM/warnings/timer/bleed-2-fault"),
-		bleed2FaultOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-2-fault-output"),
-		bleed1NotShutOutput: props.globals.initNode("/ECAM/warnings/timer/prv-1-not-shut-output"),
-		bleed2NotShutOutput: props.globals.initNode("/ECAM/warnings/timer/prv-2-not-shut-output"),
-		bleed1And2LoTemp: props.globals.initNode("/ECAM/warnings/timer/bleed-1-and-2-low-temp"),
-		bleed1And2LoTempOutput: props.globals.initNode("/ECAM/warnings/timer/bleed-1-and-2-low-temp-output"),
-		bleed1Off60Output: props.globals.initNode("/ECAM/warnings/logic/bleed-1-off-60-output"),
-		bleed1Off5Output: props.globals.initNode("/ECAM/warnings/logic/bleed-1-off-5-output"),
-		bleed2Off60Output: props.globals.initNode("/ECAM/warnings/logic/bleed-2-off-60-output"),
-		bleed2Off5Output: props.globals.initNode("/ECAM/warnings/logic/bleed-2-off-5-output"),
-		eng1AiceNotClsd: props.globals.initNode("/ECAM/warnings/timer/eng-aice-1-open-output"),
-		eng2AiceNotClsd: props.globals.initNode("/ECAM/warnings/timer/eng-aice-2-open-output"),
-		eng1AiceNotOpen: props.globals.initNode("/ECAM/warnings/timer/eng-aice-1-closed-output"),
-		eng2AiceNotOpen: props.globals.initNode("/ECAM/warnings/timer/eng-aice-2-closed-output"),
-		LRElevFault: props.globals.initNode("/ECAM/warnings/fctl/lrElevFault-output"),
-		waiLhiPr: props.globals.initNode("/ECAM/warnings/timer/wing-hi-pr-left"),
-		waiRhiPr: props.globals.initNode("/ECAM/warnings/timer/wing-hi-pr-right"),
-		pack1Fault: props.globals.initNode("/ECAM/warnings/timer/pack-1-fault-2"),
-		pack2Fault: props.globals.initNode("/ECAM/warnings/timer/pack-2-fault-2"),
-		pack1Off: props.globals.initNode("/ECAM/warnings/timer/pack-1-off"),
-		pack2Off: props.globals.initNode("/ECAM/warnings/timer/pack-2-off"),
-		trimAirFault: props.globals.initNode("/ECAM/warnings/timer/trim-air-fault"),
-		yawDamper1Fault: props.globals.initNode("/ECAM/warnings/timer/yaw-damper-1-fault"),
-		yawDamper2Fault: props.globals.initNode("/ECAM/warnings/timer/yaw-damper-2-fault"),
-		navTerrFault: props.globals.initNode("/ECAM/warnings/timer/nav-gpws-terr-fault"),
-	},
-	Flipflops: {
-		apuGenFault: props.globals.initNode("/ECAM/warnings/flipflop/apu-gen-fault"),
-		apuGenFaultOnOff: props.globals.initNode("/ECAM/warnings/flipflop/apu-gen-fault-on-off"),
-		bleed1LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-1-low-temp-flipflop-output"),
-		bleed2LowTemp: props.globals.initNode("/ECAM/warnings/logic/bleed-2-low-temp-flipflop-output"),
-		gen1Fault: props.globals.initNode("/ECAM/warnings/flipflop/gen-1-fault"),
-		gen2Fault: props.globals.initNode("/ECAM/warnings/flipflop/gen-2-fault"),
-		gen1FaultOnOff: props.globals.initNode("/ECAM/warnings/flipflop/gen-1-fault-on-off"),
-		gen2FaultOnOff: props.globals.initNode("/ECAM/warnings/flipflop/gen-2-fault-on-off"),
-		pack1Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-1-ovht"),
-		pack2Ovht: props.globals.initNode("/ECAM/warnings/flipflop/pack-2-ovht"),
-		parkBrk: props.globals.initNode("/ECAM/warnings/config/park-brk/park-brk-output"),
-		eng1ThrLvrAbvIdle: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle"),
-		eng2ThrLvrAbvIdle: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle"),
-	},
-};
 
 var warning = {
 	new: func(msg,colour = "g",aural = 9,light = 9,isMainMsg = 0,lastSubmsg = 0, sdPage = "nil", isMemo = 0) {
@@ -176,7 +84,7 @@ var warning = {
 		me.noRepeat = 1;
 	},
 	sound: func() {
-		if (me.aural > 3) { return; }
+		if (me.aural == 9) { return; }
 		if (me.active == 0 and me.wasActive == 1) {
 			aural[me.aural].setBoolValue(0); 
 			me.wasActive = 0;
@@ -196,7 +104,7 @@ var warning = {
     },
 	callPage: func() {
 		if (me.sdPage == "nil" or me.hasCalled == 1) { return; }
-		ecam.SystemDisplay.failCall(me.sdPage);
+		ecam.SystemDisplayController.failureCall(me.sdPage);
 		me.hasCalled = 1;
 	}
 };
@@ -260,22 +168,16 @@ var status = {
 var ECAM_controller = {
 	_recallCounter: 0,
 	_noneActive: 0,
-	counter: 0,
+	_ready: 0,
 	init: func() {
-		ECAMloopTimer.start();
-		me.counter = 0;
 		me.reset();
+		me._ready = 1;
 	},
-	loop: func() {
+	loop: func(notification) {
+		if (!me._ready) {
+			return;
+		}
 		if ((systems.ELEC.Bus.acEss.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110) and !pts.Acconfig.running.getBoolValue()) {
-			# update FWC phases
-			if (me.counter == 0) {
-				phaseLoop();
-				me.counter = 1;
-				return;
-			}
-			me.counter = 0;
-			
 			# check active messages
 			messages_priority_3();
 			messages_priority_2();
@@ -303,7 +205,7 @@ var ECAM_controller = {
 		}
 		
 		# write to ECAM
-		var counter = 0;
+		counter = 0;
 		
 		if (!pts.Acconfig.running.getBoolValue()) {
 			foreach (var w; warnings.vector) {
@@ -311,6 +213,7 @@ var ECAM_controller = {
 					if (counter < 9) {
 						w.write();
 						counter += 1;
+						w.callPage();
 					}
 					w.warnlight();
 					w.sound();
@@ -352,6 +255,7 @@ var ECAM_controller = {
 		}
 	},
 	reset: func() {
+		me._ready = 0;
 		foreach (var w; warnings.vector) {
 			if (w.active == 1) {
 				w.active = 0;
@@ -387,18 +291,19 @@ var ECAM_controller = {
 				m.active = 0;
 			}
 		}
+		me._ready = 1;
 	},
 	clear: func() {
 		hasCleared = 0;
-		counter = 0;
+		counterClear = 0;
 		noMainMsg = 0;
 		storeFirstWarning = nil;
 		
 		# first go through the first eight, see how many mainMsg there are
 		foreach (var w; warnings.vector) {
-			if (counter >= 8) { break; }
+			if (counterClear >= 8) { break; }
 			if (w.active == 1 and w.clearFlag != 1 and w.isMemo != 1) {
-				counter += 1;
+				counterClear += 1;
 				if (w.isMainMsg == 1) {
 					if (noMainMsg == 0) {
 						storeFirstWarning = w;
@@ -410,11 +315,11 @@ var ECAM_controller = {
 		
 		# then, if there is an overflow and noMainMsg == 1, we clear the first shown ones
 		if (leftOverflow.getBoolValue() and noMainMsg == 1) {
-			counter = 0;
+			counterClear = 0;
 			foreach (var w; warnings.vector) {
-				if (counter >= 8) { break; }
+				if (counterClear >= 8) { break; }
 				if (w.active == 1 and w.clearFlag != 1 and w.isMemo != 1) {
-					counter += 1;
+					counterClear += 1;
 					if (w.isMainMsg == 1) { continue; }
 					w.clearFlag = 1;
 					hasCleared = 1;
@@ -434,9 +339,14 @@ var ECAM_controller = {
 			}
 		}
 		
-		if (statusFlag == 1 and lines[0].getValue() == "") {
-			ecam.SystemDisplay.manCall("sts");
+		if (!hasCleared and statusFlag) {
 			statusFlag = 0;
+			ecam.SystemDisplayController.manCall("statusPage");
+			return;
+		}
+		
+		if (!hasCleared and !statusFlag) {
+			SystemDisplayController.manCall("CLR");
 		}
 	},
 	recall: func() {
@@ -477,14 +387,10 @@ var ECAM_controller = {
 };
 
 setlistener("/systems/electrical/bus/dc-ess", func {
-	if (dc_ess.getValue() < 25) {
+	if (systems.ELEC.Bus.dcEss.getValue() < 25) {
 		ECAM_controller.reset();
 	}
 }, 0, 0);
-
-var ECAMloopTimer = maketimer(0.15, func {
-	ECAM_controller.loop();
-});
 
 # Flash Master Warning Light
 var shutUpYou = func() {

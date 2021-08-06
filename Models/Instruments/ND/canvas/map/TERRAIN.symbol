@@ -1,0 +1,451 @@
+# See: http://wiki.flightgear.org/MapStructure
+# Class things:
+
+## Airbus Terrain on ND by InuYaksa*2021
+## EGPWS device - Applicable to: MSN 0112
+## Ident.: DSC-31-45-00009586.0012001 / 22 MAY 12
+## Ident.: DSC-31-45-00009586.0009001 / 08 AUG 13
+
+## inspired from work on 787-family - thanks a lots
+## and a great help from legoboyvdlp
+
+var name = 'TERRAIN';
+var parents = [DotSym];
+var __self__ = caller(0)[0];
+DotSym.makeinstance( name, __self__ );
+
+var element_type = "group";
+
+var terrain_alert = props.globals.getNode("/instrumentation/mk-viii/outputs/alert-mode");
+
+var tile_list = [
+				nil,"tile_gl.png","tile_gh.png","tile_al.png","tile_ah.png","tile_rh.png", # 0-5  low alt - imho real ND displays as amber-ish color than yellow one
+				"tile_gl.png","tile_gh.png","tile_gh.png","tile_gs.png", # 6-9 hi alt
+				"tile_ml.png","tile_cl.png",  # 10 magenta - 11 cyan-ish/blue (water)
+				"tile_as.png","tile_rs.png"   # 12-13 alert - solid colors
+				];
+
+var is_terrain = 0;
+
+var get_elevation = func (lat, lon) {
+	var info = geodinfo(lat, lon);
+	var elevation = 0;
+	if (info != nil) { 
+		elevation = int(info[0] * 3.2808399);
+		me.is_terrain = (info[1] == nil) ? 1 : info[1].solid;
+    }
+	else { elevation = nil; }
+	return elevation;
+}
+
+var updateTerrain = func {
+
+	if (me.reference == nil) return;
+
+	if(me.fetching) return;
+
+	me.fetching = 1;
+
+	if (me.request_clear == 1) {
+		me.request_clear = 0;
+		me.clear();
+		me.group.setVisible(1);
+	}
+
+	var RAD2DEG = 57.2957795;
+	var DEG2RAD = 0.016774532925;
+
+	var pos_lat = me.reference.lat();
+	var pos_lon = me.reference.lon();
+	
+	var heading = me.refheading;
+	var altitudeft = me.refaltitudeft;
+	var lowaltft = me.reflowaltft;
+	var basealtft = me.basealtitudeft;
+	var alert_level = me.terrain_alert.getValue();
+
+	var side = (math.mod(me.radar_beacon,2)==0) ? "L" : "R";
+	var a = int(me.radar_beacon/2);
+    var col = a + 0.5;
+
+	if (side == "R") {
+		col = -col;
+	}
+
+	var trn = me.terrlayer[side ~ a];
+
+	var len = size(trn);
+	var range = me.range;
+
+	var tiles = me.tile_list;
+
+	#var proj_lon = pos_lon + ((col * (range/30) * math.sin(DEG2RAD * (heading - 90))) / 40);
+	#var proj_lat = pos_lat + ((col * (range/30) * math.cos(DEG2RAD * (heading - 90))) / 40);
+
+	# if me.tileradiusw == 20
+	var range_20f = range / 19.70; #18.75;
+	var heading_sin = math.sin(DEG2RAD * heading);
+	var heading_cos = math.cos(DEG2RAD * heading);
+
+	var col_x_range20f = col * range_20f;
+
+	var proj_lon = pos_lon + ((col_x_range20f * math.sin(DEG2RAD * (heading - 90))) / 60);
+	var proj_lat = pos_lat + ((col_x_range20f * math.cos(DEG2RAD * (heading - 90))) / 60);
+
+	var elevft = [];
+
+	me.radar_cleared = 0;
+
+	var altmin = 9999;
+	var altmax = -9999;
+
+	for (var row = 0; row < len; row += 1) {
+
+		if (trn[row] == nil) {
+			append(elevft,-1);
+			continue;
+		}
+
+		var row_x_r20f_60th = (row * range_20f / 60);
+
+		var point_lon = proj_lon + (row_x_r20f_60th * heading_sin);
+		var point_lat = proj_lat + (row_x_r20f_60th * heading_cos);
+
+		var elev = me.get_elevation(point_lat, point_lon);
+		var grad = 0; #black
+		if (elev != nil) {			
+			if (elev>altmax) altmax = elev;
+			if (me.is_terrain) {
+				if (elev<altmin) altmin = elev;
+				if (elev < basealtft) grad = 0; # < 400 near runway use blank
+				else {
+					var diff = elev - altitudeft;
+					if (diff>=0) {
+						grad = int(diff/1000) + 3;
+						if (grad>5) grad = 5;
+						if (alert_level > 0 and a <= 6) {
+							if (alert_level == 1 and grad != 5) grad = 12; # solid yellow
+							else if (alert_level == 2 and grad == 5) grad = 13; # solid red
+						}
+					} else {
+						if (me.hialtmode == 0) {
+							if (diff>=lowaltft) grad = 3; # lite yellow
+							else {
+								grad = int(diff/1000) + 2;
+								if (grad<0) grad = 0;
+							}						
+						} else {
+							if (diff>=lowaltft) grad = 3; # lite yellow
+							else {
+							    if (me.bands_range > 0 and elev > me.bands_minalt) {
+									if (elev >= me.green_altitude) grad = 9; # solid green
+									else {
+										grad =  8 - int((me.bands_maxalt - elev) / me.bands_range); # 9 -
+										#if (grad>9) grad = 9; # solid green
+										if (grad>8) grad = 8; # high green
+										else if (grad<6) grad = 6; #light green
+									}
+								}
+							}
+						}
+					}
+				}
+			} else {
+				if (elev <= 0) {
+					grad = 11; #water/cyan
+				}
+			}
+			append(elevft,grad); # 0-5
+		} else {
+			append(elevft,0);  # no data - black (magenta)
+		}
+		
+	}
+
+	for (var r=0; r < len; r+=1) {
+		var imgx = elevft[r];
+		if (imgx == -1) continue;			
+		if (imgx < 1) trn[r].hide();
+		else trn[r].setFile(me.imgpath ~ me.tile_list[imgx]).show();		
+	}
+
+	if (altmax != -9999) {
+	
+		if (altmin > altmax) altmin = altmax; # occurs on sea areas
+
+		if (me.max_altitude == -9999) {
+			me.min_altitude = altmin;
+			me.max_altitude = altmax;
+		} else {
+			if (altmin<me.min_altitude) me.min_altitude = altmin;
+			if (altmax>me.max_altitude) me.max_altitude = altmax;
+		}
+
+	}
+
+	me.radar_beacon += 1;
+	if (me.radar_beacon >= (me.tileradiusw*2)) {
+		me.restart_beacon();
+	}
+	
+	me.fetching = 0;
+};
+
+var update_altitudes = func {
+
+    var maxalt = int(me.max_altitude);
+	me.terrain_minalt.setValue(int(me.min_altitude));
+	me.terrain_maxalt.setValue(maxalt);
+
+	if (me.avg_maxalt == -9999) {
+		me.avg_minalt = int(me.min_altitude);
+		me.avg_maxalt = maxalt;
+	} else {
+		me.avg_minalt = math.avg(me.avg_minalt,me.min_altitude);
+		me.avg_maxalt = math.avg(me.avg_maxalt,maxalt);
+	}
+
+	var altdif = maxalt - me.refaltitudeft;
+	if (altdif <= 0) {
+		if (altdif >= me.reflowaltft) me.terrain_maxcol.setValue(1);
+		else me.terrain_maxcol.setValue(0);
+	} else {
+		if (altdif>=2000) me.terrain_maxcol.setValue(2);
+		else me.terrain_maxcol.setValue(1);
+	}
+
+	me.avg_diffalt = me.avg_maxalt - me.avg_minalt;
+
+	if (me.onground == 0 and (maxalt + 200) < me.refaltitudeft) {   # 200 ft tollerance
+		me.hialtmode = 1;
+		var mxrange = math.max(1600,int((me.avg_maxalt - me.basealtitudeft) * 0.3));
+		var range = math.min(mxrange,me.avg_diffalt);
+		if (range < 160) {  # min elev number
+			me.bands_range = 0;
+		} else {
+			me.bands_maxalt = me.avg_maxalt;
+			me.bands_minalt = math.max( me.avg_maxalt - range, me.avg_minalt + me.basealtitudeft );
+			me.bands_range = int( (me.bands_maxalt - me.bands_minalt) / 4);
+		}
+		me.green_altitude  = math.max(maxalt - 1200, me.avg_maxalt - me.bands_range);
+	} else {
+		me.hialtmode = 0;
+		#me.avg_minalt = 9999;
+	}
+
+ 	me.min_altitude = 9999;
+	me.max_altitude = -9999;
+	me.avg_maxalt = -9999;
+	
+}
+
+var restart_beacon = func {
+	me.radar_beacon = 0;
+	me.radar_cycle += 1;
+	me.reference = nil;
+};
+
+var init = func {
+	print('TERRAIN init');
+	#print(me.layer.efis_path);
+
+	me.tile = 33;
+	me.fetching = 0;
+	me.fetchRad = me.model.fetchRad; # Radius of radar layer to fetch
+	me.range = me.model.rangeNm; # Range of Navigation Display
+	me.viewport_radius = me.getOption('viewport_radius', 670);
+	me.imgpath = get_local_path('res/terrainv2/');
+	me.radar_beacon = 0;
+	me.radar_cycle = 0;
+	me.radar_cleared = 1;
+	me.request_clear = 0;	
+	me.min_altitude = 9999;
+	me.max_altitude = -9999;
+	me.green_altitude = 0; # max altitude for solid green (peak color)
+	me.avg_minalt = 9999;
+	me.avg_maxalt = -9999;
+	me.avg_diffalt = nil;
+	me.maxalt_col = 0;  # 0 = grn, 1 = yel, 2 = red
+	me.bands_minalt = 0;
+	me.bands_maxalt = 0;
+	me.bands_range = 0;
+	me.basealtitudeft = nil;
+	me.reference = nil;
+	me.onfailure = 0;
+	me.hialtmode = 0; # high aircraft relative altitude mode
+	me.checkarrival = 0;
+	me.onground = 1;
+
+	me.terrain_minalt = props.globals.initNode(me.layer.efis_path ~ "/nd/terrain-on-nd/min-altitude", 0,"INT");
+	me.terrain_maxalt = props.globals.initNode(me.layer.efis_path ~ "/nd/terrain-on-nd/max-altitude", -9999,"INT");
+	me.terrain_maxcol = props.globals.initNode(me.layer.efis_path ~ "/nd/terrain-on-nd/max-color", -1,"INT"); # 0= grn, 1= yel, 2= red	
+
+	var tile = me.tile;
+
+	var gx = int(me.viewport_radius / tile);
+	me.tileradius = gx;
+
+	var limx = int((512/tile)+0.5);  # display width is smaller than height
+	me.tileradiusw = limx;
+
+	me.terrlayer = {};
+
+	var centx = 0;
+	var centy = -me.viewport_radius;
+
+	var group = me.group.createChild("group").set("z-index", -100); #me.element
+
+	for (var c=0; c<limx; c+=1) {
+		var hh = c * tile;
+		var mx = (c == 0) ? gx : int(math.sqrt(gx*gx-c*c) + 0.5);
+		var my = int(c*4/gx);
+		var py = centy + (gx-1) * tile;
+		var pxr = centx+(c*tile);
+		var pxl = centx-(c*tile)-tile;
+		var grplx = [];
+		var grprx = [];
+		for (var r=0; r<mx; r+=1) {
+			if (r<my) {
+				append(grplx , nil); #skip
+				append(grprx , nil);
+			} else {
+				append(grplx , group.createChild("image").setSize(tile,tile).setTranslation(pxl,py).hide());
+				append(grprx , group.createChild("image").setSize(tile,tile).setTranslation(pxr,py).hide());
+			}
+			py-=tile;
+		}
+		me.terrlayer["L" ~ c] = grplx;
+		me.terrlayer["R" ~ c] = grprx;
+	}
+
+	setlistener("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", func{   # detect GPWS switch status
+		me.onfailure = getprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit");
+	},1,0);
+
+};
+
+var clear = func {
+
+	if (me.radar_cleared == 0) {
+		me.radar_cleared = 1;
+		for (var c=0; c<me.tileradiusw; c+=1 ) {
+			var rowL = me.terrlayer["L" ~ c];			
+			var rowR = me.terrlayer["R" ~ c];
+			var len = size(rowL);
+			for (var r=0; r<len; r+=1) {
+				if (rowL[r] != nil) {
+					rowL[r].hide();
+					rowR[r].hide();
+				}
+			}
+		}		
+	}
+
+}
+
+var draw = func {
+
+	if(me.fetching) return;
+
+	if (pts.Sim.pause.getBoolValue()) return;
+
+    if (me.onfailure == 1) {
+		me.clear();
+		me.restart_beacon();
+		return;
+	}
+
+	if (me.layer.display_hidden == 1) {
+		me.layer.display_hidden = 0;
+		me.clear();
+		me.terrain_maxalt.setValue(-9999);
+		me.min_altitude = 9999;
+		me.max_altitude = -9999;
+		me.avg_maxalt = -9999;				
+		me.reference = nil;
+	}
+
+	if (me.reference == nil) {  # update aircraft reference
+
+		var ref = geo.aircraft_position();
+		me.reference = ref;
+		if (ref != nil) {
+
+			me.refheading = getprop("orientation/heading-magnetic-deg");
+
+			var refalt = int(getprop("/position/altitude-ft"));  #int(ref.alt() * 3.2808399);
+			me.refaltitudeft = refalt;			
+			me.groundaltft = int(getprop("/position/ground-elev-ft"));
+			me.reflowaltft = (pts.Gear.position[1].getValue()) ? -250 : -500;
+			me.onground = pts.Gear.wow[0].getValue();
+
+			if (me.max_altitude != -9999) me.update_altitudes();
+
+			var flatalt = (me.avg_diffalt == nil or me.avg_diffalt>499) ? 400 : 180;
+
+			var vspeed30s = int(getprop("velocities/vertical-speed-fps") * 30);
+			if (vspeed30s<-500) me.refaltitudeft = math.max(me.avg_minalt , me.refaltitudeft + vspeed30s);
+
+			if (me.basealtitudeft == nil) {  # first basealt set
+				me.basealtitudeft = me.groundaltft + flatalt;
+				me.flatalt = flatalt;
+				me.checkarrival = 1;
+				print("set REFALT [init]: "~me.basealtitudeft);
+			} else if (fmgc.FMGCInternal.phase < 2) { # starting at phase < 2
+			  if (me.flatalt != flatalt) {
+				  me.basealtitudeft = me.groundaltft + flatalt;
+				  me.flatalt = flatalt;
+				  print("set REFALT [flat]: "~me.basealtitudeft);
+			  }			  
+			} else if (fmgc.FMGCInternal.phase == 5) {
+				if (me.checkarrival == 1) {
+					me.checkarrival = 0;				
+					me.basealtitudeft = nil;
+					if (fmgc.FMGCInternal.arrApt != nil) {
+						var airport = airportinfo(fmgc.FMGCInternal.arrApt);
+						if (airport != nil) me.basealtitudeft = flatalt + int(airport.elevation * M2FT);
+						print("set REFALT [arrApt]: "~me.basealtitudeft);
+					}
+					if (me.basealtitudeft == nil) {
+						me.basealtitudeft = flatalt + me.avg_minalt; # that's fun
+					}
+				}
+			} else if (fmgc.FMGCInternal.phase == 6) {
+				if (me.checkarrival == 0) {
+					me.checkarrival = 1;
+					#me.basealtitudeft = 0;
+				}
+			} else if (fmgc.FMGCInternal.phase == 7) {
+				if (me.checkarrival == 0) {
+					me.checkarrival = 1;
+					me.basealtitudeft = me.groundaltft + flatalt;
+					print("set REFALT [done]: "~me.basealtitudeft);
+				}
+			} else if (fmgc.FMGCInternal.phase == 2) {
+				var expdaltft = me.groundaltft + flatalt;
+				if (me.basealtitudeft > expdaltft) {
+					me.basealtitudeft = expdaltft;
+					print("set REFALT [blwbase]: "~me.basealtitudeft);
+				}				
+			} else if (fmgc.FMGCInternal.phase >= 2) {		
+				if (me.avg_minalt != 9999) me.basealtitudeft = int(math.avg(me.basealtitudeft,flatalt + me.avg_minalt));
+			}
+
+		}		
+
+	} else {
+
+		var range = me.layer.map.getRange(); # Range of Navigation Display
+		var update_size = (range != me.range);
+		me.range = range;
+
+		if (update_size) {
+			me.request_clear = 1;
+		}
+
+		me.updateTerrain(); # left
+		me.updateTerrain(); # right
+
+	}
+
+};

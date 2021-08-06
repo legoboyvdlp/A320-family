@@ -13,9 +13,8 @@ var dc2 = 0;
 
 # Main class
 var ELEC = {
-	_timer1On: 0,
-	_timer2On: 0,
 	EmerElec: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-elec-config"),
+	EmerElec45: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-elec-config-45"),
 	Bus: {
 		acEss: props.globals.getNode("/systems/electrical/bus/ac-ess"),
 		acEssShed: props.globals.getNode("/systems/electrical/bus/ac-ess-shed"),
@@ -33,9 +32,6 @@ var ELEC = {
 		acEssBusFault: props.globals.getNode("/systems/failures/electrical/ac-ess-bus"),
 		ac1BusFault: props.globals.getNode("/systems/failures/electrical/ac-1-bus"),
 		ac2BusFault: props.globals.getNode("/systems/failures/electrical/ac-2-bus"),
-		bat1Fault: props.globals.getNode("/systems/failures/electrical/bat-1"),
-		bat2Fault: props.globals.getNode("/systems/failures/electrical/bat-2"),
-		dcBatBusFault: props.globals.getNode("/systems/failures/electrical/dc-bat-bus"),
 		dcEssBusFault: props.globals.getNode("/systems/failures/electrical/dc-ess-bus"),
 		dc1BusFault: props.globals.getNode("/systems/failures/electrical/dc-1-bus"),
 		dc2BusFault: props.globals.getNode("/systems/failures/electrical/dc-2-bus"),
@@ -81,15 +77,17 @@ var ELEC = {
 		acTie1: props.globals.getNode("/systems/electrical/relay/ac-bus-ac-bus-tie-1/contact-pos"),
 		acTie2: props.globals.getNode("/systems/electrical/relay/ac-bus-ac-bus-tie-2/contact-pos"),
 		apuGlc: props.globals.getNode("/systems/electrical/relay/apu-glc/contact-pos"),
-		dcEssFeedBat: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-bat/contact-pos"),
-		essTrContactor: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/contact-pos"),
+		dcEssFeedBat: props.globals.getNode("/systems/electrical/relay/dc-bat-tie-dc-ess/contact-pos"),
+		essTrContactor: props.globals.getNode("/systems/electrical/relay/ess-tr-contactor/contact-pos"),
 		extEpc: props.globals.getNode("/systems/electrical/relay/ext-epc/contact-pos"),
-		dcTie1: props.globals.getNode("/systems/electrical/relay/dc-bus-tie-dc-1/contact-pos"),
-		dcTie2: props.globals.getNode("/systems/electrical/relay/dc-bus-tie-dc-2/contact-pos"),
+		dcTie1: props.globals.getNode("/systems/electrical/relay/dc-bat-tie-dc-1/contact-pos"),
+		dcTie2: props.globals.getNode("/systems/electrical/relay/dc-bat-tie-dc-2/contact-pos"),
 		glc1: props.globals.getNode("/systems/electrical/relay/gen-1-glc/contact-pos"),
 		glc2: props.globals.getNode("/systems/electrical/relay/gen-2-glc/contact-pos"),
 		tr1Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/contact-pos"),
 		tr2Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-2/contact-pos"),
+		relay7XB: props.globals.getNode("/systems/electrical/sources/si-1/inverter-control/relay-7xb"),
+		relay15XE2: props.globals.getNode("/systems/electrical/relay/relay-15XE2/contact-pos"),
 	},
 	SomeThing: {
 		emerGenSignal: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-gen-operate"),
@@ -104,7 +102,7 @@ var ELEC = {
 		Bat1: {
 			volt: props.globals.getNode("/systems/electrical/sources/bat-1/volt"),
 			amps: props.globals.getNode("/systems/electrical/sources/bat-1/amps"),
-			contact: props.globals.getNode("/systems/electrical/sources/bat-1/contact"),
+			contact: props.globals.getNode("/systems/electrical/sources/bat-1/bcl-supply"),
 			percent: props.globals.getNode("/systems/electrical/sources/bat-1/percent"),
 			direction: props.globals.getNode("/systems/electrical/sources/bat-1/direction"),
 			time: props.globals.getNode("/systems/electrical/sources/bat-1/time"),
@@ -112,7 +110,7 @@ var ELEC = {
 		Bat2: {
 			volt: props.globals.getNode("/systems/electrical/sources/bat-2/volt"),
 			amps: props.globals.getNode("/systems/electrical/sources/bat-2/amps"),
-			contact: props.globals.getNode("/systems/electrical/sources/bat-2/contact"),
+			contact: props.globals.getNode("/systems/electrical/sources/bat-2/bcl-supply"),
 			percent: props.globals.getNode("/systems/electrical/sources/bat-2/percent"),
 			direction: props.globals.getNode("/systems/electrical/sources/bat-2/direction"),
 			time: props.globals.getNode("/systems/electrical/sources/bat-2/time"),
@@ -121,6 +119,7 @@ var ELEC = {
 			volts: props.globals.getNode("/systems/electrical/sources/emer-gen/output-volt"),
 			hertz: props.globals.getNode("/systems/electrical/sources/emer-gen/output-hertz"),
 			voltsRelay: props.globals.getNode("/systems/electrical/relay/emer-glc/output"),
+			relayPos: props.globals.getNode("/systems/electrical/relay/emer-glc/contact-pos"),
 		},
 		Ext: {
 			volts: props.globals.getNode("/systems/electrical/sources/ext/output-volt"),
@@ -135,10 +134,10 @@ var ELEC = {
 			outputAmp: props.globals.getNode("/systems/electrical/relay/tr-contactor-2/output-amp"),
 		},
 		trEss: {
-			outputVolt: props.globals.getNode("/systems/electrical/sources/tr-ess/output-volt"),
-			outputAmp: props.globals.getNode("/systems/electrical/sources/tr-ess/output-amp"),
-			outputVoltRelay: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/output"),
-			outputAmpRelay: props.globals.getNode("/systems/electrical/relay/dc-ess-feed-tr/output-amp"),
+			outputVolt: props.globals.getNode("/systems/electrical/sources/ess-tr/output-volt"),
+			outputAmp: props.globals.getNode("/systems/electrical/sources/ess-tr/output-amp"),
+			outputVoltRelay: props.globals.getNode("/systems/electrical/relay/ess-tr-contactor/output"),
+			outputAmpRelay: props.globals.getNode("/systems/electrical/relay/ess-tr-contactor/output-amp"),
 		},
 		IDG1: {
 			gcrRelay: props.globals.getNode("/systems/electrical/sources/idg-1/gcr-relay"),
@@ -149,6 +148,10 @@ var ELEC = {
 			gcrRelay: props.globals.getNode("/systems/electrical/sources/idg-2/gcr-relay"),
 			hertz: props.globals.getNode("/systems/electrical/sources/idg-2/output-hertz"),
 			volts: props.globals.getNode("/systems/electrical/sources/idg-2/output-volt"),
+		},
+		Inverter: {
+			hertz: props.globals.getNode("/systems/electrical/sources/si-1/output-hertz"),
+			volts: props.globals.getNode("/systems/electrical/sources/si-1/output-volt"),
 		},
 	},
 	Switch: {
@@ -189,9 +192,6 @@ var ELEC = {
 		me.Fail.acEssBusFault.setBoolValue(0);
 		me.Fail.ac1BusFault.setBoolValue(0);
 		me.Fail.ac2BusFault.setBoolValue(0);
-		me.Fail.bat1Fault.setBoolValue(0);
-		me.Fail.bat2Fault.setBoolValue(0);
-		me.Fail.dcBatBusFault.setBoolValue(0);
 		me.Fail.dcEssBusFault.setBoolValue(0);
 		me.Fail.dc1BusFault.setBoolValue(0);
 		me.Fail.dc2BusFault.setBoolValue(0);
@@ -206,36 +206,65 @@ var ELEC = {
 		me.Fail.tr1Fault.setBoolValue(0);
 		me.Fail.tr2Fault.setBoolValue(0);
 	},
-	loop: func() {
+	_FMGC1: 0,
+	_FMGC2: 0,
+	_activeFMGC: nil,
+	_timer1On: 0,
+	_timer2On: 0,
+	loop: func(notification) {
 		# Autopilot Disconnection routines
-		if (me.Bus.dcEssShed.getValue() < 25) {
-			if (fmgc.Output.ap1.getValue() and !me._timer1On) {
+		me._activeFMGC = fcu.FCUController.activeFMGC.getValue();
+		me._FMGC1 = fmgc.Output.ap1.getValue();
+		me._FMGC2 = fmgc.Output.ap2.getValue();
+		
+		if (notification.dcEssShed < 25) {
+			if (me._FMGC1 and !me._timer1On) { # delay 1 cycle to avoid spurious
 				me._timer1On = 1;
-				settimer(func() {
-					if (me.Bus.dcEssShed.getValue() < 25) {
-						fcu.apOff("hard", 1);
-						if (fcu.FCUController.activeFMGC.getValue() == 1) {
-							fcu.athrOff("hard");
-						}
+			} elsif (me._FMGC1) {
+				if (notification.dcEssShed < 25) {
+					fcu.apOff("hard", 1);
+					if (me._activeFMGC == 1) {
+						fcu.athrOff("hard");
 					}
-					me._timer1On = 0;
-				}, 0.1);
+				}
+				me._timer1On = 0;
 			}
 		}
 		
-		if (me.Bus.dc2.getValue() < 25) {
-			if (fmgc.Output.ap2.getValue() and !me._timer2On) {
+		if (notification.dc2 < 25) {
+			if (me._FMGC2 and !me._timer2On) {  # delay 1 cycle to avoid spurious
 				me._timer2On = 1;
-				settimer(func() {
-					if (me.Bus.dc2.getValue() < 25) {
-						fcu.apOff("hard", 2);
-						if (fcu.FCUController.activeFMGC.getValue() == 2) {
-							fcu.athrOff("hard");
-						}
+			} elsif (me._FMGC2) {
+				if (notification.dc2 < 25) {
+					fcu.apOff("hard", 2);
+					if (me._activeFMGC == 2) {
+						fcu.athrOff("hard");
 					}
-					me._timer2On = 0;
-				}, 0.1);
+				}
+				me._timer2On = 0;
 			}
 		}
 	},
+};
+
+# Emesary
+var A320Electrical = notifications.SystemRecipient.new("A320 Electrical",ELEC.loop,ELEC);
+emesary.GlobalTransmitter.Register(A320Electrical);
+
+var input = {
+	"elecAC1": "/systems/electrical/bus/ac-1",
+	"elecAC2": "/systems/electrical/bus/ac-2",
+	"elecACEss": "/systems/electrical/bus/ac-ess",
+	"elecACEssShed": "/systems/electrical/bus/ac-ess-shed",
+	"dc1": "/systems/electrical/bus/dc-1",
+	"dc2": "/systems/electrical/bus/dc-2",
+	"dcBat": "/systems/electrical/bus/dc-bat",
+	"dcEss": "/systems/electrical/bus/dc-ess",
+	"dcEssShed": "/systems/electrical/bus/dc-ess-shed",
+	"dcHot1": "/systems/electrical/bus/dc-hot-1",
+	"dcHot2": "/systems/electrical/bus/dc-hot-2",
+};
+
+foreach (var name; keys(input)) {
+	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Electrical", name, input[name]));
 }

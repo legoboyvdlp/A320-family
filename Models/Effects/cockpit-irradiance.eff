@@ -2,6 +2,7 @@
     <name>panel</name>
     <inherits-from>Effects/model-interior</inherits-from>
     <parameters>
+		<shadow-mapping-enabled type="bool">true</shadow-mapping-enabled>
 		<irradiance-map-type type="int">1</irradiance-map-type>
 		<irradiance-map-strength type="float">0.33</irradiance-map-strength>
 		<texture n="4">

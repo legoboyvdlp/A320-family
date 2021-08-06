@@ -98,6 +98,10 @@ var PNEU = {
 		pack2: props.globals.getNode("/systems/air-conditioning/valves/flow-control-valve-2"),
 		ramAir: props.globals.getNode("/systems/air-conditioning/valves/ram-air"),
 		hotAir: props.globals.getNode("/systems/air-conditioning/valves/hot-air"),
+		starter1: props.globals.getNode("/systems/pneumatics/valves/starter-valve-1"),
+		starter2: props.globals.getNode("/systems/pneumatics/valves/starter-valve-2"),
+		wingLeft: props.globals.getNode("/systems/pneumatics/valves/wing-ice-1"),
+		wingRight: props.globals.getNode("/systems/pneumatics/valves/wing-ice-2"),
 	},
 	pressMode: props.globals.getNode("/systems/pressurization/mode", 1),
 	init: func() {
@@ -117,10 +121,8 @@ var PNEU = {
 		#setprop("/systems/ventilation/cabin/fans", 0); # aircon fans
 		#setprop("/systems/ventilation/avionics/extractvalve", "0");
 		#setprop("/systems/ventilation/avionics/inletvalve", "0");
-		setprop("/controls/oxygen/masksDeploy", 0);
-		setprop("/controls/oxygen/masksDeployMan", 0);
-		setprop("/controls/oxygen/masksReset", 0); # this is the TMR RESET pb on the maintenance panel, needs 3D model
-		setprop("/controls/oxygen/masksSys", 0);
+		setprop("/controls/oxygen/passenger-mask-deploy-man", 0);
+		setprop("/controls/oxygen/passenger-mask-reset", 0); # this is the TMR RESET pb on the maintenance panel, needs 3D model
 	},
 	resetFail: func() {
 		me.Fail.apu.setBoolValue(0);
@@ -138,10 +140,7 @@ var PNEU = {
 		me.Fail.trimValveFwd.setBoolValue(0);
 		me.Fail.xbleed.setBoolValue(0);
 	},
-	loop: func() {
-		wowl = getprop("gear/gear[1]/wow");
-		wowr = getprop("gear/gear[2]/wow");
-		
+	loop: func(notification) {
 		# Legacy pressurization
 		auto = getprop("/controls/pressurization/mode-sel");
 		ditch = getprop("/controls/pressurization/ditching");
@@ -158,43 +157,5 @@ var PNEU = {
 			setprop("/systems/ventilation/avionics/fan", 0);
 			setprop("/systems/ventilation/lavatory/extractfan", 0);
 		}
-		
-		# Oxygen
-		#if (cabinalt > 13500) { 
-		#	setprop("/controls/oxygen/masksDeploy", 1);
-		#	setprop("/controls/oxygen/masksSys", 1);
-		#}
 	},
 };
-
-
-# Oxygen (Cabin)
-
-setlistener("/controls/oxygen/masksDeployMan", func {
-	guard = getprop("/controls/oxygen/masksGuard");
-	masks = getprop("/controls/oxygen/masksDeployMan");
-	
-	if (guard and masks) {
-		setprop("/controls/oxygen/masksDeployMan", 0);
-	} else if (!guard and masks) {
-		setprop("/controls/oxygen/masksDeployMan", 1);
-		setprop("/controls/oxygen/masksDeploy", 1);
-		setprop("/controls/oxygen/masksSys", 1);
-	}
-}, 0, 0);
-
-setlistener("/controls/oxygen/masksDeployMan", func {
-	masks = getprop("/controls/oxygen/masksDeployMan");
-	autoMasks = getprop("/controls/oxygen/masksDeploy");
-	if (!masks) { 
-		setprop("/controls/oxygen/masksDeployMan", 1);
-	}
-}, 0, 0);
-
-setlistener("/controls/oxygen/masksDeploy", func {
-	masks = getprop("/controls/oxygen/masksDeployMan");
-	autoMasks = getprop("/controls/oxygen/masksDeploy");
-	if (!autoMasks) { 
-		setprop("/controls/oxygen/masksDeploy", 1);
-	}
-}, 0, 0);

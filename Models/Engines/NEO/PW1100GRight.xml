@@ -13,7 +13,7 @@
 
 	<params>
 		<n1>engines/engine[4]/n1</n1>
-		<on-fire>systems/failures/engine-right-fire</on-fire>
+		<on-fire>systems/failures/fire/engine-right-fire</on-fire>
 		<contrail>engines/engine[1]/contrail</contrail>
 		<reverser-pos-norm>sim/multiplay/generic/float[3]</reverser-pos-norm>
 	</params>

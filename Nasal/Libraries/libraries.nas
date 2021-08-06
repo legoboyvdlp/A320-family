@@ -7,6 +7,7 @@ print("------------------------------------------------");
 print("Copyright (c) 2016-2020 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
+# Disable specific menubar items
 setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
@@ -28,9 +29,6 @@ var beacon = aircraft.light.new("/sim/model/lights/beacon", [0.1, 1], "/controls
 var strobe = aircraft.light.new("/sim/model/lights/strobe", [0.05, 0.06, 0.05, 1], "/controls/lighting/strobe");
 var tail_strobe = aircraft.light.new("/sim/model/lights/tailstrobe", [0.1, 1], "/controls/lighting/strobe");
 
-var stateL = 0;
-var stateR = 0;
-
 ###########
 # Effects #
 ###########
@@ -39,121 +37,6 @@ var tiresmoke_system = aircraft.tyresmoke_system.new(0, 1, 2);
 aircraft.rain.init();
 
 aircraft.livery.init(getprop("/sim/model/livery-dir"));
-
-##########
-# Sounds #
-##########
-
-setlistener("/sim/sounde/btn1", func {
-	if (!getprop("/sim/sounde/btn1")) {
-		return;
-	}
-	settimer(func {
-		props.globals.getNode("/sim/sounde/btn1").setBoolValue(0);
-	}, 0.05);
-});
-
-setlistener("/sim/sounde/oh-btn", func {
-	if (!getprop("/sim/sounde/oh-btn")) {
-		return;
-	}
-	settimer(func {
-		props.globals.getNode("/sim/sounde/oh-btn").setBoolValue(0);
-	}, 0.05);
-});
-
-setlistener("/sim/sounde/btn3", func {
-	if (!getprop("/sim/sounde/btn3")) {
-		return;
-	}
-	settimer(func {
-		props.globals.getNode("/sim/sounde/btn3").setBoolValue(0);
-	}, 0.05);
-});
-
-setlistener("/sim/sounde/knb1", func {
-	if (!getprop("/sim/sounde/knb1")) {
-		return;
-	}
-	settimer(func {
-		props.globals.getNode("/sim/sounde/knb1").setBoolValue(0);
-	}, 0.05);
-});
-
-setlistener("/sim/sounde/switch1", func {
-	if (!getprop("/sim/sounde/switch1")) {
-		return;
-	}
-	settimer(func {
-		props.globals.getNode("/sim/sounde/switch1").setBoolValue(0);
-	}, 0.05);
-});
-
-setlistener("/controls/lighting/seatbelt-sign", func {
-	props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(1);
-	settimer(func {
-		props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(0);
-	}, 2);
-}, 0, 0);
-
-setlistener("/controls/lighting/no-smoking-sign", func {
-	props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(1);
-	settimer(func {
-		props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(0);
-	}, 1);
-}, 0, 0);
-
-var flaps_click = props.globals.getNode("/sim/sounde/flaps-click");
-
-setlistener("/controls/flight/flaps-input", func {
-	flaps_click.setBoolValue(1);
-}, 0, 0);
-
-setlistener("/sim/sounde/flaps-click", func {
-	if (!flaps_click.getValue()) {
-		return;
-	}
-	settimer(func {
-		flaps_click.setBoolValue(0);
-	}, 0.4);
-});
-
-var spdbrk_click = props.globals.getNode("/sim/sounde/spdbrk-click");
-
-setlistener("/controls/flight/speedbrake", func {
-	spdbrk_click.setBoolValue(1);
-}, 0, 0);
-
-setlistener("/sim/sounde/spdbrk-click", func {
-	if (!spdbrk_click.getValue()) {
-		return;
-	}
-	settimer(func {
-		spdbrk_click.setBoolValue(0);
-	}, 0.4);
-});
-
-var relayBatt1 = func {
-  setprop("/sim/sounde/relay-batt-1",1);
-  settimer(func {setprop("/sim/sounde/relay-batt-1",0);},0.35);
-}
-var relayBatt2 = func {
-  setprop("/sim/sounde/relay-batt-2",1);
-  settimer(func {setprop("/sim/sounde/relay-batt-2",0);},0.35);
-}
-var relayApu = func {
-  setprop("/sim/sounde/relay-apu",1);
-  settimer(func {setprop("/sim/sounde/relay-apu",0);},0.35);
-}
-var relayExt = func {
-  setprop("/sim/sounde/relay-ext",1);
-  settimer(func {setprop("/sim/sounde/relay-ext",0);},0.35);
-}
-
-setlistener("/systems/electrical/sources/bat-1/contact", relayBatt1, nil, 0);
-setlistener("/systems/electrical/sources/bat-2/contact", relayBatt2, nil, 0);
-setlistener("/systems/electrical/relay/apu-glc/contact-pos", relayApu, nil, 0);
-setlistener("/systems/electrical/relay/ext-epc/contact-pos", relayExt, nil, 0);
 
 #########
 # Doors #
@@ -199,9 +82,13 @@ var triggerDoor = func(door, doorName, doorDesc) {
 ###########
 # Systems #
 ###########
-var systemsInit = func {
+var systemsInitialized = 0;
+var A320Libraries = nil;
+
+var systemsInit = func() {
+	systemsInitialized = 0;
 	fbw.FBW.init();
-	effects.light_manager.init();
+	effects.lightManager.init();
 	systems.ELEC.init();
 	systems.PNEU.init();
 	systems.PRESS.init();
@@ -222,9 +109,7 @@ var systemsInit = func {
 	mcdu.MCDU_init(1);
 	mcdu_scratchpad.mcduMsgtimer1.start();
 	mcdu_scratchpad.mcduMsgtimer2.start();
-	systemsLoop.start();
 	effects.icingInit();
-	lightsLoop.start();
 	ecam.ECAM.init();
 	libraries.variousReset();
 	rmp.init();
@@ -236,13 +121,17 @@ var systemsInit = func {
 	fmgc.flightPlanController.init();
 	fmgc.windController.init();
 	atsu.CompanyCall.init();
+	systemsInitialized = 1;
 }
 
-setlistener("/sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func() {
 	systemsInit();
 	fmgc.postInit();
 	fmgc.flightPlanTimer.start();
 	fmgc.WaypointDatabase.read();
+
+	A320Libraries = LibrariesRecipient.new("A320 Libraries");
+	emesary.GlobalTransmitter.Register(A320Libraries);
 });
 
 var collectorTankL = props.globals.getNode("/fdm/jsbsim/propulsion/tank[5]/contents-lbs");
@@ -250,62 +139,79 @@ var collectorTankR = props.globals.getNode("/fdm/jsbsim/propulsion/tank[6]/conte
 var groundAir = props.globals.getNode("/controls/pneumatics/switches/groundair");
 var groundCart = props.globals.getNode("/controls/electrical/ground-cart");
 var chocks = props.globals.getNode("/services/chocks/enable");
-var engRdy = props.globals.getNode("/engines/ready");
 var groundspeed = 0;
+var stateL = 0;
+var stateR = 0;
 
-var systemsLoop = maketimer(0.1, func {
-	systems.ELEC.loop();
-	systems.PNEU.loop();
-	systems.PRESS.loop();
-	systems.HYD.loop();
-	systems.ADIRS.loop();
+var seatbeltSwitch = props.globals.getNode("/controls/switches/seatbelt-sign");
+var noSmokingSwitch = props.globals.getNode("/controls/switches/no-smoking-sign");
+var emerLtsSwitch = props.globals.getNode("/controls/switches/emer-lights");
+var seatbeltLight = props.globals.getNode("/controls/lighting/seatbelt-sign");
+var noSmokingLight = props.globals.getNode("/controls/lighting/no-smoking-sign");
+
+var update_items = [
+	props.UpdateManager.FromHashValue("seatbelt", nil, func(val) {
+		if (val) {
+			if (!seatbeltLight.getBoolValue()) {
+				seatbeltLight.setValue(1);
+			}
+		} else {
+			if (seatbeltLight.getBoolValue()) {
+				seatbeltLight.setValue(0);
+			}
+		}
+	}),
+	props.UpdateManager.FromHashList(["noSmoking","gearPosNorm"], nil, func(val) {
+		if (val.noSmoking == 1) {
+			if (!noSmokingLight.getBoolValue()) {
+				noSmokingLight.setBoolValue(1);
+			}
+		} elsif (val.noSmoking == 0.5 and val.gearPosNorm != 0) { # todo: should be when uplocks not engaged
+			if (!noSmokingLight.getBoolValue()) {
+				noSmokingLight.setBoolValue(1);
+			}
+		} else {
+			noSmokingLight.setBoolValue(0); # sign stays on in cabin but sound still occurs
+		}
+	}),
+];
+
+var systemsLoop = func(notification) {
+	if (!systemsInitialized and getprop("/systems/acconfig/mismatch-code") != "0x000") { return; }
+	systems.PNEU.loop(notification);
+	systems.ADIRS.loop(notification);
+	systems.BrakeSys.update(notification);
+	systems.HFLoop(notification);
 	systems.APUController.loop();
-	systems.BrakeSys.update();
-	ecam.ECAM.loop();
 	fadec.FADEC.loop();
 	rmp.rmpUpdate();
-	fcu.FCUController.loop();
+	fcu.FCUController.loop(notification);
+	atc.Transponders.vector[atc.transponderPanel.atcSel - 1].update(notification);
 	dmc.DMController.loop();
 	atsu.ATSU.loop();
 	libraries.BUTTONS.update();
-	systems.HFLoop();
 	
-	groundspeed = pts.Velocities.groundspeed.getValue();
-	if ((groundAir.getBoolValue() or groundCart.getBoolValue()) and ((groundspeed > 2) or (!pts.Controls.Gear.parkingBrake.getBoolValue() and !chocks.getBoolValue()))) {
-		groundAir.setBoolValue(0);
-		groundCart.setBoolValue(0);
-	}
-	
-	if (groundspeed > 15) {
-		shakeEffectA3XX.setBoolValue(1);
-	} else {
-		shakeEffectA3XX.setBoolValue(0);
-	}
-	
-	stateL = pts.Engines.Engine.state[0].getValue();
-	stateR = pts.Engines.Engine.state[1].getValue();
-	
-	if (stateL == 3 and stateR == 3) {
-		engRdy.setBoolValue(1);
-	} else {
-		engRdy.setBoolValue(0);
-	}
-	
-	if ((stateL == 2 or stateL == 3) and collectorTankL.getValue() < 1) {
+	if ((notification.engine1State == 2 or notification.engine1State == 3) and collectorTankL.getValue() < 1) {
 		systems.cutoff_one();
 	}
-	if ((stateR == 2 or stateR == 3) and collectorTankR.getValue() < 1) {
+	if ((notification.engine2State == 2 or notification.engine2State == 3) and collectorTankR.getValue() < 1) {
 		systems.cutoff_two();
 	}
-});
+	
+	foreach (var update_item; update_items) {
+		update_item.update(notification);
+	}
+}
 
 # GPWS
 var GPWS = {
 	inhibitNode: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit"),
+	tatcfInhibit: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit"),
 	volume: props.globals.getNode("/instrumentation/mk-viii/speaker/volume"),
 	flapAllOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override"),
 	flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override"),
 	flapOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-override"),
+	alertMode: props.globals.initNode("/instrumentation/mk-viii/outputs/alert-mode",0,"INT"),
 };
 
 setlistener("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit", func() {
@@ -332,10 +238,24 @@ setlistener("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override
 	updateGPWSFlap();
 }, 0, 0);
 
+# GPWS alert pooling for get mode change - a little esoteric way but it works
+var gpws_alert_watch = maketimer(0.8,func {	
+	var alert = 0;
+	if (getprop("instrumentation/mk-viii/outputs/discretes/gpws-warning")) alert = 2; # MODE2 - warning - RED
+	else if (getprop("instrumentation/mk-viii/outputs/discretes/gpws-alert")) alert = 1; # MODE1 - caution - YELLOW
+	if (GPWS.alertMode.getValue()!=alert) GPWS.alertMode.setValue(alert);
+});
+
+setlistener("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", func{   # detect GPWS switch status
+	var failure = GPWS.tatcfInhibit.getBoolValue();
+	if (!failure) gpws_alert_watch.start();
+	else gpws_alert_watch.stop();
+},1,0);
+
 # Replay
 var replayState = props.globals.getNode("/sim/replay/replay-state");
-setlistener("/sim/replay/replay-state", func() {
-	if (replayState.getBoolValue()) {
+setlistener(replayState, func(v) {
+	if (v.getBoolValue()) {
 	} else {
 		acconfig.colddark();
 		gui.popupTip("Replay Ended: Setting Cold and Dark state...");
@@ -343,7 +263,7 @@ setlistener("/sim/replay/replay-state", func() {
 }, 0, 0);
 
 # Steep ILS
-setlistener("/options/steep-ils", func {
+setlistener("/options/steep-ils", func() {
 	if (getprop("/options/steep-ils") == 1) {
 		setprop("/instrumentation/mk-viii/inputs/discretes/steep-approach", 1);
 	} else {
@@ -359,12 +279,12 @@ canvas.Text.setText = func(text) {
 	me.set("text", typeof(text) == 'scalar' ? text : "");
 };
 canvas.Element._lastVisible = nil;
-canvas.Element.show = func {
+canvas.Element.show = func() {
 	if (1 == me._lastVisible) {return me;}
 	me._lastVisible = 1;
 	me.setBool("visible", 1);
 };
-canvas.Element.hide = func {
+canvas.Element.hide = func() {
 	if (0 == me._lastVisible) {return me;}
 	me._lastVisible = 0;
 	me.setBool("visible", 0);
@@ -375,146 +295,9 @@ canvas.Element.setVisible = func(vis) {
 	me.setBool("visible", vis);
 };
 
-############
-# Controls #
-############
-
-controls.stepSpoilers = func(step) {
-	pts.Controls.Flight.speedbrakeArm.setValue(0);
-	if (step == 1) {
-		deploySpeedbrake();
-	} else if (step == -1) {
-		retractSpeedbrake();
-	}
-}
-
-var deploySpeedbrake = func {
-	if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
-		if (pts.Controls.Flight.speedbrake.getValue() < 1.0) {
-			pts.Controls.Flight.speedbrake.setValue(1.0);
-		}
-	} else {
-		if (pts.Controls.Flight.speedbrake.getValue() < 0.5) {
-			pts.Controls.Flight.speedbrake.setValue(0.5);
-		} else if (pts.Controls.Flight.speedbrake.getValue() < 1.0) {
-			pts.Controls.Flight.speedbrake.setValue(1.0);
-		}
-	}
-}
-
-var retractSpeedbrake = func {
-	if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
-		if (pts.Controls.Flight.speedbrake.getValue() > 0.0) {
-			pts.Controls.Flight.speedbrake.setValue(0.0);
-		}
-	} else {
-		if (pts.Controls.Flight.speedbrake.getValue() > 0.5) {
-			pts.Controls.Flight.speedbrake.setValue(0.5);
-		} else if (pts.Controls.Flight.speedbrake.getValue() > 0.0) {
-			pts.Controls.Flight.speedbrake.setValue(0.0);
-		}
-	}
-}
-
-var delta = 0;
-var output = 0;
-var slewProp = func(prop, delta) {
-    delta *= pts.Sim.Time.deltaRealtimeSec.getValue();
-    output = props.globals.getNode(prop).getValue() + delta;
-    props.globals.getNode(prop).setValue(output);
-    return output;
-}
-
-controls.flapsDown = func(step) {
-	pts.Controls.Flight.flapsTemp = pts.Controls.Flight.flaps.getValue();
-	if (step == 1) {
-		if (pts.Controls.Flight.flapsTemp < 0.2) {
-			pts.Controls.Flight.flaps.setValue(0.2);
-		} else if (pts.Controls.Flight.flapsTemp < 0.4) {
-			pts.Controls.Flight.flaps.setValue(0.4);
-		} else if (pts.Controls.Flight.flapsTemp < 0.6) {
-			pts.Controls.Flight.flaps.setValue(0.6);
-		} else if (pts.Controls.Flight.flapsTemp < 0.8) {
-			pts.Controls.Flight.flaps.setValue(0.8);
-		}
-	} else if (step == -1) {
-		if (pts.Controls.Flight.flapsTemp > 0.6) {
-			pts.Controls.Flight.flaps.setValue(0.6);
-		} else if (pts.Controls.Flight.flapsTemp > 0.4) {
-			pts.Controls.Flight.flaps.setValue(0.4);
-		} else if (pts.Controls.Flight.flapsTemp > 0.2) {
-			pts.Controls.Flight.flaps.setValue(0.2);
-		} else if (pts.Controls.Flight.flapsTemp > 0) {
-			pts.Controls.Flight.flaps.setValue(0);
-		}
-	}
-}
-
-controls.elevatorTrim = func(d) {
-    if (systems.HYD.Psi.green.getValue() >= 1500) {
-        slewProp("/controls/flight/elevator-trim", d * 0.0185); # Rate in JSB normalized (0.125 / 13.5)
-    } else {
-		slewProp("/controls/flight/elevator-trim", d * 0.0092) # Rate in JSB normalized (0.125 / 13.5)
-	}
-}
-
-setlistener("/controls/flight/elevator-trim", func {
-    if (pts.Controls.Flight.elevatorTrim.getValue() > 0.296296) {
-        pts.Controls.Flight.elevatorTrim.setValue(0.296296);
-    }
-}, 0, 0);
-
-# For the cockpit rotation and anywhere else you want to use it
-var cmdDegCalc = 0;
-var slewPitchWheel = func(d) {
-	cmdDegCalc = math.round(pts.Fdm.JSBsim.Hydraulics.ElevatorTrim.cmdDeg.getValue(), 0.1);
-	if (d > 0) { # DN
-		if (cmdDegCalc < 4) {
-			cmdDegCalc = (cmdDegCalc + 0.1) / 13.5; # Add and normalize, NOT 4! 13.5 = 1 on either polarity
-			pts.Controls.Flight.elevatorTrim.setValue(cmdDegCalc);
-		}
-	} else { # UP
-		if (cmdDegCalc > -13.5) {
-			cmdDegCalc = (cmdDegCalc - 0.1) / 13.5; # Subtract and normalize
-			pts.Controls.Flight.elevatorTrim.setValue(cmdDegCalc);
-		}
-	}
-}
-
 ##########
-# Lights #
+# Misc   #
 ##########
-
-var lightsLoop = maketimer(0.2, func {
-	# signs
-	
-	#if (getprop("/systems/pressurization/cabinalt-norm") > 11300) {
-	#	setprop("/controls/lighting/seatbelt-sign", 1);
-	#	setprop("/controls/lighting/no-smoking-sign", 1);
-	#} else {
-		if (getprop("/controls/switches/seatbelt-sign") == 1) {
-			 if (getprop("/controls/lighting/seatbelt-sign") == 0) {
-				setprop("/controls/lighting/seatbelt-sign", 1);
-			}
-		} elsif (getprop("/controls/switches/seatbelt-sign") == 0) {
-			 if (getprop("/controls/lighting/seatbelt-sign") == 1) {
-				setprop("/controls/lighting/seatbelt-sign", 0);
-			}
-		}
-		
-		if (getprop("/controls/switches/no-smoking-sign") == 1) {
-			if (getprop("/controls/lighting/no-smoking-sign") == 0) {
-				setprop("/controls/lighting/no-smoking-sign", 1);
-			}
-		} elsif (getprop("/controls/switches/no-smoking-sign") == 0.5 and getprop("/gear/gear[0]/position-norm") != 0) { # todo: should be when uplocks not engaged
-			if (getprop("/controls/lighting/no-smoking-sign") == 0) {
-				setprop("/controls/lighting/no-smoking-sign", 1);
-			}
-		} else {
-			setprop("/controls/lighting/no-smoking-sign", 0); # sign stays on in cabin but sound still occurs
-		}
-	#}
-});
 
 var pilotComfortTwoPos = func(prop) {
 	var item = getprop(prop);
@@ -536,25 +319,24 @@ var pilotComfortOnePos = func(prop) {
 	}
 }
 
-var lTray = func {
+var lTray = func() {
 	pilotComfortTwoPos("/controls/tray/lefttrayext");
 }
-var rTray = func {
+var rTray = func() {
 	pilotComfortTwoPos("/controls/tray/righttrayext");
 }
 
-var l1Pedal = func {
+var l1Pedal = func() {
 	pilotComfortOnePos("/controls/footrest-cpt[0]");
 }
-var l2Pedal = func {
+var l2Pedal = func() {
 	pilotComfortOnePos("/controls/footrest-cpt[1]");
 }
 
-var r1Pedal = func {
+var r1Pedal = func() {
 	pilotComfortOnePos("/controls/footrest-fo[0]");
 }
-var r2Pedal = func {
-	var r2PedalCMD = getprop("/controls/footrest-fo[1]");
+var r2Pedal = func() {
 	pilotComfortOnePos("/controls/footrest-fo[1]");
 }
 
@@ -569,7 +351,7 @@ if (pts.Controls.Flight.autoCoordination.getBoolValue()) {
     pts.Controls.Flight.aileronDrivesTiller.setBoolValue(0);
 }
 
-setlistener("/controls/flight/auto-coordination", func {
+setlistener("/controls/flight/auto-coordination", func() {
     pts.Controls.Flight.autoCoordination.setBoolValue(0);
 	print("System: Auto Coordination has been turned off as it is not compatible with the fly-by-wire of this aircraft.");
 	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
@@ -586,5 +368,63 @@ var APPanel = {
 		fcu.FCUController.ATDisc();
 	},
 };
+
+
+# Emesary
+var LibrariesRecipient =
+{
+	new: func(_ident)
+	{
+		var NewLibrariesRecipient = emesary.Recipient.new(_ident);
+		NewLibrariesRecipient.Receive = func(notification)
+		{
+			if (notification.NotificationType == "FrameNotification")
+			{
+				if (math.mod(notifications.frameNotification.FrameCount,4) == 0) {
+					systemsLoop(notification);
+				}
+				return emesary.Transmitter.ReceiptStatus_OK;
+			}
+			return emesary.Transmitter.ReceiptStatus_NotProcessed;
+		};
+		return NewLibrariesRecipient;
+	},
+};
+
+var input = {
+	# Libraries
+	"seatbelt": "/controls/switches/seatbelt-sign",
+	"noSmoking": "/controls/switches/no-smoking-sign",
+	"gearPosNorm": "/gear/gear[0]/position-norm",
+	"gearPosNorm1": "/gear/gear[1]/position-norm",
+	"gearPosNorm2": "/gear/gear[2]/position-norm",
+	"engine1Running": "/engines/engine[0]/running",
+	"engine2Running": "/engines/engine[1]/running",
+};
+
+foreach (var name; keys(input)) {
+	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Libraries", name, input[name]));
+}
+
+# TODO split EFIS altimeters
+var newinhg = nil;
+setlistener("/instrumentation/altimeter/setting-inhg", func() {
+	newinhg = getprop("/instrumentation/altimeter/setting-inhg");
+	setprop("/instrumentation/altimeter[1]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[2]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[3]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[4]/setting-inhg", newinhg);
+	setprop("/instrumentation/altimeter[5]/setting-inhg", newinhg);
+}, 0, 0);
+
+var newhpa = nil;
+setlistener("/instrumentation/altimeter/setting-hpa", func() {
+	newhpa = getprop("/instrumentation/altimeter/setting-hpa");
+	setprop("/instrumentation/altimeter[1]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[2]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[3]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[4]/setting-hpa", newhpa);
+	setprop("/instrumentation/altimeter[5]/setting-hpa", newhpa);
+}, 0, 0);
 
 setprop("/systems/acconfig/libraries-loaded", 1);

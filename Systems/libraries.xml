@@ -382,14 +382,6 @@
 	</filter>
 	
 	<filter>
-		<name>TAS</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>/instrumentation/airspeed-indicator/true-speed-kt</input>
-		<output>/velocities/TAS</output>
-	</filter>
-	
-	<filter>
 		<name>LBtoKG</name>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -511,46 +503,6 @@
 		</enable>
 		<input>0</input>
 		<output>/controls/flight/auto-coordination</output>
-	</filter>
-	
-	<!-- Braking -->
-	
-	<filter>
-		<name>Left Press</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<property>/controls/gear/brake-left</property>
-					<entry><ind>0.0</ind><dep>   0</dep></entry>
-					<entry><ind>0.3</ind><dep>1000</dep></entry>
-					<entry><ind>0.6</ind><dep>2000</dep></entry>
-					<entry><ind>1.0</ind><dep>3000</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/systems/hydraulic/brakes/pressure-left-psi</output>
-	</filter>
-	
-	<filter>
-		<name>Right Press</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<property>/controls/gear/brake-right</property>
-					<entry><ind>0.0</ind><dep>   0</dep></entry>
-					<entry><ind>0.3</ind><dep>1000</dep></entry>
-					<entry><ind>0.6</ind><dep>2000</dep></entry>
-					<entry><ind>1.0</ind><dep>3000</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/systems/hydraulic/brakes/pressure-right-psi</output>
 	</filter>
 	
 	<filter>
@@ -1138,5 +1090,4 @@
 		</input>
 		<output>/instrumentation/mk-viii/inputs/discretes/landing-flaps</output>
 	</logic>
-
 </PropertyList>

@@ -82,7 +82,7 @@ var draw = func{
 	var wp_group = me.element;
 	var alt = me.model.alt;
 	var i = me.model.idx;
-	var vnav_actv = getprop(me.options.ver_ctrl) == me.options.managed_val;
+	var vnav_actv = getprop(me.options.spd_ctrl) == 1;
 	var curwp = getprop(me.options.current_wp);
 	if(alt > 0){
 		var wp_d = me.model.wp.distance_along_route;

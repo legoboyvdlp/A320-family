@@ -168,12 +168,12 @@ var AOC = {
 		
 		var serverString = "";
 		if (me.server.getValue() == "vatsim") {
-			serverString = "https://api.flybywiresim.com/metar?source=vatsim&icao=";
+			serverString = "https://api.flybywiresim.com/metar/" ~ airport ~ "?source=vatsim";
 		} else {
-			serverString = defaultServer;
+			serverString = defaultServer ~ airport;
 		}
 		
-		http.load(serverString ~ airport)
+		http.load(serverString)
 			.fail(func(r) me.downloadFail(i, r))
 			.done(func(r) {
 				var errs = [];
@@ -212,7 +212,23 @@ var AOC = {
 	},
 	processMETAR: func(r, i) {
 		var raw = r.response;
+		if (find('"statusCode":404',raw) != -1) {
+			me.received = 0;
+			me.sent = 0;
+			mcdu.mcdu_message(i, "NO METAR AVAILABLE");
+			return;
+		}
+		
 		if (me.server.getValue() == "vatsim") {
+			if (find("metar", raw) != -1) {
+				raw = split('"metar":"', raw)[1];
+				raw = split('","source":"Vatsim"}', raw)[0];
+			} else {
+				me.received = 0;
+				me.sent = 0;
+				mcdu.mcdu_message(i, "BAD SERVER RESPONSE");
+				return;
+			}
 			me.lastMETAR = raw;
 		} else if (find("<raw_text>", raw) != -1) {
 			raw = split("<raw_text>", raw)[1];
@@ -312,9 +328,9 @@ var ATIS = {
 			return 1;
 		}
 		
-		var serverString = "https://api.flybywiresim.com/atis?source=" ~ me.serverSel.getValue() ~ "&icao=";
+		var serverString = "https://api.flybywiresim.com/atis/" ~ airport ~ "?source=" ~ me.serverSel.getValue();
 		
-		http.load(serverString ~ airport)
+		http.load(serverString)
 			.fail(func(r) return 3)
 			.done(func(r) {
 				var errs = [];
@@ -330,19 +346,19 @@ var ATIS = {
 	},
 	processATIS: func(r, i) {
 		var raw = r.response;
-		if (r.response == "FBW_ERROR: D-ATIS not available at this airport" or find("atis not avail",r.response) != -1) {
+		if (raw == "FBW_ERROR: D-ATIS not available at this airport" or find("atis not avail",raw) != -1 or find('"statusCode":404',raw) != -1) {
 			me.received = 0;
 			me.sent = 0;
 			mcdu.mcdu_message(i,"NO D-ATIS AVAILABLE");
 			return;
 		}
 		if (find("combined", raw) != -1) {
-			raw = split('{"combined":"', raw)[1];
+			raw = split('"combined":"', raw)[1];
 			raw = split('"}', raw)[0];
 		} else {
 			if (me.type == 0) {
-				raw = split('{"arr":"', raw)[1];
-				raw = split('","dep":', raw)[0];
+				raw = split('"arr":"', raw)[1];
+				raw = split('","dep":"', raw)[0];
 			} else {
 				raw = split('","dep":"', raw)[1];
 				raw = split('"}', raw)[0];

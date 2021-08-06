@@ -17,6 +17,7 @@ var cargoTestBtnOff = props.globals.initNode("/controls/fire/cargo/test-off", 0,
 var eng1FireWarn = props.globals.initNode("/systems/fire/engine1/warning-active", 0, "BOOL");
 var eng2FireWarn = props.globals.initNode("/systems/fire/engine2/warning-active", 0, "BOOL");
 var apuFireWarn = props.globals.initNode("/systems/fire/apu/warning-active", 0, "BOOL");
+var lavatoryFireWarn = props.globals.getNode("/systems/fire/lavatory/warning", 1);
 var eng1Inop = props.globals.initNode("/systems/fire/engine1/det-inop", 0, "BOOL");
 var eng2Inop = props.globals.initNode("/systems/fire/engine2/det-inop", 0, "BOOL");
 var apuInop = props.globals.initNode("/systems/fire/apu/det-inop", 0, "BOOL");
@@ -33,13 +34,15 @@ var eng1Agent2TimerTime = props.globals.initNode("/systems/fire/engine1/agent2-t
 var eng2Agent2TimerTime = props.globals.initNode("/systems/fire/engine2/agent2-timer-time", 0, "INT");
 var apuAgentTimerTime = props.globals.initNode("/systems/fire/apu/agent-timer-time", 0, "INT");
 
+var fireButtons = [props.globals.getNode("/controls/engines/engine[0]/fire-btn"),props.globals.getNode("/controls/engines/engine[1]/fire-btn"),props.globals.getNode("/controls/apu/fire-btn")];
+
 var fire_init = func {
 	setprop("/controls/OH/protectors/fwddisch", 0);
 	setprop("/controls/OH/protectors/aftdisch", 0);
 	setprop("/controls/fire/cargo/fwddisch", 0);
 	setprop("/controls/fire/cargo/aftdisch", 0);
-	setprop("/systems/failures/cargo-fwd-fire", 0);
-	setprop("/systems/failures/cargo-aft-fire", 0);
+	setprop("/systems/failures/fire/cargo-fwd-fire", 0);
+	setprop("/systems/failures/fire/cargo-aft-fire", 0);
 	setprop("/controls/fire/cargo/test", 0);
 	fire_timer.start();
 }
@@ -276,9 +279,9 @@ var detectorLoop = {
 		}
 	},
 	sendSignal: func(system, typeLoop) {
-		if (system == 0 and !getprop("/systems/failures/engine-left-fire")) { return; }
-		elsif (system == 1 and !getprop("/systems/failures/engine-right-fire")) { return; }
-		elsif (system == 2 and !getprop("/systems/failures/apu-fire")) { return; }
+		if (system == 0 and !getprop("/systems/failures/fire/engine-left-fire")) { return; }
+		elsif (system == 1 and !getprop("/systems/failures/fire/engine-right-fire")) { return; }
+		elsif (system == 2 and !getprop("/systems/failures/fire/apu-fire")) { return; }
 		engFireDetectorUnits.vector[system].receiveSignal(typeLoop);
 	}
 };
@@ -303,8 +306,8 @@ var cargoDetectorLoop = {
 		}
 	},
 	sendSignal: func(system, typeLoop) {
-		if ((system == 0 or system == 1) and !getprop("/systems/failures/cargo-aft-fire")) { return; }
-		elsif (system == 2 and !getprop("/systems/failures/cargo-fwd-fire")) { return; }
+		if ((system == 0 or system == 1) and !getprop("/systems/failures/fire/cargo-aft-fire")) { return; }
+		elsif (system == 2 and !getprop("/systems/failures/fire/cargo-fwd-fire")) { return; }
 		
 		cargoSmokeDetectorUnits.vector[system].receiveSignal(typeLoop);
 	}
@@ -488,29 +491,29 @@ var checkTwoInop2Timer = maketimer(0.1, checkTwoInop2);
 var checkTwoInop3Timer = maketimer(0.1, checkTwoInop3);
 
 # Create fire systems
-var engFireDetectorUnits = std.Vector.new([ engFireDetectorUnit.new(0, "/systems/failures/engine-left-fire", "/controls/fire/test-btn-1"), engFireDetectorUnit.new(1, "/systems/failures/engine-right-fire", "/controls/fire/test-btn-2"), engFireDetectorUnit.new(2, "/systems/failures/apu-fire", "/controls/fire/apu-test-btn") ]);
-var cargoSmokeDetectorUnits = std.Vector.new([cargoSmokeDetectorUnit.new(0, "/systems/failures/cargo-aft-fire"), cargoSmokeDetectorUnit.new(1, "/systems/failures/cargo-aft-fire"), cargoSmokeDetectorUnit.new(1, "/systems/failures/cargo-fwd-fire")]);
+var engFireDetectorUnits = std.Vector.new([ engFireDetectorUnit.new(0, "/systems/failures/fire/engine-left-fire", "/controls/fire/test-btn-1"), engFireDetectorUnit.new(1, "/systems/failures/fire/engine-right-fire", "/controls/fire/test-btn-2"), engFireDetectorUnit.new(2, "/systems/failures/fire/apu-fire", "/controls/fire/apu-test-btn") ]);
+var cargoSmokeDetectorUnits = std.Vector.new([cargoSmokeDetectorUnit.new(0, "/systems/failures/fire/cargo-aft-fire"), cargoSmokeDetectorUnit.new(1, "/systems/failures/fire/cargo-aft-fire"), cargoSmokeDetectorUnit.new(1, "/systems/failures/fire/cargo-fwd-fire")]);
 
 # Create detector loops
 var engDetectorLoops = std.Vector.new([ 
-detectorLoop.new(0, 1, "/systems/fire/engine1/temperature", "/systems/electrical/bus/dc-ess", "/systems/failures/engine-left-fire"),  detectorLoop.new(0, 2, "/systems/fire/engine1/temperature", "/systems/electrical/bus/dc-2", "/systems/failures/engine-left-fire"),
-detectorLoop.new(1, 1, "/systems/fire/engine2/temperature", "/systems/electrical/bus/dc-2", "/systems/failures/engine-right-fire"),    detectorLoop.new(1, 2, "/systems/fire/engine2/temperature", "/systems/electrical/bus/dc-ess", "/systems/failures/engine-right-fire"),
-detectorLoop.new(2, 1, "/systems/fire/apu/temperature", "/systems/electrical/bus/dc-bat", "/systems/failures/apu-fire"),               detectorLoop.new(2, 2, "/systems/fire/apu/temperature", "/systems/electrical/bus/dc-bat", "/systems/failures/apu-fire") 
+detectorLoop.new(0, 1, "/systems/fire/engine1/temperature", "/systems/electrical/bus/dc-ess", "/systems/failures/fire/engine-left-fire"),  detectorLoop.new(0, 2, "/systems/fire/engine1/temperature", "/systems/electrical/bus/dc-2", "/systems/failures/fire/engine-left-fire"),
+detectorLoop.new(1, 1, "/systems/fire/engine2/temperature", "/systems/electrical/bus/dc-2", "/systems/failures/fire/engine-right-fire"),    detectorLoop.new(1, 2, "/systems/fire/engine2/temperature", "/systems/electrical/bus/dc-ess", "/systems/failures/fire/engine-right-fire"),
+detectorLoop.new(2, 1, "/systems/fire/apu/temperature", "/systems/electrical/bus/dc-bat", "/systems/failures/fire/apu-fire"),               detectorLoop.new(2, 2, "/systems/fire/apu/temperature", "/systems/electrical/bus/dc-bat", "/systems/failures/fire/apu-fire") 
 ]);
 
 var cargoDetectorLoops = std.Vector.new([ 
-cargoDetectorLoop.new(0, 1, "/systems/fire/cargo/aft/temperature", "/systems/failures/cargo-aft-fire"), cargoDetectorLoop.new(0, 2, "/systems/fire/cargo/aft/temperature", "/systems/failures/cargo-aft-fire"),
-cargoDetectorLoop.new(1, 1, "/systems/fire/cargo/aft/temperature", "/systems/failures/cargo-aft-fire"), cargoDetectorLoop.new(1, 2, "/systems/fire/cargo/aft/temperature", "/systems/failures/cargo-aft-fire"),
-cargoDetectorLoop.new(2, 1, "/systems/fire/cargo/fwd/temperature", "/systems/failures/cargo-fwd-fire"), cargoDetectorLoop.new(2, 2, "/systems/fire/cargo/fwd/temperature", "/systems/failures/cargo-fwd-fire")
+cargoDetectorLoop.new(0, 1, "/systems/fire/cargo/aft/temperature", "/systems/failures/fire/cargo-aft-fire"), cargoDetectorLoop.new(0, 2, "/systems/fire/cargo/aft/temperature", "/systems/failures/fire/cargo-aft-fire"),
+cargoDetectorLoop.new(1, 1, "/systems/fire/cargo/aft/temperature", "/systems/failures/fire/cargo-aft-fire"), cargoDetectorLoop.new(1, 2, "/systems/fire/cargo/aft/temperature", "/systems/failures/fire/cargo-aft-fire"),
+cargoDetectorLoop.new(2, 1, "/systems/fire/cargo/fwd/temperature", "/systems/failures/fire/cargo-fwd-fire"), cargoDetectorLoop.new(2, 2, "/systems/fire/cargo/fwd/temperature", "/systems/failures/fire/cargo-fwd-fire")
 ]);
 
 # Create extinguisher bottles
-var extinguisherBottles = std.Vector.new([extinguisherBottle.new(0, "/systems/fire/engine1/disch1", "/systems/electrical/bus/dc-hot-1", "/systems/failures/engine-left-fire", "/systems/fire/engine1/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine1/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/engine-left-fire", "/systems/fire/engine1/warning-active"),
-extinguisherBottle.new(0, "/systems/fire/engine2/disch1", "/systems/electrical/bus/dc-hot-2", "/systems/failures/engine-right-fire", "/systems/fire/engine2/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine2/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/engine-right-fire", "/systems/fire/engine2/warning-active"), 
-extinguisherBottle.new(9, "/systems/fire/apu/disch", "/systems/electrical/bus/dc-bat", "/systems/failures/apu-fire", "/systems/fire/apu/warning-active") ]);
+var extinguisherBottles = std.Vector.new([extinguisherBottle.new(0, "/systems/fire/engine1/disch1", "/systems/electrical/bus/dc-hot-1", "/systems/failures/fire/engine-left-fire", "/systems/fire/engine1/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine1/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/fire/engine-left-fire", "/systems/fire/engine1/warning-active"),
+extinguisherBottle.new(0, "/systems/fire/engine2/disch1", "/systems/electrical/bus/dc-hot-2", "/systems/failures/fire/engine-right-fire", "/systems/fire/engine2/warning-active"), extinguisherBottle.new(1, "/systems/fire/engine2/disch2", "/systems/electrical/bus/dc-2", "/systems/failures/fire/engine-right-fire", "/systems/fire/engine2/warning-active"), 
+extinguisherBottle.new(9, "/systems/fire/apu/disch", "/systems/electrical/bus/dc-bat", "/systems/failures/fire/apu-fire", "/systems/fire/apu/warning-active") ]);
 
 # There is only one bottle but the system will think there are two, so other parts work
-var cargoExtinguisherBottles = std.Vector.new([extinguisherBottle.new(8, "/systems/fire/cargo/disch", "/systems/electrical/bus/dc-bat", "/systems/failures/cargo-aft-fire", "/systems/fire/cargo/aft/warning-active", 250), extinguisherBottle.new(7, "/systems/fire/cargo/disch", "/systems/electrical/bus/dc-bat", "/systems/failures/cargo-fwd-fire", "/systems/fire/cargo/fwd/warning-active", 250)]);
+var cargoExtinguisherBottles = std.Vector.new([extinguisherBottle.new(8, "/systems/fire/cargo/disch", "/systems/electrical/bus/dc-bat", "/systems/failures/fire/cargo-aft-fire", "/systems/fire/cargo/aft/warning-active", 250), extinguisherBottle.new(7, "/systems/fire/cargo/disch", "/systems/electrical/bus/dc-bat", "/systems/failures/fire/cargo-fwd-fire", "/systems/fire/cargo/fwd/warning-active", 250)]);
 
 # Create CIDS channels
 var CIDSchannels = std.Vector.new([CIDSchannel.new("/systems/electrical/bus/dc-ess"), CIDSchannel.new("/systems/electrical/bus/dc-2")]);
@@ -544,7 +547,7 @@ var createCargoFireBottleListener = func(prop, index) {
 
 # Listeners 
 setlistener("/controls/engines/engine[0]/fire-btn", func() { 
-	if (getprop("/controls/engines/engine[0]/fire-btn") == 1) { 
+	if (systems.fireButtons[0].getValue() == 1) { 
 		ecam.shutUpYou();
 		eng1AgentTimerMakeTimer.stop();
 		eng1AgentTimer.setValue(10);
@@ -587,7 +590,7 @@ eng1Agent2TimerMakeTimerFunc = func() {
 }
 
 setlistener("/controls/engines/engine[1]/fire-btn", func() { 
-	if (getprop("/controls/engines/engine[1]/fire-btn") == 1) { 
+	if (systems.fireButtons[1].getValue() == 1) { 
 		ecam.shutUpYou(); 
 		eng2AgentTimerMakeTimer.stop();
 		eng2AgentTimer.setValue(10);
@@ -652,7 +655,7 @@ apuAgentTimerMakeTimerFunc = func() {
 }
 
 setlistener("/controls/fire/test-btn-1", func() {
-	if (getprop("/systems/failures/engine-left-fire")) { return; }
+	if (getprop("/systems/failures/fire/engine-left-fire")) { return; }
 	
 	if (testBtn.getValue() == 1) {
 		if (systems.ELEC.Bus.dcBat.getValue() > 25 or systems.ELEC.Bus.dcEss.getValue() > 25) {
@@ -665,7 +668,7 @@ setlistener("/controls/fire/test-btn-1", func() {
 }, 0, 0);
 
 setlistener("/controls/fire/test-btn-2", func() {
-	if (getprop("/systems/failures/engine-right-fire")) { return; }
+	if (getprop("/systems/failures/fire/engine-right-fire")) { return; }
 	if (testBtn2.getValue() == 1) {
 		if (systems.ELEC.Bus.dcBat.getValue() > 25 or systems.ELEC.Bus.dcEss.getValue() > 25) {
 			eng2FireWarn.setBoolValue(1);
@@ -677,7 +680,7 @@ setlistener("/controls/fire/test-btn-2", func() {
 }, 0, 0);
 
 setlistener("/controls/fire/apu-test-btn", func() {
-	if (getprop("/systems/failures/apu-fire")) { return; }
+	if (getprop("/systems/failures/fire/apu-fire")) { return; }
 	if (apuTestBtn.getValue() == 1) {
 		if (systems.ELEC.Bus.dcBat.getValue() > 25 or systems.ELEC.Bus.dcEss.getValue() > 25) {
 			apuFireWarn.setBoolValue(1);
@@ -689,7 +692,7 @@ setlistener("/controls/fire/apu-test-btn", func() {
 }, 0, 0);
 
 setlistener("/controls/fire/cargo/test", func() {
-	if (getprop("/systems/failures/aft-cargo-fire") or getprop("/systems/failures/fwd-cargo-fire") or systems.ELEC.Bus.dcBat.getValue() < 25 or systems.ELEC.Bus.dcEss.getValue() < 25) { return; }
+	if (getprop("/systems/failures/fire/aft-cargo-fire") or getprop("/systems/failures/fire/fwd-cargo-fire") or systems.ELEC.Bus.dcBat.getValue() < 25 or systems.ELEC.Bus.dcEss.getValue() < 25) { return; }
 	if (cargoTestBtn.getBoolValue()) {
 		cargoTestTime.setValue(elapsedTime.getValue());
 		cargoTestChecker.start();

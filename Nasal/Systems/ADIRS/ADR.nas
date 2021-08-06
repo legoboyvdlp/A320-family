@@ -10,32 +10,31 @@ var _selfTestTime = nil;
 var ADIRSnodesND = [props.globals.getNode("/instrumentation/efis[0]/nd/ir-1", 1),props.globals.getNode("/instrumentation/efis[1]/nd/ir-2", 1),props.globals.getNode("/instrumentation/efis[0]/nd/ir-3", 1)];
 
 var ADIRU = {
-	# local vars
-	_alignTime: 0,
-	_voltageMain: 0,
-	_voltageBackup: 0,
-	_voltageLimitedTime: 0,
-	_noPowerTime: 0,
-	_timeVar: 0,
-	_roll: 0,
-	_pitch: 0,
-	_gs: 0,
-	
-	num: 0,
-	aligned: 0,
-	inAlign: 0,
-	outputOn: 1, # 0 = disc, 1 = normal
-	mode: 0, # 0 = off, 1 = nav, 2 = att
-	energised: 0, # 0 = off, 1 = on
-	operative: 0, # 0 = off,
-	alignTimer: nil,
-	input: [],
-	output: [],
-	
 	# methods
     new: func(n) {
 		var adiru = { parents:[ADIRU] };
 		adiru.num = n;
+		adiru._alignTime =  0;
+		adiru._pfdTime =  0;
+		adiru._voltageMain =  0;
+		adiru._voltageBackup =  0;
+		adiru._voltageLimitedTime =  0;
+		adiru._noPowerTime =  0;
+		adiru._timeVar =  0;
+		adiru._roll =  0;
+		adiru._pitch =  0;
+		adiru._gs =  0;
+		
+		adiru.aligned =  0;
+		adiru.operating =  0; # ir operating - used for PFD + fbw failure
+		adiru.inAlign =  0;
+		adiru.outputOn =  1; # 0 = disc; 1 = normal
+		adiru.mode =  0; # 0 = off; 1 = nav; 2 = att
+		adiru.energised =  0; # 0 = off; 1 = on
+		adiru.operative =  0; # 0 = off;
+		adiru.alignTimer =  nil;
+		adiru.input =  [];
+		adiru.output =  [];
 		adiru.alignTimer = maketimer(0.1, adiru, me.alignLoop);
 		
 		return adiru;
@@ -93,6 +92,7 @@ var ADIRU = {
 		if (!ADIRS.skip.getValue()) {
 			if (time > 0 and me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
 				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + time;
+				me._pfdTime = pts.Sim.Time.elapsedSec.getValue() + 20 + (rand() * 5);
 				me.inAlign = 1;
 				if (me.alignTimer != nil) {
 					me.alignTimer.start();
@@ -101,6 +101,7 @@ var ADIRU = {
 		} else {
 			if (me.aligned == 0 and me.inAlign == 0 and me.operative == 1) {
 				me._alignTime = pts.Sim.Time.elapsedSec.getValue() + 5;
+				me._pfdTime = pts.Sim.Time.elapsedSec.getValue() + 1;
 				me.inAlign = 1;
 				if (me.alignTimer != nil) {
 					me.alignTimer.start();
@@ -109,11 +110,11 @@ var ADIRU = {
 		}
 	},
 	stopAlignNoAlign: func() {
-		print("Stopping alignment or setting unaligned state");
 		me.inAlign = 0;
 		me.aligned = 0;
 		ADIRSnodesND[me.num].setValue(0);
 		ADIRS.Operating.aligned[me.num].setValue(0);
+		me.operating = 0;
 		if (me.alignTimer != nil) {
 			me.alignTimer.stop();
 		}
@@ -123,6 +124,9 @@ var ADIRU = {
 		foreach (var predicate; keys(canvas_nd.ND_2.NDFo.predicates)) {
 			call(canvas_nd.ND_2.NDFo.predicates[predicate]);
 		}
+	},
+	irOperating: func() {
+		me.operating = 1;
 	},
 	stopAlignAligned: func() {
 		me.inAlign = 0;
@@ -139,6 +143,7 @@ var ADIRU = {
 			call(canvas_nd.ND_2.NDFo.predicates[predicate]);
 		}
 	},
+	_excessMotion: 0,
 	alignLoop: func() {
 		me._roll = pts.Orientation.roll.getValue();
 		me._pitch = pts.Orientation.pitch.getValue();
@@ -147,17 +152,26 @@ var ADIRU = {
 		# todo use IR values
 		if (me._gs > 5 or abs(me._pitch) > 5 or abs(me._roll) > 10) {
 			me.stopAlignNoAlign();
-			print("Excessive motion, restarting");
+			me._excessMotion = 1;
 			me.update(); # update operative
 			me.align(calcAlignTime(pts.Position.latitude.getValue()));
 		} elsif (me.operative == 0) {
 			me.stopAlignNoAlign();
+			me._excessMotion = 0;
 		} elsif (pts.Sim.Time.elapsedSec.getValue() >= me._alignTime) {
 			me.stopAlignAligned();
+			me._excessMotion = 0;
+		} else {
+			me._excessMotion = 0;
+		}
+		
+		if (!me.operating and pts.Sim.Time.elapsedSec.getValue() >= me._pfdTime) {
+			me.irOperating();
 		}
 	},
 	instAlign: func() {
 		me.stopAlignAligned();
+		me.irOperating();
 	},
 	# Update loop
 	update: func() {
@@ -308,7 +322,9 @@ var ADIRS = {
 			}
 		),
 	],
-	loop: func() {
+	_hasGPSPrimLost: 0,
+	_hasGPSPrim: 0,
+	loop: func(notification) {
 		if (me._init) {
 			for (i = 0; i < _NUMADIRU; i = i + 1) {
 				# update ADR units power
@@ -329,10 +345,34 @@ var ADIRS = {
 						me.Operating.adr[i].setValue(0);
 					}
 				}
+				
+				if (!me.Operating.aligned[0].getBoolValue() and !me.Operating.aligned[1].getBoolValue() and !me.Operating.aligned[2].getBoolValue()) {
+					if (!me._hasGPSPrimLost) {
+						mcdu_scratchpad.messageQueues[0].addNewMsg(mcdu_scratchpad.MessageController.getTypeIIMsgByText("GPS PRIMARY LOST"));
+						mcdu_scratchpad.messageQueues[1].addNewMsg(mcdu_scratchpad.MessageController.getTypeIIMsgByText("GPS PRIMARY LOST"));
+						me._hasGPSPrimLost = 1;
+					}
+				} else {
+					if (me._hasGPSPrimLost) {
+						mcdu_scratchpad.messageQueues[0].deleteWithText("GPS PRIMARY LOST");
+						mcdu_scratchpad.messageQueues[1].deleteWithText("GPS PRIMARY LOST");
+						me._hasGPSPrimLost = 0;
+					}
+				}
+				
+				if (me.Operating.aligned[0].getBoolValue() or me.Operating.aligned[1].getBoolValue() or me.Operating.aligned[2].getBoolValue()) {
+					if (!me._hasGPSPrim) {
+						mcdu_scratchpad.messageQueues[0].addNewMsg(mcdu_scratchpad.MessageController.getTypeIIMsgByText("GPS PRIMARY"));
+						mcdu_scratchpad.messageQueues[1].addNewMsg(mcdu_scratchpad.MessageController.getTypeIIMsgByText("GPS PRIMARY"));
+						me._hasGPSPrim = 1;
+					}
+				} else {
+					me._hasGPSPrim = 0;
+				}
 			}
 			
+			
 			# Update VFE
-			notification = nil;
 			foreach (var update_item; me.update_items) {
 				update_item.update(notification);
 			}

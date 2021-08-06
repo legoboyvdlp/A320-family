@@ -4,16 +4,16 @@
 # Copyright (c) 2019 Jonathan Redpath
 
 var HYD = {
+	lcont: 0,
+	rcont: 0,
 	Brakes: {
-		accumPressPsi: props.globals.initNode("/systems/hydraulic/brakes/accumulator-pressure-psi", 0, "INT"),
+		accumPressPsi: props.globals.initNode("/systems/hydraulic/yellow-accumulator-psi-cmd", 3000, "INT"),
 		leftPressPsi: props.globals.initNode("/systems/hydraulic/brakes/pressure-left-psi", 0, "INT"),
 		rightPressPsi: props.globals.initNode("/systems/hydraulic/brakes/pressure-right-psi", 0, "INT"),
-		askidSw: props.globals.initNode("/systems/hydraulic/brakes/askidnwssw", 1, "BOOL"),
 		mode: props.globals.initNode("/systems/hydraulic/brakes/mode", 0, "INT"),
-		lbrake: props.globals.initNode("/systems/hydraulic/brakes/lbrake", 0, "INT"),
-		rbrake: props.globals.initNode("/systems/hydraulic/brakes/rbrake", 0, "INT"),
+		leftbrake: props.globals.getNode("/controls/gear/brake-left"),
+		rightbrake: props.globals.getNode("/controls/gear/brake-right"),
 		noserubber: props.globals.initNode("/systems/hydraulic/brakes/nose-rubber", 0, "INT"),
-		counter: props.globals.initNode("/systems/hydraulic/brakes/counter", 0, "INT"),
 	},
 	Fail: {
 		blueElec: props.globals.getNode("/systems/failures/hydraulic/blue-elec"),
@@ -56,16 +56,22 @@ var HYD = {
 		rat: props.globals.getNode("/controls/hydraulic/switches/rat-man"),
 		yellowEDP: props.globals.getNode("/controls/hydraulic/switches/yellow-edp"),
 		yellowElec: props.globals.getNode("/controls/hydraulic/switches/yellow-elec"),
+		nwsSwitch: props.globals.getNode("/controls/gear/nws-switch"),
 	},
 	Valve: {
 		yellowFire: props.globals.getNode("/systems/hydraulic/sources/yellow-edp/fire-valve"),
 		greenFire: props.globals.getNode("/systems/hydraulic/sources/green-edp/fire-valve"),
 	},
+	Warnings: {
+		blueAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/blue-abnorm-lo-pr"),
+		greenAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/green-abnorm-lo-pr"),
+		yellowAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/yellow-abnorm-lo-pr"),
+	},
 	init: func() {
 		me.resetFail();
-		me.Qty.blueInput.setValue(math.round((rand() * 4) + 8 , 0.1)); # Random between 8 and 12
-		me.Qty.greenInput.setValue(math.round((rand() * 4) + 8 , 0.1)); # Random between 8 and 12
-		me.Qty.yellowInput.setValue(math.round((rand() * 4) + 8 , 0.1)); # Random between 8 and 12
+		me.Qty.blueInput.setValue(math.round((rand() * 2) + 6 , 0.1)); # Random between 6 and 8
+		me.Qty.greenInput.setValue(math.round((rand() * 4) + 14 , 0.1)); # Random between 14 and 18
+		me.Qty.yellowInput.setValue(math.round((rand() * 4) + 10 , 0.1)); # Random between 10 and 14
 		me.Switch.blueElec.setValue(1);
 		me.Switch.blueElecOvrd.setValue(0);
 		me.Switch.greenEDP.setValue(1);
@@ -73,6 +79,7 @@ var HYD = {
 		me.Switch.rat.setValue(0);
 		me.Switch.yellowEDP.setValue(1);
 		me.Switch.yellowElec.setValue(0);
+		me.Brakes.accumPressPsi.setValue(3000);
 	},
 	resetFail: func() {
 		me.Fail.blueElec.setBoolValue(0);
@@ -84,17 +91,128 @@ var HYD = {
 		me.Fail.yellowElec.setBoolValue(0);
 		me.Fail.yellowLeak.setBoolValue(0);
 	},
-	loop: func() {
-		if (me.Brakes.mode.getValue() == 2) {
-			if (me.Psi.yellow.getValue() > 2500 and me.Brakes.accumPressPsi.getValue() < 700) {
-				me.Brakes.accumPressPsi.setValue(me.Brakes.accumPressPsi.getValue() + 50);
+	loop: func(notification) {
+		# Decrease accumPressPsi when green and yellow hydraulics aren't pressurized
+		if (me.Brakes.leftbrake.getValue() > 0 or notification.brakesMode == 0) {
+			me.lcont = me.lcont + 1;
+		} else {
+			me.lcont = 0;
+		}
+		if (me.Brakes.rightbrake.getValue() > 0 or notification.brakesMode == 0) {
+			me.rcont = me.rcont + 1;
+		} else {
+			me.rcont = 0;
+		}
+		
+		if (notification.yellow < notification.accumPressPsi and notification.accumPressPsi > 0) {
+			if (me.lcont == 1) {
+				me.Brakes.accumPressPsi.setValue(notification.accumPressPsi - 200);
+			}
+			if (me.rcont == 1) {
+				me.Brakes.accumPressPsi.setValue(notification.accumPressPsi - 200);
+			}
+			if (notification.accumPressPsi < 0) {
+				me.Brakes.accumPressPsi.setValue(0);
+			}
+		}
+		
+		# Braking Pressure
+		if (notification.brakesMode == 1 or (notification.brakesMode == 2 and notification.green >= 2500)) {
+			# Normal braking - Green OK
+			if (notification.leftBrake > 0) {
+				me.Brakes.leftPressPsi.setValue(notification.green * notification.leftBrakeFCS);
+			} else {
+				me.Brakes.leftPressPsi.setValue(0);
+			}
+			if (notification.rightBrake > 0) {
+				me.Brakes.rightPressPsi.setValue(notification.green * notification.rightBrakeFCS);
+			} else {
+				me.Brakes.rightPressPsi.setValue(0);
+			}
+		} else {
+			if ((notification.brakesMode == 2 and notification.green < 2500) or notification.brakesMode == 0) {
+				# Alternate Braking (Yellow OK + Antiskid ON + electric OK) - missing condition: BSCU OK-KO
+				if (notification.yellow >= 2500 and notification.NWSSwitch and (notification.dc1 >= 24 or notification.dc2 >= 24 or notification.dcEss >= 24)) {
+					if (notification.leftBrake > 0 or notification.brakesMode == 0) {
+						me.Brakes.leftPressPsi.setValue(notification.yellow * notification.leftBrakeFCS);
+					} else {
+						me.Brakes.leftPressPsi.setValue(0);
+					}
+					if (notification.rightBrake > 0 or notification.brakesMode == 0) {
+						me.Brakes.rightPressPsi.setValue(notification.yellow * notification.rightBrakeFCS);
+					} else {
+						me.Brakes.rightPressPsi.setValue(0);
+					}
+				} else {
+					# Alternate Braking (Yellow OK + Antiskid OFF + electric OK) - missing condition: BSCU OK-KO
+					if (notification.yellow >= 2500 and !notification.NWSSwitch and (notification.dc1 >= 24 or notification.dc2 >= 24 or notification.dcEss >= 24)) {
+						if (notification.leftBrake > 0 or notification.brakesMode == 0) {
+							me.Brakes.leftPressPsi.setValue(1000 * notification.leftBrakeFCS);
+						} else {
+							me.Brakes.leftPressPsi.setValue(0);
+						}
+						if (notification.rightBrake > 0 or notification.brakesMode == 0) {
+							me.Brakes.rightPressPsi.setValue(1000 * notification.rightBrakeFCS);
+						}  else {
+							me.Brakes.rightPressPsi.setValue(0);
+						}
+					} else {
+						# Alternate Braking (Yellow KO or Antiskid KO or electric KO) - missing condition: BSCU OK-KO
+						if (notification.accumPressPsi < 1000 and (notification.yellow < 2500 or !notification.NWSSwitch or (notification.dc1 < 24 and notification.dc2 < 24 and notification.dcEss < 24))) {
+							if (notification.leftBrake > 0 or notification.brakesMode == 0) {
+								me.Brakes.leftPressPsi.setValue(notification.accumPressPsi * notification.leftBrakeFCS);
+							} else {
+								me.Brakes.leftPressPsi.setValue(0);
+							}
+							if (notification.rightBrake > 0 or notification.brakesMode == 0) {
+								me.Brakes.rightPressPsi.setValue(notification.accumPressPsi * notification.rightBrakeFCS);
+							}  else {
+								me.Brakes.rightPressPsi.setValue(0);
+							}
+						} else {
+							if (notification.leftBrake > 0 or notification.brakesMode == 0) {
+								me.Brakes.leftPressPsi.setValue(1000 * notification.leftBrakeFCS);
+							} else {
+								me.Brakes.leftPressPsi.setValue(0);
+							}
+							if (notification.rightBrake > 0 or notification.brakesMode == 0) {
+								me.Brakes.rightPressPsi.setValue(1000 * notification.rightBrakeFCS);
+							}  else {
+								me.Brakes.rightPressPsi.setValue(0);
+							}
+						}
+					}
+				} 
 			}
 		}
 	},
 };
 
+# Restrict gear raising on the ground
 setlistener("/controls/gear/gear-down", func {
 	if (!pts.Controls.Gear.gearDown.getValue() and (pts.Gear.wow[0].getValue() or pts.Gear.wow[1].getValue() or pts.Gear.wow[2].getValue())) {
 		pts.Controls.Gear.gearDown.setValue(1);
 	}
 });
+
+# Emesary
+var A320Hydraulic = notifications.SystemRecipient.new("A320 Hydraulic",HYD.loop,HYD);
+emesary.GlobalTransmitter.Register(A320Hydraulic);
+
+var input = {
+	"blue": "/systems/hydraulic/blue-psi",
+	"green": "/systems/hydraulic/green-psi",
+	"yellow": "/systems/hydraulic/yellow-psi",
+	
+	"brakesMode": "/systems/hydraulic/brakes/mode",
+	"accumPressPsi": "/systems/hydraulic/yellow-accumulator-psi-cmd",
+	"leftBrake": "/controls/gear/brake-left",
+	"rightBrake": "/controls/gear/brake-right",
+	"leftBrakeFCS": "/fdm/jsbsim/fcs/left-brake-cmd-norm",
+	"rightBrakeFCS": "/fdm/jsbsim/fcs/right-brake-cmd-norm",
+	"NWSSwitch": "/controls/gear/nws-switch",
+};
+
+foreach (var name; keys(input)) {
+	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Hydraulic", name, input[name]));
+}

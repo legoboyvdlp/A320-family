@@ -35,6 +35,13 @@
     <filter>
         <type>gain</type>
         <gain>1.0</gain>
+        <input>/controls/lighting/fcu-digit-norm-tied</input>
+        <output>/controls/lighting/fcu-digit-norm</output>
+    </filter>
+	
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
         <input>/controls/lighting/main-panel-norm-tied</input>
         <output>/controls/lighting/main-panel-norm</output>
     </filter>

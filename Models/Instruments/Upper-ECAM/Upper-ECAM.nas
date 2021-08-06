@@ -1,5 +1,4 @@
 var flapsPos = nil;
-var elapsedtime = nil;
 var LBS2KGS = 0.4535924;
 var slatLockGoing = 0;
 var slatLockFlash = 0;
@@ -508,7 +507,7 @@ var canvas_upperECAM = {
 		me.updatePower();
 		
 		if (me.test.getVisible() == 1) {
-			me.updateTest();
+			me.updateTest(notification);
 		}
 		
 		if (me.group.getVisible() == 0) {
@@ -905,8 +904,8 @@ var canvas_upperECAM = {
 		}
 	},
 	
-	updateTest: func() {
-		if (du3_test_time.getValue() + 1 >= pts.Sim.Time.elapsedSec.getValue()) {
+	updateTest: func(notification) {
+		if (du3_test_time.getValue() + 1 >= notification.elapsedTime) {
 			me["Test_white"].show();
 			me["Test_text"].hide();
 		} else {
@@ -914,28 +913,38 @@ var canvas_upperECAM = {
 			me["Test_text"].show();
 		}
 	},
+	off: 0,
+	on: 0,
 	powerTransient: func() {
 		if (systems.ELEC.Bus.acEss.getValue() >= 110) {
-			if (du3_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
-				if (pts.Gear.wow[0].getValue()) {
-					if (!acconfig.getBoolValue() and !du3_test.getBoolValue()) {
+			if (!me.on) {
+				if (du3_offtime.getValue() + 3 < pts.Sim.Time.elapsedSec.getValue()) {
+					if (pts.Gear.wow[0].getValue()) {
+						if (!acconfig.getBoolValue() and !du3_test.getBoolValue()) {
+							du3_test.setValue(1);
+							du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue());
+						} else if (acconfig.getBoolValue() and !du3_test.getBoolValue()) {
+							du3_test.setValue(1);
+							du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+							du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue() - 30);
+						}
+					} else {
 						du3_test.setValue(1);
-						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue());
-					} else if (acconfig.getBoolValue() and !du3_test.getBoolValue()) {
-						du3_test.setValue(1);
-						du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-						du3_test_time.setValue(pts.Sim.Time.elapsedSec.getValue() - 30);
+						du3_test_amount.setValue(0);
+						du3_test_time.setValue(-100);
 					}
-				} else {
-					du3_test.setValue(1);
-					du3_test_amount.setValue(0);
-					du3_test_time.setValue(-100);
 				}
+				me.off = 0;
+				me.on = 1;
 			}
 		} else {
-			du3_test.setValue(0);
-			du3_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
+			if (!me.off) {
+				du3_test.setValue(0);
+				du3_offtime.setValue(pts.Sim.Time.elapsedSec.getValue());
+				me.off = 1;
+				me.on = 0;
+			}
 		}
 	},
 	updatePower: func() {
@@ -972,15 +981,14 @@ var UpperECAMRecipient =
 						EWDRecipient.MainScreen = canvas_upperECAM.new("Aircraft/A320-family/Models/Instruments/Upper-ECAM/res/cfm-eis2.svg", "A320 E/WD CFM", "CFM");
 					}
 				}
-				
-				#if (!math.mod(notifications.frameNotification.FrameCount,2)){
+				if (math.mod(notifications.frameNotification.FrameCount,2) == 0) {
 					if (EWDRecipient.type) {
 						EWDRecipient.MainScreen.updateIAE(notification);
 					} else {
 						EWDRecipient.MainScreen.updateCFM(notification);
 					
 					}
-				#}
+				}
 				return emesary.Transmitter.ReceiptStatus_OK;
 			}
 			return emesary.Transmitter.ReceiptStatus_NotProcessed;
@@ -992,9 +1000,8 @@ var UpperECAMRecipient =
 var A320EWD = UpperECAMRecipient.new("A320 E/WD");
 emesary.GlobalTransmitter.Register(A320EWD);
 
-input = {
+var input = {
 	fuelTotalLbs: "/consumables/fuel/total-fuel-lbs",
-	acconfigUnits: "/systems/acconfig/options/weight-kgs",
 	slatLocked: "/fdm/jsbsim/fcs/slat-locked",
 	
 	# N1 parameters

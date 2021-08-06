@@ -5,7 +5,40 @@
 
 var initInputA = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
-	if (key == "L2") {
+	if (key == "L1") { #clear coRoute if set
+		if (scratchpad == "CLR") {
+			if (fmgc.FMGCInternal.coRouteSet == 1) {
+				fmgc.FMGCInternal.coRouteSet = 0;
+				fmgc.FMGCInternal.coRoute = "";
+				fmgc.FMGCInternal.depApt = "";
+				fmgc.FMGCInternal.arrApt = "";
+				fmgc.FMGCInternal.toFromSet = 0;
+				fmgc.FMGCNodes.toFromSet.setValue(0);
+				fmgc.windController.resetDesWinds();
+				setprop("/FMGC/internal/align-ref-lat", 0);
+				setprop("/FMGC/internal/align-ref-long", 0);
+				setprop("/FMGC/internal/align-ref-lat-edit", 0);
+				setprop("/FMGC/internal/align-ref-long-edit", 0);
+				if (fmgc.FMGCInternal.blockConfirmed) {
+					fmgc.FMGCInternal.fuelCalculating = 0;
+					fmgc.fuelCalculating.setValue(0);
+					fmgc.FMGCInternal.fuelCalculating = 1;
+					fmgc.fuelCalculating.setValue(1);
+				}
+				fmgc.flightPlanController.reset(2);
+				fmgc.flightPlanController.init();
+				Simbrief.SimbriefParser.inhibit = 0;				
+			}
+			mcdu_scratchpad.scratchpads[i].empty();
+		} else {
+			var len = size(scratchpad);
+			if (fmgc.FMGCInternal.coRouteSet == 1 or len != 10) {
+				mcdu_message(i, "NOT ALLOWED");
+			} else {
+				mcdu_message(i, "NOT IN DATA BASE");  # fake message - TODO flightplan loader
+			}
+		}
+	} else if (key == "L2") {
 		if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.altAirport = "";
 			fmgc.FMGCInternal.altAirportSet = 0;
@@ -107,10 +140,10 @@ var initInputA = func(key, i) {
 		} else if (find("/", scratchpad) != -1) {
 			var crztemp = split("/", scratchpad);
 			if (find("FL", crztemp[0]) != -1) {
-				var crz = int(substr(crztemp[0], 2));
+				var crz = substr(crztemp[0], 2);
 				var crzs = size(substr(crztemp[0], 2));
 			} else {
-				var crz = int(crztemp[0]);
+				var crz = crztemp[0];
 				var crzs = size(crztemp[0]);
 			}
 			var temp = int(crztemp[1]);
@@ -129,17 +162,17 @@ var initInputA = func(key, i) {
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
-			} else if (crzs >= 1 and crzs <= 3 and crz != nil and temps >= 1 and temps <= 3 and temp != nil) {
+			} else if (find(".", crz) == -1 and crzs >= 1 and crzs <= 3 and crz != nil and temps >= 1 and temps <= 3 and temp != nil) {
 				if (crz > 0 and crz <= 390 and temp >= -99 and temp <= 99) {
-					fmgc.FMGCInternal.crzFt = crz * 100;
-					fmgc.FMGCInternal.crzFl = crz;
+					fmgc.FMGCInternal.crzFt = int(crz) * 100;
+					fmgc.FMGCInternal.crzFl = int(crz);
 					fmgc.altvert();
 					fmgc.updateRouteManagerAlt();
 					fmgc.FMGCInternal.crzSet = 1;
 					updateCrzLvlCallback();
 					fmgc.FMGCInternal.crzTemp = temp;
 					fmgc.FMGCInternal.crzTempSet = 1;
-					fmgc.FMGCInternal.crzProg = crz;
+					fmgc.FMGCInternal.crzProg = int(crz);
 					if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 0;
 						fmgc.fuelCalculating.setValue(0);
@@ -155,21 +188,21 @@ var initInputA = func(key, i) {
 			}
 		} else {
 			if (find("FL", scratchpad) != -1) {
-				var crz = int(substr(scratchpad, 2));
+				var crz = substr(scratchpad, 2);
 				var crzs = size(substr(scratchpad, 2));
 			} else {
-				var crz = int(scratchpad);
+				var crz = scratchpad;
 				var crzs = size(scratchpad);
 			}
-			if (crzs >= 1 and crzs <= 3 and crz != nil) {
+			if (find(".", crz) == -1 and crzs >= 1 and crzs <= 3 and crz != nil) {
 				if (crz > 0 and crz <= 390) {
-					fmgc.FMGCInternal.crzFt = crz * 100;
-					fmgc.FMGCInternal.crzFl = crz;
+					fmgc.FMGCInternal.crzFt = int(crz) * 100;
+					fmgc.FMGCInternal.crzFl = int(crz);
 					fmgc.altvert();
 					fmgc.updateRouteManagerAlt();
 					fmgc.FMGCInternal.crzSet = 1;
 					updateCrzLvlCallback();
-					fmgc.FMGCInternal.crzProg = crz;
+					fmgc.FMGCInternal.crzProg = int(crz);
 					if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 0;
 						fmgc.fuelCalculating.setValue(0);
@@ -185,7 +218,10 @@ var initInputA = func(key, i) {
 			}
 		}
 	} else if (key == "R1") {
-		if (scratchpad == "CLR") {
+		if (fmgc.FMGCInternal.coRouteSet == 1) {
+			mcdu_message(i, "NOT ALLOWED");
+		}
+		else if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.depApt = "";
 			fmgc.FMGCInternal.arrApt = "";
 			fmgc.FMGCInternal.toFromSet = 0;
@@ -204,11 +240,12 @@ var initInputA = func(key, i) {
 			fmgc.flightPlanController.reset(2);
 			fmgc.flightPlanController.init();
 			Simbrief.SimbriefParser.inhibit = 0;
+			fmgc.updateARPT();
 			mcdu_scratchpad.scratchpads[i].empty();
 		#} else if (scratchpad == "") {
 			#fmgc.FMGCInternal.altSelected = 0;
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
-		} else {
+		} else {			
 			if (!fmgc.flightPlanController.temporaryFlag[i]) {
 				var tfs = size(scratchpad);
 				if (tfs == 9 and find("/", scratchpad) != -1) {
@@ -230,6 +267,7 @@ var initInputA = func(key, i) {
 						mcdu_scratchpad.scratchpads[i].empty();
 						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 						fmgc.FMGCInternal.altSelected = 0;
+						fmgc.updateARPT();
 						fmgc.updateArptLatLon();
 						#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 					} else {
@@ -243,7 +281,7 @@ var initInputA = func(key, i) {
 			}
 		}
 	} else if (key == "R2") {
-		if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3) {
+		if (pts.Engines.Engine.state[0].getValue() != 3 and pts.Engines.Engine.state[1].getValue() != 3 and fmgc.FMGCInternal.toFromSet == 0) {
 			if (!ecam.vhf3_voice.active) {
 				if (atsu.ATSU.working) {
 					if (getprop("/FMGC/simbrief-username") == "") {

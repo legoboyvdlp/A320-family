@@ -136,37 +136,79 @@
 			<property>/it-autoflight/internal/alt</property>
 		</input>
 		<reference>
-			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+			<property>/instrumentation/altimeter[0]/indicated-altitude-ft</property>
 		</reference>
-		<output>/instrumentation/pfd/alt-diff</output>
+		<output>/instrumentation/pfd/alt-diff[0]</output>
 	</filter>
 	
 	<filter>
-		<name>Ground bug diff</name>
+		<name>Altitude bug diff</name>
 		<type>gain</type>
 		<update-interval-secs type="double">0.05</update-interval-secs>
 		<gain>1.0</gain>
 		<input>
-			<property>/position/ground-elev-ft</property>
+			<property>/it-autoflight/internal/alt</property>
 		</input>
 		<reference>
-			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+			<property>/instrumentation/altimeter[1]/indicated-altitude-ft</property>
 		</reference>
-		<output>/instrumentation/pfd/ground-diff</output>
+		<output>/instrumentation/pfd/alt-diff[1]</output>
 	</filter>
 	
 	<filter>
-		<name>Destination bug diff</name>
+		<name>Altitude bug diff</name>
 		<type>gain</type>
 		<update-interval-secs type="double">0.05</update-interval-secs>
 		<gain>1.0</gain>
 		<input>
-			<property>/FMGC/internal/ldg-elev</property>
+			<property>/it-autoflight/internal/alt</property>
 		</input>
 		<reference>
-			<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+			<property>/instrumentation/altimeter[2]/indicated-altitude-ft</property>
 		</reference>
-		<output>/instrumentation/pfd/landing-diff</output>
+		<output>/instrumentation/pfd/alt-diff[2]</output>
+	</filter>
+	
+	<filter>
+		<name>Altitude bug diff</name>
+		<type>gain</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<gain>1.0</gain>
+		<input>
+			<property>/it-autoflight/internal/alt</property>
+		</input>
+		<reference>
+			<property>/instrumentation/altimeter[3]/indicated-altitude-ft</property>
+		</reference>
+		<output>/instrumentation/pfd/alt-diff[3]</output>
+	</filter>
+	
+	<filter>
+		<name>Altitude bug diff</name>
+		<type>gain</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<gain>1.0</gain>
+		<input>
+			<property>/it-autoflight/internal/alt</property>
+		</input>
+		<reference>
+			<property>/instrumentation/altimeter[4]/indicated-altitude-ft</property>
+		</reference>
+		<output>/instrumentation/pfd/alt-diff[4]</output>
+	</filter>
+	
+	<filter>
+		<name>Altitude bug diff</name>
+		<type>gain</type>
+		<update-interval-secs type="double">0.05</update-interval-secs>
+		<gain>1.0</gain>
+		<input>
+			<property>/it-autoflight/internal/alt</property>
+		</input>
+		<reference>
+			<property>/instrumentation/altimeter[5]/indicated-altitude-ft</property>
+		</reference>
+		<output>/instrumentation/pfd/alt-diff[5]</output>
 	</filter>
 	
 	<filter>
@@ -531,5 +573,108 @@
 		</input>
 		<output>/instrumentation/iesi/pitch-deg</output>
 	</filter>
+	
+	<filter>
+		<name>Wind East</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<product>
+						<property>/velocities/speed-east-fps</property>
+						<value>0.592484</value> <!-- fps to kt -->
+					</product>
+					<product>
+						<cos><deg2rad><property>/orientation/pitch-deg</property></deg2rad></cos>
+						<sin><deg2rad><property>/orientation/heading-deg</property></deg2rad></sin>
+						<!--<floor>-->
+							<property>/systems/navigation/adr/output/tas-3</property>
+							<!--<value>100</value>
+						</floor>-->
+					</product>
+				</difference>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/wind-speed-east</output>
+		<min>-4096</min>
+		<max>4096</max>
+	</filter>
+	
+	<filter>
+		<name>Wind North</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<product>
+						<property>/velocities/speed-north-fps</property>
+						<value>0.592484</value> <!-- fps to kt -->
+					</product>
+					<product>
+						<cos><deg2rad><property>/orientation/pitch-deg</property></deg2rad></cos>
+						<cos><deg2rad><property>/orientation/heading-deg</property></deg2rad></cos>
+						<!--<floor>-->
+							<property>/systems/navigation/adr/output/tas-3</property>
+							<!--<value>100</value>
+						</floor>-->
+					</product>
+				</difference>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/wind-speed-north</output>
+		<min>-4096</min>
+		<max>4096</max>
+	</filter>
 
+	<filter>
+		<name>Wind Direction</name>
+		<type>exponential</type>
+		<filter-time>1.28</filter-time>
+		<input>
+			<expression>
+				<sum>
+					<rad2deg>
+						<atan2>
+							<property>/instrumentation/pfd/wind-speed-east</property>
+							<property>/instrumentation/pfd/wind-speed-north</property>
+						</atan2>
+					</rad2deg>
+					<value>180</value>
+				</sum>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/wind-direction</output>
+		<period>
+			<min>0</min>
+			<max>360</max>
+		</period>
+	</filter>
+
+	<filter>
+		<name>Wind Speed</name>
+		<type>exponential</type>
+		<filter-time>1.28</filter-time>
+		<input>
+			<expression>
+				<sqrt>
+					<sum>
+						<pow>
+							<property>/instrumentation/pfd/wind-speed-east</property>
+							<value>2</value>
+						</pow>
+						<pow>
+							<property>/instrumentation/pfd/wind-speed-north</property>
+							<value>2</value>
+						</pow>
+					</sum>
+				</sqrt>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/wind-speed</output>
+		<min>0</min>
+		<max>256</max>
+	</filter>
+	
 </PropertyList>

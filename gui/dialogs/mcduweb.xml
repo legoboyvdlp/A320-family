@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+
+<!-- A3XX MCDU web launcher Dialog -->
+
+<PropertyList>
+
+	<name>mcdu-web</name>
+	<layout>vbox</layout>
+	<pref-width>480</pref-width>
+
+	<nasal>
+		<open>
+			props.globals.initNode("/sim/http/mcduweb/local-ip", "", "STRING");
+		</open>
+	</nasal>	
+
+    <group>
+        <layout>hbox</layout>
+        <text>
+            <halign>left</halign>
+            <label>Remote MCDU for browser/tablet/smartphone</label>
+        </text>
+
+        <button>
+            <halign>right</halign>
+            <pref-width>20</pref-width>
+            <pref-height>20</pref-height>
+            <legend>X</legend>
+            <key>Esc</key>
+            <binding>
+                <command>dialog-close</command>
+            </binding>
+        </button>
+    </group>
+	
+    <hrule/>
+	
+	<group>
+		<layout>vbox</layout>
+		
+		<text>
+			<halign>left</halign>
+			<label>Please check: HTTP service running is required.</label>
+			<visible>
+				<equals>
+					<property>/sim/http/running</property>
+					<value>0</value>
+				</equals>
+			</visible>			
+		</text>
+		<text>		
+			<halign>left</halign>
+			<label>Start FlightGear with -httpd=8080</label>
+			<visible>
+				<equals>
+					<property>/sim/http/running</property>
+					<value>0</value>
+				</equals>
+			</visible>			
+		</text>
+
+    </group>
+
+	<group>
+		<layout>vbox</layout>
+
+		<text>
+			<halign>center</halign>
+			<label>Open MCDU on browser</label>
+		</text>
+
+		<button>
+			<halign>center</halign>
+			<legend>launch browser</legend>
+			<binding>
+				<command>nasal</command>
+				<script>
+					var n = getprop("/sim/http/running",0);
+					if( n != 1 ) {
+					  gui.popupTip("Internal webserver not running. Restart FlightGear with -httpd=8080", 5.0);
+					} else {
+					  var _url = "http://localhost:" ~ getprop("/sim/http/options/listening-port") ~ "/aircraft-dir/WebPanel/mcdu.html";
+					  fgcommand("open-browser", props.Node.new({ "url": _url }));
+					}				
+				</script>
+			</binding>
+		</button>
+	</group>	
+	
+	<group>
+		<layout>vbox</layout>
+		<text>
+			<halign>center</halign>
+			<label></label>
+		</text>
+		<text>
+			<halign>center</halign>
+			<label>Scan QR code with your smartphone or tablet</label>
+		</text>
+
+	</group>
+
+	<group>
+		<layout>hbox</layout>
+		<input>
+			<width>220</width>
+			<height>25</height>	
+			<padding>5</padding>
+			<label>Local IP</label>
+			<property>/sim/http/mcduweb/local-ip</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>			
+			<live type="bool">true</live>
+		</input>
+		<button>
+			<legend>get qrcode</legend>
+			<pref-height>25</pref-height>
+			<pref-width>180</pref-width>
+			<padding>5</padding>
+			<binding>
+				<command>nasal</command>
+				<script>
+					var _url = "";
+					if (size(getprop("/sim/http/mcduweb/local-ip"))>6) {
+						if ( getprop("sim/http/running",0) == 1 ) _url = "http://" ~ getprop("/sim/http/mcduweb/local-ip") ~ ":" ~ getprop("/sim/http/options/listening-port") ~ "/aircraft-dir/WebPanel/mcdu.html";
+						root.createChild("image").set("src", "https://qr.eletto.dev/" ~ _url).setSize(300,300).setTranslation(10,10); 					
+					}
+				</script>
+			</binding>
+		</button>
+	</group>
+
+	<canvas>
+		<name>mcduwebqr</name>
+		<valign>center</valign>
+		<halign>center</halign>
+		<stretch>false</stretch>
+		<pref-width>320</pref-width>
+		<pref-height>320</pref-height>
+		<nasal>
+			<load>
+				<![CDATA[
+				    var n = props.globals.getNode("/sim/http/running");
+					var mcdu_canvas_dlg = canvas.get(cmdarg());
+					var root = mcdu_canvas_dlg.createGroup();
+					mcdu_canvas_dlg.setColorBackground(1, 1, 1, 1);
+				]]>
+			</load>
+			<unload>
+				<![CDATA[
+					mcdu_canvas_dlg.del();
+					mcdu_canvas_dlg = nil;
+					root = nil;
+				]]>
+			</unload>
+		</nasal>
+	</canvas>
+
+	<group>
+		<layout>vbox</layout>
+		<text>
+			<halign>center</halign>
+			<label>* QRCode provided by https://qr.eletto.dev/</label>
+		</text>
+
+	</group>
+
+</PropertyList>

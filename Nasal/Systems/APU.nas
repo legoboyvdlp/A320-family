@@ -29,6 +29,7 @@ var APU = {
 	bleedTime: 0,
 	cooldownEndTime: 0,
 	fastStart: 0,
+	inhibitEMERELEC: 0,
 	_count: 0,
 	warnings: {
 		lowOilLevel: 0,
@@ -62,6 +63,7 @@ var APU = {
 		me.signals.fault.setValue(0);
 		me.signals.autoshutdown = 0;
 		me.signals.emer = 0;
+		me.inhibitEMERELEC = 0;
 		checkApuStartTimer.stop();
 		apuStartTimer.stop();
 		apuStartTimer2.stop();
@@ -101,7 +103,7 @@ var APU = {
 		me.inletFlap.open();
 		me.listenSignals = 1;
 		settimer(func() { 
-			if (APUNodes.Controls.master.getValue() and !getprop("/systems/acconfig/autoconfig-running")) { 
+			if (APUNodes.Controls.master.getValue() and !pts.Acconfig.running.getValue()) { 
 				me.setState(2);
 			}
 		}, 3);
@@ -119,7 +121,7 @@ var APU = {
 		if (me.fastStart) {
 			me.inletFlap.setpos(1);
 		}
-		if (pts.APU.rpm.getValue() < 7 and me.fuelValvePos.getValue() and me.inletFlapPos.getValue() == 1 and me.signals.oilTestComplete and !me.warnings.lowOilLevel) {
+		if (pts.APU.rpm.getValue() < 7 and me.fuelValvePos.getValue() and me.inletFlapPos.getValue() == 1 and me.signals.oilTestComplete and !me.warnings.lowOilLevel and !me.inhibitEMERELEC) {
 			me.setState(4);
 			me.listenStopSignal = 1;
 			checkApuStartTimer.stop();
@@ -131,7 +133,7 @@ var APU = {
 		apuStartTimer.start();
 	},
 	waitStart: func() {
-		if (pts.APU.rpm.getValue() >= 4.9) {
+		if (pts.APU.rpm.getValue() >= 4.9 or me.fastStart) {
 			me.GenericControls.cutoff.setValue(0);
 			if (me.fastStart) {
 				setprop("/fdm/jsbsim/propulsion/set-running", 2);
@@ -270,6 +272,7 @@ var APU = {
 			if (me.state == 5 and APUNodes.Oil.pressure.getValue() < 35 or APUNodes.Oil.temperature.getValue() > 135) {
 				me.autoStop();
 			}
+			
 			if (systems.ELEC.Bus.dcBat.getValue() < 25) {	
 				if (!me._powerLost) {
 					me._powerLost = 1;
@@ -286,6 +289,12 @@ var APU = {
 				}
 			} else {
 				me._powerLost = 0;
+			}
+			
+			if (systems.ELEC.EmerElec.getValue() == 1 and (systems.ELEC.EmerElec45.getValue() != 1 and systems.ELEC.Source.EmerGen.voltsRelay.getValue() < 110)) {
+				me.inhibitEMERELEC = 1;
+			} else {
+				me.inhibitEMERELEC = 0;
 			}
 		}
 	},

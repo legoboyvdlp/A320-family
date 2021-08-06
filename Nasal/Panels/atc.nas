@@ -17,16 +17,15 @@ var Transponder = {
 	code: "2000",
 	selected: 0,
 	electricalSrc: "",
-	activeADIRS: 0,
+	activeADIRS: 1,
 	condition: 0,
 	failed: 0,
-	codeDigitsNodes: [props.globals.getNode("instrumentation/transponder/inputs/digit[0]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[1]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[2]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[3]", 1)],
-	serviceableNode: props.globals.getNode("instrumentation/transponder/serviceable", 1),
-	knobNode: props.globals.getNode("instrumentation/transponder/inputs/knob-mode", 1),
-	identNode: props.globals.getNode("instrumentation/transponder/inputs/ident-btn", 1),
-	ac1Node: props.globals.getNode("/systems/electrical/bus/ac-1", 1),
-	tcasNode: props.globals.getNode("instrumentation/tcas/inputs/mode"),
-	aglNode: props.globals.getNode("position/gear-agl-ft", 1),
+	codeDigitsNodes: [props.globals.getNode("/instrumentation/transponder/inputs/digit[0]", 1), props.globals.getNode("/instrumentation/transponder/inputs/digit[1]", 1), props.globals.getNode("/instrumentation/transponder/inputs/digit[2]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[3]", 1)],
+	serviceableNode: props.globals.getNode("/instrumentation/transponder/serviceable", 1),
+	knobNode: props.globals.getNode("/instrumentation/transponder/inputs/knob-mode", 1),
+	identNode: props.globals.getNode("/instrumentation/transponder/inputs/ident-btn", 1),
+	tcasNode: props.globals.getNode("/instrumentation/tcas/inputs/mode"),
+	aglNode: props.globals.getNode("/position/gear-agl-ft", 1),
 	electricNode: props.globals.getNode("/systems/electrical/outputs/transponder", 1), # communicate to generic systems
 	new: func(elecSrc, ADIRS) {
 		var t = {parents:[Transponder]};
@@ -40,9 +39,9 @@ var Transponder = {
 		
 		return t;
 	},
-	update: func() {
+	update: func(notification) {
 		# TCAS - on seperate electrical source, so has to be before transponder electrical checking
-		if (me.ac1Node.getValue() < 110) {
+		if (notification.elecAC1 < 110) {
 			me.tcasNode.setValue(0); # off
 		} else {
 			if (me.mode >= 1 and me.mode <= 3) {
@@ -142,10 +141,11 @@ var transponderPanel = {
 	code: "2000",
 	codeDisp: "2000",
 	codeProp: props.globals.initNode("/systems/atc/transponder-code", "2000", "STRING"),
+	failNode: props.globals.getNode("/systems/atc/failed"),
 	failLight: 0,
 	clearFlag: 0,
 	keypad: func(keyNum) {
-		if (props.globals.getNode("/controls/switches/annun-test", 1).getBoolValue() or props.globals.getNode("/systems/electrical/bus/dc-ess", 1).getValue() < 25) {
+		if (pts.Controls.Switches.annunTest.getBoolValue() or systems.ELEC.Bus.dcEss.getValue() < 25) {
 			return;
 		}
 		if (keyNum < 0 or keyNum > 7) {
@@ -163,7 +163,7 @@ var transponderPanel = {
 		}
 	},
 	clearKey: func() {
-		if (props.globals.getNode("/controls/switches/annun-test", 1).getBoolValue() or props.globals.getNode("/systems/electrical/bus/dc-ess", 1).getValue() < 25) {
+		if (pts.Controls.Switches.annunTest.getBoolValue() or systems.ELEC.Bus.dcEss.getValue() < 25) {
 			return;
 		}
 		if (me.codeDisp != "") {
@@ -215,7 +215,7 @@ var transponderPanel = {
 			return;
 		}
 		me.failLight = newFail;
-		props.globals.getNode("/systems/atc/failed").setBoolValue(me.failLight);
+		me.failNode.setBoolValue(me.failLight);
 	},
 	identSwitch: func() {
 		Transponders.vector[me.atcSel - 1].ident();
@@ -244,13 +244,47 @@ var transponderPanel = {
 				Transponders.vector[1].switchADIRS(2);
 			}
 		}
+		
+		if (Transponders.vector[me.atcSel - 1].activeADIRS == 1) {
+			me.updateADR1(systems.ADIRS.Operating.adr[0].getValue());
+		} elsif (Transponders.vector[me.atcSel - 1].activeADIRS == 2) {
+			me.updateADR2(systems.ADIRS.Operating.adr[1].getValue());
+		} elsif (Transponders.vector[me.atcSel - 1].activeADIRS == 3) {
+			me.updateADR3(systems.ADIRS.Operating.adr[2].getValue());
+		}
+	},
+	updateADR1: func(val) {
+		if (Transponders.vector[me.atcSel - 1].activeADIRS == 1) {
+			if (val) {
+				pts.Instrumentation.TCAS.servicable.setValue(1);
+			} else {
+				pts.Instrumentation.TCAS.servicable.setValue(0);
+			}
+		}
+	},
+	updateADR2: func(val) {
+		if (Transponders.vector[me.atcSel - 1].activeADIRS == 2) {
+			if (val) {
+				pts.Instrumentation.TCAS.servicable.setValue(1);
+			} else {
+				pts.Instrumentation.TCAS.servicable.setValue(0);
+			}
+		}
+	},
+	updateADR3: func(val) {
+		if (Transponders.vector[me.atcSel - 1].activeADIRS == 3) {
+			if (val) {
+				pts.Instrumentation.TCAS.servicable.setValue(1);
+			} else {
+				pts.Instrumentation.TCAS.servicable.setValue(0);
+			}
+		}
 	},
 };
 
 var init = func() {
 	transponderPanel.atcSwitch(1);
 	transponderPanel.updateAirData();
-	transponderTimer.start();
 }
 
 # Handler for code change from generic dialog
@@ -262,6 +296,14 @@ setlistener("/instrumentation/transponder/id-code", func {
 
 var Transponders = std.Vector.new([Transponder.new("/systems/electrical/bus/ac-ess-shed", 1), Transponder.new("/systems/electrical/bus/ac-2", 2)]);
 	
-var transponderTimer = maketimer(0.1, func() {
-	Transponders.vector[transponderPanel.atcSel - 1].update();
-});
+setlistener("/systems/navigation/adr/operating-1", func() {
+	transponderPanel.updateADR1(systems.ADIRS.Operating.adr[0].getValue());
+}, 1, 0);
+
+setlistener("/systems/navigation/adr/operating-2", func() {
+	transponderPanel.updateADR2(systems.ADIRS.Operating.adr[1].getValue());
+}, 1, 0);
+
+setlistener("/systems/navigation/adr/operating-3", func() {
+	transponderPanel.updateADR3(systems.ADIRS.Operating.adr[2].getValue());
+}, 1, 0);

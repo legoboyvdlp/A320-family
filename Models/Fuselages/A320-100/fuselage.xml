@@ -32,7 +32,7 @@
 			<z-m>0.95</z-m>
 		</offsets>
 		<condition>
-			<property>systems/failures/apu-fire</property>
+			<property>systems/failures/fire/apu-fire</property>
 		</condition>
 	</model>
 
