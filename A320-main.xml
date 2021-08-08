@@ -4396,9 +4396,7 @@
 				<desc>Simple Engage/Disengage reversers</desc>
 				<binding>
 					<command>nasal</command>
-					<script>
-					systems.toggleFastRevThrust();
-					</script>
+					<script>systems.toggleFastRevThrust();</script>
 				</binding>
 			</key>
 			<key n="257">
@@ -4406,9 +4404,7 @@
 				<desc>Disengage/Decrease reversers</desc>
 				<binding>
 					<command>nasal</command>
-					<script>
-					systems.unRevThrust();
-					</script>
+					<script>systems.unRevThrust();</script>
 				</binding>
 			</key>
 			<key n="258">
@@ -4416,65 +4412,15 @@
 				<desc>Engage/Increase reversers</desc>
 				<binding>
 					<command>nasal</command>
-					<script>
-					systems.doRevThrust();
-					</script>
+					<script>systems.doRevThrust();</script>
 				</binding>
 			</key>
 			<key n="2">
 				<name>Ctrl-b</name>
 				<desc>Cycle speedbrake setting</desc>
 				<binding>
-					<condition>
-						<and>
-							<not-equals>
-								<property>/controls/flight/speedbrake-arm</property>
-								<value>1</value>
-							</not-equals>
-							<or>
-								<equals>
-									<property>/gear/gear[1]/wow</property>
-									<value>1</value>
-								</equals>
-								<equals>
-									<property>/gear/gear[2]/wow</property>
-									<value>1</value>
-								</equals>
-							</or>
-						</and>
-					</condition>
-					<command>property-cycle</command>
-					<property>/controls/flight/speedbrake</property>
-					<value>0.0</value>
-					<value>1.0</value>
-				</binding>
-				<binding>
-					<condition>
-						<and>
-							<not-equals>
-								<property>/controls/flight/speedbrake-arm</property>
-								<value>1</value>
-							</not-equals>
-							<equals>
-								<property>/gear/gear[1]/wow</property>
-								<value>0</value>
-							</equals>
-							<equals>
-								<property>/gear/gear[2]/wow</property>
-								<value>0</value>
-							</equals>
-						</and>
-					</condition>
-					<command>property-cycle</command>
-					<property>/controls/flight/speedbrake</property>
-					<value>0.0</value>
-					<value>0.5</value>
-					<value>1.0</value>
-				</binding>
-				<binding>
-					<command>property-assign</command>
-					<property>/controls/flight/speedbrake-arm</property>
-					<value>0</value>
+					<command>nasal</command>
+					<script>libraries.speedbrakeKey();</script>
 				</binding>
 			</key>
 			<key n="356">

@@ -6993,47 +6993,19 @@
 			</binding>
 		</action>
 		<action>
-			<button>4</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>
-					var spdBrk = getprop("controls/flight/speedbrake" );
-					if(spdBrk == 0){
-						setprop("controls/flight/speedbrake-arm", 0);
-						setprop("controls/flight/speedbrake", 0.5);
-					}
-					elsif(spdBrk == 0.5){
-						setprop("controls/flight/speedbrake-arm", 0);
-						setprop("controls/flight/speedbrake", 1);
-					}
-					elsif(spdBrk == 1){
-						setprop("controls/flight/speedbrake-arm", 0);
-						# Do nothing because spoilers are fully up.
-					}
-				</script>
-			</binding>
-		</action>
-		<action>
 			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>
-					var spdBrk = getprop("controls/flight/speedbrake");
-					if(spdBrk == 0){
-						setprop("controls/flight/speedbrake-arm", 0);
-						# Do nothing because spoilers are fully down.
-					}
-					elsif(spdBrk == 0.5){
-						setprop("controls/flight/speedbrake-arm", 0);
-						setprop("controls/flight/speedbrake", 0);
-					}
-					elsif(spdBrk == 1){
-						setprop("controls/flight/speedbrake-arm", 0);
-						setprop("controls/flight/speedbrake", 0.5);
-					}
-				</script>
+				<script>libraries.retractSpeedbrake();</script>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.deploySpeedbrake();</script>
 			</binding>
 		</action>
 	</animation>

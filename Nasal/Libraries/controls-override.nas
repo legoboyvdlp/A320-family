@@ -1,11 +1,5 @@
-# A320 Main Libraries
-# Joshua Davidson (Octal450)
-
+# Airbus A320 Custom Controls
 # Copyright (c) 2021 Josh Davidson (Octal450)
-
-############
-# Controls #
-############
 
 controls.stepSpoilers = func(step) {
 	pts.Controls.Flight.speedbrakeArm.setValue(0);
@@ -16,7 +10,31 @@ controls.stepSpoilers = func(step) {
 	}
 }
 
+var speedbrakeKey = func() {
+	if (pts.Controls.Flight.speedbrakeArm.getBoolValue()) {
+		pts.Controls.Flight.speedbrakeArm.setBoolValue(0);
+	} else {
+		pts.Controls.Flight.speedbrakeTemp = pts.Controls.Flight.speedbrake.getValue();
+		if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
+			if (pts.Controls.Flight.speedbrake.getValue() < 1) {
+				pts.Controls.Flight.speedbrake.setValue(1);
+			} else {
+				pts.Controls.Flight.speedbrake.setValue(0);
+			}
+		} else {
+			if (pts.Controls.Flight.speedbrake.getValue() < 0.5) {
+				pts.Controls.Flight.speedbrake.setValue(0.5);
+			} else if (pts.Controls.Flight.speedbrake.getValue() < 1) {
+				pts.Controls.Flight.speedbrake.setValue(1);
+			} else {
+				pts.Controls.Flight.speedbrake.setValue(0);
+			}
+		}
+	}
+}
+
 var deploySpeedbrake = func() {
+	pts.Controls.Flight.speedbrakeArm.setBoolValue(0);
 	if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
 		if (pts.Controls.Flight.speedbrake.getValue() < 1.0) {
 			pts.Controls.Flight.speedbrake.setValue(1.0);
@@ -24,22 +42,23 @@ var deploySpeedbrake = func() {
 	} else {
 		if (pts.Controls.Flight.speedbrake.getValue() < 0.5) {
 			pts.Controls.Flight.speedbrake.setValue(0.5);
-		} else if (pts.Controls.Flight.speedbrake.getValue() < 1.0) {
-			pts.Controls.Flight.speedbrake.setValue(1.0);
+		} else if (pts.Controls.Flight.speedbrake.getValue() < 1) {
+			pts.Controls.Flight.speedbrake.setValue(1);
 		}
 	}
 }
 
 var retractSpeedbrake = func() {
+	pts.Controls.Flight.speedbrakeArm.setBoolValue(0);
 	if (pts.Gear.wow[1].getBoolValue() or pts.Gear.wow[2].getBoolValue()) {
-		if (pts.Controls.Flight.speedbrake.getValue() > 0.0) {
-			pts.Controls.Flight.speedbrake.setValue(0.0);
+		if (pts.Controls.Flight.speedbrake.getValue() > 0) {
+			pts.Controls.Flight.speedbrake.setValue(0);
 		}
 	} else {
 		if (pts.Controls.Flight.speedbrake.getValue() > 0.5) {
 			pts.Controls.Flight.speedbrake.setValue(0.5);
-		} else if (pts.Controls.Flight.speedbrake.getValue() > 0.0) {
-			pts.Controls.Flight.speedbrake.setValue(0.0);
+		} else if (pts.Controls.Flight.speedbrake.getValue() > 0) {
+			pts.Controls.Flight.speedbrake.setValue(0);
 		}
 	}
 }
