@@ -4774,6 +4774,7 @@
 			<file>Aircraft/A320-family/Models/Instruments/DCDU/DCDU.nas</file>
 		</canvas_dcdu>
 		<canvas_mcdu>
+			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU-funcs.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
 		<canvas_qnh>
