@@ -39,7 +39,7 @@
 					</quotient>
 					<property>/controls/oxygen/cockpit-mask-1-on</property>
 					<table>
-						<independentVar lookup="row">/systems/pressurization/cabinalt</independentVar>
+						<independentVar lookup="row">/systems/pressurization/cabin-altitude</independentVar>
 						<independentVar lookup="column">/controls/oxygen/cockpit-mask-1-selector</independentVar>
 						<tableData>
 								    0    1
@@ -67,7 +67,7 @@
 					</quotient>
 					<property>/controls/oxygen/cockpit-mask-2-on</property>
 					<table>
-						<independentVar lookup="row">/systems/pressurization/cabinalt</independentVar>
+						<independentVar lookup="row">/systems/pressurization/cabin-altitude</independentVar>
 						<independentVar lookup="column">/controls/oxygen/cockpit-mask-2-selector</independentVar>
 						<tableData>
 								    0    1
@@ -95,7 +95,7 @@
 					</quotient>
 					<property>/controls/oxygen/cockpit-mask-3-on</property>
 					<table>
-						<independentVar lookup="row">/systems/pressurization/cabinalt</independentVar>
+						<independentVar lookup="row">/systems/pressurization/cabin-altitude</independentVar>
 						<independentVar lookup="column">/controls/oxygen/cockpit-mask-3-selector</independentVar>
 						<tableData>
 								    0    1
@@ -123,7 +123,7 @@
 					</quotient>
 					<property>/controls/oxygen/cockpit-mask-4-on</property>
 					<table>
-						<independentVar lookup="row">/systems/pressurization/cabinalt</independentVar>
+						<independentVar lookup="row">/systems/pressurization/cabin-altitude</independentVar>
 						<independentVar lookup="column">/controls/oxygen/cockpit-mask-4-selector</independentVar>
 						<tableData>
 								    0    1
@@ -290,7 +290,7 @@
 		<switch name="/systems/oxygen/passenger-oxygen/pressure-switch">
 			<defualt value="0"/>
 			<test logic="AND" value="1">
-				/systems/pressurization/cabinalt ge 14000
+				/systems/pressurization/cabin-altitude ge 14000
 				/systems/electrical/bus/dc-ess ge 25
 			</test>
 			<!-- HI ALT 16000 -->
