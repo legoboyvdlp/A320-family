@@ -4768,6 +4768,7 @@
 			<file>Aircraft/A320-family/Models/Instruments/IESI/IESI.nas</file>
 		</canvas_iesi>
 		<canvas_mcdu>
+			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU-funcs.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
 		<canvas_qrh>
