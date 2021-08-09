@@ -358,8 +358,8 @@ var ATIS = {
 			raw = split('"}', raw)[0];
 		} else {
 			if (me.type == 0) {
-				raw = split('{"arr":"', raw)[1];
-				raw = split('","dep":', raw)[0];
+				raw = split('"arr":"', raw)[1];
+				raw = split('","dep":"', raw)[0];
 			} else {
 				raw = split('","dep":"', raw)[1];
 				raw = split('"}', raw)[0];

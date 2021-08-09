@@ -1840,10 +1840,10 @@ var canvas_MCDU_base = {
 				me.colorLeft("blu", "blu", "blu", "blu", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "grn", "grn", "grn", "wht", "wht");
+				me.colorCenter("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRight("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRight("blu", "blu", "blu", "blu", "wht", "blu");
+				me.colorRightS("blu", "blu", "blu", "blu", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
 			
@@ -1877,7 +1877,11 @@ var canvas_MCDU_base = {
 				if (atsu.ATISInstances[x].station != nil) {	
 					me["Simple_L" ~ (x + 1)].setText(" " ~ atsu.ATISInstances[x].station ~ "/" ~ (atsu.ATISInstances[x].type == 0 ? "ARR" : "DEP"));
 					me["Simple_L" ~ (x + 1)].setFont(default);
-					me["Simple_L" ~ (x + 1) ~ "_Arrow"].show();
+					if (atsu.ATISInstances[x].received) {
+						me["Simple_L" ~ (x + 1) ~ "_Arrow"].show();
+					} else {
+						me["Simple_L" ~ (x + 1) ~ "_Arrow"].hide();
+					}
 				} else {
 					me["Simple_L" ~ (x + 1)].setText(" [  ]/[  ]");
 					me["Simple_L" ~ (x + 1)].setFont(symbol);
