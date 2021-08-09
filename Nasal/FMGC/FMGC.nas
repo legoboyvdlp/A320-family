@@ -1014,7 +1014,6 @@ var reset_FMGC = func {
 	Input.hdg.setValue(hdg);
 	Input.alt.setValue(alt);
 	
-	systems.PNEU.pressMode.setValue("GN");
 	setprop("/systems/pressurization/vs", "0");
 	setprop("/systems/pressurization/targetvs", "0");
 	setprop("/systems/pressurization/vs-norm", "0");

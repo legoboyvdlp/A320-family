@@ -72,7 +72,7 @@ var canvas_lowerECAMPagePress =
 				}
 			}),
 			props.UpdateManager.FromHashValue("pressAuto", nil, func(val) {
-				if (val) {
+				if (val != 0) {
 					obj["PRESS-Man"].hide();
 					obj["PRESS-Sys-1"].show();
 				} else {
@@ -231,7 +231,7 @@ var canvas_lowerECAMPagePress =
 
 var input = {
 	pressAlt: "/systems/pressurization/cabin-altitude",
-	pressAuto: "/systems/pressurization/auto",
+	pressAuto: "/systems/pressurization/active-mode",
 	pressDelta: "/systems/pressurization/cabin-delta-p",
 	pressVS: "/systems/pressurization/cabin-rate-fpm",
 	

@@ -93,7 +93,6 @@ var phaseSignal = {
 		signal.phaseEnd = phaseEnd;
 		signal.node = props.globals.getNode(nodePath, 1);
 		signal.runningTimer = 0;
-		print("Registering listener for " ~ nodePath);
 		signal.listener = setlistener(signal.node, func() { signal.phaseFunc(); }, 0, 0);
 	},
 	del: func() {
@@ -109,7 +108,6 @@ var phaseSignal = {
 	phaseFunc: func() {
 		if (CPCController.phase.getValue() != me.phaseStart) { return; }
 		if (me.node.getValue() == 1) {
-			print("Condition true, switching to phase " ~ me.phaseEnd);
 			CPCController.phase.setValue(me.phaseEnd);
 			if (me.phaseEnd == 0 and me.runningTimer == 0) {
 				CPCController.takeoffAltSet = 0;
@@ -117,11 +115,8 @@ var phaseSignal = {
 				CPCController.takeoffPsiSet = 0;
 				CPCController.takeoffPsi.setValue(-9999);
 				me.runningTimer = 1;
-				print("Will run timer in 70 seconds");
 				settimer(func() {
-					print("Alright, starting check");
 					if (me.checkPhase(0) == 1) {
-						print("Phase still zero, switching");
 						CPCController.switchActive();
 					}
 				}, 70);
@@ -144,7 +139,7 @@ setlistener("/gear/gear[1]/wow", func() {
 			CPCController.takeoffPsiSet = 1;
 		}
 	}
-}, 0, 0);
+}, 1, 0);
 
 setlistener("/controls/pressurization/ldg-elev", func() {
 	if (PRESS.Switches.ldgElev.getValue() == 0) {

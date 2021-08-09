@@ -103,7 +103,6 @@ var PNEU = {
 		wingLeft: props.globals.getNode("/systems/pneumatics/valves/wing-ice-1"),
 		wingRight: props.globals.getNode("/systems/pneumatics/valves/wing-ice-2"),
 	},
-	pressMode: props.globals.getNode("/systems/pressurization/mode", 1),
 	init: func() {
 		me.resetFail();
 		
