@@ -1877,7 +1877,11 @@ var canvas_MCDU_base = {
 				if (atsu.ATISInstances[x].station != nil) {	
 					me["Simple_L" ~ (x + 1)].setText(" " ~ atsu.ATISInstances[x].station ~ "/" ~ (atsu.ATISInstances[x].type == 0 ? "ARR" : "DEP"));
 					me["Simple_L" ~ (x + 1)].setFont(default);
-					me["Simple_L" ~ (x + 1) ~ "_Arrow"].show();
+					if (atsu.ATISInstances[x].received) {
+						me["Simple_L" ~ (x + 1) ~ "_Arrow"].show();
+					} else {
+						me["Simple_L" ~ (x + 1) ~ "_Arrow"].hide();
+					}
 				} else {
 					me["Simple_L" ~ (x + 1)].setText(" [  ]/[  ]");
 					me["Simple_L" ~ (x + 1)].setFont(symbol);
