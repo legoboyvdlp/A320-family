@@ -1378,8 +1378,6 @@
 				<ac-ess-bus type="bool">0</ac-ess-bus>
 				<ac-1-bus type="bool">0</ac-1-bus>
 				<ac-2-bus type="bool">0</ac-2-bus>
-				<bat-1 type="bool">0</bat-1>
-				<bat-2 type="bool">0</bat-2>
 				<dc-bat-bus type="bool">0</dc-bat-bus>
 				<dc-ess-bus type="bool">0</dc-ess-bus>
 				<dc-1-bus type="bool">0</dc-1-bus>
@@ -4401,9 +4399,7 @@
 				<desc>Simple Engage/Disengage reversers</desc>
 				<binding>
 					<command>nasal</command>
-					<script>
-					systems.toggleFastRevThrust();
-					</script>
+					<script>systems.toggleFastRevThrust();</script>
 				</binding>
 			</key>
 			<key n="257">
@@ -4411,9 +4407,7 @@
 				<desc>Disengage/Decrease reversers</desc>
 				<binding>
 					<command>nasal</command>
-					<script>
-					systems.unRevThrust();
-					</script>
+					<script>systems.unRevThrust();</script>
 				</binding>
 			</key>
 			<key n="258">
@@ -4421,65 +4415,15 @@
 				<desc>Engage/Increase reversers</desc>
 				<binding>
 					<command>nasal</command>
-					<script>
-					systems.doRevThrust();
-					</script>
+					<script>systems.doRevThrust();</script>
 				</binding>
 			</key>
 			<key n="2">
 				<name>Ctrl-b</name>
 				<desc>Cycle speedbrake setting</desc>
 				<binding>
-					<condition>
-						<and>
-							<not-equals>
-								<property>/controls/flight/speedbrake-arm</property>
-								<value>1</value>
-							</not-equals>
-							<or>
-								<equals>
-									<property>/gear/gear[1]/wow</property>
-									<value>1</value>
-								</equals>
-								<equals>
-									<property>/gear/gear[2]/wow</property>
-									<value>1</value>
-								</equals>
-							</or>
-						</and>
-					</condition>
-					<command>property-cycle</command>
-					<property>/controls/flight/speedbrake</property>
-					<value>0.0</value>
-					<value>1.0</value>
-				</binding>
-				<binding>
-					<condition>
-						<and>
-							<not-equals>
-								<property>/controls/flight/speedbrake-arm</property>
-								<value>1</value>
-							</not-equals>
-							<equals>
-								<property>/gear/gear[1]/wow</property>
-								<value>0</value>
-							</equals>
-							<equals>
-								<property>/gear/gear[2]/wow</property>
-								<value>0</value>
-							</equals>
-						</and>
-					</condition>
-					<command>property-cycle</command>
-					<property>/controls/flight/speedbrake</property>
-					<value>0.0</value>
-					<value>0.5</value>
-					<value>1.0</value>
-				</binding>
-				<binding>
-					<command>property-assign</command>
-					<property>/controls/flight/speedbrake-arm</property>
-					<value>0</value>
+					<command>nasal</command>
+					<script>libraries.speedbrakeKey();</script>
 				</binding>
 			</key>
 			<key n="356">
@@ -4796,7 +4740,6 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFTO.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/RADNAV.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/DATA.nas</file>
-			<file>Aircraft/A320-family/Nasal/MCDU/DATA2.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/STATUS.nas</file>
 		</mcdu>
 		<!-- Traffic layer from E-jet -->
@@ -4837,6 +4780,7 @@
 			<file>Aircraft/A320-family/Models/Instruments/DCDU/DCDU.nas</file>
 		</canvas_dcdu>
 		<canvas_mcdu>
+			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU-funcs.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
 		<canvas_qnh>

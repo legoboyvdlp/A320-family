@@ -7,6 +7,7 @@
 				<name>N680AW(Unpainted)</name>
 				<texture-fuselage>N680AW-fuselage.png</texture-fuselage>
 				<texture-engine>N680AW-engine.png</texture-engine>
+				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 		</model>
 	</sim>

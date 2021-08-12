@@ -7,6 +7,7 @@
 				<name>QTR Qatar Airways (A7-AHW)</name>
 				<texture-fuselage>QTR-fuselage.png</texture-fuselage>
 				<texture-engine>QTR-engine.png</texture-engine>
+				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 		</model>
 	</sim>

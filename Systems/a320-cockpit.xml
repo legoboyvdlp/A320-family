@@ -7,6 +7,16 @@
 	
 	<channel name="Animations">
 		
+		<lag_filter name="spoilers/main-lever">
+			<input>spoilers/lever-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="spoilers/lever-arm">
+			<input>/controls/flight/speedbrake-arm</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<fcs_function name="fadec/throttle-lever[0]">
 			<function>
 				<quotient>

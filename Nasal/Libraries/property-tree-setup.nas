@@ -54,6 +54,7 @@ var Controls = {
 		flapsPos: props.globals.getNode("/controls/flight/flaps-pos"),
 		speedbrake: props.globals.getNode("/controls/flight/speedbrake"),
 		speedbrakeArm: props.globals.getNode("/controls/flight/speedbrake-arm"),
+		speedbrakeTemp: 0,
 		rudder: props.globals.getNode("/controls/flight/rudder"),
 		rudderTrim: props.globals.getNode("/controls/flight/rudder-trim"),
 	},
@@ -103,6 +104,9 @@ var Fdm = {
 		Aero: {
 			alpha: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg"),
 			alphaNorm: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg-norm"),
+		},
+		Fadec: {
+			detent: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent"),props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent")],
 		},
 		Fcs: {
 			brake: [props.globals.getNode("/fdm/jsbsim/fcs/left-brake-cmd-norm"),props.globals.getNode("/fdm/jsbsim/fcs/right-brake-cmd-norm")],
@@ -213,13 +217,17 @@ var Instrumentation = {
 	MKVII: {
 		Inputs: {
 			Discretes: {
-				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override"),
+				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override"),
 			},
 		},
 	},
 	Nav: {
 		gsDeflection: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm"),
 		locDeflection: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm"),
+	},
+	PFD: {
+		windDirection: props.globals.getNode("/instrumentation/pfd/wind-direction"),
+		windSpeed: props.globals.getNode("/instrumentation/pfd/wind-speed"),
 	},
 	TCAS: {
 		servicable: props.globals.getNode("/instrumentation/tcas/serviceable"),

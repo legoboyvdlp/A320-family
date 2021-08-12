@@ -30,6 +30,9 @@ var ECAM_line5rc = props.globals.getNode("/ECAM/rightmsg/linec5", 1);
 var ECAM_line6rc = props.globals.getNode("/ECAM/rightmsg/linec6", 1);
 var ECAM_line7rc = props.globals.getNode("/ECAM/rightmsg/linec7", 1);
 var ECAM_line8rc = props.globals.getNode("/ECAM/rightmsg/linec8", 1);
+var enginesBothAtIdle = props.globals.getNode("/fdm/jsbsim/fadec/both-at-idle");
+var enginesBothAtIdleTime = props.globals.initNode("/ECAM/Upper/idle-time", 0.0, "DOUBLE");
+var enginesBothAtIdleTimeSaved = props.globals.initNode("/ECAM/Upper/idle-time-saved", 0.0, "DOUBLE");
 
 var canvas_upperECAM = {
 	new: func(svg, name, type) {
@@ -496,7 +499,7 @@ var canvas_upperECAM = {
 		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
 		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
 		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1","ECAMR2","ECAMR3","ECAMR4","ECAMR5","ECAMR6","ECAMR7","ECAMR8","ECAM_Right","FOB-weight-unit","FFlow-weight-unit","SlatAlphaLock",
-		"SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp"];
+		"SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp","idleIndication"];
 	},
 	getKeysIAE: func() {
 		return ["EPR1-needle","EPR1-thr","EPR1-ylim","EPR1","EPR1-decpnt","EPR1-decimal","EPR1-box","EPR1-scale","EPR1-scaletick","EPR1-scalenum","EPR1-XX","EPR1-XX2","EGT1-needle","EGT1","EGT1-scale","EGT1-box","EGT1-scale2","EGT1-scaletick","EGT1-XX",
@@ -504,7 +507,7 @@ var canvas_upperECAM = {
 		"EPR2-decimal","EPR2-box","EPR2-scale","EPR2-scaletick","EPR2-scalenum","EPR2-XX","EPR2-XX2","EGT2-needle","EGT2","EGT2-scale","EGT2-scale2","EGT2-box","EGT2-scaletick","EGT2-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal",
 		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","EPRMode",
 		"N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","N1Mode","REV1","REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1","ECAMR2","ECAMR3",
-		"ECAMR4","ECAMR5","ECAMR6","ECAMR7","ECAMR8","ECAM_Right","FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp"];
+		"ECAMR4","ECAMR5","ECAMR6","ECAMR7","ECAMR8","ECAM_Right","FFlow1-weight-unit", "FFlow2-weight-unit", "FOB-weight-unit","SlatAlphaLock","SlatIndicator","FlapIndicator","SlatLine","FlapLine","aFloor","FlxLimDegreesC","FlxLimTemp","idleIndication"];
 	},
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
@@ -531,6 +534,9 @@ var canvas_upperECAM = {
 			me[key].setColor(me.getColorString(node.getValue()));
 		}, 0, 0);
 	},
+	displayIdle: 0,
+	displayIdleDim: 0,
+	displayIdleTrigger: 0,
 	updateCommon: func(notification) {
 		me.updatePower();
 		
@@ -540,6 +546,37 @@ var canvas_upperECAM = {
 		
 		if (me.group.getVisible() == 0) {
 			return;
+		}
+		
+		if (enginesBothAtIdle.getValue() and !me["aFloor"].getVisible() and !notification.gear1Wow and notification.athr) {
+			if (!me.displayIdleTrigger) {
+				enginesBothAtIdleTime.setValue(notification.elapsedTime);
+				me.displayIdleTrigger = 1;
+			}
+			if ((notification.elapsedTime - enginesBothAtIdleTime.getValue()) < 10) {
+				if ((notification.elapsedTime - enginesBothAtIdleTimeSaved.getValue()) > 1) {
+					enginesBothAtIdleTimeSaved.setValue(notification.elapsedTime);
+					me.displayIdleDim = !me.displayIdleDim;
+				}
+			}
+			me.displayIdle = 1;
+		} else {
+			me.displayIdle = 0;
+			me.displayIdleDim = 0;
+			me.displayIdleTrigger = 0;
+			enginesBothAtIdleTime.setValue(0);
+			enginesBothAtIdleTimeSaved.setValue(0);
+		}
+		
+		if (me.displayIdle) {
+			me["idleIndication"].show();
+			if (me.displayIdleDim) {
+				me["idleIndication"].setColor(0.0509,0.7529,0.2941,0.5);
+			} else {
+				me["idleIndication"].setColor(0.0509,0.7529,0.2941,1);
+			}
+		} else {
+			me["idleIndication"].hide();
 		}
 		
 		foreach(var update_item; me.update_items)

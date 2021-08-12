@@ -7,7 +7,7 @@ var HYD = {
 	lcont: 0,
 	rcont: 0,
 	Brakes: {
-		accumPressPsi: props.globals.initNode("/systems/hydraulic/yellow-accumulator-psi-cmd", 0, "INT"),
+		accumPressPsi: props.globals.initNode("/systems/hydraulic/yellow-accumulator-psi-cmd", 3000, "INT"),
 		leftPressPsi: props.globals.initNode("/systems/hydraulic/brakes/pressure-left-psi", 0, "INT"),
 		rightPressPsi: props.globals.initNode("/systems/hydraulic/brakes/pressure-right-psi", 0, "INT"),
 		mode: props.globals.initNode("/systems/hydraulic/brakes/mode", 0, "INT"),
@@ -62,6 +62,11 @@ var HYD = {
 		yellowFire: props.globals.getNode("/systems/hydraulic/sources/yellow-edp/fire-valve"),
 		greenFire: props.globals.getNode("/systems/hydraulic/sources/green-edp/fire-valve"),
 	},
+	Warnings: {
+		blueAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/blue-abnorm-lo-pr"),
+		greenAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/green-abnorm-lo-pr"),
+		yellowAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/yellow-abnorm-lo-pr"),
+	},
 	init: func() {
 		me.resetFail();
 		me.Qty.blueInput.setValue(math.round((rand() * 2) + 6 , 0.1)); # Random between 6 and 8
@@ -74,6 +79,7 @@ var HYD = {
 		me.Switch.rat.setValue(0);
 		me.Switch.yellowEDP.setValue(1);
 		me.Switch.yellowElec.setValue(0);
+		me.Brakes.accumPressPsi.setValue(3000);
 	},
 	resetFail: func() {
 		me.Fail.blueElec.setBoolValue(0);
@@ -109,7 +115,7 @@ var HYD = {
 				me.Brakes.accumPressPsi.setValue(0);
 			}
 		}
-
+		
 		# Braking Pressure
 		if (notification.brakesMode == 1 or (notification.brakesMode == 2 and notification.green >= 2500)) {
 			# Normal braking - Green OK

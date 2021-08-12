@@ -5601,6 +5601,22 @@
 			</or>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>metric_alt</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.FCUController.MetricAlt();
+					setprop("sim/sounde/btn1", 1);
+				</script>
+			</binding>
+		</action>
+	</animation>
 
 	<!-- Sidestick Priority Lights -->
 	<animation>
@@ -6977,47 +6993,19 @@
 			</binding>
 		</action>
 		<action>
-			<button>4</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>
-					var spdBrk = getprop("controls/flight/speedbrake" );
-					if(spdBrk == 0){
-						setprop("controls/flight/speedbrake-arm", 0);
-						setprop("controls/flight/speedbrake", 0.5);
-					}
-					elsif(spdBrk == 0.5){
-						setprop("controls/flight/speedbrake-arm", 0);
-						setprop("controls/flight/speedbrake", 1);
-					}
-					elsif(spdBrk == 1){
-						setprop("controls/flight/speedbrake-arm", 0);
-						# Do nothing because spoilers are fully up.
-					}
-				</script>
-			</binding>
-		</action>
-		<action>
 			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>
-					var spdBrk = getprop("controls/flight/speedbrake");
-					if(spdBrk == 0){
-						setprop("controls/flight/speedbrake-arm", 0);
-						# Do nothing because spoilers are fully down.
-					}
-					elsif(spdBrk == 0.5){
-						setprop("controls/flight/speedbrake-arm", 0);
-						setprop("controls/flight/speedbrake", 0);
-					}
-					elsif(spdBrk == 1){
-						setprop("controls/flight/speedbrake-arm", 0);
-						setprop("controls/flight/speedbrake", 0.5);
-					}
-				</script>
+				<script>libraries.retractSpeedbrake();</script>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.deploySpeedbrake();</script>
 			</binding>
 		</action>
 	</animation>
@@ -7701,19 +7689,15 @@
 		<object-name>vs.ind</object-name>
 		<object-name>fpa.ind</object-name>
 		<object-name>fpa.ind.001</object-name>
-		<object-name>atc-code</object-name>
-		<object-name>atc-test</object-name>
 		<object-name>fpa-text</object-name>
 		<object-name>qnh-inhg</object-name>
 		<object-name>qnh-hpa</object-name>
 		<object-name>qnh-std</object-name>
 		<object-name>qnh-test</object-name>
-		<object-name>rudder-trim</object-name>
-		<object-name>rudder-trim-letter</object-name>
 		<diffuse>
-			<red>0.75</red>
-			<green>0.30</green>
-			<blue>0.0</blue>
+			<red>1.00</red>
+			<green>0.515</green>
+			<blue>0.00</blue>
 			<factor-prop>controls/lighting/fcu-digit-norm</factor-prop>
 		</diffuse>
 		<ambient>
@@ -7727,9 +7711,9 @@
 			<blue>0</blue>
 		</specular>
 		<emission>
-			<red>0.75</red>
-			<green>0.30</green>
-			<blue>0.0</blue>
+			<red>1.00</red>
+			<green>0.515</green>
+			<blue>0.00</blue>
 			<factor-prop>controls/lighting/fcu-digit-norm</factor-prop>
 		</emission>
 	</animation>
@@ -7738,10 +7722,12 @@
 		<type>material</type>
 		<object-name>rudder-trim</object-name>
 		<object-name>rudder-trim-letter</object-name>
+		<object-name>atc-code</object-name>
+		<object-name>atc-test</object-name>
 		<diffuse>
-			<red>0.75</red>
-			<green>0.30</green>
-			<blue>0.0</blue>
+			<red>1.00</red>
+			<green>0.355</green>
+			<blue>0.00</blue>
 		</diffuse>
 		<ambient>
 			<red>0</red>
@@ -7754,9 +7740,9 @@
 			<blue>0</blue>
 		</specular>
 		<emission>
-			<red>0.75</red>
-			<green>0.30</green>
-			<blue>0.0</blue>
+			<red>1.00</red>
+			<green>0.355</green>
+			<blue>0.00</blue>
 		</emission>
 	</animation>
 
@@ -9180,9 +9166,9 @@
 		<object-name>dme1</object-name>
 <!--		<object-name>dme1_20</object-name>-->
 		<diffuse>
-			<red>0.89</red>
-			<green>0.37</green>
-			<blue>0.08</blue>
+			<red>1.00</red>
+			<green>0.355</green>
+			<blue>0.00</blue>
 		</diffuse>
 		<ambient>
 			<red>0</red>
@@ -9195,9 +9181,9 @@
 			<blue>0</blue>
 		</specular>
 		<emission>
-			<red>0.89</red>
-			<green>0.37</green>
-			<blue>0.08</blue>
+			<red>1.00</red>
+			<green>0.355</green>
+			<blue>0.00</blue>
 		</emission>
 	</animation>
 	

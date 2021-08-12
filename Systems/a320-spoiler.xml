@@ -9,6 +9,28 @@
 	
 	<channel name="Spoiler Logic">
 		
+		<switch name="spoilers/auto-speedbrake-arm"> <!-- Important for spoiler axis -->
+			<default value="/controls/flight/speedbrake-arm"/>
+			<test value="0">
+				/controls/flight/speedbrake gt 0
+			</test>
+			<output>/controls/flight/speedbrake-arm</output>
+		</switch>
+		
+		<fcs_function name="spoilers/lever-input">
+			<function>
+				<table>
+					<independentVar lookup="row">/controls/flight/speedbrake</independentVar>
+					<tableData>
+						0.10  0.0
+						0.45  0.5
+						0.55  0.5
+						0.90  1.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<switch name="spoilers/main-gear-or">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -25,8 +47,8 @@
 			</test>
 		</switch>
 		
-		<switch name="spoilers/auto-speedbrake-cmd">
-			<default value="spoilers/auto-speedbrake-cmd"/>
+		<switch name="spoilers/auto-speedbrake">
+			<default value="spoilers/auto-speedbrake"/>
 			<test logic="OR" value="0"> <!-- Reset -->
 				fadec/control-1/detent ne 0
 				fadec/control-2/detent ne 0
@@ -39,12 +61,19 @@
 				spoilers/main-gear-and eq 1
 				/velocities/groundspeed-kt ge 72
 			</test>
-			<test logic="AND" value="0.20"> <!-- PLD Set 10 degrees -->
+			<test logic="AND" value="0.2"> <!-- PLD Set 10 degrees -->
 				fadec/control-1/detent eq 0
 				fadec/control-2/detent eq 0
 				/controls/flight/speedbrake-arm eq 1
 				spoilers/main-gear-or eq 1
 				/velocities/groundspeed-kt ge 72
+			</test>
+		</switch>
+		
+		<switch name="spoilers/lever-cmd">
+			<default value="spoilers/lever-input"/>
+			<test value="spoilers/auto-speedbrake">
+				/controls/flight/speedbrake-arm eq 1
 			</test>
 		</switch>
 		
@@ -54,45 +83,25 @@
 				spoilers/main-gear-or eq 0
 				fbw/fmgc/enabled eq 1
 			</test>
-			<test logic="AND" value="0.8">
-				spoilers/main-gear-or eq 0
-				fbw/fmgc/enabled eq 1
-			</test>
 		</switch>
 		
-		<fcs_function name="spoilers/speedbrake-nul">
+		<fcs_function name="spoilers/main-cmd">
 			<function>
 				<table>
-					<independentVar lookup="row">/controls/flight/speedbrake</independentVar>
-					<tableData>
-						0.10  0.0
-						0.45  0.625
-						0.55  0.625
-						0.95  1.0
+					<independentVar lookup="row">spoilers/lever-cmd</independentVar>
+					<tableData> <!-- Half is 12.5/25 of 20/40 -->
+						0.0  0.000
+						0.5  0.625
+						1.0  1.000
 					</tableData>
 				</table>
 			</function>
-		</fcs_function>
-		
-		<lag_filter name="spoilers/main-lever">
-			<input>spoilers/speedbrake-nul</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<summer name="spoilers/main-cmd">
-			<input>spoilers/speedbrake-nul</input>
-			<input>spoilers/auto-speedbrake-cmd</input>
+			<output>fbw/spoiler-output</output>
 			<clipto>
-				<min>0.0</min>
+				<min>0</min>
 				<max>spoilers/max-spoiler</max>
 			</clipto>
-			<output>fbw/spoiler-output</output>
-		</summer>
-		
-		<lag_filter name="spoilers/lever-arm">
-			<input>/controls/flight/speedbrake-arm</input>
-			<c1>20</c1>
-		</lag_filter>
+		</fcs_function>
 		
 		<fcs_function name="hydraulics/spoiler-droop-rate">
 			<function>
@@ -125,7 +134,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-l1/cmd-deg">
 			<input>hydraulics/spoiler-l1/switch</input>
-			<gain>50.0</gain>
+			<gain>50</gain>
 		</pure_gain>
 		
 		<switch name="hydraulics/spoiler-l1/rate">
@@ -243,7 +252,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-l2/cmd-deg">
 			<input>hydraulics/spoiler-l2/switch</input>
-			<gain>50.0</gain>
+			<gain>50</gain>
 		</pure_gain>
 		
 		<switch name="hydraulics/spoiler-l2/rate">
@@ -339,7 +348,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-l3/cmd-deg">
 			<input>hydraulics/spoiler-l3/switch</input>
-			<gain>50.0</gain>
+			<gain>50</gain>
 		</pure_gain>
 		
 		<switch name="hydraulics/spoiler-l3/rate">
@@ -435,7 +444,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-l4/cmd-deg">
 			<input>hydraulics/spoiler-l4/switch</input>
-			<gain>50.0</gain>
+			<gain>50</gain>
 		</pure_gain>
 		
 		<switch name="hydraulics/spoiler-l4/rate">
@@ -507,7 +516,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-l5/cmd-deg">
 			<input>hydraulics/spoiler-l5/switch</input>
-			<gain>50.0</gain>
+			<gain>50</gain>
 		</pure_gain>
 		
 		<switch name="hydraulics/spoiler-l5/rate">
@@ -546,7 +555,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-r1/cmd-deg">
 			<input>hydraulics/spoiler-r1/switch</input>
-			<gain>50.0</gain>
+			<gain>50</gain>
 		</pure_gain>
 		
 		<switch name="hydraulics/spoiler-r1/rate">
@@ -664,7 +673,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-r2/cmd-deg">
 			<input>hydraulics/spoiler-r2/switch</input>
-			<gain>50.0</gain>
+			<gain>50</gain>
 		</pure_gain>
 		
 		<switch name="hydraulics/spoiler-r2/rate">
@@ -760,7 +769,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-r3/cmd-deg">
 			<input>hydraulics/spoiler-r3/switch</input>
-			<gain>50.0</gain>
+			<gain>50</gain>
 		</pure_gain>
 		
 		<switch name="hydraulics/spoiler-r3/rate">
@@ -856,7 +865,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-r4/cmd-deg">
 			<input>hydraulics/spoiler-r4/switch</input>
-			<gain>50.0</gain>
+			<gain>50</gain>
 		</pure_gain>
 		
 		<switch name="hydraulics/spoiler-r4/rate">
@@ -928,7 +937,7 @@
 		
 		<pure_gain name="hydraulics/spoiler-r5/cmd-deg">
 			<input>hydraulics/spoiler-r5/switch</input>
-			<gain>50.0</gain>
+			<gain>50</gain>
 		</pure_gain>
 		
 		<switch name="hydraulics/spoiler-r5/rate">

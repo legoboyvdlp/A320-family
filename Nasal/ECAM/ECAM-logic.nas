@@ -36,6 +36,7 @@ var altAlertInhibit = nil;
 var alt200 = nil;
 var alt750 = nil;
 var bigThree = nil;
+var fltCtlLandAsap = 0;
 
 var altAlertSteady = 0;
 var altAlertFlash = 0;
@@ -2098,7 +2099,7 @@ var messages_priority_2 = func {
 		altnLaw.active = 1;
 		altnLawProt.active = 1;
 		if (altnLawMaxSpeed.clearFlag == 0 and altnLawMaxSpeed2.clearFlag == 0 and !fbw.tripleADRFail) {
-			if (!(getprop("/ECAM/warnings/hyd/green-abnorm-lo-pr") and (getprop("/ECAM/warnings/hyd/blue-abnorm-lo-pr") or getprop("/ECAM/warnings/hyd/yellow-abnorm-lo-pr")))) {
+			if (!(systems.HYD.Warnings.greenAbnormLoPr.getValue() and (systems.HYD.Warnings.blueAbnormLoPr.getValue() or systems.HYD.Warnings.yellowAbnormLoPr.getValue()))) {
 				altnLawMaxSpeed.active = 1;
 				ECAM_controller.warningReset(altnLawMaxSpeed2);
 			} else {
@@ -2135,7 +2136,7 @@ var messages_priority_2 = func {
 		if (getprop("/fdm/jsbsim/fadec/thr-locked-flash") == 0) {
 			athr_lock.msg = " ";
 		} else {
-			athr_lock.msg = msgSave
+			athr_lock.msg = msgSave;
 		}
 		athr_lock.active = 1;
 		athr_lock_1.active = 1;
@@ -3148,7 +3149,7 @@ var messages_config_memo = func {
 		setprop("/ECAM/to-config-reset", 0);
 	}
 	
-	if (getprop("/controls/autobrake/mode") == 3) {
+	if (systems.Autobrake.mode.getValue() == 3) {
 		toMemoLine1.msg = "T.O AUTO BRK MAX";
 		toMemoLine1.colour = "g";
 	} else {
@@ -3411,14 +3412,20 @@ var messages_right_memo = func {
 		ldg_inhibit.active = 0;
 	}
 	
-	if ((!pts.Gear.wow[1].getValue()) and (systems.ELEC.EmerElec.getValue() or getprop("/systems/fire/engine1/warning-active") == 1 or getprop("/systems/fire/engine2/warning-active") == 1 or getprop("/systems/fire/apu/warning-active") == 1 or getprop("/systems/failures/fire/cargo-aft-fire") == 1 or getprop("/systems/failures/fire/cargo-fwd-fire") == 1) or (((systems.HYD.Psi.green.getValue() < 1500 and pts.Engines.Engine.state[0].getValue() == 3) and (systems.HYD.Psi.yellow.getValue() < 1500 and pts.Engines.Engine.state[1].getValue() == 3)) or ((systems.HYD.Psi.green.getValue() < 1500 or systems.HYD.Psi.yellow.getValue() < 1500) and pts.Engines.Engine.state[0].getValue() == 3 and pts.Engines.Engine.state[1].getValue() == 3) and phaseVarMemo3 >= 3 and phaseVarMemo3 <= 8)) {
-		# todo: emer elec
+	if (!(FWC.Timer.gnd.getValue() == 1) and (systems.ELEC.EmerElec.getValue() or dualFailNode.getValue() == 1 or systems.eng1FireWarn.getValue() == 1 or systems.eng2FireWarn.getValue() == 1 or systems.apuFireWarn.getValue() == 1 or systems.aftCargoFireWarn.getValue() == 1 or systems.fwdCargoFireWarn.getValue() == 1 or (systems.HYD.Warnings.greenAbnormLoPr.getValue() and systems.HYD.Warnings.yellowAbnormLoPr.getValue()) or (systems.HYD.Warnings.greenAbnormLoPr.getValue() and systems.HYD.Warnings.blueAbnormLoPr.getValue()) or (systems.HYD.Warnings.blueAbnormLoPr.getValue() and systems.HYD.Warnings.yellowAbnormLoPr.getValue()))) {
 		land_asap_r.active = 1;
 	} else {
 		land_asap_r.active = 0;
 	}
 	
-	if (land_asap_r.active == 0 and !pts.Gear.wow[1].getValue() and ((getprop("/fdm/jsbsim/propulsion/tank[0]/contents-lbs") < 1650 and getprop("/fdm/jsbsim/propulsion/tank[1]/contents-lbs") < 1650) or ((getprop("/systems/electrical/bus/dc-2") < 25 and (getprop("/systems/failures/fctl/elac1") == 1 or getprop("/systems/failures/fctl/sec1") == 1)) or (systems.HYD.Psi.green.getValue() < 1500 and (getprop("/systems/failures/fctl/elac1") == 1 and getprop("/systems/failures/fctl/sec1") == 1)) or (systems.HYD.Psi.yellow.getValue() < 1500 and (getprop("/systems/failures/fctl/elac1") == 1 and getprop("/systems/failures/fctl/sec1") == 1)) or (systems.HYD.Psi.blue.getValue() < 1500 and (getprop("/systems/failures/fctl/elac2") == 1 and getprop("/systems/failures/fctl/sec2") == 1))) or (phaseVarMemo3 >= 3 and phaseVarMemo3 <= 8 and (pts.Engines.Engine.state[0].getValue() != 3 or pts.Engines.Engine.state[1].getValue() != 3)))) {
+	if ((systems.ELEC.Bus.dc2.getValue() < 25 and (fbw.FBW.Failures.elac1.getValue() == 1 or fbw.FBW.Failures.sec1.getValue() == 1)) or ((systems.HYD.Psi.yellow.getValue() < 1500 or systems.HYD.Psi.green.getValue() < 1500) and (fbw.FBW.Failures.elac1.getValue() == 1 and fbw.FBW.Failures.sec1.getValue() == 1)) or (systems.HYD.Psi.blue.getValue() < 1500 and (fbw.FBW.Failures.elac2.getValue() == 1 and fbw.FBW.Failures.sec2.getValue() == 1))) {
+		fltCtlLandAsap = 1;
+	} else {
+		fltCtlLandAsap = 0;
+	}
+	
+	if (land_asap_r.active == 0 and !(FWC.Timer.gnd.getValue() == 1) and (warningNodes.Timers.lowLevelBoth.getValue() == 1 or warningNodes.Logic.eng1Shutdown.getValue() or warningNodes.Logic.eng2Shutdown.getValue() or warningNodes.Logic.eng1Fail.getValue() or warningNodes.Logic.eng2Fail.getValue() or warningNodes.Timers.dcEmerConfig.getValue() == 1 or fltCtlLandAsap)) {
+		# todo avionics smoke and reverse unlocked
 		land_asap_a.active = 1;
 	} else {
 		land_asap_a.active = 0;
@@ -3496,7 +3503,7 @@ var messages_right_memo = func {
 		nw_strg_disc.colour = "g";
 	}
 	
-	if (getprop("/controls/pneumatics/switches/ram-air") == 1) {
+	if (systems.PNEU.Switch.ramAir.getValue() == 1) {
 		ram_air.active = 1;
 	} else {
 		ram_air.active = 0;
@@ -3537,7 +3544,7 @@ var messages_right_memo = func {
 		company_msg.active = 0;
 	}
 	
-	if (getprop("/controls/ice-protection/leng") == 1 or getprop("/controls/ice-protection/reng") == 1 or getprop("/systems/electrical/bus/dc-1") == 0 or getprop("/systems/electrical/bus/dc-2") == 0) {
+	if (getprop("/controls/ice-protection/leng") == 1 or getprop("/controls/ice-protection/reng") == 1 or systems.ELEC.Bus.dc1.getValue() < 25 or  systems.ELEC.Bus.dc2.getValue() < 25) {
 		eng_aice.active = 1;
 	} else {
 		eng_aice.active = 0;
@@ -3549,7 +3556,7 @@ var messages_right_memo = func {
 		wing_aice.active = 0;
 	}
 	
-	if (getprop("/controls/pneumatics/switches/apu") == 1 and pts.APU.rpm.getValue() >= 95) {
+	if (systems.PNEU.Switch.apu.getValue() == 1 and pts.APU.rpm.getValue() >= 95) {
 		apu_bleed.active = 1;
 	} else {
 		apu_bleed.active = 0;
@@ -3561,43 +3568,43 @@ var messages_right_memo = func {
 		apu_avail.active = 0;
 	}
 
-	if (getprop("/controls/lighting/landing-lights[1]") > 0 or getprop("/controls/lighting/landing-lights[2]") > 0) {
+	if (pts.Controls.Lighting.landingLights[1].getValue() > 0 or pts.Controls.Lighting.landingLights[2].getValue() > 0) {
 		ldg_lt.active = 1;
 	} else {
 		ldg_lt.active = 0;
 	}
 	
-	if (getprop("/controls/gear/brake-fans") == 1) {
+	if (systems.BrakeSys.brakeFans.getValue() == 1) {
 		brk_fan.active = 1;
 	} else {
 		brk_fan.active = 0;
 	}
 	
-	if (getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override") == 1) { # todo: emer elec
+	if (pts.Instrumentation.MKVII.Inputs.Discretes.flap3Override.getValue() == 1) { # todo: emer elec
 		gpws_flap3.active = 1;
 	} else {
 		gpws_flap3.active = 0;
 	}
 	
-	if (!getprop("/systems/radio/vhf3-data-mode") and (phaseVarMemo3 == 1 or phaseVarMemo3 == 2 or phaseVarMemo3 == 6 or phaseVarMemo3 == 9 or phaseVarMemo3 == 10)) {
+	if (!rmp.vhf3_data_mode.getValue() and (phaseVarMemo3 == 1 or phaseVarMemo3 == 2 or phaseVarMemo3 == 6 or phaseVarMemo3 == 9 or phaseVarMemo3 == 10)) {
 		vhf3_voice.active = 1;
 	} else {
 		vhf3_voice.active = 0;
 	}
 	
-	if (getprop("/controls/autobrake/mode") == 1 and (phaseVarMemo3 == 7 or phaseVarMemo3 == 8)) {
+	if (systems.Autobrake.mode.getValue() == 1 and (phaseVarMemo3 == 7 or phaseVarMemo3 == 8)) {
 		auto_brk_lo.active = 1;
 	} else {
 		auto_brk_lo.active = 0;
 	}
 
-	if (getprop("/controls/autobrake/mode") == 2 and (phaseVarMemo3 == 7 or phaseVarMemo3 == 8)) {
+	if (systems.Autobrake.mode.getValue() == 2 and (phaseVarMemo3 == 7 or phaseVarMemo3 == 8)) {
 		auto_brk_med.active = 1;
 	} else {
 		auto_brk_med.active = 0;
 	}
 
-	if (getprop("/controls/autobrake/mode") == 3 and (phaseVarMemo3 == 7 or phaseVarMemo3 == 8)) {
+	if (systems.Autobrake.mode.getValue() == 3 and (phaseVarMemo3 == 7 or phaseVarMemo3 == 8)) {
 		auto_brk_max.active = 1;
 	} else {
 		auto_brk_max.active = 0;
