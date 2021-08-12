@@ -38,7 +38,7 @@ var findTexByRes = func(path, file, maxRes) {
 		}
 		res = res / 2;
 	}
-	logprint(LOG_WARN, "No suiting texture found", me.path);
+	print("No suiting texture found");
 	return nil;
 };
 
@@ -60,12 +60,13 @@ var canvas_livery = {
 	},
 	setResolution: func(resolution) {
 	},
-	createTarget: func(name, objects, property, resolution=4096) {
+	createTarget: func(name, objects, property, defLiv, resolution=4096) {
 		me.targets[name] = {
 			canvas: nil,
 			layers: {},
 			groups: {},
 			listener: nil,
+			defaultLiv: defLiv,
 			resolution: resolution,
 		};
 		maxRes = getprop("/sim/model/livery/max-resolution");
@@ -100,11 +101,16 @@ var canvas_livery = {
 			me.targets[name].canvas.addPlacement({"node": object});
 		}
 		me.targets[name].groups["base"] = me.targets[name].canvas.createGroup("base");
+		var livery = "";
 		resStr = findTexByRes(me.liveriesdir, getprop(property), resolution);
 		if (resStr == nil) {
-			return nil;
+			livery = me.targets[name].defaultLiv;
 		}
-		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)).setSize(resolution,resolution);
+		else
+		{
+			livery = me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)
+		}
+		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(livery).setSize(resolution,resolution);
 		me.targets[name].listener = setlistener(property, func(property) {
 			resStr = findTexByRes(me.liveriesdir, property.getValue(), resolution);
 			if (resStr == nil) {
@@ -189,9 +195,14 @@ var canvas_livery_update = {
 			me.targets[name].canvas.addPlacement({"module-id": me.module_id, "type": "scenery-object", "node": object});
 		}
 		me.targets[name].groups["base"] = me.targets[name].canvas.createGroup("base");
+		var livery = "";
 		resStr = findTexByRes(me.liveriesdir, getprop(property), resolution);
 		if (resStr == nil) {
-			return nil;
+			livery = me.targets[name].defaultLiv;
+		}
+		else
+		{
+			livery = me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)
 		}
 		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)).setSize(resolution,resolution);
 		me.targets[name].listener = setlistener("/ai/models/multiplayer[" ~ me.module_id ~ "]/" ~ property, func(property) {
