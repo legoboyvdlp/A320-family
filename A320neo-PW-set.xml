@@ -14,7 +14,7 @@
 			<livery>
 				<file>Airbus</file>
 			</livery>
-			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/A320/PW-NEO</livery-dir>
+			<livery-dir type="string">Aircraft/A320-family/Models/Liveries//PW-NEO</livery-dir>
 		</model>
 		
 		<sound>
