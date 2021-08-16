@@ -14,8 +14,8 @@
 			<expression>
 				<table>
 					<property>/velocities/airspeed-kt</property>
-					<entry><ind>140</ind><dep>1.8</dep></entry>
-					<entry><ind>360</ind><dep>2.8</dep></entry>
+					<entry><ind>140</ind><dep>1.6</dep></entry>
+					<entry><ind>360</ind><dep>2.6</dep></entry>
 				</table>
 			</expression>
 		</gain>
@@ -71,8 +71,8 @@
 			<expression>
 				<table>
 					<property>/velocities/airspeed-kt</property>
-					<entry><ind>140</ind><dep>1.8</dep></entry>
-					<entry><ind>360</ind><dep>2.8</dep></entry>
+					<entry><ind>140</ind><dep>1.6</dep></entry>
+					<entry><ind>360</ind><dep>2.6</dep></entry>
 				</table>
 			</expression>
 		</gain>
