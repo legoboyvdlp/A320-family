@@ -1,26 +1,67 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Jonathan Redpath (legoboyvdlp) -->
+<!-- Copyright (c) 2021 Jonathan Redpath (legoboyvdlp) -->
 
 <system name="A320: Lights">
 
 	<channel name="Interior Lights" execrate="8">
-		<switch name="/controls/lighting/reading-light-tied">
+	
+		<switch name="/controls/lighting/reading-light-left">
 			<default value="0" />
-			<test value="/controls/lighting/main-flood-knb">
+			<test value="/controls/lighting/reading-light-left-knb">
 				/systems/electrical/bus/dc-1 gt 25
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/panel-light-tied">
+		<switch name="/controls/lighting/reading-light-right">
+			<default value="0" />
+			<test value="/controls/lighting/reading-light-right-knb">
+				/systems/electrical/bus/dc-1 gt 25
+			</test>
+		</switch>
+		
+		<switch name="/controls/lighting/map-light-left">
+			<default value="0" />
+			<test value="/controls/lighting/map-light-left-knb">
+				/systems/electrical/bus/dc-1 gt 25
+			</test>
+		</switch>
+		
+		<switch name="/controls/lighting/map-light-right">
+			<default value="0" />
+			<test value="/controls/lighting/map-light-right-knb">
+				/systems/electrical/bus/dc-2 gt 25
+			</test>
+		</switch>
+		<switch name="/controls/lighting/console-floor-light">
+			<default value="0" />
+			<test value="/controls/lighting/console-floor-light-sw">
+				/systems/electrical/bus/dc-1 gt 25
+			</test>
+		</switch>
+		
+		<switch name="/controls/lighting/console-floor-light-right">
+			<default value="0" />
+			<test value="/controls/lighting/console-floor-light-sw-right">
+				/systems/electrical/bus/dc-2 gt 25
+			</test>
+		</switch>
+		
+		<switch name="/controls/lighting/panel-flood-light-left">
 			<default value="0" />
 			<test logic="OR" value="/controls/lighting/main-flood-knb">
 				/systems/electrical/bus/dc-ess gt 25
+			</test>
+		</switch>
+		
+		<switch name="/controls/lighting/panel-flood-light-right">
+			<default value="0" />
+			<test logic="OR" value="/controls/lighting/main-flood-knb">
 				/systems/electrical/bus/dc-1 gt 25
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/pedestal-light-tied">
+		<switch name="/controls/lighting/pedestal-light">
 			<default value="0" />
 			<test value="/controls/lighting/ped-flood-knb">
 				/systems/electrical/bus/dc-1 gt 25

@@ -1033,6 +1033,8 @@
 			<interior type="double">0</interior>
 			<cockpit type="bool">0</cockpit>
 			<cones type="bool">true</cones>
+			<console-floor-light-sw type="double">0</console-floor-light-sw>
+			<console-floor-light-sw-right type="double">0</console-floor-light-sw-right>
 			<dome-norm type="double">0</dome-norm>
 			<fcu-panel-knb type="double">0</fcu-panel-knb>
 			<fcu-panel-norm type="double">0</fcu-panel-norm>
@@ -1049,10 +1051,14 @@
 			<main-flood-norm type="double">0</main-flood-norm>
 			<main-panel-knb type="double">0</main-panel-knb>
 			<main-panel-norm type="double">0</main-panel-norm>
+			<map-light-left-knb type="double">0</map-light-left-knb>
+			<map-light-right-knb type="double">0</map-light-right-knb>
+			<main-panel-pedestal-norm type="double">0</main-panel-pedestal-norm>
 			<nav-lights-switch type="int">0</nav-lights-switch>
 			<overhead-panel-knb type="double">0</overhead-panel-knb>
 			<overhead-panel-norm type="double">0</overhead-panel-norm>
-			<main-panel-pedestal-norm type="double">0</main-panel-pedestal-norm>
+			<reading-light-left-knb type="double">0</reading-light-left-knb>
+			<reading-light-right-knb type="double">0</reading-light-right-knb>
 			<strobe type="bool">0</strobe>
 			<no-smoking-sign type="bool">1</no-smoking-sign>
 			<seatbelt-sign type="bool">0</seatbelt-sign>

@@ -330,18 +330,6 @@
 		</emission>
 	</animation>
 	
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/ddrmi</inherits-from>
-		<object-name>ddrmi_body</object-name>
-		<object-name>ddrmi_vor_adf_select_1</object-name>
-		<object-name>ddrmi_vor_adf_select_2</object-name>
-		<object-name>ddrmi_pointer_1</object-name>
-		<object-name>ddrmi_pointer_2</object-name>
-		<object-name>ddrmi_inside</object-name>
-		<object-name>ddrmi_vor_adf_flag_1</object-name>
-		<object-name>ddrmi_vor_adf_flag_2</object-name>
-	</effect>
-	
 	<!-- Brakes Pressure Indicator -->
 	<animation>
     	<type>rotate</type>
@@ -434,11 +422,6 @@
 		</emission>
 	</animation>
 	
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/brake</inherits-from>
-		<object-name>brakes_body</object-name>
-	</effect>
-
 	<!-- Multi-purpose Control and Display Units -->
 	<model>
 		<name>MCDU1</name>
@@ -499,47 +482,6 @@
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-upper</inherits-from>
-		<object-name>throttle_1</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-atc</inherits-from>
-		<object-name>atc_glare</object-name>
-		<object-name>atc_body</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-engine</inherits-from>
-		<object-name>engine_body</object-name>
-		<object-name>engine_glare</object-name>
-		<object-name>eng_mode</object-name>
-		<object-name>Lcutoff</object-name>
-		<object-name>Rcutoff</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/brightness-panel-ped</inherits-from>
-		<object-name>vu111_body</object-name>
-		<object-name>vu112_body</object-name>
-		<object-name>vu111_glare</object-name>
-		<object-name>vu112_glare</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/dummy-gap</inherits-from>
-		<object-name>dummy_1</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-radar</inherits-from>
-		<object-name>radar_mode</object-name>
-		<object-name>radar_tilt</object-name>
-		<object-name>radar_body</object-name>
-		<object-name>radar_glare</object-name>
-	</effect>
 
 	<animation>
 		<type>select</type>
@@ -7889,94 +7831,6 @@
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/panel-flood</inherits-from>
-		<object-name>main_panel</object-name>
-		<object-name>gear_lever_body</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/gear-lever</inherits-from>
-		<object-name>gear_lever</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/panel-flood-brightness</inherits-from>
-		<object-name>brightness_panel_left_glare</object-name>
-		<object-name>brightness_panel_right_glare</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood</inherits-from>
-		<object-name>pedestal_low</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-glare</inherits-from>
-		<object-name>pedestal_low_glare</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/thr-quad-flood</inherits-from>
-		<object-name>thr_quad</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/rudder-trim</inherits-from>
-		<object-name>RudderTrim</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/park-brk</inherits-from>
-		<object-name>ParkBrk</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/gravity-gear</inherits-from>
-		<object-name>gravity_gear</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/panel-flood-glare</inherits-from>
-		<object-name>main_panel_signboard</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/panel-flood-glare-right</inherits-from>
-		<object-name>gear_labels</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-footrest</inherits-from>
-		<object-name>ped_footrest</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-flap</inherits-from>
-		<object-name>FlapsLever</object-name>
-	</effect>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/pedestal-flood-spdbrk</inherits-from>
-		<object-name>SpdBrk</object-name>
-	</effect>
-
-<!--	<effect>-->
-<!--		<inherits-from>Aircraft/A320-family/Models/Effects/clock-glare</inherits-from>-->
-<!--		<object-name>clock_glare</object-name>-->
-<!--	</effect>-->
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/iesi</inherits-from>
-		<object-name>iesi</object-name>
-		<object-name>iesi_baro_knb</object-name>
-		<object-name>iesi_btn_bugs</object-name>
-		<object-name>iesi_btn_ls</object-name>
-		<object-name>iesi_btn_minus</object-name>
-		<object-name>iesi_btn_plus</object-name>
-		<object-name>iesi_btn_rst</object-name>
-	</effect>
 	
 	<animation>
 		<type>pick</type>
@@ -8100,19 +7954,6 @@
 		</axis>
 	</animation>
 	
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/clock</inherits-from>
-<!--		<object-name>clock</object-name>-->
-		<object-name>clock_body</object-name>
-		<object-name>et_knob</object-name>
-		<object-name>clock_knob</object-name>
-		<object-name>chrono_reset</object-name>
-		<object-name>chrono_btn</object-name>
-		<object-name>clock_set</object-name>
-<!--		<object-name>clock_display</object-name>-->
-	</effect>
-
-	<!-- move any objects requiring lightmap to another effect file -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
 		<object-name>ACP</object-name>
@@ -8377,7 +8218,32 @@
 		<object-name>integ_lt</object-name>
 		<object-name>flood_lt_ped</object-name>
 		<object-name>radar_gain</object-name>
-		<object-name>throttle_1_label</object-name>
+		<object-name>throttle_1_label</object-name><object-name>vu111_body</object-name>
+		<object-name>vu112_body</object-name>
+		<object-name>vu111_glare</object-name>
+		<object-name>vu112_glare</object-name>
+		<object-name>radar_mode</object-name>
+		<object-name>radar_tilt</object-name>
+		<object-name>radar_body</object-name>
+		<object-name>radar_glare</object-name>
+		<object-name>dummy_1</object-name>
+		<object-name>engine_body</object-name>
+		<object-name>engine_glare</object-name>
+		<object-name>eng_mode</object-name>
+		<object-name>Lcutoff</object-name>
+		<object-name>Rcutoff</object-name>
+		<object-name>throttle_1</object-name>
+		<object-name>atc_glare</object-name>
+		<object-name>atc_body</object-name>
+		<object-name>pedestal_low</object-name>
+		<object-name>pedestal_low_glare</object-name>
+		<object-name>thr_quad</object-name>
+		<object-name>RudderTrim</object-name>
+		<object-name>ParkBrk</object-name>
+		<object-name>gravity_gear</object-name>
+		<object-name>ped_footrest</object-name>
+		<object-name>FlapsLever</object-name>
+		<object-name>SpdBrk</object-name>
 	</effect>
 	
 	<!-- Panels that are vertical -->
@@ -8435,6 +8301,35 @@
 		<object-name>dcduBtnR.pgeminus</object-name>
 		<object-name>dcduBtnR.pgeplus</object-name>
 		<object-name>dcduBtnGlare</object-name>
+		<object-name>main_panel</object-name>
+		<object-name>gear_lever_body</object-name>
+		<object-name>gear_lever</object-name>
+		<object-name>brightness_panel_left_glare</object-name>
+		<object-name>brightness_panel_right_glare</object-name>
+		<object-name>main_panel_signboard</object-name>
+		<object-name>gear_labels</object-name>
+		<object-name>iesi</object-name>
+		<object-name>iesi_baro_knb</object-name>
+		<object-name>iesi_btn_bugs</object-name>
+		<object-name>iesi_btn_ls</object-name>
+		<object-name>iesi_btn_minus</object-name>
+		<object-name>iesi_btn_plus</object-name>
+		<object-name>iesi_btn_rst</object-name>
+		<object-name>ddrmi_body</object-name>
+		<object-name>ddrmi_vor_adf_select_1</object-name>
+		<object-name>ddrmi_vor_adf_select_2</object-name>
+		<object-name>ddrmi_pointer_1</object-name>
+		<object-name>ddrmi_pointer_2</object-name>
+		<object-name>ddrmi_inside</object-name>
+		<object-name>ddrmi_vor_adf_flag_1</object-name>
+		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>brakes_body</object-name>
+		<object-name>clock_body</object-name>
+		<object-name>et_knob</object-name>
+		<object-name>clock_knob</object-name>
+		<object-name>chrono_reset</object-name>
+		<object-name>chrono_btn</object-name>
+		<object-name>clock_set</object-name>
 	</effect>
 	
 	<animation>
@@ -9820,6 +9715,886 @@
 			<z>0</z>
 		</axis>
 	</animation>
+	
+	
+	<!-- Compositor Lighting -->
+	<light>
+		<name>Pedestal Light</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/pedestal-light</property></dim-factor>
+		<position>
+			<x-m>0.510226</x-m>
+			<y-m>-0.000203</y-m>
+			<z-m>1.10204</z-m>
+		</position>
+		<direction>
+			<x>-0.35</x>
+			<y>0</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.5</r>
+			<g>0.5</g>
+			<b>0.5</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.45</l>
+			<q>0.75</q>
+		</attenuation>
+		<spot-exponent>100.0</spot-exponent>
+		<spot-cutoff>25.0</spot-cutoff>
+		<range-m>10.0</range-m>
+	</light>
+	
+	<animation>
+		<type>knob</type>
+        <object-name>readingLightLeft</object-name>
+        <property>/controls/lighting/reading-light-left-knb</property>
+		<factor>180</factor>
+		<offset-deg>-90</offset-deg>
+        <axis>
+			<x1-m>0.722935</x1-m>
+			<y1-m>-0.210543</y1-m>
+			<z1-m>1.18627</z1-m>
+			<x2-m>0.716082</x2-m>
+			<y2-m>-0.210578</y2-m>
+			<z2-m>1.20481</z2-m>
+		</axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>/controls/lighting/reading-light-left-knb</property>
+                <factor>0.05</factor>
+                <min>0</min>
+                <max>1</max>                
+                <wrap>false</wrap>
+            </binding>
+        </action>
+	</animation>
+
+	<light>
+		<name>Left Overhead Reading Light</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/reading-light-left</property></dim-factor>
+		<position>
+			<x-m>0.71802</x-m>
+			<y-m>-0.272788</y-m>
+			<z-m>1.19352</z-m>
+		</position>
+		<direction>
+			<x>-0.22850161172</x>
+			<y>-0.2</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.5</r>
+			<g>0.5</g>
+			<b>0.5</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.45</l>
+			<q>0.75</q>
+		</attenuation>
+		<spot-exponent>100.0</spot-exponent>
+		<spot-cutoff>25.0</spot-cutoff>
+		<range-m>10.0</range-m>
+	</light>
+
+	<animation>
+		<type>knob</type>
+        <object-name>readingLightRight</object-name>
+        <property>/controls/lighting/reading-light-right-knb</property>
+		<factor>180</factor>
+		<offset-deg>-90</offset-deg>
+        <axis>
+			<x1-m>0.591399</x1-m>
+			<y1-m>0.282751</y1-m>
+			<z1-m>1.13594</z1-m>
+			<x2-m>0.584543</x2-m>
+			<y2-m>0.282715</y2-m>
+			<z2-m>1.15449</z2-m>
+		</axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>/controls/lighting/reading-light-right-knb</property>
+                <factor>0.05</factor>
+                <min>0</min>
+                <max>1</max>                
+                <wrap>false</wrap>
+            </binding>
+        </action>
+	</animation>
+
+	<light>
+		<name>Right Overhead Reading Light</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/reading-light-right</property></dim-factor>
+		<position>
+			<x-m>0.586497</x-m>
+			<y-m>0.220913</y-m>
+			<z-m>1.1432</z-m>
+		</position>
+		<direction>
+			<x>-0.22850161172</x>
+			<y>0.2</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.5</r>
+			<g>0.5</g>
+			<b>0.5</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.45</l>
+			<q>0.75</q>
+		</attenuation>
+		<spot-exponent>100.0</spot-exponent>
+		<spot-cutoff>25.0</spot-cutoff>
+		<range-m>10.0</range-m>
+	</light>
+
+	<light>
+		<name>Panel Flood Light Far Left</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/panel-flood-light-left</property></dim-factor>
+		<position>
+			<x-m>-0.520043</x-m>
+			<y-m>-0.714193</y-m>
+			<z-m>0.450317</z-m>
+		</position>
+		<direction>
+			<x>-0.185</x>
+			<y>0.0</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.5</r>
+			<g>0.5</g>
+			<b>0.5</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.80</l>
+			<q>12.50</q>
+		</attenuation>
+		<spot-exponent>50.0</spot-exponent>
+		<spot-cutoff>35.0</spot-cutoff>
+		<range-m>2.5</range-m>
+	</light>
+
+	<light>
+		<name>Panel Flood Light Center Left</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/panel-flood-light-left</property></dim-factor>
+		<position>
+			<x-m>-0.57573</x-m>
+			<y-m>-0.16723</y-m>
+			<z-m>0.44432</z-m>
+		</position>
+		<direction>
+			<x>0.1</x>
+			<y>0.0</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.5</r>
+			<g>0.5</g>
+			<b>0.5</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.80</l>
+			<q>12.50</q>
+		</attenuation>
+		<spot-exponent>50.0</spot-exponent>
+		<spot-cutoff>35.0</spot-cutoff>
+		<range-m>2.5</range-m>
+	</light>
+
+	<light>
+		<name>Panel Flood Light Center Right</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/panel-flood-light-right</property></dim-factor>
+		<position>
+			<x-m>-0.57609</x-m>
+			<y-m>0.175827</y-m>
+			<z-m>0.44651</z-m>
+		</position>
+		<direction>
+			<x>0.1</x>
+			<y>0</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.5</r>
+			<g>0.5</g>
+			<b>0.5</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.80</l>
+			<q>12.50</q>
+		</attenuation>
+		<spot-exponent>50.0</spot-exponent>
+		<spot-cutoff>35.0</spot-cutoff>
+		<range-m>2.5</range-m>
+	</light>
+
+	<light>
+		<name>Panel Flood Light Far Right</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/panel-flood-light-right</property></dim-factor>
+		<position>
+			<x-m>-0.52009</x-m>
+			<y-m>0.71444</y-m>
+			<z-m>0.4476</z-m>
+		</position>
+		<direction>
+			<x>-0.185</x>
+			<y>0.0</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.5</r>
+			<g>0.5</g>
+			<b>0.5</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.80</l>
+			<q>12.50</q>
+		</attenuation>
+		<spot-exponent>50.0</spot-exponent>
+		<spot-cutoff>35.0</spot-cutoff>
+		<range-m>2.5</range-m>
+	</light>
+
+	<animation>
+		<type>knob</type>
+        <object-name>map_lt_left</object-name>
+        <property>/controls/lighting/map-light-left-knb</property>
+		<factor>180</factor>
+		<offset-deg>-90</offset-deg>
+        <axis>
+			<x1-m>-0.392313</x1-m>
+			<y1-m>-0.645853</y1-m>
+			<z1-m>0.41149</z1-m>
+			<x2-m>-0.387715</x2-m>
+			<y2-m>-0.644105</y2-m>
+			<z2-m>0.401322</z2-m>
+		</axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>/controls/lighting/map-light-left-knb</property>
+                <factor>0.05</factor>
+                <min>0</min>
+                <max>1</max>                
+                <wrap>false</wrap>
+            </binding>
+        </action>
+	</animation>
+
+	<light>
+		<name>Left Map Light</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/map-light-left</property></dim-factor>
+		<position>
+			<x-m>-0.381531</x-m>
+			<y-m>-0.50947</y-m>
+			<z-m>0.467942</z-m>
+		</position>
+		<direction>
+			<x>0.05</x>
+			<y>0.0</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.8</r>
+			<g>0.8</g>
+			<b>0.8</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.80</l>
+			<q>12.50</q>
+		</attenuation>
+		<spot-exponent>15.0</spot-exponent>
+		<spot-cutoff>45.0</spot-cutoff>
+		<range-m>2.5</range-m>
+	</light>
+
+	<animation>
+		<type>knob</type>
+        <object-name>map_lt_right</object-name>
+        <property>/controls/lighting/map-light-right-knb</property>
+		<factor>180</factor>
+		<offset-deg>-90</offset-deg>
+        <axis>
+			<x1-m>-0.392313</x1-m>
+			<y1-m>0.645853</y1-m>
+			<z1-m>0.41149</z1-m>
+			<x2-m>-0.387715</x2-m>
+			<y2-m>0.644105</y2-m>
+			<z2-m>0.401322</z2-m>
+		</axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>/controls/lighting/map-light-right-knb</property>
+                <factor>0.05</factor>
+                <min>0</min>
+                <max>1</max>                
+                <wrap>false</wrap>
+            </binding>
+        </action>
+	</animation>
+
+	<light>
+		<name>Right Map Light</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/map-light-right</property></dim-factor>
+		<position>
+			<x-m>-0.381531</x-m>
+			<y-m> 0.50947</y-m>
+			<z-m>0.467942</z-m>
+		</position>
+		<direction>
+			<x>0.05</x>
+			<y>0.0</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.8</r>
+			<g>0.8</g>
+			<b>0.8</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.80</l>
+			<q>12.50</q>
+		</attenuation>
+		<spot-exponent>15.0</spot-exponent>
+		<spot-cutoff>45.0</spot-cutoff>
+		<range-m>2.5</range-m>
+	</light>
+
+	<animation>
+		<type>knob</type>
+        <object-name>light_console_cpt_sw</object-name>
+        <property>/controls/lighting/console-floor-light-sw</property>
+		<factor>-60</factor>
+		<offset-deg>30</offset-deg>
+        <center>
+			<x-m>-0.560268</x-m>
+			<y-m>-0.713513</y-m>
+			<z-m>0.232654</z-m>
+		</center>
+		<axis>
+			<y>1</y>
+		</axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>/controls/lighting/console-floor-light-sw</property>
+				<factor>0.5</factor>
+                <min>0</min>
+                <max>1</max>                
+                <wrap>false</wrap>
+            </binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+        </action>
+	</animation>
+
+	<light>
+		<name>Left Console Light 1</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/console-floor-light</property></dim-factor>
+		<position>
+			<x-m>0.62414</x-m>
+			<y-m>-1.4042</y-m>
+			<z-m>0.195</z-m>
+		</position>
+		<direction>
+			<x>0.0</x>
+			<y>0.15</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.8</r>
+			<g>0.8</g>
+			<b>0.8</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.50</l>
+			<q>8.30</q>
+		</attenuation>
+		<spot-exponent>10.0</spot-exponent>
+		<spot-cutoff>80.0</spot-cutoff>
+		<range-m>3.0</range-m>
+	</light>
+
+	<light>
+		<name>Left Console Light 2</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/console-floor-light</property></dim-factor>
+		<position>
+			<x-m>0.140123</x-m>
+			<y-m>-1.20421</y-m>
+			<z-m>0.230</z-m>
+		</position>
+		<direction>
+			<x>0.0</x>
+			<y>0.10</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.8</r>
+			<g>0.8</g>
+			<b>0.8</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.50</l>
+			<q>8.30</q>
+		</attenuation>
+		<spot-exponent>10.0</spot-exponent>
+		<spot-cutoff>80.0</spot-cutoff>
+		<range-m>3.0</range-m>
+	</light>
+
+	<light>
+		<name>Left Console Light 3</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/console-floor-light</property></dim-factor>
+		<position>
+			<x-m>-0.141133</x-m>
+			<y-m>-1.08799</y-m>
+			<z-m>0.215</z-m>
+		</position>
+		<direction>
+			<x>0.0</x>
+			<y>0.0</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.8</r>
+			<g>0.8</g>
+			<b>0.8</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>2.25</l>
+			<q>18.75</q>
+		</attenuation>
+		<spot-exponent>10.0</spot-exponent>
+		<spot-cutoff>60.0</spot-cutoff>
+		<range-m>2.0</range-m>
+	</light>
+
+	<light>
+		<name>Left Console Light 4</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/console-floor-light</property></dim-factor>
+		<position>
+			<x-m>-0.083548</x-m>
+			<y-m>-0.953093</y-m>
+			<z-m>-0.008889</z-m>
+		</position>
+		<direction>
+			<x>1.0</x>
+			<y>0.00</y>
+			<z>-1.0</z>
+		</direction>
+		<ambient>
+			<r>0.8</r>
+			<g>0.8</g>
+			<b>0.8</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.50</l>
+			<q>8.30</q>
+		</attenuation>
+		<spot-exponent>30.0</spot-exponent>
+		<spot-cutoff>30.0</spot-cutoff>
+		<range-m>3.0</range-m>
+	</light>
+
+	<animation>
+		<type>knob</type>
+        <object-name>light_console_fo_sw</object-name>
+        <property>/controls/lighting/console-floor-light-sw-right</property>
+		<factor>-60</factor>
+		<offset-deg>30</offset-deg>
+        <center>
+			<x-m>-0.560268</x-m>
+			<y-m>-0.713513</y-m>
+			<z-m>0.232654</z-m>
+		</center>
+		<axis>
+			<y>1</y>
+		</axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>/controls/lighting/console-floor-light-sw-right</property>
+				<factor>0.5</factor>
+                <min>0</min>
+                <max>1</max>                
+                <wrap>false</wrap>
+            </binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+        </action>
+	</animation>
+
+	<light>
+		<name>Right Console Light 1</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/console-floor-light-right</property></dim-factor>
+		<position>
+			<x-m>0.62414</x-m>
+			<y-m>1.4042</y-m>
+			<z-m>0.195</z-m>
+		</position>
+		<direction>
+			<x>0.0</x>
+			<y>-0.15</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.8</r>
+			<g>0.8</g>
+			<b>0.8</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.50</l>
+			<q>8.30</q>
+		</attenuation>
+		<spot-exponent>10.0</spot-exponent>
+		<spot-cutoff>80.0</spot-cutoff>
+		<range-m>3.0</range-m>
+	</light>
+
+	<light>
+		<name>Right Console Light 2</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/console-floor-light-right</property></dim-factor>
+		<position>
+			<x-m>0.140123</x-m>
+			<y-m>1.20421</y-m>
+			<z-m>0.230</z-m>
+		</position>
+		<direction>
+			<x>0.0</x>
+			<y>-0.10</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.8</r>
+			<g>0.8</g>
+			<b>0.8</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.50</l>
+			<q>8.30</q>
+		</attenuation>
+		<spot-exponent>10.0</spot-exponent>
+		<spot-cutoff>80.0</spot-cutoff>
+		<range-m>3.0</range-m>
+	</light>
+
+	<light>
+		<name>Right Console Light 3</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/console-floor-light-right</property></dim-factor>
+		<position>
+			<x-m>-0.141133</x-m>
+			<y-m>1.08799</y-m>
+			<z-m>0.215</z-m>
+		</position>
+		<direction>
+			<x>0.0</x>
+			<y>0.0</y>
+			<z>-1</z>
+		</direction>
+		<ambient>
+			<r>0.8</r>
+			<g>0.8</g>
+			<b>0.8</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>2.25</l>
+			<q>18.75</q>
+		</attenuation>
+		<spot-exponent>10.0</spot-exponent>
+		<spot-cutoff>60.0</spot-cutoff>
+		<range-m>2.0</range-m>
+	</light>
+
+	<light>
+		<name>Right Console Light 4</name>
+		<type>spot</type>
+		<dim-factor><property>/controls/lighting/console-floor-light-right</property></dim-factor>
+		<position>
+			<x-m>-0.083548</x-m>
+			<y-m> 0.953093</y-m>
+			<z-m>-0.008889</z-m>
+		</position>
+		<direction>
+			<x>1.0</x>
+			<y>0.00</y>
+			<z>-1.0</z>
+		</direction>
+		<ambient>
+			<r>0.8</r>
+			<g>0.8</g>
+			<b>0.8</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>1.0</g>
+			<b>1.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>1.50</l>
+			<q>8.30</q>
+		</attenuation>
+		<spot-exponent>30.0</spot-exponent>
+		<spot-cutoff>30.0</spot-cutoff>
+		<range-m>3.0</range-m>
+	</light>
 
 </PropertyList>
 
