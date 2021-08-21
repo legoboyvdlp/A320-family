@@ -16,7 +16,7 @@
 				<texture-fuselage>SWR-fuselage.png</texture-fuselage>
 				<texture-engine>SWR-engine.png</texture-engine>
 			</livery>
-			<livery-dir type="string">Aircraft/A320-family/Models/Liveries//CFM</livery-dir>
+			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/CFM</livery-dir>
 		</model>
 		
 		<sound>

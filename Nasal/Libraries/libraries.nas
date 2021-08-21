@@ -53,7 +53,7 @@ if (aero == "A320-200-CFM") {
 } else if (aero == "A320neo-CFM") {
 	var livery = aircraft.canvas_livery.init("Models/Liveries/CFM-NEO");
 	elements = ["EngineLEAPL", "EngineLEAPL.007", "EngineLEAPL.Inner", "EngineLEAPR", "EngineLEAPR.Inner", "Exhaust2LEAPL", "Exhaust2LEAPR", "Exhaust3LEAPL", "Exhaust3LEAPR", "IntakeLEAPL", "IntakeLEAPR", "PylonLEAPL", "PylonLEAPR", "ReverserLDoorLEAP", "ReverserRDoorLEAP"];
-	livery.createTarget("engines", elements, "sim/model/livery/texture-engine");
+	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/CFM-NEO/2k/SAS-engine.png");
 #	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/CFM-NEO/engine-dirt.png");
 } else if (aero == "A320neo-PW") {
 	var livery = aircraft.canvas_livery.init("Models/Liveries/PW-NEO");
