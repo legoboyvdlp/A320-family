@@ -996,6 +996,7 @@
 		<property>modes/fo-du-xfr</property>
 		<factor>-0.20062</factor>
 		<axis>
+			<x>-0.004984547901</x>
 			<x>0</x>
 			<y>1</y>
 			<z>0</z>
