@@ -649,7 +649,7 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	} elsif (FMGCInternal.phase == 3) {
 		if (FMGCInternal.crzFl >= 200) {
-			if ((flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
+			if ((flightPlanController.arrivalDist <= 200 and altSel < 20000)) {
 				newphase = 4;
 				systems.PNEU.pressMode.setValue("DE");
 			}
@@ -662,10 +662,6 @@ var masterFMGC = maketimer(0.2, func {
 	} elsif (FMGCInternal.phase == 4) {
 		if (getprop("/FMGC/internal/decel")) {
 			newphase = 5;
-		}
-		elsif (altSel == (FMGCInternal.crzFl * 100)) {  # back to CRZ state
-			newphase = 3;
-			systems.PNEU.pressMode.setValue("CR");
 		}
 	} elsif (FMGCInternal.phase == 5) {
 		if (state1 == "TOGA" and state2 == "TOGA") {
