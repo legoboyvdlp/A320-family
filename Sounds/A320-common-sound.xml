@@ -1490,7 +1490,7 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.75</factor>
+				<factor>1.5</factor>
 			</volume>
 		</switch>
 		
@@ -1516,7 +1516,7 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.75</factor>
+				<factor>1.5</factor>
 			</volume>
 		</switch>
 		
@@ -1529,7 +1529,7 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.75</factor>
+				<factor>1.5</factor>
 			</volume>
 		</switch>
 		
@@ -1542,7 +1542,7 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.6</factor>
+				<factor>1.0</factor>
 			</volume>
 		</switch>
 		
@@ -1555,7 +1555,7 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.75</factor>
+				<factor>1.5</factor>
 			</volume>
 		</switch>
 		
@@ -1926,6 +1926,22 @@
 			<volume>
 				<property>/sim/current-view/internal</property>
 				<factor>0.6</factor>
+			</volume>
+		</announcements>
+		
+		<announcements>
+			<name>depressurization</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Announce/depressurization.wav</path>
+			<condition>
+				<equals>
+					<property>/systems/oxygen/passenger-oxygen/sys-on-light</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>2.0</factor>
 			</volume>
 		</announcements>
 		

@@ -573,16 +573,108 @@
 		</input>
 		<output>/instrumentation/iesi/pitch-deg</output>
 	</filter>
+	
+	<filter>
+		<name>Wind East</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<product>
+						<property>/velocities/speed-east-fps</property>
+						<value>0.592484</value> <!-- fps to kt -->
+					</product>
+					<product>
+						<cos><deg2rad><property>/orientation/pitch-deg</property></deg2rad></cos>
+						<sin><deg2rad><property>/orientation/heading-deg</property></deg2rad></sin>
+						<!--<floor>-->
+							<property>/systems/navigation/adr/output/tas-3</property>
+							<!--<value>100</value>
+						</floor>-->
+					</product>
+				</difference>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/wind-speed-east</output>
+		<min>-4096</min>
+		<max>4096</max>
+	</filter>
+	
+	<filter>
+		<name>Wind North</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<product>
+						<property>/velocities/speed-north-fps</property>
+						<value>0.592484</value> <!-- fps to kt -->
+					</product>
+					<product>
+						<cos><deg2rad><property>/orientation/pitch-deg</property></deg2rad></cos>
+						<cos><deg2rad><property>/orientation/heading-deg</property></deg2rad></cos>
+						<!--<floor>-->
+							<property>/systems/navigation/adr/output/tas-3</property>
+							<!--<value>100</value>
+						</floor>-->
+					</product>
+				</difference>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/wind-speed-north</output>
+		<min>-4096</min>
+		<max>4096</max>
+	</filter>
 
-	<flipflop>
-        <type>monostable</type>
-        <time>
-            <value>1.5</value>
-        </time>
-        <S>
-			<property>/instrumentation/pfd/lights/autoland-armed</property>
-        </S>
-        <output>/instrumentation/pfd/lights/autoland-sw-pulse</output>
-    </flipflop>
+	<filter>
+		<name>Wind Direction</name>
+		<type>exponential</type>
+		<filter-time>1.28</filter-time>
+		<input>
+			<expression>
+				<sum>
+					<rad2deg>
+						<atan2>
+							<property>/instrumentation/pfd/wind-speed-east</property>
+							<property>/instrumentation/pfd/wind-speed-north</property>
+						</atan2>
+					</rad2deg>
+					<value>180</value>
+				</sum>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/wind-direction</output>
+		<period>
+			<min>0</min>
+			<max>360</max>
+		</period>
+	</filter>
 
+	<filter>
+		<name>Wind Speed</name>
+		<type>exponential</type>
+		<filter-time>1.28</filter-time>
+		<input>
+			<expression>
+				<sqrt>
+					<sum>
+						<pow>
+							<property>/instrumentation/pfd/wind-speed-east</property>
+							<value>2</value>
+						</pow>
+						<pow>
+							<property>/instrumentation/pfd/wind-speed-north</property>
+							<value>2</value>
+						</pow>
+					</sum>
+				</sqrt>
+			</expression>
+		</input>
+		<output>/instrumentation/pfd/wind-speed</output>
+		<min>0</min>
+		<max>256</max>
+	</filter>
+	
 </PropertyList>

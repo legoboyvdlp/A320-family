@@ -196,13 +196,17 @@ var Instrumentation = {
 	MKVII: {
 		Inputs: {
 			Discretes: {
-				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap3-override"),
+				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override"),
 			},
 		},
 	},
 	Nav: {
 		gsDeflection: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm"),
 		locDeflection: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm"),
+	},
+	PFD: {
+		windDirection: props.globals.getNode("/instrumentation/pfd/wind-direction"),
+		windSpeed: props.globals.getNode("/instrumentation/pfd/wind-speed"),
 	},
 	TCAS: {
 		servicable: props.globals.getNode("/instrumentation/tcas/serviceable"),

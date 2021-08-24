@@ -1058,6 +1058,19 @@
 				<ratman type="bool">0</ratman>
 			</protectors>
 		</OH>
+		<oxygen>
+			<cockpit-oxygen-supply-pb type="bool">0</cockpit-oxygen-supply-pb>
+			<cockpit-mask-1-on type="bool">0</cockpit-mask-1-on>
+			<cockpit-mask-2-on type="bool">0</cockpit-mask-2-on>
+			<cockpit-mask-3-on type="bool">0</cockpit-mask-3-on>
+			<cockpit-mask-4-on type="bool">0</cockpit-mask-4-on>
+			<cockpit-mask-1-selector type="bool">0</cockpit-mask-1-selector>
+			<cockpit-mask-2-selector type="bool">0</cockpit-mask-2-selector>
+			<cockpit-mask-3-selector type="bool">0</cockpit-mask-3-selector>
+			<cockpit-mask-4-selector type="bool">0</cockpit-mask-4-selector>
+			<passenger-mask-deploy-man type="bool">0</passenger-mask-deploy-man>
+			<passenger-mask-reset type="bool">0</passenger-mask-reset>
+		</oxygen>
 		<pneumatics n="0">
 			<switches n="0">
 				<apu type="bool">0</apu>
@@ -1285,8 +1298,6 @@
 				<ac-ess-bus type="bool">0</ac-ess-bus>
 				<ac-1-bus type="bool">0</ac-1-bus>
 				<ac-2-bus type="bool">0</ac-2-bus>
-				<bat-1 type="bool">0</bat-1>
-				<bat-2 type="bool">0</bat-2>
 				<dc-bat-bus type="bool">0</dc-bat-bus>
 				<dc-ess-bus type="bool">0</dc-ess-bus>
 				<dc-1-bus type="bool">0</dc-1-bus>
@@ -1580,6 +1591,7 @@
 				<operating-3 type="bool">0</operating-3>
 			</adr>
 		</navigation>
+		
 	</systems>
 	
 	<options n="0">
@@ -4719,7 +4731,6 @@
 			<file>Aircraft/A320-family/Nasal/MCDU/PERFTO.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/RADNAV.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/DATA.nas</file>
-			<file>Aircraft/A320-family/Nasal/MCDU/DATA2.nas</file>
 			<file>Aircraft/A320-family/Nasal/MCDU/STATUS.nas</file>
 		</mcdu>
 		<!-- Traffic layer from E-jet -->
@@ -4757,6 +4768,7 @@
 			<file>Aircraft/A320-family/Models/Instruments/IESI/IESI.nas</file>
 		</canvas_iesi>
 		<canvas_mcdu>
+			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU-funcs.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
 		<canvas_qrh>

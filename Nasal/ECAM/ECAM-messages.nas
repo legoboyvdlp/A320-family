@@ -796,8 +796,11 @@ var memos                = std.Vector.new([
 	var rat              = memo.new(msg: "RAT OUT"     ),
 	var emer_gen         = memo.new(msg: "EMER GEN"    ),
 	var ram_air          = memo.new(msg: "RAM AIR ON"  ),
+	var pax_oxy          = memo.new(msg: "OXY PAX ON"  ),
 	var nw_strg_disc     = memo.new(msg: "NW STRG DISC"),
 	var ignition         = memo.new(msg: "IGNITION"    ),
+	var eng1Cowl         = memo.new(msg: "ENG 1 COWL"  ), # Not yet implemented (NEO)
+	var eng2Cowl         = memo.new(msg: "ENG 2 COWL"  ), # Not yet implemented (NEO)
 	var cabin_ready      = memo.new(msg: "CABIN READY" ), # Not yet implemented
 	var pred_ws_off      = memo.new(msg: "PRED W/S OFF"), # Not yet implemented
 	var terr_stby        = memo.new(msg: "TERR STBY"   ), # Not yet implemented
@@ -825,7 +828,8 @@ var memos                = std.Vector.new([
 	var auto_brk_off     = memo.new(msg: "AUTO BRK OFF"), # Not yet implemented
 	var man_ldg_elev     = memo.new(msg: "MAN LDG ELEV"), # Not yet implemented
 	var ctr_tk_feedg     = memo.new(msg: "CTR TK FEEDG"),
-	var fuelx            = memo.new(msg: "FUEL X FEED" )
+	var fuelx            = memo.new(msg: "FUEL X FEED" ),
+	var adirs_switch     = memo.new(msg: "ADIRS SWTG"  )  # Not yet implemented
 ]);
 
 var clearWarnings        = std.Vector.new();
