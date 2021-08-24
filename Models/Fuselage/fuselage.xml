@@ -36,6 +36,11 @@
 	</effect>
 	
 	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>Windsheild</object-name>
+	</effect>
+	
+	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-rudder</inherits-from>
 		<object-name>Rudder</object-name>
 	</effect>

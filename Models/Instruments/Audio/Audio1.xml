@@ -1159,8 +1159,12 @@
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
 		<object-name>audio_body</object-name>
-		<object-name>audio_glare</object-name>
 		<object-name>audio_int_rad</object-name>
+	</effect>
+	
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>audio_glare</object-name>
 	</effect>
 
 	<animation>

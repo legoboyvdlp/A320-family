@@ -2050,6 +2050,10 @@
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
 		<object-name>mcdu_body</object-name>
+	</effect>
+	
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
 		<object-name>mcdu_glare</object-name>
 	</effect>
 	

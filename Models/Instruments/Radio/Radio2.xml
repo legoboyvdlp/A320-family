@@ -2215,10 +2215,15 @@
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
 		<object-name>radio_body</object-name>
-		<object-name>radio_glare</object-name>
 		<object-name>radio_rot0</object-name>
 		<object-name>radio_rot1</object-name>
 		<object-name>radio_on</object-name>
+	</effect>
+	
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>radio_glare</object-name>
+		<object-name>radio_nav_lit</object-name>
 	</effect>
 
 </PropertyList>
