@@ -1167,14 +1167,14 @@
 
 	<effect>
 		<inherits-from>Effects/model-transparent</inherits-from>
-		<object-name>Eng1FireCover</object-name>
-		<object-name>Eng2FireCover</object-name>
-		<object-name>APUFireCover</object-name>
 		<object-name>MarkingLts</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
+		<object-name>Eng1FireCover</object-name>
+		<object-name>Eng2FireCover</object-name>
+		<object-name>APUFireCover</object-name>
 		<object-name>Panel</object-name>
 		<object-name>firebtnapu</object-name>
 		<object-name>firebtn1</object-name>
