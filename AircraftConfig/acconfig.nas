@@ -573,9 +573,8 @@ var takeoff = func {
 	}
 }
 
-setprop("/systems/start-up-on-start", 0);
 setlistener("/systems/start-up-on-start", func() {
 	if (getprop("/systems/start-up-on-start")) {
 		settimer(takeoff, 5);
 	}
-}, 0, 0);
+}, 1, 0);
