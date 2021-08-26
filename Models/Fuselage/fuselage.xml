@@ -47,6 +47,7 @@
 		<object-name>MLGFittingL.Placards</object-name>
 		<object-name>MLGFittingR.Placards</object-name>
 		<object-name>Fuselage.Placards</object-name>
+		<object-name>Wings.Placards</object-name>
 	</effect>
 	
 	<effect>
