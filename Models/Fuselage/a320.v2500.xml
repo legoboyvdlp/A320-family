@@ -458,6 +458,11 @@
 	</effect>
 	
 	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>EngineIAEV2500L.Placards</object-name>
+	</effect>
+	
+	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-wing</inherits-from>
 		<object-name>EngineFairingL</object-name>
 		<object-name>EngineFairingR</object-name>

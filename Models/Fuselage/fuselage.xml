@@ -38,6 +38,15 @@
 	<effect>
 		<inherits-from>Effects/model-transparent</inherits-from>
 		<object-name>Windsheild</object-name>
+		<object-name>DoorL1.Placards</object-name>
+		<object-name>DoorR1.Placards</object-name>
+		<object-name>DoorL4.Placards</object-name>
+		<object-name>DoorR4.Placards</object-name>
+		<object-name>NLGFitting.Placards</object-name>
+		<object-name>NLGFittingLower.Placards</object-name>
+		<object-name>MLGFittingL.Placards</object-name>
+		<object-name>MLGFittingR.Placards</object-name>
+		<object-name>Fuselage.Placards</object-name>
 	</effect>
 	
 	<effect>
