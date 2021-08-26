@@ -2301,7 +2301,7 @@
 			</test>
 		</switch>
 
-		<switch name="/instrumentation/pfd/lights/autoland-armed">
+		<switch name="/instrumentation/pfd/logic/autoland/autoland-armed">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				<test logic="OR">
@@ -2321,12 +2321,12 @@
 			</test>
 		</switch>				
 
-		<switch name="/instrumentation/pfd/lights/autoland-alarm">
+		<switch name="/instrumentation/pfd/logic/autoland/autoland-alarm">
 			<default value="0"/>
 			<test logic="AND" value="1">			
-			  /instrumentation/pfd/lights/autoland-armed eq 1
+			  /instrumentation/pfd/logic/autoland/autoland-armed eq 1
   			  <!-- /modes/pfd/fma/pitch-mode eq "LAND" -->
-			  /it-autoflight/output/vert eq 2			  
+			  /it-autoflight/output/vert eq 2
 			  <test logic="OR">
 				<test logic="AND">
 					/it-autoflight/output/ap1 eq 0
@@ -2345,11 +2345,12 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 			  <test logic="AND">
-			    /instrumentation/pfd/lights/autoland-alarm eq 1				
-			  	/instrumentation/pfd/lights/autoland-sw-pulse eq 1
+			    /instrumentation/pfd/logic/autoland/autoland-alarm eq 1				
+			  	/instrumentation/pfd/logic/autoland/autoland-sw-pulse eq 1
 			  </test>
 			  <test logic="AND">
-			    /it-autoflight/output/ap-warning eq 1
+			  	/instrumentation/pfd/logic/autoland/autoland-alarm eq 1
+			    /it-autoflight/output/ap-warning ge 1
 			    /ECAM/warnings/master-warning-flash eq 1
 			  </test>
 		    </test>

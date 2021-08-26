@@ -1016,7 +1016,7 @@
 			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-once.wav</path>
 			<condition>
 				<equals>
-					<property>/instrumentation/pfd/lights/autoland-alarm</property>
+					<property>/instrumentation/pfd/logic/autoland/autoland-alarm</property>
 					<value>1</value>
 				</equals>
 			</condition>

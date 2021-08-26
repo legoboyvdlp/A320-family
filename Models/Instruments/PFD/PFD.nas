@@ -164,8 +164,8 @@ var amberFlash1 = props.globals.initNode("/instrumentation/pfd/flash-indicators/
 var amberFlash2 = props.globals.initNode("/instrumentation/pfd/flash-indicators/amber-flash-2", 0, "BOOL");
 var dhFlash = props.globals.initNode("/instrumentation/pfd/flash-indicators/dh-flash", 0, "BOOL");
 
-var light_autoland_armed = props.globals.initNode("/instrumentation/pfd/lights/autoland-armed", 0, "BOOL");
-var light_autoland_on = props.globals.initNode("/instrumentation/pfd/lights/autoland-on", 0, "BOOL");
+var autoland_alarm = props.globals.initNode("/instrumentation/pfd/logic/autoland/autoland-alarm", 0, "BOOL");
+var autoland_pulse = props.globals.initNode("/instrumentation/pfd/logic/autoland/autoland-sw-pulse", 0, "BOOL");
 
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
@@ -2967,3 +2967,21 @@ var dhTimer = maketimer(0.50, func {
 		dh_count = dh_count + 1;
 	}
 });
+
+var autolandTimer = maketimer(1.0, func {
+	if (autoland_pulse.getBoolValue()) {
+		autoland_pulse.setBoolValue(0);
+	} else {
+		autoland_pulse.setBoolValue(1);
+	}
+});
+
+setlistener(autoland_alarm, func(alarm) {
+	if (alarm.getBoolValue()) {
+		autoland_pulse.setBoolValue(1);
+		autolandTimer.start();
+	} else {
+		autolandTimer.stop();
+		autoland_pulse.setBoolValue(0);
+	}
+}, 0, 0);
