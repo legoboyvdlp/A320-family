@@ -48,6 +48,7 @@
 		<object-name>MLGFittingR.Placards</object-name>
 		<object-name>Fuselage.Placards</object-name>
 		<object-name>Wings.Placards</object-name>
+		<object-name>navglass</object-name>
 	</effect>
 	
 	<effect>
