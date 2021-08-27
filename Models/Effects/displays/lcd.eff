@@ -4,6 +4,7 @@ Author: Nikolai V. Chr.
 -->
 <PropertyList>
 	<name>Aircraft/A320-family/Models/Effects/displays/lcd</name>
+	<inherits-from>Effects/model-default</inherits-from>
 	<parameters>
 		<inner-angle type="float">35</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
 		<outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
@@ -52,96 +53,6 @@ Author: Nikolai V. Chr.
 		<display_xsize><use>/sim/startup/xsize</use></display_xsize>
 		<display_ysize><use>/sim/startup/ysize</use></display_ysize>
 	</parameters>
-	<technique n="3">
-		<predicate>
-		  <and>
-			<property>/sim/rendering/rembrandt/enabled</property>
-		  </and>
-		</predicate>
-		<pass>
-			<lighting>true</lighting>
-			<depth>
-				<write-mask type="bool">false</write-mask>
-			</depth>
-			<material>
-				<active>
-					<use>material/active</use>
-				</active>
-				<ambient>
-					<use>material/ambient</use>
-				</ambient>
-				<diffuse>
-					<use>material/diffuse</use>
-				</diffuse>
-				<specular>
-					<use>material/specular</use>
-				</specular>
-				<emissive>
-					<use>material/emissive</use>
-				</emissive>
-				<shininess>
-					<use>material/shininess</use>
-				</shininess>
-				<color-mode>
-					<use>material/color-mode</use>
-				</color-mode>
-			</material>
-			<blend>
-				<active>
-					<use>blend/active</use>
-				</active>
-				<source>
-					<use>blend/source</use>
-				</source>
-				<destination>
-					<use>blend/destination</use>
-				</destination>
-			</blend>
-			<shade-model>
-				<use>shade-model</use>
-			</shade-model>
-			<cull-face>
-				<use>cull-face</use>
-			</cull-face>
-				<render-bin>
-					<bin-number>1</bin-number>
-					<bin-name>DepthSortedBin</bin-name>
-				</render-bin>
-			<texture-unit>
-				<unit>0</unit>
-				<active>
-					<use>texture[0]/active</use>
-				</active>
-                <type>
-                    <use>texture[0]/type</use>
-                </type>
-				<image>
-					<use>texture[0]/image</use>
-				</image>
-				<filter>
-					<use>texture[0]/filter</use>
-				</filter>
-				<wrap-s>
-					<use>texture[0]/wrap-s</use>
-				</wrap-s>
-				<wrap-t>
-					<use>texture[0]/wrap-t</use>
-				</wrap-t>
-				<!--
-          <internal-format>
-            <use>texture[0]/internal-format</use>
-          </internal-format>
-          -->
-				<environment>
-					<mode>modulate</mode>
-				</environment>
-			</texture-unit>
-			<!-- A two-sided lighting model is set by default near the root
-           of the scene graph. Perhaps that ought to be set in this
-           effect?
-        -->
-		</pass>
-	</technique>
 	<technique n="5">
 		<predicate>
 		   <and>
