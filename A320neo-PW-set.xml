@@ -13,7 +13,9 @@
 		<model>
 			<path>Aircraft/A320-family/Models/A320neo-PW.xml</path>
 			<livery>
-				<file>Airbus</file>
+				<file>NKS</file>
+				<texture-fuselage>NKS-fuselage.png</texture-fuselage>
+				<texture-engine>NKS-engine.png</texture-engine>
 			</livery>
 			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/PW-NEO</livery-dir>
 		</model>
