@@ -2326,7 +2326,7 @@
 			<test logic="AND" value="1">			
 			  /instrumentation/pfd/logic/autoland/autoland-armed eq 1
   			  <!-- /modes/pfd/fma/pitch-mode eq "LAND" -->
-			  /it-autoflight/output/vert eq 2
+			  /instrumentation/pfd/logic/autoland/flare-mode eq 1
 			  <test logic="OR">
 				<test logic="AND">
 					/it-autoflight/output/ap1 eq 0

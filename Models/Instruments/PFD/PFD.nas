@@ -166,6 +166,7 @@ var dhFlash = props.globals.initNode("/instrumentation/pfd/flash-indicators/dh-f
 
 var autoland_alarm = props.globals.initNode("/instrumentation/pfd/logic/autoland/autoland-alarm", 0, "BOOL");
 var autoland_pulse = props.globals.initNode("/instrumentation/pfd/logic/autoland/autoland-sw-pulse", 0, "BOOL");
+var autoland_flare_mode = props.globals.initNode("/instrumentation/pfd/logic/autoland/flare-mode", 0, "BOOL");
 
 var canvas_PFD_base = {
 	init: func(canvas_group, file) {
@@ -2985,3 +2986,11 @@ setlistener(autoland_alarm, func(alarm) {
 		autoland_pulse.setBoolValue(0);
 	}
 }, 0, 0);
+
+setlistener(pitch_mode, func(pitch) {
+	if (pitch.getValue() == "FLARE") {
+		autoland_flare_mode.setBoolValue(1);
+	} else {
+		autoland_flare_mode.setBoolValue(0);
+	}
+},0,0);
