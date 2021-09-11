@@ -18,7 +18,6 @@ var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2", 1);
 var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3", 1);
 var att_switch = props.globals.getNode("/controls/navigation/switching/att-hdg", 1);
 var elapsedtime = props.globals.getNode("/sim/time/elapsed-sec", 1);
-var wow0 = props.globals.getNode("/gear/gear[0]/wow");
 
 # Create Nodes:
 var altFlash = [0,0];
@@ -1789,7 +1788,7 @@ var canvas_pfd = {
 		if (me.powerNode.getValue() >= 110) {
 			if (!me.on) {
 				if (me.offTimeNode.getValue() + 3 < elapsedtime_act) { 
-					if (wow0.getValue() == 1) {
+					if (pts.Gear.wow[0].getValue()) {
 						if (acconfig.getValue() != 1 and me.testNode.getValue() != 1) {
 							me.testNode.setValue(1);
 							me.testAmountNode.setValue(math.round((rand() * 5 ) + 35, 0.1));
