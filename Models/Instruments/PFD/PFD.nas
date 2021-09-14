@@ -917,7 +917,7 @@ var canvas_pfd = {
 			if (me.aoa == nil or (systems.ADIRS.ADIRunits[(me.number == 0 ? 0 : 1)].operating != 1) or (systems.ADIRS.ADIRunits[2].operating != 1 and notification.attSwitch == (me.number == 0 ? -1 : 1))){
 				me["FPV"].hide();	
 			} else {
-				me.AI_fpv_trans.setTranslation(math.clamp(me.getTrackDiffPixels(me.track_diff), -21, 21), math.clamp(me.aoa, -20, 20) * 12.5); 
+				me.AI_fpv_trans.setTranslation(me.getTrackDiffPixels(math.clamp(me.track_diff, -21, 21)), math.clamp(me.aoa, -20, 20) * 12.5); 
 				me.AI_fpv_rot.setRotation(-notification.roll * D2R, me["AI_center"].getCenter());
 				me["FPV"].setRotation(notification.roll * D2R); # It shouldn't be rotated, only the axis should be
 				me["FPV"].show();
