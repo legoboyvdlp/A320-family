@@ -16,7 +16,6 @@ var alt_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 
 var aoa_1 = props.globals.getNode("/systems/navigation/adr/output/aoa-1", 1);
 var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2", 1);
 var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3", 1);
-var att_switch = props.globals.getNode("/controls/navigation/switching/att-hdg", 1);
 var elapsedtime = props.globals.getNode("/sim/time/elapsed-sec", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
@@ -812,6 +811,21 @@ var canvas_pfd = {
 					obj["ALT_digit_DN"].setText(sprintf("%5.0f", val.altitudeAutopilot));
 				}
 			}),
+			props.UpdateManager.FromHashValue("managedSpd", nil, func(val) {
+				if (val) {
+					obj["ASI_target"].setColor(0.6901,0.3333,0.7450);
+					obj["ASI_digit_UP"].setColor(0.6901,0.3333,0.7450);
+					obj["ASI_decimal_UP"].setColor(0.6901,0.3333,0.7450);
+					obj["ASI_digit_DN"].setColor(0.6901,0.3333,0.7450);
+					obj["ASI_decimal_DN"].setColor(0.6901,0.3333,0.7450);
+				} else {
+					obj["ASI_target"].setColor(0.0901,0.6039,0.7176);
+					obj["ASI_digit_UP"].setColor(0.0901,0.6039,0.7176);
+					obj["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);
+					obj["ASI_digit_DN"].setColor(0.0901,0.6039,0.7176);
+					obj["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
+				}
+			}),
 		];
 		
 		obj.update_items_mismatch = [
@@ -854,6 +868,7 @@ var canvas_pfd = {
 	getKeysMismatch: func() {
 		return ["ERRCODE"];
 	},
+	aoa: 0,
 	showMetricAlt: 0,
 	update: func(notification) {
 		me.updatePower(notification);
@@ -872,7 +887,7 @@ var canvas_pfd = {
 		}
 		
 		# Errors
-		if (systems.ADIRS.ADIRunits[(me.number == 0 ? 0 : 1)].operating == 1 or (systems.ADIRS.ADIRunits[2].operating == 1 and att_switch.getValue() == (me.number == 0 ? -1 : 1))) {
+		if (systems.ADIRS.ADIRunits[(me.number == 0 ? 0 : 1)].operating == 1 or (systems.ADIRS.ADIRunits[2].operating == 1 and notification.attSwitch == (me.number == 0 ? -1 : 1))) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
@@ -892,17 +907,13 @@ var canvas_pfd = {
 		
 		# FPV
 		if (notification.trkFpa) {
-			var aoa = (me.number == 0 ? me.getAOAForPFD1() : me.getAOAForPFD2());	
-			if (aoa == nil or (systems.ADIRS.ADIRunits[(me.number == 0 ? 0 : 1)].operating != 1) or (systems.ADIRS.ADIRunits[2].operating != 1 and att_switch.getValue() == (me.number == 0 ? -1 : 1))){
+			me.aoa = (me.number == 0 ? me.getAOAForPFD1() : me.getAOAForPFD2());	
+			if (me.aoa == nil or (systems.ADIRS.ADIRunits[(me.number == 0 ? 0 : 1)].operating != 1) or (systems.ADIRS.ADIRunits[2].operating != 1 and notification.attSwitch == (me.number == 0 ? -1 : 1))){
 				me["FPV"].hide();	
 			} else {
-				var roll_deg = notification.roll or 0; 
-				AICenter = me["AI_center"].getCenter();
-				var track_x_translation = me.getTrackDiffPixels(me.track_diff); 
-
-				me.AI_fpv_trans.setTranslation(track_x_translation, math.clamp(aoa, -20, 20) * 12.5); 
-				me.AI_fpv_rot.setRotation(-roll_deg * D2R, AICenter);
-				me["FPV"].setRotation(roll_deg * D2R); # It shouldn't be rotated, only the axis should be
+				me.AI_fpv_trans.setTranslation(me.getTrackDiffPixels(me.track_diff), math.clamp(me.aoa, -20, 20) * 12.5); 
+				me.AI_fpv_rot.setRotation(-notification.roll * D2R, me["AI_center"].getCenter());
+				me["FPV"].setRotation(notification.roll * D2R); # It shouldn't be rotated, only the axis should be
 				me["FPV"].show();
 			}
 		} else {
@@ -955,13 +966,12 @@ var canvas_pfd = {
 				me.ASI = me.ind_spd - 30;
 			}
 			
-			me.FMGC_max = fmgc.FMGCInternal.maxspeed;
-			if (me.FMGC_max <= 30) {
+			if (fmgc.FMGCInternal.maxspeed <= 30) {
 				me.ASImax = 0 - me.ASI;
-			} else if (me.FMGC_max >= 420) {
+			} else if (fmgc.FMGCInternal.maxspeed >= 420) {
 				me.ASImax = 390 - me.ASI;
 			} else {
-				me.ASImax = me.FMGC_max - 30 - me.ASI;
+				me.ASImax = fmgc.FMGCInternal.maxspeed - 30 - me.ASI;
 			}
 			
 			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
@@ -974,40 +984,36 @@ var canvas_pfd = {
 			}
 			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
-				me.FMGC_vls = fmgc.FMGCInternal.vls_min;
-				if (me.FMGC_vls <= 30) {
+				if (fmgc.FMGCInternal.vls_min <= 30) {
 					me.VLSmin = 0 - me.ASI;
-				} else if (me.FMGC_vls >= 420) {
+				} else if (fmgc.FMGCInternal.vls_min >= 420) {
 					me.VLSmin = 390 - me.ASI;
 				} else {
-					me.VLSmin = me.FMGC_vls - 30 - me.ASI;
+					me.VLSmin = fmgc.FMGCInternal.vls_min - 30 - me.ASI;
 				}
 				
-				me.FMGC_prot = fmgc.FMGCInternal.alpha_prot;
-				if (me.FMGC_prot <= 30) {
+				if (fmgc.FMGCInternal.alpha_prot <= 30) {
 					me.ALPHAprot = 0 - me.ASI;
-				} else if (me.FMGC_prot >= 420) {
+				} else if (fmgc.FMGCInternal.alpha_prot >= 420) {
 					me.ALPHAprot = 390 - me.ASI;
 				} else {
-					me.ALPHAprot = me.FMGC_prot - 30 - me.ASI;
+					me.ALPHAprot = fmgc.FMGCInternal.alpha_prot - 30 - me.ASI;
 				}
 				
-				me.FMGC_max = fmgc.FMGCInternal.alpha_max;
-				if (me.FMGC_max <= 30) {
+				if (fmgc.FMGCInternal.alpha_max <= 30) {
 					me.ALPHAmax = 0 - me.ASI;
-				} else if (me.FMGC_max >= 420) {
+				} else if (fmgc.FMGCInternal.alpha_max >= 420) {
 					me.ALPHAmax = 390 - me.ASI;
 				} else {
-					me.ALPHAmax = me.FMGC_max - 30 - me.ASI;
+					me.ALPHAmax = fmgc.FMGCInternal.alpha_max - 30 - me.ASI;
 				}
 				
-				me.FMGC_vsw = fmgc.FMGCInternal.vsw;
-				if (me.FMGC_vsw <= 30) {
+				if (fmgc.FMGCInternal.vsw <= 30) {
 					me.ALPHAvsw = 0 - me.ASI;
-				} else if (me.FMGC_vsw >= 420) {
+				} else if (fmgc.FMGCInternal.vsw >= 420) {
 					me.ALPHAvsw = 390 - me.ASI;
 				} else {
-					me.ALPHAvsw = me.FMGC_vsw - 30 - me.ASI;
+					me.ALPHAvsw = fmgc.FMGCInternal.vsw - 30 - me.ASI;
 				}
 				
 				if (notification.fac1 or notification.fac2) {
@@ -1036,31 +1042,14 @@ var canvas_pfd = {
 			me.tgt_ias = notification.targetIasPFD;
 			me.tgt_kts = notification.targetKts;
 			
-			if (notification.managedSpd == 1) {
+			if (notification.managedSpd) {
 				if (notification.decel) {
-					if (fmgc.FMGCInternal.vappSpeedSet) {
-						me.vapp = fmgc.FMGCInternal.vapp_appr;
-					} else {
-						me.vapp = fmgc.FMGCInternal.vapp;
-					}
-					me.tgt_ias = me.vapp;
-					me.tgt_kts = me.vapp;
+					me.tgt_ias = fmgc.FMGCInternal.vappSpeedSet ? fmgc.FMGCInternal.vapp_appr : fmgc.FMGCInternal.vapp;
+					me.tgt_kts = fmgc.FMGCInternal.vappSpeedSet ? fmgc.FMGCInternal.vapp_appr : fmgc.FMGCInternal.vapp;
 				} else if (fmgc.FMGCInternal.phase == 6) {
 					me.tgt_ias = fmgc.FMGCInternal.clean;
 					me.tgt_kts = fmgc.FMGCInternal.clean;
 				}
-				
-				me["ASI_target"].setColor(0.6901,0.3333,0.7450);
-				me["ASI_digit_UP"].setColor(0.6901,0.3333,0.7450);
-				me["ASI_decimal_UP"].setColor(0.6901,0.3333,0.7450);
-				me["ASI_digit_DN"].setColor(0.6901,0.3333,0.7450);
-				me["ASI_decimal_DN"].setColor(0.6901,0.3333,0.7450);
-			} else {
-				me["ASI_target"].setColor(0.0901,0.6039,0.7176);
-				me["ASI_digit_UP"].setColor(0.0901,0.6039,0.7176);
-				me["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);
-				me["ASI_digit_DN"].setColor(0.0901,0.6039,0.7176);
-				me["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
 			}
 			
 			if (me.tgt_ias <= 30) {
@@ -1081,7 +1070,7 @@ var canvas_pfd = {
 				me["ASI_decimal_DN"].hide();
 				me["ASI_target"].show();
 			} else if (me.ASItrgtdiff < -42) {
-				if (notification.ktsMach == 1) {
+				if (notification.ktsMach) {
 					me["ASI_digit_DN"].setText(sprintf("%3.0f", notification.targetMach * 1000));
 					me["ASI_decimal_UP"].hide();
 					me["ASI_decimal_DN"].show();
@@ -1094,7 +1083,7 @@ var canvas_pfd = {
 				me["ASI_digit_UP"].hide();
 				me["ASI_target"].hide();
 			} else if (me.ASItrgtdiff > 42) {
-				if (notification.ktsMach == 1) {
+				if (notification.ktsMach) {
 					me["ASI_digit_UP"].setText(sprintf("%3.0f", notification.targetMach * 1000));
 					me["ASI_decimal_UP"].show();
 					me["ASI_decimal_DN"].hide();
@@ -1337,18 +1326,19 @@ var canvas_pfd = {
 		if (dmc.DMController.DMCs[me.number].outputs[2] != nil) {
 			me.ind_mach = dmc.DMController.DMCs[me.number].outputs[2].getValue();
 			me["machError"].hide();
+			
+			if (me.ind_mach >= 0.999) {
+				me["ASI_mach"].setText("999");
+			} else {
+				me["ASI_mach"].setText(sprintf("%3.0f", me.ind_mach * 1000));
+			}
+			
 			if (me.ind_mach >= 0.5) {
 				me["ASI_mach_decimal"].show();
 				me["ASI_mach"].show();
 			} else {
 				me["ASI_mach_decimal"].hide();
 				me["ASI_mach"].hide();
-			}
-			
-			if (me.ind_mach >= 0.999) {
-				me["ASI_mach"].setText("999");
-			} else {
-				me["ASI_mach"].setText(sprintf("%3.0f", me.ind_mach * 1000));
 			}
 		} else {
 			me["machError"].show();
@@ -1367,11 +1357,13 @@ var canvas_pfd = {
 			me.altitude = dmc.DMController.DMCs[me.number].outputs[1].getValue();
 		
 			if (me.showMetricAlt) {
+				me["ALT_digit_UP_metric"].show();
 				me["Metric_box"].show();
 				me["Metric_letter"].show();
 				me["Metric_cur_alt"].show();
 				me["Metric_cur_alt"].setText(sprintf("%5.0f", me.altitude * 0.3048));
 			} else {
+				me["ALT_digit_UP_metric"].hide();
 				me["Metric_box"].hide();
 				me["Metric_letter"].hide();
 				me["Metric_cur_alt"].hide();
@@ -1726,13 +1718,6 @@ var canvas_pfd = {
         }
 		
 		me["AI_heading"].update();
-		
-		
-		if (me.showMetricAlt) {
-			me["ALT_digit_UP_metric"].show();
-		} else {
-			me["ALT_digit_UP_metric"].hide();
-		}
 	},
 	updateTest: func(notification) {
 		if (me.number == 1) {
@@ -1918,6 +1903,7 @@ var input = {
 	foDuXfr: "/modes/fo-du-xfr",
 	du1Lgt: "/controls/lighting/DU/du1",
 	du6Lgt: "/controls/lighting/DU/du6",
+	attSwitch: "/controls/navigation/switching/att-hdg",
 	
 	atMode: "/modes/pfd/fma/at-mode",
 	apMode: "/modes/pfd/fma/ap-mode",
