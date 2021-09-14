@@ -25,9 +25,7 @@
 				<command>nasal</command>
 				<script>
 				acconfig.writeSettings();
-				canvas_pfd.rateApply();
 				canvas_nd.rateApply();
-				canvas_ecam.l_rateApply();
 				</script>
 			</binding>
 			<binding>
@@ -221,9 +219,7 @@
 				<command>nasal</command>
 				<script>
 				acconfig.writeSettings();
-				canvas_pfd.rateApply();
 				canvas_nd.rateApply();
-				canvas_ecam.l_rateApply();
 				</script>
 			</binding>
 		</button>
@@ -235,9 +231,7 @@
 				<command>nasal</command>
 				<script>
 				acconfig.writeSettings();
-				canvas_pfd.rateApply();
 				canvas_nd.rateApply();
-				canvas_ecam.l_rateApply();
 				</script>
 			</binding>
 			<binding>

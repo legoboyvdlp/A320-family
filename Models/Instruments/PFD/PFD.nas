@@ -230,8 +230,14 @@ var canvas_pfd = {
 				obj["FD_pitch"].setTranslation(0, val * -3.8);
 			}),
 			props.UpdateManager.FromHashValue("agl", nil, func(val) {
-				obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500))));
-				
+				if (val >= 50) {
+					obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500),10)));
+				} else if (val >= 5) {
+					obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500),5)));
+				} else {
+					obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500))));
+				}
+					
 				if (-val >= -565 and -val <= 565) {
 					obj["ground_ref"].setTranslation(0, (-val / 100) * -48.66856);
 					obj["ground_ref"].show();
@@ -242,7 +248,7 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashList(["agl","gear1Wow", "gear2Wow","fmgcPhase"], nil, func(val) {
 				if (-val.agl >= -565 and -val.agl <= 565) {
 					if ((val.fmgcPhase == 5 or val.fmgcPhase == 6) and !val.gear1Wow and !val.gear2Wow) { # TODO: add std too
-						obj["ground"].setTranslation(0, (-val / 100) * -48.66856);
+						obj["ground"].setTranslation(0, (-val.agl / 100) * -48.66856);
 						obj["ground"].show();
 					} else {
 						obj["ground"].hide();
@@ -911,7 +917,7 @@ var canvas_pfd = {
 			if (me.aoa == nil or (systems.ADIRS.ADIRunits[(me.number == 0 ? 0 : 1)].operating != 1) or (systems.ADIRS.ADIRunits[2].operating != 1 and notification.attSwitch == (me.number == 0 ? -1 : 1))){
 				me["FPV"].hide();	
 			} else {
-				me.AI_fpv_trans.setTranslation(me.getTrackDiffPixels(me.track_diff), math.clamp(me.aoa, -20, 20) * 12.5); 
+				me.AI_fpv_trans.setTranslation(math.clamp(me.getTrackDiffPixels(me.track_diff), -21, 21), math.clamp(me.aoa, -20, 20) * 12.5); 
 				me.AI_fpv_rot.setRotation(-notification.roll * D2R, me["AI_center"].getCenter());
 				me["FPV"].setRotation(notification.roll * D2R); # It shouldn't be rotated, only the axis should be
 				me["FPV"].show();
