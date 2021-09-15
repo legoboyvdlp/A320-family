@@ -29,25 +29,54 @@
 			<binding>
 				<command>property-assign</command>
 				<property>controls/audio/acp[0]/int-rad</property>
-				<value>2</value>
+				<value>1</value>
+				<condition>
+					<not>
+						<equals>
+							<property>controls/audio/acp[0]/int-rad</property>
+							<value>2</value>
+						</equals>
+					</not>
+				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
 			<binding>
 				<command>property-assign</command>
 				<property>controls/audio/acp[0]/int-rad</property>
-				<value>1</value>
+				<value>0</value>
+				<condition>
+					<equals>
+						<property>controls/audio/acp[0]/int-rad</property>
+						<value>2</value>
+					</equals>
+				</condition>
 			</binding>
 			<mod-up>
 				<binding>
 					<command>property-assign</command>
 					<property>controls/audio/acp[0]/int-rad</property>
 					<value>0</value>
+					<condition>
+						<not>
+							<equals>
+								<property>controls/audio/acp[0]/int-rad</property>
+								<value>2</value>
+							</equals>
+						</not>
+					</condition>
 				</binding>
 			</mod-up>
 		</action>
+		<action>
+			<button>1</button>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/audio/acp[0]/int-rad</property>
+				<value>2</value>
+				<value>0</value>
+			</binding>
+		</action>
 	</animation>
+	
 	<animation>
 		<type>rotate</type>
 		<object-name>audio_int_rad</object-name>

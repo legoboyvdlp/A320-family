@@ -1634,6 +1634,7 @@
 		<hftone>
 			<name>HF PTT tone</name>
 			<mode>looped</mode>
+			<type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/Cockpit/1000hz.wav</path>
 			<condition>
 				<and>
@@ -1651,6 +1652,7 @@
 		<hftone>
 			<name>HF PTT tone 2</name>
 			<mode>looped</mode>
+			<type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/Cockpit/1000hz.wav</path>
 			<condition>
 				<and>
@@ -1668,6 +1670,7 @@
 		<hfstatic>
 			<name>HF static</name>
 			<mode>looped</mode>
+			<type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/Cockpit/hf-radio-static.wav</path>
 			<condition>
 				<and>
@@ -1686,6 +1689,7 @@
 		<hfstatic>
 			<name>HF static 2</name>
 			<mode>looped</mode>
+			<type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/Cockpit/hf-radio-static.wav</path>
 			<condition>
 				<and>
