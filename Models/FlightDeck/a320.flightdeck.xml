@@ -6453,16 +6453,10 @@
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
 				</equals>
-				<and>
-					<equals>
-						<property>instrumentation/pfd/lights/autoland-armed</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>instrumentation/pfd/lights/autoland-on</property>
-						<value>1</value>
-					</equals>
-				</and>
+				<equals>
+					<property>instrumentation/pfd/lights/autoland-on</property>
+					<value>1</value>
+				</equals>
 			</or>
 		</condition>
 	</animation>
