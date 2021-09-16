@@ -2325,7 +2325,6 @@
 			<default value="0"/>
 			<test logic="AND" value="1">			
 			  /instrumentation/pfd/logic/autoland/autoland-armed eq 1
-  			  <!-- /modes/pfd/fma/pitch-mode eq "LAND" -->
 			  /instrumentation/pfd/logic/autoland/pitch-land eq 1
 			  <test logic="OR">
 				<test logic="AND">
@@ -2333,8 +2332,21 @@
 					/it-autoflight/output/ap2 eq 0			    
 			    </test>
 				/instrumentation/radar-altimeter-difference-ft gt 15
+				<test logic="AND">
+					<test logic="OR">
+						/instrumentation/nav[0]/gs-needle-deflection-norm gt 0.5
+						/instrumentation/nav[0]/gs-needle-deflection-norm lt -0.5
+					</test>
+					/position/gear-agl-ft ge 100
+				</test>
+				<test logic="AND">
+					<test logic="OR">
+						/instrumentation/nav[0]/heading-needle-deflection-norm gt 0.125
+						/instrumentation/nav[0]/heading-needle-deflection-norm lt -0.125
+					</test>
+					/position/gear-agl-ft ge 15
+				</test>
 				<!-- TODO 
-				- Localizer deviation excessive
 				- Loss of localizer signal
 				-->
 			  </test>
