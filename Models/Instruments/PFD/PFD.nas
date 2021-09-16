@@ -2183,7 +2183,7 @@ setlistener(autoland_alarm, func(alarm) {
 	}
 }, 0, 0);
 
-setlistener(pitch_mode, func(pitch) {
+setlistener("/modes/pfd/fma/pitch-mode", func(pitch) {
 	if (pitch.getValue() == "LAND") {
 		autoland_pitch_land.setBoolValue(1);
 	} else {
