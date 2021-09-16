@@ -2302,36 +2302,69 @@
 			</test>
 		</switch>
 
-		<switch name="/instrumentation/pfd/lights/autoland-armed">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				<!-- /gear/gear[0]/wow eq 0 -->				
-			    <test logic="AND">
-				  /modes/pfd/ILS1 eq 1
-				  /instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected le 200
-				</test>				
-			    <test logic="AND">
-				  /modes/pfd/ILS2 eq 1
-				  /instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected le 200
-				</test>				
-				<!-- /instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected le 200 -->
-			</test>
-		</switch>		
-
-		<switch name="/instrumentation/pfd/lights/autoland-on">
+		<switch name="/instrumentation/pfd/logic/autoland/autoland-armed">
 			<default value="0"/>
 			<test logic="AND" value="1">
-			  /instrumentation/pfd/lights/autoland-armed eq 1
+				<test logic="OR">
+					/systems/electrical/bus/ac-2 ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/modes/pfd/ILS1 eq 1
+						/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected lt 200
+					</test>				
+					<test logic="AND">
+						/modes/pfd/ILS2 eq 1
+						/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected lt 200
+					</test>				
+				</test>
+			</test>
+		</switch>				
+
+		<switch name="/instrumentation/pfd/logic/autoland/autoland-alarm">
+			<default value="0"/>
+			<test logic="AND" value="1">			
+			  /instrumentation/pfd/logic/autoland/autoland-armed eq 1
+			  /instrumentation/pfd/logic/autoland/pitch-land eq 1
 			  <test logic="OR">
 				<test logic="AND">
 					/it-autoflight/output/ap1 eq 0
 					/it-autoflight/output/ap2 eq 0			    
 			    </test>
 				/instrumentation/radar-altimeter-difference-ft gt 15
+				<test logic="AND">
+					<test logic="OR">
+						/instrumentation/nav[0]/gs-needle-deflection-norm gt 0.5
+						/instrumentation/nav[0]/gs-needle-deflection-norm lt -0.5
+					</test>
+					/position/gear-agl-ft ge 100
+				</test>
+				<test logic="AND">
+					<test logic="OR">
+						/instrumentation/nav[0]/heading-needle-deflection-norm gt 0.125
+						/instrumentation/nav[0]/heading-needle-deflection-norm lt -0.125
+					</test>
+					/position/gear-agl-ft ge 15
+				</test>
 				<!-- TODO 
-				- Localizer deviation excessive
 				- Loss of localizer signal
 				-->
+			  </test>
+		    </test>
+		</switch>		
+
+		<switch name="/instrumentation/pfd/lights/autoland-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+			  <test logic="AND">
+			    /instrumentation/pfd/logic/autoland/autoland-alarm eq 1				
+			  	/instrumentation/pfd/logic/autoland/autoland-sw-pulse eq 1
+			  </test>
+			  <test logic="AND">
+			  	/instrumentation/pfd/logic/autoland/autoland-alarm eq 1
+			    /it-autoflight/output/ap-warning ge 1
+			    /ECAM/warnings/master-warning-flash eq 1
 			  </test>
 		    </test>
 		</switch>		

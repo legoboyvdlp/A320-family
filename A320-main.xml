@@ -1930,6 +1930,11 @@
 		<pfd n="0">
 			<hundred-above type="int">99999</hundred-above>
 			<minimums type="int">99999</minimums>
+			<heading-deg type="double">0</heading-deg>
+			<heading-scale type="double">0</heading-scale>
+			<horizon-ground type="double">0</horizon-ground>
+			<horizon-pitch type="double">0</horizon-pitch>
+			<track-deg type="double">0</track-deg>
 		</pfd>
 		
 		<radar-altimeter n="0">

@@ -100,7 +100,7 @@ var highFrequencyRadio = {
 		}
 	},
 	datalink: func() {
-		if (me.powerNode.getValue() < 115) { 
+		if (me.powerNode.getValue() < 110) { 
 			me.datalinkConnected = 0;
 			return; 
 		}
@@ -118,33 +118,41 @@ var HFS = [highFrequencyRadio.new(systems.ELEC.Bus.acEssShed, 0), highFrequencyR
 # Can't use setlistener on the voltage as it always gets written to by JSB (and changes according to engine rpm)
 
 var update_items_HF_radio = [
-	props.UpdateManager.FromHashValue("elecACEssShed", 0.1, func(val)
+	props.UpdateManager.FromHashValue("elecACEssShed", 0.2, func(val)
 		{
 			if (val < 110) {
-				HFS[0].transmit = 0;
-				HFS[0].receptionProp.setValue(0);
-				toneTimer1.stop();
-				transmitTimer1.stop();
-				HFS[0].toneControl.setValue(0);
-				HFS[0]._toneTime = nil;
-				ecam.transmitFlag1 = 0;
+				if (HFS[0].receptionProp.getBoolValue()) {
+					HFS[0].transmit = 0;
+					HFS[0].receptionProp.setValue(0);
+					toneTimer1.stop();
+					transmitTimer1.stop();
+					HFS[0].toneControl.setValue(0);
+					HFS[0]._toneTime = nil;
+					ecam.transmitFlag1 = 0;
+				}
 			} else {
-				HFS[0].receptionProp.setValue(1);
+				if (!HFS[0].receptionProp.getBoolValue()) {
+					HFS[0].receptionProp.setValue(1);
+				}
 			}
 		}
 	),
-	props.UpdateManager.FromHashValue("elecAC2", 0.1, func(val)
+	props.UpdateManager.FromHashValue("elecAC2", 0.2, func(val)
 		{
-			if (val) {
-				HFS[1].transmit = 0;
-				HFS[1].receptionProp.setValue(0);
-				toneTimer2.stop();
-				transmitTimer2.stop();
-				HFS[1].toneControl.setValue(0);
-				HFS[1]._toneTime = nil;
-				ecam.transmitFlag2 = 0;
+			if (val < 110) {
+				if (HFS[1].receptionProp.getBoolValue()) {
+					HFS[1].transmit = 0;
+					HFS[1].receptionProp.setValue(0);
+					toneTimer2.stop();
+					transmitTimer2.stop();
+					HFS[1].toneControl.setValue(0);
+					HFS[1]._toneTime = nil;
+					ecam.transmitFlag2 = 0;
+				}
 			} else {
-				HFS[1].receptionProp.setValue(1);
+				if (!HFS[1].receptionProp.getBoolValue()) {
+					HFS[1].receptionProp.setValue(1);
+				}
 			}
 		}
 	),

@@ -75,7 +75,7 @@ var DMController = {
 			# update DMC2 to correct properties for first officer PFD
 			me.DMCs[1].altitudes = [props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-1-fo", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-2-fo", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-3-fo", 1)];
 			me.DMCs[1].altitudesPfd = [props.globals.getNode("/instrumentation/altimeter[3]/indicated-altitude-ft-pfd", 1), props.globals.getNode("/instrumentation/altimeter[4]/indicated-altitude-ft-pfd", 1), props.globals.getNode("/instrumentation/altimeter[5]/indicated-altitude-ft-pfd", 1)];
-			me.DMCs[1].altitudeDiffs = [props.globals.getNode("//instrumentation/pfd/alt-diff[3]", 1), props.globals.getNode("//instrumentation/pfd/alt-diff[4]", 1), props.globals.getNode("//instrumentation/pfd/alt-diff[5]", 1)];
+			me.DMCs[1].altitudeDiffs = [props.globals.getNode("/instrumentation/pfd/alt-diff[3]", 1), props.globals.getNode("/instrumentation/pfd/alt-diff[4]", 1), props.globals.getNode("/instrumentation/pfd/alt-diff[5]", 1)];
 			me._init = 1;
 		}
 	},
