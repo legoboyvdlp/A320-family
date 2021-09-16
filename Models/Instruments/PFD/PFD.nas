@@ -588,110 +588,6 @@ var canvas_pfd = {
 				}
 			}),
 			props.UpdateManager.FromHashList(["alphaFloor","togaLk","thrust1","thrust2","throttleMode","throttleModeBox","thrustLimit","engOut","thr1","thr2","athr"], nil, func(val) {
-				if (val.athr and (val.thrust1 == "TOGA" or val.thrust1 == "MCT" or val.thrust1 == "MAN THR" or val.thrust2 == "TOGA" or val.thrust2 == "MCT" or val.thrust2 == "MAN THR") and val.engOut != 1 and val.alphaFloor != 1 and 
-				val.togaLk != 1) {
-					obj["FMA_man"].show();
-					if (val.thrust1 == "TOGA" or val.thrust2 == "TOGA") {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("TOGA");
-						obj["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-					} else if ((val.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (val.thrust2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("THR");
-						obj["FMA_man_box"].setColor(0.7333,0.3803,0);
-					} else if ((val.thrust1 == "MCT" or val.thrust2 == "MCT") and val.thrustLimit != "FLX") {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("MCT");
-						obj["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-					} else if ((val.thrust1 == "MCT" or val.thrust2 == "MCT") and val.thrustLimit == "FLX") {
-						obj["FMA_man_box"].hide();
-						obj["FMA_flx_box"].show();
-						obj["FMA_flxtemp"].show();
-						obj["FMA_manmode"].hide();
-						obj["FMA_flxmode"].show();
-						obj["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-					} else if ((val.thrust1 == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (val.thrust2 == "MAN THR" and !systems.FADEC.manThrAboveMct[1])) {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("THR");
-						obj["FMA_man_box"].setColor(0.7333,0.3803,0);
-					}
-				} else if (val.athr and (val.thrust1 == "TOGA" or (val.thrust1 == "MCT" and thrust_limit_act == "FLX") or (val.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or val.thrust2 == "TOGA" or (val.thrust2 == "MCT" and 
-				val.thrustLimit == "FLX") or (val.thrust2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) and val.engOut and val.alphaFloor != 1 and val.togaLk != 1) {
-					obj["FMA_man"].show();
-					if (val.thrust1 == "TOGA" or val.thrust2 == "TOGA") {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("TOGA");
-						obj["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-					} else if ((val.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (val.thrust2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("THR");
-						obj["FMA_man_box"].setColor(0.7333,0.3803,0);
-					} else if ((val.thrust1 == "MCT" or val.thrust2 == "MCT") and val.thrustLimit == "FLX") {
-						obj["FMA_man_box"].hide();
-						obj["FMA_flx_box"].show();
-						obj["FMA_flxtemp"].show();
-						obj["FMA_manmode"].hide();
-						obj["FMA_flxmode"].show();
-						obj["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-					}
-				} else {
-					obj["FMA_man"].hide();
-					obj["FMA_manmode"].hide();
-					obj["FMA_man_box"].hide();
-					obj["FMA_flx_box"].hide();
-					obj["FMA_flxtemp"].hide();
-					obj["FMA_flxmode"].hide();
-				}
-				
-				if (val.alphaFloor != 1 and val.togaLk != 1) {
-					if (val.athr and val.engOut != 1 and (val.thrust1 == "MAN" or val.thrust1 == "CL") and (val.thrust2 == "MAN" or val.thrust2 == "CL")) {
-						obj["FMA_thrust"].show();
-						if (val.throttleModeBox and val.throttleMode != " ") {
-							obj["FMA_thrust_box"].show();
-						} else {
-							obj["FMA_thrust_box"].hide();
-						}
-					} else if (val.athr and val.engOut and (val.thrust1 == "MAN" or val.thrust1 == "CL" or (val.thrust1 == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (val.thrust1 == "MCT" and val.thrustLimit != "FLX")) and 
-					(val.thrust2 == "MAN" or val.thrust2 == "CL" or (val.thrust2 == "MAN THR" and !systems.FADEC.manThrAboveMct[1]) or (val.thrust2 == "MCT" and val.thrustLimit != "FLX"))) {
-						obj["FMA_thrust"].show();
-						if (val.throttleModeBox and val.throttleMode != " ") {
-							obj["FMA_thrust_box"].show();
-						} else {
-							obj["FMA_thrust_box"].hide();
-						}
-					} else {
-						obj["FMA_thrust"].hide();
-						obj["FMA_thrust_box"].hide();
-					}
-				} else {
-					obj["FMA_thrust"].show();
-					obj["FMA_thrust_box"].show();
-				}
-				
 				if (val.alphaFloor) {
 					obj["FMA_thrust"].setText("A.FLOOR");
 					obj["FMA_thrust_box"].setColor(0.7333,0.3803,0);
@@ -1526,6 +1422,110 @@ var canvas_pfd = {
 				me["FMA_Middle1"].show();
 				me["FMA_Middle2"].hide();
 			}
+		}
+		
+		if (notification.athr and (notification.thrust1 == "TOGA" or notification.thrust1 == "MCT" or notification.thrust1 == "MAN THR" or notification.thrust2 == "TOGA" or notification.thrust2 == "MCT" or notification.thrust2 == "MAN THR") and notification.engOut != 1 and notification.alphaFloor != 1 and 
+		notification.togaLk != 1) {
+			me["FMA_man"].show();
+			if (notification.thrust1 == "TOGA" or notification.thrust2 == "TOGA") {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("TOGA");
+				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
+			} else if ((notification.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (notification.thrust2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("THR");
+				me["FMA_man_box"].setColor(0.7333,0.3803,0);
+			} else if ((notification.thrust1 == "MCT" or notification.thrust2 == "MCT") and notification.thrustLimit != "FLX") {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("MCT");
+				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
+			} else if ((notification.thrust1 == "MCT" or notification.thrust2 == "MCT") and notification.thrustLimit == "FLX") {
+				me["FMA_man_box"].hide();
+				me["FMA_flx_box"].show();
+				me["FMA_flxtemp"].show();
+				me["FMA_manmode"].hide();
+				me["FMA_flxmode"].show();
+				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
+			} else if ((notification.thrust1 == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (notification.thrust2 == "MAN THR" and !systems.FADEC.manThrAboveMct[1])) {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("THR");
+				me["FMA_man_box"].setColor(0.7333,0.3803,0);
+			}
+		} else if (notification.athr and (notification.thrust1 == "TOGA" or (notification.thrust1 == "MCT" and thrust_limit_act == "FLX") or (notification.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or notification.thrust2 == "TOGA" or (notification.thrust2 == "MCT" and 
+		notification.thrustLimit == "FLX") or (notification.thrust2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) and notification.engOut and notification.alphaFloor != 1 and notification.togaLk != 1) {
+			me["FMA_man"].show();
+			if (notification.thrust1 == "TOGA" or notification.thrust2 == "TOGA") {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("TOGA");
+				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
+			} else if ((notification.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (notification.thrust2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("THR");
+				me["FMA_man_box"].setColor(0.7333,0.3803,0);
+			} else if ((notification.thrust1 == "MCT" or notification.thrust2 == "MCT") and notification.thrustLimit == "FLX") {
+				me["FMA_man_box"].hide();
+				me["FMA_flx_box"].show();
+				me["FMA_flxtemp"].show();
+				me["FMA_manmode"].hide();
+				me["FMA_flxmode"].show();
+				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
+			}
+		} else {
+			me["FMA_man"].hide();
+			me["FMA_manmode"].hide();
+			me["FMA_man_box"].hide();
+			me["FMA_flx_box"].hide();
+			me["FMA_flxtemp"].hide();
+			me["FMA_flxmode"].hide();
+		}
+			
+		if (notification.alphaFloor != 1 and notification.togaLk != 1) {
+			if (notification.athr and notification.engOut != 1 and (notification.thrust1 == "MAN" or notification.thrust1 == "CL") and (notification.thrust2 == "MAN" or notification.thrust2 == "CL")) {
+				me["FMA_thrust"].show();
+				if (notification.throttleModeBox and notification.throttleMode != " ") {
+					me["FMA_thrust_box"].show();
+				} else {
+					me["FMA_thrust_box"].hide();
+				}
+			} else if (notification.athr and notification.engOut and (notification.thrust1 == "MAN" or notification.thrust1 == "CL" or (notification.thrust1 == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (notification.thrust1 == "MCT" and notification.thrustLimit != "FLX")) and 
+			(notification.thrust2 == "MAN" or notification.thrust2 == "CL" or (notification.thrust2 == "MAN THR" and !systems.FADEC.manThrAboveMct[1]) or (notification.thrust2 == "MCT" and notification.thrustLimit != "FLX"))) {
+				me["FMA_thrust"].show();
+				if (notification.throttleModeBox and notification.throttleMode != " ") {
+					me["FMA_thrust_box"].show();
+				} else {
+					me["FMA_thrust_box"].hide();
+				}
+			} else {
+				me["FMA_thrust"].hide();
+				me["FMA_thrust_box"].hide();
+			}
+		} else {
+			me["FMA_thrust"].show();
+			me["FMA_thrust_box"].show();
 		}
 		
 		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist >= 250) {
