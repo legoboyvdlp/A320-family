@@ -800,16 +800,8 @@
 			<gain>0.261799</gain>
 		</pure_gain>
 		
-		<fcs_function name="fbw/roll/p-rad_sec">
-			<function>
-				<toradians>
-					<property>/orientation/roll-rate-degps</property>
-				</toradians>
-			</function>
-		</fcs_function>
-		
 		<switch name="fbw/roll/p-r_s-s">
-			<default value="fbw/roll/p-rad_sec"/>
+			<default value="velocities/p-rad_sec"/>
 			<test value="0">
 				gear/unit[0]/WOW eq 1
 			</test>
@@ -1178,16 +1170,8 @@
 			<gain>-0.087266</gain>
 		</pure_gain>
 		
-		<fcs_function name="fbw/pitch/thetadot-rad_sec">
-			<function>
-				<toradians>
-					<property>/orientation/pitch-rate-degps</property>
-				</toradians>
-			</function>
-		</fcs_function>
-		
 		<switch name="fbw/pitch/t-r_s-s">
-			<default value="fbw/pitch/thetadot-rad_sec"/>
+			<default value="velocities/thetadot-rad_sec"/>
 			<test value="0">
 				gear/unit[0]/WOW eq 1
 			</test>
