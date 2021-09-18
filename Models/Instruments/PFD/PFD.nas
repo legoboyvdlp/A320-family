@@ -1986,8 +1986,8 @@ var input = {
 	autopilotFPA: "/it-autoflight/input/fpa",
 	autopilotVS: "/it-autoflight/input/vs",
 	
-	aileronPFD: "/controls/flight/aileron-input-fast",
-	elevatorPFD: "/controls/flight/elevator-input-fast",
+	aileronPFD: "/fdm/jsbsim/fbw/roll/a-i-pfd",
+	elevatorPFD: "/fdm/jsbsim/fbw/pitch/e-i-pfd",
 	flapsInput: "/controls/flight/flaps-input",
 	
 	thrustLvrClb: "/fdm/jsbsim/fadec/lvrclb",

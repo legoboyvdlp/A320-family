@@ -1,6 +1,4 @@
 # Airbus A3XX FBW/Flight Control Computer System
-# Joshua Davidson (Octal450)
-
 # Copyright (c) 2021 Josh Davidson (Octal450)
 
 var mmoIAS = 0;
@@ -44,8 +42,6 @@ var FBW = {
 	activeLaw: props.globals.getNode("/it-fbw/law"),
 	activeYawLaw: props.globals.getNode("/it-fbw/yaw-law"),
 	override: props.globals.getNode("/it-fbw/override"),
-	rollBack: props.globals.getNode("/it-fbw/roll-back"),
-	rollLim: props.globals.getNode("/it-fbw/roll-lim"),
 	yawdamper: props.globals.getNode("/systems/fctl/yawdamper-active"),
 	Computers: {
 		elac1: props.globals.getNode("/systems/fctl/elac1"),
@@ -91,7 +87,6 @@ var FBW = {
 		fac2: props.globals.getNode("/systems/fctl/lights/fac2-fault"),
 	},
 	Protections: {
-		overspeedRoll: props.globals.getNode("/it-fbw/protections/overspeed-roll-back"),
 		overspeed: props.globals.getNode("/it-fbw/protections/overspeed"),
 	},
 	Sidestick: {
@@ -269,37 +264,6 @@ var update_loop = func {
 }
 	
 var fbw_loop = func {
-	ail = pts.Controls.Flight.aileron.getValue();
-	roll = pts.Orientation.roll.getValue();
-	rollback = FBW.rollBack.getValue();
-	
-	if (ail > 0.4 and roll >= -33.5) {
-		FBW.rollLim.setValue("67");
-		if (rollback == 1 and roll <= 33.5 and roll >= -33.5) {
-			FBW.rollBack.setValue(0);
-		} elsif (rollback == 0 and (roll > 33.5 or roll < -33.5)) {
-			FBW.rollBack.setValue(1);
-		}
-	} else if (ail < -0.4 and roll <= 33.5) {
-		FBW.rollLim.setValue("67");
-		if (rollback == 1 and roll <= 33.5 and roll >= -33.5) {
-			FBW.rollBack.setValue(0);
-		} elsif (rollback == 0 and (roll > 33.5 or roll < -33.5)) {
-			FBW.rollBack.setValue(1);
-		}
-	} else if (ail < 0.04 and ail > -0.04) {
-		FBW.rollLim.setValue("33");
-		if (rollback == 1 and roll <= 33.5 and roll >= -33.5) {
-			FBW.rollBack.setValue(0);
-		}
-	}
-	
-	if (ail > 0.04 or ail < -0.04) {
-		FBW.Protections.overspeedRoll.setValue(0);
-	} else if (ail < 0.04 and ail > -0.04) {
-		FBW.Protections.overspeedRoll.setValue(1);
-	}
-
 	if (!FBW.override.getBoolValue()) {
 		var active = FBW.activeLaw.getValue();
 		var degrade = FBW.degradeLaw.getValue();

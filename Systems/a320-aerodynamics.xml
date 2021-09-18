@@ -596,7 +596,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
 				<toradians><property>hydraulics/aileron-l/final-deg</property></toradians>
-				<value>0.031</value>
+				<value>0.035</value>
 			</product>
 		</function>
 		
@@ -607,7 +607,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
 				<toradians><property>hydraulics/aileron-r/final-deg</property></toradians>
-				<value>-0.031</value>
+				<value>-0.035</value>
 			</product>
 		</function>
 		

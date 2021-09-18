@@ -226,30 +226,27 @@
 				<path></path>
 			</electrical>
 			<autopilot n="0">
-				<path>Aircraft/A320-family/Systems/fbw-pitch.xml</path>
-			</autopilot>
-			<autopilot n="1">
 				<path>Aircraft/A320-family/Systems/fmgc-drivers.xml</path>
 			</autopilot>
-			<autopilot n="2">
+			<autopilot n="1">
 				<path>Aircraft/A320-family/Systems/fmgc-roll-yaw.xml</path>
 			</autopilot>
-			<autopilot n="3">
+			<autopilot n="2">
 				<path>Aircraft/A320-family/Systems/fmgc-pitch.xml</path>
 			</autopilot>
-			<autopilot n="4">
+			<autopilot n="3">
 				<path>Aircraft/A320-family/Systems/fmgc-thrust.xml</path>
 			</autopilot>
-			<autopilot n="5">
+			<autopilot n="4">
 				<path>Aircraft/A320-family/Systems/libraries.xml</path>
 			</autopilot>
-			<autopilot n="6">
+			<autopilot n="5">
 				<path>Aircraft/A320-family/Systems/upper-ecam.xml</path>
 			</autopilot>
-			<autopilot n="7">
+			<autopilot n="6">
 				<path>Aircraft/A320-family/Systems/lower-ecam.xml</path>
 			</autopilot>
-			<autopilot n="8">
+			<autopilot n="7">
 				<path>Aircraft/A320-family/Systems/pfd.xml</path>
 			</autopilot>
 			<property-rule n="101">
@@ -955,9 +952,7 @@
 		<flight>
 			<aileron n="1" type="double">0</aileron>
 			<aileron-drives-tiller type="bool">0</aileron-drives-tiller>
-			<aileron-input type="double">0</aileron-input>
 			<elevator n="1" type="double">0</elevator>
-			<elevator-input type="double">0</elevator-input>
 			<rudder n="1" type="double">0</rudder>
 			<speedbrake-arm type="bool">0</speedbrake-arm>
 			<slats type="double">0</slats>

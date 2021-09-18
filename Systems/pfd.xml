@@ -354,7 +354,7 @@
 	<filter>
 		<name>Pitch PFD</name>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>
@@ -381,7 +381,7 @@
 	<filter>
 		<name>Ground Horizon</name>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<condition>
 				<and>
@@ -403,7 +403,7 @@
 						<entry><ind>150</ind><dep> 17.35</dep></entry>
 					</table>
 					<table>
-						<property>/orientation/pitch-deg</property>
+						<property>/instrumentation/pfd/pitch-deg-non-linear</property>
 						<entry><ind> 0.00</ind><dep>  0.00</dep></entry>
 						<entry><ind>17.35</ind><dep>-17.35</dep></entry>
 					</table>
@@ -431,7 +431,7 @@
 						<entry><ind>150</ind><dep> 17.35</dep></entry>
 					</table>
 					<table>
-						<property>/orientation/pitch-deg</property>
+						<property>/instrumentation/pfd/pitch-deg-non-linear</property>
 						<entry><ind>-17.35</ind><dep> 17.35</dep></entry>
 						<entry><ind>  0.00</ind><dep>  0.00</dep></entry>
 						<entry><ind> 17.35</ind><dep>-17.35</dep></entry>
@@ -447,8 +447,8 @@
 	<filter>
 		<name>Horizon Heading Pitch</name>
 		<type>gain</type>
-		<gain>1</gain>
-		<input>/orientation/pitch-deg</input>
+		<gain>1.0</gain>
+		<input>/instrumentation/pfd/pitch-deg-non-linear</input>
 		<output>/instrumentation/pfd/horizon-pitch</output>
 		<min>-17.35</min>
 		<max>17.35</max>
@@ -457,7 +457,7 @@
 	<filter>
 		<name>Vertical Speed Needle</name>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>
@@ -488,7 +488,7 @@
 	<filter>
 		<name>Vertical Speed Digit Translate</name>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>
@@ -538,7 +538,7 @@
 		<name>IESI Slip/Skid Indicator</name>
 		<debug>false</debug>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>
@@ -558,7 +558,7 @@
 		<name>IESI Pitch</name>
 		<debug>false</debug>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>

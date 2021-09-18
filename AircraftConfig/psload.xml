@@ -17,9 +17,9 @@
         </text>
 		<button>
 			<halign>right</halign>
-			<legend>Abort</legend>
+			<legend>Cancel</legend>
 			<pref-width>60</pref-width>
-			<key>Esc</key>
+			<pref-height>20</pref-height>
 			<binding>
 				<command>nasal</command>
 				<script>acconfig.abortPanelStates();</script>

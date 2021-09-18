@@ -651,6 +651,7 @@
 			<test value="1"> <!-- MAN -->
 				fadec/control-1/throttle-pos gt /systems/acconfig/options/fadec/idle-t
 			</test>
+			<output>fbw/detent-1-feedback</output>
 		</switch>
 		
 		<fcs_function name="fadec/control-1/lever/idle-climb">
@@ -898,6 +899,7 @@
 			<test value="1"> <!-- MAN -->
 				fadec/control-2/throttle-pos gt /systems/acconfig/options/fadec/idle-t
 			</test>
+			<output>fbw/detent-2-feedback</output>
 		</switch>
 		
 		<fcs_function name="fadec/control-2/lever/idle-climb">

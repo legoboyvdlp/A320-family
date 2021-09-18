@@ -7,6 +7,21 @@
 	
 	<channel name="Animations">
 		
+		<lag_filter name="fbw/aileron-sidestick">
+			<input>fbw/sidestick/roll-input-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="fbw/elevator-sidestick">
+			<input>fbw/sidestick/pitch-input-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="fbw/rudder-pedal">
+			<input>fbw/sidestick/yaw-input-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<lag_filter name="spoilers/main-lever">
 			<input>spoilers/lever-cmd</input>
 			<c1>20</c1>
