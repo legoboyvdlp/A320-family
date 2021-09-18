@@ -680,7 +680,7 @@
 						<independentVar lookup="row">fbw/roll/max-rad-l-o</independentVar>
 						<tableData>
 							0  0.000000
-							1  1.169370
+							1  0.785398
 						</tableData>
 					</table>
 					<table>
