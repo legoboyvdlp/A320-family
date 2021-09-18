@@ -1536,10 +1536,10 @@ var canvas_pfd = {
 				me["AI_agl"].show();
 				if (notification.agl <= notification.decision) {
 					me["AI_agl"].setColor(0.7333,0.3803,0);
-					me["AI_agl"].setFontSize(60);
+					me["AI_agl"].setFontSize(55);
 				} else {
 					if (notification.agl <= 400) {
-						me["AI_agl"].setFontSize(60);
+						me["AI_agl"].setFontSize(55);
 					} else {
 						me["AI_agl"].setFontSize(45);
 					}
@@ -1561,10 +1561,10 @@ var canvas_pfd = {
 					minimum.setValue(notification.radio);
 					if (notification.agl <= notification.radio + 100) {
 						me["AI_agl"].setColor(0.7333,0.3803,0);
-						me["AI_agl"].setFontSize(60);
+						me["AI_agl"].setFontSize(55);
 					} else {
 						if (notification.agl <= 400) {
-							me["AI_agl"].setFontSize(60);
+							me["AI_agl"].setFontSize(55);
 						} else {
 							me["AI_agl"].setFontSize(45);
 						}
@@ -1580,10 +1580,10 @@ var canvas_pfd = {
 					minimum.setValue(notification.baro);
 					if (notification.agl <= notification.baro + 100) {
 						me["AI_agl"].setColor(0.7333,0.3803,0);
-						me["AI_agl"].setFontSize(60);
+						me["AI_agl"].setFontSize(55);
 					} else {
 						if (notification.agl <= 400) {
-							me["AI_agl"].setFontSize(60);
+							me["AI_agl"].setFontSize(55);
 						} else {
 							me["AI_agl"].setFontSize(45);
 						}
@@ -1598,7 +1598,7 @@ var canvas_pfd = {
 					hundredAbove.setValue(100);
 					minimum.setValue(0);
 					if (notification.agl <= 400) {
-						me["AI_agl"].setFontSize(60);
+						me["AI_agl"].setFontSize(55);
 					} else {
 						me["AI_agl"].setFontSize(45);
 					}
@@ -1616,7 +1616,7 @@ var canvas_pfd = {
 					minimum.setValue(300);
 					if (notification.agl <= 400) {
 						me["AI_agl"].setColor(0.7333,0.3803,0);
-						me["AI_agl"].setFontSize(60);
+						me["AI_agl"].setFontSize(55);
 					} else {
 						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
 						me["AI_agl"].setFontSize(45);
