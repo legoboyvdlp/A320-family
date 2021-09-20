@@ -14,6 +14,7 @@
 	<property value="1">fbw/mixer/sidestick-gain-feedback</property>
 	<property value="0">fbw/spoiler-output</property>
 	<property value="3.5">fbw/rate-c1</property>
+	<property value="0">fbw/pitch/ias-input</property>
 	
 	<!-- Default gains for tuning -->
 	<property value="0">fbw/roll/p-gain</property>
@@ -69,6 +70,18 @@
 			</test>
 		</switch>
 		
+		<switch name="fbw/protections/overspeed">
+			<default value="fbw/protections/overspeed"/>
+			<test logic="OR" value="0">
+				position/wow eq 1
+				/it-fbw/law ne 0
+				/instrumentation/airspeed-indicator/indicated-speed-kt le /FMGC/internal/vmo-mmo
+			</test>
+			<test value="1">
+				/instrumentation/airspeed-indicator/indicated-speed-kt ge /FMGC/internal/vmo-mmo-plus-6
+			</test>
+		</switch>
+		
 		<fcs_function name="fbw/roll/p-gain">
 			<function>
 				<table>
@@ -105,7 +118,7 @@
 					<tableData>
 						     0    1
 						140 -2.5  0.0
-						350 -0.5  0.0
+						350 -0.4  0.0
 					</tableData>
 				</table>
 			</function>
@@ -147,7 +160,7 @@
 					<tableData>
 						     0    1
 						140  2.0  0.0
-						350  0.4  0.0
+						350  0.3  0.0
 					</tableData>
 				</table>
 			</function>
@@ -214,19 +227,6 @@
 				</sum>
 			</function>
 		</fcs_function>
-		
-		<pid name="fbw/pitch/vc-kts-rate">
-			<descripton>Use D only to calculate rate of IAS</descripton>
-			<input>velocities/vc-kts</input>
-			<kp>0.0</kp>
-			<ki>0.0</ki>
-			<kd>1.0</kd>
-		</pid>
-		
-		<lag_filter name="fbw/pitch/vc-kts-rate-lag">
-			<input>fbw/pitch/vc-kts-rate</input>
-			<c1>1.0</c1>
-		</lag_filter>
 		
 		<switch name="fbw/mixer/rate-limit">
 			<default value="fbw/mixer/rate-limit"/>
@@ -661,7 +661,7 @@
 		<switch name="fbw/roll/overspeed-overbank">
 			<default value="0"/>
 			<test value="0">
-				/it-fbw/protections/overspeed ne 1
+				fbw/protections/overspeed ne 1
 			</test>
 			<test logic="OR" value="1">
 				attitude/roll-rad lt -0.584685
@@ -673,7 +673,7 @@
 			<function>
 				<ifthen>
 					<eq>
-						<property>/it-fbw/protections/overspeed</property>
+						<property>fbw/protections/overspeed</property>
 						<value>1</value>
 					</eq>
 					<table>
@@ -714,9 +714,9 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/max-rad-error</independentVar>
 					<tableData>
-						-0.174533  1.00
-						-0.043633  0.25
-						 0.000000  0.00
+						-0.087266  1.0
+						-0.034907  0.1
+						 0.000000  0.0
 					</tableData>
 				</table>
 			</function>
@@ -727,9 +727,9 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/min-rad-error</independentVar>
 					<tableData>
-						0.000000  0.00
-						0.043633 -0.25
-						0.174533 -1.00
+						0.000000  0.0
+						0.034907 -0.1
+						0.087266 -1.0
 					</tableData>
 				</table>
 			</function>
@@ -758,8 +758,8 @@
 					<tableData>
 						          0     1
 						0.000000  0.00  0.00
-						0.043633 -0.25 -0.25
-						0.174533 -0.67 -1.00
+						0.034907 -0.10 -0.10
+						0.087266 -0.67 -1.00
 					</tableData>
 				</table>
 			</function>
@@ -772,8 +772,8 @@
 					<independentVar lookup="column">fbw/roll/overspeed-overbank</independentVar>
 					<tableData>
 						           0     1
-						-0.174533  0.67  1.00
-						-0.043633  0.25  0.25
+						-0.087266  0.67  1.00
+						-0.034907  0.10  0.10
 						 0.000000  0.00  0.00
 					</tableData>
 				</table>
@@ -926,7 +926,7 @@
 				<product>
 					<pow>
 						<abs><property>fbw/roll/s-i-f-i</property></abs>
-						<value>1.625</value>
+						<value>1.7</value>
 					</pow>
 					<ifthen>
 						<lt>
@@ -956,27 +956,81 @@
 			</test>
 		</switch>
 		
-		<switch name="fbw/roll/s-l">
+		<switch name="fbw/roll/s-l-2">
 			<default value="0"/>
-			<test value="fbw/roll/s-i">
-				/it-fbw/law ne 3
-				/systems/failures/aileron-left eq 0
+			<test logic="OR" value="0">
+				/it-fbw/law eq 3
 			</test>
-			<test value="fbw/aileron-output">
-				/it-fbw/law ne 3
+			<test logic="OR" value="fbw/roll/s-i">
+				/it-fbw/law eq 0
+				position/wow eq 1
 				/systems/failures/aileron-left eq 1
 			</test>
 		</switch>
 		
-		<switch name="fbw/roll/s-r">
+		<switch name="fbw/roll/s-l-3">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/it-fbw/law eq 3
+			</test>
+			<test logic="OR" value="fbw/roll/s-i">
+				/it-fbw/law eq 0
+				position/wow eq 1
+				/systems/failures/aileron-left eq 1
+				/systems/failures/spoilers/spoiler-l4 eq 1
+			</test>
+		</switch>
+		
+		<switch name="fbw/roll/s-l-4">
 			<default value="0"/>
 			<test value="fbw/roll/s-i">
 				/it-fbw/law ne 3
-				/systems/failures/aileron-right eq 0
 			</test>
-			<test value="fbw/aileron-output">
+		</switch>
+		
+		<switch name="fbw/roll/s-l-5">
+			<default value="0"/>
+			<test value="fbw/roll/s-i">
 				/it-fbw/law ne 3
+			</test>
+		</switch>
+		
+		<switch name="fbw/roll/s-r-2">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/it-fbw/law eq 3
+			</test>
+			<test logic="OR" value="fbw/roll/s-i">
+				/it-fbw/law eq 0
+				position/wow eq 1
 				/systems/failures/aileron-right eq 1
+			</test>
+		</switch>
+		
+		<switch name="fbw/roll/s-r-3">
+			<default value="0"/>
+			<test logic="OR" value="0">
+				/it-fbw/law eq 3
+			</test>
+			<test logic="OR" value="fbw/roll/s-i">
+				/it-fbw/law eq 0
+				position/wow eq 1
+				/systems/failures/aileron-right eq 1
+				/systems/failures/spoilers/spoiler-r4 eq 1
+			</test>
+		</switch>
+		
+		<switch name="fbw/roll/s-r-4">
+			<default value="0"/>
+			<test value="fbw/roll/s-i">
+				/it-fbw/law ne 3
+			</test>
+		</switch>
+		
+		<switch name="fbw/roll/s-r-5">
+			<default value="0"/>
+			<test value="fbw/roll/s-i">
+				/it-fbw/law ne 3
 			</test>
 		</switch>
 	
@@ -984,23 +1038,11 @@
 	
 	<channel name="FBW: Pitch">
 		
-		<switch name="fbw/pitch/elevator-max"> <!-- Prevent pitch down -->
-			<default value="1"/>
-			<test logic="AND" value="0">
-				/it-fbw/law eq 0
-				/it-fbw/protections/overspeed eq 1
-			</test>
-		</switch>
-		
 		<switch name="fbw/pitch/e-i-f">
 			<default value="fbw/sidestick/pitch-input"/>
 			<test value="0">
 				fbw/fmgc/enabled eq 1
 			</test>
-			<clipto>
-				<min>-1.0</min>
-				<max>fbw/pitch/elevator-max</max>
-			</clipto>
 		</switch>
 		
 		<actuator name="fbw/pitch/e-i-m">
@@ -1013,7 +1055,58 @@
 			<c1>20.0</c1>
 		</lag_filter>
 		
-		<fcs_function name="fbw/pitch/e-f-air">
+		<pid name="fbw/pitch/vc-kts-rate">
+			<descripton>Use D only to calculate rate of IAS</descripton>
+			<input>velocities/vc-kts</input>
+			<kp>0.0</kp>
+			<ki>0.0</ki>
+			<kd>1.0</kd>
+		</pid>
+		
+		<lag_filter name="fbw/pitch/vc-kts-rate-lag">
+			<input>fbw/pitch/vc-kts-rate</input>
+			<c1>10.0</c1>
+		</lag_filter>
+		
+		<summer name="fbw/pitch/vmo-mmo-error">
+			<input>fbw/pitch/ias-input</input>
+			<input>-/FMGC/internal/vmo-mmo</input>
+		</summer>
+		
+		<fcs_function name="fbw/pitch/e-i-overspeed">
+			<function>
+				<table>
+					<independentVar lookup="row">fbw/sidestick/pitch-input</independentVar>
+					<independentVar lookup="column">fbw/pitch/vc-kts-rate</independentVar>
+					<independentVar lookup="table">fbw/pitch/vmo-mmo-error</independentVar>
+					<tableData breakPoint="6"> <!-- Engage point, reduced forwards authority -->
+						   -1    1    3
+						-1 -1.0 -1.0 -1.0
+						 0  0.0 -0.5 -0.7
+						 1  0.3  0.3  0.3
+					</tableData>
+					<tableData breakPoint="16"> <!-- VMO + 16, no forwards authority allowed -->
+						   -2    0    2
+						-1 -1.0 -1.0 -1.0
+						 0  0.0 -0.5 -0.7
+						 1  0.0  0.0  0.0
+					</tableData>
+					<tableData breakPoint="31"> <!-- Full forward stabilizes just below VD -->
+						   -3   -1    0    2    4
+						-1 -1.0 -1.0 -1.0 -1.0 -1.0
+						 0  0.0 -0.5 -0.5 -1.0 -1.0
+						 1  0.0  0.0  0.0 -0.5 -1.0
+					</tableData>
+					<tableData breakPoint="36"> <!-- Get under VD at all costs -->
+						   -3    1
+						-1 -1.0 -1.0
+						 0  0.0 -1.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/pitch/e-i-flare">
 			<function>
 				<sum>
 					<property>fbw/sidestick/pitch-input</property>
@@ -1065,9 +1158,9 @@
 				<table>
 					<independentVar lookup="row">fbw/pitch/min-rad-error</independentVar>
 					<tableData>
-						0.000000  0.00
-						0.021817  0.25
-						0.087266  1.00
+						0.000000  0.0
+						0.034907  0.1
+						0.087266  1.0
 					</tableData>
 				</table>
 			</function>
@@ -1078,9 +1171,9 @@
 				<table>
 					<independentVar lookup="row">fbw/pitch/max-rad-error</independentVar>
 					<tableData>
-						-0.087266 -1.00
-						-0.021817 -0.25
-						 0.000000  0.00
+						-0.087266 -1.0
+						-0.034907 -0.1
+						 0.000000  0.0
 					</tableData>
 				</table>
 			</function>
@@ -1088,7 +1181,11 @@
 		
 		<switch name="fbw/pitch/e-i-cmd">
 			<default value="fbw/sidestick/pitch-input"/>
-			<test logic="AND" value="fbw/pitch/e-f-air">
+			<test logic="AND" value="fbw/pitch/e-i-overspeed">
+				fbw/protections/overspeed eq 1
+				position/wow eq 0
+			</test>
+			<test logic="AND" value="fbw/pitch/e-i-flare">
 				fbw/fmgc/enabled eq 0
 				/position/gear-agl-ft le 30
 				/controls/flight/flaps-pos ge 4
@@ -1099,7 +1196,7 @@
 				fbw/detent-2-feedback le 2
 				fadec/eng-out ne 1
 			</test>
-			<test logic="AND" value="fbw/pitch/e-f-air">
+			<test logic="AND" value="fbw/pitch/e-i-flare">
 				fbw/fmgc/enabled eq 0
 				/position/gear-agl-ft le 30
 				/controls/flight/flaps-pos ge 4
@@ -1129,9 +1226,9 @@
 				<table>
 					<independentVar lookup="row">fbw/pitch/max-rad-error</independentVar>
 					<tableData>
-						0.000000  0.00
-						0.021817  0.25
-						0.087266  1.00
+						0.000000  0.0
+						0.034907  0.1
+						0.087266  1.0
 					</tableData>
 				</table>
 			</function>
@@ -1142,9 +1239,9 @@
 				<table>
 					<independentVar lookup="row">fbw/pitch/min-rad-error</independentVar>
 					<tableData>
-						-0.087266 -1.00
-						-0.021817 -0.25
-						 0.000000  0.00
+						-0.087266 -1.0
+						-0.034907 -0.1
+						 0.000000  0.0
 					</tableData>
 				</table>
 			</function>
@@ -1295,7 +1392,7 @@
 				attitude/roll-rad gt -0.628319
 				fbw/pitch/pid-switched ge 0.01
 				fbw/pitch/g-instrumented ge 0.5
-				/it-fbw/protections/overspeed ne 1
+				fbw/protections/overspeed ne 1
 				/controls/flight/elevator-trim le 0.32
 				position/wow eq 0
 			</test>
@@ -1306,7 +1403,7 @@
 				attitude/roll-rad gt -0.628319
 				fbw/pitch/pid-switched le -0.01
 				fbw/pitch/g-instrumented ge 0.5
-				/it-fbw/protections/overspeed ne 1
+				fbw/protections/overspeed ne 1
 				/controls/flight/elevator-trim ge -1.0
 				position/wow eq 0
 			</test>

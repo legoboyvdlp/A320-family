@@ -1,11 +1,45 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 FMGC -->
-<!-- Copyright (c) 2019 Jonathan Redpath -->
+<!-- Copyright (c) 2021 Josh Davidson and Jonathan Redpath -->
 
 <system name="A320: FMGC">
-
+	
+	<property value="350">/FMGC/internal/vmo-kts</property>
+	
 	<channel name="FMGC" execrate="8">
+		
+		<fcs_function name="/FMGC/internal/mmo-kts">
+			<function>
+				<product>
+					<quotient>
+						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+						<max> <!-- Prevent divide by 0 -->
+							<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+							<value>0.0000001</value>
+						</max>
+					</quotient>
+					<value>0.82</value>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<switch name="/FMGC/internal/vmo-mmo">
+			<default value="/FMGC/internal/vmo-kts"/>
+			<test logic="AND" value="/FMGC/internal/mmo-kts">
+				/FMGC/internal/mmo-kts lt /FMGC/internal/vmo-kts
+				position/wow eq 0
+			</test>
+		</switch>
+		
+		<fcs_function name="/FMGC/internal/vmo-mmo-plus-6">
+			<function>
+				<sum>
+					<property>/FMGC/internal/vmo-mmo</property>
+					<value>6</value>
+				</sum>
+			</function>
+		</fcs_function>
 		
 		<fcs_function name="/systems/fmgc/cas-compare/cas-1-to-3">
 			<function>

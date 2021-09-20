@@ -4698,7 +4698,7 @@
 			<file>Aircraft/A320-family/Nasal/ECAM/ECAM-phases.nas</file>
 		</ecam>
 		<fbw>
-			<file>Aircraft/A320-family/Nasal/FBW/it-fbw.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/fbw.nas</file>
 		</fbw>
 		<fcu>
 			<file>Aircraft/A320-family/Nasal/FMGC/FCU.nas</file>

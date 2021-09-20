@@ -1727,5 +1727,14 @@
 		</input>
 		<output>/instrumentation/dcdu/lcd-contrast</output>
 	</filter>
+	
+	<predict-simple>
+		<name>FBW Pitch IAS Predictor</name>
+		<debug>false</debug>
+		<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
+		<output>/fdm/jsbsim/fbw/pitch/ias-input</output>
+		<seconds>1.0</seconds>
+		<filter-gain>0</filter-gain>
+	</predict-simple>
 
 </PropertyList>

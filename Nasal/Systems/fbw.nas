@@ -87,7 +87,7 @@ var FBW = {
 		fac2: props.globals.getNode("/systems/fctl/lights/fac2-fault"),
 	},
 	Protections: {
-		overspeed: props.globals.getNode("/it-fbw/protections/overspeed"),
+		overspeed: props.globals.getNode("/fdm/jsbsim/fbw/protections/overspeed"),
 	},
 	Sidestick: {
 		active: [props.globals.getNode("/fdm/jsbsim/fbw/sidestick/active[0]"), props.globals.getNode("/fdm/jsbsim/fbw/sidestick/active[1]")],
@@ -240,25 +240,9 @@ var update_loop = func {
 		}
 	}
 	
-	
-	cas = pts.Instrumentation.AirspeedIndicator.indicatedSpdKt.getValue();
-	mmoIAS = (cas / pts.Instrumentation.AirspeedIndicator.indicatedMach.getValue()) * 0.82;
-	if (mmoIAS < 350) {
-		fmgc.FMGCInternal.vmo_mmo = mmoIAS;
-	} else {
-		fmgc.FMGCInternal.vmo_mmo = 350;
-	}
-	
-	if (cas > (fmgc.FMGCInternal.vmo_mmo + 6) and (law == 0 or law == 1)) {
+	if (FBW.Protections.overspeed.getBoolValue()) {
 		if (fmgc.Input.ap1.getBoolValue() or fmgc.Input.ap2.getBoolValue()) {
 			fcu.apOff("hard", 0);
-		}
-		if (!FBW.Protections.overspeed.getBoolValue()) {
-			FBW.Protections.overspeed.setBoolValue(1);
-		}
-	} else {
-		if (FBW.Protections.overspeed.getBoolValue()) {
-			FBW.Protections.overspeed.setBoolValue(0);
 		}
 	}
 }

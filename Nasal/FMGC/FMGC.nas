@@ -115,7 +115,7 @@ var FMGCInternal = {
 	# speeds
 	alpha_prot: 0,
 	alpha_max: 0,
-	vmo_mmo: 0,
+	vmo_mmo: props.globals.getNode("/FMGC/internal/vmo-mmo"),
 	vsw: 0,
 	vls_min: 0,
 	clean: 0,
@@ -688,7 +688,7 @@ var masterFMGC = maketimer(0.2, func {
 	} elsif (pts.Gear.position[0].getValue() != 0 or pts.Gear.position[1].getValue() != 0 or pts.Gear.position[2].getValue() != 0) {
 		FMGCInternal.maxspeed = 284;
 	} else {
-		FMGCInternal.maxspeed = fmgc.FMGCInternal.vmo_mmo;
+		FMGCInternal.maxspeed = fmgc.FMGCInternal.vmo_mmo.getValue();
 	}
 	
 	if (newphase != FMGCInternal.phase) {  # phase changed

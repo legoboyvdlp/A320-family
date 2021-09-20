@@ -188,7 +188,7 @@
 						<value>0.5</value>
 					</product>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-l-2</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.55
@@ -203,7 +203,7 @@
 				<sum>
 					<property>spoilers/main-cmd</property>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-l-2</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.7
@@ -216,7 +216,7 @@
 		<fcs_function name="hydraulics/spoiler-l2/retracted">
 			<function>
 				<table>
-					<independentVar lookup="row">fbw/roll/s-l</independentVar>
+					<independentVar lookup="row">fbw/roll/s-l-2</independentVar>
 					<tableData>
 						-1.0  0.7
 						 0.0  0.0
@@ -281,7 +281,7 @@
 				<sum>
 					<property>spoilers/main-cmd</property>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-l-3</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.7
@@ -299,7 +299,7 @@
 						<value>0.8</value>
 					</product>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-l-3</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.7
@@ -312,7 +312,7 @@
 		<fcs_function name="hydraulics/spoiler-l3/retracted">
 			<function>
 				<table>
-					<independentVar lookup="row">fbw/roll/s-l</independentVar>
+					<independentVar lookup="row">fbw/roll/s-l-3</independentVar>
 					<tableData>
 						-1.0  0.7
 						 0.0  0.0
@@ -377,7 +377,7 @@
 				<sum>
 					<property>spoilers/main-cmd</property>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-l-4</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.7
@@ -395,7 +395,7 @@
 						<value>0.8</value>
 					</product>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-l-4</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.7
@@ -408,7 +408,7 @@
 		<fcs_function name="hydraulics/spoiler-l4/retracted">
 			<function>
 				<table>
-					<independentVar lookup="row">fbw/roll/s-l</independentVar>
+					<independentVar lookup="row">fbw/roll/s-l-4</independentVar>
 					<tableData>
 						-1.0  0.7
 						 0.0  0.0
@@ -473,7 +473,7 @@
 				<sum>
 					<property>spoilers/main-cmd</property>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-l-5</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.7
@@ -486,7 +486,7 @@
 		<fcs_function name="hydraulics/spoiler-l5/retracted">
 			<function>
 				<table>
-					<independentVar lookup="row">fbw/roll/s-l</independentVar>
+					<independentVar lookup="row">fbw/roll/s-l-5</independentVar>
 					<tableData>
 						-1.0  0.7
 						 0.0  0.0
@@ -609,7 +609,7 @@
 						<value>0.5</value>
 					</product>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-r-2</independentVar>
 						<tableData>
 							-1.0 -0.55
 							 0.0  0.0
@@ -624,7 +624,7 @@
 				<sum>
 					<property>spoilers/main-cmd</property>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-r-2</independentVar>
 						<tableData>
 							-1.0 -0.7
 							 0.0  0.0
@@ -637,7 +637,7 @@
 		<fcs_function name="hydraulics/spoiler-r2/retracted">
 			<function>
 				<table>
-					<independentVar lookup="row">fbw/roll/s-l</independentVar>
+					<independentVar lookup="row">fbw/roll/s-r-2</independentVar>
 					<tableData>
 						0.0  0.0
 						1.0  0.7
@@ -702,7 +702,7 @@
 				<sum>
 					<property>spoilers/main-cmd</property>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-r-3</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.7
@@ -720,7 +720,7 @@
 						<value>0.8</value>
 					</product>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-r-3</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.7
@@ -733,7 +733,7 @@
 		<fcs_function name="hydraulics/spoiler-r3/retracted">
 			<function>
 				<table>
-					<independentVar lookup="row">fbw/roll/s-l</independentVar>
+					<independentVar lookup="row">fbw/roll/s-r-3</independentVar>
 					<tableData>
 						 0.0  0.0
 						 1.0  0.7
@@ -798,7 +798,7 @@
 				<sum>
 					<property>spoilers/main-cmd</property>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-r-4</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.7
@@ -816,7 +816,7 @@
 						<value>0.8</value>
 					</product>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-r-4</independentVar>
 						<tableData>
 							0.0  0.0
 							1.0 -0.7
@@ -829,7 +829,7 @@
 		<fcs_function name="hydraulics/spoiler-r4/retracted">
 			<function>
 				<table>
-					<independentVar lookup="row">fbw/roll/s-l</independentVar>
+					<independentVar lookup="row">fbw/roll/s-r-4</independentVar>
 					<tableData>
 						 0.0  0.0
 						 1.0  0.7
@@ -894,7 +894,7 @@
 				<sum>
 					<property>spoilers/main-cmd</property>
 					<table>
-						<independentVar lookup="row">fbw/roll/s-l</independentVar>
+						<independentVar lookup="row">fbw/roll/s-r-5</independentVar>
 						<tableData>
 							-1.0 -0.7
 							 0.0  0.0
@@ -907,7 +907,7 @@
 		<fcs_function name="hydraulics/spoiler-r5/retracted">
 			<function>
 				<table>
-					<independentVar lookup="row">fbw/roll/s-l</independentVar>
+					<independentVar lookup="row">fbw/roll/s-r-5</independentVar>
 					<tableData>
 						0.0  0.0
 						1.0  0.7
