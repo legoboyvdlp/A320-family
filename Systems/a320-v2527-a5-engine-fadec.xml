@@ -1548,7 +1548,7 @@
 								<property>/engines/engine[0]/n1-actual</property>
 								<property>/engines/engine[1]/n1-actual</property>
 							</max>
-							<value>0.005</value>
+							<value>0.2</value>
 						</difference>
 						<property>fadec/limit/idle</property>
 					</le>
