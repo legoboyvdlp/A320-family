@@ -2902,7 +2902,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("instrumentation/altimeter/setting-inhg", getprop("instrumentation/altimeter/setting-inhg") + 0.01);
+				setprop("/instrumentation/altimeter/setting-inhg", getprop("/instrumentation/altimeter/setting-inhg") + 0.01);
 				</script>
 				<condition>
 					<and>
@@ -2924,7 +2924,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("instrumentation/altimeter/setting-hpa", getprop("instrumentation/altimeter/setting-hpa") + 1.0);
+				setprop("/instrumentation/altimeter/setting-hpa", getprop("/instrumentation/altimeter/setting-hpa") + 1.0);
 				</script>
 				<condition>
 					<and>
@@ -2958,7 +2958,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("instrumentation/altimeter/setting-inhg", getprop("instrumentation/altimeter/setting-inhg") - 0.01);
+				setprop("/instrumentation/altimeter/setting-inhg", getprop("/instrumentation/altimeter/setting-inhg") - 0.01);
 				</script>
 				<condition>
 					<and>
@@ -2980,7 +2980,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("instrumentation/altimeter/setting-hpa", getprop("instrumentation/altimeter/setting-hpa") - 1.0);
+				setprop("/instrumentation/altimeter/setting-hpa", getprop("/instrumentation/altimeter/setting-hpa") - 1.0);
 				</script>
 				<condition>
 					<and>
@@ -3504,7 +3504,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("instrumentation/efis/inputs/CSTR") != 1) {
+				if (getprop("/instrumentation/efis/inputs/CSTR") != 1) {
 					fcu.cpt_efis_btns("cstr");
 				} else {
 					fcu.cpt_efis_btns("off");
@@ -3549,7 +3549,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("instrumentation/efis[1]/inputs/CSTR") != 1) {
+				if (getprop("/instrumentation/efis[1]/inputs/CSTR") != 1) {
 					fcu.fo_efis_btns("cstr");
 				} else {
 					fcu.fo_efis_btns("off");
@@ -3594,7 +3594,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("instrumentation/efis/inputs/wpt") != 1) {
+				if (getprop("/instrumentation/efis/inputs/wpt") != 1) {
 					fcu.cpt_efis_btns("wpt");
 				} else {
 					fcu.cpt_efis_btns("off");
@@ -3639,7 +3639,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("instrumentation/efis[1]/inputs/wpt") != 1) {
+				if (getprop("/instrumentation/efis[1]/inputs/wpt") != 1) {
 					fcu.fo_efis_btns("wpt");
 				} else {
 					fcu.fo_efis_btns("off");
@@ -3684,7 +3684,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("instrumentation/efis/inputs/VORD") != 1) {
+				if (getprop("/instrumentation/efis/inputs/VORD") != 1) {
 					fcu.cpt_efis_btns("vord");
 				} else {
 					fcu.cpt_efis_btns("off");
@@ -3729,7 +3729,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("instrumentation/efis[1]/inputs/VORD") != 1) {
+				if (getprop("/instrumentation/efis[1]/inputs/VORD") != 1) {
 					fcu.fo_efis_btns("vord");
 				} else {
 					fcu.fo_efis_btns("off");
@@ -3774,7 +3774,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("instrumentation/efis/inputs/NDB") != 1) {
+				if (getprop("/instrumentation/efis/inputs/NDB") != 1) {
 					fcu.cpt_efis_btns("ndb");
 				} else {
 					fcu.cpt_efis_btns("off");
@@ -3819,7 +3819,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("instrumentation/efis[1]/inputs/NDB") != 1) {
+				if (getprop("/instrumentation/efis[1]/inputs/NDB") != 1) {
 					fcu.fo_efis_btns("ndb");
 				} else {
 					fcu.fo_efis_btns("off");
@@ -3864,7 +3864,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("instrumentation/efis/inputs/arpt") != 1) {
+				if (getprop("/instrumentation/efis/inputs/arpt") != 1) {
 					fcu.cpt_efis_btns("arpt");
 				} else {
 					fcu.cpt_efis_btns("off");
@@ -3909,7 +3909,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				if (getprop("instrumentation/efis[1]/inputs/arpt") != 1) {
+				if (getprop("/instrumentation/efis[1]/inputs/arpt") != 1) {
 					fcu.fo_efis_btns("arpt");
 				} else {
 					fcu.fo_efis_btns("off");

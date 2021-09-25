@@ -767,6 +767,32 @@
 	
 	<channel name="ADR Output" execrate="2"> <!-- todo - need lowpass? -->
 	
+		<!-- Copy Altimeter Settings -->
+		<pure_gain name="/instrumentation/altimeter[1]/setting-inhg">
+			<input>/instrumentation/altimeter[0]/setting-inhg</input>
+			<gain>1</gain>
+		</pure_gain>
+	
+		<pure_gain name="/instrumentation/altimeter[2]/setting-inhg">
+			<input>/instrumentation/altimeter[0]/setting-inhg</input>
+			<gain>1</gain>
+		</pure_gain>
+	
+		<pure_gain name="/instrumentation/altimeter[3]/setting-inhg">
+			<input>/instrumentation/altimeter[0]/setting-inhg</input>
+			<gain>1</gain>
+		</pure_gain>
+	
+		<pure_gain name="/instrumentation/altimeter[4]/setting-inhg">
+			<input>/instrumentation/altimeter[0]/setting-inhg</input>
+			<gain>1</gain>
+		</pure_gain>
+	
+		<pure_gain name="/instrumentation/altimeter[5]/setting-inhg">
+			<input>/instrumentation/altimeter[0]/setting-inhg</input>
+			<gain>1</gain>
+		</pure_gain>
+	
 		<pure_gain name="/systems/navigation/adr/output/aoa-1">
 			<input>/systems/navigation/probes/aoa-1</input>
 			<gain>/systems/navigation/adr/operating-1</gain>

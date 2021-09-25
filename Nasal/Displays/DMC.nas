@@ -17,7 +17,7 @@ var DMC = {
 		d.sats = [props.globals.getNode("/systems/navigation/adr/output/sat-1", 1), props.globals.getNode("/systems/navigation/adr/output/sat-2", 1), props.globals.getNode("/systems/navigation/adr/output/sat-3", 1)];
 		d.tats = [props.globals.getNode("/systems/navigation/adr/output/tat-1", 1), props.globals.getNode("/systems/navigation/adr/output/tat-2", 1), props.globals.getNode("/systems/navigation/adr/output/tat-3", 1)];
 		d.trends = [props.globals.getNode("/instrumentation/pfd/speed-lookahead-1", 1), props.globals.getNode("/instrumentation/pfd/speed-lookahead-2", 1), props.globals.getNode("/instrumentation/pfd/speed-lookahead-3", 1)];
-		d.altitudeDiffs = [props.globals.getNode("//instrumentation/pfd/alt-diff[0]", 1), props.globals.getNode("//instrumentation/pfd/alt-diff[1]", 1), props.globals.getNode("//instrumentation/pfd/alt-diff[2]", 1)];
+		d.altitudeDiffs = [props.globals.getNode("/instrumentation/pfd/alt-diff[0]", 1), props.globals.getNode("/instrumentation/pfd/alt-diff[1]", 1), props.globals.getNode("/instrumentation/pfd/alt-diff[2]", 1)];
 		d.outputs = [nil, nil, nil, nil, nil, nil, nil, nil]; # airspeed, altitude, mach, pfd altitude, sat, tat, speed trend, altitudeDiffs
 		return d;
 	},
