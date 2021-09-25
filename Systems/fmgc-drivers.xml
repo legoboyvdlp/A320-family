@@ -822,22 +822,56 @@
 	</filter>
 	
 	<filter>
+		<name>FD Pitch Takeoff</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<equals>
+					<property>/it-autoflight/mode/vert</property>
+					<value>T/O CLB</value>
+				</equals>
+			</condition>
+			<expression>
+				<product>
+					<table>
+						<property>/orientation/pitch-deg</property>
+						<entry><ind> 1</ind><dep>2.8</dep></entry>
+						<entry><ind>10</ind><dep>0.0</dep></entry>
+					</table>
+					<table>
+						<property>/position/gear-agl-ft</property>
+						<entry><ind> 5</ind><dep>1</dep></entry>
+						<entry><ind>30</ind><dep>0</dep></entry>
+					</table>
+				</product>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/it-autoflight/fd/pitch-bar-takeoff</output>
+	</filter>
+	
+	<filter>
 		<name>FD Pitch</name>
 		<debug>false</debug>
 		<type>noise-spike</type>
 		<input>
 			<expression>
-				<product>
-					<difference>
-						<property>/it-autoflight/internal/target-common-fpm</property>
-						<property>/it-autoflight/internal/vert-speed-fpm</property>
-					</difference>
-					<table>
-						<property>/velocities/airspeed-kt</property>
-						<entry><ind>140</ind><dep>0.001848350</dep></entry>
-						<entry><ind>360</ind><dep>0.000924175</dep></entry>
-					</table>
-				</product>
+				<sum>
+					<product>
+						<difference>
+							<property>/it-autoflight/internal/target-common-fpm</property>
+							<property>/it-autoflight/internal/vert-speed-fpm</property>
+						</difference>
+						<table>
+							<property>/velocities/airspeed-kt</property>
+							<entry><ind>140</ind><dep>0.001848350</dep></entry>
+							<entry><ind>360</ind><dep>0.000924175</dep></entry>
+						</table>
+					</product>
+					<property>/it-autoflight/fd/pitch-bar-takeoff</property>
+				</sum>
 			</expression>
 		</input>
 		<output>/it-autoflight/fd/pitch-bar</output>
