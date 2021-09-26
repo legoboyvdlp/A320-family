@@ -653,14 +653,18 @@ var canvas_lowerECAMPageElec =
 					obj["ELEC-Line-ACESS-TRESS"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["elec15XE2","statInvVolts","statInvHertz"], nil, func(val) {
-				if (val.elec15XE2) {
+			props.UpdateManager.FromHashValue("elec15XE2", nil, func(val) {
+				if (val) {
 					obj["STATINV-group"].show();
-					obj["StatVolt"].setText(sprintf("%s",val.statInvVolts));
-					obj["StatHertz"].setText(sprintf("%s",val.statInvHertz));
 				} else {
 					obj["STATINV-group"].hide();
 				}
+			}),
+			props.UpdateManager.FromHashValue("statInvVolts", 0.1, func(val) {
+				obj["StatVolt"].setText(sprintf("%s",math.round(val)));
+			}),
+			props.UpdateManager.FromHashValue("statInvHertz", 0.5, func(val) {
+				obj["StatHz"].setText(sprintf("%s",math.round(val)));
 			}),
 		];
 		
