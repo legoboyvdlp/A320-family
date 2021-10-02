@@ -462,8 +462,8 @@ var FCUController = {
 	},
 	MetricAlt: func() {
 		if (me.FCUworking) {
-			canvas_pfd.PFD_1.showMetricAlt = !canvas_pfd.PFD_1.showMetricAlt;
-			canvas_pfd.PFD_2.showMetricAlt = !canvas_pfd.PFD_2.showMetricAlt;
+			canvas_pfd.A320PFD1.MainScreen.showMetricAlt = !canvas_pfd.A320PFD1.MainScreen.showMetricAlt;
+			canvas_pfd.A320PFD2.MainScreen.showMetricAlt = !canvas_pfd.A320PFD2.MainScreen.showMetricAlt;
 		}
 	},
 };

@@ -2136,7 +2136,7 @@ var messages_priority_2 = func {
 		if (getprop("/systems/thrust/thr-locked-flash") == 0) {
 			athr_lock.msg = " ";
 		} else {
-			athr_lock.msg = msgSave
+			athr_lock.msg = msgSave;
 		}
 		athr_lock.active = 1;
 		athr_lock_1.active = 1;

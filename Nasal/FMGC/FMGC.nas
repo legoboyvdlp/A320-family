@@ -653,7 +653,7 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	} elsif (FMGCInternal.phase == 3) {
 		if (FMGCInternal.crzFl >= 200) {
-			if ((flightPlanController.arrivalDist <= 200 or altSel < 20000)) {
+			if ((flightPlanController.arrivalDist <= 200 and altSel < 20000)) {
 				newphase = 4;
 				systems.PNEU.pressMode.setValue("DE");
 			}
@@ -667,10 +667,6 @@ var masterFMGC = maketimer(0.2, func {
 		if (getprop("/FMGC/internal/decel")) {
 			newphase = 5;
 		}
-		elsif (altSel == (FMGCInternal.crzFl * 100)) {  # back to CRZ state
-			newphase = 3;
-			systems.PNEU.pressMode.setValue("CR");
-		}
 	} elsif (FMGCInternal.phase == 5) {
 		if (state1 == "TOGA" and state2 == "TOGA") {
 			newphase = 6;
@@ -682,7 +678,6 @@ var masterFMGC = maketimer(0.2, func {
 			newphase = 2;
 		}
 	}
-
 
 	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and 
 	   flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
