@@ -1275,14 +1275,24 @@
 	</filter>
 	
 	<logic>
-		<!-- somewhat confusing : this input is not 'are the flaps in landing configration', but rather,
-		'are the flaps NOT in a landing configuration'. There is a configuration bit to flip
-		the sense of this, if required. -->
+		<!-- True when flaps are NOT in landing config -->
 		<input>
-			<less-than>
-				<property>/controls/flight/flaps</property>
-				<value>0.8</value>
-			</less-than>
+			<or>
+				<less-than>
+					<property>/controls/flight/flaps-input</property>
+					<value>3</value>
+				</less-than>
+				<and>
+					<less-than>
+						<property>/controls/flight/flaps-input</property>
+						<value>4</value>
+					</less-than>
+					<not-equals>
+						<property>/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override</property>
+						<value>1</value>
+					</not-equals>
+				</and>
+			</or>
 		</input>
 		<output>/instrumentation/mk-viii/inputs/discretes/landing-flaps</output>
 	</logic>

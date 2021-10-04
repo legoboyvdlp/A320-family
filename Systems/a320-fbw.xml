@@ -13,7 +13,7 @@
 	<property value="0">fbw/yaw/tc-pd</property>
 	<property value="1">fbw/mixer/sidestick-gain-feedback</property>
 	<property value="0">fbw/spoiler-output</property>
-	<property value="3.5">fbw/rate-c1</property>
+	<property value="3">fbw/rate-c1</property>
 	<property value="0">fbw/pitch/ias-input</property>
 	
 	<!-- Default gains for tuning -->
@@ -117,7 +117,7 @@
 					<independentVar lookup="column">fbw/roll/gain-switch</independentVar>
 					<tableData>
 						     0    1
-						140 -2.5  0.0
+						140 -1.9  0.0
 						350 -0.4  0.0
 					</tableData>
 				</table>

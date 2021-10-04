@@ -15,7 +15,8 @@
             <halign>left</halign>
             <label>Please wait...</label>
         </text>
-		<button>
+		<!-- its broken. needs acconfig 2.0 -->
+		<!--button>
 			<halign>right</halign>
 			<legend>Cancel</legend>
 			<pref-width>60</pref-width>
@@ -24,7 +25,7 @@
 				<command>nasal</command>
 				<script>acconfig.abortPanelStates();</script>
 			</binding>
-		</button>	
+		</button-->	
     </group>
 	
     <hrule/>
