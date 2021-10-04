@@ -2228,6 +2228,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/electrical/bus/dc-ess ge 25
+				<test logic="OR" value = "2">
+					/controls/radio/rmp[0]/on eq 1 <!-- pilot side pedestal com-nav radios on/off switch -->
+					/controls/radio/rmp[1]/on eq 1 <!-- f/o side pedestal com-nav radios on/off switch -->
+					/controls/radio/rmp[2]/on eq 1 <!-- overhead panel com-nav radios on/off switch (3D not yet installed Oct. 2021) -->
+				</test>
 			</test>
 		</switch>
 		
@@ -2235,6 +2240,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/electrical/bus/dc-2 ge 25
+				<test logic="OR" value = "2">
+					/controls/radio/rmp[0]/on eq 1 <!-- pilot side pedestal com-nav radios on/off switch -->
+					/controls/radio/rmp[1]/on eq 1 <!-- f/o side pedestal com-nav radios on/off switch -->
+					/controls/radio/rmp[2]/on eq 1 <!-- overhead panel com-nav radios on/off switch (3D not yet installed Oct. 2021) -->
+				</test>
 			</test>
 		</switch>
 		
@@ -2242,6 +2252,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/electrical/bus/dc-1 ge 25
+				<test logic="OR" value = "2">
+					/controls/radio/rmp[0]/on eq 1 <!-- pilot side pedestal com-nav radios on/off switch -->
+					/controls/radio/rmp[1]/on eq 1 <!-- f/o side pedestal com-nav radios on/off switch -->
+					/controls/radio/rmp[2]/on eq 1 <!-- overhead panel com-nav radios on/off switch (3D not yet installed Oct. 2021) -->
+				</test>
 			</test>
 		</switch>
 		
