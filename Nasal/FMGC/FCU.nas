@@ -532,7 +532,7 @@ var apOff = func(type, side) {
 
 # Autothrust Disconnection
 var athrOff = func(type) {
-	if (fmgc.Input.athr.getValue() == 1) {
+	if (fmgc.Input.athr.getValue() == 1 and !systems.FADEC.alphaFloor.getBoolValue()) {
 		if (type == "hard") {
 			systems.lockThr();
 		}

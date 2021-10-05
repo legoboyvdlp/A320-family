@@ -1073,6 +1073,23 @@
 			<input>-/FMGC/internal/vmo-mmo</input>
 		</summer>
 		
+		<fcs_function name="fbw/pitch/e-i-normal">
+			<function>
+				<sum>
+					<property>fbw/sidestick/pitch-input</property>
+					<table>
+						<independentVar lookup="row">attitude/roll-rad</independentVar>
+						<tableData>
+							-1.1693700  0.4
+							-0.5846853  0.0
+							 0.5846853  0.0
+							 1.1693700  0.4
+						</tableData>
+					</table>
+				</sum>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="fbw/pitch/e-i-overspeed">
 			<function>
 				<table>
@@ -1180,7 +1197,7 @@
 		</fcs_function>
 		
 		<switch name="fbw/pitch/e-i-cmd">
-			<default value="fbw/sidestick/pitch-input"/>
+			<default value="fbw/pitch/e-i-normal"/>
 			<test logic="AND" value="fbw/pitch/e-i-overspeed">
 				fbw/protections/overspeed eq 1
 				position/wow eq 0
@@ -1262,9 +1279,17 @@
 			<c1>fbw/rate-c1</c1>
 		</lag_filter>
 		
+		<switch name="fbw/pitch/rate-demand-gain">
+			<default value="-0.087266"/>
+			<test logic="OR" value="0.087266">
+				attitude/roll-rad lt -1.5708
+				attitude/roll-rad gt 1.5708
+			</test>
+		</switch>
+		
 		<pure_gain name="fbw/pitch/rate-demand">
 			<input>fbw/pitch/e-i</input>
-			<gain>-0.087266</gain>
+			<gain>fbw/pitch/rate-demand-gain</gain>
 		</pure_gain>
 		
 		<switch name="fbw/pitch/t-r_s-s">

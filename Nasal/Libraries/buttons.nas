@@ -163,3 +163,13 @@ var toggleSTD = func() {
 		pts.Instrumentation.Altimeter.std.setBoolValue(1);
 	}
 }
+
+# Commonality
+var apPanel = {
+	apDisc: func() {
+		fcu.FCUController.APDisc();
+	},
+	atDisc: func() {
+		fcu.FCUController.ATDisc();
+	},
+};
