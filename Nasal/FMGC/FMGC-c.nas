@@ -204,18 +204,6 @@ var loopFMA = maketimer(0.05, func {
 		}
 	}
 	
-	trk = Custom.trkFpa.getValue();
-	latText = Text.lat.getValue();
-	if (latText == "HDG" and trk == 0) {
-		if (newlat != "HDG") {
-			Modes.PFD.FMA.rollMode.setValue("HDG");
-		}
-	} else if (latText == "HDG" and trk == 1) {
-		if (newlat != "TRACK") {
-			Modes.PFD.FMA.rollMode.setValue("TRACK");
-		}
-	}
-	
 	# Boxes
 	elapsedtime = pts.Sim.Time.elapsedSec.getValue();
 	if (Modes.PFD.FMA.apModeTime.getValue() + 10 >= elapsedtime) {
@@ -283,7 +271,17 @@ var updateFma = {
 	lat: func() {
 		latText = Text.lat.getValue();
 		newlat = Modes.PFD.FMA.rollMode.getValue();
-		if (latText == "LNAV") {
+		if (latText == "HDG") {
+			if (Custom.trkFpa.getValue()) {
+				if (newlat != "TRACK") {
+					Modes.PFD.FMA.rollMode.setValue("TRACK");
+				}
+			} else {
+				if (newlat != "HDG") {
+					Modes.PFD.FMA.rollMode.setValue("HDG");
+				}
+			}
+		} else if (latText == "LNAV") {
 			if (newlat != "NAV") {
 				Modes.PFD.FMA.rollMode.setValue("NAV");
 			}
@@ -628,7 +626,7 @@ setlistener("/modes/pfd/fma/pitch-mode-armed", func {
 }, 0, 0);
 
 setlistener("/modes/pfd/fma/pitch-mode2-armed", func {
-	if (Modes.PFD.FMA.pitchMode2Armed != " ") {
+	if (Modes.PFD.FMA.pitchMode2Armed.getValue() != " ") {
 		Modes.PFD.FMA.pitchMode2ArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);

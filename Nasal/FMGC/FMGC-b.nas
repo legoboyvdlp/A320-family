@@ -925,6 +925,7 @@ var ITAF = {
 		} else if (Input.hdgCalc < 1) { # It's rounded, so this is ok. Otherwise do < 0.5
 			Input.hdgCalc = Input.hdgCalc + 360;
 		}
+		updateFma.lat();
 		Input.hdg.setValue(Input.hdgCalc);
 	},
 	trkFpaOff: func() {
@@ -941,6 +942,7 @@ var ITAF = {
 		} else if (Input.hdgCalc < 1) { # It's rounded, so this is ok. Otherwise do < 0.5
 			Input.hdgCalc = Input.hdgCalc + 360;
 		}
+		updateFma.lat();
 		Input.hdg.setValue(Input.hdgCalc);
 	},
 	updateLatText: func(t) {
