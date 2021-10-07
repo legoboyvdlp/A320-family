@@ -27,6 +27,9 @@ var SwitchingPanel = {
 	},
 	doAttHdg: func(newAttHdg) {
 		if (newAttHdg < -1 or newAttHdg > 1) { return; }
+		
+		systems.ADIRS.backupSupply[2][1] = newAttHdg == -1 ? 0 : 1;
+		
 		me.Switches.attHdg.setValue(newAttHdg);
 		foreach (var predicate; keys(canvas_nd.ND_1.NDCpt.predicates)) {
 			call(canvas_nd.ND_1.NDCpt.predicates[predicate]);
