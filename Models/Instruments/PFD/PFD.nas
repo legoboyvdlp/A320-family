@@ -1467,7 +1467,7 @@ var canvas_pfd = {
 				me["FMA_manmode"].setText("THR");
 				me["FMA_man_box"].setColor(0.7333,0.3803,0);
 			}
-		} else if (notification.athr and (notification.thrust1 == "TOGA" or (notification.thrust1 == "MCT" and thrust_limit_act == "FLX") or (notification.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or notification.thrust2 == "TOGA" or (notification.thrust2 == "MCT" and 
+		} else if (notification.athr and (notification.thrust1 == "TOGA" or (notification.thrust1 == "MCT" and notification.thrustLimit == "FLX") or (notification.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or notification.thrust2 == "TOGA" or (notification.thrust2 == "MCT" and 
 		notification.thrustLimit == "FLX") or (notification.thrust2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) and notification.engOut and notification.alphaFloor != 1 and notification.togaLk != 1) {
 			me["FMA_man"].show();
 			if (notification.thrust1 == "TOGA" or notification.thrust2 == "TOGA") {
