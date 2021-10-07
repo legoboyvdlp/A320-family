@@ -2125,6 +2125,33 @@
 			<gain>1.0</gain>
 		</pure_gain>
 		
+		<!-- Mirror sub-buses (todo CB logic) -->
+		
+		<pure_gain name="/systems/electrical/bus/sub-bus/dc-hot-1-703"> <!-- Sub-bus with no CB protection -->
+			<input>/systems/electrical/sources/bat-1/volt</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/electrical/bus/sub-bus/dc-hot-2-704"> <!-- Sub-bus with no CB protection -->
+			<input>/systems/electrical/sources/bat-2/volt</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/electrical/bus/sub-bus/dc-2-202">
+			<input>/systems/electrical/bus/dc-2</input> <!-- todo CB 1PN2 -->
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/electrical/bus/sub-bus/dc-2-204">
+			<input>/systems/electrical/bus/dc-2</input> <!-- todo CB 3PN2 -->
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/electrical/bus/sub-bus/dc-2-206-208">
+			<input>/systems/electrical/bus/dc-2</input> <!-- todo CB 6PN -->
+			<gain>1.0</gain>
+		</pure_gain>
+		
 	</channel>
 	
 	<channel name="Emergency Electric Logic" execrate="8">
