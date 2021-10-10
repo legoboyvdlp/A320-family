@@ -5,7 +5,7 @@
 <turbine_engine name="CFM56-5B4">
 	
 	<milthrust>27000</milthrust>
-	<tsfc>0.445</tsfc>
+	<tsfc>0.335</tsfc>
 	<bleed>0.03</bleed>
 	<ignitionn1>0.6</ignitionn1>
 	<ignitionn2>22.2</ignitionn2>
