@@ -798,7 +798,7 @@
 					</not-equals>
 				</and>
 			</condition>
-			<value>50</value>
+			<value>1000</value>
 		</max-rate-of-change>
 		<max-rate-of-change>15</max-rate-of-change>
 	</filter>

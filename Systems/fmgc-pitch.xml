@@ -356,7 +356,7 @@
 	</filter>
 	
 	<filter>
-		<name>TARGET FPM</name>
+		<name>Target FPM</name>
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -420,6 +420,15 @@
 			</condition>
 			<property>/it-autoflight/internal/nav-rate-of-climb-fpm</property>
 		</input>
+		<input>
+			<condition>
+				<equals>
+					<property>/it-autoflight/output/vert</property>
+					<value>9</value>
+				</equals>
+			</condition>
+			<property>/it-autoflight/internal/vert-speed-fpm</property>
+		</input>
 		<output>/it-autoflight/internal/target-common-fpm</output>
 	</filter>
 	
@@ -447,6 +456,10 @@
 							<value>1</value>
 						</equals>
 					</or>
+					<not-equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>9</value>
+					</not-equals>
 				</and>
 			</condition>
 		</enable>
@@ -600,6 +613,10 @@
 								<value>1</value>
 							</equals>
 						</or>
+						<not-equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>9</value>
+						</not-equals>
 					</and>
 				</not>
 			</condition>
