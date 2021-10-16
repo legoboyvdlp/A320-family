@@ -213,21 +213,6 @@
 			<gain>1.0</gain>
 		</pure_gain>
 		
-		<fcs_function name="fbw/pitch/g-computed">
-			<function>
-				<sum>
-					<property>fbw/pitch/g-instrumented</property>
-					<quotient>
-						<value>-1</value>
-						<cos>
-							<property>attitude/roll-rad</property>
-						</cos>
-					</quotient>
-					<value>1</value>
-				</sum>
-			</function>
-		</fcs_function>
-		
 		<switch name="fbw/mixer/rate-limit">
 			<default value="fbw/mixer/rate-limit"/>
 			<test logic="AND" value="0.5"> <!-- 2 seconds -->

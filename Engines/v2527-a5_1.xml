@@ -9,10 +9,10 @@
 	<bleed>0.03</bleed>
 	<ignitionn1>4.8</ignitionn1>
 	<ignitionn2>23.9</ignitionn2>
-	<n1spinup>0.2</n1spinup>
-	<n2spinup>1.0</n2spinup>
+	<n1spinup>0.37</n1spinup>
+	<n2spinup>1.85</n2spinup>
 	<n1startrate>0.365</n1startrate>
-	<n2startrate>1.724</n2startrate>
+	<n2startrate>0.767</n2startrate>
 	<idlen1>22.4</idlen1>
 	<idlen2>60.9</idlen2>
 	<maxn1>100.0</maxn1>

@@ -7,9 +7,9 @@
 	<milthrust>27000</milthrust>
 	<tsfc>0.335</tsfc>
 	<bleed>0.03</bleed>
-	<ignitionn1>0.6</ignitionn1>
+	<ignitionn1>2.3</ignitionn1>
 	<ignitionn2>22.2</ignitionn2>
-	<n1spinup>0.05</n1spinup>
+	<n1spinup>0.19</n1spinup>
 	<n2spinup>1.85</n2spinup>
 	<n1startrate>0.573</n1startrate>
 	<n2startrate>1.127</n2startrate>

@@ -197,7 +197,7 @@ var auto_start_one = func {
 }
 
 var eng_one_auto_start = maketimer(0.5, func {
-	if (pts.Engines.Engine.n2Actual[0].getValue() >= 22) {
+	if (pts.Engines.Engine.n2Actual[0].getValue() >= 21) {
 		eng_one_auto_start.stop();
 		pts.Engines.Engine.state[0].setValue(2);
 		pts.Controls.Engines.Engine.cutoff[0].setValue(0);
@@ -260,7 +260,7 @@ var auto_start_two = func {
 }
 
 var eng_two_auto_start = maketimer(0.5, func {
-	if (pts.Engines.Engine.n2Actual[1].getValue() >= 22) {
+	if (pts.Engines.Engine.n2Actual[1].getValue() >= 21) {
 		eng_two_auto_start.stop();
 		pts.Engines.Engine.state[1].setValue(2);
 		pts.Controls.Engines.Engine.cutoff[1].setValue(0);

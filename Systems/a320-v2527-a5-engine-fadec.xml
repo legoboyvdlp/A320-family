@@ -1963,13 +1963,13 @@
 		
 		<lag_filter name="fadec/ff-actual-1">
 			<input>/engines/engine[0]/fuel-flow_pph</input>
-			<c1>3</c1>
+			<c1>3.0</c1>
 			<output>/engines/engine[0]/ff-actual</output>
 		</lag_filter>
 		
 		<lag_filter name="fadec/ff-actual-2">
 			<input>/engines/engine[1]/fuel-flow_pph</input>
-			<c1>3</c1>
+			<c1>3.0</c1>
 			<output>/engines/engine[1]/ff-actual</output>
 		</lag_filter>
 	
