@@ -11,7 +11,7 @@
 	<property value="0">fbw/pitch/g-pi</property>
 	<property value="0">fbw/pitch/pid</property>
 	<property value="0">fbw/yaw/tc-pd</property>
-	<property value="1">fbw/mixer/sidestick-gain-feedback</property>
+	<property value="1">fbw/pitch/mixer/sidestick-gain-feedback</property>
 	<property value="0">fbw/spoiler-output</property>
 	<property value="3">fbw/rate-c1</property>
 	<property value="0">fbw/pitch/ias-input</property>
@@ -213,32 +213,79 @@
 			<gain>1.0</gain>
 		</pure_gain>
 		
-		<switch name="fbw/mixer/rate-limit">
-			<default value="fbw/mixer/rate-limit"/>
-			<test logic="AND" value="0.5"> <!-- 2 seconds -->
+		<switch name="fbw/roll/mixer/rate-limit">
+			<default value="fbw/roll/mixer/rate-limit"/>
+			<test logic="AND" value="2"> <!-- 0.5 seconds -->
 				position/wow eq 1
-				fbw/mixer/sidestick-gain-feedback eq 1
+				fbw/roll/mixer/sidestick-gain-feedback eq 1
 			</test>
 			<test logic="AND" value="100"> <!-- Unlimited -->
 				position/wow eq 1
-				fbw/mixer/sidestick-gain-feedback ne 1
+				fbw/roll/mixer/sidestick-gain-feedback ne 1
 			</test>
 			<test logic="AND" value="100"> <!-- Unlimited -->
 				position/wow eq 0
-				fbw/mixer/sidestick-gain-feedback eq 0
+				fbw/roll/mixer/sidestick-gain-feedback eq 0
 			</test>
 		</switch>
 		
-		<actuator name="fbw/mixer/sidestick-gain">
+		<actuator name="fbw/roll/mixer/sidestick-gain">
 			<input>position/wow</input>
-			<rate_limit>fbw/mixer/rate-limit</rate_limit>
-			<output>fbw/mixer/sidestick-gain-feedback</output>
+			<rate_limit>fbw/roll/mixer/rate-limit</rate_limit>
+			<output>fbw/roll/mixer/sidestick-gain-feedback</output>
 		</actuator>
 		
-		<fcs_function name="fbw/mixer/computer-gain">
+		<fcs_function name="fbw/roll/mixer/computer-gain">
 			<function>
 				<table>
-					<independentVar lookup="row">fbw/mixer/sidestick-gain</independentVar>
+					<independentVar lookup="row">fbw/roll/mixer/sidestick-gain</independentVar>
+					<tableData>
+						0  1
+						1  0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="fbw/pitch/mixer/rate-limit">
+			<default value="fbw/pitch/mixer/rate-limit"/>
+			<test logic="AND" value="0.2"> <!-- 5 seconds -->
+				position/wow eq 1
+				fbw/pitch/mixer/sidestick-gain-feedback eq 1
+			</test>
+			<test logic="AND" value="100"> <!-- Unlimited -->
+				position/wow eq 1
+				fbw/pitch/mixer/sidestick-gain-feedback ne 1
+			</test>
+			<test logic="AND" value="100"> <!-- Unlimited -->
+				position/wow eq 0
+				fbw/pitch/mixer/sidestick-gain-feedback eq 0
+			</test>
+		</switch>
+		
+		<actuator name="fbw/pitch/mixer/sidestick-gain-linear">
+			<input>position/wow</input>
+			<rate_limit>fbw/pitch/mixer/rate-limit</rate_limit>
+			<output>fbw/pitch/mixer/sidestick-gain-feedback</output>
+		</actuator>
+		
+		<fcs_function name="fbw/pitch/mixer/sidestick-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">fbw/pitch/mixer/sidestick-gain-linear</independentVar>
+					<tableData>
+						0.0  0.0
+						0.6  0.3
+						1.0  1.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/pitch/mixer/computer-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">fbw/pitch/mixer/sidestick-gain</independentVar>
 					<tableData>
 						0  1
 						1  0
@@ -848,19 +895,19 @@
 			</function>
 		</fcs_function>
 		
-		<pure_gain name="fbw/mixer/roll/computer-demand">
+		<pure_gain name="fbw/roll/mixer/computer-demand">
 			<input>fbw/roll/pid</input>
-			<gain>fbw/mixer/computer-gain</gain>
+			<gain>fbw/roll/mixer/computer-gain</gain>
 		</pure_gain>
 		
-		<pure_gain name="fbw/mixer/roll/sidestick-demand">
+		<pure_gain name="fbw/roll/mixer/sidestick-demand">
 			<input>fbw/roll/a-i-f</input>
-			<gain>fbw/mixer/sidestick-gain</gain>
+			<gain>fbw/roll/mixer/sidestick-gain</gain>
 		</pure_gain>
 		
-		<summer name="fbw/mixer/roll/output">
-			<input>fbw/mixer/roll/computer-demand</input>
-			<input>fbw/mixer/roll/sidestick-demand</input>
+		<summer name="fbw/roll/mixer/output">
+			<input>fbw/roll/mixer/computer-demand</input>
+			<input>fbw/roll/mixer/sidestick-demand</input>
 			<clipto>
 				<min>-1.0</min>
 				<max>1.0</max>
@@ -869,7 +916,7 @@
 		
 		<switch name="fbw/aileron-output">
 			<default value="0"/>
-			<test logic="AND" value="fbw/mixer/roll/output"> <!-- Mix stick and control law for transition from ground law -->
+			<test logic="AND" value="fbw/roll/mixer/output"> <!-- Mix stick and control law for transition from ground law -->
 				position/wow eq 0
 				/it-fbw/law eq 0
 			</test>
@@ -1352,19 +1399,19 @@
 			</test>
 		</switch>
 		
-		<pure_gain name="fbw/mixer/pitch/computer-demand">
+		<pure_gain name="fbw/pitch/mixer/computer-demand">
 			<input>fbw/pitch/pid-switched</input>
-			<gain>fbw/mixer/computer-gain</gain>
+			<gain>fbw/pitch/mixer/computer-gain</gain>
 		</pure_gain>
 		
-		<pure_gain name="fbw/mixer/pitch/sidestick-demand">
+		<pure_gain name="fbw/pitch/mixer/sidestick-demand">
 			<input>fbw/pitch/e-i-f</input>
-			<gain>fbw/mixer/sidestick-gain</gain>
+			<gain>fbw/pitch/mixer/sidestick-gain</gain>
 		</pure_gain>
 		
-		<summer name="fbw/mixer/pitch/output">
-			<input>fbw/mixer/pitch/computer-demand</input>
-			<input>fbw/mixer/pitch/sidestick-demand</input>
+		<summer name="fbw/pitch/mixer/output">
+			<input>fbw/pitch/mixer/computer-demand</input>
+			<input>fbw/pitch/mixer/sidestick-demand</input>
 			<clipto>
 				<min>-1.0</min>
 				<max>1.0</max>
@@ -1373,7 +1420,7 @@
 		
 		<switch name="fbw/elevator-output">
 			<default value="0"/>
-			<test logic="AND" value="fbw/mixer/pitch/output"> <!-- Mix stick and control law for transition from ground law -->
+			<test logic="AND" value="fbw/pitch/mixer/output"> <!-- Mix stick and control law for transition from ground law -->
 				position/wow eq 0
 				fbw/pitch/law-switch eq 1
 			</test>
