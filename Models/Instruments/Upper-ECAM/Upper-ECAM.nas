@@ -212,11 +212,11 @@ var canvas_upperECAM = {
 			}),
 			props.UpdateManager.FromHashValue("EPR_actual_1", nil, func(val) {
 				obj["EPR1"].setText(sprintf("%1.0f", math.floor(epr1)));
-				obj["EPR1-decimal"].setText(sprintf("%03d", (val - int(val)) * 1000));
+				obj["EPR1-decimal"].setText(sprintf("%03d", (val - int(val) + 0.0005) * 1000));
 			}),
 			props.UpdateManager.FromHashValue("EPR_actual_2", nil, func(val) {
 				obj["EPR2"].setText(sprintf("%1.0f", math.floor(epr2)));
-				obj["EPR2-decimal"].setText(sprintf("%03d", (val - int(val)) * 1000));
+				obj["EPR2-decimal"].setText(sprintf("%03d", (val - int(val) + 0.0005) * 1000));
 			}),
 			props.UpdateManager.FromHashValue("EPR_lim", 0.005, func(val) {
 				obj["EPR1-ylim"].setRotation((val + 90) * D2R);
@@ -285,7 +285,7 @@ var canvas_upperECAM = {
 			}),
 			props.UpdateManager.FromHashValue("eprLimit", 0.0005, func(val) {
 				obj["EPRLim"].setText(sprintf("%1.0f", math.floor(eprLim)));
-				obj["EPRLim-decimal"].setText(sprintf("%03d", (val - int(val)) * 1000));
+				obj["EPRLim-decimal"].setText(sprintf("%03d", (val - int(val) + 0.0005) * 1000));
 			}),
 			props.UpdateManager.FromHashValue("n1Limit", 0.01, func(val) {
 				obj["N1Lim"].setText(sprintf("%s", math.floor(val + 0.05)));
