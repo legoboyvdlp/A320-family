@@ -163,6 +163,8 @@ var FBW = {
 	},
 };
 
+var degradeLaw = 0;
+
 var update_loop = func {
 	elac1 = FBW.Computers.elac1.getBoolValue();
 	elac2 = FBW.Computers.elac2.getBoolValue();
@@ -210,34 +212,29 @@ var update_loop = func {
 			FBW.degradeYawLaw.setValue(1);
 		}
 		
-		if (law == 0 and !tripleIRFail) {
-			FBW.degradeLaw.setValue(1);
+		if ((law == 0 or law == 2 or law == 3) and !tripleIRFail) {
+			degradeLaw = 1;
 			if (!tripleSECFault) {
 				FBW.apOff = 1;
 			}
-		} elsif (tripleIRFail and (law == 0 or law == 1)) {
-			FBW.degradeLaw.setValue(2);
+		} elsif (tripleIRFail and (law == 0 or law == 1 or law == 3)) {
+			degradeLaw = 2;
 			FBW.apOff = 1;
+		}
+		
+		if (!pts.Gear.wow[1].getBoolValue() and !pts.Gear.wow[2].getBoolValue()) {
+			if (degradeLaw == 1 and pts.Controls.Gear.gearDown.getBoolValue()) {
+				FBW.degradeLaw.setValue(2); # todo 3 sec timer
+			} else {
+				FBW.degradeLaw.setValue(degradeLaw)
+			}
+		} else {
+			FBW.degradeLaw.setValue(degradeLaw)
 		}
 	} else {
 		FBW.degradeYawLaw.setValue(0);
 		FBW.degradeLaw.setValue(0);
 		FBW.apOff = 0;
-	}
-		
-	# degrade loop runs faster; reset this variable
-	law = FBW.activeLaw.getValue();
-	
-	if (!pts.Gear.wow[1].getBoolValue() and !pts.Gear.wow[2].getBoolValue()) {
-		if (pts.Controls.Gear.gearDown.getBoolValue()) {
-			if (law == 1) {
-				FBW.degradeLaw.setValue(2); # todo 3 sec timer
-			}
-		} else {
-			if (law == 2 and !tripleIRFail) {
-				FBW.degradeLaw.setValue(1); # todo 3 sec timer
-			}
-		}
 	}
 	
 	

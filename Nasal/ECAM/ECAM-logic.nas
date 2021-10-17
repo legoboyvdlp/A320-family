@@ -3239,7 +3239,7 @@ var messages_config_memo = func {
 		ldgMemoLine3.colour = "c";
 	}
 	
-	if (getprop("/it-fbw/law") == 1 or getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override")) {
+	if (fbw.FBW.activeLaw.getValue() == 1 or pts.Instrumentation.MKVII.Inputs.Discretes.flap3Override.getValue()) {
 		if (pts.Controls.Flight.flapsPos.getValue() == 4) {
 			ldgMemoLine4.msg = "    FLAPS CONF 3";
 			ldgMemoLine4.colour = "g";
