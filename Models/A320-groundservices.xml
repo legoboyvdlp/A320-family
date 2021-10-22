@@ -83,6 +83,25 @@
 		</offsets>
 	</model>
 	
+	<!-- Catering Truck - 2nd door -->
+	
+	<model>
+		<name>cater-truck</name>
+		<path>Aircraft/A320-family/Models/Services/Catering/L_T_VolvoFM-4_5m-set.xml</path>
+		<condition>
+			<equals>
+				<property>services/catering/enable</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<offsets>
+			<x-m>11.2</x-m>
+			<y-m>6.32</y-m>
+			<z-m>-4.17</z-m>
+			<heading-deg>82</heading-deg>
+		</offsets>
+	</model>
+	
 	<!-- Baggage Truck -->
 	
 	<model>
