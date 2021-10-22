@@ -37,6 +37,7 @@ var alt200 = nil;
 var alt750 = nil;
 var bigThree = nil;
 var fltCtlLandAsap = 0;
+var gearPosition = nil;
 
 var altAlertSteady = 0;
 var altAlertFlash = 0;
@@ -2057,10 +2058,11 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(fctlSpdBrkStillOut);
 	}
 	
+	gearPosition = pts.Gear.position[1].getValue();
 	if (directLaw.clearFlag == 0 and warningNodes.Timers.directLaw.getValue() and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8) {
 		directLaw.active = 1;
 		directLawProt.active = 1;
-		if (directLawMaxSpeed.clearFlag == 0 and !fbw.tripleADRFail and pts.Gear.position[1].getValue() == 1) {
+		if (directLawMaxSpeed.clearFlag == 0 and !fbw.tripleADRFail and gearPosition != 1) {
 			directLawMaxSpeed.active = 1;
 		} else {
 			ECAM_controller.warningReset(directLawMaxSpeed);
@@ -2070,12 +2072,12 @@ var messages_priority_2 = func {
 		} else {
 			ECAM_controller.warningReset(directLawTrim);
 		}
-		if (directLawCare.clearFlag == 0 and (fbw.tripleADRFail or pts.Gear.position[1].getValue() == 1)) {
+		if (directLawCare.clearFlag == 0 and (fbw.tripleADRFail or gearPosition != 1)) {
 			directLawCare.active = 1;
 		} else {
 			ECAM_controller.warningReset(directLawCare);
 		}
-		if (directLawSpdBrk.clearFlag == 0 and !fbw.tripleADRFail and pts.Gear.position[1].getValue() == 1) {
+		if (directLawSpdBrk.clearFlag == 0 and !fbw.tripleADRFail and gearPosition != 1) {
 			directLawSpdBrk.active = 1;
 		} else {
 			ECAM_controller.warningReset(directLawSpdBrk);
@@ -2111,7 +2113,13 @@ var messages_priority_2 = func {
 			ECAM_controller.warningReset(altnLawMaxSpeed2);
 		}
 		
-		if (altnLawMaxSpdBrk.clearFlag == 0 and (fbw.tripleADRFail or warningNodes.Logic.leftElevFail.getValue() or warningNodes.Logic.rightElevFail.getValue())) {
+		if (altnLawCare.clearFlag == 0 and (fbw.tripleADRFail or gearPosition != 1)) {
+			altnLawCare.active = 1;
+		} else {
+			ECAM_controller.warningReset(altnLawCare);
+		}
+		
+		if (altnLawMaxSpdBrk.clearFlag == 0 and (fbw.tripleADRFail or warningNodes.Logic.leftElevFail.getValue() or warningNodes.Logic.rightElevFail.getValue() or warningNodes.Logic.leftElevNotAvail.getValue())) {
 			altnLawMaxSpdBrk.active = 1;
 		} else {
 			ECAM_controller.warningReset(altnLawMaxSpdBrk);
@@ -2121,6 +2129,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(altnLawProt);
 		ECAM_controller.warningReset(altnLawMaxSpeed);
 		ECAM_controller.warningReset(altnLawMaxSpeed2);
+		ECAM_controller.warningReset(altnLawCare);
 		ECAM_controller.warningReset(altnLawMaxSpdBrk);
 	}
 	
