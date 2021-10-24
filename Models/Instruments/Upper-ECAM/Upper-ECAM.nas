@@ -285,7 +285,7 @@ var canvas_upperECAM = {
 				obj["EPRLim-mode"].setText(sprintf("%s", val));
 				obj["N1Lim-mode"].setText(sprintf("%s", val));
 			}),
-			props.UpdateManager.FromHashValue("eprLimit", 0.0005, func(val) {
+			props.UpdateManager.FromHashValue("eprLimit", 0.0001, func(val) {
 				eprLim = val + 0.0005;
 				obj["EPRLim"].setText(sprintf("%1.0f", math.floor(eprLim)));
 				obj["EPRLim-decimal"].setText(sprintf("%03d", (eprLim - int(eprLim)) * 1000));
