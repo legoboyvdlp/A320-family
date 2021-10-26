@@ -332,6 +332,41 @@
 		
 	</channel>
 	
+	<channel name="SEC Power Supply">
+		
+		<switch name="/systems/fctl/power-supply/sec1/relay-condition">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/hydraulic/blue-psi ge 1500
+				/systems/hydraulic/green-psi ge 1500
+				/systems/hydraulic/yellow-psi ge 1500
+			</test>
+		</switch>
+		
+		<!-- if ELAC1 is not powered, then the timer does not run - this makes behaviour with cold + dark OK -->
+		<switch name="/systems/fctl/power-supply/sec1/relay-rate">
+			<default value="100"/>
+			<test logic="OR" value="0.03333333333">
+				/systems/fctl/sec1 eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fctl/power-supply/sec1/relay-timer">
+			<input>/systems/fctl/power-supply/sec1/relay-condition</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">0.03333333333</rate_limit> <!-- 30s -->
+		</actuator>
+		
+		<switch name="/systems/fctl/power-supply/sec1/relay">
+			<default value="0"/>
+			<test logic="AND" value="/systems/electrical/bus/sub-bus/dc-hot-1-703">
+				/systems/electrical/bus/sub-bus/dc-hot-1-703 ge 25
+				/systems/fctl/power-supply/sec1/relay-timer ne 0
+			</test>
+		</switch>
+		
+	</channel>
+	
 	<channel name="Computers">
 		
 		<switch name="/systems/fctl/lights/elac1-fault">
@@ -404,18 +439,26 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/fctl/power-supply/sec1/has-power">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-ess ge 25
+				/systems/fctl/power-supply/sec1/relay ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fctl/power-supply/sec1/has-power-output">
+			<input>/systems/fctl/power-supply/sec1/has-power</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">4</rate_limit> <!-- 250ms -->
+		</actuator>
+		
 		<switch name="/systems/fctl/sec1">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/fctl/switches/sec1 eq 1
 				/systems/failures/fctl/sec1 eq 0
-				<test logic="OR">
-					/systems/electrical/bus/dc-ess ge 25
-					<test logic="AND"> <!-- in flight: DC HOT backup -->
-						/systems/electrical/bus/sub-bus/dc-hot-1-703 ge 25
-						/gear/gear[1]/wow eq 0
-					</test>
-				</test>
+				/systems/fctl/power-supply/sec1/has-power-output ne 0
 			</test>
 		</switch>
 		
@@ -427,12 +470,25 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/fctl/power-supply/sec2/has-power">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/sub-bus/dc-2-204 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fctl/power-supply/sec2/has-power-output">
+			<input>/systems/fctl/power-supply/sec2/has-power</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">4</rate_limit> <!-- 250ms -->
+		</actuator>
+		
 		<switch name="/systems/fctl/sec2">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/fctl/switches/sec2 eq 1
 				/systems/failures/fctl/sec2 eq 0
-				/systems/electrical/bus/sub-bus/dc-2-204 ge 25
+				/systems/fctl/power-supply/sec2/has-power-output ne 0
 			</test>
 		</switch>
 		
@@ -444,12 +500,26 @@
 			</test>
 		</switch>
 		
+		<switch name="/systems/fctl/power-supply/sec3/has-power">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/sub-bus/dc-2-204 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fctl/power-supply/sec3/has-power-output">
+			<input>/systems/fctl/power-supply/sec3/has-power</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">4</rate_limit> <!-- 250ms -->
+		</actuator>
+		
+		
 		<switch name="/systems/fctl/sec3">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/fctl/switches/sec3 eq 1
 				/systems/failures/fctl/sec3 eq 0
-				/systems/electrical/bus/sub-bus/dc-2-204 ge 25
+				/systems/fctl/power-supply/sec3/has-power-output ne 0
 			</test>
 		</switch>
 		
