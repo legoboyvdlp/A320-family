@@ -134,6 +134,11 @@ var duplicateNamesPage = {
 		}	
 	},
 	pushButtonLeft: func(indexSelect) {
+		if (indexSelect > size(me.vector)) { 
+			mcdu_message(me.computer, "NOT ALLOWED");
+			return; 
+		}
+		
 		if (!dirToFlag) {
 			if (!me.flagPBD and !me.flagPROG) {
 				if (size(me.vector[0].id) == 5) {

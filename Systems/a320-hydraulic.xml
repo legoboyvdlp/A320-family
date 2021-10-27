@@ -305,7 +305,7 @@
 				/controls/hydraulic/switches/yellow-elec eq 1
 				/systems/failures/hydraulic/yellow-elec ne 1
 				<test logic="OR"> <!-- TODO: via 3XX CB 122VU -->
-					/systems/electrical/sources/ext/output-volt ge 110
+					/systems/electrical/relay/ext-epc/output ge 110
 					/systems/electrical/bus/ac-2 ge 110
 				</test>
 			</test>
