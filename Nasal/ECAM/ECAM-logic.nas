@@ -2246,52 +2246,12 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(fac2FaultFacOff);
 	}
 	
-	if (yawDamper1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 == 9 or phaseVar2 == 6) and warningNodes.Timers.yawDamper1Fault.getValue() == 1 and !warningNodes.Logic.yawDamper12Fault.getBoolValue()) {
-		yawDamper1Fault.active = 1;
-	} else {
-		ECAM_controller.warningReset(yawDamper1Fault);
-	}
-	
-	if (yawDamper2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 == 9 or phaseVar2 == 6) and warningNodes.Timers.yawDamper2Fault.getValue() == 1 and !warningNodes.Logic.yawDamper12Fault.getBoolValue()) {
-		yawDamper2Fault.active = 1;
-	} else {
-		ECAM_controller.warningReset(yawDamper2Fault);
-	}
-	
-	if (rudTravLimSys1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.rtlu1Fault.getBoolValue()) {
-		rudTravLimSys1Fault.active = 1;
-	} else {
-		ECAM_controller.warningReset(rudTravLimSys1Fault);
-	}
-	
-	if (rudTravLimSys2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.rtlu2Fault.getBoolValue()) {
-		rudTravLimSys2Fault.active = 1;
-	} else {
-		ECAM_controller.warningReset(rudTravLimSys2Fault);
-	}
-	
-	if (fcu.FCUController.FCU1.failed and fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25 and systems.ELEC.Bus.dcEss.getValue() >= 25 and fcuFault.clearFlag == 0) {
+	if (fcu.FCUController.FCU1.failed and fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25 and systems.ELEC.Bus.dc2.getValue() >= 25 and fcuFault.clearFlag == 0) {
 		fcuFault.active = 1;
 		fcuFaultBaro.active = 1;
 	} else {
 		ECAM_controller.warningReset(fcuFault);
 		ECAM_controller.warningReset(fcuFaultBaro);
-	}
-	
-	if (fcu.FCUController.FCU1.failed and !fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25 and fcuFault1.clearFlag == 0) {
-		fcuFault1.active = 1;
-		fcuFault1Baro.active = 1;
-	} else {
-		ECAM_controller.warningReset(fcuFault1);
-		ECAM_controller.warningReset(fcuFault1Baro);
-	}
-	
-	if (fcu.FCUController.FCU2.failed and !fcu.FCUController.FCU1.failed and systems.ELEC.Bus.dc2.getValue() >= 25 and fcuFault2.clearFlag == 0) {
-		fcuFault2.active = 1;
-		fcuFault2Baro.active = 1;
-	} else {
-		ECAM_controller.warningReset(fcuFault2);
-		ECAM_controller.warningReset(fcuFault2Baro);
 	}
 	
 	# FUEL
@@ -3025,6 +2985,46 @@ var messages_priority_2 = func {
 	} else {
 		ECAM_controller.warningReset(wingIceOpenGnd);
 		ECAM_controller.warningReset(wingIceOpenGndShut);
+	}
+	
+	if (yawDamper1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 == 9 or phaseVar2 == 6) and warningNodes.Timers.yawDamper1Fault.getValue() == 1 and !warningNodes.Logic.yawDamper12Fault.getBoolValue()) {
+		yawDamper1Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(yawDamper1Fault);
+	}
+	
+	if (yawDamper2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 == 9 or phaseVar2 == 6) and warningNodes.Timers.yawDamper2Fault.getValue() == 1 and !warningNodes.Logic.yawDamper12Fault.getBoolValue()) {
+		yawDamper2Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(yawDamper2Fault);
+	}
+	
+	if (rudTravLimSys1Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.rtlu1Fault.getBoolValue()) {
+		rudTravLimSys1Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(rudTravLimSys1Fault);
+	}
+	
+	if (rudTravLimSys2Fault.clearFlag == 0 and (phaseVar2 <= 2 or phaseVar2 >= 9 or phaseVar2 == 6) and warningNodes.Logic.rtlu2Fault.getBoolValue()) {
+		rudTravLimSys2Fault.active = 1;
+	} else {
+		ECAM_controller.warningReset(rudTravLimSys2Fault);
+	}
+	
+	if (fcu.FCUController.FCU1.failed and !fcu.FCUController.FCU2.failed and systems.ELEC.Bus.dcEss.getValue() >= 25 and fcuFault1.clearFlag == 0) {
+		fcuFault1.active = 1;
+		fcuFault1Baro.active = 1;
+	} else {
+		ECAM_controller.warningReset(fcuFault1);
+		ECAM_controller.warningReset(fcuFault1Baro);
+	}
+	
+	if (fcu.FCUController.FCU2.failed and !fcu.FCUController.FCU1.failed and systems.ELEC.Bus.dc2.getValue() >= 25 and fcuFault2.clearFlag == 0) {
+		fcuFault2.active = 1;
+		fcuFault2Baro.active = 1;
+	} else {
+		ECAM_controller.warningReset(fcuFault2);
+		ECAM_controller.warningReset(fcuFault2Baro);
 	}
 	
 	if (wingIceLHiPr.clearFlag == 0 and warningNodes.Timers.waiLhiPr.getValue() == 1 and (phaseVar2 <= 2  or phaseVar2 >= 9 or phaseVar2 == 6)) {
