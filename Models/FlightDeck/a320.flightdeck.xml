@@ -7585,6 +7585,7 @@
 			<red>1.00</red>
 			<green>0.355</green>
 			<blue>0.00</blue>
+			<factor-prop>controls/lighting/main-panel-norm-digital</factor-prop>
 		</diffuse>
 		<ambient>
 			<red>0</red>
@@ -7600,6 +7601,7 @@
 			<red>1.00</red>
 			<green>0.355</green>
 			<blue>0.00</blue>
+			<factor-prop>controls/lighting/main-panel-norm-digital</factor-prop>
 		</emission>
 	</animation>
 
