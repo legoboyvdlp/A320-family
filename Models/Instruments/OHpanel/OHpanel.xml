@@ -6414,7 +6414,7 @@
 
 	<!-- Texts -->
 	<text>
-		<name>Battery-volt</name>
+		<name>Battery-volt1</name>
 		<offsets>
 			<x-m>-0.008</x-m>
 			<y-m>-0.057</y-m>
@@ -6440,7 +6440,7 @@
 	</text>
 
 	<text>
-		<name>Battery-volt-test</name>
+		<name>Battery-volt1-test</name>
 		<offsets>
 			<x-m>-0.008</x-m>
 			<y-m>-0.057</y-m>
@@ -6466,7 +6466,7 @@
 	</text>
 
 	<text>
-		<name>Battery-volt</name>
+		<name>Battery-volt2</name>
 		<offsets>
 			<x-m>-0.008</x-m>
 			<y-m>0.035</y-m>
@@ -6492,7 +6492,7 @@
 	</text>
 
 	<text>
-		<name>Battery-volt-test</name>
+		<name>Battery-volt2-test</name>
 		<offsets>
 			<x-m>-0.008</x-m>
 			<y-m>0.035</y-m>
@@ -6519,7 +6519,8 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>Battery-volt</object-name>
+		<object-name>Battery-volt1</object-name>
+		<object-name>Battery-volt2</object-name>
 		<condition>
 			<equals>
 				<property>controls/switches/annun-test</property>
@@ -6530,13 +6531,44 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>Battery-volt-test</object-name>
+		<object-name>Battery-volt1-test</object-name>
+		<object-name>Battery-volt2-test</object-name>
 		<condition>
 			<equals>
 				<property>controls/switches/annun-test</property>
 				<value>1</value>
 			</equals>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>Battery-volt1</object-name>
+		<object-name>Battery-volt2</object-name>
+		<object-name>Battery-volt1-test</object-name>
+		<object-name>Battery-volt2-test</object-name>
+		<diffuse>
+			<red>1</red>
+			<green>1</green>
+			<blue>1</blue>
+			<factor-prop>controls/lighting/overhead-panel-norm-digital</factor-prop>
+		</diffuse>
+		<ambient>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</ambient>
+		<specular>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</specular>
+		<emission>
+			<red>1</red>
+			<green>1</green>
+			<blue>1</blue>
+			<factor-prop>controls/lighting/overhead-panel-norm-digital</factor-prop>
+		</emission>
 	</animation>
 
 	<!-- Fire Buttons -->
