@@ -390,6 +390,10 @@ var ATIS = {
 			code = split(".", code)[0];
 		}
 		
+		if (find(",", code) != -1) {
+			code = split(",", code)[0];
+		}
+		
 		me.receivedCode = code;
 		
 		var time = "";
@@ -402,15 +406,27 @@ var ATIS = {
 		} else if (find("TIME ", raw) != -1) {
 			time = split("TIME ", raw)[1];
 			time = split(" ", time)[0];
+		} else if (find(" UTC", raw) != -1) {
+			time = split(" UTC", raw)[0];
+			time = right(time, 4);
 		} else if (find("Z.", raw) != -1) {
 			time = split("Z.", raw)[0];
 			time = right(time, 4);
 		} else if (find("Z SPECIAL", raw) != -1) {
 			time = split("Z SPECIAL", raw)[0];
 			time = right(time, 4);
+		} else if (find("Z EXPECT", raw) != -1) {
+			time = split("Z EXPECT", raw)[0];
+			time = right(time, 4);
 		} else if (find("metreport", raw) != -1) {
 			time = split("metreport", raw)[0];
 			time = right(time, 4);
+		} else if (find("METREPORT ", raw) != -1) {
+			time = split("METREPORT ", raw)[1];
+			time = left(time, 4);
+		} else if (find("INFORMATION " ~ code ~ " AT ", raw) != -1) {
+			time = split("INFORMATION " ~ code ~ " AT ", raw)[1];
+			time = left(time, 4);
 		} else if (find((code ~ " "), raw) != -1) {
 			if (size(split(" ",split(code ~ " ", raw)[1])[0]) == 4) {
 				time = split(" ",split(code ~ " ", raw)[1])[0];
@@ -420,8 +436,10 @@ var ATIS = {
 			debug.dump(raw);
 		}
 		
+		# Handle UK airport issue
+		# Limitation: always ends in 0
 		if (size(time) == 3) {
-			time ~= " ";
+			time ~= "0";
 		}
 		
 		raw = string.uc(raw);
