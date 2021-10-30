@@ -339,6 +339,7 @@ var ATIS = {
 					print("Failed to parse ATIS for " ~ airport);
 					debug.dump(r.response);
                     debug.printerror(errs);
+					me.sent = 0;
 					mcdu.mcdu_message(i, "BAD SERVER RESPONSE");
                 }
 			});
@@ -394,6 +395,10 @@ var ATIS = {
 			code = split(",", code)[0];
 		}
 		
+		if (size(code) > 1) {
+			code = left(code, 1);
+		}
+		
 		me.receivedCode = code;
 		
 		var time = "";
@@ -406,6 +411,9 @@ var ATIS = {
 		} else if (find("TIME ", raw) != -1) {
 			time = split("TIME ", raw)[1];
 			time = split(" ", time)[0];
+		} else if (find("WEATHER AT ", raw) != -1) {
+			time = split("WEATHER AT ", raw)[1];
+			time = left(split(" ", time)[0], 4);
 		} else if (find(" UTC", raw) != -1) {
 			time = split(" UTC", raw)[0];
 			time = right(time, 4);
@@ -431,6 +439,8 @@ var ATIS = {
 			if (size(split(" ",split(code ~ " ", raw)[1])[0]) == 4) {
 				time = split(" ",split(code ~ " ", raw)[1])[0];
 			}
+		} else if (size(split(" ",split(code, raw)[1])[0]) == 4) {
+			time = split(" ",split(code, raw)[1])[0];
 		} else {
 			print("Failed to find a valid ATIS time for " ~ me.station);
 			debug.dump(raw);
@@ -440,6 +450,8 @@ var ATIS = {
 		# Limitation: always ends in 0
 		if (size(time) == 3) {
 			time ~= "0";
+		} else if (size(time) > 4) {
+			time = left(time, 4);
 		}
 		
 		raw = string.uc(raw);
