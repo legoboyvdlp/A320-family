@@ -214,8 +214,8 @@
 	</filter>
 	
 	<filter>
-		<type>gain</type>
-		<gain>1</gain>
+		<type>noise-spike</type>
+		<max-rate-of-change>0.5</max-rate-of-change>
 		<input>
 			<condition>
 				<property>/sim/sound/internal-custom</property>

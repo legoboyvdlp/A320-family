@@ -1090,14 +1090,41 @@
 			<path>Aircraft/A320-family/Sounds/SASA/A320_aircond.wav</path>
 			<mode>looped</mode>
 			<name>air conditioning</name>
+			<delay-sec>2</delay-sec>
 			<condition>
-				<property>/sim/current-view/internal</property>
+				<property>/sim/sound/other/air-con</property>
 			</condition>
 			<volume>
 				<property>/sim/sound/other/air-con</property>
-				<factor>6</factor>
+				<factor>10</factor>
 			</volume>
 		</ac>
+		
+		<ac2>
+			<path>Aircraft/A320-family/Sounds/SASA/Pack-In.wav</path>
+			<mode>once</mode>
+			<name>air conditioning in</name>
+			<condition>
+				<property>/sim/sound/other/air-con</property>
+			</condition>
+			<volume>
+				<factor>17</factor>
+				<property>/sim/current-view/internal</property>
+			</volume>
+		</ac2>
+		
+		<ac2>
+			<path>Aircraft/A320-family/Sounds/SASA/Pack-Out.wav</path>
+			<mode>once</mode>
+			<name>air conditioning out</name>
+			<condition>
+				<not><property>/sim/sound/other/air-con</property></not>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>17</factor>
+			</volume>
+		</ac2>
 		
 		<wow>
 			<mode>once</mode>
