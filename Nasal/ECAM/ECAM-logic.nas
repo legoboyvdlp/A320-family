@@ -3433,7 +3433,7 @@ var messages_right_memo = func {
 		fltCtlLandAsap = 0;
 	}
 	
-	if (land_asap_r.active == 0 and !(FWC.Timer.gnd.getValue() == 1) and (warningNodes.Timers.lowLevelBoth.getValue() == 1 or warningNodes.Logic.eng1Shutdown.getValue() or warningNodes.Logic.eng2Shutdown.getValue() or warningNodes.Logic.eng1Fail.getValue() or warningNodes.Logic.eng2Fail.getValue() or warningNodes.Timers.dcEmerConfig.getValue() == 1 or fltCtlLandAsap)) {
+	if (land_asap_r.active == 0 and !(FWC.Timer.gnd.getValue() == 1) and (warningNodes.Timers.lowLevelBoth.getValue() == 1 or warningNodes.Logic.eng1Shutdown.getValue() or warningNodes.Logic.eng2Shutdown.getValue() or warningNodes.Logic.eng1FailFlipflop.getValue() or warningNodes.Logic.eng2FailFlipflop.getValue() or warningNodes.Timers.dcEmerConfig.getValue() == 1 or fltCtlLandAsap)) {
 		# todo avionics smoke and reverse unlocked
 		land_asap_a.active = 1;
 	} else {
