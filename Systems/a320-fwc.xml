@@ -7,6 +7,12 @@
 
 	<channel name="FWC" execrate="16">
 		
+		<actuator name="/ECAM/phases/timer/acconfig-running">
+			<input>/systems/acconfig/autoconfig-running</input>
+			<rate_limit sense="decr">0.2</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
+		</actuator>
+		
 		<actuator name="/ECAM/phases/timer/eng1idle-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/eng1idle</input>
@@ -2895,6 +2901,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-1-shutdown">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/ECAM/phases/timer/acconfig-running eq 0
 				/ECAM/dual-failure-enabled eq 0
 				<test logic="OR">
 					<test logic="AND">
@@ -2915,6 +2922,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-shutdown">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/ECAM/phases/timer/acconfig-running eq 0
 				/ECAM/dual-failure-enabled eq 0
 				<test logic="OR">
 					<test logic="AND">
@@ -2959,6 +2967,7 @@
 		<switch name="/ECAM/warnings/fctl/lrElevFault">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/ECAM/phases/timer/acconfig-running eq 0
 				/ECAM/warning-phase ne 1
 				/ECAM/warning-phase ne 10
 				<test logic="OR">
@@ -3067,6 +3076,7 @@
 		<switch name="/ECAM/warnings/fctl/altn-law">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/ECAM/phases/timer/acconfig-running eq 0
 				/ECAM/warning-phase ne 1
 				/ECAM/warning-phase ne 10
 				/it-fbw/law eq 1
@@ -3083,6 +3093,7 @@
 		<switch name="/ECAM/warnings/fctl/direct-law-output">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/ECAM/phases/timer/acconfig-running eq 0
 				/ECAM/warning-phase ne 1
 				/ECAM/warning-phase ne 10
 				/it-fbw/law eq 2

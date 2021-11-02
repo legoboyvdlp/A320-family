@@ -140,6 +140,8 @@ var warningNodes = {
 		revSet: props.globals.initNode("/ECAM/warnings/logic/eng/reverse-set"),
 		eng1Fail: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-fail"),
 		eng2Fail: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-fail"),
+		eng1FailFlipflop: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-fail-output"),
+		eng2FailFlipflop: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-fail-output"),
 		phase5Trans: props.globals.initNode("/ECAM/warnings/logic/eng/phase-5-output"),
 		eng1Shutdown: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-shutdown"),
 		eng2Shutdown: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-shutdown"),
