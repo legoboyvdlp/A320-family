@@ -43,7 +43,7 @@ var FADEC = {
 	togaLk: props.globals.getNode("/fdm/jsbsim/fadec/toga-lk"),
 	init: func() {
 		me.engOut.setBoolValue(0);
-		me.Limit.activeMode.setBoolValue("TOGA");
+		me.Limit.activeMode.setValue("TOGA");
 		me.Limit.activeModeInt.setValue(0);
 		me.Limit.flexActive.setBoolValue(0);
 		me.Limit.flexActiveCmd.setBoolValue(0);

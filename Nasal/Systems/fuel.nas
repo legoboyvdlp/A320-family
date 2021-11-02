@@ -57,7 +57,7 @@ var FUEL = {
 		offsetLeft: props.globals.getNode("/systems/fuel/offset-left"),
 		offsetRight: props.globals.getNode("/systems/fuel/offset-right"),
 	},
-	resetFail: func() {
+	resetFailures: func() {
 		me.Fail.pumpLeft1.setValue(0);
 		me.Fail.pumpLeft2.setValue(0);
 		me.Fail.pumpCenter1.setValue(0);
@@ -66,7 +66,7 @@ var FUEL = {
 		me.Fail.pumpRight2.setValue(0);
 	},
 	init: func() {
-		me.resetFail();
+		me.resetFailures();
 	},
 	setOffsetLeft: func() {
 		me.Quantity.offsetLeft.setValue(me.Quantity.offsetLeft.getValue() - pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[0].getValue());

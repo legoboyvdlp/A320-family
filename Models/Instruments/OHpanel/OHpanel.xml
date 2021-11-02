@@ -3491,7 +3491,7 @@
 			<binding>
 				<condition>
 					<equals>
-						<property>controls/electrical/ground-cart</property>
+						<property>controls/electrical/switches/ground-cart</property>
 						<value>1</value>
 					</equals>
 				</condition>
@@ -3511,7 +3511,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/electrical/ground-cart</property>
+					<property>controls/electrical/switches/ground-cart</property>
 					<value>1</value>
 				</equals>
 				<and>

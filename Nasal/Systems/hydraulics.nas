@@ -68,7 +68,7 @@ var HYD = {
 		yellowAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/yellow-abnorm-lo-pr"),
 	},
 	init: func() {
-		me.resetFail();
+		me.resetFailures();
 		me.Qty.blueInput.setValue(8);
 		me.Qty.greenInput.setValue(16);
 		me.Qty.yellowInput.setValue(15);
@@ -81,7 +81,7 @@ var HYD = {
 		me.Switch.yellowElec.setValue(0);
 		me.Brakes.accumPressPsi.setValue(3000);
 	},
-	resetFail: func() {
+	resetFailures: func() {
 		me.Fail.blueElec.setBoolValue(0);
 		me.Fail.blueLeak.setBoolValue(0);
 		me.Fail.greenEng.setBoolValue(0);

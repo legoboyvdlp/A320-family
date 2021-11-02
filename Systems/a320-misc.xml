@@ -82,20 +82,6 @@
 			</test>
 		</switch>
 		
-		<switch name="/controls/pneumatics/switches/groundair">
-			<default value="/controls/pneumatics/switches/groundair"/>
-			<test logic="AND" value="0">
-				/velocities/groundspeed-kt ge 2
-			</test>
-		</switch>
-		
-		<switch name="/controls/electrical/ground-cart">
-			<default value="/controls/electrical/ground-cart"/>
-			<test logic="AND" value="0">
-				/velocities/groundspeed-kt ge 2
-			</test>
-		</switch>
-		
 	</channel>
 	
 </system>

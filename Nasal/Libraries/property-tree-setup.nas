@@ -60,9 +60,8 @@ var Controls = {
 	},
 	Gear: {
 		brake: [props.globals.getNode("/controls/gear/brake-left"),props.globals.getNode("/controls/gear/brake-right")],
+		brakeParking: props.globals.getNode("/controls/gear/brake-parking"),
 		gearDown: props.globals.getNode("/controls/gear/gear-down"),
-		parkingBrake: props.globals.getNode("/controls/gear/brake-parking"),
-		chocks: props.globals.getNode("/services/chocks/enable"),
 	},
 	Lighting: {
 		landingLights: [props.globals.getNode("/controls/lighting/landing-lights[0]"),props.globals.getNode("/controls/lighting/landing-lights[1]"),props.globals.getNode("/controls/lighting/landing-lights[2]")],
@@ -259,6 +258,13 @@ var Position = {
 	longitude: props.globals.getNode("/position/longitude-deg"),
 };
 
+var Services = {
+	Chocks: {
+		enable: props.globals.getNode("/services/chocks/enable"),
+		enableTemp: 1,
+	},
+};
+
 var Sim = {
 	aero: props.globals.getNode("/sim/aero"),
 	aircraft: props.globals.getNode("/sim/aircraft"),
@@ -342,6 +348,7 @@ var Systems = {
 var Velocities = {
 	airspeedKt: props.globals.getNode("/velocities/airspeed-kt"),
 	groundspeedKt: props.globals.getNode("/velocities/groundspeed-kt"),
+	groundspeedKtTemp: 0,
 	mach: props.globals.getNode("/velocities/mach"),
 };
 

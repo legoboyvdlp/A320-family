@@ -21,10 +21,10 @@ var spinning = maketimer(0.05, func {
 });
 
 var failReset = func {
-	systems.ELEC.resetFail();
-	systems.PNEU.resetFail();
-	fbw.FBW.resetFail();
-	systems.HYD.resetFail();
+	systems.ELEC.resetFailures();
+	systems.PNEU.resetFailures();
+	fbw.FBW.resetFailures();
+	systems.HYD.resetFailures();
 }
 
 var failResetOld = func {
@@ -90,6 +90,10 @@ var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
 print("A320-family Revision: " ~ current_revision);
 setprop("/systems/acconfig/revision", current_revision);
+
+var SYSTEM = { # Prepare for migration to ACCONFIG V2
+	autoConfigRunning: props.globals.getNode("/systems/acconfig/autoconfig-running"),
+};
 
 var foViewNode = props.globals.initNode("/systems/acconfig/options/fo-view", 0, "BOOL");
 setprop("/systems/acconfig/options/simbrief-username", "");
@@ -268,6 +272,7 @@ var colddark = func {
 		setprop("/controls/gear/brake-left", 1);
 		setprop("/controls/gear/brake-right", 1);
 		# Initial shutdown, and reinitialization.
+		setprop("/services/chocks/enable", 1);
 		setprop("/controls/engines/engine-start-switch", 1);
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
@@ -327,6 +332,7 @@ var beforestart = func {
 		setprop("/controls/gear/brake-left", 1);
 		setprop("/controls/gear/brake-right", 1);
 		# First, we set everything to cold and dark.
+		setprop("/services/chocks/enable", 1);
 		setprop("/controls/engines/engine-start-switch", 1);
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
@@ -423,6 +429,7 @@ var taxi = func {
 		setprop("/controls/gear/brake-left", 1);
 		setprop("/controls/gear/brake-right", 1);
 		# First, we set everything to cold and dark.
+		setprop("/services/chocks/enable", 0);
 		setprop("/controls/engines/engine-start-switch", 1);
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
@@ -533,7 +540,6 @@ var taxi_d = func {
 	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/apu/master", 0);
 	setprop("/controls/pneumatics/switches/apu", 0);
-	setprop("/controls/gear/brake-parking", 0);
 	setprop("/controls/gear/brake-left", 0);
 	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);

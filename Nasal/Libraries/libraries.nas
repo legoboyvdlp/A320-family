@@ -22,16 +22,10 @@ var qty2 = math.round((rand() * 5 ) + 20, 0.1);
 setprop("/engines/engine[0]/oil-qt-actual", qty1);
 setprop("/engines/engine[1]/oil-qt-actual", qty2);
 
-##########
-# Lights #
-##########
+# Aircraft Visual
 var beacon = aircraft.light.new("/sim/model/lights/beacon", [0.1, 1], "/controls/lighting/beacon");
 var strobe = aircraft.light.new("/sim/model/lights/strobe", [0.05, 0.06, 0.05, 1], "/controls/lighting/strobe");
 var tail_strobe = aircraft.light.new("/sim/model/lights/tailstrobe", [0.1, 1], "/controls/lighting/strobe");
-
-###########
-# Effects #
-###########
 
 var tiresmoke_system = aircraft.tyresmoke_system.new(0, 1, 2);
 aircraft.rain.init();
@@ -68,10 +62,6 @@ var elements = ["AileronL","AileronR","Antenna1","Antenna2","ApuFlap","AvionicsV
 livery.createTarget("fuselage", elements, "sim/model/livery/texture-fuselage", defaultFuseLiv, resolution=16384);
 livery.addLayer("fuselage", "dirt", "Aircraft/A320-family/Models/Liveries/fuselage-dirt.png");
 
-#########
-# Doors #
-#########
-
 # Front doors
 var doorl1 = aircraft.door.new("/sim/model/door-positions/doorl1", 5);
 var doorr1 = aircraft.door.new("/sim/model/door-positions/doorr1", 5);
@@ -105,9 +95,7 @@ var triggerDoor = func(door, doorName, doorDesc) {
 	}
 };
 
-###########
-# Systems #
-###########
+# Systems
 var systemsInitialized = 0;
 var A320Libraries = nil;
 
@@ -162,8 +150,8 @@ setlistener("/sim/signals/fdm-initialized", func() {
 
 var collectorTankL = props.globals.getNode("/fdm/jsbsim/propulsion/tank[5]/contents-lbs");
 var collectorTankR = props.globals.getNode("/fdm/jsbsim/propulsion/tank[6]/contents-lbs");
-var groundAir = props.globals.getNode("/controls/pneumatics/switches/groundair");
-var groundCart = props.globals.getNode("/controls/electrical/ground-cart");
+var groundAir = props.globals.getNode("/controls/pneumatics/switches/ground-air");
+var groundCart = props.globals.getNode("/controls/electrical/switches/ground-cart");
 var chocks = props.globals.getNode("/services/chocks/enable");
 var groundspeed = 0;
 var stateL = 0;
@@ -216,6 +204,22 @@ var systemsLoop = func(notification) {
 	dmc.DMController.loop();
 	atsu.ATSU.loop();
 	libraries.BUTTONS.update();
+	
+	pts.Services.Chocks.enableTemp = pts.Services.Chocks.enable.getBoolValue();
+	pts.Velocities.groundspeedKtTemp = pts.Velocities.groundspeedKt.getValue();
+	if ((pts.Velocities.groundspeedKtTemp >= 2 or !pts.Fdm.JSBsim.Position.wow.getBoolValue()) and pts.Services.Chocks.enableTemp) {
+		pts.Services.Chocks.enable.setBoolValue(0);
+	}
+	
+	if ((pts.Velocities.groundspeedKtTemp >= 2 or (!pts.Controls.Gear.brakeParking.getBoolValue() and !pts.Services.Chocks.enableTemp)) and !acconfig.SYSTEM.autoConfigRunning.getBoolValue()) {
+		if (systems.ELEC.Switch.groundCart.getBoolValue() or systems.ELEC.Switch.extPwr.getBoolValue()) {
+			systems.ELEC.Switch.groundCart.setBoolValue(0);
+			systems.ELEC.Switch.extPwr.setBoolValue(0);
+		}
+		if (systems.PNEU.Switch.groundAir.getBoolValue()) {
+			systems.PNEU.Switch.groundAir.setBoolValue(0);
+		}
+	}
 	
 	if ((notification.engine1State == 2 or notification.engine1State == 3) and collectorTankL.getValue() < 1) {
 		systems.cutoff_one();
@@ -321,9 +325,7 @@ canvas.Element.setVisible = func(vis) {
 	me.setBool("visible", vis);
 };
 
-##########
-# Misc   #
-##########
+# Misc
 var pilotComfortTwoPos = func(prop) {
 	var item = getprop(prop);
 	if (item < 0.5) {
@@ -365,10 +367,6 @@ var r2Pedal = func() {
 	pilotComfortOnePos("/controls/footrest-fo[1]");
 }
 
-#####################
-# Auto-coordination #
-#####################
-
 if (pts.Controls.Flight.autoCoordination.getBoolValue()) {
     pts.Controls.Flight.autoCoordination.setBoolValue(0);
     pts.Controls.Flight.aileronDrivesTiller.setBoolValue(1);
@@ -382,9 +380,7 @@ setlistener("/controls/flight/auto-coordination", func() {
 	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
 }, 0, 0);
 
-##############
-# Legacy FCU #
-##############
+# Legacy FCU
 var APPanel = {
 	APDisc: func() {
 		fcu.FCUController.APDisc();

@@ -825,7 +825,7 @@ var input = {
 	elecTREssVolt: "/systems/electrical/relay/ess-tr-contactor/output",
 	elecIDG1Disc: "/controls/electrical/switches/idg-1-disc",
 	elecIDG2Disc: "/controls/electrical/switches/idg-2-disc",
-	elecGroundCart: "/controls/electrical/ground-cart",
+	elecGroundCart: "/controls/electrical/switches/ground-cart",
 	elecExtHertz: "/systems/electrical/sources/ext/output-hertz",
 	elecExtVolt: "/systems/electrical/sources/ext/output-volt",
 	elecDCTie1: "/systems/electrical/relay/dc-bat-tie-dc-1/contact-pos",

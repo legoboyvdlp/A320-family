@@ -78,7 +78,7 @@ var FCUController = {
 			}
 		),
 	],
-	resetFail: func() {
+	resetFailures: func() {
 		if (me._init == 0) { return; }
 		me.FCU1.restore();
 		me.FCU2.restore();

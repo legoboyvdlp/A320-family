@@ -21,7 +21,7 @@ var outflowpos = nil;
 var targetvs = nil; 
 var eng1_starter = nil;
 var eng2_starter = nil;
-		
+
 # Main class
 var PNEU = {
 	Fail: {
@@ -70,14 +70,15 @@ var PNEU = {
 		blower: props.globals.getNode("/controls/pneumatics/switches/blower"),
 		cabinFans: props.globals.getNode("/controls/pneumatics/switches/cabin-fans"),
 		extract: props.globals.getNode("/controls/pneumatics/switches/extract"),
+		groundAir: props.globals.getNode("/controls/pneumatics/switches/ground-air"),
 		hotAir: props.globals.getNode("/controls/pneumatics/switches/hot-air"),
 		pack1: props.globals.getNode("/controls/pneumatics/switches/pack-1"),
 		pack2: props.globals.getNode("/controls/pneumatics/switches/pack-2"),
 		packFlow: props.globals.getNode("/controls/pneumatics/switches/pack-flow"),
 		ramAir: props.globals.getNode("/controls/pneumatics/switches/ram-air"),
 		tempAft: props.globals.getNode("/controls/pneumatics/switches/temp-cabin-aft"),
-		tempFwd: props.globals.getNode("/controls/pneumatics/switches/temp-cabin-fwd"),
 		tempCockpit: props.globals.getNode("/controls/pneumatics/switches/temp-cockpit"),
+		tempFwd: props.globals.getNode("/controls/pneumatics/switches/temp-cabin-fwd"),
 		xbleed: props.globals.getNode("/controls/pneumatics/switches/x-bleed"),
 	},
 	Warnings: {
@@ -104,7 +105,23 @@ var PNEU = {
 	},
 	pressMode: props.globals.getNode("/systems/pressurization/mode", 1),
 	init: func() {
-		me.resetFail();
+		me.resetFailures();
+		me.Switch.apu.setBoolValue(0);
+		me.Switch.bleed1.setBoolValue(1);
+		me.Switch.bleed2.setBoolValue(1);
+		me.Switch.blower.setBoolValue(0);
+		me.Switch.cabinFans.setBoolValue(0);
+		me.Switch.extract.setBoolValue(0);
+		me.Switch.groundAir.setBoolValue(0);
+		me.Switch.hotAir.setBoolValue(1);
+		me.Switch.pack1.setBoolValue(0);
+		me.Switch.pack2.setBoolValue(0);
+		me.Switch.packFlow.setValue(1);
+		me.Switch.ramAir.setBoolValue(0);
+		me.Switch.tempAft.setValue(0.5);
+		me.Switch.tempCockpit.setValue(0.5);
+		me.Switch.tempFwd.setValue(0.5);
+		me.Switch.xbleed.setValue(1);
 		
 		# Legacy pressurization system
 		setprop("/systems/pressurization/mode", "GN");
@@ -143,7 +160,7 @@ var PNEU = {
 		setprop("/controls/oxygen/passenger-mask-deploy-man", 0);
 		setprop("/controls/oxygen/passenger-mask-reset", 0); # this is the TMR RESET pb on the maintenance panel, needs 3D model
 	},
-	resetFail: func() {
+	resetFailures: func() {
 		me.Fail.apu.setBoolValue(0);
 		me.Fail.bleed1.setBoolValue(0);
 		me.Fail.bleed2.setBoolValue(0);

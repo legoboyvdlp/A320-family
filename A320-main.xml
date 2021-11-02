@@ -553,6 +553,7 @@
 		<!-- Multiplayer properties -->
 		<multiplay>
 			<generic>
+				<bool n="0" alias="/services/chocks/enable"/>
 				<float n="0" alias="/controls/lighting/dome-norm"/>
 				<float n="1" alias="/gear/gear[0]/steering-norm"/>
 				<float n="2" alias="/engines/engine[0]/reverser-pos-norm"/>
@@ -721,7 +722,7 @@
 				</control-2>
 				<eng-out type="bool">0</eng-out>
 				<limit n="0">
-					<active-mode type="string">T/O</active-mode>
+					<active-mode type="string">TOGA</active-mode>
 					<active-mode-int type="int">0</active-mode-int>
 					<flex-active type="bool">0</flex-active>
 					<flex-active-cmd type="bool">0</flex-active-cmd>
@@ -876,7 +877,6 @@
 			<avionics-switch type="bool">true</avionics-switch>
 		</electric>
 		<electrical>
-			<ground-cart type="bool">0</ground-cart>
 			<switches n="0">
 				<apu type="bool">1</apu>
 				<ac-ess-feed type="bool">1</ac-ess-feed>
@@ -889,6 +889,7 @@
 				<gen-1 type="bool">1</gen-1>
 				<gen-2 type="bool">1</gen-2>
 				<gen-1-line-contactor type="bool">0</gen-1-line-contactor>
+				<ground-cart type="bool">0</ground-cart>
 				<idg-1-disc type="bool">1</idg-1-disc>
 				<idg-2-disc type="bool">1</idg-2-disc>
 				<idg-1-disc-momentary type="bool">0</idg-1-disc-momentary>
@@ -984,10 +985,10 @@
 		</fuel>
 		<gear>
 			<brake-fans type="bool">0</brake-fans>
-			<brake-parking type="bool">1</brake-parking>
+			<brake-parking type="bool">0</brake-parking>
+			<nws-switch type="double">1</nws-switch>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
 			<tiller-enabled type="bool">0</tiller-enabled>
-			<nws-switch type="double">1</nws-switch>
 		</gear>
 		<hydraulic>
 			<switches>
@@ -1132,21 +1133,20 @@
 				<blower type="bool">0</blower>
 				<cabin-fans type="bool">0</cabin-fans>
 				<extract type="bool">0</extract>
-				<groundair type="bool">0</groundair>
+				<ground-air type="bool">0</ground-air>
 				<hot-air type="bool">1</hot-air>
 				<pack-1 type="bool">0</pack-1>
 				<pack-2 type="bool">0</pack-2>
-				<pack-flow type="double">1.0</pack-flow>
+				<pack-flow type="double">1</pack-flow>
 				<ram-air type="bool">0</ram-air>
 				<temp-cabin-aft type="double">0.5</temp-cabin-aft>
 				<temp-cabin-fwd type="double">0.5</temp-cabin-fwd>
 				<temp-cockpit type="double">0.5</temp-cockpit>
-				<x-bleed type="int">1</x-bleed> <!-- auto -->
+				<x-bleed type="int">1</x-bleed> <!-- Auto -->
 			</switches>
 		</pneumatics>
 		<switches>
-			<!-- Smoking is bad :P -->
-			<no-smoking-sign type="double">0.5</no-smoking-sign>
+			<no-smoking-sign type="double">0.5</no-smoking-sign> <!-- Smoking is bad :P -->
 			<seatbelt-sign type="double">0.0</seatbelt-sign>
 			<annun-test type="int">0</annun-test>
 			<qnh-knb>100000</qnh-knb>
@@ -1253,7 +1253,7 @@
 	
 	<services n="0">
 		<chocks n="0">
-			<enable type="bool">0</enable>
+			<enable type="bool">1</enable>
 		</chocks>
 		<fuel-truck>
 			<connect type="bool">0</connect>

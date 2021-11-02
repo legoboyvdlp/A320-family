@@ -23,6 +23,7 @@ var variousReset = func() {
 	setprop("/controls/switches/cabinCall", 0);
 	setprop("/controls/switches/mechCall", 0);
 	libraries.emerLtsSwitch.setValue(0.5);
+	pts.Controls.Gear.brakeParking.setBoolValue(0);
 	# cockpit voice recorder stuff
 	setprop("/controls/CVR/power", 0);
 	setprop("/controls/CVR/test", 0);
@@ -134,7 +135,7 @@ var MechCallFunc = func() {
 
 var _CVRtestRunning = 0;
 var CVR_test = func() {
-	if (pts.Controls.Gear.parkingBrake.getValue()) {
+	if (pts.Controls.Gear.brakeParking.getValue()) {
 		if (!_CVRtestRunning) {
 			_CVRtestRunning = 1;
 			cvr_tone.setValue(1);

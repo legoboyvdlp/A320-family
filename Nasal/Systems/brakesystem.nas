@@ -178,7 +178,7 @@ var BrakeSystem =
 				var V2_R = V1 - me.BrakeDecel * dt * RBrakeLevel;
 
 				LThermalEnergy += (Mass * pts.Gear.compression[1].getValue() * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2);
-				if (pts.Controls.Gear.chocks.getValue()) {
+				if (pts.Services.Chocks.enable.getValue()) {
 					if (!notification.parkingBrake) {
 						# cooling effect: reduce thermal energy by (LnCoolFactor) * dt
 						LThermalEnergy = LThermalEnergy * math.exp(LnCoolFactor * dt);					
@@ -211,7 +211,7 @@ var BrakeSystem =
 				};
 
 				RThermalEnergy += (Mass * pts.Gear.compression[2].getValue() * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2);
-				if (pts.Controls.Gear.chocks.getValue()) {
+				if (pts.Services.Chocks.enable.getValue()) {
 					if (!notification.parkingBrake) {
 						# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
 						RThermalEnergy = RThermalEnergy * math.exp(RnCoolFactor * dt);

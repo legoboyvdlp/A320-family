@@ -815,7 +815,7 @@ var canvas_MCDU_base = {
 				me["Simple_L6"].setText(" RETURN");
 				pageSwitch[i].setBoolValue(1);
 			}
-			me["Simple_R1S"].setText(sprintf("%-10s",(pts.Controls.Gear.parkingBrake.getValue() == 1) ? "SET" : "RELEASED"));
+			me["Simple_R1S"].setText(sprintf("%-10s",(pts.Controls.Gear.brakeParking.getValue() == 1) ? "SET" : "RELEASED"));
 			me["Simple_R1"].setText(sprintf("%-10s",(pts.Gear.wow[0].getValue() == 1) ? "GROUND" : "FLIGHT"));
 			me["Simple_R2S"].setText(sprintf("%-10s",(doorL1_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
 			me["Simple_R2"].setText(sprintf("%-10s",(doorR1_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));

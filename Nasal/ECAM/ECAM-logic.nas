@@ -303,7 +303,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng1FireGnlever);
 			}
 			
-			if (eng1FireGnparkbrk.clearFlag == 0 and pts.Controls.Gear.parkingBrake.getValue() == 0) { 
+			if (eng1FireGnparkbrk.clearFlag == 0 and pts.Controls.Gear.brakeParking.getValue() == 0) { 
 				eng1FireGnstopped.active = 1;
 				eng1FireGnparkbrk.active = 1;
 			} else {
@@ -458,7 +458,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(eng2FireGnlever);
 			}
 			
-			if (eng2FireGnparkbrk.clearFlag == 0 and pts.Controls.Gear.parkingBrake.getValue() == 0) { 
+			if (eng2FireGnparkbrk.clearFlag == 0 and pts.Controls.Gear.brakeParking.getValue() == 0) { 
 				eng2FireGnstopped.active = 1;
 				eng2FireGnparkbrk.active = 1;
 			} else {
@@ -3465,7 +3465,7 @@ var messages_right_memo = func {
 		spd_brk.colour = "a";
 	}
 	
-	if (pts.Controls.Gear.parkingBrake.getValue() == 1 and phaseVarMemo3 != 3) {
+	if (pts.Controls.Gear.brakeParking.getValue() == 1 and phaseVarMemo3 != 3) {
 		park_brk.active = 1;
 	} else {
 		park_brk.active = 0;

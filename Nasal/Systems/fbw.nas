@@ -109,7 +109,7 @@ var FBW = {
 			fbwt.stop();
 		}
 		
-		me.resetFail();
+		me.resetFailures();
 		
 		me.Switches.elac1Sw.setBoolValue(1);
 		me.Switches.elac2Sw.setBoolValue(1);
@@ -139,7 +139,7 @@ var FBW = {
 			fbwt.start();
 		}
 	},
-	resetFail: func() {
+	resetFailures: func() {
 		me.Failures.elac1.setBoolValue(0);
 		me.Failures.elac2.setBoolValue(0);
 		me.Failures.sec1.setBoolValue(0);
