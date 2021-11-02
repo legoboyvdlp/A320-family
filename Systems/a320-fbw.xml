@@ -483,6 +483,23 @@
 			</test>
 		</switch>
 		
+		<!-- Because we want to be attitude stable -->
+		<fcs_function name="fbw/roll/p-rad_sec">
+			<function>
+				<toradians>
+					<property>/orientation/roll-rate-degps</property>
+				</toradians>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/pitch/thetadot-rad_sec">
+			<function>
+				<toradians>
+					<property>/orientation/pitch-rate-degps</property>
+				</toradians>
+			</function>
+		</fcs_function>
+		
 	</channel>
 	
 	<channel name="Computers">
@@ -981,7 +998,7 @@
 		</pure_gain>
 		
 		<switch name="fbw/roll/p-r_s-s">
-			<default value="velocities/p-rad_sec"/>
+			<default value="fbw/roll/p-rad_sec"/>
 			<test value="0">
 				gear/unit[0]/WOW eq 1
 			</test>
@@ -1483,7 +1500,7 @@
 		</pure_gain>
 		
 		<switch name="fbw/pitch/t-r_s-s">
-			<default value="velocities/thetadot-rad_sec"/>
+			<default value="fbw/pitch/thetadot-rad_sec"/>
 			<test value="0">
 				gear/unit[0]/WOW eq 1
 			</test>
