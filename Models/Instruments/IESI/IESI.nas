@@ -11,6 +11,11 @@ var _showIESI = 0;
 var _fast = 0;
 var _IESITime = 0;
 
+var pinPrograms = {
+	metricAltitude: 1,
+	showInHg: 1,
+};
+
 var canvas_IESI = {
 	new: func(svg, name) {
 		var obj = {parents: [canvas_IESI] };
@@ -50,6 +55,10 @@ var canvas_IESI = {
 		obj.AI_horizon_rot = obj["AI_horizon"].createTransform();
 		
 		obj.middleAltOffset = nil;
+		obj._excessMotion = 0;
+		obj.canReset = 0;
+		obj.isNegativeAlt = 0;
+		obj.att10s.hide();
 		
 		obj.update_items = [
 			props.UpdateManager.FromHashValue("airspeed", nil, func(val) {
@@ -72,10 +81,10 @@ var canvas_IESI = {
 				
 				if (val.altitude < 0) {
 					obj["negText"].show();
-					obj["negText2"].show();
+					obj.isNegativeAlt = 1;
 				} else {
 					obj["negText"].hide();
-					obj["negText2"].hide();
+					obj.isNegativeAlt = 0;
 				}
 				
 				obj.altOffset = (val.altitude / 500) - int(val.altitude / 500);
@@ -149,7 +158,7 @@ var canvas_IESI = {
 		return obj;
 	},	
 	getKeys: func() {
-		return ["IESI","IESI_Init","ASI_scale","ASI_mach","ASI_mach_decimal","AI_center","AI_horizon","AI_bank","AI_slipskid","ALT_scale","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_meters","QNH_setting","QNH_std","negText","negText2","AI_bank_scale"];
+		return ["IESI","IESI_Init","att90s","att10s","ATTflag","ALTwarn","SPDwarn","ASI_scale","ASI_mach","ASI_mach_decimal","AI_center","AI_index","AI_horizon","AI_sky_bank","AI_bank","AI_bank_center","AI_slipskid","ALT_scale","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_meters","QNH_setting","QNH_std","negText","negText2","AI_bank_scale","metricM","metricBox"];
 	},
 	update: func(notification) {
 		if (notification.qnh_inhg != me._cachedInhg) {
@@ -163,12 +172,61 @@ var canvas_IESI = {
 		}
 		
 		if (_IESITime + 90 >= notification.elapsedTime) {
+			if (notification.groundspeed > 2) {
+				me._excessMotion = 1;
+			}
+			
 			me["IESI"].hide(); 
 			me["IESI_Init"].show();
+			if (_fast) {
+				me["att10s"].show();
+				me["att90s"].hide();
+			} else {
+				me["att10s"].hide();
+				me["att90s"].show();
+			}
+			me["ATTflag"].hide();
 			return;
 		} else {
-			me["IESI_Init"].hide();
-			me["IESI"].show();
+			if (pinPrograms.metricAltitude) {
+				me["ALT_meters"].show();
+				me["metricM"].show();
+				me["metricBox"].show();
+				
+				if (me.isNegativeAlt) {
+					me["negText2"].show();
+				} else {
+					me["negText2"].hide();
+				}
+			} else {
+				me["ALT_meters"].hide();
+				me["metricM"].hide();
+				me["metricBox"].hide();
+				me["negText2"].hide();
+			}
+			_fast = 0;
+			
+			if (!me._excessMotion) {
+				me["IESI_Init"].hide();
+				me["IESI"].show();
+				me["AI_bank"].show();
+				me["AI_bank_center"].show();
+				me["AI_bank_scale"].show();
+				me["AI_index"].show();
+				me["AI_horizon"].show();
+				me["AI_sky_bank"].show();
+				me["ATTflag"].hide();
+			} else {
+				me["IESI_Init"].hide();
+				me["IESI"].show();
+				me["AI_bank"].hide();
+				me["AI_bank_center"].hide();
+				me["AI_bank_scale"].hide();
+				me["AI_index"].hide();
+				me["AI_horizon"].hide();
+				me["AI_sky_bank"].hide();
+				me["ATTflag"].show();
+			}
 		}
 		
 		foreach(var update_item; me.update_items)
@@ -181,7 +239,11 @@ var canvas_IESI = {
 			me["QNH_setting"].hide();
 			me["QNH_std"].show();
 		} else {
-			me["QNH_setting"].setText(sprintf("%4.0f", notification.qnh_hpa) ~ "/" ~ sprintf("%2.2f", notification.qnh_inhg));
+			if (pinPrograms.showInHg) {
+				me["QNH_setting"].setText(sprintf("%4.0f", notification.qnh_hpa) ~ "/" ~ sprintf("%2.2f", notification.qnh_inhg));
+			} else {
+				me["QNH_setting"].setText(sprintf("%4.0f", notification.qnh_hpa));
+			}
 			me["QNH_setting"].show();
 			me["QNH_std"].hide();
 		}
@@ -189,13 +251,17 @@ var canvas_IESI = {
 	_transientVar: 0,
 	updatePower: func(notification) {
 		# todo 20W power consumption
-		if (notification.attReset == 1) {
-			if (notification.iesiInit and _IESITime + 90 >= notification.elapsedTime) {
+		if (notification.attReset == 1 and me.canReset) {
+			if (notification.iesiInit and _IESITime + 90 >= notification.elapsedTime and !me._excessMotion) {
 				_fast = 1;
 			} else {
 				_fast = 0;
 			}
+			me._excessMotion = 0;
 			iesi_init.setBoolValue(0);
+			me.canReset = 0;
+		} else if (_IESITime + 90 < notification.elapsedTime and notification.iesiInit and !me.canReset) {
+			me.canReset = 1;
 		}
 		
 		if (notification.dcEss >= 25 or (notification.relay7XB and notification.dcHot1 >= 25)) {
@@ -204,7 +270,6 @@ var canvas_IESI = {
 				iesi_init.setBoolValue(1);
 				if (_fast) {
 					_IESITime = notification.elapsedTime - 80;
-					_fast = 0;
 				} else {
 					_IESITime = notification.elapsedTime;
 				}
@@ -216,7 +281,7 @@ var canvas_IESI = {
 			if (!me._transientVar) {
 				me._transientVar = 1;
 				settimer(func() {
-					if (systems.ELEC.Bus.dcEss.getValue() >= 25 or (systems.ELEC.Bus.dcHot1.getValue() >= 25 and systems.ELEC.Relay.relay7XB.getValue())) {
+					if (systems.ELEC.Bus.dcEss.getValue() >= 25 or (systems.ELEC.Bus.dcHot1703.getValue() >= 25 and systems.ELEC.Relay.relay7XB.getValue())) {
 						me._transientVar = 0;
 					} else {
 						_showIESI = 0;
