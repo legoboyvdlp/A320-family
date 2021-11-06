@@ -43,7 +43,7 @@
      showgrid="true"
      inkscape:zoom="0.93517029"
      inkscape:cx="815.35952"
-     inkscape:cy="847.9739"
+     inkscape:cy="762.42799"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
@@ -170,7 +170,7 @@
        x="304.32764"
        height="91.330338"
        width="406.27161"
-       id="rect12278"
+       id="attRstRect"
        style="fill:#c9d121;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17302;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
     <text
        inkscape:label="#text979"
@@ -2041,17 +2041,4 @@
        x="487.22318"
        id="tspan4618"
        sodipodi:role="line">STD</tspan></text>
-  <text
-     inkscape:label="#text979"
-     transform="scale(1.0000144,0.9999856)"
-     xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
-     x="510.22949"
-     y="796.4032"
-     id="att10s"><tspan
-       sodipodi:role="line"
-       id="tspan1131"
-       x="510.22949"
-       y="796.4032"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:86px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:0.75">ATT 10s</tspan></text>
 </svg>
