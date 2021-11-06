@@ -3066,10 +3066,19 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<and>
+							<greater-than-equals>
+								<property>/systems/electrical/bus/sub-bus/dc-hot-1-703</property>
+								<value>25</value>
+							</greater-than-equals>
+							<property>/systems/electrical/sources/si-1/inverter-control/relay-7xb</property>
+						</and>
+					</or>
 				</condition>
 				<command>nasal</command>
 				<script>
@@ -3088,39 +3097,22 @@
 				<condition>
 					<and>
 						<equals>
-							<property>instrumentation/altimeter[6]/inhg</property>
-							<value>1</value>
-						</equals>
-						<equals>
 							<property>instrumentation/altimeter[6]/std</property>
 							<value>0</value>
 						</equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</and>
-				</condition>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter[6]/setting-hpa", getprop("/instrumentation/altimeter[6]/setting-hpa") + 1.0);
-				</script>
-				<condition>
-					<and>
-						<equals>
-							<property>instrumentation/altimeter[6]/inhg</property>
-							<value>0</value>
-						</equals>
-						<equals>
-							<property>instrumentation/altimeter[6]/std</property>
-							<value>0</value>
-						</equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-ess</property>
+								<value>25</value>
+							</greater-than-equals>
+							<and>
+								<greater-than-equals>
+									<property>/systems/electrical/bus/sub-bus/dc-hot-1-703</property>
+									<value>25</value>
+								</greater-than-equals>
+								<property>/systems/electrical/sources/si-1/inverter-control/relay-7xb</property>
+							</and>
+						</or>
 					</and>
 				</condition>
 			</binding>
@@ -3144,39 +3136,22 @@
 				<condition>
 					<and>
 						<equals>
-							<property>instrumentation/altimeter[6]/inhg</property>
-							<value>1</value>
-						</equals>
-						<equals>
 							<property>instrumentation/altimeter[6]/std</property>
 							<value>0</value>
 						</equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</and>
-				</condition>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter[6]/setting-hpa", getprop("/instrumentation/altimeter[6]/setting-hpa") - 1.0);
-				</script>
-				<condition>
-					<and>
-						<equals>
-							<property>instrumentation/altimeter[6]/inhg</property>
-							<value>0</value>
-						</equals>
-						<equals>
-							<property>instrumentation/altimeter[6]/std</property>
-							<value>0</value>
-						</equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-ess</property>
+								<value>25</value>
+							</greater-than-equals>
+							<and>
+								<greater-than-equals>
+									<property>/systems/electrical/bus/sub-bus/dc-hot-1-703</property>
+									<value>25</value>
+								</greater-than-equals>
+								<property>/systems/electrical/sources/si-1/inverter-control/relay-7xb</property>
+							</and>
+						</or>
 					</and>
 				</condition>
 			</binding>

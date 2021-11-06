@@ -6,7 +6,6 @@
 var dualFailNode = props.globals.initNode("/ECAM/dual-failure-enabled", 0, "BOOL");
 var apWarn       = props.globals.getNode("/it-autoflight/output/ap-warning", 1);
 var athrWarn     = props.globals.getNode("/it-autoflight/output/athr-warning", 1);
-var emerGen      = props.globals.getNode("/controls/electrical/switches/emer-gen", 1);
 
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
 var state1Node = props.globals.getNode("/engines/engine[0]/state", 1);

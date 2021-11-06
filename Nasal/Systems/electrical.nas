@@ -264,6 +264,7 @@ var input = {
 	"dcEss": "/systems/electrical/bus/dc-ess",
 	"dcEssShed": "/systems/electrical/bus/dc-ess-shed",
 	"dcHot1": "/systems/electrical/bus/dc-hot-1",
+	"dcHot1703": "/systems/electrical/bus/sub-bus/dc-hot-1-703",
 	"dcHot2": "/systems/electrical/bus/dc-hot-2",
 };
 

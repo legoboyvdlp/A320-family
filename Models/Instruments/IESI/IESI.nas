@@ -269,7 +269,7 @@ var canvas_IESI = {
 			me.canReset = 1;
 		}
 		
-		if (notification.dcEss >= 25 or (notification.relay7XB and notification.dcHot1 >= 25)) {
+		if (notification.dcEss >= 25 or (notification.relay7XB and notification.dcHot1703 >= 25)) {
 			_showIESI = 1;
 			if (notification.acconfig != 1 and notification.iesiInit != 1) {
 				iesi_init.setBoolValue(1);
