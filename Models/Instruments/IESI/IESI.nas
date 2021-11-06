@@ -143,7 +143,12 @@ var canvas_IESI = {
 				obj["AI_bank"].setRotation(-val * D2R);
 			}),
 			props.UpdateManager.FromHashValue("skid", nil, func(val) {
-				obj["AI_slipskid"].setTranslation(val, 0);
+				if (abs(val) >= 84.99) {
+					obj["AI_slipskid"].hide();
+				} else {
+					obj["AI_slipskid"].setTranslation(-val, 0);
+					obj["AI_slipskid"].show();
+				}
 			}),
 			props.UpdateManager.FromHashList(["altimeter_mode","qnh_hpa","qnh_inhg"], nil, func(val) {
 				obj.updateQNH(val);
@@ -331,16 +336,16 @@ emesary.GlobalTransmitter.Register(A320IESI);
 var input = {
 	"acconfig": "/systems/acconfig/autoconfig-running",
 	"airspeed": "/instrumentation/airspeed-indicator[0]/indicated-speed-kt",
-	"altitude": "/instrumentation/altimeter/indicated-altitude-ft",
-	"altitude_ind": "/instrumentation/altimeter/indicated-altitude-ft-pfd",
-	"altimeter_mode": "/instrumentation/altimeter[0]/std",
+	"altitude": "/instrumentation/altimeter[6]/indicated-altitude-ft",
+	"altitude_ind": "/instrumentation/altimeter[6]/indicated-altitude-ft-pfd",
+	"altimeter_mode": "/instrumentation/altimeter[6]/std",
 	"attReset": "/instrumentation/iesi/att-reset",
 	"iesiBrt": "/controls/lighting/DU/iesi",
 	"iesiInit": "/instrumentation/iesi/iesi-init",
 	"mach": "/instrumentation/airspeed-indicator/indicated-mach",
 	"pitch": "/instrumentation/iesi/pitch-deg",
-	"qnh_hpa": "/instrumentation/altimeter[0]/setting-hpa",
-	"qnh_inhg": "/instrumentation/altimeter[0]/setting-inhg",
+	"qnh_hpa": "/instrumentation/altimeter[6]/setting-hpa",
+	"qnh_inhg": "/instrumentation/altimeter[6]/setting-inhg",
 	"roll": "/orientation/roll-deg",
 	"skid": "/instrumentation/iesi/slip-skid",
 	"relay7XB": "/systems/electrical/sources/si-1/inverter-control/relay-7xb",

@@ -163,6 +163,10 @@ var Instrumentation = {
 		oldQnh: props.globals.getNode("/instrumentation/altimeter[0]/oldqnh"),
 		settingInhg: props.globals.getNode("/instrumentation/altimeter[0]/setting-inhg"),
 		std: props.globals.getNode("/instrumentation/altimeter[0]/std"),
+		indicatedFtIESI: props.globals.getNode("/instrumentation/altimeter[6]/indicated-altitude-ft"),
+		oldQnhIESI: props.globals.getNode("/instrumentation/altimeter[6]/oldqnh"),
+		settingInhgIESI: props.globals.getNode("/instrumentation/altimeter[6]/setting-inhg"),
+		stdIESI: props.globals.getNode("/instrumentation/altimeter[6]/std"),
 	},
 	Clock: {
 		indicatedString: props.globals.getNode("/instrumentation/clock/indicated-string"),

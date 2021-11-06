@@ -91,7 +91,10 @@
 		<name>altimeter</name> <!-- standby, measure directly, not via ADR -->
 		<number>6</number>
 		<static-pressure>/systems/static[2]/pressure-inhg</static-pressure>
+		<quantum>0</quantum>
 		<tau>0.1</tau>
+		<encode-mode-c>0</encode-mode-c>
+		<encode-mode-s>0</encode-mode-s>
 	</altimeter>
 	
 	<attitude-indicator>
