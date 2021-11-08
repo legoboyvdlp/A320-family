@@ -10,7 +10,6 @@ var canChangeZOffset = 0;
 var decStep = -5;
 var incStep = 5;
 var shakeFlag = 0;
-var viewName = "XX";
 var viewNumberRaw = 0;
 var views = [0, 9, 10, 11, 12, 13];
 var viewsOld = [0, 8, 9, 10, 11, 12];
@@ -146,8 +145,7 @@ var setView = func(n) {
 }
 
 var fovZoom = func(d) {
-	viewName = pts.Sim.CurrentView.name.getValue();
-	canChangeZOffset = pts.Sim.CurrentView.type.getValue() == "lookat" and viewName != "Tower View" and viewName != "Fly-By View" and viewName != "Chase View" and viewName != "Chase View Without Yaw" and viewName != "Walk View";
+	canChangeZOffset = pts.Sim.CurrentView.name.getValue() == "Helicopter View";
 	
 	if (pts.Sim.CurrentView.zOffsetM.getValue() <= -50) {
 		decStep = -10;

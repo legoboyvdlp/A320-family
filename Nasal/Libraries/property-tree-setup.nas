@@ -274,7 +274,6 @@ var Sim = {
 		name: props.globals.getNode("/sim/current-view/name", 1),
 		pitchOffsetDeg: props.globals.getNode("/sim/current-view/pitch-offset-deg", 1),
 		rollOffsetDeg: props.globals.getNode("/sim/current-view/roll-offset-deg", 1),
-		type: props.globals.getNode("/sim/current-view/type", 1),
 		viewNumber: props.globals.getNode("/sim/current-view/view-number", 1),
 		viewNumberRaw: props.globals.getNode("/sim/current-view/view-number-raw", 1),
 		zOffsetDefault: props.globals.getNode("/sim/current-view/z-offset-default", 1),
