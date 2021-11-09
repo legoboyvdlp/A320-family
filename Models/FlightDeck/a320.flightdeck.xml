@@ -2878,7 +2878,6 @@
 		<type>pick</type>
 		<object-name>qnh_cpt_knb</object-name>
 		<object-name>qnh_fo_knb</object-name>
-		<object-name>iesi_baro_knb</object-name>
 		<action>
 			<button>0</button>
 			<button>1</button>
@@ -3002,6 +3001,115 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/switches/qnh-knb</property>
+				<step>-1</step>
+				<min>0</min>
+				<max>200000</max>
+				<wrap>true</wrap>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>iesi_baro_knb</object-name>
+		<action>
+			<button>0</button>
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<and>
+							<greater-than-equals>
+								<property>/systems/electrical/bus/sub-bus/dc-hot-1-703</property>
+								<value>25</value>
+							</greater-than-equals>
+							<property>/systems/electrical/sources/si-1/inverter-control/relay-7xb</property>
+						</and>
+					</or>
+				</condition>
+				<command>nasal</command>
+				<script>
+				libraries.toggleSTDIESI();
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>3</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/instrumentation/altimeter[6]/setting-inhg", getprop("/instrumentation/altimeter[6]/setting-inhg") + 0.01);
+				</script>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/altimeter[6]/std</property>
+							<value>0</value>
+						</equals>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-ess</property>
+								<value>25</value>
+							</greater-than-equals>
+							<and>
+								<greater-than-equals>
+									<property>/systems/electrical/bus/sub-bus/dc-hot-1-703</property>
+									<value>25</value>
+								</greater-than-equals>
+								<property>/systems/electrical/sources/si-1/inverter-control/relay-7xb</property>
+							</and>
+						</or>
+					</and>
+				</condition>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/qnh-knb-iesi</property>
+				<step>1</step>
+				<min>0</min>
+				<max>200000</max>
+				<wrap>true</wrap>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/instrumentation/altimeter[6]/setting-inhg", getprop("/instrumentation/altimeter[6]/setting-inhg") - 0.01);
+				</script>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/altimeter[6]/std</property>
+							<value>0</value>
+						</equals>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-ess</property>
+								<value>25</value>
+							</greater-than-equals>
+							<and>
+								<greater-than-equals>
+									<property>/systems/electrical/bus/sub-bus/dc-hot-1-703</property>
+									<value>25</value>
+								</greater-than-equals>
+								<property>/systems/electrical/sources/si-1/inverter-control/relay-7xb</property>
+							</and>
+						</or>
+					</and>
+				</condition>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/qnh-knb-iesi</property>
 				<step>-1</step>
 				<min>0</min>
 				<max>200000</max>

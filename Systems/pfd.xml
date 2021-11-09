@@ -543,11 +543,11 @@
 			<expression>
 				<table>
 					<property>/fdm/jsbsim/accelerations/Ny</property>
-					<entry><ind>-0.20</ind><dep>-105</dep></entry>
+					<entry><ind>-0.20</ind><dep>-85</dep></entry>
 					<entry><ind>-0.01</ind><dep>   0</dep></entry>
 					<entry><ind> 0.00</ind><dep>   0</dep></entry>
 					<entry><ind> 0.01</ind><dep>   0</dep></entry>
-					<entry><ind> 0.20</ind><dep> 105</dep></entry>
+					<entry><ind> 0.20</ind><dep> 85</dep></entry>
 				</table>
 			</expression>
 		</input>

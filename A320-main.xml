@@ -1713,6 +1713,14 @@
 			<serviceable type="bool">true</serviceable>
 		</altimeter>
 		
+		<altimeter n="6">
+			<indicated-altitude-ft type="double">0</indicated-altitude-ft>
+			<indicated-altitude-ft-pfd type="double">0</indicated-altitude-ft-pfd>
+			<oldqnh type="double">29.92</oldqnh>
+			<serviceable type="bool">true</serviceable>
+			<std type="bool">0</std>
+		</altimeter>
+		
 		<chrono n="0">
 			<started type="bool">0</started>
 			<paused type="bool">0</paused>
