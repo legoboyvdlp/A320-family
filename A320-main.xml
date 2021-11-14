@@ -226,29 +226,33 @@
 				<path></path>
 			</electrical>
 			<autopilot n="0">
-				<path>Aircraft/A320-family/Systems/fmgc-drivers.xml</path>
+				<path>Aircraft/A320-family/Systems/a320-fbw-rules.xml</path>
 			</autopilot>
 			<autopilot n="1">
-				<path>Aircraft/A320-family/Systems/fmgc-roll-yaw.xml</path>
+				<path>Aircraft/A320-family/Systems/fmgc-drivers.xml</path>
 			</autopilot>
 			<autopilot n="2">
-				<path>Aircraft/A320-family/Systems/fmgc-pitch.xml</path>
+				<path>Aircraft/A320-family/Systems/fmgc-roll-yaw.xml</path>
 			</autopilot>
 			<autopilot n="3">
-				<path>Aircraft/A320-family/Systems/fmgc-thrust.xml</path>
+				<path>Aircraft/A320-family/Systems/fmgc-pitch.xml</path>
 			</autopilot>
 			<autopilot n="4">
-				<path>Aircraft/A320-family/Systems/libraries.xml</path>
+				<path>Aircraft/A320-family/Systems/fmgc-thrust.xml</path>
 			</autopilot>
 			<autopilot n="5">
-				<path>Aircraft/A320-family/Systems/upper-ecam.xml</path>
+				<path>Aircraft/A320-family/Systems/libraries.xml</path>
 			</autopilot>
 			<autopilot n="6">
-				<path>Aircraft/A320-family/Systems/lower-ecam.xml</path>
+				<path>Aircraft/A320-family/Systems/upper-ecam.xml</path>
 			</autopilot>
 			<autopilot n="7">
+				<path>Aircraft/A320-family/Systems/lower-ecam.xml</path>
+			</autopilot>
+			<autopilot n="8">
 				<path>Aircraft/A320-family/Systems/pfd.xml</path>
 			</autopilot>
+			<!-- Property rule 100 is sound -->
 			<property-rule n="101">
 				<path>Aircraft/A320-family/Systems/sound-common.xml</path>
 			</property-rule>
@@ -954,6 +958,7 @@
 			<aileron n="1" type="double">0</aileron>
 			<aileron-drives-tiller type="bool">0</aileron-drives-tiller>
 			<elevator n="1" type="double">0</elevator>
+			<flaps-input-out type="int">0</flaps-input-out>
 			<rudder n="1" type="double">0</rudder>
 			<speedbrake-arm type="bool">0</speedbrake-arm>
 			<slats type="double">0</slats>

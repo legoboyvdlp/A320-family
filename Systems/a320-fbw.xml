@@ -8,7 +8,7 @@
 	<property value="0">fbw/detent-1-feedback</property>
 	<property value="0">fbw/detent-2-feedback</property>
 	<property value="0">fbw/roll/pid</property>
-	<property value="0">fbw/pitch/g-pi</property>
+	<property value="0">fbw/pitch/load-factor-pi</property>
 	<property value="0">fbw/pitch/pid</property>
 	<property value="0">fbw/yaw/tc-pd</property>
 	<property value="1">fbw/pitch/mixer/sidestick-gain-feedback</property>
@@ -365,6 +365,90 @@
 				</table>
 			</function>
 		</fcs_function>
+		
+		<pid name="fbw/pitch/vc-kts-rate">
+			<descripton>Use D only to calculate rate of IAS</descripton>
+			<input>velocities/vc-kts</input>
+			<kp>0.0</kp>
+			<ki>0.0</ki>
+			<kd>1.0</kd>
+		</pid>
+		
+		<lag_filter name="fbw/pitch/vc-kts-rate-lag">
+			<input>fbw/pitch/vc-kts-rate</input>
+			<c1>10</c1>
+		</lag_filter>
+		
+		<!-- Because we want to be attitude stable -->
+		<fcs_function name="fbw/roll/p-rad_sec">
+			<function>
+				<toradians>
+					<property>/orientation/roll-rate-degps</property>
+				</toradians>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/pitch/thetadot-rad_sec">
+			<function>
+				<toradians>
+					<property>/orientation/pitch-rate-degps</property>
+				</toradians>
+			</function>
+		</fcs_function>
+		
+		<!-- Custom Load Factor Calculation -->
+		<fcs_function name="fbw/pitch/load-factor-computed">
+			<function>
+				<ifthen>
+					<eq>
+						<property>position/wow</property>
+						<value>0</value>
+					</eq>
+					<sum>
+						<quotient>
+							<sum>
+								<product>
+									<property>velocities/q-rad_sec</property>
+									<property>velocities/u-fps</property>
+								</product>
+								<product>
+									<value>-1</value>
+									<property>velocities/p-rad_sec</property>
+									<property>velocities/v-fps</property>
+								</product>
+								<product>
+									<value>32.174</value>
+									<cos>
+										<property>attitude/theta-rad</property>
+									</cos>
+									<cos>
+										<property>attitude/phi-rad</property>
+									</cos>
+								</product>
+								<product>
+									<value>-1</value>
+									<property>accelerations/wdot-ft_sec2</property>
+								</product>
+							</sum>
+							<value>32.174</value>
+						</quotient>
+						<quotient>
+							<value>-1</value>
+							<cos>
+								<property>attitude/roll-rad</property>
+							</cos>
+						</quotient>
+						<value>1</value>
+					</sum>
+					<value>1</value>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="fbw/pitch/load-factor">
+			<input>fbw/pitch/load-factor-computed</input>
+			<c1>7.5</c1>
+		</lag_filter>
 	
 	</channel>
 	
@@ -482,23 +566,6 @@
 				/systems/fctl/power-supply/sec1/relay-timer ne 0
 			</test>
 		</switch>
-		
-		<!-- Because we want to be attitude stable -->
-		<fcs_function name="fbw/roll/p-rad_sec">
-			<function>
-				<toradians>
-					<property>/orientation/roll-rate-degps</property>
-				</toradians>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="fbw/pitch/thetadot-rad_sec">
-			<function>
-				<toradians>
-					<property>/orientation/pitch-rate-degps</property>
-				</toradians>
-			</function>
-		</fcs_function>
 		
 	</channel>
 	
@@ -818,7 +885,7 @@
 		
 		<lag_filter name="fbw/roll/a-i-pfd">
 			<input>fbw/roll/a-i-m</input>
-			<c1>20.0</c1>
+			<c1>20</c1>
 		</lag_filter>
 		
 		<fcs_function name="fbw/roll/max-rad-i-n">
@@ -1026,11 +1093,11 @@
 			<ki>fbw/roll/i-gain</ki>
 			<kd>fbw/roll/d-gain</kd>
 			<trigger>fbw/roll/trigger</trigger>
+			<output>fbw/roll/pid</output>
 			<clipto>
 				<min>-1.0</min>
 				<max>1.0</max>
 			</clipto>
-			<output>fbw/roll/pid</output>
 		</pid>
 		
 		<switch name="fbw/roll/gear-law-switch">
@@ -1042,14 +1109,10 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="fbw/roll/rollout-cmd">
-			<function>
-				<product>
-					<property>/orientation/roll-deg</property>
-					<value>-0.1</value>
-				</product>
-			</function>
-		</fcs_function>
+		<pure_gain name="fbw/roll/rollout-cmd">
+			<input>/orientation/roll-deg</input>
+			<gain>-0.1</gain>
+		</pure_gain>
 		
 		<pure_gain name="fbw/roll/mixer/computer-demand">
 			<input>fbw/roll/pid</input>
@@ -1249,20 +1312,7 @@
 		
 		<lag_filter name="fbw/pitch/e-i-pfd">
 			<input>fbw/pitch/e-i-m</input>
-			<c1>20.0</c1>
-		</lag_filter>
-		
-		<pid name="fbw/pitch/vc-kts-rate">
-			<descripton>Use D only to calculate rate of IAS</descripton>
-			<input>velocities/vc-kts</input>
-			<kp>0.0</kp>
-			<ki>0.0</ki>
-			<kd>1.0</kd>
-		</pid>
-		
-		<lag_filter name="fbw/pitch/vc-kts-rate-lag">
-			<input>fbw/pitch/vc-kts-rate</input>
-			<c1>10.0</c1>
+			<c1>20</c1>
 		</lag_filter>
 		
 		<summer name="fbw/pitch/vmo-mmo-error">
@@ -1481,8 +1531,49 @@
 			</clipto>
 		</summer>
 		
-		<lag_filter name="fbw/pitch/e-i">
+		<switch name="fbw/pitch/load-factor-min">
+			<default value="-1.0"/>
+			<test value="0.0">
+				/controls/flight/flaps-input-out ne 0
+			</test>
+		</switch>
+		
+		<switch name="fbw/pitch/load-factor-max">
+			<default value="2.5"/>
+			<test value="2.0">
+				/controls/flight/flaps-input-out ne 0
+			</test>
+		</switch>
+		
+		<lag_filter name="fbw/pitch/e-i-sum-lag">
 			<input>fbw/pitch/e-i-sum</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<fcs_function name="fbw/pitch/load-factor-demand">
+			<function>
+				<table>
+					<independentVar lookup="row">fbw/pitch/e-i-sum-lag</independentVar>
+					<tableData>
+						-1  2.5
+						 0  1.0
+						 1 -0.5
+					</tableData>
+				</table>
+			</function>
+			<clipto>
+				<min>fbw/pitch/load-factor-min</min>
+				<max>fbw/pitch/load-factor-max</max>
+			</clipto>
+		</fcs_function>
+		
+		<summer name="fbw/pitch/load-factor-error">
+			<input>fbw/pitch/load-factor</input>
+			<input>-fbw/pitch/load-factor-demand</input>
+		</summer>
+		
+		<lag_filter name="fbw/pitch/e-i">
+			<input>fbw/pitch/load-factor-pi</input> <!-- From a320-fbw-rules.xml -->
 			<c1>fbw/rate-c1</c1>
 		</lag_filter>
 		
@@ -1528,11 +1619,11 @@
 			<ki>fbw/pitch/i-gain</ki>
 			<kd>fbw/pitch/d-gain</kd>
 			<trigger>fbw/pitch/trigger</trigger>
+			<output>fbw/pitch/pid</output>
 			<clipto>
 				<min>-1.0</min>
 				<max>1.0</max>
 			</clipto>
-			<output>fbw/pitch/pid</output>
 		</pid>
 		
 		<pure_gain name="fbw/pitch/pid-inv">
@@ -1879,11 +1970,11 @@
 			<kp>fbw/yaw/tc-p-gain</kp>
 			<ki>0.0</ki>
 			<kd>fbw/yaw/tc-d-gain</kd>
+			<output>fbw/yaw/tc-pd</output>
 			<clipto>
 				<min>-0.4</min>
 				<max>0.4</max>
 			</clipto>
-			<output>fbw/yaw/tc-pd</output>
 		</pid>
 		
 		<switch name="fbw/yaw/tc-pd-s">
