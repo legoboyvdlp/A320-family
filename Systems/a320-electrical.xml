@@ -855,9 +855,6 @@
 				/controls/hydraulic/switches/rat-man eq 1
 				/controls/electrical/switches/emer-elec-man-on eq 1 
 			</test>
-			<!--<test value="0">
-				/controls/hydraulic/switches/ground-rat-retraction eq 1
-			</test>-->
 		</switch>
 		
 		<switch name="/systems/electrical/some-electric-thingie/emer-gen-operate">
