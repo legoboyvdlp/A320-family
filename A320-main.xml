@@ -1273,7 +1273,6 @@
 		<acconfig n="0">
 			<autoconfig-running type="bool">0</autoconfig-running>
 			<options n="0">
-				<enable-shaders type="bool">true</enable-shaders>
 				<fadec n="0"> <!-- Configurable Detents -->
 					<climb-b type="double">0.6</climb-b>
 					<climb-t type="double">0.65</climb-t>
