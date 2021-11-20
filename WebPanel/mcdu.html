@@ -14,8 +14,8 @@
 		let blank_src;
 		let loading = 0;
 		let scheduled_load = 0;
-		function refresh_screen() {
-			if (loading) {
+		function refresh_screen(force) {
+			if (loading && !force) {
 				scheduled_load = 1;
 			}
 			else {
@@ -100,7 +100,19 @@
 			});
 			blank_src = screen_src;			
 			screen_src = "/screenshot?canvasindex=10&type=png";
-			setInterval(refresh_screen, 1000);
+			screen.addEventListener('error', function () {
+				loading = 0;
+				if (scheduled_load) {
+					refresh_screen();
+				}
+			});
+			screen.addEventListener('abort', function () {
+				loading = 0;
+				if (scheduled_load) {
+					refresh_screen();
+				}
+			});
+			setInterval(function () { refresh_screen(true); }, 1000);
 		}, true);
 	</script>
 	<style>

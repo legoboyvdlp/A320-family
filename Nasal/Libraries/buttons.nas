@@ -165,3 +165,14 @@ var toggleSTD = func() {
 		pts.Instrumentation.Altimeter.std.setBoolValue(1);
 	}
 }
+
+var toggleSTDIESI = func() {
+	if (pts.Instrumentation.Altimeter.stdIESI.getBoolValue()) {
+		pts.Instrumentation.Altimeter.settingInhgIESI.setValue(pts.Instrumentation.Altimeter.oldQnhIESI.getValue());
+		pts.Instrumentation.Altimeter.stdIESI.setBoolValue(0);
+	} else {
+		pts.Instrumentation.Altimeter.oldQnhIESI.setValue(pts.Instrumentation.Altimeter.settingInhgIESI.getValue());
+		pts.Instrumentation.Altimeter.settingInhgIESI.setValue(29.92);
+		pts.Instrumentation.Altimeter.stdIESI.setBoolValue(1);
+	}
+}

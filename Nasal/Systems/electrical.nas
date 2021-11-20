@@ -26,7 +26,9 @@ var ELEC = {
 		dc1: props.globals.getNode("/systems/electrical/bus/dc-1"),
 		dc2: props.globals.getNode("/systems/electrical/bus/dc-2"),
 		dcHot1: props.globals.getNode("/systems/electrical/bus/dc-hot-1"),
+		dcHot1703: props.globals.getNode("/systems/electrical/bus/sub-bus/dc-hot-1-703"),
 		dcHot2: props.globals.getNode("/systems/electrical/bus/dc-hot-2"),
+		dcHot2704: props.globals.getNode("/systems/electrical/bus/sub-bus/dc-hot-2-704"),
 	},
 	Fail: {
 		acEssBusFault: props.globals.getNode("/systems/failures/electrical/ac-ess-bus"),
@@ -262,6 +264,7 @@ var input = {
 	"dcEss": "/systems/electrical/bus/dc-ess",
 	"dcEssShed": "/systems/electrical/bus/dc-ess-shed",
 	"dcHot1": "/systems/electrical/bus/dc-hot-1",
+	"dcHot1703": "/systems/electrical/bus/sub-bus/dc-hot-1-703",
 	"dcHot2": "/systems/electrical/bus/dc-hot-2",
 };
 

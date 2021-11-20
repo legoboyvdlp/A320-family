@@ -18,8 +18,18 @@ var FCU = {
 		f.elecSupply = elecNode;
         return f;
     },
-	loop: func() {
-		me.failed = (me.elecSupply.getValue() < 25 or me.condition == 0) ? 1 : 0;
+	elec: nil,
+	powerOffTime: -99,
+	loop: func(notification) {
+		me.elec = me.elecSupply.getValue();
+		if (me.elec < 25) {
+			if (me.powerOffTime == -99) {
+				me.powerOffTime = notification.elapsedTime;
+			}
+		} else {
+			me.powerOffTime = -99;
+		}
+		me.failed = ((notification.elapsedTime > (me.powerOffTime + 0.25) and me.elec < 25) or me.condition == 0) ? 1 : 0;
 	},
 	setFail: func() {
 		me.condition = 0;
@@ -44,8 +54,8 @@ var FCUController = {
 		if (me._init == 0) { return; }
 		
 		# Update FCU Power
-		me.FCU1.loop();
-		me.FCU2.loop();
+		me.FCU1.loop(notification);
+		me.FCU2.loop(notification);
 		
 		if (!me.FCU1.failed or !me.FCU2.failed) {
 			me.FCUworking = 1;

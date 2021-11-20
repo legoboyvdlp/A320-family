@@ -238,13 +238,7 @@ var canvas_pfd = {
 				} else {
 					obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500))));
 				}
-					
-				if (-val >= -565 and -val <= 565) {
-					obj["ground_ref"].setTranslation(0, (-val / 100) * -48.66856);
-					obj["ground_ref"].show();
-				} else {
-					obj["ground_ref"].hide();
-				}
+				obj["ground_ref"].setTranslation(0, (-val / 100) * -48.66856);
 			}),
 			props.UpdateManager.FromHashList(["agl","gear1Wow", "gear2Wow","fmgcPhase"], nil, func(val) {
 				if (-val.agl >= -565 and -val.agl <= 565) {
@@ -1309,6 +1303,13 @@ var canvas_pfd = {
 			} else {
 				me["ASI_trend_up"].hide();
 				me["ASI_trend_down"].hide();
+			}
+			
+					
+			if (-notification.agl >= -565 and -notification.agl <= 565) {
+				me["ground_ref"].show();
+			} else {
+				me["ground_ref"].hide();
 			}
 		} else {
 			me["ASI_group"].hide();

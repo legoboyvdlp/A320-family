@@ -163,6 +163,10 @@ var Instrumentation = {
 		oldQnh: props.globals.getNode("/instrumentation/altimeter[0]/oldqnh"),
 		settingInhg: props.globals.getNode("/instrumentation/altimeter[0]/setting-inhg"),
 		std: props.globals.getNode("/instrumentation/altimeter[0]/std"),
+		indicatedFtIESI: props.globals.getNode("/instrumentation/altimeter[6]/indicated-altitude-ft"),
+		oldQnhIESI: props.globals.getNode("/instrumentation/altimeter[6]/oldqnh"),
+		settingInhgIESI: props.globals.getNode("/instrumentation/altimeter[6]/setting-inhg"),
+		stdIESI: props.globals.getNode("/instrumentation/altimeter[6]/std"),
 	},
 	Clock: {
 		indicatedString: props.globals.getNode("/instrumentation/clock/indicated-string"),
@@ -247,7 +251,6 @@ var Sim = {
 		name: props.globals.getNode("/sim/current-view/name", 1),
 		pitchOffsetDeg: props.globals.getNode("/sim/current-view/pitch-offset-deg", 1),
 		rollOffsetDeg: props.globals.getNode("/sim/current-view/roll-offset-deg", 1),
-		type: props.globals.getNode("/sim/current-view/type", 1),
 		viewNumberRaw: props.globals.getNode("/sim/current-view/view-number-raw", 1),
 		zOffsetDefault: props.globals.getNode("/sim/current-view/z-offset-default", 1),
 		xOffsetM: props.globals.getNode("/sim/current-view/x-offset-m", 1),

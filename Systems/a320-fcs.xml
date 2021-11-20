@@ -836,10 +836,10 @@
 				fcs/slat-locked-cmd eq 1
 				<test logic="OR">
 					/gear/gear[1]/wow ne 1
-					/velocities/airspeed-kt ge 60
+					/systems/navigation/adr/output/cas-1 ge 60
 				</test>
 				<test logic="OR">
-					aero/alpha-deg gt 7.6
+					/systems/navigation/adr/output/aoa-1 gt 7.6
 					/systems/navigation/adr/output/cas-1 lt 154
 				</test>
 			</test>
@@ -848,10 +848,10 @@
 				/controls/flight/flaps-input ne 0
 				<test logic="OR">
 					/gear/gear[1]/wow ne 1
-					/velocities/airspeed-kt ge 60
+					/systems/navigation/adr/output/cas-1 ge 60
 				</test>
 				<test logic="OR">
-					aero/alpha-deg gt 8.5
+					/systems/navigation/adr/output/aoa-1 gt 8.5
 					/systems/navigation/adr/output/cas-1 lt 148
 				</test>
 			</test>
