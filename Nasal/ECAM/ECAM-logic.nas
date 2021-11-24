@@ -3,7 +3,7 @@
 
 # props.nas:
 
-var dualFailNode = props.globals.initNode("/ECAM/dual-failure-enabled", 0, "BOOL");
+var dualFailNode = props.globals.initNode("/ECAM/warnings/logic/eng/dual-failure", 0, "BOOL");
 var apWarn       = props.globals.getNode("/it-autoflight/output/ap-warning", 1);
 var athrWarn     = props.globals.getNode("/it-autoflight/output/athr-warning", 1);
 
@@ -3642,19 +3642,3 @@ var messages_right_memo = func {
 		adirs_switch.active = 0;
 	}
 }
-
-setlistener("/engines/engine[0]/state", func() {
-	if ((state1Node.getValue() != 3 and state2Node.getValue() != 3) and !pts.Fdm.JSBsim.Position.wow.getBoolValue()) {
-		dualFailNode.setBoolValue(1);
-	} else {
-		dualFailNode.setBoolValue(0);
-	}
-}, 0, 0);
-
-setlistener("/engines/engine[1]/state", func() {
-	if ((state1Node.getValue() != 3 and state2Node.getValue() != 3) and !pts.Fdm.JSBsim.Position.wow.getBoolValue()) {
-		dualFailNode.setBoolValue(1);
-	} else {
-		dualFailNode.setBoolValue(0);
-	}
-}, 0, 0);
