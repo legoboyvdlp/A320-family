@@ -2767,7 +2767,7 @@
 		</actuator>
 		
 		
-		<actuator name="/ECAM/warnings/logic/eng/eng-1-fire-btn-timer">
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-fire-btn-timer">
 			<input>/controls/engines/engine[1]/fire-btn</input>
 			<rate_limit sense="incr">0.1</rate_limit>
 			<rate_limit sense="decr">1.0</rate_limit>
@@ -2778,7 +2778,7 @@
 			<test logic="AND" value="1">
 				/ECAM/timer/ground-calc eq 0
 				<test logic="OR">
-					/ECAM/warnings/logic/eng/eng-1-fire-btn-timer eq 1
+					/ECAM/warnings/logic/eng/eng-2-fire-btn-timer eq 1
 					/controls/engines/engine[1]/fire-btn eq 0
 				</test>
 				<test logic="OR">
