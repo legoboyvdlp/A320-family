@@ -3,7 +3,7 @@
 
 # props.nas:
 
-var dualFailNode = props.globals.initNode("/ECAM/dual-failure-enabled", 0, "BOOL");
+var dualFailNode = props.globals.initNode("/ECAM/warnings/logic/eng/dual-failure", 0, "BOOL");
 var apWarn       = props.globals.getNode("/it-autoflight/output/ap-warning", 1);
 var athrWarn     = props.globals.getNode("/it-autoflight/output/athr-warning", 1);
 
@@ -1920,7 +1920,7 @@ var messages_priority_2 = func {
 	}
 	
 	# GEN 1 FAULT
-	if (gen1fault.clearFlag == 0 and warningNodes.Flipflops.gen1Fault.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
+	if (gen1fault.clearFlag == 0 and warningNodes.Flipflops.gen1Fault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
 		gen1fault.active = 1;
 		if (!warningNodes.Flipflops.gen1FaultOnOff.getValue()) {
 			gen1faultGen.active = 1;
@@ -1950,7 +1950,7 @@ var messages_priority_2 = func {
 	}
 	
 	# GEN 2 FAULT
-	if (gen2fault.clearFlag == 0 and warningNodes.Flipflops.gen2Fault.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
+	if (gen2fault.clearFlag == 0 and warningNodes.Flipflops.gen2Fault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
 		gen2fault.active = 1;
 		if (!warningNodes.Flipflops.gen2FaultOnOff.getValue()) {
 			gen2faultGen.active = 1;
@@ -3642,19 +3642,3 @@ var messages_right_memo = func {
 		adirs_switch.active = 0;
 	}
 }
-
-setlistener("/engines/engine[0]/state", func() {
-	if ((state1Node.getValue() != 3 and state2Node.getValue() != 3) and !pts.Fdm.JSBsim.Position.wow.getBoolValue()) {
-		dualFailNode.setBoolValue(1);
-	} else {
-		dualFailNode.setBoolValue(0);
-	}
-}, 0, 0);
-
-setlistener("/engines/engine[1]/state", func() {
-	if ((state1Node.getValue() != 3 and state2Node.getValue() != 3) and !pts.Fdm.JSBsim.Position.wow.getBoolValue()) {
-		dualFailNode.setBoolValue(1);
-	} else {
-		dualFailNode.setBoolValue(0);
-	}
-}, 0, 0);
