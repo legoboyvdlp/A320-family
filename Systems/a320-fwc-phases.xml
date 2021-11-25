@@ -141,39 +141,11 @@
 			</test>
 		</switch>
 		
-		<switch name="/ECAM/phases/phase-calculation/engine-1-off">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				<test logic="OR">
-					/ECAM/phases/timer/eng1idle-output eq 0
-					/controls/engines/engine[0]/cutoff-switch eq 1
-				</test>
-				<test logic="OR">
-					/ECAM/timer/ground-calc eq 1
-					/ECAM/phases/timer/eng1idle eq 0
-				</test>
-			</test>
-		</switch>
-	
-		<switch name="/ECAM/phases/phase-calculation/engine-2-off">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				<test logic="OR">
-					/ECAM/phases/timer/eng2idle-output eq 0
-					/controls/engines/engine[1]/cutoff-switch eq 1
-				</test>
-				<test logic="OR">
-					/ECAM/timer/ground-calc eq 1
-					/ECAM/phases/timer/eng2idle eq 0
-				</test>
-			</test>
-		</switch>
-		
 		<switch name="/ECAM/phases/phase-calculation/engines-1-2-not-running">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/phases/phase-calculation/engine-1-off eq 1
-				/ECAM/phases/phase-calculation/engine-2-off eq 1
+				/ECAM/warnings/logic/eng/JE1NORUN eq 1
+				/ECAM/warnings/logic/eng/JE2NORUN eq 1
 			</test>
 		</switch>
 		

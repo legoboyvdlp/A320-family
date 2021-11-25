@@ -1920,7 +1920,7 @@ var messages_priority_2 = func {
 	}
 	
 	# GEN 1 FAULT
-	if (gen1fault.clearFlag == 0 and warningNodes.Flipflops.gen1Fault.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
+	if (gen1fault.clearFlag == 0 and warningNodes.Flipflops.gen1Fault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
 		gen1fault.active = 1;
 		if (!warningNodes.Flipflops.gen1FaultOnOff.getValue()) {
 			gen1faultGen.active = 1;
@@ -1950,7 +1950,7 @@ var messages_priority_2 = func {
 	}
 	
 	# GEN 2 FAULT
-	if (gen2fault.clearFlag == 0 and warningNodes.Flipflops.gen2Fault.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
+	if (gen2fault.clearFlag == 0 and warningNodes.Flipflops.gen2Fault.getValue() == 1 and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 6 or phaseVar2 == 9)) {
 		gen2fault.active = 1;
 		if (!warningNodes.Flipflops.gen2FaultOnOff.getValue()) {
 			gen2faultGen.active = 1;
