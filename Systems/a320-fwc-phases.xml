@@ -88,8 +88,9 @@
 		<switch name="/ECAM/logic/ground-calc-immediate">
 			<default value="0"/>
 			<test logic="OR" value="1">
+				/ECAM/flipflop/radar-altimeter-5-set eq 1
 				/ECAM/flipflop/radar-altimeter-5-output eq 1
-				/position/gear-agl-ft lt 5
+				/gear/gear[1]/compression-norm ne 0
 			</test>
 		</switch>
 		
