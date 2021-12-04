@@ -1117,7 +1117,7 @@ emesary.GlobalTransmitter.Register(A320EWD);
 
 var input = {
 	fuelTotalLbs: "/consumables/fuel/total-fuel-lbs",
-	slatLocked: "/fdm/jsbsim/fcs/slat-locked",
+	slatLocked: "/fdm/jsbsim/fcs/sfcc/slat-locked",
 	
 	# N1 parameters
 	N1_1: "/instrumentation/upper-ecam/n1[0]",
