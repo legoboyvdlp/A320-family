@@ -20,8 +20,7 @@ var RED = [1.0000,0.0000,0.0000];
 
 canvas.NDStyles["Airbus"] = {
 	font_mapper: func(family, weight) {
-		if( family == "Liberation Sans" and weight == "normal" )
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+		return "ECAMFontRegular.ttf";
 	},
 
 	# where all the symbols are stored

@@ -48,7 +48,7 @@ var canvas_upperECAM = {
 		obj.typeString = type;
 		
 		obj.font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "ECAMFontRegular.ttf";
 		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
@@ -439,23 +439,6 @@ var canvas_upperECAM = {
 		obj.createListenerForLine("/ECAM/rightmsg/linec6", ECAM_line6rc, "ECAMR6");
 		obj.createListenerForLine("/ECAM/rightmsg/linec7", ECAM_line7rc, "ECAMR7");
 		obj.createListenerForLine("/ECAM/rightmsg/linec8", ECAM_line8rc, "ECAMR8");
-		
-		obj["ECAML1"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML2"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML3"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML4"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML5"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML6"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML7"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML8"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR1"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR2"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR3"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR4"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR5"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR6"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR7"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR8"].setFont("LiberationMonoCustom.ttf");
 		
 		# cache
 		obj._cachedN1 = [nil, nil];
