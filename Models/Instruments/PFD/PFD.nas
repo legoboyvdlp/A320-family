@@ -643,7 +643,7 @@ var canvas_pfd = {
 						obj["FMA_manmode"].setText("THR");
 						obj["FMA_man_box"].setColor(0.7333,0.3803,0);
 					}
-				} else if (val.athr and (val.thrust1 == "TOGA" or (val.thrust1 == "MCT" and thrust_limit_act == "FLX") or (val.thrust1 == "MAN THR" and val.thr1 >= 0.83) or val.thrust2 == "TOGA" or (val.thrust2 == "MCT" and 
+				} else if (val.athr and (val.thrust1 == "TOGA" or (val.thrust1 == "MCT" and val.thrustLimit == "FLX") or (val.thrust1 == "MAN THR" and val.thr1 >= 0.83) or val.thrust2 == "TOGA" or (val.thrust2 == "MCT" and 
 				val.thrustLimit == "FLX") or (val.thrust2 == "MAN THR" and val.thr2 >= 0.83)) and val.engOut and val.alphaFloor != 1 and val.togaLk != 1) {
 					obj["FMA_man"].show();
 					if (val.thrust1 == "TOGA" or val.thrust2 == "TOGA") {
