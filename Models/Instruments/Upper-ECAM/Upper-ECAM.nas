@@ -48,7 +48,7 @@ var canvas_upperECAM = {
 		obj.typeString = type;
 		
 		obj.font_mapper = func(family, weight) {
-			return "ECAMFontBold100em.ttf";
+			return "ECAMFontRegular.ttf";
 		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
@@ -75,6 +75,23 @@ var canvas_upperECAM = {
 		foreach(var key; obj.getKeysTest()) {
 			obj[key] = obj.test.getElementById(key);
 		};
+		
+		obj["ECAML1"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML2"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML3"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML4"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML5"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML6"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML7"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML8"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR1"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR2"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR3"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR4"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR5"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR6"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR7"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR8"].setFont("ECAMFontBold100em.ttf");
 		
 		obj.units = acconfig_weight_kgs.getValue();
 		
