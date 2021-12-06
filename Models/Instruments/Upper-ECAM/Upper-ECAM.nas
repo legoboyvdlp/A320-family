@@ -48,7 +48,7 @@ var canvas_upperECAM = {
 		obj.typeString = type;
 		
 		obj.font_mapper = func(family, weight) {
-			return "ECAMFontRegular.ttf";
+			return "ECAMFontBold100em.ttf";
 		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );

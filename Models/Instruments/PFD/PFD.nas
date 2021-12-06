@@ -100,7 +100,7 @@ var canvas_pfd = {
         obj.mismatch = obj.canvas.createGroup();
 		
 		obj.font_mapper = func(family, weight) {
-			return "ECAMFontRegular.ttf";
+			return "ECAMFontBold100em.ttf";
 		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );

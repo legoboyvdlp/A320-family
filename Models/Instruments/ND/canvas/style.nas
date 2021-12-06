@@ -20,7 +20,7 @@ var RED = [1.0000,0.0000,0.0000];
 
 canvas.NDStyles["Airbus"] = {
 	font_mapper: func(family, weight) {
-		return "ECAMFontRegular.ttf";
+		return "ECAMFontBold100em.ttf";
 	},
 
 	# where all the symbols are stored
