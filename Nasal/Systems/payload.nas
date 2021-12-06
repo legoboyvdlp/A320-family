@@ -27,6 +27,9 @@ var fuelSvc = {
 		
 		if (me.enable.getValue() and me.connect.getValue()) {
 			me.operate.setBoolValue(1);
+		} else {
+			screen.log.write("Fuel truck not connected", 1, 0, 0);
+			return;
 		}
 		
 		fuelTimer.start();
