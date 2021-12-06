@@ -581,7 +581,7 @@ var canvas_pfd = {
 					obj["FD_pitch"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["alphaFloor","togaLk","thrust1","thrust2","throttleMode","throttleModeBox","thrustLimit","engOut","thr1","thr2","athr"], nil, func(val) {
+			props.UpdateManager.FromHashList(["alphaFloor","togaLk","throttleMode"], nil, func(val) {
 				if (val.alphaFloor) {
 					obj["FMA_thrust"].setText("A.FLOOR");
 					obj["FMA_thrust_box"].setColor(0.7333,0.3803,0);
