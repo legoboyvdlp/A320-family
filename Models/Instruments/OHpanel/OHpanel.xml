@@ -6423,7 +6423,7 @@
 		<name>Battery-volt1</name>
 		<offsets>
 			<x-m>-0.008</x-m>
-			<y-m>-0.057</y-m>
+			<y-m>-0.058</y-m>
 			<z-m>0.0155</z-m>
 			<pitch-deg>62</pitch-deg>
 			<roll-deg>88</roll-deg>
@@ -6432,9 +6432,9 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
-		<format type="string">%2.1f</format>
+		<format type="string">%2.1fV</format>
 		<property>systems/electrical/bus/dc-hot-1</property>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -6449,7 +6449,7 @@
 		<name>Battery-volt1-test</name>
 		<offsets>
 			<x-m>-0.008</x-m>
-			<y-m>-0.057</y-m>
+			<y-m>-0.058</y-m>
 			<z-m>0.0155</z-m>
 			<pitch-deg>62</pitch-deg>
 			<roll-deg>88</roll-deg>
@@ -6458,9 +6458,9 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
-		<format type="string">88.8</format>
+		<format type="string">88.8V</format>
 		<property>autopilot/serviceable</property>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -6475,7 +6475,7 @@
 		<name>Battery-volt2</name>
 		<offsets>
 			<x-m>-0.008</x-m>
-			<y-m>0.035</y-m>
+			<y-m>0.033</y-m>
 			<z-m>0.0155</z-m>
 			<pitch-deg>62</pitch-deg>
 			<roll-deg>90</roll-deg>
@@ -6484,9 +6484,9 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
-		<format type="string">%2.1f</format>
+		<format type="string">%2.1fV</format>
 		<property>systems/electrical/bus/dc-hot-2</property>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -6501,7 +6501,7 @@
 		<name>Battery-volt2-test</name>
 		<offsets>
 			<x-m>-0.008</x-m>
-			<y-m>0.035</y-m>
+			<y-m>0.033</y-m>
 			<z-m>0.0155</z-m>
 			<pitch-deg>62</pitch-deg>
 			<roll-deg>90</roll-deg>
@@ -6510,9 +6510,9 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
-		<format type="string">88.8</format>
+		<format type="string">88.8V</format>
 		<property>autopilot/serviceable</property>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>

@@ -629,7 +629,7 @@
 		<property type="string">/systems/atc/transponder-code</property>
 		<format>%s</format>
 		<truncate type="bool">false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -653,7 +653,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">literal</type>
 		<text type="string">8888</text>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -1399,7 +1399,7 @@
 		<property>controls/flight/rudder-trim-display</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
-		<font>led.txf</font>
+		<font>Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -3250,7 +3250,7 @@
 		<format type="string">%2.2f</format>
 		<property>instrumentation/altimeter/setting-inhg</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -3276,7 +3276,7 @@
 		<format type="string">%2.2f</format>
 		<property>instrumentation/altimeter/setting-inhg</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -3302,7 +3302,7 @@
 		<format type="string">%2.0f</format>
 		<property>instrumentation/altimeter/setting-hpa</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -3328,7 +3328,7 @@
 		<format type="string">%2.0f</format>
 		<property>instrumentation/altimeter/setting-hpa</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -3354,7 +3354,7 @@
 		<format type="string">STD</format>
 		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -3380,7 +3380,7 @@
 		<format type="string">STD</format>
 		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -3406,7 +3406,7 @@
 		<format type="string">88.88</format>
 		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -3432,7 +3432,7 @@
 		<format type="string">88.88</format>
 		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -4772,7 +4772,7 @@
 		<format type="string">%3.0f</format>
 		<property>it-autoflight/input/kts</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -4798,7 +4798,7 @@
 		<format type="string">%0.3f</format>
 		<property>it-autoflight/input/mach</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -4824,7 +4824,7 @@
 		<format type="string">.888</format>
 		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -4850,7 +4850,7 @@
 		<format type="string">%03.0f</format>
 		<property>it-autoflight/input/hdg</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -4876,7 +4876,7 @@
 		<format type="string">888</format>
 		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -4902,7 +4902,7 @@
 		<format type="string">%05.0f</format>
 		<property>it-autoflight/input/alt</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -4928,7 +4928,7 @@
 		<format type="string">88888</format>
 		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -4954,7 +4954,7 @@
 		<format type="string">%s</format>
 		<property>it-autoflight/output/vs-fcu-display</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -4980,7 +4980,7 @@
 		<format type="string">oo</format>
 		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -5006,7 +5006,7 @@
 		<format type="string">%+2.1f</format>
 		<property>it-autoflight/input/fpa</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -5032,7 +5032,7 @@
 		<format type="string">-8888</format>
 		<property>autopilot/serviceable</property>
 		<truncate>false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
 		<draw-alignment>false</draw-alignment>
 		<draw-boundingbox>false</draw-boundingbox>
@@ -8631,7 +8631,7 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
 		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
 		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
@@ -8662,7 +8662,7 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
 		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
 		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
@@ -8693,7 +8693,7 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
 		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
 		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
@@ -8724,7 +8724,7 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
 		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
 		<character-aspect-ratio type="double">1.1</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
@@ -8755,7 +8755,7 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
 		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
 		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
@@ -8786,7 +8786,7 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
 		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
 		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
@@ -8817,7 +8817,7 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
 		<character-size type="double">0.010</character-size> <!-- size (height) im meters -->
 		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
@@ -8994,7 +8994,7 @@
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
-		<font>led.txf</font>
+		<font>Airbus7Seg.ttf</font>
 		<character-size type="double">0.007</character-size>
 		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height>
@@ -9025,7 +9025,7 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
 		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
 		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
@@ -9058,7 +9058,7 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
 		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
 		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
@@ -9089,7 +9089,7 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
 		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
 		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->

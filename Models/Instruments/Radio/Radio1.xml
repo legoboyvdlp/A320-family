@@ -2013,11 +2013,11 @@
 		<format type="string">%s</format>
 		<property>controls/radio/rmp[0]/active-display</property>
 		<truncate type="bool">false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">AirbusRMP.ttf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
-		<character-size>0.008</character-size>
+		<character-size>0.012</character-size>
 		<font-resolution>
 			<width type="int">32</width>
 			<height type="int">32</height>
@@ -2061,11 +2061,11 @@
 		<format type="string">888.888</format>
 		<property>autopilot/serviceable</property>
 		<truncate type="bool">false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">AirbusRMP.ttf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
-		<character-size>0.008</character-size>
+		<character-size>0.012</character-size>
 		<font-resolution>
 			<width type="int">32</width>
 			<height type="int">32</height>
@@ -2109,11 +2109,11 @@
 		<format type="string">%s</format>
 		<property>controls/radio/rmp[0]/standby-display</property>
 		<truncate type="bool">false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">AirbusRMP.ttf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
-		<character-size>0.008</character-size>
+		<character-size>0.012</character-size>
 		<font-resolution>
 			<width type="int">32</width>
 			<height type="int">32</height>
@@ -2157,11 +2157,11 @@
 		<format type="string">888.888</format>
 		<property>autopilot/serviceable</property>
 		<truncate type="bool">false</truncate>
-		<font type="string">led.txf</font>
+		<font type="string">AirbusRMP.ttf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
-		<character-size>0.008</character-size>
+		<character-size>0.012</character-size>
 		<font-resolution>
 			<width type="int">32</width>
 			<height type="int">32</height>

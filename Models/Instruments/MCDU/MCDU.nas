@@ -26,9 +26,8 @@ var myCRZWIND = [nil, nil];
 var myDESWIND = [nil, nil];
 var myHISTWIND = [nil, nil];
 var myAtis = [nil, nil];
-var default = "BoeingCDU-Large.ttf";
-#var symbol = "helvetica_medium.txf";
-var symbol = "LiberationMonoCustom.ttf";
+var default = "HoneywellMCDU.ttf";
+var symbol = "HoneywellMCDU.ttf";
 var normal = 70;
 var small = 56;
 var page = "";
@@ -186,7 +185,7 @@ var togglePageFreeze = func(i) {
 var canvas_MCDU_base = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
-			return "BoeingCDU-Large.ttf";
+			return "HoneywellMCDU.ttf";
 		};
 
 		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
