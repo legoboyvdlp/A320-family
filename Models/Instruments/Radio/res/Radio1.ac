@@ -14679,7 +14679,7 @@ OBJECT poly
 name "radio_nav_lit"
 data 18
 radio_nav_lit.mesh
-texture "Radio.jpg"
+texture "Radio_glare.png"
 crease 40.000000
 numvert 12
 -0.18161 -0.09587 -0.13972
