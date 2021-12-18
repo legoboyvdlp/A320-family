@@ -110,7 +110,7 @@ var Fdm = {
 			brake: [props.globals.getNode("/fdm/jsbsim/fcs/left-brake-cmd-norm"),props.globals.getNode("/fdm/jsbsim/fcs/right-brake-cmd-norm")],
 			flapDeg: props.globals.getNode("/fdm/jsbsim/fcs/flap-pos-deg"),
 			slatDeg: props.globals.getNode("/fdm/jsbsim/fcs/slat-pos-deg"),
-			slatLocked: props.globals.getNode("/fdm/jsbsim/fcs/slat-locked"),
+			slatLocked: props.globals.getNode("/fdm/jsbsim/fcs/sfcc/slat-locked"),
 		},
 		Fbw: {
 			aileron: props.globals.getNode("/fdm/jsbsim/fbw/aileron-sidestick"),
