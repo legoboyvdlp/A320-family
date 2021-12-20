@@ -50,10 +50,6 @@ const MCDU = (function () {
 			img.addEventListener('error', reject);
 
 			img.addEventListener('load', (event) => {
-				const gotCacheBust = parseInt(event.target.src.split('cacheBust=')[1]) || 0;
-				if (gotCacheBust !== currentCacheBust) {
-					return;
-				}
 				showScreenImageLoadState(true);
 				resolve(url);
 			});
@@ -160,7 +156,6 @@ const MCDU = (function () {
 			]
 		});
 		request.send(body);
-		setTimeout(refreshScreen, 150);
 		return new Promise((resolve) => {
 			request.addEventListener('load', () => {
 				lastSentText = text;
