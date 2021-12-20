@@ -93,6 +93,7 @@ body {
 
 [data-button] {
 	position: absolute;
+	cursor: pointer;
 }
 
 [data-showbuttons="1"] [data-button] {
