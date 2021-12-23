@@ -111,6 +111,7 @@
 		<type>rotate</type>
 		<object-name>ddrmi_hdg</object-name>
 		<property>instrumentation/ddrmi/heading</property>
+		<factor>-1</factor>
 		<axis>
 			<object-name>ddrmi_hdg.axis</object-name>
 		</axis>
@@ -121,6 +122,7 @@
 		<object-name>ddrmi_pointer_1</object-name>
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/needle-1</property>
+		<factor>-1</factor>
 		<axis>
 			<object-name>ddrmi_hdg.axis</object-name>
 		</axis>
@@ -131,6 +133,7 @@
 		<object-name>ddrmi_pointer_2</object-name>
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/needle-2</property>
+		<factor>-1</factor>
 		<axis>
 			<object-name>ddrmi_hdg.axis</object-name>
 		</axis>
@@ -9149,8 +9152,8 @@
 					</greater-than>
 				</or>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>110</value>
 				</greater-than-equals>
 				<equals>
 					<property>instrumentation/ddrmi/vor-adf-1</property>
@@ -9176,8 +9179,8 @@
 					<value>20</value>
 				</less-than-equals>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>110</value>
 				</greater-than-equals>
 				<equals>
 					<property>instrumentation/ddrmi/vor-adf-1</property>
@@ -9205,8 +9208,8 @@
 					</greater-than>
 				</or>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>110</value>
 				</greater-than-equals>
 				<equals>
 					<property>instrumentation/ddrmi/vor-adf-2</property>
@@ -9232,8 +9235,8 @@
 					<value>20.0</value>
 				</less-than-equals>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25.0</value>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>110.0</value>
 				</greater-than-equals>
 				<equals>
 					<property>instrumentation/ddrmi/vor-adf-2</property>
