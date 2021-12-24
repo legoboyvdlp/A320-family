@@ -154,6 +154,24 @@
 				</test>
 			</test>
 		</switch>
+		
+		<switch name="/instrumentation/marker-beacon/volume">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/mkr-volume">
+				/controls/audio/acp[0]/mkr-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/mkr-recive eq 0
+					/controls/audio/acp[0]/mkr-volume ge /controls/audio/acp[1]/mkr-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/mkr-volume">
+				/controls/audio/acp[1]/mkr-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/mkr-recive eq 0
+					/controls/audio/acp[0]/mkr-volume lt /controls/audio/acp[1]/mkr-volume
+				</test>
+			</test>
+		</switch>
 			
 	</channel>
 	
