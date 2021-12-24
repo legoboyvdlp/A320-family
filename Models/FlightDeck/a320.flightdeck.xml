@@ -151,7 +151,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>instrumentation/ddrmi/vor-adf-1</property>
-				<min>-1</min>
+				<min>0</min>
 				<max>1</max>
 			</binding>
 		</action>
@@ -163,8 +163,7 @@
 		<object-name>ddrmi_vor_adf_select_1</object-name>
 		<property>instrumentation/ddrmi/vor-adf-1</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>90</dep></entry> <!-- ADF -->
-			<entry><ind> 0</ind><dep>45</dep></entry> <!-- OFF -->
+			<entry><ind> 0</ind><dep>90</dep></entry> <!-- ADF -->
 			<entry><ind> 1</ind><dep> 0</dep></entry> <!-- VOR -->
 		</interpolation>
 		<axis>
@@ -183,7 +182,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>instrumentation/ddrmi/vor-adf-2</property>
-				<min>-1</min>
+				<min>0</min>
 				<max>1</max>
 			</binding>
 		</action>
@@ -195,8 +194,7 @@
 		<object-name>ddrmi_vor_adf_select_2</object-name>
 		<property>instrumentation/ddrmi/vor-adf-2</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>-90</dep></entry> <!-- ADF -->
-			<entry><ind> 0</ind><dep>-45</dep></entry> <!-- OFF -->
+			<entry><ind> 0</ind><dep>-90</dep></entry> <!-- ADF -->
 			<entry><ind> 1</ind><dep> 0</dep></entry> <!-- VOR -->
 		</interpolation>
 		<axis>

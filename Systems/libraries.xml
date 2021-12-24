@@ -1007,7 +1007,7 @@
 					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-1</property>
-						<value>-1</value>
+						<value>0</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/adf[0]/in-range</property>
@@ -1110,7 +1110,7 @@
 					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-2</property>
-						<value>-1</value>
+						<value>0</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/adf[1]/in-range</property>
@@ -1186,7 +1186,7 @@
 						<and>
 							<equals>
 								<property>/instrumentation/ddrmi/vor-adf-1</property>
-								<value>-1</value>
+								<value>0</value>
 							</equals>
 							<equals>
 								<property>/instrumentation/adf[0]/in-range</property>
@@ -1246,7 +1246,7 @@
 						<and>
 							<equals>
 								<property>/instrumentation/ddrmi/vor-adf-2</property>
-								<value>-1</value>
+								<value>0</value>
 							</equals>
 							<equals>
 								<property>/instrumentation/adf[1]/in-range</property>

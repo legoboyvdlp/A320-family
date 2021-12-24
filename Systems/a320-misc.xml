@@ -39,6 +39,84 @@
 		
 	</channel>
 	
+	<channel name="ADF" execrate="8">
+	
+		<switch name="/instrumentation/adf[0]/power-supply">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/adf[0]/power-supply-bite-enable">
+			<input>/instrumentation/adf[0]/power-supply</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">0.5</rate_limit>
+		</actuator>
+		
+		<actuator name="/instrumentation/adf[0]/power-supply-bite-timer">
+			<input>/instrumentation/adf[0]/power-supply</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+	
+		<switch name="/instrumentation/adf[0]/power-supply-was-off">
+			<default value="/instrumentation/adf[0]/power-supply-was-off"/>
+			<test logic="AND" value="0">
+				/instrumentation/adf[0]/power-supply-bite-timer eq 1
+			</test>
+			<test logic="AND" value="1">
+				/instrumentation/adf[0]/power-supply-bite-enable eq 0
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/adf[0]/power-supply-node">
+			<default value="0"/>
+			<test logic="OR" value="/systems/electrical/bus/ac-ess-shed">
+				/instrumentation/adf[0]/power-supply-was-off eq 0
+				/instrumentation/adf[0]/power-supply-bite-timer eq 1
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/adf[1]/power-supply">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/adf[1]/power-supply-bite-enable">
+			<input>/instrumentation/adf[1]/power-supply</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">0.5</rate_limit>
+		</actuator>
+		
+		<actuator name="/instrumentation/adf[1]/power-supply-bite-timer">
+			<input>/instrumentation/adf[1]/power-supply</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+	
+		<switch name="/instrumentation/adf[1]/power-supply-was-off">
+			<default value="/instrumentation/adf[1]/power-supply-was-off"/>
+			<test logic="AND" value="0">
+				/instrumentation/adf[1]/power-supply-bite-timer eq 1
+			</test>
+			<test logic="AND" value="1">
+				/instrumentation/adf[1]/power-supply-bite-enable eq 0
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/adf[1]/power-supply-node">
+			<default value="0"/>
+			<test logic="OR" value="/systems/electrical/bus/ac-2">
+				/instrumentation/adf[1]/power-supply-was-off eq 0
+				/instrumentation/adf[1]/power-supply-bite-timer eq 1
+			</test>
+		</switch>
+			
+	</channel>
+	
 	<channel name="ACP" execrate="8">
 		
 		<switch name="/instrumentation/adf[0]/volume-norm">

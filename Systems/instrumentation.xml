@@ -9,14 +9,14 @@
 	<adf>
 		<name>adf</name>
 		<number>0</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<power-supply>/instrumentation/adf[0]/power-supply-node</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</adf>
 	
 	<adf>
 		<name>adf</name>
 		<number>1</number>
-		<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<power-supply>/instrumentation/adf[1]/power-supply-node</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</adf>
 	

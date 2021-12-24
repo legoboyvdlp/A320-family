@@ -277,11 +277,11 @@ var update_displays_nav = func(nav) {
 			stby_display_rmp2.setValue(sprintf("%3.2f", stby_vor2.getValue()));
 		}
 	} else if (nav == 5 and chan1 == "adf") {
-		act_display_rmp1.setValue(sprintf("%4.0f", act_adf1.getValue()));
-		stby_display_rmp1.setValue(sprintf("%4.0f", stby_adf1.getValue()));
+		act_display_rmp1.setValue(sprintf("%4.2f", act_adf1.getValue()));
+		stby_display_rmp1.setValue(sprintf("%4.2f", stby_adf1.getValue()));
 	} else if (nav == 6 and chan2 == "adf") {
-		act_display_rmp2.setValue(sprintf("%4.0f", act_adf2.getValue()));
-		stby_display_rmp2.setValue(sprintf("%4.0f", stby_adf2.getValue()));
+		act_display_rmp2.setValue(sprintf("%4.2f", act_adf2.getValue()));
+		stby_display_rmp2.setValue(sprintf("%4.2f", stby_adf2.getValue()));
 	}
 }
 
