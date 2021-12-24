@@ -99,6 +99,8 @@ var ils1FreqSet = props.globals.getNode("/FMGC/internal/ils1freq-set", 1);
 var ils1CRSSet = props.globals.getNode("/FMGC/internal/ils1crs-set", 1);
 var adf1FreqSet = props.globals.getNode("/FMGC/internal/adf1freq-set", 1);
 var adf2FreqSet = props.globals.getNode("/FMGC/internal/adf2freq-set", 1);
+var adf1Bfo = props.globals.getNode("/systems/radio/rmp[0]/bfo-active", 1);
+var adf2Bfo = props.globals.getNode("/systems/radio/rmp[1]/bfo-active", 1);
 var ils1CRS = props.globals.getNode("/instrumentation/nav[0]/radials/selected-deg", 1);
 var vor1CRS = props.globals.getNode("/instrumentation/nav[2]/radials/selected-deg", 1);
 var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-deg", 1);
@@ -2595,12 +2597,12 @@ var canvas_MCDU_base = {
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "blu");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "blu");
 				me.colorCenter("wht", "wht", "wht", "wht", "wht", "grn");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRight("blu", "blu", "blu", "blu", "blu", "blu");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "blu");
 				
 				pageSwitch[i].setBoolValue(1);
 			}
@@ -2625,14 +2627,28 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L4"].setFontSize(small); 
 			}
+			
+			me["Simple_L6"].setText(" ADF1 BFO");
+			me["Simple_R6"].setText("ADF2 BFO ");
+			
 			if (adf1FreqSet.getValue() == 1) {
 				me["Simple_L5"].setFont(default); 
 				me["Simple_L5"].setFontSize(normal); 
-				me["Simple_L5"].setText(sprintf("%s", adf1.getValue()));
+				me["Simple_L5"].setText(sprintf(" %s", adf1.getValue()));
+				me["Simple_L6"].show();
+				
+				if (adf1Bfo.getValue()) {
+					# TODO - wrong arrow
+					me["Simple_L6_Arrow"].hide();
+				} else {
+					me["Simple_L6_Arrow"].show();
+				}
 			} else {
 				me["Simple_L5"].setFont(symbol); 
 				me["Simple_L5"].setFontSize(small); 
-				me["Simple_L5"].setText("[   ]/[     ]");
+				me["Simple_L5"].setText("[   ]/[    .]");
+				me["Simple_L6"].hide();
+				me["Simple_L6_Arrow"].hide();
 			}
 			
 			if (vor2FreqSet.getValue() == 1) {
@@ -2645,14 +2661,25 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_R2"].setFontSize(small); 
 			}
+			
 			if (adf2FreqSet.getValue() == 1) {
 				me["Simple_R5"].setFont(default); 
 				me["Simple_R5"].setFontSize(normal); 
-				me["Simple_R5"].setText(sprintf("%s", adf2.getValue()));
+				me["Simple_R5"].setText(sprintf("%s ", adf2.getValue()));
+				me["Simple_R6"].show();
+				
+				if (adf2Bfo.getValue()) {
+					# TODO - wrong arrow
+					me["Simple_R6_Arrow"].hide();
+				} else {
+					me["Simple_R6_Arrow"].show();
+				}
 			} else {
 				me["Simple_R5"].setFont(symbol); 
 				me["Simple_R5"].setFontSize(small); 
-				me["Simple_R5"].setText("[     ]/[   ]");
+				me["Simple_R5"].setText("[    .]/[   ]");
+				me["Simple_R6"].hide();
+				me["Simple_R6_Arrow"].hide();
 			}
 			
 			me["Simple_L1"].setText(" " ~ vor1.getValue());

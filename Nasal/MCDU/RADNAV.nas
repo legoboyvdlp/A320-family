@@ -104,17 +104,44 @@ var radnavInput = func(key, i) {
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				var tfs = size(scratchpad);
-				if (tfs == 3 or tfs == 4) {
-					if (scratchpad >= 190 and scratchpad <= 1750) {
-						setprop("instrumentation/adf[0]/frequencies/selected-khz", scratchpad);
-						setprop("/FMGC/internal/adf1freq-set", 1);
-						mcdu_scratchpad.scratchpads[i].empty();
+				if (tfs >= 3 and tfs <= 6) {
+					if (scratchpad >= 190 and scratchpad <= 1799) {
+						if (scratchpad != int(scratchpad)) {
+							var splitScratchpad = split(".",scratchpad);
+							if (size(splitScratchpad) != 2 or splitScratchpad[1] != "5") {
+								mcdu_message(i, "NOT ALLOWED");
+							} else {
+								setprop("/instrumentation/adf[0]/frequencies/selected-khz", scratchpad);
+								setprop("/FMGC/internal/adf1freq-set", 1);
+								mcdu_scratchpad.scratchpads[i].empty();
+							}
+						} else {
+							setprop("/instrumentation/adf[0]/frequencies/selected-khz", scratchpad);
+							setprop("/FMGC/internal/adf1freq-set", 1);
+							mcdu_scratchpad.scratchpads[i].empty();
+						}
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
 					}
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
+			}
+		} else if (key == "L6") {
+			if (getprop("/FMGC/internal/adf1freq-set")) {
+				if (scratchpad == "CLR" and getprop("/systems/radio/rmp[0]/bfo-active")) {
+					setprop("/systems/radio/rmp[0]/bfo-active", 0);
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					var tfs = size(scratchpad);
+					if (tfs == 0 and !getprop("/systems/radio/rmp[0]/bfo-active")) {
+						setprop("/systems/radio/rmp[0]/bfo-active", 1);
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+				}
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else if (key == "R1") {
 			if (scratchpad == "CLR") {
@@ -169,11 +196,22 @@ var radnavInput = func(key, i) {
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				var tfs = size(scratchpad);
-				if (tfs == 3 or tfs == 4) {
-					if (scratchpad >= 190 and scratchpad <= 1750) {
-						setprop("instrumentation/adf[1]/frequencies/selected-khz", scratchpad);
-						setprop("/FMGC/internal/adf2freq-set", 1);
-						mcdu_scratchpad.scratchpads[i].empty();
+				if (tfs >= 3 and tfs <= 6) {
+					if (scratchpad >= 190 and scratchpad <= 1799) {
+						if (scratchpad != int(scratchpad)) {
+							var splitScratchpad = split(".",scratchpad);
+							if (size(splitScratchpad) != 2 or splitScratchpad[1] != "5") {
+								mcdu_message(i, "NOT ALLOWED");
+							} else {
+								setprop("/instrumentation/adf[1]/frequencies/selected-khz", scratchpad);
+								setprop("/FMGC/internal/adf2freq-set", 1);
+								mcdu_scratchpad.scratchpads[i].empty();
+							}
+						} else {
+							setprop("/instrumentation/adf[1]/frequencies/selected-khz", scratchpad);
+							setprop("/FMGC/internal/adf2freq-set", 1);
+							mcdu_scratchpad.scratchpads[i].empty();
+						}
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
 					}
@@ -181,8 +219,24 @@ var radnavInput = func(key, i) {
 					mcdu_message(i, "NOT ALLOWED");
 				}
 			}
+		} else if (key == "R6") {
+			if (getprop("/FMGC/internal/adf2freq-set")) {
+				if (scratchpad == "CLR" and getprop("/systems/radio/rmp[1]/bfo-active")) {
+					setprop("/systems/radio/rmp[1]/bfo-active", 0);
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else {
+					var tfs = size(scratchpad);
+					if (tfs == 0 and !getprop("/systems/radio/rmp[1]/bfo-active")) {
+						setprop("/systems/radio/rmp[1]/bfo-active", 1);
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+				}
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
+		} else {
+			mcdu_message(i, "NOT ALLOWED");
 		}
-	} else {
-		mcdu_message(i, "NOT ALLOWED");
 	}
 }

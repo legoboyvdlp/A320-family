@@ -490,7 +490,7 @@ var change_nav_mode = func(rmp_nr, nav_mode) {
 }
 
 # ADF Radio: Implement BFO such that you will hear audio
-var BFOActive = [props.globals.getNode("/systems/radio/rmp[0]/bfo-active"),props.globals.getNode("/systems/radio/rmp[1]/bfo-active")];
+var BFOActive = [props.globals.initNode("/systems/radio/rmp[0]/bfo-active", 0, "BOOL"),props.globals.initNode("/systems/radio/rmp[1]/bfo-active", 0, "BOOL")];
 var ADFIdent = [props.globals.getNode("/instrumentation/adf[0]/ident-audible"),props.globals.getNode("/instrumentation/adf[1]/ident-audible")];
 var ADFMode = [props.globals.getNode("/instrumentation/adf[0]/mode"),props.globals.getNode("/instrumentation/adf[1]/mode")];
 

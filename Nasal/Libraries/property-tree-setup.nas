@@ -154,6 +154,12 @@ var Gear = {
 };
 
 var Instrumentation = {
+	Adf: {
+		ident: [props.globals.getNode("/instrumentation/adf[0]/ident"), props.globals.getNode("/instrumentation/adf[1]/ident")],
+		Frequencies: {
+			selectedKhz: [props.globals.getNode("/instrumentation/adf[0]/frequencies/selected-khz"), props.globals.getNode("/instrumentation/adf[1]/frequencies/selected-khz")],
+		},
+	},
 	AirspeedIndicator: {
 		indicatedSpdKt: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt"),
 		indicatedMach: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach"),

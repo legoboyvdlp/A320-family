@@ -577,28 +577,18 @@ var nav3 = func {
 }
 
 var adf0 = func {
-	var freqadf0uf = getprop("/instrumentation/adf[0]/frequencies/selected-khz");
-	var freqadf0 = sprintf("%.2f", freqadf0uf);
-	var nameadf0 = getprop("/instrumentation/adf[0]/ident") or "";
-	if (freqadf0 >= 190 and freqadf0 <= 1750) {
-		if (nameadf0 != "") {
-			setprop("/FMGC/internal/adf1-mcdu", nameadf0 ~ "/" ~ freqadf0);
-		} else {
-			setprop("/FMGC/internal/adf1-mcdu", freqadf0);
-		}
+	var freqadf0 = sprintf("%.1f", pts.Instrumentation.Adf.Frequencies.selectedKhz[0].getValue());
+	if (freqadf0 >= 190 and freqadf0 <= 1799) {
+		var nameadf0 = pts.Instrumentation.Adf.ident[0].getValue() or "   ";
+		setprop("/FMGC/internal/adf1-mcdu", nameadf0 ~ "/" ~ freqadf0);
 	}
 }
 
 var adf1 = func {
-	var freqadf1uf = getprop("/instrumentation/adf[1]/frequencies/selected-khz");
-	var freqadf1 = sprintf("%.2f", freqadf1uf);
-	var nameadf1 = getprop("/instrumentation/adf[1]/ident") or "";
-	if (freqadf1 >= 190 and freqadf1 <= 1750) {
-		if (nameadf1 != "") {
-			setprop("/FMGC/internal/adf2-mcdu", freqadf1 ~ "/" ~ nameadf1);
-		} else {
-			setprop("/FMGC/internal/adf2-mcdu", freqadf1);
-		}
+	var freqadf1 = sprintf("%.1f", pts.Instrumentation.Adf.Frequencies.selectedKhz[1].getValue());
+	if (freqadf1 >= 190 and freqadf1 <= 1799) {
+		var nameadf1 = pts.Instrumentation.Adf.ident[1].getValue() or "   ";
+		setprop("/FMGC/internal/adf2-mcdu", freqadf1 ~ "/" ~ nameadf1);
 	}
 }
 

@@ -843,6 +843,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("WINDCLB");
 		} else if (page == "ROUTESELECTION") {
 			initInputROUTESEL("L6",i);
+		} else if (page == "RADNAV") {
+			radnavInput("L6",i);
 		} else if (page == "PERFCLB") {
 			perfCLBInput("L6",i);
 		} else if (page == "PERFCRZ") {
@@ -1286,6 +1288,8 @@ var rskbutton = func(btn, i) {
 			mcdu_message(i, "AOC DISABLED");
 		} else if (page == "INITA") {
 			initInputA("R6",i);
+		} else if (page == "RADNAV") {
+			radnavInput("R6",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(6);
 		} else if (page == "VERTREV") {

@@ -39,6 +39,46 @@
 		
 	</channel>
 	
+	<channel name="ACP" execrate="8">
+		
+		<switch name="/instrumentation/adf[0]/volume-norm">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/adf1-volume">
+				/controls/audio/acp[0]/adf1-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/adf1-recive eq 0
+					/controls/audio/acp[0]/adf1-volume ge /controls/audio/acp[1]/adf1-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/adf1-volume">
+				/controls/audio/acp[1]/adf1-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/adf1-recive eq 0
+					/controls/audio/acp[0]/adf1-volume lt /controls/audio/acp[1]/adf1-volume
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/adf[1]/volume-norm">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/adf2-volume">
+				/controls/audio/acp[0]/adf2-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/adf2-recive eq 0
+					/controls/audio/acp[0]/adf2-volume ge /controls/audio/acp[1]/adf2-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/adf2-volume">
+				/controls/audio/acp[1]/adf2-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/adf2-recive eq 0
+					/controls/audio/acp[0]/adf2-volume lt /controls/audio/acp[1]/adf2-volume
+				</test>
+			</test>
+		</switch>
+			
+	</channel>
+	
 	<channel name="System Display" execrate="8">
 		
 		<switch name="/ECAM/Lower/g-force-display-cmd">
