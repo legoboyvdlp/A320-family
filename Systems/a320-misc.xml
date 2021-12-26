@@ -195,7 +195,7 @@
 			
 	</channel>
 	
-	<channel name="VOR" execrate="8">
+	<channel name="DME" execrate="8">
 	
 		<switch name="/instrumentation/dme[0]/power-supply">
 			<default value="0"/>
@@ -325,6 +325,24 @@
 				<test logic="OR">
 					/controls/audio/acp[0]/mkr-recive eq 0
 					/controls/audio/acp[0]/mkr-volume lt /controls/audio/acp[1]/mkr-volume
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/nav[0]/volume">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/ils-volume">
+				/controls/audio/acp[0]/ils-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/ils-recive eq 0
+					/controls/audio/acp[0]/ils-volume ge /controls/audio/acp[1]/ils-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/ils-volume">
+				/controls/audio/acp[1]/ils-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/ils-recive eq 0
+					/controls/audio/acp[0]/ils-volume lt /controls/audio/acp[1]/ils-volume
 				</test>
 			</test>
 		</switch>

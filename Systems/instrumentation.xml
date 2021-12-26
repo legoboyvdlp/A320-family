@@ -129,14 +129,14 @@
 	<dme>  <!-- fake extra dme units for the ILS -->
 		<name>dme</name>
 		<number>0</number>
-		<power-supply>/instrumentation/dme[0]/power-supply-node</power-supply>
+		<power-supply>/systems/electrical/bus/ac-ess</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</dme>
 	
 	<dme>
 		<name>dme</name>
 		<number>1</number>
-		<power-supply>/instrumentation/dme[1]/power-supply-node</power-supply>
+		<power-supply>/systems/electrical/bus/ac-2</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</dme>
 	
@@ -188,14 +188,14 @@
 	<nav-radio> <!-- ILS unit -->
 		<name>nav</name>
 		<number>0</number>
-		<power-supply>/instrumentation/nav[2]/power-supply-node</power-supply>
+		<power-supply>/systems/electrical/bus/ac-ess</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</nav-radio>
 	
 	<nav-radio>
 		<name>nav</name>
 		<number>1</number>
-		<power-supply>/instrumentation/nav[3]/power-supply-node</power-supply>
+		<power-supply>/systems/electrical/bus/ac-2</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</nav-radio>
 	

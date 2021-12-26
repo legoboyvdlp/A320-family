@@ -11,6 +11,10 @@ var mkr_capt_recive = props.globals.initNode("/controls/audio/acp[0]/mkr-recive"
 var mkr_capt_volume = props.globals.initNode("/controls/audio/acp[0]/mkr-volume", 1, "DOUBLE");
 var mkr_fo_recive = props.globals.initNode("/controls/audio/acp[1]/mkr-recive", 0, "BOOL");
 var mkr_fo_volume = props.globals.initNode("/controls/audio/acp[1]/mkr-volume", 1, "DOUBLE");
+var ils_capt_recive = props.globals.initNode("/controls/audio/acp[0]/ils-recive", 0, "BOOL");
+var ils_capt_volume = props.globals.initNode("/controls/audio/acp[0]/ils-volume", 1, "DOUBLE");
+var ils_fo_recive = props.globals.initNode("/controls/audio/acp[1]/ils-recive", 0, "BOOL");
+var ils_fo_volume = props.globals.initNode("/controls/audio/acp[1]/ils-volume", 1, "DOUBLE");
 
 var vhf1_capt_recive = props.globals.initNode("/controls/audio/acp[0]/vhf1-recive", 1, "BOOL");
 var vhf2_capt_recive = props.globals.initNode("/controls/audio/acp[0]/vhf2-recive", 1, "BOOL");
