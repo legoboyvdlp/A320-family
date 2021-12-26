@@ -2683,16 +2683,16 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L1"].setText(" " ~ vor1.getValue());
-			me["Simple_L2"].setText(sprintf("%3.0f", vor1CRS.getValue()));
+			me["Simple_L2"].setText(sprintf("%03.0f", vor1CRS.getValue()));
 			me["Simple_L3"].setText(" " ~ ils1.getValue());
-			me["Simple_L4"].setText(sprintf("%3.0f", ils1CRS.getValue()));
+			me["Simple_L4"].setText(sprintf("%03.0f", ils1CRS.getValue()));
 			me["Simple_L1S"].setText("VOR1/FREQ");
 			me["Simple_L2S"].setText("CRS");
 			me["Simple_L3S"].setText("ILS /FREQ");
 			me["Simple_L4S"].setText("CRS");
 			me["Simple_L5S"].setText("ADF1/FREQ");
 			me["Simple_R1"].setText(" " ~ vor2.getValue());
-			me["Simple_R2"].setText(sprintf("%3.0f", vor2CRS.getValue()));
+			me["Simple_R2"].setText(sprintf("%03.0f", vor2CRS.getValue()));
 			me["Simple_R3"].setText("[  ]/[   ]");
 			me["Simple_R4"].setText("-.-   [   ]");
 			me["Simple_R1S"].setText("FREQ/VOR2");
