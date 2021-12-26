@@ -1036,7 +1036,9 @@
 			<property>/instrumentation/adf[0]/indicated-bearing-deg</property>
 			<scale>-1.0</scale>
 		</input>
-		<input>-90</input>
+		<input>
+			<property>/instrumentation/ddrmi/needle-1</property>
+		</input>
 		<output>/instrumentation/ddrmi/needle-1</output>
 	</filter>
 	
@@ -1139,7 +1141,9 @@
 			<property>/instrumentation/adf[1]/indicated-bearing-deg</property>
 			<scale>-1.0</scale>
 		</input>
-		<input>-90</input>
+		<input>
+			<property>/instrumentation/ddrmi/needle-2</property>
+		</input>
 		<output>/instrumentation/ddrmi/needle-2</output>
 	</filter>
 	
