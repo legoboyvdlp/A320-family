@@ -27,13 +27,53 @@ var parseFrequencyVOR = func(scratchpad, i, num) {
 	}
 }
 
-var searchResult = nil;
+var searchResultVOR = nil;
 var parseIdentVOR = func(scratchpad, i, num) {
 	# TODO - duplicate names
 	if (size(scratchpad) == 3) {
-		searchResult = findNavaidsByID(scratchpad);
-		if (size(searchResult) != 0) {
-			pts.Instrumentation.Nav.Frequencies.selectedMhz[num].setValue(searchResult[0].frequency / 100);
+		searchResultVOR = findNavaidsByID(scratchpad);
+		if (size(searchResultVOR) != 0) {
+			pts.Instrumentation.Nav.Frequencies.selectedMhz[num].setValue(searchResultVOR[0].frequency / 100);
+			return 3;
+		} else {
+			return 2;
+		}
+	} else {
+		return 1;
+	}
+};
+
+var splitScratchpadADF = nil;
+var parseFrequencyADF = func(scratchpad, i, num) {
+	if (size(scratchpad) >= 3 and size(scratchpad) <= 6) {
+		if (scratchpad >= 190 and scratchpad <= 1799) {
+			if (scratchpad != int(scratchpad)) {
+				splitScratchpadADF = split(".",scratchpad);
+				if (size(splitScratchpadADF) != 2 or splitScratchpadADF[1] != "5") {
+					return 3;
+				} else {
+					pts.Instrumentation.Adf.Frequencies.selectedKhz[num].setValue(scratchpad);
+					return 4;
+				}
+			} else {
+				pts.Instrumentation.Adf.Frequencies.selectedKhz[num].setValue(scratchpad);
+				return 4;
+			}
+		} else {
+			return 2;
+		}
+	} else {
+		return 1;
+	}
+}
+
+var searchResultADF = nil;
+var parseIdentADF = func(scratchpad, i, num) {
+	# TODO - duplicate names
+	if (size(scratchpad) == 2 or size(scratchpad) == 3) {
+		searchResultADF = findNavaidsByID(scratchpad);
+		if (size(searchResultADF) != 0) {
+			pts.Instrumentation.Adf.Frequencies.selectedKhz[num].setValue(searchResultADF[0].frequency / 100);
 			return 3;
 		} else {
 			return 2;
@@ -170,27 +210,55 @@ var radnavInput = func(key, i) {
 				fmgc.FMGCInternal.ADF1.freqSet = 0;
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				if (radNavScratchpadSize >= 3 and radNavScratchpadSize <= 6) {
-					if (radNavScratchpad >= 190 and radNavScratchpad <= 1799) {
-						if (radNavScratchpad != int(radNavScratchpad)) {
-							var splitradNavScratchpad = split(".",radNavScratchpad);
-							if (size(splitradNavScratchpad) != 2 or splitradNavScratchpad[1] != "5") {
+				if (size(split("/", radNavScratchpad)) == 2) {
+					if (size(split("/", radNavScratchpad)[0]) != 0) {
+						mcdu_message(i, "FORMAT ERROR");
+						return;
+					} else {
+						radNavScratchpad = split("/", radNavScratchpad)[1];
+						if (num(radNavScratchpad) != radNavScratchpad) {
+							mcdu_message(i, "FORMAT ERROR");
+						} else {
+							returny = parseFrequencyADF(radNavScratchpad, i, 0);
+							if (returny == 1) {
+								mcdu_message(i, "FORMAT ERROR");
+							} elsif (returny == 2) {
+								mcdu_message(i, "ENTRY OUT OF RANGE");
+							} elsif (returny == 3) {
 								mcdu_message(i, "NOT ALLOWED");
-							} else {
-								pts.Instrumentation.Adf.Frequencies.selectedKhz[0].setValue(radNavScratchpad);
+							} elsif (returny == 4) {
 								fmgc.FMGCInternal.ADF1.freqSet = 1;
 								mcdu_scratchpad.scratchpads[i].empty();
 							}
-						} else {
-							pts.Instrumentation.Adf.Frequencies.selectedKhz[0].setValue(radNavScratchpad);
+						}
+					}
+				} else if (size(split("/", radNavScratchpad)) == 1) {
+					if (num(radNavScratchpad) == radNavScratchpad) {
+						returny = parseFrequencyADF(radNavScratchpad, i, 0);
+						if (returny == 1) {
+							mcdu_message(i, "FORMAT ERROR");
+						} elsif (returny == 2) {
+							mcdu_message(i, "ENTRY OUT OF RANGE");
+						} elsif (returny == 3) {
+							mcdu_message(i, "NOT ALLOWED");
+						} elsif (returny == 4) {
 							fmgc.FMGCInternal.ADF1.freqSet = 1;
 							mcdu_scratchpad.scratchpads[i].empty();
 						}
-					} else {
-						mcdu_message(i, "NOT ALLOWED");
+					} else if (isstr(radNavScratchpad)) {
+						returny = parseIdentADF(radNavScratchpad, i, 0);
+						if (returny == 1) {
+							mcdu_message(i, "FORMAT ERROR");
+						} elsif (returny == 2) {
+							# TODO - NEW NAVAID page
+							mcdu_message(i, "NOT IN DATA BASE");
+						} elsif (returny == 3) {
+							fmgc.FMGCInternal.ADF1.freqSet = 1;
+							mcdu_scratchpad.scratchpads[i].empty();
+						}
 					}
 				} else {
-					mcdu_message(i, "NOT ALLOWED");
+					mcdu_message(i, "FORMAT ERROR");
 				}
 			}
 		} else if (key == "L6") {
@@ -286,27 +354,55 @@ var radnavInput = func(key, i) {
 				fmgc.FMGCInternal.ADF2.freqSet = 0;
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				if (radNavScratchpadSize >= 3 and radNavScratchpadSize <= 6) {
-					if (radNavScratchpad >= 190 and radNavScratchpad <= 1799) {
-						if (radNavScratchpad != int(radNavScratchpad)) {
-							var splitradNavScratchpad = split(".",radNavScratchpad);
-							if (size(splitradNavScratchpad) != 2 or splitradNavScratchpad[1] != "5") {
+				if (size(split("/", radNavScratchpad)) == 2) {
+					if (size(split("/", radNavScratchpad)[1]) != 0) {
+						mcdu_message(i, "FORMAT ERROR");
+						return;
+					} else {
+						radNavScratchpad = split("/", radNavScratchpad)[0];
+						if (num(radNavScratchpad) != radNavScratchpad) {
+							mcdu_message(i, "FORMAT ERROR");
+						} else {
+							returny = parseFrequencyADF(radNavScratchpad, i, 1);
+							if (returny == 1) {
+								mcdu_message(i, "FORMAT ERROR");
+							} elsif (returny == 2) {
+								mcdu_message(i, "ENTRY OUT OF RANGE");
+							} elsif (returny == 3) {
 								mcdu_message(i, "NOT ALLOWED");
-							} else {
-								pts.Instrumentation.Adf.Frequencies.selectedKhz[1].setValue(radNavScratchpad);
+							} elsif (returny == 4) {
 								fmgc.FMGCInternal.ADF2.freqSet = 1;
 								mcdu_scratchpad.scratchpads[i].empty();
 							}
-						} else {
-							pts.Instrumentation.Adf.Frequencies.selectedKhz[1].setValue(radNavScratchpad);
+						}
+					}
+				} else if (size(split("/", radNavScratchpad)) == 1) {
+					if (num(radNavScratchpad) == radNavScratchpad) {
+						returny = parseFrequencyADF(radNavScratchpad, i, 1);
+						if (returny == 1) {
+							mcdu_message(i, "FORMAT ERROR");
+						} elsif (returny == 2) {
+							mcdu_message(i, "ENTRY OUT OF RANGE");
+						} elsif (returny == 3) {
+							mcdu_message(i, "NOT ALLOWED");
+						} elsif (returny == 4) {
 							fmgc.FMGCInternal.ADF2.freqSet = 1;
 							mcdu_scratchpad.scratchpads[i].empty();
 						}
-					} else {
-						mcdu_message(i, "NOT ALLOWED");
+					} else if (isstr(radNavScratchpad)) {
+						returny = parseIdentADF(radNavScratchpad, i, 1);
+						if (returny == 1) {
+							mcdu_message(i, "FORMAT ERROR");
+						} elsif (returny == 2) {
+							# TODO - NEW NAVAID page
+							mcdu_message(i, "NOT IN DATA BASE");
+						} elsif (returny == 3) {
+							fmgc.FMGCInternal.ADF2.freqSet = 1;
+							mcdu_scratchpad.scratchpads[i].empty();
+						}
 					}
 				} else {
-					mcdu_message(i, "NOT ALLOWED");
+					mcdu_message(i, "FORMAT ERROR");
 				}
 			}
 		} else if (key == "R6") {
