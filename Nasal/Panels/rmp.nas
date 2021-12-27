@@ -97,6 +97,7 @@ var sel_crs_rmp1 = props.globals.initNode("/systems/radio/rmp[0]/select-crs", 1,
 var sel_crs_rmp2 = props.globals.initNode("/systems/radio/rmp[1]/select-crs", 1, "BOOL");
 
 var vhf3_data_mode = props.globals.initNode("/systems/radio/vhf3-data-mode", 1, "BOOL");
+var rmpNav = [props.globals.initNode("/systems/radio/rmp[0]/nav", 0, "BOOL"),props.globals.initNode("/systems/radio/rmp[1]/nav", 0, "BOOL")];
 
 var init = func() {
 	chan_rmp1.setValue("vhf1");
@@ -478,14 +479,14 @@ var change_nav_mode = func(rmp_nr, nav_mode) {
 		if (rmp_nr == 2 and (chan_rmp2.getValue() == "vor" or chan_rmp2.getValue() == "ls" or chan_rmp2.getValue() == "adf")) {
 			chan_rmp2.setValue("vhf2");
 		}
-		setprop("/FMGC/internal/ils1freq-set", 1);
-		setprop("/FMGC/internal/ils1crs-set", 1);
-		setprop("/FMGC/internal/vor1freq-set", 1);
-		setprop("/FMGC/internal/vor1crs-set", 1);
-		setprop("/FMGC/internal/vor2freq-set", 1);
-		setprop("/FMGC/internal/vor2crs-set", 1);
-		setprop("/FMGC/internal/adf1freq-set", 1);
-		setprop("/FMGC/internal/adf2freq-set", 1);	
+		fmgc.FMGCInternal.ILS.freqSet = 1;
+		fmgc.FMGCInternal.ILS.crsSet = 1;
+		fmgc.FMGCInternal.VOR1.freqSet = 1;
+		fmgc.FMGCInternal.VOR1.crsSet = 1;
+		fmgc.FMGCInternal.VOR2.freqSet = 1;
+		fmgc.FMGCInternal.VOR2.crsSet = 1;
+		fmgc.FMGCInternal.ADF1.freqSet = 1;
+		fmgc.FMGCInternal.ADF2.freqSet = 1;	
 	}
 }
 

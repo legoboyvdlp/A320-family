@@ -32,24 +32,6 @@ var alt = 0;
 var altitude = 0;
 var flap = 0;
 var flaps = 0;
-var freqnav0uf = 0;
-var freqnav0 = 0;
-var namenav0 = "XX";
-var freqnav1uf = 0;
-var freqnav1 = 0;
-var namenav1 = "XX";
-var freqnav2uf = 0;
-var freqnav2 = 0;
-var namenav2 = "XX";
-var freqnav3uf = 0;
-var freqnav3 = 0;
-var namenav3 = "XX";
-var freqadf0uf = 0;
-var freqadf0 = 0;
-var nameadf0 = "XX";
-var freqadf1uf = 0;
-var freqadf1 = 0;
-var nameadf1 = "XX";
 var ias = 0;
 var mach = 0;
 var ktsmach = 0;
@@ -66,18 +48,12 @@ var windSpeed = 0;
 var windsDidChange = 0;
 var tempOverspeed = nil;
 
-setprop("position/gear-agl-ft", 0);
+setprop("/position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-agl-ft", 1500); #eventually set to 1500 above runway
 setprop("/it-autoflight/internal/vert-speed-fpm", 0);
 setprop("/it-autoflight/output/fma-pwr", 0);
 setprop("/instrumentation/nav[0]/nav-id", "XXX");
 setprop("/instrumentation/nav[1]/nav-id", "XXX");
-setprop("/FMGC/internal/ils1-mcdu", "XXX/999.99");
-setprop("/FMGC/internal/ils2-mcdu", "XXX/999.99");
-setprop("/FMGC/internal/vor1-mcdu", "XXX/999.99");
-setprop("/FMGC/internal/vor2-mcdu", "999.99/XXX");
-setprop("/FMGC/internal/adf1-mcdu", "XXX/999.99");
-setprop("/FMGC/internal/adf2-mcdu", "999.99/XXX");
 
 var FMGCAlignDone = [props.globals.initNode("/FMGC/internal/align1-done", 0, "BOOL"), props.globals.initNode("/FMGC/internal/align2-done", 0, "BOOL"), props.globals.initNode("/FMGC/internal/align3-done", 0, "BOOL")];
 var FMGCAlignTime = [props.globals.initNode("/FMGC/internal/align1-time", 0, "DOUBLE"), props.globals.initNode("/FMGC/internal/align2-time", 0, "DOUBLE"), props.globals.initNode("/FMGC/internal/align3-time", 0, "DOUBLE")];
@@ -245,6 +221,32 @@ var FMGCInternal = {
 	mngKtsMach: 0,
 	mngSpd: 0,
 	mngSpdCmd: 0,
+	
+	# RADNAV
+	ADF1: {
+		freqSet: 0,
+		mcdu: "XXX/999.99"
+	},
+	ADF2: {
+		freqSet: 0,
+		mcdu: "999.99/XXX"
+	},
+	ILS: {
+		crsSet: 0,
+		freqCalculated: 0,
+		freqSet: 0,
+		mcdu: "XXX/999.99"
+	},
+	VOR1: {
+		crsSet: 0,
+		freqSet: 0,
+		mcdu: "XXX/999.99"
+	},
+	VOR2: {
+		crsSet: 0,
+		freqSet: 0,
+		mcdu: "999.99/XXX"
+	},
 };
 
 var postInit = func() {
@@ -523,78 +525,53 @@ var updateFuel = func {
 ############################
 # Flight Phase and Various #
 ############################
-
+var freqnav0 = nil;
 var nav0 = func {
-	var freqnav0uf = getprop("/instrumentation/nav[0]/frequencies/selected-mhz");
-	var freqnav0 = sprintf("%.2f", freqnav0uf);
-	var namenav0 = getprop("/instrumentation/nav[0]/nav-id") or "";
+	freqnav0 = sprintf("%.2f", pts.Instrumentation.Nav.Frequencies.selectedMhz[0].getValue());
 	if (freqnav0 >= 108.10 and freqnav0 <= 111.95) {
-		if (namenav0 != "") {
-			setprop("/FMGC/internal/ils1-mcdu", namenav0 ~ "/" ~ freqnav0);
-		} else {
-			setprop("/FMGC/internal/ils1-mcdu", freqnav0);
-		}
+		var namenav0 = getprop("/instrumentation/nav[0]/nav-id") or "   ";
+		fmgc.FMGCInternal.ILS.mcdu = namenav0 ~ "/" ~ freqnav0;
 	}
 }
 
-var nav1 = func {
-	var freqnav1uf = getprop("/instrumentation/nav[1]/frequencies/selected-mhz");
-	var freqnav1 = sprintf("%.2f", freqnav1uf);
-	var namenav1 = getprop("/instrumentation/nav[1]/nav-id") or "";
-	if (freqnav1 >= 108.10 and freqnav1 <= 111.95) {
-		if (namenav1 != "") {
-			setprop("/FMGC/internal/ils2-mcdu", freqnav1 ~ "/" ~ namenav1);
-		} else {
-			setprop("/FMGC/internal/ils2-mcdu", freqnav1);
-		}
-	}
-}
-
+var freqnav2 = nil;
 var nav2 = func {
-	var freqnav2uf = getprop("/instrumentation/nav[2]/frequencies/selected-mhz");
-	var freqnav2 = sprintf("%.2f", freqnav2uf);
-	var namenav2 = getprop("/instrumentation/nav[2]/nav-id") or "";
+	freqnav2 = sprintf("%.2f", pts.Instrumentation.Nav.Frequencies.selectedMhz[2].getValue());
 	if (freqnav2 >= 108.00 and freqnav2 <= 117.95) {
-		if (namenav2 != "") {
-			setprop("/FMGC/internal/vor1-mcdu", namenav2 ~ "/" ~ freqnav2);
-		} else {
-			setprop("/FMGC/internal/vor1-mcdu", freqnav2);
-		}
+		var namenav2 = getprop("/instrumentation/nav[2]/nav-id") or "   ";
+		fmgc.FMGCInternal.VOR1.mcdu = namenav2 ~ "/" ~ freqnav2;
 	}
 }
 
+var freqnav3 = nil;
 var nav3 = func {
-	var freqnav3uf = getprop("/instrumentation/nav[3]/frequencies/selected-mhz");
-	var freqnav3 = sprintf("%.2f", freqnav3uf);
-	var namenav3 = getprop("/instrumentation/nav[3]/nav-id") or "";
+	freqnav3 = sprintf("%.2f", pts.Instrumentation.Nav.Frequencies.selectedMhz[3].getValue());
 	if (freqnav3 >= 108.00 and freqnav3 <= 117.95) {
-		if (namenav3 != "") {
-			setprop("/FMGC/internal/vor2-mcdu", freqnav3 ~ "/" ~ namenav3);
-		} else {
-			setprop("/FMGC/internal/vor2-mcdu", freqnav3);
-		}
+		var namenav3 = getprop("/instrumentation/nav[3]/nav-id") or "   ";
+		fmgc.FMGCInternal.VOR2.mcdu = freqnav3 ~ "/" ~ namenav3;
 	}
 }
 
+var freqadf0 = nil;
 var adf0 = func {
-	var freqadf0 = sprintf("%.1f", pts.Instrumentation.Adf.Frequencies.selectedKhz[0].getValue());
+	freqadf0 = sprintf("%.1f", pts.Instrumentation.Adf.Frequencies.selectedKhz[0].getValue());
 	if (freqadf0 >= 190 and freqadf0 <= 1799) {
 		var nameadf0 = pts.Instrumentation.Adf.ident[0].getValue() or "   ";
-		setprop("/FMGC/internal/adf1-mcdu", nameadf0 ~ "/" ~ freqadf0);
+		fmgc.FMGCInternal.ADF1.mcdu =  nameadf0 ~ "/" ~ freqadf0;
 	}
 }
 
+var freqadf1 = nil;
 var adf1 = func {
-	var freqadf1 = sprintf("%.1f", pts.Instrumentation.Adf.Frequencies.selectedKhz[1].getValue());
+	freqadf1 = sprintf("%.1f", pts.Instrumentation.Adf.Frequencies.selectedKhz[1].getValue());
 	if (freqadf1 >= 190 and freqadf1 <= 1799) {
 		var nameadf1 = pts.Instrumentation.Adf.ident[1].getValue() or "   ";
-		setprop("/FMGC/internal/adf2-mcdu", freqadf1 ~ "/" ~ nameadf1);
+		fmgc.FMGCInternal.ADF2.mcdu = freqadf1 ~ "/" ~ nameadf1;
 	}
 }
 
 var radios = maketimer(1, func() {
 	nav0();
-	nav1();
 	nav2();
 	nav3();
 	adf0();
@@ -952,28 +929,28 @@ var updateAirportRadios = func {
 		setprop("/FMGC/internal/ldg-elev", airport.elevation * M2FT); # eventually should be runway elevation
 		magnetic_hdg = geo.normdeg(destination_rwy.heading - getprop("/environment/magnetic-variation-deg"));
 		runway_ils = destination_rwy.ils_frequency_mhz;
-		if (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set") and !getprop("/FMGC/internal/ils1crs-set")) {
-			setprop("/FMGC/internal/ils1freq-calculated", runway_ils);
-			setprop("/instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
-			setprop("/instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
-		} elsif (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set")) {
-			setprop("/FMGC/internal/ils1freq-calculated", runway_ils);
-			setprop("/instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
-		} elsif (!getprop("/FMGC/internal/ils1crs-set")) {
-			setprop("/instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+		if (runway_ils != nil and !fmgc.FMGCInternal.ILS.freqSet and !fmgc.FMGCInternal.ILS.crsSet) {
+			fmgc.FMGCInternal.ILS.freqCalculated = runway_ils;
+			pts.Instrumentation.Nav.Frequencies.selectedMhz[0].setValue(runway_ils);
+			pts.Instrumentation.Nav.Radials.selectedDeg[0].setValue(magnetic_hdg);
+		} elsif (runway_ils != nil and !fmgc.FMGCInternal.ILS.freqSet) {
+			fmgc.FMGCInternal.ILS.freqCalculated = runway_ils;
+			pts.Instrumentation.Nav.Frequencies.selectedMhz[0].setValue(runway_ils);
+		} elsif (!fmgc.FMGCInternal.ILS.crsSet) {
+			pts.Instrumentation.Nav.Radials.selectedDeg[0].setValue(magnetic_hdg);
 		}
 	} elsif (airportRadiosPhase <= 1 and departure_rwy != nil) {
 		magnetic_hdg = geo.normdeg(departure_rwy.heading - getprop("/environment/magnetic-variation-deg"));
 		runway_ils = departure_rwy.ils_frequency_mhz;
-		if (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set") and !getprop("/FMGC/internal/ils1crs-set")) {
-			setprop("/FMGC/internal/ils1freq-calculated", runway_ils);
-			setprop("/instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
-			setprop("/instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
-		} elsif (runway_ils != nil and !getprop("/FMGC/internal/ils1freq-set")) {
-			setprop("/FMGC/internal/ils1freq-calculated", runway_ils);
-			setprop("/instrumentation/nav[0]/frequencies/selected-mhz", runway_ils);
-		} elsif (!getprop("/FMGC/internal/ils1crs-set")) {
-			setprop("/instrumentation/nav[0]/radials/selected-deg", magnetic_hdg);
+		if (runway_ils != nil and !fmgc.FMGCInternal.ILS.freqSet and !fmgc.FMGCInternal.ILS.crsSet) {
+			fmgc.FMGCInternal.ILS.freqCalculated = runway_ils;
+			pts.Instrumentation.Nav.Frequencies.selectedMhz[0].setValue(runway_ils);
+			pts.Instrumentation.Nav.Radials.selectedDeg[0].setValue(magnetic_hdg);
+		} elsif (runway_ils != nil and !fmgc.FMGCInternal.ILS.freqSet) {
+			fmgc.FMGCInternal.ILS.freqCalculated = runway_ils;
+			pts.Instrumentation.Nav.Frequencies.selectedMhz[0].setValue(runway_ils);
+		} elsif (!fmgc.FMGCInternal.ILS.crsSet) {
+			pts.Instrumentation.Nav.Radials.selectedDeg[0].setValue(magnetic_hdg);
 		}
 	}
 
@@ -1238,6 +1215,7 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 var timer30secLanding = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/landing-time") + 30) {
 		FMGCInternal.phase = 7;
+		
 		if (FMGCInternal.costIndexSet) {
 			setprop("/FMGC/internal/last-cost-index", FMGCInternal.costIndex);
 		} else {

@@ -593,7 +593,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.dmeR.setColor(0,0.6,0.85);
 		if((var navident=getprop("/instrumentation/adf[1]/ident")) != "")
 			me.symbols.vorRId.setText(navident);
-		else me.symbols.vorRId.setText(sprintf("%3d",getprop("/instrumentation/adf[1]/frequencies/selected-khz")));
+		else me.symbols.vorRId.setText(sprintf("%3d",pts.Instrumentation.Adf.Frequencies.selectedKhz[1].getValue()));
 			me.symbols.vorRId.setColor(0,0.6,0.85);
 		me.symbols.dmeRDist.setText("");
 		me.symbols.dmeRDist.setColor(0,0.6,0.85);
