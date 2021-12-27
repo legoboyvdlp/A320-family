@@ -798,7 +798,7 @@ canvas.NDStyles["Airbus"] = {
 					if(nd.get_switch("toggle_display_mode") == "APP")
 						nd.symbols.ilsLbl.setText("ILS");
 					else
-						nd.symbols.ilsLbl.setText("VOR 1");
+						nd.symbols.ilsLbl.setText("VOR1");
 				},
 				is_false: func(nd) nd.symbols.ilsLbl.hide(),
 			},
@@ -1660,13 +1660,13 @@ canvas.NDStyles["Airbus"] = {
 				is_true: func(nd) {
 					nd.symbols.dmeL.show();
 					if(nd.get_switch("toggle_lh_vor_adf") < 0){
-						nd.symbols.vorL.setText("ADF 1");
+						nd.symbols.vorL.setText("ADF1");
 						nd.symbols.vorL.setColor(0.195,0.96,0.097);
 						nd.symbols.vorLId.setColor(0.195,0.96,0.097);
 						#nd.symbols.dmeLDist.setColor(0.195,0.96,0.097);
 						nd.symbols.dmeL.setText("");
 					} else {
-						nd.symbols.vorL.setText("VOR 1");
+						nd.symbols.vorL.setText("VOR1");
 						nd.symbols.vorL.setColor(1,1,1);
 						nd.symbols.vorLId.setColor(1,1,1);
 						#nd.symbols.dmeLDist.setColor(1,1,1);
@@ -1687,12 +1687,12 @@ canvas.NDStyles["Airbus"] = {
 				is_true: func(nd) {
 					nd.symbols.dmeR.show();
 					if(nd.get_switch("toggle_rh_vor_adf") < 0){
-						nd.symbols.vorR.setText("ADF 2");
+						nd.symbols.vorR.setText("ADF2");
 						nd.symbols.vorR.setColor(0.195,0.96,0.097);
 						nd.symbols.vorRId.setColor(0.195,0.96,0.097);
 						nd.symbols.dmeR.setText("");
 					} else {
-						nd.symbols.vorR.setText("VOR 2");
+						nd.symbols.vorR.setText("VOR2");
 						nd.symbols.vorR.setColor(1,1,1);
 						nd.symbols.vorRId.setColor(1,1,1);
 						#nd.symbols.dmeRDist.setColor(1,1,1);
@@ -1718,10 +1718,11 @@ canvas.NDStyles["Airbus"] = {
 						var adf = "instrumentation/adf/";
 						var navident = getprop(adf~ "ident");
 						var frq = getprop(adf~ "frequencies/selected-khz");
-						if(navident != "")
+						if(navident != "") {
 							nd.symbols.vorLId.setText(navident);
-						else 
+						} else {
 							nd.symbols.vorLId.setText(sprintf("%3d", frq));
+						}
 						nd.symbols.dmeLDist.setText("");
 					} else {
 						var nav = nd.get_nav_path("vor", 0);
@@ -1730,10 +1731,11 @@ canvas.NDStyles["Airbus"] = {
 						var dme = nd.get_nav_path("dme", 0);
 						var dst = getprop(dme~ "indicated-distance-nm");
 						#print(dme~ "indicated-distance-nm");
-						if(getprop(nav~ "in-range"))
+						if(getprop(nav~ "in-range")) {
 							nd.symbols.vorLId.setText(navID);
-						else
+						} else {
 							nd.symbols.vorLId.setText(frq);
+						}
 						if(getprop(dme~ "in-range"))
 							nd.symbols.dmeLDist.setText(sprintf("%3.1f",
 											dst));
@@ -1775,10 +1777,11 @@ canvas.NDStyles["Airbus"] = {
 						var adf = "instrumentation/adf[1]/";
 						var navident = getprop(adf~ "ident");
 						var frq = getprop(adf~ "frequencies/selected-khz");
-						if(navident != "")
+						if(navident != "") {
 							nd.symbols.vorRId.setText(navident);
-						else 
+						} else {
 							nd.symbols.vorRId.setText(sprintf("%3d", frq));
+						}
 						nd.symbols.dmeRDist.setText("");
 					} else {
 						var nav = nd.get_nav_path("vor", 1);
@@ -1787,10 +1790,11 @@ canvas.NDStyles["Airbus"] = {
 						var dme = nd.get_nav_path("dme", 1);
 						var dst = getprop(dme~ "indicated-distance-nm");
 						#print(dme~ "indicated-distance-nm");
-						if(getprop(nav~ "in-range"))
+						if(getprop(nav~ "in-range")) {
 							nd.symbols.vorRId.setText(navID);
-						else
+						} else {
 							nd.symbols.vorRId.setText(frq);
+						}
 						if(getprop(dme~ "in-range"))
 							nd.symbols.dmeRDist.setText(sprintf("%3.1f",
 											dst));
