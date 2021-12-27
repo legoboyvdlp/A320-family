@@ -521,6 +521,7 @@ var updateFuel = func {
 ############################
 # Flight Phase and Various #
 ############################
+# TODO - if no ID is found, should trigger a NOT IN DATA BASE message
 var freqnav0 = nil;
 var nav0 = func {
 	freqnav0 = sprintf("%.2f", pts.Instrumentation.Nav.Frequencies.selectedMhz[0].getValue());
