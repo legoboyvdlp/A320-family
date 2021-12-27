@@ -2013,7 +2013,7 @@
 		<format type="string">%s</format>
 		<property>controls/radio/rmp[0]/active-display</property>
 		<truncate type="bool">false</truncate>
-		<font type="string">AirbusRMP.ttf</font>
+		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -2061,7 +2061,7 @@
 		<format type="string">888.888</format>
 		<property>autopilot/serviceable</property>
 		<truncate type="bool">false</truncate>
-		<font type="string">AirbusRMP.ttf</font>
+		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -2109,7 +2109,7 @@
 		<format type="string">%s</format>
 		<property>controls/radio/rmp[0]/standby-display</property>
 		<truncate type="bool">false</truncate>
-		<font type="string">AirbusRMP.ttf</font>
+		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -2157,7 +2157,7 @@
 		<format type="string">888.888</format>
 		<property>autopilot/serviceable</property>
 		<truncate type="bool">false</truncate>
-		<font type="string">AirbusRMP.ttf</font>
+		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>

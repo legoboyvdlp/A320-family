@@ -6434,7 +6434,7 @@
 		<type type="string">number-value</type>
 		<format type="string">%2.1fV</format>
 		<property>systems/electrical/bus/dc-hot-1</property>
-		<font type="string">Airbus7Seg.ttf</font>
+		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -6460,7 +6460,7 @@
 		<type type="string">text-value</type>
 		<format type="string">88.8V</format>
 		<property>autopilot/serviceable</property>
-		<font type="string">Airbus7Seg.ttf</font>
+		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -6486,7 +6486,7 @@
 		<type type="string">number-value</type>
 		<format type="string">%2.1fV</format>
 		<property>systems/electrical/bus/dc-hot-2</property>
-		<font type="string">Airbus7Seg.ttf</font>
+		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
@@ -6512,7 +6512,7 @@
 		<type type="string">text-value</type>
 		<format type="string">88.8V</format>
 		<property>autopilot/serviceable</property>
-		<font type="string">Airbus7Seg.ttf</font>
+		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
 		<draw-alignment type="bool">false</draw-alignment>
 		<draw-boundingbox type="bool">false</draw-boundingbox>
