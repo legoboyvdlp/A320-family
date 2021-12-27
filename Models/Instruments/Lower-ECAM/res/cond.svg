@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1024pt"
    height="1024pt"
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="cond.svg">
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="cond.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <metadata
      id="metadata375">
     <rdf:RDF>
@@ -37,24 +37,26 @@
      guidetolerance="10"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
      id="namedview371"
      showgrid="false"
-     inkscape:zoom="0.64"
-     inkscape:cx="695.07573"
-     inkscape:cy="944.3933"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:zoom="0.90509668"
+     inkscape:cx="561.81843"
+     inkscape:cy="673.96115"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2">
+     inkscape:current-layer="svg2"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="pt">
     <inkscape:grid
        type="xygrid"
        id="grid5153" />
   </sodipodi:namedview>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.67340493px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.6734px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="48.639896"
      y="48.280994"
      id="PageTitleCOND"
@@ -64,7 +66,7 @@
        id="tspan4709"
        x="48.639896"
        y="48.280994"
-       style="font-size:44.08086014px;line-height:0;fill:#cecdce;fill-opacity:1;stroke-width:3.67340493px">COND</tspan></text>
+       style="font-size:44.0809px;line-height:0;fill:#cecdce;fill-opacity:1;stroke-width:3.6734px">COND</tspan></text>
   <rect
      style="fill:#cecdce;fill-opacity:1"
      id="PageTitleCOND2"
@@ -75,7 +77,7 @@
      inkscape:label="#rect3718" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:2.77442408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:2.77442px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="313.45657"
      y="97.765625"
      id="CONDFanFwdFault"
@@ -85,7 +87,7 @@
        id="tspan4587"
        x="313.45657"
        y="97.765625"
-       style="font-size:33.29309082px;line-height:0;fill:#bb6100;fill-opacity:1;stroke-width:2.77442408px">FAN</tspan></text>
+       style="font-size:33.2931px;line-height:0;fill:#bb6100;fill-opacity:1;stroke-width:2.77442px">FAN</tspan></text>
   <rect
      style="fill:#cecdce;fill-opacity:1;stroke-width:0.86598712"
      id="rect3956-8-3-3"
@@ -122,7 +124,7 @@
   </g>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:40px"
      x="720.00421"
      y="215.465"
      id="CONDTempAFT"
@@ -131,10 +133,10 @@
        id="tspan5151-3"
        x="720.00421"
        y="215.465"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b">34</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;font-size:40px">34</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:40px"
      x="493.86606"
      y="215.46501"
      id="CONDTempFWD"
@@ -143,10 +145,10 @@
        id="tspan5151-3-6"
        x="493.86606"
        y="215.46501"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px">34</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px;font-size:40px">34</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:40px"
      x="269.65335"
      y="215.46501"
      id="CONDTempCKPT"
@@ -155,7 +157,7 @@
        id="tspan5151-3-6-5"
        x="269.65335"
        y="215.46501"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px">34</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px;font-size:40px">34</tspan></text>
   <rect
      style="fill:#cecdce;fill-opacity:1;stroke-width:0.53966081"
      id="rect3956-8-3-3-5"
@@ -181,7 +183,7 @@
      transform="rotate(90)" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:2.77442408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:2.77442px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="631.45154"
      y="97.952538"
      id="CONDFanAftFault"
@@ -191,7 +193,7 @@
        id="tspan4587-9"
        x="631.45154"
        y="97.952538"
-       style="font-size:33.29309082px;line-height:0;fill:#bb6100;fill-opacity:1;stroke-width:2.77442408px">FAN</tspan></text>
+       style="font-size:33.2931px;line-height:0;fill:#bb6100;fill-opacity:1;stroke-width:2.77442px">FAN</tspan></text>
   <rect
      style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:5.05554008;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect5105-5"
@@ -202,7 +204,7 @@
      transform="rotate(90)" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.52312994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.52313px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="856.18103"
      y="37.231632"
      id="CONDTempUnit-text"
@@ -212,10 +214,10 @@
        id="tspan4642"
        x="856.18103"
        y="37.231632"
-       style="font-size:30.27799988px;line-height:0">    TEMP   :</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30.278px;line-height:0;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:start;text-anchor:start">TEMP   :</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:2.52312994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:2.52313px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="1020.7702"
      y="37.878414"
      id="CONDTempUnit"
@@ -225,7 +227,7 @@
        id="tspan4662"
        x="1020.7702"
        y="37.878414"
-       style="font-size:30.27799988px;line-height:0"> °C</tspan></text>
+       style="font-size:30.278px;line-height:0;-inkscape-font-specification:'FBW Display-EIS';font-family:'FBW Display-EIS';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"> °C</tspan></text>
   <rect
      style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.09431279;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect5105-1"
@@ -262,7 +264,7 @@
        style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.76551205;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.62508571"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.625086"
        x="221.56564"
        y="279.96747"
        id="text4971"
@@ -270,11 +272,11 @@
          sodipodi:role="line"
          x="221.56564"
          y="279.96747"
-         style="font-size:25.00342751px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.62508571"
+         style="font-size:25.0034px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.625086"
          id="tspan4973">C</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.6385085"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.638508"
        x="343.26071"
        y="285.13028"
        id="text4979"
@@ -283,11 +285,11 @@
          id="tspan4977"
          x="343.26071"
          y="285.13028"
-         style="font-size:25.54034042px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.6385085">H</tspan></text>
+         style="font-size:25.5403px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.638508">H</tspan></text>
   </g>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68228626px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68229px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="216.7287"
      y="163.90752"
      id="APUGentext-7"
@@ -297,10 +299,10 @@
        id="tspan4729"
        x="216.7287"
        y="163.90752"
-       style="font-size:32.18743515px;line-height:0;fill:#cecdce;fill-opacity:1;stroke-width:2.68228626px">CKPT</tspan></text>
+       style="font-size:32.1874px;line-height:0;fill:#cecdce;fill-opacity:1;stroke-width:2.68229px">CKPT</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68228602px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68229px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="467.41418"
      y="163.52992"
      id="APUGentext-7-2"
@@ -310,10 +312,10 @@
        id="tspan4749"
        x="467.41418"
        y="163.52992"
-       style="font-size:32.18700027px;line-height:0">FWD</tspan></text>
+       style="font-size:32.187px;line-height:0">FWD</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68228602px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68229px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="704.31982"
      y="163.46629"
      id="APUGentext-7-2-1"
@@ -323,10 +325,10 @@
        id="tspan4769"
        x="704.31982"
        y="163.46629"
-       style="font-size:32.18700027px;line-height:0">AFT</tspan></text>
+       style="font-size:32.187px;line-height:0">AFT</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:40px"
      x="268.29697"
      y="269.87991"
      id="CONDDuctTempCKPT"
@@ -335,10 +337,10 @@
        id="tspan5151-3-6-5-1"
        x="268.29697"
        y="269.87991"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px">34</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px;font-size:40px">34</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:40px"
      x="494.50436"
      y="269.24161"
      id="CONDDuctTempFWD"
@@ -347,10 +349,10 @@
        id="tspan5151-3-6-9"
        x="494.50436"
        y="269.24161"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px">34</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px;font-size:40px">34</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:40px"
      x="720.08398"
      y="268.0448"
      id="CONDDuctTempAFT"
@@ -359,7 +361,7 @@
        id="tspan5151-3-9"
        x="720.08398"
        y="268.0448"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px">34</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px;font-size:40px">34</tspan></text>
   <g
      id="CONDTrimValveCKPT"
      inkscape:label="#g4870"
@@ -402,7 +404,7 @@
        style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75068456;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.62508571"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.625086"
        x="221.56564"
        y="279.96747"
        id="text4971-8"
@@ -410,11 +412,11 @@
          sodipodi:role="line"
          x="221.56564"
          y="279.96747"
-         style="font-size:25.00342751px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.62508571"
+         style="font-size:25.0034px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.625086"
          id="tspan4973-1">C</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.6385085"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.638508"
        x="343.26071"
        y="285.13028"
        id="text4979-2"
@@ -423,7 +425,7 @@
          id="tspan4977-9"
          x="343.26071"
          y="285.13028"
-         style="font-size:25.54034042px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.6385085">H</tspan></text>
+         style="font-size:25.5403px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.638508">H</tspan></text>
   </g>
   <g
      transform="translate(224.8544,-0.57971191)"
@@ -467,7 +469,7 @@
        style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.73555821;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.62508571"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.625086"
        x="221.56564"
        y="279.96747"
        id="text4971-8-8"
@@ -475,11 +477,11 @@
          sodipodi:role="line"
          x="221.56564"
          y="279.96747"
-         style="font-size:25.00342751px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.62508571"
+         style="font-size:25.0034px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.625086"
          id="tspan4973-1-8">C</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.6385085"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.638508"
        x="343.26071"
        y="285.13028"
        id="text4979-2-5"
@@ -488,7 +490,7 @@
          id="tspan4977-9-0"
          x="343.26071"
          y="285.13028"
-         style="font-size:25.54034042px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.6385085">H</tspan></text>
+         style="font-size:25.5403px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.638508">H</tspan></text>
   </g>
   <g
      transform="translate(449.85443,-0.57974243)"
@@ -519,21 +521,21 @@
        id="text5049"
        y="332.37225"
        x="1004.2363"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.73987794"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.739878"
        xml:space="preserve"><tspan
          id="tspan5053"
          sodipodi:role="line"
          x="1004.2363"
          y="332.37225"
-         style="font-size:29.59499741px;line-height:1.25">HOT</tspan></text>
+         style="font-size:29.595px;line-height:1.25">HOT</tspan></text>
     <text
        transform="scale(0.99117946,1.008899)"
        id="text5057"
        y="408.18839"
        x="907.98334"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.83926964"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.83927"
        xml:space="preserve"><tspan
-         style="font-size:33.57078552px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.83926964"
+         style="font-size:33.5708px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.83927"
          y="408.18839"
          x="907.98334"
          id="tspan5055"
@@ -580,7 +582,7 @@
          sodipodi:nodetypes="cc"
          inkscape:label="#APUN-scale" />
       <rect
-         style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75371224;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.753712;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect5105-1-7-2-4-0-4"
          width="5.3955846"
          height="12.452538"
@@ -592,10 +594,10 @@
          id="text4971-8-8-5"
          y="279.96747"
          x="221.56564"
-         style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.62508571"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.625086"
          xml:space="preserve"><tspan
            id="tspan4973-1-8-0"
-           style="font-size:25.00342751px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.62508571"
+           style="font-size:25.0034px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.625086"
            y="279.96747"
            x="221.56564"
            sodipodi:role="line">C</tspan></text>
@@ -604,9 +606,9 @@
          id="text4979-2-5-3"
          y="285.13028"
          x="343.26071"
-         style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.6385085"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.638508"
          xml:space="preserve"><tspan
-           style="font-size:25.54034042px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.6385085"
+           style="font-size:25.5403px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.638508"
            y="285.13028"
            x="343.26071"
            id="tspan4977-9-0-6"
@@ -617,9 +619,9 @@
        id="CONDTempCargoAFT"
        y="474.75494"
        x="734.49084"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:40px"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px;font-size:40px"
          y="474.75494"
          x="734.49084"
          id="tspan5151-3-3"
@@ -629,9 +631,9 @@
        id="CONDDuctTempCargoAFT"
        y="514.75751"
        x="721.77655"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:40px"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:end;text-anchor:end;fill:#0dc04b;stroke-width:1px;font-size:40px"
          y="514.75751"
          x="721.77655"
          id="tspan5151-3-9-0"
@@ -641,7 +643,7 @@
        inkscape:label="#g3445"
        id="CONDOutletValve">
       <path
-         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
          id="path5107-1"
          inkscape:connector-curvature="0"
@@ -659,7 +661,7 @@
        inkscape:label="#g3445"
        id="CONDHotAirCargoValve">
       <path
-         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
          id="path5107-1-4"
          inkscape:connector-curvature="0"
@@ -686,19 +688,19 @@
        transform="translate(-8.4626824,314.74572)">
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.73987794"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.739878"
          x="1004.2363"
          y="332.37225"
          id="text5049-6"
          transform="scale(0.89370291,1.1189401)"><tspan
-           style="font-size:29.59499741px;line-height:1.25"
+           style="font-size:29.595px;line-height:1.25"
            sodipodi:role="line"
            id="tspan5053-9"
            x="1004.2363"
            y="332.37225">HOT</tspan></text>
       <text
          xml:space="preserve"
-         style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.83926964"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.83927"
          x="907.98334"
          y="408.18839"
          id="text5057-3"
@@ -707,7 +709,7 @@
            id="tspan5055-7"
            x="907.98334"
            y="408.18839"
-           style="font-size:33.57078552px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.83926964">AIR</tspan></text>
+           style="font-size:33.5708px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.83927">AIR</tspan></text>
     </g>
     <rect
        transform="rotate(90)"
@@ -716,14 +718,14 @@
        height="104.99595"
        width="5.3955846"
        id="rect5105-6-4"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.18858266;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.18858;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        y="671.5"
        x="699.00403"
        height="27.145565"
        width="5.3955846"
        id="rect5105-6-4-5"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.11282313;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.11282;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <g
        inkscape:label="#g4870"
        id="CONDTrimValveCargoAFT"
@@ -735,7 +737,7 @@
          id="path4844-7-1-5"
          inkscape:connector-curvature="0" />
       <rect
-         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.31802487;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:1.31802;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect5105-1-7-2-9-7-5-4"
          width="5.3955846"
          height="38.079739"
@@ -748,7 +750,7 @@
        inkscape:label="#g3445"
        id="CONDInletValve">
       <path
-         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 872.14551,172.28989 c 0,15.58192 -12.63164,28.21356 -28.21356,28.21356 -15.58192,0 -28.21356,-12.63164 -28.21356,-28.21356 0,-15.58192 12.63164,-28.21356 28.21356,-28.21356 15.58192,0 28.21356,12.63164 28.21356,28.21356 z"
          id="path5107-1-44"
          inkscape:connector-curvature="0"
@@ -767,14 +769,14 @@
        height="13.04398"
        width="5.3955846"
        id="rect5105-6-0"
-       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.77140373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.771404;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        y="493.45602"
        x="768.60443"
        height="13.04398"
        width="5.3955846"
        id="rect5105-6-0-7"
-       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.77140373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.771404;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        transform="rotate(90)"
        y="-774"
@@ -782,7 +784,7 @@
        height="47.999954"
        width="5.3955846"
        id="rect5105-6-0-7-8"
-       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.47977984;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.47978;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        transform="rotate(90)"
        y="-675"
@@ -790,14 +792,14 @@
        height="117.74998"
        width="5.3955846"
        id="rect5105-6-0-7-8-6"
-       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.31769943;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.3177;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        y="419.5"
        x="557.25"
        height="87.000038"
        width="5.3955846"
        id="rect5105-6-0-7-8-6-8"
-       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.99221587;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.99222;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        transform="rotate(-90)"
        y="557.25"
@@ -805,27 +807,27 @@
        height="215.24992"
        width="5.3955846"
        id="rect5105-6-0-7-8-6-8-8"
-       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.13363338;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.13363;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        y="415.75"
        x="768.75"
        height="11.99999"
        width="5.3955846"
        id="rect5105-6-0-7-4"
-       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.73988998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.73989;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <text
        transform="scale(0.94655352,1.0564643)"
        inkscape:label="#text3720"
        id="APUGentext-7-2-1-3"
        y="448.3699"
        x="597.97925"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68228602px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.68229px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
          id="tspan4769-1"
          sodipodi:role="line"
          x="597.97925"
          y="448.3699"
-         style="font-size:32.18700027px;line-height:0;stroke-width:2.68228602px">AFT</tspan></text>
+         style="font-size:32.187px;line-height:0;stroke-width:2.68229px">AFT</tspan></text>
   </g>
   <g
      id="g913">
@@ -999,11 +1001,29 @@
        id="tspan861"
        x="512.93152"
        y="940.98541"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.99999905px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#bb6100;fill-opacity:1">G.LOAD 0.6</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#bb6100;fill-opacity:1">G.LOAD 0.6</tspan></text>
   <path
      style="fill:none;stroke:#cdcecd;stroke-width:5.24999984;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="m 217.49999,240.24999 c 0,0 -67.49999,-3.75 -97.49999,-26.25"
      id="path963"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cc" />
+  <circle
+     id="path7562"
+     style="fill:#0dc04b;stroke:#000000;stroke-width:0.75"
+     cx="854.58984"
+     cy="29.589844"
+     r="0.44246721" />
+  <circle
+     id="path7564"
+     style="fill:#0dc04b;stroke:#000000;stroke-width:0.75"
+     cx="854.58984"
+     cy="29.589844"
+     r="0.44246721" />
+  <circle
+     id="path7566"
+     style="fill:#0dc04b;stroke:#000000;stroke-width:0.75"
+     cx="863.67188"
+     cy="38.964844"
+     r="0.44246721" />
 </svg>
