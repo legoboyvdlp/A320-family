@@ -30,7 +30,7 @@ var parseFrequencyVOR = func(scratchpad, i, num) {
 var searchResultVOR = nil;
 var parseIdentVOR = func(scratchpad, i, num) {
 	# TODO - duplicate names
-	if (size(scratchpad) == 3) {
+	if (size(scratchpad) == 2 or size(scratchpad) == 3) {
 		searchResultVOR = findNavaidsByID(scratchpad);
 		if (size(searchResultVOR) != 0) {
 			pts.Instrumentation.Nav.Frequencies.selectedMhz[num].setValue(searchResultVOR[0].frequency / 100);
