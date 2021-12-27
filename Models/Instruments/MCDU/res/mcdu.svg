@@ -41,14 +41,14 @@
      inkscape:window-height="986"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="8.9318521"
-     inkscape:cx="541.48904"
-     inkscape:cy="205.66843"
+     inkscape:zoom="0.27912038"
+     inkscape:cx="1538.7626"
+     inkscape:cy="759.52892"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
-     inkscape:current-layer="PERFTO"
-     showguides="false"
+     inkscape:current-layer="svg2"
+     showguides="true"
      inkscape:snap-global="false"
      units="px"
      inkscape:document-rotation="0"
@@ -63,9 +63,9 @@
      id="Scratchpad"
      y="836.87567"
      x="20.138426"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-font-specification:HoneywellMCDU;font-stretch:normal;font-variant:normal;font-size:63.99999981px"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      xml:space="preserve"><tspan
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;font-size:63.99999981px"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
        y="836.87567"
        x="20.138426"
        id="tspan4242"
@@ -309,7 +309,7 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="521.74713"
        y="69.238266"
        id="Simple_Title2"
@@ -319,10 +319,10 @@
          id="tspan1367"
          x="521.74713"
          y="69.238266"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">TITLE</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">TITLE</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="521.74713"
        y="69.238266"
        id="Simple_Title"
@@ -332,7 +332,7 @@
          id="tspan4246"
          x="521.74713"
          y="69.238266"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">TITLE</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">TITLE</tspan></text>
     <text
        inkscape:label="#text4244"
        transform="scale(0.991516,1.0085566)"
@@ -1115,9 +1115,9 @@
          id="FPLN_FROM"
          y="68.861366"
          x="177.72771"
-         style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-weight:normal;line-height:0%;font-family:HoneywellMCDU;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-font-specification:HoneywellMCDU;font-stretch:normal;font-variant:normal"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:51.2px;line-height:1.25;font-family:BoeingCDULarge;-inkscape-font-specification:BoeingCDULarge;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:51.2px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1"
            y="68.861366"
            x="177.72771"
            id="tspan1240"
@@ -2503,16 +2503,16 @@
        id="PERFTO_F"
        y="187.10254"
        x="399.48752"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="187.10254"
          x="399.48752"
          id="tspan4391"
          sodipodi:role="line">F</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="398.21817"
        y="304.35275"
        id="PERFTO_S"
@@ -2522,23 +2522,23 @@
          id="tspan4395"
          x="398.21817"
          y="304.35275"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">S</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">S</tspan></text>
     <text
        inkscape:label="#text4244"
        transform="scale(0.991516,1.0085566)"
        id="PERFTO_O"
        y="422.15305"
        x="398.21817"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="422.15305"
          x="398.21817"
          id="tspan4399"
          sodipodi:role="line">O</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:49.06666643px;-inkscape-font-specification:HoneywellMCDU;font-stretch:normal;font-variant:normal"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="478.87796"
        y="171.04486"
        id="PERFTO_FE"
@@ -2548,23 +2548,23 @@
          id="tspan4367"
          x="478.87796"
          y="171.04486"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;font-size:49.06666643px">=</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">=</tspan></text>
     <text
        inkscape:label="#text4244"
        transform="scale(0.90642126,1.1032398)"
        id="PERFTO_SE"
        y="278.32764"
        x="478.87796"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:49.06666643px;-inkscape-font-specification:HoneywellMCDU;font-stretch:normal;font-variant:normal"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;font-size:49.06666643px"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="278.32764"
          x="478.87796"
          id="tspan4371"
          sodipodi:role="line">=</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:49.06666643px;-inkscape-font-specification:HoneywellMCDU;font-stretch:normal;font-variant:normal"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="478.87796"
        y="385.6102"
        id="PERFTO_OE"
@@ -2574,7 +2574,7 @@
          id="tspan4375"
          x="478.87796"
          y="385.6102"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;font-size:49.06666643px">=</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">=</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -2586,16 +2586,16 @@
        id="PERFAPPR_F"
        y="187.10254"
        x="399.48752"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="187.10254"
          x="399.48752"
          id="tspan1115"
          sodipodi:role="line">F</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="398.21817"
        y="304.35275"
        id="PERFAPPR_S"
@@ -2605,16 +2605,16 @@
          id="tspan1082"
          x="398.21817"
          y="304.35275"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">S</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">S</tspan></text>
     <text
        inkscape:label="#text4244"
        transform="scale(0.991516,1.0085566)"
        id="PERFAPPR_O"
        y="422.15305"
        x="398.21817"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="422.15305"
          x="398.21817"
          id="tspan1085"
@@ -2638,16 +2638,16 @@
        id="PERFAPPR_SE"
        y="278.32764"
        x="478.87796"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:49.06666643px;-inkscape-font-specification:HoneywellMCDU;font-stretch:normal;font-variant:normal"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;font-size:49.06666643px"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="278.32764"
          x="478.87796"
          id="tspan1091"
          sodipodi:role="line">=</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:49.06666643px;-inkscape-font-specification:HoneywellMCDU;font-stretch:normal;font-variant:normal"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="478.87796"
        y="385.6102"
        id="PERFAPPR_OE"
@@ -2657,7 +2657,7 @@
          id="tspan1094"
          x="478.87796"
          y="385.6102"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;font-size:49.06666643px">=</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">=</tspan></text>
     <g
        style="stroke:#179ab7;stroke-opacity:1"
        id="PERFAPPR_LDG_3"
@@ -2765,16 +2765,16 @@
        id="PERFGA_F"
        y="187.10254"
        x="399.48752"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="187.10254"
          x="399.48752"
          id="tspan1129"
          sodipodi:role="line">F</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="398.21817"
        y="304.35275"
        id="PERFGA_S"
@@ -2784,16 +2784,16 @@
          id="tspan1132"
          x="398.21817"
          y="304.35275"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">S</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">S</tspan></text>
     <text
        inkscape:label="#text4244"
        transform="scale(0.991516,1.0085566)"
        id="PERFGA_O"
        y="422.15305"
        x="398.21817"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1"
          y="422.15305"
          x="398.21817"
          id="tspan1135"
@@ -2826,7 +2826,7 @@
          sodipodi:role="line">=</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;line-height:0%;font-family:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-size:49.06666643px;-inkscape-font-specification:HoneywellMCDU;font-stretch:normal;font-variant:normal"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:0%;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="478.87796"
        y="385.6102"
        id="PERFGA_OE"
@@ -2836,7 +2836,7 @@
          id="tspan1144"
          x="478.87796"
          y="385.6102"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;font-size:49.06666643px">=</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:49.0667px;line-height:1.25;font-family:HoneywellMCDU;-inkscape-font-specification:HoneywellMCDU;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1">=</tspan></text>
   </g>
   <g
      style="opacity:0.94000005;stroke:#179ab7;stroke-opacity:1"
