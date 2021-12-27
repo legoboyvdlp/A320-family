@@ -154,6 +154,12 @@ var Gear = {
 };
 
 var Instrumentation = {
+	Adf: {
+		ident: [props.globals.getNode("/instrumentation/adf[0]/ident"), props.globals.getNode("/instrumentation/adf[1]/ident")],
+		Frequencies: {
+			selectedKhz: [props.globals.getNode("/instrumentation/adf[0]/frequencies/selected-khz"), props.globals.getNode("/instrumentation/adf[1]/frequencies/selected-khz")],
+		},
+	},
 	AirspeedIndicator: {
 		indicatedSpdKt: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt"),
 		indicatedMach: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach"),
@@ -205,6 +211,12 @@ var Instrumentation = {
 		},
 	},
 	Nav: {
+		Frequencies: {
+			selectedMhz: [props.globals.getNode("/instrumentation/nav[0]/frequencies/selected-mhz"), props.globals.getNode("/instrumentation/nav[1]/frequencies/selected-mhz"), props.globals.getNode("/instrumentation/nav[2]/frequencies/selected-mhz"), props.globals.getNode("/instrumentation/nav[3]/frequencies/selected-mhz")],
+		},
+		Radials: {
+			selectedDeg: [props.globals.getNode("/instrumentation/nav[0]/radials/selected-deg"), props.globals.getNode("/instrumentation/nav[1]/radials/selected-deg"), props.globals.getNode("/instrumentation/nav[2]/radials/selected-deg"), props.globals.getNode("/instrumentation/nav[3]/radials/selected-deg")],
+		},
 		gsDeflection: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm"),
 		locDeflection: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm"),
 	},

@@ -84,24 +84,6 @@ var database1 = props.globals.getNode("/FMGC/internal/navdatabase", 1);
 var database2 = props.globals.getNode("/FMGC/internal/navdatabase2", 1);
 var databaseCode = props.globals.getNode("/FMGC/internal/navdatabasecode", 1);
 
-# RADNAV
-var vor1 = props.globals.getNode("/FMGC/internal/vor1-mcdu", 1);
-var vor2 = props.globals.getNode("/FMGC/internal/vor2-mcdu", 1);
-var ils1 = props.globals.getNode("/FMGC/internal/ils1-mcdu", 1);
-var adf1 = props.globals.getNode("/FMGC/internal/adf1-mcdu", 1);
-var adf2 = props.globals.getNode("/FMGC/internal/adf2-mcdu", 1);
-var vor1FreqSet = props.globals.getNode("/FMGC/internal/vor1freq-set", 1);
-var vor1CRSSet = props.globals.getNode("/FMGC/internal/vor1crs-set", 1);
-var vor2FreqSet = props.globals.getNode("/FMGC/internal/vor2freq-set", 1);
-var vor2CRSSet = props.globals.getNode("/FMGC/internal/vor2crs-set", 1);
-var ils1FreqSet = props.globals.getNode("/FMGC/internal/ils1freq-set", 1);
-var ils1CRSSet = props.globals.getNode("/FMGC/internal/ils1crs-set", 1);
-var adf1FreqSet = props.globals.getNode("/FMGC/internal/adf1freq-set", 1);
-var adf2FreqSet = props.globals.getNode("/FMGC/internal/adf2freq-set", 1);
-var ils1CRS = props.globals.getNode("/instrumentation/nav[0]/radials/selected-deg", 1);
-var vor1CRS = props.globals.getNode("/instrumentation/nav[2]/radials/selected-deg", 1);
-var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-deg", 1);
-
 # INT-A
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
 
@@ -2578,8 +2560,8 @@ var canvas_MCDU_base = {
 				me["Simple_L0S"].hide();
 				showLeftS(me,1, 1, 1, 1, 1, -1);
 				showLeftArrow(me,-1, -1, -1, -1, -1, -1);
-				showRight(me,1, 1, 1, 1, 1, -1);
-				showRightS(me,1, 1, 1, 1, 1, -1);
+				showRight(me,1, 1, -1, -1, 1, -1);
+				showRightS(me,1, 1, -1, -1, 1, -1);
 				showRightArrow(me,-1, -1, -1, -1, -1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
@@ -2594,86 +2576,107 @@ var canvas_MCDU_base = {
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "blu");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "blu");
 				me.colorCenter("wht", "wht", "wht", "wht", "wht", "grn");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRight("blu", "blu", "blu", "blu", "blu", "blu");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "blu");
 				
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (vor1FreqSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.VOR1.freqSet) {
 				me["Simple_L1"].setFontSize(normal); 
 			} else {
 				me["Simple_L1"].setFontSize(small); 
 			}
-			if (vor1CRSSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.VOR1.crsSet) {
 				me["Simple_L2"].setFontSize(normal); 
 			} else {
 				me["Simple_L2"].setFontSize(small); 
 			}
-			if (ils1FreqSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.ILS.freqSet) {
 				me["Simple_L3"].setFontSize(normal); 
 			} else {
 				me["Simple_L3"].setFontSize(small); 
 			}
-			if (ils1CRSSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.ILS.crsSet) {
 				me["Simple_L4"].setFontSize(normal); 
 			} else {
 				me["Simple_L4"].setFontSize(small); 
 			}
-			if (adf1FreqSet.getValue() == 1) {
+			
+			me["Simple_L6"].setText(" ADF1 BFO");
+			me["Simple_R6"].setText("ADF2 BFO ");
+			
+			if (fmgc.FMGCInternal.ADF1.freqSet) {
 				me["Simple_L5"].setFont(default); 
 				me["Simple_L5"].setFontSize(normal); 
-				me["Simple_L5"].setText(sprintf("%s", adf1.getValue()));
+				me["Simple_L5"].setText(sprintf(" %s", fmgc.FMGCInternal.ADF1.mcdu));
+				me["Simple_L6"].show();
+				
+				if (rmp.BFOActive[0].getValue()) {
+					# TODO - wrong arrow
+					me["Simple_L6_Arrow"].hide();
+				} else {
+					me["Simple_L6_Arrow"].show();
+				}
 			} else {
 				me["Simple_L5"].setFont(symbol); 
 				me["Simple_L5"].setFontSize(small); 
-				me["Simple_L5"].setText("[   ]/[     ]");
+				me["Simple_L5"].setText("[   ]/[    .]");
+				me["Simple_L6"].hide();
+				me["Simple_L6_Arrow"].hide();
 			}
 			
-			if (vor2FreqSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.VOR2.freqSet) {
 				me["Simple_R1"].setFontSize(normal); 
 			} else {
 				me["Simple_R1"].setFontSize(small); 
 			}
-			if (vor2CRSSet.getValue() == 1) {
+			if (fmgc.FMGCInternal.VOR2.crsSet) {
 				me["Simple_R2"].setFontSize(normal); 
 			} else {
 				me["Simple_R2"].setFontSize(small); 
 			}
-			if (adf2FreqSet.getValue() == 1) {
+			
+			if (fmgc.FMGCInternal.ADF2.freqSet) {
 				me["Simple_R5"].setFont(default); 
 				me["Simple_R5"].setFontSize(normal); 
-				me["Simple_R5"].setText(sprintf("%s", adf2.getValue()));
+				me["Simple_R5"].setText(sprintf("%s ", fmgc.FMGCInternal.ADF2.mcdu));
+				me["Simple_R6"].show();
+				
+				if (rmp.BFOActive[1].getValue()) {
+					# TODO - wrong arrow
+					me["Simple_R6_Arrow"].hide();
+				} else {
+					me["Simple_R6_Arrow"].show();
+				}
 			} else {
 				me["Simple_R5"].setFont(symbol); 
 				me["Simple_R5"].setFontSize(small); 
-				me["Simple_R5"].setText("[     ]/[   ]");
+				me["Simple_R5"].setText("[    .]/[   ]");
+				me["Simple_R6"].hide();
+				me["Simple_R6_Arrow"].hide();
 			}
 			
-			me["Simple_L1"].setText(" " ~ vor1.getValue());
-			me["Simple_L2"].setText(sprintf("%3.0f", vor1CRS.getValue()));
-			me["Simple_L3"].setText(" " ~ ils1.getValue());
-			me["Simple_L4"].setText(sprintf("%3.0f", ils1CRS.getValue()));
+			me["Simple_L1"].setText(" " ~ fmgc.FMGCInternal.VOR1.mcdu);
+			me["Simple_L2"].setText(sprintf("%03.0f", pts.Instrumentation.Nav.Radials.selectedDeg[2].getValue()));
+			me["Simple_L3"].setText(" " ~ fmgc.FMGCInternal.ILS.mcdu);
+			me["Simple_L4"].setText(sprintf("%03.0f", pts.Instrumentation.Nav.Radials.selectedDeg[0].getValue()));
 			me["Simple_L1S"].setText("VOR1/FREQ");
 			me["Simple_L2S"].setText("CRS");
 			me["Simple_L3S"].setText("ILS /FREQ");
 			me["Simple_L4S"].setText("CRS");
 			me["Simple_L5S"].setText("ADF1/FREQ");
-			me["Simple_R1"].setText(" " ~ vor2.getValue());
-			me["Simple_R2"].setText(sprintf("%3.0f", vor2CRS.getValue()));
-			me["Simple_R3"].setText("[  ]/[   ]");
-			me["Simple_R4"].setText("-.-   [   ]");
+			me["Simple_R1"].setText(" " ~ fmgc.FMGCInternal.VOR2.mcdu);
+			me["Simple_R2"].setText(sprintf("%03.0f", pts.Instrumentation.Nav.Radials.selectedDeg[3].getValue()));
 			me["Simple_R1S"].setText("FREQ/VOR2");
 			me["Simple_R2S"].setText("CRS");
-			me["Simple_R3S"].setText("CHAN/ MLS");
-			me["Simple_R4S"].setText("SLOPE   CRS");
 			me["Simple_R5S"].setText("FREQ/ADF2");
 			
-			if (getprop("systems/radio/rmp[0]/nav") or getprop("systems/radio/rmp[1]/nav")) {
+			if (rmp.rmpNav[0].getValue() or rmp.rmpNav[1].getValue()) {
 				me["Simple_L1"].hide();
 				me["Simple_L2"].hide();
 				me["Simple_L3"].hide();
@@ -2681,8 +2684,6 @@ var canvas_MCDU_base = {
 				me["Simple_L5"].hide();
 				me["Simple_R1"].hide();
 				me["Simple_R2"].hide();
-				me["Simple_R3"].hide();
-				me["Simple_R4"].hide();
 				me["Simple_R5"].hide();
 			} else {
 				me["Simple_L1"].show();
@@ -2692,8 +2693,6 @@ var canvas_MCDU_base = {
 				me["Simple_L5"].show();
 				me["Simple_R1"].show();
 				me["Simple_R2"].show();
-				me["Simple_R3"].show();
-				me["Simple_R4"].show();
 				me["Simple_R5"].show();
 			}
 		} else if (page == "INITA") {

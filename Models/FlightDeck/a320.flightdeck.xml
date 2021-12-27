@@ -111,6 +111,7 @@
 		<type>rotate</type>
 		<object-name>ddrmi_hdg</object-name>
 		<property>instrumentation/ddrmi/heading</property>
+		<factor>-1</factor>
 		<axis>
 			<object-name>ddrmi_hdg.axis</object-name>
 		</axis>
@@ -121,6 +122,7 @@
 		<object-name>ddrmi_pointer_1</object-name>
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/needle-1</property>
+		<factor>-1</factor>
 		<axis>
 			<object-name>ddrmi_hdg.axis</object-name>
 		</axis>
@@ -131,6 +133,7 @@
 		<object-name>ddrmi_pointer_2</object-name>
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/needle-2</property>
+		<factor>-1</factor>
 		<axis>
 			<object-name>ddrmi_hdg.axis</object-name>
 		</axis>
@@ -148,7 +151,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>instrumentation/ddrmi/vor-adf-1</property>
-				<min>-1</min>
+				<min>0</min>
 				<max>1</max>
 			</binding>
 		</action>
@@ -160,8 +163,7 @@
 		<object-name>ddrmi_vor_adf_select_1</object-name>
 		<property>instrumentation/ddrmi/vor-adf-1</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>90</dep></entry> <!-- ADF -->
-			<entry><ind> 0</ind><dep>45</dep></entry> <!-- OFF -->
+			<entry><ind> 0</ind><dep>90</dep></entry> <!-- ADF -->
 			<entry><ind> 1</ind><dep> 0</dep></entry> <!-- VOR -->
 		</interpolation>
 		<axis>
@@ -180,7 +182,7 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>instrumentation/ddrmi/vor-adf-2</property>
-				<min>-1</min>
+				<min>0</min>
 				<max>1</max>
 			</binding>
 		</action>
@@ -192,8 +194,7 @@
 		<object-name>ddrmi_vor_adf_select_2</object-name>
 		<property>instrumentation/ddrmi/vor-adf-2</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>-90</dep></entry> <!-- ADF -->
-			<entry><ind> 0</ind><dep>-45</dep></entry> <!-- OFF -->
+			<entry><ind> 0</ind><dep>-90</dep></entry> <!-- ADF -->
 			<entry><ind> 1</ind><dep> 0</dep></entry> <!-- VOR -->
 		</interpolation>
 		<axis>
@@ -9037,8 +9038,6 @@
 		<kerning>default</kerning>
 	</text>
 	
-
-	
 	<text>
 		<name>dme1_0</name>
 		<offsets>
@@ -9101,14 +9100,74 @@
 		<kerning>default</kerning>
 	</text>
 	
+	<text>
+		<name>dme_flag</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.149</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>right-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">literal</type>
+		<text type="string">----</text>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	
+	<text>
+		<name>dme1_flag</name>
+		<offsets>
+			<x-m>-0.529</x-m>
+			<y-m>-0.116</y-m>
+			<z-m>0.1305</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>right-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">literal</type>
+		<text type="string">----</text>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>led.txf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.007</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+	
 	<animation>
 		<type>material</type>
 		<object-name>dme_0</object-name>
 		<object-name>dme</object-name>
-<!--		<object-name>dme_20</object-name>-->
+		<object-name>dme_flag</object-name>
 		<object-name>dme1_0</object-name>
 		<object-name>dme1</object-name>
-<!--		<object-name>dme1_20</object-name>-->
+		<object-name>dme1_flag</object-name>
 		<diffuse>
 			<red>1.00</red>
 			<green>0.355</green>
@@ -9149,8 +9208,8 @@
 					</greater-than>
 				</or>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>110</value>
 				</greater-than-equals>
 				<equals>
 					<property>instrumentation/ddrmi/vor-adf-1</property>
@@ -9176,8 +9235,8 @@
 					<value>20</value>
 				</less-than-equals>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>110</value>
 				</greater-than-equals>
 				<equals>
 					<property>instrumentation/ddrmi/vor-adf-1</property>
@@ -9205,8 +9264,8 @@
 					</greater-than>
 				</or>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>110</value>
 				</greater-than-equals>
 				<equals>
 					<property>instrumentation/ddrmi/vor-adf-2</property>
@@ -9232,8 +9291,46 @@
 					<value>20.0</value>
 				</less-than-equals>
 				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25.0</value>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>110.0</value>
+				</greater-than-equals>
+				<equals>
+					<property>instrumentation/ddrmi/vor-adf-2</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>dme_flag</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[2]/operable</property>
+				<not><property>instrumentation/dme[2]/in-range</property></not>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>110.0</value>
+				</greater-than-equals>
+				<equals>
+					<property>instrumentation/ddrmi/vor-adf-1</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>dme1_flag</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/dme[3]/operable</property>
+				<not><property>instrumentation/dme[3]/in-range</property></not>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-ess</property>
+					<value>110.0</value>
 				</greater-than-equals>
 				<equals>
 					<property>instrumentation/ddrmi/vor-adf-2</property>

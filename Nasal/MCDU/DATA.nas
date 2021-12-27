@@ -11,13 +11,13 @@ var dataInput = func(key, i) {
 		setprop("MCDU[" ~ i ~ "]/page", "GPSMON");
 	} elsif (key == "L5") {
 		if (canvas_mcdu.myClosestAirport[i] != nil) {
-					canvas_mcdu.myClosestAirport[i].del();
+			canvas_mcdu.myClosestAirport[i].del();
 		}
 		canvas_mcdu.myClosestAirport[i] = nil;
 		canvas_mcdu.myClosestAirport[i] = closestAirportPage.new(i);
 		setprop("MCDU[" ~ i ~ "]/page", "CLOSESTAIRPORT");
 	} elsif (key == "R5") {
-		setprop("MCDU[" ~ i ~ "]/page", "PRINTFUNC");
+		mcdu_message(i, "PRINTER NOT AVAILABLE");
 	}
 }
 
