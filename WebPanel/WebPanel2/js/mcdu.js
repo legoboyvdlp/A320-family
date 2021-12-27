@@ -1,5 +1,5 @@
 const MCDU = (function () {
-	const screenImageBaseUrl = '/screenshot?canvasindex=10&type=jpg';
+	const screenImageBaseUrl = '/screenshot?canvasindex=13&type=jpg';
 	const refreshInterval = 2000;
 
 	const body = document.body;
