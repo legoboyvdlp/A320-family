@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1024pt"
    height="1024pt"
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="fuel.svg">
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="fuel.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <metadata
      id="metadata375">
     <rdf:RDF>
@@ -45,17 +45,19 @@
      guidetolerance="10"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
      id="namedview371"
-     showgrid="false"
-     inkscape:zoom="0.68"
-     inkscape:cx="434.43172"
-     inkscape:cy="1022.8371"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     showgrid="true"
+     inkscape:zoom="2.72"
+     inkscape:cx="149.81618"
+     inkscape:cy="964.70588"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2">
+     inkscape:current-layer="svg2"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="pt">
     <inkscape:grid
        type="xygrid"
        id="grid5153" />
@@ -72,10 +74,10 @@
        id="tspan4329"
        x="22.146826"
        y="772.49347"
-       style="font-size:30.05855751px;line-height:1.25">1</tspan></text>
+       style="font-size:30.0586px;line-height:1.25">1</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.67340493px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.6734px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="57.800312"
      y="58.444595"
      id="PageTitleFUEL"
@@ -85,7 +87,7 @@
        id="tspan4660"
        x="57.800312"
        y="58.444595"
-       style="font-size:44.08099747px;line-height:0">FUEL</tspan></text>
+       style="font-size:44.081px;line-height:0">FUEL</tspan></text>
   <rect
      style="fill:#cecdce;fill-opacity:1"
      id="PageTitleCOND2"
@@ -96,7 +98,7 @@
      inkscape:label="#rect3718" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.64407849px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.64408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="493.22452"
      y="33.318096"
      id="FUEL-text-1"
@@ -106,10 +108,10 @@
        id="tspan4665"
        x="493.22452"
        y="33.318096"
-       style="font-size:31.72899818px;line-height:0">F.USED</tspan></text>
+       style="font-size:31.729px;line-height:0">F.USED</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.52312994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.52313px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="161.9035"
      y="222.82034"
      id="FUEL-APU-label"
@@ -119,10 +121,10 @@
        id="tspan4737"
        x="161.9035"
        y="222.82034"
-       style="font-size:30.27799988px;line-height:0">APU</tspan></text>
+       style="font-size:30.278px;line-height:0">APU</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.51659px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="568.72894"
      y="451.87012"
      id="FUEL-Center-quantity"
@@ -132,7 +134,7 @@
        id="tspan4739"
        x="568.72894"
        y="451.87012"
-       style="font-size:30.19910812px;line-height:0;fill:#0dc04b;fill-opacity:1;stroke-width:2.5165925px">0000</tspan></text>
+       style="font-size:30.1991px;line-height:0;fill:#0dc04b;fill-opacity:1;stroke-width:2.51659px">0000</tspan></text>
   <g
      id="FUEL-XFEED"
      inkscape:label="#g3445"
@@ -162,7 +164,7 @@
      transform="rotate(-90)" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.64407849px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.64408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="519.24542"
      y="66.23494"
      id="FUEL-text-2"
@@ -172,10 +174,10 @@
        id="tspan4685"
        x="519.24542"
        y="66.23494"
-       style="font-size:31.72900009px;line-height:0">1+2</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.729px;line-height:0;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS'">1+2</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#239eb9;fill-opacity:1;stroke:none;stroke-width:2.64407849px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#239eb9;fill-opacity:1;stroke:none;stroke-width:2.64408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="520.71503"
      y="135.97148"
      id="Fused-weight-unit"
@@ -185,7 +187,7 @@
        id="tspan4705"
        x="520.71503"
        y="135.97148"
-       style="font-size:31.72900009px;line-height:0">LBS</tspan></text>
+       style="font-size:31.729px;line-height:0">LBS</tspan></text>
   <rect
      style="fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:2.2426722;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect5105-6-0-7-8-6-8-8-9"
@@ -232,7 +234,7 @@
      y="405.25" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.51659px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="315.9696"
      y="468.43625"
      id="FUEL-Left-Inner-quantity"
@@ -242,23 +244,23 @@
        id="tspan4819"
        x="279.51846"
        y="468.43625"
-       style="font-size:30.1989994px;line-height:0;text-align:end;text-anchor:end;">0000</tspan></text>
+       style="font-size:30.199px;line-height:0;text-align:end;text-anchor:end">0000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.51659px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="827.31793"
      y="468.59464"
      id="FUEL-Right-Inner-quantity"
      inkscape:label="#text5149"
      transform="scale(0.9562547,1.0457465)"><tspan
-       style="font-size:30.19900131px;line-height:0;text-align:end;text-anchor:end;stroke-width:2.5165925px;"
+       style="font-size:30.199px;line-height:0;text-align:end;text-anchor:end;stroke-width:2.51659px"
        y="468.59464"
        x="790.86682"
        sodipodi:role="line"
        id="tspan4819-8">0000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.51659px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="981.7066"
      y="468.28946"
      id="FUEL-Right-Outer-quantity"
@@ -268,10 +270,10 @@
        id="tspan4857"
        x="1008.5436"
        y="468.28946"
-       style="font-size:30.1989994px;line-height:0;text-anchor:middle;text-align:center;">000</tspan></text>
+       style="font-size:30.199px;line-height:0;text-align:center;text-anchor:middle">000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.51659px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="106.37531"
      y="468.35995"
      id="FUEL-Left-Outer-quantity"
@@ -281,7 +283,7 @@
        id="tspan4877"
        x="79.538307"
        y="468.35995"
-       style="font-size:30.1989994px;line-height:0;text-align:end;text-anchor:end;">000</tspan></text>
+       style="font-size:30.199px;line-height:0;text-align:end;text-anchor:end">000</tspan></text>
   <rect
      style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.17700815;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect5105-6-0-7-8-6-8-8-7-3-8-3"
@@ -400,7 +402,7 @@
   </g>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.12171543"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.12172"
      x="260.50327"
      y="57.44717"
      id="FUEL-ENG-1-label"
@@ -410,10 +412,10 @@
        id="tspan5071"
        x="260.50327"
        y="57.44717"
-       style="font-size:44.86862183px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:1.12171543">1</tspan></text>
+       style="font-size:44.8686px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:1.12172">1</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.12171543"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.12172"
      x="768.26727"
      y="57.18037"
      id="FUEL-ENG-2-label"
@@ -423,10 +425,10 @@
        id="tspan5093"
        x="768.26727"
        y="57.18037"
-       style="font-size:44.86899948px;line-height:1.25">2</tspan></text>
+       style="font-size:44.869px;line-height:1.25">2</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26px;line-height:0%;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75"
      x="26.210106"
      y="734.67151"
      id="text5097"><tspan
@@ -434,7 +436,7 @@
        id="tspan5099"
        x="26.210106"
        y="734.67151"
-       style="font-size:30px;line-height:1.25">F.FLOW</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS'">F.FLOW</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75"
@@ -448,15 +450,15 @@
        style="font-size:30px;line-height:1.25">2</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75"
-     x="100.87872"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75"
+     x="120.37872"
      y="772.19952"
      id="text5097-7-4"><tspan
        sodipodi:role="line"
        id="tspan5139"
-       x="100.87872"
+       x="120.37872"
        y="772.19952"
-       style="font-size:30px;line-height:1.25">:</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS'">:</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.75"
@@ -482,18 +484,18 @@
        style="font-size:30px;line-height:1.25">00</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75"
-     x="163.28925"
-     y="846.48328"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75"
+     x="120.54752"
+     y="846.51776"
      id="text5097-7-4-0"><tspan
-       style="font-size:30.00000191px;line-height:1.25;stroke-width:0.75"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';stroke-width:0.75"
        sodipodi:role="line"
        id="tspan5139-8"
-       x="163.28925"
-       y="846.48328">:</tspan></text>
+       x="120.54752"
+       y="846.51776">:</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75"
      x="27.537735"
      y="844.28827"
      id="text5097-1"><tspan
@@ -501,10 +503,10 @@
        id="tspan5217"
        x="27.537735"
        y="844.28827"
-       style="font-size:30px;line-height:1.25">FOB</tspan></text>
+       style="font-size:30px;line-height:1.25;-inkscape-font-specification:'FBW Display-EIS';font-family:'FBW Display-EIS';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">FOB</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.82910466"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.829105"
      x="241.11945"
      y="824.09894"
      id="FUEL-On-Board"
@@ -514,7 +516,7 @@
        id="tspan5237"
        x="241.11945"
        y="824.09894"
-       style="font-size:33.16418839px;line-height:1.25;stroke-width:0.82910466">00000</tspan></text>
+       style="font-size:33.1642px;line-height:1.25;stroke-width:0.829105">00000</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.75"
@@ -1002,7 +1004,7 @@
      style="fill:none;stroke:#0dc04b;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75;"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
      x="786.66431"
      y="105.24868"
      id="FUEL-used-2"
@@ -1011,10 +1013,10 @@
        id="tspan5830"
        x="750.45337"
        y="105.24868"
-       style="font-size:30px;line-height:1.25;text-align:end;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke-width:0.75;">0000</tspan></text>
+       style="font-size:30px;line-height:1.25;text-align:end;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke-width:0.75">0000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75;"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
      x="542.49701"
      y="106.80015"
      id="FUEL-used-both"
@@ -1023,10 +1025,10 @@
        id="tspan5830-5"
        x="506.28607"
        y="106.80015"
-       style="font-size:30.00000191px;line-height:1.25;text-align:end;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke-width:0.75;">0000</tspan></text>
+       style="font-size:30px;line-height:1.25;text-align:end;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke-width:0.75">0000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75;"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
      x="301.11325"
      y="105.37296"
      id="FUEL-used-1"
@@ -1035,7 +1037,7 @@
        id="tspan5830-5-2"
        x="264.90231"
        y="105.37296"
-       style="font-size:30.00000191px;line-height:1.25;text-align:end;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke-width:0.75;">0000</tspan></text>
+       style="font-size:30px;line-height:1.25;text-align:end;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke-width:0.75">0000</tspan></text>
   <rect
      style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.82722223;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="FUEL-ENG-1-pipe"
@@ -1076,7 +1078,7 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;fill:#179ab7;fill-opacity:1;stroke-width:1px">°C</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.51659px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="1001.6182"
      y="562.05835"
      id="FUEL-Right-Outer-temp"
@@ -1086,10 +1088,10 @@
        id="tspan5954"
        x="1001.6182"
        y="562.05835"
-       style="font-size:30.1989994px;line-height:0">00</tspan></text>
+       style="font-size:30.199px;line-height:0">00</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.51659px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="887.56396"
      y="561.32831"
      id="FUEL-Right-Inner-temp"
@@ -1099,29 +1101,29 @@
        id="tspan6012"
        x="887.56396"
        y="561.32831"
-       style="font-size:30.1989994px;line-height:0">00</tspan></text>
+       style="font-size:30.199px;line-height:0">00</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.51659px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="229.04169"
      y="561.21387"
      id="FUEL-Left-Inner-temp"
      inkscape:label="#text5149"
      transform="scale(0.9562547,1.0457465)"><tspan
-       style="font-size:30.19900131px;line-height:0;stroke-width:2.5165925px"
+       style="font-size:30.199px;line-height:0;stroke-width:2.51659px"
        y="561.21387"
        x="229.04169"
        sodipodi:role="line"
        id="tspan6012-4">00</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.5165925px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.51659px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="110.50874"
      y="560.99017"
      id="FUEL-Left-Outer-temp"
      inkscape:label="#text5149"
      transform="scale(0.9562547,1.0457465)"><tspan
-       style="font-size:30.19900131px;line-height:0;stroke-width:2.5165925px"
+       style="font-size:30.199px;line-height:0;stroke-width:2.51659px"
        sodipodi:role="line"
        id="tspan5954-9"
        x="110.50874"
@@ -1281,7 +1283,7 @@
        style="font-size:32px;line-height:1.25">z</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'FBW Display-EIS';text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-font-specification:'FBW Display-EIS';font-stretch:normal;font-variant:normal"
      x="24"
      y="776"
      id="text4335"><tspan
@@ -1289,18 +1291,18 @@
        id="tspan4337"
        x="24"
        y="776"
-       style="font-size:32px;line-height:1.25"> </tspan></text>
+       style="font-size:32px;line-height:1.25;-inkscape-font-specification:'FBW Display-EIS';font-family:'FBW Display-EIS';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal"> </tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="37.067074"
-     y="771.12933"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="43.067074"
+     y="772.62933"
      id="text4339"><tspan
        sodipodi:role="line"
        id="tspan4341"
-       x="37.067074"
-       y="771.12933"
-       style="font-size:32px;line-height:1.25">+</tspan></text>
+       x="43.067074"
+       y="772.62933"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS'">+</tspan></text>
   <g
      id="g913">
     <rect
@@ -1473,10 +1475,10 @@
        id="tspan861"
        x="512.93152"
        y="940.98541"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.99999905px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#bb6100;fill-opacity:1">G.LOAD 0.6</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#bb6100;fill-opacity:1">G.LOAD 0.6</tspan></text>
   <path
-     style="fill:#cecdce;fill-opacity:1;stroke:#cecdce;stroke-width:2.99999991;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     d="M 29.999999,847.74995 H 86.249997"
+     style="fill:#cecdce;fill-opacity:1;stroke:#cecdce;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 26.999999,847.74995 H 83.249997"
      id="path1017"
      inkscape:connector-curvature="0" />
 </svg>

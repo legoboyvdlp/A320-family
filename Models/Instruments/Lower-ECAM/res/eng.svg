@@ -43,7 +43,7 @@
      showgrid="true"
      inkscape:zoom="1"
      inkscape:cx="594.5"
-     inkscape:cy="650"
+     inkscape:cy="330"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
@@ -659,8 +659,8 @@
      inkscape:transform-center-x="70.6625" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.750002"
-     x="264.69104"
+     style="font-style:normal;font-weight:normal;font-size:31.9999px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.750002;text-anchor:middle;text-align:center"
+     x="303.25345"
      y="181.87344"
      id="FUEL-used-1"
      inkscape:label="#text5832"
@@ -669,11 +669,11 @@
        id="tspan5830-5-2"
        x="264.69104"
        y="181.87344"
-       style="font-size:30.0001px;line-height:1.25;fill:#0dc04b;fill-opacity:1;stroke-width:0.750002">0000</tspan></text>
+       style="font-size:31.9999px;line-height:1.25;fill:#0dc04b;fill-opacity:1;stroke-width:0.750002;text-anchor:middle;text-align:center">0000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75"
-     x="682.74243"
+     style="font-style:normal;font-weight:normal;font-size:32px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:0.75;text-anchor:middle;text-align:center"
+     x="721.30493"
      y="181.74864"
      id="FUEL-used-2"
      inkscape:label="#text5832"><tspan
@@ -681,10 +681,10 @@
        id="tspan5830"
        x="682.74243"
        y="181.74864"
-       style="font-size:30px;line-height:1.25;fill:#0dc04b;fill-opacity:1;stroke-width:0.75">0000</tspan></text>
+       style="font-size:32px;line-height:1.25;fill:#0dc04b;fill-opacity:1;stroke-width:0.75;text-anchor:middle;text-align:center">0000</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:0.749999"
+     style="font-style:normal;font-weight:normal;font-size:28.0000336px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:0.749999"
      x="679.57947"
      y="209.71054"
      id="FUEL-clog-2"
@@ -694,16 +694,16 @@
        id="tspan5830-2"
        x="679.57947"
        y="209.71054"
-       style="font-size:30px;line-height:1.25;fill:#bb6100;fill-opacity:1;stroke-width:0.749999">CLOG</tspan></text>
+       style="line-height:1.25;fill:#bb6100;fill-opacity:1;stroke-width:0.749999;font-size:28.0000336px">CLOG</tspan></text>
   <text
      transform="scale(0.9999988)"
      inkscape:label="#text5832"
      id="FUEL-clog-1"
      y="209.71054"
      x="261.52823"
-     style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:0.749999"
+     style="font-style:normal;font-weight:normal;font-size:28.0000336px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:0.749999"
      xml:space="preserve"><tspan
-       style="font-size:30px;line-height:1.25;fill:#bb6100;fill-opacity:1;stroke-width:0.749999"
+       style="line-height:1.25;fill:#bb6100;fill-opacity:1;stroke-width:0.749999;font-size:28.0000336px"
        y="209.71054"
        x="261.52823"
        id="tspan933"
@@ -714,16 +714,16 @@
      id="OIL-clog-2"
      y="476.71021"
      x="679.57947"
-     style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:0.749999"
+     style="font-style:normal;font-weight:normal;font-size:28.0000336px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:0.749999"
      xml:space="preserve"><tspan
-       style="font-size:30px;line-height:1.25;fill:#bb6100;fill-opacity:1;stroke-width:0.749999"
+       style="line-height:1.25;fill:#bb6100;fill-opacity:1;stroke-width:0.749999;font-size:28.0000336px"
        y="476.71021"
        x="679.57947"
        id="tspan937"
        sodipodi:role="line">CLOG</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:12px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:0.749999"
+     style="font-style:normal;font-weight:normal;font-size:28.0000336px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:0.749999"
      x="261.52823"
      y="476.71021"
      id="OIL-clog-1"
@@ -733,7 +733,7 @@
        id="tspan941"
        x="261.52823"
        y="476.71021"
-       style="font-size:30px;line-height:1.25;fill:#bb6100;fill-opacity:1;stroke-width:0.749999">CLOG</tspan></text>
+       style="line-height:1.25;fill:#bb6100;fill-opacity:1;stroke-width:0.749999;font-size:28.0000336px">CLOG</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:40px;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
