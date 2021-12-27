@@ -39,6 +39,352 @@
 		
 	</channel>
 	
+	<channel name="ADF" execrate="8">
+	
+		<switch name="/instrumentation/adf[0]/power-supply">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/adf[0]/power-supply-bite-enable">
+			<input>/instrumentation/adf[0]/power-supply</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">0.5</rate_limit>
+		</actuator>
+		
+		<actuator name="/instrumentation/adf[0]/power-supply-bite-timer">
+			<input>/instrumentation/adf[0]/power-supply</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+	
+		<switch name="/instrumentation/adf[0]/power-supply-was-off">
+			<default value="/instrumentation/adf[0]/power-supply-was-off"/>
+			<test logic="AND" value="0">
+				/instrumentation/adf[0]/power-supply-bite-timer eq 1
+			</test>
+			<test logic="AND" value="1">
+				/instrumentation/adf[0]/power-supply-bite-enable eq 0
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/adf[0]/power-supply-node">
+			<default value="0"/>
+			<test logic="OR" value="/systems/electrical/bus/ac-ess-shed">
+				/instrumentation/adf[0]/power-supply-was-off eq 0
+				/instrumentation/adf[0]/power-supply-bite-timer eq 1
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/adf[1]/power-supply">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/adf[1]/power-supply-bite-enable">
+			<input>/instrumentation/adf[1]/power-supply</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">0.5</rate_limit>
+		</actuator>
+		
+		<actuator name="/instrumentation/adf[1]/power-supply-bite-timer">
+			<input>/instrumentation/adf[1]/power-supply</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+	
+		<switch name="/instrumentation/adf[1]/power-supply-was-off">
+			<default value="/instrumentation/adf[1]/power-supply-was-off"/>
+			<test logic="AND" value="0">
+				/instrumentation/adf[1]/power-supply-bite-timer eq 1
+			</test>
+			<test logic="AND" value="1">
+				/instrumentation/adf[1]/power-supply-bite-enable eq 0
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/adf[1]/power-supply-node">
+			<default value="0"/>
+			<test logic="OR" value="/systems/electrical/bus/ac-2">
+				/instrumentation/adf[1]/power-supply-was-off eq 0
+				/instrumentation/adf[1]/power-supply-bite-timer eq 1
+			</test>
+		</switch>
+			
+	</channel>
+	
+	<channel name="VOR" execrate="8">
+	
+		<switch name="/instrumentation/nav[2]/power-supply">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-ess ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/nav[2]/power-supply-bite-enable">
+			<input>/instrumentation/nav[2]/power-supply</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">0.333</rate_limit>
+		</actuator>
+		
+		<actuator name="/instrumentation/nav[2]/power-supply-bite-timer">
+			<input>/instrumentation/nav[2]/power-supply</input>
+			<rate_limit sense="incr">0.333</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+	
+		<switch name="/instrumentation/nav[2]/power-supply-was-off">
+			<default value="/instrumentation/nav[2]/power-supply-was-off"/>
+			<test logic="AND" value="0">
+				/instrumentation/nav[2]/power-supply-bite-timer eq 1
+			</test>
+			<test logic="AND" value="1">
+				/instrumentation/nav[2]/power-supply-bite-enable eq 0
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/nav[2]/power-supply-node">
+			<default value="0"/>
+			<test logic="OR" value="/systems/electrical/bus/ac-ess">
+				/instrumentation/nav[2]/power-supply-was-off eq 0
+				/instrumentation/nav[2]/power-supply-bite-timer eq 1
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/nav[3]/power-supply">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/nav[3]/power-supply-bite-enable">
+			<input>/instrumentation/nav[3]/power-supply</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">0.333</rate_limit>
+		</actuator>
+		
+		<actuator name="/instrumentation/nav[3]/power-supply-bite-timer">
+			<input>/instrumentation/nav[3]/power-supply</input>
+			<rate_limit sense="incr">0.333</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+	
+		<switch name="/instrumentation/nav[3]/power-supply-was-off">
+			<default value="/instrumentation/nav[3]/power-supply-was-off"/>
+			<test logic="AND" value="0">
+				/instrumentation/nav[3]/power-supply-bite-timer eq 1
+			</test>
+			<test logic="AND" value="1">
+				/instrumentation/nav[3]/power-supply-bite-enable eq 0
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/nav[3]/power-supply-node">
+			<default value="0"/>
+			<test logic="OR" value="/systems/electrical/bus/ac-2">
+				/instrumentation/nav[3]/power-supply-was-off eq 0
+				/instrumentation/nav[3]/power-supply-bite-timer eq 1
+			</test>
+		</switch>
+			
+	</channel>
+	
+	<channel name="DME" execrate="8">
+	
+		<switch name="/instrumentation/dme[0]/power-supply">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/dme[0]/power-supply-bite-enable">
+			<input>/instrumentation/dme[0]/power-supply</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">0.5</rate_limit>
+		</actuator>
+		
+		<actuator name="/instrumentation/dme[0]/power-supply-bite-timer">
+			<input>/instrumentation/dme[0]/power-supply</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+	
+		<switch name="/instrumentation/dme[0]/power-supply-was-off">
+			<default value="/instrumentation/dme[0]/power-supply-was-off"/>
+			<test logic="AND" value="0">
+				/instrumentation/dme[0]/power-supply-bite-timer eq 1
+			</test>
+			<test logic="AND" value="1">
+				/instrumentation/dme[0]/power-supply-bite-enable eq 0
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/dme[0]/power-supply-node">
+			<default value="0"/>
+			<test logic="OR" value="/systems/electrical/bus/ac-ess-shed">
+				/instrumentation/dme[0]/power-supply-was-off eq 0
+				/instrumentation/dme[0]/power-supply-bite-timer eq 1
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/dme[1]/power-supply">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/dme[1]/power-supply-bite-enable">
+			<input>/instrumentation/dme[1]/power-supply</input>
+			<rate_limit sense="incr">100</rate_limit>
+			<rate_limit sense="decr">0.5</rate_limit>
+		</actuator>
+		
+		<actuator name="/instrumentation/dme[1]/power-supply-bite-timer">
+			<input>/instrumentation/dme[1]/power-supply</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+	
+		<switch name="/instrumentation/dme[1]/power-supply-was-off">
+			<default value="/instrumentation/dme[1]/power-supply-was-off"/>
+			<test logic="AND" value="0">
+				/instrumentation/dme[1]/power-supply-bite-timer eq 1
+			</test>
+			<test logic="AND" value="1">
+				/instrumentation/dme[1]/power-supply-bite-enable eq 0
+			</test>
+		</switch>
+	
+		<switch name="/instrumentation/dme[1]/power-supply-node">
+			<default value="0"/>
+			<test logic="OR" value="/systems/electrical/bus/ac-2">
+				/instrumentation/dme[1]/power-supply-was-off eq 0
+				/instrumentation/dme[1]/power-supply-bite-timer eq 1
+			</test>
+		</switch>
+			
+	</channel>
+	
+	<channel name="ACP" execrate="8">
+		
+		<switch name="/instrumentation/adf[0]/volume-norm">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/adf1-volume">
+				/controls/audio/acp[0]/adf1-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/adf1-recive eq 0
+					/controls/audio/acp[0]/adf1-volume ge /controls/audio/acp[1]/adf1-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/adf1-volume">
+				/controls/audio/acp[1]/adf1-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/adf1-recive eq 0
+					/controls/audio/acp[0]/adf1-volume lt /controls/audio/acp[1]/adf1-volume
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/adf[1]/volume-norm">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/adf2-volume">
+				/controls/audio/acp[0]/adf2-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/adf2-recive eq 0
+					/controls/audio/acp[0]/adf2-volume ge /controls/audio/acp[1]/adf2-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/adf2-volume">
+				/controls/audio/acp[1]/adf2-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/adf2-recive eq 0
+					/controls/audio/acp[0]/adf2-volume lt /controls/audio/acp[1]/adf2-volume
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/marker-beacon/volume">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/mkr-volume">
+				/controls/audio/acp[0]/mkr-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/mkr-recive eq 0
+					/controls/audio/acp[0]/mkr-volume ge /controls/audio/acp[1]/mkr-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/mkr-volume">
+				/controls/audio/acp[1]/mkr-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/mkr-recive eq 0
+					/controls/audio/acp[0]/mkr-volume lt /controls/audio/acp[1]/mkr-volume
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/nav[0]/volume">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/ils-volume">
+				/controls/audio/acp[0]/ils-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/ils-recive eq 0
+					/controls/audio/acp[0]/ils-volume ge /controls/audio/acp[1]/ils-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/ils-volume">
+				/controls/audio/acp[1]/ils-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/ils-recive eq 0
+					/controls/audio/acp[0]/ils-volume lt /controls/audio/acp[1]/ils-volume
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/nav[2]/volume">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/vor1-volume">
+				/controls/audio/acp[0]/vor1-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/vor1-recive eq 0
+					/controls/audio/acp[0]/vor1-volume ge /controls/audio/acp[1]/vor1-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/vor1-volume">
+				/controls/audio/acp[1]/vor1-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/vor1-recive eq 0
+					/controls/audio/acp[0]/vor1-volume lt /controls/audio/acp[1]/vor1-volume
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/nav[3]/volume">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/vor2-volume">
+				/controls/audio/acp[0]/vor2-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/vor2-recive eq 0
+					/controls/audio/acp[0]/vor2-volume ge /controls/audio/acp[1]/vor2-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/vor2-volume">
+				/controls/audio/acp[1]/vor2-recive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/vor2-recive eq 0
+					/controls/audio/acp[0]/vor2-volume lt /controls/audio/acp[1]/vor2-volume
+				</test>
+			</test>
+		</switch>
+			
+	</channel>
+	
 	<channel name="System Display" execrate="8">
 		
 		<switch name="/ECAM/Lower/g-force-display-cmd">

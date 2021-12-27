@@ -45,15 +45,15 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/print/mcdu/page2/R4req", 0);
 	
 	#RADNAV
-	setprop("/FMGC/internal/ils1freq-set", 0);
-	setprop("/FMGC/internal/ils1crs-set", 0);
-	setprop("/FMGC/internal/ils1freq-calculated", 0);
-	setprop("/FMGC/internal/vor1freq-set", 0);
-	setprop("/FMGC/internal/vor1crs-set", 0);
-	setprop("/FMGC/internal/vor2freq-set", 0);
-	setprop("/FMGC/internal/vor2crs-set", 0);
-	setprop("/FMGC/internal/adf1freq-set", 0);
-	setprop("/FMGC/internal/adf2freq-set", 0);
+	fmgc.FMGCInternal.ILS.freqSet = 0;
+	fmgc.FMGCInternal.ILS.freqCalculated = 0;
+	fmgc.FMGCInternal.ILS.crsSet = 0;
+	fmgc.FMGCInternal.VOR1.freqSet = 0;
+	fmgc.FMGCInternal.VOR1.crsSet = 0;
+	fmgc.FMGCInternal.VOR2.freqSet = 0;
+	fmgc.FMGCInternal.VOR2.crsSet = 0;
+	fmgc.FMGCInternal.ADF1.freqSet = 0;
+	fmgc.FMGCInternal.ADF2.freqSet = 0;
 	
 	# INT-A
 	fmgc.FMGCInternal.altAirport = "";
@@ -847,6 +847,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("WINDCLB");
 		} else if (page == "ROUTESELECTION") {
 			initInputROUTESEL("L6",i);
+		} else if (page == "RADNAV") {
+			radnavInput("L6",i);
 		} else if (page == "PERFCLB") {
 			perfCLBInput("L6",i);
 		} else if (page == "PERFCRZ") {
@@ -1303,6 +1305,8 @@ var rskbutton = func(btn, i) {
 			mcdu_message(i, "AOC DISABLED");
 		} else if (page == "INITA") {
 			initInputA("R6",i);
+		} else if (page == "RADNAV") {
+			radnavInput("R6",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(6);
 		} else if (page == "VERTREV") {

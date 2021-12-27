@@ -97,6 +97,7 @@ var sel_crs_rmp1 = props.globals.initNode("/systems/radio/rmp[0]/select-crs", 1,
 var sel_crs_rmp2 = props.globals.initNode("/systems/radio/rmp[1]/select-crs", 1, "BOOL");
 
 var vhf3_data_mode = props.globals.initNode("/systems/radio/vhf3-data-mode", 1, "BOOL");
+var rmpNav = [props.globals.initNode("/systems/radio/rmp[0]/nav", 0, "BOOL"),props.globals.initNode("/systems/radio/rmp[1]/nav", 0, "BOOL")];
 
 var init = func() {
 	chan_rmp1.setValue("vhf1");
@@ -277,11 +278,11 @@ var update_displays_nav = func(nav) {
 			stby_display_rmp2.setValue(sprintf("%3.2f", stby_vor2.getValue()));
 		}
 	} else if (nav == 5 and chan1 == "adf") {
-		act_display_rmp1.setValue(sprintf("%4.0f", act_adf1.getValue()));
-		stby_display_rmp1.setValue(sprintf("%4.0f", stby_adf1.getValue()));
+		act_display_rmp1.setValue(sprintf("%4.2f", act_adf1.getValue()));
+		stby_display_rmp1.setValue(sprintf("%4.2f", stby_adf1.getValue()));
 	} else if (nav == 6 and chan2 == "adf") {
-		act_display_rmp2.setValue(sprintf("%4.0f", act_adf2.getValue()));
-		stby_display_rmp2.setValue(sprintf("%4.0f", stby_adf2.getValue()));
+		act_display_rmp2.setValue(sprintf("%4.2f", act_adf2.getValue()));
+		stby_display_rmp2.setValue(sprintf("%4.2f", stby_adf2.getValue()));
 	}
 }
 
@@ -478,19 +479,19 @@ var change_nav_mode = func(rmp_nr, nav_mode) {
 		if (rmp_nr == 2 and (chan_rmp2.getValue() == "vor" or chan_rmp2.getValue() == "ls" or chan_rmp2.getValue() == "adf")) {
 			chan_rmp2.setValue("vhf2");
 		}
-		setprop("/FMGC/internal/ils1freq-set", 1);
-		setprop("/FMGC/internal/ils1crs-set", 1);
-		setprop("/FMGC/internal/vor1freq-set", 1);
-		setprop("/FMGC/internal/vor1crs-set", 1);
-		setprop("/FMGC/internal/vor2freq-set", 1);
-		setprop("/FMGC/internal/vor2crs-set", 1);
-		setprop("/FMGC/internal/adf1freq-set", 1);
-		setprop("/FMGC/internal/adf2freq-set", 1);	
+		fmgc.FMGCInternal.ILS.freqSet = 1;
+		fmgc.FMGCInternal.ILS.crsSet = 1;
+		fmgc.FMGCInternal.VOR1.freqSet = 1;
+		fmgc.FMGCInternal.VOR1.crsSet = 1;
+		fmgc.FMGCInternal.VOR2.freqSet = 1;
+		fmgc.FMGCInternal.VOR2.crsSet = 1;
+		fmgc.FMGCInternal.ADF1.freqSet = 1;
+		fmgc.FMGCInternal.ADF2.freqSet = 1;	
 	}
 }
 
 # ADF Radio: Implement BFO such that you will hear audio
-var BFOActive = [props.globals.getNode("/systems/radio/rmp[0]/bfo-active"),props.globals.getNode("/systems/radio/rmp[1]/bfo-active")];
+var BFOActive = [props.globals.initNode("/systems/radio/rmp[0]/bfo-active", 0, "BOOL"),props.globals.initNode("/systems/radio/rmp[1]/bfo-active", 0, "BOOL")];
 var ADFIdent = [props.globals.getNode("/instrumentation/adf[0]/ident-audible"),props.globals.getNode("/instrumentation/adf[1]/ident-audible")];
 var ADFMode = [props.globals.getNode("/instrumentation/adf[0]/mode"),props.globals.getNode("/instrumentation/adf[1]/mode")];
 

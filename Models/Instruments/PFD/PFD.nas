@@ -515,42 +515,6 @@ var canvas_pfd = {
 					obj["GS_scale"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["pfdILS1","pfdILS2","dmeInRange","dmeDistance","pfdILSMcdu"], nil, func(val) {
-				if ((obj.number == 0 and val.pfdILS1) or (obj.number == 1 and val.pfdILS2)) {
-					obj.split_ils = split("/", val.pfdILSMcdu);
-					if (size(obj.split_ils) < 2) {
-						obj["ils_freq"].setText(obj.split_ils[0]);
-						obj["ils_freq"].show();
-						obj["ils_code"].hide();
-						obj["dme_dist"].hide();
-						obj["dme_dist_legend"].hide();
-					} else {
-						obj["ils_code"].setText(obj.split_ils[0]);
-						obj["ils_freq"].setText(obj.split_ils[1]);
-						obj["ils_code"].show();
-						obj["ils_freq"].show();
-						
-						if (val.dmeInRange) {
-							obj["dme_dist"].show();
-							obj["dme_dist_legend"].show();
-							
-							if (val.dmeDistance < 20.0) {
-								obj["dme_dist"].setText(sprintf("%1.1f", val.dmeDistance));
-							} else {
-								obj["dme_dist"].setText(sprintf("%2.0f", val.dmeDistance));
-							}
-						} else {
-							obj["dme_dist"].hide();
-							obj["dme_dist_legend"].hide();
-						}
-					}
-				} else {
-					obj["ils_code"].hide();
-					obj["ils_freq"].hide();
-					obj["dme_dist"].hide();
-					obj["dme_dist_legend"].hide();
-				}
-			}),
 			props.UpdateManager.FromHashList(["hasLocalizer","hasGlideslope","signalQuality","localizerInRange","glideslopeInRange","pfdILS1","pfdILS2"], nil, func(val) {
 				if (((obj.number == 0 and val.pfdILS1) or (obj.number == 1 and val.pfdILS2)) and val.localizerInRange and val.hasLocalizer and val.signalQuality > 0.99) {
 					obj["LOC_pointer"].show();
@@ -623,50 +587,6 @@ var canvas_pfd = {
 					obj["HDG_digit_L"].hide();
 					obj["HDG_digit_R"].hide();
 					obj["HDG_target"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashList(["pfdILSMcdu","headingPFD","pfdILS1","pfdILS2","ilsCrs"], nil, func(val) {
-				obj.split_ils = split("/", val.pfdILSMcdu);
-				
-				if (((obj.number == 0 and val.pfdILS1) or (obj.number == 1 and val.pfdILS2)) and size(obj.split_ils) == 2) {
-					obj.magnetic_hdg = val.ilsCrs;
-					obj.magnetic_hdg_dif = geo.normdeg180(obj.magnetic_hdg - val.headingPFD);
-					if (obj.magnetic_hdg_dif >= -23.62 and obj.magnetic_hdg_dif <= 23.62) {
-						obj["CRS_pointer"].setTranslation((obj.magnetic_hdg_dif / 10) * 98.5416, 0);
-						obj["ILS_HDG_R"].hide();
-						obj["ILS_HDG_L"].hide();
-						obj["CRS_pointer"].show();
-					} else if (obj.magnetic_hdg_dif < -23.62 and obj.magnetic_hdg_dif >= -180) {
-						if (int(obj.magnetic_hdg) < 10) {
-							obj["ILS_left"].setText(sprintf("00%1.0f", int(obj.magnetic_hdg)));
-						} else if (int(obj.magnetic_hdg) < 100) {
-							obj["ILS_left"].setText(sprintf("0%2.0f", int(obj.magnetic_hdg)));
-						} else {
-							obj["ILS_left"].setText(sprintf("%3.0f", int(obj.magnetic_hdg)));
-						}
-						obj["ILS_HDG_L"].show();
-						obj["ILS_HDG_R"].hide();
-						obj["CRS_pointer"].hide();
-					} else if (obj.magnetic_hdg_dif > 23.62 and obj.magnetic_hdg_dif <= 180) {
-						if (int(obj.magnetic_hdg) < 10) {
-							obj["ILS_right"].setText(sprintf("00%1.0f", int(obj.magnetic_hdg)));
-						} else if (int(obj.magnetic_hdg) < 100) {
-							obj["ILS_right"].setText(sprintf("0%2.0f", int(obj.magnetic_hdg)));
-						} else {
-							obj["ILS_right"].setText(sprintf("%3.0f", int(obj.magnetic_hdg)));
-						}
-						obj["ILS_HDG_R"].show();
-						obj["ILS_HDG_L"].hide();
-						obj["CRS_pointer"].hide();
-					} else {
-						obj["ILS_HDG_R"].hide();
-						obj["ILS_HDG_L"].hide();
-						obj["CRS_pointer"].hide();
-					}
-				} else {
-					obj["ILS_HDG_R"].hide();
-					obj["ILS_HDG_L"].hide();
-					obj["CRS_pointer"].hide();
 				}
 			}),
 			props.UpdateManager.FromHashList(["altimeterHpa","altimeterInhg","altimeterInhgMode"], nil, func(val) {
@@ -1735,6 +1655,82 @@ var canvas_pfd = {
 			}
 		}
 		
+		me.split_ils = split("/", fmgc.FMGCInternal.ILS.mcdu);
+		if ((me.number == 0 and notification.pfdILS1) or (me.number == 1 and notification.pfdILS2)) {
+			if (size(me.split_ils) < 2) {
+				me["ils_freq"].setText(me.split_ils[0]);
+				me["ils_freq"].show();
+				me["ils_code"].hide();
+				me["dme_dist"].hide();
+				me["dme_dist_legend"].hide();
+			} else {
+				me["ils_code"].setText(me.split_ils[0]);
+				me["ils_freq"].setText(me.split_ils[1]);
+				me["ils_code"].show();
+				me["ils_freq"].show();
+				
+				if (notification.dmeInRange) {
+					me["dme_dist"].show();
+					me["dme_dist_legend"].show();
+					
+					if (notification.dmeDistance < 20.0) {
+						me["dme_dist"].setText(sprintf("%1.1f", notification.dmeDistance));
+					} else {
+						me["dme_dist"].setText(sprintf("%2.0f", notification.dmeDistance));
+					}
+				} else {
+					me["dme_dist"].hide();
+					me["dme_dist_legend"].hide();
+				}
+			}
+		} else {
+			me["ils_code"].hide();
+			me["ils_freq"].hide();
+			me["dme_dist"].hide();
+			me["dme_dist_legend"].hide();
+		}
+		
+		if (((me.number == 0 and notification.pfdILS1) or (me.number == 1 and notification.pfdILS2)) and size(me.split_ils) == 2) {
+			me.magnetic_hdg = notification.ilsCrs;
+			me.magnetic_hdg_dif = geo.normdeg180(me.magnetic_hdg - notification.headingPFD);
+			if (me.magnetic_hdg_dif >= -23.62 and me.magnetic_hdg_dif <= 23.62) {
+				me["CRS_pointer"].setTranslation((me.magnetic_hdg_dif / 10) * 98.5416, 0);
+				me["ILS_HDG_R"].hide();
+				me["ILS_HDG_L"].hide();
+				me["CRS_pointer"].show();
+			} else if (me.magnetic_hdg_dif < -23.62 and me.magnetic_hdg_dif >= -180) {
+				if (int(me.magnetic_hdg) < 10) {
+					me["ILS_left"].setText(sprintf("00%1.0f", int(me.magnetic_hdg)));
+				} else if (int(me.magnetic_hdg) < 100) {
+					me["ILS_left"].setText(sprintf("0%2.0f", int(me.magnetic_hdg)));
+				} else {
+					me["ILS_left"].setText(sprintf("%3.0f", int(me.magnetic_hdg)));
+				}
+				me["ILS_HDG_L"].show();
+				me["ILS_HDG_R"].hide();
+				me["CRS_pointer"].hide();
+			} else if (me.magnetic_hdg_dif > 23.62 and me.magnetic_hdg_dif <= 180) {
+				if (int(me.magnetic_hdg) < 10) {
+					me["ILS_right"].setText(sprintf("00%1.0f", int(me.magnetic_hdg)));
+				} else if (int(me.magnetic_hdg) < 100) {
+					me["ILS_right"].setText(sprintf("0%2.0f", int(me.magnetic_hdg)));
+				} else {
+					me["ILS_right"].setText(sprintf("%3.0f", int(me.magnetic_hdg)));
+				}
+				me["ILS_HDG_R"].show();
+				me["ILS_HDG_L"].hide();
+				me["CRS_pointer"].hide();
+			} else {
+				me["ILS_HDG_R"].hide();
+				me["ILS_HDG_L"].hide();
+				me["CRS_pointer"].hide();
+			}
+		} else {
+			me["ILS_HDG_R"].hide();
+			me["ILS_HDG_L"].hide();
+			me["CRS_pointer"].hide();
+		}
+		
 		foreach(var update_item; me.update_items)
         {
             update_item.update(notification);
@@ -2000,7 +1996,6 @@ var input = {
 	
 	pfdILS1: "/modes/pfd/ILS1",
 	pfdILS2: "/modes/pfd/ILS2",
-	pfdILSMcdu: "/FMGC/internal/ils1-mcdu",
 	
 	markerO: "/instrumentation/marker-beacon/outer",
 	markerM: "/instrumentation/marker-beacon/middle",
