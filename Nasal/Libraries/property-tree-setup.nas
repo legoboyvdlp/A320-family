@@ -99,6 +99,7 @@ var Environment = {
 	tempDegC: props.globals.getNode("/environment/temperature-degc"),
 	windFromHdg: props.globals.getNode("/environment/wind-from-heading-deg"),
 	windSpeedKt: props.globals.getNode("/environment/wind-speed-kt"),
+	pressureInHg: props.globals.getNode("/environment/pressure-inhg"),
 };
 
 var Fdm = {
@@ -321,6 +322,7 @@ var Systems = {
 	Navigation: {
 		ADR: {
 			Output: {
+				baroAltCorrectedCapt: props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-1-capt"),
 				overspeed: props.globals.getNode("/systems/navigation/adr/output/overspeed"),
 				underspeed: props.globals.getNode("/systems/navigation/adr/output/underspeed"),
 			},

@@ -59,6 +59,7 @@ var PNEU = {
 		cockpitTemp: props.globals.getNode("/systems/air-conditioning/temperatures/cockpit-temp"),
 		cabinAftTemp: props.globals.getNode("/systems/air-conditioning/temperatures/cabin-aft-temp"),
 		cabinFwdTemp: props.globals.getNode("/systems/air-conditioning/temperatures/cabin-fwd-temp"),
+		cabinTempK: props.globals.getNode("/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin"),
 	},
 	Psi: {
 		engine1: props.globals.getNode("/systems/pneumatics/psi/engine-1-psi"),

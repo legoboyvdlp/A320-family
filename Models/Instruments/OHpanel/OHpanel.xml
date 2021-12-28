@@ -4800,7 +4800,7 @@
 				<value>0</value>
 			</binding>
 		</release>
-		<drag-direction>vertical</drag-direction>
+		<drag-direction>horizontal</drag-direction>
 		<drag-scale-px>5</drag-scale-px>
 		<increase>
 			<repeatable>true</repeatable>

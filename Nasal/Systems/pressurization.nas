@@ -4,7 +4,7 @@
 var CabinPressureController = {
 	new: func(elecNode) {
 		var cpc = { parents:[CabinPressureController] };
-		cpc.elecSupply = props.globals.getNode(elecNode, 1);
+		cpc.elecSupply = elecNode;
 		cpc.condition = 100;
 		cpc.failed = 0;
 		return cpc;
@@ -40,12 +40,12 @@ var CPCController = {
 	takeoffAlt: props.globals.getNode("/systems/pressurization/logic/takeoff-altitude-ft", 1),
 	takeoffPsiSet: 0,
 	takeoffPsi: props.globals.getNode("/systems/pressurization/logic/takeoff-psi", 1),
-	targetVS: props.globals.getNode("/systems/pressurization/man-target-vs", 1),
+	manValveTarget: props.globals.getNode("/systems/pressurization/valves/outflow-man-valve-cmd", 1),
 	cabinPsi: props.globals.getNode("/systems/pressurization/cabin-pressure-psi", 1),
 	cabinPsiMemo: props.globals.getNode("/systems/pressurization/logic/cruise/cabinpsi-memo-cruise", 1),
 	init: func() {
 		me.activeCPC.setValue(rand() >= 0.5 ? 1 : 0);
-		me.CPCS = [CabinPressureController.new("/systems/electrical/bus/dc-ess"),CabinPressureController.new("/systems/electrical/bus/dc-2")];
+		me.CPCS = [CabinPressureController.new(systems.ELEC.Bus.dcEss),CabinPressureController.new(systems.ELEC.Bus.dc2)];
 	},
 	resetFail: func() {
 		if (me.CPCS[0] != nil and me.CPCS[1] != nil) {
@@ -58,7 +58,11 @@ var CPCController = {
 	},
 	setManVs: func(d) {
 		if (me.mode.getValue() != 2) { return; }
-		me.targetVS.setValue(me.targetVS.getValue() + -d*50);
+		var newTarget = me.manValveTarget.getValue() + -d*0.01;
+		if (newTarget > 1) { newTarget = 1; }
+		if (newTarget < 0) { newTarget = 0; }
+		
+		me.manValveTarget.setValue(newTarget);
 	},
 	setMode: func(mode) {
 		if (mode >= 0 and mode <= 2) {
@@ -128,21 +132,21 @@ var phaseSignal = {
 	},
 };
 
-setlistener("/gear/gear[1]/wow", func() {
-	if (!pts.Gear.wow[1].getBoolValue()) {
+setlistener("/gear/gear[1]/wow", func(val) {
+	if (!val.getBoolValue()) {
 		if (!CPCController.takeoffAltSet) {
-			CPCController.takeoffAlt.setValue(getprop("/systems/navigation/adr/computation/baro-alt-corrected-1-capt"));
+			CPCController.takeoffAlt.setValue(pts.Systems.Navigation.ADR.Output.baroAltCorrectedCapt.getValue());
 			CPCController.takeoffAltSet = 1;
 		}
 		if (!CPCController.takeoffPsiSet) {
-			CPCController.takeoffPsi.setValue(getprop("/environment/pressure-inhg") * 0.491154);
+			CPCController.takeoffPsi.setValue(pts.Environment.pressureInHg.getValue() * 0.491154);
 			CPCController.takeoffPsiSet = 1;
 		}
 	}
 }, 1, 0);
 
-setlistener("/controls/pressurization/ldg-elev", func() {
-	if (PRESS.Switches.ldgElev.getValue() == 0) {
+setlistener("/controls/pressurization/ldg-elev", func(val) {
+	if (val.getValue() == 0) {
 		if (CPCController.mode.getValue() == 1) {
 			CPCController.setMode(0);
 		}
@@ -187,9 +191,9 @@ var PRESS = {
 };
 
 var calc_mass_on_init = func() {
-	var x = getprop("/environment/pressure-inhg") * 3386.38815789475 * 330;
-	var y = 287.058 * getprop("/systems/air-conditioning/temperatures/cabin-overall-temp-kelvin");
-	return (x / y);
+	var pressure = pts.Environment.pressureInHg.getValue() * 3386.38815789475 * 330;
+	var temperature = 287.058 * systems.PNEU.Packs.cabinTempK.getValue();
+	return (pressure / temperature);
 };
 
 setprop("/systems/pressurization/calculations/cabin-mass-init", calc_mass_on_init());

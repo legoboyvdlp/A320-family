@@ -262,22 +262,25 @@
 		</fcs_function>
 	</channel>
 	
+	<!-- RPCU commands manual motor to fully open the outflow valve on the ground -->
 	<channel name="RPCU" execrate="8">
-	
-		<switch name="/systems/pressurization/rpcu-active">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/systems/electrical/bus/dc-bat ge 25
-			</test>
-		</switch>
 		
 		<switch name="/systems/pressurization/rpcu-command-open">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/pressurization/rpcu-active eq 1
-				<test logic="AND">
-					/gear/gear[1]/wow eq 1
-					/gear/gear[2]/wow eq 1
+				/systems/electrical/bus/dc-bat ge 25
+				<test logic="OR">
+					<test logic="AND">
+						/gear/gear[1]/wow eq 1
+						/gear/gear[2]/wow eq 1
+					</test>
+					<test logic="AND">
+						<test logic="OR">
+							/gear/gear[1]/wow eq 1
+							/gear/gear[2]/wow eq 1
+						</test>
+						/controls/gear/brake-parking eq 1
+					</test>
 				</test>
 				<test logic="OR">
 					<test logic="AND">
@@ -297,6 +300,7 @@
 				/systems/pressurization/valves/outflow-valve ne 1.0
 			</test>
 		</switch>
+		
 	</channel>
 	
 	<channel name="Control Logic" execrate="8">
@@ -553,14 +557,23 @@
 				/systems/pressurization/cabin-delta-p ge 8.6
 			</test>
 		</switch>
+		
+		<switch name="/systems/pressurization/valves/outflow-man-valve-cmd">
+			<default value="/systems/pressurization/valves/outflow-man-valve-cmd"/>
+			<test logic="OR" value="/systems/pressurization/valves/outflow-valve">
+				/systems/pressurization/active-mode ne 2
+			</test>
+		</switch>
+		
 		<switch name="/systems/pressurization/valves/outflow-valve-cmd">
 			<default value="/systems/pressurization/logic/outflow-valve-cmd"/>
 			<test logic="AND" value="0">
 				/controls/pressurization/ditching eq 1
 			</test>
-			<test logic="AND" value="0">
+			<test logic="AND" value="0.5">
 				/systems/pressurization/active-mode ne 2
 				/controls/pneumatics/switches/ram-air eq 1
+				/systems/pressurization/cabin-delta-p lt 1
 			</test>
 			<test logic="AND" value="0">
 				/systems/pressurization/active-mode ne 2

@@ -1575,7 +1575,9 @@
 				<cabin-mass-offset type="double">0</cabin-mass-offset>
 			</calculations>
 			<cabin-pressure-psi type="double">14.7</cabin-pressure-psi>
-			<man-target-vs type="double">0</man-target-vs>
+			<valves>
+				<outflow-man-valve-cmd type="double">0</outflow-man-valve-cmd>
+			</valves>
 		</pressurization>
 		
 		<pitot n="0">
