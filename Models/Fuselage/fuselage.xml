@@ -37,7 +37,6 @@
 	
 	<effect>
 		<inherits-from>Effects/model-transparent</inherits-from>
-		<object-name>Windsheild</object-name>
 		<object-name>DoorL1.Placards</object-name>
 		<object-name>DoorR1.Placards</object-name>
 		<object-name>DoorL4.Placards</object-name>
@@ -49,6 +48,11 @@
 		<object-name>Fuselage.Placards</object-name>
 		<object-name>Wings.Placards</object-name>
 		<object-name>navglass</object-name>
+	</effect>
+	
+	<effect>
+		<inherits-from>Effects/glass</inherits-from>
+		<object-name>Windsheild</object-name>
 	</effect>
 	
 	<effect>
@@ -3117,7 +3121,7 @@
 		<type>rotate</type>
 		<object-name>WindshildWiperL</object-name>
 		<property>/fdm/jsbsim/fcs/left-wiper-pos-norm</property>
-		<factor>-45</factor>
+		<factor>-56</factor>
 		<axis>
 			<x1-m>-17.4353</x1-m>
 			<y1-m>-0.119353</y1-m>
@@ -3132,7 +3136,7 @@
 		<type>rotate</type>
 		<object-name>WindshildWiperR</object-name>
 		<property>/fdm/jsbsim/fcs/right-wiper-pos-norm</property>
-		<factor>45</factor>
+		<factor>56</factor>
 		<axis>
 			<x1-m>-17.4335</x1-m>
 			<y1-m>0.119445</y1-m>

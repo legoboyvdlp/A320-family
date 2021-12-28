@@ -1292,11 +1292,11 @@
 				fcs/left-wiper-pos-norm ge 0.001
 				/systems/electrical/bus/dc-1 ge 25
 			</test>
-			<test logic="AND" value="4">
+			<test logic="AND" value="2.5">
 				/controls/switches/wiperLspd eq 1
 				/systems/electrical/bus/dc-1 ge 25
 			</test>
-			<test logic="AND" value="7">
+			<test logic="AND" value="4.5">
 				/controls/switches/wiperLspd eq 2
 				/systems/electrical/bus/dc-1 ge 25
 			</test>
@@ -1339,11 +1339,11 @@
 				fcs/right-wiper-pos-norm ge 0.001
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
-			<test logic="AND" value="4">
+			<test logic="AND" value="2.5">
 				/controls/switches/wiperRspd eq 1
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
-			<test logic="AND" value="7">
+			<test logic="AND" value="4.5">
 				/controls/switches/wiperRspd eq 2
 				/systems/electrical/bus/dc-2 ge 25
 			</test>

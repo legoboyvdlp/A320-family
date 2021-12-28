@@ -8434,11 +8434,15 @@
 		<object-name>vu111_glare</object-name>
 		<object-name>vu112_glare</object-name>
 		<object-name>atc_glare</object-name>
-		<object-name>WindowGlassCpt</object-name>
-		<object-name>WindowGlassFo</object-name>
 		<object-name>thr_quad_lts</object-name>
 		<object-name>trim_2_lts</object-name>
 		<object-name>terr_on_nd_label</object-name>
+	</effect>
+	
+	<effect>
+		<inherits-from>Effects/glass</inherits-from>
+		<object-name>WindowGlassCpt</object-name>
+		<object-name>WindowGlassFo</object-name>
 	</effect>
 	
 	<animation>
