@@ -4,11 +4,6 @@
 ##################
 # Init Functions #
 ##################
-
-var database1 = 0;
-var database2 = 0;
-var code1 = 0;
-var code2 = 0;
 var gear0 = 0;
 var state1 = 0;
 var state2 = 0;
@@ -918,18 +913,16 @@ var masterFMGC = maketimer(0.2, func {
 ############################
 #handle radios, runways, v1/vr/v2
 ############################
-var airportRadiosPhase = nil;
 var updateAirportRadios = func {
-
-	airportRadiosPhase = FMGCInternal.phase;
-
 	departure_rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
 	destination_rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
-	if (airportRadiosPhase >= 2 and destination_rwy != nil) {
+	
+	if (FMGCInternal.phase >= 2 and destination_rwy != nil) {
 		var airport = airportinfo(FMGCInternal.arrApt);
 		setprop("/FMGC/internal/ldg-elev", airport.elevation * M2FT); # eventually should be runway elevation
-		magnetic_hdg = geo.normdeg(destination_rwy.heading - getprop("/environment/magnetic-variation-deg"));
+		magnetic_hdg = geo.normdeg(destination_rwy.heading - pts.Environment.magVar.getValue());
 		runway_ils = destination_rwy.ils_frequency_mhz;
+		
 		if (runway_ils != nil and !fmgc.FMGCInternal.ILS.freqSet and !fmgc.FMGCInternal.ILS.crsSet) {
 			fmgc.FMGCInternal.ILS.freqCalculated = runway_ils;
 			pts.Instrumentation.Nav.Frequencies.selectedMhz[0].setValue(runway_ils);
@@ -940,9 +933,10 @@ var updateAirportRadios = func {
 		} elsif (!fmgc.FMGCInternal.ILS.crsSet) {
 			pts.Instrumentation.Nav.Radials.selectedDeg[0].setValue(magnetic_hdg);
 		}
-	} elsif (airportRadiosPhase <= 1 and departure_rwy != nil) {
-		magnetic_hdg = geo.normdeg(departure_rwy.heading - getprop("/environment/magnetic-variation-deg"));
+	} elsif (FMGCInternal.phase <= 1 and departure_rwy != nil) {
+		magnetic_hdg = geo.normdeg(departure_rwy.heading - pts.Environment.magVar.getValue());
 		runway_ils = departure_rwy.ils_frequency_mhz;
+		
 		if (runway_ils != nil and !fmgc.FMGCInternal.ILS.freqSet and !fmgc.FMGCInternal.ILS.crsSet) {
 			fmgc.FMGCInternal.ILS.freqCalculated = runway_ils;
 			pts.Instrumentation.Nav.Frequencies.selectedMhz[0].setValue(runway_ils);
@@ -1124,15 +1118,23 @@ var ManagedSPD = maketimer(0.25, func {
 	}
 });
 
+# Nav Database
+var navDataBase = {
+	currentCode: "AB20170101",
+	currentDate: "01JAN-28JAN",
+	standbyCode: "AB20170102",
+	standbyDate: "29JAN-26FEB",
+};
+
+var tempStoreCode = nil;
+var tempStoreDate = nil;
 var switchDatabase = func {
-	database1 = getprop("/FMGC/internal/navdatabase");
-	database2 = getprop("/FMGC/internal/navdatabase2");
-	code1 = getprop("/FMGC/internal/navdatabasecode");
-	code2 = getprop("/FMGC/internal/navdatabasecode2");
-	setprop("/FMGC/internal/navdatabase", database2);
-	setprop("/FMGC/internal/navdatabase2", database1);
-	setprop("/FMGC/internal/navdatabasecode", code2);
-	setprop("/FMGC/internal/navdatabasecode2", code1);
+	tempStoreCode = navDataBase.currentCode;
+	tempStoreDate = navDataBase.currentDate;
+	navDataBase.currentCode = navDataBase.standbyCode;
+	navDataBase.currentDate = navDataBase.standbyDate;
+	navDataBase.standbyCode = tempStoreCode;
+	navDataBase.standbyDate = tempStoreDate;
 }
 
 # Landing to phase 7

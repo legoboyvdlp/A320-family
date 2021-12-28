@@ -81,9 +81,6 @@ var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
 var mcdu2_lgt = props.globals.getNode("/controls/lighting/DU/mcdu2", 1);
 var acType = props.globals.getNode("/MCDUC/type", 1);
 var engType = props.globals.getNode("/MCDUC/eng", 1);
-var database1 = props.globals.getNode("/FMGC/internal/navdatabase", 1);
-var database2 = props.globals.getNode("/FMGC/internal/navdatabase2", 1);
-var databaseCode = props.globals.getNode("/FMGC/internal/navdatabasecode", 1);
 
 # INT-A
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
@@ -2134,9 +2131,9 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L1"].setText(sprintf("%s", engType.getValue()));
-			me["Simple_L2"].setText(sprintf("%s", " " ~ database1.getValue()));
-			me["Simple_L3"].setText(sprintf("%s", " " ~ database2.getValue()));
-			me["Simple_R2"].setText(sprintf("%s", databaseCode.getValue() ~ " "));
+			me["Simple_L2"].setText(" " ~ fmgc.navDataBase.currentDate);
+			me["Simple_L3"].setText(" " ~ fmgc.navDataBase.standbyDate);
+			me["Simple_R2"].setText(fmgc.navDataBase.currentCode);
 			
 			if (fmgc.WaypointDatabase.getCount() >= 1) {
 				me["Simple_R4"].show();
