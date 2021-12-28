@@ -107,16 +107,16 @@ var PNEU = {
 		me.resetFail();
 		
 		# Legacy pressurization system
-		setprop("/systems/pressurization/pack-1-out-temp", 0);
-		setprop("/systems/pressurization/pack-2-out-temp", 0);
-		setprop("/systems/pressurization/pack-1-bypass", 0);
-		setprop("/systems/pressurization/pack-2-bypass", 0);
-		setprop("/systems/pressurization/pack-1-flow", 0);
-		setprop("/systems/pressurization/pack-2-flow", 0);
-		setprop("/systems/pressurization/pack-1-comp-out-temp", 0);
-		setprop("/systems/pressurization/pack-2-comp-out-temp", 0);
-		setprop("/systems/pressurization/pack-1-valve", 0);
-		setprop("/systems/pressurization/pack-2-valve", 0);
+		#setprop("/systems/pressurization/pack-1-out-temp", 0);
+		#setprop("/systems/pressurization/pack-2-out-temp", 0);
+		#setprop("/systems/pressurization/pack-1-bypass", 0);
+		#setprop("/systems/pressurization/pack-2-bypass", 0);
+		#setprop("/systems/pressurization/pack-1-flow", 0);
+		#setprop("/systems/pressurization/pack-2-flow", 0);
+		#setprop("/systems/pressurization/pack-1-comp-out-temp", 0);
+		#setprop("/systems/pressurization/pack-2-comp-out-temp", 0);
+		#setprop("/systems/pressurization/pack-1-valve", 0);
+		#setprop("/systems/pressurization/pack-2-valve", 0);
 		#setprop("/systems/ventilation/cabin/fans", 0); # aircon fans
 		#setprop("/systems/ventilation/avionics/extractvalve", "0");
 		#setprop("/systems/ventilation/avionics/inletvalve", "0");
@@ -140,11 +140,9 @@ var PNEU = {
 		me.Fail.xbleed.setBoolValue(0);
 	},
 	loop: func(notification) {
-		# Legacy pressurization
 		auto = getprop("/controls/pressurization/mode-sel");
 		ditch = getprop("/controls/pressurization/ditching");
 		if (ditch and auto) {
-			setprop("/systems/pressurization/outflowpos", "1");
 			setprop("/systems/ventilation/avionics/extractvalve", "1");
 			setprop("/systems/ventilation/avionics/inletvalve", "1");
 		}

@@ -976,22 +976,6 @@ var reset_FMGC = func {
 	Input.hdg.setValue(hdg);
 	Input.alt.setValue(alt);
 	
-	setprop("/systems/pressurization/vs", "0");
-	setprop("/systems/pressurization/targetvs", "0");
-	setprop("/systems/pressurization/vs-norm", "0");
-	setprop("/systems/pressurization/auto", 1);
-	setprop("/systems/pressurization/deltap", "0");
-	setprop("/systems/pressurization/outflowpos", "0");
-	setprop("/systems/pressurization/deltap-norm", "0");
-	setprop("/systems/pressurization/outflowpos-norm", "0");
-	altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
-	setprop("/systems/pressurization/cabinalt", altitude);
-	setprop("/systems/pressurization/targetalt", altitude); 
-	setprop("/systems/pressurization/diff-to-target", "0");
-	setprop("/systems/pressurization/ditchingpb", 0);
-	setprop("/systems/pressurization/targetvs", "0");
-	setprop("/systems/pressurization/ambientpsi", "0");
-	setprop("/systems/pressurization/cabinpsi", "0");
 	setprop("systems/ventilation/cabin/fans", 0); # aircon fans
 	setprop("systems/ventilation/avionics/fan", 0);
 	setprop("systems/ventilation/avionics/extractvalve", "0");

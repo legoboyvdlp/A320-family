@@ -192,4 +192,4 @@ var calc_mass_on_init = func() {
 	return (x / y);
 };
 
-setprop("/systems/pressurization/cabin-mass-now", calc_mass_on_init());
+setprop("/systems/pressurization/calculations/cabin-mass-init", calc_mass_on_init());

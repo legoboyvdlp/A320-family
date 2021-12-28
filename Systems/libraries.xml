@@ -378,7 +378,7 @@
 			</expression>
 		</input>
 		<input>0</input>
-		<output>/systems/pressurization/outflow-total-kg_s</output>
+		<output>/systems/pressurization/calculations/outflow-total-kg_s</output>
 	</filter>
 	
 	<filter>
