@@ -314,10 +314,6 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/pressurization/modes/gnd/target-vs">
-			<default value="/systems/pressurization/modes/gnd/max-rate"/>
-		</switch>
-		
 		<!-- Ambient pressure to psi -->
 		<fcs_function name="/systems/pressurization/modes/gnd/target-psi">
 			<function>
@@ -337,6 +333,19 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="/systems/pressurization/modes/gnd/target-vs">
+			<function>
+				<product>
+					<value>-5000</value>
+					<property>/systems/pressurization/modes/gnd/target-psi-diff</property>
+				</product>
+			</function>
+			<clipto>
+				<min>-/systems/pressurization/modes/gnd/max-rate</min>
+				<max>/systems/pressurization/modes/gnd/max-rate</max>
+			</clipto>
+		</fcs_function>
+		
 		<!-- Takeoff
 			Prepressurize at -400 fpm to deltaP = 0.1
 			Then hold until after rotation 
@@ -348,19 +357,13 @@
 			</test>
 		</switch>
 		
-		<switch name="/systems/pressurization/modes/takeoff/target-vs">
-			<default value="/systems/pressurization/modes/takeoff/max-rate"/>
-		</switch>
-		
 		<!-- Target PSI = Ambient PSI + 0.1 -->
+		<!-- should it be ambient pressure or cabin pressure? -->
 		<fcs_function name="/systems/pressurization/modes/takeoff/target-psi">
 			<function>
 				<sum>
 					<v>0.1</v>
-					<product>
-						<v>0.491154</v>
-						<property>/environment/pressure-inhg</property>
-					</product>
+					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</sum>
 			</function>
 		</fcs_function>
@@ -372,6 +375,19 @@
 					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/modes/takeoff/target-vs">
+			<function>
+				<product>
+					<value>-5000</value>
+					<property>/systems/pressurization/modes/takeoff/target-psi-diff</property>
+				</product>
+			</function>
+			<clipto>
+				<min>/systems/pressurization/modes/takeoff/max-rate</min>
+				<max>0</max>
+			</clipto>
 		</fcs_function>
 		
 		<!-- Climb 
@@ -561,8 +577,43 @@
 		</fcs_function>
 		
 		<!-- Dump pressure on ground -->
+		<switch name="/systems/pressurization/logic/target-vs">
+			<default value="0"/>
+			<test logic="AND" value="/systems/pressurization/modes/gnd/target-vs">
+				/systems/pressurization/modes/gnd/active eq 1
+			</test>
+			<test logic="AND" value="/systems/pressurization/modes/takeoff/target-vs">
+				/systems/pressurization/modes/takeoff/active eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="/systems/pressurization/logic/target-vs-error">
+			<function>
+				<difference>
+					<property>/systems/pressurization/cabin-rate-fpm</property>
+					<property>/systems/pressurization/logic/target-vs</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/logic/outflow-valve-logic">
+			<function>
+				<sum>
+					<value>0.8</value>
+					<product>
+						<value>-0.0012</value>
+						<property>/systems/pressurization/logic/target-vs-error</property>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>0.6</min>
+				<max>1.0</max>
+			</clipto>
+		</fcs_function>
+		
 		<switch name="/systems/pressurization/logic/outflow-valve-cmd">
-			<default value="/systems/pressurization/valves/outflow-valve-cmd"/>
+			<default value="/systems/pressurization/logic/outflow-valve-logic"/>
 			<test logic="AND" value="1">
 				/systems/pressurization/modes/gnd/active eq 1
 			</test> <!-- Should be 55 seconds after touchdown -->
