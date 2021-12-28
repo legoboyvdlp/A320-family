@@ -316,24 +316,7 @@
 		</output>
 	</filter>
 	
-	<filter>
-		<name>CabinDeltaPress</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<difference>
-					<property>/systems/pressurization/cabin-pressure-psi</property>
-					<product>
-						<value>0.491154</value>
-						<property>/environment/pressure-inhg</property>
-					</product>
-				</difference>
-			</expression>
-		</input>
-		<output>/systems/pressurization/cabin-delta-p</output>
-	</filter>
-	
+	<!-- NEED TO ADD CONDITION FOR NEGATIVE DELTA P -->
 	<filter>
 		<name>OutflowMassFlow</name>
 		<type>gain</type>
@@ -379,6 +362,53 @@
 		</input>
 		<input>0</input>
 		<output>/systems/pressurization/calculations/outflow-total-kg_s</output>
+	</filter>
+	
+	<filter>
+		<name>SafetyMassFlow</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<greater-than>
+					<property>/systems/pressurization/cabin-delta-p</property>
+					<value>0</value>
+				</greater-than>
+			</condition>
+			<expression>
+				<product>
+					<value>0.84</value> <!-- Cd -->
+					<value>0.78539816339</value> <!-- pi / 4 -->
+					<product>
+						<!--<v>0.1156</v>-->
+						<value>11.56</value>
+						<property>/systems/pressurization/valves/safety-valve</property>
+					</product>
+					<product>
+						<value>515.378819</value>
+						<property>/environment/density-slugft3</property>
+					</product>
+					<pow>
+						<div>
+							<product>
+								<value>2</value>
+								<property>/systems/pressurization/cabin-delta-p</property>
+							</product>
+							<product>
+								<product>
+									<value>515.378819</value>
+									<property>/environment/density-slugft3</property>
+								</product>
+								<value>0.98663664</value>
+							</product>
+						</div>
+						<value>0.5</value>
+					</pow>
+				</product>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/systems/pressurization/calculations/safety-total-kg_s</output>
 	</filter>
 	
 	<filter>

@@ -1542,7 +1542,7 @@
 		</pneumatics>
 		
 		<pressurization>
-			<logic>
+			<modes>
 				<abort>
 					<max-rate type="double">-750</max-rate>
 				</abort>
@@ -1561,6 +1561,8 @@
 				<takeoff>
 					<max-rate type="double">-400</max-rate>
 				</takeoff>
+			</modes>
+			<logic>
 				<takeoff-altitude-ft type="double">-9999</takeoff-altitude-ft>
 				<takeoff-psi type="double">-9999</takeoff-psi>
 				<landing-psi type="double">-9999</landing-psi>

@@ -11,7 +11,7 @@ var CabinPressureController = {
 	},
 	
 	update: func() {
-		if (me.elecSupply.getValue() < 25 or me.condition == 0) {
+		if (me.elecSupply.getValue() < 25 or fbw.tripleADRFail or me.condition == 0) {
 			me.failed = 1;
 		} else {
 			me.failed = 0;
@@ -80,12 +80,13 @@ var CPCController = {
 		
 		if (me.CPCS[0].failed and me.CPCS[1].failed) {
 			me.bothCPCOff.setValue(1);
-		}
-		
-		if (me.activeCPC.getValue() == 0 and me.CPCS[0].failed and me.CPCS[1].failed != 0) {
-			me.switchActive();
-		} elsif (me.activeCPC.getValue() == 1 and me.CPCS[1].failed and !me.CPCS[0].failed) {
-			me.switchActive();
+		} else {
+			me.bothCPCOff.setValue(0);
+			if (me.activeCPC.getValue() == 0 and me.CPCS[0].failed and me.CPCS[1].failed != 0) {
+				me.switchActive();
+			} elsif (me.activeCPC.getValue() == 1 and me.CPCS[1].failed and !me.CPCS[0].failed) {
+				me.switchActive();
+			}
 		}
 	}
 };

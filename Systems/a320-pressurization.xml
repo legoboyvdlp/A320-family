@@ -196,6 +196,46 @@
 		
 	</channel>
 	
+	<!-- RPCU commands manual motor to fully open the outflow valve on the ground -->
+	<channel name="RPCU" execrate="8">
+		
+		<switch name="/systems/pressurization/rpcu-command-open">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-bat ge 25
+				<test logic="OR">
+					<test logic="AND">
+						/gear/gear[1]/wow eq 1
+						/gear/gear[2]/wow eq 1
+					</test>
+					<test logic="AND">
+						<test logic="OR">
+							/gear/gear[1]/wow eq 1
+							/gear/gear[2]/wow eq 1
+						</test>
+						/controls/gear/brake-parking eq 1
+					</test>
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/controls/engines/engine[0]/cutoff-switch eq 1
+						/controls/engines/engine[1]/cutoff-switch eq 1
+					</test>
+					<test logic="AND">
+						/systems/navigation/adr/output/cas-1 lt 100
+						/systems/navigation/adr/output/cas-2 lt 100
+						/systems/navigation/adr/output/cas-3 lt 100
+					</test>
+				</test>
+				<test logic="OR">
+					/systems/pressurization/active-mode eq 2
+					/systems/pressurization/both-cpcs-off eq 1
+				</test>
+			</test>
+		</switch>
+		
+	</channel>
+	
 	<channel name="Pressurization Schedules" execrate="8">
 	
 		<switch name="/systems/pressurization/logic/destination-qnh">
@@ -262,62 +302,24 @@
 		</fcs_function>
 	</channel>
 	
-	<!-- RPCU commands manual motor to fully open the outflow valve on the ground -->
-	<channel name="RPCU" execrate="8">
-		
-		<switch name="/systems/pressurization/rpcu-command-open">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/electrical/bus/dc-bat ge 25
-				<test logic="OR">
-					<test logic="AND">
-						/gear/gear[1]/wow eq 1
-						/gear/gear[2]/wow eq 1
-					</test>
-					<test logic="AND">
-						<test logic="OR">
-							/gear/gear[1]/wow eq 1
-							/gear/gear[2]/wow eq 1
-						</test>
-						/controls/gear/brake-parking eq 1
-					</test>
-				</test>
-				<test logic="OR">
-					<test logic="AND">
-						/controls/engines/engine[0]/cutoff-switch eq 1
-						/controls/engines/engine[1]/cutoff-switch eq 1
-					</test>
-					<test logic="AND">
-						/systems/navigation/adr/output/cas-1 lt 100
-						/systems/navigation/adr/output/cas-2 lt 100
-						/systems/navigation/adr/output/cas-3 lt 100
-					</test>
-				</test>
-				<test logic="OR">
-					/systems/pressurization/active-mode eq 2
-					/systems/pressurization/both-cpcs-off eq 1
-				</test>
-				/systems/pressurization/valves/outflow-valve ne 1.0
-			</test>
-		</switch>
-		
-	</channel>
-	
 	<channel name="Control Logic" execrate="8">
 	
 		<!-- Ground -->
-		<switch name="/systems/pressurization/logic/gnd/active">
+		<!-- Dump pressure at max 500 fpm until deltaP = 0 -->
+		<!-- Then hold the outflow fully open -->
+		<switch name="/systems/pressurization/modes/gnd/active">
 			<default value="0"/>
 			<test value="1">
 				/systems/pressurization/active-phase eq 0
 			</test>
 		</switch>
 		
-		<switch name="/systems/pressurization/logic/gnd/target-vs">
-			<default value="/systems/pressurization/logic/gnd/max-rate"/>
+		<switch name="/systems/pressurization/modes/gnd/target-vs">
+			<default value="/systems/pressurization/modes/gnd/max-rate"/>
 		</switch>
 		
-		<fcs_function name="/systems/pressurization/logic/gnd/target-psi">
+		<!-- Ambient pressure to psi -->
+		<fcs_function name="/systems/pressurization/modes/gnd/target-psi">
 			<function>
 				<product>
 					<v>0.491154</v>
@@ -326,28 +328,32 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pressurization/logic/gnd/target-psi-diff">
+		<fcs_function name="/systems/pressurization/modes/gnd/target-psi-diff">
 			<function>
 				<difference>
-					<property>/systems/pressurization/logic/gnd/target-psi</property>
+					<property>/systems/pressurization/modes/gnd/target-psi</property>
 					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
 		
-		<!-- Takeoff -->
-		<switch name="/systems/pressurization/logic/takeoff/active">
+		<!-- Takeoff
+			Prepressurize at -400 fpm to deltaP = 0.1
+			Then hold until after rotation 
+		-->
+		<switch name="/systems/pressurization/modes/takeoff/active">
 			<default value="0"/>
 			<test value="1">
 				/systems/pressurization/active-phase eq 1
 			</test>
 		</switch>
 		
-		<switch name="/systems/pressurization/logic/takeoff/target-vs">
-			<default value="/systems/pressurization/logic/takeoff/max-rate"/>
+		<switch name="/systems/pressurization/modes/takeoff/target-vs">
+			<default value="/systems/pressurization/modes/takeoff/max-rate"/>
 		</switch>
 		
-		<fcs_function name="/systems/pressurization/logic/takeoff/target-psi">
+		<!-- Target PSI = Ambient PSI + 0.1 -->
+		<fcs_function name="/systems/pressurization/modes/takeoff/target-psi">
 			<function>
 				<sum>
 					<v>0.1</v>
@@ -359,24 +365,26 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pressurization/logic/takeoff/target-psi-diff">
+		<fcs_function name="/systems/pressurization/modes/takeoff/target-psi-diff">
 			<function>
 				<difference>
-					<property>/systems/pressurization/logic/takeoff/target-psi</property>
+					<property>/systems/pressurization/modes/takeoff/target-psi</property>
 					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
 		
-		<!-- Climb -->
-		<switch name="/systems/pressurization/logic/climb/active">
+		<!-- Climb 
+			 Climb schedule based on ambient pressure and climb rate
+		-->
+		<switch name="/systems/pressurization/modes/climb/active">
 			<default value="0"/>
 			<test value="1">
 				/systems/pressurization/active-phase eq 2
 			</test>
 		</switch>
 		
-		<fcs_function name="/systems/pressurization/logic/climb/target-vs">
+		<fcs_function name="/systems/pressurization/modes/climb/target-vs">
 			<function>
 				<product>
 					<v>0.19736842105</v>
@@ -385,11 +393,11 @@
 			</function>
 			<clipto>
 				<min>0</min>
-				<max>/systems/pressurization/logic/climb/max-rate</max>
+				<max>/systems/pressurization/modes/climb/max-rate</max>
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pressurization/logic/climb/target-psi">
+		<fcs_function name="/systems/pressurization/modes/climb/target-psi">
 			<function>
 				<difference>
 					<product>
@@ -401,24 +409,28 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pressurization/logic/climb/target-psi-diff">
+		<fcs_function name="/systems/pressurization/modes/climb/target-psi-diff">
 			<function>
 				<difference>
-					<property>/systems/pressurization/logic/climb/target-psi</property>
+					<property>/systems/pressurization/modes/climb/target-psi</property>
 					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
 		
-		<!-- Abort -->
-		<switch name="/systems/pressurization/logic/abort/active">
+		<!-- Abort 
+			 Prevent cabin from climbing 
+			 Cabin pressure is maintained at takeoff value
+			 Up to max deltaP
+		-->
+		<switch name="/systems/pressurization/modes/abort/active">
 			<default value="0"/>
 			<test value="1">
 				/systems/pressurization/active-phase eq 3
 			</test>
 		</switch>
 		
-		<fcs_function name="/systems/pressurization/logic/abort/target-vs">
+		<fcs_function name="/systems/pressurization/modes/abort/target-vs">
 			<function>
 				<product>
 					<v>0.19736842105</v>
@@ -426,12 +438,12 @@
 				</product>
 			</function>
 			<clipto>
-				<min>/systems/pressurization/logic/abort/max-rate</min>
+				<min>/systems/pressurization/modes/abort/max-rate</min>
 				<max>0</max>
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pressurization/logic/abort/target-psi">
+		<fcs_function name="/systems/pressurization/modes/abort/target-psi">
 			<function>
 				<sum>
 					<v>0.1</v>
@@ -440,29 +452,33 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pressurization/logic/abort/target-psi-diff">
+		<fcs_function name="/systems/pressurization/modes/abort/target-psi-diff">
 			<function>
 				<difference>
-					<property>/systems/pressurization/logic/abort/target-psi</property>
+					<property>/systems/pressurization/modes/abort/target-psi</property>
 					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
 		
-		<!-- Cruise -->
-		
-		<switch name="/systems/pressurization/logic/cruise/active">
+		<!-- Cruise
+			 Maintain deltaP at switch into cruise mode, or landing field elevation, whichever is higher
+			 Maximum cabin altitude = 8000
+			 If the landing field elevation > 8000ft, landing field elevation - cabin altitude is maintained
+			 at 3,800 feet up to maximum of 80000 ft
+		-->
+		<switch name="/systems/pressurization/modes/cruise/active">
 			<default value="0"/>
 			<test value="1">
 				/systems/pressurization/active-phase eq 4
 			</test>
 		</switch>
 		
-		<switch name="/systems/pressurization/logic/cruise/target-vs">
+		<switch name="/systems/pressurization/modes/cruise/target-vs">
 			<default value="0"/>
 		</switch>
 		
-		<fcs_function name="/systems/pressurization/logic/cruise/landing-alt-difference">
+		<fcs_function name="/systems/pressurization/modes/cruise/landing-alt-difference">
 			<function>
 				<difference>
 					<!--<property>/systems/pressurization/cabinalt</property>-->
@@ -472,43 +488,48 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pressurization/logic/cruise/target-alt-psi">
+		<fcs_function name="/systems/pressurization/modes/cruise/target-alt-psi">
 			<function>
 				<sum>
 					<product>
 						<v>0.00039473684</v>
-						<property>/systems/pressurization/logic/cruise/landing-alt-difference</property>
+						<property>/systems/pressurization/modes/cruise/landing-alt-difference</property>
 					</product>
-					<property>/systems/pressurization/logic/cruise/cabinpsi-memo-cruise</property>
+					<property>/systems/pressurization/modes/cruise/cabinpsi-memo-cruise</property>
 				</sum>
 			</function>
 		</fcs_function>
 		
-		<switch name="/systems/pressurization/logic/cruise/target-psi">
-			<default value="/systems/pressurization/logic/cruise/cabinpsi-memo-cruise"/>
-			<test logic="OR" value="/systems/pressurization/logic/cruise/target-alt-psi">
-				/systems/pressurization/logic/cruise/landing-alt-difference le -3800
+		<switch name="/systems/pressurization/modes/cruise/target-psi">
+			<default value="/systems/pressurization/modes/cruise/cabinpsi-memo-cruise"/>
+			<test logic="OR" value="/systems/pressurization/modes/cruise/target-alt-psi">
+				/systems/pressurization/modes/cruise/landing-alt-difference le -3800
 			</test>
 		</switch>
 		
-		<fcs_function name="/systems/pressurization/logic/cruise/target-psi-diff">
+		<fcs_function name="/systems/pressurization/modes/cruise/target-psi-diff">
 			<function>
 				<difference>
-					<property>/systems/pressurization/logic/cruise/target-psi</property>
+					<property>/systems/pressurization/modes/cruise/target-psi</property>
 					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
 		
-		<!-- Descent -->
-		<switch name="/systems/pressurization/logic/descent/active">
+		<!-- Descent
+			When descent is commanded, cabin altitude descends at the standard rate
+			Scheduled by rate of descent and ambient pressure
+			Until maximum deltaP or landing field elevation + 0.1
+			How can we hold maximum deltaP with constant VS?
+		-->
+		<switch name="/systems/pressurization/modes/descent/active">
 			<default value="0"/>
 			<test value="1">
 				/systems/pressurization/active-phase eq 5
 			</test>
 		</switch>
 		
-		<fcs_function name="/systems/pressurization/logic/descent/target-vs">
+		<fcs_function name="/systems/pressurization/modes/descent/target-vs">
 			<function>
 				<product>
 					<v>0.19736842105</v>
@@ -516,12 +537,12 @@
 				</product>
 			</function>
 			<clipto>
-				<min>/systems/pressurization/logic/descent/max-rate</min>
+				<min>/systems/pressurization/modes/descent/max-rate</min>
 				<max>0</max>
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pressurization/logic/descent/target-psi">
+		<fcs_function name="/systems/pressurization/modes/descent/target-psi">
 			<function>
 				<sum>
 					<v>0.1</v>
@@ -530,20 +551,21 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="/systems/pressurization/logic/descent/target-psi-diff">
+		<fcs_function name="/systems/pressurization/modes/descent/target-psi-diff">
 			<function>
 				<difference>
-					<property>/systems/pressurization/logic/descent/target-psi</property>
+					<property>/systems/pressurization/modes/descent/target-psi</property>
 					<property>/systems/pressurization/cabin-pressure-psi</property>
 				</difference>
 			</function>
 		</fcs_function>
 		
+		<!-- Dump pressure on ground -->
 		<switch name="/systems/pressurization/logic/outflow-valve-cmd">
 			<default value="/systems/pressurization/valves/outflow-valve-cmd"/>
 			<test logic="AND" value="1">
-				/systems/pressurization/active-phase eq 0
-			</test> <!-- should be a 55 sec delay on touchdown, but nvm... -->
+				/systems/pressurization/modes/gnd/active eq 1
+			</test> <!-- Should be 55 seconds after touchdown -->
 		</switch>
 		
 	</channel>
@@ -568,6 +590,7 @@
 		<switch name="/systems/pressurization/valves/outflow-valve-cmd">
 			<default value="/systems/pressurization/logic/outflow-valve-cmd"/>
 			<test logic="AND" value="0">
+				/systems/pressurization/active-mode ne 2
 				/controls/pressurization/ditching eq 1
 			</test>
 			<test logic="AND" value="0.5">
@@ -577,10 +600,15 @@
 			</test>
 			<test logic="AND" value="0">
 				/systems/pressurization/active-mode ne 2
-				/systems/pressurization/cabin-pressure-psi lt 8.300505
+				/systems/pressurization/cabin-pressure-psi lt 8.300505 <!-- what is this? 15000 feet? -->
 			</test>
 			<test logic="AND" value="1">
 				/systems/pressurization/rpcu-command-open eq 1
+				/systems/pressurization/valves/outflow-valve ne 1.0
+			</test>
+			<test logic="AND" value="/systems/pressurization/valves/outflow-man-valve-cmd">
+				/systems/pressurization/rpcu-command-open eq 0
+				/systems/pressurization/active-mode eq 2
 			</test>
 		</switch>
 		
@@ -616,10 +644,13 @@
 				<sum>
 					<property>/systems/pressurization/calculations/cabin-mass-init</property>
 					<property>/systems/pressurization/calculations/cabin-mass-offset</property>
-					<product>
-						<property>/systems/pressurization/calculations/outflow-total-kg_s</property>
+					<!-- <product> why 2 separate?
+						<sum>
+							<property>/systems/pressurization/calculations/outflow-total-kg_s</property>
+							<output>/systems/pressurization/calculations/safety-total-kg_s</output>
+						</sum>
 						<property>simulation/channel-dt</property>
-					</product>
+					</product> -->
 				</sum>
 			</function>
 		</fcs_function>
@@ -634,6 +665,10 @@
 					</product>
 					<product>
 						<property>-/systems/pressurization/calculations/outflow-total-kg_s</property>
+						<property>simulation/channel-dt</property>
+					</product>
+					<product>
+						<property>-/systems/pressurization/calculations/safety-total-kg_s</property>
 						<property>simulation/channel-dt</property>
 					</product>
 				</sum>
@@ -653,6 +688,18 @@
 						<v>330</v>
 					</quotient>
 				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pressurization/cabin-delta-p">
+			<function>
+				<difference>
+					<property>/systems/pressurization/cabin-pressure-psi</property>
+					<product>
+						<value>0.491154</value>
+						<property>/environment/pressure-inhg</property>
+					</product>
+				</difference>
 			</function>
 		</fcs_function>
 		
