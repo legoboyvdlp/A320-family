@@ -66,14 +66,13 @@ var FMGCinit = func {
 	FMGCInternal.mngSpdCmd = 157;
 	FMGCInternal.mngKtsMach = 0;
 	FMGCInternal.machSwitchover = 0;
-	setprop("/FMGC/internal/loc-source", "NAV0");
 	setprop("/FMGC/internal/optalt", 0);
-	setprop("/FMGC/internal/landing-time", -99);
+	FMGCInternal.landingTime = -99;
+	FMGCInternal.blockFuelTime = -99;
+	FMGCInternal.fuelPredTime = -99;
 	FMGCAlignTime[0].setValue(-99);
 	FMGCAlignTime[1].setValue(-99);
 	FMGCAlignTime[2].setValue(-99);
-	setprop("/FMGC/internal/block-fuel-time", -99);
-	setprop("/FMGC/internal/fuel-pred-time", -99); 
 	masterFMGC.start();
 	radios.start();
 }
@@ -216,6 +215,10 @@ var FMGCInternal = {
 	mngKtsMach: 0,
 	mngSpd: 0,
 	mngSpdCmd: 0,
+	
+	landingTime: -99,
+	blockFuelTime: -99,
+	fuelPredTime: -99,
 	
 	# RADNAV
 	ADF1: {
@@ -1138,15 +1141,15 @@ var switchDatabase = func {
 }
 
 # Landing to phase 7
-setlistener("/gear/gear[1]/wow", func() {
-	if (getprop("/gear/gear[1]/wow") == 0 and timer30secLanding.isRunning) {
+setlistener("/gear/gear[1]/wow", func(val) {
+	if (val.getValue() == 0 and timer30secLanding.isRunning) {
 		timer30secLanding.stop();
-		setprop("/FMGC/internal/landing-time", -99);
+		FMGCInternal.landingTime = -99;
 	}
 	
-	if (pts.Gear.wow[1].getValue() and getprop("/FMGC/internal/landing-time") == -99) {
+	if (val.getValue() and FMGCInternal.landingTime == -99) {
 		timer30secLanding.start();
-		setprop("/FMGC/internal/landing-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 }, 0, 0);
 
@@ -1189,34 +1192,34 @@ setlistener("/systems/navigation/adr/operating-3", func() {
 # Calculate Block Fuel
 setlistener("/FMGC/internal/block-calculating", func() {
 	if (timer3blockFuel.isRunning) {
-		setprop("/FMGC/internal/block-fuel-time", -99);
+		FMGCInternal.blockFuelTime = -99;
 		timer3blockFuel.start();
-		setprop("/FMGC/internal/block-fuel-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCInternal.blockFuelTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 	
-	if (getprop("/FMGC/internal/block-fuel-time") == -99) {
+	if (FMGCInternal.blockFuelTime == -99) {
 		timer3blockFuel.start();
-		setprop("/FMGC/internal/block-fuel-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCInternal.blockFuelTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 }, 0, 0);
 
 # Calculate Fuel Prediction
 setlistener("/FMGC/internal/fuel-calculating", func() {
 	if (timer5fuelPred.isRunning) {
-		setprop("/FMGC/internal/fuel-pred-time", -99);
+		FMGCInternal.fuelPredTime = -99;
 		timer5fuelPred.start();
-		setprop("/FMGC/internal/fuel-pred-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCInternal.fuelPredTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 	
-	if (getprop("/FMGC/internal/fuel-pred-time") == -99) {
+	if (FMGCInternal.fuelPredTime == -99) {
 		timer5fuelPred.start();
-		setprop("/FMGC/internal/fuel-pred-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCInternal.fuelPredTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 }, 0, 0);
 
 # Maketimers
 var timer30secLanding = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/landing-time") + 30) {
+	if (pts.Sim.Time.elapsedSec.getValue() > FMGCInternal.landingTime + 30) {
 		FMGCInternal.phase = 7;
 		
 		if (FMGCInternal.costIndexSet) {
@@ -1224,7 +1227,7 @@ var timer30secLanding = maketimer(1, func() {
 		} else {
 			setprop("/FMGC/internal/last-cost-index", 0);
 		}
-		setprop("/FMGC/internal/landing-time", -99);
+		FMGCInternal.landingTime = -99;
 		timer30secLanding.stop();
 	}
 });
@@ -1254,21 +1257,21 @@ var timer48gpsAlign3 = maketimer(1, func() {
 });
 
 var timer3blockFuel = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/block-fuel-time") + 3) {
+	if (pts.Sim.Time.elapsedSec.getValue() > FMGCInternal.blockFuelTime + 3) {
 		#updateFuel();
 		fmgc.FMGCInternal.blockCalculating = 0;
 		fmgc.blockCalculating.setValue(0);
-		setprop("/FMGC/internal/block-fuel-time", -99); 
+		FMGCInternal.blockFuelTime = -99;
 		timer3blockFuel.stop();
 	}
 });
 
 var timer5fuelPred = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
+	if (pts.Sim.Time.elapsedSec.getValue() > FMGCInternal.fuelPredTime + 5) {
 		#updateFuel();
 		fmgc.FMGCInternal.fuelCalculating = 0;
 		fmgc.fuelCalculating.setValue(0);
-		setprop("/FMGC/internal/fuel-pred-time", -99); 
+		FMGCInternal.fuelPredTime = -99;
 		timer5fuelPred.stop();
 	}
 });
