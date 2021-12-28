@@ -1677,6 +1677,14 @@
 			<serviceable type="bool">true</serviceable>
 		</altimeter>
 		
+		<altimeter n="6">
+			<indicated-altitude-ft type="double">0</indicated-altitude-ft>
+			<indicated-altitude-ft-pfd type="double">0</indicated-altitude-ft-pfd>
+			<oldqnh type="double">29.92</oldqnh>
+			<serviceable type="bool">true</serviceable>
+			<std type="bool">0</std>
+		</altimeter>
+		
 		<chrono n="0">
 			<started type="bool">0</started>
 			<paused type="bool">0</paused>
@@ -1889,6 +1897,11 @@
 		<pfd n="0">
 			<hundred-above type="int">99999</hundred-above>
 			<minimums type="int">99999</minimums>
+			<heading-deg type="double">0</heading-deg>
+			<heading-scale type="double">0</heading-scale>
+			<horizon-ground type="double">0</horizon-ground>
+			<horizon-pitch type="double">0</horizon-pitch>
+			<track-deg type="double">0</track-deg>
 		</pfd>
 		
 		<radar-altimeter n="0">
@@ -4804,6 +4817,7 @@
 			<file>Aircraft/A320-family/Models/Instruments/IESI/IESI.nas</file>
 		</canvas_iesi>
 		<canvas_mcdu>
+			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU-funcs.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/MCDU/MCDU.nas</file>
 		</canvas_mcdu>
 		<canvas_qrh>

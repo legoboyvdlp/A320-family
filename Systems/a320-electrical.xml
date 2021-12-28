@@ -826,22 +826,35 @@
 		</switch>
 		
 		<!-- Emergency Generator -->
+		<switch name="/systems/electrical/some-electric-thingie/speed-abv-100">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/navigation/adr/output/cas-1 gt 100
+				/systems/navigation/adr/operating-1 eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/electrical/some-electric-thingie/speed-abv-100-output">
+            <input>/systems/electrical/some-electric-thingie/speed-abv-100</input>
+            <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+            <rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
+        </actuator>
+		
 		<switch name="/systems/electrical/some-electric-thingie/rat-deploy">
 			<default value="/systems/electrical/some-electric-thingie/rat-deploy"/>
 			<test logic="AND" value="1">
-				/instrumentation/airspeed-indicator/indicated-speed-kt gt 100
+				/systems/electrical/bus/dc-hot-1 ge 25
+				/systems/electrical/some-electric-thingie/speed-abv-100-output eq 1
+				/controls/electrical/switches/emer-gen-test eq 0
 				/sim/time/elapsed-sec gt 30
-				/systems/electrical/bus/ac-1 eq 0
-				/systems/electrical/bus/ac-2 eq 0
+				/systems/electrical/bus/ac-1 lt 1
+				/systems/electrical/bus/ac-2 lt 1
 				/controls/electrical/switches/emer-elec-man-on eq 0
 			</test>
 			<test logic="OR" value="1">
 				/controls/hydraulic/switches/rat-man eq 1
 				/controls/electrical/switches/emer-elec-man-on eq 1 
 			</test>
-			<!--<test value="0">
-				/controls/hydraulic/switches/ground-rat-retraction eq 1
-			</test>-->
 		</switch>
 		
 		<switch name="/systems/electrical/some-electric-thingie/emer-gen-operate">
@@ -2109,6 +2122,33 @@
 			<gain>1.0</gain>
 		</pure_gain>
 		
+		<!-- Mirror sub-buses (todo CB logic) -->
+		
+		<pure_gain name="/systems/electrical/bus/sub-bus/dc-hot-1-703"> <!-- Sub-bus with no CB protection -->
+			<input>/systems/electrical/sources/bat-1/volt</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/electrical/bus/sub-bus/dc-hot-2-704"> <!-- Sub-bus with no CB protection -->
+			<input>/systems/electrical/sources/bat-2/volt</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/electrical/bus/sub-bus/dc-2-202">
+			<input>/systems/electrical/bus/dc-2</input> <!-- todo CB 1PN2 -->
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/electrical/bus/sub-bus/dc-2-204">
+			<input>/systems/electrical/bus/dc-2</input> <!-- todo CB 3PN2 -->
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="/systems/electrical/bus/sub-bus/dc-2-206-208">
+			<input>/systems/electrical/bus/dc-2</input> <!-- todo CB 6PN -->
+			<gain>1.0</gain>
+		</pure_gain>
+		
 	</channel>
 	
 	<channel name="Emergency Electric Logic" execrate="8">
@@ -2197,22 +2237,49 @@
 			<test value="/systems/electrical/bus/dc-2">
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
-			<!--<output>/systems/electrical/outputs/adf</output>
-			<output>/systems/electrical/outputs/dme</output>-->
 			<output>/systems/electrical/outputs/efis</output>
 			<output>/systems/electrical/outputs/fcp-power</output>
 			<output>/systems/electrical/outputs/fuel-pump[0]</output>
 			<output>/systems/electrical/outputs/fuel-pump[1]</output>
 			<output>/systems/electrical/outputs/fuel-pump[2]</output>
-			<output>/systems/electrical/outputs/gps</output>
 			<output>/systems/electrical/outputs/mk-viii</output>
-			<!--<output>/systems/electrical/outputs/nav[0]</output>
-			<output>/systems/electrical/outputs/nav[1]</output>
-			<output>/systems/electrical/outputs/nav[2]</output>
-			<output>/systems/electrical/outputs/nav[3]</output>-->
 			<output>/systems/electrical/outputs/tacan</output>
 			<output>/systems/electrical/outputs/turn-coordinator</output>
 		</switch>
+		
+		<switch name="/systems/electrical/generic-ac-pwr">
+			<description>This makes the FG stuff work because we killed the generic electrical</description>
+			<default value="0"/>
+			<test value="/systems/electrical/bus/ac-ess">
+				/systems/electrical/bus/ac-ess ge 25
+			</test>
+			<test value="/systems/electrical/bus/ac-2">
+				/systems/electrical/bus/ac-2 ge 25
+			</test>
+			<output>/systems/electrical/outputs/gps</output>
+		</switch>
+		
+		<switch name="/instrumentation/comm[0]/power-btn">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess ge 25
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/comm[1]/power-btn">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/comm[2]/power-btn">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-1 ge 25
+			</test>
+		</switch>
+		
 	</channel>
 	
 	<channel name="Overhead Lights" execrate="8">

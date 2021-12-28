@@ -86,7 +86,14 @@ var atisPage = {
 		var pageMinusOne = (me.page - 1);
 		var numberExtraChar = pageMinusOne * 210;
 		me.L1 = [substr(message, numberExtraChar, 30), atsu.ATISInstances[me.index].station ~ "/" ~ (atsu.ATISInstances[me.index].type == 0 ? "ARR" : "DEP"), "wht"];
-		me.R1 = [" ",atsu.DictionaryString.fetchString1(atsu.ATISInstances[me.index].receivedCode).string2 ~ " " ~ atsu.ATISInstances[me.index].receivedTime ~ "Z", "wht"];
+		
+		var code = atsu.DictionaryString.fetchString1(atsu.ATISInstances[me.index].receivedCode);
+		if (code != "") {
+			me.R1 = [" ",code.string2 ~ " " ~ atsu.ATISInstances[me.index].receivedTime ~ "Z", "wht"];
+		} else {
+			me.R1 = [" ",atsu.ATISInstances[me.index].receivedCode ~ " " ~ atsu.ATISInstances[me.index].receivedTime ~ "Z", "wht"];
+		}
+		
 		if (size(message) > 30) {
 			me.L2[1] = substr(message, numberExtraChar + 30, 30);
 		}

@@ -398,6 +398,26 @@
                 <value>0</value>
             </binding>
         </button>
+		
+        <button>
+            <legend>Stow RAT</legend>
+            <halign>center</halign>
+            <padding>5</padding>
+			<enable>
+				<and>
+					<property>/gear/gear[1]/wow</property>
+					<less-than>
+						<property>/velocities/groundspeed-kt</property>
+						<value>100</value>
+					</less-than>
+				</and>
+			</enable>
+            <binding>
+                <command>property-assign</command>
+                <property>/systems/electrical/some-electric-thingie/rat-deploy</property>
+                <value>0</value>
+            </binding>
+        </button>
     </group>
 
 </PropertyList>

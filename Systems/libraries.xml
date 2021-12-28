@@ -682,13 +682,27 @@
 			<condition>
 				<and>
 					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-ess</property>
-						<value>25</value>
+						<property>/systems/electrical/bus/ac-ess</property>
+						<value>110</value>
 					</greater-than-equals>
-					<equals>
-						<property>/systems/navigation/aligned-1</property>
-						<value>1</value>
-					</equals> <!-- TODO ATT HDG SWITCH -->
+					<or>
+						<and>
+							<property>/systems/navigation/aligned-1</property>
+							<not>
+								<equals>
+									<property>/controls/navigation/switching/att-hdg</property>
+									<value>-1</value>
+								</equals>
+							</not>
+						</and>
+						<and>
+							<property>/systems/navigation/aligned-3</property>
+							<equals>
+								<property>/controls/navigation/switching/att-hdg</property>
+								<value>-1</value>
+							</equals>
+						</and>
+					</or>
 				</and>
 			</condition>
 		</enable>
@@ -723,8 +737,8 @@
 			<condition>
 				<and>
 					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-ess</property>
-						<value>25</value>
+						<property>/systems/electrical/bus/ac-ess</property>
+						<value>110</value>
 					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-1</property>
@@ -734,10 +748,24 @@
 						<property>/instrumentation/nav[2]/in-range</property>
 						<value>1</value>
 					</equals>
-					<equals>
-						<property>/systems/navigation/aligned-1</property>
-						<value>1</value>
-					</equals>
+					<or>
+						<and>
+							<property>/systems/navigation/aligned-1</property>
+							<not>
+								<equals>
+									<property>/controls/navigation/switching/att-hdg</property>
+									<value>-1</value>
+								</equals>
+							</not>
+						</and>
+						<and>
+							<property>/systems/navigation/aligned-3</property>
+							<equals>
+								<property>/controls/navigation/switching/att-hdg</property>
+								<value>-1</value>
+							</equals>
+						</and>
+					</or>
 				</and>
 			</condition>
 			<property>/instrumentation/ddrmi/vor-1-error</property>
@@ -747,27 +775,43 @@
 			<condition>
 				<and>
 					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-ess</property>
-						<value>25</value>
+						<property>/systems/electrical/bus/ac-ess</property>
+						<value>110</value>
 					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-1</property>
-						<value>-1</value>
+						<value>0</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/adf[0]/in-range</property>
 						<value>1</value>
 					</equals>
-					<equals>
-						<property>/systems/navigation/aligned-1</property>
-						<value>1</value>
-					</equals>
+					<or>
+						<and>
+							<property>/systems/navigation/aligned-1</property>
+							<not>
+								<equals>
+									<property>/controls/navigation/switching/att-hdg</property>
+									<value>-1</value>
+								</equals>
+							</not>
+						</and>
+						<and>
+							<property>/systems/navigation/aligned-3</property>
+							<equals>
+								<property>/controls/navigation/switching/att-hdg</property>
+								<value>-1</value>
+							</equals>
+						</and>
+					</or>
 				</and>
 			</condition>
 			<property>/instrumentation/adf[0]/indicated-bearing-deg</property>
 			<scale>-1.0</scale>
 		</input>
-		<input>-90</input>
+		<input>
+			<property>/instrumentation/ddrmi/needle-1</property>
+		</input>
 		<output>/instrumentation/ddrmi/needle-1</output>
 	</filter>
 	
@@ -798,8 +842,8 @@
 			<condition>
 				<and>
 					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-ess</property>
-						<value>25</value>
+						<property>/systems/electrical/bus/ac-ess</property>
+						<value>110</value>
 					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-2</property>
@@ -809,10 +853,24 @@
 						<property>/instrumentation/nav[3]/in-range</property>
 						<value>1</value>
 					</equals>
-					<equals>
-						<property>/systems/navigation/aligned-1</property>
-						<value>1</value>
-					</equals>
+					<or>
+						<and>
+							<property>/systems/navigation/aligned-1</property>
+							<not>
+								<equals>
+									<property>/controls/navigation/switching/att-hdg</property>
+									<value>-1</value>
+								</equals>
+							</not>
+						</and>
+						<and>
+							<property>/systems/navigation/aligned-3</property>
+							<equals>
+								<property>/controls/navigation/switching/att-hdg</property>
+								<value>-1</value>
+							</equals>
+						</and>
+					</or>
 				</and>
 			</condition>
 			<property>/instrumentation/ddrmi/vor-2-error</property>
@@ -822,27 +880,43 @@
 			<condition>
 				<and>
 					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-ess</property>
-						<value>25</value>
+						<property>/systems/electrical/bus/ac-ess</property>
+						<value>110</value>
 					</greater-than-equals>
 					<equals>
 						<property>/instrumentation/ddrmi/vor-adf-2</property>
-						<value>-1</value>
+						<value>0</value>
 					</equals>
 					<equals>
 						<property>/instrumentation/adf[1]/in-range</property>
 						<value>1</value>
 					</equals>
-					<equals>
-						<property>/systems/navigation/aligned-1</property>
-						<value>1</value>
-					</equals>
+					<or>
+						<and>
+							<property>/systems/navigation/aligned-1</property>
+							<not>
+								<equals>
+									<property>/controls/navigation/switching/att-hdg</property>
+									<value>-1</value>
+								</equals>
+							</not>
+						</and>
+						<and>
+							<property>/systems/navigation/aligned-3</property>
+							<equals>
+								<property>/controls/navigation/switching/att-hdg</property>
+								<value>-1</value>
+							</equals>
+						</and>
+					</or>
 				</and>
 			</condition>
 			<property>/instrumentation/adf[1]/indicated-bearing-deg</property>
 			<scale>-1.0</scale>
 		</input>
-		<input>-90</input>
+		<input>
+			<property>/instrumentation/ddrmi/needle-2</property>
+		</input>
 		<output>/instrumentation/ddrmi/needle-2</output>
 	</filter>
 	
@@ -854,13 +928,27 @@
 			<condition>
 				<and>
 					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-ess</property>
-						<value>25</value>
+						<property>/systems/electrical/bus/ac-ess</property>
+						<value>110</value>
 					</greater-than-equals>
-					<equals>
-						<property>/systems/navigation/aligned-1</property>
-						<value>1</value>
-					</equals>
+					<or>
+						<and>
+							<property>/systems/navigation/aligned-1</property>
+							<not>
+								<equals>
+									<property>/controls/navigation/switching/att-hdg</property>
+									<value>-1</value>
+								</equals>
+							</not>
+						</and>
+						<and>
+							<property>/systems/navigation/aligned-3</property>
+							<equals>
+								<property>/controls/navigation/switching/att-hdg</property>
+								<value>-1</value>
+							</equals>
+						</and>
+					</or>
 					<or>
 						<and>
 							<equals>
@@ -875,7 +963,7 @@
 						<and>
 							<equals>
 								<property>/instrumentation/ddrmi/vor-adf-1</property>
-								<value>-1</value>
+								<value>0</value>
 							</equals>
 							<equals>
 								<property>/instrumentation/adf[0]/in-range</property>
@@ -900,13 +988,27 @@
 			<condition>
 				<and>
 					<greater-than-equals>
-						<property>/systems/electrical/bus/dc-ess</property>
-						<value>25</value>
+						<property>/systems/electrical/bus/ac-ess</property>
+						<value>110</value>
 					</greater-than-equals>
-					<equals>
-						<property>/systems/navigation/aligned-1</property>
-						<value>1</value>
-					</equals>
+					<or>
+						<and>
+							<property>/systems/navigation/aligned-1</property>
+							<not>
+								<equals>
+									<property>/controls/navigation/switching/att-hdg</property>
+									<value>-1</value>
+								</equals>
+							</not>
+						</and>
+						<and>
+							<property>/systems/navigation/aligned-3</property>
+							<equals>
+								<property>/controls/navigation/switching/att-hdg</property>
+								<value>-1</value>
+							</equals>
+						</and>
+					</or>
 					<or>
 						<and>
 							<equals>
@@ -921,7 +1023,7 @@
 						<and>
 							<equals>
 								<property>/instrumentation/ddrmi/vor-adf-2</property>
-								<value>-1</value>
+								<value>0</value>
 							</equals>
 							<equals>
 								<property>/instrumentation/adf[1]/in-range</property>

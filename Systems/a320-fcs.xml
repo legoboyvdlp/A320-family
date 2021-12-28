@@ -830,39 +830,49 @@
 	
 	<channel name="Slats">
 		
-		<switch name="fcs/slat-locked-cmd">
+		<switch name="fcs/sfcc/slat-locked-cmd">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				fcs/slat-locked-cmd eq 1
+				<test logic="OR">
+					fcs/sfcc/unit1-avail eq 1
+					fcs/sfcc/unit2-avail eq 1
+				</test>
+				fcs/sfcc/slat-locked-cmd eq 1
+				/systems/navigation/adr/operating-2 eq 1
 				<test logic="OR">
 					/gear/gear[1]/wow ne 1
-					/velocities/airspeed-kt ge 60
+					/systems/navigation/adr/output/cas-2 ge 60
 				</test>
 				<test logic="OR">
-					aero/alpha-deg gt 7.6
-					/systems/navigation/adr/output/cas-1 lt 154
+					/systems/navigation/adr/output/aoa-2 gt 7.6
+					/systems/navigation/adr/output/cas-2 lt 154
 				</test>
 			</test>
 			<test logic="AND" value="1">
-				fcs/slat-locked-cmd eq 0
+				<test logic="OR">
+					fcs/sfcc/unit1-avail eq 1
+					fcs/sfcc/unit2-avail eq 1
+				</test>
+				fcs/sfcc/slat-locked-cmd eq 0
 				/controls/flight/flaps-input ne 0
+				/systems/navigation/adr/operating-2 eq 1
 				<test logic="OR">
 					/gear/gear[1]/wow ne 1
-					/velocities/airspeed-kt ge 60
+					/systems/navigation/adr/output/cas-2 ge 60
 				</test>
 				<test logic="OR">
-					aero/alpha-deg gt 8.5
-					/systems/navigation/adr/output/cas-1 lt 148
+					/systems/navigation/adr/output/aoa-2 gt 8.5
+					/systems/navigation/adr/output/cas-2 lt 148
 				</test>
 			</test>
 		</switch>
 		
-		<switch name="fcs/slat-locked">
+		<switch name="fcs/sfcc/slat-locked">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/flight/flaps-input eq 0
 				fcs/slat-pos-deg le 18.01
-				fcs/slat-locked-cmd eq 1
+				fcs/sfcc/slat-locked-cmd eq 1
 			</test>
 		</switch>
 		
@@ -871,7 +881,7 @@
 			<test logic="AND" value="0.0">
 				/controls/flight/flaps-input eq 0
 				fcs/slat-pos-deg le 18.01
-				fcs/slat-locked eq 1
+				fcs/sfcc/slat-locked eq 1
 			</test>
 			<test value="100">
 				/systems/acconfig/autoconfig-running eq 1

@@ -48,6 +48,8 @@ var progCLBInput = func(key, i) {
 			fmgc.FMGCInternal.crzProg = fmgc.FMGCInternal.crzFl;
 			if (fmgc.FMGCInternal.phase == 5) {
 				fmgc.FMGCInternal.phase = 3;
+				fmgc.FMGCNodes.phase.setValue(3);
+				systems.PNEU.pressMode.setValue("CR");
 				setprop("/FMGC/internal/activate-once", 0);
 				setprop("/FMGC/internal/activate-twice", 0);
 				setprop("/FMGC/internal/decel", 0);
@@ -60,6 +62,8 @@ var progCLBInput = func(key, i) {
 				mcdu_scratchpad.scratchpads[i].empty();
 				if (fmgc.FMGCInternal.phase == 5) {
 					fmgc.FMGCInternal.phase = 3;
+					fmgc.FMGCNodes.phase.setValue(3);
+					systems.PNEU.pressMode.setValue("CR");
 					setprop("/FMGC/internal/activate-once", 0);
 					setprop("/FMGC/internal/activate-twice", 0);
 					setprop("/FMGC/internal/decel", 0);
@@ -80,6 +84,8 @@ var progCRZInput = func(key, i) {
 			fmgc.FMGCInternal.crzProg = fmgc.FMGCInternal.crzFl;
 			if (fmgc.FMGCInternal.phase == 5) {
 				fmgc.FMGCInternal.phase = 3;
+				fmgc.FMGCNodes.phase.setValue(3);
+				systems.PNEU.pressMode.setValue("CR");
 				setprop("/FMGC/internal/activate-once", 0);
 				setprop("/FMGC/internal/activate-twice", 0);
 				setprop("/FMGC/internal/decel", 0);
@@ -92,6 +98,8 @@ var progCRZInput = func(key, i) {
 				mcdu_scratchpad.scratchpads[i].empty();
 				if (fmgc.FMGCInternal.phase == 5) {
 					fmgc.FMGCInternal.phase = 3;
+					fmgc.FMGCNodes.phase.setValue(3);
+					systems.PNEU.pressMode.setValue("CR");
 					setprop("/FMGC/internal/activate-once", 0);
 					setprop("/FMGC/internal/activate-twice", 0);
 					setprop("/FMGC/internal/decel", 0);
@@ -112,6 +120,8 @@ var progDESInput = func(key, i) {
 			fmgc.FMGCInternal.crzProg = fmgc.FMGCInternal.crzFl;
 			if (fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
 				fmgc.FMGCInternal.phase = 3;
+				fmgc.FMGCNodes.phase.setValue(3);
+				systems.PNEU.pressMode.setValue("CR");
 				setprop("/FMGC/internal/activate-once", 0);
 				setprop("/FMGC/internal/activate-twice", 0);
 				setprop("/FMGC/internal/decel", 0);
@@ -124,6 +134,8 @@ var progDESInput = func(key, i) {
 				mcdu_scratchpad.scratchpads[i].empty();
 				if (fmgc.FMGCInternal.phase == 4 or fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
 					fmgc.FMGCInternal.phase = 3;
+					fmgc.FMGCNodes.phase.setValue(3);
+					systems.PNEU.pressMode.setValue("CR");
 					setprop("/FMGC/internal/activate-once", 0);
 					setprop("/FMGC/internal/activate-twice", 0);
 					setprop("/FMGC/internal/decel", 0);

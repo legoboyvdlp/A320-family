@@ -17,7 +17,7 @@ var DMC = {
 		d.sats = [props.globals.getNode("/systems/navigation/adr/output/sat-1", 1), props.globals.getNode("/systems/navigation/adr/output/sat-2", 1), props.globals.getNode("/systems/navigation/adr/output/sat-3", 1)];
 		d.tats = [props.globals.getNode("/systems/navigation/adr/output/tat-1", 1), props.globals.getNode("/systems/navigation/adr/output/tat-2", 1), props.globals.getNode("/systems/navigation/adr/output/tat-3", 1)];
 		d.trends = [props.globals.getNode("/instrumentation/pfd/speed-lookahead-1", 1), props.globals.getNode("/instrumentation/pfd/speed-lookahead-2", 1), props.globals.getNode("/instrumentation/pfd/speed-lookahead-3", 1)];
-		d.altitudeDiffs = [props.globals.getNode("//instrumentation/pfd/alt-diff[0]", 1), props.globals.getNode("//instrumentation/pfd/alt-diff[1]", 1), props.globals.getNode("//instrumentation/pfd/alt-diff[2]", 1)];
+		d.altitudeDiffs = [props.globals.getNode("/instrumentation/pfd/alt-diff[0]", 1), props.globals.getNode("/instrumentation/pfd/alt-diff[1]", 1), props.globals.getNode("/instrumentation/pfd/alt-diff[2]", 1)];
 		d.outputs = [nil, nil, nil, nil, nil, nil, nil, nil]; # airspeed, altitude, mach, pfd altitude, sat, tat, speed trend, altitudeDiffs
 		return d;
 	},
@@ -75,7 +75,7 @@ var DMController = {
 			# update DMC2 to correct properties for first officer PFD
 			me.DMCs[1].altitudes = [props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-1-fo", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-2-fo", 1), props.globals.getNode("/systems/navigation/adr/output/baro-alt-corrected-3-fo", 1)];
 			me.DMCs[1].altitudesPfd = [props.globals.getNode("/instrumentation/altimeter[3]/indicated-altitude-ft-pfd", 1), props.globals.getNode("/instrumentation/altimeter[4]/indicated-altitude-ft-pfd", 1), props.globals.getNode("/instrumentation/altimeter[5]/indicated-altitude-ft-pfd", 1)];
-			me.DMCs[1].altitudeDiffs = [props.globals.getNode("//instrumentation/pfd/alt-diff[3]", 1), props.globals.getNode("//instrumentation/pfd/alt-diff[4]", 1), props.globals.getNode("//instrumentation/pfd/alt-diff[5]", 1)];
+			me.DMCs[1].altitudeDiffs = [props.globals.getNode("/instrumentation/pfd/alt-diff[3]", 1), props.globals.getNode("/instrumentation/pfd/alt-diff[4]", 1), props.globals.getNode("/instrumentation/pfd/alt-diff[5]", 1)];
 			me._init = 1;
 		}
 	},

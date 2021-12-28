@@ -6,6 +6,12 @@
 
 	<channel name="FWC" execrate="16">
 		
+		<actuator name="/ECAM/phases/timer/acconfig-running">
+			<input>/systems/acconfig/autoconfig-running</input>
+			<rate_limit sense="decr">0.2</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
+		</actuator>
+		
 		<actuator name="/ECAM/phases/timer/eng1idle-output">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/eng1idle</input>
@@ -1493,10 +1499,80 @@
 	
 	<channel name="Electrical Warnings" execrate="16">
 	
+		<switch name="/ECAM/warnings/logic/eng/engine-1-core-speed-abv-idle-input">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[0]/n2-actual ge 59.4
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/engine-1-core-speed-abv-idle">
+			<input>/ECAM/warnings/logic/eng/engine-1-core-speed-abv-idle-input</input>
+			<rate_limit sense="incr">0.03333333333</rate_limit> <!-- 31 -->
+			<rate_limit sense="decr">1.0</rate_limit>
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-1-fire-btn-timer-31">
+			<input>/controls/engines/engine[0]/fire-btn</input>
+			<rate_limit sense="incr">0.03225806451</rate_limit> <!-- 31 -->
+			<rate_limit sense="decr">1.0</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/JE1NORUN">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/engines/engine[0]/cutoff-switch eq 1
+				<test logic="AND">
+					/ECAM/warnings/logic/eng/engine-1-core-speed-abv-idle ne 1
+					<test logic="OR">
+						/engines/engine[0]/n2-actual lt 59.4
+						/ECAM/timer/ground-calc eq 1
+						/controls/engines/engine[0]/fire-btn eq 0
+						/ECAM/warnings/logic/eng/eng-1-fire-btn-timer-31 ne 1
+					</test>
+				</test>
+			</test>
+		</switch>
+	
+		<switch name="/ECAM/warnings/logic/eng/engine-2-core-speed-abv-idle-input">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine[0]/n2-actual ge 59.4
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/engine-2-core-speed-abv-idle">
+			<input>/ECAM/warnings/logic/eng/engine-2-core-speed-abv-idle-input</input>
+			<rate_limit sense="incr">0.03333333333</rate_limit> <!-- 31 -->
+			<rate_limit sense="decr">1.0</rate_limit>
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-fire-btn-timer-31">
+			<input>/controls/engines/engine[1]/fire-btn</input>
+			<rate_limit sense="incr">0.03225806451</rate_limit> <!-- 31 -->
+			<rate_limit sense="decr">1.0</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/JE2NORUN">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/engines/engine[1]/cutoff-switch eq 1
+				<test logic="AND">
+					/ECAM/warnings/logic/eng/engine-2-core-speed-abv-idle ne 1
+					<test logic="OR">
+						/engines/engine[1]/n2-actual lt 59.4
+						/ECAM/timer/ground-calc eq 1
+						/controls/engines/engine[1]/fire-btn eq 0
+						/ECAM/warnings/logic/eng/eng-2-fire-btn-timer-31 ne 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/gen-1-inop">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/JE1NORUN eq 0
 				/systems/electrical/relay/gen-1-glc/contact-pos eq 0
 			</test>
 		</switch>
@@ -1564,7 +1640,7 @@
 		<switch name="/ECAM/warnings/logic/gen-2-inop">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[1]/state eq 3
+				/ECAM/warnings/logic/eng/JE2NORUN eq 0
 				/systems/electrical/relay/gen-2-glc/contact-pos eq 0
 			</test>
 		</switch>
@@ -1817,7 +1893,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/timer/ground-calc eq 0
-				/ECAM/dual-failure-enabled eq 0
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 				<test logic="OR">
 					<test logic="AND">
 						<test logic="OR">
@@ -1864,7 +1940,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/timer/ground-calc eq 0
-				/ECAM/dual-failure-enabled eq 0
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 				<test logic="OR">
 					<test logic="AND">
 						<test logic="OR">
@@ -2301,36 +2377,69 @@
 			</test>
 		</switch>
 
-		<switch name="/instrumentation/pfd/lights/autoland-armed">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				<!-- /gear/gear[0]/wow eq 0 -->				
-			    <test logic="AND">
-				  /modes/pfd/ILS1 eq 1
-				  /instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected le 200
-				</test>				
-			    <test logic="AND">
-				  /modes/pfd/ILS2 eq 1
-				  /instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected le 200
-				</test>				
-				<!-- /instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected le 200 -->
-			</test>
-		</switch>		
-
-		<switch name="/instrumentation/pfd/lights/autoland-on">
+		<switch name="/instrumentation/pfd/logic/autoland/autoland-armed">
 			<default value="0"/>
 			<test logic="AND" value="1">
-			  /instrumentation/pfd/lights/autoland-armed eq 1
+				<test logic="OR">
+					/systems/electrical/bus/ac-2 ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/modes/pfd/ILS1 eq 1
+						/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected lt 200
+					</test>				
+					<test logic="AND">
+						/modes/pfd/ILS2 eq 1
+						/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected lt 200
+					</test>				
+				</test>
+			</test>
+		</switch>				
+
+		<switch name="/instrumentation/pfd/logic/autoland/autoland-alarm">
+			<default value="0"/>
+			<test logic="AND" value="1">			
+			  /instrumentation/pfd/logic/autoland/autoland-armed eq 1
+			  /instrumentation/pfd/logic/autoland/pitch-land eq 1
 			  <test logic="OR">
 				<test logic="AND">
 					/it-autoflight/output/ap1 eq 0
 					/it-autoflight/output/ap2 eq 0			    
 			    </test>
 				/instrumentation/radar-altimeter-difference-ft gt 15
+				<test logic="AND">
+					<test logic="OR">
+						/instrumentation/nav[0]/gs-needle-deflection-norm gt 0.5
+						/instrumentation/nav[0]/gs-needle-deflection-norm lt -0.5
+					</test>
+					/position/gear-agl-ft ge 100
+				</test>
+				<test logic="AND">
+					<test logic="OR">
+						/instrumentation/nav[0]/heading-needle-deflection-norm gt 0.125
+						/instrumentation/nav[0]/heading-needle-deflection-norm lt -0.125
+					</test>
+					/position/gear-agl-ft ge 15
+				</test>
 				<!-- TODO 
-				- Localizer deviation excessive
 				- Loss of localizer signal
 				-->
+			  </test>
+		    </test>
+		</switch>		
+
+		<switch name="/instrumentation/pfd/lights/autoland-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+			  <test logic="AND">
+			    /instrumentation/pfd/logic/autoland/autoland-alarm eq 1				
+			  	/instrumentation/pfd/logic/autoland/autoland-sw-pulse eq 1
+			  </test>
+			  <test logic="AND">
+			  	/instrumentation/pfd/logic/autoland/autoland-alarm eq 1
+			    /it-autoflight/output/ap-warning ge 1
+			    /ECAM/warnings/master-warning-flash eq 1
 			  </test>
 		    </test>
 		</switch>		
@@ -2713,6 +2822,48 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/eng/dual-failure-5-sec-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/n2-actual lt 59.4
+				/engines/engine[1]/n2-actual lt 59.4
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/dual-failure-5-sec">
+			<input>/ECAM/warnings/logic/eng/dual-failure-5-sec-input</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-fire-btn-timer">
+			<input>/controls/engines/engine[1]/fire-btn</input>
+			<rate_limit sense="incr">0.1</rate_limit>
+			<rate_limit sense="decr">1.0</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/dual-failure">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/timer/ground-calc eq 0
+				<test logic="OR">
+					/ECAM/warnings/logic/eng/eng-2-fire-btn-timer eq 1
+					/controls/engines/engine[1]/fire-btn eq 0
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/controls/engines/engine[0]/fire-btn eq 1
+						/controls/engines/engine[1]/fire-btn eq 1
+					</test>
+					<test logic="AND">
+						/controls/engines/engine[0]/cutoff-switch eq 1
+						/controls/engines/engine[1]/cutoff-switch eq 1
+					</test>
+					/ECAM/warnings/logic/eng/dual-failure-5-sec eq 1
+				</test>
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-cond-set-input">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -2779,7 +2930,7 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/engines/engine[0]/n2-actual ge 59.4
-				/ECAM/dual-failure-enabled eq 1
+				/ECAM/warnings/logic/eng/dual-failure eq 1
 			</test>
 		</switch>
 		
@@ -2787,7 +2938,7 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/engines/engine[1]/n2-actual ge 59.4
-				/ECAM/dual-failure-enabled eq 1
+				/ECAM/warnings/logic/eng/dual-failure eq 1
 			</test>
 		</switch>
 		
@@ -2851,7 +3002,8 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-1-shutdown">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/dual-failure-enabled eq 0
+				/ECAM/phases/timer/acconfig-running eq 0
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 				<test logic="OR">
 					<test logic="AND">
 						<test logic="OR">
@@ -2871,7 +3023,8 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-shutdown">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/dual-failure-enabled eq 0
+				/ECAM/phases/timer/acconfig-running eq 0
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 				<test logic="OR">
 					<test logic="AND">
 						<test logic="OR">
@@ -2915,6 +3068,7 @@
 		<switch name="/ECAM/warnings/fctl/lrElevFault">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/ECAM/phases/timer/acconfig-running eq 0
 				/ECAM/warning-phase ne 1
 				/ECAM/warning-phase ne 10
 				<test logic="OR">
@@ -3023,6 +3177,7 @@
 		<switch name="/ECAM/warnings/fctl/altn-law">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/ECAM/phases/timer/acconfig-running eq 0
 				/ECAM/warning-phase ne 1
 				/ECAM/warning-phase ne 10
 				/it-fbw/law eq 1
@@ -3039,6 +3194,7 @@
 		<switch name="/ECAM/warnings/fctl/direct-law-output">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/ECAM/phases/timer/acconfig-running eq 0
 				/ECAM/warning-phase ne 1
 				/ECAM/warning-phase ne 10
 				/it-fbw/law eq 2

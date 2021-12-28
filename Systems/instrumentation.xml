@@ -9,14 +9,14 @@
 	<adf>
 		<name>adf</name>
 		<number>0</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<power-supply>/instrumentation/adf[0]/power-supply-node</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</adf>
 	
 	<adf>
 		<name>adf</name>
 		<number>1</number>
-		<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<power-supply>/instrumentation/adf[1]/power-supply-node</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</adf>
 	
@@ -91,7 +91,10 @@
 		<name>altimeter</name> <!-- standby, measure directly, not via ADR -->
 		<number>6</number>
 		<static-pressure>/systems/static[2]/pressure-inhg</static-pressure>
+		<quantum>0</quantum>
 		<tau>0.1</tau>
+		<encode-mode-c>0</encode-mode-c>
+		<encode-mode-s>0</encode-mode-s>
 	</altimeter>
 	
 	<attitude-indicator>
@@ -123,10 +126,10 @@
 		<eight-point-three>1</eight-point-three>
 	</comm-radio>
 	
-	<dme>
+	<dme>  <!-- fake extra dme units for the ILS -->
 		<name>dme</name>
 		<number>0</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<power-supply>/systems/electrical/bus/ac-ess</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</dme>
 	
@@ -137,17 +140,17 @@
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</dme>
 	
-	<dme> <!-- fake extra dme units for the ILS -->
+	<dme> <!-- VOR DME -->
 		<name>dme</name>
 		<number>2</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<power-supply>/instrumentation/dme[0]/power-supply-node</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</dme>
 	
 	<dme>
 		<name>dme</name>
 		<number>3</number>
-		<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<power-supply>/instrumentation/dme[1]/power-supply-node</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</dme>
 	
@@ -178,19 +181,14 @@
 	<marker-beacon> <!-- part of VOR1 unit -->
 		<name>marker-beacon</name>
 		<number>0</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<power-supply>/instrumentation/nav[2]/power-supply-node</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</marker-beacon>
 	
-	<marker-beacon>
-		<name>marker-beacon</name>
-		<number>0</number>
-	</marker-beacon>
-	
-	<nav-radio> <!-- VOR unit -->
+	<nav-radio> <!-- ILS unit -->
 		<name>nav</name>
 		<number>0</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<power-supply>/systems/electrical/bus/ac-ess</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</nav-radio>
 	
@@ -201,17 +199,17 @@
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</nav-radio>
 	
-	<nav-radio> <!-- ILS unit -->
+	<nav-radio> <!-- VOR unit -->
 		<name>nav</name>
 		<number>2</number>
-		<power-supply>/systems/electrical/bus/ac-ess-shed</power-supply>
+		<power-supply>/instrumentation/nav[2]/power-supply-node</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</nav-radio>
 	
 	<nav-radio>
 		<name>nav</name>
 		<number>3</number>
-		<power-supply>/systems/electrical/bus/ac-2</power-supply>
+		<power-supply>/instrumentation/nav[3]/power-supply-node</power-supply>
 		<minimum-supply-volts>109.9</minimum-supply-volts>
 	</nav-radio>
 	

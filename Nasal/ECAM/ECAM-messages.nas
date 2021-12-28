@@ -501,6 +501,7 @@ var warnings				  = std.Vector.new([
 	var altnLawProt           = warning.new(msg: "     (PROT LOST)",          colour: "a"),
 	var altnLawMaxSpeed       = warning.new(msg: " MAX SPEED........320 KT",  colour: "c"),
 	var altnLawMaxSpeed2      = warning.new(msg: " MAX SPEED........320/.77", colour: "c"),
+	var altnLawCare           = warning.new(msg: " MANEUVER WITH CARE",       colour: "c"),
 	var altnLawMaxSpdBrk      = warning.new(msg: " SPD BRK.......DO NOT USE", colour: "c"),
 	
 	# Autothrust
