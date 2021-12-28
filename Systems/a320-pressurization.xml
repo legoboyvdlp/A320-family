@@ -3,6 +3,7 @@
 <system name="A320: Pressurization">
 	<property value="0">/systems/air-conditioning/calculations/mass-flow-total-kg_s</property>
 	<property value="0">/systems/pressurization/calculations/outflow-total-kg_s</property>
+		<property value="0.0008">/systems/pressurization/logic/outflow-valve-sensitivity</property>
 	<channel name="Pressurization Logic Controller" execrate="8">
 		
 		<summer name="/systems/pressurization/logic/alt-change-takeoff">
@@ -363,7 +364,10 @@
 			<function>
 				<sum>
 					<v>0.1</v>
-					<property>/systems/pressurization/cabin-pressure-psi</property>
+					<product>
+						<v>0.491154</v>
+						<property>/environment/pressure-inhg</property>
+					</product>
 				</sum>
 			</function>
 		</fcs_function>
@@ -601,13 +605,13 @@
 				<sum>
 					<value>0.8</value>
 					<product>
-						<value>-0.0012</value>
+						<value>-/systems/pressurization/logic/outflow-valve-sensitivity</value>
 						<property>/systems/pressurization/logic/target-vs-error</property>
 					</product>
 				</sum>
 			</function>
 			<clipto>
-				<min>0.6</min>
+				<min>0.4</min>
 				<max>1.0</max>
 			</clipto>
 		</fcs_function>
