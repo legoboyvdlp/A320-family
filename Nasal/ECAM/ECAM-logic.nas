@@ -3564,13 +3564,13 @@ var messages_right_memo = func {
 		wing_aice.active = 0;
 	}
 	
-	if (systems.PNEU.Switch.apu.getValue() == 1 and pts.APU.rpm.getValue() >= 95) {
+	if (systems.PNEU.Switch.apu.getValue() == 1 and systems.PNEU.Valves.apu.getValue() != 0 and systems.APUController.APU != nil and systems.APUController.APU.signals.available.getBoolValue()) {
 		apu_bleed.active = 1;
 	} else {
 		apu_bleed.active = 0;
 	}
 
-	if (apu_bleed.active == 0 and pts.APU.rpm.getValue() >= 95) {
+	if (apu_bleed.active == 0 and systems.APUController.APU != nil and systems.APUController.APU.signals.available.getBoolValue()) {
 		apu_avail.active = 1;
 	} else {
 		apu_avail.active = 0;
