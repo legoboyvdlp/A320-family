@@ -79,9 +79,6 @@ var acType = props.globals.getNode("/options/model-number", 1);
 var engType = props.globals.getNode("/options/engine-name", 1);
 var idleFactor = props.globals.getNode("/options/company-options/idle-factor", 1);
 var perfFactor = props.globals.getNode("/options/company-options/perf-factor", 1);
-var database1 = props.globals.getNode("/FMGC/internal/navdatabase", 1);
-var database2 = props.globals.getNode("/FMGC/internal/navdatabase2", 1);
-var databaseCode = props.globals.getNode("/FMGC/internal/navdatabasecode", 1);
 
 # INT-A
 var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
