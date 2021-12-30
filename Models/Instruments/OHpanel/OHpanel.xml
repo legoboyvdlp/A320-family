@@ -71,9 +71,7 @@
 		<object-name>ELAC1Btn2O</object-name>
 		<object-name>FAC1Btn1F</object-name>
 		<object-name>FAC1Btn2O</object-name>
-		<object-name>Gen1Btn1F</object-name>
 		<object-name>Gen1Btn2O</object-name>
-		<object-name>Gen2Btn1F</object-name>
 		<object-name>Gen2Btn2O</object-name>
 		<object-name>SEC1Btn1F</object-name>
 		<object-name>SEC1Btn2O</object-name>
@@ -3271,16 +3269,19 @@
 		<type>select</type>
 		<object-name>Gen1Btn1F</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>systems/electrical/light/gen-1-fault</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<or>
+					<equals>
+						<property>systems/electrical/light/gen-1-fault</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+				</or>
+				<property>/systems/electrical/sources/idg-1/gcu-1-powered</property>
+			</and>
 		</condition>
 	</animation>
 
@@ -3581,16 +3582,19 @@
 		<type>select</type>
 		<object-name>Gen2Btn1F</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>systems/electrical/light/gen-2-fault</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<or>
+					<equals>
+						<property>systems/electrical/light/gen-2-fault</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+				</or>
+				<property>/systems/electrical/sources/idg-2/gcu-2-powered</property>
+			</and>
 		</condition>
 	</animation>
 
