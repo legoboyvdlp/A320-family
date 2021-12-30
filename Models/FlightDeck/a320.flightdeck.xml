@@ -1226,7 +1226,7 @@
 		</condition>
 	</animation>
 	
-	<!-- Direct DC power from DC2 206PP to ECP LEDs -->
+	<!-- Direct DC power from DC2 206PP to ECP LEDs and rudder trim indicator -->
 	<animation>
 		<type>select</type>
 		<object-name>ecam_apu_led</object-name>
@@ -1245,16 +1245,6 @@
 		<object-name>ecam_press_led</object-name>
 		<object-name>ecam_sts_led</object-name>
 		<object-name>ecam_wheel_led</object-name>
-		<condition>
-			<greater-than-equals>
-				<property>systems/electrical/bus/dc-2</property>
-				<value>25</value>
-			</greater-than-equals>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>select</type>
 		<object-name>rudder-trim-letter</object-name>
 		<object-name>rudder-trim</object-name>
 		<condition>
