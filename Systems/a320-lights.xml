@@ -28,14 +28,15 @@
 		<switch name="/controls/lighting/fcu-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/fcu-panel-knb">
-				/systems/electrical/bus/ac-1 gt 25
+				/systems/electrical/bus/ac-1 gt 110
 			</test>
 		</switch>
 		
 		<switch name="/controls/lighting/fcu-digit-norm-tied">
 			<default value="0" />
-			<test value="/controls/lighting/fcu-digit-knb">
-				/systems/electrical/bus/ac-1 gt 25
+			<test logic="OR" value="/controls/lighting/fcu-digit-knb">
+				/systems/electrical/bus/ac-si-bus ge 110
+				/systems/electrical/bus/ac-ess-shed ge 110
 			</test>
 		</switch>
 		
