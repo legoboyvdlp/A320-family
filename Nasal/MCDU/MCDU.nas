@@ -25,10 +25,6 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/keyboard-right", 0);
 	
 	#ACCONFIG
-	setprop("/FMGC/internal/navdatabase", "01JAN-28JAN");
-	setprop("/FMGC/internal/navdatabase2", "29JAN-26FEB");
-	setprop("/FMGC/internal/navdatabasecode", "AB20170101");
-	setprop("/FMGC/internal/navdatabasecode2", "AB20170102");
 	setprop("/FMGC/print/mcdu/page1/L1auto", 0);
 	setprop("/FMGC/print/mcdu/page1/L2auto", 0);
 	setprop("/FMGC/print/mcdu/page1/L3auto", 0);

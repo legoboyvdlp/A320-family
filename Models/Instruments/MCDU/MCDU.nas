@@ -2456,9 +2456,9 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L1"].setText(sprintf("%s", engType.getValue()));
-			me["Simple_L2"].setText(sprintf("%s", " " ~ database1.getValue()));
-			me["Simple_L3"].setText(sprintf("%s", " " ~ database2.getValue()));
-			me["Simple_R2"].setText(sprintf("%s", databaseCode.getValue() ~ " "));
+			me["Simple_L2"].setText(" " ~ fmgc.navDataBase.currentDate);
+			me["Simple_L3"].setText(" " ~ fmgc.navDataBase.standbyDate);
+			me["Simple_R2"].setText(fmgc.navDataBase.currentCode);
 			
 			if (fmgc.WaypointDatabase.getCount() >= 1) {
 				me["Simple_R4"].show();

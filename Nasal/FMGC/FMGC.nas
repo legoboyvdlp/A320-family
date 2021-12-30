@@ -4,11 +4,6 @@
 ##################
 # Init Functions #
 ##################
-
-var database1 = 0;
-var database2 = 0;
-var code1 = 0;
-var code2 = 0;
 var gear0 = 0;
 var state1 = 0;
 var state2 = 0;
@@ -71,14 +66,13 @@ var FMGCinit = func {
 	FMGCInternal.mngSpdCmd = 157;
 	FMGCInternal.mngKtsMach = 0;
 	FMGCInternal.machSwitchover = 0;
-	setprop("/FMGC/internal/loc-source", "NAV0");
 	setprop("/FMGC/internal/optalt", 0);
-	setprop("/FMGC/internal/landing-time", -99);
+	FMGCInternal.landingTime = -99;
+	FMGCInternal.blockFuelTime = -99;
+	FMGCInternal.fuelPredTime = -99;
 	FMGCAlignTime[0].setValue(-99);
 	FMGCAlignTime[1].setValue(-99);
 	FMGCAlignTime[2].setValue(-99);
-	setprop("/FMGC/internal/block-fuel-time", -99);
-	setprop("/FMGC/internal/fuel-pred-time", -99); 
 	masterFMGC.start();
 	radios.start();
 }
@@ -219,6 +213,10 @@ var FMGCInternal = {
 	mngKtsMach: 0,
 	mngSpd: 0,
 	mngSpdCmd: 0,
+	
+	landingTime: -99,
+	blockFuelTime: -99,
+	fuelPredTime: -99,
 	
 	# RADNAV
 	ADF1: {
@@ -913,18 +911,16 @@ var masterFMGC = maketimer(0.2, func {
 ############################
 #handle radios, runways, v1/vr/v2
 ############################
-var airportRadiosPhase = nil;
 var updateAirportRadios = func {
-
-	airportRadiosPhase = FMGCInternal.phase;
-
 	departure_rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
 	destination_rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
-	if (airportRadiosPhase >= 2 and destination_rwy != nil) {
+	
+	if (FMGCInternal.phase >= 2 and destination_rwy != nil) {
 		var airport = airportinfo(FMGCInternal.arrApt);
 		setprop("/FMGC/internal/ldg-elev", airport.elevation * M2FT); # eventually should be runway elevation
-		magnetic_hdg = geo.normdeg(destination_rwy.heading - getprop("/environment/magnetic-variation-deg"));
+		magnetic_hdg = geo.normdeg(destination_rwy.heading - pts.Environment.magVar.getValue());
 		runway_ils = destination_rwy.ils_frequency_mhz;
+		
 		if (runway_ils != nil and !fmgc.FMGCInternal.ILS.freqSet and !fmgc.FMGCInternal.ILS.crsSet) {
 			fmgc.FMGCInternal.ILS.freqCalculated = runway_ils;
 			pts.Instrumentation.Nav.Frequencies.selectedMhz[0].setValue(runway_ils);
@@ -935,9 +931,10 @@ var updateAirportRadios = func {
 		} elsif (!fmgc.FMGCInternal.ILS.crsSet) {
 			pts.Instrumentation.Nav.Radials.selectedDeg[0].setValue(magnetic_hdg);
 		}
-	} elsif (airportRadiosPhase <= 1 and departure_rwy != nil) {
-		magnetic_hdg = geo.normdeg(departure_rwy.heading - getprop("/environment/magnetic-variation-deg"));
+	} elsif (FMGCInternal.phase <= 1 and departure_rwy != nil) {
+		magnetic_hdg = geo.normdeg(departure_rwy.heading - pts.Environment.magVar.getValue());
 		runway_ils = departure_rwy.ils_frequency_mhz;
+		
 		if (runway_ils != nil and !fmgc.FMGCInternal.ILS.freqSet and !fmgc.FMGCInternal.ILS.crsSet) {
 			fmgc.FMGCInternal.ILS.freqCalculated = runway_ils;
 			pts.Instrumentation.Nav.Frequencies.selectedMhz[0].setValue(runway_ils);
@@ -1119,27 +1116,35 @@ var ManagedSPD = maketimer(0.25, func {
 	}
 });
 
+# Nav Database
+var navDataBase = {
+	currentCode: "AB20170101",
+	currentDate: "01JAN-28JAN",
+	standbyCode: "AB20170102",
+	standbyDate: "29JAN-26FEB",
+};
+
+var tempStoreCode = nil;
+var tempStoreDate = nil;
 var switchDatabase = func {
-	database1 = getprop("/FMGC/internal/navdatabase");
-	database2 = getprop("/FMGC/internal/navdatabase2");
-	code1 = getprop("/FMGC/internal/navdatabasecode");
-	code2 = getprop("/FMGC/internal/navdatabasecode2");
-	setprop("/FMGC/internal/navdatabase", database2);
-	setprop("/FMGC/internal/navdatabase2", database1);
-	setprop("/FMGC/internal/navdatabasecode", code2);
-	setprop("/FMGC/internal/navdatabasecode2", code1);
+	tempStoreCode = navDataBase.currentCode;
+	tempStoreDate = navDataBase.currentDate;
+	navDataBase.currentCode = navDataBase.standbyCode;
+	navDataBase.currentDate = navDataBase.standbyDate;
+	navDataBase.standbyCode = tempStoreCode;
+	navDataBase.standbyDate = tempStoreDate;
 }
 
 # Landing to phase 7
-setlistener("/gear/gear[1]/wow", func() {
-	if (getprop("/gear/gear[1]/wow") == 0 and timer30secLanding.isRunning) {
+setlistener("/gear/gear[1]/wow", func(val) {
+	if (val.getValue() == 0 and timer30secLanding.isRunning) {
 		timer30secLanding.stop();
-		setprop("/FMGC/internal/landing-time", -99);
+		FMGCInternal.landingTime = -99;
 	}
 	
-	if (pts.Gear.wow[1].getValue() and getprop("/FMGC/internal/landing-time") == -99) {
+	if (val.getValue() and FMGCInternal.landingTime == -99) {
 		timer30secLanding.start();
-		setprop("/FMGC/internal/landing-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 }, 0, 0);
 
@@ -1182,34 +1187,34 @@ setlistener("/systems/navigation/adr/operating-3", func() {
 # Calculate Block Fuel
 setlistener("/FMGC/internal/block-calculating", func() {
 	if (timer3blockFuel.isRunning) {
-		setprop("/FMGC/internal/block-fuel-time", -99);
+		FMGCInternal.blockFuelTime = -99;
 		timer3blockFuel.start();
-		setprop("/FMGC/internal/block-fuel-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCInternal.blockFuelTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 	
-	if (getprop("/FMGC/internal/block-fuel-time") == -99) {
+	if (FMGCInternal.blockFuelTime == -99) {
 		timer3blockFuel.start();
-		setprop("/FMGC/internal/block-fuel-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCInternal.blockFuelTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 }, 0, 0);
 
 # Calculate Fuel Prediction
 setlistener("/FMGC/internal/fuel-calculating", func() {
 	if (timer5fuelPred.isRunning) {
-		setprop("/FMGC/internal/fuel-pred-time", -99);
+		FMGCInternal.fuelPredTime = -99;
 		timer5fuelPred.start();
-		setprop("/FMGC/internal/fuel-pred-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCInternal.fuelPredTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 	
-	if (getprop("/FMGC/internal/fuel-pred-time") == -99) {
+	if (FMGCInternal.fuelPredTime == -99) {
 		timer5fuelPred.start();
-		setprop("/FMGC/internal/fuel-pred-time", pts.Sim.Time.elapsedSec.getValue());
+		FMGCInternal.fuelPredTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 }, 0, 0);
 
 # Maketimers
 var timer30secLanding = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/landing-time") + 30) {
+	if (pts.Sim.Time.elapsedSec.getValue() > FMGCInternal.landingTime + 30) {
 		FMGCInternal.phase = 7;
 		
 		if (FMGCInternal.costIndexSet) {
@@ -1217,7 +1222,7 @@ var timer30secLanding = maketimer(1, func() {
 		} else {
 			setprop("/FMGC/internal/last-cost-index", 0);
 		}
-		setprop("/FMGC/internal/landing-time", -99);
+		FMGCInternal.landingTime = -99;
 		timer30secLanding.stop();
 	}
 });
@@ -1247,21 +1252,21 @@ var timer48gpsAlign3 = maketimer(1, func() {
 });
 
 var timer3blockFuel = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/block-fuel-time") + 3) {
+	if (pts.Sim.Time.elapsedSec.getValue() > FMGCInternal.blockFuelTime + 3) {
 		#updateFuel();
 		fmgc.FMGCInternal.blockCalculating = 0;
 		fmgc.blockCalculating.setValue(0);
-		setprop("/FMGC/internal/block-fuel-time", -99); 
+		FMGCInternal.blockFuelTime = -99;
 		timer3blockFuel.stop();
 	}
 });
 
 var timer5fuelPred = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > getprop("/FMGC/internal/fuel-pred-time") + 5) {
+	if (pts.Sim.Time.elapsedSec.getValue() > FMGCInternal.fuelPredTime + 5) {
 		#updateFuel();
 		fmgc.FMGCInternal.fuelCalculating = 0;
 		fmgc.fuelCalculating.setValue(0);
-		setprop("/FMGC/internal/fuel-pred-time", -99); 
+		FMGCInternal.fuelPredTime = -99;
 		timer5fuelPred.stop();
 	}
 });

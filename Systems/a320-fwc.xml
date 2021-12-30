@@ -2833,7 +2833,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/ECAM/warnings/logic/eng/dual-failure-5-sec-input">
+		<switch name="/ECAM/warnings/logic/eng/dual-failure-2-sec-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[0]/n2-actual lt 59.4
@@ -2841,8 +2841,8 @@
 			</test>
 		</switch>
 		
-		<actuator name="/ECAM/warnings/logic/eng/dual-failure-5-sec">
-			<input>/ECAM/warnings/logic/eng/dual-failure-5-sec-input</input>
+		<actuator name="/ECAM/warnings/logic/eng/dual-failure-2-sec">
+			<input>/ECAM/warnings/logic/eng/dual-failure-2-sec-input</input>
 			<rate_limit sense="incr">0.5</rate_limit>
 			<rate_limit sense="decr">100</rate_limit>
 		</actuator>
@@ -2870,7 +2870,7 @@
 						/controls/engines/engine[0]/cutoff-switch eq 1
 						/controls/engines/engine[1]/cutoff-switch eq 1
 					</test>
-					/ECAM/warnings/logic/eng/dual-failure-5-sec eq 1
+					/ECAM/warnings/logic/eng/dual-failure-2-sec eq 1
 				</test>
 			</test>
 		</switch>

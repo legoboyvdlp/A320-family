@@ -71,37 +71,29 @@
 		<switch name="/controls/lighting/fcu-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/fcu-panel-knb">
-				/systems/electrical/bus/ac-1 gt 25
+				/systems/electrical/bus/ac-1 gt 110
 			</test>
 		</switch>
 		
 		<switch name="/controls/lighting/fcu-digit-norm-tied">
 			<default value="0" />
-			<test value="/controls/lighting/fcu-digit-knb">
-				/systems/electrical/bus/ac-1 gt 25
+			<test logic="OR" value="/controls/lighting/fcu-digit-knb">
+				/systems/electrical/bus/ac-si-bus ge 110
+				/systems/electrical/bus/ac-ess-shed ge 110
 			</test>
 		</switch>
 		
 		<switch name="/controls/lighting/main-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/main-panel-knb">
-				/systems/electrical/bus/ac-1 gt 25
+				/systems/electrical/bus/ac-1 gt 110
 			</test>
 		</switch>
 		
 		<switch name="/controls/lighting/overhead-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/overhead-panel-knb">
-				/systems/electrical/bus/ac-1 gt 25
-			</test>
-		</switch>
-		
-		<switch name="/controls/lighting/annunciator-lights-tied">
-			<default value="0" />
-			<test logic="OR" value="1"> <!-- TODO: add static inverter as a source, also dc-2 switching -->
 				/systems/electrical/bus/ac-1 gt 110
-				/systems/electrical/bus/ac-2 gt 110
-				/systems/electrical/bus/dc-2 gt 25
 			</test>
 		</switch>
 		

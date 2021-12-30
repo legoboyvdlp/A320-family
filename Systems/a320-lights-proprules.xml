@@ -53,12 +53,4 @@
 		</input>
         <output>/controls/lighting/overhead-panel-norm-digital</output>
     </filter>
-	
-    <filter>
-        <type>gain</type>
-        <gain>1.0</gain>
-        <input>/controls/lighting/annunciator-lights-tied</input>
-        <output>/controls/lighting/annunciator-lights</output>
-    </filter>
-	
 </PropertyList>
