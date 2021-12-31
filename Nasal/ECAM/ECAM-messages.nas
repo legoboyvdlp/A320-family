@@ -543,20 +543,9 @@ var warnings				  = std.Vector.new([
 	var fac2FaultSuccess      = warning.new(msg: "   •IF UNSUCCESSFUL :",     colour: "w"),
 	var fac2FaultFacOff       = warning.new(msg: " -FAC 2..............OFF",  colour: "c"),
 	
-	var yawDamper1Fault       = warning.new(msg: "AUTO FLT YAW DAMPER 1",     colour: "a", isMainMsg: 1),
-	var yawDamper2Fault       = warning.new(msg: "AUTO FLT YAW DAMPER 2",     colour: "a", isMainMsg: 1),
-	# var rudTrim1Fault         = warning.new(msg: "AUTO FLT RUD TRIM1 FAULT",  colour: "a", isMainMsg: 1), not implemented
-	# var rudTrim2Fault         = warning.new(msg: "AUTO FLT RUD TRIM2 FAULT",  colour: "a", isMainMsg: 1), not implemented
-	var rudTravLimSys1Fault   = warning.new(msg: "AUTO FLT RUD TRV LIM 1",    colour: "a", isMainMsg: 1),
-	var rudTravLimSys2Fault   = warning.new(msg: "AUTO FLT RUD TRV LIM 2",    colour: "a", isMainMsg: 1),
-	
 	# FCU fault
 	var fcuFault              = warning.new(msg: "AUTO FLT FCU 1+2 FAULT",    colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var fcuFaultBaro          = warning.new(msg: " -PFD BARO REF: STD ONLY",  colour: "c"),
-	var fcuFault1             = warning.new(msg: "AUTO FLT FCU 1 FAULT",      colour: "a", isMainMsg: 1),
-	var fcuFault1Baro         = warning.new(msg: " -BARO REF.......X CHECK",  colour: "c"),
-	var fcuFault2             = warning.new(msg: "AUTO FLT FCU 2 FAULT",      colour: "a", isMainMsg: 1),
-	var fcuFault2Baro         = warning.new(msg: " -BARO REF.......X CHECK",  colour: "c"),
 	
 	# FUEL
 	var wingLoLvl             = warning.new(msg: "FUEL L+R WING TK LO LVL",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
@@ -691,7 +680,6 @@ var warnings				  = std.Vector.new([
 	var wingIceLOpenEngOff    = warning.new(msg: " -ENG1 BLEED.........OFF",  colour: "c"),
 	var wingIceLOpenXbld      = warning.new(msg: " -X BLEED...........SHUT",  colour: "c"),
 	var wingIceLOpenApuOff    = warning.new(msg: " -APU BLEED..........OFF",  colour: "c"),
-	var wingIceLOpenSpacer    = warning.new(msg: "                        ",  colour: "c"),
 	var wingIceLOpenFlt       = warning.new(msg: " WAI AVAIL IN FLT",         colour: "c"),
 	var wingIceLOpenEngOn     = warning.new(msg: " -ENG1 BLEED.........OFF",  colour: "c"),
 	var wingIceLOpenIceReq    = warning.new(msg: " -WING ANTI ICE..AS RQRD",  colour: "c"),
@@ -701,13 +689,24 @@ var warnings				  = std.Vector.new([
 	var wingIceROpenEngOff    = warning.new(msg: " -ENG2 BLEED.........OFF",  colour: "c"),
 	var wingIceROpenXbld      = warning.new(msg: " -X BLEED...........SHUT",  colour: "c"),
 	var wingIceROpenApuOff    = warning.new(msg: " -APU BLEED..........OFF",  colour: "c"),
-	var wingIceROpenSpacer    = warning.new(msg: "                        ",  colour: "c"),
 	var wingIceROpenFlt       = warning.new(msg: " WAI AVAIL IN FLT",         colour: "c"),
 	var wingIceROpenEngOn     = warning.new(msg: " -ENG2 BLEED.........OFF",  colour: "c"),
 	var wingIceROpenIceReq    = warning.new(msg: " -WING ANTI ICE..AS RQRD",  colour: "c"),
 	var wingIceROpenThrust    = warning.new(msg: " THRUST LIM PENALTY",       colour: "c"),
 	var wingIceOpenGnd        = warning.new(msg: "WING A.ICE OPEN ON GND",    colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var wingIceOpenGndShut    = warning.new(msg: " -WING ANTI ICE......OFF",  colour: "c"),
+	
+	var yawDamper1Fault       = warning.new(msg: "AUTO FLT YAW DAMPER 1",     colour: "a", isMainMsg: 1),
+	var yawDamper2Fault       = warning.new(msg: "AUTO FLT YAW DAMPER 2",     colour: "a", isMainMsg: 1),
+	# var rudTrim1Fault         = warning.new(msg: "AUTO FLT RUD TRIM1 FAULT",  colour: "a", isMainMsg: 1), not implemented
+	# var rudTrim2Fault         = warning.new(msg: "AUTO FLT RUD TRIM2 FAULT",  colour: "a", isMainMsg: 1), not implemented
+	var rudTravLimSys1Fault   = warning.new(msg: "AUTO FLT RUD TRV LIM 1",    colour: "a", isMainMsg: 1),
+	var rudTravLimSys2Fault   = warning.new(msg: "AUTO FLT RUD TRV LIM 2",    colour: "a", isMainMsg: 1),
+	var fcuFault1             = warning.new(msg: "AUTO FLT FCU 1 FAULT",      colour: "a", isMainMsg: 1),
+	var fcuFault1Baro         = warning.new(msg: " -BARO REF.......X CHECK",  colour: "c"),
+	var fcuFault2             = warning.new(msg: "AUTO FLT FCU 2 FAULT",      colour: "a", isMainMsg: 1),
+	var fcuFault2Baro         = warning.new(msg: " -BARO REF.......X CHECK",  colour: "c"),
+	
 	var wingIceLHiPr          = warning.new(msg: "WING A.ICE L HI PR",        colour: "a", isMainMsg: 1),
 	var wingIceLHiPrThrust    = warning.new(msg: " THRUST LIM PENTALTY",      colour: "c"),
 	var wingIceRHiPr          = warning.new(msg: "WING A.ICE R HI PR",        colour: "a", isMainMsg: 1),
