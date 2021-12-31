@@ -90,6 +90,8 @@ var warningNodes = {
 		bleed2LoTempPack: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-pack"),
 		bleed2WaiAvail: props.globals.initNode("/ECAM/warnings/logic/bleed-2-wai-avail"),
 		waiSysfault: props.globals.initNode("/ECAM/warnings/logic/wing-anti-ice-sys-fault"),
+		waiLopen: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-left-open"),
+		waiRopen: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-right-open"),
 		waiLclosed: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-left-closed"),
 		waiRclosed: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-right-closed"),
 		procWaiShutdown: props.globals.initNode("/ECAM/warnings/logic/proc-wai-shutdown-output"),

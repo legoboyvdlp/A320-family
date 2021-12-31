@@ -207,14 +207,14 @@
 			<rate_limit sense="incr">0.04</rate_limit> <!-- 25 seconds -->
 		</actuator>
 		
-		<actuator name="/ECAM/warnings/logic/wing-anti-ice-left-closed-set">
+		<actuator name="/ECAM/warnings/logic/wing-anti-ice-left-closed-set-timer">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/wing-anti-ice-left-closed-set-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.066666</rate_limit> <!-- 15 seconds -->
 		</actuator>
 		
-		<actuator name="/ECAM/warnings/logic/wing-anti-ice-right-closed-set">
+		<actuator name="/ECAM/warnings/logic/wing-anti-ice-right-closed-set-timer">
 			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/wing-anti-ice-right-closed-set-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
@@ -359,6 +359,20 @@
 			<input>/ECAM/warnings/logic/apu-gen-fault-reset</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/wing-anti-ice-left-open-set-15">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/wing-anti-ice-left-open-set-15-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.06666666666</rate_limit> <!-- 15 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/wing-anti-ice-right-open-set-15">
+			<description>Timer for the ECAM system</description>
+			<input>/ECAM/warnings/logic/wing-anti-ice-right-open-set-15-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.06666666666</rate_limit> <!-- 15 seconds -->
 		</actuator>
 	</channel>
 	
@@ -785,7 +799,7 @@
 		<switch name="/ECAM/warnings/logic/wai-ground-pulse-set">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/gear/gear[1]/wow eq 0
+				/ECAM/timer/ground-calc ne 1
 				/controls/ice-protection/wing eq 1
 			</test>
 		</switch>
@@ -804,10 +818,17 @@
 						/ECAM/warnings/logic/wai-ground-pulse-set eq 1
 					</test>
 					<test logic="AND">
-						/gear/gear[1]/wow eq 1
+						/ECAM/timer/ground-calc eq 1
 						/ECAM/warnings/timer/wing-anti-ice-25 ne 1
 					</test>
 				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-left-closed-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/wing-anti-ice-left-closed-set-timer eq 1
 			</test>
 		</switch>
 		
@@ -831,6 +852,14 @@
 				</test>
 			</test>
 		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-right-closed-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/wing-anti-ice-right-closed-set-timer eq 1
+			</test>
+		</switch>
+		
 		
 		<switch name="/ECAM/warnings/timer/phase-1-input">
 			<default value="0"/>
@@ -867,7 +896,7 @@
 			<defualt value="0"/>
 			<test logic="AND" value="1">
 				/controls/ice-protection/wing eq 1
-				/gear/gear[1]/wow eq 1
+				/ECAM/timer/ground-calc eq 1
 				/ECAM/warnings/logic/wai-on eq 1
 			</test>
 		</switch>
@@ -888,14 +917,14 @@
 				/controls/engines/engine[1]/fire-btn eq 0
 				/ECAM/warnings/logic/wai-ground-pulse eq 1
 				/ECAM/warnings/logic/wai-ground-pulse-set eq 1
-				<test logic="OR">
+				<test logic="OR"> <!-- XOR -->
 					<test logic="AND">
-						/engines/engine[0]/state eq 3
-						/engines/engine[1]/state ne 3 <!-- TODO this must use ENG 1 FAIL from the ECAM warning see page 2856 of ESLD -->
+						/ECAM/warnings/logic/eng/eng-1-shutdown eq 1
+						/ECAM/warnings/logic/eng/eng-2-shutdown eq 0
 					</test>
 					<test logic="AND">
-						/engines/engine[0]/state ne 3
-						/engines/engine[1]/state eq 3
+						/ECAM/warnings/logic/eng/eng-1-shutdown eq 0
+						/ECAM/warnings/logic/eng/eng-2-shutdown eq 1
 					</test>
 				</test>
 			</test>
@@ -930,6 +959,20 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/phase-6-pulse-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 6
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/phase-9-pulse-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 9
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/wai-phase-9-pulse-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -958,11 +1001,106 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-left-open-set-15-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/wing-ice-1 ne 0
+				<test logic="OR">
+					/ECAM/warnings/logic/wai-on eq 0
+					<!--<test logic="AND">
+						/ECAM/warnings/logic/wai-on eq 1
+						/ECAM/timer/ground-calc eq 1
+						PREC = 1
+					</test>-->
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-left-open-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/ECAM/warnings/logic/wing-anti-ice-left-open-set-15 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-left-open-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/wing-ice-1 eq 0
+				/ECAM/warnings/timer/phase-1 eq 1
+				<test logic="AND">
+					<test logic="AND">
+						/ECAM/warnings/logic/wai-phase-9-pulse-input eq 1
+						/ECAM/warnings/logic/wai-phase-9-pulse eq 1
+					</test>
+					/systems/pneumatics/valves/wing-ice-1 ne 0
+					/controls/pneumatics/switches/bleed-1 eq 1
+				</test>
+				<test logic="AND">
+					/systems/pneumatics/valves/wing-ice-1 ne 0
+					/controls/pneumatics/switches/bleed-1 eq 0
+					<test logic="AND">
+						/ECAM/warnings/logic/wai-phase-9-pulse-input eq 1
+						/ECAM/warnings/logic/wai-phase-9-pulse eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-right-open-set-15-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/wing-ice-2 ne 0
+				<test logic="OR">
+					/ECAM/warnings/logic/wai-on eq 0
+					<!--<test logic="AND">
+						/ECAM/warnings/logic/wai-on eq 1
+						/ECAM/timer/ground-calc eq 1
+						PREC = 1
+					</test>-->
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-right-open-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/ECAM/warnings/logic/wing-anti-ice-right-open-set-15 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-right-open-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/wing-ice-2 eq 0
+				/ECAM/warnings/timer/phase-1 eq 1
+				<test logic="AND">
+					<test logic="AND">
+						/ECAM/warnings/logic/wai-phase-9-pulse-input eq 1
+						/ECAM/warnings/logic/wai-phase-9-pulse eq 1
+					</test>
+					/systems/pneumatics/valves/wing-ice-2 ne 0
+					/controls/pneumatics/switches/bleed-2 eq 1
+				</test>
+				<test logic="AND">
+					/systems/pneumatics/valves/wing-ice-2 ne 0
+					/controls/pneumatics/switches/bleed-2 eq 0
+					<test logic="AND">
+						/ECAM/warnings/logic/wai-phase-9-pulse-input eq 1
+						/ECAM/warnings/logic/wai-phase-9-pulse eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/wing-hi-pr-left-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/wai-on eq 1
-				/systems/pneumatics/psi/engine-1-psi gt 49 <!-- rando number -->
+				/systems/pneumatics/psi/engine-1-psi gt 49
 			</test>
 		</switch>
 		
