@@ -1523,7 +1523,12 @@ var button = func(btn, i, event = "") {
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
 		} else if (btn == "PLUSMINUS") {
-			mcdu_scratchpad.scratchpads[i].addChar("-");
+			if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "-") {
+				mcdu_scratchpad.scratchpads[i].clear();
+				mcdu_scratchpad.scratchpads[i].addChar("+");
+			} else {
+				mcdu_scratchpad.scratchpads[i].addChar("-");
+			}
 		} else {
 			mcdu_scratchpad.scratchpads[i].addChar(btn);
 		}

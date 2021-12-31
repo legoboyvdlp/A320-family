@@ -1193,8 +1193,7 @@ setlistener("/systems/navigation/adr/operating-3", func() {
 setlistener("/FMGC/internal/block-calculating", func() {
 	if (timer3blockFuel.isRunning) {
 		FMGCInternal.blockFuelTime = -99;
-		timer3blockFuel.start();
-		FMGCInternal.blockFuelTime = pts.Sim.Time.elapsedSec.getValue();
+		timer3blockFuel.stop();
 	}
 	
 	if (FMGCInternal.blockFuelTime == -99) {
@@ -1207,8 +1206,7 @@ setlistener("/FMGC/internal/block-calculating", func() {
 setlistener("/FMGC/internal/fuel-calculating", func() {
 	if (timer5fuelPred.isRunning) {
 		FMGCInternal.fuelPredTime = -99;
-		timer5fuelPred.start();
-		FMGCInternal.fuelPredTime = pts.Sim.Time.elapsedSec.getValue();
+		timer5fuelPred.stop();
 	}
 	
 	if (FMGCInternal.fuelPredTime == -99) {
