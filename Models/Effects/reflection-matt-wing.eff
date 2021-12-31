@@ -3,6 +3,7 @@
 	<name>reflection</name>
 	<inherits-from>Effects/model-combined-deferred</inherits-from>
 	<parameters>
+		<rain-enabled type="int">2</rain-enabled>
 		<reflection-enabled type="int">1</reflection-enabled>
 		<reflection-dynamic type="int">1</reflection-dynamic>
 		<reflect_map-enabled type="int">0</reflect_map-enabled>
