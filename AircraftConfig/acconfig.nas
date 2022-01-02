@@ -391,9 +391,9 @@ var beforestart_b = func {
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
-	libraries.noSmokingSwitch.setValue(0.5);
-	libraries.seatbeltSwitch.setValue(1.0);
-	libraries.emerLtsSwitch.setValue(0.5);
+	pts.Controls.Switches.noSmokingSwitch.setValue(0.5);
+	pts.Controls.Switches.seatbeltSwitch.setValue(1.0);
+	pts.Controls.Switches.emerLtsSwitch.setValue(0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
@@ -488,9 +488,9 @@ var taxi_b = func {
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/switches/wing-lights", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
-	libraries.noSmokingSwitch.setValue(0.5);
-	libraries.seatbeltSwitch.setValue(1.0);
-	libraries.emerLtsSwitch.setValue(0.5);
+	pts.Controls.Switches.noSmokingSwitch.setValue(0.5);
+	pts.Controls.Switches.seatbeltSwitch.setValue(1.0);
+	pts.Controls.Switches.emerLtsSwitch.setValue(0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
