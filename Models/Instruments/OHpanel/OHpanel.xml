@@ -21,7 +21,7 @@
 		<object-name>CargoHotAirBtn1F</object-name>
 		<object-name>CargoHotAirBtn2O</object-name>
 		<object-name>CrewOxyBtn2O</object-name>
-		<object-name>ExtPwrBtn1A</object-name>
+		<!-- <object-name>ExtPwrBtn1A</object-name> -->
 		<object-name>GalleyPwrBtn1F</object-name>
 		<object-name>GalleyPwrBtn2O</object-name>
 		<object-name>Gen1LineBtn1S</object-name>
