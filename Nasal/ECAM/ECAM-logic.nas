@@ -1294,7 +1294,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng1FailRelight);
 	}
 	
-	if (warningNodes.Logic.eng1Shutdown.getValue() and eng1ShutDown.clearFlag == 0) {
+	if (warningNodes.Logic.eng1Shutdown.getValue() and !warningNodes.Logic.eng1Fail.getValue() and eng1ShutDown.clearFlag == 0) {
 		eng1ShutDown.active = 1;
 		
 		if (phaseVar2 != 4 and phaseVar2 != 5 and systems.fireButtons[0].getValue() == 0 and (systems.PNEU.Valves.wingLeft.getValue() or systems.PNEU.Valves.wingRight.getValue())) {
@@ -1501,7 +1501,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(eng2FailRelight);
 	}
 	
-	if (warningNodes.Logic.eng2Shutdown.getValue() and eng2ShutDown.clearFlag == 0) {
+	if (warningNodes.Logic.eng2Shutdown.getValue() and !warningNodes.Logic.eng2Fail.getValue() and eng2ShutDown.clearFlag == 0) {
 		eng2ShutDown.active = 1;
 		
 		if (phaseVar2 != 4 and phaseVar2 != 5 and systems.fireButtons[1].getValue() == 0 and (systems.PNEU.Valves.wingLeft.getValue() or systems.PNEU.Valves.wingRight.getValue())) {
@@ -2950,18 +2950,19 @@ var messages_priority_2 = func {
 	if (wingIceSysFault.clearFlag == 0 and warningNodes.Logic.waiSysfault.getBoolValue() and (phaseVar2 <= 2  or phaseVar2 >= 9 or phaseVar2 == 6)) {
 		wingIceSysFault.active = 1;
 		
-		if ((warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) and warningNodes.Logic.procWaiShutdown.getValue() == 1) {
+		if (wingIceSysFaultXbld.clearFlag == 0 and (warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) and warningNodes.Logic.procWaiShutdown.getValue() == 1) {
 			wingIceSysFaultXbld.active = 1;
 		} else {
 			ECAM_controller.warningReset(wingIceSysFaultXbld);
 		}
-		if ((warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) and wing_pb.getValue()) {
+		
+		if (wingIceSysFaultOff.clearFlag == 0 and (warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) and wing_pb.getValue()) {
 			wingIceSysFaultOff.active = 1;
 		} else {
 			ECAM_controller.warningReset(wingIceSysFaultOff);
 		}
 		
-		if (warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue()) {
+		if (wingIceSysFaultIcing.clearFlag == 0 and (warningNodes.Logic.waiLclosed.getValue() or warningNodes.Logic.waiRclosed.getValue())) {
 			wingIceSysFaultIcing.active = 1;
 		} else {
 			ECAM_controller.warningReset(wingIceSysFaultIcing);
@@ -2973,10 +2974,158 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(wingIceSysFaultIcing);
 	}
 	
+	if (wingIceLOpen.clearFlag == 0 and warningNodes.Logic.waiLopen.getBoolValue() and (phaseVar2 <= 3  or phaseVar2 >= 9 or phaseVar2 == 6)) {
+		wingIceLOpen.active = 1;
+		
+		if (wingIceLOpenOff.clearFlag == 0 and wing_pb.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 9)) {
+			wingIceLOpenOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingIceLOpenOff);
+		}
+		
+		if (FWC.Timer.gnd.getValue() == 1) {
+			if (wingIceLOpenEngOff.clearFlag == 0 and systems.PNEU.Switch.bleed1.getBoolValue()) {
+				wingIceLOpenEngOff.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceLOpenEngOff);
+			}
+			
+			if (wingIceLOpenXbld.clearFlag == 0 and systems.PNEU.Valves.crossbleed.getValue() != 0) {
+				wingIceLOpenXbld.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceLOpenXbld);
+			}
+			
+			if (wingIceLOpenApuOff.clearFlag == 0 and systems.PNEU.Valves.apu.getValue() != 0) {
+				wingIceLOpenApuOff.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceLOpenApuOff);
+			}
+		} else {
+			ECAM_controller.warningReset(wingIceLOpenEngOff);
+			ECAM_controller.warningReset(wingIceLOpenXbld);
+			ECAM_controller.warningReset(wingIceLOpenApuOff);
+		}
+		
+		if (wingIceLOpenFlt.clearFlag == 0 and phaseVar2 != 9 and phaseVar2 != 10 and (wing_pb.getValue() == 0 or FWC.Timer.gnd.getValue() == 1)) {
+			wingIceLOpenFlt.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingIceLOpenFlt);
+		}
+		
+		if (FWC.Timer.gnd.getValue() != 1) {
+			if (wingIceLOpenEngOn.clearFlag == 0 and !systems.PNEU.Switch.bleed1.getBoolValue()) {
+				wingIceLOpenEngOn.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceLOpenEngOn);
+			}
+			
+			if (wingIceLOpenIceReq.clearFlag == 0 and !wing_pb.getValue()) {
+				wingIceLOpenIceReq.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceLOpenIceReq);
+			}
+			
+			if (wingIceLOpenThrust.clearFlag == 0 and systems.PNEU.Switch.bleed1.getBoolValue() and !wing_pb.getValue()) {
+				wingIceLOpenThrust.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceLOpenThrust);
+			}
+		} else {
+			ECAM_controller.warningReset(wingIceLOpenEngOn);
+			ECAM_controller.warningReset(wingIceLOpenIceReq);
+			ECAM_controller.warningReset(wingIceLOpenThrust);
+		}
+	} else {
+		ECAM_controller.warningReset(wingIceLOpen);
+		ECAM_controller.warningReset(wingIceLOpenOff);
+		ECAM_controller.warningReset(wingIceLOpenEngOff);
+		ECAM_controller.warningReset(wingIceLOpenXbld);
+		ECAM_controller.warningReset(wingIceLOpenApuOff);
+		ECAM_controller.warningReset(wingIceLOpenFlt);
+		ECAM_controller.warningReset(wingIceLOpenEngOn);
+		ECAM_controller.warningReset(wingIceLOpenIceReq);
+		ECAM_controller.warningReset(wingIceLOpenThrust);
+	}
+	
+	if (wingIceROpen.clearFlag == 0 and warningNodes.Logic.waiRopen.getBoolValue() and (phaseVar2 <= 3  or phaseVar2 >= 9 or phaseVar2 == 6)) {
+		wingIceROpen.active = 1;
+		
+		if (wingIceROpenOff.clearFlag == 0 and wing_pb.getValue() and (phaseVar2 == 2 or phaseVar2 == 3 or phaseVar2 == 9)) {
+			wingIceROpenOff.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingIceROpenOff);
+		}
+		
+		if (FWC.Timer.gnd.getValue() == 1) {
+			if (wingIceROpenEngOff.clearFlag == 0 and systems.PNEU.Switch.bleed2.getBoolValue()) {
+				wingIceROpenEngOff.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceROpenEngOff);
+			}
+			
+			if (wingIceROpenXbld.clearFlag == 0 and systems.PNEU.Valves.crossbleed.getValue() != 0) {
+				wingIceROpenXbld.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceROpenXbld);
+			}
+			
+			if (wingIceROpenApuOff.clearFlag == 0 and systems.PNEU.Valves.apu.getValue() != 0) {
+				wingIceROpenApuOff.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceROpenApuOff);
+			}
+		} else {
+			ECAM_controller.warningReset(wingIceROpenEngOff);
+			ECAM_controller.warningReset(wingIceROpenXbld);
+			ECAM_controller.warningReset(wingIceROpenApuOff);
+		}
+		
+		if (wingIceROpenFlt.clearFlag == 0 and phaseVar2 != 9 and phaseVar2 != 10 and (wing_pb.getValue() == 0 or FWC.Timer.gnd.getValue() == 1)) {
+			wingIceROpenFlt.active = 1;
+		} else {
+			ECAM_controller.warningReset(wingIceROpenFlt);
+		}
+		
+		if (FWC.Timer.gnd.getValue() != 1) {
+			if (wingIceROpenEngOn.clearFlag == 0 and !systems.PNEU.Switch.bleed2.getBoolValue()) {
+				wingIceROpenEngOn.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceROpenEngOn);
+			}
+			
+			if (wingIceROpenIceReq.clearFlag == 0 and !wing_pb.getValue()) {
+				wingIceROpenIceReq.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceROpenIceReq);
+			}
+			
+			if (wingIceROpenThrust.clearFlag == 0 and systems.PNEU.Switch.bleed2.getBoolValue() and !wing_pb.getValue()) {
+				wingIceROpenThrust.active = 1;
+			} else {
+				ECAM_controller.warningReset(wingIceROpenThrust);
+			}
+		} else {
+			ECAM_controller.warningReset(wingIceROpenEngOn);
+			ECAM_controller.warningReset(wingIceROpenIceReq);
+			ECAM_controller.warningReset(wingIceROpenThrust);
+		}
+	} else {
+		ECAM_controller.warningReset(wingIceROpen);
+		ECAM_controller.warningReset(wingIceROpenOff);
+		ECAM_controller.warningReset(wingIceROpenEngOff);
+		ECAM_controller.warningReset(wingIceROpenXbld);
+		ECAM_controller.warningReset(wingIceROpenApuOff);
+		ECAM_controller.warningReset(wingIceROpenFlt);
+		ECAM_controller.warningReset(wingIceROpenEngOn);
+		ECAM_controller.warningReset(wingIceROpenIceReq);
+		ECAM_controller.warningReset(wingIceROpenThrust);
+	}
+	
 	if (wingIceOpenGnd.clearFlag == 0 and warningNodes.Logic.waiGndFlight.getValue() and (phaseVar2 <= 2  or phaseVar2 >= 9)) {
 		wingIceOpenGnd.active = 1;
 		
-		if (pts.Gear.wow[1].getValue() and wing_pb.getValue()) {
+		if (FWC.Timer.gnd.getValue() == 1 and wing_pb.getValue()) {
 			wingIceOpenGndShut.active = 1;
 		} else {
 			ECAM_controller.warningReset(wingIceOpenGndShut);
@@ -3564,13 +3713,13 @@ var messages_right_memo = func {
 		wing_aice.active = 0;
 	}
 	
-	if (systems.PNEU.Switch.apu.getValue() == 1 and pts.APU.rpm.getValue() >= 95) {
+	if (systems.PNEU.Switch.apu.getValue() == 1 and systems.PNEU.Valves.apu.getValue() != 0 and systems.APUController.APU != nil and systems.APUController.APU.signals.available.getBoolValue()) {
 		apu_bleed.active = 1;
 	} else {
 		apu_bleed.active = 0;
 	}
 
-	if (apu_bleed.active == 0 and pts.APU.rpm.getValue() >= 95) {
+	if (apu_bleed.active == 0 and systems.APUController.APU != nil and systems.APUController.APU.signals.available.getBoolValue()) {
 		apu_avail.active = 1;
 	} else {
 		apu_avail.active = 0;

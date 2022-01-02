@@ -25,7 +25,7 @@ var new = func(layer) {
 		map: layer.map,
 		listeners: [],
 	};
-	layer.searcher._equals = func(l,r) 0; # TODO: create model objects instead?
+	layer.searcher._equals = func(l,r) return (l == r);
 	append(m.listeners, setlistener(layer.options.active_node, func m.layer.update() ), setlistener(layer.options.wp_num, func m.layer.update() ));
 	m.addVisibilityListener();
 	var driver = opt_member(m.layer.options, 'route_driver');

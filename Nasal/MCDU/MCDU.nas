@@ -25,10 +25,6 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/keyboard-right", 0);
 	
 	#ACCONFIG
-	setprop("/FMGC/internal/navdatabase", "01JAN-28JAN");
-	setprop("/FMGC/internal/navdatabase2", "29JAN-26FEB");
-	setprop("/FMGC/internal/navdatabasecode", "AB20170101");
-	setprop("/FMGC/internal/navdatabasecode2", "AB20170102");
 	setprop("/FMGC/print/mcdu/page1/L1auto", 0);
 	setprop("/FMGC/print/mcdu/page1/L2auto", 0);
 	setprop("/FMGC/print/mcdu/page1/L3auto", 0);
@@ -45,15 +41,15 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/print/mcdu/page2/R4req", 0);
 	
 	#RADNAV
-	setprop("/FMGC/internal/ils1freq-set", 0);
-	setprop("/FMGC/internal/ils1crs-set", 0);
-	setprop("/FMGC/internal/ils1freq-calculated", 0);
-	setprop("/FMGC/internal/vor1freq-set", 0);
-	setprop("/FMGC/internal/vor1crs-set", 0);
-	setprop("/FMGC/internal/vor2freq-set", 0);
-	setprop("/FMGC/internal/vor2crs-set", 0);
-	setprop("/FMGC/internal/adf1freq-set", 0);
-	setprop("/FMGC/internal/adf2freq-set", 0);
+	fmgc.FMGCInternal.ILS.freqSet = 0;
+	fmgc.FMGCInternal.ILS.freqCalculated = 0;
+	fmgc.FMGCInternal.ILS.crsSet = 0;
+	fmgc.FMGCInternal.VOR1.freqSet = 0;
+	fmgc.FMGCInternal.VOR1.crsSet = 0;
+	fmgc.FMGCInternal.VOR2.freqSet = 0;
+	fmgc.FMGCInternal.VOR2.crsSet = 0;
+	fmgc.FMGCInternal.ADF1.freqSet = 0;
+	fmgc.FMGCInternal.ADF2.freqSet = 0;
 	
 	# INT-A
 	fmgc.FMGCInternal.altAirport = "";
@@ -256,10 +252,6 @@ var lskbutton = func(btn, i) {
 			radnavInput("L1",i);
 		} else if (page == "DATA") {
 			dataInput("L1",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("L1",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L1",i);
 		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type == 0) {
 				if (canvas_mcdu.myDeparture[i] != nil) {
@@ -410,10 +402,6 @@ var lskbutton = func(btn, i) {
 			perfDESInput("L2",i); 
 		} else if (page == "DATA") {
 			dataInput("L2",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("L2",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L2",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(2);
 		} else if (page == "DEPARTURE") {
@@ -537,10 +525,6 @@ var lskbutton = func(btn, i) {
 			radnavInput("L3",i);
 		} else if (page == "DATA") {
 			dataInput("L3",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("L3",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L3",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(3);
 		} else if (page == "DEPARTURE") {
@@ -664,8 +648,6 @@ var lskbutton = func(btn, i) {
 			perfAPPRInput("L4",i);
 		} else if (page == "RADNAV") {
 			radnavInput("L4",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L4",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(4);
 		} else if (page == "DEPARTURE") {
@@ -784,10 +766,6 @@ var lskbutton = func(btn, i) {
 			perfGAInput("L5",i);
 		} else if (page == "RADNAV") {
 			radnavInput("L5",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("L5",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L5",i);
 		} else if (page == "DATA") {
 			dataInput("L5",i);
 		} else if (page == "DATA2") {
@@ -843,6 +821,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("WINDCLB");
 		} else if (page == "ROUTESELECTION") {
 			initInputROUTESEL("L6",i);
+		} else if (page == "RADNAV") {
+			radnavInput("L6",i);
 		} else if (page == "PERFCLB") {
 			perfCLBInput("L6",i);
 		} else if (page == "PERFCRZ") {
@@ -853,8 +833,6 @@ var lskbutton = func(btn, i) {
 			perfAPPRInput("L6",i);
 		} else if (page == "PERFGA") {
 			perfGAInput("L6",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L6",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(6);
 		} else if (page == "LATREV" or page == "VERTREV" or page == "DUPLICATENAMES") {
@@ -930,10 +908,6 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myDESWIND[i].pushButtonRight(1);
 		} else if (page == "RADNAV") {
 			radnavInput("R1",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("R1",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("R1",i);
 		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type == 1) {
 				if (canvas_mcdu.myArrival[i] != nil) {
@@ -1006,10 +980,6 @@ var rskbutton = func(btn, i) {
 			perfAPPRInput("R2",i);
 		} else if (page == "RADNAV") {
 			radnavInput("R2",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("R2",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("R2",i);
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(2);
 		} else if (page == "ARRIVAL") {
@@ -1051,10 +1021,6 @@ var rskbutton = func(btn, i) {
 			perfTOInput("R3",i);
 		} else if (page == "PERFAPPR") {
 			perfAPPRInput("R3",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("R3",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("R3",i);
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(3);
 		} else if (page == "ARRIVAL") {
@@ -1144,8 +1110,6 @@ var rskbutton = func(btn, i) {
 			perfAPPRInput("R4",i);
 		} else if (page == "RADNAV") {
 			radnavInput("R4",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("R4",i);
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(4);
 		} else if (page == "ARRIVAL") {
@@ -1282,10 +1246,12 @@ var rskbutton = func(btn, i) {
 			perfDESInput("R6",i);
 		} else if (page == "PERFAPPR") {
 			perfAPPRInput("R6",i);
-		} else if ((page == "DATA") or (page == "PRINTFUNC") or (page == "PRINTFUNC2")) {
+		} else if (page == "DATA") {
 			mcdu_message(i, "AOC DISABLED");
 		} else if (page == "INITA") {
 			initInputA("R6",i);
+		} else if (page == "RADNAV") {
+			radnavInput("R6",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(6);
 		} else if (page == "VERTREV") {
@@ -1339,10 +1305,6 @@ var arrowbutton = func(btn, i) {
 			}
 		} else if (page == "INITB" or page == "FUELPRED") {
 			pageNode[i].setValue("INITA");
-		} else if (page == "PRINTFUNC") {
-			pageNode[i].setValue("PRINTFUNC2");
-		} else if (page == "PRINTFUNC2") {
-			pageNode[i].setValue("PRINTFUNC");
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollLeft();
 		} else if (page == "ARRIVAL") {
@@ -1371,10 +1333,6 @@ var arrowbutton = func(btn, i) {
 			}
 		} else if (page == "INITB" or page == "FUELPRED") {
 			pageNode[i].setValue("INITA");
-		} else if (page == "PRINTFUNC") {
-			pageNode[i].setValue("PRINTFUNC2");
-		} else if (page == "PRINTFUNC2") {
-			pageNode[i].setValue("PRINTFUNC");
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollRight();
 		} else if (page == "ARRIVAL") {
@@ -1565,7 +1523,12 @@ var button = func(btn, i, event = "") {
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
 		} else if (btn == "PLUSMINUS") {
-			mcdu_scratchpad.scratchpads[i].addChar("-");
+			if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "-") {
+				mcdu_scratchpad.scratchpads[i].clear();
+				mcdu_scratchpad.scratchpads[i].addChar("+");
+			} else {
+				mcdu_scratchpad.scratchpads[i].addChar("-");
+			}
 		} else {
 			mcdu_scratchpad.scratchpads[i].addChar(btn);
 		}

@@ -2153,7 +2153,7 @@
 	
 	<channel name="Emergency Electric Logic" execrate="8">
 		
-		<switch name="/systems/electrical/some-electric-thingie/emer-elec-config">
+		<switch name="/systems/electrical/some-electric-thingie/emer-elec-config-cmd">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/electrical/bus/ac-1 lt 110
@@ -2163,17 +2163,30 @@
 				/systems/electrical/relay/ext-epc/contact-pos eq 0
 				<test logic="OR">
 					/controls/electrical/switches/gen-1 eq 0
-					/systems/failures/electrical/gen-1 eq 1
+					/ECAM/warnings/logic/gen-1-inop eq 1
                 </test>
 				<test logic="OR">
 					/controls/electrical/switches/gen-2 eq 0
-					/systems/failures/electrical/gen-2 eq 1
+					/ECAM/warnings/logic/gen-2-inop eq 1
                 </test>
 				<test logic="OR">
 					/controls/electrical/switches/apu eq 0
-					/systems/failures/electrical/apu eq 1
-					/engines/engine[2]/n1 lt 94.9
+					/ECAM/warnings/logic/apu-gen-fault eq 1
+					/systems/apu/available eq 0
                 </test>
+			</test>
+		</switch>
+		
+		<actuator name="/systems/electrical/some-electric-thingie/emer-elec-config-timer">
+			<input>/systems/electrical/some-electric-thingie/emer-elec-config-cmd</input>
+			<rate_limit sense="incr">5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/electrical/some-electric-thingie/emer-elec-config">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/some-electric-thingie/emer-elec-config-timer eq 1
 			</test>
 		</switch>
 		
@@ -2242,10 +2255,21 @@
 			<output>/systems/electrical/outputs/fuel-pump[0]</output>
 			<output>/systems/electrical/outputs/fuel-pump[1]</output>
 			<output>/systems/electrical/outputs/fuel-pump[2]</output>
-			<output>/systems/electrical/outputs/gps</output>
 			<output>/systems/electrical/outputs/mk-viii</output>
 			<output>/systems/electrical/outputs/tacan</output>
 			<output>/systems/electrical/outputs/turn-coordinator</output>
+		</switch>
+		
+		<switch name="/systems/electrical/generic-ac-pwr">
+			<description>This makes the FG stuff work because we killed the generic electrical</description>
+			<default value="0"/>
+			<test value="/systems/electrical/bus/ac-ess">
+				/systems/electrical/bus/ac-ess ge 25
+			</test>
+			<test value="/systems/electrical/bus/ac-2">
+				/systems/electrical/bus/ac-2 ge 25
+			</test>
+			<output>/systems/electrical/outputs/gps</output>
 		</switch>
 		
 		<switch name="/instrumentation/comm[0]/power-btn">
