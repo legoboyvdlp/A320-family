@@ -21,7 +21,6 @@
 		<object-name>CargoHotAirBtn1F</object-name>
 		<object-name>CargoHotAirBtn2O</object-name>
 		<object-name>CrewOxyBtn2O</object-name>
-		<object-name>ExtPwrBtn1A</object-name>
 		<object-name>GalleyPwrBtn1F</object-name>
 		<object-name>GalleyPwrBtn2O</object-name>
 		<object-name>Gen1LineBtn1S</object-name>
@@ -106,6 +105,44 @@
 					<property>systems/electrical/bus/ac-ess-shed</property>
 					<value>110</value>
 				</greater-than-equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- Special for EXT pwr AVAIL light -->
+	<animation>
+		<type>select</type>
+		<object-name>ExtPwrBtn1A</object-name>
+		<condition>	
+			<or>
+				<and>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-si-bus</property>
+							<value>110</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-ess-shed</property>
+							<value>110</value>
+						</greater-than-equals>
+					</or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-ess</property>
+						<value>110</value>
+					</greater-than-equals>
+				</and>
+				<and>
+					<greater-than>
+						<property>/systems/electrical/sources/ext/output-volt</property>
+						<value>110</value>
+					</greater-than>
+					<not>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-ess</property>
+							<value>110</value>
+						</greater-than-equals>
+					</not>
+				</and>
 			</or>
 		</condition>
 	</animation>
