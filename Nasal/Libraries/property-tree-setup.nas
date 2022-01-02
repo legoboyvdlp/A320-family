@@ -217,6 +217,8 @@ var Instrumentation = {
 		Inputs: {
 			Discretes: {
 				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override"),
+				flapAllOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override"),
+				steepApproach: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/steep-approach"),
 			},
 		},
 	},

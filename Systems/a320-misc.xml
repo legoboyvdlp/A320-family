@@ -385,6 +385,28 @@
 			
 	</channel>
 	
+	<channel name="GPWS" execrate="8">
+		
+		<switch name="/instrumentation/mk-viii/inputs/discretes/momentary-flap-override">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override eq 1
+				<test logic="AND">
+					/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override eq 1
+					/controls/flight/flaps-pos ge 4
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/mk-viii/speaker/volume">
+			<default value="0"/>
+			<test logic="OR" value="2">
+				/instrumentation/mk-viii/inputs/discretes/gpws-inhibit eq 0
+			</test>
+		</switch>
+		
+	</channel>
+	
 	<channel name="System Display" execrate="8">
 		
 		<switch name="/ECAM/Lower/g-force-display-cmd">

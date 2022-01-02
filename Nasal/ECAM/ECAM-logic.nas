@@ -3542,7 +3542,7 @@ var messages_memo = func {
 		fob_66L.active = 0;
 	}
 	
-	if (libraries.GPWS.flapAllOverride.getValue() and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
+	if (pts.Instrumentation.MKVII.Inputs.Discretes.flapAllOverride.getValue() and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		gpws_flap_mode_off.active = 1;
 	} else {
 		gpws_flap_mode_off.active = 0;
@@ -3737,7 +3737,7 @@ var messages_right_memo = func {
 		brk_fan.active = 0;
 	}
 	
-	if (pts.Instrumentation.MKVII.Inputs.Discretes.flap3Override.getValue() == 1) { # todo: emer elec
+	if (pts.Instrumentation.MKVII.Inputs.Discretes.flap3Override.getValue()) { # todo: emer elec
 		gpws_flap3.active = 1;
 	} else {
 		gpws_flap3.active = 0;

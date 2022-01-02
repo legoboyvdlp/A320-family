@@ -159,40 +159,10 @@ var systemsLoop = func(notification) {
 
 # GPWS
 var GPWS = {
-	inhibitNode: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit"),
-	tatcfInhibit: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit"),
-	volume: props.globals.getNode("/instrumentation/mk-viii/speaker/volume"),
-	flapAllOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override"),
-	flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override"),
-	flapOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-override"),
 	alertMode: props.globals.initNode("/instrumentation/mk-viii/outputs/alert-mode", 0, "INT"),
 	alert: props.globals.getNode("instrumentation/mk-viii/outputs/discretes/gpws-alert"),
 	warning: props.globals.getNode("instrumentation/mk-viii/outputs/discretes/gpws-warning"),
 };
-
-setlistener("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit", func(val) {
-	if (val.getBoolValue()) {
-		GPWS.volume.setValue(2);
-	} else {
-		GPWS.volume.setValue(0);
-	}
-}, 0, 0);
-
-var updateGPWSFlap = func() {
-	if (GPWS.flapAllOverride.getBoolValue() or (GPWS.flap3Override.getBoolValue() and pts.Controls.Flight.flapsPos.getValue() >= 4)) {
-		GPWS.flapOverride.setBoolValue(1);
-	} else {
-		GPWS.flapOverride.setBoolValue(0);
-	}
-}
-
-setlistener("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override", func() {
-	updateGPWSFlap();
-}, 0, 0);
-
-setlistener("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", func() {
-	updateGPWSFlap();
-}, 0, 0);
 
 # GPWS alert pooling for get mode change - a little esoteric way but it works
 var GPWSAlertStatus = 0;
@@ -219,6 +189,15 @@ setlistener("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", func (va
 	}
 }, 1, 0);
 
+# Steep ILS
+setlistener("/options/steep-ils", func(val) {
+	if (val.getValue()) {
+		pts.Instrumentation.MKVII.Inputs.Discretes.steepApproach.setValue(1);
+	} else {
+		pts.Instrumentation.MKVII.Inputs.Discretes.steepApproach.setValue(0);
+	}
+}, 0, 0);
+
 # Replay
 var replayState = props.globals.getNode("/sim/replay/replay-state");
 setlistener(replayState, func(v) {
@@ -226,15 +205,6 @@ setlistener(replayState, func(v) {
 	} else {
 		acconfig.colddark();
 		gui.popupTip("Replay Ended: Setting Cold and Dark state...");
-	}
-}, 0, 0);
-
-# Steep ILS
-setlistener("/options/steep-ils", func() {
-	if (getprop("/options/steep-ils") == 1) {
-		setprop("/instrumentation/mk-viii/inputs/discretes/steep-approach", 1);
-	} else {
-		setprop("/instrumentation/mk-viii/inputs/discretes/steep-approach", 0);
 	}
 }, 0, 0);
 
