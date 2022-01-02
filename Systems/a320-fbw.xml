@@ -772,7 +772,7 @@
 		<switch name="/systems/fctl/fac1-healthy-signal">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/fctl/fac1-healthy ne 0
+				/systems/fctl/fac1-healthy eq 1
 				<test logic="OR">
 					/systems/fctl/fac1-healthy-latch eq 0
 					/gear/gear[0]/wow eq 1
@@ -843,7 +843,7 @@
 		<switch name="/systems/fctl/fac2-healthy-signal">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/fctl/fac2-healthy ne 0
+				/systems/fctl/fac2-healthy eq 1
 				<test logic="OR">
 					/systems/fctl/fac2-healthy-latch eq 0
 					/gear/gear[0]/wow eq 1

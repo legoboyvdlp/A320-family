@@ -1224,6 +1224,7 @@
 	<!-- Remove from this animation once you simulate -->
 	<animation>
 		<type>select</type>
+		<object-name>atc-test</object-name>
 		<object-name>audio_att_sgn</object-name>
 		<object-name>audio_call_hf2_led</object-name>
 		<object-name>audio_call_hf1_led</object-name>
@@ -1233,13 +1234,10 @@
 		<object-name>audio_mech_sgn</object-name>
 		<object-name>ecam_c_b_led</object-name>
 		<object-name>ecam_el_dc_led</object-name>
-		<object-name>ecam_sts_led</object-name>
 		<object-name>engine_fault_1</object-name>
 		<object-name>engine_fault_2</object-name>
 		<object-name>exped_led</object-name>
-		<object-name>qnh-test</object-name>
 		<object-name>radio_opt_led</object-name>
-		<object-name>ver.fmgc</object-name>
 		<condition>
 			<property>controls/switches/annun-test</property>
 		</condition>
@@ -1250,7 +1248,9 @@
 		<object-name>alt-text-test</object-name>
 		<object-name>hdg-text-test</object-name>
 		<object-name>spd-text-test</object-name>
+		<object-name>qnh-test</object-name>
 		<object-name>vs-text-test</object-name>
+		<object-name>ver.fmgc</object-name>
 		<condition>
 			<or>
 				<not><property>FMGC/FCU-working</property></not>

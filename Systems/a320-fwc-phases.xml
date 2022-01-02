@@ -7,7 +7,6 @@
 	<channel name="FWC Phase Logic Timers" execrate="8">
 		
 		<actuator name="/ECAM/timer/ground-calc">
-            <description>Timer for the ECAM phase system</description>
             <input>/ECAM/logic/ground-calc-immediate</input>
             <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">1</rate_limit> <!-- 1 second -->

@@ -3314,7 +3314,7 @@ var messages_config_memo = func {
 		toMemoLine1.colour = "c";
 	}
 	
-	if (libraries.seatbeltSwitch.getValue() and libraries.noSmokingSwitch.getValue() ) {
+	if (pts.Controls.Switches.seatbeltSwitch.getValue() and pts.Controls.Switches.noSmokingSwitch.getValue()) {
 		toMemoLine2.msg = "    SIGNS ON";
 		toMemoLine2.colour = "g";
 	} else {
@@ -3380,7 +3380,7 @@ var messages_config_memo = func {
 		ldgMemoLine1.colour = "c";
 	}
 	
-	if (libraries.seatbeltSwitch.getValue() and libraries.noSmokingSwitch.getValue()) {
+	if (pts.Controls.Switches.seatbeltSwitch.getValue() and pts.Controls.Switches.noSmokingSwitch.getValue()) {
 		ldgMemoLine2.msg = "    SIGNS ON";
 		ldgMemoLine2.colour = "g";
 	} else {
@@ -3505,19 +3505,19 @@ var messages_memo = func {
 		gnd_splrs.active = 0;
 	}
 	
-	if (libraries.seatbeltLight.getValue() == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
+	if (pts.Controls.Lighting.seatbeltSign.getValue() and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		seatbelts.active = 1;
 	} else {
 		seatbelts.active = 0;
 	}
 	
-	if (libraries.noSmokingLight.getValue() == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # should go off after takeoff assuming switch is in auto due to old logic from the days when smoking was allowed!
+	if (pts.Controls.Lighting.noSmokingSign.getValue() and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # should go off after takeoff assuming switch is in auto due to old logic from the days when smoking was allowed!
 		nosmoke.active = 1;
 	} else {
 		nosmoke.active = 0;
 	}
 
-	if (getprop("/controls/lighting/strobe") == 0 and !pts.Gear.wow[1].getValue() and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # todo: use gear branch properties
+	if (!pts.Controls.Lighting.strobe.getValue() and !pts.Gear.wow[1].getValue() and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) { # todo: use gear branch properties
 		strobe_lt_off.active = 1;
 	} else {
 		strobe_lt_off.active = 0;
@@ -3542,7 +3542,7 @@ var messages_memo = func {
 		fob_66L.active = 0;
 	}
 	
-	if (getprop("instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
+	if (pts.Instrumentation.MKVII.Inputs.Discretes.flapAllOverride.getValue() and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		gpws_flap_mode_off.active = 1;
 	} else {
 		gpws_flap_mode_off.active = 0;
@@ -3737,7 +3737,7 @@ var messages_right_memo = func {
 		brk_fan.active = 0;
 	}
 	
-	if (pts.Instrumentation.MKVII.Inputs.Discretes.flap3Override.getValue() == 1) { # todo: emer elec
+	if (pts.Instrumentation.MKVII.Inputs.Discretes.flap3Override.getValue()) { # todo: emer elec
 		gpws_flap3.active = 1;
 	} else {
 		gpws_flap3.active = 0;
