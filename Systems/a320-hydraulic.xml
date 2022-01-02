@@ -172,7 +172,6 @@
 		</switch>
 		
 		<actuator name="/systems/hydraulic/sources/blue-elec/pump-operate-apu-timer">
-            <description>Timer for the ECAM system</description>
             <input>/systems/hydraulic/sources/blue-elec/pump-operate-apu</input>
             <rate_limit sense="incr">100</rate_limit> <!-- Instant -->
             <rate_limit sense="decr">0.0083333</rate_limit> <!-- 120 seconds -->
