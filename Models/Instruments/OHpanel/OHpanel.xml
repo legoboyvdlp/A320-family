@@ -261,22 +261,6 @@
 		</condition>
 	</animation>
 
-	<animation>
-		<type>material</type>
-		<object-name>Battery-volt</object-name>
-		<object-name>Battery-volt-test</object-name>
-		<emission>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
-		</emission>
-		<diffuse>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
-		</diffuse>
-	</animation>
-
 	<!-- Ventilation -->
 	<animation>
 		<type>select</type>
