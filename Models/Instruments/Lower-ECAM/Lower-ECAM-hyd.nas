@@ -1,15 +1,6 @@
 # A3XX Lower ECAM Canvas
 # Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
 
-var elec_pump_y_ovht = props.globals.initNode("/systems/hydraulic/elec-pump-yellow-ovht", 0, "BOOL");
-var elec_pump_b_ovht = props.globals.initNode("/systems/hydraulic/elec-pump-blue-ovht", 0, "BOOL");
-var y_resv_ovht = props.globals.initNode("/systems/hydraulic/yellow-resv-ovht", 0, "BOOL");
-var b_resv_ovht = props.globals.initNode("/systems/hydraulic/blue-resv-ovht", 0, "BOOL");
-var g_resv_ovht = props.globals.initNode("/systems/hydraulic/green-resv-ovht", 0, "BOOL");
-var y_resv_lo_press = props.globals.initNode("/systems/hydraulic/yellow-resv-lo-air-press", 0, "BOOL");
-var b_resv_lo_press = props.globals.initNode("/systems/hydraulic/blue-resv-lo-air-press", 0, "BOOL");
-var g_resv_lo_press = props.globals.initNode("/systems/hydraulic/green-resv-lo-air-press", 0, "BOOL");
-
 var canvas_lowerECAMPageHyd =
 {
 	new: func(svg,name) {
@@ -46,22 +37,33 @@ var canvas_lowerECAMPageHyd =
 		# init
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("blue", 25, func(val) {
-				if (val >= 100) {
-					obj["Press-Blue"].setText(sprintf("%s", math.round(val, 50)));
+			props.UpdateManager.FromHashList(["blue", "dcEssShed"], 25, func(val) {
+				if (val.dcEssShed >= 25) {
+					if (val.blue >= 100) {
+						obj["Press-Blue"].setText(sprintf("%s", math.round(val.blue, 50)));
+					} else {
+						obj["Press-Blue"].setText(sprintf("%s", 0));
+					}
+					
+					if (val.blue > 1450) {
+						obj["Blue-Line"].setColor(0.0509,0.7529,0.2941);
+						obj["Blue-Line"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Blue-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Blue-Line-Bottom"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Blue-Indicator"].setColor(0.0509,0.7529,0.2941);
+						obj["Press-Blue"].setColor(0.0509,0.7529,0.2941);
+						obj["Blue-label"].setColor(0.8078,0.8039,0.8078);
+					} else {
+						obj["Blue-Line"].setColor(0.7333,0.3803,0);
+						obj["Blue-Line"].setColorFill(0.7333,0.3803,0);
+						obj["Blue-Line-Top"].setColorFill(0.7333,0.3803,0);
+						obj["Blue-Line-Bottom"].setColorFill(0.7333,0.3803,0);
+						obj["Blue-Indicator"].setColor(0.7333,0.3803,0);
+						obj["Press-Blue"].setColor(0.7333,0.3803,0);
+						obj["Blue-label"].setColor(0.7333,0.3803,0);
+					}
 				} else {
-					obj["Press-Blue"].setText(sprintf("%s", 0));
-				}
-				
-				if (val > 1450) {
-					obj["Blue-Line"].setColor(0.0509,0.7529,0.2941);
-					obj["Blue-Line"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Blue-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Blue-Line-Bottom"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Blue-Indicator"].setColor(0.0509,0.7529,0.2941);
-					obj["Press-Blue"].setColor(0.0509,0.7529,0.2941);
-					obj["Blue-label"].setColor(0.8078,0.8039,0.8078);
-				} else {
+					obj["Press-Blue"].setText(sprintf("%s", "XX"));
 					obj["Blue-Line"].setColor(0.7333,0.3803,0);
 					obj["Blue-Line"].setColorFill(0.7333,0.3803,0);
 					obj["Blue-Line-Top"].setColorFill(0.7333,0.3803,0);
@@ -71,23 +73,35 @@ var canvas_lowerECAMPageHyd =
 					obj["Blue-label"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("yellow", 25, func(val) {
-				if (val >= 100) {
-					obj["Press-Yellow"].setText(sprintf("%s", math.round(val, 50)));
+			props.UpdateManager.FromHashList(["yellow", "dcEssShed"], 25, func(val) {
+				if (val.dcEssShed >= 25) {
+					if (val.yellow >= 100) {
+						obj["Press-Yellow"].setText(sprintf("%s", math.round(val.yellow, 50)));
+					} else {
+						obj["Press-Yellow"].setText(sprintf("%s", 0));
+					}
+					
+					if (val.yellow > 1450) {
+						obj["Yellow-Line"].setColor(0.0509,0.7529,0.2941);
+						obj["Yellow-Line"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Yellow-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Yellow-Line-Middle"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Yellow-Line-Bottom"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Yellow-Indicator"].setColor(0.0509,0.7529,0.2941);
+						obj["Press-Yellow"].setColor(0.0509,0.7529,0.2941);
+						obj["Yellow-label"].setColor(0.8078,0.8039,0.8078);
+					} else {
+						obj["Yellow-Line"].setColor(0.7333,0.3803,0);
+						obj["Yellow-Line"].setColorFill(0.7333,0.3803,0);
+						obj["Yellow-Line-Top"].setColorFill(0.7333,0.3803,0);
+						obj["Yellow-Line-Middle"].setColorFill(0.7333,0.3803,0);
+						obj["Yellow-Line-Bottom"].setColorFill(0.7333,0.3803,0);
+						obj["Yellow-Indicator"].setColor(0.7333,0.3803,0);
+						obj["Press-Yellow"].setColor(0.7333,0.3803,0);
+						obj["Yellow-label"].setColor(0.7333,0.3803,0);
+					}
 				} else {
-					obj["Press-Yellow"].setText(sprintf("%s", 0));
-				}
-				
-				if (val > 1450) {
-					obj["Yellow-Line"].setColor(0.0509,0.7529,0.2941);
-					obj["Yellow-Line"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Yellow-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Yellow-Line-Middle"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Yellow-Line-Bottom"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Yellow-Indicator"].setColor(0.0509,0.7529,0.2941);
-					obj["Press-Yellow"].setColor(0.0509,0.7529,0.2941);
-					obj["Yellow-label"].setColor(0.8078,0.8039,0.8078);
-				} else {
+					obj["Press-Yellow"].setText(sprintf("%s", "XX"));
 					obj["Yellow-Line"].setColor(0.7333,0.3803,0);
 					obj["Yellow-Line"].setColorFill(0.7333,0.3803,0);
 					obj["Yellow-Line-Top"].setColorFill(0.7333,0.3803,0);
@@ -98,23 +112,35 @@ var canvas_lowerECAMPageHyd =
 					obj["Yellow-label"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("green", 25, func(val) {
-				if (val >= 100) {
-					obj["Press-Green"].setText(sprintf("%s", math.round(val, 50)));
+			props.UpdateManager.FromHashList(["green", "dcEssShed"], 25, func(val) {
+				if (val.dcEssShed) {
+					if (val.green >= 100) {
+						obj["Press-Green"].setText(sprintf("%s", math.round(val.green, 50)));
+					} else {
+						obj["Press-Green"].setText(sprintf("%s", 0));
+					}
+					
+					if (val.green > 1450) {
+						obj["Green-Line"].setColor(0.0509,0.7529,0.2941);
+						obj["Green-Line"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Green-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Green-Line-Middle"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Green-Line-Bottom"].setColorFill(0.0509,0.7529,0.2941);
+						obj["Green-Indicator"].setColor(0.0509,0.7529,0.2941);
+						obj["Press-Green"].setColor(0.0509,0.7529,0.2941);
+						obj["Green-label"].setColor(0.8078,0.8039,0.8078);
+					} else {
+						obj["Green-Line"].setColor(0.7333,0.3803,0);
+						obj["Green-Line"].setColorFill(0.7333,0.3803,0);
+						obj["Green-Line-Top"].setColorFill(0.7333,0.3803,0);
+						obj["Green-Line-Middle"].setColorFill(0.7333,0.3803,0);
+						obj["Green-Line-Bottom"].setColorFill(0.7333,0.3803,0);
+						obj["Green-Indicator"].setColor(0.7333,0.3803,0);
+						obj["Press-Green"].setColor(0.7333,0.3803,0);
+						obj["Green-label"].setColor(0.7333,0.3803,0);
+					}
 				} else {
-					obj["Press-Green"].setText(sprintf("%s", 0));
-				}
-				
-				if (val > 1450) {
-					obj["Green-Line"].setColor(0.0509,0.7529,0.2941);
-					obj["Green-Line"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Green-Line-Top"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Green-Line-Middle"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Green-Line-Bottom"].setColorFill(0.0509,0.7529,0.2941);
-					obj["Green-Indicator"].setColor(0.0509,0.7529,0.2941);
-					obj["Press-Green"].setColor(0.0509,0.7529,0.2941);
-					obj["Green-label"].setColor(0.8078,0.8039,0.8078);
-				} else {
+					obj["Press-Green"].setText(sprintf("%s", "XX"));
 					obj["Green-Line"].setColor(0.7333,0.3803,0);
 					obj["Green-Line"].setColorFill(0.7333,0.3803,0);
 					obj["Green-Line-Top"].setColorFill(0.7333,0.3803,0);
@@ -514,14 +540,14 @@ var canvas_lowerECAMPageHyd =
 };
 
 var input = {
-	hydBlueResvOvht: "/systems/hydraulic/blue-resv-ovht",
-	hydGreenResvOvht: "/systems/hydraulic/green-resv-ovht",
-	hydYellowResvOvht: "/systems/hydraulic/yellow-resv-ovht",
-	hydBlueResvLoPrs: "/systems/hydraulic/blue-resv-lo-air-press",
-	hydGreenResvLoPrs: "/systems/hydraulic/green-resv-lo-air-press",
-	hydYellowResvLoPrs: "/systems/hydraulic/yellow-resv-lo-air-press",
-	hydYellowElecPumpOvht: "/systems/hydraulic/elec-pump-yellow-ovht",
-	hydBlueElecPumpOvht: "/systems/hydraulic/elec-pump-blue-ovht",
+	hydBlueResvOvht: "/systems/hydraulic/relays/blue-reservoir-overheat",
+	hydGreenResvOvht: "/systems/hydraulic/relays/green-reservoir-overheat",
+	hydYellowResvOvht: "/systems/hydraulic/relays/yellow-reservoir-overheat",
+	hydBlueResvLoPrs: "/systems/failures/hydraulic/blue-reservoir-air-press-lo",
+	hydGreenResvLoPrs: "/systems/failures/hydraulic/green-reservoir-air-press-lo",
+	hydYellowResvLoPrs: "/systems/failures/hydraulic/yellow-reservoir-air-press-lo",
+	hydBlueElecPumpOvht: "/systems/failures/hydraulic/blue-elec-ovht",
+	hydYellowElecPumpOvht: "/systems/failures/hydraulic/yellow-elec-ovht",
 	hydRATPosition: "/systems/hydraulic/sources/rat/position",
 	hydGreenFireValve: "/systems/hydraulic/sources/green-edp/fire-valve",
 	hydYellowFireValve: "/systems/hydraulic/sources/yellow-edp/fire-valve",
