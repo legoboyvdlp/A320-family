@@ -557,7 +557,7 @@ var input = {
 	hydYellowEDPPumpSwitch: "/controls/hydraulic/switches/yellow-edp",
 	hydPTUSwitch: "/controls/hydraulic/switches/ptu",
 	hydPTUFault: "/systems/failures/hydraulic/ptu",
-	hydPTUActive: "/systems/hydraulic/sources/ptu/ptu-hydraulic-condition",
+	hydPTUActive: "/systems/hydraulic/sources/ptu/ptu-loop-sound-cmd",
 	hydPTUDiff: "/systems/hydraulic/yellow-psi-diff",
 	hydBlueQTY: "/systems/hydraulic/blue-qty",
 	hydGreenQTY: "/systems/hydraulic/green-qty",

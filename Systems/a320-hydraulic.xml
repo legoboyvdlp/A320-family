@@ -385,7 +385,10 @@
 						</max>
 						<value>0</value>
 					</ifthen>
-					<property>/systems/hydraulic/sources/green-edp/fire-valve</property>
+					<difference>
+						<value>1</value>
+						<property>/systems/hydraulic/sources/green-edp/fire-valve</property>
+					</difference>
 				</product>
 			</function>
 		</fcs_function>
@@ -432,7 +435,10 @@
 						</max>
 						<value>0</value>
 					</ifthen>
-					<property>/systems/hydraulic/sources/yellow-edp/fire-valve</property>
+					<difference>
+						<value>1</value>
+						<property>/systems/hydraulic/sources/yellow-edp/fire-valve</property>
+					</difference>
 				</product>
 			</function>
 		</fcs_function>
@@ -557,7 +563,7 @@
 			<default value="0"/>
 			<test logic="AND" value="/systems/hydraulic/yellow-psi-ptu">
 				<test logic="OR">
-					/position/altitude-ft ge 1500
+					/position/gear-agl-ft ge 1500
 					/gear/gear[0]/compression-norm ne 0
 				</test>
 				/systems/electrical/bus/dc-service-bus ge 25
