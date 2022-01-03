@@ -2058,7 +2058,7 @@ var messages_priority_2 = func {
 	}
 	
 	gearPosition = pts.Gear.position[1].getValue();
-	if (directLaw.clearFlag == 0 and warningNodes.Timers.directLaw.getValue() and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8) {
+	if (directLaw.clearFlag == 0 and warningNodes.Timers.directLaw.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8) {
 		directLaw.active = 1;
 		directLawProt.active = 1;
 		if (directLawMaxSpeed.clearFlag == 0 and !fbw.tripleADRFail and gearPosition != 1) {
@@ -2096,7 +2096,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(directLawSpdBrk2);
 	}
 	
-	if (altnLaw.clearFlag == 0 and warningNodes.Timers.altnLaw.getValue() and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8) {
+	if (altnLaw.clearFlag == 0 and warningNodes.Timers.altnLaw.getValue() == 1 and phaseVar2 != 4 and phaseVar2 != 5 and phaseVar2 != 7 and phaseVar2 != 8) {
 		altnLaw.active = 1;
 		altnLawProt.active = 1;
 		if (altnLawMaxSpeed.clearFlag == 0 and altnLawMaxSpeed2.clearFlag == 0 and !fbw.tripleADRFail) {
