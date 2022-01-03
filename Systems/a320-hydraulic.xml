@@ -133,6 +133,16 @@
 			<default value="/systems/hydraulic/sources/rat/source-psi"/>
 		</switch>
 		
+		
+		<!-- TODO PSI according to flow rate
+		0 L / M = 2987 psi
+		23 L / M = 2854 psi
+		32 L / M = 2175 psi
+		
+		Power Draw 45A at speed of 7600 RPM to 8000 RPM max load
+		Startup Draw 138A
+		-->
+		
 		<!-- Elec Blue -->
 		<switch name="/systems/hydraulic/sources/blue-elec/pump-operate">
 			<default value="0"/>
@@ -204,6 +214,11 @@
 			</test>
 		</switch>
 		
+		<!-- TODO PSI according to flow rate
+		0 L / M = 3000 psi
+		140 L / M = 2854 psi
+		-->
+		
 		<!-- EDP Green -->
 		<fcs_function name="/systems/hydraulic/sources/green-edp/source-psi">
 			<function>
@@ -233,7 +248,6 @@
 			<default value="0"/>
 			<test value="/systems/hydraulic/sources/green-edp/source-psi">
 				/controls/hydraulic/switches/green-edp eq 1
-				/systems/hydraulic/sources/green-edp/fire-valve lt 0.10
 			</test>
 		</switch>
 		
@@ -249,6 +263,15 @@
 				</test>
 			</test>
 		</switch>
+		
+		<!-- TODO PSI according to flow rate
+		0 L / M = 2987 psi
+		23 L / M = 2842 psi
+		32 L / M = 2175 psi
+		
+		Power Draw 45A at full speed of 7700 RPM
+		Startup 138A
+		-->
 		
 		<fcs_function name="/systems/hydraulic/sources/yellow-elec/source-psi">
 			<function>
@@ -268,6 +291,12 @@
 				/systems/failures/hydraulic/yellow-elec eq 0
 			</test>
 		</switch>
+		
+		
+		<!-- TODO PSI according to flow rate
+		0 L / M = 3000 psi
+		140 L / M = 2854 psi
+		-->
 		
 		<!-- EDP Yellow -->
 		<fcs_function name="/systems/hydraulic/sources/yellow-edp/source-psi">
@@ -298,7 +327,6 @@
 			<default value="0"/>
 			<test value="/systems/hydraulic/sources/yellow-edp/source-psi">
 				/controls/hydraulic/switches/yellow-edp eq 1
-				/systems/hydraulic/sources/yellow-edp/fire-valve lt 0.10
 			</test>
 		</switch>
 		
@@ -345,17 +373,20 @@
 		
 		<fcs_function name="/systems/hydraulic/green-psi-cmd">
 			<function>
-				<ifthen>
-					<ge>
-						<property>/systems/hydraulic/green-qty</property>
-						<value>1.0</value>
-					</ge>
-					<max>
-						<property>/systems/hydraulic/green-psi-cmd-pump</property>
-						<property>/systems/hydraulic/sources/ptu/yellow-green</property>
-					</max>
-					<value>0</value>
-				</ifthen>
+				<product>
+					<ifthen>
+						<ge>
+							<property>/systems/hydraulic/green-qty</property>
+							<value>1.0</value>
+						</ge>
+						<max>
+							<property>/systems/hydraulic/green-psi-cmd-pump</property>
+							<property>/systems/hydraulic/sources/ptu/yellow-green</property>
+						</max>
+						<value>0</value>
+					</ifthen>
+					<property>/systems/hydraulic/sources/green-edp/fire-valve</property>
+				</product>
 			</function>
 		</fcs_function>
 		
@@ -389,17 +420,20 @@
 		
 		<fcs_function name="/systems/hydraulic/yellow-psi-cmd">
 			<function>
-				<ifthen>
-					<ge>
-						<property>/systems/hydraulic/yellow-qty</property>
-						<value>1.0</value>
-					</ge>
-					<max>
-						<property>/systems/hydraulic/yellow-psi-cmd-pump</property>
-						<property>/systems/hydraulic/sources/ptu/green-yellow</property>
-					</max>
-					<value>0</value>
-				</ifthen>
+				<product>
+					<ifthen>
+						<ge>
+							<property>/systems/hydraulic/yellow-qty</property>
+							<value>1.0</value>
+						</ge>
+						<max>
+							<property>/systems/hydraulic/yellow-psi-cmd-pump</property>
+							<property>/systems/hydraulic/sources/ptu/green-yellow</property>
+						</max>
+						<value>0</value>
+					</ifthen>
+					<property>/systems/hydraulic/sources/yellow-edp/fire-valve</property>
+				</product>
 			</function>
 		</fcs_function>
 
@@ -442,10 +476,6 @@
 			<rate_limit sense="decr">/systems/hydraulic/sys-decr-rate</rate_limit>
 		</actuator>
 		
-	</channel>
-		
-	<channel name="Power Transfer Unit" execrate="8">
-		<!-- PTU -->
 		<fcs_function name="/systems/hydraulic/yellow-psi-diff">
 			<function>
 				<difference>
@@ -455,9 +485,15 @@
 			</function>
 		</fcs_function>
 		
+	</channel>
+		
+	<channel name="Power Transfer Unit" execrate="8">
+		<!-- PTU -->
+		<!-- todo - add yellow pump running to close cargo doors inhibits PTU -->
 		<switch name="/systems/hydraulic/sources/ptu/ptu-inhibited">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-service-bus ge 25
 				/gear/gear[0]/compression-norm ne 0
 				<test logic="OR">
 					<test logic="AND">
@@ -501,18 +537,38 @@
 			</test>
 		</switch>
 		
+		<!-- Direction -->
 		<switch name="/systems/hydraulic/sources/ptu/green-yellow">
 			<default value="0"/>
 			<test logic="AND" value="/systems/hydraulic/green-psi-ptu">
+				<test logic="OR">
+					/position/altitude-ft ge 1500
+					/gear/gear[0]/compression-norm ne 0
+				</test>
+				/systems/electrical/bus/dc-service-bus ge 25
 				/controls/hydraulic/switches/ptu eq 1
 				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 1
 				/systems/hydraulic/sources/ptu/ptu-inhibited eq 0
-				/systems/electrical/bus/dc-2 ge 25
 				/systems/failures/hydraulic/ptu ne 1
-				/systems/hydraulic/sources/yellow-edp/fire-valve lt 0.10
 			</test>
 		</switch>
 		
+		<switch name="/systems/hydraulic/sources/ptu/yellow-green">
+			<default value="0"/>
+			<test logic="AND" value="/systems/hydraulic/yellow-psi-ptu">
+				<test logic="OR">
+					/position/altitude-ft ge 1500
+					/gear/gear[0]/compression-norm ne 0
+				</test>
+				/systems/electrical/bus/dc-service-bus ge 25
+				/controls/hydraulic/switches/ptu eq 1
+				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 1
+				/systems/hydraulic/sources/ptu/ptu-inhibited eq 0
+				/systems/failures/hydraulic/ptu ne 1
+			</test>
+		</switch>
+		
+		<!-- fade in loop sound over 1 second -->
 		<switch name="/systems/hydraulic/sources/ptu/ptu-loop-sound-cmd">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -526,18 +582,6 @@
 			<rate_limit sense="incr">1</rate_limit>
 			<rate_limit sense="decr">120</rate_limit> <!-- instant -->
 		</actuator>
-		
-		<switch name="/systems/hydraulic/sources/ptu/yellow-green">
-			<default value="0"/>
-			<test logic="AND" value="/systems/hydraulic/yellow-psi-ptu">
-				/controls/hydraulic/switches/ptu eq 1
-				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 1
-				/systems/hydraulic/sources/ptu/ptu-inhibited eq 0
-				/systems/electrical/bus/dc-2 ge 25
-				/systems/failures/hydraulic/ptu ne 1
-				/systems/hydraulic/sources/green-edp/fire-valve lt 0.10
-			</test>
-		</switch>
 		
 	</channel>
 	

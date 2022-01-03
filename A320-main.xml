@@ -1340,7 +1340,7 @@
 				<blue-elec-ovht type="bool">0</blue-elec-ovht>
 				<blue-leak type="bool">0</blue-leak>
 				<blue-reservoir-air-press-lo type="bool">0</blue-reservoir-air-press-lo> <!-- true at 22 psi relative, false at 25 psi relative -->
-				<blue-reservoir-ovht type="bool">0</blue-reservoir-ovht> <!-- 95 deg -->
+				<blue-reservoir-ovht type="bool">0</blue-reservoir-ovht> <!-- 95 deg, cancel at 88.4 deg -->
 				<green-edp type="bool">0</green-edp>
 				<green-leak type="bool">0</green-leak>
 				<green-reservoir-air-press-lo type="bool">0</green-reservoir-air-press-lo>
@@ -1348,7 +1348,7 @@
 				<ptu type="bool">0</ptu>
 				<yellow-edp type="bool">0</yellow-edp>
 				<yellow-elec type="bool">0</yellow-elec>
-				<yellow-elec-ovht type="bool">0</yellow-elec-ovht>
+				<yellow-elec-ovht type="bool">0</yellow-elec-ovht> <!-- 162 deg -->
 				<yellow-leak type="bool">0</yellow-leak>
 				<yellow-reservoir-air-press-lo type="bool">0</yellow-reservoir-air-press-lo>
 				<yellow-reservoir-ovht type="bool">0</yellow-reservoir-ovht>
