@@ -850,6 +850,19 @@
                 <script>atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);</script>
             </binding>
         </action>
+		<hovered>
+			<binding>
+			<command>set-tooltip</command>
+			<tooltip-id>atc_stby_mode</tooltip-id>
+			<label>Mode: %s</label>
+				<property>controls/atc/mode-knob</property>
+					<mapping>nasal</mapping>
+					<script>
+						var modes = ['STANDBY','ALT','XPNDR','TA ONLY','TA/RA'];
+						return modes[arg[0]];
+					</script>
+			</binding>
+		</hovered>		
 	</animation>
 
 	<animation>
