@@ -2262,6 +2262,76 @@
 		</axis>
 	</animation>
 
+	<!-- Foot warner switches -->
+
+	<animation>
+		<type>rotate</type>
+		<object-name>foot_warmer_cpt_sw</object-name>
+		<object-name>foot_warmer_cpt_sw.mark</object-name>
+		<property>controls/cabin/footwarmer-cpt</property>
+		<interpolation>
+			<entry><ind>1</ind><dep>-20</dep></entry>
+			<entry><ind>0</ind><dep>20</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>foot_warmer_cpt_sw.axis</object-name>
+		</axis>		
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>foot_warmer_cpt_sw</object-name>
+		<object-name>foot_warmer_cpt_sw.mark</object-name>
+		<action>
+			<button>0</button>			
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/cabin/footwarmer-cpt</property>
+				<value>1</value>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sounde/switch1</property>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>foot_warmer_fo_sw</object-name>
+		<object-name>foot_warmer_fo_sw.mark</object-name>
+		<property>controls/cabin/footwarmer-fo</property>
+		<interpolation>
+			<!-- Axis inverted!! -->
+			<entry><ind>1</ind><dep>20</dep></entry>
+			<entry><ind>0</ind><dep>-20</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>foot_warmer_fo_sw.axis</object-name>
+		</axis>		
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>foot_warmer_fo_sw</object-name>
+		<object-name>foot_warmer_fo_sw.mark</object-name>
+		<action>
+			<button>0</button>			
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/cabin/footwarmer-fo</property>
+				<value>1</value>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sounde/switch1</property>
+			</binding>
+		</action>
+	</animation>
+
+
 	<!-- ECAM Controls -->
 	<animation>
 		<type>pick</type>

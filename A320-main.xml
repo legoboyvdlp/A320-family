@@ -812,6 +812,10 @@
 			<brake-left type="double">0</brake-left>
 			<brake-right type="double">0</brake-right>
 		</autobrake>
+		<cabin>
+			<footwarmer-cpt type="bool">0</footwarmer-cpt>
+			<footwarmer-fo type="bool">0</footwarmer-fo>
+		</cabin>
 		<CVR>
 			<erase type="bool">0</erase>
 			<gndctl type="bool">0</gndctl>
