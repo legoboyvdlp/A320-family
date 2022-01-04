@@ -1143,15 +1143,12 @@ var switchDatabase = func {
 
 # Landing to phase 7
 setlistener("/gear/gear[1]/wow", func(val) {
-	print("Called gear");
 	if (val.getValue() == 0 and timer30secLanding.isRunning) {
-		print("Stopping timer");
 		timer30secLanding.stop();
 		FMGCInternal.landingTime = -99;
 	}
 	
 	if (val.getValue() and FMGCInternal.landingTime == -99) {
-		print("Starting timer");
 		timer30secLanding.start();
 		FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
 	}
