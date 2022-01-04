@@ -89,7 +89,7 @@
 			</test>
 		</switch>
 		
-		<switch name="controls/lighting/leftturnoff">
+		<switch name="/controls/lighting/leftturnoff">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/lighting/turnoff-light-switch eq 1
