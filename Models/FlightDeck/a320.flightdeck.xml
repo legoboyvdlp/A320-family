@@ -1115,6 +1115,7 @@
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
+		<object-name>CockpitDoorOpen</object-name>		
 		<condition>
 			<or>
 				<greater-than-equals>
@@ -1503,6 +1504,122 @@
 				<property>controls/gear/brake-parking</property>
 			</binding>
 		</action>
+	</animation>
+
+	<!-- Cocktpit Door Switch  -->
+	<animation>
+        <type>rotate</type>
+        <object-name>CockpitDoorSwitch</object-name>
+		<object-name>CockpitDoorSwitch.mark</object-name>
+        <property>controls/doors/doorc-switch</property>
+		<interpolation>
+			<entry><ind>-1</ind><dep>-25</dep></entry>
+			<entry><ind> 0</ind><dep>  0</dep></entry>
+			<entry><ind> 1</ind><dep> 25</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>CockpitDoorSwitch.axis</object-name>
+		</axis>
+  	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>CockpitDoorSwitch</object-name>
+		<object-name>CockpitDoorSwitch.mark</object-name>
+		<action>			
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<not><property>devices/status/keyboard/shift</property></not>
+				</condition>			
+				<command>property-assign</command>
+				<property>controls/doors/doorc-switch</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<condition>
+					<property>devices/status/keyboard/shift</property>
+				</condition>			
+				<command>property-assign</command>
+				<property>controls/doors/doorc-switch</property>
+				<value>-1</value>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/sim/sounde/switch1</property>
+				<value>1</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/doors/doorc-switch</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<action>		
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/doors/doorc-switch</property>
+				<value>-1</value>
+			</binding>
+			<binding>				
+				<command>property-assign</command>
+				<property>/sim/sounde/switch1</property>
+				<value>1</value>				
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/doors/doorc-switch</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>doorc-switch-lock</tooltip-id>
+				<label>Cockpit door switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>CockpitDoorOpen</object-name>
+		<object-name>CockpitDoorSwitch.mark</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>		
+				<not-equals>
+					<property>sim/model/door-positions/doorc/lock-status</property>
+					<value>1</value>
+				</not-equals>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>CockpitDoorFault</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>		
+				<equals>
+					<property>sim/model/door-positions/doorc/lock-status</property>
+					<value>-9</value>
+				</equals>
+			</or>
+		</condition>
 	</animation>
 
 	<!-- Terr on ND -->

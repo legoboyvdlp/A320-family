@@ -819,6 +819,9 @@
 			<test type="bool">0</test>
 			<tone type="bool">0</tone>
 		</CVR>
+		<doors>
+			<doorc-switch type="int">0</doorc-switch>
+		</doors>
 		<electric>
 			<avionics-switch type="bool">true</avionics-switch>
 		</electric>
