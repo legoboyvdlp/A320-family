@@ -5,7 +5,8 @@
 <system name="A320: Hydraulic">	
 	
 	<property value="500">/systems/hydraulic/sys-incr-rate</property> <!-- 2 seconds per 1000 psi -->
-	<channel name="SYS Leak Logic" execrate="8">
+	
+	<channel name="Reservoir Quantity" execrate="8">
 		
 		<!-- Blue -->
 		<switch name="/systems/hydraulic/blue-qty-cmd">
@@ -84,7 +85,7 @@
 	
 	</channel>
 	
-	<channel name="Main Hydraulic" execrate="8">
+	<channel name="Sources" execrate="8">
 		
 		<!-- Common -->
 		<switch name="/systems/hydraulic/sys-decr-rate">
@@ -131,6 +132,16 @@
 		<switch name="/systems/hydraulic/sources/rat/output-psi">
 			<default value="/systems/hydraulic/sources/rat/source-psi"/>
 		</switch>
+		
+		
+		<!-- TODO PSI according to flow rate
+		0 L / M = 2987 psi
+		23 L / M = 2854 psi
+		32 L / M = 2175 psi
+		
+		Power Draw 45A at speed of 7600 RPM to 8000 RPM max load
+		Startup Draw 138A
+		-->
 		
 		<!-- Elec Blue -->
 		<switch name="/systems/hydraulic/sources/blue-elec/pump-operate">
@@ -203,6 +214,11 @@
 			</test>
 		</switch>
 		
+		<!-- TODO PSI according to flow rate
+		0 L / M = 3000 psi
+		140 L / M = 2854 psi
+		-->
+		
 		<!-- EDP Green -->
 		<fcs_function name="/systems/hydraulic/sources/green-edp/source-psi">
 			<function>
@@ -232,7 +248,6 @@
 			<default value="0"/>
 			<test value="/systems/hydraulic/sources/green-edp/source-psi">
 				/controls/hydraulic/switches/green-edp eq 1
-				/systems/hydraulic/sources/green-edp/fire-valve lt 0.10
 			</test>
 		</switch>
 		
@@ -248,6 +263,15 @@
 				</test>
 			</test>
 		</switch>
+		
+		<!-- TODO PSI according to flow rate
+		0 L / M = 2987 psi
+		23 L / M = 2842 psi
+		32 L / M = 2175 psi
+		
+		Power Draw 45A at full speed of 7700 RPM
+		Startup 138A
+		-->
 		
 		<fcs_function name="/systems/hydraulic/sources/yellow-elec/source-psi">
 			<function>
@@ -267,6 +291,12 @@
 				/systems/failures/hydraulic/yellow-elec eq 0
 			</test>
 		</switch>
+		
+		
+		<!-- TODO PSI according to flow rate
+		0 L / M = 3000 psi
+		140 L / M = 2854 psi
+		-->
 		
 		<!-- EDP Yellow -->
 		<fcs_function name="/systems/hydraulic/sources/yellow-edp/source-psi">
@@ -297,9 +327,12 @@
 			<default value="0"/>
 			<test value="/systems/hydraulic/sources/yellow-edp/source-psi">
 				/controls/hydraulic/switches/yellow-edp eq 1
-				/systems/hydraulic/sources/yellow-edp/fire-valve lt 0.10
 			</test>
 		</switch>
+		
+	</channel>
+	
+	<channel name="Pressure Totals" execrate="8">
 		
 		<!-- Blue PSI -->
 		<fcs_function name="/systems/hydraulic/blue-psi-cmd">
@@ -340,17 +373,23 @@
 		
 		<fcs_function name="/systems/hydraulic/green-psi-cmd">
 			<function>
-				<ifthen>
-					<ge>
-						<property>/systems/hydraulic/green-qty</property>
-						<value>1.0</value>
-					</ge>
-					<max>
-						<property>/systems/hydraulic/green-psi-cmd-pump</property>
-						<property>/systems/hydraulic/sources/ptu/yellow-green</property>
-					</max>
-					<value>0</value>
-				</ifthen>
+				<product>
+					<ifthen>
+						<ge>
+							<property>/systems/hydraulic/green-qty</property>
+							<value>1.0</value>
+						</ge>
+						<max>
+							<property>/systems/hydraulic/green-psi-cmd-pump</property>
+							<property>/systems/hydraulic/sources/ptu/yellow-green</property>
+						</max>
+						<value>0</value>
+					</ifthen>
+					<difference>
+						<value>1</value>
+						<property>/systems/hydraulic/sources/green-edp/fire-valve</property>
+					</difference>
+				</product>
 			</function>
 		</fcs_function>
 		
@@ -384,17 +423,23 @@
 		
 		<fcs_function name="/systems/hydraulic/yellow-psi-cmd">
 			<function>
-				<ifthen>
-					<ge>
-						<property>/systems/hydraulic/yellow-qty</property>
-						<value>1.0</value>
-					</ge>
-					<max>
-						<property>/systems/hydraulic/yellow-psi-cmd-pump</property>
-						<property>/systems/hydraulic/sources/ptu/green-yellow</property>
-					</max>
-					<value>0</value>
-				</ifthen>
+				<product>
+					<ifthen>
+						<ge>
+							<property>/systems/hydraulic/yellow-qty</property>
+							<value>1.0</value>
+						</ge>
+						<max>
+							<property>/systems/hydraulic/yellow-psi-cmd-pump</property>
+							<property>/systems/hydraulic/sources/ptu/green-yellow</property>
+						</max>
+						<value>0</value>
+					</ifthen>
+					<difference>
+						<value>1</value>
+						<property>/systems/hydraulic/sources/yellow-edp/fire-valve</property>
+					</difference>
+				</product>
 			</function>
 		</fcs_function>
 
@@ -437,7 +482,6 @@
 			<rate_limit sense="decr">/systems/hydraulic/sys-decr-rate</rate_limit>
 		</actuator>
 		
-		<!-- PTU -->
 		<fcs_function name="/systems/hydraulic/yellow-psi-diff">
 			<function>
 				<difference>
@@ -447,9 +491,15 @@
 			</function>
 		</fcs_function>
 		
+	</channel>
+		
+	<channel name="Power Transfer Unit" execrate="8">
+		<!-- PTU -->
+		<!-- todo - add yellow pump running to close cargo doors inhibits PTU -->
 		<switch name="/systems/hydraulic/sources/ptu/ptu-inhibited">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-service-bus ge 25
 				/gear/gear[0]/compression-norm ne 0
 				<test logic="OR">
 					<test logic="AND">
@@ -493,18 +543,38 @@
 			</test>
 		</switch>
 		
+		<!-- Direction -->
 		<switch name="/systems/hydraulic/sources/ptu/green-yellow">
 			<default value="0"/>
 			<test logic="AND" value="/systems/hydraulic/green-psi-ptu">
+				<test logic="OR">
+					/position/altitude-ft ge 1500
+					/gear/gear[0]/compression-norm ne 0
+				</test>
+				/systems/electrical/bus/dc-service-bus ge 25
 				/controls/hydraulic/switches/ptu eq 1
 				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 1
 				/systems/hydraulic/sources/ptu/ptu-inhibited eq 0
-				/systems/electrical/bus/dc-2 ge 25
 				/systems/failures/hydraulic/ptu ne 1
-				/systems/hydraulic/sources/yellow-edp/fire-valve lt 0.10
 			</test>
 		</switch>
 		
+		<switch name="/systems/hydraulic/sources/ptu/yellow-green">
+			<default value="0"/>
+			<test logic="AND" value="/systems/hydraulic/yellow-psi-ptu">
+				<test logic="OR">
+					/position/gear-agl-ft ge 1500
+					/gear/gear[0]/compression-norm ne 0
+				</test>
+				/systems/electrical/bus/dc-service-bus ge 25
+				/controls/hydraulic/switches/ptu eq 1
+				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 1
+				/systems/hydraulic/sources/ptu/ptu-inhibited eq 0
+				/systems/failures/hydraulic/ptu ne 1
+			</test>
+		</switch>
+		
+		<!-- fade in loop sound over 1 second -->
 		<switch name="/systems/hydraulic/sources/ptu/ptu-loop-sound-cmd">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -518,18 +588,6 @@
 			<rate_limit sense="incr">1</rate_limit>
 			<rate_limit sense="decr">120</rate_limit> <!-- instant -->
 		</actuator>
-		
-		<switch name="/systems/hydraulic/sources/ptu/yellow-green">
-			<default value="0"/>
-			<test logic="AND" value="/systems/hydraulic/yellow-psi-ptu">
-				/controls/hydraulic/switches/ptu eq 1
-				/systems/hydraulic/sources/ptu/ptu-hydraulic-condition eq 1
-				/systems/hydraulic/sources/ptu/ptu-inhibited eq 0
-				/systems/electrical/bus/dc-2 ge 25
-				/systems/failures/hydraulic/ptu ne 1
-				/systems/hydraulic/sources/green-edp/fire-valve lt 0.10
-			</test>
-		</switch>
 		
 	</channel>
 	
@@ -553,10 +611,17 @@
 			</test>
 		</switch>
 		
-		<lag_filter name="/systems/hydraulic/yellow-accumulator-psi-output">
+		<lag_filter name="/systems/hydraulic/yellow-accumulator-psi-output-filter">
 			<input>/systems/hydraulic/yellow-accumulator-psi</input>
 			<c1>9</c1>
 		</lag_filter>
+		
+		<switch name="/systems/hydraulic/yellow-accumulator-psi-output">
+			<default value="/systems/hydraulic/yellow-accumulator-psi-output-filter"/>
+			<test value="0">
+				/systems/electrical/bus/dc-ess lt 25
+			</test>
+		</switch>
 		
 		<switch name="/systems/hydraulic/brakes/pressure-left-psi-input">
 			<default value="0"/>
@@ -572,85 +637,105 @@
 			</test>
 		</switch>
 		
-		<lag_filter name="/systems/hydraulic/brakes/pressure-left-psi-output">
+		<lag_filter name="/systems/hydraulic/brakes/pressure-left-psi-output-filter">
 			<input>/systems/hydraulic/brakes/pressure-left-psi-input</input>
 			<c1>9</c1>
 		</lag_filter>
 		
-		<lag_filter name="/systems/hydraulic/brakes/pressure-right-psi-output">
+		<switch name="/systems/hydraulic/brakes/pressure-left-psi-output">
+			<default value="/systems/hydraulic/brakes/pressure-left-psi-output-filter"/>
+			<test value="0">
+				/systems/electrical/bus/dc-ess lt 25
+			</test>
+		</switch>
+		
+		<lag_filter name="/systems/hydraulic/brakes/pressure-right-psi-output-filter">
 			<input>/systems/hydraulic/brakes/pressure-right-psi-input</input>
 			<c1>9</c1>
 		</lag_filter>
 		
+		<switch name="/systems/hydraulic/brakes/pressure-right-psi-output">
+			<default value="/systems/hydraulic/brakes/pressure-right-psi-output-filter"/>
+			<test value="0">
+				/systems/electrical/bus/dc-ess lt 25
+			</test>
+		</switch>
+		
 	</channel>
 	
-	<channel name="Lights" execrate="8">
+	<channel name="Relays for Warnings" execrate="8">
 	
-		<switch name="/systems/hydraulic/lights/blue-elec-fault">
+		<switch name="/systems/hydraulic/relays/blue-reservoir-low-qty-switch">
 			<default value="0"/>
-			<test logic="OR" value="1">
-				<test logic="AND">
-					/systems/hydraulic/sources/blue-elec/output-psi le 1450
-					<test logic="OR">
-						/engines/engine[0]/state eq 3
-						/engines/engine[1]/state eq 3
-					</test>
-				</test>
-				/systems/hydraulic/blue-qty lt 2.4
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/hydraulic/blue-qty lt 2.2
 			</test>
 		</switch>
 	
-		<switch name="/systems/hydraulic/lights/green-edp-fault">
+		<switch name="/systems/hydraulic/relays/green-reservoir-low-qty-switch">
 			<default value="0"/>
-			<test logic="OR" value="1">
-				<test logic="AND">
-					/systems/hydraulic/sources/green-edp/output-psi le 1750
-					/engines/engine[0]/state eq 3
-				</test>
-				<test>
-					/systems/hydraulic/green-qty lt 3.5
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/hydraulic/green-qty lt 3.0
+			</test>
+		</switch>
+	
+		<switch name="/systems/hydraulic/relays/yellow-reservoir-low-qty-switch">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/hydraulic/yellow-qty lt 3.0
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/relays/green-reservoir-low-qty-air-press-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-1 ge 25
+				<test logic="OR">
+					/systems/hydraulic/relays/green-reservoir-low-qty-switch eq 1
+					/systems/failures/hydraulic/green-reservoir-air-press-lo eq 1
 				</test>
 			</test>
 		</switch>
 		
-		<switch name="/systems/hydraulic/lights/yellow-edp-fault">
+		<switch name="/systems/hydraulic/relays/yellow-reservoir-low-qty-air-press-fault">
 			<default value="0"/>
-			<test logic="OR" value="1">
-				<test logic="AND">
-					/systems/hydraulic/sources/yellow-edp/output-psi le 1750
-					/engines/engine[1]/state eq 3
-				</test>
-				<test>
-					/systems/hydraulic/yellow-qty lt 3.5
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+				<test logic="OR">
+					/systems/hydraulic/relays/yellow-reservoir-low-qty-switch eq 1
+					/systems/failures/hydraulic/yellow-reservoir-air-press-lo eq 1
 				</test>
 			</test>
 		</switch>
 		
-		<switch name="/systems/hydraulic/lights/yellow-elec-fault">
+		<switch name="/systems/hydraulic/relays/blue-reservoir-overheat">
 			<default value="0"/>
-			<test logic="OR" value="1">
-				<test logic="AND">
-					/systems/hydraulic/sources/yellow-elec/output-psi le 1450
-					/systems/hydraulic/sources/yellow-edp/output-psi le 1750
-					<test logic="AND">
-						/systems/hydraulic/sources/ptu/green-yellow le 1750
-						/systems/hydraulic/sources/ptu/yellow-green le 1750
-					</test>
-				</test>
-				<test>
-					/systems/hydraulic/yellow-qty lt 3.5
-				</test>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess ge 25
+				/systems/failures/hydraulic/blue-reservoir-ovht eq 1
 			</test>
 		</switch>
 		
-		<switch name="/systems/hydraulic/lights/ptu-fault">
+		<switch name="/systems/hydraulic/relays/green-reservoir-overheat">
 			<default value="0"/>
-			<test logic="OR" value="1">
-				/systems/hydraulic/yellow-qty lt 3.5
-				/systems/hydraulic/green-qty lt 3.5
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-1 ge 25
+				/systems/failures/hydraulic/green-reservoir-ovht eq 1
 			</test>
 		</switch>
 		
+		<switch name="/systems/hydraulic/relays/yellow-reservoir-overheat">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+				/systems/failures/hydraulic/yellow-reservoir-ovht eq 1
+			</test>
+		</switch>
+		
+		<!-- These are a physical switch, so there is no need for transducer power -->
 		<switch name="/systems/hydraulic/warnings/blue-lo-pr">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -681,6 +766,106 @@
 					/systems/hydraulic/warnings/yellow-lo-pr eq 1
 				</test>
 				/systems/hydraulic/yellow-psi lt 1450
+			</test>
+		</switch>
+		
+	</channel>
+	
+	<channel name="Lights" execrate="8">
+		
+		<switch name="/systems/hydraulic/lights/ptu-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+				<test logic="OR">
+					/systems/hydraulic/relays/yellow-reservoir-overheat eq 1
+					/systems/hydraulic/relays/green-reservoir-overheat eq 1
+					<test logic="AND">
+						<test logic="OR">
+							/systems/hydraulic/relays/green-reservoir-low-qty-air-press-fault eq 1
+							/systems/hydraulic/relays/yellow-reservoir-low-qty-air-press-fault eq 1
+						</test>
+						/controls/hydraulic/switches/ptu eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/lights/green-edp-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-1 ge 25
+				<test logic="OR">
+					/systems/hydraulic/relays/green-reservoir-overheat eq 1
+					<test logic="AND">
+						<test logic="OR">
+							<test logic="AND">
+								/systems/hydraulic/sources/green-edp/output-psi le 1750
+								/engines/engine[0]/state eq 3 <!-- TODO - oil pressure 73-25 SCH 09 -->
+							</test>
+							/systems/hydraulic/relays/green-reservoir-low-qty-air-press-fault eq 1
+						</test>
+						/controls/hydraulic/switches/green-edp eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/lights/yellow-edp-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+				<test logic="OR">
+					/systems/hydraulic/relays/yellow-reservoir-overheat eq 1
+					<test logic="AND">
+						<test logic="OR">
+							<test logic="AND">
+								/systems/hydraulic/sources/yellow-edp/output-psi le 1750
+								/engines/engine[1]/state eq 3 <!-- TODO - oil pressure 73-25 SCH 09 -->
+							</test>
+							/systems/hydraulic/relays/yellow-reservoir-low-qty-air-press-fault eq 1
+						</test>
+						/controls/hydraulic/switches/yellow-edp eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/hydraulic/lights/blue-elec-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/hydraulic/relays/blue-reservoir-overheat eq 1
+				/systems/failures/hydraulic/blue-elec-ovht eq 1
+				<test logic="AND">
+					<test logic="OR">
+						/systems/hydraulic/relays/blue-reservoir-low-qty-switch eq 1
+						/systems/failures/hydraulic/blue-reservoir-air-press-lo eq 1
+						<test logic="AND">
+							/systems/hydraulic/sources/blue-elec/output-psi le 1450
+							<test logic="OR">
+								/engines/engine[0]/state eq 3 <!-- TODO - oil pressure 73-25 SCH 09 -->
+								/engines/engine[1]/state eq 3
+								/controls/hydraulic/switches/blue-elec-ovrd eq 1
+							</test>
+						</test>
+					</test>
+					/controls/hydraulic/switches/blue-elec eq 1
+				</test>
+			</test>
+		</switch>
+		<switch name="/systems/hydraulic/lights/yellow-elec-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/hydraulic/relays/yellow-reservoir-overheat eq 1
+				/systems/failures/hydraulic/yellow-elec-ovht eq 1
+				<test logic="AND">
+					<test logic="OR">
+						/systems/hydraulic/relays/yellow-reservoir-low-qty-switch eq 1
+						/systems/failures/hydraulic/yellow-reservoir-air-press-lo eq 1
+						/systems/hydraulic/sources/yellow-elec/output-psi le 1450
+					</test>
+					/controls/hydraulic/switches/yellow-elec eq 1
+				</test>
 			</test>
 		</switch>
 		

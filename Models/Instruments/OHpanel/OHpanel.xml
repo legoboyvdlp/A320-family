@@ -21,7 +21,6 @@
 		<object-name>CargoHotAirBtn1F</object-name>
 		<object-name>CargoHotAirBtn2O</object-name>
 		<object-name>CrewOxyBtn2O</object-name>
-		<object-name>ExtPwrBtn1A</object-name>
 		<object-name>GalleyPwrBtn1F</object-name>
 		<object-name>GalleyPwrBtn2O</object-name>
 		<object-name>Gen1LineBtn1S</object-name>
@@ -106,6 +105,44 @@
 					<property>systems/electrical/bus/ac-ess-shed</property>
 					<value>110</value>
 				</greater-than-equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- Special for EXT pwr AVAIL light -->
+	<animation>
+		<type>select</type>
+		<object-name>ExtPwrBtn1A</object-name>
+		<condition>	
+			<or>
+				<and>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-si-bus</property>
+							<value>110</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-ess-shed</property>
+							<value>110</value>
+						</greater-than-equals>
+					</or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-ess</property>
+						<value>110</value>
+					</greater-than-equals>
+				</and>
+				<and>
+					<greater-than>
+						<property>/systems/electrical/sources/ext/output-volt</property>
+						<value>110</value>
+					</greater-than>
+					<not>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-ess</property>
+							<value>110</value>
+						</greater-than-equals>
+					</not>
+				</and>
 			</or>
 		</condition>
 	</animation>
@@ -222,22 +259,6 @@
 				<value>1</value>
 			</equals>
 		</condition>
-	</animation>
-
-	<animation>
-		<type>material</type>
-		<object-name>Battery-volt</object-name>
-		<object-name>Battery-volt-test</object-name>
-		<emission>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
-		</emission>
-		<diffuse>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
-		</diffuse>
 	</animation>
 
 	<!-- Ventilation -->
@@ -1988,12 +2009,6 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/green-edp</property>
 			</binding>
@@ -2009,20 +2024,8 @@
 		<object-name>GreenEngPump1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/hydraulic/lights/green-edp-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/switches/green-edp</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/hydraulic/lights/green-edp-fault</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2032,14 +2035,10 @@
 		<object-name>GreenEngPump2O</object-name>
 		<condition>
 			<or>
-				<equals>
+				<not>
 					<property>controls/hydraulic/switches/green-edp</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				</not>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2156,12 +2155,6 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/blue-elec</property>
 			</binding>
@@ -2177,20 +2170,8 @@
 		<object-name>BlueElecPump1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/hydraulic/lights/blue-elec-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/switches/blue-elec</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/hydraulic/lights/blue-elec-fault</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2200,14 +2181,10 @@
 		<object-name>BlueElecPump2O</object-name>
 		<condition>
 			<or>
-				<equals>
+				<not>
 					<property>controls/hydraulic/switches/blue-elec</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				</not>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2223,12 +2200,6 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/ptu</property>
 			</binding>
@@ -2244,20 +2215,8 @@
 		<object-name>PTU1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/hydraulic/lights/ptu-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/switches/ptu</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/hydraulic/lights/ptu-fault</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2267,14 +2226,10 @@
 		<object-name>PTU2O</object-name>
 		<condition>
 			<or>
-				<equals>
+				<not>
 					<property>controls/hydraulic/switches/ptu</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				</not>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2290,12 +2245,6 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/yellow-edp</property>
 			</binding>
@@ -2311,20 +2260,8 @@
 		<object-name>YellowEngPump1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/hydraulic/lights/yellow-edp-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/switches/yellow-edp</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/hydraulic/lights/yellow-edp-fault</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2334,14 +2271,10 @@
 		<object-name>YellowEngPump2O</object-name>
 		<condition>
 			<or>
-				<equals>
+				<not>
 					<property>controls/hydraulic/switches/yellow-edp</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				</not>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2357,12 +2290,6 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/yellow-elec</property>
 			</binding>
@@ -2378,20 +2305,8 @@
 		<object-name>YellowElecPump1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/hydraulic/lights/yellow-elec-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/switches/yellow-elec</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/hydraulic/lights/yellow-elec-fault</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2401,14 +2316,8 @@
 		<object-name>YellowElecPump2O</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/hydraulic/switches/yellow-elec</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/hydraulic/switches/yellow-elec</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
