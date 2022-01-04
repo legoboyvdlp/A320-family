@@ -216,7 +216,8 @@ var FMGCInternal = {
 	mngSpd: 0,
 	mngSpdCmd: 0,
 	
-	landingTime: -99,
+	# This can't be init to -98, because we don't want it to run until WOW has gone to false and back to true
+	landingTime: -98, 
 	blockFuelTime: -99,
 	fuelPredTime: -99,
 	
@@ -1142,12 +1143,15 @@ var switchDatabase = func {
 
 # Landing to phase 7
 setlistener("/gear/gear[1]/wow", func(val) {
+	print("Called gear");
 	if (val.getValue() == 0 and timer30secLanding.isRunning) {
+		print("Stopping timer");
 		timer30secLanding.stop();
 		FMGCInternal.landingTime = -99;
 	}
 	
 	if (val.getValue() and FMGCInternal.landingTime == -99) {
+		print("Starting timer");
 		timer30secLanding.start();
 		FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
 	}
@@ -1217,8 +1221,9 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 
 # Maketimers
 var timer30secLanding = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > FMGCInternal.landingTime + 30) {
+	if (pts.Sim.Time.elapsedSec.getValue() > (FMGCInternal.landingTime + 30)) {
 		FMGCInternal.phase = 7;
+		FMGCNodes.phase.setValue(7);
 		
 		if (FMGCInternal.costIndexSet) {
 			setprop("/FMGC/internal/last-cost-index", FMGCInternal.costIndex);
