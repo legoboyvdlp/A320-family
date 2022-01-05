@@ -1128,7 +1128,6 @@
 		<object-name>vs-text-test</object-name>
 		<object-name>wpt_led</object-name>
 		<object-name>wpt_led.001</object-name>
-		<object-name>CockpitDoorOpen</object-name>		
 		<condition>
 			<or>
 				<greater-than-equals>
@@ -8486,8 +8485,6 @@
 		<object-name>pedals_block_capt</object-name>
 		<object-name>pedals_indicator_1</object-name>
 		<object-name>Pedestal-Low</object-name>
-		<object-name>CockpitDoorFault</object-name>
-		<object-name>CockpitDoorOpen</object-name>
 		<object-name>CockpitDoorSwitch</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
 		<object-name>CockpitDoorVideoButton</object-name>
