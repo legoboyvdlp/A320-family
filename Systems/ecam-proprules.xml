@@ -592,6 +592,17 @@
             <value>1.0</value>
         </time>
         <S>
+			<not><property>/ECAM/warnings/logic/phase-2-pulse-input</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/phase-2-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
 			<not><property>/ECAM/warnings/logic/wai-phase-9-pulse-input</property></not>
         </S>
         <output>/ECAM/warnings/logic/wai-phase-9-pulse</output>
@@ -1210,5 +1221,16 @@
 			<property>/ECAM/warnings/logic/eng/phase-5-output</property>
 		</S>
 		<output>/ECAM/warnings/logic/eng/phase-5-output-2</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/hyd/yellow-elec-pump-fail-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/hyd/yellow-elec-pump-fail-reset</property>
+		</R>
+		<output>/ECAM/warnings/hyd/yellow-elec-pump-fail</output>
 	</flipflop>
 </PropertyList>

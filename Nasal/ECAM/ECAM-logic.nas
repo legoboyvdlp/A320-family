@@ -626,7 +626,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(park_brk_config);
 	}
 	
-	if (lrElevFault.clearFlag == 0 and warningNodes.Timers.LRElevFault.getValue()) {
+	if (lrElevFault.clearFlag == 0 and warningNodes.Timers.LRElevFault.getValue() == 1) {
 		lrElevFault.active = 1;
 		if (lrElevFaultSpeed.clearFlag == 0) {
 			lrElevFaultSpeed.active = 1;
@@ -829,6 +829,32 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(lavatorySmokeComm);
 	}
 	
+	# CAB PRESS EXESS RESIDUAL PRESS
+	if (excessResidPress.clearFlag == 0 and warningNodes.Logic.excessPress.getValue() == 1 and phaseVar == 10) {
+		if (excessResidPressPack1.clearFlag == 0) {
+			excessResidPressPack1.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessResidPressPack1);
+		}
+		
+		if (excessResidPressPack2.clearFlag == 0) {
+			excessResidPressPack2.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessResidPressPack2);
+		}
+		
+		if (excessResidPressCabCr.clearFlag == 0) {
+			excessResidPressCabCr.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessResidPressCabCr);
+		}
+	} else {
+		ECAM_controller.warningReset(excessResidPress);
+		ECAM_controller.warningReset(excessResidPressPack1);
+		ECAM_controller.warningReset(excessResidPressPack2);
+		ECAM_controller.warningReset(excessResidPressCabCr);
+	}
+	
 	# ESS on BAT
 	# NEW EMER ELEC CONFIG
 	if (essBusOnBat.clearFlag == 0 and warningNodes.Timers.staticInverter.getValue() == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) {
@@ -977,13 +1003,13 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(hydBYloPrRat);
 		}
 		
-		if (hydBYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and systems.HYD.Qty.yellow.getValue() >= 3.5) { 
+		if (hydBYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and !systems.HYD.Pump.yellowElecFail.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and !systems.HYD.Fail.yellowReservoirAirPressLow.getBoolValue() and !systems.HYD.Warnings.yellowReservoirOvht.getBoolValue() and !systems.HYD.Warnings.yellowLoLvl.getBoolValue()) { 
 			hydBYloPrYElec.active = 1;
 		} else {
 			ECAM_controller.warningReset(hydBYloPrYElec);
 		}
 		
-		if (hydBYloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 2.4) {
+		if (hydBYloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 1.8 and !systems.HYD.Fail.blueReservoirAirPressLow.getBoolValue() and !systems.HYD.Warnings.blueReservoirOvht.getBoolValue() and !systems.HYD.Warnings.blueLoLvl.getBoolValue()) {
 			hydBYloPrRatOn.active = 1;
 		} else {
 			ECAM_controller.warningReset(hydBYloPrRatOn);
@@ -1052,7 +1078,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(hydGBloPrRat);
 		}
 		
-		if (hydGBloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 2.4) {
+		if (hydGBloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 1.8 and !systems.HYD.Fail.blueReservoirAirPressLow.getBoolValue() and !systems.HYD.Warnings.blueReservoirOvht.getBoolValue() and !systems.HYD.Warnings.blueLoLvl.getBoolValue()) {
 			hydGBloPrRatOn.active = 1;
 		} else {
 			ECAM_controller.warningReset(hydGBloPrRatOn);
@@ -1105,7 +1131,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(hydGBloPrFmsPredict);
 	}
 	
-	if (hydGYloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.greenYellow.getValue()) {
+	if (hydGYloPr.clearFlag == 0 and warningNodes.Logic.greenYellow.getValue()) {
 		hydGYloPr.active = 1;
 		if (hydGYloPrPtu.clearFlag == 0 and systems.HYD.Switch.ptu.getValue() != 0) {
 			hydGYloPrPtu.active = 1;
@@ -1125,7 +1151,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(hydGYloPrYEng);
 		}
 		
-		if (hydGYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and systems.HYD.Qty.yellow.getValue() >= 3.5) { 
+		if (hydGYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and !systems.HYD.Pump.yellowElecFail.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and !systems.HYD.Fail.yellowReservoirAirPressLow.getBoolValue() and !systems.HYD.Warnings.yellowReservoirOvht.getBoolValue() and !systems.HYD.Warnings.yellowLoLvl.getBoolValue()) { 
 			hydGYloPrYElec.active = 1;
 		} else {
 			ECAM_controller.warningReset(hydGYloPrYElec);

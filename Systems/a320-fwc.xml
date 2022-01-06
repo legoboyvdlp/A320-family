@@ -3146,6 +3146,38 @@
 		
 	</channel>
 	
+	<channel name="PRESS" execrate="16">
+	
+		<switch name="/ECAM/warnings/press/exess-residual-pressure-ground-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/phases/phase-calculation/engines-1-2-not-running eq 1
+				/ECAM/timer/ground-calc eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/press/exess-residual-pressure-ground">
+			<input>/ECAM/warnings/press/exess-residual-pressure-ground-input</input>
+			<rate_limit sense="incr">0.14285714285</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/press/exess-residual-pressure-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/press/exess-residual-pressure-ground eq 1
+				/systems/pressurization/deltap-norm ge 0.1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/press/exess-residual-pressure">
+			<input>/ECAM/warnings/press/exess-residual-pressure-input</input>
+			<rate_limit sense="incr">0.2</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+	</channel>
+	
 	<channel name="FCTL" execrate="16">
 	
 		<switch name="/ECAM/warnings/fctl/lrElevFault">
@@ -3644,9 +3676,9 @@
 	
 		<switch name="/ECAM/warnings/hyd/engines-2-online">
 			<default value="0"/>
-			<test logic="AND" value="1">
-				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/eng/JE1NORUN eq 0
+				/ECAM/warnings/logic/eng/JE2NORUN eq 0
 			</test>
 		</switch>
 		
@@ -3659,8 +3691,8 @@
 		<switch name="/ECAM/warnings/hyd/engines-2-off-in-air">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[0]/state ne 3
-				/engines/engine[1]/state ne 3
+				/ECAM/warnings/logic/eng/JE1NORUN eq 1
+				/ECAM/warnings/logic/eng/JE2NORUN eq 1
 				/ECAM/timer/ground-calc eq 0
 			</test>
 		</switch>
@@ -3674,7 +3706,7 @@
 		<switch name="/ECAM/warnings/hyd/engine-1-start">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/JE1NORUN eq 0
 				<test logic="AND">
 					/ECAM/warning-phase ne 1
 					/ECAM/warning-phase ne 2
@@ -3693,7 +3725,7 @@
 		<switch name="/ECAM/warnings/hyd/engine-2-start">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[1]/state eq 3
+				/ECAM/warnings/logic/eng/JE2NORUN eq 0
 				<test logic="AND">
 					/ECAM/warning-phase ne 1
 					/ECAM/warning-phase ne 2
@@ -3781,21 +3813,8 @@
 		<switch name="/ECAM/warnings/hyd/blue-green-failure">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				<test logic="OR">
-					<test logic="AND"> <!-- inhibit unless engine running -->
-						<test logic="OR">
-							/ECAM/warning-phase le 2
-							/ECAM/warning-phase ge 9
-						</test>
-						/engines/engine[0]/state eq 3
-					</test>
-					<test logic="AND">
-						/ECAM/warning-phase gt 2
-						/ECAM/warning-phase lt 9
-						/ECAM/warning-phase ne 4
-						/ECAM/warning-phase ne 5
-					</test>
-				</test>
+				/ECAM/warning-phase ne 4
+				/ECAM/warning-phase ne 5
 				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
 				/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
 			</test>
@@ -3804,21 +3823,8 @@
 		<switch name="/ECAM/warnings/hyd/blue-yellow-failure">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				<test logic="OR">
-					<test logic="AND"> <!-- inhibit unless engine running -->
-						<test logic="OR">
-							/ECAM/warning-phase le 2
-							/ECAM/warning-phase ge 9
-						</test>
-						/engines/engine[1]/state eq 3
-					</test>
-					<test logic="AND">
-						/ECAM/warning-phase gt 2
-						/ECAM/warning-phase lt 9
-						/ECAM/warning-phase ne 4
-						/ECAM/warning-phase ne 5
-					</test>
-				</test>
+				/ECAM/warning-phase ne 4
+				/ECAM/warning-phase ne 5
 				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
 				/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
 			</test>
@@ -3827,8 +3833,7 @@
 		<switch name="/ECAM/warnings/hyd/green-yellow-failure">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 				/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
 				/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
 			</test>
@@ -3837,18 +3842,16 @@
 		<switch name="/ECAM/warnings/hyd/blue-green-fuel-consumpt">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/timer/ground-calc eq 0
-				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
+				/ECAM/timer/ground-calc ne 1
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 			</test>
 		</switch>
 		
 		<switch name="/ECAM/warnings/hyd/blue-yellow-fuel-consumpt">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/timer/ground-calc eq 0
-				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
+				/ECAM/timer/ground-calc ne 1
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 				<test logic="OR">
 					<test logic="AND">
 						/ECAM/warnings/logic/SFLAPEXT eq 1
@@ -3872,9 +3875,8 @@
 		<switch name="/ECAM/warnings/hyd/green-yellow-fuel-consumpt">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/timer/ground-calc eq 0
-				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
+				/ECAM/timer/ground-calc ne 1
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 				<test logic="OR">
 					<test logic="AND">
 						/ECAM/warnings/logic/SFLAPEXT eq 1
@@ -3896,6 +3898,28 @@
 						</test>
 						/ECAM/warnings/logic/BLUE-EMER-ELEC ne 1
 					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/yellow-elec-pump-fail-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/hydraulic/sources/yellow-elec/pump-operate eq 1
+				/systems/hydraulic/yellow-psi lt 1450
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/yellow-elec-pump-fail-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/sources/yellow-elec/pump-operate eq 1
+					/systems/hydraulic/yellow-psi ge 1450
+				</test>
+				<test logic="AND">
+					/ECAM/warnings/logic/phase-2-pulse-input eq 1
+					/ECAM/warnings/logic/phase-2-pulse eq 1
 				</test>
 			</test>
 		</switch>

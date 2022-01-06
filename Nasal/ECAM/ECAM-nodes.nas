@@ -151,6 +151,7 @@ var warningNodes = {
 		gen1Off: props.globals.initNode("/ECAM/warnings/logic/elec/gen-1-off"),
 		gen2Off: props.globals.initNode("/ECAM/warnings/logic/elec/gen-2-off"),
 		spdBrkOut: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-still-out"),
+		excessPress: props.globals.initNode("/ECAM/warnings/press/exess-residual-pressure"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
