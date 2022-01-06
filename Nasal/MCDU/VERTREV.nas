@@ -55,11 +55,17 @@ var vertRev = {
 	getAlt: func() {
 		if (me.wp.alt_cstr != nil and me.wp.alt_cstr > 0) {
 			var tcol = (me.wp.alt_cstr_type == "computed" or me.wp.alt_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
+			var cstrAlt = "";
+			
 			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
-				return [sprintf("%5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)) ~ " ", tcol];
+				cstrAlt = "FL" ~ math.round(num(me.wp.alt_cstr) / 100);
 			} else {
-				return [sprintf("%5.0f", me.wp.alt_cstr) ~ " ", tcol];
+				cstrAlt = me.wp.alt_cstr;
 			}
+			
+			cstrAlt = (me.wp.alt_cstr_type == "above") ? "+" ~ cstrAlt : cstrAlt;
+			cstrAlt = (me.wp.alt_cstr_type == "below") ? "-" ~ cstrAlt : cstrAlt;
+			return [cstrAlt ~ (size(cstrAlt) == 6 ? "" : " "), tcol];
 		} else {
 			return [nil,nil];
 		}
@@ -242,17 +248,37 @@ var vertRev = {
 				mcdu_scratchpad.scratchpads[me.computer].empty();
 				me._setupPageWithData();
 				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
-			}  elsif (num(scratchpadStore) != nil and (size(scratchpadStore) == 4 or size(scratchpadStore) == 5) and scratchpadStore >= 0 and scratchpadStore <= 39000) {
-				me.wp.setAltitude(math.round(scratchpadStore, 10), "at");
-				mcdu_scratchpad.scratchpads[me.computer].empty();
-				me._setupPageWithData();
-				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 			} else {
-				mcdu_message(me.computer, "FORMAT ERROR");
+				if (right(scratchpadStore, 1) == "+") {
+					validateAltCstr(left(scratchpadStore, size(scratchpadStore) - 1), "above", me);
+				} elsif (right(scratchpadStore, 1) == "-") {
+					validateAltCstr(left(scratchpadStore, size(scratchpadStore) - 1), "below", me);
+				} elsif (left(scratchpadStore, 1) == "+") {
+					validateAltCstr(right(scratchpadStore, size(scratchpadStore) - 1), "above", me);
+				} elsif (left(scratchpadStore, 1) == "-") {
+					validateAltCstr(right(scratchpadStore, size(scratchpadStore) - 1), "below", me);
+				} else {
+					validateAltCstr(scratchpadStore, "at", me);
+				}
 			}
 		}
 	},
 };
+
+var validateAltCstr = func(scratchpadStore, type, self) {
+	if (num(scratchpadStore) != nil and (size(scratchpadStore) >= 3 and size(scratchpadStore) <= 5)) {
+		if (scratchpadStore >= 100 and scratchpadStore <= 39000) {
+			self.wp.setAltitude(math.round(scratchpadStore, 10), type);
+			mcdu_scratchpad.scratchpads[self.computer].empty();
+			self._setupPageWithData();
+			canvas_mcdu.pageSwitch[self.computer].setBoolValue(0);
+		} else {
+			mcdu_message(self.computer, "ENTRY OUT OF RANGE");
+		}
+	} else {
+		mcdu_message(self.computer, "FORMAT ERROR");
+	}
+}
 
 var updateCrzLvlCallback = func () {
 	if (canvas_mcdu.myVertRev[0] != nil) { 

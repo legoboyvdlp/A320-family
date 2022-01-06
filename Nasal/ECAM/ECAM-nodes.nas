@@ -74,6 +74,11 @@ var FWC = {
 
 var warningNodes = {
 	Logic: {
+		JE1TLAI: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-tla-idle"),
+		JE2TLAI: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-tla-idle"),
+		adr123Fault: props.globals.initNode("/ECAM/warnings/navigation/ADR123-fault"),
+		eng1OilLoPr: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-oil-lo-pr"),
+		eng2OilLoPr: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-oil-lo-pr"),
 		altitudeAlert: props.globals.initNode("/ECAM/warnings/altitude-alert/c-chord"),
 		altitudeAlertSteady: props.globals.initNode("/ECAM/warnings/altitude-alert/altitude-alert-steady"),
 		altitudeAlertFlash: props.globals.initNode("/ECAM/warnings/altitude-alert/altitude-alert-flash"),
@@ -151,6 +156,8 @@ var warningNodes = {
 		gen1Off: props.globals.initNode("/ECAM/warnings/logic/elec/gen-1-off"),
 		gen2Off: props.globals.initNode("/ECAM/warnings/logic/elec/gen-2-off"),
 		spdBrkOut: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-still-out"),
+		excessPress: props.globals.initNode("/ECAM/warnings/press/exess-residual-pressure"),
+		excessCabAlt: props.globals.initNode("/ECAM/warnings/logic/press/excess-cabin-alt"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
@@ -214,5 +221,7 @@ var warningNodes = {
 		parkBrk: props.globals.initNode("/ECAM/warnings/config/park-brk/park-brk-output"),
 		eng1ThrLvrAbvIdle: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle"),
 		eng2ThrLvrAbvIdle: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle"),
+		cabPressExcessFlipflopTop: props.globals.initNode("/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-top"),
+		cabPressExcessFlipflop: props.globals.initNode("/ECAM/warnings/logic/press/excess-cabin-alt-flipflop"),
 	},
 };

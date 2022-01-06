@@ -122,11 +122,17 @@ var fplnItem = {
 			return [" " ~ fmgc.flightPlanController.fromWptAlt, "mag"];
 		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr > 0) {
 			var tcol = (me.wp.alt_cstr_type == "computed" or me.wp.alt_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
+			var cstrAlt = "";
+			
 			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
-				return [" " ~ sprintf("%5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), tcol];
+				cstrAlt = "FL" ~ math.round(num(me.wp.alt_cstr) / 100);
 			} else {
-				return [" " ~ sprintf("%5.0f", me.wp.alt_cstr), tcol];
+				cstrAlt = me.wp.alt_cstr;
 			}
+			
+			cstrAlt = (me.wp.alt_cstr_type == "above") ? "+" ~ cstrAlt : cstrAlt;
+			cstrAlt = (me.wp.alt_cstr_type == "below") ? "-" ~ cstrAlt : cstrAlt;
+			return [sprintf("%6s", cstrAlt), tcol];
 		} else {
 			return ["------", "wht"];
 		}
@@ -208,25 +214,25 @@ var fplnItem = {
 			} elsif (find("/",  scratchpadStore) != -1) {
 				var scratchpadSplit = split("/", scratchpadStore);
 				
-				if (size(scratchpadSplit[0]) == 0) {
-					if (num(scratchpadSplit[1]) != nil and (size(scratchpadSplit[1]) == 4 or size(scratchpadSplit[1]) == 5) and scratchpadSplit[1] >= 0 and scratchpadSplit[1] <= 39000) {
-						me.wp.setAltitude(math.round(scratchpadSplit[1], 10), "at");
+				if (size(scratchpadSplit[0]) != 0) {
+					if (num(scratchpadSplit[0]) != nil and size(scratchpadSplit[0]) == 3 and scratchpadSplit[0] >= 100 and scratchpadSplit[0] <= 350) {
+						me.wp.setSpeed(scratchpadSplit[0], "at");
 						mcdu_scratchpad.scratchpads[me.computer].empty();
 					} else {
 						mcdu_message(me.computer, "FORMAT ERROR");
 					}
+				}
+				
+				if (right(scratchpadSplit[1], 1) == "+") {
+					validateAltCstrFpln(left(scratchpadSplit[1], size(scratchpadSplit[1]) - 1), "above", me);
+				} elsif (right(scratchpadSplit[1], 1) == "-") {
+					validateAltCstrFpln(left(scratchpadSplit[1], size(scratchpadSplit[1]) - 1), "below", me);
+				} elsif (left(scratchpadSplit[1], 1) == "+") {
+					validateAltCstrFpln(right(scratchpadSplit[1], size(scratchpadSplit[1]) - 1), "above", me);
+				} elsif (left(scratchpadSplit[1], 1) == "-") {
+					validateAltCstrFpln(right(scratchpadSplit[1], size(scratchpadSplit[1]) - 1), "below", me);
 				} else {
-					if (num(scratchpadSplit[0]) != nil and size(scratchpadSplit[0]) == 3 and scratchpadSplit[0] >= 100 and scratchpadSplit[0] <= 350 and
-						num(scratchpadSplit[1]) != nil and (size(scratchpadSplit[1]) == 4 or size(scratchpadSplit[1]) == 5) and scratchpadSplit[1] >= 0 and scratchpadSplit[1] <= 39000) {
-						me.wp.setSpeed(scratchpadSplit[0], "at");
-						me.wp.setAltitude(math.round(scratchpadSplit[1], 10), "at");
-						mcdu_scratchpad.scratchpads[me.computer].empty();
-					} elsif (num(scratchpadSplit[0]) != nil and size(scratchpadSplit[0]) == 3 and scratchpadSplit[0] >= 100 and scratchpadSplit[0] <= 350 and size(scratchpadSplit[1]) == 0) {
-						me.wp.setSpeed(scratchpadSplit[0], "at");
-						mcdu_scratchpad.scratchpads[me.computer].empty();
-					} else {
-						mcdu_message(me.computer, "FORMAT ERROR");
-					}
+					validateAltCstrFpln(scratchpadSplit[1], "at", me);
 				}
 			} elsif (num(scratchpadStore) != nil and size(scratchpadStore) == 3 and scratchpadStore >= 100 and scratchpadStore <= 350) {
 				me.wp.setSpeed(scratchpadStore, "at");
@@ -239,6 +245,19 @@ var fplnItem = {
 		}
 	},
 };
+
+var validateAltCstrFpln = func(scratchpadStore, type, self) {
+	if (num(scratchpadStore) != nil and (size(scratchpadStore) >= 3 and size(scratchpadStore) <= 5)) {
+		if (scratchpadStore >= 100 and scratchpadStore <= 39000) {
+			self.wp.setAltitude(math.round(scratchpadStore, 10), type);
+			mcdu_scratchpad.scratchpads[self.computer].empty();
+		} else {
+			mcdu_message(self.computer, "ENTRY OUT OF RANGE");
+		}
+	} else {
+		mcdu_message(self.computer, "FORMAT ERROR");
+	}
+}
 
 var staticText = {
 	new: func(computer, text) {
