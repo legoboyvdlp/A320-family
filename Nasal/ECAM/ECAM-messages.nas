@@ -93,7 +93,7 @@ var warnings				  = std.Vector.new([
 	var apuFireMaster         = warning.new(msg: " -MASTER SW..........OFF",  colour: "c"),
 	
 	# ADR 1 + 2 + 3 FAULT
-	var ADR123Fault           = warning.new(msg: "NAV ADR1+2+3 FAULT      ",  colour: "r", aural: 0, light: 0, isMainMsg: 1),
+	var ADR123Fault           = warning.new(msg: "NAV ADR 1+2+3 FAULT      ",  colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	var ADR123FaultAP         = warning.new(msg: " -AP+FD..............OFF",  colour: "c"),
 	var ADR123FaultATHR       = warning.new(msg: " -ATHR...............OFF",  colour: "c"),
 	var ADR123FaultPRBW       = warning.new(msg: " -PROBE/WINDOW HEAT...ON",  colour: "c"),

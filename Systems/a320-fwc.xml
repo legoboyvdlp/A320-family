@@ -1623,7 +1623,7 @@
 		<switch name="/ECAM/warnings/logic/eng/engine-2-core-speed-abv-idle-input">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/engines/engine[0]/n2-actual ge 59.4
+				/engines/engine[1]/n2-actual ge 59.4
 			</test>
 		</switch>
 		
