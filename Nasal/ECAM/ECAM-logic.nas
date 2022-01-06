@@ -574,6 +574,61 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(apuFireMaster);
 	}
 	
+	if (ADR123Fault.clearFlag == 0 and warningNodes.Logic.adr123Fault.getValue() and phaseVar3 != 4 and phaseVar3 != 8) {
+		ADR123Fault.active = 1;
+		
+		if (ADR123FaultAP.clearFlag == 0 and (fmgc.Output.ap1.getBoolValue() or fmgc.Output.ap2.getBoolValue() or fmgc.Output.fd1.getBoolValue() or fmgc.Output.fd2.getBoolValue())) {
+			ADR123FaultAP.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultAP);
+		}
+		
+		if (ADR123FaultATHR.clearFlag == 0 and fmgc.Output.athr.getBoolValue()) {
+			ADR123FaultATHR.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultATHR);
+		}
+		
+		if (ADR123FaultPRBW.clearFlag == 0) {
+			ADR123FaultPRBW.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultPRBW);
+		}
+		
+		if (ADR123FaultADRPB.clearFlag == 0 and (systems.ADIRS.Switches.adrSw[0].getBoolValue() or systems.ADIRS.Switches.adrSw[1].getBoolValue() or systems.ADIRS.Switches.adrSw[2].getBoolValue())) {
+			ADR123FaultADRPB.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultADRPB);
+		}
+		
+		if (ADR123FaultSPD.clearFlag == 0) {
+			ADR123FaultSPD.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultSPD);
+		}
+		
+		if (ADR123FaultSTBY.clearFlag == 0) {
+			ADR123FaultSTBY.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultSTBY);
+		}
+		
+		if (ADR123FaultPROC.clearFlag == 0) {
+			ADR123FaultPROC.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultPROC);
+		}
+	} else {
+		ECAM_controller.warningReset(ADR123Fault);
+		ECAM_controller.warningReset(ADR123FaultAP);
+		ECAM_controller.warningReset(ADR123FaultATHR);
+		ECAM_controller.warningReset(ADR123FaultPRBW);
+		ECAM_controller.warningReset(ADR123FaultADRPB);
+		ECAM_controller.warningReset(ADR123FaultSPD);
+		ECAM_controller.warningReset(ADR123FaultSTBY);
+		ECAM_controller.warningReset(ADR123FaultPROC);
+	}
+	
 	if ((ecamConfigTest.getValue() and (phaseVar3 == 1 or phaseVar3 == 2 or phaseVar3 == 9)) or phaseVar3 == 3 or phaseVar3 == 4) {
 		takeoffConfig = 1;
 	} else {
@@ -659,7 +714,7 @@ var messages_priority_3 = func {
 		}
 		
 		if (warningNodes.Flipflops.cabPressExcessFlipflop.getValue()) {
-			if (excessCabAltTHRLVR.clearFlag == 0 and !fmgc.Output.athr.getBoolValue() and warningNodes.Logic.JE1TLAI.getValue() != 0 and warningNodes.Logic.JE2TLAI.getValue() != 0) {
+			if (excessCabAltTHRLVR.clearFlag == 0 and !fmgc.Output.athr.getBoolValue() and warningNodes.Logic.JE1TLAI.getValue() == 0 and warningNodes.Logic.JE2TLAI.getValue() == 0) {
 				excessCabAltTHRLVR.active = 1;
 			} else {
 				ECAM_controller.warningReset(excessCabAltTHRLVR);
@@ -695,7 +750,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(excessCabAltENG);
 			ECAM_controller.warningReset(excessCabAltATC);
 		}
-			
+		
 		if (warningNodes.Flipflops.cabPressExcessFlipflopTop.getValue() and !warningNodes.Flipflops.cabPressExcessFlipflop.getValue()) {
 			if (excessCabAltCAB.clearFlag == 0) {
 				excessCabAltCAB.active = 1;
@@ -757,6 +812,60 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(excessCabAltMEA);
 		ECAM_controller.warningReset(excessCabAltCabAlt);
 		ECAM_controller.warningReset(excessCabAltMasks);
+	}
+	
+	if (eng1OilLoPr.clearFlag == 0 and warningNodes.Logic.eng1OilLoPr.getBoolValue() and phaseVar3 != 1 and phaseVar3 != 10) {
+		eng1OilLoPr.active = 1;
+		
+		if (eng1OilLoPrIf.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
+			eng1OilLoPrIf.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1OilLoPrIf);
+		}
+		
+		if (eng1OilLoPrThrot.clearFlag == 0 and !warningNodes.Logic.JE1TLAI.getValue()) {
+			eng1OilLoPrThrot.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1OilLoPrThrot);
+		}
+		
+		if (eng1OilLoPrMaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
+			eng1OilLoPrMaster.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1OilLoPrMaster);
+		}
+	} else {
+		ECAM_controller.warningReset(eng1OilLoPr);
+		ECAM_controller.warningReset(eng1OilLoPrIf);
+		ECAM_controller.warningReset(eng1OilLoPrThrot);
+		ECAM_controller.warningReset(eng1OilLoPrMaster);
+	}
+	
+	if (eng2OilLoPr.clearFlag == 0 and warningNodes.Logic.eng2OilLoPr.getBoolValue() and phaseVar3 != 1 and phaseVar3 != 10) {
+		eng2OilLoPr.active = 1;
+		
+		if (eng2OilLoPrIf.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
+			eng2OilLoPrIf.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2OilLoPrIf);
+		}
+		
+		if (eng2OilLoPrThrot.clearFlag == 0 and !warningNodes.Logic.JE2TLAI.getValue()) {
+			eng2OilLoPrThrot.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2OilLoPrThrot);
+		}
+		
+		if (eng2OilLoPrMaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
+			eng2OilLoPrMaster.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2OilLoPrMaster);
+		}
+	} else {
+		ECAM_controller.warningReset(eng2OilLoPr);
+		ECAM_controller.warningReset(eng2OilLoPrIf);
+		ECAM_controller.warningReset(eng2OilLoPrThrot);
+		ECAM_controller.warningReset(eng2OilLoPrMaster);
 	}
 	
 	if (lrElevFault.clearFlag == 0 and warningNodes.Timers.LRElevFault.getValue() == 1) {

@@ -3124,6 +3124,36 @@
 			</test>
 		</switch>
 		
+		<actuator name="/ECAM/warnings/logic/eng/eng-1-oil-lo-pr-cutoff-delay">
+			<input>/controls/engines/engine[0]/cutoff-switch</input>
+			<rate_limit sense="decr">0.03333333333</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-oil-lo-pr">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/eng-1-oil-lo-pr-cutoff-delay eq 0 <!-- sense inverted -->
+				/ECAM/warnings/logic/eng/JE1NORUN eq 0
+				/engines/engine[0]/oil-psi-actual lt 13
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-oil-lo-pr-cutoff-delay">
+			<input>/controls/engines/engine[1]/cutoff-switch</input>
+			<rate_limit sense="decr">0.03333333333</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-oil-lo-pr">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/eng-2-oil-lo-pr-cutoff-delay eq 0 <!-- sense inverted -->
+				/ECAM/warnings/logic/eng/JE2NORUN eq 0
+				/engines/engine[1]/oil-psi-actual lt 13
+			</test>
+		</switch>
+		
 	</channel>
 	
 	<channel name="Config" execrate="16">
@@ -4222,7 +4252,7 @@
 		
 	</channel>
 	
-	<!--<channel name="NAV" execrate="16">
+	<channel name="NAV" execrate="16">
 	
 		<switch name="/ECAM/warnings/navigation/ADR123-fault">
 			<default value="0"/>
@@ -4231,12 +4261,13 @@
 				/systems/electrical/bus/ac-2 ge 110
 				/systems/electrical/bus/ac-ess ge 110
 				/ECAM/warning-phase ne 1
-				/ECAM/warning-phase ne 4
-				/ECAM/warning-phase ne 8
 				/ECAM/warning-phase ne 10
+				/systems/navigation/adr/operating-1 eq 0
+				/systems/navigation/adr/operating-2 eq 0
+				/systems/navigation/adr/operating-3 eq 0
 			</test>
 		</switch>
 		
-	</channel>-->
+	</channel>
 	
 </system>

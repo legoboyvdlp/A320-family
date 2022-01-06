@@ -76,6 +76,9 @@ var warningNodes = {
 	Logic: {
 		JE1TLAI: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-tla-idle"),
 		JE2TLAI: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-tla-idle"),
+		adr123Fault: props.globals.initNode("/ECAM/warnings/navigation/ADR123-fault"),
+		eng1OilLoPr: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-oil-lo-pr"),
+		eng2OilLoPr: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-oil-lo-pr"),
 		altitudeAlert: props.globals.initNode("/ECAM/warnings/altitude-alert/c-chord"),
 		altitudeAlertSteady: props.globals.initNode("/ECAM/warnings/altitude-alert/altitude-alert-steady"),
 		altitudeAlertFlash: props.globals.initNode("/ECAM/warnings/altitude-alert/altitude-alert-flash"),
