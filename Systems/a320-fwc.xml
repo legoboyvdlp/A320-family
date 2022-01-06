@@ -2673,9 +2673,9 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-1-tla-abv-6-output eq 1
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/JE1NORUN eq 1
 				<test logic="AND">
-					/engines/engine[1]/state eq 3
+					/ECAM/warnings/logic/eng/JE2NORUN eq 1
 					<test logic="OR">
 						<test logic="AND">
 							/ECAM/warnings/logic/eng/eng-2-reverse eq 1
@@ -2692,9 +2692,9 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-1-tla-abv-6-2-output eq 1
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/JE1NORUN eq 1
 				<test logic="AND">
-					/engines/engine[1]/state eq 3
+					/ECAM/warnings/logic/eng/JE2NORUN eq 1
 					<test logic="OR">
 						/ECAM/warnings/logic/eng/eng-2-tla-idle-output eq 1
 						<test logic="AND">
@@ -2711,9 +2711,9 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-output eq 1
-				/engines/engine[1]/state eq 3
+				/ECAM/warnings/logic/eng/JE2NORUN eq 1
 				<test logic="AND">
-					/engines/engine[0]/state eq 3
+					/ECAM/warnings/logic/eng/JE1NORUN eq 1
 					<test logic="OR">
 						<test logic="AND">
 							/ECAM/warnings/logic/eng/eng-1-reverse eq 1
@@ -2730,9 +2730,9 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2-output eq 1
-				/engines/engine[1]/state eq 3
+				/ECAM/warnings/logic/eng/JE2NORUN eq 1
 				<test logic="AND">
-					/engines/engine[0]/state eq 3
+					/ECAM/warnings/logic/eng/JE1NORUN eq 1
 					<test logic="OR">
 						/ECAM/warnings/logic/eng/eng-1-tla-idle-output eq 1
 						<test logic="AND">
@@ -3175,6 +3175,82 @@
 			<rate_limit sense="incr">0.2</rate_limit>
 			<rate_limit sense="decr">100</rate_limit>
 		</actuator>
+		
+		<switch name="/ECAM/warnings/timer/press/excess-cabin-alt-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/cabinalt-norm ge 9550
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/timer/press/excess-cabin-alt">
+			<input>/ECAM/warnings/timer/press/excess-cabin-alt-input</input>
+			<rate_limit sense="incr">1</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/press/excess-cabin-alt">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/timer/press/excess-cabin-alt eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/phase-3-10-pulse-input">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 3
+				/ECAM/warning-phase eq 10
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-top-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="OR">
+						/systems/navigation/adr/computation/baro-alt-corrected-1-capt ge 10000
+						/systems/navigation/adr/computation/baro-alt-corrected-2-capt ge 10000
+						/systems/navigation/adr/computation/baro-alt-corrected-3-capt ge 10000
+					</test>
+					<test logic="AND">
+						/systems/navigation/adr/operating-1 eq 0
+						/systems/navigation/adr/operating-2 eq 0
+						/systems/navigation/adr/operating-3 eq 0
+					</test>
+				</test>
+				/ECAM/warnings/logic/press/excess-cabin-alt eq 1
+				/ECAM/warnings/logic/press/excess-cabin-alt-pulse eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="OR">
+						/systems/navigation/adr/computation/baro-alt-corrected-1-capt ge 16000
+						/systems/navigation/adr/computation/baro-alt-corrected-2-capt ge 16000
+						/systems/navigation/adr/computation/baro-alt-corrected-3-capt ge 16000
+					</test>
+					<test logic="AND">
+						/systems/navigation/adr/operating-1 eq 0
+						/systems/navigation/adr/operating-2 eq 0
+						/systems/navigation/adr/operating-3 eq 0
+					</test>
+				</test>
+				/ECAM/warnings/logic/press/excess-cabin-alt eq 1
+				/ECAM/warnings/logic/press/excess-cabin-alt-pulse eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-reset">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/phase-3-10-pulse-input eq 1
+				/ECAM/warnings/logic/phase-3-10-pulse eq 1
+			</test>
+		</switch>
 		
 	</channel>
 	

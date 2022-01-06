@@ -136,6 +136,7 @@ var warnings				  = std.Vector.new([
 	var excessCabAltSPDBRK    = warning.new(msg: " -SPD BRK...........FULL",  colour: "c"),
 	var excessCabAltSPD       = warning.new(msg: " SPD.....MAX/APPROPRIATE",  colour: "c"),
 	var excessCabAltENG       = warning.new(msg: " -ENG MODE...........IGN",  colour: "c"),
+	var excessCabAltATC       = warning.new(msg: " -ATC.............NOTIFY",  colour: "c"),
 	var excessCabAltCAB       = warning.new(msg: " -CABIN CREW......ADVISE",  colour: "c"),
 	var excessCabAltPA        = warning.new(msg: " -EMER DES (PA).ANNOUNCE",  colour: "c"),
 	var excessCabAltXPDR      = warning.new(msg: " -XPDR 7700.....CONSIDER",  colour: "c"),

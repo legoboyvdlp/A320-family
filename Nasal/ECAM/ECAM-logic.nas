@@ -626,6 +626,139 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(park_brk_config);
 	}
 	
+	if (excessCabAlt.clearFlag == 0 and warningNodes.Logic.excessCabAlt.getValue() == 1 and phaseVar3 == 6) {
+		excessCabAlt.active = 1;
+		
+		if (excessCabAltMask.clearFlag == 0 and warningNodes.Flipflops.cabPressExcessFlipflopTop.getValue()) {
+			excessCabAltMask.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessCabAltMask);
+		}
+		
+		if (warningNodes.Flipflops.cabPressExcessFlipflop.getValue()) {
+			if (excessCabAltSigns.clearFlag == 0 and (!pts.Controls.Lighting.noSmokingSign.getValue() or !pts.Controls.Lighting.seatbeltSign.getValue())) {
+				excessCabAltSigns.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltSigns);
+			}
+			
+			if (excessCabAltEmerD.clearFlag == 0) {
+				excessCabAltEmerD.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltEmerD);
+			}
+		} else {
+			ECAM_controller.warningReset(excessCabAltSigns);
+			ECAM_controller.warningReset(excessCabAltEmerD);
+		}
+		
+		if (excessCabAltDES.clearFlag == 0 and warningNodes.Flipflops.cabPressExcessFlipflopTop.getValue()) {
+			excessCabAltDES.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessCabAltDES);
+		}
+		
+		if (warningNodes.Flipflops.cabPressExcessFlipflop.getValue()) {
+			if (excessCabAltTHRLVR.clearFlag == 0 and !fmgc.Output.athr.getBoolValue() and warningNodes.Logic.JE1TLAI.getValue() != 0 and warningNodes.Logic.JE2TLAI.getValue() != 0) {
+				excessCabAltTHRLVR.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltTHRLVR);
+			}
+			
+			if (excessCabAltSPDBRK.clearFlag == 0 and pts.Controls.Flight.speedbrake.getValue() != 1) {
+				excessCabAltSPDBRK.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltSPDBRK);
+			}
+			
+			if (excessCabAltSPD.clearFlag == 0) {
+				excessCabAltSPD.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltSPD);
+			}
+			
+			if (excessCabAltENG.clearFlag == 0 and pts.Controls.Engines.startSw.getValue() != 1) {
+				excessCabAltENG.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltENG);
+			}
+			
+			if (excessCabAltATC.clearFlag == 0) {
+				excessCabAltATC.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltATC);
+			}
+		} else {
+			ECAM_controller.warningReset(excessCabAltTHRLVR);
+			ECAM_controller.warningReset(excessCabAltSPDBRK);
+			ECAM_controller.warningReset(excessCabAltSPD);
+			ECAM_controller.warningReset(excessCabAltENG);
+			ECAM_controller.warningReset(excessCabAltATC);
+		}
+			
+		if (warningNodes.Flipflops.cabPressExcessFlipflopTop.getValue() and !warningNodes.Flipflops.cabPressExcessFlipflop.getValue()) {
+			if (excessCabAltCAB.clearFlag == 0) {
+				excessCabAltCAB.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltCAB);
+			}
+		} else {
+			ECAM_controller.warningReset(excessCabAltCAB);
+		}
+		
+		if (warningNodes.Flipflops.cabPressExcessFlipflop.getValue()) {
+			if (excessCabAltPA.clearFlag == 0) {
+				excessCabAltPA.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltPA);
+			}
+			
+			if (excessCabAltXPDR.clearFlag == 0) {
+				excessCabAltXPDR.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltXPDR);
+			}
+		} else {
+			ECAM_controller.warningReset(excessCabAltPA);
+			ECAM_controller.warningReset(excessCabAltXPDR);
+		}
+		
+		if (excessCabAltMEA.clearFlag == 0) {
+			excessCabAltMEA.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessCabAltMEA);
+		}
+		
+		if (excessCabAltCabAlt.clearFlag == 0) {
+			excessCabAltCabAlt.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessCabAltCabAlt);
+		}
+		
+		if (excessCabAltMasks.clearFlag == 0) {
+			excessCabAltMasks.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessCabAltMasks);
+		}
+	} else {
+		ECAM_controller.warningReset(excessCabAlt);
+		ECAM_controller.warningReset(excessCabAltMask);
+		ECAM_controller.warningReset(excessCabAltSigns);
+		ECAM_controller.warningReset(excessCabAltEmerD);
+		ECAM_controller.warningReset(excessCabAltDES);
+		ECAM_controller.warningReset(excessCabAltTHRLVR);
+		ECAM_controller.warningReset(excessCabAltSPDBRK);
+		ECAM_controller.warningReset(excessCabAltSPD);
+		ECAM_controller.warningReset(excessCabAltENG);
+		ECAM_controller.warningReset(excessCabAltCAB);
+		ECAM_controller.warningReset(excessCabAltATC);
+		ECAM_controller.warningReset(excessCabAltPA);
+		ECAM_controller.warningReset(excessCabAltXPDR);
+		ECAM_controller.warningReset(excessCabAltMEA);
+		ECAM_controller.warningReset(excessCabAltCabAlt);
+		ECAM_controller.warningReset(excessCabAltMasks);
+	}
+	
 	if (lrElevFault.clearFlag == 0 and warningNodes.Timers.LRElevFault.getValue() == 1) {
 		lrElevFault.active = 1;
 		if (lrElevFaultSpeed.clearFlag == 0) {
@@ -3340,7 +3473,7 @@ var messages_config_memo = func {
 		toMemoLine1.colour = "c";
 	}
 	
-	if (pts.Controls.Switches.seatbeltSwitch.getValue() and pts.Controls.Switches.noSmokingSwitch.getValue()) {
+	if (pts.Controls.Lighting.seatbeltSign.getValue() and pts.Controls.Lighting.noSmokingSign.getValue()) {
 		toMemoLine2.msg = "    SIGNS ON";
 		toMemoLine2.colour = "g";
 	} else {
@@ -3406,7 +3539,7 @@ var messages_config_memo = func {
 		ldgMemoLine1.colour = "c";
 	}
 	
-	if (pts.Controls.Switches.seatbeltSwitch.getValue() and pts.Controls.Switches.noSmokingSwitch.getValue()) {
+	if (pts.Controls.Lighting.seatbeltSign.getValue() and pts.Controls.Lighting.noSmokingSign.getValue()) {
 		ldgMemoLine2.msg = "    SIGNS ON";
 		ldgMemoLine2.colour = "g";
 	} else {
