@@ -8,7 +8,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="pfd.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   inkscape:version="0.91 r13725"
    id="svg2"
    version="1.1"
    viewBox="0 0 1024 1024"
@@ -40,14 +40,14 @@
      inkscape:current-layer="svg2"
      inkscape:window-maximized="1"
      inkscape:window-y="-8"
-     inkscape:window-x="-8"
-     inkscape:cy="1074.3176"
-     inkscape:cx="955.3885"
-     inkscape:zoom="2"
-     showgrid="true"
+     inkscape:window-x="1592"
+     inkscape:cy="732.64766"
+     inkscape:cx="-141.75866"
+     inkscape:zoom="1.4142136"
+     showgrid="false"
      id="namedview371"
-     inkscape:window-height="705"
-     inkscape:window-width="1366"
+     inkscape:window-height="1030"
+     inkscape:window-width="1920"
      inkscape:pageshadow="2"
      inkscape:pageopacity="1"
      guidetolerance="10"
@@ -1416,6 +1416,14 @@
      width="111.28601"
      id="ASI_grey"
      style="fill:#4c4c4c;fill-opacity:1;stroke:none;stroke-width:2.4000001;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+  <rect
+     inkscape:label="#rect9211"
+     y="237.03366"
+     x="8.3655996"
+     height="552.00073"
+     width="117.6912"
+     id="ASI_buss_clip"
+     style="opacity:0.46000001;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:1.27696717;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <rect
      style="opacity:0.46000001;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:1.27696717;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="ASI_scale_clip"
@@ -5543,6 +5551,67 @@
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cc" />
     </g>
+    <g
+       id="ASI_buss"
+       inkscape:label="#g4393">
+      <rect
+         inkscape:label="#rect4351"
+         y="-1600.868"
+         x="11.565965"
+         height="4227.8042"
+         width="111.2864"
+         id="rect4308"
+         style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:2.4000001;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+      <rect
+         style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.4000001;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         id="rect4321"
+         width="111.28601"
+         height="106.4768"
+         x="11.565598"
+         y="459.79559"
+         inkscape:label="#rect4351" />
+      <path
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="rect4323"
+         d="m 11.5656,415.26108 55.643,44.53492 55.64301,-44.53492 0,44.53492 -111.28601,-3.8e-4 z"
+         style="fill:#c9d121;fill-opacity:1;stroke:none;stroke-width:2.4000001;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+      <text
+         sodipodi:linespacing="0%"
+         transform="scale(0.92334527,1.0830185)"
+         id="text4326"
+         y="348.03003"
+         x="71.731003"
+         style="font-style:normal;font-weight:normal;font-size:35.17491531px;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.65757698"
+         xml:space="preserve"
+         inkscape:label="#text983"><tspan
+           dx="0"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35.17491531px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.65757698"
+           y="348.03003"
+           x="74.131004"
+           id="tspan4328"
+           sodipodi:role="line">FAST</tspan></text>
+      <path
+         style="fill:#c9d121;fill-opacity:1;stroke:none;stroke-width:2.4000001;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         d="m 11.5656,649.23533 55.643,-82.96333 55.64301,82.96333 0,-82.96333 -111.28601,7.1e-4 z"
+         id="path4330"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccc" />
+      <text
+         inkscape:label="#text983"
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:35.17491531px;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.65757698"
+         x="71.731506"
+         y="659.0799"
+         id="text4332"
+         transform="scale(0.92333871,1.0830262)"
+         sodipodi:linespacing="0%"><tspan
+           sodipodi:role="line"
+           id="tspan4334"
+           x="71.731506"
+           y="659.0799"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35.17491531px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.65757698">SLOW</tspan></text>
+    </g>
     <path
        inkscape:label="#rect902"
        sodipodi:nodetypes="cccc"
@@ -5574,6 +5643,13 @@
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cc" />
     </g>
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="ASI_index_middle"
+       d="m 14.807958,512.82643 79.685458,0"
+       style="fill:none;fill-opacity:1;stroke:#c9d121;stroke-width:4.8405509;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       inkscape:label="#path944-3" />
     <g
        inkscape:label="#g4874"
        id="ASI_trend_up">
