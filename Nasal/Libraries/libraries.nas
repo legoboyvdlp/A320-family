@@ -84,7 +84,7 @@ var triggerDoor = func(door, doorName, doorDesc) {
 };
 
 setlistener("/controls/doors/doorc-switch",func(a){
-	if (getprop("systems/electrical/bus/dc-2")>25 or getprop("systems/electrical/bus/dc-1")>25) {
+	if (systems.ELEC.Bus.dc1.getValue() > 25 or systems.ELEC.Bus.dc2.getValue() > 25) {
 		var pos = a.getValue();
 		var current = getprop("/sim/model/door-positions/doorc/lock-status");
 		if (pos == 1 and current == 0) {		## LOCK
