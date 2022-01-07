@@ -812,6 +812,10 @@
 			<brake-left type="double">0</brake-left>
 			<brake-right type="double">0</brake-right>
 		</autobrake>
+		<cabin>
+			<footwarmer-cpt type="bool">0</footwarmer-cpt>
+			<footwarmer-fo type="bool">0</footwarmer-fo>
+		</cabin>
 		<CVR>
 			<erase type="bool">0</erase>
 			<gndctl type="bool">0</gndctl>
@@ -819,6 +823,9 @@
 			<test type="bool">0</test>
 			<tone type="bool">0</tone>
 		</CVR>
+		<doors>
+			<doorc-switch type="int">0</doorc-switch>
+		</doors>
 		<electric>
 			<avionics-switch type="bool">true</avionics-switch>
 		</electric>
@@ -1604,6 +1611,7 @@
 	<options n="0">
 		<system n="0">
 			<keyboard-mode type="bool">0</keyboard-mode>
+			<fgcamera-keys-enabled type="bool">0</fgcamera-keys-enabled>
 		</system>
 		<steep-ils type="bool">0</steep-ils>
 		<steep-ils-avail type="bool">0</steep-ils-avail>
@@ -2242,9 +2250,18 @@
 				</binding>
 				<binding>
 					<condition>
+				    	<property>/options/system/fgcamera-keys-enabled</property>
+					</condition>
+					<command>fgcamera-select</command>
+					<camera-id>1</camera-id>
+					<camera-type>aircraft</camera-type>
+				</binding>
+				<binding>
+					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
+						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>property-assign</command>
 					<property>/sim/current-view/view-number</property>
@@ -2280,9 +2297,18 @@
 				</binding>
 				<binding>
 					<condition>
+     					<property>/options/system/fgcamera-keys-enabled</property>
+					</condition>
+					<command>fgcamera-select</command>
+					<camera-id>2</camera-id>
+					<camera-type>aircraft</camera-type>
+				</binding>
+				<binding>
+					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
+						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>property-assign</command>
 					<property>/sim/current-view/view-number</property>
@@ -2319,9 +2345,18 @@
 				</binding>
 				<binding>
 					<condition>
+				    	<property>/options/system/fgcamera-keys-enabled</property>
+					</condition>
+					<command>fgcamera-select</command>
+					<camera-id>3</camera-id>
+					<camera-type>aircraft</camera-type>
+				</binding>
+				<binding>
+					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
+						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>property-assign</command>
 					<property>/sim/current-view/view-number</property>
@@ -2358,9 +2393,18 @@
 				</binding>
 				<binding>
 					<condition>
+				    	<property>/options/system/fgcamera-keys-enabled</property>
+					</condition>
+					<command>fgcamera-select</command>
+					<camera-id>4</camera-id>
+					<camera-type>aircraft</camera-type>
+				</binding>
+				<binding>
+					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
+						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>property-assign</command>
 					<property>/sim/current-view/view-number</property>
@@ -2397,9 +2441,18 @@
 				</binding>
 				<binding>
 					<condition>
+				    	<property>/options/system/fgcamera-keys-enabled</property>
+					</condition>
+					<command>fgcamera-select</command>
+					<camera-id>5</camera-id>
+					<camera-type>aircraft</camera-type>
+				</binding>
+				<binding>
+					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
+						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>property-assign</command>
 					<property>/sim/current-view/view-number</property>
@@ -2438,9 +2491,18 @@
 				</binding>
 				<binding>
 					<condition>
+				    	<property>/options/system/fgcamera-keys-enabled</property>
+					</condition>
+					<command>fgcamera-select</command>
+					<camera-id>6</camera-id>
+					<camera-type>aircraft</camera-type>
+				</binding>
+				<binding>
+					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 						<not><property>/options/system/keyboard-mode</property></not>
+						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>property-assign</command>
 					<property>/sim/current-view/view-number</property>
@@ -2487,6 +2549,14 @@
 				</binding-->
 				<binding>
 					<condition>
+				    	<property>/options/system/fgcamera-keys-enabled</property>
+					</condition>
+					<command>fgcamera-select</command>
+					<camera-id>7</camera-id>
+					<camera-type>aircraft</camera-type>
+				</binding>
+				<binding>
+					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
 						<property>/options/system/keyboard-mode</property>
@@ -2513,6 +2583,14 @@
 					<command>nasal</command>
 					<script>mcdu.button("8", 1);</script>
 				</binding>
+				<binding>
+					<condition>
+				    	<property>/options/system/fgcamera-keys-enabled</property>
+					</condition>
+					<command>fgcamera-select</command>
+					<camera-id>8</camera-id>
+					<camera-type>aircraft</camera-type>
+				</binding>
 				<!--binding>
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
@@ -2527,7 +2605,7 @@
 					<condition>
 						<not><property>/FMGC/keyboard-left</property></not>
 						<not><property>/FMGC/keyboard-right</property></not>
-						<property>/options/system/keyboard-mode</property>
+						<property>/options/system/keyboard-mode</property>						
 					</condition>
 					<command>nasal</command>
 					<script>
@@ -2551,6 +2629,14 @@
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("9", 1);</script>
+				</binding>
+				<binding>
+					<condition>
+				    	<property>/options/system/fgcamera-keys-enabled</property>
+					</condition>
+					<command>fgcamera-select</command>
+					<camera-id>9</camera-id>
+					<camera-type>aircraft</camera-type>
 				</binding>
 				<!--binding>
 					<condition>

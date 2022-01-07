@@ -850,6 +850,19 @@
                 <script>atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);</script>
             </binding>
         </action>
+		<hovered>
+			<binding>
+			<command>set-tooltip</command>
+			<tooltip-id>atc_stby_mode</tooltip-id>
+			<label>Mode: %s</label>
+				<property>controls/atc/mode-knob</property>
+					<mapping>nasal</mapping>
+					<script>
+						var modes = ['STANDBY','ALT','XPNDR','TA ONLY','TA/RA'];
+						return modes[arg[0]];
+					</script>
+			</binding>
+		</hovered>		
 	</animation>
 
 	<animation>
@@ -1505,6 +1518,122 @@
 		</action>
 	</animation>
 
+	<!-- Cocktpit Door Switch  -->
+	<animation>
+        <type>rotate</type>
+        <object-name>CockpitDoorSwitch</object-name>
+		<object-name>CockpitDoorSwitch.mark</object-name>
+        <property>controls/doors/doorc-switch</property>
+		<interpolation>
+			<entry><ind>-1</ind><dep>-25</dep></entry>
+			<entry><ind> 0</ind><dep>  0</dep></entry>
+			<entry><ind> 1</ind><dep> 25</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>CockpitDoorSwitch.axis</object-name>
+		</axis>
+  	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>CockpitDoorSwitch</object-name>
+		<object-name>CockpitDoorSwitch.mark</object-name>
+		<action>			
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<not><property>devices/status/keyboard/shift</property></not>
+				</condition>			
+				<command>property-assign</command>
+				<property>controls/doors/doorc-switch</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<condition>
+					<property>devices/status/keyboard/shift</property>
+				</condition>			
+				<command>property-assign</command>
+				<property>controls/doors/doorc-switch</property>
+				<value>-1</value>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/sim/sounde/switch1</property>
+				<value>1</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/doors/doorc-switch</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<action>		
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/doors/doorc-switch</property>
+				<value>-1</value>
+			</binding>
+			<binding>				
+				<command>property-assign</command>
+				<property>/sim/sounde/switch1</property>
+				<value>1</value>				
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/doors/doorc-switch</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>doorc-switch-lock</tooltip-id>
+				<label>Cockpit door switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>CockpitDoorOpen</object-name>
+		<object-name>CockpitDoorSwitch.mark</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>		
+				<not-equals>
+					<property>sim/model/door-positions/doorc/lock-status</property>
+					<value>1</value>
+				</not-equals>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>CockpitDoorFault</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>		
+				<equals>
+					<property>sim/model/door-positions/doorc/lock-status</property>
+					<value>-9</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+
 	<!-- Terr on ND -->
 	<animation>
 		<type>pick</type>
@@ -2131,6 +2260,76 @@
 			<object-name>pfd_brt_fo.axis</object-name>
 		</axis>
 	</animation>
+
+	<!-- Foot warner switches -->
+
+	<animation>
+		<type>rotate</type>
+		<object-name>foot_warmer_cpt_sw</object-name>
+		<object-name>foot_warmer_cpt_sw.mark</object-name>
+		<property>controls/cabin/footwarmer-cpt</property>
+		<interpolation>
+			<entry><ind>1</ind><dep>-20</dep></entry>
+			<entry><ind>0</ind><dep>20</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>foot_warmer_cpt_sw.axis</object-name>
+		</axis>		
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>foot_warmer_cpt_sw</object-name>
+		<object-name>foot_warmer_cpt_sw.mark</object-name>
+		<action>
+			<button>0</button>			
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/cabin/footwarmer-cpt</property>
+				<value>1</value>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sounde/switch1</property>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>foot_warmer_fo_sw</object-name>
+		<object-name>foot_warmer_fo_sw.mark</object-name>
+		<property>controls/cabin/footwarmer-fo</property>
+		<interpolation>
+			<!-- Axis inverted!! -->
+			<entry><ind>1</ind><dep>20</dep></entry>
+			<entry><ind>0</ind><dep>-20</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>foot_warmer_fo_sw.axis</object-name>
+		</axis>		
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>foot_warmer_fo_sw</object-name>
+		<object-name>foot_warmer_fo_sw.mark</object-name>
+		<action>
+			<button>0</button>			
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/cabin/footwarmer-fo</property>
+				<value>1</value>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sounde/switch1</property>
+			</binding>
+		</action>
+	</animation>
+
 
 	<!-- ECAM Controls -->
 	<animation>
@@ -8286,8 +8485,6 @@
 		<object-name>pedals_block_capt</object-name>
 		<object-name>pedals_indicator_1</object-name>
 		<object-name>Pedestal-Low</object-name>
-		<object-name>CockpitDoorFault</object-name>
-		<object-name>CockpitDoorOpen</object-name>
 		<object-name>CockpitDoorSwitch</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
 		<object-name>CockpitDoorVideoButton</object-name>
