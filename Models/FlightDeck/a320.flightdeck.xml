@@ -1519,9 +1519,10 @@
 	</animation>
 
 	<!-- Cocktpit Door Switch  -->
+	
 	<animation>
-        <type>rotate</type>
-        <object-name>CockpitDoorSwitch</object-name>
+		<type>knob</type>
+		<object-name>CockpitDoorSwitch</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
         <property>controls/doors/doorc-switch</property>
 		<interpolation>
@@ -1532,64 +1533,31 @@
 		<axis>
 			<object-name>CockpitDoorSwitch.axis</object-name>
 		</axis>
-  	</animation>
-	<animation>
-		<type>pick</type>
-		<object-name>CockpitDoorSwitch</object-name>
-		<object-name>CockpitDoorSwitch.mark</object-name>
-		<action>			
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<not><property>devices/status/keyboard/shift</property></not>
-				</condition>			
-				<command>property-assign</command>
-				<property>controls/doors/doorc-switch</property>
-				<value>1</value>
-			</binding>
-			<binding>
-				<condition>
-					<property>devices/status/keyboard/shift</property>
-				</condition>			
-				<command>property-assign</command>
-				<property>controls/doors/doorc-switch</property>
-				<value>-1</value>
-			</binding>
-			<binding>
-				<command>property-assign</command>
-				<property>/sim/sounde/switch1</property>
-				<value>1</value>
-			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/doors/doorc-switch</property>
-					<value>0</value>
-				</binding>
-			</mod-up>
-		</action>
 		<action>		
-			<button>1</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>property-assign</command>
+			<binding>	
+				<command>property-cycle</command>
 				<property>controls/doors/doorc-switch</property>
 				<value>-1</value>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
 			</binding>
-			<binding>				
-				<command>property-assign</command>
-				<property>/sim/sounde/switch1</property>
-				<value>1</value>				
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/doors/doorc-switch</property>
-					<value>0</value>
-				</binding>
-			</mod-up>
 		</action>
+		<release>		
+			<binding>	
+				<command>property-assign</command>
+				<property>controls/doors/doorc-switch</property>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</release>
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
@@ -1602,7 +1570,6 @@
 	<animation>
 		<type>select</type>
 		<object-name>CockpitDoorOpen</object-name>
-		<object-name>CockpitDoorSwitch.mark</object-name>
 		<condition>
 			<or>
 				<equals>
@@ -8485,6 +8452,8 @@
 		<object-name>pedals_block_capt</object-name>
 		<object-name>pedals_indicator_1</object-name>
 		<object-name>Pedestal-Low</object-name>
+		<object-name>CockpitDoorFault</object-name>
+		<object-name>CockpitDoorOpen</object-name>
 		<object-name>CockpitDoorSwitch</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
 		<object-name>CockpitDoorVideoButton</object-name>
