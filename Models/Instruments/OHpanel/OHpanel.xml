@@ -5191,6 +5191,7 @@
 		<object-name>LandingLtLSwtch</object-name>
 		<action>
 			<button>0</button>
+			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
@@ -5206,6 +5207,7 @@
 		</action>
 		<action>
 			<button>1</button>
+			<button>4</button>			
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
@@ -5227,6 +5229,7 @@
 		<object-name>LandingLtRSwtch</object-name>
 		<action>
 			<button>0</button>
+			<button>3</button>			
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
@@ -5242,6 +5245,7 @@
 		</action>
 		<action>
 			<button>1</button>
+			<button>4</button>			
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>

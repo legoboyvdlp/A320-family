@@ -1888,6 +1888,28 @@
 			</volume>
 		</relay>
 		
+		<relay>
+			<name>CockpitDoorLocking</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/cockpitdoor_lock.wav</path>
+			<property>/sim/sounde/doorc_locking</property>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>1</factor>
+			</volume>
+		</relay>
+
+		<relay>
+			<name>CockpitDoorUnlocking</name>
+			<mode>once</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/cockpitdoor_unlock.wav</path>
+			<property>/sim/sounde/doorc_unlocking</property>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>0.8</factor>
+			</volume>
+		</relay>
+
 		<announcements>
 			<name>fa_boarding</name>
 			<mode>once</mode>

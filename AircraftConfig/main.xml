@@ -242,6 +242,27 @@
 				<live>true</live>
 			</checkbox>
 			
+			<checkbox>
+				<label>Enable FGCamera 0-9 keys</label>
+				<halign>left</halign>
+				<enable>/sim/fgcamera/enable</enable>
+				<property>/options/system/fgcamera-keys-enabled</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/options/system/fgcamera-keys-enabled</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
 			<!-- TODO Comment back in, when fully implemented -->
 			<checkbox>
 				<label>Weight in KG</label>
