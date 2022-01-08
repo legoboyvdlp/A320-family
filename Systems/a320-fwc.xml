@@ -2381,6 +2381,14 @@
 						fcs/slat-pos-deg lt 15
 						<test logic="OR">
 							<test logic="AND">
+								aero/alpha-deg-corrected ge 13.5
+								<test logic="OR">
+									/systems/navigation/aligned-1 eq 1
+									/systems/navigation/aligned-2 eq 1
+									/systems/navigation/aligned-3 eq 1
+								</test>
+							</test>
+							<test logic="AND">
 								/systems/navigation/adr/output/aoa-1 ge 13.5
 								/systems/navigation/adr/operating-1 eq 1
 							</test>
@@ -2397,23 +2405,41 @@
 					<test logic="AND">
 						/it-fbw/law eq 0
 						fcs/slat-pos-deg ge 15
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-1 ge 22
-							/systems/navigation/adr/operating-1 eq 1
-						</test>
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-2 ge 22
-							/systems/navigation/adr/operating-2 eq 1
-						</test>
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-3 ge 22
-							/systems/navigation/adr/operating-3 eq 1
+						<test logic="OR">
+							<test logic="AND">
+								aero/alpha-deg-corrected ge 22
+								<test logic="OR">
+									/systems/navigation/aligned-1 eq 1
+									/systems/navigation/aligned-2 eq 1
+									/systems/navigation/aligned-3 eq 1
+								</test>
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-1 ge 22
+								/systems/navigation/adr/operating-1 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-2 ge 22
+								/systems/navigation/adr/operating-2 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-3 ge 22
+								/systems/navigation/adr/operating-3 eq 1
+							</test>
 						</test>
 					</test>
 					<test logic="AND">
 						/it-fbw/law ne 0
 						fcs/slat-pos-deg lt 15
 						<test logic="OR">
+							<test logic="AND">
+								aero/alpha-deg-corrected ge 8
+								<test logic="OR">
+									/systems/navigation/aligned-1 eq 1
+									/systems/navigation/aligned-2 eq 1
+									/systems/navigation/aligned-3 eq 1
+								</test>
+							</test>
 							<test logic="AND">
 								/systems/navigation/adr/output/aoa-1 ge 8
 								/systems/navigation/adr/operating-1 eq 1
@@ -2431,17 +2457,27 @@
 					<test logic="AND">
 						/it-fbw/law ne 0
 						fcs/slat-pos-deg ge 15
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-1 ge 14
-							/systems/navigation/adr/operating-1 eq 1
-						</test>
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-2 ge 14
-							/systems/navigation/adr/operating-2 eq 1
-						</test>
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-3 ge 14
-							/systems/navigation/adr/operating-3 eq 1
+						<test logic="OR">
+							<test logic="AND">
+								aero/alpha-deg-corrected ge 14
+								<test logic="OR">
+									/systems/navigation/aligned-1 eq 1
+									/systems/navigation/aligned-2 eq 1
+									/systems/navigation/aligned-3 eq 1
+								</test>
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-1 ge 14
+								/systems/navigation/adr/operating-1 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-2 ge 14
+								/systems/navigation/adr/operating-2 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-3 ge 14
+								/systems/navigation/adr/operating-3 eq 1
+							</test>
 						</test>
 					</test>
 				</test>

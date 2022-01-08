@@ -100,6 +100,7 @@ var triggerDoor = func(door, doorName, doorDesc) {
 };
 
 setlistener("/controls/doors/doorc-switch",func(a){
+	setprop("sim/sounde/switch1", 1);
 	if (systems.ELEC.Bus.dc1.getValue() > 25 or systems.ELEC.Bus.dc2.getValue() > 25) {
 		var pos = a.getValue();
 		var current = getprop("/sim/model/door-positions/doorc/lock-status");
@@ -111,11 +112,11 @@ setlistener("/controls/doors/doorc-switch",func(a){
 		else if (pos == -1 and current == 1) {		## UNLOCK
 			settimer( func {
 				if (a.getValue() == pos) setprop("/sim/model/door-positions/doorc/lock-status",0);
-			},0.2);
+			},0.3);
 		}
 		#setprop("/sim/model/door-positions/doorc/lock-status",-9); ## FAULT
 	}
-});
+},0,0);
 
 ###########
 # Systems #
