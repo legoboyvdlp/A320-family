@@ -784,7 +784,7 @@ var canvas_pfd = {
 		"ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer",
 		"HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend",
 		"ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError","vsFMArate","tailstrikeInd",
-		"Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_index_middle"];
+		"Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue","ASI_index_middle"];
 	},
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
@@ -878,6 +878,7 @@ var canvas_pfd = {
 			me["ASI_error"].hide();
 			me["ASI_buss"].hide();
 			me["ASI_buss_ref"].hide();
+			me["ASI_buss_ref_blue"].hide();
 			me["ASI_frame"].setColor(1,1,1);
 			me["ASI_group"].show();
 			me["VLS_min"].hide();
@@ -1248,11 +1249,14 @@ var canvas_pfd = {
 			if (!systems.ADIRS.Operating.adr[0].getValue() and !systems.ADIRS.Operating.adr[1].getValue() and !systems.ADIRS.Operating.adr[2].getValue()) {
 				me["ASI_buss"].show();
 				me["ASI_buss_ref"].show();
-				me["ASI_buss"].setTranslation(0, getprop("/instrumentation/pfd/buss/translate"));
+				me["ASI_buss_ref_blue"].show();
+				me["ASI_buss"].setTranslation(0, notification.bussTranslate);
+				me["ASI_buss_ref_blue"].setTranslation(0, notification.bussTranslate);
 				me["ASI_error"].hide();
 			} else {
 				me["ASI_buss"].hide();
 				me["ASI_buss_ref"].hide();
+				me["ASI_buss_ref_blue"].hide();
 				me["ASI_error"].show();
 			}
 			me["ASI_frame"].setColor(1,0,0);
@@ -2053,6 +2057,8 @@ var input = {
 	decel: "/FMGC/internal/decel",
 	radio: "/FMGC/internal/radio",
 	baro: "/FMGC/internal/baro",
+	
+	bussTranslate: "/instrumentation/pfd/buss/translate",
 };
 
 foreach (var name; keys(input)) {

@@ -41,9 +41,9 @@
      inkscape:window-maximized="1"
      inkscape:window-y="-11"
      inkscape:window-x="-11"
-     inkscape:cy="728.67352"
-     inkscape:cx="100.32077"
-     inkscape:zoom="5.6568544"
+     inkscape:cy="676.96634"
+     inkscape:cx="183.00807"
+     inkscape:zoom="11.313709"
      showgrid="false"
      id="namedview371"
      inkscape:window-height="986"
@@ -2657,7 +2657,7 @@
      inkscape:label="#g4375"
      id="ALPHA_bars">
     <rect
-       style="display:inline;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#bb6100;stroke-width:3.4027499;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       style="display:inline;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#bb6100;stroke-width:3.40275;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
        id="VLS_min"
        width="11.001064"
        height="2089.313"
@@ -5718,6 +5718,13 @@
          id="tspan4696"
          sodipodi:role="line">.</tspan></text>
   </g>
+  <path
+     inkscape:label="#rect902"
+     sodipodi:nodetypes="cccc"
+     inkscape:connector-curvature="0"
+     id="ASI_buss_ref_blue"
+     d="m 155.37613,491.12121 -1e-5,43.41526 -40.47717,-21.70763 z"
+     style="display:inline;fill:none;fill-opacity:1;stroke:#179ab7;stroke-width:4;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
   <g
      id="ASI_buss"
      inkscape:label="#g4393">
