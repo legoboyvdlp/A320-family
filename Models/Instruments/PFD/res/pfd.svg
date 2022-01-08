@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="pfd.svg"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="0.91 r13725"
    id="svg2"
    version="1.1"
    viewBox="0 0 1024 1024"
    height="1024pt"
-   width="1024pt"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:dc="http://purl.org/dc/elements/1.1/">
+   width="1024pt">
   <metadata
      id="metadata375">
     <rdf:RDF>
@@ -39,14 +39,14 @@
      showguides="true"
      inkscape:current-layer="svg2"
      inkscape:window-maximized="1"
-     inkscape:window-y="-11"
-     inkscape:window-x="-11"
-     inkscape:cy="676.96634"
-     inkscape:cx="183.00807"
-     inkscape:zoom="11.313709"
+     inkscape:window-y="-8"
+     inkscape:window-x="1592"
+     inkscape:cy="650.95194"
+     inkscape:cx="172.61297"
+     inkscape:zoom="4.0000002"
      showgrid="false"
      id="namedview371"
-     inkscape:window-height="986"
+     inkscape:window-height="1030"
      inkscape:window-width="1920"
      inkscape:pageshadow="2"
      inkscape:pageopacity="1"
@@ -5585,13 +5585,6 @@
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cc" />
     </g>
-    <path
-       sodipodi:nodetypes="cc"
-       inkscape:connector-curvature="0"
-       id="ASI_index_middle"
-       d="M 14.807958,512.82643 H 94.493416"
-       style="fill:none;fill-opacity:1;stroke:#c9d121;stroke-width:4.84055;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-       inkscape:label="#path944-3" />
     <g
        inkscape:label="#g4874"
        id="ASI_trend_up">
