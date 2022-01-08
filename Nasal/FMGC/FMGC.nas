@@ -14,8 +14,6 @@ var n1_right = 0;
 var modelat = "";
 var mode = 0;
 var gs = 0;
-var cruiseft = 0;
-var cruiseft_b = 0;
 var state1 = 0;
 var state2 = 0;
 var accel_agl_ft = 0;
@@ -572,8 +570,6 @@ var masterFMGC = maketimer(0.2, func {
 	mode = Modes.PFD.FMA.pitchMode.getValue();
 	gs = pts.Velocities.groundspeed.getValue();
 	alt = pts.Instrumentation.Altimeter.indicatedFt.getValue();
-	# cruiseft = FMGCInternal.crzFt;
-	# cruiseft_b = FMGCInternal.crzFt - 200;
 	state1 = pts.Systems.Thrust.state[0].getValue();
 	state2 = pts.Systems.Thrust.state[1].getValue();
 	accel_agl_ft = Setting.reducAglFt.getValue();
@@ -713,6 +709,7 @@ var masterFMGC = maketimer(0.2, func {
 	if (altitude > 20000) {
 		FMGCInternal.clean += (altitude - 20000) / 1000;
 	}
+	
 	FMGCInternal.vs1g_clean = 0.0024 * weight_lbs * weight_lbs + 0.124 * weight_lbs + 88.942;
 	FMGCInternal.vs1g_conf_1 = -0.0007 * weight_lbs * weight_lbs + 0.6795 * weight_lbs + 44.673;
 	FMGCInternal.vs1g_conf_1f = -0.0001 * weight_lbs * weight_lbs + 0.5211 * weight_lbs + 49.027;
@@ -723,13 +720,11 @@ var masterFMGC = maketimer(0.2, func {
 	FMGCInternal.flap2 = FMGCInternal.vs1g_conf_2 * 1.47;
 	FMGCInternal.flap3 = FMGCInternal.vs1g_conf_3 * 1.36;
 	if (FMGCInternal.ldgConfig3) {
-		FMGCInternal.vls = FMGCInternal.vs1g_conf_3 * 1.23;
+		FMGCInternal.vls = math.clamp(FMGCInternal.vs1g_conf_3 * 1.23, 113, 999);
 	} else {
-		FMGCInternal.vls = FMGCInternal.vs1g_conf_full * 1.23
+		FMGCInternal.vls = math.clamp(FMGCInternal.vs1g_conf_full * 1.23, 113, 999);
 	}
-	if (FMGCInternal.vls < 113) {
-		FMGCInternal.vls = 113;
-	}
+	
 	if (!fmgc.FMGCInternal.vappSpeedSet) {
 		if (FMGCInternal.destWind < 5) {
 			FMGCInternal.vapp = FMGCInternal.vls + 5;
