@@ -15,7 +15,7 @@ var MCDU_init = func(i) {
 var MCDU_reset = func(i) {
 	setprop("/MCDU[" ~ i ~ "]/active", 0);
 	setprop("/MCDU[" ~ i ~ "]/atsu-active", 0);
-	setprop("it-autoflight/settings/togaspd", 157); #aka v2 clone
+	setprop("/it-autoflight/settings/togaspd", 157); #aka v2 clone
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/last-atsu-page", "ATSUDLINK");
 	setprop("/MCDU[" ~ i ~ "]/active-system","");
@@ -496,6 +496,8 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "VERTREV") {
+			canvas_mcdu.myVertRev[i].pushButtonLeft(2);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 1;
 			atsu.freeTexts[i].changed = 1;

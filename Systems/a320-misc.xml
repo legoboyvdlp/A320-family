@@ -502,4 +502,26 @@
 		
 	</channel>
 	
+	<channel name="FMGC">
+		
+		<fcs_function name="/FMGC/internal/kts-to-mach-factor">
+			<function>
+				<quotient>
+					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/mach-to-kts-factor">
+			<function>
+				<quotient>
+					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+	</channel>
+	
 </system>

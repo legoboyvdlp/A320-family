@@ -5223,6 +5223,12 @@ var canvas_MCDU_base = {
 					
 					me.colorRight(myVertRev[i].R1[2],myVertRev[i].R2[2],myVertRev[i].R3[2],myVertRev[i].R4[2],myVertRev[i].R5[2],myVertRev[i].R6[2]);
 				}
+				
+				if (myVertRev[i] != nil and (myVertRev[i].type == 1 and fmgc.FMGCInternal.desSpdLimSet) or (myVertRev[i].type != 1 and fmgc.FMGCInternal.clbSpdLimSet)) {
+					me["Simple_L2"].setFontSize(normal);
+				} else {
+					me["Simple_L2"].setFontSize(small);
+				}
 				pageSwitch[i].setBoolValue(1);
 			}
 		} else if (page == "DEPARTURE") {
