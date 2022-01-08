@@ -1521,7 +1521,39 @@
 	<!-- Cocktpit Door Switch  -->
 	
 	<animation>
-		<type>knob</type>
+		<type>slider</type>
+		<object-name>CockpitDoorSwitch</object-name>
+		<object-name>CockpitDoorSwitch.mark</object-name>
+        <property>controls/doors/doorc-switch</property>
+		<drag-direction>vertical</drag-direction>
+		<action>		
+			<binding>	
+				<command>property-adjust</command>
+				<property>controls/doors/doorc-switch</property>
+				<factor>-1</factor>
+				<min>-1</min>
+				<max>1</max>
+				<wrap>0</wrap>
+			</binding>		
+		</action>
+		<release>		
+			<binding>	
+				<command>property-assign</command>
+				<property>controls/doors/doorc-switch</property>
+				<value>0</value>
+			</binding>
+		</release>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>doorc-switch-lock</tooltip-id>
+				<label>Cockpit door switch</label>
+			</binding>
+		</hovered>		
+	</animation>
+
+	<animation>
+		<type>rotate</type>
 		<object-name>CockpitDoorSwitch</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
         <property>controls/doors/doorc-switch</property>
@@ -1533,38 +1565,6 @@
 		<axis>
 			<object-name>CockpitDoorSwitch.axis</object-name>
 		</axis>
-		<action>		
-			<binding>	
-				<command>property-cycle</command>
-				<property>controls/doors/doorc-switch</property>
-				<value>-1</value>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<release>		
-			<binding>	
-				<command>property-assign</command>
-				<property>controls/doors/doorc-switch</property>
-				<value>0</value>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</release>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>doorc-switch-lock</tooltip-id>
-				<label>Cockpit door switch</label>
-			</binding>
-		</hovered>
 	</animation>
 
 	<animation>
