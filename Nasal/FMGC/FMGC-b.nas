@@ -240,11 +240,9 @@ var ITAF = {
 		Custom.Output.fmaPower = 1;
 		
 		# Sync FMA
-		me.ap1Master(0);
-		me.ap2Master(0);
-		me.athrMaster(0);
-		me.fd1Master(1);
-		me.fd2Master(1);
+		fmaAp();
+		fmaAthr();
+		fmaFd();
 		
 		ManagedSPD.stop();
 		loopTimer.start();
