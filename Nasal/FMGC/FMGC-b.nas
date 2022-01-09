@@ -181,7 +181,7 @@ var Custom = {
 		spdManaged: props.globals.getNode("/it-autoflight/input/spd-managed", 1),
 	},
 	Output: {
-		fmaPower: props.globals.initNode("/it-autoflight/output/fma-pwr", 0, "BOOL"),
+		fmaPower: 0,
 		vsFCU: props.globals.initNode("/it-autoflight/output/vs-fcu-display", "", "STRING"),
 	},
 	Sound: {
@@ -237,7 +237,7 @@ var ITAF = {
 		me.updateLatText("");
 		me.updateVertText("");
 		Custom.showHdg.setBoolValue(1);
-		Custom.Output.fmaPower.setBoolValue(1);
+		Custom.Output.fmaPower = 1;
 		ManagedSPD.stop();
 		loopTimer.start();
 		slowLoopTimer.start();
@@ -433,8 +433,8 @@ var ITAF = {
 	ap1Master: func(s) {
 		if (s == 1) {
 			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100) {
-				me.revertBasicMode();
 				Output.ap1.setBoolValue(1);
+				me.updateFma();
 				Output.latTemp = Output.lat.getValue();
 				if (Output.ap2.getBoolValue() and !Output.apprArm.getBoolValue() and Output.latTemp != 2 and Output.latTemp != 4) {
 					me.ap2Master(0);
@@ -450,12 +450,13 @@ var ITAF = {
 		if (Input.ap1.getBoolValue() != Output.ap1Temp) {
 			Input.ap1.setBoolValue(Output.ap1Temp);
 		}
+		fmaAp();
 	},
 	ap2Master: func(s) {
 		if (s == 1) {
 			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100) {
-				me.revertBasicMode();
 				Output.ap2.setBoolValue(1);
+				me.updateFma();
 				Output.latTemp = Output.lat.getValue();
 				if (Output.ap1.getBoolValue() and !Output.apprArm.getBoolValue() and Output.latTemp != 2 and Output.latTemp != 4) {
 					me.ap1Master(0);
@@ -471,6 +472,7 @@ var ITAF = {
 		if (Input.ap2.getBoolValue() != Output.ap2Temp) {
 			Input.ap2.setBoolValue(Output.ap2Temp);
 		}
+		fmaAp();
 	},
 	apOffFunction: func() {
 		if (!Output.ap1.getBoolValue() and !Output.ap2.getBoolValue()) { # Only do if both APs are off
@@ -500,6 +502,7 @@ var ITAF = {
 		if (Input.athr.getBoolValue() != Output.athrTemp) {
 			Input.athr.setBoolValue(Output.athrTemp);
 		}
+		fmaAthr();
 	},
 	fd1Master: func(s) {
 		if (s == 1) {
@@ -515,6 +518,7 @@ var ITAF = {
 		if (Input.fd1.getBoolValue() != Output.fd1Temp) {
 			Input.fd1.setBoolValue(Output.fd1Temp);
 		}
+		fmaFd();
 	},
 	fd2Master: func(s) {
 		if (s == 1) {
@@ -530,6 +534,7 @@ var ITAF = {
 		if (Input.fd2.getBoolValue() != Output.fd2Temp) {
 			Input.fd2.setBoolValue(Output.fd2Temp);
 		}
+		fmaFd();
 	},
 	setLatMode: func(n) {
 		Output.vertTemp = Output.vert.getValue();
@@ -576,7 +581,9 @@ var ITAF = {
 			Custom.showHdg.setBoolValue(0);
 			me.updateLatText("T/O");
 		} else if (n == 9) { # NONE
+			me.updateLnavArm(0);
 			me.updateLocArm(0);
+			me.updateApprArm(0);
 			Output.lat.setValue(9);
 			Custom.showHdg.setBoolValue(1);
 			me.updateLatText("");
@@ -878,9 +885,10 @@ var ITAF = {
 			me.setLatMode(9);
 			me.setVertMode(9);
 			me.setLatArm(0);
-			Custom.Output.fmaPower.setBoolValue(0);
+			Custom.Output.fmaPower = 0;
 		} else {
-			Custom.Output.fmaPower.setBoolValue(1);
+			if (!Custom.Output.fmaPower) showAllBoxes();
+			Custom.Output.fmaPower = 1;
 			me.revertBasicMode();
 		}
 	},
