@@ -42,7 +42,6 @@ var tempOverspeed = nil;
 setprop("/position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-agl-ft", 1500); #eventually set to 1500 above runway
 setprop("/it-autoflight/internal/vert-speed-fpm", 0);
-setprop("/it-autoflight/output/fma-pwr", 0);
 setprop("/instrumentation/nav[0]/nav-id", "XXX");
 setprop("/instrumentation/nav[1]/nav-id", "XXX");
 
