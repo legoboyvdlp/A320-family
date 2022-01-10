@@ -74,6 +74,13 @@ var athrCallback = func(modeNode, timerNode) {
 	}
 }
 
+var setAthrArmed = func(value) {
+	Modes.PFD.FMA.athrArmed = value;
+	if (Modes.PFD.FMA.athrMode != " ") {
+		Modes.PFD.FMA.athrModeTime = pts.Sim.Time.elapsedSec.getValue();
+	}
+}
+
 var throttleModeCallback = func(modeNode, timerNode) {
 	state1 = systems.FADEC.detentText[0].getValue();
 	state2 = systems.FADEC.detentText[1].getValue();
@@ -99,6 +106,7 @@ var fma_init = func() {
 	setFmaText("rollMode", " ", genericCallback, "rollModeTime");
 	setFmaText("rollModeArmed", " ", genericCallback, "rollModeArmedTime");
 	setFmaText("throttleMode", " ", throttleModeCallback, "throttleModeTime");
+	setAthrArmed(0);
 	
 	Modes.PFD.FMA.apModeBox = 0;
 	Modes.PFD.FMA.athrModeBox = 0;
@@ -164,14 +172,13 @@ var loopFMA = maketimer(0.05, func() {
 	
 	# A/THR Armed/Active
 	athr = Output.athr.getValue();
-	
 	if (athr and (state1 == "MAN THR" or state2 == "MAN THR" or state1 == "MCT" or state2 == "MCT" or state1 == "TOGA" or state2 == "TOGA") and engout != 1) {
-		Modes.PFD.FMA.athrArmed = 1;
+		setAthrArmed(1);
 	} else if (athr and ((state1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and systems.FADEC.manThrAboveMct[1]) or (systems.FADEC.Limit.activeMode.getValue() == "FLX" and (state1 == "MCT" or state2 == "MCT")) 
 	or state1 == "TOGA" or state2 == "TOGA") and engout) {
-		Modes.PFD.FMA.athrArmed = 1;
+		setAthrArmed(1);
 	} else {
-		Modes.PFD.FMA.athrArmed = 0;
+		setAthrArmed(0);
 	}
 	
 	# SRS RWY Engagement
