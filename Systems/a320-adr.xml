@@ -742,12 +742,17 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="/systems/navigation/adr/computation/underspeed-difference">
-			<default value="2"/>
-			<test logic="OR" value="19">
-				/controls/flight/speedbrake eq 1.0
-			</test>
-		</switch>
+		<fcs_function name="/systems/navigation/adr/computation/underspeed-difference">
+			<function>
+				<sum>
+					<value>2</value>
+					<product>
+						<property>/controls/flight/speedbrake</property>
+						<value>17</value>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
 		
 		<fcs_function name="/systems/navigation/adr/computation/underspeed">
 			<function>
