@@ -1051,8 +1051,10 @@
 		<object-name>mach-text</object-name>
 		<object-name>ndb_led</object-name>
 		<object-name>ndb_led.001</object-name>
-		<object-name>qnh-hpa</object-name>
-		<object-name>qnh-inhg</object-name>
+		<object-name>qnh-hpa-left</object-name>
+		<object-name>qnh-hpa-right</object-name>
+		<object-name>qnh-inhg-left</object-name>
+		<object-name>qnh-inhg-right</object-name>
 		<object-name>qnh-std</object-name>
 		<object-name>qnh-test</object-name>
 		<object-name>radio_adf_led</object-name>
@@ -3114,7 +3116,6 @@
 	<animation>
 		<type>pick</type>
 		<object-name>qnh_cpt_knb</object-name>
-		<object-name>qnh_fo_knb</object-name>
 		<action>
 			<button>0</button>
 			<button>1</button>
@@ -3143,7 +3144,7 @@
 				<condition>
 					<and>
 						<equals>
-							<property>instrumentation/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg-left</property>
 							<value>1</value>
 						</equals>
 						<equals>
@@ -3165,7 +3166,7 @@
 				<condition>
 					<and>
 						<equals>
-							<property>instrumentation/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg-left</property>
 							<value>0</value>
 						</equals>
 						<equals>
@@ -3199,7 +3200,7 @@
 				<condition>
 					<and>
 						<equals>
-							<property>instrumentation/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg-left</property>
 							<value>1</value>
 						</equals>
 						<equals>
@@ -3221,7 +3222,141 @@
 				<condition>
 					<and>
 						<equals>
-							<property>instrumentation/altimeter/inhg</property>
+							<property>instrumentation/altimeter/inhg-left</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>instrumentation/altimeter/std</property>
+							<value>0</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/qnh-knb</property>
+				<step>-1</step>
+				<min>0</min>
+				<max>200000</max>
+				<wrap>true</wrap>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>qnh_fo_knb</object-name>
+		<action>
+			<button>0</button>
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>nasal</command>
+				<script>
+				libraries.toggleSTD();
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>3</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/instrumentation/altimeter/setting-inhg", getprop("/instrumentation/altimeter/setting-inhg") + 0.01);
+				</script>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/altimeter/inhg-right</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>instrumentation/altimeter/std</property>
+							<value>0</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/instrumentation/altimeter/setting-hpa", getprop("/instrumentation/altimeter/setting-hpa") + 1.0);
+				</script>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/altimeter/inhg-right</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>instrumentation/altimeter/std</property>
+							<value>0</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/qnh-knb</property>
+				<step>1</step>
+				<min>0</min>
+				<max>200000</max>
+				<wrap>true</wrap>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/instrumentation/altimeter/setting-inhg", getprop("/instrumentation/altimeter/setting-inhg") - 0.01);
+				</script>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/altimeter/inhg-right</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>instrumentation/altimeter/std</property>
+							<value>0</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/instrumentation/altimeter/setting-hpa", getprop("/instrumentation/altimeter/setting-hpa") - 1.0);
+				</script>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/altimeter/inhg-right</property>
 							<value>0</value>
 						</equals>
 						<equals>
@@ -3358,6 +3493,27 @@
 	<animation>
 		<type>pick</type>
 		<object-name>qnh_cpt_sw</object-name>
+		<action>
+			<button>0</button>
+			<button>1</button>
+			<button>3</button>
+			<button>4</button>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/altimeter/inhg-left</property>
+				<value>0</value>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>pick</type>
 		<object-name>qnh_fo_sw</object-name>
 		<action>
 			<button>0</button>
@@ -3367,7 +3523,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>instrumentation/altimeter/inhg</property>
+				<property>instrumentation/altimeter/inhg-right</property>
 				<value>0</value>
 				<value>1</value>
 			</binding>
@@ -3401,7 +3557,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_cpt_sw</object-name>
-		<property>instrumentation/altimeter/inhg</property>
+		<property>instrumentation/altimeter/inhg-left</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>40</dep></entry>
 			<entry><ind>1</ind><dep>-3</dep></entry>
@@ -3414,7 +3570,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_fo_sw</object-name>
-		<property>instrumentation/altimeter/inhg</property>
+		<property>instrumentation/altimeter/inhg-right</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>40</dep></entry>
 			<entry><ind>1</ind><dep>-3</dep></entry>
@@ -3425,7 +3581,7 @@
 	</animation>
 
 	<text>
-		<name>qnh-inhg</name>
+		<name>qnh-inhg-left</name>
 		<offsets>
 			<x-m>-0.375</x-m>
 			<y-m>-0.25128</y-m>
@@ -3451,7 +3607,7 @@
 	</text>
 
 	<text>
-		<name>qnh-inhg</name>
+		<name>qnh-inhg-right</name>
 		<offsets>
 			<x-m>-0.375</x-m>
 			<y-m>0.25128</y-m>
@@ -3477,7 +3633,7 @@
 	</text>
 
 	<text>
-		<name>qnh-hpa</name>
+		<name>qnh-hpa-left</name>
 		<offsets>
 			<x-m>-0.375</x-m>
 			<y-m>-0.25128</y-m>
@@ -3503,7 +3659,7 @@
 	</text>
 
 	<text>
-		<name>qnh-hpa</name>
+		<name>qnh-hpa-right</name>
 		<offsets>
 			<x-m>-0.375</x-m>
 			<y-m>0.25128</y-m>
@@ -3634,7 +3790,7 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>qnh-inhg</object-name>
+		<object-name>qnh-inhg-left</object-name>
 		<condition>
 			<and>
 				<not-equals>
@@ -3642,7 +3798,7 @@
 					<value>1</value>
 				</not-equals>
 				<equals>
-					<property>instrumentation/altimeter/inhg</property>
+					<property>instrumentation/altimeter/inhg-left</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -3655,7 +3811,7 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>qnh-hpa</object-name>
+		<object-name>qnh-hpa-left</object-name>
 		<condition>
 			<and>
 				<not-equals>
@@ -3663,7 +3819,7 @@
 					<value>1</value>
 				</not-equals>
 				<equals>
-					<property>instrumentation/altimeter/inhg</property>
+					<property>instrumentation/altimeter/inhg-left</property>
 					<value>0</value>
 				</equals>
 				<equals>
@@ -3673,6 +3829,49 @@
 			</and>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>qnh-inhg-right</object-name>
+		<condition>
+			<and>
+				<not-equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</not-equals>
+				<equals>
+					<property>instrumentation/altimeter/inhg-right</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>instrumentation/altimeter/std</property>
+					<value>0</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>qnh-hpa-right</object-name>
+		<condition>
+			<and>
+				<not-equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</not-equals>
+				<equals>
+					<property>instrumentation/altimeter/inhg-right</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>instrumentation/altimeter/std</property>
+					<value>0</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+
 
 	<animation>
 		<type>select</type>
@@ -7948,8 +8147,10 @@
 		<object-name>fpa.ind</object-name>
 		<object-name>fpa.ind.001</object-name>
 		<object-name>fpa-text</object-name>
-		<object-name>qnh-inhg</object-name>
-		<object-name>qnh-hpa</object-name>
+		<object-name>qnh-hpa-left</object-name>
+		<object-name>qnh-hpa-right</object-name>
+		<object-name>qnh-inhg-left</object-name>
+		<object-name>qnh-inhg-right</object-name>
 		<object-name>qnh-std</object-name>
 		<object-name>qnh-test</object-name>
 		<diffuse>

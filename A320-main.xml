@@ -1705,7 +1705,8 @@
 	
 	<instrumentation n="0">
 		<altimeter n="0">
-			<inhg type="bool">0</inhg>
+			<inhg-left type="bool">0</inhg-left>
+			<inhg-right type="bool">0</inhg-right>
 			<indicated-altitude-ft type="double">0</indicated-altitude-ft>
 			<indicated-altitude-ft-pfd type="double">0</indicated-altitude-ft-pfd>
 			<oldqnh type="double">29.92</oldqnh>

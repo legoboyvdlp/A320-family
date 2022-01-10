@@ -454,8 +454,8 @@ var canvas_pfd = {
 					obj["HDG_target"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["altimeterHpa","altimeterInhg","altimeterInhgMode"], nil, func(val) {
-				if (val.altimeterInhgMode == 0) {
+			props.UpdateManager.FromHashList(["altimeterHpa","altimeterInhg","altimeterInhgModeLeft","altimeterInhgModeRight"], nil, func(val) {
+				if ((obj.number == 0 and val.altimeterInhgModeLeft == 0) or (obj.number == 1 and val.altimeterInhgModeRight == 0)) {
 					obj["QNH_setting"].setText(sprintf("%4.0f", val.altimeterHpa));
 				} else {
 					obj["QNH_setting"].setText(sprintf("%2.2f", val.altimeterInhg));
@@ -2032,7 +2032,8 @@ var input = {
 	markerI: "/instrumentation/marker-beacon/inner",
 	
 	altimeterStd: "/instrumentation/altimeter/std",
-	altimeterInhgMode: "/instrumentation/altimeter/inhg",
+	altimeterInhgModeLeft: "/instrumentation/altimeter/inhg-left",
+	altimeterInhgModeRight: "/instrumentation/altimeter/inhg-right",
 	altimeterInhg: "/instrumentation/altimeter/setting-inhg",
 	altimeterHpa: "/instrumentation/altimeter/setting-hpa",
 	targetIasPFD: "/FMGC/internal/target-ias-pfd",
