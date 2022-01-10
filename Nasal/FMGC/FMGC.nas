@@ -700,7 +700,7 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	}
 	
-	# Speeds
+	# Pull speeds from JSBsim
 	FMGCInternal.vsw = FMGCNodes.vs1g.getValue();
 	FMGCInternal.vls = FMGCNodes.vls.getValue();
 	FMGCInternal.vs1g_conf_0 = FMGCNodes.vs1gConf0.getValue();

@@ -1320,7 +1320,7 @@ var canvas_pfd = {
 		if (notification.alphaFloor != 1 and notification.togaLk != 1) {
 			if (notification.athr and notification.engOut != 1 and (notification.thrust1 == "MAN" or notification.thrust1 == "CL") and (notification.thrust2 == "MAN" or notification.thrust2 == "CL")) {
 				me["FMA_thrust"].show();
-				if (fmgc.Modes.PFD.FMA.throttleBox and fmgc.Modes.PFD.FMA.throttle != " ") {
+				if (fmgc.Modes.PFD.FMA.throttleModeBox and fmgc.Modes.PFD.FMA.throttleMode != " ") {
 					me["FMA_thrust_box"].show();
 				} else {
 					me["FMA_thrust_box"].hide();
@@ -1328,7 +1328,7 @@ var canvas_pfd = {
 			} else if (notification.athr and notification.engOut and (notification.thrust1 == "MAN" or notification.thrust1 == "CL" or (notification.thrust1 == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (notification.thrust1 == "MCT" and notification.thrustLimit != "FLX")) and 
 			(notification.thrust2 == "MAN" or notification.thrust2 == "CL" or (notification.thrust2 == "MAN THR" and !systems.FADEC.manThrAboveMct[1]) or (notification.thrust2 == "MCT" and notification.thrustLimit != "FLX"))) {
 				me["FMA_thrust"].show();
-				if (fmgc.Modes.PFD.FMA.throttleBox and fmgc.Modes.PFD.FMA.throttle != " ") {
+				if (fmgc.Modes.PFD.FMA.throttleModeBox and fmgc.Modes.PFD.FMA.throttleMode != " ") {
 					me["FMA_thrust_box"].show();
 				} else {
 					me["FMA_thrust_box"].hide();
@@ -1691,7 +1691,7 @@ var canvas_pfd = {
 			me["FMA_combined"].hide();
 			me["FMA_combined_box"].hide();
 			
-			if (fmgc.Modes.PFD.FMA.pitchModeBox and fmgc.Modes.PFD.FMA.pitchMode != " " and (notification.ap1 or notification.notification or val.fd1 or notification.fd2)) {
+			if (fmgc.Modes.PFD.FMA.pitchModeBox and fmgc.Modes.PFD.FMA.pitchMode != " " and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
 				me["FMA_pitch_box"].show();
 			} else {
 				me["FMA_pitch_box"].hide();
@@ -1700,20 +1700,20 @@ var canvas_pfd = {
 			if (fmgc.Modes.PFD.FMA.pitchModeArmed == " " and fmgc.Modes.PFD.FMA.pitchMode2Armed == " ") {
 				me["FMA_pitcharm_box"].hide();
 			} else {
-				if ((fmgc.Modes.PFD.FMA.pitchModeArmedBox or fmgc.Modes.PFD.FMA.pitchMode2ArmedBox) and (notification.ap1 or notification.notification or val.fd1 or notification.fd2)) {
+				if ((fmgc.Modes.PFD.FMA.pitchModeArmedBox or fmgc.Modes.PFD.FMA.pitchMode2ArmedBox) and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
 					me["FMA_pitcharm_box"].show();
 				} else {
 					me["FMA_pitcharm_box"].hide();
 				}
 			}
 			
-			if (fmgc.Modes.PFD.FMA.rollModeBox == 1 and fmgc.Modes.PFD.FMA.rollMode != " "  and (notification.ap1 or notification.notification or val.fd1 or notification.fd2)) {
+			if (fmgc.Modes.PFD.FMA.rollModeBox == 1 and fmgc.Modes.PFD.FMA.rollMode != " "  and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
 				me["FMA_roll_box"].show();
 			} else {
 				me["FMA_roll_box"].hide();
 			}
 			
-			if (fmgc.Modes.PFD.FMA.rollModeArmedBox == 1 and fmgc.Modes.PFD.FMA.rollModeArmed != " " and (notification.ap1 or notification.notification or val.fd1 or notification.fd2)) {
+			if (fmgc.Modes.PFD.FMA.rollModeArmedBox == 1 and fmgc.Modes.PFD.FMA.rollModeArmed != " " and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
 				me["FMA_rollarm_box"].show();
 			} else {
 				me["FMA_rollarm_box"].hide();
@@ -1727,7 +1727,7 @@ var canvas_pfd = {
 			me["FMA_thrust"].setText("TOGA LK");
 			me["FMA_thrust_box"].setColor(0.7333,0.3803,0);
 		} else {
-			me["FMA_thrust"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.throttle));
+			me["FMA_thrust"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.throttleMode));
 			me["FMA_thrust_box"].setColor(0.8078,0.8039,0.8078);
 		}
 		
