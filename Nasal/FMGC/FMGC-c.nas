@@ -56,6 +56,7 @@ var Modes = {
 };
 
 var setFmaText = func(node, value, callback, timerNode) {
+	if (Modes.PFD.FMA[node] == value) { return; }
 	Modes.PFD.FMA[node] = value;
 	call(callback, [node, timerNode]);
 };
@@ -138,58 +139,36 @@ var loopFMA = maketimer(0.05, func() {
 	engout = systems.FADEC.engOut.getValue();
 	
 	if (state1 == "TOGA" or state2 == "TOGA") {
-		if (fmgc.Modes.PFD.FMA.throttleMode != "   ") {
-			setFmaText("throttleMode", "   ", throttleModeCallback, "throttleModeTime");
-		}
+		setFmaText("throttleMode", "   ", throttleModeCallback, "throttleModeTime");
 	} else if ((state1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) {
-		if (fmgc.Modes.PFD.FMA.throttleMode != "   ") {
-			setFmaText("throttleMode", "   ", throttleModeCallback, "throttleModeTime");
-		}
+		setFmaText("throttleMode", "   ", throttleModeCallback, "throttleModeTime");
 	} else if ((state1 == "MCT" or state2 == "MCT") and !engout) {
-		if (fmgc.Modes.PFD.FMA.throttleMode != "  ") {
-			setFmaText("throttleMode", "  ", throttleModeCallback, "throttleModeTime");
-		}
+		setFmaText("throttleMode", "  ", throttleModeCallback, "throttleModeTime");
 	} else if (((state1 == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and !systems.FADEC.manThrAboveMct[1])) and !engout) {
-		if (fmgc.Modes.PFD.FMA.throttleMode != " ") {
-			setFmaText("throttleMode", " ", throttleModeCallback, "throttleModeTime");
-		}
+		setFmaText("throttleMode", " ", throttleModeCallback, "throttleModeTime");
 	} else {
 		vert = Output.vert.getValue();
 		if (vert == 4 or vert >= 6 or vert <= 8) {
 			if (Output.ap1.getBoolValue() or Output.ap2.getBoolValue() or Output.fd1.getBoolValue() or Output.fd2.getBoolValue()) {
 				thr = Output.thrMode.getValue();
 				if (thr == 0) {
-					if (fmgc.Modes.PFD.FMA.throttleMode != Input.ktsMach.getValue() ? "MACH" : "SPEED") {
-						setFmaText("throttleMode", Input.ktsMach.getValue() ? "MACH" : "SPEED", throttleModeCallback, "throttleModeTime");
-					}
+					setFmaText("throttleMode", Input.ktsMach.getValue() ? "MACH" : "SPEED", throttleModeCallback, "throttleModeTime");
 				} else if (thr == 1) {
-					if (fmgc.Modes.PFD.FMA.throttleMode != "THR IDLE") {
-						setFmaText("throttleMode", "THR IDLE", throttleModeCallback, "throttleModeTime");
-					}
+					setFmaText("throttleMode", "THR IDLE", throttleModeCallback, "throttleModeTime");
 				} else if (thr == 2) {
 					if (state1 == "MCT" or state2 == "MCT" and engout) {
-						if (fmgc.Modes.PFD.FMA.throttleMode != "THR MCT") {
-							setFmaText("throttleMode", "THR MCT", throttleModeCallback, "throttleModeTime");
-						}
+						setFmaText("throttleMode", "THR MCT", throttleModeCallback, "throttleModeTime");
 					} else if (state1 == "CL" or state2 == "CL") {
-						if (fmgc.Modes.PFD.FMA.throttleMode != "THR CLB") {
-							setFmaText("throttleMode", "THR CLB", throttleModeCallback, "throttleModeTime");
-						}
+						setFmaText("throttleMode", "THR CLB", throttleModeCallback, "throttleModeTime");
 					} else {
-						if (fmgc.Modes.PFD.FMA.throttleMode != "THR LVR") {
-							setFmaText("throttleMode", "THR LVR", throttleModeCallback, "throttleModeTime");
-						}
+						setFmaText("throttleMode", "THR LVR", throttleModeCallback, "throttleModeTime");
 					}
 				}
 			} else {
-				if (fmgc.Modes.PFD.FMA.throttleMode != Input.ktsMach.getValue() ? "MACH" : "SPEED") {
-					setFmaText("throttleMode", Input.ktsMach.getValue() ? "MACH" : "SPEED", throttleModeCallback, "throttleModeTime");
-				}
-			}
-		} else {
-			if (fmgc.Modes.PFD.FMA.throttleMode != Input.ktsMach.getValue() ? "MACH" : "SPEED") {
 				setFmaText("throttleMode", Input.ktsMach.getValue() ? "MACH" : "SPEED", throttleModeCallback, "throttleModeTime");
 			}
+		} else {
+			setFmaText("throttleMode", Input.ktsMach.getValue() ? "MACH" : "SPEED", throttleModeCallback, "throttleModeTime");
 		}
 	}
 	
