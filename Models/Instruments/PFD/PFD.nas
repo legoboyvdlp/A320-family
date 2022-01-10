@@ -23,7 +23,9 @@ var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 # Create Nodes:
 var altFlash = [0,0];
 var amberFlash = [0, 0];
+var aFloorFlash = 0;
 var dhFlash = 0;
+var togaLkFlash = 0;
 var ilsFlash = [0,0];
 var qnhFlash = [0,0];
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
@@ -1339,7 +1341,38 @@ var canvas_pfd = {
 			}
 		} else {
 			me["FMA_thrust"].show();
-			me["FMA_thrust_box"].show();
+			if (notification.alphaFloor) {
+				if (!afloor_going) {
+					aFloorTimer.start();
+					afloor_going = 1;
+				}
+				
+				if (aFloorFlash and afloor_going) {
+					me["FMA_thrust_box"].show();
+				} else {
+					me["FMA_thrust_box"].hide();
+				}
+			} else {
+				aFloorTimer.stop();
+				afloor_going = 0;
+			
+			}
+			if (notification.togaLk) {
+				if (!togalk_going) {
+					togaLkTimer.start();
+					togalk_going = 1;
+				}
+				
+				if (togaLkFlash and togalk_going) {
+					me["FMA_thrust_box"].show();
+				} else {
+					me["FMA_thrust_box"].hide();
+				}
+			} else {
+				togaLkTimer.stop();
+				togalk_going = 0;
+			
+			}
 		}
 		
 		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist >= 250) {
@@ -2110,6 +2143,15 @@ var qnhTimer2 = maketimer(0.50, func {
 	}
 });
 
+var afloor_going = 0;
+var aFloorTimer = maketimer(0.50, func {
+	if (!aFloorFlash) {
+		aFloorFlash = 1;
+	} else {
+		aFloorFlash = 0;
+	}
+});
+
 var alt_going1 = 0;
 var altTimer1 = maketimer(0.50, func {
 	if (!altFlash[0]) {
@@ -2154,6 +2196,16 @@ var dhTimer = maketimer(0.50, func {
 		dhFlash = 0;
 	}
 });
+
+var togalk_going = 0;
+var togaLkTimer = maketimer(0.50, func {
+	if (!togaLkFlash) {
+		togaLkFlash = 1;
+	} else {
+		togaLkFlash = 0;
+	}
+});
+
 
 var autolandTimer = maketimer(0.5, func {
 	if (autoland_pulse.getBoolValue()) {
