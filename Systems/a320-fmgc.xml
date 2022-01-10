@@ -100,6 +100,46 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="/FMGC/internal/tow-vs1g-conf-0">
+			<function>
+				<table>
+					<independentVar lookup="row">/FMGC/internal/tow</independentVar>
+					<tableData>
+						35000  114.99
+						40000  123.08
+						45000  130.66
+						50000  137.73
+						55000  144.41
+						60000  150.81
+						65000  156.76
+						70000  162.65
+						75000  168.43
+						80000  173.65
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/lw-vs1g-conf-0">
+			<function>
+				<table>
+					<independentVar lookup="row">/FMGC/internal/lw</independentVar>
+					<tableData>
+						35000  114.99
+						40000  123.08
+						45000  130.66
+						50000  137.73
+						55000  144.41
+						60000  150.81
+						65000  156.76
+						70000  162.65
+						75000  168.43
+						80000  173.65
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="/FMGC/internal/vs1g-conf-1">
 			<function>
 				<table>
@@ -140,10 +180,90 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="/FMGC/internal/tow-vs1g-conf-1f">
+			<function>
+				<table>
+					<independentVar lookup="row">/FMGC/internal/tow</independentVar>
+					<tableData>
+						35000   90.08
+						40000   96.03
+						45000  101.93
+						50000  107.55
+						55000  112.76
+						60000  117.97
+						65000  122.96
+						70000  127.54
+						75000  132.18
+						80000  136.54
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/lw-vs1g-conf-1f">
+			<function>
+				<table>
+					<independentVar lookup="row">/FMGC/internal/lw</independentVar>
+					<tableData>
+						35000   90.08
+						40000   96.03
+						45000  101.93
+						50000  107.55
+						55000  112.76
+						60000  117.97
+						65000  122.96
+						70000  127.54
+						75000  132.18
+						80000  136.54
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="/FMGC/internal/vs1g-conf-2">
 			<function>
 				<table>
 					<independentVar lookup="row">inertia/weight-kg</independentVar>
+					<tableData>
+						35000   85.16
+						40000   90.31
+						45000   95.64
+						50000  101.02
+						55000  106.07
+						60000  110.94
+						65000  115.63
+						70000  119.99
+						75000  124.23
+						80000  128.58
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/tow-vs1g-conf-2">
+			<function>
+				<table>
+					<independentVar lookup="row">/FMGC/internal/tow</independentVar>
+					<tableData>
+						35000   85.16
+						40000   90.31
+						45000   95.64
+						50000  101.02
+						55000  106.07
+						60000  110.94
+						65000  115.63
+						70000  119.99
+						75000  124.23
+						80000  128.58
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/lw-vs1g-conf-2">
+			<function>
+				<table>
+					<independentVar lookup="row">/FMGC/internal/lw</independentVar>
 					<tableData>
 						35000   85.16
 						40000   90.31
@@ -180,10 +300,94 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="/FMGC/internal/tow-vs1g-conf-3">
+			<function>
+				<table>
+					<independentVar lookup="row">/FMGC/internal/tow</independentVar>
+					<tableData>
+						35000   83.55
+						40000   88.77
+						45000   94.32
+						50000   99.25
+						55000  104.23
+						60000  109.10
+						65000  113.75
+						70000  118.16
+						75000  122.28
+						80000  126.35
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/lw-vs1g-conf-3">
+			<function>
+				<table>
+					<independentVar lookup="row">/FMGC/internal/lw</independentVar>
+					<tableData>
+						35000   83.55
+						40000   88.77
+						45000   94.32
+						50000   99.25
+						55000  104.23
+						60000  109.10
+						65000  113.75
+						70000  118.16
+						75000  122.28
+						80000  126.35
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="/FMGC/internal/vs1g-conf-full">
 			<function>
 				<table>
 					<independentVar lookup="row">inertia/weight-kg</independentVar>
+					<independentVar lookup="column">/options/maxflap</independentVar>
+					<tableData> <!-- CFM 35, IAE 40 -->
+						       35      40
+						35000   81.61   79.67
+						40000   86.71   84.65
+						45000   91.69   89.06
+						50000   96.56   93.87
+						55000  101.37   98.51
+						60000  106.01  102.92
+						65000  110.25  106.75
+						70000  114.67  111.18
+						75000  118.68  115.08
+						80000  122.58  118.81
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/tow-vs1g-conf-full">
+			<function>
+				<table>
+					<independentVar lookup="row">/FMGC/internal/tow</independentVar>
+					<independentVar lookup="column">/options/maxflap</independentVar>
+					<tableData> <!-- CFM 35, IAE 40 -->
+						       35      40
+						35000   81.61   79.67
+						40000   86.71   84.65
+						45000   91.69   89.06
+						50000   96.56   93.87
+						55000  101.37   98.51
+						60000  106.01  102.92
+						65000  110.25  106.75
+						70000  114.67  111.18
+						75000  118.68  115.08
+						80000  122.58  118.81
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/lw-vs1g-conf-full">
+			<function>
+				<table>
+					<independentVar lookup="row">/FMGC/internal/lw</independentVar>
 					<independentVar lookup="column">/options/maxflap</independentVar>
 					<tableData> <!-- CFM 35, IAE 40 -->
 						       35      40
@@ -269,7 +473,10 @@
 		<fcs_function name="/FMGC/internal/vls">
 			<function>
 				<product>
-					<property>/FMGC/internal/vs1g-kts</property>
+					<max>
+						<property>/FMGC/internal/vs1g-kts</property>
+						<value>113</value>
+					</max>
 					<sum>
 						<property>/FMGC/internal/vls-factor</property>
 						<table>

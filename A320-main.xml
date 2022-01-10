@@ -840,7 +840,9 @@
 		<internal n="0">
 			<cost-index type="int">0</cost-index>
 			<flex type="int">45</flex>
+			<lw type="double">0</lw>
 			<to-state type="bool">0</to-state>
+			<tow type="double">0</tow>
 			<vmax type="double">350</vmax>
 		</internal>
 		<simbrief-username type="string"></simbrief-username>

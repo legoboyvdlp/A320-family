@@ -89,7 +89,7 @@ var FMGCInternal = {
 	vsw: 0,
 	vls_min: 0,
 	clean: 0,
-	vs1g_clean: 0,
+	vs1g_conf_0: 0,
 	vs1g_conf_1: 0,
 	vs1g_conf_1f: 0,
 	vs1g_conf_2: 0,
@@ -101,14 +101,14 @@ var FMGCInternal = {
 	vls: 0,
 	vapp: 0,
 	clean_to: 0,
-	vs1g_clean_to: 0,
+	vs1g_conf_0_to: 0,
 	vs1g_conf_2_to: 0,
 	vs1g_conf_3_to: 0,
 	vs1g_conf_full_to: 0,
 	slat_to: 0,
 	flap2_to: 0,
 	clean_appr: 0,
-	vs1g_clean_appr: 0,
+	vs1g_conf_0_appr: 0,
 	vs1g_conf_2_appr: 0,
 	vs1g_conf_3_appr: 0,
 	vs1g_conf_full_appr: 0,
@@ -258,6 +258,12 @@ var FMGCNodes = {
 	decel: props.globals.initNode("/FMGC/internal/decel", 0, "BOOL"),
 	flap2: props.globals.getNode("/FMGC/internal/flap-2"),
 	flap3: props.globals.getNode("/FMGC/internal/flap-3"),
+	lw: props.globals.getNode("/FMGC/internal/lw"),
+	lwVs1gConf0: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-0"),
+	lwVs1gConf1f: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-1f"),
+	lwVs1gConf2: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-2"),
+	lwVs1gConf3: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-3"),
+	lwVs1gConfFull: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-full"),
 	mngSpdAlt: props.globals.getNode("/FMGC/internal/mng-alt-spd"),
 	ktsToMachFactor: props.globals.getNode("/FMGC/internal/kts-to-mach-factor"),
 	machToKtsFactor: props.globals.getNode("/FMGC/internal/mach-to-kts-factor"),
@@ -265,6 +271,12 @@ var FMGCNodes = {
 	slat: props.globals.getNode("/FMGC/internal/slat"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
+	tow: props.globals.getNode("/FMGC/internal/tow"),
+	towVs1gConf0: props.globals.getNode("/FMGC/internal/tow-vs1g-conf-0"),
+	towVs1gConf1f: props.globals.getNode("/FMGC/internal/tow-vs1g-conf-1f"),
+	towVs1gConf2: props.globals.getNode("/FMGC/internal/tow-vs1g-conf-2"),
+	towVs1gConf3: props.globals.getNode("/FMGC/internal/tow-vs1g-conf-3"),
+	towVs1gConfFull: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-full"),
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
 	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
 	phase: props.globals.initNode("/FMGC/internal/phase", 0, "INT"),
@@ -400,6 +412,7 @@ var updateFuel = func {
 	
 	if (FMGCInternal.zfwSet) {
 		FMGCInternal.lw = num(FMGCInternal.zfw + FMGCInternal.altFuel + FMGCInternal.finalFuel);
+		FMGCNodes.lw.setValue(FMGCInternal.lw);
 	}
 	
 	# Calculate trip fuel
@@ -505,6 +518,7 @@ var updateFuel = func {
 	}
 	
 	FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
+	FMGCNodes.tow.setValue(FMGCInternal.tow);
 }
 
 ############################
@@ -732,7 +746,6 @@ var masterFMGC = maketimer(0.2, func {
 	
 	# predicted takeoff speeds
 	if (FMGCInternal.phase == 1) {
-		FMGCInternal.clean_to = FMGCInternal.clean;
 		FMGCInternal.vs1g_conf_0_to = FMGCInternal.vs1g_conf_0;
 		FMGCInternal.vs1g_conf_2_to = FMGCInternal.vs1g_conf_2;
 		FMGCInternal.vs1g_conf_3_to = FMGCInternal.vs1g_conf_3;
@@ -740,21 +753,16 @@ var masterFMGC = maketimer(0.2, func {
 		FMGCInternal.slat_to = FMGCInternal.slat;
 		FMGCInternal.flap2_to = FMGCInternal.flap2;
 	} else {
-		FMGCInternal.clean_to = 2 * FMGCInternal.tow * 0.45359237 + 85;
-		if (altitude > 20000) {
-			FMGCInternal.clean_to += (altitude - 20000) / 1000;
-		}
-		FMGCInternal.vs1g_conf_0_to = 0.0024 * FMGCInternal.tow * FMGCInternal.tow + 0.124 * FMGCInternal.tow + 88.942;
-		FMGCInternal.vs1g_conf_2_to = -0.0005 * FMGCInternal.tow * FMGCInternal.tow + 0.5488 * FMGCInternal.tow + 44.279;
-		FMGCInternal.vs1g_conf_3_to = -0.0005 * FMGCInternal.tow * FMGCInternal.tow + 0.5488 * FMGCInternal.tow + 43.279;
-		FMGCInternal.vs1g_conf_full_to = -0.0007 * FMGCInternal.tow * FMGCInternal.tow + 0.6002 * FMGCInternal.tow + 38.479;
-		FMGCInternal.slat_to = FMGCInternal.vs1g_conf_0_to * 1.23;
-		FMGCInternal.flap2_to = FMGCInternal.vs1g_conf_2_to * 1.47;
+		FMGCInternal.vs1g_conf_0_to = FMGCNodes.towVs1gConf0.getValue();
+		FMGCInternal.vs1g_conf_2_to = FMGCNodes.towVs1gConf2.getValue();
+		FMGCInternal.vs1g_conf_3_to = FMGCNodes.towVs1gConf3.getValue();
+		FMGCInternal.vs1g_conf_full_to = FMGCNodes.towVs1gConfFull.getValue();
+		FMGCInternal.slat_to = FMGCNodes.towVs1gConf0.getValue() * 1.27;
+		FMGCInternal.flap2_to = FMGCNodes.towVs1gConf1f.getValue() * 1.22;
 	}
 	
 	# predicted approach (temp go-around) speeds
 	if (FMGCInternal.phase == 5 or FMGCInternal.phase == 6) {
-		FMGCInternal.clean_appr = FMGCInternal.clean;
 		FMGCInternal.vs1g_conf_0_appr = FMGCInternal.vs1g_conf_0;
 		FMGCInternal.vs1g_conf_2_appr = FMGCInternal.vs1g_conf_2;
 		FMGCInternal.vs1g_conf_3_appr = FMGCInternal.vs1g_conf_3;
@@ -766,20 +774,16 @@ var masterFMGC = maketimer(0.2, func {
 			FMGCInternal.vapp_appr = FMGCInternal.vapp;
 		}
 	} else {
-		FMGCInternal.clean_appr = 2 * FMGCInternal.lw * 0.45359237 + 85;
-		if (altitude > 20000) {
-			FMGCInternal.clean_appr += (altitude - 20000) / 1000;
-		}
-		FMGCInternal.vs1g_conf_0_appr = 0.0024 * FMGCInternal.lw * FMGCInternal.lw + 0.124 * FMGCInternal.lw + 88.942;
-		FMGCInternal.vs1g_conf_2_appr = -0.0005 * FMGCInternal.lw * FMGCInternal.lw + 0.5488 * FMGCInternal.lw + 44.279;
-		FMGCInternal.vs1g_conf_3_appr = -0.0005 * FMGCInternal.lw * FMGCInternal.lw + 0.5488 * FMGCInternal.lw + 43.279;
-		FMGCInternal.vs1g_conf_full_appr = -0.0007 * FMGCInternal.lw * FMGCInternal.lw + 0.6002 * FMGCInternal.lw + 38.479;
-		FMGCInternal.slat_appr = FMGCInternal.vs1g_conf_0_appr * 1.23;
-		FMGCInternal.flap2_appr = FMGCInternal.vs1g_conf_2_appr * 1.47;
+		FMGCInternal.vs1g_conf_0_appr = FMGCNodes.lwVs1gConf0.getValue();
+		FMGCInternal.vs1g_conf_2_appr = FMGCNodes.lwVs1gConf2.getValue();
+		FMGCInternal.vs1g_conf_3_appr = FMGCNodes.lwVs1gConf3.getValue();
+		FMGCInternal.vs1g_conf_full_appr = FMGCNodes.lwVs1gConfFull.getValue();
+		FMGCInternal.slat_appr = FMGCNodes.lwVs1gConf0.getValue() * 1.27;
+		FMGCInternal.flap2_appr = FMGCNodes.lwVs1gConf1f.getValue() * 1.22;
 		if (FMGCInternal.ldgConfig3) {
 			FMGCInternal.vls_appr = FMGCInternal.vs1g_conf_3_appr * 1.23;
 		} else {
-			FMGCInternal.vls_appr = FMGCInternal.vs1g_conf_full_appr * 1.23
+			FMGCInternal.vls_appr = FMGCInternal.vs1g_conf_full_appr * 1.23;
 		}
 		if (FMGCInternal.vls_appr < 113) {
 			FMGCInternal.vls_appr = 113;
