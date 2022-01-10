@@ -290,7 +290,7 @@ var updateFma = {
 			setFmaText("pitchMode", "OP CLB", genericCallback, "pitchModeTime");
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
 		} else if (vertText == "SPD DES") {
-			setFmaText("pitchMode", "OP CLB", genericCallback, "pitchModeTime");
+			setFmaText("pitchMode", "OP DES", genericCallback, "pitchModeTime");
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
 		} else if (vertText == "FPA") {
 			setFmaText("pitchMode", "FPA", genericCallback, "pitchModeTime");
