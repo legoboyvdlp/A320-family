@@ -11,8 +11,6 @@ var dep = "";
 var arr = "";
 var n1_left = 0;
 var n1_right = 0;
-var modelat = "";
-var mode = 0;
 var gs = 0;
 var state1 = 0;
 var state2 = 0;
@@ -571,8 +569,6 @@ var newphase = nil;
 var masterFMGC = maketimer(0.2, func {
 	n1_left = pts.Engines.Engine.n1Actual[0].getValue();
 	n1_right = pts.Engines.Engine.n1Actual[1].getValue();
-	modelat = Modes.PFD.FMA.rollMode.getValue();
-	mode = Modes.PFD.FMA.pitchMode.getValue();
 	gs = pts.Velocities.groundspeedKt.getValue();
 	alt = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 	# cruiseft = FMGCInternal.crzFt;
@@ -586,22 +582,22 @@ var masterFMGC = maketimer(0.2, func {
 	newphase = FMGCInternal.phase;
 
 	if (FMGCInternal.phase == 0) {
-		if (gear0 and ((n1_left >= 85 and n1_right >= 85 and mode == "SRS") or gs >= 90)) {
+		if (gear0 and ((n1_left >= 85 and n1_right >= 85 and Modes.PFD.FMA.pitchMode == "SRS") or gs >= 90)) {
 			newphase = 1;
 			systems.PNEU.pressMode.setValue("TO");
 		}
 	} elsif (FMGCInternal.phase == 1) {
 		if (gear0) {
-			if ((n1_left < 85 or n1_right < 85) and gs < 90 and mode == " ") { # rejected takeoff
+			if ((n1_left < 85 or n1_right < 85) and gs < 90 and Modes.PFD.FMA.pitchMode == " ") { # rejected takeoff
 				newphase = 0;
 				systems.PNEU.pressMode.setValue("GN");
 			}
-		} elsif (((mode != "SRS" and mode != " ") or alt >= accel_agl_ft)) {
+		} elsif (((Modes.PFD.FMA.pitchMode != "SRS" and Modes.PFD.FMA.pitchMode != " ") or alt >= accel_agl_ft)) {
 			newphase = 2;
 			systems.PNEU.pressMode.setValue("TO");
 		}
 	} elsif (FMGCInternal.phase == 2) {
-		if ((mode == "ALT CRZ" or mode == "ALT CRZ*")) {
+		if ((Modes.PFD.FMA.pitchMode == "ALT CRZ" or Modes.PFD.FMA.pitchMode == "ALT CRZ*")) {
 			newphase = 3;
 			systems.PNEU.pressMode.setValue("CR");
 		}
@@ -634,7 +630,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 
 	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and 
-	   flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
+	   flightPlanController.arrivalDist <= 15 and (Modes.PFD.FMA.rollMode == "NAV" or Modes.PFD.FMA.rollMode == "LOC" or Modes.PFD.FMA.rollMode == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
 		FMGCNodes.decel.setValue(1);
 	} elsif (FMGCNodes.decel.getValue() and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
 		FMGCNodes.decel.setValue(0);
@@ -929,7 +925,6 @@ var ManagedSPD = maketimer(0.25, func {
 			altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 			decel = FMGCNodes.decel.getValue();
 			ktsmach = Input.ktsMach.getValue();
-			mode = Modes.PFD.FMA.pitchMode.getValue();
 			srsSPD = srsSpeedNode.getValue();
 			
 			mng_alt_spd = math.round(FMGCNodes.mngSpdAlt.getValue(), 1);
@@ -942,7 +937,7 @@ var ManagedSPD = maketimer(0.25, func {
 				FMGCInternal.machSwitchover = 0;
 			}
 			
-			if ((mode == " " or mode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
+			if ((Modes.PFD.FMA.pitchMode == " " or Modes.PFD.FMA.pitchMode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
 				FMGCInternal.mngKtsMach = 0;
 				FMGCInternal.mngSpdCmd = srsSPD;
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {

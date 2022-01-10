@@ -173,7 +173,7 @@ var Sound = {
 # A3XX Custom
 var Custom = {
 	apFdOn: 0,
-	hdgTime: props.globals.getNode("/modes/fcu/hdg-time", 1),
+	hdgTime: -45,
 	ndTrkSel: [props.globals.getNode("/instrumentation/efis[0]/trk-selected", 1), props.globals.getNode("/instrumentation/efis[1]/trk-selected", 1)],
 	showHdg: props.globals.initNode("/it-autoflight/custom/show-hdg", 1, "BOOL"),
 	trkFpa: props.globals.initNode("/it-autoflight/custom/trk-fpa", 0, "BOOL"),
@@ -347,7 +347,7 @@ var ITAF = {
 		
 		# Preselect Heading
 		if (Output.latTemp != 0 and Output.latTemp != 9) { # Modes that always show HDG
-			if (Custom.hdgTime.getValue() + 45 >= Misc.elapsedSec.getValue()) {
+			if (Custom.hdgTime + 45 >= Misc.elapsedSec.getValue()) {
 				Custom.showHdg.setBoolValue(1);
 			} else {
 				Custom.showHdg.setBoolValue(0);

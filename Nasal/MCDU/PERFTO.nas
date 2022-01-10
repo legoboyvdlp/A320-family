@@ -83,7 +83,7 @@ var perfTOInput = func(key, i) {
 				if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
 					fmgc.FMGCInternal.v2 = scratchpad;
 					fmgc.FMGCInternal.v2set = 1;
-					fmgc.updatePitchArm2();
+					fmgc.setFmaText("pitchMode2Armed", fmgc.FMGCInternal.v2set ? "CLB" : " ", genericCallback, "pitchMode2ArmedTime");
 					setprop("/it-autoflight/settings/togaspd", scratchpad);
 					mcdu_scratchpad.scratchpads[i].empty();
 

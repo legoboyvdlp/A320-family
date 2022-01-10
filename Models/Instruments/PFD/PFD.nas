@@ -353,114 +353,6 @@ var canvas_pfd = {
 					}
 				}
 			}),
-			props.UpdateManager.FromHashValue("athrArm", nil, func(val) {
-				if (val != 1) {
-					obj["FMA_athr"].setColor(0.8078,0.8039,0.8078);
-				} else {
-					obj["FMA_athr"].setColor(0.0901,0.6039,0.7176);
-				}
-			}),
-			props.UpdateManager.FromHashList(["apBox","apMode"], nil, func(val) {
-				obj["FMA_ap"].setText(sprintf("%s", val.apMode));
-				if (val.apBox and val.apMode != " ") {
-					obj["FMA_ap_box"].show();
-				} else {
-					obj["FMA_ap_box"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashList(["atBox","atMode"], nil, func(val) {
-				obj["FMA_athr"].setText(sprintf("%s", val.atMode));
-				if (val.atBox and val.atMode != " ") {
-					obj["FMA_athr_box"].show();
-				} else {
-					obj["FMA_athr_box"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashValue("rollMode", nil, func(val) {
-				obj["FMA_roll"].setText(sprintf("%s", val));
-			}),
-			props.UpdateManager.FromHashValue("rollModeArmed", nil, func(val) {
-				obj["FMA_rollarm"].setText(sprintf("%s", val));
-			}),
-			props.UpdateManager.FromHashList(["pitchMode","pitchModeBox","autopilotVS","autopilotFPA","pitchMode2Armed","pitchModeArmed","pitchMode2ArmedBox","pitchModeArmedBox","rollMode","rollModeBox","rollModeArmed","rollModeArmedBox","ap1","ap2","fd1","fd2"], nil, func(val) {
-				obj["FMA_combined"].setText(sprintf("%s", val.pitchMode));
-				if (val.pitchMode == "V/S") {
-					obj["FMA_pitch"].setText(sprintf("%s         ", val.pitchMode));
-					obj["vsFMArate"].setText(sprintf("%+4.0f",val.autopilotVS));
-					obj["vsFMArate"].show();
-				} elsif (val.pitchMode == "FPA") {
-					obj["FMA_pitch"].setText(sprintf("%s         ", val.pitchMode));
-					obj["vsFMArate"].setText(sprintf("%+3.1f°",val.autopilotFPA));
-					obj["vsFMArate"].show();
-				} else {
-					obj["FMA_pitch"].setText(sprintf("%s", val.pitchMode));
-					obj["vsFMArate"].hide();
-				}
-				
-				
-				if (val.pitchMode == "LAND" or val.pitchMode == "FLARE" or val.pitchMode == "ROLL OUT") {
-					obj["FMA_pitch"].hide();
-					obj["FMA_roll"].hide();
-					obj["FMA_pitch_box"].hide();
-					obj["FMA_roll_box"].hide();
-					obj["FMA_pitcharm_box"].hide();
-					obj["FMA_rollarm_box"].hide();
-					obj["FMA_Middle1"].hide();
-					obj["FMA_Middle2"].hide();
-					obj["FMA_combined"].show();
-					
-					if (val.pitchModeBox and val.pitchMode != " ") {
-						obj["FMA_combined_box"].show();
-					} else {
-						obj["FMA_combined_box"].hide();
-					}
-				} else {
-					obj["FMA_combined"].hide();
-					obj["FMA_combined_box"].hide();
-					
-					if (val.pitchModeBox and val.pitchMode != " " and (val.ap1 or val.ap2 or val.fd1 or val.fd2)) {
-						obj["FMA_pitch_box"].show();
-					} else {
-						obj["FMA_pitch_box"].hide();
-					}
-					
-					if (val.pitchModeArmed == "" and val.pitchMode2Armed == "") {
-						obj["FMA_pitcharm_box"].hide();
-					} else {
-						if ((val.pitchModeArmedBox or val.pitchMode2ArmedBox) and (val.ap1 or val.ap2 or val.fd1 or val.fd2)) {
-							obj["FMA_pitcharm_box"].show();
-						} else {
-							obj["FMA_pitcharm_box"].hide();
-						}
-					}
-					
-					if (val.rollModeBox == 1 and val.rollMode != " " and (val.ap1 or val.ap2 or val.fd1 or val.fd2)) {
-						obj["FMA_roll_box"].show();
-					} else {
-						obj["FMA_roll_box"].hide();
-					}
-					
-					if (val.rollModeArmedBox == 1 and val.rollModeArmed != " " and (val.ap1 or val.ap2 or val.fd1 or val.fd2)) {
-						obj["FMA_rollarm_box"].show();
-					} else {
-						obj["FMA_rollarm_box"].hide();
-					}
-				}
-			}),
-			props.UpdateManager.FromHashValue("pitchModeArmed", nil, func(val) {
-				obj["FMA_pitcharm"].setText(sprintf("%s", val));
-			}),
-			props.UpdateManager.FromHashValue("pitchMode2Armed", nil, func(val) {
-				obj["FMA_pitcharm2"].setText(sprintf("%s", val));
-			}),
-			props.UpdateManager.FromHashList(["fdBox","fdMode"], nil, func(val) {
-				obj["FMA_fd"].setText(sprintf("%s", val.fdMode));
-				if (val.fdBox and val.fdMode != " ") {
-					obj["FMA_fd_box"].show();
-				} else {
-					obj["FMA_fd_box"].hide();
-				}
-			}),
 			props.UpdateManager.FromHashList(["fd1","fd2","ap1","ap2"], nil, func(val) {
 				if (val.fd1 or val.fd2 or val.ap1 or val.ap2) {
 					obj["FMA_pitcharm"].show();
@@ -526,36 +418,6 @@ var canvas_pfd = {
 					obj["GS_pointer"].show();
 				} else {
 					obj["GS_pointer"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashList(["fd1","fd2","rollMode","pitchMode","trkFpa","pitchPFD","roll","gear1Wow"], nil, func(val) {
-				if (((obj.number == 0 and val.fd1) or (obj.number == 1 and val.fd2)) and val.trkFpa == 0 and val.pitchPFD < 25 and val.pitchPFD > -13 and val.roll < 45 and val.roll > -45) {
-					if (val.rollMode != " " and !val.gear1Wow) {
-						obj["FD_roll"].show();
-					} else {
-						obj["FD_roll"].hide();
-					}
-					
-					if (val.pitchMode != " ") {
-						obj["FD_pitch"].show();
-					} else {
-						obj["FD_pitch"].hide();
-					}
-				} else {
-					obj["FD_roll"].hide();
-					obj["FD_pitch"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashList(["alphaFloor","togaLk","throttleMode"], nil, func(val) {
-				if (val.alphaFloor) {
-					obj["FMA_thrust"].setText("A.FLOOR");
-					obj["FMA_thrust_box"].setColor(0.7333,0.3803,0);
-				} else if (val.togaLk) {
-					obj["FMA_thrust"].setText("TOGA LK");
-					obj["FMA_thrust_box"].setColor(0.7333,0.3803,0);
-				} else {
-					obj["FMA_thrust"].setText(sprintf("%s", val.throttleMode));
-					obj["FMA_thrust_box"].setColor(0.8078,0.8039,0.8078);
 				}
 			}),
 			props.UpdateManager.FromHashValue("flexTemp", nil, func(val) {
@@ -1338,7 +1200,13 @@ var canvas_pfd = {
 			me["ALT_digit_UP_metric"].hide();
 		}
 		
-		if (notification.pitchMode == "LAND" or notification.pitchMode == "FLARE" or notification.pitchMode == "ROLL OUT") {
+		if (fmgc.Modes.PFD.FMA.pitchMode == "LAND" or fmgc.Modes.PFD.FMA.pitchMode == "FLARE" or fmgc.Modes.PFD.FMA.pitchMode == "ROLL OUT") {
+			if (fmgc.Modes.PFD.FMA.pitchMode == "LAND") {
+				autoland_pitch_land.setBoolValue(1);
+			} else {
+				autoland_pitch_land.setBoolValue(0);
+			}
+			
 			if (ecam.directLaw.active) {
 				me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
 				me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
@@ -1452,7 +1320,7 @@ var canvas_pfd = {
 		if (notification.alphaFloor != 1 and notification.togaLk != 1) {
 			if (notification.athr and notification.engOut != 1 and (notification.thrust1 == "MAN" or notification.thrust1 == "CL") and (notification.thrust2 == "MAN" or notification.thrust2 == "CL")) {
 				me["FMA_thrust"].show();
-				if (notification.throttleModeBox and notification.throttleMode != " ") {
+				if (fmgc.Modes.PFD.FMA.throttleBox and fmgc.Modes.PFD.FMA.throttle != " ") {
 					me["FMA_thrust_box"].show();
 				} else {
 					me["FMA_thrust_box"].hide();
@@ -1460,7 +1328,7 @@ var canvas_pfd = {
 			} else if (notification.athr and notification.engOut and (notification.thrust1 == "MAN" or notification.thrust1 == "CL" or (notification.thrust1 == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (notification.thrust1 == "MCT" and notification.thrustLimit != "FLX")) and 
 			(notification.thrust2 == "MAN" or notification.thrust2 == "CL" or (notification.thrust2 == "MAN THR" and !systems.FADEC.manThrAboveMct[1]) or (notification.thrust2 == "MCT" and notification.thrustLimit != "FLX"))) {
 				me["FMA_thrust"].show();
-				if (notification.throttleModeBox and notification.throttleMode != " ") {
+				if (fmgc.Modes.PFD.FMA.throttleBox and fmgc.Modes.PFD.FMA.throttle != " ") {
 					me["FMA_thrust_box"].show();
 				} else {
 					me["FMA_thrust_box"].hide();
@@ -1756,6 +1624,130 @@ var canvas_pfd = {
 			me["CRS_pointer"].hide();
 		}
 		
+		me["FMA_ap"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.apMode));
+		if (fmgc.Modes.PFD.FMA.apModeBox and fmgc.Modes.PFD.FMA.apMode != " ") {
+			me["FMA_ap_box"].show();
+		} else {
+			me["FMA_ap_box"].hide();
+		}
+		
+		me["FMA_athr"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.athrMode));
+		if (fmgc.Modes.PFD.FMA.athrModeBox and fmgc.Modes.PFD.FMA.athrMode != " ") {
+			me["FMA_athr_box"].show();
+		} else {
+			me["FMA_athr_box"].hide();
+		}
+		
+		me["FMA_fd"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.fdMode));
+		if (fmgc.Modes.PFD.FMA.fdModeBox and fmgc.Modes.PFD.FMA.fdMode != " ") {
+			me["FMA_fd_box"].show();
+		} else {
+			me["FMA_fd_box"].hide();
+		}
+		
+		if (fmgc.Modes.PFD.FMA.athrArmed != 1) {
+			me["FMA_athr"].setColor(0.8078,0.8039,0.8078);
+		} else {
+			me["FMA_athr"].setColor(0.0901,0.6039,0.7176);
+		}
+		
+		me["FMA_roll"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.rollMode));
+		me["FMA_rollarm"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.rollModeArmed));
+		me["FMA_combined"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.pitchMode));
+		me["FMA_pitcharm"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.pitchModeArmed));
+		me["FMA_pitcharm2"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.pitchMode2Armed));
+		
+		if (fmgc.Modes.PFD.FMA.pitchMode == "V/S") {
+			me["FMA_pitch"].setText(sprintf("%s         ", fmgc.Modes.PFD.FMA.pitchMode));
+			me["vsFMArate"].setText(sprintf("%+4.0f",notification.autopilotVS));
+			me["vsFMArate"].show();
+		} elsif (fmgc.Modes.PFD.FMA.pitchMode == "FPA") {
+			me["FMA_pitch"].setText(sprintf("%s         ", fmgc.Modes.PFD.FMA.pitchMode));
+			me["vsFMArate"].setText(sprintf("%+3.1f°",notification.autopilotFPA));
+			me["vsFMArate"].show();
+		} else {
+			me["FMA_pitch"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.pitchMode));
+			me["vsFMArate"].hide();
+		}
+		
+		
+		if (fmgc.Modes.PFD.FMA.pitchMode == "LAND" or fmgc.Modes.PFD.FMA.pitchMode == "FLARE" or fmgc.Modes.PFD.FMA.pitchMode == "ROLL OUT") {
+			me["FMA_pitch"].hide();
+			me["FMA_roll"].hide();
+			me["FMA_pitch_box"].hide();
+			me["FMA_roll_box"].hide();
+			me["FMA_pitcharm_box"].hide();
+			me["FMA_rollarm_box"].hide();
+			me["FMA_Middle1"].hide();
+			me["FMA_Middle2"].hide();
+			me["FMA_combined"].show();
+			
+			if (fmgc.Modes.PFD.FMA.pitchModeBox and fmgc.Modes.PFD.FMA.pitchMode != " ") {
+				me["FMA_combined_box"].show();
+			} else {
+				me["FMA_combined_box"].hide();
+			}
+		} else {
+			me["FMA_combined"].hide();
+			me["FMA_combined_box"].hide();
+			
+			if (fmgc.Modes.PFD.FMA.pitchModeBox and fmgc.Modes.PFD.FMA.pitchMode != " " and (notification.ap1 or notification.notification or val.fd1 or notification.fd2)) {
+				me["FMA_pitch_box"].show();
+			} else {
+				me["FMA_pitch_box"].hide();
+			}
+			
+			if (fmgc.Modes.PFD.FMA.pitchModeArmed == " " and fmgc.Modes.PFD.FMA.pitchMode2Armed == " ") {
+				me["FMA_pitcharm_box"].hide();
+			} else {
+				if ((fmgc.Modes.PFD.FMA.pitchModeArmedBox or fmgc.Modes.PFD.FMA.pitchMode2ArmedBox) and (notification.ap1 or notification.notification or val.fd1 or notification.fd2)) {
+					me["FMA_pitcharm_box"].show();
+				} else {
+					me["FMA_pitcharm_box"].hide();
+				}
+			}
+			
+			if (fmgc.Modes.PFD.FMA.rollModeBox == 1 and fmgc.Modes.PFD.FMA.rollMode != " "  and (notification.ap1 or notification.notification or val.fd1 or notification.fd2)) {
+				me["FMA_roll_box"].show();
+			} else {
+				me["FMA_roll_box"].hide();
+			}
+			
+			if (fmgc.Modes.PFD.FMA.rollModeArmedBox == 1 and fmgc.Modes.PFD.FMA.rollModeArmed != " " and (notification.ap1 or notification.notification or val.fd1 or notification.fd2)) {
+				me["FMA_rollarm_box"].show();
+			} else {
+				me["FMA_rollarm_box"].hide();
+			}
+		}
+		
+		if (notification.alphaFloor) {
+			me["FMA_thrust"].setText("A.FLOOR");
+			me["FMA_thrust_box"].setColor(0.7333,0.3803,0);
+		} else if (notification.togaLk) {
+			me["FMA_thrust"].setText("TOGA LK");
+			me["FMA_thrust_box"].setColor(0.7333,0.3803,0);
+		} else {
+			me["FMA_thrust"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.throttle));
+			me["FMA_thrust_box"].setColor(0.8078,0.8039,0.8078);
+		}
+		
+		if (((me.number == 0 and notification.fd1) or (me.number == 1 and notification.fd2)) and notification.trkFpa == 0 and notification.pitchPFD < 25 and notification.pitchPFD > -13 and notification.roll < 45 and notification.roll > -45) {
+			if (fmgc.Modes.PFD.FMA.rollMode != " " and !notification.gear1Wow) {
+				me["FD_roll"].show();
+			} else {
+				me["FD_roll"].hide();
+			}
+			
+			if (fmgc.Modes.PFD.FMA.pitchMode != " ") {
+				me["FD_pitch"].show();
+			} else {
+				me["FD_pitch"].hide();
+			}
+		} else {
+			me["FD_roll"].hide();
+			me["FD_pitch"].hide();
+		}
+		
 		foreach(var update_item; me.update_items)
         {
             update_item.update(notification);
@@ -1955,27 +1947,7 @@ var input = {
 	du6Lgt: "/controls/lighting/DU/du6",
 	attSwitch: "/controls/navigation/switching/att-hdg",
 	
-	atMode: "/modes/pfd/fma/at-mode",
-	apMode: "/modes/pfd/fma/ap-mode",
-	fdMode: "/modes/pfd/fma/fd-mode",
-	atBox: "/modes/pfd/fma/athr-mode-box",
-	apBox: "/modes/pfd/fma/ap-mode-box",
-	fdBox: "/modes/pfd/fma/fd-mode-box",
 	athr: "/it-autoflight/output/athr",
-	athrArm: "/modes/pfd/fma/athr-armed",
-	rollMode: "/modes/pfd/fma/roll-mode",
-	rollModeArmed: "/modes/pfd/fma/roll-mode-armed",
-	rollModeBox: "/modes/pfd/fma/roll-mode-box",
-	rollModeArmedBox: "/modes/pfd/fma/roll-mode-armed-box",
-	pitchMode: "/modes/pfd/fma/pitch-mode",
-	pitchModeArmed: "/modes/pfd/fma/pitch-mode-armed",
-	pitchMode2Armed: "/modes/pfd/fma/pitch-mode2-armed",
-	pitchModeBox: "/modes/pfd/fma/pitch-mode-box",
-	pitchModeArmedBox: "/modes/pfd/fma/pitch-mode-armed-box",
-	pitchMode2ArmedBox: "/modes/pfd/fma/pitch-mode2-armed-box",
-	throttleMode: "/modes/pfd/fma/throttle-mode",
-	throttleModeBox: "/modes/pfd/fma/throttle-mode-box",
-	
 	altitudeAutopilot: "/it-autoflight/internal/alt",
 	pitchPFD: "/instrumentation/pfd/pitch-deg-non-linear",
 	horizonGround: "/instrumentation/pfd/horizon-ground",
@@ -2201,10 +2173,3 @@ setlistener(autoland_alarm, func(alarm) {
 	}
 }, 0, 0);
 
-setlistener("/modes/pfd/fma/pitch-mode", func(pitch) {
-	if (pitch.getValue() == "LAND") {
-		autoland_pitch_land.setBoolValue(1);
-	} else {
-		autoland_pitch_land.setBoolValue(0);
-	}
-},0,0);

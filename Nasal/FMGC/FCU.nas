@@ -555,6 +555,6 @@ var athrOff = func(type) {
 var hdgInput = func {
 	if (fmgc.Output.lat.getValue() != 0) {
 		fmgc.Custom.showHdg.setBoolValue(1);
-		fmgc.Custom.hdgTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		fmgc.Custom.hdgTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 }
