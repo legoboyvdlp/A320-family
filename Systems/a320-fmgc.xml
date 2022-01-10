@@ -244,17 +244,35 @@
 			</test>
 		</switch>
 		
-		<switch name="/FMGC/internal/vls-factor">
-			<default value="1.23"/> <!-- 1.23 VS1g -->
+		<switch name="/FMGC/internal/vls-factor-cmd">
+			<default value="1.28"/> <!-- 1.28 VS1g -->
 			<test value="1.13"> <!-- 1.13 VS1g -->
 				/FMGC/internal/takeoff-latch eq 1
 			</test>
+			<test value="1.23"> <!-- 1.23 VS1g -->
+				fcs/flap-pos-deg ge 0.1
+			</test>
 		</switch>
+		
+		<switch name="/FMGC/internal/vls-factor-rate">
+			<default value="10"/>
+			<test value="0.1">
+				position/wow eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/FMGC/internal/vls-factor">
+			<input>/FMGC/internal/vls-factor-cmd</input>
+			<rate_limit>/FMGC/internal/vls-factor-rate</rate_limit>
+		</actuator>
 		
 		<fcs_function name="/FMGC/internal/vls">
 			<function>
 				<product>
-					<property>/FMGC/internal/vs1g-kts</property>
+					<difference>
+						<property>/FMGC/internal/vs1g-kts</property>
+						<value>5</value>
+					</difference>
 					<sum>
 						<property>/FMGC/internal/vls-factor</property>
 						<table>
@@ -306,20 +324,20 @@
 		
 		<!-- Slat -->
 		<pure_gain name="/FMGC/internal/slat">
-			<input>/FMGC/internal/vs1g-conf-1</input>
-			<gain>1.22</gain>
+			<input>/FMGC/internal/vs1g-conf-0</input>
+			<gain>1.27</gain>
 		</pure_gain>
 		
 		<!-- Flap 2 -->
 		<pure_gain name="/FMGC/internal/flap-2">
-			<input>/FMGC/internal/vs1g-conf-2</input>
-			<gain>1.25</gain>
+			<input>/FMGC/internal/vs1g-conf-1f</input>
+			<gain>1.22</gain>
 		</pure_gain>
 		
 		<!-- Flap 3 -->
 		<pure_gain name="/FMGC/internal/flap-3">
-			<input>/FMGC/internal/vs1g-conf-3</input>
-			<gain>1.25</gain>
+			<input>/FMGC/internal/vs1g-conf-2</input>
+			<gain>1.22</gain>
 		</pure_gain>
 	
 	</channel>
