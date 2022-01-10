@@ -759,7 +759,7 @@
 							<property>/systems/navigation/adr/output/cas-3</property>
 						</max>
 						<difference>
-							<property>/FMGC/internal/vls-min</property>
+							<property>/FMGC/internal/vls</property>
 							<property>/systems/navigation/adr/computation/underspeed-difference</property>
 						</difference>
 					</lt>

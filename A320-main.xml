@@ -841,6 +841,7 @@
 			<cost-index type="int">0</cost-index>
 			<flex type="int">45</flex>
 			<to-state type="bool">0</to-state>
+			<vmax type="double">350</vmax>
 		</internal>
 		<simbrief-username type="string"></simbrief-username>
 	</FMGC>

@@ -7,8 +7,9 @@
 	
 	<property value="350">/FMGC/internal/vmo-kts</property>
 	
-	<channel name="FMGC" execrate="8">
+	<channel name="Envelope Protection" execrate="8">
 		
+		<!-- Vmo/Mmo -->
 		<fcs_function name="/FMGC/internal/mmo-kts">
 			<function>
 				<product>
@@ -16,7 +17,7 @@
 						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
 						<max> <!-- Prevent divide by 0 -->
 							<property>/instrumentation/airspeed-indicator/indicated-mach</property>
-							<value>0.0000001</value>
+							<value>0.0001</value>
 						</max>
 					</quotient>
 					<value>0.82</value>
@@ -40,6 +41,290 @@
 				</sum>
 			</function>
 		</fcs_function>
+		
+		<!-- VS1g -->
+		<fcs_function name="/FMGC/internal/vs1g-kts">
+			<function>
+				<table>
+					<independentVar lookup="row">inertia/weight-kg</independentVar>
+					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
+					<tableData breakPoint="0"> <!-- 40 column is a guess, no data for flap without slat -->
+						       0       40
+						35000  114.99   99.55
+						40000  123.08  106.14
+						45000  130.66  111.83
+						50000  137.73  117.76
+						55000  144.41  123.46
+						60000  150.81  128.89
+						65000  156.76  133.34
+						70000  162.65  138.73
+						75000  168.43  143.60
+						80000  173.65  148.02
+					</tableData>
+					<tableData breakPoint="27">
+						       0       10      15      20      35      40
+						35000   95.11   90.08   85.16   83.55   81.61   79.67
+						40000  101.59   96.03   90.31   88.77   86.71   84.65
+						45000  107.89  101.93   95.64   94.32   91.69   89.06
+						50000  113.84  107.55  101.02   99.25   96.56   93.87
+						55000  119.46  112.76  106.07  104.23  101.37   98.51
+						60000  124.84  117.97  110.94  109.10  106.01  102.92
+						65000  130.17  122.96  115.63  113.75  110.25  106.75
+						70000  135.10  127.54  119.99  118.16  114.67  111.18
+						75000  139.91  132.18  124.23  122.28  118.68  115.08
+						80000  144.44  136.54  128.58  126.35  122.58  118.81
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<!-- Extra VS1g tables for predictions etc -->
+		<fcs_function name="/FMGC/internal/vs1g-conf-0">
+			<function>
+				<table>
+					<independentVar lookup="row">inertia/weight-kg</independentVar>
+					<tableData>
+						35000  114.99
+						40000  123.08
+						45000  130.66
+						50000  137.73
+						55000  144.41
+						60000  150.81
+						65000  156.76
+						70000  162.65
+						75000  168.43
+						80000  173.65
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/vs1g-conf-1">
+			<function>
+				<table>
+					<independentVar lookup="row">inertia/weight-kg</independentVar>
+					<tableData>
+						35000   95.11
+						40000  101.59
+						45000  107.89
+						50000  113.84
+						55000  119.46
+						60000  124.84
+						65000  130.17
+						70000  135.10
+						75000  139.91
+						80000  144.44
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/vs1g-conf-1f">
+			<function>
+				<table>
+					<independentVar lookup="row">inertia/weight-kg</independentVar>
+					<tableData>
+						35000   90.08
+						40000   96.03
+						45000  101.93
+						50000  107.55
+						55000  112.76
+						60000  117.97
+						65000  122.96
+						70000  127.54
+						75000  132.18
+						80000  136.54
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/vs1g-conf-2">
+			<function>
+				<table>
+					<independentVar lookup="row">inertia/weight-kg</independentVar>
+					<tableData>
+						35000   85.16
+						40000   90.31
+						45000   95.64
+						50000  101.02
+						55000  106.07
+						60000  110.94
+						65000  115.63
+						70000  119.99
+						75000  124.23
+						80000  128.58
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/vs1g-conf-3">
+			<function>
+				<table>
+					<independentVar lookup="row">inertia/weight-kg</independentVar>
+					<tableData>
+						35000   83.55
+						40000   88.77
+						45000   94.32
+						50000   99.25
+						55000  104.23
+						60000  109.10
+						65000  113.75
+						70000  118.16
+						75000  122.28
+						80000  126.35
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/vs1g-conf-full">
+			<function>
+				<table>
+					<independentVar lookup="row">inertia/weight-kg</independentVar>
+					<independentVar lookup="column">/options/maxflap</independentVar>
+					<tableData> <!-- CFM 35, IAE 40 -->
+						       35      40
+						35000   81.61   79.67
+						40000   86.71   84.65
+						45000   91.69   89.06
+						50000   96.56   93.87
+						55000  101.37   98.51
+						60000  106.01  102.92
+						65000  110.25  106.75
+						70000  114.67  111.18
+						75000  118.68  115.08
+						80000  122.58  118.81
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/vs1g-roll-factor">
+			<function>
+				<sqrt> <!-- Take the square root to get the factor -->
+					<quotient> <!-- Calculate neutral load factor from bank -->
+						<value>1</value>
+						<cos>
+							<toradians>
+								<min>
+									<abs>
+										<property>/orientation/roll-deg</property>
+									</abs>
+									<value>89</value> <!-- Above math breaks -->
+								</min>
+							</toradians>
+						</cos>
+					</quotient>
+				</sqrt>
+			</function>
+		</fcs_function>
+		
+		<pure_gain name="/FMGC/internal/vs1g">
+			<input>/FMGC/internal/vs1g-kts</input>
+			<gain>/FMGC/internal/vs1g-roll-factor</gain>
+			<clipto>
+				<min>0</min>
+				<max>/FMGC/internal/vmo-mmo</max>
+			</clipto>
+		</pure_gain>
+		
+		<!-- Vls -->
+		<switch name="/FMGC/internal/takeoff-latch">
+			<default value="/FMGC/internal/takeoff-latch"/>
+			<test logic="OR" value="1">
+				position/wow eq 1
+				/FMGC/internal/phase lt 2
+				/FMGC/internal/phase eq 6
+			</test>
+			<test value="0">
+				fcs/flap-pos-deg lt 0.1
+			</test>
+		</switch>
+		
+		<switch name="/FMGC/internal/vls-factor">
+			<default value="1.23"/> <!-- 1.23 VS1g -->
+			<test value="1.13"> <!-- 1.13 VS1g -->
+				/FMGC/internal/takeoff-latch eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="/FMGC/internal/vls">
+			<function>
+				<product>
+					<property>/FMGC/internal/vs1g-kts</property>
+					<sum>
+						<property>/FMGC/internal/vls-factor</property>
+						<table>
+							<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+							<tableData>
+								    0  0.00
+								43000  0.22
+							</tableData>
+						</table>
+					</sum>
+				</product>
+			</function>
+			<clipto>
+				<min>/FMGC/internal/vs1g</min>
+				<max>100000</max>
+			</clipto>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/vls-mach">
+			<function>
+				<product>
+					<quotient>
+						<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+						<max> <!-- Prevent divide by 0 -->
+							<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+							<value>0.0001</value>
+						</max>
+					</quotient>
+					<property>/FMGC/internal/vls</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<!-- Vmax - Computed in FMGC.nas and ADR.nas -->
+		<fcs_function name="/FMGC/internal/vmax-mach">
+			<function>
+				<product>
+					<quotient>
+						<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+						<max> <!-- Prevent divide by 0 -->
+							<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+							<value>0.0001</value>
+						</max>
+					</quotient>
+					<property>/FMGC/internal/vmax</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<!-- Slat -->
+		<pure_gain name="/FMGC/internal/slat">
+			<input>/FMGC/internal/vs1g-conf-1</input>
+			<gain>1.22</gain>
+		</pure_gain>
+		
+		<!-- Flap 2 -->
+		<pure_gain name="/FMGC/internal/flap-2">
+			<input>/FMGC/internal/vs1g-conf-2</input>
+			<gain>1.25</gain>
+		</pure_gain>
+		
+		<!-- Flap 3 -->
+		<pure_gain name="/FMGC/internal/flap-3">
+			<input>/FMGC/internal/vs1g-conf-3</input>
+			<gain>1.25</gain>
+		</pure_gain>
+	
+	</channel>
+	
+	<channel name="FMGC Misc" execrate="8">
 		
 		<fcs_function name="/systems/fmgc/cas-compare/cas-1-to-3">
 			<function>
@@ -259,6 +544,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
+	
 	</channel>
 
 </system>

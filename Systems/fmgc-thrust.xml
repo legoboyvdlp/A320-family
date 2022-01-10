@@ -10,7 +10,17 @@
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<input>/it-autoflight/input/kts</input>
+		<input>
+			<expression>
+				<max>
+					<min>
+						<property>/it-autoflight/input/kts</property>
+						<property>/FMGC/internal/vmax</property>
+					</min>
+					<property>/FMGC/internal/vls</property>
+				</max>
+			</expression>
+		</input>
 		<output>/it-autoflight/internal/athr-kts-cmd</output>
 		<min>
 			<expression>
@@ -72,7 +82,17 @@
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<input>/it-autoflight/input/mach</input>
+		<input>
+			<expression>
+				<max>
+					<min>
+						<property>/it-autoflight/input/mach</property>
+						<property>/FMGC/internal/vmax-mach</property>
+					</min>
+					<property>/FMGC/internal/vls-mach</property>
+				</max>
+			</expression>
+		</input>
 		<output>/it-autoflight/internal/athr-mach-cmd</output>
 		<min>
 			<expression>

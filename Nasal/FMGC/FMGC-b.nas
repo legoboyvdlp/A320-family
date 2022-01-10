@@ -262,10 +262,6 @@ var ITAF = {
 		Internal.vsTemp = Internal.vs.getValue();
 		Position.indicatedAltitudeFtTemp = Position.indicatedAltitudeFt.getValue();
 		
-		# Update VLS / VMAX for autothrust
-		FMGCNodes.vmax.setValue(FMGCInternal.maxspeed);
-		FMGCNodes.vlsMin.setValue(FMGCInternal.vls_min);
-		
 		# LNAV Engagement
 		if (Output.lnavArm.getBoolValue()) {
 			me.checkLnav(1);

@@ -85,6 +85,7 @@ var canvas_pfd = {
 	tgt_kts: 0,
 	tgt_ias: 0,
 	vapp: 0,
+	vls: 0,
 	new: func(svg, name, number) {
 		var obj = {parents: [canvas_pfd] };
 		obj.canvas = canvas.new({
@@ -788,12 +789,13 @@ var canvas_pfd = {
 			}
 			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
-				if (fmgc.FMGCInternal.vls_min <= 30) {
+				me.vls = fmgc.FMGCNodes.vls.getValue();
+				if (me.vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
-				} else if (fmgc.FMGCInternal.vls_min >= 420) {
+				} else if (me.vls >= 420) {
 					me.VLSmin = 390 - me.ASI;
 				} else {
-					me.VLSmin = fmgc.FMGCInternal.vls_min - 30 - me.ASI;
+					me.VLSmin = me.vls - 30 - me.ASI;
 				}
 				
 				if (fmgc.FMGCInternal.alpha_prot <= 30) {

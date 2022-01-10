@@ -239,7 +239,13 @@
 			<expression>
 				<product>
 					<difference>
-						<property>/it-autoflight/input/mach</property>
+						<max>
+							<min>
+								<property>/it-autoflight/input/mach</property>
+								<property>/FMGC/internal/vmax-mach</property>
+							</min>
+							<property>/FMGC/internal/vls-mach</property>
+						</max>
 						<property>/instrumentation/airspeed-indicator/indicated-mach</property>
 					</difference>
 					<value>80</value>
@@ -250,7 +256,13 @@
 			<expression>
 				<product>
 					<difference>
-						<property>/it-autoflight/input/kts</property>
+						<max>
+							<min>
+								<property>/it-autoflight/input/kts</property>
+								<property>/FMGC/internal/vmax</property>
+							</min>
+							<property>/FMGC/internal/vls</property>
+						</max>
 						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
 					</difference>
 					<value>0.08</value>

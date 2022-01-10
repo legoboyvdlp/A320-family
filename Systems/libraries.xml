@@ -578,20 +578,6 @@
 	</filter>
 	
 	<filter>
-		<name>LBtoKG</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<input>
-			<product>
-				<property>/fdm/jsbsim/inertia/weight-lbs</property>
-				<value>0.45359237</value>
-			</product>
-		</input>
-		<output>/fdm/jsbsim/inertia/weight-kg</output>
-	</filter>
-	
-	<filter>
 		<name>optalt</name>
 		<type>gain</type>
 		<gain>1.0</gain>
