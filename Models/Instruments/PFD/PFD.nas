@@ -391,11 +391,11 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashList(["pitchMode","pitchModeBox","autopilotVS","autopilotFPA","pitchMode2Armed","pitchModeArmed","pitchMode2ArmedBox","pitchModeArmedBox","rollMode","rollModeBox","rollModeArmed","rollModeArmedBox","ap1","ap2","fd1","fd2"], nil, func(val) {
 				obj["FMA_combined"].setText(sprintf("%s", val.pitchMode));
 				if (val.pitchMode == "V/S") {
-					obj["FMA_pitch"].setText(sprintf("%s         ", val.pitchMode));
+					obj["FMA_pitch"].setText(sprintf("%s     ", val.pitchMode));
 					obj["vsFMArate"].setText(sprintf("%+4.0f",val.autopilotVS));
 					obj["vsFMArate"].show();
 				} elsif (val.pitchMode == "FPA") {
-					obj["FMA_pitch"].setText(sprintf("%s         ", val.pitchMode));
+					obj["FMA_pitch"].setText(sprintf("%s     ", val.pitchMode));
 					obj["vsFMArate"].setText(sprintf("%+3.1f°",val.autopilotFPA));
 					obj["vsFMArate"].show();
 				} else {
