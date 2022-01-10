@@ -238,6 +238,12 @@ var ITAF = {
 		me.updateVertText("");
 		Custom.showHdg.setBoolValue(1);
 		Custom.Output.fmaPower = 1;
+		
+		# Sync FMA
+		fmaAp();
+		fmaAthr();
+		fmaFd();
+		
 		ManagedSPD.stop();
 		loopTimer.start();
 		slowLoopTimer.start();

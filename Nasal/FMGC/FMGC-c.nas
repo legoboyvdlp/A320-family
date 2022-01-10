@@ -3,20 +3,13 @@
 
 var at = nil;
 var athr = nil;
-var ap1 = nil;
-var ap2 = nil;
 var elapsedtime = nil;
 var engout = nil;
 var engstate1 = nil;
 var engstate2 = nil;
-var fd1 = nil;
-var fd2 = nil;
 var flx = nil;
-var gear1 = nil;
-var gear2 = nil;
 var gs_defl = nil;
 var latText = nil;
-var MCPalt = nil;
 var nav_defl = nil;
 var newfd = nil;
 var newarm = nil;
@@ -107,7 +100,7 @@ var init = func() {
 };
 
 # Master Thrust
-var loopFMA = maketimer(0.05, func {
+var loopFMA = maketimer(0.05, func() {
 	state1 = systems.FADEC.detentText[0].getValue();
 	state2 = systems.FADEC.detentText[1].getValue();
 	newthr = Modes.PFD.FMA.throttle.getValue();
@@ -135,7 +128,7 @@ var loopFMA = maketimer(0.05, func {
 			if (Output.ap1.getBoolValue() or Output.ap2.getBoolValue() or Output.fd1.getBoolValue() or Output.fd2.getBoolValue()) {
 				thr = Output.thrMode.getValue();
 				if (thr == 0) {
-					loopFMA_b();
+					updateFMAThrottleMode();
 				} else if (thr == 1) {
 					if (newthr != "THR IDLE") {
 						Modes.PFD.FMA.throttle.setValue("THR IDLE");
@@ -156,10 +149,10 @@ var loopFMA = maketimer(0.05, func {
 					}
 				}
 			} else {
-				loopFMA_b();
+				updateFMAThrottleMode();
 			}
 		} else {
-			loopFMA_b();
+			updateFMAThrottleMode();
 		}
 	}
 	
@@ -182,25 +175,24 @@ var loopFMA = maketimer(0.05, func {
 	}
 	
 	# SRS RWY Engagement
-	flx = systems.FADEC.Limit.flexActive.getBoolValue();
-	newlat = Modes.PFD.FMA.rollMode.getValue();
-	engstate1 = pts.Engines.Engine.state[0].getValue();
-	engstate2 = pts.Engines.Engine.state[1].getValue();
-	if (((state1 == "TOGA" or state2 == "TOGA") or (flx == 1 and (state1 == "MCT" or state2 == "MCT")) or (flx == 1 and ((state1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])))) and (engstate1 == 3 or engstate2 == 3)) {
-		# RWY Engagement would go here, but automatic ILS selection is not simulated yet.
-		gear1 = pts.Gear.wow[1].getValue();
-		if (gear1 and FMGCInternal.v2set and Output.vert.getValue() != 7) {
-			ITAF.setVertMode(7);
-			ITAF.updateVertText("T/O CLB");
-		}
-	} else {
-		gear1 = pts.Gear.wow[1].getValue();
-		gear2 = pts.Gear.wow[2].getValue();
-		if (Input.lat.getValue() == 5 and (gear1 or gear2)) {
-			ITAF.setLatMode(9);
-		}
-		if (Input.vert.getValue() == 7 and (gear1 or gear2)) {
-			ITAF.setVertMode(9);
+	if (pts.Gear.wow[1].getValue() or pts.Gear.wow[2].getValue()) {
+		flx = systems.FADEC.Limit.flexActive.getBoolValue();
+		newlat = Modes.PFD.FMA.rollMode.getValue();
+		engstate1 = pts.Engines.Engine.state[0].getValue();
+		engstate2 = pts.Engines.Engine.state[1].getValue();
+		if (((state1 == "TOGA" or state2 == "TOGA") or (flx == 1 and (state1 == "MCT" or state2 == "MCT")) or (flx == 1 and ((state1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])))) and (engstate1 == 3 or engstate2 == 3)) {
+			# RWY Engagement would go here, but automatic ILS selection is not simulated yet.
+			if (FMGCInternal.v2set and Output.vert.getValue() != 7) {
+				ITAF.setVertMode(7);
+				ITAF.updateVertText("T/O CLB");
+			}
+		} else {
+			if (Input.lat.getValue() == 5) {
+				ITAF.setLatMode(9);
+			}
+			if (Input.vert.getValue() == 7) {
+				ITAF.setVertMode(9);
+			}
 		}
 	}
 	
@@ -253,7 +245,7 @@ var loopFMA = maketimer(0.05, func {
 	}
 });
 
-var loopFMA_b = func {
+var updateFMAThrottleMode = func() {
 	newthr = Modes.PFD.FMA.throttle.getValue();
 	if (!Input.ktsMach.getValue()) {
 		if (newthr != "SPEED") {
@@ -406,23 +398,33 @@ var updateFma = {
 	},
 };
 
-# Lateral Special
-var locupdate = maketimer(0.5, func {
-	latText = Text.lat.getValue();
-	newlat = Modes.PFD.FMA.rollMode.getValue();
+# Update localizer and glideslope
+var locupdate = maketimer(0.5, func() {
 	nav_defl = pts.Instrumentation.Nav.locDeflection.getValue();
-	if (latText == "LOC") {
+	if (Text.lat.getValue() == "LOC") {
 		if (nav_defl > -0.06 and nav_defl < 0.06) {
 			locupdate.stop();
-			if (newlat != "LOC") {
+			if (Modes.PFD.FMA.rollMode.getValue() != "LOC") {
 				Modes.PFD.FMA.rollMode.setValue("LOC");
 			}
 		}
 	}
 });
 
+var gsupdate = maketimer(0.5, func() {
+	gs_defl = pts.Instrumentation.Nav.gsDeflection.getValue();
+	if (Text.vert.getValue() == "G/S") {
+		if (gs_defl > -0.06 and gs_defl < 0.06) {
+			gsupdate.stop();
+			if (Modes.PFD.FMA.pitchMode.getValue() != "G/S") {
+				Modes.PFD.FMA.pitchMode.setValue("G/S");
+			}
+		}
+	}
+});
+
 # Vertical Special
-var updatePitchArm2 = func {
+var updatePitchArm2 = func() {
 	newvertarm = Modes.PFD.FMA.pitchMode2Armed.getValue();
 	if (newvertarm != "CLB" and FMGCInternal.v2set) {
 		Modes.PFD.FMA.pitchMode2Armed.setValue("CLB");
@@ -431,26 +433,12 @@ var updatePitchArm2 = func {
 	}
 }
 
-var gsupdate = maketimer(0.5, func {
-	vertText = Text.vert.getValue();
-	newvert = Modes.PFD.FMA.pitchMode.getValue();
-	gs_defl = pts.Instrumentation.Nav.gsDeflection.getValue();
-	if (vertText == "G/S") {
-		if (gs_defl > -0.06 and gs_defl < 0.06) {
-			gsupdate.stop();
-			if (newvert != "G/S") {
-				Modes.PFD.FMA.pitchMode.setValue("G/S");
-			}
-		}
-	}
-});
 
-var altvert = func {
-	MCPalt = Internal.alt.getValue();
+var altvert = func() {
 	vertText = Text.vert.getValue();
 	newvert = Modes.PFD.FMA.pitchMode.getValue();
 	
-	if (abs(fmgc.FMGCInternal.crzFt - MCPalt) <= 20) {
+	if (abs(fmgc.FMGCInternal.crzFt - Internal.alt.getValue()) <= 20) {
 		if (vertText == "ALT HLD") {
 			if (newvert != "ALT CRZ") {
 				Modes.PFD.FMA.pitchMode.setValue("ALT CRZ");
@@ -474,92 +462,86 @@ var altvert = func {
 }
 
 # AP
-var fmaAp = func {
+var ap1 = nil;
+var ap2 = nil;
+var apTextVector = [nil, nil, nil, nil];
+var fmaAp = func() {
 	ap1 = Output.ap1.getValue();
 	ap2 = Output.ap2.getValue();
-	newap = Modes.PFD.FMA.apMode.getValue();
-	if (ap1 and ap2 and newap != "AP1+2") {
-		Modes.PFD.FMA.apMode.setValue("AP 1+2");
-	} else if (ap1 and !ap2 and newap != "AP 1") {
-		Modes.PFD.FMA.apMode.setValue("AP 1");
-	} else if (ap2 and !ap1 and newap != "AP 2") {
-		Modes.PFD.FMA.apMode.setValue("AP 2");
-	} else if (!ap1 and !ap2) {
-		Modes.PFD.FMA.apMode.setValue(" ");
-	}
+	
+	apTextVector[0] = (ap1 or ap2) ? "AP " : " ";
+	apTextVector[1] = ap1 ? "1" : "";
+	apTextVector[2] = (ap1 and ap2) ? "+" : "";
+	apTextVector[3] = ap2 ? "2" : "";
+	Modes.PFD.FMA.apMode.setValue(apTextVector[0] ~ apTextVector[1] ~ apTextVector[2] ~ apTextVector[3]);
 }
 
 # FD
-var fmaFd = func {
+var fd1 = nil;
+var fd2 = nil;
+var fdTextVector = [nil, nil, nil];
+var fmaFd = func() {
 	fd1 = Output.fd1.getValue();
 	fd2 = Output.fd2.getValue();
-	newfd = Modes.PFD.FMA.fdMode.getValue();
-	if (fd1 and fd2 and newfd != "1FD2") {
-		Modes.PFD.FMA.fdMode.setValue("1 FD 2");
-	} else if (fd1 and !fd2 and newfd != "1 FD -") {
-		Modes.PFD.FMA.fdMode.setValue("1 FD -");
-	} else if (fd2 and !fd1 and newfd != "- FD 2") {
-		Modes.PFD.FMA.fdMode.setValue("- FD 2");
-	} else if (!fd1 and !fd2) {
-		Modes.PFD.FMA.fdMode.setValue(" ");
-	}
+	
+	fdTextVector[0] = fd1 ? "1" : (fd2 ? "-" : "");
+	fdTextVector[1] = (fd1 or fd2) ? " FD " : " ";
+	fdTextVector[2] = fd2 ? "2" : (fd1 ? "-" : "");
+	Modes.PFD.FMA.fdMode.setValue(fdTextVector[0] ~ fdTextVector[1] ~ fdTextVector[2]);
 }
 
 # A/THR
-var fmaAthr = func {
-	at = Output.athr.getValue();
-	if (at and Modes.PFD.FMA.athrMode.getValue() != "A/THR") {
-		Modes.PFD.FMA.athrMode.setValue("A/THR");
-	} else if (!at) {
-		Modes.PFD.FMA.athrMode.setValue(" ");
-	}
+var fmaAthr = func() {
+	Modes.PFD.FMA.athrMode.setValue( Output.athr.getValue() ? "A/THR" : " ");
 }
 
-var showAllBoxes = func {
+var showAllBoxes = func() {
+	elapsedtime = pts.Sim.Time.elapsedSec.getValue();
 	if (Modes.PFD.FMA.rollMode.getValue() != " ") {
-		Modes.PFD.FMA.rollModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.rollModeTime.setValue(elapsedtime);
 	}
 	if (Modes.PFD.FMA.pitchMode.getValue() != " ") {
-		Modes.PFD.FMA.pitchModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.pitchModeTime.setValue(elapsedtime);
 	}
 	if (Modes.PFD.FMA.rollModeArmed.getValue() != " ") {
-		Modes.PFD.FMA.rollModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.rollModeArmedTime.setValue(elapsedtime);
 	}
 	if (Modes.PFD.FMA.pitchModeArmed.getValue() != " ") {
-		Modes.PFD.FMA.pitchModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.pitchModeArmedTime.setValue(elapsedtime);
 	}
 	if (Modes.PFD.FMA.pitchMode2Armed.getValue() != " ") {
-		Modes.PFD.FMA.pitchMode2ArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.pitchMode2ArmedTime.setValue(elapsedtime);
 	}
 }
 
 # Boxes
-setlistener("/modes/pfd/fma/ap-mode", func {
+setlistener("/modes/pfd/fma/ap-mode", func() {
 	if (Modes.PFD.FMA.apMode.getValue() != " ") {
 		Modes.PFD.FMA.apModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
-setlistener("/modes/pfd/fma/fd-mode", func {
+setlistener("/modes/pfd/fma/fd-mode", func() {
 	if (Modes.PFD.FMA.fdMode.getValue() != " ") {
 		Modes.PFD.FMA.fdModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
-setlistener("/modes/pfd/fma/at-mode", func {
+setlistener("/modes/pfd/fma/at-mode", func() {
 	if (Modes.PFD.FMA.athrMode.getValue() != " ") {
-		Modes.PFD.FMA.throttleModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		elapsedtime = pts.Sim.Time.elapsedSec.getValue();
+		Modes.PFD.FMA.throttleModeTime.setValue(elapsedtime);
+		Modes.PFD.FMA.athrModeTime.setValue(elapsedtime);
+	}
+}, 0, 0);
+
+setlistener("/modes/pfd/fma/athr-armed", func() {
+	if (Modes.PFD.FMA.athrMode.getValue() != " ") {
 		Modes.PFD.FMA.athrModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
-setlistener("/modes/pfd/fma/athr-armed", func {
-	if (Modes.PFD.FMA.athrMode.getValue() != " ") {
-		Modes.PFD.FMA.athrModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
-	}
-}, 0, 0);
-
-setlistener("/modes/pfd/fma/throttle-mode", func {
+setlistener("/modes/pfd/fma/throttle-mode", func() {
 	state1 = systems.FADEC.detentText[0].getValue();
 	state2 = systems.FADEC.detentText[1].getValue();
 	athr = Output.athr.getValue();
@@ -573,36 +555,36 @@ setlistener("/modes/pfd/fma/throttle-mode", func {
 	}
 }, 0, 0);
 
-setlistener("/modes/pfd/fma/roll-mode", func {
+setlistener("/modes/pfd/fma/roll-mode", func() {
 	if (Modes.PFD.FMA.rollMode.getValue() != " ") {
 		Modes.PFD.FMA.rollModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
-setlistener("/modes/pfd/fma/pitch-mode", func {
+setlistener("/modes/pfd/fma/pitch-mode", func() {
 	if (Modes.PFD.FMA.pitchMode.getValue() != " ") {
 		Modes.PFD.FMA.pitchModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
-setlistener("/modes/pfd/fma/roll-mode-armed", func {
+setlistener("/modes/pfd/fma/roll-mode-armed", func() {
 	if (Modes.PFD.FMA.rollModeArmed.getValue() != " ") {
 		Modes.PFD.FMA.rollModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
-setlistener("/modes/pfd/fma/pitch-mode-armed", func {
+setlistener("/modes/pfd/fma/pitch-mode-armed", func() {
 	if (Modes.PFD.FMA.pitchModeArmed.getValue() != " ") {
 		Modes.PFD.FMA.pitchModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
-setlistener("/modes/pfd/fma/pitch-mode2-armed", func {
+setlistener("/modes/pfd/fma/pitch-mode2-armed", func() {
 	if (Modes.PFD.FMA.pitchMode2Armed.getValue() != " ") {
 		Modes.PFD.FMA.pitchMode2ArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
 
-setlistener("/sim/signals/fdm-initialized", func {
+setlistener("/sim/signals/fdm-initialized", func() {
 	init();
 });
