@@ -269,10 +269,7 @@
 		<fcs_function name="/FMGC/internal/vls">
 			<function>
 				<product>
-					<difference>
-						<property>/FMGC/internal/vs1g-kts</property>
-						<value>5</value>
-					</difference>
+					<property>/FMGC/internal/vs1g-kts</property>
 					<sum>
 						<property>/FMGC/internal/vls-factor</property>
 						<table>
