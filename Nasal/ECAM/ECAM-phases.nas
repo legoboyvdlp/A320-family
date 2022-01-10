@@ -96,6 +96,6 @@ var setPhase = func(newPhase) {
 	}
 }
 
-setlistener("/ECAM/buttons/recall-btn", func() {
-	FWC.Flipflop.recallSet.setValue(FWC.Btn.recall.getBoolValue());
+setlistener("/ECAM/buttons/recall-btn", func(val) {
+	FWC.Flipflop.recallSet.setValue(val.getBoolValue());
 }, 0, 0);

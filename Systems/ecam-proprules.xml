@@ -592,6 +592,17 @@
             <value>1.0</value>
         </time>
         <S>
+			<not><property>/ECAM/warnings/logic/phase-2-pulse-input</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/phase-2-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
 			<not><property>/ECAM/warnings/logic/wai-phase-9-pulse-input</property></not>
         </S>
         <output>/ECAM/warnings/logic/wai-phase-9-pulse</output>
@@ -603,9 +614,53 @@
             <value>1.0</value>
         </time>
         <S>
+			<not><property>/ECAM/warnings/logic/phase-6-pulse-input</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/phase-6-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/ECAM/warnings/logic/phase-9-pulse-input</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/phase-9-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/ECAM/warnings/logic/phase-3-10-pulse-input</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/phase-3-10-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
 			<not><property>/ECAM/warnings/logic/phase-10-pulse-input</property></not>
         </S>
         <output>/ECAM/warnings/logic/phase-10-pulse</output>
+	</flipflop>
+	
+	<flipflop>
+        <type>monostable</type>
+        <time>
+            <value>1.0</value>
+        </time>
+        <S>
+			<not><property>/ECAM/warnings/logic/press/excess-cabin-alt</property></not>
+        </S>
+        <output>/ECAM/warnings/logic/press/excess-cabin-alt-pulse</output>
 	</flipflop>
 	
 	<flipflop>
@@ -706,6 +761,34 @@
 			<property>/ECAM/warnings/logic/wing-anti-ice-flipflop-reset</property>
 		</R>
 		<output>/ECAM/warnings/logic/wing-anti-ice-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/logic/wing-anti-ice-left-open-set</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/wing-anti-ice-left-open-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/wing-anti-ice-left-open</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<equals>
+				<property>/ECAM/warnings/logic/wing-anti-ice-right-open-set</property>
+				<value>1</value>
+			</equals>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/wing-anti-ice-right-open-reset</property>
+		</R>
+		<output>/ECAM/warnings/flipflop/wing-anti-ice-right-open</output>
 	</flipflop>
 	
 	<flipflop>
@@ -1160,5 +1243,38 @@
 			<property>/ECAM/warnings/logic/eng/phase-5-output</property>
 		</S>
 		<output>/ECAM/warnings/logic/eng/phase-5-output-2</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>RS</type>
+		<S>
+			<property>/ECAM/warnings/hyd/yellow-elec-pump-fail-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/hyd/yellow-elec-pump-fail-reset</property>
+		</R>
+		<output>/ECAM/warnings/hyd/yellow-elec-pump-fail</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/press/excess-cabin-alt-flipflop</output>
+	</flipflop>
+	
+	<flipflop>
+		<type>SR</type>
+		<S>
+			<property>/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-top-set</property>
+		</S>
+		<R>
+			<property>/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-reset</property>
+		</R>
+		<output>/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-top</output>
 	</flipflop>
 </PropertyList>

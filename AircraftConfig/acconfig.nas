@@ -51,6 +51,7 @@ setprop("/systems/acconfig/out-of-date", 0);
 setprop("/systems/acconfig/mismatch-code", "0x000");
 setprop("/systems/acconfig/mismatch-reason", "XX");
 setprop("/systems/acconfig/options/keyboard-mode", 0);
+setprop("/systems/acconfig/options/fgcamera-keys-enabled", 0);
 setprop("/systems/acconfig/options/weight-kgs", 1);
 setprop("/systems/acconfig/options/adirs-skip", 0);
 setprop("/systems/acconfig/options/allow-oil-consumption", 0);
@@ -214,6 +215,7 @@ var renderingSettings = {
 var readSettings = func {
 	io.read_properties(pts.Sim.fgHome.getValue() ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 	setprop("/options/system/keyboard-mode", getprop("/systems/acconfig/options/keyboard-mode"));
+	if (getprop("/sim/fgcamera/enable")) setprop("/options/system/fgcamera-keys-enabled", getprop("/systems/acconfig/options/fgcamera-keys-enabled")); # read only when FGCamera enabled
 	setprop("/options/system/weight-kgs", getprop("/systems/acconfig/options/weight-kgs"));
 	setprop("/options/system/save-state", getprop("/systems/acconfig/options/save-state"));
 	setprop("/controls/adirs/skip", getprop("/systems/acconfig/options/adirs-skip"));
@@ -228,6 +230,7 @@ var readSettings = func {
 
 var writeSettings = func {
 	setprop("/systems/acconfig/options/keyboard-mode", getprop("/options/system/keyboard-mode"));
+	setprop("/systems/acconfig/options/fgcamera-keys-enabled", getprop("/options/system/fgcamera-keys-enabled"));
 	setprop("/systems/acconfig/options/weight-kgs", getprop("/options/system/weight-kgs"));
 	setprop("/systems/acconfig/options/save-state", getprop("/options/system/save-state"));
 	setprop("/systems/acconfig/options/adirs-skip", getprop("/controls/adirs/skip"));
@@ -391,9 +394,9 @@ var beforestart_b = func {
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
-	libraries.noSmokingSwitch.setValue(0.5);
-	libraries.seatbeltSwitch.setValue(1.0);
-	libraries.emerLtsSwitch.setValue(0.5);
+	pts.Controls.Switches.noSmokingSwitch.setValue(0.5);
+	pts.Controls.Switches.seatbeltSwitch.setValue(1.0);
+	pts.Controls.Switches.emerLtsSwitch.setValue(0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
@@ -488,9 +491,9 @@ var taxi_b = func {
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/switches/wing-lights", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
-	libraries.noSmokingSwitch.setValue(0.5);
-	libraries.seatbeltSwitch.setValue(1.0);
-	libraries.emerLtsSwitch.setValue(0.5);
+	pts.Controls.Switches.noSmokingSwitch.setValue(0.5);
+	pts.Controls.Switches.seatbeltSwitch.setValue(1.0);
+	pts.Controls.Switches.emerLtsSwitch.setValue(0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
