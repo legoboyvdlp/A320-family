@@ -175,6 +175,21 @@
 		<reference>/it-autoflight/internal/athr-kts</reference>
 		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 		<config>
+			<Kp> <!-- Approach Autothrust -->
+				<condition>
+					<and>
+						<less-than>
+							<property>/position/gear-agl-ft</property>
+							<value>3200</value>
+						</less-than>
+						<greater-than-equals>
+							<property>/controls/flight/flaps-input</property>
+							<value>1</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<value>0.06</value>
+			</Kp>
 			<Kp>0.055</Kp>
 			<Ti>9.0</Ti>
 			<Td>0.00001</Td>
@@ -214,6 +229,21 @@
 		</reference>
 		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 		<config>
+			<Kp> <!-- Approach Autothrust -->
+				<condition>
+					<and>
+						<less-than>
+							<property>/position/gear-agl-ft</property>
+							<value>3200</value>
+						</less-than>
+						<greater-than-equals>
+							<property>/controls/flight/flaps-input</property>
+							<value>1</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<value>0.06</value>
+			</Kp>
 			<Kp>0.055</Kp>
 			<Ti>9.0</Ti>
 			<Td>0.00001</Td>

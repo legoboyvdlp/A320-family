@@ -1044,6 +1044,7 @@
 				position/wow eq 1
 				/it-fbw/law ne 0
 				/FMGC/FCU-working eq 0
+				position/gear-agl-ft lt 100
 			</test>
 			<test logic="AND" value="0"> <!-- Reset -->
 				fadec/eng-out eq 1
