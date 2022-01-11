@@ -25,7 +25,7 @@ var canvas_lowerECAM_base =
 		me.canvas.addPlacement({"node": "uecam.screen2"});
 		
 		me.font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "ECAMFontRegular.ttf";
 		};
 		
 		me.test = me.canvas.createGroup();
