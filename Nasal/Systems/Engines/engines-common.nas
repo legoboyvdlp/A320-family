@@ -1,5 +1,5 @@
 # A3XX Engine Control
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 
 var manStart = [props.globals.initNode("/controls/engines/engine[0]/man-start", 0, "BOOL"),props.globals.initNode("/controls/engines/engine[1]/man-start", 0, "BOOL")];
 var lastIgniter = [props.globals.getNode("/controls/engines/engine[0]/last-igniter"),props.globals.initNode("/controls/engines/engine[1]/last-igniter")];

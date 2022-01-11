@@ -1,5 +1,5 @@
 # A3XX FMGC Flightplan Driver
-# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var wpDep = nil;
 var wpArr = nil;

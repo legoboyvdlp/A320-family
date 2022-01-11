@@ -1,5 +1,5 @@
 # A320 Property Tree Setup
-# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath
 # Nodes organized like property tree, except when lots of identical (example: Gear wow), where vectors are used to make it easier
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
