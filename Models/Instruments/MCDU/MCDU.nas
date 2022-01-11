@@ -24,11 +24,10 @@ var myCRZWIND = [nil, nil];
 var myDESWIND = [nil, nil];
 var myHISTWIND = [nil, nil];
 var myAtis = [nil, nil];
-var default = "BoeingCDU-Large.ttf";
-#var symbol = "helvetica_medium.txf";
-var symbol = "LiberationMonoCustom.ttf";
-var normal = 70;
-var small = 56;
+var default = "HoneywellMCDU.ttf";
+var symbol = "HoneywellMCDU.ttf";
+var normal = 60;
+var small = 46;
 var page = "";
 var fplnLineSize = 0;
 var fplnl1 = "";
@@ -143,7 +142,7 @@ var togglePageFreeze = func(i) {
 var canvas_MCDU_base = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
-			return "BoeingCDU-Large.ttf";
+			return "HoneywellMCDU.ttf";
 		};
 		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
 		var svg_keys = me.getKeys();
@@ -380,7 +379,7 @@ var canvas_MCDU_base = {
 	},
 	doIRSFunc: func(i,degrees,minutes,sign,degrees2,minutes2,sign2) {
 		if (systems.ADIRS.ADIRunits[i].operative and getprop("/FMGC/internal/align" ~ (i + 1) ~ "-done")) {
-			me["Simple_C" ~ (3 + i)].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
+			me["Simple_C" ~ (3 + i)].setText(abs(degrees) ~ "°" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "°" ~ minutes2 ~ " " ~ sign2);
 		} else {
 			me["Simple_C" ~ (3 + i)].setText("-----.--/-----.--");
 		}
@@ -3055,7 +3054,7 @@ var canvas_MCDU_base = {
 			if (!fmgc.FMGCInternal.toFromSet and !fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(WHITE);
-				me["Simple_L6"].setText("-----/---g");
+				me["Simple_L6"].setText("-----/---°");
 			} else if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.crzTempSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(BLUE);
@@ -3069,7 +3068,7 @@ var canvas_MCDU_base = {
 			} else {
 				me["INITA_CruiseFLTemp"].show();
 				me["Simple_L6"].setColor(AMBER);
-				me["Simple_L6"].setText("         g");
+				me["Simple_L6"].setText("         °");
 			}
 			if (fmgc.FMGCInternal.coRouteSet) { # show coRoute when valid
 				me["INITA_CoRoute"].hide();
@@ -3258,12 +3257,12 @@ var canvas_MCDU_base = {
 			degrees = int(dms);
 			minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 			sign = degrees >= 0 ? "N" : "S";
-			me["Simple_L2"].setText(abs(degrees) ~ "g" ~ minutes ~ " " ~ sign);
+			me["Simple_L2"].setText(abs(degrees) ~ "°" ~ minutes ~ " " ~ sign);
 			dms2 = getprop("/position/longitude-deg");
 			degrees2 = int(dms2);
 			minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
 			sign2 = degrees2 >= 0 ? "E" : "W";
-			me["Simple_R2"].setText(abs(degrees2) ~ "g" ~ minutes2 ~ " " ~ sign2);
+			me["Simple_R2"].setText(abs(degrees2) ~ "°" ~ minutes2 ~ " " ~ sign2);
 			me.doIRSFunc(0,degrees,minutes,sign,degrees2,minutes2,sign2);
 			me.doIRSFunc(1,degrees,minutes,sign,degrees2,minutes2,sign2);
 			me.doIRSFunc(2,degrees,minutes,sign,degrees2,minutes2,sign2);
@@ -4971,23 +4970,23 @@ var canvas_MCDU_base = {
 			
 			me["Simple_L2S"].setText("TEMP");
 			if (dest_temp.getValue() != -999) {
-				me["Simple_L2"].setText(sprintf("%3.0fg", dest_temp.getValue()));
+				me["Simple_L2"].setText(sprintf("%3.0f°", dest_temp.getValue()));
 			} else {
-				me["Simple_L2"].setText("---g");
+				me["Simple_L2"].setText("---°");
 			}
 			
 			me["Simple_L3S"].setText("MAG WIND");
 			if (fmgc.FMGCInternal.destMagSet and fmgc.FMGCInternal.destWindSet) {
-				me["Simple_L3"].setText(sprintf("%03.0fg", fmgc.FMGCInternal.destMag) ~ sprintf("/%.0f", fmgc.FMGCInternal.destWind));
+				me["Simple_L3"].setText(sprintf("%03.0f°", fmgc.FMGCInternal.destMag) ~ sprintf("/%.0f", fmgc.FMGCInternal.destWind));
 				me["Simple_L3"].setFontSize(normal);
 			} else {
 				me["Simple_L3"].setFontSize(small);
 				if (myDESWIND[i] != nil and myDESWIND[i].returnGRND() != nil) {
 					var result = myDESWIND[i].returnGRND();
-					me["Simple_L3"].setText(sprintf("%03.0fg", result[0]) ~ sprintf("/%.0f", result[1]));
+					me["Simple_L3"].setText(sprintf("%03.0f°", result[0]) ~ sprintf("/%.0f", result[1]));
 				} else if (myDESWIND[math.abs(i-1)] != nil and myDESWIND[math.abs(i-1)].returnGRND() != nil) {
 					var result = myDESWIND[math.abs(i-1)].returnGRND();
-					me["Simple_L3"].setText(sprintf("%03.0fg", result[0]) ~ sprintf("/%.0f", result[1]));
+					me["Simple_L3"].setText(sprintf("%03.0f°", result[0]) ~ sprintf("/%.0f", result[1]));
 				} else {
 					me["Simple_L3"].setText("---g/---");
 				}

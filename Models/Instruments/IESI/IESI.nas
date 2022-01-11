@@ -25,7 +25,7 @@ var canvas_IESI = {
         obj.group = obj.canvas.createGroup();
 		
 		obj.font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "ECAMFontRegular.ttf";
 		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
