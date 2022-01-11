@@ -42,6 +42,64 @@
 			</function>
 		</fcs_function>
 		
+		<!-- Green Dot -->
+		<fcs_function name="/FMGC/internal/clean">
+			<function>
+				<sum>
+					<quotient>
+						<property>inertia/weight-kg</property>
+						<value>500</value> <!-- Skip the * 2 step! -->
+					</quotient>
+					<ifthen>
+						<eq>
+							<property>/options/eng-int</property>
+							<value>1</value>
+						</eq>
+						<value>85</value>
+						<value>80</value>
+					</ifthen>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/tow-clean">
+			<function>
+				<sum>
+					<quotient>
+						<property>/FMGC/internal/tow</property>
+						<value>500</value> <!-- Skip the * 2 step! -->
+					</quotient>
+					<ifthen>
+						<eq>
+							<property>/options/eng-int</property>
+							<value>1</value>
+						</eq>
+						<value>85</value>
+						<value>80</value>
+					</ifthen>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/lw-clean">
+			<function>
+				<sum>
+					<quotient>
+						<property>/FMGC/internal/lw</property>
+						<value>500</value> <!-- Skip the * 2 step! -->
+					</quotient>
+					<ifthen>
+						<eq>
+							<property>/options/eng-int</property>
+							<value>1</value>
+						</eq>
+						<value>85</value>
+						<value>80</value>
+					</ifthen>
+				</sum>
+			</function>
+		</fcs_function>
+		
 		<!-- VS1g -->
 		<fcs_function name="/FMGC/internal/vs1g-kts">
 			<function>

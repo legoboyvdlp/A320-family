@@ -256,9 +256,11 @@ var postInit = func() {
 var FMGCNodes = {
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
 	decel: props.globals.initNode("/FMGC/internal/decel", 0, "BOOL"),
+	clean: props.globals.getNode("/FMGC/internal/clean"),
 	flap2: props.globals.getNode("/FMGC/internal/flap-2"),
 	flap3: props.globals.getNode("/FMGC/internal/flap-3"),
 	lw: props.globals.getNode("/FMGC/internal/lw"),
+	lwClean: props.globals.getNode("/FMGC/internal/lw-clean"),
 	lwVs1gConf0: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-0"),
 	lwVs1gConf1f: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-1f"),
 	lwVs1gConf2: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-2"),
@@ -272,6 +274,7 @@ var FMGCNodes = {
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
 	tow: props.globals.getNode("/FMGC/internal/tow"),
+	towClean: props.globals.getNode("/FMGC/internal/tow-clean"),
 	towVs1gConf0: props.globals.getNode("/FMGC/internal/tow-vs1g-conf-0"),
 	towVs1gConf1f: props.globals.getNode("/FMGC/internal/tow-vs1g-conf-1f"),
 	towVs1gConf2: props.globals.getNode("/FMGC/internal/tow-vs1g-conf-2"),
@@ -412,7 +415,7 @@ var updateFuel = func {
 	
 	if (FMGCInternal.zfwSet) {
 		FMGCInternal.lw = num(FMGCInternal.zfw + FMGCInternal.altFuel + FMGCInternal.finalFuel);
-		FMGCNodes.lw.setValue(FMGCInternal.lw);
+		FMGCNodes.lw.setValue(FMGCInternal.lw * LB2KG * 1000);
 	}
 	
 	# Calculate trip fuel
@@ -518,7 +521,7 @@ var updateFuel = func {
 	}
 	
 	FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
-	FMGCNodes.tow.setValue(FMGCInternal.tow);
+	FMGCNodes.tow.setValue(FMGCInternal.tow * LB2KG * 1000);
 }
 
 ############################
@@ -726,6 +729,9 @@ var masterFMGC = maketimer(0.2, func {
 	FMGCInternal.slat = FMGCNodes.slat.getValue();
 	FMGCInternal.flap2 = FMGCNodes.flap2.getValue();
 	FMGCInternal.flap3 = FMGCNodes.flap3.getValue();
+	FMGCInternal.clean = FMGCNodes.clean.getValue();
+	FMGCInternal.clean_to = FMGCNodes.towClean.getValue();
+	FMGCInternal.clean_appr = FMGCNodes.lwClean.getValue();
 	
 	############################
 	# calculate speeds

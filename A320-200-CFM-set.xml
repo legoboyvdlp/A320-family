@@ -223,6 +223,7 @@
 	
 	<options n="0">
 		<eng type="string">CFM</eng>
+		<eng-int type="int">0</eng-int>
 		<engine-name type="string">CFM56-5B4</engine-name>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">35</maxflap>
