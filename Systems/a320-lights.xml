@@ -234,7 +234,7 @@
 					/systems/electrical/bus/dc-service-bus ge 25
 				</test>
 				<test logic="OR">
-					/systems/pressurization/cabinalt-norm ge 11300
+					/systems/pressurization/cabin-altitude ge 11300
 					/controls/switches/no-smoking-sign eq 1
 				</test>
 			</test>
@@ -256,7 +256,7 @@
 					/systems/electrical/bus/dc-service-bus ge 25
 				</test>
 				<test logic="OR">
-					/systems/pressurization/cabinalt-norm ge 11300
+					/systems/pressurization/cabin-altitude ge 11300
 					/controls/switches/seatbelt-sign eq 1
 				</test>
 			</test>

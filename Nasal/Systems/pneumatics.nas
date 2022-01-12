@@ -2,24 +2,13 @@
 # Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
 
 # Local vars
-var cabinalt = nil;
-var targetalt = nil;
-var cabinpsi = nil;
 var state1 = nil;
 var state2 = nil;
 var stateL = nil;
 var stateR = nil;
-var wowc = nil;
-var wowl = nil;
-var wowr = nil;
-var vs = nil;
-var manvs = nil;
 var pause = nil;
 var auto = nil;
-var speed = nil;
 var ditch = nil;
-var outflowpos = nil;
-var targetvs = nil; 
 var eng1_starter = nil;
 var eng2_starter = nil;
 		

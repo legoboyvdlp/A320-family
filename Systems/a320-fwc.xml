@@ -3245,7 +3245,7 @@
 		<switch name="/ECAM/warnings/timer/press/excess-cabin-alt-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/systems/pressurization/cabinalt-norm ge 9550
+				/systems/pressurization/cabin-altitude ge 9550
 			</test>
 		</switch>
 		
