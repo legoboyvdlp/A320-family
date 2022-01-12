@@ -3232,7 +3232,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/press/exess-residual-pressure-ground eq 1
-				/systems/pressurization/deltap-norm ge 0.1
+				/systems/pressurization/cabin-delta-p ge 0.1
 			</test>
 		</switch>
 		
