@@ -1262,7 +1262,7 @@
 				<legend>^</legend>
 				<pref-height>25</pref-height>
 				<pref-width>25</pref-width>
-				<!--binding>
+				<binding>
 					<command>nasal</command>
 					<script>mcdu.button("OVFY", 1);</script>
 					<condition>
@@ -1271,7 +1271,7 @@
 							<value>110</value>
 						</greater-than-equals>
 					</condition>
-				</binding-->
+				</binding>
 			</button>
 			
 			<button>

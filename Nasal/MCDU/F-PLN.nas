@@ -20,9 +20,9 @@ var fplnItem = {
 					return ["MANUAL", me.getSubText(), me.colour];
 				} else {
 					if (size(wptName) == 2) {
-						return[wptName[0] ~ wptName[1], me.getSubText(), me.colour];
+						return[wptName[0] ~ wptName[1 ~ (me.wp.fly_type == "flyOver" ? "@" : "")], me.getSubText(), me.colour];
 					} else {
-						return [me.wp.wp_name, me.getSubText(), me.colour];
+						return [me.wp.wp_name ~ (me.wp.fly_type == "flyOver" ? "@" : ""), me.getSubText(), me.colour];
 					}
 				}
 			} else {
