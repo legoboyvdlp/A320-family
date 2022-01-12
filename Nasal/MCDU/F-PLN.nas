@@ -99,8 +99,11 @@ var fplnItem = {
 		return sprintf("%03.0f", math.round(me.brg));
 	},
 	getTrack: func() {
-		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
-		me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - magvar(wp.lat, wp.lon);
+		if (me.index > (size(fmgc.wpCoursePrev[me.plan]) - 1)) {
+			me.trk = me.wp.leg_bearing - magvar(me.wp.lat, me.wp.lon);
+		} else {
+			me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - magvar(me.wp.lat, me.wp.lon);
+		}
 		if (me.trk < 0) { me.trk += 360; }
 		if (me.trk > 360) { me.trk -= 360; }
 		return sprintf("%03.0f", math.round(me.trk));
@@ -138,10 +141,14 @@ var fplnItem = {
 		}
 	},
 	getDist: func() {
-		if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
-			return math.round(fmgc.wpDistance[me.plan][me.index].getValue());
+		if (me.index > size(fmgc.wpDistancePrev[me.plan]) - 1) {
+			return math.round(me.wp.leg_distance);
 		} else {
-			return math.round(fmgc.wpDistancePrev[me.plan][me.index].getValue());
+			if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
+				return math.round(fmgc.wpDistance[me.plan][me.index].getValue());
+			} else {
+				return math.round(fmgc.wpDistancePrev[me.plan][me.index].getValue());
+			}
 		}
 	},
 	pushButtonLeft: func() {
@@ -359,7 +366,25 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			}
 		}
 		append(me.planList, staticText.new(me.computer, me.getText("fplnEnd")));
-		append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
+		if (!fmgc.FMGCInternal.altAirportSet) {
+			append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
+		} else {
+			var altnApt = findAirportsByICAO(fmgc.FMGCInternal.altAirport)[0];
+			append(me.planList, fplnItem.new({
+				alt_cstr: nil,
+				alt_cstr_type: nil,
+				fly_type: "flyBy",
+				lat: altnApt.lat,
+				leg_bearing: courseAndDistance(findAirportsByICAO(fmgc.FMGCInternal.arrApt)[0], altnApt)[0],
+				leg_distance: courseAndDistance(findAirportsByICAO(fmgc.FMGCInternal.arrApt)[0], altnApt)[1],
+				lon: altnApt.lon,
+				speed_cstr: nil,
+				speed_cstr_type: nil,
+				wp_name: fmgc.FMGCInternal.altAirport,
+			}, i, me.planIndex, me.computer, "blu"));
+			append(me.planList, staticText.new(me.computer, me.getText("altnFplnEnd")));
+		}
+		
 		me.basePage();
 	},
 	basePage: func() {
