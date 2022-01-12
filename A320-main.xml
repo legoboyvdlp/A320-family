@@ -566,7 +566,7 @@
 		
 		<flight-recorder include="Systems/flight-recorder.xml"/>
 		
-		<!--<gui n="0" include="gui/it-gui.xml"/>-->
+		<gui n="0" include="gui/it-gui.xml"/>
 		
 		<current-view>
 			<z-offset-default type="float">60.0</z-offset-default>
