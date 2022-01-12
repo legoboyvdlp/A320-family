@@ -1,10 +1,8 @@
 # A320 Main Libraries
-# Joshua Davidson (Octal450)
-
 # Copyright (c) 2022 Josh Davidson (Octal450)
 
 print("------------------------------------------------");
-print("Copyright (c) 2016-2021 Josh Davidson (Octal450)");
+print("Copyright (c) 2016-2022 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
 # Disable specific menubar items
