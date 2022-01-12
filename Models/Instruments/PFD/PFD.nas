@@ -100,7 +100,7 @@ var canvas_pfd = {
         obj.mismatch = obj.canvas.createGroup();
 		
 		obj.font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "ECAMFontRegular.ttf";
 		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
@@ -391,11 +391,11 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashList(["pitchMode","pitchModeBox","autopilotVS","autopilotFPA","pitchMode2Armed","pitchModeArmed","pitchMode2ArmedBox","pitchModeArmedBox","rollMode","rollModeBox","rollModeArmed","rollModeArmedBox","ap1","ap2","fd1","fd2"], nil, func(val) {
 				obj["FMA_combined"].setText(sprintf("%s", val.pitchMode));
 				if (val.pitchMode == "V/S") {
-					obj["FMA_pitch"].setText(sprintf("%s         ", val.pitchMode));
+					obj["FMA_pitch"].setText(sprintf("%s     ", val.pitchMode));
 					obj["vsFMArate"].setText(sprintf("%+4.0f",val.autopilotVS));
 					obj["vsFMArate"].show();
 				} elsif (val.pitchMode == "FPA") {
-					obj["FMA_pitch"].setText(sprintf("%s         ", val.pitchMode));
+					obj["FMA_pitch"].setText(sprintf("%s     ", val.pitchMode));
 					obj["vsFMArate"].setText(sprintf("%+3.1f°",val.autopilotFPA));
 					obj["vsFMArate"].show();
 				} else {
@@ -779,9 +779,10 @@ var canvas_pfd = {
 		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
-		"ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale",
-		"HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L",
-		"ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt"];
+		"ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer",
+		"HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend",
+		"ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError","vsFMArate","tailstrikeInd",
+		"Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue"];
 	},
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
@@ -791,6 +792,7 @@ var canvas_pfd = {
 	},
 	aoa: 0,
 	showMetricAlt: 0,
+	ASItrendIsShown: 0,
 	update: func(notification) {
 		me.updatePower(notification);
 		
@@ -872,6 +874,9 @@ var canvas_pfd = {
 		if (dmc.DMController.DMCs[me.number].outputs[0] != nil) {
 			me.ind_spd = dmc.DMController.DMCs[me.number].outputs[0].getValue();
 			me["ASI_error"].hide();
+			me["ASI_buss"].hide();
+			me["ASI_buss_ref"].hide();
+			me["ASI_buss_ref_blue"].hide();
 			me["ASI_frame"].setColor(1,1,1);
 			me["ASI_group"].show();
 			me["VLS_min"].hide();
@@ -1214,17 +1219,23 @@ var canvas_pfd = {
 			me["ASI_trend_up"].setTranslation(0, math.clamp(me.ASItrend, 0, 50) * -6.6);
 			me["ASI_trend_down"].setTranslation(0, math.clamp(me.ASItrend, -50, 0) * -6.6);
 			
-			if (me.ASItrend >= 2) {
-				me["ASI_trend_up"].show();
-				me["ASI_trend_down"].hide();
-			} else if (me.ASItrend <= -2) {
-				me["ASI_trend_down"].show();
-				me["ASI_trend_up"].hide();
+			if (notification.fac1 or notification.fac2) {
+				if (me.ASItrend >= 2 or (me.ASItrendIsShown and me.ASItrend >= 1)) {
+					me["ASI_trend_up"].show();
+					me["ASI_trend_down"].hide();
+					me.ASItrendIsShown = 1;
+				} else if (me.ASItrend <= -2 or (me.ASItrendIsShown and me.ASItrend <= -1)) {
+					me["ASI_trend_up"].hide();
+					me["ASI_trend_down"].show();
+					me.ASItrendIsShown = 1;
+				} else {
+					me["ASI_trend_up"].hide();
+					me["ASI_trend_down"].hide();
+				}
 			} else {
 				me["ASI_trend_up"].hide();
 				me["ASI_trend_down"].hide();
 			}
-			
 					
 			if (-notification.agl >= -565 and -notification.agl <= 565) {
 				me["ground_ref"].show();
@@ -1233,7 +1244,19 @@ var canvas_pfd = {
 			}
 		} else {
 			me["ASI_group"].hide();
-			me["ASI_error"].show();
+			if (!systems.ADIRS.Operating.adr[0].getValue() and !systems.ADIRS.Operating.adr[1].getValue() and !systems.ADIRS.Operating.adr[2].getValue()) {
+				me["ASI_buss"].show();
+				me["ASI_buss_ref"].show();
+				me["ASI_buss_ref_blue"].show();
+				me["ASI_buss"].setTranslation(0, notification.bussTranslate);
+				me["ASI_buss_ref_blue"].setTranslation(0, notification.bussTranslate);
+				me["ASI_error"].hide();
+			} else {
+				me["ASI_buss"].hide();
+				me["ASI_buss_ref"].hide();
+				me["ASI_buss_ref_blue"].hide();
+				me["ASI_error"].show();
+			}
 			me["ASI_frame"].setColor(1,0,0);
 			me["clean_speed"].hide();
 			me["S_target"].hide();
@@ -2032,6 +2055,8 @@ var input = {
 	decel: "/FMGC/internal/decel",
 	radio: "/FMGC/internal/radio",
 	baro: "/FMGC/internal/baro",
+	
+	bussTranslate: "/instrumentation/pfd/buss/translate",
 };
 
 foreach (var name; keys(input)) {

@@ -273,24 +273,6 @@ var APU = {
 				me.autoStop();
 			}
 			
-			if (systems.ELEC.Bus.dcBat.getValue() < 25) {	
-				if (!me._powerLost) {
-					me._powerLost = 1;
-					settimer(func() {
-						if (me._powerLost) {
-							if (me.GenericControls.starter.getValue()) {
-								me.GenericControls.starter.setValue(0);
-							}
-							if (me.state != 0) {
-								me.autoStop();
-							}
-						}
-					}, 0.2);
-				}
-			} else {
-				me._powerLost = 0;
-			}
-			
 			if (systems.ELEC.EmerElec.getValue() == 1 and (systems.ELEC.EmerElec45.getValue() != 1 and systems.ELEC.Source.EmerGen.voltsRelay.getValue() < 110)) {
 				me.inhibitEMERELEC = 1;
 			} else {
@@ -315,6 +297,19 @@ var APUController = {
 		}
 	}
 };
+
+setlistener("/systems/apu/shutdown-power-loss", func(val) {
+	if (APUController.APU != nil) {
+		if (val.getBoolValue()) {
+			if (APUController.APU.GenericControls.starter.getValue()) {
+				APUController.APU.GenericControls.starter.setValue(0);
+			}
+			if (APUController.APU.state != 0) {
+				APUController.APU.autoStop();
+			}
+		}
+	}
+}, 0, 0);
 
 var _masterTime = 0;
 setlistener("/controls/apu/master", func() {

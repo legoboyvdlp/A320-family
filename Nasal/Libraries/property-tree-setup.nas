@@ -69,9 +69,15 @@ var Controls = {
 	},
 	Lighting: {
 		landingLights: [props.globals.getNode("/controls/lighting/landing-lights[0]"),props.globals.getNode("/controls/lighting/landing-lights[1]"),props.globals.getNode("/controls/lighting/landing-lights[2]")],
+		noSmokingSign: props.globals.getNode("/controls/lighting/no-smoking-sign"),
+		seatbeltSign: props.globals.getNode("/controls/lighting/seatbelt-sign"),
+		strobe: props.globals.getNode("/controls/lighting/strobe"),
 	},
 	Switches: {
 		annunTest: props.globals.getNode("/controls/switches/annun-test"),
+		emerLtsSwitch: props.globals.getNode("/controls/switches/emer-lights"),
+		noSmokingSwitch: props.globals.getNode("/controls/switches/no-smoking-sign"),
+		seatbeltSwitch: props.globals.getNode("/controls/switches/seatbelt-sign"),
 	},
 };
 
@@ -136,6 +142,10 @@ var Fdm = {
 			Engine: {
 				fuelUsed: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/fuel-used-lbs")],
 				reverserAngle: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad")],
+			},
+			Tank: {
+				contentsLbs: [props.globals.getNode("/fdm/jsbsim/propulsion/tank[0]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[1]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs"), 
+					props.globals.getNode("/fdm/jsbsim/propulsion/tank[3]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[4]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[5]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[6]/contents-lbs")],
 			},
 		},
 	},
@@ -208,6 +218,8 @@ var Instrumentation = {
 		Inputs: {
 			Discretes: {
 				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override"),
+				flapAllOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override"),
+				steepApproach: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/steep-approach"),
 			},
 		},
 	},

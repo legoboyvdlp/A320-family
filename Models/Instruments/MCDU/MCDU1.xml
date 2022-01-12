@@ -1673,7 +1673,7 @@
 			</binding>
 		</action>
 	</animation>
-	<!--animation>
+	<animation>
 		<type>pick</type>
 		<object-name>overfly</object-name>
 		<action>
@@ -1696,7 +1696,7 @@
 				</condition>
 			</binding>
 		</action>
-	</animation-->
+	</animation>
 	<animation>
 		<type>pick</type>
 		<object-name>clr</object-name>

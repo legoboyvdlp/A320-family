@@ -559,14 +559,6 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>engine_fault_1</object-name>
-		<condition>
-			<property>systems/unused/unused-ped</property>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
 		<object-name>engine_fire_1</object-name>
 		<condition>
 			<or>
@@ -585,15 +577,7 @@
 			<blue>1.0</blue>
 		</emission>
 	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>engine_fault_2</object-name>
-		<condition>
-			<property>systems/unused/unused-ped</property>
-		</condition>
-	</animation>
-
+	
 	<animation>
 		<type>select</type>
 		<object-name>engine_fire_2</object-name>
@@ -866,6 +850,19 @@
                 <script>atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);</script>
             </binding>
         </action>
+		<hovered>
+			<binding>
+			<command>set-tooltip</command>
+			<tooltip-id>atc_stby_mode</tooltip-id>
+			<label>Mode: %s</label>
+				<property>controls/atc/mode-knob</property>
+					<mapping>nasal</mapping>
+					<script>
+						var modes = ['STANDBY','ALT','XPNDR','TA ONLY','TA/RA'];
+						return modes[arg[0]];
+					</script>
+			</binding>
+		</hovered>		
 	</animation>
 
 	<animation>
@@ -1058,12 +1055,13 @@
 		<path>Aircraft/A320-family/Models/Instruments/IESI/IESI.xml</path>
 	</model>
 
-	<!-- No button lights without power! -->
+	<!-- Button lights 115 mA, 5 VAC on BRT setting -->
+	<!-- Sourced from 4 transformers -->
+	
+	
+	<!-- 31LP AC ESS SHED 801XP 5VAC transformer -->
 	<animation>
 		<type>select</type>
-		<object-name>abs_low_on</object-name>
-		<object-name>abs_med_on</object-name>
-		<object-name>abs_max_on</object-name>
 		<object-name>alt-text</object-name>
 		<object-name>alt-text-test</object-name>
 		<object-name>ap1_led</object-name>
@@ -1071,9 +1069,9 @@
 		<object-name>appr_led</object-name>
 		<object-name>arpt_led</object-name>
 		<object-name>arpt_led.001</object-name>
-		<object-name>a-thr_led</object-name>
 		<object-name>atc-code</object-name>
 		<object-name>atc-test</object-name>
+		<object-name>a-thr_led</object-name>
 		<object-name>audio_att_led</object-name>
 		<object-name>audio_att_sgn</object-name>
 		<object-name>audio_call_hf2_led</object-name>
@@ -1085,19 +1083,165 @@
 		<object-name>audio_hf2_led</object-name>
 		<object-name>audio_mech_led</object-name>
 		<object-name>audio_mech_sgn</object-name>
+		<object-name>audio_pa_led</object-name>
 		<object-name>audio_voice_led</object-name>
 		<object-name>audio_vhf1_led</object-name>
 		<object-name>audio_vhf2_led</object-name>
 		<object-name>audio_vhf3_led</object-name>
-		<object-name>autoland_light_on</object-name>
-		<object-name>brk_fan_on</object-name>
-		<object-name>brk_hot_on</object-name>
-<!--		<object-name>clock_glare</object-name>-->
 		<object-name>cstr_led</object-name>
 		<object-name>cstr_led.001</object-name>
+		<object-name>exped_led</object-name>
+		<object-name>fcu_screen</object-name>
+		<object-name>fd1_led</object-name>
+		<object-name>fd2_led</object-name>
+		<object-name>fpa-text</object-name>
+		<object-name>hdg-text</object-name>
+		<object-name>hdg-text-test</object-name>
+		<object-name>ils_led</object-name>
+		<object-name>ils2_led</object-name>
+		<object-name>loc_led</object-name>
+		<object-name>mach-text</object-name>
+		<object-name>ndb_led</object-name>
+		<object-name>ndb_led.001</object-name>
+		<object-name>qnh-hpa</object-name>
+		<object-name>qnh-inhg</object-name>
+		<object-name>qnh-std</object-name>
+		<object-name>qnh-test</object-name>
+		<object-name>radio_adf_led</object-name>
+		<object-name>radio_am_led</object-name>
+		<object-name>radio_bfo_led</object-name>
+		<object-name>radio_hf1_led</object-name>
+		<object-name>radio_hf2_led</object-name>
+		<object-name>radio_ls_led</object-name>
+		<object-name>radio_nav_led</object-name>
+		<object-name>radio_opt_led</object-name>
+		<object-name>radio_vhf1_led</object-name>
+		<object-name>radio_vhf2_led</object-name>
+		<object-name>radio_vhf3_led</object-name>
+		<object-name>radio_vor_led</object-name>
+		<object-name>spd-text</object-name>
+		<object-name>spd-text-test</object-name>
+		<object-name>vord_led</object-name>
+		<object-name>vord_led.001</object-name>
+		<object-name>vs-text</object-name>
+		<object-name>vs-text-last-2-digits</object-name>
+		<object-name>vs-text-test</object-name>
+		<object-name>wpt_led</object-name>
+		<object-name>wpt_led.001</object-name>
+		<condition>
+			<or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-si-bus</property>
+					<value>110</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-ess-shed</property>
+					<value>110</value>
+				</greater-than-equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- Special for master warning -->
+	<animation>
+		<type>select</type>
+		<object-name>autoland_light_on</object-name>
+		<object-name>master_caution_on</object-name>
+		<object-name>master_warning_on</object-name>
+		<condition>
+			<or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-si-bus</property>
+					<value>110</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-ess-shed</property>
+					<value>110</value>
+				</greater-than-equals>
+				<greater-than>
+					<property>/systems/electrical/bus/ac-2</property>
+					<value>110</value>
+				</greater-than>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- 35LP AC ESS SHED 801XP 5VAC transformer 
+		 BACKUP 901XP STAT INV
+	-->
+	<animation>
+		<type>select</type>
+		<object-name>engine_fire_1</object-name>
+		<object-name>engine_fire_2</object-name>
+		<object-name>gear_lever_down_arrow</object-name>
+		<object-name>lgear_down</object-name>
+		<object-name>lgear_unlk</object-name>
+		<object-name>ngear_down</object-name>
+		<object-name>ngear_unlk</object-name>
+		<object-name>rgear_down</object-name>
+		<object-name>rgear_unlk</object-name>
+		<condition>
+			<or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-si-bus</property>
+					<value>110</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-ess-shed</property>
+					<value>110</value>
+				</greater-than-equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- 36LP AC 2 202XP 5VAC transformer -->
+	<!-- ATC MSG (dual power with 37LP?) -->
+	<animation>
+		<type>select</type>
+		<object-name>brk_fan_on</object-name>
+		<object-name>brk_hot_on</object-name>
+		<object-name>CockpitDoorFault</object-name>
+		<object-name>CockpitDoorOpen</object-name>
+		<object-name>engine_fault_1</object-name>
+		<object-name>engine_fault_2</object-name>
+		<object-name>prio_fo.arrow</object-name>
+		<object-name>prio_fo_fo</object-name>
+		<condition>
+			<greater-than>
+				<property>/systems/electrical/bus/ac-2</property>
+				<value>110</value>
+			</greater-than>
+		</condition>
+	</animation>
+	
+	<!-- 37LP AC 1 103XP 5VAC transformer -->
+	<!-- ATC MSG, GPWS annunciator -->
+	<animation>
+		<type>select</type>
+		<object-name>abs_low_on</object-name>
+		<object-name>abs_med_on</object-name>
+		<object-name>abs_max_on</object-name>
 		<object-name>dec_low_on</object-name>
 		<object-name>dec_med_on</object-name>
 		<object-name>dec_max_on</object-name>
+		<object-name>prio_capt.arrow</object-name>
+		<object-name>prio_capt.arrow.001</object-name>
+		<object-name>prio_capt.capt</object-name>
+		<object-name>prio_capt.capt.001</object-name>
+		<object-name>radio_sel_led</object-name>
+		<object-name>terr_on_nd_on_l</object-name>
+		<object-name>terr_on_nd_on_r</object-name>
+		<condition>
+			<greater-than>
+				<property>/systems/electrical/bus/ac-1</property>
+				<value>110</value>
+			</greater-than>
+		</condition>
+	</animation>
+	
+	<!-- Direct DC power from DC2 206PP to ECP LEDs and rudder trim indicator -->
+	<animation>
+		<type>select</type>
 		<object-name>ecam_apu_led</object-name>
 		<object-name>ecam_bleed_led</object-name>
 		<object-name>ecam_cond_led</object-name>
@@ -1114,66 +1258,6 @@
 		<object-name>ecam_press_led</object-name>
 		<object-name>ecam_sts_led</object-name>
 		<object-name>ecam_wheel_led</object-name>
-		<object-name>exped_led</object-name>
-		<object-name>fcu_screen</object-name>
-		<object-name>fd1_led</object-name>
-		<object-name>fd2_led</object-name>
-		<object-name>fpa-text</object-name>
-		<object-name>hdg-text</object-name>
-		<object-name>hdg-text-test</object-name>
-		<object-name>ils_led</object-name>
-		<object-name>ils2_led</object-name>
-		<object-name>lgear_down</object-name>
-		<object-name>lgear_unlk</object-name>
-		<object-name>loc_led</object-name>
-		<object-name>mach-text</object-name>
-		<object-name>master_caution_on</object-name>
-		<object-name>master_warning_on</object-name>
-		<object-name>ndb_led</object-name>
-		<object-name>ndb_led.001</object-name>
-		<object-name>ngear_down</object-name>
-		<object-name>ngear_unlk</object-name>
-		<object-name>qnh-hpa</object-name>
-		<object-name>qnh-inhg</object-name>
-		<object-name>qnh-std</object-name>
-		<object-name>qnh-test</object-name>
-		<object-name>radio_adf_led</object-name>
-		<object-name>radio_am_led</object-name>
-		<object-name>radio_bfo_led</object-name>
-		<object-name>radio_hf1_led</object-name>
-		<object-name>radio_hf2_led</object-name>
-		<object-name>radio_ls_led</object-name>
-		<object-name>radio_nav_led</object-name>
-		<object-name>radio_opt_led</object-name>
-		<object-name>radio_sel_led</object-name>
-		<object-name>radio_vhf1_led</object-name>
-		<object-name>radio_vhf2_led</object-name>
-		<object-name>radio_vhf3_led</object-name>
-		<object-name>radio_vor_led</object-name>
-		<object-name>rgear_down</object-name>
-		<object-name>rgear_unlk</object-name>
-		<object-name>spd-text</object-name>
-		<object-name>spd-text-test</object-name>
-		<object-name>terr_on_nd_label</object-name>
-		<object-name>terr_on_nd_on_l</object-name>
-		<object-name>terr_on_nd_on_r</object-name>
-		<object-name>vord_led</object-name>
-		<object-name>vord_led.001</object-name>
-		<object-name>vs-text</object-name>
-		<object-name>vs-text-last-2-digits</object-name>
-		<object-name>vs-text-test</object-name>
-		<object-name>wpt_led</object-name>
-		<object-name>wpt_led.001</object-name>
-		<condition>
-			<greater-than-equals>
-				<property>systems/electrical/bus/dc-ess</property>
-				<value>25</value>
-			</greater-than-equals>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>select</type>
 		<object-name>rudder-trim-letter</object-name>
 		<object-name>rudder-trim</object-name>
 		<condition>
@@ -1211,13 +1295,10 @@
 		<object-name>audio_mech_sgn</object-name>
 		<object-name>ecam_c_b_led</object-name>
 		<object-name>ecam_el_dc_led</object-name>
-		<object-name>ecam_sts_led</object-name>
 		<object-name>engine_fault_1</object-name>
 		<object-name>engine_fault_2</object-name>
 		<object-name>exped_led</object-name>
-		<object-name>qnh-test</object-name>
 		<object-name>radio_opt_led</object-name>
-		<object-name>ver.fmgc</object-name>
 		<condition>
 			<property>controls/switches/annun-test</property>
 		</condition>
@@ -1228,7 +1309,9 @@
 		<object-name>alt-text-test</object-name>
 		<object-name>hdg-text-test</object-name>
 		<object-name>spd-text-test</object-name>
+		<object-name>qnh-test</object-name>
 		<object-name>vs-text-test</object-name>
+		<object-name>ver.fmgc</object-name>
 		<condition>
 			<or>
 				<not><property>FMGC/FCU-working</property></not>
@@ -1433,6 +1516,89 @@
 				<property>controls/gear/brake-parking</property>
 			</binding>
 		</action>
+	</animation>
+
+	<!-- Cocktpit Door Switch  -->
+	
+	<animation>
+		<type>slider</type>
+		<object-name>CockpitDoorSwitch</object-name>
+		<object-name>CockpitDoorSwitch.mark</object-name>
+        <property>controls/doors/doorc-switch</property>
+		<drag-direction>vertical</drag-direction>
+		<action>		
+			<binding>	
+				<command>property-adjust</command>
+				<property>controls/doors/doorc-switch</property>
+				<factor>-1</factor>
+				<min>-1</min>
+				<max>1</max>
+				<wrap>0</wrap>
+			</binding>		
+		</action>
+		<release>		
+			<binding>	
+				<command>property-assign</command>
+				<property>controls/doors/doorc-switch</property>
+				<value>0</value>
+			</binding>
+		</release>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>doorc-switch-lock</tooltip-id>
+				<label>Cockpit door switch</label>
+			</binding>
+		</hovered>		
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>CockpitDoorSwitch</object-name>
+		<object-name>CockpitDoorSwitch.mark</object-name>
+        <property>controls/doors/doorc-switch</property>
+		<interpolation>
+			<entry><ind>-1</ind><dep>-25</dep></entry>
+			<entry><ind> 0</ind><dep>  0</dep></entry>
+			<entry><ind> 1</ind><dep> 25</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>CockpitDoorSwitch.axis</object-name>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>CockpitDoorOpen</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>		
+				<not-equals>
+					<property>sim/model/door-positions/doorc/lock-status</property>
+					<value>1</value>
+				</not-equals>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>CockpitDoorFault</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>		
+				<equals>
+					<property>sim/model/door-positions/doorc/lock-status</property>
+					<value>-9</value>
+				</equals>
+			</or>
+		</condition>
 	</animation>
 
 	<!-- Terr on ND -->
@@ -2061,6 +2227,76 @@
 			<object-name>pfd_brt_fo.axis</object-name>
 		</axis>
 	</animation>
+
+	<!-- Foot warner switches -->
+
+	<animation>
+		<type>rotate</type>
+		<object-name>foot_warmer_cpt_sw</object-name>
+		<object-name>foot_warmer_cpt_sw.mark</object-name>
+		<property>controls/cabin/footwarmer-cpt</property>
+		<interpolation>
+			<entry><ind>1</ind><dep>-20</dep></entry>
+			<entry><ind>0</ind><dep>20</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>foot_warmer_cpt_sw.axis</object-name>
+		</axis>		
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>foot_warmer_cpt_sw</object-name>
+		<object-name>foot_warmer_cpt_sw.mark</object-name>
+		<action>
+			<button>0</button>			
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/cabin/footwarmer-cpt</property>
+				<value>1</value>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sounde/switch1</property>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>foot_warmer_fo_sw</object-name>
+		<object-name>foot_warmer_fo_sw.mark</object-name>
+		<property>controls/cabin/footwarmer-fo</property>
+		<interpolation>
+			<!-- Axis inverted!! -->
+			<entry><ind>1</ind><dep>20</dep></entry>
+			<entry><ind>0</ind><dep>-20</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>foot_warmer_fo_sw.axis</object-name>
+		</axis>		
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>foot_warmer_fo_sw</object-name>
+		<object-name>foot_warmer_fo_sw.mark</object-name>
+		<action>
+			<button>0</button>			
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/cabin/footwarmer-fo</property>
+				<value>1</value>
+				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sounde/switch1</property>
+			</binding>
+		</action>
+	</animation>
+
 
 	<!-- ECAM Controls -->
 	<animation>
@@ -5916,28 +6152,16 @@
 		<type>select</type>
 		<object-name>gear_lever_down_arrow</object-name>
 		<condition>
-			<and>
-				<or>
-					<greater-than>
-						<property>systems/electrical/bus/ac-ess</property>
-						<value>110</value>
-					</greater-than>
-					<greater-than>
-						<property>systems/electrical/bus/ac-2</property>
-						<value>110</value>
-					</greater-than>
-				</or>
-				<or>
-					<equals>
-						<property>controls/switches/annun-test</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>ECAM/warnings/landing-gear-warning-light</property>
-						<value>1</value>
-					</equals>
-				</or>
-			</and>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>ECAM/warnings/landing-gear-warning-light</property>
+					<value>1</value>
+				</equals>
+			</or>
 		</condition>
 	</animation>
 	
@@ -5945,28 +6169,16 @@
 		<type>material</type>
 		<object-name>gear_lever_down_arrow</object-name>
 		<condition>
-			<and>
-				<or>
-					<greater-than>
-						<property>systems/electrical/bus/ac-ess</property>
-						<value>110</value>
-					</greater-than>
-					<greater-than>
-						<property>systems/electrical/bus/ac-2</property>
-						<value>110</value>
-					</greater-than>
-				</or>
-				<or>
-					<equals>
-						<property>controls/switches/annun-test</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>ECAM/warnings/landing-gear-warning-light</property>
-						<value>1</value>
-					</equals>
-				</or>
-			</and>
+			<or>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>ECAM/warnings/landing-gear-warning-light</property>
+					<value>1</value>
+				</equals>
+			</or>
 		</condition>
 		<emission>
 			<red>1.00</red>

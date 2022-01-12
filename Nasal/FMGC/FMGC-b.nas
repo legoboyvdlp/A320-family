@@ -173,7 +173,7 @@ var Custom = {
 		spdManaged: props.globals.getNode("/it-autoflight/input/spd-managed", 1),
 	},
 	Output: {
-		fmaPower: props.globals.initNode("/it-autoflight/output/fma-pwr", 0, "BOOL"),
+		fmaPower: 0,
 		vsFCU: props.globals.initNode("/it-autoflight/output/vs-fcu-display", "", "STRING"),
 	},
 	Sound: {
@@ -229,7 +229,7 @@ var ITAF = {
 		Text.lat.setValue(" ");
 		Text.vert.setValue(" ");
 		Custom.showHdg.setBoolValue(1);
-		Custom.Output.fmaPower.setBoolValue(1);
+		Custom.Output.fmaPower = 1;
 		ManagedSPD.stop();
 		loopTimer.start();
 		slowLoopTimer.start();
@@ -432,24 +432,19 @@ var ITAF = {
 				}
 				Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
 				
-				# Advance logic done by flightplan controller
-				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue()) {
+				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWpTemp).fly_type == "flyBy") {
+					flightPlanController.autoSequencing();
+				} elsif (FPLN.wp0Dist.getValue() <= 0.15) {
 					flightPlanController.autoSequencing();
 				}
-				
-				#if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWpTemp).fly_type == "flyBy") {
-				#	flightPlanController.autoSequencing();
-				#} elsif (FPLN.wp0Dist.getValue() <= 0.1) {
-				#	flightPlanController.autoSequencing();
-				#}
 			}
 		}
 	},
 	ap1Master: func(s) {
 		if (s == 1) {
 			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100) {
-				me.revertBasicMode();
 				Output.ap1.setBoolValue(1);
+				me.updateFma();
 				Output.latTemp = Output.lat.getValue();
 				if (Output.ap2.getBoolValue() and !Output.apprArm.getBoolValue() and Output.latTemp != 2 and Output.latTemp != 4) {
 					me.ap2Master(0);
@@ -465,12 +460,13 @@ var ITAF = {
 		if (Input.ap1.getBoolValue() != Output.ap1Temp) {
 			Input.ap1.setBoolValue(Output.ap1Temp);
 		}
+		fmaAp();
 	},
 	ap2Master: func(s) {
 		if (s == 1) {
 			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100) {
-				me.revertBasicMode();
 				Output.ap2.setBoolValue(1);
+				me.updateFma();
 				Output.latTemp = Output.lat.getValue();
 				if (Output.ap1.getBoolValue() and !Output.apprArm.getBoolValue() and Output.latTemp != 2 and Output.latTemp != 4) {
 					me.ap1Master(0);
@@ -486,6 +482,7 @@ var ITAF = {
 		if (Input.ap2.getBoolValue() != Output.ap2Temp) {
 			Input.ap2.setBoolValue(Output.ap2Temp);
 		}
+		fmaAp();
 	},
 	apOffFunction: func() {
 		if (!Output.ap1.getBoolValue() and !Output.ap2.getBoolValue()) { # Only do if both APs are off
@@ -515,6 +512,7 @@ var ITAF = {
 		if (Input.athr.getBoolValue() != Output.athrTemp) {
 			Input.athr.setBoolValue(Output.athrTemp);
 		}
+		fmaAthr();
 	},
 	fd1Master: func(s) {
 		if (s == 1) {
@@ -530,6 +528,7 @@ var ITAF = {
 		if (Input.fd1.getBoolValue() != Output.fd1Temp) {
 			Input.fd1.setBoolValue(Output.fd1Temp);
 		}
+		fmaFd();
 	},
 	fd2Master: func(s) {
 		if (s == 1) {
@@ -545,6 +544,7 @@ var ITAF = {
 		if (Input.fd2.getBoolValue() != Output.fd2Temp) {
 			Input.fd2.setBoolValue(Output.fd2Temp);
 		}
+		fmaFd();
 	},
 	setLatMode: func(n) {
 		Output.vertTemp = Output.vert.getValue();
@@ -596,7 +596,9 @@ var ITAF = {
 			Text.lat.setValue("T/O");
 			me.armTextCheck();
 		} else if (n == 9) { # NONE
+			Output.lnavArm.setBoolValue(0);
 			Output.locArm.setBoolValue(0);
+			Output.apprArm.setBoolValue(0);
 			Output.lat.setValue(9);
 			Custom.showHdg.setBoolValue(1);
 			Text.lat.setValue(" ");
@@ -882,9 +884,10 @@ var ITAF = {
 			me.setLatMode(9);
 			me.setVertMode(9);
 			me.setLatArm(0);
-			Custom.Output.fmaPower.setBoolValue(0);
+			Custom.Output.fmaPower = 0;
 		} else {
-			Custom.Output.fmaPower.setBoolValue(1);
+			if (!Custom.Output.fmaPower) showAllBoxes();
+			Custom.Output.fmaPower = 1;
 			me.revertBasicMode();
 		}
 	},
