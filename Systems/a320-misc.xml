@@ -466,4 +466,62 @@
 		
 	</channel>
 	
+	<channel name="PFD BUSS" execrate="8">
+	
+		
+		<fcs_function name="/instrumentation/pfd/buss/translate">
+			<function>
+				<ifthen>
+					<lt>
+						<property>/fdm/jsbsim/fcs/slat-pos-deg</property>
+						<value>15</value>
+					</lt>
+					<table>
+						<independentVar lookup="row">aero/alpha-deg-corrected</independentVar>
+						<tableData>
+						    -1.5    136.409
+							 0.0   53.447
+							 3.0    0
+							 6.5   -53.447
+							 8.0   -136.409
+						</tableData>
+					</table>
+					<table>
+						<independentVar lookup="row">aero/alpha-deg-corrected</independentVar>
+						<tableData>
+						    -1.5    136.409
+						     0.0    53.447
+							 3.0    0
+							12.5   -53.447
+							14.0   -136.409
+						</tableData>
+					</table>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+	</channel>
+	
+	<channel name="FMGC">
+		
+		<fcs_function name="/FMGC/internal/kts-to-mach-factor">
+			<function>
+				<quotient>
+					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/mach-to-kts-factor">
+			<function>
+				<quotient>
+					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+	</channel>
+	
 </system>

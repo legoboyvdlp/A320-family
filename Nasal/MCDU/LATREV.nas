@@ -85,6 +85,8 @@ var latRev = {
 				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0]];
 			} elsif (me.type == 1) {
 				me.title = ["LAT REV", " FROM ", left(me.wpt.wp_name, 4)];
+				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0]];
+				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 				if (size(me.wpt.wp_name) > 4) {
 					me.arrAirport = findAirportsByICAO(left(me.wpt.wp_name, 4));
 				} else {
@@ -92,27 +94,36 @@ var latRev = {
 				}
 				me.subtitle = [dmsToString(sprintf(me.arrAirport[0].lat), "lat"), dmsToString(sprintf(me.arrAirport[0].lon), "lon")];
 				me.L3 = [" ALTN", nil, "wht"];
-				me.L4 = [" ALTN", " ENABLE", "blu"];
+				if (fmgc.FMGCInternal.altAirportSet) {
+					me.L4 = [" ALTN", " ENABLE", "blu"];
+					me.arrowsMatrix[0][3] = 1;
+				} else {
+					me.arrowsMatrix[0][3] = 0;
+				}
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["ARRIVAL ", nil, "wht"];
 				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
-				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0]];
-				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 			} elsif (me.type == 3) {
 				me.title = ["LAT REV", " FROM ", me.wpt.wp_name];
+				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 1, 0]];
+				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "wht", "ack"]];
+				
 				if (me.wpt != nil) {
 					me.subtitle = [dmsToString(sprintf(me.wpt.lat), "lat"), dmsToString(sprintf(me.wpt.lon), "lon")];
 				}
 				me.L3 = [" HOLD", nil, "wht"];
-				me.L4 = [" ALTN", " ENABLE", "blu"];
+				if (fmgc.FMGCInternal.altAirportSet) {
+					me.L4 = [" ALTN", " ENABLE", "blu"];
+					me.arrowsMatrix[0][3] = 1;
+				} else {
+					me.arrowsMatrix[0][3] = 0;
+				}
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["FIX INFO ", nil, "wht"];
 				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
 				me.R4 = ["[     ]", "NEW DEST", "blu"];
 				me.R5 = ["AIRWAYS ", nil, "wht"];
-				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 1, 0]];
-				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "wht", "ack"]];
 				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
 			}
 		}

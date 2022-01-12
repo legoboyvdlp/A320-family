@@ -90,7 +90,7 @@
   </g>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.12171543"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.12171543"
      x="252.23582"
      y="518.83618"
      id="Pump-Green-label"
@@ -100,10 +100,10 @@
        id="tspan5071"
        x="252.23582"
        y="518.83618"
-       style="font-size:44.86862183px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:1.12171543">1</tspan></text>
+       style="font-size:44.86862183px;line-height:1.25;fill:#ffffff;fill-opacity:1;stroke-width:1.12171543">1</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:1.12171543"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.12171543"
      x="765.90515"
      y="518.83655"
      id="Pump-Yellow-label"
@@ -569,7 +569,7 @@
   </g>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.23399234px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.23399234px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="141.2791"
      y="141.94647"
      id="Green-label"
@@ -582,7 +582,7 @@
        style="font-size:38.8080368px;line-height:0;stroke-width:3.23399234px">GREEN</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.32247186px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.32247186px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="474.72162"
      y="150.48338"
      id="Blue-label"
@@ -595,7 +595,7 @@
        style="font-size:39.86965179px;line-height:0;stroke-width:3.32247186px">BLUE</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:3.24444103px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.24444103px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="813.40643"
      y="144.02638"
      id="Yellow-label"
@@ -703,7 +703,7 @@
   </g>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.7688396px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.7688396px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="648.68372"
      y="332.78397"
      id="PTU-label"
@@ -742,7 +742,7 @@
        style="font-size:33.75584793px;line-height:0;fill:#179ab7;fill-opacity:1;stroke-width:2.81296349px">PSI</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:0.75"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.75"
      x="380.50534"
      y="437.96274"
      id="RAT-label"
@@ -751,7 +751,7 @@
        id="tspan5348"
        x="380.50534"
        y="437.96274"
-       style="font-size:30px;line-height:1.25;fill:#cecdce;fill-opacity:1;stroke-width:0.75">RAT</tspan></text>
+       style="font-size:30px;line-height:1.25;fill:#ffffff;fill-opacity:1;stroke-width:0.75">RAT</tspan></text>
   <g
      id="RAT-not-stowed"
      inkscape:label="#g5378">
@@ -777,7 +777,7 @@
      inkscape:connector-curvature="0"
      id="RAT-stowed"
      d="m 482.25,426.99999 -15.75,7.5 -16.50001,8.25 v -17.25 -15.30854 c 0,0 1.69343,0.68362 19.69535,10.2091 11.05466,5.84944 12.55466,6.59944 12.55466,6.59944 z"
-     style="fill:none;fill-opacity:1;stroke:#cecdce;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1" />
   <g
      transform="matrix(-1,0,0,1,1314.75,0.75)"
      id="ELEC-Yellow-on"
@@ -804,16 +804,16 @@
      inkscape:connector-curvature="0"
      id="ELEC-Yellow-off"
      d="m 832.49998,427.74999 15.75,7.5 16.50001,8.25 v -17.25 -15.30854 c 0,0 -1.69343,0.68362 -19.69535,10.2091 -11.05466,5.84944 -12.55466,6.59944 -12.55466,6.59944 z"
-     style="fill:none;fill-opacity:1;stroke:#cecdce;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2.77499986;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4.80000019;stroke-dasharray:none;stroke-opacity:1" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.6992681px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.6992681px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="931.32257"
      y="397.36942"
      id="ELEC-Yellow-label"
      inkscape:label="#text5149"
      transform="scale(0.95285485,1.0494778)"><tspan
-       style="font-size:32.39107513px;line-height:0;fill:#cecdce;fill-opacity:1;stroke-width:2.6992681px"
+       style="font-size:32.39107513px;line-height:0;fill:#ffffff;fill-opacity:1;stroke-width:2.6992681px"
        y="397.36942"
        x="931.32257"
        id="tspan5443"
@@ -833,13 +833,13 @@
        sodipodi:role="line">OVHT</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.6992681px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.6992681px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="579.49225"
      y="490.00397"
      id="ELEC-Blue-label"
      inkscape:label="#text5149"
      transform="scale(0.95285485,1.0494778)"><tspan
-       style="font-size:32.39107513px;line-height:0;fill:#cecdce;fill-opacity:1;stroke-width:2.6992681px"
+       style="font-size:32.39107513px;line-height:0;fill:#ffffff;fill-opacity:1;stroke-width:2.6992681px"
        y="490.00397"
        x="579.49225"
        id="tspan5443-3"
@@ -886,7 +886,7 @@
      sodipodi:nodetypes="ccccccc"
      inkscape:label="#path5530" />
   <rect
-     style="opacity:0.8;fill:#cecdce;fill-opacity:1;stroke:#179ab7;stroke-width:1.6348666;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+     style="opacity:0.8;fill:#ffffff;fill-opacity:1;stroke:#179ab7;stroke-width:1.6348666;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
      id="HYD-Quantity-Group-Yellow_clip"
      width="33.343235"
      height="180.96817"
@@ -916,7 +916,7 @@
        height="144.83067"
        width="5.3955846"
        id="rect5105-6-0-7-8-6-8-8-7-3-8-8-1"
-       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.57043672;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.57043672;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        inkscape:connector-curvature="0"
        id="path5559"
@@ -930,7 +930,7 @@
        inkscape:label="#path5563" />
   </g>
   <rect
-     style="opacity:0.8;fill:#cecdce;fill-opacity:1;stroke:#179ab7;stroke-width:1.63897061;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+     style="opacity:0.8;fill:#ffffff;fill-opacity:1;stroke:#179ab7;stroke-width:1.63897061;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
      id="HYD-Quantity-Group-Blue_clip"
      width="33.344971"
      height="181.86841"
@@ -959,7 +959,7 @@
        height="135.94765"
        width="5.3955846"
        id="rect5105-6-0-7-8-6-8-8-7-3-8-8-1-6"
-       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.49036217;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.49036217;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        inkscape:connector-curvature="0"
        id="path5559-3"
@@ -973,7 +973,7 @@
        inkscape:label="#path5563" />
   </g>
   <rect
-     style="opacity:0.8;fill:#cecdce;fill-opacity:1;stroke:#179ab7;stroke-width:1.63411391;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+     style="opacity:0.8;fill:#ffffff;fill-opacity:1;stroke:#179ab7;stroke-width:1.63411391;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
      id="HYD-Quantity-Group-Green_clip"
      width="33.336826"
      height="180.83632"
@@ -1002,7 +1002,7 @@
        height="152.12271"
        width="5.3955846"
        id="rect5105-6-0-7-8-6-8-8-7-3-8-8-1-62"
-       style="fill:#cecdce;fill-opacity:1;stroke:none;stroke-width:2.63435125;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.63435125;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        inkscape:connector-curvature="0"
        id="path5559-1"
@@ -1026,9 +1026,9 @@
        id="tspan3716"
        x="498.69232"
        y="52.393005"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#cecdce">HYD</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#ffffff">HYD</tspan></text>
   <rect
-     style="fill:#cecdce;fill-opacity:1"
+     style="fill:#ffffff;fill-opacity:1"
      id="PageTitle2"
      width="99.494408"
      height="4.5880013"
@@ -1102,7 +1102,7 @@
        id="tspan3914"
        x="695.24951"
        y="939.8045"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#cecdce">GW</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#ffffff">GW</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1113,7 +1113,7 @@
        id="tspan3914-9"
        x="48.73233"
        y="939.2984"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#cecdce">TAT</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#ffffff">TAT</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1124,7 +1124,7 @@
        id="tspan3914-9-4"
        x="47.952412"
        y="975.40332"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#cecdce">SAT</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#ffffff">SAT</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;line-height:0%;font-family:'Liberation Sans';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"

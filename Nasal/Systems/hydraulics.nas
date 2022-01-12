@@ -44,6 +44,7 @@ var HYD = {
 	},
 	Pump: {
 		yellowElec: props.globals.getNode("/systems/hydraulic/sources/yellow-elec/pump-operate"),
+		yellowElecFail: props.globals.getNode("/ECAM/warnings/hyd/yellow-elec-pump-fail"),
 	},
 	Qty: {
 		blueInput: props.globals.initNode("/systems/hydraulic/blue-qty-input", 0, "INT"),
@@ -74,6 +75,12 @@ var HYD = {
 		blueAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/blue-abnorm-lo-pr"),
 		greenAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/green-abnorm-lo-pr"),
 		yellowAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/yellow-abnorm-lo-pr"),
+		blueLoLvl: props.globals.getNode("/systems/hydraulic/relays/blue-reservoir-low-qty-switch"),
+		greenLoLvl: props.globals.getNode("/systems/hydraulic/relays/green-reservoir-low-qty-switch"),
+		yellowLoLvl: props.globals.getNode("/systems/hydraulic/relays/yellow-reservoir-low-qty-switch"),
+		blueReservoirOvht: props.globals.getNode("/systems/hydraulic/relays/blue-reservoir-overheat"),
+		greenReservoirOvht: props.globals.getNode("/systems/hydraulic/relays/green-reservoir-overheat"),
+		yellowReservoirOvht: props.globals.getNode("/systems/hydraulic/relays/yellow-reservoir-overheat"),
 	},
 	init: func() {
 		me.resetFail();

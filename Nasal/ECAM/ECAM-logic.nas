@@ -574,6 +574,61 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(apuFireMaster);
 	}
 	
+	if (ADR123Fault.clearFlag == 0 and warningNodes.Logic.adr123Fault.getValue() and phaseVar3 != 4 and phaseVar3 != 8) {
+		ADR123Fault.active = 1;
+		
+		if (ADR123FaultAP.clearFlag == 0 and (fmgc.Output.ap1.getBoolValue() or fmgc.Output.ap2.getBoolValue() or fmgc.Output.fd1.getBoolValue() or fmgc.Output.fd2.getBoolValue())) {
+			ADR123FaultAP.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultAP);
+		}
+		
+		if (ADR123FaultATHR.clearFlag == 0 and fmgc.Output.athr.getBoolValue()) {
+			ADR123FaultATHR.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultATHR);
+		}
+		
+		if (ADR123FaultPRBW.clearFlag == 0) {
+			ADR123FaultPRBW.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultPRBW);
+		}
+		
+		if (ADR123FaultADRPB.clearFlag == 0 and (systems.ADIRS.Switches.adrSw[0].getBoolValue() or systems.ADIRS.Switches.adrSw[1].getBoolValue() or systems.ADIRS.Switches.adrSw[2].getBoolValue())) {
+			ADR123FaultADRPB.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultADRPB);
+		}
+		
+		if (ADR123FaultSPD.clearFlag == 0) {
+			ADR123FaultSPD.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultSPD);
+		}
+		
+		if (ADR123FaultSTBY.clearFlag == 0) {
+			ADR123FaultSTBY.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultSTBY);
+		}
+		
+		if (ADR123FaultPROC.clearFlag == 0) {
+			ADR123FaultPROC.active = 1;
+		} else {
+			ECAM_controller.warningReset(ADR123FaultPROC);
+		}
+	} else {
+		ECAM_controller.warningReset(ADR123Fault);
+		ECAM_controller.warningReset(ADR123FaultAP);
+		ECAM_controller.warningReset(ADR123FaultATHR);
+		ECAM_controller.warningReset(ADR123FaultPRBW);
+		ECAM_controller.warningReset(ADR123FaultADRPB);
+		ECAM_controller.warningReset(ADR123FaultSPD);
+		ECAM_controller.warningReset(ADR123FaultSTBY);
+		ECAM_controller.warningReset(ADR123FaultPROC);
+	}
+	
 	if ((ecamConfigTest.getValue() and (phaseVar3 == 1 or phaseVar3 == 2 or phaseVar3 == 9)) or phaseVar3 == 3 or phaseVar3 == 4) {
 		takeoffConfig = 1;
 	} else {
@@ -626,7 +681,194 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(park_brk_config);
 	}
 	
-	if (lrElevFault.clearFlag == 0 and warningNodes.Timers.LRElevFault.getValue()) {
+	if (excessCabAlt.clearFlag == 0 and warningNodes.Logic.excessCabAlt.getValue() == 1 and phaseVar3 == 6) {
+		excessCabAlt.active = 1;
+		
+		if (excessCabAltMask.clearFlag == 0 and warningNodes.Flipflops.cabPressExcessFlipflopTop.getValue()) {
+			excessCabAltMask.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessCabAltMask);
+		}
+		
+		if (warningNodes.Flipflops.cabPressExcessFlipflop.getValue()) {
+			if (excessCabAltSigns.clearFlag == 0 and (!pts.Controls.Lighting.noSmokingSign.getValue() or !pts.Controls.Lighting.seatbeltSign.getValue())) {
+				excessCabAltSigns.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltSigns);
+			}
+			
+			if (excessCabAltEmerD.clearFlag == 0) {
+				excessCabAltEmerD.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltEmerD);
+			}
+		} else {
+			ECAM_controller.warningReset(excessCabAltSigns);
+			ECAM_controller.warningReset(excessCabAltEmerD);
+		}
+		
+		if (excessCabAltDES.clearFlag == 0 and warningNodes.Flipflops.cabPressExcessFlipflopTop.getValue()) {
+			excessCabAltDES.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessCabAltDES);
+		}
+		
+		if (warningNodes.Flipflops.cabPressExcessFlipflop.getValue()) {
+			if (excessCabAltTHRLVR.clearFlag == 0 and !fmgc.Output.athr.getBoolValue() and warningNodes.Logic.JE1TLAI.getValue() == 0 and warningNodes.Logic.JE2TLAI.getValue() == 0) {
+				excessCabAltTHRLVR.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltTHRLVR);
+			}
+			
+			if (excessCabAltSPDBRK.clearFlag == 0 and pts.Controls.Flight.speedbrake.getValue() != 1) {
+				excessCabAltSPDBRK.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltSPDBRK);
+			}
+			
+			if (excessCabAltSPD.clearFlag == 0) {
+				excessCabAltSPD.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltSPD);
+			}
+			
+			if (excessCabAltENG.clearFlag == 0 and pts.Controls.Engines.startSw.getValue() != 1) {
+				excessCabAltENG.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltENG);
+			}
+			
+			if (excessCabAltATC.clearFlag == 0) {
+				excessCabAltATC.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltATC);
+			}
+		} else {
+			ECAM_controller.warningReset(excessCabAltTHRLVR);
+			ECAM_controller.warningReset(excessCabAltSPDBRK);
+			ECAM_controller.warningReset(excessCabAltSPD);
+			ECAM_controller.warningReset(excessCabAltENG);
+			ECAM_controller.warningReset(excessCabAltATC);
+		}
+		
+		if (warningNodes.Flipflops.cabPressExcessFlipflopTop.getValue() and !warningNodes.Flipflops.cabPressExcessFlipflop.getValue()) {
+			if (excessCabAltCAB.clearFlag == 0) {
+				excessCabAltCAB.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltCAB);
+			}
+		} else {
+			ECAM_controller.warningReset(excessCabAltCAB);
+		}
+		
+		if (warningNodes.Flipflops.cabPressExcessFlipflop.getValue()) {
+			if (excessCabAltPA.clearFlag == 0) {
+				excessCabAltPA.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltPA);
+			}
+			
+			if (excessCabAltXPDR.clearFlag == 0) {
+				excessCabAltXPDR.active = 1;
+			} else {
+				ECAM_controller.warningReset(excessCabAltXPDR);
+			}
+		} else {
+			ECAM_controller.warningReset(excessCabAltPA);
+			ECAM_controller.warningReset(excessCabAltXPDR);
+		}
+		
+		if (excessCabAltMEA.clearFlag == 0) {
+			excessCabAltMEA.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessCabAltMEA);
+		}
+		
+		if (excessCabAltCabAlt.clearFlag == 0) {
+			excessCabAltCabAlt.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessCabAltCabAlt);
+		}
+		
+		if (excessCabAltMasks.clearFlag == 0) {
+			excessCabAltMasks.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessCabAltMasks);
+		}
+	} else {
+		ECAM_controller.warningReset(excessCabAlt);
+		ECAM_controller.warningReset(excessCabAltMask);
+		ECAM_controller.warningReset(excessCabAltSigns);
+		ECAM_controller.warningReset(excessCabAltEmerD);
+		ECAM_controller.warningReset(excessCabAltDES);
+		ECAM_controller.warningReset(excessCabAltTHRLVR);
+		ECAM_controller.warningReset(excessCabAltSPDBRK);
+		ECAM_controller.warningReset(excessCabAltSPD);
+		ECAM_controller.warningReset(excessCabAltENG);
+		ECAM_controller.warningReset(excessCabAltCAB);
+		ECAM_controller.warningReset(excessCabAltATC);
+		ECAM_controller.warningReset(excessCabAltPA);
+		ECAM_controller.warningReset(excessCabAltXPDR);
+		ECAM_controller.warningReset(excessCabAltMEA);
+		ECAM_controller.warningReset(excessCabAltCabAlt);
+		ECAM_controller.warningReset(excessCabAltMasks);
+	}
+	
+	if (eng1OilLoPr.clearFlag == 0 and warningNodes.Logic.eng1OilLoPr.getBoolValue() and phaseVar3 != 1 and phaseVar3 != 10) {
+		eng1OilLoPr.active = 1;
+		
+		if (eng1OilLoPrIf.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
+			eng1OilLoPrIf.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1OilLoPrIf);
+		}
+		
+		if (eng1OilLoPrThrot.clearFlag == 0 and !warningNodes.Logic.JE1TLAI.getValue()) {
+			eng1OilLoPrThrot.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1OilLoPrThrot);
+		}
+		
+		if (eng1OilLoPrMaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[0].getValue() == 0) {
+			eng1OilLoPrMaster.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng1OilLoPrMaster);
+		}
+	} else {
+		ECAM_controller.warningReset(eng1OilLoPr);
+		ECAM_controller.warningReset(eng1OilLoPrIf);
+		ECAM_controller.warningReset(eng1OilLoPrThrot);
+		ECAM_controller.warningReset(eng1OilLoPrMaster);
+	}
+	
+	if (eng2OilLoPr.clearFlag == 0 and warningNodes.Logic.eng2OilLoPr.getBoolValue() and phaseVar3 != 1 and phaseVar3 != 10) {
+		eng2OilLoPr.active = 1;
+		
+		if (eng2OilLoPrIf.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
+			eng2OilLoPrIf.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2OilLoPrIf);
+		}
+		
+		if (eng2OilLoPrThrot.clearFlag == 0 and !warningNodes.Logic.JE2TLAI.getValue()) {
+			eng2OilLoPrThrot.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2OilLoPrThrot);
+		}
+		
+		if (eng2OilLoPrMaster.clearFlag == 0 and pts.Controls.Engines.Engine.cutoffSw[1].getValue() == 0) {
+			eng2OilLoPrMaster.active = 1;
+		} else {
+			ECAM_controller.warningReset(eng2OilLoPrMaster);
+		}
+	} else {
+		ECAM_controller.warningReset(eng2OilLoPr);
+		ECAM_controller.warningReset(eng2OilLoPrIf);
+		ECAM_controller.warningReset(eng2OilLoPrThrot);
+		ECAM_controller.warningReset(eng2OilLoPrMaster);
+	}
+	
+	if (lrElevFault.clearFlag == 0 and warningNodes.Timers.LRElevFault.getValue() == 1) {
 		lrElevFault.active = 1;
 		if (lrElevFaultSpeed.clearFlag == 0) {
 			lrElevFaultSpeed.active = 1;
@@ -829,6 +1071,32 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(lavatorySmokeComm);
 	}
 	
+	# CAB PRESS EXESS RESIDUAL PRESS
+	if (excessResidPress.clearFlag == 0 and warningNodes.Logic.excessPress.getValue() == 1 and phaseVar == 10) {
+		if (excessResidPressPack1.clearFlag == 0) {
+			excessResidPressPack1.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessResidPressPack1);
+		}
+		
+		if (excessResidPressPack2.clearFlag == 0) {
+			excessResidPressPack2.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessResidPressPack2);
+		}
+		
+		if (excessResidPressCabCr.clearFlag == 0) {
+			excessResidPressCabCr.active = 1;
+		} else {
+			ECAM_controller.warningReset(excessResidPressCabCr);
+		}
+	} else {
+		ECAM_controller.warningReset(excessResidPress);
+		ECAM_controller.warningReset(excessResidPressPack1);
+		ECAM_controller.warningReset(excessResidPressPack2);
+		ECAM_controller.warningReset(excessResidPressCabCr);
+	}
+	
 	# ESS on BAT
 	# NEW EMER ELEC CONFIG
 	if (essBusOnBat.clearFlag == 0 and warningNodes.Timers.staticInverter.getValue() == 1 and phaseVar3 >= 5 and phaseVar3 <= 7) {
@@ -977,13 +1245,13 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(hydBYloPrRat);
 		}
 		
-		if (hydBYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and systems.HYD.Qty.yellow.getValue() >= 3.5) { 
+		if (hydBYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and !systems.HYD.Pump.yellowElecFail.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and !systems.HYD.Fail.yellowReservoirAirPressLow.getBoolValue() and !systems.HYD.Warnings.yellowReservoirOvht.getBoolValue() and !systems.HYD.Warnings.yellowLoLvl.getBoolValue()) { 
 			hydBYloPrYElec.active = 1;
 		} else {
 			ECAM_controller.warningReset(hydBYloPrYElec);
 		}
 		
-		if (hydBYloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 2.4) {
+		if (hydBYloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 1.8 and !systems.HYD.Fail.blueReservoirAirPressLow.getBoolValue() and !systems.HYD.Warnings.blueReservoirOvht.getBoolValue() and !systems.HYD.Warnings.blueLoLvl.getBoolValue()) {
 			hydBYloPrRatOn.active = 1;
 		} else {
 			ECAM_controller.warningReset(hydBYloPrRatOn);
@@ -1052,7 +1320,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(hydGBloPrRat);
 		}
 		
-		if (hydGBloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 2.4) {
+		if (hydGBloPrRatOn.clearFlag == 0 and systems.HYD.Rat.position.getValue() == 0 and systems.HYD.Qty.blue.getValue() >= 1.8 and !systems.HYD.Fail.blueReservoirAirPressLow.getBoolValue() and !systems.HYD.Warnings.blueReservoirOvht.getBoolValue() and !systems.HYD.Warnings.blueLoLvl.getBoolValue()) {
 			hydGBloPrRatOn.active = 1;
 		} else {
 			ECAM_controller.warningReset(hydGBloPrRatOn);
@@ -1105,7 +1373,7 @@ var messages_priority_3 = func {
 		ECAM_controller.warningReset(hydGBloPrFmsPredict);
 	}
 	
-	if (hydGYloPr.clearFlag == 0 and phaseVar3 != 4 and phaseVar3 != 5 and warningNodes.Logic.greenYellow.getValue()) {
+	if (hydGYloPr.clearFlag == 0 and warningNodes.Logic.greenYellow.getValue()) {
 		hydGYloPr.active = 1;
 		if (hydGYloPrPtu.clearFlag == 0 and systems.HYD.Switch.ptu.getValue() != 0) {
 			hydGYloPrPtu.active = 1;
@@ -1125,7 +1393,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(hydGYloPrYEng);
 		}
 		
-		if (hydGYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and systems.HYD.Qty.yellow.getValue() >= 3.5) { 
+		if (hydGYloPrYElec.clearFlag == 0 and !systems.HYD.Pump.yellowElec.getValue() and !systems.HYD.Pump.yellowElecFail.getValue() and systems.ELEC.Bus.ac2.getValue() >= 110 and !systems.HYD.Fail.yellowReservoirAirPressLow.getBoolValue() and !systems.HYD.Warnings.yellowReservoirOvht.getBoolValue() and !systems.HYD.Warnings.yellowLoLvl.getBoolValue()) { 
 			hydGYloPrYElec.active = 1;
 		} else {
 			ECAM_controller.warningReset(hydGYloPrYElec);
@@ -3314,7 +3582,7 @@ var messages_config_memo = func {
 		toMemoLine1.colour = "c";
 	}
 	
-	if (pts.Controls.Switches.seatbeltSwitch.getValue() and pts.Controls.Switches.noSmokingSwitch.getValue()) {
+	if (pts.Controls.Lighting.seatbeltSign.getValue() and pts.Controls.Lighting.noSmokingSign.getValue()) {
 		toMemoLine2.msg = "    SIGNS ON";
 		toMemoLine2.colour = "g";
 	} else {
@@ -3380,7 +3648,7 @@ var messages_config_memo = func {
 		ldgMemoLine1.colour = "c";
 	}
 	
-	if (pts.Controls.Switches.seatbeltSwitch.getValue() and pts.Controls.Switches.noSmokingSwitch.getValue()) {
+	if (pts.Controls.Lighting.seatbeltSign.getValue() and pts.Controls.Lighting.noSmokingSign.getValue()) {
 		ldgMemoLine2.msg = "    SIGNS ON";
 		ldgMemoLine2.colour = "g";
 	} else {

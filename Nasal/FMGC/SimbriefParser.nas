@@ -120,7 +120,6 @@ var SimbriefParser = {
 			fmgc.updateArptLatLon();
 			fmgc.updateARPT();
 		} else {
-			me.cleanupInvalid();
 			return nil;
 		}
 		

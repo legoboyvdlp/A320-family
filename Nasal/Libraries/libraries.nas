@@ -64,6 +64,10 @@ var cargofwd = aircraft.door.new("/sim/model/door-positions/cargofwd", 10);
 # Seat armrests in the flight deck (unused)
 var armrests = aircraft.door.new("/sim/model/door-positions/armrests", 2);
 
+# Cockpit door - TODO animation
+var cockpitdoor = aircraft.door.new("/sim/model/door-positions/doorc", 1);
+setprop("/sim/model/door-positions/doorc/lock-status",0);
+
 # door opener/closer
 var triggerDoor = func(door, doorName, doorDesc) {
 	if (getprop("/sim/model/door-positions/" ~ doorName ~ "/position-norm") > 0) {
@@ -78,6 +82,25 @@ var triggerDoor = func(door, doorName, doorDesc) {
 		}
 	}
 };
+
+setlistener("/controls/doors/doorc-switch",func(a){
+	setprop("sim/sounde/switch1", 1);
+	if (systems.ELEC.Bus.dc1.getValue() > 25 or systems.ELEC.Bus.dc2.getValue() > 25) {
+		var pos = a.getValue();
+		var current = getprop("/sim/model/door-positions/doorc/lock-status");
+		if (pos == 1 and current == 0) {		## LOCK
+			settimer( func {
+				if (a.getValue() == pos) setprop("/sim/model/door-positions/doorc/lock-status",1);
+			},0.4);
+		}
+		else if (pos == -1 and current == 1) {		## UNLOCK
+			settimer( func {
+				if (a.getValue() == pos) setprop("/sim/model/door-positions/doorc/lock-status",0);
+			},0.3);
+		}
+		#setprop("/sim/model/door-positions/doorc/lock-status",-9); ## FAULT
+	}
+},0,0);
 
 ###########
 # Systems #
