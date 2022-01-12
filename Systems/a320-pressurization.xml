@@ -605,7 +605,7 @@
 				<sum>
 					<value>0.8</value>
 					<product>
-						<value>-/systems/pressurization/logic/outflow-valve-sensitivity</value>
+						<property>-/systems/pressurization/logic/outflow-valve-sensitivity</property>
 						<property>/systems/pressurization/logic/target-vs-error</property>
 					</product>
 				</sum>
