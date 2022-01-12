@@ -1567,6 +1567,8 @@ var button = func(btn, i, event = "") {
 			} else {
 				mcdu_scratchpad.scratchpads[i].addChar("-");
 			}
+		} else if (btn == "OVFY") {
+			mcdu_scratchpad.scratchpads[i].addChar("@");
 		} else {
 			mcdu_scratchpad.scratchpads[i].addChar(btn);
 		}
