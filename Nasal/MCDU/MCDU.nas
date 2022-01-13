@@ -1528,11 +1528,18 @@ var button = func(btn, i, event = "") {
 			if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "-") {
 				mcdu_scratchpad.scratchpads[i].clear();
 				mcdu_scratchpad.scratchpads[i].addChar("+");
+			} else if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "+") {
+				mcdu_scratchpad.scratchpads[i].clear();
+				mcdu_scratchpad.scratchpads[i].addChar("-");
 			} else {
 				mcdu_scratchpad.scratchpads[i].addChar("-");
 			}
 		} else if (btn == "OVFY") {
-			mcdu_scratchpad.scratchpads[i].addChar("@");
+			if (mcdu_scratchpad.scratchpads[i].scratchpad == "") {
+				mcdu_scratchpad.scratchpads[i].addChar("@");
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_scratchpad.scratchpads[i].addChar(btn);
 		}
