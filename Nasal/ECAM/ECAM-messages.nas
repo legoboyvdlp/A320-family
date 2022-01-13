@@ -14,9 +14,9 @@ var warnings				  = std.Vector.new([
 	var flap_not_zero         = warning.new(msg: "F/CTL FLAP LVR NOT ZERO",   colour: "r", aural: 0, light: 0, isMainMsg: 1),
 	
 	var overspeed             = warning.new(msg: "OVER SPEED",                colour: "r", aural: 0, light: 0, isMainMsg: 1),
-	var overspeedVMO          = warning.new(msg: "-VMO/MMO.......350 /.82",   colour: "r"),
-	var overspeedGear         = warning.new(msg: "-VLE...........280 /.67",   colour: "r"),
-	var overspeedFlap         = warning.new(msg: "-VFE................XXX",   colour: "r"),
+	var overspeedVMO          = warning.new(msg: " -VMO/MMO.......350 /.82",  colour: "r"),
+	var overspeedGear         = warning.new(msg: " -VLE...........280 /.67",  colour: "r"),
+	var overspeedFlap         = warning.new(msg: " -VFE................XXX",  colour: "r"),
 	
 	var allEngFail            = warning.new(msg: "ENG ALL ENGINES FAILURE",   colour: "r", aural: 0, light: 0, isMainMsg: 1, sdPage: "enginePage"),
 	var allEngFailElec        = warning.new(msg: " -EMER ELEC PWR...MAN ON",  colour: "c"),
@@ -182,25 +182,25 @@ var warnings				  = std.Vector.new([
 	var cargoSmokeFwdGrdClsd  = warning.new(msg: " .IF FWD CRG CLSD:",        colour: "w"),
 	var cargoSmokeFwdAgent    = warning.new(msg: " -AGENT............DISCH",  colour: "c"),
 	var cargoSmokeFwdGrd      = warning.new(msg: " .WHEN ON GROUND",          colour: "w"),
-	var cargoSmokeFwdDoors    = warning.new(msg: " BEFORE OPEN CRG DOORS:",   colour: "w"),
-	var cargoSmokeFwdDisemb   = warning.new(msg: "-PAX..........DISEMBARK",   colour: "c"),
+	var cargoSmokeFwdDoors    = warning.new(msg: "  BEFORE OPEN CRG DOORS:",  colour: "w"),
+	var cargoSmokeFwdDisemb   = warning.new(msg: " -PAX..........DISEMBARK",  colour: "c"),
 	var cargoSmokeAft         = warning.new(msg: "SMOKE AFT CARGO SMOKE",     colour: "r", aural: 0, light: 0, isMainMsg: 1, sdPage: "condPage"),
 	var cargoSmokeAftFans     = warning.new(msg: " -CAB FANS...........OFF",  colour: "c"),
 	var cargoSmokeAftGrdClsd  = warning.new(msg: " .IF AFT CRG CLSD:",        colour: "w"),
 	var cargoSmokeAftAgent    = warning.new(msg: " -AGENT............DISCH",  colour: "c"),
 	var cargoSmokeAftGrd      = warning.new(msg: " .WHEN ON GROUND",          colour: "w"),
-	var cargoSmokeAftDoors    = warning.new(msg: " BEFORE OPEN CRG DOORS:",   colour: "w"),
-	var cargoSmokeAftDisemb   = warning.new(msg: "-PAX..........DISEMBARK",   colour: "c"),
+	var cargoSmokeAftDoors    = warning.new(msg: "  BEFORE OPEN CRG DOORS:",  colour: "w"),
+	var cargoSmokeAftDisemb   = warning.new(msg: " -PAX..........DISEMBARK",  colour: "c"),
 	
 	# Lavatory SMOKE
 	var lavatorySmoke         = warning.new(msg: "SMOKE LAVATORY SMOKE     ", colour: "r", aural: 0, light: 0, isMainMsg: 1),
-	var lavatorySmokeComm     = warning.new(msg: "-CKPT/CAB COM.ESTABLISH  ", colour: "c"),
+	var lavatorySmokeComm     = warning.new(msg: " -CKPT/CAB COM.ESTABLISH ", colour: "c"),
 	
 	# EXCES RESID PR
 	var excessResidPress      = warning.new(msg: "CAB PR EXCES RESIDUAL PR ", colour: "r", aural: 0, light: 0, isMainMsg: 1, sdPage: "cabPressPage"),
-	var excessResidPressPack1 = warning.new(msg: "-PACK 1.............OFF",   colour: "c"),
-	var excessResidPressPack2 = warning.new(msg: "-PACK 2.............OFF",   colour: "c"),
-	var excessResidPressCabCr = warning.new(msg: "-CABIN CREW.......ALERT",   colour: "c"),
+	var excessResidPressPack1 = warning.new(msg: " -PACK 1.............OFF",  colour: "c"),
+	var excessResidPressPack2 = warning.new(msg: " -PACK 2.............OFF",  colour: "c"),
+	var excessResidPressCabCr = warning.new(msg: " -CABIN CREW.......ALERT",  colour: "c"),
 	
 	# ESS Bus on Bat
 	# NEW EMER CONFIG
@@ -514,19 +514,19 @@ var warnings				  = std.Vector.new([
 	
 	# Autothrust
 	var athr_offw			  = warning.new(msg: "AUTO FLT A/THR OFF", 	      colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var athr_offw_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
+	var athr_offw_1			  = warning.new(msg: " -THR LEVERS........MOVE",  colour: "c"),
 	var athr_lock			  = warning.new(msg: "ENG THRUST LOCKED", 		  colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var athr_lock_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
+	var athr_lock_1			  = warning.new(msg: " -THR LEVERS........MOVE",  colour: "c"),
 	var athr_lim			  = warning.new(msg: "AUTO FLT A/THR LIMITED",    colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var athr_lim_1			  = warning.new(msg: "-THR LEVERS........MOVE",   colour: "c"),
+	var athr_lim_1			  = warning.new(msg: " -THR LEVERS........MOVE",  colour: "c"),
 	
 	# TCAS FAULT
 	var tcasFault             = warning.new(msg: "NAV TCAS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var tcasStby              = warning.new(msg: "NAV TCAS STBY",             colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	var gpwsFault             = warning.new(msg: "NAV GPWS FAULT",            colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var gpwsFaultOff		  = warning.new(msg: "-GPWS...............OFF",   colour: "c"),
+	var gpwsFaultOff		  = warning.new(msg: " -GPWS...............OFF",  colour: "c"),
 	var gpwsTerrFault         = warning.new(msg: "NAV GPWS TERR DET FAULT",   colour: "a", aural: 1, light: 1, isMainMsg: 1),
-	var gpwsTerrFaultOff	  = warning.new(msg: "-GPWS TERR..........OFF",   colour: "c"),
+	var gpwsTerrFaultOff	  = warning.new(msg: " -GPWS TERR..........OFF",  colour: "c"),
 	
 	# FAC and Rudder System
 	var fac12Fault            = warning.new(msg: "AUTO FLT FAC 1+2 FAULT",    colour: "a", aural: 1, light: 1, isMainMsg: 1),
