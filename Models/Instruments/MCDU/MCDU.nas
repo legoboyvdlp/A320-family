@@ -2773,13 +2773,13 @@ var canvas_MCDU_base = {
 			} else if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.crzTempSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(BLUE);
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%sg", fmgc.FMGCInternal.crzTemp));
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%s°", fmgc.FMGCInternal.crzTemp));
 			} else if (fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(BLUE);
 				fmgc.FMGCInternal.crzTemp = 15 - (2 * fmgc.FMGCInternal.crzFl / 10);
 				fmgc.FMGCInternal.crzTempSet = 1;
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%sg", fmgc.FMGCInternal.crzTemp));
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%s°", fmgc.FMGCInternal.crzTemp));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
 				me["Simple_L6"].setColor(AMBER);
@@ -2842,7 +2842,7 @@ var canvas_MCDU_base = {
 			me["Simple_R6S"].setText("GND TEMP");
 			if (fmgc.FMGCInternal.phase == 0 and !fmgc.FMGCInternal.gndTempSet) {
 				fmgc.FMGCInternal.gndTemp = 15 - (2 * getprop("/position/gear-agl-ft") / 1000);
-				me["Simple_R6"].setText(sprintf("%.0fg", fmgc.FMGCInternal.gndTemp));
+				me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
 				me["Simple_R6"].setFontSize(small); 
 			} else {
 				if (fmgc.FMGCInternal.gndTempSet) {
@@ -2850,7 +2850,7 @@ var canvas_MCDU_base = {
 				} else {
 					me["Simple_R6"].setFontSize(small); 
 				}
-				me["Simple_R6"].setText(sprintf("%.0fg", fmgc.FMGCInternal.gndTemp));
+				me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
 			}
 			
 			me["Simple_L1S"].setText(" CO RTE");
