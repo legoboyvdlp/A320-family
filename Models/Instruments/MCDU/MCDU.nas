@@ -193,6 +193,18 @@ var canvas_MCDU_base = {
 			}
 		}
 		
+		me["Simple_L1S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_L2S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_L3S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_L4S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_L5S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_L6S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_R1S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_R2S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_R4S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_R5S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_R6S"].setFont("HoneywellMCDUSmall.ttf");
+
 		me["PERFTO_FE"].setColor(BLUE);
 		me["PERFTO_SE"].setColor(BLUE);
 		me["PERFTO_OE"].setColor(BLUE);
@@ -2697,7 +2709,7 @@ var canvas_MCDU_base = {
 				me["INITA_FromTo"].show();
 				me["Simple_L1"].hide();
 				me["Simple_L2"].setColor(WHITE);
-				me["Simple_L2"].setText("----/----------");
+				me["Simple_L2"].setText("----/------");
 				showRight(me,-1, 1, 0, 0, 0, 0);
 				me["Simple_R2S"].show();
 				if (!Simbrief.SimbriefParser.inhibit) {
@@ -2735,7 +2747,7 @@ var canvas_MCDU_base = {
 				me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
 			}
 			
-			me["Simple_L1S"].setText(" CO RTE");
+			me["Simple_L1S"].setText("CO RTE");
 			me["Simple_L2S"].setText("ALTN/CO RTE");
 			me["Simple_L3S"].setText("FLT NBR");
 			me["Simple_L5S"].setText("COST INDEX");
@@ -2783,8 +2795,8 @@ var canvas_MCDU_base = {
 				me["Simple_C4B"].hide();
 				showCenterS(me,1, 1, 1, 1, 1, -1);
 				
-				me.fontSizeLeft(small, small, 0, 0, 0, small);
-				me.fontSizeRight(small, small, 0, 0, 0, normal);
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, small, small, small, small, 0);
 				
 				me.colorLeft("blu", "blu", "ack", "ack", "ack", "wht");
@@ -2795,12 +2807,19 @@ var canvas_MCDU_base = {
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "blu");
 				me.colorCenter("grn", "ack", "grn", "grn", "grn", "grn");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+			
+			
+				me["Simple_L1S"].setText("LAT");
+				me["Simple_L2S"].setText("LAT");
+				me["Simple_R1S"].setText("LONG");
+				me["Simple_R2S"].setText("LONG");
+				me["Simple_L6"].setText(" RETURN");
+				me["Simple_C1S"].setText("REFERENCE");
+				me["Simple_C2S"].setText("GPS POSITION");
 				
 				pageSwitch[i].setBoolValue(1);
 			}
 			
-			me["Simple_L1S"].setText("LAT");
-				me["Simple_R1S"].setText("LONG");
 			if (getprop("/FMGC/internal/align-ref-lat-edit")) {
 				me["IRSINIT_1"].show();
 				me["IRSINIT_2"].hide();
@@ -2821,7 +2840,7 @@ var canvas_MCDU_base = {
 				minutes_lat = sprintf("%.1f",abs((dms_lat - degrees_lat) * 60));
 				sign_lat = degrees_lat >= 0 ? "N" : "S";
 				lat_same = degrees_lat == degrees and minutes_lat == minutes and sign_lat == sign;
-				me["Simple_L1"].setText(abs(sprintf("%.0f", degrees)) ~ "g" ~ sprintf("%.1f", minutes) ~ " " ~ sign);
+				me["Simple_L1"].setText(abs(sprintf("%.0f", degrees)) ~ "°" ~ sprintf("%.1f", minutes) ~ sign);
 				
 				degrees = getprop("/FMGC/internal/align-ref-long-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-long-minutes");
@@ -2831,7 +2850,7 @@ var canvas_MCDU_base = {
 				minutes_long = sprintf("%.1f",abs((dms_long - degrees_long) * 60));
 				sign_long = degrees_long >= 0 ? "E" : "W";
 				long_same = degrees_long == degrees and minutes_long == minutes and sign_long == sign;
-				me["Simple_R1"].setText(abs(sprintf("%.0f", degrees)) ~ "g" ~ sprintf("%.1f", minutes) ~ " " ~ sign);
+				me["Simple_R1"].setText(abs(sprintf("%.0f", degrees)) ~ "°" ~ sprintf("%.1f", minutes) ~ sign);
 				
 				if (lat_same and long_same) {
 					me["Simple_C1"].setText(getprop("/FMGC/flightplan[2]/wp[0]/id"));
@@ -2851,26 +2870,35 @@ var canvas_MCDU_base = {
 			degrees = int(dms);
 			minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 			sign = degrees >= 0 ? "N" : "S";
-			me["Simple_L2"].setText(abs(degrees) ~ "°" ~ minutes ~ " " ~ sign);
 			dms2 = getprop("/position/longitude-deg");
 			degrees2 = int(dms2);
 			minutes2 = sprintf("%.1f",abs((dms2 - degrees2) * 60));
 			sign2 = degrees2 >= 0 ? "E" : "W";
+			
+			# GPS POS
+			me["Simple_L2"].setText(abs(degrees) ~ "°" ~ minutes ~ sign);
 			me["Simple_R2"].setText(abs(degrees2) ~ "°" ~ minutes2 ~ " " ~ sign2);
-			if (systems.ADIRS.ADIRunits[0].operative and getprop("/FMGC/internal/align1-done")) {
-				me["Simple_C3"].setText(abs(degrees) ~ "°" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "°" ~ minutes2 ~ " " ~ sign2);
-			} else {
-				me["Simple_C3"].setText("-----.--/-----.--");
-			}
-			if (systems.ADIRS.ADIRunits[1].operative and getprop("/FMGC/internal/align2-done")) {
-				me["Simple_C4"].setText(abs(degrees) ~ "°" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "°" ~ minutes2 ~ " " ~ sign2);
-			} else {
-				me["Simple_C4"].setText("-----.--/-----.--");
-			}
-			if (systems.ADIRS.ADIRunits[2].operative and getprop("/FMGC/internal/align3-done")) {
-				me["Simple_C5"].setText(abs(degrees) ~ "°" ~ minutes ~ " " ~ sign ~ "/" ~ abs(degrees2) ~ "°" ~ minutes2 ~ " " ~ sign2);
-			} else {
-				me["Simple_C5"].setText("-----.--/-----.--");
+			
+			# IRS POS
+			for (var ADR = 0; ADR < 3; ADR += 1) {
+				if (systems.ADIRS.ADIRunits[ADR].operative and getprop("/FMGC/internal/align" ~ (ADR + 1) ~ "-done")) {
+					me["Simple_C" ~ (ADR + 3)].setText(abs(degrees) ~ "°" ~ minutes ~ sign ~ "/" ~ abs(degrees2) ~ "°" ~ minutes2 ~ sign2);
+					me["Simple_C" ~ (ADR + 3)].setColor(GREEN);
+				} else {
+					me["Simple_C" ~ (ADR + 3)].setText("--°---.--/---°--.--");
+					me["Simple_C" ~ (ADR + 3)].setColor(WHITE);
+				}
+				
+				
+				if (systems.ADIRS.Operating.aligned[ADR].getValue()) {
+					if (systems.ADIRS.ADIRunits[ADR].mode == 2) {
+						me["Simple_C" ~ (ADR + 3) ~ "S"].setText("IRS" ~ (ADR + 1) ~ " IN ATT");
+					} else {
+						me["Simple_C" ~ (ADR + 3) ~ "S"].setText("IRS" ~ (ADR + 1) ~ " ALIGNED ON GPS");
+					}
+				} else {
+					me["Simple_C" ~ (ADR + 3) ~ "S"].setText("IRS" ~ (ADR + 1) ~ " ALIGNING ON GPS");
+				}
 			}
 			
 			if (align_set.getValue() == 1) {
@@ -2883,42 +2911,6 @@ var canvas_MCDU_base = {
 				me["IRSINIT_star"].hide();
 				showRightArrow(me,0, 0, 0, 0, 0, 1);
 			}
-			
-			if (systems.ADIRS.Operating.aligned[0].getValue()) {
-				if (systems.ADIRS.ADIRunits[0].mode == 2) {
-					me["Simple_C3S"].setText("IRS1 IN ATT");
-				} else {
-					me["Simple_C3S"].setText("IRS1 ALIGNED ON GPS");
-				}
-			} else {
-				me["Simple_C3S"].setText("IRS1 ALIGNING ON GPS");
-			}
-			
-			if (systems.ADIRS.Operating.aligned[1].getValue()) {
-				if (systems.ADIRS.ADIRunits[1].mode == 2) {
-					me["Simple_C4S"].setText("IRS2 IN ATT");
-				} else {
-					me["Simple_C4S"].setText("IRS2 ALIGNED ON GPS");
-				}
-			} else {
-				me["Simple_C4S"].setText("IRS2 ALIGNING ON GPS");
-			}
-			
-			if (systems.ADIRS.Operating.aligned[2].getValue()) {
-				if (systems.ADIRS.ADIRunits[2].mode == 2) {
-					me["Simple_C5S"].setText("IRS3 IN ATT");
-				} else {
-					me["Simple_C5S"].setText("IRS3 ALIGNED ON GPS");
-				}
-			} else {
-				me["Simple_C5S"].setText("IRS3 ALIGNING ON GPS");
-			}
-			
-			me["Simple_L2S"].setText("LAT");
-			me["Simple_L6"].setText(" RETURN");
-			me["Simple_R2S"].setText("LONG");
-			me["Simple_C1S"].setText("REFERENCE");
-			me["Simple_C2S"].setText("GPS POSITION");
 
 		} else if (page == "ROUTESELECTION") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -2994,7 +2986,16 @@ var canvas_MCDU_base = {
 				me["WIND"].hide();
 				me["PROG"].hide();
 				me["PERFTO"].hide();
-				me["arrowsDepArr"].hide();
+				me["arrowsDepArr"].show();
+				me["arrow1L"].hide();
+				me["arrow2L"].hide();
+				me["arrow3L"].hide();
+				me["arrow4L"].hide();
+				me["arrow5L"].hide();
+				me["arrow1R"].hide();
+				me["arrow2R"].hide();
+				me["arrow4R"].hide();
+				me["arrow5R"].hide();
 				me["PERFAPPR"].hide();
 				me["PERFGA"].hide();
 				me["Simple_Title"].show();
@@ -3013,7 +3014,7 @@ var canvas_MCDU_base = {
 				showCenterS(me,-1, -1, -1, -1, -1, -1);
 				showRight(me,-1, 1, 1, 1, 1, 1);
 				showRightS(me,1, 1, 1, 1, 1, 1);
-				showRightArrow(me,-1, -1, 1, -1, -1, -1);
+				showRightArrow(me,-1, -1, -1, -1, -1, -1);
 				
 				me.fontSizeLeft(small, small, small, small, small, small);
 				me.fontSizeCenter(normal, small, small, small, small, small);
@@ -3032,14 +3033,15 @@ var canvas_MCDU_base = {
 				pageSwitch[i].setBoolValue(1);
 			}
 					
-			me["Simple_L1S"].setText("TAXI");
 			if (acconfig_weight_kgs.getValue() == 1) {
 				me["Simple_L1"].setText(sprintf("%2.1f", fmgc.FMGCInternal.taxiFuel * LBS2KGS));
 			} else {
 				me["Simple_L1"].setText(sprintf("%2.1f", fmgc.FMGCInternal.taxiFuel));
 			}
+			
+			me["Simple_L1S"].setText("TAXI");
 			me["Simple_L2S"].setText("TRIP/TIME");
-			me["Simple_L3S"].setText("RTE RSV/PCT");
+			me["Simple_L3S"].setText("RTE RSV/%");
 			me["Simple_L4S"].setText("ALTN/TIME");
 			me["Simple_L5S"].setText("FINAL/TIME");
 			me["Simple_L6S"].setText("MIN DEST FOB");
@@ -3077,12 +3079,12 @@ var canvas_MCDU_base = {
 					me["Simple_R3"].show(); 
 					me["Simple_R3S"].setText("FUEL");
 					me["Simple_R3"].setText("PLANNING ");
-					me["Simple_R3_Arrow"].show();
-					me["Simple_R3_Arrow"].setColor(AMBER);
+					me["arrow3R"].show();
+					me["arrow3R"].setColor(AMBER);
 				} else {
 					me["Simple_R3S"].hide();
 					me["Simple_R3"].hide(); 
-					me["Simple_R3_Arrow"].hide();
+					me["arrow3R"].hide();
 				}
 				me["Simple_C4B"].hide();
 				me["Simple_R4"].setText("---.-/---.-");
@@ -3114,8 +3116,7 @@ var canvas_MCDU_base = {
 					me["Simple_R3"].show(); 
 					me["Simple_R3S"].setText("FUEL");
 					me["Simple_R3"].setText("PLANNING ");
-					me["Simple_R3_Arrow"].show();
-					me["Simple_R3_Arrow"].setColor(GREEN);
+					me["arrow3R"].hide();
 					me["Simple_C4B"].hide();
 					me["Simple_R4"].setText("---.-/---.-");
 					me["Simple_R6"].setText("---.-/----");
@@ -3144,8 +3145,8 @@ var canvas_MCDU_base = {
 						me["Simple_R3"].show(); 
 						me["Simple_R3S"].setText("BLOCK");
 						me["Simple_R3"].setText("CONFIRM ");
-						me["Simple_R3_Arrow"].show();
-						me["Simple_R3_Arrow"].setColor(AMBER);
+						me["arrow3R"].show();
+						me["arrow3R"].setColor(AMBER);
 						me["Simple_C4B"].show();
 						if (num(fmgc.FMGCInternal.tow) >= 100.0) {
 							if (acconfig_weight_kgs.getValue() == 1) {
@@ -3199,7 +3200,7 @@ var canvas_MCDU_base = {
 							}
 							me["Simple_R3S"].hide();
 							me["Simple_R3"].hide(); 
-							me["Simple_R3_Arrow"].hide();
+							me["arrow3R"].hide();
 							me["Simple_C4B"].show();
 							if (num(fmgc.FMGCInternal.tow) >= 100.0) {
 								if (acconfig_weight_kgs.getValue() == 1) {
@@ -3331,7 +3332,7 @@ var canvas_MCDU_base = {
 							}
 							me["Simple_R3S"].hide();
 							me["Simple_R3"].hide(); 
-							me["Simple_R3_Arrow"].hide();
+							me["arrow3R"].hide();
 							me["Simple_C4B"].hide();
 							
 							if (acconfig_weight_kgs.getValue() == 1) {
@@ -3489,9 +3490,20 @@ var canvas_MCDU_base = {
 				me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 			}
 			
+			me["Simple_L1S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L3S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L4S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L5S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L6S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_C1S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_R1S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_R3S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_R4S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_R5S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_R6S"].setFont("HoneywellMCDUSmall.ttf");
+			
 			me["Simple_L1S"].setText("AT");
-			me["Simple_L2S"].setText("X");
-			me["Simple_L3S"].setText("RTE RSV/PCT");
+			me["Simple_L3S"].setText("RTE RSV/%");
 			me["Simple_L4S"].setText("ALTN /TIME");
 			me["Simple_L5S"].setText("FINAL/TIME");
 			me["Simple_L6S"].setText("MIN DEST FOB");
@@ -3503,7 +3515,6 @@ var canvas_MCDU_base = {
 			me["Simple_R1"].setText("---.-");
 			me["Simple_R2"].setText("---.-");
 			me["Simple_R1S"].setText("EFOB");
-			me["Simple_R2S"].setText("X");
 			me["Simple_R4S"].setText("FOB      ");
 			me["Simple_R5S"].setText("   GW/   CG");
 			me["Simple_R6S"].setText("EXTRA/TIME");
@@ -3894,10 +3905,10 @@ var canvas_MCDU_base = {
 			
 			if (mcdu.bearingDistances[i].selectedPoint != nil) {
 				me["Simple_L4"].setColor(GREEN);
-				me["Simple_L4"].setText(sprintf("%3.0fg /%4.1f",mcdu.bearingDistances[i].bearing,mcdu.bearingDistances[i].distance));
+				me["Simple_L4"].setText(sprintf("%3.0f° /%4.1f",mcdu.bearingDistances[i].bearing,mcdu.bearingDistances[i].distance));
 			} else {
 				me["Simple_L4"].setColor(WHITE);
-				me["Simple_L4"].setText(" ---g /----.-");
+				me["Simple_L4"].setText(" ---° /----.-");
 			}
 			
 			me["Simple_R5"].setText("GPS PRIMARY");
@@ -4786,6 +4797,7 @@ var canvas_MCDU_base = {
 				me["Simple_C4B"].hide();
 				
 				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
 				
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");

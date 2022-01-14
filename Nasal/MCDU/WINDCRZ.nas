@@ -95,7 +95,7 @@ var windCRZPage = {
 				if (windStore.set) {
 					me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				} else {
-					me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+					me.L4 = ["[ ]°/[ ]/[ ]", nil, "blu"];
 				}
 			} else {
 				me.L4 = [nil, nil, "ack"];
@@ -106,7 +106,7 @@ var windCRZPage = {
 				if (windStore.set) {
 					me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				} else {
-					me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+					me.L3 = ["[ ]°/[ ]/[ ]", nil, "blu"];
 				}
 			} else {
 				me.L3 = [nil, nil, "ack"];
@@ -117,7 +117,7 @@ var windCRZPage = {
 				if (windStore.set) {
 					me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				} else {
-					me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+					me.L2 = ["[ ]°/[ ]/[ ]", nil, "blu"];
 				}
 			} else {
 				me.L2 = [nil, nil, "ack"];
@@ -126,9 +126,9 @@ var windCRZPage = {
 			if (me.items >= 1) {
 				var windStore = fmgc.windController.crz_winds[computer_temp].wind1;
 				if (windStore.set) {
-					me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
+					me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "  TRU WIND/ALT", "blu"];
 				} else {
-					me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+					me.L1 = ["[ ]°/[ ]/[ ]", "  TRU WIND/ALT", "blu"];
 				}
 			}
 			
@@ -136,7 +136,7 @@ var windCRZPage = {
 			if (windStore.set) {
 				me.L5 = [windStore.temp ~ "/" ~ windStore.altitude, "SAT / ALT", "blu"];
 			} else {
-				me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
+				me.L5 = ["[ ]/[  ]", "SAT / ALT", "blu"];
 			}
 		} else {
 			if (me.items >= 4) {
@@ -144,7 +144,7 @@ var windCRZPage = {
 				if (windStore.set) {
 					me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				} else {
-					me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+					me.L4 = ["[ ]°/[ ]/[ ]", nil, "blu"];
 				}
 			} else {
 				me.L4 = [nil, nil, "ack"];
@@ -155,7 +155,7 @@ var windCRZPage = {
 				if (windStore.set) {
 					me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				} else {
-					me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+					me.L3 = ["[ ]°/[ ]/[ ]", nil, "blu"];
 				}
 			} else {
 				me.L3 = [nil, nil, "ack"];
@@ -166,7 +166,7 @@ var windCRZPage = {
 				if (windStore.set) {
 					me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 				} else {
-					me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+					me.L2 = ["[ ]°/[ ]/[ ]", nil, "blu"];
 				}
 			} else {
 				me.L2 = [nil, nil, "ack"];
@@ -175,9 +175,9 @@ var windCRZPage = {
 			if (me.items >= 1) {
 				var windStore = fmgc.windController.winds[computer_temp][me.match_location].wind1;
 				if (windStore.set) {
-					me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
+					me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "  TRU WIND/ALT", "blu"];
 				} else {
-					me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+					me.L1 = ["[ ]°/[ ]/[ ]", "  TRU WIND/ALT", "blu"];
 				}
 			}
 			
@@ -185,7 +185,7 @@ var windCRZPage = {
 			if (windStore.set) {
 				me.L5 = [windStore.temp ~ "/" ~ windStore.altitude, "SAT / ALT", "blu"];
 			} else {
-				me.L5 = ["[  ]/[   ]", "SAT / ALT", "blu"];
+				me.L5 = ["[ ]/[  ]", "SAT / ALT", "blu"];
 			}
 		}
 		

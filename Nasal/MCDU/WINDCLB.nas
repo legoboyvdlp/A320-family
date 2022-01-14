@@ -68,7 +68,7 @@ var windCLBPage = {
 			if (windStore.set) {
 				me.L5 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 			} else {
-				me.L5 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+				me.L5 = ["[ ]°/[ ]/[ ]", nil, "blu"];
 			}
 		} else {
 			me.L5 = [nil, nil, "ack"];
@@ -79,7 +79,7 @@ var windCLBPage = {
 			if (windStore.set) {
 				me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 			} else {
-				me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+				me.L4 = ["[ ]°/[ ]/[ ]", nil, "blu"];
 			}
 		} else {
 			me.L4 = [nil, nil, "ack"];
@@ -90,7 +90,7 @@ var windCLBPage = {
 			if (windStore.set) {
 				me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 			} else {
-				me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+				me.L3 = ["[ ]°/[ ]/[ ]", nil, "blu"];
 			}
 		} else {
 			me.L3 = [nil, nil, "ack"];
@@ -101,7 +101,7 @@ var windCLBPage = {
 			if (windStore.set) {
 				me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
 			} else {
-				me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
+				me.L2 = ["[ ]°/[ ]/[ ]", nil, "blu"];
 			}
 		} else {
 			me.L2 = [nil, nil, "ack"];
@@ -110,15 +110,15 @@ var windCLBPage = {
 		if (me.items >= 1) {
 			var windStore = fmgc.windController.clb_winds[computer_temp].wind1;
 			if (windStore.set) {
-				me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
+				me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "  TRU WIND/ALT", "blu"];
 			} else {
-				me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
+				me.L1 = ["[ ]°/[ ]/[ ]", "  TRU WIND/ALT", "blu"];
 			}
 		}
 		
 		me.L6 = [" RETURN", nil, "wht"];
-		me.R1 = [" HISTORY ", "WIND ", "wht"];
-		me.R3 = [" REQUEST ", "WIND ", "amb"];
+		me.R1 = ["WIND ", "HISTORY ", "wht"];
+		me.R3 = ["REQUEST ", "WIND ", "amb"];
 		me.R5 = [" PHASE ", "NEXT ", "wht"];
 		
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
