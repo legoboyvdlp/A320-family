@@ -8,7 +8,6 @@ var magVar = nil;
 var windDESPage = {
 	title: nil,
 	titleColour: "wht",
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -50,7 +49,6 @@ var windDESPage = {
 		me.titleColour = "wht";
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 1, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "wht", "ack", "ack"]];
-		me.fontMatrix = [[1, 1, 1, 1, 1, 0], [1, 0, 0, 0, 0, 0]];
 		
 		var computer_temp = 2;
 		if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
@@ -73,10 +71,8 @@ var windDESPage = {
 			var windStore = fmgc.windController.des_winds[computer_temp].wind5;
 			if (windStore.set) {
 				me.L5 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
-				me.fontMatrix[0][4] = 1;
 			} else {
 				me.L5 = ["[  ]/°[  ]/[   ]", nil, "blu"];
-				me.fontMatrix[0][4] = 1;
 			}
 		} else {
 			me.L5 = [nil, nil, "ack"];
@@ -86,10 +82,8 @@ var windDESPage = {
 			var windStore = fmgc.windController.des_winds[computer_temp].wind4;
 			if (windStore.set) {
 				me.L4 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
-				me.fontMatrix[0][3] = 1;
 			} else {
 				me.L4 = ["[  ]°/[  ]/[   ]", nil, "blu"];
-				me.fontMatrix[0][3] = 1;
 			}
 		} else {
 			me.L4 = [nil, nil, "ack"];
@@ -99,10 +93,8 @@ var windDESPage = {
 			var windStore = fmgc.windController.des_winds[computer_temp].wind3;
 			if (windStore.set) {
 				me.L3 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
-				me.fontMatrix[0][2] = 1;
 			} else {
 				me.L3 = ["[  ]°/[  ]/[   ]", nil, "blu"];
-				me.fontMatrix[0][2] = 1;
 			}
 		} else {
 			me.L3 = [nil, nil, "ack"];
@@ -112,10 +104,8 @@ var windDESPage = {
 			var windStore = fmgc.windController.des_winds[computer_temp].wind2;
 			if (windStore.set) {
 				me.L2 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, nil, "blu"];
-				me.fontMatrix[0][1] = 1;
 			} else {
 				me.L2 = ["[  ]°/[  ]/[   ]", nil, "blu"];
-				me.fontMatrix[0][1] = 1;
 			}
 		} else {
 			me.L2 = [nil, nil, "ack"];
@@ -125,10 +115,8 @@ var windDESPage = {
 			var windStore = fmgc.windController.des_winds[computer_temp].wind1;
 			if (windStore.set) {
 				me.L1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude) ~ "/" ~ windStore.altitude, "TRU WIND/ALT", "blu"];
-				me.fontMatrix[0][0] = 1;
 			} else {
 				me.L1 = ["[  ]°/[  ]/[   ]", "TRU WIND/ALT", "blu"];
-				me.fontMatrix[0][0] = 1;
 			}
 		}
 		
@@ -138,10 +126,8 @@ var windDESPage = {
 			var windStore = fmgc.windController.des_winds[computer_temp].alt1;
 			if (windStore.set) {
 				me.R1 = [sprintf("%03.0f", windStore.heading) ~ "°/" ~ sprintf("%03.0f", windStore.magnitude), "ALTN WIND ", "blu"];
-				me.fontMatrix[1][0] = 1;
 			} else {
 				me.R1 = ["[  ]°/[  ]", "ALTN WIND ", "blu"];
-				me.fontMatrix[1][0] = 1;
 			}
 		} else {
 			me.R1 = ["", "", "blu"];

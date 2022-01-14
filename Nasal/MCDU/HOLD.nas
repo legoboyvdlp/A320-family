@@ -1,7 +1,6 @@
 var holdPage = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -42,11 +41,9 @@ var holdPage = {
 		me.titleColour = "wht";
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [1, 1, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["wht", "wht", "ack", "ack", "ack", "ack"]];
-		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		if (me.waypoint.fly_type == "Hold") {
 			me.makeTmpy();
 			me.L1 = [" " ~ sprintf("%03.0f", me.waypoint.hold_inbound_radial), "INB CRS", "blu"];
-			me.fontMatrix[0][0] = 0;
 			
 			if (me.waypoint.hold_is_left_handed) {
 				me.L2 = [" L", " TURN", "blu"];

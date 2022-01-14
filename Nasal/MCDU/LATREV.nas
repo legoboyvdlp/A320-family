@@ -2,7 +2,6 @@ var latRev = {
 	title: [nil, nil, nil],
 	titleColour: "wht",
 	subtitle: [nil, nil],
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -55,7 +54,6 @@ var latRev = {
 			me.R2 = ["[    ]°/[   ]°/[  ]", "LL XING/INCR/NO", "blu"];
 			me.arrowsMatrix = [[0, 1, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "wht", "wht", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
-			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]];
 		} elsif (me.type == 4) { 
 			me.title = ["LAT REV", " FROM ", "DISCON"];
 			me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
@@ -63,7 +61,6 @@ var latRev = {
 			me.L6 = [" RETURN", nil, "wht"];
 			me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
-			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
 		} else {
 			if (me.type == 0) {	
 				me.title = ["LAT REV", " FROM ", left(me.wpt.wp_name, 4)];
@@ -82,7 +79,6 @@ var latRev = {
 				me.R4 = ["[     ]", "NEW DEST", "blu"];
 				me.arrowsMatrix = [[1, 1, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
 				me.arrowsColour = [["wht", "wht", "ack", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
-				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0]];
 			} elsif (me.type == 1) {
 				me.title = ["LAT REV", " FROM ", left(me.wpt.wp_name, 4)];
 				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0]];
@@ -103,7 +99,6 @@ var latRev = {
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["ARRIVAL ", nil, "wht"];
 				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
-				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 			} elsif (me.type == 3) {
 				me.title = ["LAT REV", " FROM ", me.wpt.wp_name];
 				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 1, 0]];
@@ -124,7 +119,6 @@ var latRev = {
 				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
 				me.R4 = ["[     ]", "NEW DEST", "blu"];
 				me.R5 = ["AIRWAYS ", nil, "wht"];
-				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
 			}
 		}
 	},

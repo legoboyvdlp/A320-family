@@ -291,7 +291,6 @@ var staticText = {
 };
 
 var fplnPage = { # this one is only created once, and then updated - remember this
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	L1: [nil, nil, "ack"], # content, title, colour
 	L2: [nil, nil, "ack"],
 	L3: [nil, nil, "ack"],

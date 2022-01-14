@@ -1,6 +1,5 @@
 var closestAirportPage = {
 	title: nil,
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -45,7 +44,6 @@ var closestAirportPage = {
 		me.R6 = ["EFOB/WIND ", nil, "wht"];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 1]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "blu"], ["ack", "ack", "ack", "ack", "ack", "wht"]];
-		me.fontMatrix = [[0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		me.update();
 		me.updateBrgDist();
