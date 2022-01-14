@@ -91,7 +91,7 @@ var vertRev = {
 			me.L2 = [fmgc.FMGCInternal.clbSpdLim ~ "/" ~ fmgc.FMGCInternal.clbSpdLimAlt, " CLB SPD LIM", "mag"];
 			me.speed = me.getSpd();
 			if (me.speed[0] == nil) {
-				me.L3 = [" [    ]", " SPD CSTR", "blu"];
+				me.L3 = ["[   ]", " SPD CSTR", "blu"];
 			} else {
 				me.L3 = [me.speed[0], " SPD CSTR", me.speed[1]];
 			}
@@ -101,9 +101,9 @@ var vertRev = {
 			me.R2 = ["RTA ", nil, "wht"];
 			me.alt = me.getAlt();
 			if (me.alt[0] == nil) {
-				me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
+				me.R3 = ["[     ]", "ALT CSTR ", "blu"];
 			} else {
-				me.R3 = [me.alt[0], "ALT CSTR  ", me.alt[1]];
+				me.R3 = [me.alt[0], "ALT CSTR ", me.alt[1]];
 			}
 			me.R6 = ["DES ", nil, "amb"];
 			# When the system does vertical planning, L6 should be RETURN and R6 not used if the MCDU knows the waypoint is during climb or descent.

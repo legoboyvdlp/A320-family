@@ -423,6 +423,7 @@ var canvas_MCDU_base = {
 			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
+				me["Simple_C1S"].setColor(WHITE);
 				me["FPLN"].show();
 				me["DIRTO_TMPY_group"].hide();
 				me["INITA"].hide();
@@ -4913,6 +4914,7 @@ var canvas_MCDU_base = {
 					if (myLatRev[i].subtitle[0] != nil) {
 						me["Simple_Center"].show();
 						me["Simple_C1S"].setText(sprintf("%s", myLatRev[i].subtitle[0] ~ "/" ~ myLatRev[i].subtitle[1]));
+						me["Simple_C1S"].setColor(fmgc.flightPlanController.temporaryFlag[i] ? YELLOW : GREEN);
 						me["Simple_C1S"].show();
 						me["Simple_C1"].hide();
 						me["Simple_C2"].hide();
