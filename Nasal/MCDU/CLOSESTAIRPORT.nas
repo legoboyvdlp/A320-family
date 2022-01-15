@@ -40,7 +40,7 @@ var closestAirportPage = {
 		me.C1[1] = " BRG   DIST";
 		me.R1[1] = "UTC  ";
 		me.L5 = ["[   ]", nil, "blu"];
-		me.C5 = [nil, nil, "grn"];
+		me.C5 = [nil, me.frozen ? "LIST FROZEN" : nil, "grn"];
 		me.R5 = [nil, nil, "grn"];
 		me.L6 = [" FREEZE", nil, "blu"];
 		me.R6 = ["EFOB/WIND ", nil, "wht"];
@@ -113,7 +113,7 @@ var closestAirportPage = {
 			me.C4 = [sprintf("%03d",me.cdVector[3][0] - magvarLocal) ~ "°  " ~ math.round(me.cdVector[3][1]), nil, "grn"];
 		}
 		if (me.manAirport != nil) {
-			me.C5 = [sprintf("%03d",courseAndDistance(me.manAirport)[0] - magvarLocal) ~ "°  " ~ math.round(courseAndDistance(me.manAirport)[1]), nil, "grn"];
+			me.C5 = [sprintf("%03d",courseAndDistance(me.manAirport)[0] - magvarLocal) ~ "°  " ~ math.round(courseAndDistance(me.manAirport)[1]), me.frozen ? "LIST FROZEN" : nil, "grn"];
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
@@ -131,7 +131,7 @@ var closestAirportPage = {
 			me.manAirport = airportinfo(id);
 			me.L5 = [id, nil, "grn"];
 			me.R5 = ["----", nil, "grn"];
-			mcdu_scratchpad.scratchpads[i].empty();
+			mcdu_scratchpad.scratchpads[me.computer].empty();
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	}
