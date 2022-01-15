@@ -526,7 +526,7 @@ var lskbutton = func(btn, i) {
 		} else if (page == "PERFAPPR") {
 			perfAPPRInput("L3",i);
 		} else if (page == "STATUS") {
-			statusInput("L3",i);
+			fmgc.switchDatabase();
 		} else if (page == "RADNAV") {
 			radnavInput("L3",i);
 		} else if (page == "DATA") {
@@ -790,7 +790,6 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
 		} else if (page == "CLOSESTAIRPORT") {
 			canvas_mcdu.myClosestAirport[i].manAirportCall(mcdu_scratchpad.scratchpads[i].scratchpad);
-			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("NOTIFICATION");
 		} else if (page == "FLTLOG") {
@@ -1188,7 +1187,16 @@ var rskbutton = func(btn, i) {
 			}
 			pageNode[i].setValue("WINDDES");
 		} else if (page == "STATUS") {
-			statusInput("R5",i);
+			if (fmgc.WaypointDatabase.getCount() >= 1) {
+				if (fmgc.WaypointDatabase.confirm[i]) {
+					fmgc.WaypointDatabase.delete(i);
+					fmgc.WaypointDatabase.confirm[i] = 0;
+				} else {
+					fmgc.WaypointDatabase.confirm[i] = 1;
+				}
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "PERFTO") {
 			perfTOInput("R5",i);
 		} else if (page == "PERFAPPR") {
@@ -1564,11 +1572,18 @@ var button = func(btn, i, event = "") {
 			if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "-") {
 				mcdu_scratchpad.scratchpads[i].clear();
 				mcdu_scratchpad.scratchpads[i].addChar("+");
+			} else if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "+") {
+				mcdu_scratchpad.scratchpads[i].clear();
+				mcdu_scratchpad.scratchpads[i].addChar("-");
 			} else {
 				mcdu_scratchpad.scratchpads[i].addChar("-");
 			}
 		} else if (btn == "OVFY") {
-			mcdu_scratchpad.scratchpads[i].addChar("@");
+			if (mcdu_scratchpad.scratchpads[i].scratchpad == "") {
+				mcdu_scratchpad.scratchpads[i].addChar("@");
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_scratchpad.scratchpads[i].addChar(btn);
 		}

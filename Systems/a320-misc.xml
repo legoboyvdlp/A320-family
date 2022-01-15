@@ -488,7 +488,7 @@
 		
 	</channel>
 	
-	<channel name="FMGC">
+	<channel name="FMGC" execrate="8">
 		
 		<fcs_function name="/FMGC/internal/kts-to-mach-factor">
 			<function>
@@ -505,6 +505,60 @@
 					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
 					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
 				</quotient>
+			</function>
+		</fcs_function>
+		
+	</channel>
+	
+	<channel name="IESI" execrate="8">
+		
+		<switch name="/instrumentation/iesi/display/show-mach">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/airspeed-indicator/indicated-mach ge 0.5
+			</test>
+			<test logic="AND" value="1">
+				/instrumentation/airspeed-indicator/indicated-mach ge 0.45
+				/instrumentation/iesi/display/show-mach eq 1
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/iesi/power/power-command">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-ess ge 25
+				<test logic="AND">
+					/systems/electrical/sources/si-1/inverter-control/relay-7xb ne 0
+					/systems/electrical/bus/sub-bus/dc-hot-1-703 ge 25
+				</test>
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/iesi/power/power-transient-timer">
+			<input>/instrumentation/iesi/power/power-command</input>
+			<rate_limit sense="decr">5</rate_limit>
+			<rate_limit sene="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/instrumentation/iesi/power/power-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/iesi/power/power-transient-timer ne 0
+			</test>
+		</switch>
+		
+		<fcs_function name="/instrumentation/iesi/power/power-consumption-w">
+			<function>
+				<sum>
+					<product>
+						<value>16</value>
+						<property>/instrumentation/iesi/power/power-on</property>
+					</product>
+					<product>
+						<value>4</value>
+						<property>/controls/lighting/DU/iesi</property>
+					</product>
+				</sum>
 			</function>
 		</fcs_function>
 		

@@ -49,52 +49,41 @@ var canvas_IESI = {
 		obj.AI_horizon_trans = obj["AI_horizon"].createTransform();
 		obj.AI_horizon_rot = obj["AI_horizon"].createTransform();
 		
+		obj._aiCenter = obj["AI_center"].getCenter();
 		obj._cachedInhg = nil;
-		obj._excessMotion = 0;
-		obj._fast = 0;
+		obj._cachedMode = nil;
+		obj._canReset = 0;
+		obj._excessMotionInInit = 0;
+		obj._fastInit = 0;
 		obj._IESITime = 0;
-		obj._showIESI = 0;
-		obj.ASI = 0;
-		obj.canReset = 0;
-		obj.isNegativeAlt = 0;
-		obj.middleAltOffset = nil;
+		obj._isNegativeAlt = 0;
+		obj._middleAltOffset = nil;
+		obj._powerResult = 0;
+		obj._roll = 0;
 		
 		obj.update_items = [
 			props.UpdateManager.FromHashValue("airspeed", nil, func(val) {
-				# Subtract 30, since the scale starts at 30, but don't allow less than 0, or more than 520 knots
-				if (val <= 30) {
-					obj.ASI = 0;
-				} else if (val >= 520) {
-					obj.ASI = 490;
-				} else {
-					obj.ASI = val - 30;
-				}
-				obj["ASI_scale"].setTranslation(0, obj.ASI * 8.295);
+				obj["ASI_scale"].setTranslation(0, math.clamp(val - 30, 0, 490) * 8.295);
 			}),
 			props.UpdateManager.FromHashList(["altitude","altitude_ind"], nil, func(val) {
-				if (val.altitude > 50000) {
-					val.altitude = 50000;
-				} elsif (val.altitude < -2000) {
-					val.altitude = -2000;
-				}
-				
+				val.altitude = math.clamp(val.altitude, -2000, 50000);
 				if (val.altitude < 0) {
 					obj["negText"].show();
-					obj.isNegativeAlt = 1;
+					obj._isNegativeAlt = 1;
 				} else {
 					obj["negText"].hide();
-					obj.isNegativeAlt = 0;
+					obj._isNegativeAlt = 0;
 				}
 				
 				obj.altOffset = (val.altitude / 500) - int(val.altitude / 500);
 				obj.middleAltText = roundaboutAlt(val.altitude / 100);
 				if (obj.altOffset > 0.5) {
-					obj.middleAltOffset = -(obj.altOffset - 1) * 258.5528;
+					obj._middleAltOffset = -(obj.altOffset - 1) * 258.5528;
 				} else {
-					obj.middleAltOffset = -obj.altOffset * 258.5528;
+					obj._middleAltOffset = -obj.altOffset * 258.5528;
 				}
 				
-				obj["ALT_scale"].setTranslation(0, -obj.middleAltOffset);
+				obj["ALT_scale"].setTranslation(0, -obj._middleAltOffset);
 				obj["ALT_scale"].update();
 				obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText+10)));
 				obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText+5)));
@@ -114,20 +103,16 @@ var canvas_IESI = {
 				obj.altTens = num(right(sprintf("%02d", val.altitude), 2));
 				obj["ALT_tens"].setTranslation(0, obj.altTens * 3.16);
 			}),
-			props.UpdateManager.FromHashValue("mach", nil, func(val) {
-				if (val >= 0.5) {
-					obj._machWasAbove50 = 1;
-					obj["ASI_mach_decimal"].show();
-					obj["ASI_mach"].show();
-				} elsif (val >= 0.45 and obj._machWasAbove50) {
+			props.UpdateManager.FromHashValue("showMach", nil, func(val) {
+				if (val) {
 					obj["ASI_mach_decimal"].show();
 					obj["ASI_mach"].show();
 				} else {
-					obj._machWasAbove50 = 0;
 					obj["ASI_mach_decimal"].hide();
 					obj["ASI_mach"].hide();
 				}
-				
+			}),
+			props.UpdateManager.FromHashValue("mach", nil, func(val) {
 				if (val >= 0.999) {
 					obj["ASI_mach"].setText("99");
 				} else {
@@ -138,8 +123,9 @@ var canvas_IESI = {
 				obj.AI_horizon_trans.setTranslation(0, val * 16.74);
 			}),
 			props.UpdateManager.FromHashValue("roll", nil, func(val) {
-				obj.AI_horizon_rot.setRotation(-val * D2R, obj["AI_center"].getCenter());
-				obj["AI_bank"].setRotation(-val * D2R);
+				obj._roll = -val * D2R;
+				obj.AI_horizon_rot.setRotation(obj._roll, obj._aiCenter);
+				obj["AI_bank"].setRotation(obj._roll);
 			}),
 			props.UpdateManager.FromHashValue("skid", nil, func(val) {
 				if (abs(val) >= 84.99) {
@@ -149,9 +135,6 @@ var canvas_IESI = {
 					obj["AI_slipskid"].show();
 				}
 			}),
-			props.UpdateManager.FromHashList(["altimeter_mode","qnh_hpa","qnh_inhg"], nil, func(val) {
-				obj.updateQNH(val);
-			}),
 		];
 		return obj;
 	},	
@@ -159,22 +142,21 @@ var canvas_IESI = {
 		return ["IESI","IESI_Init","attRst","attRstRect","att90s","ATTflag","ATTflag_rect","ATTflag_text","ALTwarn","SPDwarn","ASI_scale","ASI_mach","ASI_mach_decimal","AI_center","AI_index","AI_horizon","AI_sky_bank","AI_bank","AI_bank_center","AI_slipskid","ALT_scale","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_meters","QNH_setting","QNH_std","negText","negText2","AI_bank_scale","metricM","metricBox"];
 	},
 	update: func(notification) {
-		if (notification.qnh_inhg != me._cachedInhg) {
-			me._cachedInhg = notification.qnh_inhg;
-			me.updateQNH(notification);
-		}
+		me._powerResult = me.updatePower(notification);
+		if (me._powerResult == 0) { return; }
 		
-		me.updatePower(notification);
-		if (me.group.getVisible() == 0) {
-			return;
+		if (notification.qnh_inhg != me._cachedInhg or notification.altimeter_mode != me._cachedMode) {
+			me._cachedInhg = notification.qnh_inhg;
+			me._cachedMode = notification.altimeter_mode;
+			me.updateQNH(notification);
 		}
 		
 		if (me._IESITime + 90 >= notification.elapsedTime) {
 			if (notification.groundspeed > 2) {
-				me._excessMotion = 1;
+				me._excessMotionInInit = 1;
 			}
 			
-			if (me._fast) {
+			if (me._fastInit) {
 				me["IESI"].show(); 
 				me["IESI_Init"].hide();
 				me["AI_bank"].hide();
@@ -203,7 +185,7 @@ var canvas_IESI = {
 				me["metricM"].show();
 				me["metricBox"].show();
 				
-				if (me.isNegativeAlt) {
+				if (me._isNegativeAlt) {
 					me["negText2"].show();
 				} else {
 					me["negText2"].hide();
@@ -215,7 +197,7 @@ var canvas_IESI = {
 				me["negText2"].hide();
 			}
 			
-			if (!me._excessMotion) {
+			if (!me._excessMotionInInit) {
 				me["IESI_Init"].hide();
 				me["IESI"].show();
 				me["AI_bank"].show();
@@ -260,59 +242,43 @@ var canvas_IESI = {
 			} else {
 				me["QNH_setting"].setText(sprintf("%4.0f", notification.qnh_hpa));
 			}
-			me["QNH_setting"].show();
 			me["QNH_std"].hide();
+			me["QNH_setting"].show();
 		}
 	},
-	_transientVar: 0,
 	updatePower: func(notification) {
-		# todo 20W power consumption
-		if (notification.attReset == 1 and me.canReset) {
-			me.canReset = 0;
-			me._excessMotion = 0;
-			me._fast = 1;
+		if (notification.attReset == 1 and me._canReset) {
+			me._canReset = 0;
+			me._excessMotionInInit = 0;
+			me._fastInit = 1;
 			iesi_init.setBoolValue(0);
-		} else if (me._IESITime + 90 < notification.elapsedTime and notification.iesiInit and !me.canReset) {
-			me.canReset = 1;
+		} else if (me._IESITime + 90 < notification.elapsedTime and notification.iesiInit and !me._canReset) {
+			me._canReset = 1;
 		}
 		
-		if (notification.dcEss >= 25 or (notification.relay7XB and notification.dcHot1703 >= 25)) {
-			me._showIESI = 1;
+		if (notification.iesiPowered) {
 			if (notification.acconfig != 1 and notification.iesiInit != 1) {
 				iesi_init.setBoolValue(1);
-				if (me._fast) {
-					me._IESITime = notification.elapsedTime - 80;
-				} else {
-					me._IESITime = notification.elapsedTime;
-				}
+				me._IESITime = notification.elapsedTime - (me._fastInit ? 80 : 0);
 			} else if (notification.acconfig == 1 and notification.iesiInit != 1) {
 				iesi_init.setBoolValue(1);
 				me._IESITime = notification.elapsedTime - 87;
 			}
 		} elsif (notification.iesiInit) {
-			if (!me._transientVar) {
-				me._transientVar = 1;
-				settimer(func() {
-					if (systems.ELEC.Bus.dcEss.getValue() >= 25 or (systems.ELEC.Bus.dcHot1703.getValue() >= 25 and systems.ELEC.Relay.relay7XB.getValue())) {
-						me._transientVar = 0;
-					} else {
-						me.canReset = 0;
-						me._excessMotion = 0;
-						me._fast = 0;
-						me._showIESI = 0;
-						me._transientVar = 0;
-						iesi_init.setBoolValue(0);
-					}
-				}, 0.2); # 200ms delay power transients
-			}
+			me._canReset = 0;
+			me._excessMotionInInit = 0;
+			me._fastInit = 0;
+			iesi_init.setBoolValue(0);
 		}
 		
-		if (me._showIESI and notification.iesiBrt > 0.01) {
+		if (notification.iesiPowered and notification.iesiBrt > 0.01) {
 			me.group.setVisible(1);
 			pts.Instrumentation.Iesi.lcdOn.setBoolValue(1);
+			return 1;
 		} else {
 			me.group.setVisible(0);
 			pts.Instrumentation.Iesi.lcdOn.setBoolValue(0);
+			return 0;
 		}
 	},
 };
@@ -354,13 +320,14 @@ var input = {
 	"attReset": "/instrumentation/iesi/att-reset",
 	"iesiBrt": "/controls/lighting/DU/iesi",
 	"iesiInit": "/instrumentation/iesi/iesi-init",
+	"iesiPowered": "/instrumentation/iesi/power/power-on",
 	"mach": "/instrumentation/airspeed-indicator/indicated-mach",
 	"pitch": "/instrumentation/iesi/pitch-deg",
 	"qnh_hpa": "/instrumentation/altimeter[6]/setting-hpa",
 	"qnh_inhg": "/instrumentation/altimeter[6]/setting-inhg",
 	"roll": "/orientation/roll-deg",
 	"skid": "/instrumentation/iesi/slip-skid",
-	"relay7XB": "/systems/electrical/sources/si-1/inverter-control/relay-7xb",
+	"showMach": "/instrumentation/iesi/display/show-mach",
 };
 
 foreach (var name; keys(input)) {

@@ -4,7 +4,6 @@ var isNoTransDep = [0, 0, 0];
 var departurePage = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -106,7 +105,6 @@ var departurePage = {
 	_setupPageWithData: func() {
 		me.title = ["DEPARTURE", " FROM ", left(me.id, 4)];
 		
-		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
 		
@@ -147,7 +145,6 @@ var departurePage = {
 		me.R4 = [nil, nil, "ack"];
 		me.R5 = [nil, nil, "ack"];
 		me.R6 = [nil, nil, "ack"];
-		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "ack"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
 	},

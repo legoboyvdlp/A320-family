@@ -160,22 +160,22 @@ var fplnItem = {
 		if (me.wp.wp_name == "DISCONTINUITY") {
 			canvas_mcdu.myLatRev[me.computer] = latRev.new(4, me.wp, me.index, me.computer);
 		} elsif (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
-			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, me.wp, me.index, me.computer);
-			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+			if (me.wp.wp_name == "PPOS" or me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp, me.index, me.computer);
+			} elsif (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
+			} elsif (fmgc.flightPlanController.flightplans[me.computer].departure != nil and left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, me.wp, me.index, me.computer);
 			} else {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp, me.index, me.computer);
 			}
 		} else {
-			if (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
-			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, me.wp, me.index, me.computer);
-			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+			if (me.wp.wp_name == "PPOS" or me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp, me.index, me.computer);
+			} elsif (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
+			} elsif (fmgc.flightPlanController.flightplans[2].departure != nil and left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, me.wp, me.index, me.computer);
 			} else {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp, me.index, me.computer);
 			}
@@ -190,22 +190,22 @@ var fplnItem = {
 			canvas_mcdu.myVertRev[me.computer] = nil;
 			
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-				if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
-					canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
-				} if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
-					canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
-				} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+				if (me.wp.wp_name == "PPOS" or me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 					canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
+				} elsif (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
+					canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
+				} if (fmgc.flightPlanController.flightplans[me.computer].departure != nil and left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
+					canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 				} else {
 					canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 				}
 			} else {
-				if (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
-					canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
-				} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
-					canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
-				} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+				if (me.wp.wp_name == "PPOS" or me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 					canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
+				} elsif (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
+					canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
+				} elsif (fmgc.flightPlanController.flightplans[2].departure != nil and left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
+					canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 				} else {
 					canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 				}
@@ -291,7 +291,6 @@ var staticText = {
 };
 
 var fplnPage = { # this one is only created once, and then updated - remember this
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	L1: [nil, nil, "ack"], # content, title, colour
 	L2: [nil, nil, "ack"],
 	L3: [nil, nil, "ack"],
@@ -509,7 +508,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}
 		} else {
-			if (size(me.outputList) >= index) {
+			if (size(me.outputList) >= index and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
 					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, (index - 1 + me.scroll), me.computer);
 					if (returny == 3) {

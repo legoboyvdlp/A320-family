@@ -34,39 +34,44 @@
 		
 		<text>
 			<halign>left</halign>
-			<label>The Aircraft Config has detected that rendering settings are not set properly!</label>
+			<label>Your rendering settings will not allow all graphical features of the aircraft to be visible!</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>This means lighting effects on the exterior and in the virtual cockpit will not be visible.</label>
+			<label>This means certain lighting effects will not be usable, including cockpit floodlights. </label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>ALS, and custom shader settings must be on.</label>
+			<label>For the best experience:</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>Landmass shader must be at least 4 for lightspots to work.</label>
+			<label>* Atmospheric Light Scattering should be enabled</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>Model shader must be at least 2 for lightmaps to work.</label>
+			<label>* Landmass shader should be at least 4 for external lights to illuminate the ground</label>
+		</text>
+		
+		<text>
+			<halign>left</halign>
+			<label>* Model shader should be at least 2 for lighting to illuminate the aircraft model</label>
 		</text>
 		
 		<hrule/>
 		
 		<text>
 			<halign>left</halign>
-			<label>Would you like the Aircraft Config to automatically turn on ALS and fix shader settings?</label>
+			<label>Would you like Aircraft Config to automatically set these minimum basic settings?</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>If the settings do not save after fixing, try quitting FlightGear through File -&gt; Exit after fixing.</label>
+			<label>To save these settings, make sure to quit FlightGear with File -&gt; Exit after your flight is complete.</label>
 		</text>
 	
 	</group>
@@ -105,8 +110,8 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Yes, fix all settings</legend>
-			<pref-width>180</pref-width>
+			<legend>Apply minimum settings</legend>
+			<pref-width>200</pref-width>
 			<binding>
 				<command>nasal</command>
 				<script>
@@ -120,8 +125,8 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Yes, but I'll fix shaders myself</legend>
-			<pref-width>180</pref-width>
+			<legend>Advanced: View Shader Settings</legend>
+			<pref-width>200</pref-width>
 			<binding>
 				<command>nasal</command>
 				<script>
@@ -143,8 +148,8 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>I don't care</legend>
-			<pref-width>180</pref-width>
+			<legend>Ignore</legend>
+			<pref-width>150</pref-width>
 			<binding>
 				<command>dialog-close</command>
 			</binding>
