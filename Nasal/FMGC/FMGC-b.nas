@@ -365,9 +365,9 @@ var ITAF = {
 		# Preselect Heading
 		if (Output.latTemp != 0 and Output.latTemp != 9) { # Modes that always show HDG
 			if (Custom.hdgTime.getValue() + 45 >= Misc.elapsedSec.getValue()) {
-				setprop("it-autoflight/custom/show-hdg", 1);
+				Custom.showHdg.setBoolValue(1);
 			} else {
-				setprop("it-autoflight/custom/show-hdg", 0);
+				Custom.showHdg.setBoolValue(0);
 			}
 		}
 		

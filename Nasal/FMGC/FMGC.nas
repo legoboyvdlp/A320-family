@@ -26,8 +26,6 @@ var altitude = 0;
 var flap = 0;
 var flaps = 0;
 var ktsmach = 0;
-var kts_sel = 0;
-var mach_sel = 0;
 var srsSPD = 0;
 var mng_alt_spd = 0;
 var mng_alt_mach = 0;
@@ -74,9 +72,9 @@ var FMGCinit = func {
 var FMGCInternal = {
 	# phase logic
 	phase: 0,
+	decel: 0,
 	minspeed: 0,
 	maxspeed: 0,
-	decel: 0,
 	clbSpdLim: 250,
 	desSpdLim: 250,
 	clbSpdLimAlt: 10000,
@@ -301,9 +299,15 @@ var updateARPT = func {
 	}
 }
 
-var updateArptLatLon = func {
+var apt = nil;
+var dms = nil;
+var degrees = nil;
+var minutes = nil;
+var sign = nil;
+var updateArptLatLon = func() {
 	#ref lat
-	dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
+	apt = airportinfo(FMGCInternal.depApt);
+	dms = apt.lat;
 	degrees = int(dms);
 	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 	sign = degrees >= 0 ? "N" : "S";
@@ -311,7 +315,7 @@ var updateArptLatLon = func {
 	setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
 	setprop("/FMGC/internal/align-ref-lat-sign", sign);
 	#ref long
-	dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
+	dms = apt.lon;
 	degrees = int(dms);
 	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 	sign = degrees >= 0 ? "E" : "W";

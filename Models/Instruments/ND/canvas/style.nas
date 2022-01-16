@@ -595,18 +595,18 @@ canvas.NDStyles["Airbus"] = {
 			isMapStructure: 1,
 			update_on: ["toggle_display_mode","toggle_range"],
 			predicate: func(nd, layer) {
-				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
+				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) and getprop("/instrumentation/nd/symbols/decel/show");
 				layer.group.setVisible( visible );
 				if (visible) {
 					layer.update();
 				}
 			},
 			options: {
-				# Overridable options:
-				# decel_node: node containing latitude-deg and longitude-deg used to mark the deceleration point
-				# managed_speed_node: boolean property indicating that the aircraft is flying in managed speed mode
+				decel_node: "/instrumentation/nd/symbols/decel",
 				listen: [
 					"fplan_active",
+					"current_wp",
+					"wp_count",
 					"spd_ctrl",
 					"ver_ctrl",
 					"athr"
@@ -746,14 +746,15 @@ canvas.NDStyles["Airbus"] = {
 			},
 		},
 		{
-			id: "taOnly", # the SVG ID
-			impl: { # implementation hash
-				init: func(nd, symbol), # for updateCenter stuff, called during initialization in the ctor
-				predicate: func(nd) getprop("/instrumentation/tcas/inputs/mode") == 2, # the condition
-				is_true:   func(nd) nd.symbols.taOnly.show(),			# if true, run this
-				is_false:  func(nd) nd.symbols.taOnly.hide(),			# if false, run this
-			}, # end of taOnly	behavior/callbacks
-		}, # end of taOnly
+			# TODO: taOnly doesn"t need to use getprop polling in update(), use a listener instead!
+			id: "taOnly",
+			impl: {
+				init: func(nd, symbol),
+				predicate: func(nd) getprop("/instrumentation/tcas/inputs/mode") == 2, 
+				is_true:   func(nd) nd.symbols.taOnly.show(),
+				is_false:  func(nd) nd.symbols.taOnly.hide(),
+			},
+		},
 		{
 			id: "tas",
 			impl: {
@@ -761,7 +762,6 @@ canvas.NDStyles["Airbus"] = {
 				predicate: func(nd) getprop("/instrumentation/airspeed-indicator/true-speed-kt") >= 60,
 				is_true: func(nd) {
 					nd.symbols.tas.setText(sprintf("%3.0f",getprop("/instrumentation/airspeed-indicator/true-speed-kt")));
-					nd.symbols.tas.show();
 				},
 				is_false: func(nd){
 					nd.symbols.tas.setText("---");
@@ -1324,7 +1324,7 @@ canvas.NDStyles["Airbus"] = {
 			id:"curTrkPtr",
 			impl: {
 				init: func(nd,symbol),
-				predicate: func(nd) (nd.in_mode("toggle_display_mode", ["APP","VOR","MAP"]) and !nd.get_switch("toggle_centered")
+				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and !nd.get_switch("toggle_centered")
 					and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting))
 					and abs(nd.aircraft_source.get_trk_mag() - nd.aircraft_source.get_hdg_mag()) <= 42),
 				is_true: func(nd) {
@@ -1368,7 +1368,7 @@ canvas.NDStyles["Airbus"] = {
 			impl: {
 				init: func(nd,symbol),
 				predicate: func(nd) (nd.get_switch("toggle_display_mode") == "MAP" and 
-							 nd.get_switch("toggle_centered") and (nd.change_phase != 1) and 
+							 nd.get_switch("toggle_centered") and (nd.change_phase != 1) and
 							 getprop(nd.options.defaults.lat_ctrl) == 0 and abs(nd.aircraft_source.get_trk_mag() - nd.aircraft_source.get_hdg_mag()) <= 42 and
 							 (nd.adirs_property.getValue() == 1 or (adirs_3.getValue() == 1 and att_switch.getValue() == nd.attitude_heading_setting))),
 				is_true: func(nd) {
@@ -1531,6 +1531,8 @@ canvas.NDStyles["Airbus"] = {
 				predicate: func(nd) (getprop("/instrumentation/airspeed-indicator/true-speed-kt") >= 100),
 				is_true: func(nd) {
 					var windDir = pts.Instrumentation.PFD.windDirection.getValue() or 0;
+					if(nd.get_switch("toggle_true_north"))
+						windDir = windDir + getprop("/environment/magnetic-variation-deg");
 					nd.symbols.wind.setText(sprintf("%03.0f / %02.0f",windDir,pts.Instrumentation.PFD.windSpeed.getValue() or 0));
 				},
 				is_false: func(nd) {
@@ -1545,7 +1547,18 @@ canvas.NDStyles["Airbus"] = {
 				predicate: func(nd) (!(nd.in_mode("toggle_display_mode", ["PLAN"]) and (nd.get_switch("toggle_display_type") == "LCD")) and (pts.Instrumentation.PFD.windSpeed.getValue() or 0) >= 2 and getprop("/instrumentation/airspeed-indicator/true-speed-kt") >= 100),
 				is_true: func(nd) {
 					nd.symbols.windArrow.show();
-					var windArrowRot = (pts.Instrumentation.PFD.windDirection.getValue() or 0) - nd.aircraft_source.get_hdg_tru();
+					var windArrowRot = pts.Instrumentation.PFD.windDirection.getValue() or 0;
+					if(nd.in_mode("toggle_display_mode", ["MAP","PLAN"])) {
+						if(nd.get_switch("toggle_true_north"))
+							windArrowRot = windArrowRot - nd.aircraft_source.get_trk_tru();
+						else
+							windArrowRot = windArrowRot - nd.aircraft_source.get_trk_mag();
+					} else {
+						if(nd.get_switch("toggle_true_north"))
+							windArrowRot = windArrowRot - nd.aircraft_source.get_hdg_tru();
+						else
+							windArrowRot = windArrowRot - nd.aircraft_source.get_hdg_mag();
+					}
 					nd.symbols.windArrow.setRotation(windArrowRot*D2R);
 				},
 				is_false: func(nd) nd.symbols.windArrow.hide(),
