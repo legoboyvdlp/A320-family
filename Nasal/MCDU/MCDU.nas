@@ -1530,6 +1530,8 @@ var button = func(btn, i, event = "") {
 			} else {  # up with buttonCLRDown[i]>4
 				buttonCLRDown[i] = 0;
 			}
+		} else if (btn == "LONGCLR") {
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
 		} else if (btn == "PLUSMINUS") {
