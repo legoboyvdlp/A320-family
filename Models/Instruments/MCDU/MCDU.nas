@@ -852,7 +852,11 @@ var canvas_MCDU_base = {
 			me["Simple_R3S"].setText(sprintf("%-10s",(doorL4_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
 			me["Simple_R3"].setText(sprintf("%-10s",(doorR4_pos.getValue() > 0.1) ? "OPEN" : "CLOSED"));
 			me["Simple_R4S"].setText(sprintf("%-10s",sprintf("%03.3f",pts.Velocities.groundspeed.getValue())));
-			me["Simple_R4"].setText(sprintf("%-10s",sprintf("%03.1f",fmgc.FMGCInternal.fob)));
+			if (getprop("/options/system/weight-kgs") == 1) {
+				me["Simple_R4"].setText(sprintf("%-10s",sprintf("%03.1f",fmgc.FMGCInternal.fob * LBS2KGS )));
+			} else {
+				me["Simple_R4"].setText(sprintf("%-10s",sprintf("%03.1f",fmgc.FMGCInternal.fob)));
+			}
 
 		} else if (page == "AOCCONFIG") {
 			if (!pageSwitch[i].getBoolValue()) {
