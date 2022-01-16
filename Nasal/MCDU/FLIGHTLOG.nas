@@ -5,8 +5,8 @@ var OOOIReport = {
 	new: func(state,time=0,fob="") {
 		var report = {parents:[OOOIReport]};
 		report.state = state;
-		if (getprop("/options/system/weight-kgs") == 1) {
-			report.fob = (fob != "") ? fob : fmgc.FMGCInternal.fob * LBS2KGS
+		if (acconfig_weight_kgs.getValue() == 1) {
+			report.fob = (fob != "") ? fob : fmgc.FMGCInternal.fob * LBS2KGS;
 		} else {
 			report.fob = (fob != "") ? fob : fmgc.FMGCInternal.fob;
 		}
