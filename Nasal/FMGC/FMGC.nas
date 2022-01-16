@@ -29,7 +29,6 @@ var ktsmach = 0;
 var kts_sel = 0;
 var mach_sel = 0;
 var srsSPD = 0;
-var decel = 0;
 var mng_alt_spd = 0;
 var mng_alt_mach = 0;
 var altsel = 0;
@@ -77,6 +76,7 @@ var FMGCInternal = {
 	phase: 0,
 	minspeed: 0,
 	maxspeed: 0,
+	decel: 0,
 	clbSpdLim: 250,
 	desSpdLim: 250,
 	clbSpdLimAlt: 10000,
@@ -258,7 +258,6 @@ var postInit = func() {
 
 var FMGCNodes = {
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
-	decel: props.globals.initNode("/FMGC/internal/decel", 0, "BOOL"),
 	flexSet: props.globals.initNode("/FMGC/internal/flex-set", 0, "BOOL"),
 	flexTemp: props.globals.initNode("/FMGC/internal/flex", 0, "INT"),
 	mngSpdAlt: props.globals.getNode("/FMGC/internal/mng-alt-spd"),
@@ -610,7 +609,7 @@ var masterFMGC = maketimer(0.2, func {
 			}
 		}
 	} elsif (FMGCInternal.phase == 4) {
-		if (FMGCNodes.decel.getValue()) {
+		if (FMGCInternal.decel) {
 			newphase = 5;
 		}
 	} elsif (FMGCInternal.phase == 5) {
@@ -627,9 +626,9 @@ var masterFMGC = maketimer(0.2, func {
 
 	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and 
 	   flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
-		FMGCNodes.decel.setValue(1);
-	} elsif (FMGCNodes.decel.getValue() and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
-		FMGCNodes.decel.setValue(0);
+		FMGCInternal.decel = 1;
+	} elsif (FMGCInternal.decel and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
+		FMGCInternal.decel = 0;
 	}
 	
 	
@@ -994,7 +993,6 @@ var ManagedSPD = maketimer(0.25, func {
 	if (FMGCInternal.crzSet and FMGCInternal.costIndexSet) {
 		if (Custom.Input.spdManaged.getBoolValue()) {
 			altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
-			decel = FMGCNodes.decel.getValue();
 			ktsmach = Input.ktsMach.getValue();
 			mode = Modes.PFD.FMA.pitchMode.getValue();
 			srsSPD = srsSpeedNode.getValue();
@@ -1015,12 +1013,12 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
 				# Speed is maximum of greendot / climb speed limit
 				FMGCInternal.mngKtsMach = 0;
-				FMGCInternal.mngSpdCmd = decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
+				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
 				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 				FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
-				if (decel) {
+				if (FMGCInternal.decel) {
 					FMGCInternal.mngKtsMach = 0;
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				} else {
@@ -1030,7 +1028,7 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
 				FMGCInternal.mngKtsMach = 0;
 				# Speed is maximum of greendot / descent speed limit
-				FMGCInternal.mngSpdCmd = decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
 			}
 			
 			# Clamp to minspeed, maxspeed

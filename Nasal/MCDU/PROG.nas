@@ -52,7 +52,7 @@ var progCLBInput = func(key, i) {
 				systems.PNEU.pressMode.setValue("CR");
 				setprop("/FMGC/internal/activate-once", 0);
 				setprop("/FMGC/internal/activate-twice", 0);
-				setprop("/FMGC/internal/decel", 0);
+				fmgc.FMGCInternal.decel = 0;
 			}
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil) {
@@ -66,7 +66,7 @@ var progCLBInput = func(key, i) {
 					systems.PNEU.pressMode.setValue("CR");
 					setprop("/FMGC/internal/activate-once", 0);
 					setprop("/FMGC/internal/activate-twice", 0);
-					setprop("/FMGC/internal/decel", 0);
+					fmgc.FMGCInternal.decel = 0;
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -88,7 +88,7 @@ var progCRZInput = func(key, i) {
 				systems.PNEU.pressMode.setValue("CR");
 				setprop("/FMGC/internal/activate-once", 0);
 				setprop("/FMGC/internal/activate-twice", 0);
-				setprop("/FMGC/internal/decel", 0);
+				fmgc.FMGCInternal.decel = 0;
 			}
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil) {
@@ -102,7 +102,7 @@ var progCRZInput = func(key, i) {
 					systems.PNEU.pressMode.setValue("CR");
 					setprop("/FMGC/internal/activate-once", 0);
 					setprop("/FMGC/internal/activate-twice", 0);
-					setprop("/FMGC/internal/decel", 0);
+					fmgc.FMGCInternal.decel = 0;
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -124,7 +124,7 @@ var progDESInput = func(key, i) {
 				systems.PNEU.pressMode.setValue("CR");
 				setprop("/FMGC/internal/activate-once", 0);
 				setprop("/FMGC/internal/activate-twice", 0);
-				setprop("/FMGC/internal/decel", 0);
+				fmgc.FMGCInternal.decel = 0;
 			}
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil) {
@@ -138,7 +138,7 @@ var progDESInput = func(key, i) {
 					systems.PNEU.pressMode.setValue("CR");
 					setprop("/FMGC/internal/activate-once", 0);
 					setprop("/FMGC/internal/activate-twice", 0);
-					setprop("/FMGC/internal/decel", 0);
+					fmgc.FMGCInternal.decel = 0;
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
