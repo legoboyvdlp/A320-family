@@ -60,7 +60,7 @@ canvas.NDStyles["Airbus"] = {
 			lat_ctrl: "/it-autoflight/output/lat",
 			managed_val: 1,
 			ver_ctrl: "/it-autoflight/output/vert",
-			spd_ctrl: "/flight-management/control/spd-ctrl",
+			spd_ctrl: "/it-autoflight/input/spd-managed",
 			current_wp: "/FMGC/flightplan[2]/current-wp",
 			ap1: "/it-autoflight/output/ap1",
 			ap2: "/it-autoflight/output/ap2",
