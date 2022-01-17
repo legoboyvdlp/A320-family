@@ -2885,9 +2885,9 @@ var canvas_MCDU_base = {
 				degrees = getprop("/FMGC/internal/align-ref-lat-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-lat-minutes");
 				sign = getprop("/FMGC/internal/align-ref-lat-sign");
-				dms_lat = getprop("/FMGC/flightplan[2]/wp[0]/lat");
-				degrees_lat = int(dms_lat);
-				minutes_lat = sprintf("%.1f",abs((dms_lat - degrees_lat) * 60));
+				apt = airportinfo(FMGCInternal.depApt);
+				degrees_lat = int(apt.lat);
+				minutes_lat = sprintf("%.1f",abs((apt.lat - degrees_lat) * 60));
 				sign_lat = degrees_lat >= 0 ? "N" : "S";
 				lat_same = degrees_lat == degrees and minutes_lat == minutes and sign_lat == sign;
 				me["Simple_L1"].setText(abs(sprintf("%.0f", degrees)) ~ "°" ~ sprintf("%.1f", minutes) ~ sign);
@@ -2895,15 +2895,14 @@ var canvas_MCDU_base = {
 				degrees = getprop("/FMGC/internal/align-ref-long-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-long-minutes");
 				sign = getprop("/FMGC/internal/align-ref-long-sign");
-				dms_long = getprop("/FMGC/flightplan[2]/wp[0]/lon");
-				degrees_long = int(dms_long);
-				minutes_long = sprintf("%.1f",abs((dms_long - degrees_long) * 60));
+				degrees_long = int(apt.lon);
+				minutes_long = sprintf("%.1f",abs((apt.lon - degrees_long) * 60));
 				sign_long = degrees_long >= 0 ? "E" : "W";
 				long_same = degrees_long == degrees and minutes_long == minutes and sign_long == sign;
 				me["Simple_R1"].setText(abs(sprintf("%.0f", degrees)) ~ "°" ~ sprintf("%.1f", minutes) ~ sign);
 				
 				if (lat_same and long_same) {
-					me["Simple_C1"].setText(getprop("/FMGC/flightplan[2]/wp[0]/id"));
+					me["Simple_C1"].setText(getprop("/autopilot/route-manager/route/wp[0]/id"));
 					me["Simple_C1"].setColor(GREEN);
 				} else {
 					me["Simple_C1"].setText("----");

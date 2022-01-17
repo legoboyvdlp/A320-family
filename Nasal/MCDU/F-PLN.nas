@@ -93,17 +93,16 @@ var fplnItem = {
 		}
 	},
 	getBrg: func() {
-		me.brg = fmgc.wpCourse[me.plan][me.index].getValue() - magvar();
+		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
+		var courseDistanceFrom = courseAndDistance(wp);
+		me.brg = courseDistanceFrom[0] - magvar();
 		if (me.brg < 0) { me.brg += 360; }
 		if (me.brg > 360) { me.brg -= 360; }
 		return sprintf("%03.0f", math.round(me.brg));
 	},
 	getTrack: func() {
-		if (me.index > (size(fmgc.wpCoursePrev[me.plan]) - 1)) {
-			me.trk = me.wp.leg_bearing - magvar(me.wp.lat, me.wp.lon);
-		} else {
-			me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - magvar(me.wp.lat, me.wp.lon);
-		}
+		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
+		me.trk = me.wp.leg_bearing - magvar(wp.lat, wp.lon);
 		if (me.trk < 0) { me.trk += 360; }
 		if (me.trk > 360) { me.trk -= 360; }
 		return sprintf("%03.0f", math.round(me.trk));
@@ -141,14 +140,12 @@ var fplnItem = {
 		}
 	},
 	getDist: func() {
-		if (me.index > size(fmgc.wpDistancePrev[me.plan]) - 1) {
-			return math.round(me.wp.leg_distance);
+		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
+		if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
+			var courseDistanceFrom = courseAndDistance(wp);
+			return math.round(courseDistanceFrom[1]);
 		} else {
-			if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
-				return math.round(fmgc.wpDistance[me.plan][me.index].getValue());
-			} else {
-				return math.round(fmgc.wpDistancePrev[me.plan][me.index].getValue());
-			}
+			return math.round(wp.leg_distance);
 		}
 	},
 	pushButtonLeft: func() {
@@ -160,7 +157,7 @@ var fplnItem = {
 		if (me.wp.wp_name == "DISCONTINUITY") {
 			canvas_mcdu.myLatRev[me.computer] = latRev.new(4, me.wp, me.index, me.computer);
 		} elsif (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			if (me.wp.wp_name == "PPOS" or me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+			if (me.wp.wp_name == "PPOS") {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp, me.index, me.computer);
 			} elsif (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
@@ -170,7 +167,7 @@ var fplnItem = {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp, me.index, me.computer);
 			}
 		} else {
-			if (me.wp.wp_name == "PPOS" or me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+			if (me.wp.wp_name == "PPOS") {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp, me.index, me.computer);
 			} elsif (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
@@ -291,11 +288,12 @@ var staticText = {
 };
 
 var pseudoItem = {
-	new: func(computer, text) {
+	new: func(computer, text, colour) {
 		var pI = {parents:[pseudoItem]};
 		pI.computer = computer;
 		pI.text = text;
 		pI.colour = colour;
+		pI.wp = "PSEUDO";
 		return pI;
 	},
 	updateLeftText: func() {
@@ -384,13 +382,28 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		} else {
 			colour = "grn";
 		}
-		for (var i = 0; i < me.plan.getPlanSize(); i += 1) {
+		
+		
+		var decelIndex = -9;
+		if (fmgc.flightPlanController.decelPoint != nil) {
+			decelIndex = getprop("/instrumentation/nd/symbols/decel/index") or -9;
+		}
+		
+		var startingIndex = fmgc.flightPlanController.currentToWptIndex.getValue() == -1 ? 0 : fmgc.flightPlanController.currentToWptIndex.getValue() - 1;
+		for (var i = startingIndex; i < me.plan.getPlanSize(); i += 1) {
+			if (!me.temporaryFlagFpln and decelIndex != -9) {
+				if (i == decelIndex) {
+					append(me.planList, pseudoItem.new(me.computer, me.getText("decel"), colour));
+				}
+			}
+			
 			if (!me.temporaryFlagFpln and i > fmgc.flightPlanController.arrivalIndex[me.planIndex] and fmgc.FMGCInternal.phase != 6) {
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, "blu"));
 			} else {
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, colour));
 			}
 		}
+		
 		append(me.planList, staticText.new(me.computer, me.getText("fplnEnd")));
 		if (!fmgc.FMGCInternal.altAirportSet) {
 			append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
@@ -478,8 +491,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			me.L6 = ["----", " DEST", "wht"];
 		}
 		me.C6 = ["----   ", "TIME   ", "wht"];
-		if (fmgc.flightPlanController.arrivalDist != nil) {
-			me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist)) ~ "  --.-", "DIST    EFOB", "wht"];
+		if (fmgc.flightPlanController.arrivalDist.getValue() != nil) {
+			me.R6 = [sprintf("%4.0f", int(fmgc.flightPlanController.arrivalDist.getValue())) ~ "  --.-", "DIST    EFOB", "wht"];
 		} else {
 			me.R6 = ["----   --.-", "DIST    EFOB", "wht"];
 		}

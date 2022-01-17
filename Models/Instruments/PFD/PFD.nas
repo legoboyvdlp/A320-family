@@ -1490,7 +1490,7 @@ var canvas_pfd = {
 			}
 		}
 		
-		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist >= 250) {
+		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist.getValue() >= 250) {
 			me["FMA_dh"].hide();
 			me["FMA_dhn"].hide();
 			me["FMA_nodh"].hide();
