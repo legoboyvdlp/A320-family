@@ -290,6 +290,31 @@ var staticText = {
 	},
 };
 
+var pseudoItem = {
+	new: func(computer, text) {
+		var pI = {parents:[pseudoItem]};
+		pI.computer = computer;
+		pI.text = text;
+		pI.colour = colour;
+		return pI;
+	},
+	updateLeftText: func() {
+		return [me.text, nil, me.colour];
+	},
+	updateCenterText: func() {
+		return ["----", nil, "wht"];
+	},
+	updateRightText: func() {
+		return ["---/------", " --NM    ", "wht"];
+	},
+	pushButtonLeft: func() {
+		mcdu_message(me.computer, "NOT ALLOWED");
+	},
+	pushButtonRight: func() {
+		mcdu_message(me.computer, "NOT ALLOWED");
+	},
+};
+
 var fplnPage = { # this one is only created once, and then updated - remember this
 	L1: [nil, nil, "ack"], # content, title, colour
 	L2: [nil, nil, "ack"],
@@ -346,6 +371,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			return "----END OF ALTN F-PLN---";
 		} else if (type == "noAltnFpln") {
 			return "------NO ALTN F-PLN-----";
+		} else if (type == "decel") { 
+			return "(DECEL)";
 		} else if (type == "empty") {
 			return "";
 		}
@@ -510,6 +537,12 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		} else {
 			if (size(me.outputList) >= index and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
+					if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
+						if (me.outputList[index - 1 + me.scroll].wp.wp_name == "(DECEL)") {
+							mcdu_message(me.computer, "NOT ALLOWED");
+							return;
+						}
+					}
 					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, (index - 1 + me.scroll), me.computer);
 					if (returny == 3) {
 						mcdu_message(me.computer, "DIR TO IN PROGRESS");

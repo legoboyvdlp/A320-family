@@ -713,7 +713,7 @@ var canvas_pfd = {
 			me.tgt_kts = notification.targetKts;
 			
 			if (notification.managedSpd) {
-				if (notification.decel) {
+				if (fmgc.FMGCInternal.decel) {
 					me.tgt_ias = fmgc.FMGCInternal.vappSpeedSet ? fmgc.FMGCInternal.vapp_appr : fmgc.FMGCInternal.vapp;
 					me.tgt_kts = fmgc.FMGCInternal.vappSpeedSet ? fmgc.FMGCInternal.vapp_appr : fmgc.FMGCInternal.vapp;
 				} else if (fmgc.FMGCInternal.phase == 6) {
@@ -2055,7 +2055,6 @@ var input = {
 	detent2: "/fdm/jsbsim/fadec/control-2/detent",
 	
 	decision: "/instrumentation/mk-viii/inputs/arinc429/decision-height",
-	decel: "/FMGC/internal/decel",
 	radio: "/FMGC/internal/radio",
 	baro: "/FMGC/internal/baro",
 	

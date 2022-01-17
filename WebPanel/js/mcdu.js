@@ -16,8 +16,7 @@ const MCDU = (function () {
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 
-	function init()
-	{
+	function init()	{
 		body.dataset.lastTouch = 0;
 		body.addEventListener('touchstart', preventZoomAction, { passive: false });
 
@@ -76,25 +75,31 @@ const MCDU = (function () {
 			buttonElement.addEventListener('click', buttonFunction);
 			buttonElement.addEventListener('touchstart', preventZoomAction, true);
 		});
+		let btn = document.querySelector("[data-button=\"button:CLR\"]");
+		if (btn) btn.addEventListener("contextmenu",function(e){
+			e.preventDefault();
+			sendButtonpress('button', 'LONGCLR');
+		});
 	}
 
 	function registerKeyboardInput() {
 		const keyTranslation = {
-			BACKSPACE: 'CLR'
+			BACKSPACE: 'CLR',
+			DELETE: 'LONGCLR',
+			'+': 'PLUSMINUS',
+			'-': 'PLUSMINUS',
+			'/': 'SLASH',
+			'.': 'DOT',
+			'^': 'OVFY',
+			' ': 'SP'
 		};
 		body.addEventListener('keyup', (event) => {
 			const key = event.key.toUpperCase();
-			if (key.match(/^[A-Z0-9/\-+.\ ]$/)) {
-				if (key === '+' || key === '-') {
-					return sendPlusMinusKey();
-				}
+			if (key.match(/^[A-Z0-9]$/)) {
 				return sendButtonpress('button', key);
 			}
-
-			const translatedKey = keyTranslation[key];
-			if (translatedKey) {
-				return sendButtonpress('button', translatedKey);
-			}
+			const translatedKey = keyTranslation[key]||false;
+			if (translatedKey) return sendButtonpress('button', translatedKey);
 		});
 	}
 
@@ -111,37 +116,13 @@ const MCDU = (function () {
 			return toggleUsedUniverse;
 		}
 
-		if (actionKey === 'button' && actionValue === '-') {
-			return sendPlusMinusKey;
-		}
-
 		return function () {
 			sendButtonpress(actionKey, actionValue);
 		};
 	}
 
-	function sendPlusMinusKey() {
-		if (lastSentText === '-') {
-			sendButtonpress('button', 'CLR')
-				.then(() => {
-					sendButtonpress('button', '+');
-				})
-			return;
-		}
-
-		if (lastSentText === '+') {
-			sendButtonpress('button', 'CLR')
-				.then(() => {
-					sendButtonpress('button', '-');
-				})
-			return;
-		}
-
-		sendButtonpress('button', '-');
-	}
-
 	function sendButtonpress(type, text) {
-		// console.log({ type, text });
+		//console.log({ type, text });
 		let request = new XMLHttpRequest;
 		request.open("POST", "/run.cgi?value=nasal");
 		request.setRequestHeader("Content-Type", "application/json");

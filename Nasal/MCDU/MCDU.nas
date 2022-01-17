@@ -153,7 +153,6 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.vrset = 0;
 	fmgc.FMGCInternal.v2 = 0;
 	fmgc.FMGCInternal.v2set = 0;
-	
 	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/MCDUC/thracc-set", 0);
 	setprop("/FMGC/internal/to-flap", 0);
@@ -1566,6 +1565,8 @@ var button = func(btn, i, event = "") {
 			} else {  # up with buttonCLRDown[i]>4
 				buttonCLRDown[i] = 0;
 			}
+		} else if (btn == "LONGCLR") {
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
 		} else if (btn == "PLUSMINUS") {
