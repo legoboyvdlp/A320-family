@@ -1521,11 +1521,12 @@
 	<!-- Cocktpit Door Switch  -->
 	
 	<animation>
-		<type>slider</type>
+		<type>knob</type>
 		<object-name>CockpitDoorSwitch</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
         <property>controls/doors/doorc-switch</property>
 		<drag-direction>vertical</drag-direction>
+		<drag-scale-px>14</drag-scale-px>
 		<action>		
 			<binding>	
 				<command>property-adjust</command>
