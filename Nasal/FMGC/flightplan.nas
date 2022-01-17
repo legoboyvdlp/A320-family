@@ -95,7 +95,9 @@ var flightPlanController = {
 	},
 	
 	loadFlightPlan: func(path) {
-		call(func {me.flightplans[3] = createFlightplan(path);}, nil, var err = []);	
+		call(func {
+			me.flightplans[3] = createFlightplan(path);
+		}, nil, var err = []);	
 		if (size(err) or me.flightplans[3] == nil) {
 			print(err[0]);
 			print("Load failed.");
@@ -275,11 +277,6 @@ var flightPlanController = {
 		fmgc.windController.insertWind(n, index, 0, "PPOS");
 	},
 	
-	insertDecel: func(n, pos, index) {
-		me.flightplans[n].insertWP(createWP(pos, "(DECEL)"), index);
-		#me.flightplans[n].getWP(index).hidden = 1;
-		fmgc.windController.insertWind(n, index, 0, "(DECEL)");
-	},
 	
 	# childWPBearingDistance - return waypoint at bearing and distance from specified waypoint ghost
 	# args: wpt, bearing, dist, name, typeStr
@@ -400,8 +397,7 @@ var flightPlanController = {
 				fmgc.windController.deleteWind(n, index);
 			}
 			
-			# if n = 2, then we are clearing a discontinuity. Don't recalculate decel.
-			me.flightPlanChanged(n, n == 2 ? 0 : 1);
+			me.flightPlanChanged(n);
 			canvas_nd.A3XXRouteDriver.triggerSignal("fp-removed");
 			return 2;
 		} else {
@@ -692,68 +688,46 @@ var flightPlanController = {
 		return count;
 	},
 	
-	getIndexOfFirstDecel: func(plan) {
-		for (var wpt = 0; wpt < me.flightplans[plan].getPlanSize(); wpt += 1) {
-			if (me.flightplans[plan].getWP(wpt).wp_name == "(DECEL)") {
-				return wpt;
-			}
-		}
-		return -99;
-	},
-	
-	calculateDecelPoint: func(n) {
-		if (me.getPlanSizeNoDiscont(n) <= 1 or fmgc.FMGCInternal.decel) { 
+	calculateDecelPoint: func() {
+		if (me.getPlanSizeNoDiscont(2) <= 1 or fmgc.FMGCInternal.decel) { 
 			setprop("/instrumentation/nd/symbols/decel/show", 0); 
 			return;			
 		}
 		
-		me.indexDecel = me.getIndexOfFirstDecel(n);
-		if (me.indexDecel != -99) {
-			me.flightplans[n].deleteWP(me.indexDecel);
-			fmgc.windController.deleteWind(n, me.indexDecel);
-			me.flightPlanChanged(n,0);
-		}
-		
 		me.indexDecel = 0;
-		
-		for (var wpt = 0; wpt < me.flightplans[n].getPlanSize(); wpt += 1) {
-			if (me.flightplans[n].getWP(wpt).wp_role == "approach") {
+		for (var wpt = 0; wpt < me.flightplans[2].getPlanSize(); wpt += 1) {
+			if (me.flightplans[2].getWP(wpt).wp_role == "approach") {
 				me.indexDecel = wpt;
 				break;
 			}
-			if (wpt == me.flightplans[n].getPlanSize()) {
+			if (wpt == me.flightplans[2].getPlanSize()) {
 				me.indexDecel = me.arrivalIndex - 2;
 				break;
 			}
 		}
 		
-		me.dist = me.flightplans[n].getWP(me.indexDecel).leg_distance - 7;
+		me.dist = me.flightplans[2].getWP(me.indexDecel).leg_distance - 7;
 		if (me.dist < 0) {
 			me.dist = 0.1;
 		}
-		me.decelPoint = me.flightplans[n].pathGeod(me.indexDecel - 1, me.dist);
+		me.decelPoint = me.flightplans[2].pathGeod(me.indexDecel - 1, me.dist);
 		
-		if (n == 2) {
-			setprop("/instrumentation/nd/symbols/decel/latitude-deg", me.decelPoint.lat); 
-			setprop("/instrumentation/nd/symbols/decel/longitude-deg", me.decelPoint.lon);
-			setprop("/instrumentation/nd/symbols/decel/show", 1);
-		}
+		setprop("/instrumentation/nd/symbols/decel/latitude-deg", me.decelPoint.lat); 
+		setprop("/instrumentation/nd/symbols/decel/longitude-deg", me.decelPoint.lon);
+		setprop("/instrumentation/nd/symbols/decel/show", 1);
 		
 		me.indexTemp = me.indexDecel;
 		me.distTemp = 7;
 		
-		if (me.flightplans[n].getWP(me.indexTemp).leg_distance < 7) {
+		if (me.flightplans[2].getWP(me.indexTemp).leg_distance < 7) {
 			while (me.distTemp > 0 and me.indexTemp > 0) {
-				me.distTemp -= me.flightplans[n].getWP(me.indexTemp).leg_distance;
+				me.distTemp -= me.flightplans[2].getWP(me.indexTemp).leg_distance;
 				me.indexTemp -= 1;
 			}
 			me.indexTemp += 1; 
 		}
 
-		# todo add to FPLN list
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
-		# me.insertDecel(n,{lat: me.decelPoint.lat, lon: me.decelPoint.lon}, me.indexTemp);
-		me.flightPlanChanged(n,0);
 	},
 	
 	# insertPlaceBearingDistance - insert PBD waypoint at specified index,
@@ -818,9 +792,8 @@ var flightPlanController = {
 		}
 	},
 	
-	# callDecel - a variable that gets passed from the calling function. Used to prevent recalculating decel after discontinuity clearing
-	flightPlanChanged: func(n, callDecel = 1) {
-		me.updatePlans(1, callDecel);
+	flightPlanChanged: func(n) {
+		me.updatePlans(1);
 		fmgc.windController.updatePlans();
 		
 		# push update to fuel
@@ -837,7 +810,7 @@ var flightPlanController = {
 	},
 	
 	# runDecel - used to ensure that only flightplanchanged will update the decel point
-	updatePlans: func(runDecel = 0, callDecel = 1) {
+	updatePlans: func(runDecel = 0) {
 		if (fmgc.FMGCInternal.toFromSet and me.flightplans[2].departure != nil and me.flightplans[2].destination != nil) { # check if flightplan exists
 			if (!me.active.getBoolValue()) {
 				if (me.currentToWptIndex.getValue() < 1) {
@@ -869,10 +842,10 @@ var flightPlanController = {
 					}
 				}
 			}	
+		}
 			
-			if (runDecel and callDecel) {
-				me.calculateDecelPoint(n);
-			}
+		if (runDecel) {
+			me.calculateDecelPoint();
 		}
 		
 		for (var i = 0; i <= 1; i += 1) {

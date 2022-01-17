@@ -590,6 +590,9 @@
 			<surveillance type="string">S</surveillance>
 		</icao>
 		<performance>
+			<!-- explicitly force the category to be 'E' instead of using tag heuristics
+			Although the A320 is a category 'C' aircraft, category 'E's profile fits better -->
+			<icao-category type="string">E</icao-category>
 			<minimum>
 				<takeoff-length-ft type="int">4500</takeoff-length-ft>
 				<landing-length-ft type="int">4500</landing-length-ft>

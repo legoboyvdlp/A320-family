@@ -41,29 +41,24 @@ var A320GPSDeleagte = {
 
         # tell the GPS C++ code we will do sequencing ourselves, so it can disable
         # its legacy logic for this
+		
         setprop(GPSPath ~ '/config/delegate-sequencing', 1);
 		
         # enable 2020.2 C++ turn anticipation
         setprop(GPSPath ~ '/config/enable-fly-by', 0);
 		
-		# Set maximum lateral deviation for sequencing to 5 miles
+		# flyOver maximum distance
 		setprop(GPSPath ~ '/config/over-flight-arm-distance', 5);
-
-        # make FlightPlan behaviour match GPS config state
-        fp.followLegTrackToFix = getprop(GPSPath ~ '/config/follow-leg-track-to-fix') or 0;
-
-        # similarly, make FlightPlan follow the performance category settings
-        fp.aircraftCategory = getprop('/autopilot/settings/icao-aircraft-category') or 'A';
-
+		
+        fp.followLegTrackToFix = 1;
+        fp.aircraftCategory = 'C';
         m._modeProp = props.globals.getNode(GPSPath ~ '/mode');
         return m;
     },
 
     _landingCheckTimeout: func
     {
-        var wow = getprop('gear/gear[0]/wow');
-        var gs = getprop('velocities/groundspeed-kt');
-        if (wow and (gs < 25))  {
+        if (pts.Gear.wow[0].getValue() and pts.Velocities.groundspeed.getValue() < 25)  {
           logprint(LOG_INFO, 'GPS saw speed < 25kts on destination runway, end of route.');
           me.landingCheck.stop();
           # record touch-down time?
@@ -73,8 +68,7 @@ var A320GPSDeleagte = {
 
     _captureCurrentCourse: func
     {
-        var crs = getprop(GPSPath ~ "/desired-course-deg");
-        setprop(GPSPath ~ "/selected-course-deg", crs);
+        setprop(GPSPath ~ "/selected-course-deg", getprop(GPSPath ~ "/desired-course-deg"));
     },
 
     _selectOBSMode: func
@@ -154,17 +148,13 @@ var A320GPSDeleagte = {
         } else if (mode == 'leg') {
             # standard leq sequencing
             var nextIndex = me.flightplan.current + 1;
-			if (nextIndex < me.flightplan.numWaypoints() and me.flightplan.nextWP().id == '(DECEL)') {
-				nextIndex += 1;
-               logprint(LOG_INFO, "default GPS reached DECEL, going to next waypoint");
-			} 
 			
 			if (nextIndex >= me.flightplan.numWaypoints()) {
                 logprint(LOG_INFO, "default GPS sequencing, finishing flightplan");
                 me.flightplan.finish();
             } elsif (me.flightplan.nextWP().wp_type == 'discontinuity') {
                 logprint(LOG_INFO, "default GPS sequencing DISCONTINUITY in flightplan, switching to OBS mode");
-
+				# TODO - revert autopilot to hdg / vs
                 me._captureCurrentCourse();
                 me._selectOBSMode();
             } else {
@@ -194,9 +184,8 @@ var A320GPSDeleagte = {
         # this check is needed to avoid problems with circular routes; when
         # activating the FP we end up here, and without this check, immediately
         # detect that we've 'landed' and finish the FP again.
-        var wow = getprop('gear/gear[0]/wow');
 
-        if (!wow and
+        if (!pts.Gear.wow[0].getValue() and
             (activeRunway != nil) and (me.flightplan.destination_runway != nil) and 
             (activeRunway.id == me.flightplan.destination_runway.id))
         {
