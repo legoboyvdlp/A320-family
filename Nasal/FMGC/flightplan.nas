@@ -761,6 +761,9 @@ var flightPlanController = {
 		
 		if (!me.temporaryFlag[plan]) {
 			if (text == "CLR" and me.flightplans[2].getWP(index).wp_name == "DISCONTINUITY") {
+				if (me.flightplans[2].getPlanSize() == 3 and me.flightplans[2].departure_runway == nil and me.flightplans[2].destination_runway == nil and index == 1) {
+					return 1;
+				}
 				var thePlan = 2;
 			} else {
 				fmgc.flightPlanController.createTemporaryFlightPlan(plan);
