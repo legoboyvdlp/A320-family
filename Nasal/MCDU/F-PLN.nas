@@ -47,9 +47,9 @@ var fplnItem = {
 				}
 				
 				if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
-					me.assembledStr[1] = "BRG" ~ me.getBrg() ~ "   ";
+					me.assembledStr[1] = "BRG" ~ me.getBrg() ~ "°  ";
 				} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() + 1) or me.index == (fmgc.flightPlanController.arrivalIndex[me.plan] + 1)) {
-					me.assembledStr[1] = "TRK" ~ me.getTrack() ~ "   ";
+					me.assembledStr[1] = "TRK" ~ me.getTrack() ~ "°  ";
 				} else {
 					me.assembledStr[1] = nil;
 				}
@@ -67,7 +67,6 @@ var fplnItem = {
 			if (me.wp.wp_name != "DISCONTINUITY") {
 				me.spd = me.getSpd();
 				me.alt = me.getAlt();
-				me.dist = me.getDist();
 				if (me.colour != "yel") {	# not temporary flightplan
 					me._colour = "wht";
 					#if (me.spd[1] != "wht" or me.alt[1] != "wht") {
@@ -84,7 +83,7 @@ var fplnItem = {
 				} else {	# temporary flightplan
 					me._colour = "yel";
 				}
-				return [me.spd[0] ~ "/" ~ me.alt[0], " " ~ me.dist ~ "NM    ", me._colour];
+				return [me.spd[0] ~ "/" ~ me.alt[0], me.getDist() ~ "NM    ", me._colour];
 			} else {
 				return [nil, nil, "ack"];
 			}
@@ -140,12 +139,20 @@ var fplnItem = {
 		}
 	},
 	getDist: func() {
+		decelIndex = getprop("/instrumentation/nd/symbols/decel/index") or -9;
 		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
+		var prevwp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index -1);
+		
 		if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
-			var courseDistanceFrom = courseAndDistance(wp);
-			return math.round(courseDistanceFrom[1]);
+			return sprintf("%3.0f", math.round(courseAndDistance(wp)[1]));;
 		} else {
-			return math.round(wp.leg_distance);
+			if (decelIndex != 9 and me.index == decelIndex + 1 and fmgc.flightPlanController.decelPoint != nil) {
+				return sprintf("%3.0f", courseAndDistance(fmgc.flightPlanController.decelPoint, wp)[1]);
+			} else if (prevwp != nil and prevwp.wp_name != "DISCONTINUITY") {
+				return sprintf("%3.0f", math.round(wp.leg_distance));
+			} else {
+				return " --";
+			}
 		}
 	},
 	pushButtonLeft: func() {
@@ -300,10 +307,21 @@ var pseudoItem = {
 		return [me.text, nil, me.colour];
 	},
 	updateCenterText: func() {
-		return ["----", nil, "wht"];
+		return ["----   ", nil, "wht"];
+	},
+	getDist: func() {
+		decelIndex = getprop("/instrumentation/nd/symbols/decel/index") or -9;
+		if (decelIndex != -9) {
+			var prevWP = fmgc.flightPlanController.flightplans[2].getWP(decelIndex - 1);
+			if (prevWP != nil and prevWP.wp_name != "DISCONTINUITY" and fmgc.flightPlanController.decelPoint != nil) {
+				return sprintf("%3.0f", courseAndDistance(prevWP, fmgc.flightPlanController.decelPoint)[1]);
+			} else {
+				return " --";
+			}
+		}
 	},
 	updateRightText: func() {
-		return ["---/------", " --NM    ", "wht"];
+		return ["---/------", me.getDist() ~ "NM    ", "wht"];
 	},
 	pushButtonLeft: func() {
 		mcdu_message(me.computer, "NOT ALLOWED");
@@ -383,7 +401,6 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			colour = "grn";
 		}
 		
-		
 		var decelIndex = -9;
 		if (fmgc.flightPlanController.decelPoint != nil) {
 			decelIndex = getprop("/instrumentation/nd/symbols/decel/index") or -9;
@@ -400,7 +417,11 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (!me.temporaryFlagFpln and i > fmgc.flightPlanController.arrivalIndex[me.planIndex] and fmgc.FMGCInternal.phase != 6) {
 				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, "blu"));
 			} else {
-				append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, colour));
+				if (i == fmgc.flightPlanController.currentToWptIndex.getValue() and !me.temporaryFlagFpln) {
+					append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, "wht"));
+				} else {
+					append(me.planList, fplnItem.new(me.plan.getWP(i), i, me.planIndex, me.computer, colour));
+				}
 			}
 		}
 		
@@ -548,7 +569,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}
 		} else {
-			if (me.outputList[index - 1 + me.scroll].wp != "PSEUDO" and size(me.outputList) >= index and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
+			if ((index - 1 + me.scroll) <= size(me.outputList) and me.outputList[index - 1 + me.scroll].wp != nil and me.outputList[index - 1 + me.scroll].wp != "PSEUDO" and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
 					if (!me.temporaryFlagFpln) {
 						var decelIndex = 9999;
