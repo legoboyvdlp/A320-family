@@ -140,16 +140,15 @@ var fplnItem = {
 	},
 	getDist: func() {
 		decelIndex = getprop("/instrumentation/nd/symbols/decel/index") or -9;
-		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
 		var prevwp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index -1);
 		
 		if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
-			return sprintf("%3.0f", math.round(courseAndDistance(wp)[1]));;
+			return sprintf("%3.0f", math.round(courseAndDistance(me.wp)[1]));;
 		} else {
-			if (decelIndex != 9 and me.index == decelIndex + 1 and fmgc.flightPlanController.decelPoint != nil) {
-				return sprintf("%3.0f", courseAndDistance(fmgc.flightPlanController.decelPoint, wp)[1]);
+			if (decelIndex != 9 and me.index == decelIndex and fmgc.flightPlanController.decelPoint != nil) {
+				return sprintf("%3.0f", courseAndDistance(fmgc.flightPlanController.decelPoint, me.wp)[1]);
 			} else if (prevwp != nil and prevwp.wp_name != "DISCONTINUITY") {
-				return sprintf("%3.0f", math.round(wp.leg_distance));
+				return sprintf("%3.0f", math.round(me.wp.leg_distance));
 			} else {
 				return " --";
 			}

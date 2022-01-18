@@ -201,11 +201,13 @@ var canvas_MCDU_base = {
 		me["Simple_L6S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_C1S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_C2S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_C3S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_C4S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_C5S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_C6S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_R1S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_R2S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_R3S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_R4S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_R5S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_R6S"].setFont("HoneywellMCDUSmall.ttf");
@@ -491,9 +493,7 @@ var canvas_MCDU_base = {
 				
 				me.hideAllArrows();
 				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.standardFontSize();
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -3538,18 +3538,6 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 			}
-			
-			me["Simple_L1S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_L3S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_L4S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_L5S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_L6S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_C1S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_R1S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_R3S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_R4S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_R5S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_R6S"].setFont("HoneywellMCDUSmall.ttf");
 			
 			me["Simple_L1S"].setText("AT");
 			me["Simple_L3S"].setText("RTE RSV/%");
