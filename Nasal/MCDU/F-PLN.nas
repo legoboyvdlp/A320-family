@@ -275,6 +275,7 @@ var staticText = {
 		var sT = {parents:[staticText]};
 		sT.computer = computer;
 		sT.text = text;
+		sT.wp = "STATIC";
 		return sT;
 	},
 	updateLeftText: func() {
@@ -577,7 +578,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}
 		} else {
-			if ((index - 1 + me.scroll) <= size(me.outputList) and me.outputList[index - 1 + me.scroll].wp != nil and me.outputList[index - 1 + me.scroll].wp != "PSEUDO" and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
+			if ((index - 1 + me.scroll) < size(me.planList) and me.outputList[index - 1].wp != "STATIC" and me.outputList[index - 1].wp != "PSEUDO" and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
 					if (!me.temporaryFlagFpln) {
 						decelIndex = getprop("/instrumentation/nd/symbols/decel/index");
