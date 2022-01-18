@@ -139,13 +139,14 @@ var fplnItem = {
 		}
 	},
 	getDist: func() {
-		decelIndex = getprop("/instrumentation/nd/symbols/decel/index") or -9;
+		decelIndex = getprop("/instrumentation/nd/symbols/decel/index");
+		decelShow = getprop("/instrumentation/nd/symbols/decel/show");
 		var prevwp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index -1);
 		
 		if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
 			return sprintf("%3.0f", math.round(courseAndDistance(me.wp)[1]));;
 		} else {
-			if (decelIndex != 9 and me.index == decelIndex and fmgc.flightPlanController.decelPoint != nil) {
+			if (decelShow and me.index == decelIndex and fmgc.flightPlanController.decelPoint != nil) {
 				return sprintf("%3.0f", courseAndDistance(fmgc.flightPlanController.decelPoint, me.wp)[1]);
 			} else if (prevwp != nil and prevwp.wp_name != "DISCONTINUITY") {
 				return sprintf("%3.0f", math.round(me.wp.leg_distance));
@@ -309,10 +310,11 @@ var pseudoItem = {
 		return ["----   ", nil, "wht"];
 	},
 	getDist: func() {
-		decelIndex = getprop("/instrumentation/nd/symbols/decel/index") or -9;
-		if (decelIndex != -9) {
+		decelIndex = getprop("/instrumentation/nd/symbols/decel/index");
+		decelShow = getprop("/instrumentation/nd/symbols/decel/show");
+		if (decelShow) {
 			var prevWP = fmgc.flightPlanController.flightplans[2].getWP(decelIndex - 1);
-			if (prevWP != nil and prevWP.wp_name != "DISCONTINUITY" and fmgc.flightPlanController.decelPoint != nil) {
+			if (prevWP != nil and prevWP.wp_name != "DISCONTINUITY") {
 				return sprintf("%3.0f", courseAndDistance(prevWP, fmgc.flightPlanController.decelPoint)[1]);
 			} else {
 				return " --";
@@ -400,14 +402,12 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			colour = "grn";
 		}
 		
-		var decelIndex = -9;
-		if (fmgc.flightPlanController.decelPoint != nil) {
-			decelIndex = getprop("/instrumentation/nd/symbols/decel/index") or -9;
-		}
+		decelIndex = getprop("/instrumentation/nd/symbols/decel/index");
+		decelShow = getprop("/instrumentation/nd/symbols/decel/show");
 		
 		var startingIndex = fmgc.flightPlanController.currentToWptIndex.getValue() == -1 ? 0 : fmgc.flightPlanController.currentToWptIndex.getValue() - 1;
 		for (var i = startingIndex; i < me.plan.getPlanSize(); i += 1) {
-			if (!me.temporaryFlagFpln and decelIndex != -9) {
+			if (!me.temporaryFlagFpln and decelShow) {
 				if (i == decelIndex) {
 					append(me.planList, pseudoItem.new(me.computer, me.getText("decel"), colour));
 				}
@@ -520,15 +520,26 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	update: func() {
 		#me.basePage();
 	},
+	planIndexFunc: func() {
+		decelIndex = getprop("/instrumentation/nd/symbols/decel/index");
+		decelShow = getprop("/instrumentation/nd/symbols/decel/show");
+		if (me.scroll < me.plan.getPlanSize()) {
+			if (decelShow) {
+				var decelOffset = 0;
+				if (me.scroll > decelIndex) {
+					decelOffset = 1;
+				}
+				setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", me.scroll - decelOffset);
+			}
+		}
+	},
 	scrollUp: func() {
 		if (size(me.planList) > 1) {
 			me.scroll += 1;
 			if (me.scroll > size(me.planList) - 3) {
 				me.scroll = 0;
 			}
-			if (me.scroll < me.plan.getPlanSize()) {
-				setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", me.scroll);
-			}
+			me.planIndexFunc();
 		} else {
 			me.scroll = 0;
 			setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", -1);
@@ -540,9 +551,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if (me.scroll < 0) {
 				me.scroll = size(me.planList) - 3;
 			}
-			if (me.scroll < me.plan.getPlanSize()) {
-				setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", me.scroll);
-			}
+			me.planIndexFunc();
 		} else {
 			me.scroll = 0;
 			setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", -1);
@@ -571,11 +580,9 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			if ((index - 1 + me.scroll) <= size(me.outputList) and me.outputList[index - 1 + me.scroll].wp != nil and me.outputList[index - 1 + me.scroll].wp != "PSEUDO" and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
 					if (!me.temporaryFlagFpln) {
-						var decelIndex = 9999;
-						if (fmgc.flightPlanController.decelPoint != nil) {
-							decelIndex = getprop("/instrumentation/nd/symbols/decel/index");
-						}
-						if ((index - 1 + me.scroll) > decelIndex) { 
+						decelIndex = getprop("/instrumentation/nd/symbols/decel/index");
+						decelShow = getprop("/instrumentation/nd/symbols/decel/show");
+						if (decelShow and (index - 1 + me.scroll) > decelIndex) { 
 							index = index - 1;
 						}
 					}
