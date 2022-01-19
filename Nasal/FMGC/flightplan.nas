@@ -212,6 +212,7 @@ var flightPlanController = {
 		# TODO - after sequencing discontinuity, FPLN should show PPOS then DISCONTINUITY
 		# Clearing that discontinuity is not allowed, you must exit using DIRTO, or else using NAV ARM and overfly
 		# TODO - triple click - confirm, is it only with DES disengage, or also with the NAV loss?
+		# TODO - I think that it only goes to VS when in DES mode
 		
 		if (me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_type == "discontinuity") {
 			fmgc.Input.lat.setValue(3);
@@ -380,7 +381,7 @@ var flightPlanController = {
 					me.deleteWP(i, 0, 1);
 				}
 				if (me.temporaryFlag[1]) {
-					me.deleteWP(i, 0, 1);
+					me.deleteWP(i, 1, 1);
 				}
 				me.deleteWP(i, 2, 1);
 			}
