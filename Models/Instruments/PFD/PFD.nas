@@ -28,6 +28,7 @@ var dhFlash = 0;
 var togaLkFlash = 0;
 var ilsFlash = [0,0];
 var qnhFlash = [0,0];
+var vsFlash = [0, 0];
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
 var du1_offtime = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
@@ -1691,11 +1692,11 @@ var canvas_pfd = {
 		me["FMA_pitcharm2"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.pitchMode2Armed));
 		
 		if (fmgc.Modes.PFD.FMA.pitchMode == "V/S") {
-			me["FMA_pitch"].setText(sprintf("%s         ", fmgc.Modes.PFD.FMA.pitchMode));
+			me["FMA_pitch"].setText(sprintf("%s       ", fmgc.Modes.PFD.FMA.pitchMode));
 			me["vsFMArate"].setText(sprintf("%+4.0f",notification.autopilotVS));
 			me["vsFMArate"].show();
 		} elsif (fmgc.Modes.PFD.FMA.pitchMode == "FPA") {
-			me["FMA_pitch"].setText(sprintf("%s         ", fmgc.Modes.PFD.FMA.pitchMode));
+			me["FMA_pitch"].setText(sprintf("%s       ", fmgc.Modes.PFD.FMA.pitchMode));
 			me["vsFMArate"].setText(sprintf("%+3.1f°",notification.autopilotFPA));
 			me["vsFMArate"].show();
 		} else {
@@ -1723,11 +1724,40 @@ var canvas_pfd = {
 		} else {
 			me["FMA_combined"].hide();
 			me["FMA_combined_box"].hide();
+			if ((notification.ap1 or notification.ap2) and fmgc.Modes.PFD.FMA.pitchMode == "V/S" and (notification.overspeedVsProt or notification.underspeedVsProt)) {
+				me.amberBoxVS = 1;
+			} else {
+				me.amberBoxVS = 0;
+			}
 			
-			if (fmgc.Modes.PFD.FMA.pitchModeBox and fmgc.Modes.PFD.FMA.pitchMode != " " and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
-				me["FMA_pitch_box"].show();
+			if ((me.amberBoxVS or fmgc.Modes.PFD.FMA.pitchModeBox) and fmgc.Modes.PFD.FMA.pitchMode != " " and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
+				if (me.amberBoxVS) {
+					me["FMA_pitch_box"].setColor(0.7333,0.3803,0.0000);
+					if (me.number == 0 and vs_going1 == 0) {
+						vs_going1 = 1;
+						vsTimer1.start();
+					} else if (me.number == 1 and vs_going2 == 0) {
+						vs_going2 = 1;
+						vsTimer2.start();
+					}
+					
+					if ((me.number == 0 and vs_going1 == 1) and (me.number == 0 and vs_going2 == 1)) {
+						if (vsFlash[me.number]) {
+							me["FMA_pitch_box"].show();
+						} else {
+							me["FMA_pitch_box"].hide();
+						}
+					}
+				} else {
+					me["FMA_pitch_box"].setColor(1,1,1);
+					me["FMA_pitch_box"].show();
+				}
 			} else {
 				me["FMA_pitch_box"].hide();
+				vs_going1 = 0;
+				vsTimer1.stop();
+				vs_going2 = 0;
+				vsTimer2.stop();
 			}
 			
 			if (fmgc.Modes.PFD.FMA.pitchModeArmed == " " and fmgc.Modes.PFD.FMA.pitchMode2Armed == " ") {
@@ -2059,6 +2089,8 @@ var input = {
 	baro: "/FMGC/internal/baro",
 	
 	bussTranslate: "/instrumentation/pfd/buss/translate",
+	overspeedVsProt: "/it-autoflight/internal/overspeed-vs-prot",
+	underspeedVsProt: "/it-autoflight/internal/underspeed-vs-prot",
 };
 
 foreach (var name; keys(input)) {
@@ -2185,6 +2217,24 @@ var amberTimer2 = maketimer(0.50, func {
 		amberFlash[1] = 1;
 	} else {
 		amberFlash[1] = 0;
+	}
+});
+
+var vs_going1 = 0;
+var vsTimer1 = maketimer(0.50, func {
+	if (!vsFlash[0]) {
+		vsFlash[0] = 1;
+	} else {
+		vsFlash[0] = 0;
+	}
+});
+
+var vs_going2 = 0;
+var vsTimer2 = maketimer(0.50, func {
+	if (!vsFlash[1]) {
+		vsFlash[1] = 1;
+	} else {
+		vsFlash[1] = 0;
 	}
 });
 
