@@ -33,6 +33,15 @@
 			</test>
 		</switch>
 		
+		<fcs_function name="/FMGC/internal/vmo-mmo-minus-5">
+			<function>
+				<sum>
+					<property>/FMGC/internal/vmo-mmo</property>
+					<value>-5</value>
+				</sum>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="/FMGC/internal/vmo-mmo-plus-6">
 			<function>
 				<sum>
@@ -605,6 +614,55 @@
 	</channel>
 	
 	<channel name="FMGC Misc" execrate="8">
+		
+		<summer name="/it-autoflight/internal/vmo-mmo-error">
+			<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
+			<input>-/FMGC/internal/vmo-mmo</input>
+			<clipto>
+				<min>-5</min>
+				<max>5</max>
+			</clipto>
+		</summer>
+		
+		<fcs_function name="/FMGC/internal/vls-switched-plus-5">
+			<function>
+				<ifthen>
+					<le>
+						<property>/it-autoflight/input/kts</property>
+						<property>/FMGC/internal/vls</property>
+					</le>
+					<property>/FMGC/internal/vls</property> <!-- Engage at VLS for VLS - 5 -->
+					<sum> <!-- Engage at VLS + 5 for VLS -->
+						<property>/FMGC/internal/vls</property>
+						<value>5</value>
+					</sum>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/it-autoflight/internal/vls-error">
+			<function>
+				<ifthen>
+					<le>
+						<property>/it-autoflight/input/kts</property>
+						<property>/FMGC/internal/vls</property>
+					</le>
+					<difference>
+						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+						<value>-5</value> <!-- Intentional double negative -->
+						<property>/FMGC/internal/vls</property>
+					</difference>
+					<difference>
+						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+						<property>/FMGC/internal/vls</property>
+					</difference>
+				</ifthen>
+			</function>
+			<clipto>
+				<min>-5</min>
+				<max>5</max>
+			</clipto>
+		</fcs_function>
 		
 		<fcs_function name="/systems/fmgc/cas-compare/cas-1-to-3">
 			<function>

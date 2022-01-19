@@ -799,23 +799,26 @@
 		</weight>
 	</payload>
 	
-	<it-autoflight>
-		<config>
-			<altitude-dial-mode>0</altitude-dial-mode>
+	<it-autoflight n="0">
+		<config n="0">
+			<altitude-dial-mode type="bool">0</altitude-dial-mode>
 		</config>
-		<output>
-			<ap1>0</ap1>
-			<ap2>0</ap2>
-			<lat>0</lat>
-			<vert>0</vert>
+		<input n="0">
+			<kts type="int">100</kts>
+		</input>
+		<output n="0">
+			<ap1 type="bool">0</ap1>
+			<ap2 type="bool">0</ap2>
+			<lat type="int">0</lat>
+			<vert type="int">0</vert>
 		</output>
-		<custom>
-			<show-hdg>0</show-hdg>
-			<trk-fpa>0</trk-fpa>
-			<hdg-knb>0</hdg-knb>
-			<spd-knb>0</spd-knb>
-			<alt-knb>0</alt-knb>
-			<vs-knb>0</vs-knb>
+		<custom n="0">
+			<alt-knb type="int">0</alt-knb>
+			<hdg-knb type="int">0</hdg-knb>
+			<show-hdg type="bool">0</show-hdg>
+			<spd-knb type="int">0</spd-knb>
+			<trk-fpa type="bool">0</trk-fpa>
+			<vs-knb type="int">0</vs-knb>
 		</custom>
 	</it-autoflight>
 

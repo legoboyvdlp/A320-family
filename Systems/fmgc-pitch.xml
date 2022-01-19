@@ -265,11 +265,27 @@
 	<filter>
 		<name>FPA FPM Filter</name>
 		<type>noise-spike</type>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/overspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/overspeed-vs</property>
+		</input>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/underspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/underspeed-vs</property>
+		</input>
 		<input>/it-autoflight/internal/target-fpm-fpa-raw</input>
 		<output>/it-autoflight/internal/target-fpm-fpa</output>
 		<max-rate-of-change>
 			<condition>
-				<not><property>/it-autoflight/internal/fpa-active</property></not>
+				<or>
+					<not><property>/it-autoflight/internal/fpa-active</property></not>
+					<property>/it-autoflight/internal/overspeed-vs-prot</property>
+					<property>/it-autoflight/internal/underspeed-vs-prot</property>
+				</or>
 			</condition>
 			<value>10000</value>
 		</max-rate-of-change>
@@ -356,6 +372,46 @@
 	</filter>
 	
 	<filter>
+		<name>Vertical Speed FD Input</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/overspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/overspeed-vs</property>
+		</input>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/underspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/underspeed-vs</property>
+		</input>
+		<input>/it-autoflight/input/vs</input>
+		<output>/it-autoflight/internal/vs-fd</output>
+	</filter>
+	
+	<filter>
+		<name>FPA FD Input</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/overspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/overspeed-vs</property>
+		</input>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/underspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/underspeed-vs</property>
+		</input>
+		<input>/it-autoflight/internal/target-fpm-fpa-raw</input>
+		<output>/it-autoflight/internal/fpa-fd</output>
+	</filter>
+	
+	<filter>
 		<name>Target FPM</name>
 		<debug>false</debug>
 		<type>gain</type>
@@ -376,7 +432,7 @@
 					<value>1</value>
 				</equals>
 			</condition>
-			<property>/it-autoflight/input/vs</property>
+			<property>/it-autoflight/internal/vs-fd</property>
 		</input>
 		<input>
 			<condition>
@@ -409,7 +465,7 @@
 					<value>5</value>
 				</equals>
 			</condition>
-			<property>/it-autoflight/internal/target-fpm-fpa-raw</property>
+			<property>/it-autoflight/internal/fpa-fd</property>
 		</input>
 		<input>
 			<condition>
