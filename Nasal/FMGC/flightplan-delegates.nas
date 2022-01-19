@@ -126,6 +126,8 @@ var A320GPSDeleagte = {
 
     sequence: func
     {
+		return;
+		
         if (!me.flightplan.active)
             return;
 		#flightPlanController.autoSequencing();

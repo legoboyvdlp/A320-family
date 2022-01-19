@@ -429,6 +429,10 @@ var ITAF = {
 				# This is removed because sequencing is done by the flightplan controller
 				# Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
 				
+				# TODO - if the waypoint is the DEST waypoint, crosstrack error must be less than 0.5nm and course error less than 30 deg
+				# TODO - if in HDG mode, if no distance, then crosstrack error must be less than 5nm
+				# TODO - if in nav, no distance condition applies, but DEST course error must be less than 30 (CONFIRM)
+				
 				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
 					flightPlanController.autoSequencing();
 				} elsif (FPLN.wp0Dist.getValue() <= 0.15) {

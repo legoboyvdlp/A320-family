@@ -209,12 +209,19 @@ var flightPlanController = {
 		
 		# Advancing logic
 		me.currentToWptIndexTemp = me.currentToWptIndex.getValue();
-		me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
+		# TODO - after sequencing discontinuity, FPLN should show PPOS then DISCONTINUITY
+		# Clearing that discontinuity is not allowed, you must exit using DIRTO, or else using NAV ARM and overfly
+		# TODO - triple click - confirm, is it only with DES disengage, or also with the NAV loss?
 		
-		if (me.num[2].getValue() > 2 and me.currentToWptIndexTemp >= 1) {
-			for (var i = 0; i <= 2; i += 1) {
-				if (i == 2 or me.temporaryFlag[i]) {
-					me.flightplans[i].getWP(me.currentToWptIndexTemp - 1).hidden = 1;
+		if (me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_type == "discontinuity") {
+			fmgc.Input.lat.setValue(3);
+		} else {
+			me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
+			if (me.num[2].getValue() > 2 and me.currentToWptIndexTemp >= 1) {
+				for (var i = 0; i <= 2; i += 1) {
+					if (i == 2 or me.temporaryFlag[i]) {
+						me.flightplans[i].getWP(me.currentToWptIndexTemp - 1).hidden = 1;
+					}
 				}
 			}
 		}
@@ -823,7 +830,7 @@ var flightPlanController = {
 					var errs = [];
 					call(func {
 						me.currentToWptIndex.setValue(1);
-					}, nil, nil, nil,errs);
+					}, nil, nil, nil, errs);
 					if (size(errs) != 0) { debug.printerror(errs); }
 				}
 				me.active.setValue(1);
