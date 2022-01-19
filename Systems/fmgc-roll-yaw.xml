@@ -8,7 +8,6 @@
 	<!-- Roll Axis -->
 	<filter>
 		<name>IT-CONTROLLER: Heading/LNAV</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>
 			<expression>
@@ -65,7 +64,6 @@
 	
 	<filter>
 		<name>IT-CONTROLLER: VOR/LOC</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>
 			<expression>
@@ -116,7 +114,6 @@
 	
 	<filter>
 		<name>IT-CONTROLLER: Align/Rollout/Takeoff</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>
@@ -139,7 +136,6 @@
 	
 	<filter>
 		<name>System Command: Roll Target Inactive Sync</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>
@@ -181,7 +177,6 @@
 	
 	<filter>
 		<name>System Command: Target Roll Filter</name>
-		<debug>false</debug>
 		<type>noise-spike</type>
 		<input>/it-autoflight/internal/target-roll-deg</input>
 		<output>/it-autoflight/internal/target-roll</output>
@@ -234,20 +229,18 @@
 	
 	<filter>
 		<name>System Command: Roll Rate Target</name>
-		<debug>false</debug>
 		<type>gain</type>
-		<gain>-0.1</gain>
+		<gain>-0.06</gain>
 		<input>/orientation/roll-deg</input>
 		<reference>/it-autoflight/internal/target-roll</reference>
 		<output>/fdm/jsbsim/fbw/fmgc/roll-cmd</output> <!-- Inputs to the FBW Roll -->
-		<min>-0.32</min>
-		<max>0.32</max>
+		<min>-0.33</min>
+		<max>0.33</max>
 	</filter>
 	
 	<!-- Yaw Axis -->
 	<pi-simple-controller>
 		<name>IT-CONTROLLER: Yaw VOR/LOC</name>
-		<debug>false</debug>
 		<enable>
 			<condition>
 				<equals>
@@ -284,7 +277,6 @@
 	
 	<filter>
 		<name>System Command: Rudder</name>
-		<debug>false</debug>
 		<type>noise-spike</type>
 		<input>
 			<condition>
