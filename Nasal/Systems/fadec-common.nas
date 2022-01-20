@@ -120,11 +120,11 @@ var FADEC = {
 		pts.Gear.wowTemp[1] = pts.Gear.wow[1].getValue();
 		pts.Gear.wowTemp[2] = pts.Gear.wow[2].getValue();
 		
-		if (me.Limit.flexActiveCmd.getBoolValue() and me.n1Mode[0].getValue() == 0 and me.n1Mode[1].getValue() == 0 and pts.Gear.wowTemp[1] and pts.Gear.wowTemp[2] and pts.Velocities.groundspeedKt.getValue() < 40 and (pts.Engines.Engine.stateTemp[0] == 3 or pts.Engines.Engine.stateTemp[1] == 3)) {
+		if (me.Limit.flexActiveCmd.getBoolValue() and me.n1Mode[0].getValue() == 0 and me.n1Mode[1].getValue() == 0 and pts.Gear.wowTemp[1] and pts.Gear.wowTemp[2] and pts.Velocities.groundspeedKt.getValue() < 40) {
 			if (!me.Limit.flexActive.getBoolValue()) {
 				me.Limit.flexActive.setBoolValue(1);
 			}
-		} else if (!me.Limit.flexActiveCmd.getBoolValue() or pts.Engines.Engine.stateTemp[0] != 3 or pts.Engines.Engine.stateTemp[1] != 3) {
+		} else if (!me.Limit.flexActiveCmd.getBoolValue()) {
 			if (me.Limit.flexActive.getBoolValue()) {
 				me.Limit.flexActive.setBoolValue(0);
 			}

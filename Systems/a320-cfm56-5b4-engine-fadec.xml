@@ -1133,12 +1133,12 @@
 			<test logic="AND" value="3"> <!-- FLX -->
 				fadec/max-detent eq 4
 				fadec/limit/flex-active eq 1
-				fadec/limit/eng-off-wow-switch eq 0
+				position/wow eq 0
 			</test>
 			<test logic="AND" value="3"> <!-- FLX -->
 				fadec/max-detent le 4
 				fadec/limit/flex-active eq 1
-				fadec/limit/eng-off-wow-switch eq 1
+				position/wow eq 1
 			</test>
 			<test logic="AND" value="1"> <!-- MCT -->
 				fadec/max-detent le 4
