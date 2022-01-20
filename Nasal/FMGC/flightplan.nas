@@ -369,36 +369,23 @@ var flightPlanController = {
 			me.addDiscontinuity(me.currentToWptIndex.getValue() + 2, plan);
 			me.DirToIndex = me.currentToWptIndex.getValue() + 1;
 		} else {
-			# we want to delete the intermediate waypoints up to but not including the waypoint. Leave index 0, we delete it later. 
-			# example - waypoint dirto is index 5, we want to delete indexes 1 -> 4. 5 - 1 = 4.
-			# so four individual deletions. Delete index 1 four times. 
-			
 			var indexWP = me.flightplans[plan].indexOfWP(waypointGhost);
-			
+			me.deleteTillIndex(waypointGhost, me.currentToWptIndex.getValue(), plan);
 			me.insertTP(plan, indexWP - 1);
-			for (var i = 0; i < indexWP - 1; i = i + 1) {
-				if (me.temporaryFlag[0]) {
-					me.deleteWP(i, 0, 1);
-				}
-				if (me.temporaryFlag[1]) {
-					me.deleteWP(i, 1, 1);
-				}
-				me.deleteWP(i, 2, 1);
-			}
 		}
 		var curAircraftPosDirTo = geo.aircraft_position();
 		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(me.currentToWptIndex.getValue() + 1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
 		me.flightPlanChanged(plan);
 	},
 	
-	deleteWP: func(index, n, a = 0, s = 0) { # a = 1, means adding a waypoint via deleting intermediate. s = 1, means autosequencing
+	deleteWP: func(index, n, a = 0) { # a = 1, means adding a waypoint via deleting intermediate
 		var wp = me.flightplans[n].getWP(index);
-		if (((s == 0 and left(wp.wp_name, 4) != FMGCInternal.depApt and left(wp.wp_name, 4) != FMGCInternal.arrApt) or (s == 1)) and me.flightplans[n].getPlanSize() > 2) {
+		if ((left(wp.wp_name, 4) != FMGCInternal.depApt and left(wp.wp_name, 4) != FMGCInternal.arrApt) and me.flightplans[n].getPlanSize() > 2) {
 
 			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
 				fmgc.windController.deleteWind(n, index);
-				if (me.flightplans[n].getWP(index) != nil and s == 0) {
+				if (me.flightplans[n].getWP(index) != nil) {
 					if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
 						me.addDiscontinuity(index, n);
 					}
@@ -767,6 +754,7 @@ var flightPlanController = {
 			return 3;
 		}
 		
+		
 		if (!me.temporaryFlag[plan]) {
 			if (text == "CLR" and me.flightplans[2].getWP(index).wp_name == "DISCONTINUITY") {
 				if (me.flightplans[2].getPlanSize() == 3 and me.flightplans[2].departure_runway == nil and me.flightplans[2].destination_runway == nil and index == 1) {
@@ -780,6 +768,7 @@ var flightPlanController = {
 		} else {
 			var thePlan = plan;
 		}
+		debug.dump(me.flightplans[thePlan].getWP(index).wp_name);
 		
 		# check waypoints database here
 		var wpFromDB = WaypointDatabase.getWP(text);

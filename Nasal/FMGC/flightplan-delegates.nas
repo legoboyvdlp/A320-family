@@ -87,11 +87,6 @@ var A320GPSDeleagte = {
 
         logprint(LOG_INFO,'flightplan activated, default GPS to LEG mode');
         setprop(GPSPath ~ "/command", "leg");
-
-        if (getprop(GPSPath ~ '/wp/wp[1]/from-flag')) {
-            logprint(LOG_INFO, '\tat GPS activation, already passed active WP, sequencing');
-            me.sequence();
-        }
     },
 
     deactivated: func
@@ -127,46 +122,6 @@ var A320GPSDeleagte = {
     sequence: func
     {
 		return;
-		
-        if (!me.flightplan.active)
-            return;
-		#flightPlanController.autoSequencing();
-        var mode = me._modeProp.getValue();
-        if (mode == 'dto') {
-            # direct-to is done, check if we should resume the following leg
-            var index = me.flightplan.indexOfWP(getprop(GPSPath ~ '/wp/wp[1]/latitude-deg'),
-                                                getprop(GPSPath ~ '/wp/wp[1]/longitude-deg'));
-            if (index >= 0) {
-                logprint(LOG_INFO, "default GPS reached Direct-To, resuming FP leg at " ~ index);
-                me.flightplan.current = index + 1;
-                setprop(GPSPath ~ "/command", "leg");
-            } else {
-                # revert to OBS mode
-                logprint(LOG_INFO, "default GPS reached Direct-To, resuming to OBS");
-
-                me._captureCurrentCourse();
-                me._selectOBSMode();
-            }
-        } else if (mode == 'leg') {
-            # standard leq sequencing
-            var nextIndex = me.flightplan.current + 1;
-			
-			if (nextIndex >= me.flightplan.numWaypoints()) {
-                logprint(LOG_INFO, "default GPS sequencing, finishing flightplan");
-                me.flightplan.finish();
-            } elsif (me.flightplan.nextWP().wp_type == 'discontinuity') {
-                logprint(LOG_INFO, "default GPS sequencing DISCONTINUITY in flightplan, switching to OBS mode");
-				# TODO - revert autopilot to hdg / vs
-                me._captureCurrentCourse();
-                me._selectOBSMode();
-            } else {
-                logprint(LOG_INFO, "default GPS sequencing to next WP");
-                me.flightplan.current = nextIndex;
-            }
-        } else {
-            # OBS, do nothing
-        }
-		
     },
 
     currentWaypointChanged: func

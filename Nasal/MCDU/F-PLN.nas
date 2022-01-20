@@ -580,15 +580,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		} else {
 			if ((index - 1 + me.scroll) < size(me.planList) and me.outputList[index - 1].wp != "STATIC" and me.outputList[index - 1].wp != "PSEUDO" and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
-					if (!me.temporaryFlagFpln) {
-						decelIndex = getprop("/instrumentation/nd/symbols/decel/index");
-						decelShow = getprop("/instrumentation/nd/symbols/decel/show");
-						if (decelShow and (index - 1 + me.scroll) > decelIndex) { 
-							index = index - 1;
-						}
-					}
-					
-					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, (index - 1 + me.scroll), me.computer);
+					# Use outputList.index to correct the index the call goes to after sequencing
+					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, me.outputList[index - 1].index, me.computer);
 					if (returny == 3) {
 						mcdu_message(me.computer, "DIR TO IN PROGRESS");
 					} elsif (returny == 0) {

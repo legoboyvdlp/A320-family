@@ -433,7 +433,13 @@ var ITAF = {
 				# TODO - if in HDG mode, if no distance, then crosstrack error must be less than 5nm
 				# TODO - if in nav, no distance condition applies, but DEST course error must be less than 30 (CONFIRM)
 				
-				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
+				var enableFlyBy = 0;
+				var maxCourseDelta = 120;
+				if (abs(fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).leg_bearing - fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp + 1).leg_bearing) < maxCourseDelta) {
+					enableFlyBy = 1;
+				}
+				
+				if (enableFlyBy and FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
 					flightPlanController.autoSequencing();
 				} elsif (FPLN.wp0Dist.getValue() <= 0.15) {
 					flightPlanController.autoSequencing();
