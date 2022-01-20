@@ -25,6 +25,7 @@ var FADEC = {
 		activeN1: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-n1"),
 		flexActive: props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active"),
 		flexActiveCmd: props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active-cmd"),
+		flexAllowed: 0,
 		flexTemp: props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-temp"),
 	},
 	lvrClb: props.globals.getNode("/fdm/jsbsim/fadec/lvrclb"),
@@ -119,12 +120,13 @@ var FADEC = {
 		pts.Engines.Engine.stateTemp[1] = pts.Engines.Engine.state[1].getValue();
 		pts.Gear.wowTemp[1] = pts.Gear.wow[1].getValue();
 		pts.Gear.wowTemp[2] = pts.Gear.wow[2].getValue();
+		me.Limit.flexAllowed = pts.Velocities.groundspeedKt.getValue() < 40 and me.Limit.flexTemp.getValue() > math.round(pts.Environment.temperatureDegC.getValue());
 		
-		if (me.Limit.flexActiveCmd.getBoolValue() and me.n1Mode[0].getValue() == 0 and me.n1Mode[1].getValue() == 0 and pts.Gear.wowTemp[1] and pts.Gear.wowTemp[2] and pts.Velocities.groundspeedKt.getValue() < 40) {
+		if (me.Limit.flexActiveCmd.getBoolValue() and me.n1Mode[0].getValue() == 0 and me.n1Mode[1].getValue() == 0 and pts.Gear.wowTemp[1] and pts.Gear.wowTemp[2] and me.Limit.flexAllowed) {
 			if (!me.Limit.flexActive.getBoolValue()) {
 				me.Limit.flexActive.setBoolValue(1);
 			}
-		} else if (!me.Limit.flexActiveCmd.getBoolValue()) {
+		} else if (!me.Limit.flexActiveCmd.getBoolValue() or !me.Limit.flexAllowed) {
 			if (me.Limit.flexActive.getBoolValue()) {
 				me.Limit.flexActive.setBoolValue(0);
 			}

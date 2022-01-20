@@ -99,7 +99,7 @@ var Engines = {
 
 var Environment = {
 	magVar: props.globals.getNode("/environment/magnetic-variation-deg"),
-	tempDegC: props.globals.getNode("/environment/temperature-degc"),
+	temperatureDegC: props.globals.getNode("/environment/temperature-degc"),
 	windFromHdg: props.globals.getNode("/environment/wind-from-heading-deg"),
 	windSpeedKt: props.globals.getNode("/environment/wind-speed-kt"),
 };
