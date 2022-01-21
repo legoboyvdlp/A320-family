@@ -68,7 +68,7 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.depApt = "";
 	fmgc.FMGCInternal.flightNum = "";
 	fmgc.FMGCInternal.flightNumSet = 0;
-	fmgc.FMGCInternal.gndTemp = -99;
+	fmgc.FMGCInternal.gndTemp = 15;
 	fmgc.FMGCInternal.gndTempSet = 0;
 	fmgc.FMGCInternal.toFromSet = 0;
 	fmgc.FMGCNodes.toFromSet.setValue(0);

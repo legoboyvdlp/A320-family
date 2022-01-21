@@ -146,7 +146,7 @@ var fplnItem = {
 		if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
 			return sprintf("%3.0f", math.round(courseAndDistance(me.wp)[1]));;
 		} else {
-			if (decelShow and me.index == decelIndex and fmgc.flightPlanController.decelPoint != nil) {
+			if (me.plan == 2 and decelShow and me.index == decelIndex and fmgc.flightPlanController.decelPoint != nil) {
 				return sprintf("%3.0f", courseAndDistance(fmgc.flightPlanController.decelPoint, me.wp)[1]);
 			} else if (prevwp != nil and prevwp.wp_name != "DISCONTINUITY") {
 				return sprintf("%3.0f", math.round(me.wp.leg_distance));

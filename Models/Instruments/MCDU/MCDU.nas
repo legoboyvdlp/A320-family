@@ -2685,6 +2685,19 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "amb", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
+				me["Simple_L1S"].setText("CO RTE");
+				me["Simple_L2S"].setText("ALTN/CO RTE");
+				me["Simple_L3S"].setText("FLT NBR");
+				me["Simple_L5S"].setText("COST INDEX");
+				me["Simple_L6S"].setText("CRZ FL/TEMP");
+				me["Simple_R1S"].setText("FROM/TO   ");
+				me["Simple_R2S"].setText("INIT ");
+				me["Simple_R5S"].setText("TROPO");
+				me["Simple_R6S"].setText("GND TEMP");
+				me["Simple_R2"].setText("REQUEST ");
+				me["Simple_R3"].setText("IRS INIT ");
+				me["Simple_R4"].setText("WIND ");
+				
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -2717,13 +2730,12 @@ var canvas_MCDU_base = {
 			} else if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.crzTempSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(BLUE);
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%s°", fmgc.FMGCInternal.crzTemp));
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%+3.0f°", fmgc.FMGCInternal.crzTemp));
 			} else if (fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(BLUE);
 				fmgc.FMGCInternal.crzTemp = 15 - (2 * fmgc.FMGCInternal.crzFl / 10);
-				fmgc.FMGCInternal.crzTempSet = 1;
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%s°", fmgc.FMGCInternal.crzTemp));
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%+3.0f°", fmgc.FMGCInternal.crzTemp));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
 				me["Simple_L6"].setColor(AMBER);
@@ -2768,6 +2780,7 @@ var canvas_MCDU_base = {
 					me["INITA_InitRequest"].hide();
 				}
 			}
+			
 			if (ADIRSMCDUBTN.getValue() != 1) {
 				me["INITA_AlignIRS"].show();
 				me["Simple_R3"].setColor(AMBER);
@@ -2777,41 +2790,34 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setColor(WHITE);
 				showRightArrow(me,0, 0, 1, 0, 0, 0);
 			}
+			
 			if (fmgc.FMGCInternal.tropoSet) {
 				me["Simple_R5"].setFontSize(normal); 
 			} else {
 				me["Simple_R5"].setFontSize(small); 
 			}
 			
-			me["Simple_R6S"].setText("GND TEMP");
-			if (fmgc.FMGCInternal.phase == 0 and !fmgc.FMGCInternal.gndTempSet) {
-				fmgc.FMGCInternal.gndTemp = 15 - (2 * getprop("/position/gear-agl-ft") / 1000);
-				me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
-				me["Simple_R6"].setFontSize(small); 
-			} else {
+			if (fmgc.FMGCInternal.phase == 0) {
 				if (fmgc.FMGCInternal.gndTempSet) {
+					me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
 					me["Simple_R6"].setFontSize(normal); 
+				} else if (fmgc.FMGCInternal.toFromSet) {
+					fmgc.FMGCInternal.gndTemp = 15 - (2 * (fmgc.flightPlanController.flightplans[2].departure.elevation * 3.28084) / 1000);
+					me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
+					me["Simple_R6"].setFontSize(small); 
 				} else {
+					me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
 					me["Simple_R6"].setFontSize(small); 
 				}
-				me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
+			} else {
+				me["Simple_R6"].setText("---");
+				me["Simple_R6"].setFontSize(small); 
 			}
 			
-			me["Simple_L1S"].setText("CO RTE");
-			me["Simple_L2S"].setText("ALTN/CO RTE");
-			me["Simple_L3S"].setText("FLT NBR");
-			me["Simple_L5S"].setText("COST INDEX");
-			me["Simple_L6S"].setText("CRZ FL/TEMP");
 			#me["Simple_L1"].setText("NONE");  # manage before (coRoute)
 			me["Simple_L3"].setText(sprintf("%s", fmgc.FMGCInternal.flightNum));
-			me["Simple_R1S"].setText("FROM/TO   ");
-			me["Simple_R2S"].setText("INIT ");
-			me["Simple_R5S"].setText("TROPO");
 			
 			me["Simple_R1"].setText(sprintf("%s", fmgc.FMGCInternal.depApt ~ "/" ~ fmgc.FMGCInternal.arrApt));
-			me["Simple_R2"].setText("REQUEST ");
-			me["Simple_R3"].setText("IRS INIT ");
-			me["Simple_R4"].setText("WIND ");
 			me["Simple_R5"].setText(sprintf("%5.0f", fmgc.FMGCInternal.tropo));
 		} else if (page == "IRSINIT") {
 			if (!pageSwitch[i].getBoolValue()) {
