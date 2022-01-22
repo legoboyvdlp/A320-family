@@ -5,7 +5,7 @@
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    sodipodi:docname="iesi.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -38,16 +38,16 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="986"
+     inkscape:window-height="974"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="0.93517029"
-     inkscape:cx="815.35952"
-     inkscape:cy="762.42799"
+     inkscape:zoom="0.66126526"
+     inkscape:cx="369.74572"
+     inkscape:cy="772.76099"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
-     inkscape:current-layer="ATTflag"
+     inkscape:current-layer="MsgBox"
      showguides="true"
      inkscape:snap-global="false"
      units="pt"
@@ -72,11 +72,11 @@
        inkscape:label="MsgBox">
       <rect
          y="720.3349"
-         x="304.32764"
+         x="260.241"
          height="91.330338"
-         width="406.27161"
+         width="490.202"
          id="rect4448"
-         style="fill:#c9d121;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17302;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+         style="fill:#c9d121;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.48539;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
       <text
          inkscape:label="#text979"
          transform="scale(1.0000144,0.9999856)"
@@ -142,11 +142,11 @@
     <g
        id="ATTwarn">
       <rect
-         style="fill:#c9d121;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         style="fill:#c9d121;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.23675;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          id="rect4484"
-         width="243.81277"
+         width="283.81299"
          height="91.330353"
-         x="390.0936"
+         x="360.09399"
          y="287.07605" />
       <text
          id="text4486"
@@ -164,14 +164,15 @@
     </g>
   </g>
   <g
-     id="ATTflag">
+     id="ATTflag"
+     style="display:inline">
     <rect
        y="720.3349"
-       x="304.32764"
+       x="260.241"
        height="91.330338"
-       width="406.27161"
+       width="490.202"
        id="attRstRect"
-       style="fill:#c9d121;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17302;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+       style="fill:#c9d121;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.48538;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
     <text
        inkscape:label="#text979"
        transform="scale(1.0000144,0.9999856)"
@@ -186,12 +187,12 @@
          y="796.4032"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:86px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:0.75">ATT : RST</tspan></text>
     <rect
-       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.21458;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
        id="ATTflag_rect"
-       width="243.81277"
-       height="91.330353"
-       x="390.0936"
-       y="287.07605" />
+       width="280.59842"
+       height="91.115768"
+       x="361.70129"
+       y="287.18335" />
     <text
        id="ATTflag_text"
        y="363.13785"
@@ -212,7 +213,8 @@
      inkscape:label="IESI">
     <g
        id="AI_horizon"
-       inkscape:label="#g4573">
+       inkscape:label="#g4573"
+       style="display:inline">
       <g
          transform="translate(824.0447,-40.79798)"
          inkscape:label="#g4312"
@@ -618,7 +620,7 @@
       </g>
     </g>
     <rect
-       style="opacity:1;fill:#1fa7f8;fill-opacity:1;stroke:none;stroke-width:2.58922;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#1fa7f8;fill-opacity:1;stroke:none;stroke-width:2.58922;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="AI_sky_bank"
        width="663.18652"
        height="124.96"
@@ -626,7 +628,7 @@
        y="138.78481"
        inkscape:label="#rect5809" />
     <rect
-       style="opacity:0.5;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:10.0653;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       style="display:inline;opacity:0.5;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:10.0653;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
        id="AI_bank_scale_clip"
        width="663.21997"
        height="229.7616"
@@ -634,7 +636,7 @@
        y="138.67441"
        inkscape:label="#rect1094" />
     <rect
-       style="opacity:0.46;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:1.27697;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;opacity:0.46;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:1.27697;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="AI_horizon_clip"
        width="663.21997"
        height="608.67889"
