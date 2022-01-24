@@ -46,6 +46,7 @@ var Misc = {
 };
 
 var Position = {
+	airborne5Secs: props.globals.getNode("/systems/fmgc/airborne-5-secs"),
 	gearAglFtTemp: 0,
 	gearAglFt: props.globals.getNode("/position/gear-agl-ft", 1),
 	indicatedAltitudeFt: props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1),
@@ -442,7 +443,7 @@ var ITAF = {
 	},
 	ap1Master: func(s) {
 		if (s == 1) {
-			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100) {
+			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and FMGCNodes.Power.FMGC1Powered.getBoolValue() and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100 and Position.airborne5Secs.getBoolValue()) {
 				Output.ap1.setBoolValue(1);
 				me.updateFma();
 				Output.latTemp = Output.lat.getValue();
@@ -464,7 +465,7 @@ var ITAF = {
 	},
 	ap2Master: func(s) {
 		if (s == 1) {
-			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and systems.ELEC.Bus.acEss.getValue() >= 110 and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100) {
+			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and FMGCNodes.Power.FMGC2Powered.getBoolValue() and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100 and Position.airborne5Secs.getBoolValue()) {
 				Output.ap2.setBoolValue(1);
 				me.updateFma();
 				Output.latTemp = Output.lat.getValue();
@@ -495,7 +496,7 @@ var ITAF = {
 	},
 	athrMaster: func(s) {
 		if (s == 1) {
-			if (systems.ELEC.Bus.acEss.getValue() >= 110 and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.apOff == 0) {
+			if ((FMGCNodes.Power.FMGC1Powered.getBoolValue() or FMGCNodes.Power.FMGC2Powered.getBoolValue()) and !pts.FMGC.CasCompare.casRejectAll.getBoolValue() and fbw.FBW.apOff == 0) {
 				Output.athr.setBoolValue(1);
 				Custom.ThrLock.setValue(0);
 				Custom.Sound.enableAthrOff = 1;

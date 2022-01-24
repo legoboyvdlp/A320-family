@@ -262,6 +262,10 @@ var FMGCNodes = {
 	ktsToMachFactor: props.globals.getNode("/FMGC/internal/kts-to-mach-factor"),
 	machToKtsFactor: props.globals.getNode("/FMGC/internal/mach-to-kts-factor"),
 	mngMachAlt: props.globals.getNode("/FMGC/internal/mng-alt-mach"),
+	Power: {
+		FMGC1Powered: props.globals.getNode("systems/fmgc/power/power-1-on"),
+		FMGC2Powered: props.globals.getNode("systems/fmgc/power/power-2-on"),
+	},
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),

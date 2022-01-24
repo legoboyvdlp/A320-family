@@ -4,7 +4,72 @@
 
 <system name="A320: FMGC">
 
+	<channel name="FMGC Power" execrate="8">
+	
+		<switch name="/systems/fmgc/power/power-1">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+			</test>
+		</switch>
+	
+		<switch name="/systems/fmgc/power/power-2">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fmgc/power/power-1-timer">
+			<input>/systems/fmgc/power/power-1</input>
+			<rate_limit sense="decr">5</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
+		</actuator>
+		
+		<actuator name="/systems/fmgc/power/power-2-timer">
+			<input>/systems/fmgc/power/power-2</input>
+			<rate_limit sense="decr">5</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/fmgc/power/power-1-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fmgc/power/power-1-timer ne 0
+			</test>
+		</switch>
+	
+		<switch name="/systems/fmgc/power/power-2-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fmgc/power/power-2-timer ne 0
+			</test>
+		</switch>
+		
+	</channel>
+	
 	<channel name="FMGC" execrate="8">
+	
+		<switch name="/systems/fmgc/airborne">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/gear/gear[1]/wow eq 0
+				/gear/gear[2]/wow eq 0
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fmgc/airborne-timer">
+			<input>/systems/fmgc/airborne</input>
+			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="incr">0.2</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/fmgc/airborne-5-secs">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fmgc/airborne-timer eq 1
+			</test>
+		</switch>
 		
 		<fcs_function name="/systems/fmgc/cas-compare/cas-1-to-3">
 			<function>

@@ -4706,6 +4706,8 @@
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
 				</equals>
+				
+				<not><property>FMGC/FCU-working</property></not>
 				<equals>
 					<property>it-autoflight/input/kts-mach</property>
 					<value>1</value>
@@ -4731,6 +4733,7 @@
 					<property>it-autoflight/input/spd-managed</property>
 					<value>0</value>
 				</equals>
+				<property>FMGC/FCU-working</property>
 			</and>
 		</condition>
 	</animation>
@@ -4752,6 +4755,7 @@
 					<property>it-autoflight/input/spd-managed</property>
 					<value>0</value>
 				</equals>
+				<property>FMGC/FCU-working</property>
 			</and>
 		</condition>
 	</animation>
@@ -4794,6 +4798,7 @@
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
 				</equals>
+				<not><property>FMGC/FCU-working</property></not>
 				<equals>
 					<property>it-autoflight/custom/trk-fpa</property>
 					<value>0</value>
@@ -4812,6 +4817,7 @@
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
 				</equals>
+				<not><property>FMGC/FCU-working</property></not>
 				<equals>
 					<property>it-autoflight/custom/trk-fpa</property>
 					<value>1</value>
@@ -4833,6 +4839,7 @@
 					<property>it-autoflight/custom/show-hdg</property>
 					<value>1</value>
 				</equals>
+				<property>FMGC/FCU-working</property>
 			</and>
 		</condition>
 	</animation>
@@ -4879,10 +4886,13 @@
 		<type>select</type>
 		<object-name>alt-text</object-name>
 		<condition>
-			<not-equals>
-				<property>controls/switches/annun-test</property>
-				<value>1</value>
-			</not-equals>
+			<and>
+				<property>FMGC/FCU-working</property>
+				<not-equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</not-equals>
+			</and>
 		</condition>
 	</animation>
 
@@ -4931,6 +4941,7 @@
 					<property>controls/switches/annun-test</property>
 					<value>1</value>
 				</equals>
+				<not><property>FMGC/FCU-working</property></not>
 				<equals>
 					<property>it-autoflight/custom/trk-fpa</property>
 					<value>1</value>
@@ -4953,6 +4964,7 @@
 					<property>it-autoflight/output/vert</property>
 					<value>1</value>
 				</equals>
+				<property>FMGC/FCU-working</property>
 			</and>
 		</condition>
 	</animation>
@@ -4970,6 +4982,7 @@
 					<property>it-autoflight/output/vert</property>
 					<value>5</value>
 				</equals>
+				<property>FMGC/FCU-working</property>
 			</and>
 		</condition>
 	</animation>
@@ -4991,6 +5004,7 @@
 					<property>it-autoflight/output/vert</property>
 					<value>5</value>
 				</not-equals>
+				<property>FMGC/FCU-working</property>
 			</and>
 		</condition>
 	</animation>
