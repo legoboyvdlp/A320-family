@@ -2048,7 +2048,7 @@
 	</animation>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/cockpit-irradiance</inherits-from>
 		<object-name>mcdu_body</object-name>
 	</effect>
 	

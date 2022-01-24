@@ -7,18 +7,27 @@
 		<reflection-enabled type="int">1</reflection-enabled>
 		<reflection-dynamic type="int">1</reflection-dynamic>
 		<reflect_map-enabled type="int">0</reflect_map-enabled>
-		<reflection-correction type="float"><use>/sim/model/reflection/reflection-correction</use></reflection-correction>
+		<reflection-correction type="float"><use>/sim/model/reflection/reflection-correction-wing</use></reflection-correction>
 		<reflection-type type="int">2</reflection-type>
-		<ambient-correction type="float"><use>/sim/model/reflection/ambient-correction</use></ambient-correction>
-		<lightmap-enabled type="int">0</lightmap-enabled>
+		<ambient-correction type="float"><use>/sim/model/reflection/ambient-correction-wing</use></ambient-correction>
+		<lightmap-enabled type="int">1</lightmap-enabled>
 		<lightmap-multi type="int">0</lightmap-multi>
 		<normalmap-enabled type="int">1</normalmap-enabled>
 		<texture n="2">
-			<image>Aircraft/A320-family/Models/Effects/res/Engine-LEAPA1-Normal.png</image>
+			<image>Aircraft/A320-family/Models/Effects/Lightmaps/Fuse-Main-Normal.png</image>
 			<filter>linear-mipmap-linear</filter>
 			<wrap-s>clamp</wrap-s>
 			<wrap-t>clamp</wrap-t>
 		</texture>
+		<lightmap-factor type="float" n="0"><use>/controls/lighting/wing-lights</use></lightmap-factor>
+        <lightmap-color type="vec3d" n="0">1.0 1.0 1.0</lightmap-color>
+        <texture n="3">
+            <image>Aircraft/A320-family/Models/Effects/WingLight/WingLightmap.png</image>
+            <filter>linear-mipmap-linear</filter>
+            <wrap-s>clamp</wrap-s>
+            <wrap-t>clamp</wrap-t>
+            <internal-format>normalized</internal-format>
+        </texture>
 		<texture n="5">
 			<type>cubemap</type>
 			<images>
@@ -31,7 +40,7 @@
 			</images>
 		</texture>
 	</parameters>
-		
+	
 	<!-- ####################
     ### NORMALMAP INCLUDE ###
     ######################### -->

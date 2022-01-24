@@ -8474,7 +8474,7 @@
 	</animation>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/cockpit-irradiance</inherits-from>
 		<object-name>ACP</object-name>
 		<object-name>atc_0</object-name>
 		<object-name>atc_1</object-name>
@@ -8753,7 +8753,7 @@
 	
 	<!-- Panels that are vertical -->
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance-vertical</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/cockpit-irradiance-vertical</inherits-from>
 		<object-name>brightness_nd_1_cpt</object-name>
 		<object-name>brightness_nd_1_fo</object-name>
 		<object-name>brightness_nd_2_cpt</object-name>

@@ -12,7 +12,7 @@
 	
 	<!-- Particle Effects -->
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/contrail.xml</path>
 		<name>contrailLeft</name>
 		<condition>
 			<property>environment/contrail</property>
@@ -30,7 +30,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/contrail.xml</path>
 		<name>contrailRight</name>
 		<condition>
 			<property>environment/contrail</property>
@@ -48,7 +48,7 @@
 	</model>
 
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/Moisture.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/Moisture.xml</path>
 		<name>moistureLeft</name>
 		<condition>
 			<and>
@@ -79,7 +79,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/Moisture.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/Moisture.xml</path>
 		<name>moistureRight</name>
 		<condition>
 			<and>
@@ -110,7 +110,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray.xml</path>
 		<name>engine-spray-left</name>
 		<condition>
 			<and>
@@ -144,7 +144,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray.xml</path>
 		<name>engine-spray-right</name>
 		<condition>
 			<and>
@@ -178,7 +178,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray-reverse.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray-reverse.xml</path>
 		<name>engine-spray-reverse</name>
 		<condition>
 			<and>
@@ -208,7 +208,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray-reverse.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray-reverse.xml</path>
 		<name>engine-spray-reverse</name>
 		<condition>
 			<and>
@@ -239,7 +239,7 @@
 
 	<model>
 		<name>Engine fire left</name>
-		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/enginefire.xml</path>
 		<offsets>
 			<x-m>-3.96705</x-m>
 			<y-m>-5.63029</y-m>
@@ -252,7 +252,7 @@
 	
 	<model>
 		<name>Engine fire right</name>
-		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/enginefire.xml</path>
 		<offsets>
 			<x-m>-3.96705</x-m>
 			<y-m> 5.63029</y-m>
@@ -408,7 +408,7 @@
 	
 	<!-- Effect -->
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-LEAP</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-engine-LEAP</inherits-from>
 		<object-name>EngineLEAPL</object-name>
 		<object-name>EngineLEAPR</object-name>
 		<object-name>ReverserLDoorLEAP</object-name>
@@ -416,7 +416,7 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-LEAP</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-matt-engine-LEAP</inherits-from>
 		<object-name>EngineLEAPL.Inner</object-name>
                 <object-name>EngineLEAPR.Inner</object-name>
 		<object-name>PylonLEAPL</object-name>
@@ -426,7 +426,7 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-LEAP</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-chrome-engine-LEAP</inherits-from>
 		<object-name>IntakeLEAPL</object-name>
 		<object-name>IntakeLEAPR</object-name>
 		<object-name>Exhaust3LEAPL</object-name>

@@ -3,7 +3,7 @@
 <PropertyList>
    <particlesystem>
 		<name>wing-condensation</name>
-		<texture>res/smoke.png</texture>
+		<texture>smoke.png</texture>
 		<emissive>false</emissive>
 		<lighting>false</lighting>
 		<type>normal</type>
@@ -58,17 +58,17 @@
 			<type>segments</type>
 			<vertex>
 				<x-m>-2.8</x-m>
-				<y-m>-2.3</y-m>
+				<y-m>2.3</y-m>
 				<z-m>-0.8</z-m>
 			</vertex>
 			<vertex>
 				<x-m>2.0</x-m>
-				<y-m>-16</y-m>
+				<y-m>16</y-m>
 				<z-m>0.3</z-m>
 			</vertex>
 			<vertex>
 				<x-m>-1.2</x-m>
-				<y-m>-8.7</y-m>
+				<y-m>8.7</y-m>
 				<z-m>-0.3</z-m>
 			</vertex>
 		</placer>

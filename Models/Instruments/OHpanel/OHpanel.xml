@@ -1192,7 +1192,7 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/cockpit-irradiance</inherits-from>
 		<object-name>Eng1FireCover</object-name>
 		<object-name>Eng2FireCover</object-name>
 		<object-name>APUFireCover</object-name>

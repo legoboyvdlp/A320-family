@@ -25,7 +25,7 @@ Author: Nikolai V. Chr.
 			<wrap-s>clamp</wrap-s>
 			<wrap-t>clamp</wrap-t>
 			<internal-format>normalized</internal-format>
-			<image>Aircraft/A320-family/Models/Effects/dust-effect-overlay.png</image>
+			<image>Aircraft/A320-family/Models/Effects/displays/dust-effect-overlay.png</image>
 		</texture>
 
 		<vertex-program-two-side type="bool">false</vertex-program-two-side>

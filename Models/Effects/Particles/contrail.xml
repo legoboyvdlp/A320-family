@@ -4,7 +4,7 @@
 	
 	<particlesystem>
 		<name>contrail</name>
-		<texture>res/smoke.png</texture>
+		<texture>smoke.png</texture>
 		<offsets>
 			<x-m>30</x-m>
 			<y-m>0.00</y-m>

@@ -4,7 +4,7 @@
 	
 	<particlesystem>
 		<name>engine-spray-reverse</name>
-		<texture>res/smoke.png</texture>
+		<texture>smoke.png</texture>
 		<emissive>false</emissive>
 		<lighting>false</lighting>
 				

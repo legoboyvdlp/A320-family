@@ -3,17 +3,17 @@
     <inherits-from>Effects/model-interior</inherits-from>
     <parameters>
 		<shadow-mapping-enabled type="bool">true</shadow-mapping-enabled>
-		<irradiance-map-type type="int">1</irradiance-map-type>
+		<irradiance-map-type type="int">2</irradiance-map-type>
 		<irradiance-map-strength type="float">0.33</irradiance-map-strength>
 		<texture n="4">
 			<type>cubemap</type>
 			<images>
-				<positive-x>Models/Effects/res/white.png</positive-x>
-				<negative-x>Models/Effects/res/white.png</negative-x>
-				<positive-y>Models/Effects/res/white.png</positive-y>
-				<negative-y>Models/Effects/res/white.png</negative-y>
-				<positive-z>Models/Effects/res/white.png</positive-z>
-				<negative-z>Models/Effects/res/white.png</negative-z>
+				<positive-x>Models/Effects/Lightmaps/white.png</positive-x>
+				<negative-x>Models/Effects/Lightmaps/white.png</negative-x>
+				<positive-y>Models/Effects/Lightmaps/white.png</positive-y>
+				<negative-y>Models/Effects/Lightmaps/white.png</negative-y>
+				<positive-z>Models/Effects/Lightmaps/white.png</positive-z>
+				<negative-z>Models/Effects/Lightmaps/white.png</negative-z>
 			</images>
 		</texture>
 		 <!--

@@ -1186,7 +1186,7 @@
 	</animation>
 
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/cockpit-irradiance</inherits-from>
 		<object-name>audio_body</object-name>
 		<object-name>audio_int_rad</object-name>
 	</effect>

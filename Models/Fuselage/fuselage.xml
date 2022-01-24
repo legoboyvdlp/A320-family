@@ -8,7 +8,7 @@
 	
 	<!-- Effects -->
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection</inherits-from>
 		<object-name>Fuselage</object-name>
 		<object-name>NLGFittingPanel</object-name>
 		<object-name>DoorL1</object-name>
@@ -56,12 +56,12 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-rudder</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-rudder</inherits-from>
 		<object-name>Rudder</object-name>
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-wing</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-matt-wing</inherits-from>
 		<object-name>Wings</object-name>
 		<object-name>FlapL1</object-name>
 		<object-name>FlapL2</object-name>
@@ -104,7 +104,7 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-chrome</inherits-from>
 		<object-name>Rat</object-name>
 		<object-name>RatSpinner</object-name>
 		<object-name>NLGSlidingTubeAxle</object-name>
