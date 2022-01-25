@@ -535,15 +535,18 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}
 		} else {
-			if (size(me.outputList) >= index and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
+			if ((index - 1 + me.scroll) < size(me.planList) and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
+					
+					# Use outputList.index to correct the index the call goes to after sequencing
+					
 					if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
-						if (me.outputList[index - 1 + me.scroll].wp.wp_name == "(DECEL)") {
+						if (me.outputList[index - 1].wp.wp_name == "(DECEL)") {
 							mcdu_message(me.computer, "NOT ALLOWED");
 							return;
 						}
 					}
-					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, (index - 1 + me.scroll), me.computer);
+					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, me.outputList[index - 1].index, me.computer);
 					if (returny == 3) {
 						mcdu_message(me.computer, "DIR TO IN PROGRESS");
 					} elsif (returny == 0) {
