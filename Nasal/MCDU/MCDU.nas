@@ -155,9 +155,9 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.v2set = 0;
 	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/MCDUC/thracc-set", 0);
-	setprop("/FMGC/internal/to-flap", 0);
-	setprop("/FMGC/internal/to-ths", "0.0");
-	setprop("/FMGC/internal/flap-ths-set", 0);
+	fmgc.FMGCInternal.toFlap = 0;
+	fmgc.FMGCInternal.toThs = 0.0;
+	fmgc.FMGCInternal.toFlapThsSet = 0;
 	setprop("/FMGC/internal/flex", 0);
 	setprop("/FMGC/internal/flex-set", 0);
 	setprop("/FMGC/internal/eng-out-reduc", "1500");
@@ -1534,17 +1534,16 @@ var button = func(btn, i, event = "") {
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
 		} else if (btn == "PLUSMINUS") {
-			if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "-") {
+			var _toggle = right(scratchpad,1);
+			if (_toggle == "+" or _toggle == "-") {
+				_toggle = (_toggle == "-") ? "+" : "-";
 				mcdu_scratchpad.scratchpads[i].clear();
-				mcdu_scratchpad.scratchpads[i].addChar("+");
-			} else if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "+") {
-				mcdu_scratchpad.scratchpads[i].clear();
-				mcdu_scratchpad.scratchpads[i].addChar("-");
+				mcdu_scratchpad.scratchpads[i].addChar(_toggle);
 			} else {
 				mcdu_scratchpad.scratchpads[i].addChar("-");
 			}
 		} else if (btn == "OVFY") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad == "") {
+			if (size(scratchpad) == 0) {
 				mcdu_scratchpad.scratchpads[i].addChar("@");
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
