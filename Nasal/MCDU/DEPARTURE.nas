@@ -558,6 +558,19 @@ var departurePage = {
 					me.selectedRunway = me.depAirport[0].runway(me.runways[index - 2 + me.scrollRwy]);
 					me.makeTmpy();
 					fmgc.flightPlanController.flightplans[me.computer].departure_runway = me.selectedRunway;
+					mcdu.perfToCheckTakeoffData(me.computer);
+					if (fmgc.FMGCInternal.v1set) {
+						fmgc.FMGCInternal.v1set = 0;
+						fmgc.FMGCInternal.v1 = 0;
+					}
+					if (fmgc.FMGCInternal.vrset) {
+						fmgc.FMGCInternal.vrset = 0;
+						fmgc.FMGCInternal.vr = 0;
+					}
+					if (fmgc.FMGCInternal.v2set) {
+						fmgc.FMGCInternal.v2set = 0;
+						fmgc.FMGCInternal.v2 = 0;
+					}
 					me.updateRunways();
 					me.updatePage();
 					fmgc.flightPlanController.flightPlanChanged(me.computer);

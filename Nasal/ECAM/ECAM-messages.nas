@@ -494,6 +494,12 @@ var warnings				  = std.Vector.new([
 	
 	# F/CTL SPD BRK STILL OUT
 	var fctlSpdBrkStillOut    = warning.new(msg: "F/CTL SPD BRK STILL OUT ",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var fctlPitchTrimDisag    = warning.new(msg: "F/CTL",                     colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var fctlPitchTrimDisag2   = warning.new(msg: "PITCH TRIM/MCDU/CG DISAGREE",  colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var fctlFlapsDisag        = warning.new(msg: "F/CTL FLAPS/MCDU DISAGREE", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var toSpdsDisag           = warning.new(msg: "T.O V1/VR/V2 DISAGREE    ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var toSpdsTooLow          = warning.new(msg: "T.O SPEEDS TOO LOW       ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
+	var toSpdsNotInserted     = warning.new(msg: "T.O SPEEDS NOT INSERTED  ", colour: "a", aural: 1, light: 1, isMainMsg: 1),
 	
 	# DIRECT LAW
 	var directLaw             = warning.new(msg: "F/CTL DIRECT LAW",          colour: "a", aural: 1, light: 1, isMainMsg: 1),

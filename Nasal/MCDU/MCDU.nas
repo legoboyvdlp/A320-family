@@ -155,9 +155,9 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.v2set = 0;
 	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/MCDUC/thracc-set", 0);
-	setprop("/FMGC/internal/to-flap", 0);
-	setprop("/FMGC/internal/to-ths", "0.0");
-	setprop("/FMGC/internal/flap-ths-set", 0);
+	fmgc.FMGCInternal.toFlap = 0;
+	fmgc.FMGCInternal.toThs = 0.0;
+	fmgc.FMGCInternal.toFlapThsSet = 0;
 	setprop("/fdm/jsbsim/fadec/limit/flex-temp", 0);
 	setprop("/fdm/jsbsim/fadec/limit/flex-active-cmd", 0);
 	setprop("/FMGC/internal/eng-out-reduc", "1500");
@@ -1535,6 +1535,8 @@ var pagebutton = func(btn, i) {
 	}
 }
 
+var buttonCLRDown = [0,0]; # counter for down event
+
 var button = func(btn, i, event = "") {
 	page = pageNode[i].getValue();
 	if (page != "MCDU") {
@@ -1544,32 +1546,40 @@ var button = func(btn, i, event = "") {
 		} else if (btn == "SP") {
 			mcdu_scratchpad.scratchpads[i].addChar(" ");
 		} else if (btn == "CLR") {
-			if (size(scratchpad) == 0) {
-				mcdu_scratchpad.scratchpads[i].addChar("CLR");
-			} else {
-				mcdu_scratchpad.scratchpads[i].clear();
+			if (event == "down") {
+				if (size(scratchpad) > 0) {
+					if (buttonCLRDown[i] > 4) {
+						mcdu_scratchpad.scratchpads[i].empty();
+					}
+					buttonCLRDown[i] = buttonCLRDown[i] + 1;
+				}
+			}
+			else if (event == "" or buttonCLRDown[i]<=4) {
+				buttonCLRDown[i] = 0;
+				#var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;  <- useless??
+				if (size(scratchpad) == 0) {
+					mcdu_scratchpad.scratchpads[i].addChar("CLR");
+				} else {
+					mcdu_scratchpad.scratchpads[i].clear();
+				}
+			} else {  # up with buttonCLRDown[i]>4
+				buttonCLRDown[i] = 0;
 			}
 		} else if (btn == "LONGCLR") {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
 		} else if (btn == "PLUSMINUS") {
-			if (size(scratchpad)==0) {
-				mcdu_message(i, "NOT ALLOWED");
-			} else if (isint(scratchpad)==1) {
-				mcdu_scratchpad.scratchpads[i].addChar("-");
+			var _toggle = right(scratchpad,1);
+			if (_toggle == "+" or _toggle == "-") {
+				_toggle = (_toggle == "-") ? "+" : "-";
+				mcdu_scratchpad.scratchpads[i].clear();
+				mcdu_scratchpad.scratchpads[i].addChar(_toggle);
 			} else {
-				var _toggle = right(scratchpad,1);
-				if (find(_toggle,"-+")!=-1) {
-					_toggle = (_toggle == "-") ? "+" : "-";
-					mcdu_scratchpad.scratchpads[i].clear();
-					mcdu_scratchpad.scratchpads[i].addChar(_toggle);
-				} else {
-					mcdu_message(i, "NOT ALLOWED");
-				}
+				mcdu_scratchpad.scratchpads[i].addChar("-");
 			}
 		} else if (btn == "OVFY") {
-			if (size(scratchpad)==0) {
+			if (size(scratchpad) == 0) {
 				mcdu_scratchpad.scratchpads[i].addChar("@");
 			} else {
 				mcdu_message(i, "NOT ALLOWED");

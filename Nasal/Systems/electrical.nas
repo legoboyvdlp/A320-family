@@ -1,15 +1,5 @@
 # A3XX Electrical System
-# Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
-
-# Local vars
-var battery1_sw = 0;
-var battery2_sw = 0;
-var batt1_fail = 0;
-var batt2_fail = 0;
-var battery1_percent = 0;
-var battery2_percent = 0;
-var dc1 = 0;
-var dc2 = 0;
+# Copyright (c) 2021 Jonathan Redpath (legoboyvdlp)
 
 # Main class
 var ELEC = {
@@ -204,46 +194,32 @@ var ELEC = {
 		me.Fail.tr1Fault.setBoolValue(0);
 		me.Fail.tr2Fault.setBoolValue(0);
 	},
-	_FMGC1: 0,
-	_FMGC2: 0,
-	_activeFMGC: nil,
-	_timer1On: 0,
-	_timer2On: 0,
-	loop: func(notification) {
-		# Autopilot Disconnection routines
-		me._activeFMGC = fcu.FCUController.activeFMGC.getValue();
-		me._FMGC1 = fmgc.Output.ap1.getValue();
-		me._FMGC2 = fmgc.Output.ap2.getValue();
-		
-		if (notification.dcEssShed < 25) {
-			if (me._FMGC1 and !me._timer1On) { # delay 1 cycle to avoid spurious
-				me._timer1On = 1;
-			} elsif (me._FMGC1) {
-				if (notification.dcEssShed < 25) {
-					fcu.apOff("hard", 1);
-					if (me._activeFMGC == 1) {
-						fcu.athrOff("hard");
-					}
-				}
-				me._timer1On = 0;
-			}
-		}
-		
-		if (notification.dc2 < 25) {
-			if (me._FMGC2 and !me._timer2On) {  # delay 1 cycle to avoid spurious
-				me._timer2On = 1;
-			} elsif (me._FMGC2) {
-				if (notification.dc2 < 25) {
-					fcu.apOff("hard", 2);
-					if (me._activeFMGC == 2) {
-						fcu.athrOff("hard");
-					}
-				}
-				me._timer2On = 0;
-			}
-		}
+	loop: func() {
+		# Empty
 	},
 };
+
+setlistener("/systems/fmgc/power/power-1-on", func(val) {
+	if (!val.getBoolValue()) {
+		if (fmgc.Output.ap1.getValue()) {
+			fcu.apOff("hard", 1);
+		}
+		if (fcu.FCUController.activeFMGC.getValue() == 1 and fmgc.Output.athr.getValue()) {
+			fcu.athrOff("hard");
+		}
+	}
+}, 0, 0);
+
+setlistener("/systems/fmgc/power/power-2-on", func(val) {
+	if (!val.getBoolValue()) {
+		if (fmgc.Output.ap2.getValue()) {
+			fcu.apOff("hard", 2);
+		}
+		if (fcu.FCUController.activeFMGC.getValue() == 2 and fmgc.Output.athr.getValue()) {
+			fcu.athrOff("hard");
+		}
+	}
+}, 0, 0);
 
 # Emesary
 var A320Electrical = notifications.SystemRecipient.new("A320 Electrical",ELEC.loop,ELEC);

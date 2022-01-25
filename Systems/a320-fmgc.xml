@@ -4,8 +4,51 @@
 <!-- Copyright (c) 2022 Josh Davidson and Jonathan Redpath -->
 
 <system name="A320: FMGC">
-	
 	<property value="350">/FMGC/internal/vmo-kts</property>
+	
+	<channel name="FMGC Power" execrate="8">
+	
+		<switch name="/systems/fmgc/power/power-1">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+			</test>
+		</switch>
+	
+		<switch name="/systems/fmgc/power/power-2">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fmgc/power/power-1-timer">
+			<input>/systems/fmgc/power/power-1</input>
+			<rate_limit sense="decr">5</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
+		</actuator>
+		
+		<actuator name="/systems/fmgc/power/power-2-timer">
+			<input>/systems/fmgc/power/power-2</input>
+			<rate_limit sense="decr">5</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/fmgc/power/power-1-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fmgc/power/power-1-timer ne 0
+			</test>
+		</switch>
+	
+		<switch name="/systems/fmgc/power/power-2-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fmgc/power/power-2-timer ne 0
+			</test>
+		</switch>
+		
+	</channel>
 	
 	<channel name="Envelope Protection" execrate="8">
 		
@@ -382,7 +425,7 @@
 						70000  118.16
 						75000  122.28
 						80000  126.35
-					</tableData>
+						</tableData>
 				</table>
 			</function>
 		</fcs_function>
@@ -593,6 +636,50 @@
 			</function>
 		</fcs_function>
 		
+		<!-- VMCA -->
+		<fcs_function name="/FMGC/internal/vmca-kt">
+			<function>
+				<table>
+					<independentVar lookup="row">/position/altitude-ft</independentVar>
+					<tableData>
+						-2000	112.0
+						 0		110.0
+						 2000	108.0
+						 4000	107.5
+						 6000	105.5
+						 8000	103.0
+						 9200	101.2
+						10000	100.0
+						12000	 96.5
+						14100	 93.5
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<!-- VMCG -->
+		<fcs_function name="/FMGC/internal/vmcg-kt">
+			<function>
+				<table>
+					<independentVar lookup="row">/position/altitude-ft</independentVar>
+					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+					<tableData>
+								10		15		20
+						-2000	111.5	109.5	109.0
+						 0		109.5	107.5	107.0
+						 2000	107.5	105.5	105.0
+						 4000	107.0	105.0	104.5
+						 6000	105.0	103.0	103.0
+						 8000	103.0	101.0	100.5
+						 9200	101.0	 99.0	 98.5
+						10000	100.0	 98.0	 97.5
+						12000	 96.5	 94.5	 94.0
+						14100	 93.0	 91.0	 91.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<!-- Slat -->
 		<pure_gain name="/FMGC/internal/slat">
 			<input>/FMGC/internal/vs1g-conf-0</input>
@@ -663,6 +750,31 @@
 				<max>5</max>
 			</clipto>
 		</fcs_function>
+		
+	</channel>
+	
+	<channel name="FMGC" execrate="8">
+	
+		<switch name="/systems/fmgc/airborne">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/gear/gear[1]/wow eq 0
+				/gear/gear[2]/wow eq 0
+			</test>
+		</switch>
+		
+		<actuator name="/systems/fmgc/airborne-timer">
+			<input>/systems/fmgc/airborne</input>
+			<rate_limit sense="decr">100</rate_limit>
+			<rate_limit sense="incr">0.2</rate_limit>
+		</actuator>
+		
+		<switch name="/systems/fmgc/airborne-5-secs">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fmgc/airborne-timer eq 1
+			</test>
+		</switch>
 		
 		<fcs_function name="/systems/fmgc/cas-compare/cas-1-to-3">
 			<function>
