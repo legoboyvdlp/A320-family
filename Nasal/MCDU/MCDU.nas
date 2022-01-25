@@ -155,9 +155,9 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.v2set = 0;
 	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/MCDUC/thracc-set", 0);
-	setprop("/FMGC/internal/to-flap", 0);
-	setprop("/FMGC/internal/to-ths", "0.0");
-	setprop("/FMGC/internal/flap-ths-set", 0);
+	fmgc.FMGCInternal.toFlap = 0;
+	fmgc.FMGCInternal.toThs = 0.0;
+	fmgc.FMGCInternal.toFlapThsSet = 0;
 	setprop("/FMGC/internal/flex", 0);
 	setprop("/FMGC/internal/flex-set", 0);
 	setprop("/FMGC/internal/eng-out-reduc", "1500");

@@ -130,6 +130,9 @@ var FMGCInternal = {
 	vrset: 0,
 	v2: 0,
 	v2set: 0,
+	toFlap: 0,
+	toThs: 0,
+	toFlapThsSet: 0,
 	
 	# PERF APPR
 	destMag: 0,

@@ -195,7 +195,7 @@ var MessageController = {
 	typeIIMessages: std.Vector.new([
 		TypeIIMessage.new("LAT DISCONT AHEAD", "amb", 0),TypeIIMessage.new("MORE DRAG"),TypeIIMessage.new("RWY/LS MISMATCH", "amb", 0),TypeIIMessage.new("STEP DELETED"),
 		TypeIIMessage.new("STEP NOW"),TypeIIMessage.new("TIME TO EXIT", "amb", 0),TypeIIMessage.new("V1/VR/V2 DISAGREE", "amb", 0),
-		TypeIIMessage.new("TO SPEEDS TOO LOW", "amb", 0),
+		TypeIIMessage.new("T.O SPEEDS TOO LOW", "amb", 0),TypeIIMessage.new("CHECK TAKE OFF DATA", "amb", 0),
 		TypeIIMessage.new("CHECK DEST DATA", "amb", 0), #p.533
 		TypeIIMessage.new("GPS PRIMARY"),TypeIIMessage.new("GPS PRIMARY LOST", "amb", 0),
 	]),
