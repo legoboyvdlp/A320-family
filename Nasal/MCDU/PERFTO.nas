@@ -3,20 +3,40 @@
 # Copyright (c) 2020 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
+# TODO - DepArp elevation or current elevation (on ground only!!) ->  math.round(fmgc.flightPlanController.flightplans[2].departure.elevation * M2FT))
+
+var doneMessageDisag = 0;
+var perfTOCheckVSpeedsConsistency = func(i) {
+	if (fmgc.FMGCInternal.v1set == 1 and fmgc.FMGCInternal.vrset == 1 and fmgc.FMGCInternal.v2set == 1) {
+		if (!(fmgc.FMGCInternal.v1 <= fmgc.FMGCInternal.vr and fmgc.FMGCInternal.vr <= fmgc.FMGCInternal.v2)) {
+			if (doneMessageDisag) {
+				mcdu_scratchpad.messageQueues[i].deleteWithText("V1/VR/V2 DISAGREE");
+			}
+			mcdu_scratchpad.messageQueues[i].addNewMsg(mcdu_scratchpad.MessageController.getTypeIIMsgByText("V1/VR/V2 DISAGREE"));
+			doneMessageDisag = 1;
+		}
+	}
+}
+
 # VMCA 109.5 at 0ft
 # VMCG 106.5 at 0ft all conf
 
-var standard_VMCA = 109.5; # TODO calculate VMCA/VMCG on altitude (ft) of departure airport (read below)
-var standard_VMCG = 106.5;
+var VMCA = props.globals.getNode("/FMGC/internal/vmca-kt");
+var VMCG = props.globals.getNode("/FMGC/internal/vmcg-kt");
 
-# TODO - DepArp elevation or current elevation (on ground only!!) ->  math.round(fmgc.flightPlanController.flightplans[2].departure.elevation * M2FT))
-
-var perfTOCheckVSpeeds = func(i) {
-	if (fmgc.FMGCInternal.v1set == 1 and fmgc.FMGCInternal.vrset == 1 and fmgc.FMGCInternal.v2set == 1) { # only when v1/vr/v2 all sets
-		if (fmgc.FMGCInternal.v1>fmgc.FMGCInternal.vr or fmgc.FMGCInternal.vr > fmgc.FMGCInternal.v2) mcdu_messageTypeII(i,"V1/VR/V2 DISAGREE");
-		else if (fmgc.FMGCInternal.v1<standard_VMCG or fmgc.FMGCInternal.vr<(standard_VMCA*1.05) or fmgc.FMGCInternal.v2<(standard_VMCA*1.10)) mcdu_messageTypeII(i,"TO SPEED TOO LOW");
-		#else if (Vr<KVr*VS1G or V2<KV2*VS1G) mcdu_messageTypeII(i,"TO SPEED TOO LOW"); #TODO - check to VS1G and look constant KVr KV2 on manual, not own by me :/
+# When ZFW, BLOCK, or CONF are entered
+# Above or takeoff thrust (FLEX or throttle) modified
+# Engines started
+var doneMessageToLow = 0;
+var perfTOCheckVSpeedsLimitations = func(i) {
+	if (fmgc.FMGCInternal.v1 < VMCG.getValue() or fmgc.FMGCInternal.vr < (VMCA.getValue() * 1.05) or fmgc.FMGCInternal.v2 < (VMCA.getValue() * 1.10)) {
+		if (doneMessageToLow) {
+			mcdu_scratchpad.messageQueues[i].deleteWithText("TO SPEEDS TOO LOW");
+		}
+		mcdu_scratchpad.messageQueues[i].addNewMsg(mcdu_scratchpad.MessageController.getTypeIIMsgByText("TO SPEEDS TOO LOW"));
+		doneMessageToLow = 1;
 	}
+	#else if (Vr<KVr*VS1G or V2<KV2*VS1G) mcdu_messageTypeII(i,"TO SPEEDS TOO LOW"); #TODO - check to VS1G and look constant KVr KV2 on manual, not own by me :/
 }
 
 var perfTOInput = func(key, i) {	
@@ -42,7 +62,7 @@ var perfTOInput = func(key, i) {
 					fmgc.FMGCNodes.v1set.setValue(1);
 					mcdu_scratchpad.scratchpads[i].empty();
 
-					perfTOCheckVSpeeds(i); # do V-speeds validation
+					perfTOCheckVSpeedsConsistency(i); 
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
@@ -63,7 +83,7 @@ var perfTOInput = func(key, i) {
 					fmgc.FMGCInternal.vrset = 1;
 					mcdu_scratchpad.scratchpads[i].empty();
 
-					perfTOCheckVSpeeds(i); # do V-speeds validation
+					perfTOCheckVSpeedsConsistency(i); 
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
@@ -87,7 +107,7 @@ var perfTOInput = func(key, i) {
 					setprop("/it-autoflight/settings/togaspd", scratchpad);
 					mcdu_scratchpad.scratchpads[i].empty();
 
-					perfTOCheckVSpeeds(i); # do V-speeds validation
+					perfTOCheckVSpeedsConsistency(i); 
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
