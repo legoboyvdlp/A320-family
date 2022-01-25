@@ -1499,6 +1499,8 @@ var pagebutton = func(btn, i) {
 	}
 }
 
+var buttonCLRDown = [0,0]; # counter for down event
+
 var button = func(btn, i, event = "") {
 	page = pageNode[i].getValue();
 	if (page != "MCDU") {
@@ -1508,32 +1510,41 @@ var button = func(btn, i, event = "") {
 		} else if (btn == "SP") {
 			mcdu_scratchpad.scratchpads[i].addChar(" ");
 		} else if (btn == "CLR") {
-			if (size(scratchpad) == 0) {
-				mcdu_scratchpad.scratchpads[i].addChar("CLR");
-			} else {
-				mcdu_scratchpad.scratchpads[i].clear();
+			if (event == "down") {
+				if (size(scratchpad) > 0) {
+					if (buttonCLRDown[i] > 4) {
+						mcdu_scratchpad.scratchpads[i].empty();
+					}
+					buttonCLRDown[i] = buttonCLRDown[i] + 1;
+				}
+			}
+			else if (event == "" or buttonCLRDown[i]<=4) {
+				buttonCLRDown[i] = 0;
+				#var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;  <- useless??
+				if (size(scratchpad) == 0) {
+					mcdu_scratchpad.scratchpads[i].addChar("CLR");
+				} else {
+					mcdu_scratchpad.scratchpads[i].clear();
+				}
+			} else {  # up with buttonCLRDown[i]>4
+				buttonCLRDown[i] = 0;
 			}
 		} else if (btn == "LONGCLR") {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
 		} else if (btn == "PLUSMINUS") {
-			if (size(scratchpad)==0) {
-				mcdu_message(i, "NOT ALLOWED");
-			} else if (isint(scratchpad)==1) {
+			if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "-") {
+				mcdu_scratchpad.scratchpads[i].clear();
+				mcdu_scratchpad.scratchpads[i].addChar("+");
+			} else if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "+") {
+				mcdu_scratchpad.scratchpads[i].clear();
 				mcdu_scratchpad.scratchpads[i].addChar("-");
 			} else {
-				var _toggle = right(scratchpad,1);
-				if (find(_toggle,"-+")!=-1) {
-					_toggle = (_toggle == "-") ? "+" : "-";
-					mcdu_scratchpad.scratchpads[i].clear();
-					mcdu_scratchpad.scratchpads[i].addChar(_toggle);
-				} else {
-					mcdu_message(i, "NOT ALLOWED");
-				}
+				mcdu_scratchpad.scratchpads[i].addChar("-");
 			}
 		} else if (btn == "OVFY") {
-			if (size(scratchpad)==0) {
+			if (mcdu_scratchpad.scratchpads[i].scratchpad == "") {
 				mcdu_scratchpad.scratchpads[i].addChar("@");
 			} else {
 				mcdu_message(i, "NOT ALLOWED");

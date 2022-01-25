@@ -1678,7 +1678,7 @@
 		<object-name>overfly</object-name>
 		<action>
 			<button>0</button>
-			<repeatable>false</repeatable>
+			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
 				<script>mcdu.button("OVFY", 1);</script>
@@ -1704,58 +1704,37 @@
 			<button>0</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>property-adjust</command>
-				<property>/MCDU[1]/clrbtn-timeout</property>
-				<step>1</step>
-				<min>0</min>
-				<max>6</max>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
 				<command>nasal</command>
-				<script>mcdu.button("LONGCLR", 1);</script>
+				<script>mcdu.button("CLR", 1, "down");</script>
 				<condition>
 					<and>
-						<equals>
-							<property>/MCDU[1]/clrbtn-timeout</property>
-							<value>5</value>
-						</equals>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac-2</property>
 							<value>110</value>
-						</greater-than-equals>					
+						</greater-than-equals>
 						<greater-than>
 							<property>controls/lighting/DU/mcdu2</property>
 							<value>0.01</value>
 						</greater-than>
 					</and>
 				</condition>
-			</binding>			
+			</binding>
 			<mod-up>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("CLR", 1);</script>
+					<script>mcdu.button("CLR", 1, "up");</script>
 					<condition>
 						<and>
-							<less-than>
-								<property>/MCDU[1]/clrbtn-timeout</property>
-								<value>5</value>
-							</less-than>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac-2</property>
 								<value>110</value>
-							</greater-than-equals>									
+							</greater-than-equals>
 							<greater-than>
 								<property>controls/lighting/DU/mcdu2</property>
 								<value>0.01</value>
 							</greater-than>
 						</and>
 					</condition>
-				</binding>
-				<binding>
-					<command>property-assign</command>
-					<property>/MCDU[1]/clrbtn-timeout</property>
-					<value>0</value>
 				</binding>
 			</mod-up>
 		</action>
