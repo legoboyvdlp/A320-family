@@ -112,20 +112,28 @@ var holdPage = {
 		if (index == 1) {
 			if (size(me.scratchpad) <= 3 and num(me.scratchpad) != nil) {
 				me.waypoint.hold_inbound_radial = me.scratchpad;
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me._setupPageWithData();
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		} else if (index == 2) {
 			if (me.scratchpad == "L") {
 				me.waypoint.hold_is_left_handed = 1;
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me._setupPageWithData();
 			} elsif (me.scratchpad == "R") {
 				me.waypoint.hold_is_left_handed = 0;
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me._setupPageWithData();
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		} elsif (index == 3) {
 			if (num(me.scratchpad) != nil) {
 				me.waypoint.hold_time_or_distance = me.scratchpad;
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me._setupPageWithData();
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}

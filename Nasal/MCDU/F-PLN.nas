@@ -29,8 +29,8 @@ var fplnItem = {
 				if (wptName[0] == "VECTORS") {
 					return ["MANUAL", me.getSubText(), me.colour];
 				} else {
-					if (me.wp.fly_type == "HOLD") {
-						return ["HOLD " ~ me.wp.hold_is_left_handed ? "L" : "R", me.getSubText(), me.colour];
+					if (me.wp.fly_type == "Hold") {
+						return ["HOLD " ~ (me.wp.hold_is_left_handed ? "L" : "R"), me.getSubText(), me.colour];
 					} else {
 						if (size(wptName) == 2) {
 							return[wptName[0] ~ wptName[1 ~ (me.wp.fly_type == "flyOver" ? "@" : "")], me.getSubText(), me.colour];
