@@ -1,3 +1,13 @@
+var getSubTextFunc = func(meRef) {
+	var subText = nil;
+	call(func {
+			subText = me.wp.wp_owner.id;
+		}, nil, meRef, nil,
+		var errs = []
+	);
+	return nil;
+}
+
 var fplnItem = {
 	new: func(wp, index, plan, computer, colour = "grn") {
 		var fI = {parents:[fplnItem]};
@@ -19,10 +29,14 @@ var fplnItem = {
 				if (wptName[0] == "VECTORS") {
 					return ["MANUAL", me.getSubText(), me.colour];
 				} else {
-					if (size(wptName) == 2) {
-						return[wptName[0] ~ wptName[1 ~ (me.wp.fly_type == "flyOver" ? "@" : "")], me.getSubText(), me.colour];
+					if (me.wp.fly_type == "HOLD") {
+						return ["HOLD " ~ me.wp.hold_is_left_handed ? "L" : "R", me.getSubText(), me.colour];
 					} else {
-						return [me.wp.wp_name ~ (me.wp.fly_type == "flyOver" ? "@" : ""), me.getSubText(), me.colour];
+						if (size(wptName) == 2) {
+							return[wptName[0] ~ wptName[1 ~ (me.wp.fly_type == "flyOver" ? "@" : "")], me.getSubText(), me.colour];
+						} else {
+							return [me.wp.wp_name ~ (me.wp.fly_type == "flyOver" ? "@" : ""), me.getSubText(), me.colour];
+						}
 					}
 				}
 			} else {
@@ -33,7 +47,11 @@ var fplnItem = {
 		}
 	},
 	getSubText: func() {
-		return nil;
+		if (me.wp.wp_parent_name != nil) {
+			return " " ~ me.wp.wp_parent_name;
+		} else {
+			return nil;
+		}
 	},
 	updateCenterText: func() {
 		if (me.wp != nil) { 
