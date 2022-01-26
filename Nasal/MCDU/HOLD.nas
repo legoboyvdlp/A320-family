@@ -137,6 +137,8 @@ var holdPage = {
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
 			}
+		} else {
+			mcdu_message(me.computer, "NOT ALLOWED");
 		}
 	},
 	pushbuttonRight: func(index) {
@@ -150,6 +152,8 @@ var holdPage = {
 				} else {
 					mcdu_message(me.computer, "NOT ALLOWED");
 				}
+			} else {
+				mcdu_message(me.computer, "NOT ALLOWED");
 			}
 		}
 	},
