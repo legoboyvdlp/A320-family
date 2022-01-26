@@ -353,6 +353,8 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "HOLD") {
+			canvas_mcdu.myHold[i].pushbuttonLeft(1);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 0;
 			atsu.freeTexts[i].changed = 1;
@@ -497,6 +499,8 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (page == "VERTREV") {
 			canvas_mcdu.myVertRev[i].pushButtonLeft(2);
+		} else if (page == "HOLD") {
+			canvas_mcdu.myHold[i].pushbuttonLeft(2);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 1;
 			atsu.freeTexts[i].changed = 1;
@@ -624,6 +628,8 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (page == "VERTREV") {
 			canvas_mcdu.myVertRev[i].pushButtonLeft(3);
+		} else if (page == "HOLD") {
+			canvas_mcdu.myHold[i].pushbuttonLeft(3);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 2;
 			atsu.freeTexts[i].changed = 1;

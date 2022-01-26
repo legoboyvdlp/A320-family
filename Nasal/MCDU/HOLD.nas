@@ -71,7 +71,7 @@ var holdPage = {
 			me.arrowsMatrix[1][1] = 1;
 		}
 		
-		me.L1 = [sprintf("%03.0f°", me.waypoint.hold_inbound_radial), "INB CRS", "yel"];
+		me.L1 = [sprintf("%03.0f°", me.waypoint.hold_inbound_radial), "INB CRS", "blu"];
 		if (me.waypoint.hold_is_left_handed) {
 			me.L2 = ["L", " TURN", "blu"];
 		} else {
@@ -128,12 +128,6 @@ var holdPage = {
 				me.waypoint.hold_time_or_distance = me.scratchpad;
 			} else {
 				mcdu_message(me.computer, "NOT ALLOWED");
-			}
-		} elsif (index == 6) {
-			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-				setprop("/MCDU[" ~ me.computer ~ "]/page", "F-PLNA");
-			} else {
-				setprop("/MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}
 		}
 	},
