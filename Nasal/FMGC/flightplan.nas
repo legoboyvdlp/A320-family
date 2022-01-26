@@ -819,7 +819,9 @@ var flightPlanController = {
 				if (me.currentToWptIndex.getValue() < 1) {
 					var errs = [];
 					call(func {
-						me.currentToWptIndex.setValue(1);
+						if (me.flightplans[2].getWP(1).id != "DISCONTINUITY") {
+							me.currentToWptIndex.setValue(1);
+						}
 					}, nil, nil, nil, errs);
 					if (size(errs) != 0) { debug.printerror(errs); }
 				}
