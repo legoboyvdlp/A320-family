@@ -442,7 +442,7 @@ var ITAF = {
 				
 				if (enableFlyBy and FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
 					flightPlanController.autoSequencing();
-				} elsif (FPLN.wp0Dist.getValue() <= 0.15) {
+				} elsif (FPLN.wp0Dist.getValue() <= 0.15 and !Gear.wow1.getBoolValue()) {
 					flightPlanController.autoSequencing();
 				}
 			}
@@ -962,6 +962,13 @@ var ITAF = {
 	},
 };
 
+
+setlistener(Gear.wow1, func(val) {
+	if (!val.getBoolValue() and FPLN.currentWP.getValue() == 0) {
+		flightPlanController.autoSequencing();
+	}
+});
+	
 setlistener("/it-autoflight/input/ap1", func {
 	Input.ap1Temp = Input.ap1.getBoolValue();
 	if (Input.ap1Temp != Output.ap1.getBoolValue()) {

@@ -768,7 +768,6 @@ var flightPlanController = {
 		} else {
 			var thePlan = plan;
 		}
-		debug.dump(me.flightplans[thePlan].getWP(index).wp_name);
 		
 		# check waypoints database here
 		var wpFromDB = WaypointDatabase.getWP(text);
