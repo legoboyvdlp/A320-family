@@ -1013,7 +1013,7 @@
 		<autolandwarning>
 			<name>autolandwarning-single</name>
 			<mode>once</mode>
-			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-once.wav</path>
+			<path>Aircraft/A320-family/Sounds/Cockpit/click.wav</path>
 			<condition>
 				<equals>
 					<property>/instrumentation/pfd/logic/autoland/autoland-alarm</property>
