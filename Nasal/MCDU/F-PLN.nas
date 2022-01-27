@@ -449,20 +449,24 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		if (!fmgc.FMGCInternal.altAirportSet) {
 			append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
 		} else {
-			var altnApt = findAirportsByICAO(fmgc.FMGCInternal.altAirport)[0];
-			append(me.planList, fplnItem.new({
-				alt_cstr: nil,
-				alt_cstr_type: nil,
-				fly_type: "flyBy",
-				lat: altnApt.lat,
-				leg_bearing: courseAndDistance(findAirportsByICAO(fmgc.FMGCInternal.arrApt)[0], altnApt)[0],
-				leg_distance: courseAndDistance(findAirportsByICAO(fmgc.FMGCInternal.arrApt)[0], altnApt)[1],
-				lon: altnApt.lon,
-				speed_cstr: nil,
-				speed_cstr_type: nil,
-				wp_name: fmgc.FMGCInternal.altAirport,
-			}, i, me.planIndex, me.computer, "blu"));
-			append(me.planList, staticText.new(me.computer, me.getText("altnFplnEnd")));
+			var altnApt = findAirportsByICAO(fmgc.FMGCInternal.altAirport);
+			if (size(altnApt) > 0) {
+				append(me.planList, fplnItem.new({
+					alt_cstr: nil,
+					alt_cstr_type: nil,
+					fly_type: "flyBy",
+					lat: altnApt.lat,
+					leg_bearing: courseAndDistance(findAirportsByICAO(fmgc.FMGCInternal.arrApt)[0], altnApt[0])[0],
+					leg_distance: courseAndDistance(findAirportsByICAO(fmgc.FMGCInternal.arrApt)[0], altnApt[0])[1],
+					lon: altnApt.lon,
+					speed_cstr: nil,
+					speed_cstr_type: nil,
+					wp_name: fmgc.FMGCInternal.altAirport,
+				}, i, me.planIndex, me.computer, "blu"));
+				append(me.planList, staticText.new(me.computer, me.getText("altnFplnEnd")));
+			} else {
+				append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
+			}
 		}
 		
 		me.basePage();
