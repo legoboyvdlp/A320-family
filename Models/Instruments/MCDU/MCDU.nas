@@ -2888,7 +2888,7 @@ var canvas_MCDU_base = {
 				degrees = getprop("/FMGC/internal/align-ref-lat-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-lat-minutes");
 				sign = getprop("/FMGC/internal/align-ref-lat-sign");
-				apt = airportinfo(FMGCInternal.depApt);
+				apt = airportinfo(fmgc.FMGCInternal.depApt);
 				degrees_lat = int(apt.lat);
 				minutes_lat = sprintf("%.1f",abs((apt.lat - degrees_lat) * 60));
 				sign_lat = degrees_lat >= 0 ? "N" : "S";
