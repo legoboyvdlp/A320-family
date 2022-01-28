@@ -178,8 +178,8 @@ var canvas_IESI = {
 				me["IESI"].hide(); 
 				me["IESI_Init"].show();
 				me["ATTflag"].hide();
+				return;
 			}
-			return;
 		} else {
 			if (pinPrograms.metricAltitude) {
 				me["ALT_meters"].show();
