@@ -832,7 +832,7 @@ canvas.NDStyles["Airbus"] = {
 						var deg = math.round(getprop("/FMGC/flightplan[2]/current-leg-course-mag")) or 0;
 					}
 					if (deg != nil) {
-						nd.symbols.wpActiveCrs.setText(sprintf("%03.0f", deg) ~ "°");
+						nd.symbols.wpActiveCrs.setText(sprintf("%03.0f°", deg));
 						nd.symbols.wpActiveCrs.show();
 					} else {
 						nd.symbols.wpActiveCrs.hide();
