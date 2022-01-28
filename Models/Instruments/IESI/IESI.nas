@@ -141,6 +141,7 @@ var canvas_IESI = {
 	getKeys: func() {
 		return ["IESI","IESI_Init","attRst","attRstRect","att90s","ATTflag","ATTflag_rect","ATTflag_text","ALTwarn","SPDwarn","ASI_scale","ASI_mach","ASI_mach_decimal","AI_center","AI_index","AI_horizon","AI_sky_bank","AI_bank","AI_bank_center","AI_slipskid","ALT_scale","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_meters","QNH_setting","QNH_std","negText","negText2","AI_bank_scale","metricM","metricBox"];
 	},
+	alignFault: props.globals.getNode("/systems/navigation/align-fault"),
 	update: func(notification) {
 		me._powerResult = me.updatePower(notification);
 		if (me._powerResult == 0) { return; }
@@ -152,7 +153,7 @@ var canvas_IESI = {
 		}
 		
 		if (me._IESITime + 90 >= notification.elapsedTime) {
-			if (notification.groundspeed > 2) {
+			if (!me._fastInit and me.alignFault.getBoolValue()) {
 				me._excessMotionInInit = 1;
 			}
 			
