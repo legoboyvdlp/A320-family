@@ -63,12 +63,15 @@
                 <color>
                     <red>
                         <value>0.8</value>
+						<property>rendering/scene/diffuse/red</property>
                     </red>
                     <green>
                         <value>0.8</value>
+						<property>rendering/scene/diffuse/red</property>
                     </green>
                     <blue>
                         <value>0.8</value>
+						<property>rendering/scene/diffuse/red</property>
                     </blue>
                     <alpha>
                         <value>0.5</value>
@@ -82,12 +85,15 @@
                 <color>
                     <red>
                         <value>0.7</value>
+						<property>rendering/scene/diffuse/red</property>
                     </red>
                     <green>
                         <value>0.7</value>
+						<property>rendering/scene/diffuse/red</property>
                     </green>
                     <blue>
                         <value>0.7</value>
+						<property>rendering/scene/diffuse/red</property>
                     </blue>
                     <alpha>
                         <value>0.005</value>

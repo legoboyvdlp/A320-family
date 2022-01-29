@@ -135,6 +135,7 @@
 						<expression>
 							<product>
 								<value>0.01</value>
+								<property>rendering/scene/diffuse/red</property>
 								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
@@ -143,6 +144,7 @@
 						<expression>
 							<product>
 								<value>0.01</value>
+								<property>rendering/scene/diffuse/red</property>
 								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
@@ -151,6 +153,7 @@
 						<expression>
 							<product>
 								<value>0.01</value>
+								<property>rendering/scene/diffuse/red</property>
 								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
@@ -174,6 +177,7 @@
 						<expression>
 							<product>
 								<value>0.01</value>
+								<property>rendering/scene/diffuse/red</property>
 								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
@@ -182,6 +186,7 @@
 						<expression>
 							<product>
 								<value>0.01</value>
+								<property>rendering/scene/diffuse/red</property>
 								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
@@ -190,6 +195,7 @@
 						<expression>
 							<product>
 								<value>0.01</value>
+								<property>rendering/scene/diffuse/red</property>
 								<property>environment/relative-humidity</property>
 							</product>
 						</expression>
