@@ -1466,7 +1466,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.97</dep></entry>
 					<entry><ind>0.0</ind><dep>0.98</dep></entry>
 				</table>
@@ -1475,7 +1475,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.95</dep></entry>
 					<entry><ind>0.0</ind><dep>0.90</dep></entry>
 				</table>
@@ -1496,7 +1496,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.97</dep></entry>
 					<entry><ind>0.0</ind><dep>0.98</dep></entry>
 				</table>
@@ -1505,7 +1505,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.95</dep></entry>
 					<entry><ind>0.0</ind><dep>0.90</dep></entry>
 				</table>
@@ -1526,7 +1526,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.97</dep></entry>
 					<entry><ind>0.0</ind><dep>0.98</dep></entry>
 				</table>
@@ -1535,7 +1535,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.95</dep></entry>
 					<entry><ind>0.0</ind><dep>0.90</dep></entry>
 				</table>
@@ -1556,7 +1556,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.97</dep></entry>
 					<entry><ind>0.0</ind><dep>0.98</dep></entry>
 				</table>
@@ -1565,7 +1565,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.95</dep></entry>
 					<entry><ind>0.0</ind><dep>0.90</dep></entry>
 				</table>
@@ -1586,7 +1586,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.97</dep></entry>
 					<entry><ind>0.0</ind><dep>0.98</dep></entry>
 				</table>
@@ -1595,7 +1595,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.95</dep></entry>
 					<entry><ind>0.0</ind><dep>0.90</dep></entry>
 				</table>
@@ -1616,7 +1616,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.97</dep></entry>
 					<entry><ind>0.0</ind><dep>0.98</dep></entry>
 				</table>
@@ -1625,7 +1625,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.95</dep></entry>
 					<entry><ind>0.0</ind><dep>0.90</dep></entry>
 				</table>
@@ -1646,7 +1646,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.97</dep></entry>
 					<entry><ind>0.0</ind><dep>0.98</dep></entry>
 				</table>
@@ -1655,7 +1655,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.95</dep></entry>
 					<entry><ind>0.0</ind><dep>0.90</dep></entry>
 				</table>
@@ -1676,7 +1676,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.97</dep></entry>
 					<entry><ind>0.0</ind><dep>0.98</dep></entry>
 				</table>
@@ -1685,7 +1685,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.95</dep></entry>
 					<entry><ind>0.0</ind><dep>0.90</dep></entry>
 				</table>
@@ -1706,7 +1706,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.97</dep></entry>
 					<entry><ind>0.0</ind><dep>0.98</dep></entry>
 				</table>
@@ -1715,7 +1715,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.95</dep></entry>
 					<entry><ind>0.0</ind><dep>0.90</dep></entry>
 				</table>
@@ -1736,7 +1736,7 @@
 			</condition>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.97</dep></entry>
 					<entry><ind>0.0</ind><dep>0.98</dep></entry>
 				</table>
@@ -1745,7 +1745,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>rendering/scene/diffuse/red</property>
+					<property>/rendering/scene/diffuse/red</property>
 					<entry><ind>0.8</ind><dep>0.95</dep></entry>
 					<entry><ind>0.0</ind><dep>0.90</dep></entry>
 				</table>
