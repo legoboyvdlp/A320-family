@@ -43,6 +43,7 @@ var du6_offtime = props.globals.initNode("/instrumentation/du/du6-off-time", 0.0
 var autoland_alarm = props.globals.initNode("/instrumentation/pfd/logic/autoland/autoland-alarm", 0, "BOOL");
 var autoland_pulse = props.globals.initNode("/instrumentation/pfd/logic/autoland/autoland-sw-pulse", 0, "BOOL");
 var autoland_pitch_land = props.globals.initNode("/instrumentation/pfd/logic/autoland/pitch-land", 0, "BOOL");
+var autoland_ap_disc_ft = props.globals.initNode("/instrumentation/pfd/logic/autoland/ap-disc-ft", 0, "INT");
 
 var canvas_pfd = {
 	middleOffset: 0,
@@ -776,7 +777,7 @@ var canvas_pfd = {
 	getKeys: func() {
 		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
 		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
-		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
+		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
 		"ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer",
@@ -1279,16 +1280,14 @@ var canvas_pfd = {
 			me["machError"].hide();
 			
 			if (me.ind_mach >= 0.999) {
-				me["ASI_mach"].setText("999");
+				me["ASI_mach"].setText(".999");
 			} else {
-				me["ASI_mach"].setText(sprintf("%3.0f", me.ind_mach * 1000));
+				me["ASI_mach"].setText(sprintf(".%3.0f", me.ind_mach * 1000));
 			}
 			
 			if (me.ind_mach >= 0.5) {
-				me["ASI_mach_decimal"].show();
 				me["ASI_mach"].show();
 			} else {
-				me["ASI_mach_decimal"].hide();
 				me["ASI_mach"].hide();
 			}
 		} else {

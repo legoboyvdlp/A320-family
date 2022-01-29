@@ -24,6 +24,14 @@
 	</predict-simple>
 
 	<filter>
+		<name>Heading Rate Degrees Per Second</name>
+		<type>gain</type>
+		<gain>57.2957795131</gain>
+		<input>/fdm/jsbsim/velocities/r-aero-rad_sec</input>
+		<output>/fdm/jsbsim/velocities/r-aero-deg_sec</output>
+	</filter>
+	
+	<filter>
 		<name>Gear AGL Altitude FT</name>
 		<type>gain</type>
 		<gain>1.0</gain>

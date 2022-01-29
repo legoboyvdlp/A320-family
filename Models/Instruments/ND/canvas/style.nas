@@ -829,7 +829,7 @@ canvas.NDStyles["Airbus"] = {
 						var deg = math.round(getprop("/autopilot/route-manager/wp[0]/bearing-deg") or 0);
 					}
 					if (deg != nil) {
-						nd.symbols.wpActiveCrs.setText(sprintf("%03.0f", deg) ~ "°");
+						nd.symbols.wpActiveCrs.setText(sprintf("%03.0f°", deg));
 						nd.symbols.wpActiveCrs.show();
 					} else {
 						nd.symbols.wpActiveCrs.hide();

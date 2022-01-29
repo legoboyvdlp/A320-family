@@ -98,22 +98,57 @@ var closestAirportPage = {
 		var magvarLocal = magvar();
 		if (size(me.airports) >= 1) {
 			me.cdVector[0] = courseAndDistance(me.airports[0]);
-			me.C1 = [sprintf("%03d",me.cdVector[0][0] - magvarLocal) ~ "°  " ~ math.round(me.cdVector[0][1]), " BRG   DIST", "grn"];
+			me.brg = me.cdVector[0][0] - magvarLocal;
+			if (me.brg > 360) {
+				me.brg -= 360;
+			} else if (me.brg < 0) {
+				me.brg += 360;
+			}
+			
+			me.C1 = [sprintf("%03d°",me.brg) ~ " " ~ sprintf("%4d",math.round(me.cdVector[0][1])), " BRG   DIST", "grn"];
 		}
 		if (size(me.airports) >= 2) {
 			me.cdVector[1] = courseAndDistance(me.airports[1]);
-			me.C2 = [sprintf("%03d",me.cdVector[1][0] - magvarLocal) ~ "°  " ~ math.round(me.cdVector[1][1]) , nil, "grn"];
+			me.brg = me.cdVector[1][0] - magvarLocal;
+			if (me.brg > 360) {
+				me.brg -= 360;
+			} else if (me.brg < 0) {
+				me.brg += 360;
+			}
+			
+			me.C2 = [sprintf("%03d°",me.brg) ~ " " ~ sprintf("%4d",math.round(me.cdVector[1][1])), nil, "grn"];
 		}
 		if (size(me.airports) >= 3) {
 			me.cdVector[2] = courseAndDistance(me.airports[2]);
-			me.C3 = [sprintf("%03d",me.cdVector[2][0] - magvarLocal) ~ "°  " ~ math.round(me.cdVector[2][1]), nil, "grn"];
+			me.brg = me.cdVector[2][0] - magvarLocal;
+			if (me.brg > 360) {
+				me.brg -= 360;
+			} else if (me.brg < 0) {
+				me.brg += 360;
+			}
+			
+			me.C3 = [sprintf("%03d°",me.brg) ~ " " ~ sprintf("%4d",math.round(me.cdVector[2][1])), nil, "grn"];
 		}
 		if (size(me.airports) >= 4) {
 			me.cdVector[3] = courseAndDistance(me.airports[3]);
-			me.C4 = [sprintf("%03d",me.cdVector[3][0] - magvarLocal) ~ "°  " ~ math.round(me.cdVector[3][1]), nil, "grn"];
+			me.brg = me.cdVector[3][0] - magvarLocal;
+			if (me.brg > 360) {
+				me.brg -= 360;
+			} else if (me.brg < 0) {
+				me.brg += 360;
+			}
+			
+			me.C4 = [sprintf("%03d°",me.brg) ~ " " ~ sprintf("%4d",math.round(me.cdVector[3][1])), nil, "grn"];
 		}
 		if (me.manAirport != nil) {
-			me.C5 = [sprintf("%03d",courseAndDistance(me.manAirport)[0] - magvarLocal) ~ "°  " ~ math.round(courseAndDistance(me.manAirport)[1]), me.frozen ? "LIST FROZEN" : nil, "grn"];
+			me.brg = courseAndDistance(me.manAirport)[0] - magvarLocal;
+			if (me.brg > 360) {
+				me.brg -= 360;
+			} else if (me.brg < 0) {
+				me.brg += 360;
+			}
+			
+			me.C5 = [sprintf("%03d°",me.brg) ~ " " ~ sprintf("%4d",math.round(courseAndDistance(me.manAirport)[1])), me.frozen ? "LIST FROZEN" : nil, "grn"];
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},

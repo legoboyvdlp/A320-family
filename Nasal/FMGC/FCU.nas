@@ -510,6 +510,9 @@ var apOff = func(type, side) {
 	} elsif (side == 2) {
 		fmgc.Input.ap2.setValue(0);
 	}
+
+    var radarft = (side == 2) ? getprop("/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected") : getprop("/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected");
+	setprop("/instrumentation/pfd/logic/autoland/ap-disc-ft",radarft);
 }
 
 # Autothrust Disconnection
