@@ -5,6 +5,34 @@
 
 <system name="A320: ADR">
 
+	<channel name="ADR Align Fault" execrate="8">
+	
+		<lag_filter name="velocities/r-aero-deg_sec_filter">
+			<input>velocities/r-aero-deg_sec</input>
+			<c1>1</c1>
+		</lag_filter>
+		
+		<lag_filter name="velocities/v-north-fps_filter">
+			<input>velocities/v-north-fps</input>
+			<c1>1</c1>
+		</lag_filter>
+		
+		<lag_filter name="velocities/v-east-fps_filter">
+			<input>velocities/v-east-fps</input>
+			<c1>1</c1>
+		</lag_filter>
+		
+		<switch name="/systems/navigation/align-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				velocities/r-aero-deg_sec_filter ge 2
+				velocities/v-north-fps_filter ge 0.5
+				velocities/v-east-fps_filter ge 0.5
+			</test>
+		</switch>
+		
+	</channel>
+	
     <channel name="ADR Inputs" execrate="2">
 		<fcs_function name="aero/alpha-deg-corrected">
 			<function>

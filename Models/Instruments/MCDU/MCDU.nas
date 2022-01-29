@@ -4927,7 +4927,7 @@ var canvas_MCDU_base = {
 					var result = myDESWIND[math.abs(i-1)].returnGRND();
 					me["Simple_L3"].setText(sprintf("%03.0f°", result[0]) ~ sprintf("/%.0f", result[1]));
 				} else {
-					me["Simple_L3"].setText("---g/---");
+					me["Simple_L3"].setText("---°/---");
 				}
 			}
 			
