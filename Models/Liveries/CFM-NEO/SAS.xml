@@ -4,7 +4,7 @@
 	<sim>
 		<model>
 			<livery>
-				<name>SAS Scandinavian (SE-ROJ)</name>
+				<name>Scandinavian (SE-ROJ)</name>
 				<texture-fuselage>SAS-fuselage.png</texture-fuselage>
 				<texture-engine>SAS-engine.png</texture-engine>
 				<texture-placards>Fuselage/res/placards.png</texture-placards>
