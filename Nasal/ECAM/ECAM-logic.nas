@@ -2326,7 +2326,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(fctlSpdBrkStillOut);
 	}
 	
-	if (fctlPitchTrimDisag.clearFlag == 0 and takeoffConfig and fmgc.FMGCInternal.toFlapThsSet and abs(-getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") - fmgc.FMGCInternal.toThs) >= 1.3) {
+	if (fctlPitchTrimDisag.clearFlag == 0 and takeoffConfig and fmgc.FMGCInternal.toFlapThsSet and abs(-getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") - fmgc.FMGCInternal.toThs) >= 1.3) {
 		fctlPitchTrimDisag.active = 1;
 		fctlPitchTrimDisag2.active = 1;
 	} else {
