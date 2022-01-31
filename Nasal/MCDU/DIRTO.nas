@@ -80,10 +80,8 @@ var dirTo = {
 		var x = 0;
 		me.vector = [];
 		for (var i = 1 + (me.scroll); i < size(canvas_mcdu.myFpln[me.computer].planList) - 2; i = i + 1) {
-			if (canvas_mcdu.myFpln[me.computer].planList[i].wp == "PSEUDO" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "DISCONTINUITY" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "VECTORS" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "T-P" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_type == "hdgToAlt") { continue; } # can't ever have tmpy with dir to
-			if (canvas_mcdu.myFpln[me.computer].planList[i].index > fmgc.flightPlanController.arrivalIndex[2]) {
-				continue; 
-			}
+			if (canvas_mcdu.myFpln[me.computer].planList[i].wp == "PSEUDO" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "DISCONTINUITY" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "VECTORS" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "T-P" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_type == "hdgToAlt") { continue; }
+			if (canvas_mcdu.myFpln[me.computer].planList[i].index > fmgc.flightPlanController.arrivalIndex[2]) { continue; }
 			append(me.vector, canvas_mcdu.myFpln[me.computer].planList[i].wp);
 			x += 1;
 			if (x == 4) { break; }
