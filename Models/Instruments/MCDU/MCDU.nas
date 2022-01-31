@@ -987,7 +987,6 @@ var canvas_MCDU_base = {
 						me.dynamicPageFunc(myReceivedMessages[i]["L" ~ x], "Simple_L" ~ x);
 					}
 					me.colorLeft(myReceivedMessages[i].L1[2],myReceivedMessages[i].L2[2],myReceivedMessages[i].L3[2],myReceivedMessages[i].L4[2],myReceivedMessages[i].L5[2],myReceivedMessages[i].L6[2]);
-					me["Simple_L6"].setColor(WHITE);
 				}
 				pageSwitch[i].setBoolValue(1);
 			}
@@ -1078,7 +1077,7 @@ var canvas_MCDU_base = {
 					me["Simple_C1S"].setText(myReceivedMessage[i].C1[1]);
 					me["Simple_R1S"].setText(myReceivedMessage[i].R1[1]);
 					me.colorLeft(myReceivedMessage[i].L1[2],myReceivedMessage[i].L2[2],myReceivedMessage[i].L3[2],myReceivedMessage[i].L4[2],myReceivedMessage[i].L5[2],myReceivedMessage[i].L6[2]);
-					me["Simple_L6"].setColor(WHITE);
+					me["Simple_L6"].setText(" RETURN");
 					me["Simple_C1S"].setColor(GREEN);
 				}
 				pageSwitch[i].setBoolValue(1);
