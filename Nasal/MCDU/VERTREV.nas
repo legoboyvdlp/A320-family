@@ -4,7 +4,6 @@ var scratchpadSplit = nil;
 var vertRev = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -85,20 +84,16 @@ var vertRev = {
 			me.R2 = ["RTA ", nil, "wht"];
 			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
-			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		} elsif (me.type == 2) { 
 			me.title = ["VERT REV", " AT ", me.id];
-			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 			me.L1 = ["", "  EFOB ---.-", "wht"];
 			me.R1 = ["", "EXTRA ---.- ", "wht"];
 			me.L2 = [fmgc.FMGCInternal.clbSpdLim ~ "/" ~ fmgc.FMGCInternal.clbSpdLimAlt, " CLB SPD LIM", "mag"];
 			me.speed = me.getSpd();
 			if (me.speed[0] == nil) {
-				me.L3 = [" [    ]", " SPD CSTR", "blu"];
-				me.fontMatrix[0][2] = 1;
+				me.L3 = ["[   ]", " SPD CSTR", "blu"];
 			} else {
 				me.L3 = [me.speed[0], " SPD CSTR", me.speed[1]];
-				me.fontMatrix[0][2] = 0;
 			}
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
 			me.L5 = [" WIND DATA", nil, "wht"];
@@ -106,11 +101,9 @@ var vertRev = {
 			me.R2 = ["RTA ", nil, "wht"];
 			me.alt = me.getAlt();
 			if (me.alt[0] == nil) {
-				me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
-				me.fontMatrix[1][2] = 1;
+				me.R3 = ["[     ]", "ALT CSTR ", "blu"];
 			} else {
-				me.R3 = [me.alt[0], "ALT CSTR  ", me.alt[1]];
-				me.fontMatrix[1][2] = 0;
+				me.R3 = [me.alt[0], "ALT CSTR ", me.alt[1]];
 			}
 			me.R6 = ["DES ", nil, "amb"];
 			# When the system does vertical planning, L6 should be RETURN and R6 not used if the MCDU knows the waypoint is during climb or descent.
@@ -138,7 +131,6 @@ var vertRev = {
 				me.R2 = ["RTA ", nil, "wht"];
 				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
-				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 			} elsif (me.type == 1) {
 				if (size(me.id) > 4) {
 					me.arrAirport = findAirportsByICAO(left(me.id, 4));
@@ -155,7 +147,6 @@ var vertRev = {
 				me.R3 = ["3000", "G/S INTCP", "grn"];
 				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
-				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 			}
 		}
 		me.updateR5();

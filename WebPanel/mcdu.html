@@ -17,12 +17,14 @@
 			background-color: #005670;
 			text-align: center;
 			color: #e4e4e4;
+			font-size: 16px;
+			padding: 0;
+			margin: 0;
 		}
 
 		body {
-			height: 100vh;
-			width: 100vw;
 			color: #8db9ca;
+			padding-top: 1rem;
 		}
 
 		h1 {
@@ -55,8 +57,9 @@
 		.choice {
 			display: inline-block;
 			position: relative;
-			width: calc(49% - 2vw);
-			padding: 1vh 1vw 75% 1vw;
+			width: calc(50% - 40px);
+			padding: 15px;			
+			padding-bottom: 75%;
 			color: inherit;
 			text-decoration: none;
 			border: 1px solid transparent;
@@ -69,11 +72,12 @@
 
 		.choice img {
 			position: absolute;
-			top: 0;
+			top: 1rem;
 			left: 0;
 			right: 0;
 			margin: auto;
-			max-height: 100%;
+			max-height: auto;
+			max-width: 100%;
 			border-radius: 8px;
 			box-shadow: 4px 4px 6px #00000063;
 		}
@@ -99,9 +103,9 @@
 		<div class="chooser">
 			<a href="WebPanel1/index.html" class="choice choice--1">
 				<span class="button">
-					abstract
+					basic
 				</span>
-				<img src="WebPanel1/screenshot.jpg">
+				<img src="WebPanel1/img/screenshot.jpg">
 			</a>
 			<a href="WebPanel2/index.html" class="choice choice--2">
 				<span class="button">

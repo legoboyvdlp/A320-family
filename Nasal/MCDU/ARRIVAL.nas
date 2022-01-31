@@ -5,7 +5,6 @@ var isNoVia = [0, 0, 0];
 var arrivalPage = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -132,7 +131,6 @@ var arrivalPage = {
 	_setupPageWithData: func() {
 		me.title = ["ARRIVAL", " TO ", left(me.id, 4)];
 		
-		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
 		
@@ -178,7 +176,6 @@ var arrivalPage = {
 		me.R4 = [nil, nil, "ack"];
 		me.R5 = [nil, nil, "ack"];
 		me.R6 = [nil, nil, "ack"];
-		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "ack"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
 	},

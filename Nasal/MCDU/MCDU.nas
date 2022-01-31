@@ -153,12 +153,11 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.vrset = 0;
 	fmgc.FMGCInternal.v2 = 0;
 	fmgc.FMGCInternal.v2set = 0;
-	
 	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/MCDUC/thracc-set", 0);
-	setprop("/FMGC/internal/to-flap", 0);
-	setprop("/FMGC/internal/to-ths", "0.0");
-	setprop("/FMGC/internal/flap-ths-set", 0);
+	fmgc.FMGCInternal.toFlap = 0;
+	fmgc.FMGCInternal.toThs = 0.0;
+	fmgc.FMGCInternal.toFlapThsSet = 0;
 	setprop("/FMGC/internal/flex", 0);
 	setprop("/FMGC/internal/flex-set", 0);
 	setprop("/FMGC/internal/eng-out-reduc", "1500");
@@ -524,7 +523,7 @@ var lskbutton = func(btn, i) {
 		} else if (page == "PERFAPPR") {
 			perfAPPRInput("L3",i);
 		} else if (page == "STATUS") {
-			statusInput("L3",i);
+			fmgc.switchDatabase();
 		} else if (page == "RADNAV") {
 			radnavInput("L3",i);
 		} else if (page == "DATA") {
@@ -788,7 +787,6 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
 		} else if (page == "CLOSESTAIRPORT") {
 			canvas_mcdu.myClosestAirport[i].manAirportCall(mcdu_scratchpad.scratchpads[i].scratchpad);
-			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("NOTIFICATION");
 		} else if (page == "FLTLOG") {
@@ -1173,7 +1171,16 @@ var rskbutton = func(btn, i) {
 			}
 			pageNode[i].setValue("WINDDES");
 		} else if (page == "STATUS") {
-			statusInput("R5",i);
+			if (fmgc.WaypointDatabase.getCount() >= 1) {
+				if (fmgc.WaypointDatabase.confirm[i]) {
+					fmgc.WaypointDatabase.delete(i);
+					fmgc.WaypointDatabase.confirm[i] = 0;
+				} else {
+					fmgc.WaypointDatabase.confirm[i] = 1;
+				}
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "PERFTO") {
 			perfTOInput("R5",i);
 		} else if (page == "PERFAPPR") {
@@ -1524,17 +1531,25 @@ var button = func(btn, i, event = "") {
 			} else {  # up with buttonCLRDown[i]>4
 				buttonCLRDown[i] = 0;
 			}
+		} else if (btn == "LONGCLR") {
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
 		} else if (btn == "PLUSMINUS") {
-			if (right(mcdu_scratchpad.scratchpads[i].scratchpad, 1) == "-") {
+			var _toggle = right(scratchpad,1);
+			if (_toggle == "+" or _toggle == "-") {
+				_toggle = (_toggle == "-") ? "+" : "-";
 				mcdu_scratchpad.scratchpads[i].clear();
-				mcdu_scratchpad.scratchpads[i].addChar("+");
+				mcdu_scratchpad.scratchpads[i].addChar(_toggle);
 			} else {
 				mcdu_scratchpad.scratchpads[i].addChar("-");
 			}
 		} else if (btn == "OVFY") {
-			mcdu_scratchpad.scratchpads[i].addChar("@");
+			if (size(scratchpad) == 0) {
+				mcdu_scratchpad.scratchpads[i].addChar("@");
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_scratchpad.scratchpads[i].addChar(btn);
 		}

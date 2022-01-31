@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
-
 <head>
 	<title>A320 MCDU</title>
 	<meta charset="utf-8">
@@ -8,113 +7,6 @@
 	<link rel="manifest" href="mcdu_manifest.json" />
 	<meta name="apple-mobile-web-app-status-bar" content="#db4938" />
 	<meta name="theme-color" content="#db4938" />
-	<script>
-		let screen;
-		let screen_src;
-		let blank_src;
-		let loading = 0;
-		let scheduled_load = 0;
-		function refresh_screen(force) {
-			if (loading && !force) {
-				scheduled_load = 1;
-			}
-			else {
-				loading = 1;
-				screen.src = screen_src + '&random=' + (new Date).getTime()
-			}
-		}
-		function press_button(type, text) {
-			let request = new XMLHttpRequest;
-			request.open(
-				"POST",
-				window.location.protocol + "//" + window.location.host + "/run.cgi?value=nasal"
-			);
-			request.setRequestHeader("Content-Type", "application/json");
-			let body = JSON.stringify({
-				"name": "",
-				"children": [
-					{
-						"name": "script",
-						"index": 0,
-						"value": "mcdu." + type + "(\"" + text + "\", 0);"
-					}
-				]
-			});
-			request.send(body);
-			request.addEventListener('load', function () {
-				refresh_screen();
-			}, true);
-		}
-
-		var preventzoomaction = function(e) {  //https://exceptionshub.com/disable-double-tap-zoom-option-in-browser-on-touch-devices.html
-				var t2 = e.timeStamp;
-				var t1 = e.currentTarget.dataset.lastTouch || t2;
-				var dt = t2 - t1;
-				var fingers = e.touches.length;
-				e.currentTarget.dataset.lastTouch = t2;
-
-				if (!dt || dt > 500 || fingers > 1) return; // not double-tap
-
-				e.preventDefault();
-				e.target.click();
-			};
-
-		window.addEventListener('load', function () {
-
-			let tds = document.querySelectorAll('.input td');
-			for (const td of tds) {
-				td.addEventListener('click', function () {
-				    if (td.className == "disabled") return;
-					press_button("button", td.textContent);
-				}, true);
-				td.addEventListener('touchstart', preventzoomaction, true);
-			}
-			tds = document.querySelectorAll('.enter td');
-			for (const td of tds) {
-				td.addEventListener('click', function () {
-					press_button(td.getAttribute("button-side") == "l" ? "lskbutton" : "rskbutton", td.getAttribute("button-id"));
-				}, true);
-				td.addEventListener('touchstart', preventzoomaction, true);
-			}
-			tds = document.querySelectorAll('.menu td');
-			for (const td of tds) {
-				td.addEventListener('click', function () {
-					press_button("pagebutton", td.className);
-				}, true);
-				td.addEventListener('touchstart', preventzoomaction, true);
-			}
-			tds = document.querySelectorAll('.arrows td');
-			for (const td of tds) {
-				td.addEventListener('click', function () {
-					press_button(td.className == 'airport' ? "pagebutton" : "arrowbutton", td.className);
-				}, true);
-				td.addEventListener('touchstart', preventzoomaction, true);
-			}
-			screen = document.querySelector('img');
-			screen.addEventListener('load', function () {
-				loading = 0;
-				if (scheduled_load) {
-					scheduled_load = 0;
-					refresh_screen();
-				}
-			});
-			blank_src = screen_src;			
-			screen_src = "/screenshot?canvasindex=10&type=png";
-			screen.addEventListener('error', function () {
-				loading = 0;
-				if (scheduled_load) {
-					refresh_screen();
-				}
-			});
-			screen.addEventListener('abort', function () {
-				loading = 0;
-				if (scheduled_load) {
-					refresh_screen();
-				}
-			});
-			setInterval(function () { refresh_screen(true); }, 1000);
-		}, true);
-	</script>
 	<style>
 		body {
 			font-size: 5rem;
@@ -201,33 +93,32 @@
 	<table class="enter" style="width: 100%">
 		<tr>
 			<td><br></td>
-			<td rowspan="8" style="vertical-align: top"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAANgAQMAAACIgIgUAAAAA1BMVEUAAACnej3aAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAgklEQVR42u3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wazbwABRxu5owAAAABJRU5ErkJggg=="
-					style="width: 100%" /></td>
+			<td rowspan="8" style="vertical-align: top"><img data-element="lcdimage" src=""	style="width: 100%" /></td>
 			<td><br></td>
 		</tr>
 		<tr>
-			<td button-id="1" button-side="l">—</td>
-			<td button-id="1" button-side="r">—</td>
+			<td data-button="lskbutton:1">—</td>
+			<td data-button="rskbutton:1">—</td>
 		</tr>
 		<tr>
-			<td button-id="2" button-side="l">—</td>
-			<td button-id="2" button-side="r">—</td>
+			<td data-button="lskbutton:2">—</td>
+			<td data-button="rskbutton:2">—</td>
 		</tr>
 		<tr>
-			<td button-id="3" button-side="l">—</td>
-			<td button-id="3" button-side="r">—</td>
+			<td data-button="lskbutton:3">—</td>
+			<td data-button="rskbutton:3">—</td>
 		</tr>
 		<tr>
-			<td button-id="4" button-side="l">—</td>
-			<td button-id="4" button-side="r">—</td>
+			<td data-button="lskbutton:4">—</td>
+			<td data-button="rskbutton:4">—</td>
 		</tr>
 		<tr>
-			<td button-id="5" button-side="l">—</td>
-			<td button-id="5" button-side="r">—</td>
+			<td data-button="lskbutton:5">—</td>
+			<td data-button="rskbutton:5">—</td>
 		</tr>
 		<tr>
-			<td button-id="6" button-side="l">—</td>
-			<td button-id="6" button-side="r">—</td>
+			<td data-button="lskbutton:6">—</td>
+			<td data-button="rskbutton:6">—</td>
 		</tr>
 		<tr>
 			<td><br></td>
@@ -236,107 +127,110 @@
 	</table>
 	<table class="menu" style="width: 100%">
 		<tr>
-			<td class="dirto">DIR</td>
-			<td class="prog">PROG</td>
-			<td class="perf">PERF</td>
-			<td class="init">INIT</td>
-			<td class="data">DATA</td>
+			<td data-button="pagebutton:dirto" class="dirto">DIR</td>
+			<td data-button="pagebutton:prog" class="prog">PROG</td>
+			<td data-button="pagebutton:perf" class="perf">PERF</td>
+			<td data-button="pagebutton:init" class="init">INIT</td>
+			<td data-button="pagebutton:data" class="data">DATA</td>
 			<td></td>
 			<td>BRT</td>
 		</tr>
 		<tr>
-			<td class="f-pln">F-PLN</td>
-			<td class="radnav">RAD<br>NAV</td>
-			<td class="fuel-pred">FUEL<br>PRED</td>
-			<td>SEC<br>F-PLN</td>
-			<td class="atc">ATC<br>COMM</td>
-			<td class="mcdu">MCDU<br>MENU</td>
+			<td data-button="pagebutton:f-pln" class="f-pln">F-PLN</td>
+			<td data-button="pagebutton:radnav" class="radnav">RAD<br>NAV</td>
+			<td data-button="pagebutton:fuel-pred" class="fuel-pred">FUEL<br>PRED</td>
+			<td data-button="" >SEC<br>F-PLN</td>
+			<td data-button="pagebutton:atc"  class="atc">ATC<br>COMM</td>
+			<td data-button="pagebutton:mcdu" class="mcdu">MCDU<br>MENU</td>
 			<td>DIM</td>
 		</tr>
 	</table>
 	<table class="input" style="float: right; width: 62.5%">
 		<tr>
-			<td>A</td>
-			<td>B</td>
-			<td>C</td>
-			<td>D</td>
-			<td>E</td>
+			<td data-button="button:A">A</td>
+			<td data-button="button:B">B</td>
+			<td data-button="button:C">C</td>
+			<td data-button="button:D">D</td>
+			<td data-button="button:E">E</td>
 		</tr>
 		<tr>
-			<td>F</td>
-			<td>G</td>
-			<td>H</td>
-			<td>I</td>
-			<td>J</td>
+			<td data-button="button:F">F</td>
+			<td data-button="button:G">G</td>
+			<td data-button="button:H">H</td>
+			<td data-button="button:I">I</td>
+			<td data-button="button:J">J</td>
 		</tr>
 		<tr>
-			<td>K</td>
-			<td>L</td>
-			<td>M</td>
-			<td>N</td>
-			<td>O</td>
+			<td data-button="button:K">K</td>
+			<td data-button="button:L">L</td>
+			<td data-button="button:M">M</td>
+			<td data-button="button:N">N</td>
+			<td data-button="button:O">O</td>
 		</tr>
 		<tr>
-			<td>P</td>
-			<td>Q</td>
-			<td>R</td>
-			<td>S</td>
-			<td>T</td>
+			<td data-button="button:P">P</td>
+			<td data-button="button:Q">Q</td>
+			<td data-button="button:R">R</td>
+			<td data-button="button:S">S</td>
+			<td data-button="button:T">T</td>
 		</tr>
 		<tr>
-			<td>U</td>
-			<td>V</td>
-			<td>W</td>
-			<td>X</td>
-			<td>Y</td>
+			<td data-button="button:U">U</td>
+			<td data-button="button:V">V</td>
+			<td data-button="button:W">W</td>
+			<td data-button="button:X">X</td>
+			<td data-button="button:Y">Y</td>
 		</tr>
 		<tr>
-			<td>Z</td>
-			<td>/</td>
-			<td style="font-size: 50%">SP</td>
-			<td style="font-size: 33%" class="disabled">OVFY<br>△</td>
-			<td style="font-size: 33%">CLR</td>
+			<td data-button="button:Z">Z</td>
+			<td data-button="button:SLASH">/</td>
+			<td style="font-size: 50%" data-button="button:SP">SP</td>
+			<td style="font-size: 33%" data-button="button:OVFY">OVFY<br>△</td>
+			<td style="font-size: 33%" data-button="button:CLR">CLR</td>
 		</tr>
 	</table>
 	<table class="arrows" style="width: 29.5%">
 		<tr>
-			<td class="airport">AIR<br>PORT</td>
+			<td data-button="pagebutton:airport" class="airport">AIR<br>PORT</td>
 			<td></td>
 		</tr>
 		<tr>
-			<td class="left">←</td>
-			<td class="up">↑</td>
+			<td data-button="arrowbutton:left" class="left">←</td>
+			<td data-button="arrowbutton:up" class="up">↑</td>
 		</tr>
 		<tr>
-			<td class="right">→</td>
-			<td class="down">↓</td>
+			<td data-button="arrowbutton:right" class="right">→</td>
+			<td data-button="arrowbutton:down" class="down">↓</td>
 		</tr>
 	</table>
 	<table class="input" style="width: 30%">
 		<tr>
-			<td>1</td>
-			<td>2</td>
-			<td>3</td>
+			<td data-button="button:1">1</td>
+			<td data-button="button:2">2</td>
+			<td data-button="button:3">3</td>
 		</tr>
 		<tr>
-			<td>4</td>
-			<td>5</td>
-			<td>6</td>
+			<td data-button="button:4">4</td>
+			<td data-button="button:5">5</td>
+			<td data-button="button:6">6</td>
 		</tr>
 		<tr>
-			<td>7</td>
-			<td>8</td>
-			<td>9</td>
+			<td data-button="button:7">7</td>
+			<td data-button="button:8">8</td>
+			<td data-button="button:9">9</td>
 		</tr>
 		<tr>
-			<td>.</td>
-			<td>0</td>
+			<td data-button="button:DOT">.</td>
+			<td data-button="button:0">0</td>
 			<td
-				style="font-size: 3vw; width: 33.333333333333333333333333333333333333333333333333333333333333333333333%; /* :) */" class="disabled">
+				style="font-size: 3vw; width: 33.34%;" data-button="button:PLUSMINUS">
 				+/-
 			</td>
 		</tr>
 	</table>
+
+	<script src="../js/mcdu.js"></script>
+
 </body>
 
 </html>
