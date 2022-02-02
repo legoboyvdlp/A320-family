@@ -126,8 +126,7 @@ var fplnItem = {
 		return sprintf("%03.0f", math.round(me.brg));
 	},
 	getTrack: func() {
-		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
-		me.trk = me.wp.leg_bearing - magvar(wp.lat, wp.lon);
+		me.trk = me.wp.leg_bearing - magvar(me.wp.lat, me.wp.lon);
 		if (me.trk < 0) { me.trk += 360; }
 		if (me.trk > 360) { me.trk -= 360; }
 		return sprintf("%03.0f", math.round(me.trk));
@@ -470,6 +469,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 					speed_cstr: nil,
 					speed_cstr_type: nil,
 					wp_name: fmgc.FMGCInternal.altAirport,
+					wp_parent_name: nil,
 				}, i, me.planIndex, me.computer, "blu"));
 				append(me.planList, staticText.new(me.computer, me.getText("altnFplnEnd")));
 			} else {
