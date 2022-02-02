@@ -1,3 +1,11 @@
+# A3XX FMGC Flightplan Page
+# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+
+# Local vars
+var decelIndex = 0;
+var decelShow = 0;
+var destName = nil;
+
 var getSubTextFunc = func(meRef) {
 	var subText = nil;
 	call(func {
@@ -526,7 +534,7 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 	},
 	destInfo: func() {
 		if (me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]) != nil) {
-			var destName = split("-", me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]).wp_name);
+			destName = split("-", me.plan.getWP(fmgc.flightPlanController.arrivalIndex[me.planIndex]).wp_name);
 			if (size(destName) == 2) {
 				me.L6 = [destName[0] ~ destName[1], " DEST", "wht"];
 			} else {
@@ -554,8 +562,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				if (me.scroll > decelIndex) {
 					decelOffset = 1;
 				}
-				setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", me.scroll - decelOffset);
 			}
+			setprop("/instrumentation/efis[" ~ me.computer ~ "]/inputs/plan-wpt-index", (fmgc.flightPlanController.currentToWptIndex.getValue() - 1 + me.scroll - decelOffset));
 		}
 	},
 	scrollUp: func() {
