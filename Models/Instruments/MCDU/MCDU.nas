@@ -425,15 +425,22 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setFont("HoneywellMCDUSmall.ttf");
 			me["Simple_R5S"].setFontSize(small);
 		}
-		if (page == "RECEIVEDMSG") {
+		if (page == "RECEIVEDMSG" or page == "ATISDETAIL") {
+			if (page == "RECEIVEDMSG") {
+				me["Simple_L2S"].setFontSize(normal);
+				me["Simple_L3S"].setFontSize(normal);
+				me["Simple_L4S"].setFontSize(normal);
+				me["Simple_L5S"].setFontSize(normal);
+			} else {
+				me["Simple_L2S"].setFontSize(small);
+				me["Simple_L3S"].setFontSize(small);
+				me["Simple_L4S"].setFontSize(small);
+				me["Simple_L5S"].setFontSize(small);
+			}
 			me["Simple_L2S"].setFont("HoneywellMCDU.ttf");
-			me["Simple_L2S"].setFontSize(normal);
 			me["Simple_L3S"].setFont("HoneywellMCDU.ttf");
-			me["Simple_L3S"].setFontSize(normal);
 			me["Simple_L4S"].setFont("HoneywellMCDU.ttf");
-			me["Simple_L4S"].setFontSize(normal);
 			me["Simple_L5S"].setFont("HoneywellMCDU.ttf");
-			me["Simple_L5S"].setFontSize(normal);
 		} else {
 			me["Simple_L2S"].setFont("HoneywellMCDUSmall.ttf");
 			me["Simple_L2S"].setFontSize(small);
