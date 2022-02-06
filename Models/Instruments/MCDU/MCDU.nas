@@ -4644,7 +4644,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L0S"].setText("DEST");
-			me["Simple_L1S"].setText("QNH");
+			me["Simple_L1S"].setText(" QNH");
 			if (dest_qnh.getValue() != -1) {
 				if (dest_qnh.getValue() < 100) {
 					me["Simple_L1"].setText(sprintf("%4.2f", dest_qnh.getValue()));
@@ -4652,7 +4652,7 @@ var canvas_MCDU_base = {
 					me["Simple_L1"].setText(sprintf("%4.0f", dest_qnh.getValue()));
 				}
 			} else {
-				me["Simple_L1"].setText("[    ]  ");
+				me["Simple_L1"].setText("[   ]");
 			}
 			
 			me["Simple_L2S"].setText("TEMP");
@@ -4665,9 +4665,7 @@ var canvas_MCDU_base = {
 			me["Simple_L3S"].setText("MAG WIND");
 			if (fmgc.FMGCInternal.destMagSet and fmgc.FMGCInternal.destWindSet) {
 				me["Simple_L3"].setText(sprintf("%03.0f°", fmgc.FMGCInternal.destMag) ~ sprintf("/%.0f", fmgc.FMGCInternal.destWind));
-				me["Simple_L3"].setFontSize(normal);
 			} else {
-				me["Simple_L3"].setFontSize(small);
 				if (myDESWIND[i] != nil and myDESWIND[i].returnGRND() != nil) {
 					var result = myDESWIND[i].returnGRND();
 					me["Simple_L3"].setText(sprintf("%03.0f°", result[0]) ~ sprintf("/%.0f", result[1]));
@@ -4697,16 +4695,16 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setColor(WHITE);
 			}
 			
-			me["Simple_R2S"].setText("BARO");
+			me["Simple_R2S"].setText("BARO ");
 			if (getprop("/FMGC/internal/baro") != 99999) {
 				me["Simple_R2"].setText(sprintf("%.0f", getprop("/FMGC/internal/baro")));
 				me.fontSizeRight(0, normal, 0, 0, 0, 0);
 			} else {
-				me["Simple_R2"].setText(" [    ]");
+				me["Simple_R2"].setText("[ ]");
 				me.fontSizeRight(0, small, 0, 0, 0, 0);
 			}
 			
-			me["Simple_R3S"].setText("RADIO");
+			me["Simple_R3S"].setText("RADIO ");
 			if (getprop("/FMGC/internal/radio") != 99999) {
 				me["Simple_R3"].setText(sprintf("%.0f", getprop("/FMGC/internal/radio")));
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
@@ -4714,13 +4712,13 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setText("NO");
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
 			} else {
-				me["Simple_R3"].setText(" [    ]");
+				me["Simple_R3"].setText("[ ]");
 				me.fontSizeRight(0, 0, small, 0, 0, 0);
 			}
 			
-			me["Simple_R4S"].setText("LDG CONF  ");
-			me["Simple_R4"].setText("CONF3  ");
-			me["Simple_R5"].setText("FULL  ");
+			me["Simple_R4S"].setText("LDG CONF ");
+			me["Simple_R4"].setText("CONF3 ");
+			me["Simple_R5"].setText("FULL ");
 			if (fmgc.FMGCInternal.ldgConfig3 == 1 and fmgc.FMGCInternal.ldgConfigFull == 0) {
 				me["PERFAPPR_LDG_3"].hide();
 				me["PERFAPPR_LDG_F"].show();
@@ -4758,7 +4756,7 @@ var canvas_MCDU_base = {
 					me["Simple_L5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vapp_appr));
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
-					me["Simple_L5"].setText("[    ]  ");
+					me["Simple_L5"].setText("[   ]  ");
 					me.fontSizeLeft(0, 0, 0, 0, small, 0);
 				}
 			}
