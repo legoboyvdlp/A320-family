@@ -440,6 +440,25 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setFont("HoneywellMCDUSmall.ttf");
 			me["Simple_R5S"].setFontSize(small);
 		}
+		if (page == "RECEIVEDMSG") {
+			me["Simple_L2S"].setFont("HoneywellMCDU.ttf");
+			me["Simple_L2S"].setFontSize(normal);
+			me["Simple_L3S"].setFont("HoneywellMCDU.ttf");
+			me["Simple_L3S"].setFontSize(normal);
+			me["Simple_L4S"].setFont("HoneywellMCDU.ttf");
+			me["Simple_L4S"].setFontSize(normal);
+			me["Simple_L5S"].setFont("HoneywellMCDU.ttf");
+			me["Simple_L5S"].setFontSize(normal);
+		} else {
+			me["Simple_L2S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L2S"].setFontSize(small);
+			me["Simple_L3S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L3S"].setFontSize(small);
+			me["Simple_L4S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L4S"].setFontSize(small);
+			me["Simple_L5S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L5S"].setFontSize(small);
+		}
 		if (page == "IRSMON") {
 			me["Simple_R1S"].setFont("HoneywellMCDU.ttf");
 			me["Simple_R1S"].setFontSize(normal);
@@ -941,11 +960,11 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L1"].setText(" WEATHER TYPE");
 				me["Simple_L1S"].setText(" " ~ atsu.AOC.selectedType);
-				me["Simple_R1S"].setText("STA 1 ");
-				me["Simple_R2"].setText("[    ]");
-				me["Simple_R2S"].setText("STA 2 ");
-				me["Simple_R3"].setText("[    ]");
-				me["Simple_R3S"].setText("STA 3 ");
+				me["Simple_R1S"].setText("STA 1");
+				me["Simple_R2"].setText("[   ]");
+				me["Simple_R2S"].setText("STA 2");
+				me["Simple_R3"].setText("[   ]");
+				me["Simple_R3S"].setText("STA 3");
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -964,7 +983,7 @@ var canvas_MCDU_base = {
 				}
 			} else {
 				me["Simple_R5"].setText("SEND ");
-				me["Simple_R1"].setText("[    ]");
+				me["Simple_R1"].setText("[   ]");
 				me["WEATHERREQSEND"].hide();
 			}
 			
@@ -1029,12 +1048,8 @@ var canvas_MCDU_base = {
 					if (mcdu.ReceivedMessagesDatabase.getCountPages() > 1) {
 						me["Simple_PageNum"].show();
 						me["Simple_PageNum"].setText(myReceivedMessages[i].getPageNumStr());
-						me["ArrowLeft"].show();
-						me["ArrowRight"].show();
 					} else {
 						me["Simple_PageNum"].hide();
-						me["ArrowLeft"].hide();
-						me["ArrowRight"].hide();
 					}
 					
 					me.dynamicPageArrowFunc(myReceivedMessages[i]);
@@ -1069,7 +1084,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontSizeLeft(small, small, small, small, small, normal);
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
 				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
 				
