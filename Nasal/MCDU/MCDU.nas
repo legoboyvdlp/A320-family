@@ -952,13 +952,19 @@ var rskbutton = func(btn, i) {
 		} else if (page == "AOCMENU") {
 			pageNode[i].setValue("FLTLOG");
 		} else if (page == "WEATHERREQ") {
-			var result = atsu.AOC.newStation(mcdu_scratchpad.scratchpads[i].scratchpad, i);
-			if (result == 1) {
-				mcdu_message(i, "NOT ALLOWED");
-			} elsif (result == 2) {
-				mcdu_message(i, "NOT IN DATA BASE");
+			if (mcdu_scratchpad.scratchpads[i].scratchpad != "CLR") {
+				var result = atsu.AOC.newStation(mcdu_scratchpad.scratchpads[i].scratchpad, i);
+				if (result == 1) {
+					mcdu_message(i, "NOT ALLOWED");
+				} elsif (result == 2) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} else {
+					mcdu_scratchpad.scratchpads[i].empty();
+				}
 			} else {
-				mcdu_scratchpad.scratchpads[i].empty();
+				atsu.AOC.sent = 0;
+				atsu.AOC.received = 0;
+				atsu.AOC.station = nil;
 			}
 		} else if (page == "WEATHERTYPE") {
 			atsu.AOC.selectedType = "TERM FCST";
