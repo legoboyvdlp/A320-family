@@ -145,6 +145,7 @@
 		<callout>
 			<name>V1</name>
 			<mode>once</mode>
+            <type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/V1.wav</path>
 			<condition>
 				<and>
@@ -183,6 +184,7 @@
 			<name>2500</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/2500.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -226,6 +228,7 @@
 			<name>2000</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/2000.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -269,6 +272,7 @@
 			<name>1000</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/1000.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -312,6 +316,7 @@
 			<name>500</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/500.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -355,6 +360,7 @@
 			<name>400</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/400.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -398,6 +404,7 @@
 			<name>300</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/300.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -441,6 +448,7 @@
 			<name>200</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/200.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -484,6 +492,7 @@
 			<name>100</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/100.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -527,6 +536,7 @@
 			<name>50</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/50.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -566,6 +576,7 @@
 			<name>40</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/40.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -605,6 +616,7 @@
 			<name>30</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/30.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -644,6 +656,7 @@
 			<name>20</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/20.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -683,6 +696,7 @@
 			<name>10</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/10.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -736,6 +750,7 @@
 			<name>5</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/5.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -787,6 +802,7 @@
 			<name>100above</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/100-above.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -822,6 +838,7 @@
 			<name>Minimum</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/minimum.wav</path>
 			<mode>once</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<equals>
@@ -859,6 +876,7 @@
 			<name>retard</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/retard.wav</path>
 			<mode>looped</mode>
+            <type>avionics</type>
 			<condition>
 				<and>
 					<greater-than>
@@ -939,6 +957,7 @@
 			<name>retard2</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/retard.wav</path>
 			<mode>looped</mode>
+            <type>avionics</type>
 			<condition>
 				<property>/sim/sound/warnings/retard</property> <!-- must be EMER CANCEL -->
 			</condition>
@@ -953,6 +972,7 @@
 		<apoff>
 			<name>apoff-looped</name>
 			<mode>looped</mode>
+            <type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-loop.wav</path>
 			<condition>
 				<and>
@@ -983,6 +1003,7 @@
 		<apoff>
 			<name>apoff-single</name>
 			<mode>once</mode>
+            <type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-once.wav</path>
 			<condition>
 				<and>
@@ -1013,6 +1034,7 @@
 		<autolandwarning>
 			<name>autolandwarning-single</name>
 			<mode>once</mode>
+            <type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/Cockpit/click.wav</path>
 			<condition>
 				<equals>

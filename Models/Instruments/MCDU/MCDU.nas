@@ -442,6 +442,32 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setFont("HoneywellMCDUSmall.ttf");
 			me["Simple_R5S"].setFontSize(small);
 		}
+		if (page == "RECEIVEDMSG" or page == "ATISDETAIL") {
+			if (page == "RECEIVEDMSG") {
+				me["Simple_L2S"].setFontSize(normal);
+				me["Simple_L3S"].setFontSize(normal);
+				me["Simple_L4S"].setFontSize(normal);
+				me["Simple_L5S"].setFontSize(normal);
+			} else {
+				me["Simple_L2S"].setFontSize(small);
+				me["Simple_L3S"].setFontSize(small);
+				me["Simple_L4S"].setFontSize(small);
+				me["Simple_L5S"].setFontSize(small);
+			}
+			me["Simple_L2S"].setFont("HoneywellMCDU.ttf");
+			me["Simple_L3S"].setFont("HoneywellMCDU.ttf");
+			me["Simple_L4S"].setFont("HoneywellMCDU.ttf");
+			me["Simple_L5S"].setFont("HoneywellMCDU.ttf");
+		} else {
+			me["Simple_L2S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L2S"].setFontSize(small);
+			me["Simple_L3S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L3S"].setFontSize(small);
+			me["Simple_L4S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L4S"].setFontSize(small);
+			me["Simple_L5S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_L5S"].setFontSize(small);
+		}
 		if (page == "IRSMON") {
 			me["Simple_R1S"].setFont("HoneywellMCDU.ttf");
 			me["Simple_R1S"].setFontSize(normal);
@@ -941,11 +967,11 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L1"].setText(" WEATHER TYPE");
 				me["Simple_L1S"].setText(" " ~ atsu.AOC.selectedType);
-				me["Simple_R1S"].setText("STA 1 ");
-				me["Simple_R2"].setText("[    ]");
-				me["Simple_R2S"].setText("STA 2 ");
-				me["Simple_R3"].setText("[    ]");
-				me["Simple_R3S"].setText("STA 3 ");
+				me["Simple_R1S"].setText("STA 1");
+				me["Simple_R2"].setText("[   ]");
+				me["Simple_R2S"].setText("STA 2");
+				me["Simple_R3"].setText("[   ]");
+				me["Simple_R3S"].setText("STA 3");
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -964,7 +990,7 @@ var canvas_MCDU_base = {
 				}
 			} else {
 				me["Simple_R5"].setText("SEND ");
-				me["Simple_R1"].setText("[    ]");
+				me["Simple_R1"].setText("[   ]");
 				me["WEATHERREQSEND"].hide();
 			}
 			
@@ -1029,12 +1055,8 @@ var canvas_MCDU_base = {
 					if (mcdu.ReceivedMessagesDatabase.getCountPages() > 1) {
 						me["Simple_PageNum"].show();
 						me["Simple_PageNum"].setText(myReceivedMessages[i].getPageNumStr());
-						me["ArrowLeft"].show();
-						me["ArrowRight"].show();
 					} else {
 						me["Simple_PageNum"].hide();
-						me["ArrowLeft"].hide();
-						me["ArrowRight"].hide();
 					}
 					
 					me.dynamicPageArrowFunc(myReceivedMessages[i]);
@@ -1069,7 +1091,7 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.fontSizeLeft(small, small, small, small, small, normal);
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
 				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
 				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
 				
@@ -4145,7 +4167,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
-			me["Simple_C3S"].setText("CLEAN  ");
+			me["Simple_C3S"].setText("   CLEAN");
 
 		} else if (page == "PERFCLB") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -4622,7 +4644,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L0S"].setText("DEST");
-			me["Simple_L1S"].setText("QNH");
+			me["Simple_L1S"].setText(" QNH");
 			if (dest_qnh.getValue() != -1) {
 				if (dest_qnh.getValue() < 100) {
 					me["Simple_L1"].setText(sprintf("%4.2f", dest_qnh.getValue()));
@@ -4630,7 +4652,7 @@ var canvas_MCDU_base = {
 					me["Simple_L1"].setText(sprintf("%4.0f", dest_qnh.getValue()));
 				}
 			} else {
-				me["Simple_L1"].setText("[    ]  ");
+				me["Simple_L1"].setText("[   ]");
 			}
 			
 			me["Simple_L2S"].setText("TEMP");
@@ -4643,9 +4665,7 @@ var canvas_MCDU_base = {
 			me["Simple_L3S"].setText("MAG WIND");
 			if (fmgc.FMGCInternal.destMagSet and fmgc.FMGCInternal.destWindSet) {
 				me["Simple_L3"].setText(sprintf("%03.0f°", fmgc.FMGCInternal.destMag) ~ sprintf("/%.0f", fmgc.FMGCInternal.destWind));
-				me["Simple_L3"].setFontSize(normal);
 			} else {
-				me["Simple_L3"].setFontSize(small);
 				if (myDESWIND[i] != nil and myDESWIND[i].returnGRND() != nil) {
 					var result = myDESWIND[i].returnGRND();
 					me["Simple_L3"].setText(sprintf("%03.0f°", result[0]) ~ sprintf("/%.0f", result[1]));
@@ -4675,16 +4695,16 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setColor(WHITE);
 			}
 			
-			me["Simple_R2S"].setText("BARO");
+			me["Simple_R2S"].setText("BARO ");
 			if (getprop("/FMGC/internal/baro") != 99999) {
 				me["Simple_R2"].setText(sprintf("%.0f", getprop("/FMGC/internal/baro")));
 				me.fontSizeRight(0, normal, 0, 0, 0, 0);
 			} else {
-				me["Simple_R2"].setText(" [    ]");
+				me["Simple_R2"].setText("[ ]");
 				me.fontSizeRight(0, small, 0, 0, 0, 0);
 			}
 			
-			me["Simple_R3S"].setText("RADIO");
+			me["Simple_R3S"].setText("RADIO ");
 			if (getprop("/FMGC/internal/radio") != 99999) {
 				me["Simple_R3"].setText(sprintf("%.0f", getprop("/FMGC/internal/radio")));
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
@@ -4692,13 +4712,13 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setText("NO");
 				me.fontSizeRight(0, 0, normal, 0, 0, 0);
 			} else {
-				me["Simple_R3"].setText(" [    ]");
+				me["Simple_R3"].setText("[ ]");
 				me.fontSizeRight(0, 0, small, 0, 0, 0);
 			}
 			
-			me["Simple_R4S"].setText("LDG CONF  ");
-			me["Simple_R4"].setText("CONF3  ");
-			me["Simple_R5"].setText("FULL  ");
+			me["Simple_R4S"].setText("LDG CONF ");
+			me["Simple_R4"].setText("CONF3 ");
+			me["Simple_R5"].setText("FULL ");
 			if (fmgc.FMGCInternal.ldgConfig3 == 1 and fmgc.FMGCInternal.ldgConfigFull == 0) {
 				me["PERFAPPR_LDG_3"].hide();
 				me["PERFAPPR_LDG_F"].show();
@@ -4736,15 +4756,15 @@ var canvas_MCDU_base = {
 					me["Simple_L5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vapp_appr));
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
-					me["Simple_L5"].setText("[    ]  ");
+					me["Simple_L5"].setText("[   ]  ");
 					me.fontSizeLeft(0, 0, 0, 0, small, 0);
 				}
 			}
 			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
-			me["Simple_C3S"].setText("CLEAN  ");
-			me["Simple_C5S"].setText("VLS   ");
+			me["Simple_C3S"].setText("   CLEAN");
+			me["Simple_C5S"].setText("VLS");
 
 		} else if (page == "PERFGA") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -4820,7 +4840,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
-			me["Simple_C3S"].setText("CLEAN  ");
+			me["Simple_C3S"].setText("   CLEAN");
 		} else if (page == "WINDCLB" or page == "WINDCRZ" or page == "WINDDES" or page == "WINDHIST") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();

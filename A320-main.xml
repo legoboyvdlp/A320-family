@@ -55,7 +55,9 @@
 		<long-description>The Airbus A320 is a family of narrow body airliners built by Airbus Industrie. First flown in 1987,
 		the aircraft is the most produced airliner ever, with over 9,500 built to date. It was one of the first airliners
 		to use digital flight controls and fly by wire, and a fully glass cockpit.</long-description>
-  
+		
+		<expected-aircraft-dir-name>A320-family</expected-aircraft-dir-name>
+		
 		<hud n="0">
 			<enable3d n="0">false</enable3d>
 			<enable3d n="1">false</enable3d>
@@ -574,7 +576,7 @@
 			<z-offset-max-m type="float">300.0</z-offset-max-m>
 		</current-view>
 		
-		<minimum-fg-version>2019.2.0</minimum-fg-version>
+		<minimum-fg-version>2020.3.12</minimum-fg-version>
 
 		<navdb>
 			<min-runway-length-ft>3000</min-runway-length-ft>

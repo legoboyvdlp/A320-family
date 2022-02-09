@@ -20,7 +20,7 @@ var receivedMessagesPage = {
 	computer: nil,
 	size: 0,
 	getPageNumStr: func() {
-		return me.curPage ~ "/" ~ ReceivedMessagesDatabase.getCountPages();
+		return "     " ~ sprintf("%02d",me.curPage) ~ "/" ~ sprintf("%02d",ReceivedMessagesDatabase.getCountPages());
 	},
 	new: func(computer) {
 		var ap = {parents:[receivedMessagesPage]};
@@ -61,7 +61,7 @@ var receivedMessagesPage = {
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 	},
 	_setupPageWithData: func() {
-		me.title = "RECEIVED MESSAGES      ";
+		me.title = "ACARS - RCVD MSGS      ";
 		me.L6 = [" RETURN", nil, "wht"];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["blu", "blu", "blu", "blu", "blu", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
@@ -74,60 +74,60 @@ var receivedMessagesPage = {
 		
 		if (me.size >= (me.curPage * 5) + -4) {
 			message = ReceivedMessagesDatabase.database.vector[-5 + (me.curPage * 5)];
-			me.L1[0] = " " ~ left(message.body, size(message.body) > 23 ? 23 : size(message.body));
+			me.L1[0] = " " ~ left(message.body, size(message.body) > 17 ? 17 : size(message.body));
 			me.L1[2] = "blu";
 			if (!message.viewed) {
-				me.L1[1] = " " ~ message.time ~ "                  NEW"; 
+				me.L1[1] = " " ~ message.time ~ "            NEW"; 
 			} else {
-				me.L1[1] = " " ~ message.time ~ "               VIEWED"; 
+				me.L1[1] = " " ~ message.time ~ "         VIEWED"; 
 			}
 			me.arrowsMatrix[0][0] = 1;
 		}
 
 		if (me.size >= (me.curPage * 5) + -3) {
 			message = ReceivedMessagesDatabase.database.vector[-4 + (me.curPage * 5)];
-			me.L2[0] = " " ~ left(message.body, size(message.body) > 23 ? 23 : size(message.body));
+			me.L2[0] = " " ~ left(message.body, size(message.body) > 17 ? 17 : size(message.body));
 			me.L2[2] = "blu";
 			if (!message.viewed) {
-				me.L2[1] = " " ~ message.time ~ "                  NEW"; 
+				me.L2[1] = " " ~ message.time ~ "            NEW"; 
 			} else {
-				me.L2[1] = " " ~ message.time ~ "               VIEWED"; 
+				me.L2[1] = " " ~ message.time ~ "         VIEWED"; 
 			}
 			me.arrowsMatrix[0][1] = 1;
 		}
 		
 		if (me.size >= (me.curPage * 5) + -2) {
 			message = ReceivedMessagesDatabase.database.vector[-3 + (me.curPage * 5)];
-			me.L3[0] = " " ~ left(message.body, size(message.body) > 23 ? 23 : size(message.body));
+			me.L3[0] = " " ~ left(message.body, size(message.body) > 17 ? 17 : size(message.body));
 			me.L3[2] = "blu";
 			if (!message.viewed) {
-				me.L3[1] = " " ~ message.time ~ "                  NEW"; 
+				me.L3[1] = " " ~ message.time ~ "            NEW"; 
 			} else {
-				me.L3[1] = " " ~ message.time ~ "               VIEWED"; 
+				me.L3[1] = " " ~ message.time ~ "         VIEWED"; 
 			}
 			me.arrowsMatrix[0][2] = 1;
 		}
 		
 		if (me.size >= (me.curPage * 5) + -1) {
 			message = ReceivedMessagesDatabase.database.vector[-2 + (me.curPage * 5)];
-			me.L4[0] = " " ~ left(message.body, size(message.body) > 23 ? 23 : size(message.body));
+			me.L4[0] = " " ~ left(message.body, size(message.body) > 17 ? 17 : size(message.body));
 			me.L4[2] = "blu";
 			if (!message.viewed) {
-				me.L4[1] = " " ~ message.time ~ "                  NEW"; 
+				me.L4[1] = " " ~ message.time ~ "            NEW"; 
 			} else {
-				me.L4[1] = " " ~ message.time ~ "               VIEWED"; 
+				me.L4[1] = " " ~ message.time ~ "         VIEWED"; 
 			}
 			me.arrowsMatrix[0][3] = 1;
 		}
 		
 		if (me.size >= (me.curPage * 5) + 0) {
 			message = ReceivedMessagesDatabase.database.vector[-1 + (me.curPage * 5)];
-			me.L5[0] = " " ~ left(message.body, size(message.body) > 23 ? 23 : size(message.body));
+			me.L5[0] = " " ~ left(message.body, size(message.body) > 17 ? 17 : size(message.body));
 			me.L5[2] = "blu";
 			if (!message.viewed) {
-				me.L5[1] = " " ~ message.time ~ "                  NEW"; 
+				me.L5[1] = " " ~ message.time ~ "            NEW"; 
 			} else {
-				me.L5[1] = " " ~ message.time ~ "               VIEWED"; 
+				me.L5[1] = " " ~ message.time ~ "         VIEWED"; 
 			}
 			me.arrowsMatrix[0][4] = 1;
 		}
@@ -239,37 +239,37 @@ var receivedMessagePage = {
 			me.L1[1] = message.time;
 			me.C1[1] = "VIEWED";
 			me.C1[2] = "grn";
-			me.R1[1] = me.curPage ~ "/" ~ ReceivedMessagesDatabase.getSize();
+			me.R1[1] = sprintf("%02d",me.curPage) ~ "/" ~ sprintf("%02d",ReceivedMessagesDatabase.getSize());
 			
-			me.L1[0] = left(message.body, size(message.body) > 30 ? 30 : size(message.body));
+			me.L1[0] = left(message.body, size(message.body) > 24 ? 24 : size(message.body));
 			me.L1[2] = "wht";
 			me.L2[2] = "wht";
 			me.L3[2] = "wht";
 			me.L4[2] = "wht";
 			me.L5[2] = "wht";
-			if (size(message.body) > 30) {
-				me.L2[1] = left(split(me.L1[0], message.body)[1], size(message.body) > 60 ? 30 : size(message.body) - 30);
+			if (size(message.body) > 24) {
+				me.L2[1] = left(split(me.L1[0], message.body)[1], size(message.body) > 48 ? 24 : size(message.body) - 24);
 			}
-			if (size(message.body) > 60) {
-				me.L2[0] = left(split(me.L2[1], message.body)[1], size(message.body) > 90 ? 30 : size(message.body) - 60);
+			if (size(message.body) > 48) {
+				me.L2[0] = left(split(me.L2[1], message.body)[1], size(message.body) > 72 ? 24 : size(message.body) - 48);
 			}
-			if (size(message.body) > 90) {
-				me.L3[1] = left(split(me.L2[0], message.body)[1], size(message.body) > 120 ? 30 : size(message.body) - 90);
+			if (size(message.body) > 72) {
+				me.L3[1] = left(split(me.L2[0], message.body)[1], size(message.body) > 96 ? 24 : size(message.body) - 72);
+			}
+			if (size(message.body) > 96) {
+				me.L3[0] = left(split(me.L3[1], message.body)[1], size(message.body) > 120 ? 24 : size(message.body) - 96);
 			}
 			if (size(message.body) > 120) {
-				me.L3[0] = left(split(me.L3[1], message.body)[1], size(message.body) > 150 ? 30 : size(message.body) - 120);
+				me.L4[1] = left(split(me.L3[0], message.body)[1], size(message.body) > 144 ? 24 : size(message.body) - 120);
 			}
-			if (size(message.body) > 150) {
-				me.L4[1] = left(split(me.L3[0], message.body)[1], size(message.body) > 180 ? 30 : size(message.body) - 150);
+			if (size(message.body) > 144) {
+				me.L4[0] = left(split(me.L4[1], message.body)[1], size(message.body) > 168 ? 24 : size(message.body) - 144);
 			}
-			if (size(message.body) > 180) {
-				me.L4[0] = left(split(me.L4[1], message.body)[1], size(message.body) > 210 ? 30 : size(message.body) - 180);
+			if (size(message.body) > 168) {
+				me.L5[1] = left(split(me.L4[0], message.body)[1], size(message.body) > 192 ? 24 : size(message.body) - 168);
 			}
-			if (size(message.body) > 210) {
-				me.L5[1] = left(split(me.L4[0], message.body)[1], size(message.body) > 240 ? 30 : size(message.body) - 210);
-			}
-			if (size(message.body) > 240) {
-				me.L5[0] = left(split(me.L5[1], message.body)[1], size(message.body) > 270 ? 30 : size(message.body) - 240);
+			if (size(message.body) > 192) {
+				me.L5[0] = left(split(me.L5[1], message.body)[1], size(message.body) > 216 ? 24 : size(message.body) - 192);
 			}
 		}
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
