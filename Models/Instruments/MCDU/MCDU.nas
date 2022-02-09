@@ -4312,6 +4312,7 @@ var canvas_MCDU_base = {
 				me.fontSizeLeft(normal, normal, normal, normal, 0, normal);
 				me.fontSizeRight(normal, small, 0, 0, 0, normal);
 				me.fontSizeCenter(small, small, small, 0, 0, 0);
+				me.fontSizeCenterS(small, small, small, small, small, small);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -4327,7 +4328,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L4"].setText(sprintf("%3.0f", fmgc.FMGCInternal.transAlt));
-			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
+			me["Simple_L5"].setText(" " ~ sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" TO DATA");
 			me["Simple_L1S"].setText(" V1");
 			me["Simple_L2S"].setText(" VR");
@@ -4335,7 +4336,7 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("TRANS ALT");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" UPLINK");
-			me["Simple_R2"].setText("[   ]  ");
+			me["Simple_R2"].setText("[M][ ]  ");
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R6"].setText("PHASE ");
 			me["Simple_R1S"].setText("RWY ");
@@ -4420,14 +4421,14 @@ var canvas_MCDU_base = {
 				}
 			} else {
 				me["Simple_R3"].setFontSize(small); 
-				me["Simple_R3"].setText("[  ]/[    ]");
+				me["Simple_R3"].setText("[  ]/[  ]");
 			}
 			if (flexSet.getValue() == 1) {
 				me["Simple_R4"].setFontSize(normal); 
-				me["Simple_R4"].setText(sprintf("%3.0f", flex.getValue()));
+				me["Simple_R4"].setText(sprintf("%3.0f°", flex.getValue()));
 			} else {
 				me["Simple_R4"].setFontSize(small); 
-				me["Simple_R4"].setText("[   ]");
+				me["Simple_R4"].setText("[ ]°");
 			}
 			if (engOutAccSet.getValue() == 1) {
 				me["Simple_R5"].setFontSize(normal);
@@ -4447,7 +4448,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
-			me["Simple_C3S"].setText("   CLEAN");
+			me["Simple_C3S"].setText("  CLEAN");
 		} else if (page == "PERFCLB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -4897,6 +4898,7 @@ var canvas_MCDU_base = {
 				me.fontSizeLeft(small, small, small, small, small, normal);
 				me.fontSizeRight(normal, small, small, small, normal, normal);
 				me.fontSizeCenter(small, small, small, 0, small, 0);
+				me.fontSizeCenterS(small, small, small, small, small, small);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -4932,7 +4934,7 @@ var canvas_MCDU_base = {
 			if (dest_temp.getValue() != -999) {
 				me["Simple_L2"].setText(sprintf("%3.0f°", dest_temp.getValue()));
 			} else {
-				me["Simple_L2"].setText("---°");
+				me["Simple_L2"].setText("[ ]°");
 			}
 			
 			me["Simple_L3S"].setText("MAG WIND");
@@ -4946,7 +4948,7 @@ var canvas_MCDU_base = {
 					var result = myDESWIND[math.abs(i-1)].returnGRND();
 					me["Simple_L3"].setText(sprintf("%03.0f°", result[0]) ~ sprintf("/%.0f", result[1]));
 				} else {
-					me["Simple_L3"].setText("---°/---");
+					me["Simple_L3"].setText("[ ]°/[  ]");
 				}
 			}
 			
@@ -5028,14 +5030,14 @@ var canvas_MCDU_base = {
 					me["Simple_L5"].setText(sprintf("%3.0f", fmgc.FMGCInternal.vapp_appr));
 					me.fontSizeLeft(0, 0, 0, 0, normal, 0);
 				} else {
-					me["Simple_L5"].setText("[   ]  ");
+					me["Simple_L5"].setText("[  ]  ");
 					me.fontSizeLeft(0, 0, 0, 0, small, 0);
 				}
 			}
 			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
-			me["Simple_C3S"].setText("   CLEAN");
+			me["Simple_C3S"].setText("  CLEAN");
 			me["Simple_C5S"].setText("VLS");
 		} else if (page == "PERFGA") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -5111,7 +5113,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
-			me["Simple_C3S"].setText("   CLEAN");
+			me["Simple_C3S"].setText("  CLEAN");
 		} else if (page == "WINDCLB" or page == "WINDCRZ" or page == "WINDDES" or page == "WINDHIST") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
