@@ -4440,7 +4440,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
-			me["Simple_C3S"].setText("CLEAN  ");
+			me["Simple_C3S"].setText("   CLEAN");
 		} else if (page == "PERFCLB") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -5028,8 +5028,8 @@ var canvas_MCDU_base = {
 			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
-			me["Simple_C3S"].setText("CLEAN  ");
-			me["Simple_C5S"].setText("VLS   ");
+			me["Simple_C3S"].setText("   CLEAN");
+			me["Simple_C5S"].setText("VLS");
 		} else if (page == "PERFGA") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
@@ -5104,7 +5104,7 @@ var canvas_MCDU_base = {
 			
 			me["Simple_C1S"].setText("FLP RETR");
 			me["Simple_C2S"].setText("SLT RETR");
-			me["Simple_C3S"].setText("CLEAN  ");
+			me["Simple_C3S"].setText("   CLEAN");
 		} else if (page == "WINDCLB" or page == "WINDCRZ" or page == "WINDDES" or page == "WINDHIST") {
 			if (!pageSwitch[i].getBoolValue()) {
 				me.defaultHideWithCenter();
