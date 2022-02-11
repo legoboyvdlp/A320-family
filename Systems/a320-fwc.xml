@@ -3457,7 +3457,7 @@
 		<actuator name="/ECAM/warnings/fctl/altn-law-output">
 			<input>/ECAM/warnings/fctl/altn-law</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">3.33333333333</rate_limit> <!-- 0.3 seconds -->
+			<rate_limit sense="incr">0.3</rate_limit>
 		</actuator>
 		
 		

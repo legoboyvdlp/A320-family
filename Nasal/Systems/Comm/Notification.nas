@@ -303,6 +303,11 @@ var ATIS = {
 			return 1;
 		}
 	},
+	setType: func(i) {
+		if (i >= 0 and i <= 1) {
+			me.type = i;
+		}
+	},
 	sendReq: func(i) {
 		if (me.station == nil or (me.sent and !me.received)) {
 			return 1;

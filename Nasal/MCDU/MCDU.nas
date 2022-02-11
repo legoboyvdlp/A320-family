@@ -293,6 +293,7 @@ var lskbutton = func(btn, i) {
 				if (atsu.ATISInstances[0].sent != 1) {
 					if (fmgc.FMGCInternal.depApt != "") {
 						atsu.ATISInstances[0].newStation(fmgc.FMGCInternal.depApt);
+						atsu.ATISInstances[0].setType(1);
 					} else {
 						atsu.ATISInstances[0].station = nil;
 					}
@@ -437,6 +438,7 @@ var lskbutton = func(btn, i) {
 				if (atsu.ATISInstances[1].sent != 1) {
 					if (fmgc.FMGCInternal.arrApt != "") {
 						atsu.ATISInstances[1].newStation(fmgc.FMGCInternal.arrApt);
+						atsu.ATISInstances[1].setType(0);
 					} else {
 						atsu.ATISInstances[1].station = nil;
 					}
@@ -564,6 +566,7 @@ var lskbutton = func(btn, i) {
 				if (atsu.ATISInstances[2].sent != 1) {
 					if (fmgc.FMGCInternal.altAirportSet) {
 						atsu.ATISInstances[2].newStation(fmgc.FMGCInternal.altAirport);
+						atsu.ATISInstances[1].setType(0);
 					} else {
 						atsu.ATISInstances[2].station = nil;
 					}
