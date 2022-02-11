@@ -279,7 +279,6 @@ var flightPlanController = {
 	# args: n, index
 	#	 n: flightplan to which the PPOS waypoint will be inserted
 	#	 index: index which the waypoint will be at. 
-	
 	insertTP: func(n, index) {
 		me.flightplans[n].insertWP(createWP(geo.aircraft_position(), "T-P"), index);
 		fmgc.windController.insertWind(n, index, 0, "T-P");
@@ -372,10 +371,10 @@ var flightPlanController = {
 			var indexWP = me.flightplans[plan].indexOfWP(waypointGhost);
 			me.deleteTillIndex(waypointGhost, me.currentToWptIndex.getValue(), plan);
 			me.insertTP(plan, indexWP - 1);
+			me.DirToIndex = indexWP;
 		}
 		var curAircraftPosDirTo = geo.aircraft_position();
 		canvas_mcdu.myDirTo[plan].updateDist(me.flightplans[plan].getWP(me.currentToWptIndex.getValue() + 1).courseAndDistanceFrom(curAircraftPosDirTo)[1]);
-		me.flightPlanChanged(plan);
 	},
 	
 	deleteWP: func(index, n, a = 0) { # a = 1, means adding a waypoint via deleting intermediate
