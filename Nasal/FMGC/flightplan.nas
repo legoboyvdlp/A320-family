@@ -369,8 +369,11 @@ var flightPlanController = {
 			me.DirToIndex = me.currentToWptIndex.getValue() + 1;
 		} else {
 			var indexWP = me.flightplans[plan].indexOfWP(waypointGhost);
-			me.deleteTillIndex(waypointGhost, me.currentToWptIndex.getValue(), plan);
-			me.insertTP(plan, indexWP - 1);
+			me.insertTP(plan, indexWP);
+			me.deleteTillIndex(waypointGhost, me.currentToWptIndex.getValue(), plan, 1);
+			
+			indexWP = me.flightplans[plan].indexOfWP(waypointGhost);
+			me.hideTillIndex(indexWP - 2, plan);
 			me.DirToIndex = indexWP;
 		}
 		var curAircraftPosDirTo = geo.aircraft_position();
@@ -405,10 +408,19 @@ var flightPlanController = {
 	# deleteTillIndex - helper that deletes waypoints up to a passed waypoint already in flightplan
 	# uses a while loop to delete a certain number of waypoints between passed index and 
 	# index of waypoint alredy in flightplan
-	deleteTillIndex: func(wpGhost, index, plan) {
-		var numToDel = me.flightplans[plan].indexOfWP(wpGhost) - index;
+	deleteTillIndex: func(wpGhost, index, plan, offset = 0) {
+		var numToDel = me.flightplans[plan].indexOfWP(wpGhost) - index - offset;
 		while (numToDel > 0) {
 			me.deleteWP(index, plan, 1);
+			numToDel -= 1;
+		}
+		return 2;
+	},
+	
+	hideTillIndex: func(index, plan) {
+		var numToDel = index;
+		while (numToDel >= 0) {
+			me.flightplans[plan].getWP(index - numToDel).hidden = 1;
 			numToDel -= 1;
 		}
 		return 2;
