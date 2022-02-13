@@ -432,7 +432,9 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		decelShow = getprop("/instrumentation/nd/symbols/decel/show");
 		
 		var startingIndex = fmgc.flightPlanController.currentToWptIndex.getValue() == -1 ? 0 : fmgc.flightPlanController.currentToWptIndex.getValue() - 1;
-		startingIndex == -1 ? 0 : startingIndex;
+		
+		# Situation where currentIndex is equal to 0
+		startingIndex = (startingIndex == -1 ? 0 : startingIndex);
 		
 		for (var i = startingIndex; i < me.plan.getPlanSize(); i += 1) {
 			if (!me.temporaryFlagFpln and decelShow) {
