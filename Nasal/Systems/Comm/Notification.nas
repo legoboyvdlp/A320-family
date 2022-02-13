@@ -1,7 +1,7 @@
 # A3XX Notification System
 # Jonathan Redpath
 
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 var defaultServer = "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&mostRecent=true&hoursBeforeNow=12&stationString=";
 var result = nil;
 
@@ -301,6 +301,11 @@ var ATIS = {
 			}
 		} else {
 			return 1;
+		}
+	},
+	setType: func(i) {
+		if (i >= 0 and i <= 1) {
+			me.type = i;
 		}
 	},
 	sendReq: func(i) {

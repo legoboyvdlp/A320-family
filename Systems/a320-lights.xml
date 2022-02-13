@@ -71,37 +71,29 @@
 		<switch name="/controls/lighting/fcu-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/fcu-panel-knb">
-				/systems/electrical/bus/ac-1 gt 25
+				/systems/electrical/bus/ac-1 gt 110
 			</test>
 		</switch>
 		
 		<switch name="/controls/lighting/fcu-digit-norm-tied">
 			<default value="0" />
-			<test value="/controls/lighting/fcu-digit-knb">
-				/systems/electrical/bus/ac-1 gt 25
+			<test logic="OR" value="/controls/lighting/fcu-digit-knb">
+				/systems/electrical/bus/ac-si-bus ge 110
+				/systems/electrical/bus/ac-ess-shed ge 110
 			</test>
 		</switch>
 		
 		<switch name="/controls/lighting/main-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/main-panel-knb">
-				/systems/electrical/bus/ac-1 gt 25
+				/systems/electrical/bus/ac-1 gt 110
 			</test>
 		</switch>
 		
 		<switch name="/controls/lighting/overhead-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/overhead-panel-knb">
-				/systems/electrical/bus/ac-1 gt 25
-			</test>
-		</switch>
-		
-		<switch name="/controls/lighting/annunciator-lights-tied">
-			<default value="0" />
-			<test logic="OR" value="1"> <!-- TODO: add static inverter as a source, also dc-2 switching -->
 				/systems/electrical/bus/ac-1 gt 110
-				/systems/electrical/bus/ac-2 gt 110
-				/systems/electrical/bus/dc-2 gt 25
 			</test>
 		</switch>
 		
@@ -233,37 +225,6 @@
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/landing-lights[1]">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/switches/landing-lights-l eq 1
-				/systems/electrical/bus/ac-1 ge 110
-			</test>
-		</switch>
-		
-		<switch name="/controls/lighting/landing-lights[2]">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/switches/landing-lights-r eq 1
-				/systems/electrical/bus/ac-2 ge 110
-			</test>
-		</switch>
-		
-		
-		<switch name="/fdm/jsbsim/rubbish/landL">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/lighting/landing-lights[1] ge 0.5
-			</test>
-		</switch>
-		
-		<switch name="/fdm/jsbsim/rubbish/landR">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/lighting/landing-lights[2] ge 0.5
-			</test>
-		</switch>
-		
 	</channel>
 	
 	<channel name="External lights">
@@ -324,6 +285,46 @@
 			<input>/controls/lighting/landing-light-pos-r-cmd</input>
 			<rate_limit>/controls/lighting/landing-light-pos-r-power</rate_limit>
 		</actuator>
+		
+	</channel>
+	
+	<channel name="Signs">
+	
+		<switch name="/controls/lighting/no-smoking-sign">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess ge 25
+					/systems/electrical/bus/dc-service-bus ge 25
+				</test>
+				<test logic="OR">
+					/systems/pressurization/cabinalt-norm ge 11300
+					/controls/switches/no-smoking-sign eq 1
+				</test>
+			</test>
+			<test logic="AND" value="1">
+				/controls/switches/no-smoking-sign eq 0.5
+				/gear/gear[0]/position-norm ge 0.8
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess ge 25
+					/systems/electrical/bus/dc-service-bus ge 25
+				</test>
+			</test>
+		</switch>
+	
+		<switch name="/controls/lighting/seatbelt-sign">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/systems/electrical/bus/dc-ess ge 25
+					/systems/electrical/bus/dc-service-bus ge 25
+				</test>
+				<test logic="OR">
+					/systems/pressurization/cabinalt-norm ge 11300
+					/controls/switches/seatbelt-sign eq 1
+				</test>
+			</test>
+		</switch>
 		
 	</channel>
 

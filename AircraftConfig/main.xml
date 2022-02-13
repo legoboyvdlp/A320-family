@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -229,6 +229,27 @@
 				<binding>
 					<command>property-toggle</command>
 					<property>/options/system/keyboard-mode</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Enable FGCamera 0-9 keys</label>
+				<halign>left</halign>
+				<enable>/sim/fgcamera/enable</enable>
+				<property>/options/system/fgcamera-keys-enabled</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/options/system/fgcamera-keys-enabled</property>
 				</binding>
 				<binding>
 					<command>dialog-apply</command>

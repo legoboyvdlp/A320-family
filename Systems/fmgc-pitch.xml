@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 
 <!-- IT-AUTOFLIGHT -->
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
 	<!-- Pitch Axis -->
 	<filter>
 		<name>IT-CONTROLLER: Altitude Capture/Hold</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>-5</gain>
 		<input>
@@ -63,7 +62,6 @@
 	
 	<pid-controller>
 		<name>IT-CONTROLLER: Speed By Pitch</name>
-		<debug>false</debug>
 		<enable>
 			<condition>
 				<property>/it-autoflight/internal/flch-active</property>
@@ -169,7 +167,6 @@
 	
 	<filter>
 		<name>Speed By Pitch Inactive Sync</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>
@@ -265,11 +262,27 @@
 	<filter>
 		<name>FPA FPM Filter</name>
 		<type>noise-spike</type>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/overspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/overspeed-vs</property>
+		</input>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/underspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/underspeed-vs</property>
+		</input>
 		<input>/it-autoflight/internal/target-fpm-fpa-raw</input>
 		<output>/it-autoflight/internal/target-fpm-fpa</output>
 		<max-rate-of-change>
 			<condition>
-				<not><property>/it-autoflight/internal/fpa-active</property></not>
+				<or>
+					<not><property>/it-autoflight/internal/fpa-active</property></not>
+					<property>/it-autoflight/internal/overspeed-vs-prot</property>
+					<property>/it-autoflight/internal/underspeed-vs-prot</property>
+				</or>
 			</condition>
 			<value>10000</value>
 		</max-rate-of-change>
@@ -356,8 +369,47 @@
 	</filter>
 	
 	<filter>
+		<name>Vertical Speed FD Input</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/overspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/overspeed-vs</property>
+		</input>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/underspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/underspeed-vs</property>
+		</input>
+		<input>/it-autoflight/input/vs</input>
+		<output>/it-autoflight/internal/vs-fd</output>
+	</filter>
+	
+	<filter>
+		<name>FPA FD Input</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/overspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/overspeed-vs</property>
+		</input>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/underspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/underspeed-vs</property>
+		</input>
+		<input>/it-autoflight/internal/target-fpm-fpa-raw</input>
+		<output>/it-autoflight/internal/fpa-fd</output>
+	</filter>
+	
+	<filter>
 		<name>Target FPM</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -376,7 +428,7 @@
 					<value>1</value>
 				</equals>
 			</condition>
-			<property>/it-autoflight/input/vs</property>
+			<property>/it-autoflight/internal/vs-fd</property>
 		</input>
 		<input>
 			<condition>
@@ -409,7 +461,7 @@
 					<value>5</value>
 				</equals>
 			</condition>
-			<property>/it-autoflight/internal/target-fpm-fpa-raw</property>
+			<property>/it-autoflight/internal/fpa-fd</property>
 		</input>
 		<input>
 			<condition>
@@ -434,7 +486,6 @@
 	
 	<pid-controller>
 		<name>IT-CONTROLLER: FPM Hold</name>
-		<debug>false</debug>
 		<enable>
 			<condition>
 				<and>
@@ -588,7 +639,6 @@
 	
 	<filter>
 		<name>System Command: Pitch Target Inactive Sync</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>
@@ -629,9 +679,8 @@
 	
 	<filter>
 		<name>System Command: Pitch Rate Target</name>
-		<debug>false</debug>
 		<type>gain</type>
-		<gain>0.125</gain>
+		<gain>0.12</gain>
 		<input>/orientation/pitch-deg</input>
 		<reference>/it-autoflight/internal/target-pitch-deg</reference>
 		<output>/fdm/jsbsim/fbw/fmgc/pitch-cmd</output> <!-- Inputs to the FBW Pitch -->

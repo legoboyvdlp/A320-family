@@ -5,6 +5,34 @@
 
 <system name="A320: ADR">
 
+	<channel name="ADR Align Fault" execrate="8">
+	
+		<lag_filter name="velocities/r-aero-deg_sec_filter">
+			<input>velocities/r-aero-deg_sec</input>
+			<c1>1</c1>
+		</lag_filter>
+		
+		<lag_filter name="velocities/v-north-fps_filter">
+			<input>velocities/v-north-fps</input>
+			<c1>1</c1>
+		</lag_filter>
+		
+		<lag_filter name="velocities/v-east-fps_filter">
+			<input>velocities/v-east-fps</input>
+			<c1>1</c1>
+		</lag_filter>
+		
+		<switch name="/systems/navigation/align-fault">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				velocities/r-aero-deg_sec_filter ge 2
+				velocities/v-north-fps_filter ge 0.5
+				velocities/v-east-fps_filter ge 0.5
+			</test>
+		</switch>
+		
+	</channel>
+	
     <channel name="ADR Inputs" execrate="2">
 		<fcs_function name="aero/alpha-deg-corrected">
 			<function>
@@ -742,12 +770,17 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="/systems/navigation/adr/computation/underspeed-difference">
-			<default value="2"/>
-			<test logic="OR" value="19">
-				/controls/flight/speedbrake eq 1.0
-			</test>
-		</switch>
+		<fcs_function name="/systems/navigation/adr/computation/underspeed-difference">
+			<function>
+				<sum>
+					<value>2</value>
+					<product>
+						<property>/controls/flight/speedbrake</property>
+						<value>17</value>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
 		
 		<fcs_function name="/systems/navigation/adr/computation/underspeed">
 			<function>
@@ -759,7 +792,7 @@
 							<property>/systems/navigation/adr/output/cas-3</property>
 						</max>
 						<difference>
-							<property>/FMGC/internal/vls-min</property>
+							<property>/FMGC/internal/vls</property>
 							<property>/systems/navigation/adr/computation/underspeed-difference</property>
 						</difference>
 					</lt>

@@ -1,5 +1,5 @@
 # A3XX Lower ECAM Canvas
-# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath
 
 var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3");
 var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");
@@ -25,7 +25,7 @@ var canvas_lowerECAM_base =
 		me.canvas.addPlacement({"node": "uecam.screen2"});
 		
 		me.font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "ECAMFontRegular.ttf";
 		};
 		
 		me.test = me.canvas.createGroup();

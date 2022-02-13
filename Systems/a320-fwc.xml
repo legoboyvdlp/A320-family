@@ -14,352 +14,314 @@
 		</actuator>
 		
 		<actuator name="/ECAM/phases/timer/eng1idle-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/eng1idle</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/phases/timer/eng2idle-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/eng2idle</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.033</rate_limit> <!-- 30 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/phases/timer/to-inhibit-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/to-inhibit</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.33</rate_limit> <!-- 3 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/phases/timer/ldg-inhibit-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/phases/timer/ldg-inhibit</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.33</rate_limit> <!-- 3 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-1-fault-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/timer/bleed-1-fault</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-2-fault-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/timer/bleed-2-fault</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/apu-fault-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/apu-bleed-fault</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/xbleed-fault-output">
-			<description>Timer for the ECAM system</description>
 			<input>/systems/pneumatics/warnings/crossbleed-disag</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/xbleed-fault-output-10"> <!-- 10 second delay on fall -->
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/crossbleed-fault-timer-was-one</input>
 			<rate_limit sense="decr">0.1</rate_limit> <!-- 10 seconds -->
 			<rate_limit sense="incr">120</rate_limit> <!-- Instant -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/xbleed-fault-eng-fire">
-			<description>Timer for the ECAM system</description>
 			<input>/controls/engines/engine[0]/fire-btn</input>
 			<rate_limit>0.06666666666</rate_limit>
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/prv-1-not-shut-apu-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/prv-1-not-shut-apu</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/prv-2-not-shut-apu-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/prv-2-not-shut-apu</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/prv-1-not-shut-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/prv-1-not-shut</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/prv-2-not-shut-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/prv-2-not-shut</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-1-and-2-low-temp-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/timer/bleed-1-and-2-low-temp</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.00185185</rate_limit> <!-- 540 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-1-low-temp-output">
-			<description>Timer for the ECAM system</description>
 			<input>/systems/pneumatics/warnings/lowtemp-1-mem</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-2-low-temp-output">
-			<description>Timer for the ECAM system</description>
 			<input>/systems/pneumatics/warnings/lowtemp-2-mem</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/bleed-1-off-60-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/bleed-1-off-60</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/bleed-2-off-60-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/bleed-2-off-60</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.016666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/bleed-1-off-5-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/bleed-1-off-5</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/bleed-2-off-5-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/bleed-2-off-5</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/eng-aice-1-open-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/eng-aice-1-open</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/eng-aice-2-open-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/eng-aice-2-open</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/eng-aice-1-closed-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/eng-aice-1-closed</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/eng-aice-2-closed-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/eng-aice-2-closed</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/wing-anti-ice-flipflop-set">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/wing-anti-ice-flipflop-set-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.0285714</rate_limit> <!-- 35 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/phase-1">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/timer/phase-1-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/wing-anti-ice-25">
-			<description>Timer for the ECAM system</description>
 			<input>/controls/ice-protection/wing</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.04</rate_limit> <!-- 25 seconds -->
 		</actuator>
 		
-		<actuator name="/ECAM/warnings/logic/wing-anti-ice-left-closed-set">
-			<description>Timer for the ECAM system</description>
+		<actuator name="/ECAM/warnings/logic/wing-anti-ice-left-closed-set-timer">
 			<input>/ECAM/warnings/logic/wing-anti-ice-left-closed-set-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.066666</rate_limit> <!-- 15 seconds -->
 		</actuator>
 		
-		<actuator name="/ECAM/warnings/logic/wing-anti-ice-right-closed-set">
-			<description>Timer for the ECAM system</description>
+		<actuator name="/ECAM/warnings/logic/wing-anti-ice-right-closed-set-timer">
 			<input>/ECAM/warnings/logic/wing-anti-ice-right-closed-set-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.066666</rate_limit> <!-- 15 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/logic/proc-wai-shutdown-output">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/proc-wai-shutdown-flipflop</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/wing-hi-pr-left">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/wing-hi-pr-left-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.025</rate_limit> <!-- 40 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/wing-hi-pr-right">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/wing-hi-pr-right-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.025</rate_limit> <!-- 40 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/cranking-35-sec">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/cranking-35-sec-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.028571</rate_limit> <!-- 35 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-1-fault-closed">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-fault-closed-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-fault-closed">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-fault-closed-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-1-disagree">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-disagree-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-disagree">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-disagree-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1</rate_limit> <!-- 10 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/ignition">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/ignition</input>
 			<rate_limit sense="incr">100</rate_limit> <!-- Instant -->
 			<rate_limit sense="decr">0.028571</rate_limit> <!-- 35 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-1-fault-5">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-fault-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.20</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-fault-5">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-fault-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.20</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-1-fault-2">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-fault-warning-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.50</rate_limit> <!-- 2 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-fault-2">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-fault-warning-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.50</rate_limit> <!-- 2 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-1-off">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-1-off-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.0166666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/pack-2-off">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/pack-2-off-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.0166666</rate_limit> <!-- 60 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/trim-air-fault">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/trim-air-fault-input</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/yaw-damper-1-fault">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/yaw-damper-1-fault</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/yaw-damper-2-fault">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/yaw-damper-2-fault</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/nav-gpws-terr-fault">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/nav-gpws-terr-fault</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">1.0</rate_limit> <!-- 1 second -->
 		</actuator>
 		
 		<actuator name="/ECAM/warnings/timer/apu-gen-fault-reset">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/apu-gen-fault-reset</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.5</rate_limit> <!-- 2 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/wing-anti-ice-left-open-set-15">
+			<input>/ECAM/warnings/logic/wing-anti-ice-left-open-set-15-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.06666666666</rate_limit> <!-- 15 seconds -->
+		</actuator>
+		
+		<actuator name="/ECAM/warnings/logic/wing-anti-ice-right-open-set-15">
+			<input>/ECAM/warnings/logic/wing-anti-ice-right-open-set-15-input</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.06666666666</rate_limit> <!-- 15 seconds -->
 		</actuator>
 	</channel>
 	
@@ -786,7 +748,7 @@
 		<switch name="/ECAM/warnings/logic/wai-ground-pulse-set">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/gear/gear[1]/wow eq 0
+				/ECAM/timer/ground-calc ne 1
 				/controls/ice-protection/wing eq 1
 			</test>
 		</switch>
@@ -805,10 +767,17 @@
 						/ECAM/warnings/logic/wai-ground-pulse-set eq 1
 					</test>
 					<test logic="AND">
-						/gear/gear[1]/wow eq 1
+						/ECAM/timer/ground-calc eq 1
 						/ECAM/warnings/timer/wing-anti-ice-25 ne 1
 					</test>
 				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-left-closed-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/wing-anti-ice-left-closed-set-timer eq 1
 			</test>
 		</switch>
 		
@@ -832,6 +801,14 @@
 				</test>
 			</test>
 		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-right-closed-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/wing-anti-ice-right-closed-set-timer eq 1
+			</test>
+		</switch>
+		
 		
 		<switch name="/ECAM/warnings/timer/phase-1-input">
 			<default value="0"/>
@@ -868,7 +845,7 @@
 			<defualt value="0"/>
 			<test logic="AND" value="1">
 				/controls/ice-protection/wing eq 1
-				/gear/gear[1]/wow eq 1
+				/ECAM/timer/ground-calc eq 1
 				/ECAM/warnings/logic/wai-on eq 1
 			</test>
 		</switch>
@@ -889,14 +866,14 @@
 				/controls/engines/engine[1]/fire-btn eq 0
 				/ECAM/warnings/logic/wai-ground-pulse eq 1
 				/ECAM/warnings/logic/wai-ground-pulse-set eq 1
-				<test logic="OR">
+				<test logic="OR"> <!-- XOR -->
 					<test logic="AND">
-						/engines/engine[0]/state eq 3
-						/engines/engine[1]/state ne 3 <!-- TODO this must use ENG 1 FAIL from the ECAM warning see page 2856 of ESLD -->
+						/ECAM/warnings/logic/eng/eng-1-shutdown eq 1
+						/ECAM/warnings/logic/eng/eng-2-shutdown eq 0
 					</test>
 					<test logic="AND">
-						/engines/engine[0]/state ne 3
-						/engines/engine[1]/state eq 3
+						/ECAM/warnings/logic/eng/eng-1-shutdown eq 0
+						/ECAM/warnings/logic/eng/eng-2-shutdown eq 1
 					</test>
 				</test>
 			</test>
@@ -931,6 +908,20 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/phase-6-pulse-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 6
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/phase-9-pulse-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warning-phase eq 9
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/wai-phase-9-pulse-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -959,11 +950,106 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-left-open-set-15-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/wing-ice-1 ne 0
+				<test logic="OR">
+					/ECAM/warnings/logic/wai-on eq 0
+					<!--<test logic="AND">
+						/ECAM/warnings/logic/wai-on eq 1
+						/ECAM/timer/ground-calc eq 1
+						PREC = 1
+					</test>-->
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-left-open-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/ECAM/warnings/logic/wing-anti-ice-left-open-set-15 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-left-open-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/wing-ice-1 eq 0
+				/ECAM/warnings/timer/phase-1 eq 1
+				<test logic="AND">
+					<test logic="AND">
+						/ECAM/warnings/logic/wai-phase-9-pulse-input eq 1
+						/ECAM/warnings/logic/wai-phase-9-pulse eq 1
+					</test>
+					/systems/pneumatics/valves/wing-ice-1 ne 0
+					/controls/pneumatics/switches/bleed-1 eq 1
+				</test>
+				<test logic="AND">
+					/systems/pneumatics/valves/wing-ice-1 ne 0
+					/controls/pneumatics/switches/bleed-1 eq 0
+					<test logic="AND">
+						/ECAM/warnings/logic/wai-phase-9-pulse-input eq 1
+						/ECAM/warnings/logic/wai-phase-9-pulse eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-right-open-set-15-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatics/valves/wing-ice-2 ne 0
+				<test logic="OR">
+					/ECAM/warnings/logic/wai-on eq 0
+					<!--<test logic="AND">
+						/ECAM/warnings/logic/wai-on eq 1
+						/ECAM/timer/ground-calc eq 1
+						PREC = 1
+					</test>-->
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-right-open-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/dc-ess-shed ge 25
+				/ECAM/warnings/logic/wing-anti-ice-right-open-set-15 eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/wing-anti-ice-right-open-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatics/valves/wing-ice-2 eq 0
+				/ECAM/warnings/timer/phase-1 eq 1
+				<test logic="AND">
+					<test logic="AND">
+						/ECAM/warnings/logic/wai-phase-9-pulse-input eq 1
+						/ECAM/warnings/logic/wai-phase-9-pulse eq 1
+					</test>
+					/systems/pneumatics/valves/wing-ice-2 ne 0
+					/controls/pneumatics/switches/bleed-2 eq 1
+				</test>
+				<test logic="AND">
+					/systems/pneumatics/valves/wing-ice-2 ne 0
+					/controls/pneumatics/switches/bleed-2 eq 0
+					<test logic="AND">
+						/ECAM/warnings/logic/wai-phase-9-pulse-input eq 1
+						/ECAM/warnings/logic/wai-phase-9-pulse eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/logic/wing-hi-pr-left-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/wai-on eq 1
-				/systems/pneumatics/psi/engine-1-psi gt 49 <!-- rando number -->
+				/systems/pneumatics/psi/engine-1-psi gt 49
 			</test>
 		</switch>
 		
@@ -1538,7 +1624,7 @@
 		<switch name="/ECAM/warnings/logic/eng/engine-2-core-speed-abv-idle-input">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/engines/engine[0]/n2-actual ge 59.4
+				/engines/engine[1]/n2-actual ge 59.4
 			</test>
 		</switch>
 		
@@ -1588,7 +1674,6 @@
 		</switch>
 		
 		<actuator name="/ECAM/warnings/timer/gen-1-fault-set">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/gen-1-fault-set</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
@@ -1656,7 +1741,6 @@
 		</switch>
 		
 		<actuator name="/ECAM/warnings/timer/gen-2-fault-set">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/gen-2-fault-set</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.1818</rate_limit> <!-- 5.5 seconds -->
@@ -1723,7 +1807,6 @@
 		</switch>
 		
 		<actuator name="/ECAM/warnings/timer/apu-gen-fault-set">
-			<description>Timer for the ECAM system</description>
 			<input>/ECAM/warnings/logic/apu-gen-fault-set</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
 			<rate_limit sense="incr">0.2</rate_limit> <!-- 5 seconds -->
@@ -2298,6 +2381,14 @@
 						fcs/slat-pos-deg lt 15
 						<test logic="OR">
 							<test logic="AND">
+								aero/alpha-deg-corrected ge 13.5
+								<test logic="OR">
+									/systems/navigation/aligned-1 eq 1
+									/systems/navigation/aligned-2 eq 1
+									/systems/navigation/aligned-3 eq 1
+								</test>
+							</test>
+							<test logic="AND">
 								/systems/navigation/adr/output/aoa-1 ge 13.5
 								/systems/navigation/adr/operating-1 eq 1
 							</test>
@@ -2314,23 +2405,41 @@
 					<test logic="AND">
 						/it-fbw/law eq 0
 						fcs/slat-pos-deg ge 15
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-1 ge 22
-							/systems/navigation/adr/operating-1 eq 1
-						</test>
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-2 ge 22
-							/systems/navigation/adr/operating-2 eq 1
-						</test>
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-3 ge 22
-							/systems/navigation/adr/operating-3 eq 1
+						<test logic="OR">
+							<test logic="AND">
+								aero/alpha-deg-corrected ge 22
+								<test logic="OR">
+									/systems/navigation/aligned-1 eq 1
+									/systems/navigation/aligned-2 eq 1
+									/systems/navigation/aligned-3 eq 1
+								</test>
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-1 ge 22
+								/systems/navigation/adr/operating-1 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-2 ge 22
+								/systems/navigation/adr/operating-2 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-3 ge 22
+								/systems/navigation/adr/operating-3 eq 1
+							</test>
 						</test>
 					</test>
 					<test logic="AND">
 						/it-fbw/law ne 0
 						fcs/slat-pos-deg lt 15
 						<test logic="OR">
+							<test logic="AND">
+								aero/alpha-deg-corrected ge 8
+								<test logic="OR">
+									/systems/navigation/aligned-1 eq 1
+									/systems/navigation/aligned-2 eq 1
+									/systems/navigation/aligned-3 eq 1
+								</test>
+							</test>
 							<test logic="AND">
 								/systems/navigation/adr/output/aoa-1 ge 8
 								/systems/navigation/adr/operating-1 eq 1
@@ -2348,17 +2457,27 @@
 					<test logic="AND">
 						/it-fbw/law ne 0
 						fcs/slat-pos-deg ge 15
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-1 ge 14
-							/systems/navigation/adr/operating-1 eq 1
-						</test>
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-2 ge 14
-							/systems/navigation/adr/operating-2 eq 1
-						</test>
-						<test logic="AND">
-							/systems/navigation/adr/output/aoa-3 ge 14
-							/systems/navigation/adr/operating-3 eq 1
+						<test logic="OR">
+							<test logic="AND">
+								aero/alpha-deg-corrected ge 14
+								<test logic="OR">
+									/systems/navigation/aligned-1 eq 1
+									/systems/navigation/aligned-2 eq 1
+									/systems/navigation/aligned-3 eq 1
+								</test>
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-1 ge 14
+								/systems/navigation/adr/operating-1 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-2 ge 14
+								/systems/navigation/adr/operating-2 eq 1
+							</test>
+							<test logic="AND">
+								/systems/navigation/adr/output/aoa-3 ge 14
+								/systems/navigation/adr/operating-3 eq 1
+							</test>
 						</test>
 					</test>
 				</test>
@@ -2381,6 +2500,7 @@
 		<switch name="/instrumentation/pfd/logic/autoland/autoland-armed">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/instrumentation/pfd/logic/autoland/pitch-land eq 1
 				<test logic="OR">
 					/systems/electrical/bus/ac-2 ge 110
 					/systems/electrical/bus/ac-ess-shed ge 110
@@ -2401,32 +2521,33 @@
 		<switch name="/instrumentation/pfd/logic/autoland/autoland-alarm">
 			<default value="0"/>
 			<test logic="AND" value="1">			
-			  /instrumentation/pfd/logic/autoland/autoland-armed eq 1
-			  /instrumentation/pfd/logic/autoland/pitch-land eq 1
-			  <test logic="OR">
-				<test logic="AND">
-					/it-autoflight/output/ap1 eq 0
-					/it-autoflight/output/ap2 eq 0			    
-			    </test>
-				/instrumentation/radar-altimeter-difference-ft gt 15
-				<test logic="AND">
-					<test logic="OR">
-						/instrumentation/nav[0]/gs-needle-deflection-norm gt 0.5
-						/instrumentation/nav[0]/gs-needle-deflection-norm lt -0.5
+				/instrumentation/pfd/logic/autoland/autoland-armed eq 1						  				
+				<test logic="OR">
+					<test logic="AND">
+						/it-autoflight/output/ap1 eq 0
+						/it-autoflight/output/ap2 eq 0
+						/instrumentation/pfd/logic/autoland/ap-disc-ft lt 200
+						/instrumentation/pfd/logic/autoland/ap-disc-ft gt 0
+					</test>					
+					/instrumentation/radar-altimeter-difference-ft gt 15
+					<test logic="AND">
+						<test logic="OR">
+							/instrumentation/nav[0]/gs-needle-deflection-norm gt 0.5
+							/instrumentation/nav[0]/gs-needle-deflection-norm lt -0.5
+						</test>
+						/position/gear-agl-ft ge 100
 					</test>
-					/position/gear-agl-ft ge 100
-				</test>
-				<test logic="AND">
-					<test logic="OR">
-						/instrumentation/nav[0]/heading-needle-deflection-norm gt 0.125
-						/instrumentation/nav[0]/heading-needle-deflection-norm lt -0.125
+					<test logic="AND">
+						<test logic="OR">
+							/instrumentation/nav[0]/heading-needle-deflection-norm gt 0.125
+							/instrumentation/nav[0]/heading-needle-deflection-norm lt -0.125
+						</test>
+						/position/gear-agl-ft ge 15
 					</test>
-					/position/gear-agl-ft ge 15
+					<!-- TODO 
+					- Loss of localizer signal
+					-->
 				</test>
-				<!-- TODO 
-				- Loss of localizer signal
-				-->
-			  </test>
 		    </test>
 		</switch>		
 
@@ -2591,9 +2712,9 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-1-tla-abv-6-output eq 1
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/JE1NORUN eq 1
 				<test logic="AND">
-					/engines/engine[1]/state eq 3
+					/ECAM/warnings/logic/eng/JE2NORUN eq 1
 					<test logic="OR">
 						<test logic="AND">
 							/ECAM/warnings/logic/eng/eng-2-reverse eq 1
@@ -2610,9 +2731,9 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-1-tla-abv-6-2-output eq 1
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/JE1NORUN eq 1
 				<test logic="AND">
-					/engines/engine[1]/state eq 3
+					/ECAM/warnings/logic/eng/JE2NORUN eq 1
 					<test logic="OR">
 						/ECAM/warnings/logic/eng/eng-2-tla-idle-output eq 1
 						<test logic="AND">
@@ -2629,9 +2750,9 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-output eq 1
-				/engines/engine[1]/state eq 3
+				/ECAM/warnings/logic/eng/JE2NORUN eq 1
 				<test logic="AND">
-					/engines/engine[0]/state eq 3
+					/ECAM/warnings/logic/eng/JE1NORUN eq 1
 					<test logic="OR">
 						<test logic="AND">
 							/ECAM/warnings/logic/eng/eng-1-reverse eq 1
@@ -2648,9 +2769,9 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2-output eq 1
-				/engines/engine[1]/state eq 3
+				/ECAM/warnings/logic/eng/JE2NORUN eq 1
 				<test logic="AND">
-					/engines/engine[0]/state eq 3
+					/ECAM/warnings/logic/eng/JE1NORUN eq 1
 					<test logic="OR">
 						/ECAM/warnings/logic/eng/eng-1-tla-idle-output eq 1
 						<test logic="AND">
@@ -2833,7 +2954,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/ECAM/warnings/logic/eng/dual-failure-5-sec-input">
+		<switch name="/ECAM/warnings/logic/eng/dual-failure-2-sec-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[0]/n2-actual lt 59.4
@@ -2841,8 +2962,8 @@
 			</test>
 		</switch>
 		
-		<actuator name="/ECAM/warnings/logic/eng/dual-failure-5-sec">
-			<input>/ECAM/warnings/logic/eng/dual-failure-5-sec-input</input>
+		<actuator name="/ECAM/warnings/logic/eng/dual-failure-2-sec">
+			<input>/ECAM/warnings/logic/eng/dual-failure-2-sec-input</input>
 			<rate_limit sense="incr">0.5</rate_limit>
 			<rate_limit sense="decr">100</rate_limit>
 		</actuator>
@@ -2870,7 +2991,7 @@
 						/controls/engines/engine[0]/cutoff-switch eq 1
 						/controls/engines/engine[1]/cutoff-switch eq 1
 					</test>
-					/ECAM/warnings/logic/eng/dual-failure-5-sec eq 1
+					/ECAM/warnings/logic/eng/dual-failure-2-sec eq 1
 				</test>
 			</test>
 		</switch>
@@ -3052,6 +3173,36 @@
 			</test>
 		</switch>
 		
+		<actuator name="/ECAM/warnings/logic/eng/eng-1-oil-lo-pr-cutoff-delay">
+			<input>/controls/engines/engine[0]/cutoff-switch</input>
+			<rate_limit sense="decr">0.03333333333</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-1-oil-lo-pr">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/eng-1-oil-lo-pr-cutoff-delay eq 0 <!-- sense inverted -->
+				/ECAM/warnings/logic/eng/JE1NORUN eq 0
+				/engines/engine[0]/oil-psi-actual lt 13
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/logic/eng/eng-2-oil-lo-pr-cutoff-delay">
+			<input>/controls/engines/engine[1]/cutoff-switch</input>
+			<rate_limit sense="decr">0.03333333333</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/eng/eng-2-oil-lo-pr">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/eng/eng-2-oil-lo-pr-cutoff-delay eq 0 <!-- sense inverted -->
+				/ECAM/warnings/logic/eng/JE2NORUN eq 0
+				/engines/engine[1]/oil-psi-actual lt 13
+			</test>
+		</switch>
+		
 	</channel>
 	
 	<channel name="Config" execrate="16">
@@ -3069,6 +3220,114 @@
 			<test logic="OR" value="1">
 				/controls/gear/brake-parking eq 0
 				/ECAM/warning-phase eq 5
+			</test>
+		</switch>
+		
+	</channel>
+	
+	<channel name="PRESS" execrate="16">
+	
+		<switch name="/ECAM/warnings/press/exess-residual-pressure-ground-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/phases/phase-calculation/engines-1-2-not-running eq 1
+				/ECAM/timer/ground-calc eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/press/exess-residual-pressure-ground">
+			<input>/ECAM/warnings/press/exess-residual-pressure-ground-input</input>
+			<rate_limit sense="incr">0.14285714285</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/press/exess-residual-pressure-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/press/exess-residual-pressure-ground eq 1
+				/systems/pressurization/deltap-norm ge 0.1
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/press/exess-residual-pressure">
+			<input>/ECAM/warnings/press/exess-residual-pressure-input</input>
+			<rate_limit sense="incr">0.2</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/timer/press/excess-cabin-alt-input">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/cabinalt-norm ge 9550
+			</test>
+		</switch>
+		
+		<actuator name="/ECAM/warnings/timer/press/excess-cabin-alt">
+			<input>/ECAM/warnings/timer/press/excess-cabin-alt-input</input>
+			<rate_limit sense="incr">1</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/ECAM/warnings/logic/press/excess-cabin-alt">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/timer/press/excess-cabin-alt eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/phase-3-10-pulse-input">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/ECAM/warning-phase eq 3
+				/ECAM/warning-phase eq 10
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-top-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="OR">
+						/systems/navigation/adr/computation/baro-alt-corrected-1-capt ge 10000
+						/systems/navigation/adr/computation/baro-alt-corrected-2-capt ge 10000
+						/systems/navigation/adr/computation/baro-alt-corrected-3-capt ge 10000
+					</test>
+					<test logic="AND">
+						/systems/navigation/adr/operating-1 eq 0
+						/systems/navigation/adr/operating-2 eq 0
+						/systems/navigation/adr/operating-3 eq 0
+					</test>
+				</test>
+				/ECAM/warnings/logic/press/excess-cabin-alt eq 1
+				/ECAM/warnings/logic/press/excess-cabin-alt-pulse eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					<test logic="OR">
+						/systems/navigation/adr/computation/baro-alt-corrected-1-capt ge 16000
+						/systems/navigation/adr/computation/baro-alt-corrected-2-capt ge 16000
+						/systems/navigation/adr/computation/baro-alt-corrected-3-capt ge 16000
+					</test>
+					<test logic="AND">
+						/systems/navigation/adr/operating-1 eq 0
+						/systems/navigation/adr/operating-2 eq 0
+						/systems/navigation/adr/operating-3 eq 0
+					</test>
+				</test>
+				/ECAM/warnings/logic/press/excess-cabin-alt eq 1
+				/ECAM/warnings/logic/press/excess-cabin-alt-pulse eq 1
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-reset">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/ECAM/warnings/logic/phase-3-10-pulse-input eq 1
+				/ECAM/warnings/logic/phase-3-10-pulse eq 1
 			</test>
 		</switch>
 		
@@ -3198,7 +3457,7 @@
 		<actuator name="/ECAM/warnings/fctl/altn-law-output">
 			<input>/ECAM/warnings/fctl/altn-law</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">3.33333333333</rate_limit> <!-- 0.3 seconds -->
+			<rate_limit sense="incr">0.3</rate_limit>
 		</actuator>
 		
 		
@@ -3572,9 +3831,9 @@
 	
 		<switch name="/ECAM/warnings/hyd/engines-2-online">
 			<default value="0"/>
-			<test logic="AND" value="1">
-				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
+			<test logic="OR" value="1">
+				/ECAM/warnings/logic/eng/JE1NORUN eq 0
+				/ECAM/warnings/logic/eng/JE2NORUN eq 0
 			</test>
 		</switch>
 		
@@ -3587,8 +3846,8 @@
 		<switch name="/ECAM/warnings/hyd/engines-2-off-in-air">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[0]/state ne 3
-				/engines/engine[1]/state ne 3
+				/ECAM/warnings/logic/eng/JE1NORUN eq 1
+				/ECAM/warnings/logic/eng/JE2NORUN eq 1
 				/ECAM/timer/ground-calc eq 0
 			</test>
 		</switch>
@@ -3602,7 +3861,7 @@
 		<switch name="/ECAM/warnings/hyd/engine-1-start">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/engines/engine[0]/state eq 3
+				/ECAM/warnings/logic/eng/JE1NORUN eq 0
 				<test logic="AND">
 					/ECAM/warning-phase ne 1
 					/ECAM/warning-phase ne 2
@@ -3621,7 +3880,7 @@
 		<switch name="/ECAM/warnings/hyd/engine-2-start">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[1]/state eq 3
+				/ECAM/warnings/logic/eng/JE2NORUN eq 0
 				<test logic="AND">
 					/ECAM/warning-phase ne 1
 					/ECAM/warning-phase ne 2
@@ -3709,21 +3968,8 @@
 		<switch name="/ECAM/warnings/hyd/blue-green-failure">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				<test logic="OR">
-					<test logic="AND"> <!-- inhibit unless engine running -->
-						<test logic="OR">
-							/ECAM/warning-phase le 2
-							/ECAM/warning-phase ge 9
-						</test>
-						/engines/engine[0]/state eq 3
-					</test>
-					<test logic="AND">
-						/ECAM/warning-phase gt 2
-						/ECAM/warning-phase lt 9
-						/ECAM/warning-phase ne 4
-						/ECAM/warning-phase ne 5
-					</test>
-				</test>
+				/ECAM/warning-phase ne 4
+				/ECAM/warning-phase ne 5
 				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
 				/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
 			</test>
@@ -3732,21 +3978,8 @@
 		<switch name="/ECAM/warnings/hyd/blue-yellow-failure">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				<test logic="OR">
-					<test logic="AND"> <!-- inhibit unless engine running -->
-						<test logic="OR">
-							/ECAM/warning-phase le 2
-							/ECAM/warning-phase ge 9
-						</test>
-						/engines/engine[1]/state eq 3
-					</test>
-					<test logic="AND">
-						/ECAM/warning-phase gt 2
-						/ECAM/warning-phase lt 9
-						/ECAM/warning-phase ne 4
-						/ECAM/warning-phase ne 5
-					</test>
-				</test>
+				/ECAM/warning-phase ne 4
+				/ECAM/warning-phase ne 5
 				/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
 				/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
 			</test>
@@ -3755,8 +3988,7 @@
 		<switch name="/ECAM/warnings/hyd/green-yellow-failure">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 				/ECAM/warnings/hyd/green-abnorm-lo-pr eq 1
 				/ECAM/warnings/hyd/yellow-abnorm-lo-pr eq 1
 			</test>
@@ -3765,18 +3997,16 @@
 		<switch name="/ECAM/warnings/hyd/blue-green-fuel-consumpt">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/timer/ground-calc eq 0
-				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
+				/ECAM/timer/ground-calc ne 1
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 			</test>
 		</switch>
 		
 		<switch name="/ECAM/warnings/hyd/blue-yellow-fuel-consumpt">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/timer/ground-calc eq 0
-				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
+				/ECAM/timer/ground-calc ne 1
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 				<test logic="OR">
 					<test logic="AND">
 						/ECAM/warnings/logic/SFLAPEXT eq 1
@@ -3800,9 +4030,8 @@
 		<switch name="/ECAM/warnings/hyd/green-yellow-fuel-consumpt">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/timer/ground-calc eq 0
-				/engines/engine[0]/state eq 3
-				/engines/engine[1]/state eq 3
+				/ECAM/timer/ground-calc ne 1
+				/ECAM/warnings/logic/eng/dual-failure eq 0
 				<test logic="OR">
 					<test logic="AND">
 						/ECAM/warnings/logic/SFLAPEXT eq 1
@@ -3824,6 +4053,28 @@
 						</test>
 						/ECAM/warnings/logic/BLUE-EMER-ELEC ne 1
 					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/yellow-elec-pump-fail-set">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/hydraulic/sources/yellow-elec/pump-operate eq 1
+				/systems/hydraulic/yellow-psi lt 1450
+			</test>
+		</switch>
+		
+		<switch name="/ECAM/warnings/hyd/yellow-elec-pump-fail-reset">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/hydraulic/sources/yellow-elec/pump-operate eq 1
+					/systems/hydraulic/yellow-psi ge 1450
+				</test>
+				<test logic="AND">
+					/ECAM/warnings/logic/phase-2-pulse-input eq 1
+					/ECAM/warnings/logic/phase-2-pulse eq 1
 				</test>
 			</test>
 		</switch>
@@ -4050,7 +4301,7 @@
 		
 	</channel>
 	
-	<!--<channel name="NAV" execrate="16">
+	<channel name="NAV" execrate="16">
 	
 		<switch name="/ECAM/warnings/navigation/ADR123-fault">
 			<default value="0"/>
@@ -4059,12 +4310,13 @@
 				/systems/electrical/bus/ac-2 ge 110
 				/systems/electrical/bus/ac-ess ge 110
 				/ECAM/warning-phase ne 1
-				/ECAM/warning-phase ne 4
-				/ECAM/warning-phase ne 8
 				/ECAM/warning-phase ne 10
+				/systems/navigation/adr/operating-1 eq 0
+				/systems/navigation/adr/operating-2 eq 0
+				/systems/navigation/adr/operating-3 eq 0
 			</test>
 		</switch>
 		
-	</channel>-->
+	</channel>
 	
 </system>

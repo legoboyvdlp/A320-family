@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 FCS -->
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <system name="A320: FCS">
 	
@@ -1292,11 +1292,11 @@
 				fcs/left-wiper-pos-norm ge 0.001
 				/systems/electrical/bus/dc-1 ge 25
 			</test>
-			<test logic="AND" value="4">
+			<test logic="AND" value="3.167">
 				/controls/switches/wiperLspd eq 1
 				/systems/electrical/bus/dc-1 ge 25
 			</test>
-			<test logic="AND" value="7">
+			<test logic="AND" value="4.667">
 				/controls/switches/wiperLspd eq 2
 				/systems/electrical/bus/dc-1 ge 25
 			</test>
@@ -1339,11 +1339,11 @@
 				fcs/right-wiper-pos-norm ge 0.001
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
-			<test logic="AND" value="4">
+			<test logic="AND" value="3.167">
 				/controls/switches/wiperRspd eq 1
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
-			<test logic="AND" value="7">
+			<test logic="AND" value="4.667">
 				/controls/switches/wiperRspd eq 2
 				/systems/electrical/bus/dc-2 ge 25
 			</test>

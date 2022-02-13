@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -8,57 +8,69 @@
 
 	<!-- ANIMATIONS -->
 
-	<!-- No button lights without power! -->
+	<!-- Button lights 115 mA, 5 VAC on BRT setting -->
+	<!-- 31LP AC ESS SHED 801XP 5VAC transformer -->
 	<animation>
 		<type>select</type>
-		<object-name>ACPack1Btn1F</object-name>
-		<object-name>ACPack1Btn2O</object-name>
-		<object-name>ACPack2Btn1F</object-name>
-		<object-name>ACPack2Btn2O</object-name>
-		<object-name>ADR1Btn1F</object-name>
-		<object-name>ADR1Btn2O</object-name>
-		<object-name>ADR2Btn1F</object-name>
-		<object-name>ADR2Btn2O</object-name>
-		<object-name>ADR3Btn1F</object-name>
-		<object-name>ADR3Btn2O</object-name>
-		<object-name>BatteryBtn11F</object-name>
-		<object-name>BatteryBtn21F</object-name>
-		<object-name>BusTieBtn2O</object-name>
-		<object-name>DitchBtn2O</object-name>
-		<object-name>EmerExtLtBtn2O</object-name>
-		<object-name>Eng1AntiIceBtn1F</object-name>
-		<object-name>Eng1AntiIceBtn2O</object-name>
-		<object-name>Eng2AntiIceBtn1F</object-name>
-		<object-name>Eng2AntiIceBtn2O</object-name>
-		<object-name>ExtPwrBtn2O</object-name>
-		<object-name>IR1Btn1F</object-name>
-		<object-name>IR1Btn2O</object-name>
-		<object-name>IR2Btn1F</object-name>
-		<object-name>IR2Btn2O</object-name>
-		<object-name>IR3Btn1F</object-name>
-		<object-name>IR3Btn2O</object-name>
+		<object-name>AftCargoIsoBtn1F</object-name>
+		<object-name>AftCargoIsoBtn2O</object-name>
+		<object-name>APUBleedBtn1F</object-name>
+		<object-name>APUBleedBtn2O</object-name>
+		<object-name>BlueElecPump1F</object-name>
+		<object-name>BlueElecPump2O</object-name>
+		<object-name>CargoHotAirBtn1F</object-name>
+		<object-name>CargoHotAirBtn2O</object-name>
+		<object-name>CrewOxyBtn2O</object-name>
+		<object-name>GalleyPwrBtn1F</object-name>
+		<object-name>GalleyPwrBtn2O</object-name>
+		<object-name>Gen1LineBtn1S</object-name>
+		<object-name>Gen1LineBtn2O</object-name>
+		<object-name>FuelXfeedBtn1O</object-name>
+		<object-name>FuelXfeedBtn2O</object-name>
+		<object-name>LFuelTank1Btn1F</object-name>
+		<object-name>LFuelTank1Btn2O</object-name>
+		<object-name>PassOxyInd1S</object-name>
 		<object-name>RamAirBtn2O</object-name>
+		<object-name>RFuelTank1Btn1F</object-name>
+		<object-name>RFuelTank1Btn2O</object-name>
 		<object-name>WingAntiIceBtn1F</object-name>
 		<object-name>WingAntiIceBtn2O</object-name>
-		<object-name>VentBlowBtn1F</object-name>
 		<condition>
 			<greater-than-equals>
-				<property>systems/electrical/bus/ac-ess</property>
-				<value>5</value>
+				<property>systems/electrical/bus/ac-ess-shed</property>
+				<value>110</value>
 			</greater-than-equals>
 		</condition>
 	</animation>
 	
+	<!-- 35LP AC ESS SHED 801XP 5VAC transformer 
+		 BACKUP 901XP STAT INV
+	-->
 	<animation>
 		<type>select</type>
+		<object-name>ACPack1Btn1F</object-name>
+		<object-name>ACPack1Btn2O</object-name>
+		<object-name>APUFireAgtBtn1S</object-name>
+		<object-name>APUFireAgtBtn2D</object-name>
 		<object-name>APUGenBtn1F</object-name>
 		<object-name>APUGenBtn2O</object-name>
 		<object-name>APUMasterBtn1F</object-name>
 		<object-name>APUMasterBtn2O</object-name>
 		<object-name>APUStartBtn1A</object-name>
 		<object-name>APUStartBtn2O</object-name>
-		<object-name>APUFireAgtBtn1S</object-name>
-		<object-name>APUFireAgtBtn2D</object-name>
+		<object-name>BatteryBtn11F</object-name>
+		<object-name>BatteryBtn21F</object-name>
+		<object-name>BatteryBtn12O</object-name>
+		<object-name>BatteryBtn22O</object-name>
+		<object-name>BusTieBtn2O</object-name>
+		<object-name>CabinPressModeBtn1F</object-name>
+		<object-name>CabinPressModeBtn2M</object-name>
+		<object-name>DitchBtn2O</object-name>
+		<object-name>ELAC1Btn1F</object-name>
+		<object-name>ELAC1Btn2O</object-name>
+		<object-name>EmerCallBtn1C</object-name>
+		<object-name>EmerCallBtn2O</object-name>
+		<object-name>EmerExtLtBtn2O</object-name>
 		<object-name>Eng1FireAgt1Btn1S</object-name>
 		<object-name>Eng1FireAgt1Btn2D</object-name>
 		<object-name>Eng2FireAgt1Btn1S</object-name>
@@ -67,71 +79,138 @@
 		<object-name>Eng1FireAgt2Btn2D</object-name>
 		<object-name>Eng2FireAgt2Btn1S</object-name>
 		<object-name>Eng2FireAgt2Btn2D</object-name>
-		<object-name>ELAC1Btn1F</object-name>
-		<object-name>ELAC1Btn2O</object-name>
-		<object-name>FAC1Btn1F</object-name>
-		<object-name>FAC1Btn2O</object-name>
-		<object-name>Gen1Btn1F</object-name>
-		<object-name>Gen1Btn2O</object-name>
-		<object-name>Gen2Btn1F</object-name>
-		<object-name>Gen2Btn2O</object-name>
-		<object-name>SEC1Btn1F</object-name>
-		<object-name>SEC1Btn2O</object-name>
-		<condition>
-			<or>
-				<greater-than-equals>
-					<property>systems/electrical/bus/ac-si-bus</property>
-					<value>5</value>
-				</greater-than-equals>
-				<greater-than-equals>
-					<property>systems/electrical/bus/ac-ess</property>
-					<value>5</value>
-				</greater-than-equals>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>ACESSFeedBtn1F</object-name>
-		<object-name>ACESSFeedBtn2A</object-name>
-		<object-name>AftCargoIsoBtn1F</object-name>
-		<object-name>AftCargoIsoBtn2O</object-name>
-		<object-name>AftCargoSmkBtn1S</object-name>
-		<object-name>AftCargoSmkBtn2D</object-name>
-		<object-name>BlueElecPump1F</object-name>
-		<object-name>BlueElecPump2O</object-name>
-		<object-name>CabinPressModeBtn1F</object-name>
-		<object-name>CabinPressModeBtn2M</object-name>
-		<object-name>CabinFansBtn2O</object-name>
-		<object-name>CargoHotAirBtn1F</object-name>
-		<object-name>CargoHotAirBtn2O</object-name>
-		<object-name>CFuelTank1Btn1F</object-name>
-		<object-name>CFuelTank1Btn2O</object-name>
-		<object-name>CFuelTank2Btn1F</object-name>
-		<object-name>CFuelTank2Btn2O</object-name>
-		<object-name>CrewOxyBtn2O</object-name>
-		<object-name>ELAC2Btn1F</object-name>
-		<object-name>ELAC2Btn2O</object-name>
-		<object-name>EmerCallBtn1C</object-name>
-		<object-name>EmerCallBtn2O</object-name>
-		<object-name>EmerGenInd1F</object-name>
 		<object-name>Eng1ManStartBtn2O</object-name>
 		<object-name>Eng2ManStartBtn2O</object-name>
 		<object-name>EvacCommandBtn1E</object-name>
 		<object-name>EvacCommandBtn2O</object-name>
+		<object-name>FAC1Btn1F</object-name>
+		<object-name>FAC1Btn2O</object-name>
+		<object-name>Gen1Btn2O</object-name>
+		<object-name>Gen2Btn2O</object-name>
+		<object-name>IDG1Btn1F</object-name>
+		<object-name>IDG2Btn1F</object-name>
+		<object-name>SEC1Btn1F</object-name>
+		<object-name>SEC1Btn2O</object-name>
+		<object-name>VentBlowBtn1F</object-name>
+		<object-name>VentBlowBtn2O</object-name>
+		<object-name>VentExtractBtn1F</object-name>
+		<object-name>VentExtractBtn2O</object-name>
+		<condition>
+			<or>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-si-bus</property>
+					<value>110</value>
+				</greater-than-equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/ac-ess-shed</property>
+					<value>110</value>
+				</greater-than-equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- Special for EXT pwr AVAIL light -->
+	<animation>
+		<type>select</type>
+		<object-name>ExtPwrBtn1A</object-name>
+		<condition>	
+			<or>
+				<and>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-si-bus</property>
+							<value>110</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-ess-shed</property>
+							<value>110</value>
+						</greater-than-equals>
+					</or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-ess</property>
+						<value>110</value>
+					</greater-than-equals>
+				</and>
+				<and>
+					<greater-than>
+						<property>/systems/electrical/sources/ext/output-volt</property>
+						<value>110</value>
+					</greater-than>
+					<not>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-ess</property>
+							<value>110</value>
+						</greater-than-equals>
+					</not>
+				</and>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- 36LP AC 2 202XP 5VAC transformer -->
+	<animation>
+		<type>select</type>
+		<object-name>ACESSFeedBtn1F</object-name>
+		<object-name>ACESSFeedBtn2A</object-name>
+		<object-name>ACPack2Btn1F</object-name>
+		<object-name>ACPack2Btn2O</object-name>
+		<object-name>CFuelTank1Btn1F</object-name>
+		<object-name>CFuelTank1Btn2O</object-name>
+		<object-name>ELAC2Btn1F</object-name>
+		<object-name>ELAC2Btn2O</object-name>
+		<object-name>Eng2AntiIceBtn1F</object-name>
+		<object-name>Eng2AntiIceBtn2O</object-name>
+		<object-name>Eng2BleedBtn1F</object-name>
+		<object-name>Eng2BleedBtn2O</object-name>
 		<object-name>FAC2Btn1F</object-name>
 		<object-name>FAC2Btn2O</object-name>
+		<object-name>LFuelTank2Btn1F</object-name>
+		<object-name>LFuelTank2Btn2O</object-name>
+		<object-name>PrbWinHeatBtn2O</object-name>
+		<object-name>PTU1F</object-name>
+		<object-name>PTU2O</object-name>
+		<object-name>RFuelTank2Btn1F</object-name>
+		<object-name>RFuelTank2Btn2O</object-name>
+		<object-name>SEC2Btn1F</object-name>
+		<object-name>SEC2Btn2O</object-name>
+		<object-name>SEC3Btn1F</object-name>
+		<object-name>SEC3Btn2O</object-name>
+		<object-name>YellowElecPump1F</object-name>
+		<object-name>YellowElecPump2O</object-name>
+		<object-name>YellowEngPump1F</object-name>
+		<object-name>YellowEngPump2O</object-name>
+		<condition>
+			<greater-than>
+				<property>/systems/electrical/bus/ac-2</property>
+				<value>110</value>
+			</greater-than>
+		</condition>
+	</animation>
+	
+	<!-- 37LP AC 1 103XP 5VAC transformer -->
+	<animation>
+		<type>select</type>
+		<object-name>ADR1Btn1F</object-name>
+		<object-name>ADR1Btn2O</object-name>
+		<object-name>ADR2Btn1F</object-name>
+		<object-name>ADR2Btn2O</object-name>
+		<object-name>ADR3Btn1F</object-name>
+		<object-name>ADR3Btn2O</object-name>
+		<object-name>AftCargoSmkBtn1S</object-name>
+		<object-name>AftCargoSmkBtn2D</object-name>
+		<object-name>CabinFansBtn2O</object-name>
+		<object-name>CFuelTank2Btn1F</object-name>
+		<object-name>CFuelTank2Btn2O</object-name>
+		<object-name>EmerGenInd1F</object-name>
+		<object-name>Eng1AntiIceBtn1F</object-name>
+		<object-name>Eng1AntiIceBtn2O</object-name>
+		<object-name>Eng1BleedBtn1F</object-name>
+		<object-name>Eng1BleedBtn2O</object-name>
+		<object-name>ExtPwrBtn2O</object-name>
 		<object-name>FuelModeBtn1F</object-name>
 		<object-name>FuelModeBtn2O</object-name>
-		<object-name>FuelXfeedBtn1O</object-name>
-		<object-name>FuelXfeedBtn2O</object-name>
 		<object-name>FwdCargoSmkBtn1S</object-name>
 		<object-name>FwdCargoSmkBtn2D</object-name>
-		<object-name>GalleyPwrBtn1F</object-name>
-		<object-name>GalleyPwrBtn2O</object-name>
-		<object-name>Gen1LineBtn1S</object-name>
-		<object-name>Gen1LineBtn2O</object-name>
 		<object-name>GPWSBtn1F</object-name>
 		<object-name>GPWSBtn2O</object-name>
 		<object-name>GPWSFlpBtn2O</object-name>
@@ -143,60 +222,18 @@
 		<object-name>GreenEngPump2O</object-name>
 		<object-name>HotAirBtn1F</object-name>
 		<object-name>HotAirBtn2O</object-name>
-		<object-name>IDG1Btn1F</object-name>
-		<object-name>IDG2Btn1F</object-name>
-		<object-name>LFuelTank1Btn1F</object-name>
-		<object-name>LFuelTank1Btn2O</object-name>
-		<object-name>LFuelTank2Btn1F</object-name>
-		<object-name>LFuelTank2Btn2O</object-name>
-		<object-name>PassOxyInd1S</object-name>
-		<object-name>PrbWinHeatBtn2O</object-name>
-		<object-name>PTU1F</object-name>
-		<object-name>PTU2O</object-name>
-		<object-name>RamAirBtn2O</object-name>
+		<object-name>IR1Btn1F</object-name>
+		<object-name>IR1Btn2O</object-name>
+		<object-name>IR2Btn1F</object-name>
+		<object-name>IR2Btn2O</object-name>
+		<object-name>IR3Btn1F</object-name>
+		<object-name>IR3Btn2O</object-name>
 		<object-name>RcdrGndCtlBtn2O</object-name>
-		<object-name>RFuelTank1Btn1F</object-name>
-		<object-name>RFuelTank1Btn2O</object-name>
-		<object-name>RFuelTank2Btn1F</object-name>
-		<object-name>RFuelTank2Btn2O</object-name>
-		<object-name>SEC2Btn1F</object-name>
-		<object-name>SEC2Btn2O</object-name>
-		<object-name>SEC3Btn1F</object-name>
-		<object-name>SEC3Btn2O</object-name>
-		<object-name>VentBlowBtn2O</object-name>
-		<object-name>VentExtractBtn1F</object-name>
-		<object-name>VentExtractBtn2O</object-name>
-		<object-name>YellowElecPump1F</object-name>
-		<object-name>YellowElecPump2O</object-name>
-		<object-name>YellowEngPump1F</object-name>
-		<object-name>YellowEngPump2O</object-name>
 		<condition>
-			<greater-than-equals>
-				<property>systems/electrical/bus/dc-ess</property>
-				<value>25</value>
-			</greater-than-equals>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>Eng1BleedBtn1F</object-name>
-		<object-name>Eng1BleedBtn2O</object-name>
-		<object-name>Eng2BleedBtn1F</object-name>
-		<object-name>Eng2BleedBtn2O</object-name>
-		<object-name>APUBleedBtn1F</object-name>
-		<object-name>APUBleedBtn2O</object-name>
-		<condition>
-			<or>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-2</property>
-					<value>25</value>
-				</greater-than-equals>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess-shed</property>
-					<value>25</value>
-				</greater-than-equals>
-			</or>
+			<greater-than>
+				<property>/systems/electrical/bus/ac-1</property>
+				<value>110</value>
+			</greater-than>
 		</condition>
 	</animation>
 	
@@ -222,22 +259,6 @@
 				<value>1</value>
 			</equals>
 		</condition>
-	</animation>
-
-	<animation>
-		<type>material</type>
-		<object-name>Battery-volt</object-name>
-		<object-name>Battery-volt-test</object-name>
-		<emission>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
-		</emission>
-		<diffuse>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
-		</diffuse>
 	</animation>
 
 	<!-- Ventilation -->
@@ -1171,7 +1192,7 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/cockpit-irradiance</inherits-from>
 		<object-name>Eng1FireCover</object-name>
 		<object-name>Eng2FireCover</object-name>
 		<object-name>APUFireCover</object-name>
@@ -1993,12 +2014,6 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/green-edp</property>
 			</binding>
@@ -2014,20 +2029,8 @@
 		<object-name>GreenEngPump1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/hydraulic/lights/green-edp-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/switches/green-edp</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/hydraulic/lights/green-edp-fault</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2037,14 +2040,10 @@
 		<object-name>GreenEngPump2O</object-name>
 		<condition>
 			<or>
-				<equals>
+				<not>
 					<property>controls/hydraulic/switches/green-edp</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				</not>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2161,12 +2160,6 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/blue-elec</property>
 			</binding>
@@ -2182,20 +2175,8 @@
 		<object-name>BlueElecPump1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/hydraulic/lights/blue-elec-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/switches/blue-elec</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/hydraulic/lights/blue-elec-fault</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2205,14 +2186,10 @@
 		<object-name>BlueElecPump2O</object-name>
 		<condition>
 			<or>
-				<equals>
+				<not>
 					<property>controls/hydraulic/switches/blue-elec</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				</not>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2228,12 +2205,6 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/ptu</property>
 			</binding>
@@ -2249,20 +2220,8 @@
 		<object-name>PTU1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/hydraulic/lights/ptu-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/switches/ptu</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/hydraulic/lights/ptu-fault</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2272,14 +2231,10 @@
 		<object-name>PTU2O</object-name>
 		<condition>
 			<or>
-				<equals>
+				<not>
 					<property>controls/hydraulic/switches/ptu</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				</not>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2295,12 +2250,6 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/yellow-edp</property>
 			</binding>
@@ -2316,20 +2265,8 @@
 		<object-name>YellowEngPump1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/hydraulic/lights/yellow-edp-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/switches/yellow-edp</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/hydraulic/lights/yellow-edp-fault</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2339,14 +2276,10 @@
 		<object-name>YellowEngPump2O</object-name>
 		<condition>
 			<or>
-				<equals>
+				<not>
 					<property>controls/hydraulic/switches/yellow-edp</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				</not>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2362,12 +2295,6 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/yellow-elec</property>
 			</binding>
@@ -2383,20 +2310,8 @@
 		<object-name>YellowElecPump1F</object-name>
 		<condition>
 			<or>
-				<and>
-					<equals>
-						<property>systems/hydraulic/lights/yellow-elec-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/hydraulic/switches/yellow-elec</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/hydraulic/lights/yellow-elec-fault</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2406,14 +2321,8 @@
 		<object-name>YellowElecPump2O</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/hydraulic/switches/yellow-elec</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/hydraulic/switches/yellow-elec</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3048,22 +2957,16 @@
 		<type>select</type>
 		<object-name>BatteryBtn12O</object-name>
 		<condition>
-			<and>
-				<or>
-					<equals>
-						<property>controls/electrical/switches/bat-1</property>
-						<value>0</value>
-					</equals>
-					<equals>
-						<property>controls/switches/annun-test</property>
-						<value>1</value>
-					</equals>
-				</or>
-				<greater-than>
-					<property>systems/electrical/bus/dc-bat</property>
-					<value>25</value>
-				</greater-than>
-			</and>
+			<or>
+				<equals>
+					<property>controls/electrical/switches/bat-1</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
 		</condition>
 	</animation>
 
@@ -3115,22 +3018,16 @@
 		<type>select</type>
 		<object-name>BatteryBtn22O</object-name>
 		<condition>
-			<and>
-				<or>
-					<equals>
-						<property>controls/electrical/switches/bat-2</property>
-						<value>0</value>
-					</equals>
-					<equals>
-						<property>controls/switches/annun-test</property>
-						<value>1</value>
-					</equals>
-				</or>
-				<greater-than>
-					<property>systems/electrical/bus/dc-bat</property>
-					<value>25</value>
-				</greater-than>
-			</and>
+			<or>
+				<equals>
+					<property>controls/electrical/switches/bat-2</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
 		</condition>
 	</animation>
 	
@@ -3276,16 +3173,19 @@
 		<type>select</type>
 		<object-name>Gen1Btn1F</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>systems/electrical/light/gen-1-fault</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<or>
+					<equals>
+						<property>systems/electrical/light/gen-1-fault</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+				</or>
+				<property>/systems/electrical/sources/idg-1/gcu-1-powered</property>
+			</and>
 		</condition>
 	</animation>
 
@@ -3520,18 +3420,10 @@
 					<property>controls/electrical/switches/ground-cart</property>
 					<value>1</value>
 				</equals>
-				<and>
-					<equals>
-						<property>controls/switches/annun-test</property>
-						<value>1</value>
-					</equals>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-ess</property>
-							<value>110</value>
-						</greater-than-equals>
-					</or>
-				</and>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
 			</or>
 		</condition>
 	</animation>
@@ -3586,16 +3478,19 @@
 		<type>select</type>
 		<object-name>Gen2Btn1F</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>systems/electrical/light/gen-2-fault</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<or>
+					<equals>
+						<property>systems/electrical/light/gen-2-fault</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+				</or>
+				<property>/systems/electrical/sources/idg-2/gcu-2-powered</property>
+			</and>
 		</condition>
 	</animation>
 
@@ -5296,6 +5191,7 @@
 		<object-name>LandingLtLSwtch</object-name>
 		<action>
 			<button>0</button>
+			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
@@ -5311,6 +5207,7 @@
 		</action>
 		<action>
 			<button>1</button>
+			<button>4</button>			
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
@@ -5332,6 +5229,7 @@
 		<object-name>LandingLtRSwtch</object-name>
 		<action>
 			<button>0</button>
+			<button>3</button>			
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
@@ -5347,6 +5245,7 @@
 		</action>
 		<action>
 			<button>1</button>
+			<button>4</button>			
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
@@ -6428,7 +6327,7 @@
 		<name>Battery-volt1</name>
 		<offsets>
 			<x-m>-0.008</x-m>
-			<y-m>-0.057</y-m>
+			<y-m>-0.058</y-m>
 			<z-m>0.0155</z-m>
 			<pitch-deg>62</pitch-deg>
 			<roll-deg>88</roll-deg>
@@ -6437,7 +6336,7 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
-		<format type="string">%2.1f</format>
+		<format type="string">%2.1fV</format>
 		<property>systems/electrical/bus/dc-hot-1</property>
 		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
@@ -6454,7 +6353,7 @@
 		<name>Battery-volt1-test</name>
 		<offsets>
 			<x-m>-0.008</x-m>
-			<y-m>-0.057</y-m>
+			<y-m>-0.058</y-m>
 			<z-m>0.0155</z-m>
 			<pitch-deg>62</pitch-deg>
 			<roll-deg>88</roll-deg>
@@ -6463,7 +6362,7 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
-		<format type="string">88.8</format>
+		<format type="string">88.8V</format>
 		<property>autopilot/serviceable</property>
 		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
@@ -6480,7 +6379,7 @@
 		<name>Battery-volt2</name>
 		<offsets>
 			<x-m>-0.008</x-m>
-			<y-m>0.035</y-m>
+			<y-m>0.033</y-m>
 			<z-m>0.0155</z-m>
 			<pitch-deg>62</pitch-deg>
 			<roll-deg>90</roll-deg>
@@ -6489,7 +6388,7 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
-		<format type="string">%2.1f</format>
+		<format type="string">%2.1fV</format>
 		<property>systems/electrical/bus/dc-hot-2</property>
 		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
@@ -6506,7 +6405,7 @@
 		<name>Battery-volt2-test</name>
 		<offsets>
 			<x-m>-0.008</x-m>
-			<y-m>0.035</y-m>
+			<y-m>0.033</y-m>
 			<z-m>0.0155</z-m>
 			<pitch-deg>62</pitch-deg>
 			<roll-deg>90</roll-deg>
@@ -6515,7 +6414,7 @@
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
-		<format type="string">88.8</format>
+		<format type="string">88.8V</format>
 		<property>autopilot/serviceable</property>
 		<font type="string">led.txf</font>
 		<draw-text type="bool">true</draw-text>
@@ -6662,10 +6561,28 @@
 		<type>material</type>
 		<object-name>Eng1FireBtn</object-name>
 		<condition>
-			<or>
-				<property>systems/fire/engine1/warning-active</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<and>
+				<or>
+					<property>systems/fire/engine1/warning-active</property>
+					<property>controls/switches/annun-test</property>
+				</or>
+				<or>
+					<!-- 35LP -->
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-si-bus</property>
+						<value>110</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-ess-shed</property>
+						<value>110</value>
+					</greater-than-equals>
+					<!-- 37LP -->
+					<greater-than>
+						<property>/systems/electrical/bus/ac-1</property>
+						<value>110</value>
+					</greater-than>
+				</or>
+			</and>
 		</condition>
 		<emission>
 			<red>1.0</red>
@@ -7009,10 +6926,28 @@
 		<type>material</type>
 		<object-name>APUFireBtn</object-name>
 		<condition>
-			<or>
-				<property>systems/fire/apu/warning-active</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<and>
+				<or>
+					<property>systems/fire/apu/warning-active</property>
+					<property>controls/switches/annun-test</property>
+				</or>
+				<or>
+					<!-- 35LP -->
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-si-bus</property>
+						<value>110</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-ess-shed</property>
+						<value>110</value>
+					</greater-than-equals>
+					<!-- 37LP -->
+					<greater-than>
+						<property>/systems/electrical/bus/ac-1</property>
+						<value>110</value>
+					</greater-than>
+				</or>
+			</and>
 		</condition>
 		<emission>
 			<red>1.0</red>
@@ -7162,10 +7097,28 @@
 		<type>material</type>
 		<object-name>Eng2FireBtn</object-name>
 		<condition>
-			<or>
-				<property>systems/fire/engine2/warning-active</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<and>
+				<or>
+					<property>systems/fire/engine2/warning-active</property>
+					<property>controls/switches/annun-test</property>
+				</or>
+				<or>
+					<!-- 35LP -->
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-si-bus</property>
+						<value>110</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-ess-shed</property>
+						<value>110</value>
+					</greater-than-equals>
+					<!-- 37LP -->
+					<greater-than>
+						<property>/systems/electrical/bus/ac-1</property>
+						<value>110</value>
+					</greater-than>
+				</or>
+			</and>
 		</condition>
 		<emission>
 			<red>1.0</red>

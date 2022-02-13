@@ -1,5 +1,5 @@
 # A320 Property Tree Setup
-# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath
 # Nodes organized like property tree, except when lots of identical (example: Gear wow), where vectors are used to make it easier
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
@@ -65,9 +65,15 @@ var Controls = {
 	},
 	Lighting: {
 		landingLights: [props.globals.getNode("/controls/lighting/landing-lights[0]"),props.globals.getNode("/controls/lighting/landing-lights[1]"),props.globals.getNode("/controls/lighting/landing-lights[2]")],
+		noSmokingSign: props.globals.getNode("/controls/lighting/no-smoking-sign"),
+		seatbeltSign: props.globals.getNode("/controls/lighting/seatbelt-sign"),
+		strobe: props.globals.getNode("/controls/lighting/strobe"),
 	},
 	Switches: {
 		annunTest: props.globals.getNode("/controls/switches/annun-test"),
+		emerLtsSwitch: props.globals.getNode("/controls/switches/emer-lights"),
+		noSmokingSwitch: props.globals.getNode("/controls/switches/no-smoking-sign"),
+		seatbeltSwitch: props.globals.getNode("/controls/switches/seatbelt-sign"),
 	},
 };
 
@@ -93,7 +99,7 @@ var Engines = {
 
 var Environment = {
 	magVar: props.globals.getNode("/environment/magnetic-variation-deg"),
-	tempDegC: props.globals.getNode("/environment/temperature-degc"),
+	temperatureDegC: props.globals.getNode("/environment/temperature-degc"),
 	windFromHdg: props.globals.getNode("/environment/wind-from-heading-deg"),
 	windSpeedKt: props.globals.getNode("/environment/wind-speed-kt"),
 };
@@ -137,6 +143,10 @@ var Fdm = {
 				fuelUsed: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/fuel-used-lbs")],
 				reverserAngle: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad")],
 			},
+			Tank: {
+				contentsLbs: [props.globals.getNode("/fdm/jsbsim/propulsion/tank[0]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[1]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs"), 
+					props.globals.getNode("/fdm/jsbsim/propulsion/tank[3]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[4]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[5]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[6]/contents-lbs")],
+			},
 		},
 	},
 };
@@ -156,6 +166,12 @@ var Gear = {
 };
 
 var Instrumentation = {
+	Adf: {
+		ident: [props.globals.getNode("/instrumentation/adf[0]/ident"), props.globals.getNode("/instrumentation/adf[1]/ident")],
+		Frequencies: {
+			selectedKhz: [props.globals.getNode("/instrumentation/adf[0]/frequencies/selected-khz"), props.globals.getNode("/instrumentation/adf[1]/frequencies/selected-khz")],
+		},
+	},
 	AirspeedIndicator: {
 		indicatedSpdKt: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt"),
 		indicatedMach: props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach"),
@@ -221,10 +237,18 @@ var Instrumentation = {
 		Inputs: {
 			Discretes: {
 				flap3Override: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override"),
+				flapAllOverride: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override"),
+				steepApproach: props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/steep-approach"),
 			},
 		},
 	},
 	Nav: {
+		Frequencies: {
+			selectedMhz: [props.globals.getNode("/instrumentation/nav[0]/frequencies/selected-mhz"), props.globals.getNode("/instrumentation/nav[1]/frequencies/selected-mhz"), props.globals.getNode("/instrumentation/nav[2]/frequencies/selected-mhz"), props.globals.getNode("/instrumentation/nav[3]/frequencies/selected-mhz")],
+		},
+		Radials: {
+			selectedDeg: [props.globals.getNode("/instrumentation/nav[0]/radials/selected-deg"), props.globals.getNode("/instrumentation/nav[1]/radials/selected-deg"), props.globals.getNode("/instrumentation/nav[2]/radials/selected-deg"), props.globals.getNode("/instrumentation/nav[3]/radials/selected-deg")],
+		},
 		gsDeflection: props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm"),
 		locDeflection: props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm"),
 	},

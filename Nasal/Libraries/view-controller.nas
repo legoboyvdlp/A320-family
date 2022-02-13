@@ -1,5 +1,5 @@
 # Octal's View Controller
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 # FovZoom based on work by onox
 
 var fgfsVersion = num(string.replace(getprop("/sim/version/flightgear"), ".", ""));

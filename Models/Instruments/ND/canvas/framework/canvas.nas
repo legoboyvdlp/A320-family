@@ -2,7 +2,7 @@
 # Joshua Davidson (Octal450)
 # Based on work by artix
 
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 
 var assert_m = canvas.assert_m;
 

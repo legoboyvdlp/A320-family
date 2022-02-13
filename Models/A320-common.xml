@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	<name>A320-200</name>
@@ -50,7 +50,7 @@
 	</animation>
 	
 	<!-- Ancilliary Objects -->
-	<!-- Tire smoke and spray effects -->
+	<!-- Particle effects -->
 	<model>
 		<path>Aircraft/Generic/Effects/tyre-smoke-nose.xml</path>
 		<name>tyre-smoke-n</name>
@@ -112,7 +112,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/tire-smoke-left.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/brake-smoke-left.xml</path>
 		<name>tire-smoke-l</name>
 		<offsets>
 			<x-m>20.3180764</x-m>
@@ -122,7 +122,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/tire-smoke-right.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/brake-smoke-right.xml</path>
 		<name>tire-smoke-r</name>
 		<offsets>
 			<x-m>20.3180764</x-m>
@@ -133,12 +133,12 @@
 	
 	<!-- wing condensation effect -->
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/wing-condensation-L.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/wing-condensation-L.xml</path>
 		<name>wing-condensation</name>
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/wing-condensation-R.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/wing-condensation-R.xml</path>
 		<name>wing-condensation</name>
 	</model>
 
@@ -203,7 +203,7 @@
 	<!-- APU fire -->
 	<model>
 		<name>APU fire</name>
-		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/enginefire.xml</path>
 		<offsets>
 			<x-m>38.9</x-m>
 			<y-m>0</y-m>

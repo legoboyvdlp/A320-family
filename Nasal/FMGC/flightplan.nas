@@ -1,5 +1,5 @@
 # A3XX FMGC Flightplan Driver
-# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var wpDep = nil;
 var wpArr = nil;
@@ -243,6 +243,19 @@ var flightPlanController = {
 				}
 			}
 		}
+	},
+	
+	# changeOverflyType - toggle flyby type of passed waypoint
+	# args: index, plan, computer
+	#   index: index to toggle
+	#   plan: plan on which operation is performed
+	# If the passed waypoint exists, toggle its flyover attribute
+	changeOverFlyType: func(index, plan) {
+		wp = me.flightplans[plan].getWP(index);
+		if (wp == nil or wp.wp_name == "DISCONTINUITY" or wp.wp_name == "VECTORS") { return 1; };
+		
+		wp.fly_type = (wp.fly_type == "flyBy") ? "flyOver" : "flyBy";
+		return 2;
 	},
 	
 	# for these two remember to call flightPlanChanged. We are assuming this is called from a function which will all flightPlanChanged itself.
@@ -730,6 +743,8 @@ var flightPlanController = {
 		
 		if (size(split("/", text)) == 3) {
 			return me.getWPforPBD(text, index, thePlan);
+		} elsif (text == "@") {
+			return me.changeOverFlyType(index, thePlan);
 		} elsif (text == "CLR") {
 			return me.deleteWP(index, thePlan, 0);
 		} elsif (size(text) > 12) {

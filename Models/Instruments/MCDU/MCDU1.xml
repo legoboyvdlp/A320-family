@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -1680,7 +1680,7 @@
 			</binding>
 		</action>
 	</animation>
-	<!--animation>
+	<animation>
 		<type>pick</type>
 		<object-name>overfly</object-name>
 		<action>
@@ -1703,7 +1703,7 @@
 				</condition>
 			</binding>
 		</action>
-	</animation-->
+	</animation>
 	<animation>
 		<type>pick</type>
 		<object-name>clr</object-name>
@@ -2048,7 +2048,7 @@
 	</animation>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/cockpit-irradiance</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/cockpit-irradiance</inherits-from>
 		<object-name>mcdu_body</object-name>
 	</effect>
 	

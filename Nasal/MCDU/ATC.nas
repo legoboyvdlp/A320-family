@@ -2,7 +2,6 @@ var latReq = {
 	title: [nil, nil, nil],
 	titleColour: "wht",
 	subtitle: [nil, nil],
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour

@@ -20,9 +20,9 @@ var fplnItem = {
 					return ["MANUAL", me.getSubText(), me.colour];
 				} else {
 					if (size(wptName) == 2) {
-						return[wptName[0] ~ wptName[1], me.getSubText(), me.colour];
+						return[wptName[0] ~ wptName[1 ~ (me.wp.fly_type == "flyOver" ? "@" : "")], me.getSubText(), me.colour];
 					} else {
-						return [me.wp.wp_name, me.getSubText(), me.colour];
+						return [me.wp.wp_name ~ (me.wp.fly_type == "flyOver" ? "@" : ""), me.getSubText(), me.colour];
 					}
 				}
 			} else {
@@ -99,8 +99,11 @@ var fplnItem = {
 		return sprintf("%03.0f", math.round(me.brg));
 	},
 	getTrack: func() {
-		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
-		me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - magvar(wp.lat, wp.lon);
+		if (me.index > (size(fmgc.wpCoursePrev[me.plan]) - 1)) {
+			me.trk = me.wp.leg_bearing - magvar(me.wp.lat, me.wp.lon);
+		} else {
+			me.trk = fmgc.wpCoursePrev[me.plan][me.index].getValue() - magvar(me.wp.lat, me.wp.lon);
+		}
 		if (me.trk < 0) { me.trk += 360; }
 		if (me.trk > 360) { me.trk -= 360; }
 		return sprintf("%03.0f", math.round(me.trk));
@@ -122,20 +125,30 @@ var fplnItem = {
 			return [" " ~ fmgc.flightPlanController.fromWptAlt, "mag"];
 		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr > 0) {
 			var tcol = (me.wp.alt_cstr_type == "computed" or me.wp.alt_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
+			var cstrAlt = "";
+			
 			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
-				return [" " ~ sprintf("%5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)), tcol];
+				cstrAlt = "FL" ~ math.round(num(me.wp.alt_cstr) / 100);
 			} else {
-				return [" " ~ sprintf("%5.0f", me.wp.alt_cstr), tcol];
+				cstrAlt = me.wp.alt_cstr;
 			}
+			
+			cstrAlt = (me.wp.alt_cstr_type == "above") ? "+" ~ cstrAlt : cstrAlt;
+			cstrAlt = (me.wp.alt_cstr_type == "below") ? "-" ~ cstrAlt : cstrAlt;
+			return [sprintf("%6s", cstrAlt), tcol];
 		} else {
 			return ["------", "wht"];
 		}
 	},
 	getDist: func() {
-		if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
-			return math.round(fmgc.wpDistance[me.plan][me.index].getValue());
+		if (me.index > size(fmgc.wpDistancePrev[me.plan]) - 1) {
+			return math.round(me.wp.leg_distance);
 		} else {
-			return math.round(fmgc.wpDistancePrev[me.plan][me.index].getValue());
+			if (me.index == fmgc.flightPlanController.currentToWptIndex.getValue()) {
+				return math.round(fmgc.wpDistance[me.plan][me.index].getValue());
+			} else {
+				return math.round(fmgc.wpDistancePrev[me.plan][me.index].getValue());
+			}
 		}
 	},
 	pushButtonLeft: func() {
@@ -147,22 +160,22 @@ var fplnItem = {
 		if (me.wp.wp_name == "DISCONTINUITY") {
 			canvas_mcdu.myLatRev[me.computer] = latRev.new(4, me.wp, me.index, me.computer);
 		} elsif (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-			if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
-			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, me.wp, me.index, me.computer);
-			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+			if (me.wp.wp_name == "PPOS" or me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp, me.index, me.computer);
+			} elsif (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
+			} elsif (fmgc.flightPlanController.flightplans[me.computer].departure != nil and left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, me.wp, me.index, me.computer);
 			} else {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp, me.index, me.computer);
 			}
 		} else {
-			if (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
-			} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
-				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, me.wp, me.index, me.computer);
-			} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+			if (me.wp.wp_name == "PPOS" or me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(2, me.wp, me.index, me.computer);
+			} elsif (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(1, me.wp, me.index, me.computer);
+			} elsif (fmgc.flightPlanController.flightplans[2].departure != nil and left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
+				canvas_mcdu.myLatRev[me.computer] = latRev.new(0, me.wp, me.index, me.computer);
 			} else {
 				canvas_mcdu.myLatRev[me.computer] = latRev.new(3, me.wp, me.index, me.computer);
 			}
@@ -177,22 +190,22 @@ var fplnItem = {
 			canvas_mcdu.myVertRev[me.computer] = nil;
 			
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
-				if (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
-					canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
-				} if (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
-					canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
-				} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+				if (me.wp.wp_name == "PPOS" or me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 					canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
+				} elsif (me.index == fmgc.flightPlanController.arrivalIndex[me.computer]) {
+					canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
+				} if (fmgc.flightPlanController.flightplans[me.computer].departure != nil and left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[me.computer].departure.id) {
+					canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 				} else {
 					canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 				}
 			} else {
-				if (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
-					canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
-				} elsif (left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
-					canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
-				} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
+				if (me.wp.wp_name == "PPOS" or me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1)) {
 					canvas_mcdu.myVertRev[me.computer] = vertRev.new(3, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
+				} elsif (me.index == fmgc.flightPlanController.arrivalIndex[2]) {
+					canvas_mcdu.myVertRev[me.computer] = vertRev.new(1, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
+				} elsif (fmgc.flightPlanController.flightplans[2].departure != nil and left(me.wp.wp_name, 4) == fmgc.flightPlanController.flightplans[2].departure.id) {
+					canvas_mcdu.myVertRev[me.computer] = vertRev.new(0, left(me.wp.wp_name, 4), me.index, me.computer, me.wp, me.plan);
 				} else {
 					canvas_mcdu.myVertRev[me.computer] = vertRev.new(2, me.wp.wp_name, me.index, me.computer, me.wp, me.plan);
 				}
@@ -208,25 +221,25 @@ var fplnItem = {
 			} elsif (find("/",  scratchpadStore) != -1) {
 				var scratchpadSplit = split("/", scratchpadStore);
 				
-				if (size(scratchpadSplit[0]) == 0) {
-					if (num(scratchpadSplit[1]) != nil and (size(scratchpadSplit[1]) == 4 or size(scratchpadSplit[1]) == 5) and scratchpadSplit[1] >= 0 and scratchpadSplit[1] <= 39000) {
-						me.wp.setAltitude(math.round(scratchpadSplit[1], 10), "at");
+				if (size(scratchpadSplit[0]) != 0) {
+					if (num(scratchpadSplit[0]) != nil and size(scratchpadSplit[0]) == 3 and scratchpadSplit[0] >= 100 and scratchpadSplit[0] <= 350) {
+						me.wp.setSpeed(scratchpadSplit[0], "at");
 						mcdu_scratchpad.scratchpads[me.computer].empty();
 					} else {
 						mcdu_message(me.computer, "FORMAT ERROR");
 					}
+				}
+				
+				if (right(scratchpadSplit[1], 1) == "+") {
+					validateAltCstrFpln(left(scratchpadSplit[1], size(scratchpadSplit[1]) - 1), "above", me);
+				} elsif (right(scratchpadSplit[1], 1) == "-") {
+					validateAltCstrFpln(left(scratchpadSplit[1], size(scratchpadSplit[1]) - 1), "below", me);
+				} elsif (left(scratchpadSplit[1], 1) == "+") {
+					validateAltCstrFpln(right(scratchpadSplit[1], size(scratchpadSplit[1]) - 1), "above", me);
+				} elsif (left(scratchpadSplit[1], 1) == "-") {
+					validateAltCstrFpln(right(scratchpadSplit[1], size(scratchpadSplit[1]) - 1), "below", me);
 				} else {
-					if (num(scratchpadSplit[0]) != nil and size(scratchpadSplit[0]) == 3 and scratchpadSplit[0] >= 100 and scratchpadSplit[0] <= 350 and
-						num(scratchpadSplit[1]) != nil and (size(scratchpadSplit[1]) == 4 or size(scratchpadSplit[1]) == 5) and scratchpadSplit[1] >= 0 and scratchpadSplit[1] <= 39000) {
-						me.wp.setSpeed(scratchpadSplit[0], "at");
-						me.wp.setAltitude(math.round(scratchpadSplit[1], 10), "at");
-						mcdu_scratchpad.scratchpads[me.computer].empty();
-					} elsif (num(scratchpadSplit[0]) != nil and size(scratchpadSplit[0]) == 3 and scratchpadSplit[0] >= 100 and scratchpadSplit[0] <= 350 and size(scratchpadSplit[1]) == 0) {
-						me.wp.setSpeed(scratchpadSplit[0], "at");
-						mcdu_scratchpad.scratchpads[me.computer].empty();
-					} else {
-						mcdu_message(me.computer, "FORMAT ERROR");
-					}
+					validateAltCstrFpln(scratchpadSplit[1], "at", me);
 				}
 			} elsif (num(scratchpadStore) != nil and size(scratchpadStore) == 3 and scratchpadStore >= 100 and scratchpadStore <= 350) {
 				me.wp.setSpeed(scratchpadStore, "at");
@@ -239,6 +252,19 @@ var fplnItem = {
 		}
 	},
 };
+
+var validateAltCstrFpln = func(scratchpadStore, type, self) {
+	if (num(scratchpadStore) != nil and (size(scratchpadStore) >= 3 and size(scratchpadStore) <= 5)) {
+		if (scratchpadStore >= 100 and scratchpadStore <= 39000) {
+			self.wp.setAltitude(math.round(scratchpadStore, 10), type);
+			mcdu_scratchpad.scratchpads[self.computer].empty();
+		} else {
+			mcdu_message(self.computer, "ENTRY OUT OF RANGE");
+		}
+	} else {
+		mcdu_message(self.computer, "FORMAT ERROR");
+	}
+}
 
 var staticText = {
 	new: func(computer, text) {
@@ -264,8 +290,32 @@ var staticText = {
 	},
 };
 
+var pseudoItem = {
+	new: func(computer, text) {
+		var pI = {parents:[pseudoItem]};
+		pI.computer = computer;
+		pI.text = text;
+		pI.colour = colour;
+		return pI;
+	},
+	updateLeftText: func() {
+		return [me.text, nil, me.colour];
+	},
+	updateCenterText: func() {
+		return ["----", nil, "wht"];
+	},
+	updateRightText: func() {
+		return ["---/------", " --NM    ", "wht"];
+	},
+	pushButtonLeft: func() {
+		mcdu_message(me.computer, "NOT ALLOWED");
+	},
+	pushButtonRight: func() {
+		mcdu_message(me.computer, "NOT ALLOWED");
+	},
+};
+
 var fplnPage = { # this one is only created once, and then updated - remember this
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	L1: [nil, nil, "ack"], # content, title, colour
 	L2: [nil, nil, "ack"],
 	L3: [nil, nil, "ack"],
@@ -321,6 +371,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			return "----END OF ALTN F-PLN---";
 		} else if (type == "noAltnFpln") {
 			return "------NO ALTN F-PLN-----";
+		} else if (type == "decel") { 
+			return "(DECEL)";
 		} else if (type == "empty") {
 			return "";
 		}
@@ -340,7 +392,25 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 			}
 		}
 		append(me.planList, staticText.new(me.computer, me.getText("fplnEnd")));
-		append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
+		if (!fmgc.FMGCInternal.altAirportSet) {
+			append(me.planList, staticText.new(me.computer, me.getText("noAltnFpln")));
+		} else {
+			var altnApt = findAirportsByICAO(fmgc.FMGCInternal.altAirport)[0];
+			append(me.planList, fplnItem.new({
+				alt_cstr: nil,
+				alt_cstr_type: nil,
+				fly_type: "flyBy",
+				lat: altnApt.lat,
+				leg_bearing: courseAndDistance(findAirportsByICAO(fmgc.FMGCInternal.arrApt)[0], altnApt)[0],
+				leg_distance: courseAndDistance(findAirportsByICAO(fmgc.FMGCInternal.arrApt)[0], altnApt)[1],
+				lon: altnApt.lon,
+				speed_cstr: nil,
+				speed_cstr_type: nil,
+				wp_name: fmgc.FMGCInternal.altAirport,
+			}, i, me.planIndex, me.computer, "blu"));
+			append(me.planList, staticText.new(me.computer, me.getText("altnFplnEnd")));
+		}
+		
 		me.basePage();
 	},
 	basePage: func() {
@@ -465,9 +535,18 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 				setprop("MCDU[" ~ me.computer ~ "]/page", "LATREV");
 			}
 		} else {
-			if (size(me.outputList) >= index) {
+			if ((index - 1 + me.scroll) < size(me.planList) and !mcdu_scratchpad.scratchpads[me.computer].showTypeIMsg and !mcdu_scratchpad.scratchpads[me.computer].showTypeIIMsg) {
 				if (size(mcdu_scratchpad.scratchpads[me.computer].scratchpad) > 0) {
-					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, (index - 1 + me.scroll), me.computer);
+					
+					# Use outputList.index to correct the index the call goes to after sequencing
+					
+					if (mcdu_scratchpad.scratchpads[me.computer].scratchpad == "CLR") {
+						if (me.outputList[index - 1].wp.wp_name == "(DECEL)") {
+							mcdu_message(me.computer, "NOT ALLOWED");
+							return;
+						}
+					}
+					var returny = fmgc.flightPlanController.scratchpad(mcdu_scratchpad.scratchpads[me.computer].scratchpad, me.outputList[index - 1].index, me.computer);
 					if (returny == 3) {
 						mcdu_message(me.computer, "DIR TO IN PROGRESS");
 					} elsif (returny == 0) {

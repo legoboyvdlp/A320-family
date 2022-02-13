@@ -1,6 +1,5 @@
 var atisPage = {
 	title: nil,
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -77,7 +76,6 @@ var atisPage = {
 		me.R6 = ["PRINT ", nil, "blu"];
 		me.arrowsMatrix = [[0, 0, 0, 0, 1, 1], [0, 0, 0, 0, 0, 1]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "wht", "wht"], ["ack", "ack", "ack", "ack", "ack", "blu"]];
-		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	update: func() {

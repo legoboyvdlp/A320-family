@@ -1,7 +1,30 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
+
+var resetFlightplan = func(i) {
+	fmgc.FMGCInternal.depApt = "";
+	fmgc.FMGCInternal.arrApt = "";
+	fmgc.FMGCInternal.toFromSet = 0;
+	fmgc.FMGCNodes.toFromSet.setValue(0);
+	fmgc.windController.resetDesWinds();
+	setprop("/FMGC/internal/align-ref-lat", 0);
+	setprop("/FMGC/internal/align-ref-long", 0);
+	setprop("/FMGC/internal/align-ref-lat-edit", 0);
+	setprop("/FMGC/internal/align-ref-long-edit", 0);
+	if (fmgc.FMGCInternal.blockConfirmed) {
+		fmgc.FMGCInternal.fuelCalculating = 0;
+		fmgc.fuelCalculating.setValue(0);
+		fmgc.FMGCInternal.fuelCalculating = 1;
+		fmgc.fuelCalculating.setValue(1);
+	}
+	fmgc.flightPlanController.reset(2);
+	fmgc.flightPlanController.init();
+	Simbrief.SimbriefParser.inhibit = 0;
+	fmgc.updateARPT();
+	mcdu_scratchpad.scratchpads[i].empty();
+}
 
 var initInputA = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
@@ -220,26 +243,7 @@ var initInputA = func(key, i) {
 			mcdu_message(i, "NOT ALLOWED");
 		}
 		else if (scratchpad == "CLR") {
-			fmgc.FMGCInternal.depApt = "";
-			fmgc.FMGCInternal.arrApt = "";
-			fmgc.FMGCInternal.toFromSet = 0;
-			fmgc.FMGCNodes.toFromSet.setValue(0);
-			fmgc.windController.resetDesWinds();
-			setprop("/FMGC/internal/align-ref-lat", 0);
-			setprop("/FMGC/internal/align-ref-long", 0);
-			setprop("/FMGC/internal/align-ref-lat-edit", 0);
-			setprop("/FMGC/internal/align-ref-long-edit", 0);
-			if (fmgc.FMGCInternal.blockConfirmed) {
-				fmgc.FMGCInternal.fuelCalculating = 0;
-				fmgc.fuelCalculating.setValue(0);
-				fmgc.FMGCInternal.fuelCalculating = 1;
-				fmgc.fuelCalculating.setValue(1);
-			}
-			fmgc.flightPlanController.reset(2);
-			fmgc.flightPlanController.init();
-			Simbrief.SimbriefParser.inhibit = 0;
-			fmgc.updateARPT();
-			mcdu_scratchpad.scratchpads[i].empty();
+			resetFlightplan(i);
 		#} else if (scratchpad == "") {
 			#fmgc.FMGCInternal.altSelected = 0;
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
@@ -251,18 +255,15 @@ var initInputA = func(key, i) {
 					var froms = size(fromto[0]);
 					var tos = size(fromto[1]);
 					if (froms == 4 and tos == 4) {
-						#route
-						if (fmgc.FMGCInternal.toFromSet == 1 and fmgc.FMGCInternal.arrApt != fromto[1]) {
-							fmgc.windController.resetDesWinds();
-						}
+						resetFlightplan(i);
 						fmgc.FMGCInternal.depApt = fromto[0];
 						fmgc.FMGCInternal.arrApt = fromto[1];
 						atsu.ATISInstances[0].newStation(fromto[0]);
 						atsu.ATISInstances[1].newStation(fromto[1]);
 						fmgc.FMGCInternal.toFromSet = 1;
 						fmgc.FMGCNodes.toFromSet.setValue(1);
-						#scratchpad
 						mcdu_scratchpad.scratchpads[i].empty();
+						
 						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 						fmgc.FMGCInternal.altSelected = 0;
 						fmgc.updateARPT();

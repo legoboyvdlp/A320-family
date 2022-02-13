@@ -316,11 +316,11 @@
 			<default value="/systems/oxygen/passenger-oxygen/sys-on-light"/>
 			<test logic="OR" value="0">
 				/controls/oxygen/passenger-mask-reset eq 1
-				/systems/electrical/bus/dc-ess lt 25
+				/systems/electrical/bus/dc-ess-shed lt 25
 			</test>
 			<test logic="AND" value="1">
 				/systems/oxygen/passenger-oxygen/masks-deploy-cmd eq 1
-				/systems/electrical/bus/dc-ess ge 25
+				/systems/electrical/bus/dc-ess-shed ge 25
 			</test>
 			<output>/systems/oxygen/passenger-oxygen/sys-on-light</output>
 		</switch>

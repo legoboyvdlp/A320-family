@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 V2527-A5 Engine -->
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <system name="A320: V2500 Engine">
 	
@@ -1503,6 +1503,7 @@
 				position/wow eq 1
 				/it-fbw/law ne 0
 				/FMGC/FCU-working eq 0
+				position/gear-agl-ft lt 100
 				fadec/control-1/n1-mode eq 1
 				fadec/control-2/n1-mode eq 1
 			</test>
@@ -1593,12 +1594,12 @@
 			<test logic="AND" value="3"> <!-- FLX -->
 				fadec/max-detent eq 4
 				fadec/limit/flex-active eq 1
-				fadec/limit/eng-off-wow-switch eq 0
+				position/wow eq 0
 			</test>
 			<test logic="AND" value="3"> <!-- FLX -->
 				fadec/max-detent le 4
 				fadec/limit/flex-active eq 1
-				fadec/limit/eng-off-wow-switch eq 1
+				position/wow eq 1
 			</test>
 			<test logic="AND" value="1"> <!-- MCT -->
 				fadec/max-detent le 4

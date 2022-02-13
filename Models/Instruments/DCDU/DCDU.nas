@@ -1,6 +1,6 @@
 # A3XX DCDU
 
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 
 var DCDU = nil;
 var DCDU_test = nil;

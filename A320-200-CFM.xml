@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <fdm_config name="A320" version="2.0" release="BETA">
 
@@ -27,7 +27,7 @@
 			<z>-0.934</z>
 		</location>
 		
-		<pointmass name="Crew">
+		<pointmass name="Cockpit Crew">
 			<weight unit="LBS">320</weight>
 			<location name="POINTMASS" unit="M">
 				<x>-15.44</x>

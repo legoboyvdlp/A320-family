@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 <!-- IAE V2500 engine -->
 
 <PropertyList include="A320-main.xml">
@@ -223,6 +223,7 @@
 	
 	<options n="0">
 		<eng type="string">IAE</eng>
+		<eng-int type="int">1</eng-int>
 		<engine-name type="string">V2527-A5</engine-name>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">40</maxflap>

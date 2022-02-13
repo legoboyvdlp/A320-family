@@ -17,13 +17,21 @@ var HYD = {
 	},
 	Fail: {
 		blueElec: props.globals.getNode("/systems/failures/hydraulic/blue-elec"),
+		blueElecOvht: props.globals.getNode("/systems/failures/hydraulic/blue-elec-ovht"),
 		blueLeak: props.globals.getNode("/systems/failures/hydraulic/blue-leak"),
+		blueReservoirAirPressLow: props.globals.getNode("/systems/failures/hydraulic/blue-reservoir-air-press-lo"),
+		blueReservoirOvht: props.globals.getNode("/systems/failures/hydraulic/blue-reservoir-ovht"),
 		greenEng: props.globals.getNode("/systems/failures/hydraulic/green-edp"),
 		greenLeak: props.globals.getNode("/systems/failures/hydraulic/green-leak"),
+		greenReservoirAirPressLow: props.globals.getNode("/systems/failures/hydraulic/green-reservoir-air-press-lo"),
+		greenReservoirOvht: props.globals.getNode("/systems/failures/hydraulic/green-reservoir-ovht"),
 		ptuFault: props.globals.getNode("/systems/failures/hydraulic/ptu"),
 		yellowEng: props.globals.getNode("/systems/failures/hydraulic/yellow-edp"),
 		yellowElec: props.globals.getNode("/systems/failures/hydraulic/yellow-elec"),
+		yellowElecOvht: props.globals.getNode("/systems/failures/hydraulic/yellow-elec-ovht"),
 		yellowLeak: props.globals.getNode("/systems/failures/hydraulic/yellow-leak"),
+		yellowReservoirAirPressLow: props.globals.getNode("/systems/failures/hydraulic/yellow-reservoir-air-press-lo"),
+		yellowReservoirOvht: props.globals.getNode("/systems/failures/hydraulic/yellow-reservoir-ovht"),
 	},
 	Psi: {
 		blue: props.globals.getNode("/systems/hydraulic/blue-psi"),
@@ -36,6 +44,7 @@ var HYD = {
 	},
 	Pump: {
 		yellowElec: props.globals.getNode("/systems/hydraulic/sources/yellow-elec/pump-operate"),
+		yellowElecFail: props.globals.getNode("/ECAM/warnings/hyd/yellow-elec-pump-fail"),
 	},
 	Qty: {
 		blueInput: props.globals.initNode("/systems/hydraulic/blue-qty-input", 0, "INT"),
@@ -66,6 +75,12 @@ var HYD = {
 		blueAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/blue-abnorm-lo-pr"),
 		greenAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/green-abnorm-lo-pr"),
 		yellowAbnormLoPr: props.globals.getNode("/ECAM/warnings/hyd/yellow-abnorm-lo-pr"),
+		blueLoLvl: props.globals.getNode("/systems/hydraulic/relays/blue-reservoir-low-qty-switch"),
+		greenLoLvl: props.globals.getNode("/systems/hydraulic/relays/green-reservoir-low-qty-switch"),
+		yellowLoLvl: props.globals.getNode("/systems/hydraulic/relays/yellow-reservoir-low-qty-switch"),
+		blueReservoirOvht: props.globals.getNode("/systems/hydraulic/relays/blue-reservoir-overheat"),
+		greenReservoirOvht: props.globals.getNode("/systems/hydraulic/relays/green-reservoir-overheat"),
+		yellowReservoirOvht: props.globals.getNode("/systems/hydraulic/relays/yellow-reservoir-overheat"),
 	},
 	init: func() {
 		me.resetFailures();
@@ -83,13 +98,21 @@ var HYD = {
 	},
 	resetFailures: func() {
 		me.Fail.blueElec.setBoolValue(0);
+		me.Fail.blueElecOvht.setBoolValue(0);
 		me.Fail.blueLeak.setBoolValue(0);
+		me.Fail.blueReservoirAirPressLow.setBoolValue(0);
+		me.Fail.blueReservoirOvht.setBoolValue(0);
 		me.Fail.greenEng.setBoolValue(0);
 		me.Fail.greenLeak.setBoolValue(0);
+		me.Fail.greenReservoirAirPressLow.setBoolValue(0);
+		me.Fail.greenReservoirOvht.setBoolValue(0);
 		me.Fail.ptuFault.setBoolValue(0);
 		me.Fail.yellowEng.setBoolValue(0);
 		me.Fail.yellowElec.setBoolValue(0);
+		me.Fail.yellowElecOvht.setBoolValue(0);
 		me.Fail.yellowLeak.setBoolValue(0);
+		me.Fail.yellowReservoirAirPressLow.setBoolValue(0);
+		me.Fail.yellowReservoirOvht.setBoolValue(0);
 	},
 	loop: func(notification) {
 		# Decrease accumPressPsi when green and yellow hydraulics aren't pressurized

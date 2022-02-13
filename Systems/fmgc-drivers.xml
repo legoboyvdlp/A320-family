@@ -8,7 +8,6 @@
 	<!-- Predictors -->
 	<predict-simple>
 		<name>IAS 5 Second Predictor</name>
-		<debug>false</debug>
 		<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
 		<output>/it-autoflight/internal/kts-predicted-5</output>
 		<seconds>5</seconds>
@@ -17,7 +16,6 @@
 	
 	<predict-simple>
 		<name>MACH 5 Second Predictor</name>
-		<debug>false</debug>
 		<input>/instrumentation/airspeed-indicator/indicated-mach</input>
 		<output>/it-autoflight/internal/mach-predicted-5</output>
 		<seconds>5</seconds>
@@ -26,7 +24,6 @@
 	
 	<predict-simple>
 		<name>IAS 15 Second Predictor</name>
-		<debug>false</debug>
 		<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
 		<output>/it-autoflight/internal/kts-predicted-15</output>
 		<seconds>15</seconds>
@@ -35,7 +32,6 @@
 	
 	<predict-simple>
 		<name>MACH 15 Second Predictor</name>
-		<debug>false</debug>
 		<input>/instrumentation/airspeed-indicator/indicated-mach</input>
 		<output>/it-autoflight/internal/mach-predicted-15</output>
 		<seconds>15</seconds>
@@ -188,7 +184,6 @@
 	
 	<filter>
 		<name>Knots Rate Lag</name>
-		<debug>false</debug>
 		<type>exponential</type>
 		<input>
 			<condition>
@@ -206,7 +201,6 @@
 	
 	<filter>
 		<name>Flch Knots Rate Command</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -239,7 +233,13 @@
 			<expression>
 				<product>
 					<difference>
-						<property>/it-autoflight/input/mach</property>
+						<max>
+							<min>
+								<property>/it-autoflight/input/mach</property>
+								<property>/FMGC/internal/vmax-mach</property>
+							</min>
+							<property>/FMGC/internal/vls-mach</property>
+						</max>
 						<property>/instrumentation/airspeed-indicator/indicated-mach</property>
 					</difference>
 					<value>80</value>
@@ -250,7 +250,13 @@
 			<expression>
 				<product>
 					<difference>
-						<property>/it-autoflight/input/kts</property>
+						<max>
+							<min>
+								<property>/it-autoflight/input/kts</property>
+								<property>/FMGC/internal/vmax</property>
+							</min>
+							<property>/FMGC/internal/vls</property>
+						</max>
 						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
 					</difference>
 					<value>0.08</value>
@@ -389,7 +395,6 @@
 	
 	<filter>
 		<name>Heading Error Deg</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -461,7 +466,6 @@
 	
 	<filter>
 		<name>Vertical Speed Sync</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>
@@ -486,11 +490,164 @@
 	</filter>
 	
 	<filter>
+		<name>Vertical Speed VMO Protection</name>
+		<type>gain</type>
+		<input>
+			<expression>
+				<div>
+					<product>
+						<property>/instrumentation/airspeed-indicator/true-speed-kt</property>
+						<value>101.26859142607174</value> <!-- FPM to Knot -->
+						<dif>
+							<product>
+								<property>/fdm/jsbsim/forces/fbx-prop-lbs</property>
+								<cos>
+									<property>/fdm/jsbsim/aero/alpha-rad</property>
+								</cos>
+							</product>
+							<product>
+								<property>/fdm/jsbsim/forces/fwx-aero-lbs</property>
+								<sum>
+									<value>1</value>
+									<product>
+										<property>/it-autoflight/internal/vmo-mmo-error</property>
+										<value>-0.1</value>
+									</product>
+								</sum>
+							</product>
+						</dif>
+					</product>
+					<property>/fdm/jsbsim/inertia/weight-lbs</property>
+				</div>
+			</expression>
+		</input>
+		<output>/it-autoflight/internal/overspeed-vs</output>
+		<min>-6000</min>
+		<max>6000</max>
+	</filter>
+	
+	<filter>
+		<name>Vertical Speed VLS Protection</name>
+		<type>gain</type>
+		<input>
+			<expression>
+				<div>
+					<product>
+						<property>/instrumentation/airspeed-indicator/true-speed-kt</property>
+						<value>101.26859142607174</value> <!-- FPM to Knot -->
+						<dif>
+							<product>
+								<property>/fdm/jsbsim/forces/fbx-prop-lbs</property>
+								<cos>
+									<property>/fdm/jsbsim/aero/alpha-rad</property>
+								</cos>
+							</product>
+							<product>
+								<property>/fdm/jsbsim/forces/fwx-aero-lbs</property>
+								<sum>
+									<value>1</value>
+									<product>
+										<property>/it-autoflight/internal/vls-error</property>
+										<value>-0.1</value>
+									</product>
+								</sum>
+							</product>
+						</dif>
+					</product>
+					<property>/fdm/jsbsim/inertia/weight-lbs</property>
+				</div>
+			</expression>
+		</input>
+		<output>/it-autoflight/internal/underspeed-vs</output>
+		<min>-6000</min>
+		<max>6000</max>
+	</filter>
+	
+	<logic>
+		<input>
+			<and>
+				<greater-than>
+					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+					<property>/FMGC/internal/vmo-mmo-minus-5</property>
+				</greater-than>
+				<or>
+					<and>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>1</value>
+						</equals>
+						<greater-than>
+							<property>/it-autoflight/internal/overspeed-vs</property>
+							<property>/it-autoflight/input/vs</property>
+						</greater-than>
+					</and>
+					<and>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>5</value>
+						</equals>
+						<greater-than>
+							<property>/it-autoflight/internal/overspeed-vs</property>
+							<property>/it-autoflight/internal/target-fpm-fpa-raw</property>
+						</greater-than>
+					</and>
+				</or>
+			</and>
+		</input>
+		<output>/it-autoflight/internal/overspeed-vs-prot</output>
+	</logic>
+	
+	<logic>
+		<input>
+			<and>
+				<less-than>
+					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+					<property>/FMGC/internal/vls-switched-plus-5</property>
+				</less-than>
+				<or>
+					<and>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>1</value>
+						</equals>
+						<less-than>
+							<property>/it-autoflight/internal/underspeed-vs</property>
+							<property>/it-autoflight/input/vs</property>
+						</less-than>
+					</and>
+					<and>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>5</value>
+						</equals>
+						<less-than>
+							<property>/it-autoflight/internal/underspeed-vs</property>
+							<property>/it-autoflight/internal/target-fpm-fpa-raw</property>
+						</less-than>
+					</and>
+				</or>
+			</and>
+		</input>
+		<output>/it-autoflight/internal/underspeed-vs-prot</output>
+	</logic>
+	
+	<filter>
 		<name>Vertical Speed Filter</name>
-		<debug>false</debug>
 		<type>noise-spike</type>
 		<feedback-if-disabled>true</feedback-if-disabled>
 		<initialize-to>output</initialize-to>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/overspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/overspeed-vs</property>
+		</input>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/underspeed-vs-prot</property>
+			</condition>
+			<property>/it-autoflight/internal/underspeed-vs</property>
+		</input>
 		<input>/it-autoflight/input/vs</input>
 		<output>/it-autoflight/internal/vs</output>
 		<max-rate-of-change>
@@ -506,6 +663,8 @@
 							<value>1</value>
 						</equals>
 					</or>
+					<not><property>/it-autoflight/internal/overspeed-vs-prot</property></not>
+					<not><property>/it-autoflight/internal/underspeed-vs-prot</property></not>
 					<equals>
 						<property>/it-autoflight/output/vert</property>
 						<value>1</value>
@@ -557,7 +716,6 @@
 	
 	<filter>
 		<name>Nav Error Deg</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -576,7 +734,6 @@
 	
 	<filter>
 		<name>Nav Course Error Deg</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -595,7 +752,6 @@
 	
 	<filter>
 		<name>Internal Vertical Speed</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>/instrumentation/gps/indicated-vertical-speed</input>
@@ -604,7 +760,6 @@
 	
 	<filter>
 		<name>Nav G/S FPM Calc</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input> <!-- Under 110ft glideslope data starts to become unusable -->
@@ -658,7 +813,6 @@
 	
 	<filter>
 		<name>Heading Predictor Stage 1</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -708,7 +862,6 @@
 	
 	<filter>
 		<name>Heading Predictor Stage 2</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -745,7 +898,6 @@
 	
 	<filter>
 		<name>Altitude Predictor</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -764,7 +916,6 @@
 	
 	<filter>
 		<name>Internal FPA Computer</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -781,7 +932,6 @@
 	<!-- Flight Director -->
 	<filter>
 		<name>FD Target Roll Filter</name>
-		<debug>false</debug>
 		<type>noise-spike</type>
 		<input>/it-autoflight/internal/target-roll-deg</input>
 		<output>/it-autoflight/internal/target-roll-fd</output>
@@ -805,7 +955,6 @@
 	
 	<filter>
 		<name>FD Roll</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -823,7 +972,6 @@
 	
 	<filter>
 		<name>FD Pitch Takeoff</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -854,7 +1002,6 @@
 	
 	<filter>
 		<name>FD Pitch</name>
-		<debug>false</debug>
 		<type>noise-spike</type>
 		<input>
 			<expression>

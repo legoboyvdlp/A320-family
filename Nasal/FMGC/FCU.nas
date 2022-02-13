@@ -1,5 +1,5 @@
 # A3XX FCU
-# Copyright (c) 2021 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2022 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
 
 # Nodes
 var altSetMode = props.globals.getNode("/it-autoflight/config/altitude-dial-mode", 1);
@@ -538,6 +538,9 @@ var apOff = func(type, side) {
 	} elsif (side == 2) {
 		fmgc.Input.ap2.setValue(0);
 	}
+
+    var radarft = (side == 2) ? getprop("/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected") : getprop("/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected");
+	setprop("/instrumentation/pfd/logic/autoland/ap-disc-ft",radarft);
 }
 
 # Autothrust Disconnection
@@ -555,6 +558,6 @@ var athrOff = func(type) {
 var hdgInput = func {
 	if (fmgc.Output.lat.getValue() != 0) {
 		fmgc.Custom.showHdg.setBoolValue(1);
-		fmgc.Custom.hdgTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		fmgc.Custom.hdgTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 }
