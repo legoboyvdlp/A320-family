@@ -4,7 +4,7 @@
 
 <PropertyList>
 
-	<path>res/ohpanelEPR.ac</path>
+	<!--<path>res/ohpanelEPR.ac</path>-->
 	
 	<!-- No button lights without power! -->
 	<animation>
