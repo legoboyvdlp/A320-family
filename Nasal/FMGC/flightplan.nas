@@ -769,6 +769,12 @@ var flightPlanController = {
 			return 3;
 		}
 		
+		if (index == me.currentToWptIndex.getValue()) {
+			return 1;
+			# TODO - implement the PPOS - DISCONT feature
+			# me.insertPPOS(thePlan, index - 1);
+			# me.addDiscontinuity(index - 1, thePlan, 1);
+		}
 		
 		if (!me.temporaryFlag[plan]) {
 			if (text == "CLR" and me.flightplans[2].getWP(index).wp_name == "DISCONTINUITY") {
@@ -783,6 +789,7 @@ var flightPlanController = {
 		} else {
 			var thePlan = plan;
 		}
+		
 		
 		# check waypoints database here
 		var wpFromDB = WaypointDatabase.getWP(text);
