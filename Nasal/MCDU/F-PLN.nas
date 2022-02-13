@@ -4,6 +4,7 @@
 # Local vars
 var decelIndex = 0;
 var decelShow = 0;
+var decelOffset = 0;
 var destName = nil;
 
 var getSubTextFunc = func(meRef) {
@@ -559,8 +560,8 @@ var fplnPage = { # this one is only created once, and then updated - remember th
 		decelIndex = getprop("/instrumentation/nd/symbols/decel/index");
 		decelShow = getprop("/instrumentation/nd/symbols/decel/show");
 		if (me.scroll < me.plan.getPlanSize()) {
+			decelOffset = 0;
 			if (decelShow) {
-				var decelOffset = 0;
 				if (me.scroll > decelIndex) {
 					decelOffset = 1;
 				}
