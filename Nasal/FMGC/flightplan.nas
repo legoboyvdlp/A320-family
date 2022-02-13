@@ -393,8 +393,12 @@ var flightPlanController = {
 					}
 				}
 			} else {
-				me.flightplans[n].deleteWP(index);
-				fmgc.windController.deleteWind(n, index);
+				if (me.flightplans[n].getWP(index).id == "DISCONTINUITY" and index > 0 and me.flightplans[n].getWP(index - 1).id == "PPOS") {
+					return 1;
+				} else {
+					me.flightplans[n].deleteWP(index);
+					fmgc.windController.deleteWind(n, index);
+				}
 			}
 			
 			me.flightPlanChanged(n);
