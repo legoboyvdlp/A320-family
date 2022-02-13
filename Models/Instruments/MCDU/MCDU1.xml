@@ -4,11 +4,11 @@
 
 <PropertyList>
 
-	<path>res/MCDU1.ac</path>
+	<!--<path>res/MCDU1.ac</path>-->
 	
 	<animation>
 		<type>pick</type>
-		<object-name>mcdu1.screen</object-name>
+		<object-name>mcdu1.screen.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -21,7 +21,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>KBMode.Toggle</object-name>
+		<object-name>KBMode.Toggle.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -39,7 +39,7 @@
 
 	<animation>
  		<type>material</type>
- 		<object-name>mcdu1.screen</object-name>
+ 		<object-name>mcdu1.screen.cpt</object-name>
  		<emission>
  			<red>1</red>
  			<green>1</green>
@@ -57,12 +57,12 @@
 			<dirt-factor>0.09</dirt-factor>
 			<contrast><use>instrumentation/mcdu/mcdu1-contrast</use></contrast>
 		</parameters>
-		<object-name>mcdu1.screen</object-name>
+		<object-name>mcdu1.screen.cpt</object-name>
 	</effect>
 
 	<animation>
 		<type>pick</type>
-		<object-name>BRT</object-name>
+		<object-name>BRT.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -85,7 +85,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>DIM</object-name>
+		<object-name>DIM.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -108,7 +108,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>radnav</object-name>
+		<object-name>radnav.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -133,7 +133,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>init</object-name>
+		<object-name>init.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -158,7 +158,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>data</object-name>
+		<object-name>data.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -183,7 +183,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>atc_comm</object-name>
+		<object-name>atc_comm.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -208,7 +208,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>mcdu</object-name>
+		<object-name>mcdu.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -233,7 +233,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>prog</object-name>
+		<object-name>prog.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -258,7 +258,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>perf</object-name>
+		<object-name>perf.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -283,7 +283,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>f-pln</object-name>
+		<object-name>f-pln.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -308,7 +308,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>fuel-pred</object-name>
+		<object-name>fuel-pred.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -333,7 +333,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>dir</object-name>
+		<object-name>dir.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -358,7 +358,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>L1</object-name>
+		<object-name>L1.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -402,7 +402,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>L2</object-name>
+		<object-name>L2.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -446,7 +446,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>L3</object-name>
+		<object-name>L3.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -490,7 +490,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>L4</object-name>
+		<object-name>L4.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -534,7 +534,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>L5</object-name>
+		<object-name>L5.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -578,7 +578,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>L6</object-name>
+		<object-name>L6.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -623,7 +623,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>R1</object-name>
+		<object-name>R1.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -667,7 +667,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>R2</object-name>
+		<object-name>R2.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -711,7 +711,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>R3</object-name>
+		<object-name>R3.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -755,7 +755,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>R4</object-name>
+		<object-name>R4.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -799,7 +799,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>R5</object-name>
+		<object-name>R5.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -843,7 +843,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>R6</object-name>
+		<object-name>R6.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -888,7 +888,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>airport</object-name>
+		<object-name>airport.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -913,7 +913,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>left</object-name>
+		<object-name>left.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -937,7 +937,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>right</object-name>
+		<object-name>right.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -961,7 +961,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>up</object-name>
+		<object-name>up.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -985,7 +985,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>down</object-name>
+		<object-name>down.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1010,7 +1010,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>a</object-name>
+		<object-name>a.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1034,7 +1034,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>b</object-name>
+		<object-name>b.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1058,7 +1058,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>c</object-name>
+		<object-name>c.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1082,7 +1082,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>d</object-name>
+		<object-name>d.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1106,7 +1106,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>e</object-name>
+		<object-name>e.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1130,7 +1130,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>f</object-name>
+		<object-name>f.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1154,7 +1154,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>g</object-name>
+		<object-name>g.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1178,7 +1178,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>h</object-name>
+		<object-name>h.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1202,7 +1202,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>i</object-name>
+		<object-name>i.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1226,7 +1226,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>j</object-name>
+		<object-name>j.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1250,7 +1250,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>k</object-name>
+		<object-name>k.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1274,7 +1274,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>l</object-name>
+		<object-name>l.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1298,7 +1298,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>m</object-name>
+		<object-name>m.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1322,7 +1322,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>n</object-name>
+		<object-name>n.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1346,7 +1346,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>o</object-name>
+		<object-name>o.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1370,7 +1370,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>p</object-name>
+		<object-name>p.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1394,7 +1394,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>q</object-name>
+		<object-name>q.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1418,7 +1418,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>r</object-name>
+		<object-name>r.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1442,7 +1442,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>s</object-name>
+		<object-name>s.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1466,7 +1466,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>t</object-name>
+		<object-name>t.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1490,7 +1490,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>u</object-name>
+		<object-name>u.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1514,7 +1514,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>v</object-name>
+		<object-name>v.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1538,7 +1538,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>w</object-name>
+		<object-name>w.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1562,7 +1562,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>x</object-name>
+		<object-name>x.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1586,7 +1586,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>y</object-name>
+		<object-name>y.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1610,7 +1610,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>z</object-name>
+		<object-name>z.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1634,7 +1634,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>/</object-name>
+		<object-name>/.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1658,7 +1658,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>sp</object-name>
+		<object-name>sp.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1682,7 +1682,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>overfly</object-name>
+		<object-name>overfly.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1706,7 +1706,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>clr</object-name>
+		<object-name>clr.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1748,7 +1748,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>0</object-name>
+		<object-name>0.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1772,7 +1772,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>1</object-name>
+		<object-name>1.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1796,7 +1796,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>2</object-name>
+		<object-name>2.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1820,7 +1820,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>3</object-name>
+		<object-name>3.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1844,7 +1844,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>4</object-name>
+		<object-name>4.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1868,7 +1868,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>5</object-name>
+		<object-name>5.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1892,7 +1892,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>6</object-name>
+		<object-name>6.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1916,7 +1916,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>7</object-name>
+		<object-name>7.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1940,7 +1940,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>8</object-name>
+		<object-name>8.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1964,7 +1964,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>9</object-name>
+		<object-name>9.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -1988,7 +1988,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>.</object-name>
+		<object-name>..cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -2012,7 +2012,7 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-		<object-name>+/-</object-name>
+		<object-name>+/-.cpt</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>true</repeatable>
@@ -2038,7 +2038,7 @@
 	<animation>
 		<name>Panel lighting</name>
 		<type>material</type>
-		<object-name>mcdu_body</object-name>
+		<object-name>mcdu_body.cpt</object-name>
 		<emission>
 			<red>0.3</red>
 			<green>0.3</green>
@@ -2049,12 +2049,12 @@
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/cockpit-irradiance</inherits-from>
-		<object-name>mcdu_body</object-name>
+		<object-name>mcdu_body.cpt</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Effects/model-transparent</inherits-from>
-		<object-name>mcdu_glare</object-name>
+		<object-name>mcdu_glare.cpt</object-name>
 	</effect>
 	
 </PropertyList>

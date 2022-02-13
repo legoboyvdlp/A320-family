@@ -4,7 +4,7 @@
 
 <PropertyList>
 
-	<path>res/Audio.ac</path>
+	<!--<path>res/Audio.ac</path>-->
 
 	<!-- Headset show/hide on Audio Control Panel(click on body) -->
 	<animation>

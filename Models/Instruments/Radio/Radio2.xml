@@ -8,7 +8,7 @@
 
 <PropertyList>
 
-	<path>res/Radio1.ac</path>
+	<!--<path>res/Radio.ac</path>-->
 
 	<!-- On Switch -->
 	<animation>
