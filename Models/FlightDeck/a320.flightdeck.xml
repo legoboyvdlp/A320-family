@@ -6487,31 +6487,21 @@
 
 	<!-- Landing Gear Lever -->
 	<animation>
-		<type>rotate</type>
+		<type>knob</type>
 		<object-name>gear_lever</object-name>
 		<property>controls/gear/gear-down</property>
-		<factor>50</factor>
-		<center>
-			<x-m>-0.55056</x-m>
-			<y-m>0</y-m>
-			<z-m>0.09393</z-m>
-		</center>
+		<factor>-50</factor>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<object-name>gear_lever.axis</object-name>
 		</axis>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>gear_lever</object-name>
 		<action>
-			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-toggle</command>
+				<command>property-cycle</command>
 				<property>controls/gear/gear-down</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
 			</binding>
 		</action>
 	</animation>
