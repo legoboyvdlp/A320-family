@@ -3034,11 +3034,38 @@
 		<object-name>Lcutoff</object-name>
 		<property>fdm/jsbsim/fcs/engine-cutoff[0]</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>  0</dep></entry>
-			<entry><ind>1</ind><dep>-70</dep></entry>
+			<entry><ind>0.0</ind><dep>  0</dep></entry>
+			<entry><ind>1.0</ind><dep>-55</dep></entry>
 		</interpolation>
 		<axis>
-			<object-name>Lcutoff.axis</object-name>
+			<!--object-name>Lcutoff.axis</object-name>-->
+			<x1-m>-0.016632</x1-m>
+			<y1-m>-0.02037</y1-m>
+			<z1-m>-0.132808</z1-m>
+			<x2-m>-0.016632</x2-m>
+			<y2-m>-0.02974</y2-m>
+			<z2-m>-0.132808</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Lcutoff</object-name>
+		<property>fdm/jsbsim/fcs/engine-cutoff[0]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>  0</dep></entry>
+			<entry><ind>0.1</ind><dep>0.0035</dep></entry>
+			<entry><ind>0.9</ind><dep>0.0035</dep></entry>
+			<entry><ind>1.0</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<!--object-name>Lcutoff.axis</object-name>-->
+			<x1-m>-0.015452</x1-m>
+			<y1-m>-0.02464</y1-m>
+			<z1-m>-0.135657</z1-m>
+			<x2-m>-0.03093</x2-m>
+			<y2-m>-0.024785</y2-m>
+			<z2-m>-0.102405</z2-m>
 		</axis>
 	</animation>
 
@@ -3060,11 +3087,38 @@
 		<object-name>Rcutoff</object-name>
 		<property>fdm/jsbsim/fcs/engine-cutoff[1]</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>  0</dep></entry>
-			<entry><ind>1</ind><dep>-70</dep></entry>
+			<entry><ind>0.0</ind><dep>  0</dep></entry>
+			<entry><ind>1.0</ind><dep>-55</dep></entry>
 		</interpolation>
 		<axis>
-			<object-name>Rcutoff.axis</object-name>
+			<!--object-name>Rcutoff.axis</object-name>-->
+			<x1-m>-0.016632</x1-m>
+			<y1-m> 0.02963</y1-m>
+			<z1-m>-0.132808</z1-m>
+			<x2-m>-0.016632</x2-m>
+			<y2-m> 0.02026</y2-m>
+			<z2-m>-0.132808</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Rcutoff</object-name>
+		<property>fdm/jsbsim/fcs/engine-cutoff[1]</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>  0</dep></entry>
+			<entry><ind>0.1</ind><dep>0.0035</dep></entry>
+			<entry><ind>0.9</ind><dep>0.0035</dep></entry>
+			<entry><ind>1.0</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<!--object-name>Lcutoff.axis</object-name>-->
+			<x1-m>-0.015452</x1-m>
+			<y1-m>0.02464</y1-m>
+			<z1-m>-0.135657</z1-m>
+			<x2-m>-0.03093</x2-m>
+			<y2-m>0.024785</y2-m>
+			<z2-m>-0.102405</z2-m>
 		</axis>
 	</animation>
 
