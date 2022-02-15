@@ -1164,7 +1164,7 @@
 		
 		<lag_filter name="fcs/brake-lever">
 			<input>/controls/gear/brake-parking</input>
-			<c1>8</c1>
+			<c1>10</c1>
 		</lag_filter>
 		
 		<actuator name="fcs/brake-left">
