@@ -1659,6 +1659,7 @@
 			<property>/surface-positions/flap-pos-norm</property>
 			<volume>
 				<property>sim/sound/wingview</property>
+				<factor>2</factor>
 			</volume>
 		</switch>
 		
