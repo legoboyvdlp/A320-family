@@ -1276,12 +1276,15 @@
 
 	<!-- Aft Pedestal -->
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>RudderTrim</object-name>
-		<action>
-			<button>3</button>
-			<button>0</button>
-			<repeatable>true</repeatable>
+		<object-name>RudderTrim.mark</object-name>
+		<property>controls/switches/rudder-trim</property>
+		<factor>-30</factor>
+		<axis>
+			<object-name>RudderTrim.axis</object-name>
+		</axis>
+		<increase>
 			<binding>
 				<condition>
 					<and>
@@ -1308,18 +1311,8 @@
 					setprop("controls/switches/rudder-trim", 1);
 				</script>
 			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/switches/rudder-trim</property>
-					<value>0</value>
-				</binding>
-			</mod-up>
-		</action>
-		<action>
-			<button>4</button>
-			<button>1</button>
-			<repeatable>true</repeatable>
+		</increase>
+		<decrease>
 			<binding>
 				<condition>
 					<or>
@@ -1340,24 +1333,14 @@
 					setprop("controls/switches/rudder-trim", -1);
 				</script>
 			</binding>
-			<mod-up>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/switches/rudder-trim</property>
-					<value>0</value>
-				</binding>
-			</mod-up>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
-		<object-name>RudderTrim</object-name>
-		<object-name>RudderTrim.mark</object-name>
-		<property>controls/switches/rudder-trim</property>
-		<factor>-30</factor>
-		<axis>
-			<object-name>RudderTrim.axis</object-name>
-		</axis>
+		</decrease>
+		<release>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/switches/rudder-trim</property>
+				<value>0</value>
+			</binding>
+		</release>
 	</animation>
 
 	<animation>
@@ -1460,6 +1443,21 @@
 	</animation>
 
 	<animation>
+		<type>translate</type>
+		<object-name>ParkBrk</object-name>
+		<property>fdm/jsbsim/fcs/brake-lever</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>0.1</ind><dep>0.003</dep></entry>
+			<entry><ind>0.9</ind><dep>0.003</dep></entry>
+			<entry><ind>1</ind><dep>0</dep></entry>
+		</interpolation>
+		<axis>
+			<z>1</z>
+		</axis>
+	</animation>
+
+	<animation>
 		<type>pick</type>
 		<object-name>ParkBrk</object-name>
 		<action>
@@ -1481,6 +1479,10 @@
         <property>controls/doors/doorc-switch</property>
 		<drag-direction>vertical</drag-direction>
 		<drag-scale-px>14</drag-scale-px>
+		<factor>25</factor>
+		<axis>
+			<object-name>CockpitDoorSwitch.axis</object-name>
+		</axis>
 		<action>		
 			<binding>	
 				<command>property-adjust</command>
@@ -1505,21 +1507,6 @@
 				<label>Cockpit door switch</label>
 			</binding>
 		</hovered>		
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>CockpitDoorSwitch</object-name>
-		<object-name>CockpitDoorSwitch.mark</object-name>
-        <property>controls/doors/doorc-switch</property>
-		<interpolation>
-			<entry><ind>-1</ind><dep>-25</dep></entry>
-			<entry><ind> 0</ind><dep>  0</dep></entry>
-			<entry><ind> 1</ind><dep> 25</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>CockpitDoorSwitch.axis</object-name>
-		</axis>
 	</animation>
 
 	<animation>
@@ -3038,13 +3025,7 @@
 			<entry><ind>1.0</ind><dep>-55</dep></entry>
 		</interpolation>
 		<axis>
-			<!--object-name>Lcutoff.axis</object-name>-->
-			<x1-m>-0.016632</x1-m>
-			<y1-m>-0.02037</y1-m>
-			<z1-m>-0.132808</z1-m>
-			<x2-m>-0.016632</x2-m>
-			<y2-m>-0.02974</y2-m>
-			<z2-m>-0.132808</z2-m>
+			<object-name>Lcutoff.axis</object-name>
 		</axis>
 	</animation>
 	
@@ -3054,12 +3035,11 @@
 		<property>fdm/jsbsim/fcs/engine-cutoff[0]</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>  0</dep></entry>
-			<entry><ind>0.1</ind><dep>0.0035</dep></entry>
-			<entry><ind>0.9</ind><dep>0.0035</dep></entry>
+			<entry><ind>0.1</ind><dep>0.002</dep></entry>
+			<entry><ind>0.9</ind><dep>0.002</dep></entry>
 			<entry><ind>1.0</ind><dep>0</dep></entry>
 		</interpolation>
 		<axis>
-			<!--object-name>Lcutoff.axis</object-name>-->
 			<x1-m>-0.015452</x1-m>
 			<y1-m>-0.02464</y1-m>
 			<z1-m>-0.135657</z1-m>
@@ -3091,13 +3071,7 @@
 			<entry><ind>1.0</ind><dep>-55</dep></entry>
 		</interpolation>
 		<axis>
-			<!--object-name>Rcutoff.axis</object-name>-->
-			<x1-m>-0.016632</x1-m>
-			<y1-m> 0.02963</y1-m>
-			<z1-m>-0.132808</z1-m>
-			<x2-m>-0.016632</x2-m>
-			<y2-m> 0.02026</y2-m>
-			<z2-m>-0.132808</z2-m>
+			<object-name>Rcutoff.axis</object-name>
 		</axis>
 	</animation>
 	
@@ -3107,12 +3081,11 @@
 		<property>fdm/jsbsim/fcs/engine-cutoff[1]</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>  0</dep></entry>
-			<entry><ind>0.1</ind><dep>0.0035</dep></entry>
-			<entry><ind>0.9</ind><dep>0.0035</dep></entry>
+			<entry><ind>0.1</ind><dep>0.002</dep></entry>
+			<entry><ind>0.9</ind><dep>0.002</dep></entry>
 			<entry><ind>1.0</ind><dep>0</dep></entry>
 		</interpolation>
 		<axis>
-			<!--object-name>Lcutoff.axis</object-name>-->
 			<x1-m>-0.015452</x1-m>
 			<y1-m>0.02464</y1-m>
 			<z1-m>-0.135657</z1-m>
@@ -6389,11 +6362,6 @@
 				<script>controls.flapsDown(1);</script>
 			</binding>
 		</action>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>FlapsLever</object-name>
 		<action>
 			<button>1</button>
 			<button>3</button>
@@ -6423,6 +6391,35 @@
 		</center>
 		<axis>
 			<object-name>FlapsLever.axis</object-name>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>FlapsLever</object-name>
+		<property>fdm/jsbsim/fcs/flap-lever</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep>0.0</dep></entry>
+			<entry><ind>0.1</ind><dep>0.002</dep></entry>
+			<entry><ind>0.9</ind><dep>0.002</dep></entry>
+			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+			<entry><ind>1.1</ind><dep>0.002</dep></entry>
+			<entry><ind>1.9</ind><dep>0.002</dep></entry>
+			<entry><ind>2.0</ind><dep>0.0</dep></entry>
+			<entry><ind>2.1</ind><dep>0.002</dep></entry>
+			<entry><ind>2.9</ind><dep>0.002</dep></entry>
+			<entry><ind>3.0</ind><dep>0.0</dep></entry>
+			<entry><ind>3.1</ind><dep>0.002</dep></entry>
+			<entry><ind>3.9</ind><dep>0.002</dep></entry>
+			<entry><ind>4.0</ind><dep>0.0</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>0.064759</x1-m>
+			<y1-m>0.080047</y1-m>
+			<z1-m>-0.145851</z1-m>
+			<x2-m>0.045747</x2-m>
+			<y2-m>0.080047</y2-m>
+			<z2-m>-0.11005</z2-m>
 		</axis>
 	</animation>
 
