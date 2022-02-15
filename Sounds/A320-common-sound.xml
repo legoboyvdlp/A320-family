@@ -30,7 +30,7 @@
 			</condition>
 			<volume>
 				<property>/engines/engine[2]/n1</property>
-				<factor>0.005</factor>
+				<factor>0.004</factor>
 			</volume>
 			<pitch>
 				<property>/engines/engine[2]/n1</property>
@@ -42,7 +42,7 @@
 		<hyd-yellow>
 			<name>yellowHydPump</name>
 			<mode>looped</mode>
-			<path>Aircraft/A320-family/Sounds/yellowHydPump.wav</path>
+			<path>Aircraft/A320-family/Sounds/Hydraulic/yellowHydPump.wav</path>
 			<condition>
 				<property>/systems/hydraulic/sources/yellow-elec/pump-operate</property>
 			</condition>
@@ -55,7 +55,7 @@
 		<hyd>
 			<name>PTU</name>
 			<mode>once</mode>
-			<path>airbus_ptu_on.wav</path>
+			<path>Aircraft/A320-family/Sounds/Hydraulic/airbus_ptu_on.wav</path>
 			<condition>
 				<or>
 					<property>/systems/hydraulic/sources/ptu/yellow-green</property>
@@ -73,7 +73,7 @@
 		<hyd>
 			<name>PTU-loop</name>
 			<mode>looped</mode>
-			<path>airbus_ptu.wav</path>
+			<path>Aircraft/A320-family/Sounds/Hydraulic/airbus_ptu.wav</path>
 			<condition>
 				<equals>
 					<property>/systems/hydraulic/sources/ptu/ptu-loop-sound</property>
@@ -127,7 +127,7 @@
 		<announcement>
 			<name>EmerCall</name>
 			<mode>once</mode>
-			<path>Aircraft/A320-family/Sounds/tripleBelt.wav</path>
+			<path>Aircraft/A320-family/Sounds/Cockpit/tripleBelt.wav</path>
 			<condition>
 				<equals>
 					<property>/controls/switches/emerCall</property>
@@ -146,7 +146,7 @@
 			<name>V1</name>
 			<mode>once</mode>
             <type>avionics</type>
-			<path>Aircraft/A320-family/Sounds/V1.wav</path>
+			<path>Aircraft/A320-family/Sounds/Cockpit/V1.wav</path>
 			<condition>
 				<and>
 					<equals>
@@ -1497,7 +1497,7 @@
 		<sb>
 			<mode>once</mode>
 			<name>sb</name>
-			<path>cabin-chime.wav</path>
+			<path>Aircraft/A320-family/Sounds/Cockpit/cabin-chime.wav</path>
 			<condition>
 				<and>
 					<greater-than>
@@ -1515,7 +1515,7 @@
 		<ns>
 			<mode>once</mode>
 			<name>ns</name>
-			<path>cabin-chime.wav</path>
+			<path>Aircraft/A320-family/Sounds/Cockpit/cabin-chime.wav</path>
 			<condition>
 				<and>
 					<greater-than>
@@ -1659,6 +1659,7 @@
 			<property>/surface-positions/flap-pos-norm</property>
 			<volume>
 				<property>sim/sound/wingview</property>
+				<factor>2</factor>
 			</volume>
 		</switch>
 		
@@ -1801,7 +1802,7 @@
 		<relay>
 			<name>Avionics</name>
 			<mode>looped</mode>
-			<path>Aircraft/A320-family/Sounds/320efis.wav</path>
+			<path>Aircraft/A320-family/Sounds/Cockpit/320efis.wav</path>
 			<condition>
 				<and>
 					<property>/sim/current-view/internal</property>
@@ -1818,7 +1819,7 @@
 				</and>
 			</condition>
 			<volume>
-				<factor>0.6</factor>
+				<factor>0.5</factor>
 			</volume>
 		</relay>
 		

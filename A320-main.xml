@@ -1089,7 +1089,7 @@
 				<bleed-1 type="bool">1</bleed-1>
 				<bleed-2 type="bool">1</bleed-2>
 				<blower type="bool">0</blower>
-				<cabin-fans type="bool">0</cabin-fans>
+				<cabin-fans type="bool">1</cabin-fans>
 				<extract type="bool">0</extract>
 				<groundair type="bool">0</groundair>
 				<hot-air type="bool">1</hot-air>

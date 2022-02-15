@@ -4,7 +4,7 @@
   <fx>
 	<!-- cockpit -->
 	<engine>
-		<name>a320_startup_left</name>
+		<name>a320_starter_left</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_starter.wav</path>
 		<condition>
@@ -25,7 +25,7 @@
 	</engine>
 	
 	<engine>
-		<name>a320_startup_right</name>
+		<name>a320_starter_right</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_starter.wav</path>
 		<condition>
@@ -46,7 +46,7 @@
 	</engine>
 	
 	<engine>
-		<name>a320_startup_left_2</name>
+		<name>a320_startup_left</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_startup.wav</path>
 		<condition>
@@ -67,7 +67,7 @@
 	</engine>
 	
 	<engine>
-		<name>a320_startup_right_2</name>
+		<name>a320_startup_right</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_startup.wav</path>
 		<condition>
@@ -128,6 +128,7 @@
 			<z>0</z>
 		</position>
 	</engine>
+	
 	
 	<engine>
 		<name>a320_cockpit_idle_1</name>
@@ -613,7 +614,7 @@
 			<z>0</z>
 			<inner-angle>225</inner-angle>
 			<outer-angle>135</outer-angle>
-			<outer-gain>0.01</outer-gain>
+			<outer-gain>0.60</outer-gain>
 		</orientation>
 		<reference-dist>30</reference-dist>
 		<position>
@@ -643,7 +644,7 @@
 			<z>0</z>
 			<inner-angle>225</inner-angle>
 			<outer-angle>135</outer-angle>
-			<outer-gain>0.01</outer-gain>
+			<outer-gain>0.60</outer-gain>
 		</orientation>
 		<reference-dist>30</reference-dist>
 		<position>
@@ -673,7 +674,7 @@
 			<z>0</z>
 			<inner-angle>45</inner-angle>
 			<outer-angle>315</outer-angle>
-			<outer-gain>0.01</outer-gain>
+			<outer-gain>0.60</outer-gain>
 		</orientation>
 		<reference-dist>60</reference-dist>
 		<position>
@@ -703,7 +704,7 @@
 			<z>0</z>
 			<inner-angle>45</inner-angle>
 			<outer-angle>315</outer-angle>
-			<outer-gain>0.01</outer-gain>
+			<outer-gain>0.60</outer-gain>
 		</orientation>
 		<reference-dist>60</reference-dist>
 		<position>

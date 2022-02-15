@@ -769,7 +769,7 @@
 		<switch name="/systems/air-conditioning/recirc/cabin-fans">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/controls/switches/pneumatics/cabin-fans eq 1
+				/controls/pneumatics/switches/cabin-fans eq 1
 				/systems/failures/pneumatics/cabin-fans eq 0
 			</test>
 		</switch>
