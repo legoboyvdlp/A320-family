@@ -79,20 +79,23 @@ var initInputA = func(key, i) {
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else if (fmgc.FMGCInternal.toFromSet) {
 			if (!fmgc.flightPlanController.temporaryFlag[i]) {
-				var tfs = size(scratchpad);
-				if (tfs == 4) {
-					fmgc.FMGCInternal.altAirport = scratchpad;
-					fmgc.FMGCInternal.altAirportSet = 1;
-					atsu.ATISInstances[2].newStation(scratchpad);
-					fmgc.windController.updatePlans();
-					if (fmgc.FMGCInternal.blockConfirmed) {
-						fmgc.FMGCInternal.fuelCalculating = 0;
-						fmgc.fuelCalculating.setValue(0);
-						fmgc.FMGCInternal.fuelCalculating = 1;
-						fmgc.fuelCalculating.setValue(1);
+				if (size(scratchpad) == 4) {
+					if (size(findAirportsByICAO(scratchpad)) > 0) {
+						fmgc.FMGCInternal.altAirport = scratchpad;
+						fmgc.FMGCInternal.altAirportSet = 1;
+						atsu.ATISInstances[2].newStation(scratchpad);
+						fmgc.windController.updatePlans();
+						if (fmgc.FMGCInternal.blockConfirmed) {
+							fmgc.FMGCInternal.fuelCalculating = 0;
+							fmgc.fuelCalculating.setValue(0);
+							fmgc.FMGCInternal.fuelCalculating = 1;
+							fmgc.fuelCalculating.setValue(1);
+						}
+						mcdu_scratchpad.scratchpads[i].empty();
+						fmgc.updateARPT();
+					} else {
+						mcdu_message(i, "NOT IN DATA BASE");
 					}
-					mcdu_scratchpad.scratchpads[i].empty();
-					fmgc.updateARPT();
 					#fmgc.FMGCInternal.altSelected = 1;
 					#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 				} else {
@@ -249,25 +252,26 @@ var initInputA = func(key, i) {
 			#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 		} else {			
 			if (!fmgc.flightPlanController.temporaryFlag[i]) {
-				var tfs = size(scratchpad);
-				if (tfs == 9 and find("/", scratchpad) != -1) {
+				if (size(scratchpad) == 9 and find("/", scratchpad) != -1) {
 					var fromto = split("/", scratchpad);
-					var froms = size(fromto[0]);
-					var tos = size(fromto[1]);
-					if (froms == 4 and tos == 4) {
-						resetFlightplan(i);
-						fmgc.FMGCInternal.depApt = fromto[0];
-						fmgc.FMGCInternal.arrApt = fromto[1];
-						atsu.ATISInstances[0].newStation(fromto[0]);
-						atsu.ATISInstances[1].newStation(fromto[1]);
-						fmgc.FMGCInternal.toFromSet = 1;
-						fmgc.FMGCNodes.toFromSet.setValue(1);
-						mcdu_scratchpad.scratchpads[i].empty();
-						
-						fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
-						fmgc.FMGCInternal.altSelected = 0;
-						fmgc.updateARPT();
-						fmgc.updateArptLatLon();
+					if (size(fromto[0]) == 4 and size(fromto[1]) == 4) {
+						if (size(findAirportsByICAO(fromto[0])) > 0 and size(findAirportsByICAO(fromto[1])) > 0) {
+							resetFlightplan(i);
+							fmgc.FMGCInternal.depApt = fromto[0];
+							fmgc.FMGCInternal.arrApt = fromto[1];
+							atsu.ATISInstances[0].newStation(fromto[0]);
+							atsu.ATISInstances[1].newStation(fromto[1]);
+							fmgc.FMGCInternal.toFromSet = 1;
+							fmgc.FMGCNodes.toFromSet.setValue(1);
+							mcdu_scratchpad.scratchpads[i].empty();
+							
+							fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
+							fmgc.FMGCInternal.altSelected = 0;
+							fmgc.updateARPT();
+							fmgc.updateArptLatLon();
+						} else {
+							mcdu_message(i, "NOT IN DATA BASE");
+						}
 						#setprop("MCDU[" ~ i ~ "]/page", "ROUTESELECTION");
 					} else {
 						mcdu_message(i, "NOT ALLOWED");
