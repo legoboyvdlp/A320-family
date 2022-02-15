@@ -95,12 +95,12 @@
 				<product>
 					<property>/sim/current-view/internal</property>
 					<table>
-						<product><property>/velocities/groundspeed-kt</property><value>1</value>  </product>
+						<product><property>/velocities/airspeed-kt</property><value>1</value>  </product>
 						<entry><ind>  0</ind><dep>0.0001</dep></entry>
 						<entry><ind> 10</ind><dep>0.0010</dep></entry>
 						<entry><ind>100</ind><dep>0.0100</dep></entry>
-						<entry><ind>250</ind><dep>0.1000</dep></entry>
-						<entry><ind>550</ind><dep>0.3000</dep></entry>
+						<entry><ind>200</ind><dep>0.1000</dep></entry>
+						<entry><ind>250</ind><dep>0.5000</dep></entry>
 					</table>
 				</product>
 			</expression> 
@@ -120,12 +120,12 @@
 			</condition>
 			<expression>
 				<table>
-					<property>/velocities/groundspeed-kt</property>
+					<property>/velocities/airspeed-kt</property>
 					<entry><ind>  0</ind><dep>0.0001</dep></entry>
 					<entry><ind> 10</ind><dep>0.0010</dep></entry>
 					<entry><ind>100</ind><dep>0.0100</dep></entry>
-					<entry><ind>250</ind><dep>0.1000</dep></entry>
-					<entry><ind>550</ind><dep>0.3000</dep></entry>
+					<entry><ind>200</ind><dep>0.1000</dep></entry>
+					<entry><ind>250</ind><dep>0.5000</dep></entry>
 				</table>
 			</expression> 
 		</input>
@@ -141,9 +141,9 @@
 				<product>
 					<property>/sim/sound/internal-custom</property>
 					<table>
-						<property>/velocities/groundspeed-kt</property>
+						<property>/velocities/airspeed-kt</property>
 						<entry><ind>  0</ind><dep>0.5</dep></entry>
-						<entry><ind>550</ind><dep>1.0</dep></entry>
+						<entry><ind>250</ind><dep>1.0</dep></entry>
 					</table>
 				</product>
 			</expression> 
