@@ -1149,7 +1149,6 @@
 	</animation>
 	
 	<!-- 36LP AC 2 202XP 5VAC transformer -->
-	<!-- ATC MSG (dual power with 37LP?) -->
 	<animation>
 		<type>select</type>
 		<object-name>brk_fan_on</object-name>
@@ -1169,7 +1168,6 @@
 	</animation>
 	
 	<!-- 37LP AC 1 103XP 5VAC transformer -->
-	<!-- ATC MSG, GPWS annunciator -->
 	<animation>
 		<type>select</type>
 		<object-name>abs_low_on</object-name>
@@ -1178,6 +1176,8 @@
 		<object-name>dec_low_on</object-name>
 		<object-name>dec_med_on</object-name>
 		<object-name>dec_max_on</object-name>
+		<object-name>gpws_gs_sw_gpws_on</object-name>
+		<object-name>gpws_gs_sw_gs_on</object-name>
 		<object-name>prio_capt.arrow</object-name>
 		<object-name>prio_capt.arrow.001</object-name>
 		<object-name>prio_capt.capt</object-name>
@@ -1190,6 +1190,24 @@
 				<property>/systems/electrical/bus/ac-1</property>
 				<value>110</value>
 			</greater-than>
+		</condition>
+	</animation>
+	
+	<!-- ATC MSG: dual power with 36LP and 37LP -->
+	<animation>
+		<type>select</type>
+		<object-name>atc_msg_on</object-name>
+		<condition>
+			<or>
+				<greater-than>
+					<property>/systems/electrical/bus/ac-2</property>
+					<value>110</value>
+				</greater-than>
+				<greater-than>
+					<property>/systems/electrical/bus/ac-1</property>
+					<value>110</value>
+				</greater-than>
+			</or>
 		</condition>
 	</animation>
 	
@@ -1599,6 +1617,18 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/terr_nd_l-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/terr_nd_l-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -1662,6 +1692,18 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/terr_nd_r-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/terr_nd_r-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -1688,6 +1730,36 @@
 		</condition>
 	</animation>
 
+	<animation>
+		<type>translate</type>
+		<object-name>terr_on_nd_l</object-name>
+		<object-name>terr_on_nd_on_l</object-name>
+		<property>/controls/cockpit/terr_nd_l-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>terr_on_nd_r</object-name>
+		<object-name>terr_on_nd_on_r</object-name>
+		<property>/controls/cockpit/terr_nd_r-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
+
 	<!-- Brake's fans -->
 	<animation>
 		<type>pick</type>
@@ -1708,7 +1780,34 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/brake-fan-translate</property>
+				<value>0.001</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/brake-fan-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>brk_fan</object-name>
+		<object-name>brk_fan_on</object-name>
+		<property>/controls/cockpit/brake-fan-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -1906,7 +2005,35 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/autobrake-lo-translate</property>
+				<value>0.001</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/autobrake-lo-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>abs_low</object-name>
+		<object-name>abs_low_on</object-name>
+		<object-name>dec_low_on</object-name>
+		<property>/controls/cockpit/autobrake-lo-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -1937,9 +2064,37 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/autobrake-med-translate</property>
+				<value>0.001</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/autobrake-med-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
+	<animation>
+		<type>translate</type>
+		<object-name>abs_med</object-name>
+		<object-name>abs_med_on</object-name>
+		<object-name>dec_med_on</object-name>
+		<property>/controls/cockpit/autobrake-med-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>abs_max</object-name>
@@ -1968,15 +2123,43 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/autobrake-max-translate</property>
+				<value>0.001</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/autobrake-max-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>abs_max</object-name>
+		<object-name>abs_max_on</object-name>
+		<object-name>dec_max_on</object-name>
+		<property>/controls/cockpit/autobrake-max-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
 		<type>knob</type>
 		<object-name>land_sw</object-name>
-		<property>controls/gear/nws-switch</property>
-		<offset-deg>18</offset-deg>
-		<factor>-35</factor>
+		<property>controls/gear/nws-switch-pos</property>
+		<offset-deg>30</offset-deg>
+		<factor>-60</factor>
 		<axis>
 			<x>0</x>
 			<y>1</y>
@@ -2071,7 +2254,33 @@
 				<command>nasal</command>
 				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/cpt-du-xfr-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/cpt-du-xfr-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>pfd_nd_xfr_sw</object-name>
+		<property>/controls/cockpit/cpt-du-xfr-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -2176,7 +2385,33 @@
 				<command>nasal</command>
 				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/fo-du-xfr-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/fo-du-xfr-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>pfd_nd_xfr_sw2</object-name>
+		<property>/controls/cockpit/fo-du-xfr-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -2221,74 +2456,112 @@
 	</animation>
 
 	<!-- Foot warner switches -->
-
 	<animation>
-		<type>rotate</type>
+		<type>knob</type>
 		<object-name>foot_warmer_cpt_sw</object-name>
 		<object-name>foot_warmer_cpt_sw.mark</object-name>
-		<property>controls/cabin/footwarmer-cpt</property>
-		<interpolation>
-			<entry><ind>1</ind><dep>-20</dep></entry>
-			<entry><ind>0</ind><dep>20</dep></entry>
-		</interpolation>
+		<property>controls/cabin/footwarmer-cpt-pos</property>
+		<offset-deg>30</offset-deg>
+		<factor>-60</factor>
+		<center>
+			<x-m>-0.559529</x-m>
+			<y-m>-0.681048</y-m>
+			<z-m>0.232538</z-m>
+		</center>
 		<axis>
-			<object-name>foot_warmer_cpt_sw.axis</object-name>
-		</axis>		
-	</animation>
-	<animation>
-		<type>pick</type>
-		<object-name>foot_warmer_cpt_sw</object-name>
-		<object-name>foot_warmer_cpt_sw.mark</object-name>
-		<action>
-			<button>0</button>			
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>	
+		<action>	
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/cabin/footwarmer-cpt</property>
-				<value>1</value>
 				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>property-toggle</command>
 				<property>/sim/sounde/switch1</property>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>warmer_cpt_lbl</tooltip-id>
+				<label>Captain's foot warmer</label>
+			</binding>
+		</hovered>
 	</animation>
-
+	
 	<animation>
-		<type>rotate</type>
+		<type>knob</type>
 		<object-name>foot_warmer_fo_sw</object-name>
 		<object-name>foot_warmer_fo_sw.mark</object-name>
-		<property>controls/cabin/footwarmer-fo</property>
-		<interpolation>
-			<!-- Axis inverted!! -->
-			<entry><ind>1</ind><dep>20</dep></entry>
-			<entry><ind>0</ind><dep>-20</dep></entry>
-		</interpolation>
+		<property>controls/cabin/footwarmer-fo-pos</property>
+		<offset-deg>30</offset-deg>
+		<factor>-60</factor>
+		<center>
+			<x-m>-0.559529</x-m>
+			<y-m>0.679987</y-m>
+			<z-m>0.232538</z-m>
+		</center>
 		<axis>
-			<object-name>foot_warmer_fo_sw.axis</object-name>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
 		</axis>		
-	</animation>
-	<animation>
-		<type>pick</type>
-		<object-name>foot_warmer_fo_sw</object-name>
-		<object-name>foot_warmer_fo_sw.mark</object-name>
-		<action>
-			<button>0</button>			
+		<action>	
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/cabin/footwarmer-fo</property>
-				<value>1</value>
 				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>property-toggle</command>
 				<property>/sim/sounde/switch1</property>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>warmer_fo_lbl</tooltip-id>
+				<label>F/O's foot warmer</label>
+			</binding>
+		</hovered>
 	</animation>
-
+	
+	<animation>
+		<type>select</type>
+		<object-name>gpws_gs_sw_gpws_on</object-name>
+		<condition>		
+			<property>controls/switches/annun-test</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>gpws_gs_sw_gs_on</object-name>
+		<condition>		
+			<property>controls/switches/annun-test</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>atc_msg_on</object-name>
+		<condition>		
+			<or>
+				<property>/network/cpdlc/new-message-light</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<!-- ECAM Controls -->
 	<animation>
@@ -7220,6 +7493,36 @@
 	</animation>
 
 	<animation>
+		<type>translate</type>
+		<object-name>master_warning</object-name>
+		<object-name>master_warning_on</object-name>
+		<property>/controls/cockpit/master-warn-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>master_caution</object-name>
+		<object-name>master_caution_on</object-name>
+		<property>/controls/cockpit/master-caut-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
 		<type>pick</type>
 		<object-name>master_warning</object-name>
 		<object-name>master_warning_on</object-name>
@@ -7273,6 +7576,18 @@
 				<command>nasal</command>
 				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/master-warn-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/master-warn-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -7311,6 +7626,18 @@
 				<command>nasal</command>
 				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/master-caut-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/master-caut-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
 
@@ -9865,7 +10192,33 @@
 				<command>nasal</command>
 				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/chrono-cpt-translate</property>
+				<value>0.001</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/chrono-cpt-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>chrono_cpt</object-name>
+		<property>/controls/cockpit/chrono-cpt-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 	
 	<!-- ND_R chrono -->
@@ -9886,7 +10239,33 @@
 				<command>nasal</command>
 				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/chrono-fo-translate</property>
+				<value>0.001</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/chrono-fo-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>chrono_fo</object-name>
+		<property>/controls/cockpit/chrono-fo-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 	
 	<!-- torch -->
@@ -10822,7 +11201,7 @@
 	<animation>
 		<type>knob</type>
         <object-name>light_console_cpt_sw</object-name>
-        <property>/controls/lighting/console-floor-light-sw</property>
+        <property>/controls/lighting/console-floor-light-sw-pos</property>
 		<factor>-60</factor>
 		<offset-deg>30</offset-deg>
         <center>
@@ -10847,6 +11226,13 @@
 				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
         </action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>console_lt_cpt_lbl</tooltip-id>
+				<label>Console and floor light switch</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<light>
@@ -11020,7 +11406,7 @@
 	<animation>
 		<type>knob</type>
         <object-name>light_console_fo_sw</object-name>
-        <property>/controls/lighting/console-floor-light-sw-right</property>
+        <property>/controls/lighting/console-floor-light-sw-right-pos</property>
 		<factor>-60</factor>
 		<offset-deg>30</offset-deg>
         <center>
@@ -11045,6 +11431,13 @@
 				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
         </action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>console_lt_fo_lbl</tooltip-id>
+				<label>Console and floor light switch</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<light>

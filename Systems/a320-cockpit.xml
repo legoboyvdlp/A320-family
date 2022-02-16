@@ -89,6 +89,31 @@
 			<input>/controls/doors/doorc-switch</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/gear/nws-switch-pos">
+			<input>/controls/gear/nws-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cabin/footwarmer-cpt-pos">
+			<input>/controls/cabin/footwarmer-cpt</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cabin/footwarmer-fo-pos">
+			<input>/controls/cabin/footwarmer-fo</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/console-floor-light-sw-pos">
+			<input>/controls/lighting/console-floor-light-sw</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/console-floor-light-sw-right-pos">
+			<input>/controls/lighting/console-floor-light-sw-right</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
