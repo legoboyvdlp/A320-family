@@ -1704,6 +1704,10 @@
 				<command>property-toggle</command>
 				<property>controls/gear/brake-fans</property>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
 		</action>
 	</animation>
 
@@ -1898,6 +1902,10 @@
 				setprop("sim/sounde/oh-btn", 1);
 				</script>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
 		</action>
 	</animation>
 
@@ -1924,6 +1932,10 @@
 				}
 				setprop("sim/sounde/oh-btn", 1);
 				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -1952,48 +1964,52 @@
 				setprop("sim/sounde/oh-btn", 1);
 				</script>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
 		</action>
 	</animation>
-
+	
 	<animation>
-		<type>rotate</type>
+		<type>knob</type>
 		<object-name>land_sw</object-name>
 		<property>controls/gear/nws-switch</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>35</dep></entry>
-			<entry><ind>1</ind><dep> 0</dep></entry>
-		</interpolation>
+		<offset-deg>18</offset-deg>
+		<factor>-35</factor>
 		<axis>
 			<x>0</x>
 			<y>1</y>
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-0.562289</x-m>
-			<y-m>0.259382</y-m>
-			<z-m>0.253933</z-m>
+			<x-m>-0.570171</x-m>
+			<y-m>0.225892</y-m>
+			<z-m>0.259829</z-m>
 		</center>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>land_sw</object-name>
 		<action>
-			<button>0</button>
-			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/gear/nws-switch</property>
 				<value>0</value>
 				<value>1</value>
+				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nws-switch-lbl</tooltip-id>
+				<label>Nose wheel steering switch</label>
+			</binding>
+		</hovered>
 	</animation>
+	
 	<!-- Dimmer Panel Left -->
 	<animation>
 		<type>pick</type>
@@ -2050,6 +2066,10 @@
 				</condition>
 				<command>property-toggle</command>
 				<property>modes/cpt-du-xfr</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -2151,6 +2171,10 @@
 				</condition>
 				<command>property-toggle</command>
 				<property>modes/fo-du-xfr</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -9821,40 +9845,6 @@
 				</equals>
 			</and>
 		</condition>
-	</animation>
-
-	<!-- ND_L chrono -->
-	<animation>
-		<type>pick</type>
-		<object-name>chrono_cpt</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>/instrumentation/efis/inputs/CHRONO</property>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
-			</binding>
-		</action>
-	</animation>
-	
-		<!-- ND_R chrono -->
-	<animation>
-		<type>pick</type>
-		<object-name>chrono_fo</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>/instrumentation/efis[1]/inputs/CHRONO</property>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
-			</binding>
-		</action>
 	</animation>
 	
 	<!-- ND_L chrono -->
