@@ -1279,7 +1279,7 @@
 		<type>knob</type>
 		<object-name>RudderTrim</object-name>
 		<object-name>RudderTrim.mark</object-name>
-		<property>controls/switches/rudder-trim</property>
+		<property>/controls/switches/rudder-trim-knob</property>
 		<factor>-30</factor>
 		<axis>
 			<object-name>RudderTrim.axis</object-name>
@@ -1304,12 +1304,17 @@
 						</or>
 					</and>
 				</condition>
-				<command>nasal</command>
-				<script>
-					var TrimVal = getprop("controls/flight/rudder-trim");
-					setprop("controls/flight/rudder-trim", TrimVal + 0.005);
-					setprop("controls/switches/rudder-trim", 1);
-				</script>
+				<command>property-adjust</command>
+				<property>/controls/flight/rudder-trim</property>
+				<step>0.005</step>
+				<min>-20.0</min>
+				<max>20.0</max>
+				<wrap>false</wrap> 
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/switches/rudder-trim</property>
+				<value>1</value>
 			</binding>
 		</increase>
 		<decrease>
@@ -1326,12 +1331,17 @@
 						</greater-than-equals>
 					</or>
 				</condition>
-				<command>nasal</command>
-				<script>
-					var TrimVal = getprop("controls/flight/rudder-trim");
-					setprop("controls/flight/rudder-trim", TrimVal - 0.005);
-					setprop("controls/switches/rudder-trim", -1);
-				</script>
+				<command>property-adjust</command>
+				<property>/controls/flight/rudder-trim</property>
+				<step>-0.005</step>
+				<min>-20.0</min>
+				<max>20.0</max>
+				<wrap>false</wrap> 
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/switches/rudder-trim</property>
+				<value>-1</value>
 			</binding>
 		</decrease>
 		<release>
@@ -1368,10 +1378,9 @@
 						</or>
 					</and>
 				</condition>
-				<command>nasal</command>
-				<script>
-					setprop("controls/flight/rudder-trim", 0);
-				</script>
+				<command>property-assign</command>
+				<property>/controls/flight/rudder-trim</property>
+				<value>0</value>
 			</binding>
 		</action>
 	</animation>
@@ -1448,8 +1457,8 @@
 		<property>fdm/jsbsim/fcs/brake-lever</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.1</ind><dep>0.003</dep></entry>
-			<entry><ind>0.9</ind><dep>0.003</dep></entry>
+			<entry><ind>0.1</ind><dep>0.002</dep></entry>
+			<entry><ind>0.9</ind><dep>0.002</dep></entry>
 			<entry><ind>1</ind><dep>0</dep></entry>
 		</interpolation>
 		<axis>

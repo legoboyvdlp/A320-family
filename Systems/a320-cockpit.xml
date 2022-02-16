@@ -32,6 +32,11 @@
 			<c1>20</c1>
 		</lag_filter>
 		
+		<lag_filter name="/controls/switches/rudder-trim-knob">
+			<input>/controls/switches/rudder-trim</input>
+			<c1>12</c1>
+		</lag_filter>
+		
 		<fcs_function name="fadec/throttle-lever[0]">
 			<function>
 				<quotient>
