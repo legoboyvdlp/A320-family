@@ -1101,23 +1101,25 @@
 			</switches>
 		</pneumatics>
 		<switches>
-			<!-- Smoking is bad :P -->
-			<no-smoking-sign type="double">0.5</no-smoking-sign>
-			<seatbelt-sign type="double">0.0</seatbelt-sign>
 			<annun-test type="int">0</annun-test>
-			<qnh-knb>100000</qnh-knb>
-			<strobe type="double">0.0</strobe>
 			<beacon type="bool">0</beacon>
-			<wing-lights type="bool">0</wing-lights>
+			<cabinCall type="bool">0</cabinCall>
+			<emerCall type="bool">0</emerCall>
+			<emerCallLtO type="bool">0</emerCallLtO>
+			<emerCallLtC type="bool">0</emerCallLtC>
 			<landing-lights-l type="float">0.0</landing-lights-l>
 			<landing-lights-r type="float">0.0</landing-lights-r>
 			<LrainRpt type="bool">0</LrainRpt>
-			<RrainRpt type="bool">0</RrainRpt>
-			<emerCallLtO type="bool">0</emerCallLtO>
-			<emerCallLtC type="bool">0</emerCallLtC>
-			<cabinCall type="bool">0</cabinCall>
-			<emerCall type="bool">0</emerCall>
 			<mechCall type="bool">0</mechCall>
+			<no-smoking-sign type="double">0.5</no-smoking-sign>
+			<qnh-knb>100000</qnh-knb>
+			<RrainRpt type="bool">0</RrainRpt>
+			<rudder-trim type="int">0</rudder-trim>
+			<seatbelt-sign type="double">0.0</seatbelt-sign>
+			<strobe type="double">0.0</strobe>
+			<wing-lights type="bool">0</wing-lights>
+			<wiperLspd type="int">0</wiperLspd>
+			<wiperRspd type="int">0</wiperRspd>
 		</switches>
 		<tray n="0">
 			<lefttrayext type="double">0</lefttrayext>
