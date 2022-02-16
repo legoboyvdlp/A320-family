@@ -37,6 +37,11 @@
 			<c1>12</c1>
 		</lag_filter>
 		
+		<lag_filter name="/controls/engines/engine-start-switch-knob">
+			<input>/controls/engines/engine-start-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<fcs_function name="fadec/throttle-lever[0]">
 			<function>
 				<quotient>
@@ -73,6 +78,16 @@
 		<lag_filter name="fcs/engine-cutoff[1]">
 			<input>/controls/engines/engine[1]/cutoff-switch</input>
 			<c1>10</c1>
+		</lag_filter>
+		
+		<lag_filter name="fcs/engine-cutoff[1]">
+			<input>/controls/engines/engine[1]/cutoff-switch</input>
+			<c1>10</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/doors/doorc-switch-pos">
+			<input>/controls/doors/doorc-switch</input>
+			<c1>20</c1>
 		</lag_filter>
 	
 	</channel>

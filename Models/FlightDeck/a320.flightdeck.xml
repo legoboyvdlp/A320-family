@@ -1351,6 +1351,13 @@
 				<value>0</value>
 			</binding>
 		</release>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>rud_trim_lbl</tooltip-id>
+				<label>Rudder trim control</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -1442,16 +1449,6 @@
 	</text>
 
 	<animation>
-		<type>rotate</type>
-		<object-name>ParkBrk</object-name>
-		<property>fdm/jsbsim/fcs/brake-lever</property>
-		<factor>90</factor>
-		<axis>
-			<object-name>ParkBrk.axis</object-name>
-		</axis>
-	</animation>
-
-	<animation>
 		<type>translate</type>
 		<object-name>ParkBrk</object-name>
 		<property>fdm/jsbsim/fcs/brake-lever</property>
@@ -1467,8 +1464,13 @@
 	</animation>
 
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>ParkBrk</object-name>
+		<property>fdm/jsbsim/fcs/brake-lever</property>
+		<factor>90</factor>
+		<axis>
+			<object-name>ParkBrk.axis</object-name>
+		</axis>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -1477,6 +1479,13 @@
 				<property>controls/gear/brake-parking</property>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>park_brk_lbl</tooltip-id>
+				<label>Parking brake</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<!-- Cocktpit Door Switch  -->
@@ -1485,7 +1494,7 @@
 		<type>knob</type>
 		<object-name>CockpitDoorSwitch</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
-        <property>controls/doors/doorc-switch</property>
+        <property>controls/doors/doorc-switch-pos</property>
 		<drag-direction>vertical</drag-direction>
 		<drag-scale-px>14</drag-scale-px>
 		<factor>25</factor>
@@ -3013,8 +3022,13 @@
 
 	<!-- Engine Cutoff/Mode Selector -->
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>Lcutoff</object-name>
+		<property>fdm/jsbsim/fcs/engine-cutoff[0]</property>
+		<factor>-55</factor>
+		<axis>
+			<object-name>Lcutoff.axis</object-name>
+		</axis>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -3022,45 +3036,28 @@
 				<command>property-toggle</command>
 				<property>controls/engines/engine[0]/cutoff-switch</property>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
 		</action>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>Lcutoff</object-name>
-		<property>fdm/jsbsim/fcs/engine-cutoff[0]</property>
-		<interpolation>
-			<entry><ind>0.0</ind><dep>  0</dep></entry>
-			<entry><ind>1.0</ind><dep>-55</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>Lcutoff.axis</object-name>
-		</axis>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>l_cutoff_lbl</tooltip-id>
+				<label>Left engine cutoff</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
-		<type>translate</type>
-		<object-name>Lcutoff</object-name>
-		<property>fdm/jsbsim/fcs/engine-cutoff[0]</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>  0</dep></entry>
-			<entry><ind>0.1</ind><dep>0.002</dep></entry>
-			<entry><ind>0.9</ind><dep>0.002</dep></entry>
-			<entry><ind>1.0</ind><dep>0</dep></entry>
-		</interpolation>
-		<axis>
-			<x1-m>-0.015452</x1-m>
-			<y1-m>-0.02464</y1-m>
-			<z1-m>-0.135657</z1-m>
-			<x2-m>-0.03093</x2-m>
-			<y2-m>-0.024785</y2-m>
-			<z2-m>-0.102405</z2-m>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>Rcutoff</object-name>
+		<property>fdm/jsbsim/fcs/engine-cutoff[1]</property>
+		<factor>-55</factor>
+		<axis>
+			<object-name>Rcutoff.axis</object-name>
+		</axis>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -3068,87 +3065,54 @@
 				<command>property-toggle</command>
 				<property>controls/engines/engine[1]/cutoff-switch</property>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
 		</action>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>Rcutoff</object-name>
-		<property>fdm/jsbsim/fcs/engine-cutoff[1]</property>
-		<interpolation>
-			<entry><ind>0.0</ind><dep>  0</dep></entry>
-			<entry><ind>1.0</ind><dep>-55</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>Rcutoff.axis</object-name>
-		</axis>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>r_cutoff_lbl</tooltip-id>
+				<label>Right engine cutoff</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
-		<type>translate</type>
-		<object-name>Rcutoff</object-name>
-		<property>fdm/jsbsim/fcs/engine-cutoff[1]</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>  0</dep></entry>
-			<entry><ind>0.1</ind><dep>0.002</dep></entry>
-			<entry><ind>0.9</ind><dep>0.002</dep></entry>
-			<entry><ind>1.0</ind><dep>0</dep></entry>
-		</interpolation>
-		<axis>
-			<x1-m>-0.015452</x1-m>
-			<y1-m>0.02464</y1-m>
-			<z1-m>-0.135657</z1-m>
-			<x2-m>-0.03093</x2-m>
-			<y2-m>0.024785</y2-m>
-			<z2-m>-0.102405</z2-m>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>eng_mode</object-name>
 		<object-name>eng_mode.mark</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/engines/engine-start-switch</property>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/engines/engine-start-switch</property>
-				<value>2</value>
-				<value>1</value>
-				<value>0</value>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>eng_mode</object-name>
-		<object-name>eng_mode.mark</object-name>
-		<property>controls/engines/engine-start-switch</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-53</dep></entry>
-			<entry><ind>1</ind><dep>  0</dep></entry>
-			<entry><ind>2</ind><dep>53</dep></entry>
-		</interpolation>
+		<property>controls/engines/engine-start-switch-knob</property>
+		<factor>53</factor>
+		<offset-deg>-53</offset-deg>
 		<axis>
 			<object-name>eng_mode.axis</object-name>
 		</axis>
+		<action>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/engines/engine-start-switch</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>eng_mode_switch_lbl</tooltip-id>
+				<label>Engine mode selector</label>
+			</binding>
+		</hovered>
 	</animation>
-
+	
 	<!-- FCU QNH and PFD Controls/Lights -->
 	<animation>
 		<type>pick</type>
@@ -6360,32 +6324,9 @@
 
 	<!-- Flap Lever -->
 	<animation>
-		<type>pick</type>
-		<object-name>FlapsLever</object-name>
-		<action>
-			<button>0</button>
-			<button>4</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>controls.flapsDown(1);</script>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>3</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>controls.flapsDown(-1);</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>FlapsLever</object-name>
+		<type>knob</type>
 		<property>fdm/jsbsim/fcs/flap-lever</property>
+		<drag-scale-px>30</drag-scale-px>
 		<interpolation>
 			<entry><ind>0</ind><dep> 0</dep></entry>
 			<entry><ind>1</ind><dep>14</dep></entry>
@@ -6393,14 +6334,31 @@
 			<entry><ind>3</ind><dep>42</dep></entry>
 			<entry><ind>4</ind><dep>56</dep></entry>
 		</interpolation>
-		<center>
-			<x-m>-0.0020</x-m>
-			<y-m>0</y-m>
-			<z-m>-0.4056</z-m>
-		</center>
 		<axis>
 			<object-name>FlapsLever.axis</object-name>
 		</axis>
+		<object-name>FlapsLever</object-name>
+		<increase>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>controls.flapsDown(1);</script>
+			</binding>
+		</increase>
+		<decrease>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>controls.flapsDown(-1);</script>
+			</binding>
+		</decrease>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>flap_lbl</tooltip-id>
+				<label>Flaps</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -7550,19 +7508,7 @@
 		<axis>
 			<x>1</x>
 			<y>0</y>
-			<z>0</z>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>translate</type>
-		<object-name>SpdBrk</object-name>
-		<property>fdm/jsbsim/spoilers/lever-arm</property>
-		<factor>0.006</factor>
-		<axis>
-			<x>0</x>
-			<y>0</y>
-			<z>1</z>
+			<z>-1</z>
 		</axis>
 	</animation>
 
