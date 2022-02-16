@@ -1509,7 +1509,7 @@
 				<min>-1</min>
 				<max>1</max>
 				<wrap>0</wrap>
-			</binding>		
+			</binding>
 		</action>
 		<release>		
 			<binding>	
@@ -1595,6 +1595,10 @@
 				<command>property-toggle</command>
 				<property>instrumentation/efis/inputs/terr</property>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
 		</action>
 	</animation>
 
@@ -1653,6 +1657,10 @@
 				</condition>
 				<command>property-toggle</command>
 				<property>instrumentation/efis[1]/inputs/terr</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
 	</animation>
@@ -3036,10 +3044,6 @@
 				<command>property-toggle</command>
 				<property>controls/engines/engine[0]/cutoff-switch</property>
 			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
-			</binding>
 		</action>
 		<hovered>
 			<binding>
@@ -3064,10 +3068,6 @@
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/engines/engine[1]/cutoff-switch</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
