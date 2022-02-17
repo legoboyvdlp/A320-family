@@ -157,7 +157,18 @@
 				<max>0</max>
 				<wrap>false</wrap>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ddrmi-1-lbl</tooltip-id>
+				<label>Toggle VOR1 / ADF1</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -177,20 +188,51 @@
 				<max>1</max>
 				<wrap>false</wrap>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ddrmi-2-lbl</tooltip-id>
+				<label>Toggle VOR2 / ADF2</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<!-- Flags -->
+	
+	<animation>
+		<name>Flag Hdg rotate</name>
+		<object-name>ddrmi_hdg_flag</object-name>
+		<type>rotate</type>
+		<property>instrumentation/ddrmi/flag-hdg</property>
+		<offset-deg>-180</offset-deg>
+		<factor>-180</factor>
+		<!--<axis>
+			<object-name>ddrmi_hdg_flag.axis</object-name>
+		</axis>-->
+		<center>
+			<x-m>-0.530373</x-m>
+			<y-m>-0.142459</y-m>
+			<z-m>0.131096</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0.2</z>
+		</axis>
+	</animation>
 	
 	<animation>
 		<name>Flag 1 rotate</name>
 		<object-name>ddrmi_vor_adf_flag_1</object-name>
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/flag-1</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-45</dep></entry>
-			<entry><ind>1</ind><dep> 0</dep></entry>
-		</interpolation>
+		<factor>45</factor>
+		<offset-deg>-45</offset-deg>
 		<axis>
 			<object-name>ddrmi_vor_adf_flag_1.axis</object-name>
 		</axis>
@@ -201,10 +243,8 @@
 		<object-name>ddrmi_vor_adf_flag_2</object-name>
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/flag-2</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>45</dep></entry>
-			<entry><ind>1</ind><dep>  0</dep></entry>
-		</interpolation>
+		<factor>-45</factor>
+		<offset-deg>45</offset-deg>
 		<axis>
 			<object-name>ddrmi_vor_adf_flag_2.axis</object-name>
 		</axis>
@@ -1610,6 +1650,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>terr_cpt-lbl</tooltip-id>
+				<label>Show terrain on ND</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -1685,6 +1732,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>terr_fo-lbl</tooltip-id>
+				<label>Show terrain on ND</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -1773,6 +1827,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>brk-fan-lbl</tooltip-id>
+				<label>Toggle brake fans</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -1998,6 +2059,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>autobrk-lo-lbl</tooltip-id>
+				<label>Autobrake Low</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -2057,6 +2125,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>autobrk-med-lbl</tooltip-id>
+				<label>Autobrake Medium</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -2116,6 +2191,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>autobrk-max-lbl</tooltip-id>
+				<label>Autobrake Max / Takeoff</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -2161,7 +2243,7 @@
 			<binding>
 				<command>set-tooltip</command>
 				<tooltip-id>nws-switch-lbl</tooltip-id>
-				<label>Nose wheel steering switch</label>
+				<label>Toggle nose wheel steering</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -2228,6 +2310,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>pfd_xfr-cpt-lbl</tooltip-id>
+				<label>Switch PFD / ND</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -2393,6 +2482,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>pfd_xfr-fo-lbl</tooltip-id>
+				<label>Switch PFD / ND</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -2659,6 +2755,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>gpws-lbl</tooltip-id>
+				<label>Cancel glideslope warning or self test GPWS</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -2722,6 +2825,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>atc_msg-lbl</tooltip-id>
+				<label>Cancel ATC msg</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -7039,6 +7149,13 @@
 				<wrap>false</wrap>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>gear-lbl</tooltip-id>
+				<label>Landing gear</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -7809,6 +7926,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>warn-lbl</tooltip-id>
+				<label>Cancel warning</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -7859,6 +7983,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>caut-lbl</tooltip-id>
+				<label>Cancel caution</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<!-- Overhead Panel-2 lighting -->
@@ -8956,6 +9087,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>iesi-reset-lbl</tooltip-id>
+				<label>Hold for 2 seconds to reset IESI</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -9003,6 +9141,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>iesi-plus-lbl</tooltip-id>
+				<label>Increase IESI brightness</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -9050,6 +9195,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>iesi-minus-lbl</tooltip-id>
+				<label>Decrease IESI brightness</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -9924,6 +10076,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>clock-chrono-reset-lbl</tooltip-id>
+				<label>Reset Chrono</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -9970,6 +10129,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>clock-chrono-lbl</tooltip-id>
+				<label>Start / Stop Chrono</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -10017,6 +10183,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>clock-set-lbl</tooltip-id>
+				<label>Toggle Time / Date</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -10055,6 +10228,13 @@
 				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>utc-select-lbl</tooltip-id>
+				<label>(INOP) Select Clock Source</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -10088,6 +10268,13 @@
                 <max>1</max>
             </binding>
         </release>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>et-ctl-lbl</tooltip-id>
+				<label>Elapsed timer control</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<!-- DME -->
@@ -10487,6 +10674,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>chrono-1-lbl</tooltip-id>
+				<label>Start / Stop / Reset Chrono</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -10534,6 +10728,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>chrono-2-lbl</tooltip-id>
+				<label>Start / Stop / Reset Chrono</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
