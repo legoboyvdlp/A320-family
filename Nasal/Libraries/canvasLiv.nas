@@ -59,6 +59,7 @@ var canvas_livery = {
 		return m;
 	},
 	setResolution: func(resolution) {
+		# TODO
 	},
 	createTarget: func(name, objects, property, defLiv, resolution=4096) {
 		me.targets[name] = {
@@ -143,7 +144,7 @@ var canvas_livery = {
 # Class for Canvas based liveries
 #
 var canvas_livery_update = {
-	init: func(liveriesdir, module_id, interval = 10.01, callback = nil, resolution=4096) {
+	init: func(liveriesdir, module_id, rplayer, interval = 10.01, callback = nil, resolution=4096) {
 		var m = { parents: [canvas_livery_update, overlay_update.new()] };
 		m.parents[1].add(liveriesdir, "sim/model/livery/file", callback);
 		m.parents[1].interval = interval;
@@ -151,16 +152,19 @@ var canvas_livery_update = {
 		m.resolution = resolution;
 		m.targets = {};
 		m.module_id = module_id;
+		m.rplayer = rplayer;
 		return m;
 	},
 	setResolution: func(resolution) {
+		# TODO
 	},
-	createTarget: func(name, objects, property, resolution=4096) {
+	createTarget: func(name, objects, property, defLiv, resolution=4096) {
 		me.targets[name] = {
 			canvas: nil,
 			layers: {},
 			groups: {},
 			listener: nil,
+			defaultLiv: defLiv,
 			resolution: resolution,
 		};
 		maxRes = getprop("/sim/model/livery/max-resolution");
@@ -205,7 +209,7 @@ var canvas_livery_update = {
 			livery = me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)
 		}
 		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)).setSize(resolution,resolution);
-		me.targets[name].listener = setlistener("/ai/models/multiplayer[" ~ me.module_id ~ "]/" ~ property, func(property) {
+		me.targets[name].listener = setlistener(me.rplayer.getNode(property, 1).getPath(), func(property) {
 			resStr = findTexByRes(me.liveriesdir, property.getValue(), resolution);
 			if (resStr == nil) {
 				return nil;
