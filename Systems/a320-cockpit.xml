@@ -152,4 +152,23 @@
 	
 	</channel>
 
+	<channel name="Loudspeakers">
+		
+		<!-- TODO audio switching -->
+		<switch name="Loudspeaker">
+			<default value="0"/>
+			<test logic="AND" value ="/controls/switches/loudspeaker-l">
+				/controls/switches/loudspeaker-l ge /controls/switches/loudspeaker-r 
+				/systems/electrical/bus/dc-ess ge 25
+			</test>
+			<test logic="AND" value ="/controls/switches/loudspeaker-r">
+				/controls/switches/loudspeaker-r gt /controls/switches/loudspeaker-l
+				/systems/electrical/bus/dc-ess ge 25
+			</test>
+			<output>/sim/sound/atc/volume</output>
+			<output>/sim/sound/chatter/volume</output>
+		</switch>
+		
+	</channel>
+	
 </system>

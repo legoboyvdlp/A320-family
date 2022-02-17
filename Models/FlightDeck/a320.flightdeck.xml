@@ -2558,7 +2558,7 @@
 			<binding>
 				<command>set-tooltip</command>
 				<tooltip-id>speaker_volume_cpt-lbl</tooltip-id>
-				<label>Loudspeaker control</label>
+				<label>Radio volume control</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -2587,7 +2587,7 @@
 			<binding>
 				<command>set-tooltip</command>
 				<tooltip-id>speaker_volume_fo-lbl</tooltip-id>
-				<label>Loudspeaker control</label>
+				<label>Radio volume control</label>
 			</binding>
 		</hovered>
 	</animation>
