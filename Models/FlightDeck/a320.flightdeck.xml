@@ -210,19 +210,9 @@
 		<type>rotate</type>
 		<property>instrumentation/ddrmi/flag-hdg</property>
 		<offset-deg>-180</offset-deg>
-		<factor>-180</factor>
-		<!--<axis>
-			<object-name>ddrmi_hdg_flag.axis</object-name>
-		</axis>-->
-		<center>
-			<x-m>-0.530373</x-m>
-			<y-m>-0.142459</y-m>
-			<z-m>0.131096</z-m>
-		</center>
+		<factor>180</factor>
 		<axis>
-			<x>1</x>
-			<y>0</y>
-			<z>0.2</z>
+			<object-name>ddrmi_hdg_flag.axis</object-name>
 		</axis>
 	</animation>
 	
@@ -1196,8 +1186,10 @@
 		<object-name>dec_low_on</object-name>
 		<object-name>dec_med_on</object-name>
 		<object-name>dec_max_on</object-name>
-		<object-name>gpws_gs_sw_gpws_on</object-name>
-		<object-name>gpws_gs_sw_gs_on</object-name>
+		<object-name>gpws_gs_sw_gpws_on.cpt</object-name>
+		<object-name>gpws_gs_sw_gs_on.cpt</object-name>
+		<object-name>gpws_gs_sw_gpws_on.fo</object-name>
+		<object-name>gpws_gs_sw_gs_on.fo</object-name>
 		<object-name>prio_capt.arrow</object-name>
 		<object-name>prio_capt.arrow.001</object-name>
 		<object-name>prio_capt.capt</object-name>
@@ -2598,17 +2590,10 @@
 		<object-name>foot_warmer_cpt_sw</object-name>
 		<object-name>foot_warmer_cpt_sw.mark</object-name>
 		<property>controls/cabin/footwarmer-cpt-pos</property>
-		<offset-deg>30</offset-deg>
-		<factor>-60</factor>
-		<center>
-			<x-m>-0.559529</x-m>
-			<y-m>-0.681048</y-m>
-			<z-m>0.232538</z-m>
-		</center>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<object-name>foot_warmer_cpt_sw.axis</object-name>
 		</axis>	
 		<action>	
 			<repeatable>false</repeatable>
@@ -2638,18 +2623,11 @@
 		<object-name>foot_warmer_fo_sw</object-name>
 		<object-name>foot_warmer_fo_sw.mark</object-name>
 		<property>controls/cabin/footwarmer-fo-pos</property>
-		<offset-deg>30</offset-deg>
-		<factor>-60</factor>
-		<center>
-			<x-m>-0.559529</x-m>
-			<y-m>0.679987</y-m>
-			<z-m>0.232538</z-m>
-		</center>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
-		</axis>		
+			<object-name>foot_warmer_fo_sw.001</object-name>
+		</axis>	
 		<action>	
 			<repeatable>false</repeatable>
 			<binding>
@@ -2675,7 +2653,8 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>gpws_gs_sw_gpws_on</object-name>
+		<object-name>gpws_gs_sw_gpws_on.cpt</object-name>
+		<object-name>gpws_gs_sw_gpws_on.fo</object-name>
 		<condition>		
 			<or>
 				<property>controls/switches/annun-test</property>
@@ -2686,7 +2665,8 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>gpws_gs_sw_gs_on</object-name>
+		<object-name>gpws_gs_sw_gs_on.cpt</object-name>
+		<object-name>gpws_gs_sw_gs_on.fo</object-name>
 		<condition>		
 			<or>
 				<property>controls/switches/annun-test</property>
@@ -2697,9 +2677,9 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>gpws_gs_sw</object-name>
-		<object-name>gpws_gs_sw_gs_on</object-name>
-		<object-name>gpws_gs_sw_gpws_on</object-name>
+		<object-name>gpws_gs_sw.cpt</object-name>
+		<object-name>gpws_gs_sw_gs_on.cpt</object-name>
+		<object-name>gpws_gs_sw_gpws_on.cpt</object-name>
 		<action>
 			<button>0</button>
 			<binding>
@@ -2765,11 +2745,96 @@
 	</animation>
 	
 	<animation>
+		<type>pick</type>
+		<object-name>gpws_gs_sw.fo</object-name>
+		<object-name>gpws_gs_sw_gs_on.fo</object-name>
+		<object-name>gpws_gs_sw_gpws_on.fo</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-1</property>
+							<value>110</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>/instrumentation/mk-viii/inputs/discretes/self-test</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-1</property>
+							<value>110</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>/instrumentation/mk-viii/inputs/discretes/glideslope-cancel</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/gpws_r-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/instrumentation/mk-viii/inputs/discretes/self-test</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>/instrumentation/mk-viii/inputs/discretes/glideslope-cancel</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/gpws_r-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>gpws-lbl</tooltip-id>
+				<label>Cancel glideslope warning or self test GPWS</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
 		<type>translate</type>
-		<object-name>gpws_gs_sw</object-name>
-		<object-name>gpws_gs_sw_gs_on</object-name>
-		<object-name>gpws_gs_sw_gpws_on</object-name>
+		<object-name>gpws_gs_sw.cpt</object-name>
+		<object-name>gpws_gs_sw_gs_on.cpt</object-name>
+		<object-name>gpws_gs_sw_gpws_on.cpt</object-name>
 		<property>/controls/cockpit/gpws_l-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>gpws_gs_sw.fo</object-name>
+		<object-name>gpws_gs_sw_gs_on.fo</object-name>
+		<object-name>gpws_gs_sw_gpws_on.fo</object-name>
+		<property>/controls/cockpit/gpws_r-translate</property>
 		<axis>
 			<x1-m>-0.366265</x1-m>
 			<y1-m>0.39799</y1-m>
@@ -11685,15 +11750,10 @@
 		<type>knob</type>
         <object-name>light_console_cpt_sw</object-name>
         <property>/controls/lighting/console-floor-light-sw-pos</property>
-		<factor>-60</factor>
-		<offset-deg>30</offset-deg>
-        <center>
-			<x-m>-0.560268</x-m>
-			<y-m>-0.713513</y-m>
-			<z-m>0.232654</z-m>
-		</center>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
 		<axis>
-			<y>1</y>
+			<object-name>light_console_cpt_sw.axis</object-name>
 		</axis>
         <action>
             <binding>
@@ -11890,15 +11950,10 @@
 		<type>knob</type>
         <object-name>light_console_fo_sw</object-name>
         <property>/controls/lighting/console-floor-light-sw-right-pos</property>
-		<factor>-60</factor>
-		<offset-deg>30</offset-deg>
-        <center>
-			<x-m>-0.560268</x-m>
-			<y-m>-0.713513</y-m>
-			<z-m>0.232654</z-m>
-		</center>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
 		<axis>
-			<y>1</y>
+			<object-name>light_console_fo_sw.axis</object-name>
 		</axis>
         <action>
             <binding>
@@ -12172,6 +12227,39 @@
 				<command>set-tooltip</command>
 				<tooltip-id>no-smk-lbl</tooltip-id>
 				<label>No smoking sign</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>audio_swtg</object-name>
+		<object-name>eng_mode.mark.030</object-name>
+		<property>controls/navigation/switching/audio-pos</property>
+		<factor>-70</factor>
+		<offset-deg>35</offset-deg>
+		<axis>
+			<object-name>eng_mode.axis.025</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/navigation/switching/audio</property>
+				<value>-1</value>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>audio-swtg-lbl</tooltip-id>
+				<label>Switch audio control to ACP3</label>
 			</binding>
 		</hovered>
 	</animation>

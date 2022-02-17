@@ -1115,6 +1115,7 @@
 				</lights>
 			</adirscp>
 			<switching>
+				<audio type="int">0</audio>
 				<att-hdg type="int">0</att-hdg>
 				<air-data type="int">0</air-data>
 			</switching>
