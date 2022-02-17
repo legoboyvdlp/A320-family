@@ -2603,8 +2603,18 @@
 		<condition>		
 			<or>
 				<property>controls/switches/annun-test</property>
-				<property>/instrumentation/mk-viii/outputs/discretes/gpws-alert</property>
 				<property>/instrumentation/mk-viii/outputs/discretes/gpws-warning</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>gpws_gs_sw_gs_on</object-name>
+		<condition>		
+			<or>
+				<property>controls/switches/annun-test</property>
+				<property>/instrumentation/mk-viii/outputs/discretes/gpws-alert</property>
 			</or>
 		</condition>
 	</animation>
@@ -2685,20 +2695,6 @@
 			<y2-m>0.39799</y2-m>
 			<z2-m>0.478435</z2-m>
 		</axis>
-	</animation>
-	
-	<animation>
-		<type>select</type>
-		<object-name>gpws_gs_sw_gs_on</object-name>
-		<condition>		
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>/instrumentation/mk-viii/outputs/alert-mode</property>
-					<value>5</value>
-				</equals>
-			</or>
-		</condition>
 	</animation>
 	
 	<animation>

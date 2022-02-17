@@ -1938,7 +1938,7 @@
 				<category-8 type="int">3</category-8>
 				<category-9 type="int">3</category-9> 
 				<category-10 type="int">6</category-10>
-				<category-13 type="int">7</category-13>
+				<category-13 type="int">6</category-13> <!-- Lamp Format 1 GPWS -->
 				<category-14 type="int">0</category-14>
 			</configuration-module>
 			<input-feeders>
