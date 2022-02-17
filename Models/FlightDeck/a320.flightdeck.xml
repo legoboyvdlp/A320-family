@@ -2158,18 +2158,11 @@
 		<type>knob</type>
 		<object-name>land_sw</object-name>
 		<property>controls/gear/nws-switch-pos</property>
-		<offset-deg>30</offset-deg>
-		<factor>-60</factor>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<object-name>land_sw.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.570171</x-m>
-			<y-m>0.225892</y-m>
-			<z-m>0.259829</z-m>
-		</center>
 		<action>
 			<repeatable>false</repeatable>
 			<binding>
@@ -2195,46 +2188,34 @@
 	
 	<!-- Dimmer Panel Left -->
 	<animation>
-		<type>pick</type>
-		<object-name>pfd_brt_cpt</object-name>
-		<object-name>pfd_brt_cpt.mark</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/DU/du1</property>
-				<step>0.05</step>
-				<max>1</max>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/DU/du1</property>
-				<step>-0.05</step>
-				<min>0</min>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
+		<type>knob</type>
 		<object-name>pfd_brt_cpt</object-name>
 		<object-name>pfd_brt_cpt.mark</object-name>
 		<property>controls/lighting/DU/du1</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-129</dep></entry>
-			<entry><ind>1</ind><dep>129</dep></entry>
-		</interpolation>
+		<offset-deg>-125</offset-deg>
+		<factor>250</factor>
 		<axis>
 			<object-name>pfd_brt_cpt.axis</object-name>
 		</axis>
+		<action>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/DU/du1</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>pfd_brt_cpt-lbl</tooltip-id>
+				<label>PFD brightness control</label>
+			</binding>
+		</hovered>
 	</animation>
-
+	
 	<animation>
 		<type>pick</type>
 		<object-name>pfd_nd_xfr_sw</object-name>
@@ -2257,7 +2238,7 @@
 			<binding>
 				<command>property-assign</command>
 				<property>/controls/cockpit/cpt-du-xfr-translate</property>
-				<value>0.0015</value>
+				<value>0.00075</value>
 			</binding>
 			<mod-up>
 				<binding>
@@ -2284,86 +2265,62 @@
 	</animation>
 
 	<animation>
-		<type>pick</type>
-		<object-name>brightness_nd_2_cpt</object-name>
-		<object-name>brightness_nd_2_cpt.mark</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/DU/du2</property>
-				<step>0.05</step>
-				<max>1</max>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/DU/du2</property>
-				<step>-0.05</step>
-				<min>0</min>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
+		<type>knob</type>
 		<object-name>brightness_nd_2_cpt</object-name>
 		<object-name>brightness_nd_2_cpt.mark</object-name>
 		<property>controls/lighting/DU/du2</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-129</dep></entry>
-			<entry><ind>1</ind><dep>129</dep></entry>
-		</interpolation>
+		<offset-deg>-125</offset-deg>
+		<factor>250</factor>
 		<axis>
 			<object-name>brightness_nd_cpt.axis</object-name>
 		</axis>
+		<action>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/DU/du2</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nd_brt_cpt-lbl</tooltip-id>
+				<label>ND brightness control</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<!-- Dimmer Panel Right -->
 	<animation>
-		<type>pick</type>
-		<object-name>brightness_nd_2_fo</object-name>
-		<object-name>brightness_nd_2_fo.mark</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/DU/du5</property>
-				<step>0.05</step>
-				<max>1</max>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/DU/du5</property>
-				<step>-0.05</step>
-				<min>0</min>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
+		<type>knob</type>
 		<object-name>brightness_nd_2_fo</object-name>
 		<object-name>brightness_nd_2_fo.mark</object-name>
 		<property>controls/lighting/DU/du5</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-129</dep></entry>
-			<entry><ind>1</ind><dep>129</dep></entry>
-		</interpolation>
+		<offset-deg>-125</offset-deg>
+		<factor>250</factor>
 		<axis>
 			<object-name>brightness_nd_fo.axis</object-name>
 		</axis>
+		<action>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/DU/du5</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nd_brt_fo-lbl</tooltip-id>
+				<label>ND brightness control</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -2388,7 +2345,7 @@
 			<binding>
 				<command>property-assign</command>
 				<property>/controls/cockpit/fo-du-xfr-translate</property>
-				<value>0.0015</value>
+				<value>0.00075</value>
 			</binding>
 			<mod-up>
 				<binding>
@@ -2415,44 +2372,90 @@
 	</animation>
 
 	<animation>
-		<type>pick</type>
-		<object-name>pfd_brt_fo</object-name>
-		<object-name>pfd_brt_fo.mark</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/DU/du6</property>
-				<step>0.05</step>
-				<max>1</max>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/DU/du6</property>
-				<step>-0.05</step>
-				<min>0</min>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
+		<type>knob</type>
 		<object-name>pfd_brt_fo</object-name>
 		<object-name>pfd_brt_fo.mark</object-name>
 		<property>controls/lighting/DU/du6</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-129</dep></entry>
-			<entry><ind>1</ind><dep>129</dep></entry>
-		</interpolation>
+		<offset-deg>-125</offset-deg>
+		<factor>250</factor>
 		<axis>
 			<object-name>pfd_brt_fo.axis</object-name>
 		</axis>
+		<action>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/DU/du6</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>pfd_brt_fo-lbl</tooltip-id>
+				<label>PFD brightness control</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>speaker_volume_cpt</object-name>
+		<object-name>speaker_volume_cpt.mark</object-name>
+		<property>controls/switches/loudspeaker-l</property>
+		<offset-deg>-125</offset-deg>
+		<factor>250</factor>
+		<axis>
+			<object-name>speaker_volume_cpt.axis</object-name>
+		</axis>
+		<action>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/loudspeaker-l</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>speaker_volume_cpt-lbl</tooltip-id>
+				<label>Loudspeaker control</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>speaker_volume_fo</object-name>
+		<object-name>speaker_volume_fo.mark</object-name>
+		<property>controls/switches/loudspeaker-r</property>
+		<offset-deg>-125</offset-deg>
+		<factor>250</factor>
+		<axis>
+			<object-name>speaker_volume_fo.axis</object-name>
+		</axis>
+		<action>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/loudspeaker-r</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>speaker_volume_fo-lbl</tooltip-id>
+				<label>Loudspeaker control</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<!-- Foot warner switches -->
@@ -2540,7 +2543,11 @@
 		<type>select</type>
 		<object-name>gpws_gs_sw_gpws_on</object-name>
 		<condition>		
-			<property>controls/switches/annun-test</property>
+			<or>
+				<property>controls/switches/annun-test</property>
+				<property>/instrumentation/mk-viii/outputs/discretes/gpws-alert</property>
+				<property>/instrumentation/mk-viii/outputs/discretes/gpws-warning</property>
+			</or>
 		</condition>
 	</animation>
 	
@@ -2548,7 +2555,13 @@
 		<type>select</type>
 		<object-name>gpws_gs_sw_gs_on</object-name>
 		<condition>		
-			<property>controls/switches/annun-test</property>
+			<or>
+				<property>controls/switches/annun-test</property>
+				<equals>
+					<property>/instrumentation/mk-viii/outputs/alert-mode</property>
+					<value>5</value>
+				</equals>
+			</or>
 		</condition>
 	</animation>
 	
