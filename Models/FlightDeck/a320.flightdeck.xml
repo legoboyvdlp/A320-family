@@ -143,7 +143,9 @@
 	<animation>
 		<type>knob</type>
 		<object-name>ddrmi_vor_adf_select_1</object-name>
-		<property>instrumentation/ddrmi/vor-adf-1</property>
+		<property>instrumentation/ddrmi/vor-adf-1-pos</property>
+		<offset-deg>90</offset-deg>
+		<factor>-90</factor>
 		<axis>
 			<object-name>ddrmi_vor_adf_select_1.axis</object-name>
 		</axis>
@@ -151,30 +153,19 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>instrumentation/ddrmi/vor-adf-1</property>
-				<min>0</min>
-				<max>1</max>
+				<min>1</min>
+				<max>0</max>
+				<wrap>false</wrap>
 			</binding>
 		</action>
 	</animation>
-
-	<animation>
-		<name>DDRMI vor-adf knob 1</name>
-		<type>rotate</type>
-		<object-name>ddrmi_vor_adf_select_1</object-name>
-		<property>instrumentation/ddrmi/vor-adf-1</property>
-		<interpolation>
-			<entry><ind> 0</ind><dep>90</dep></entry> <!-- ADF -->
-			<entry><ind> 1</ind><dep> 0</dep></entry> <!-- VOR -->
-		</interpolation>
-		<axis>
-			<object-name>ddrmi_vor_adf_select_1.axis</object-name>
-		</axis>
-	</animation>
-
+	
 	<animation>
 		<type>knob</type>
 		<object-name>ddrmi_vor_adf_select_2</object-name>
-		<property>instrumentation/ddrmi/vor-adf-2</property>
+		<property>instrumentation/ddrmi/vor-adf-2-pos</property>
+		<offset-deg>-90</offset-deg>
+		<factor>90</factor>
 		<axis>
 			<object-name>ddrmi_vor_adf_select_2.axis</object-name>
 		</axis>
@@ -184,23 +175,10 @@
 				<property>instrumentation/ddrmi/vor-adf-2</property>
 				<min>0</min>
 				<max>1</max>
+				<wrap>false</wrap>
 			</binding>
 		</action>
 	</animation>
-
-	<animation>
-		<name>DDRMI vor-adf knob 2</name>
-		<type>rotate</type>
-		<object-name>ddrmi_vor_adf_select_2</object-name>
-		<property>instrumentation/ddrmi/vor-adf-2</property>
-		<interpolation>
-			<entry><ind> 0</ind><dep>-90</dep></entry> <!-- ADF -->
-			<entry><ind> 1</ind><dep> 0</dep></entry> <!-- VOR -->
-		</interpolation>
-		<axis>
-			<object-name>ddrmi_vor_adf_select_2.axis</object-name>
-		</axis>
-	</animation>	
 	
 	<!-- Flags -->
 	
@@ -245,6 +223,7 @@
 		<object-name>ddrmi_pointer_2_adf</object-name>
 		<object-name>ddrmi_vor_adf_flag_1</object-name>
 		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>ddrmi_hdg_flag</object-name>
 		<object-name>ddrmi_hdg</object-name>
 		<!-- <emission>
 			<red>0.50</red>
@@ -288,6 +267,7 @@
 		<object-name>ddrmi_pointer_2_adf</object-name>
 		<object-name>ddrmi_vor_adf_flag_1</object-name>
 		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>ddrmi_hdg_flag</object-name>
 		<object-name>ddrmi_hdg</object-name>
 		<!-- <emission>
 			<red>0.3</red>
@@ -3825,6 +3805,16 @@
 	</animation>
 	
 	<animation>
+		<type>rotate</type>
+		<object-name>iesi_baro_knb</object-name>
+		<property>controls/switches/qnh-knb-iesi</property>
+		<factor>11.25</factor>
+		<axis>
+			<object-name>iesi_baro_knb.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
 		<type>pick</type>
 		<object-name>iesi_baro_knb</object-name>
 		<action>
@@ -3852,15 +3842,25 @@
 				libraries.toggleSTDIESI();
 				</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/iesi-qnh-knob-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/iesi-qnh-knob-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 		<action>
 			<button>3</button>
-			<repeatable>true</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter[6]/setting-inhg", getprop("/instrumentation/altimeter[6]/setting-inhg") + 0.01);
-				</script>
+				<command>property-adjust</command>
+				<property>/instrumentation/altimeter[6]/setting-inhg</property>
+				<step>0.01</step>
 				<condition>
 					<and>
 						<equals>
@@ -3894,12 +3894,10 @@
 		</action>
 		<action>
 			<button>4</button>
-			<repeatable>true</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter[6]/setting-inhg", getprop("/instrumentation/altimeter[6]/setting-inhg") - 0.01);
-				</script>
+				<command>property-adjust</command>
+				<property>/instrumentation/altimeter[6]/setting-inhg</property>
+				<step>-0.01</step>
 				<condition>
 					<and>
 						<equals>
@@ -3931,8 +3929,29 @@
 				<wrap>true</wrap>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>qnh_iesi-lbl</tooltip-id>
+				<label>Scroll for altimeter Setting - click for STD</label>
+			</binding>
+		</hovered>
 	</animation>
-
+	
+	<animation>
+		<type>translate</type>
+		<object-name>iesi_baro_knb</object-name>
+		<property>/controls/cockpit/iesi-qnh-knob-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>qnh_cpt_sw</object-name>
@@ -6949,7 +6968,8 @@
 	<animation>
 		<type>knob</type>
 		<object-name>gear_lever</object-name>
-		<property>controls/gear/gear-down</property>
+		<drag-direction>vertical</drag-direction>
+		<property>controls/gear/gear-down-pos</property>
 		<factor>-50</factor>
 		<axis>
 			<object-name>gear_lever.axis</object-name>
@@ -6959,8 +6979,8 @@
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/gear/gear-down</property>
-				<value>0</value>
 				<value>1</value>
+				<value>0</value>
 				<wrap>false</wrap>
 			</binding>
 		</action>
@@ -8869,6 +8889,10 @@
 				<property>/instrumentation/iesi/att-reset-cmd</property>
 				<value>1</value>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
 			<mod-up>
 				<binding>
 					<command>property-assign</command>
@@ -8918,6 +8942,10 @@
 					<property>/instrumentation/iesi/plus</property>
 					<value>0</value>
 				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.pushbutton();</script>
+				</binding>
 			</mod-up>
 		</action>
 	</animation>
@@ -8960,6 +8988,10 @@
 					<command>property-assign</command>
 					<property>/instrumentation/iesi/minus</property>
 					<value>0</value>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>libraries.pushbutton();</script>
 				</binding>
 			</mod-up>
 		</action>
@@ -9268,8 +9300,6 @@
 		<object-name>brightness_panel_emit</object-name>
 		<object-name>foot_warmer_cpt_sw</object-name>
 		<object-name>foot_warmer_fo_sw</object-name>
-		<object-name>ddrmi_vor_adf_flag_1</object-name>
-		<object-name>ddrmi_vor_adf_flag_2</object-name>
 		<object-name>master_caution</object-name>
 		<object-name>master_caution_on</object-name>
 		<object-name>master_warning</object-name>
@@ -9323,6 +9353,7 @@
 		<object-name>ddrmi_inside</object-name>
 		<object-name>ddrmi_vor_adf_flag_1</object-name>
 		<object-name>ddrmi_vor_adf_flag_2</object-name>
+		<object-name>ddrmi_hdg_flag</object-name>
 		<object-name>brakes_body</object-name>
 		<object-name>clock_body</object-name>
 		<object-name>et_knob</object-name>
@@ -9817,11 +9848,41 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-assign</command>
 				<property>instrumentation/chrono/chrono-reset</property>
 				<value>2</value>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/clock-chrono-reset-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/clock-chrono-reset-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>chrono_reset</object-name>
+		<property>/controls/cockpit/clock-chrono-reset-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -9837,17 +9898,37 @@
 				<value>1</value><!-- Start Timer -->
 				<value>0</value><!-- Stop Timer -->
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/chrono/started</property>
-				<value>0</value><!-- Stop Timer -->
-				<value>1</value><!-- Start Timer -->
+				<command>property-assign</command>
+				<property>/controls/cockpit/clock-chrono-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/clock-chrono-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>chrono_btn</object-name>
+		<property>/controls/cockpit/clock-chrono-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -9856,32 +9937,53 @@
 		<property>instrumentation/clock/set-knob</property>
 		<action>
 			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/clock/set-knob</property>
-				<value>0</value><!-- Date Mode -->
-				<value>1</value><!-- Time Mode -->
-			</binding>
-		</action>
-		<action>
 			<button>1</button>
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/clock/set-knob</property>
-				<value>1</value><!-- Time Mode -->
 				<value>0</value><!-- Date Mode -->
+				<value>1</value><!-- Time Mode -->
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/clock-set-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/clock-set-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
-
+	
+	<animation>
+		<type>translate</type>
+		<object-name>clock_set</object-name>
+		<property>/controls/cockpit/clock-set-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<name>UTC selector animation</name>
 		<type>knob</type>
 		<object-name>clock_knob</object-name>
-		<property>instrumentation/clock/utc-selector</property>
+		<property>instrumentation/clock/utc-selector-pos</property>
+		<factor>22.5</factor>
 		<axis>
 			<object-name>clock_knob.axis</object-name>
 		</axis>
@@ -9891,29 +9993,20 @@
 				<property>instrumentation/clock/utc-selector</property>
 				<min>0</min>
 				<max>2</max>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
 	</animation>
 
 	<animation>
-		<name>UTC selector rotate</name>
-		<type>rotate</type>
-		<object-name>clock_knob</object-name>
-		<property>instrumentation/clock/utc-selector</property>
-		<interpolation>
-			<entry><ind>2</ind><dep>90</dep></entry> <!-- SET -->
-			<entry><ind>1</ind><dep>45</dep></entry> <!-- INT -->
-			<entry><ind>0</ind><dep> 0</dep></entry> <!-- GPS -->
-		</interpolation>
-		<axis>
-			<object-name>clock_knob.axis</object-name>
-		</axis>
-	</animation>
-
-	<animation>
 		<type>knob</type>
 		<object-name>et_knob</object-name>
-		<property>instrumentation/clock/et-selector</property>
+		<property>instrumentation/clock/et-selector-pos</property>
+		<factor>22.5</factor>
 		<axis>
 			<object-name>et_knob.axis</object-name>
 		</axis>
@@ -9923,9 +10016,13 @@
 				<property>instrumentation/clock/et-selector</property>
 				<min>0</min>
 				<max>2</max>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
        </action>
-
         <!-- Release action, limit to 0 and 1. 2 is spring loaded reset position -->
 		<release>
             <binding>
@@ -9936,21 +10033,6 @@
                 <max>1</max>
             </binding>
         </release>
-	</animation>
-
-	<animation>
-		<name>ET selector rotate</name>
-		<type>rotate</type>
-		<object-name>et_knob</object-name>
-		<property>instrumentation/clock/et-selector</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>1</ind><dep>45</dep></entry>
-			<entry><ind>2</ind><dep>90</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>et_knob.axis</object-name>
-		</axis>
 	</animation>
 	
 	<!-- DME -->

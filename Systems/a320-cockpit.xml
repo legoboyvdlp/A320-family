@@ -100,6 +100,16 @@
 			<c1>20</c1>
 		</lag_filter>
 		
+		<lag_filter name="/instrumentation/ddrmi/vor-adf-1-pos">
+			<input>/instrumentation/ddrmi/vor-adf-1</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/ddrmi/vor-adf-2-pos">
+			<input>/instrumentation/ddrmi/vor-adf-2</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<lag_filter name="/controls/cabin/footwarmer-fo-pos">
 			<input>/controls/cabin/footwarmer-fo</input>
 			<c1>20</c1>
@@ -112,6 +122,21 @@
 		
 		<lag_filter name="/controls/lighting/console-floor-light-sw-right-pos">
 			<input>/controls/lighting/console-floor-light-sw-right</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/gear/gear-down-pos">
+			<input>/controls/gear/gear-down</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/clock/utc-selector-pos">
+			<input>/instrumentation/clock/utc-selector</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/clock/et-selector-pos">
+			<input>/instrumentation/clock/et-selector</input>
 			<c1>20</c1>
 		</lag_filter>
 	
