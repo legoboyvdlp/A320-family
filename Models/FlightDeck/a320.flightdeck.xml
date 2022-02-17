@@ -12236,8 +12236,7 @@
 		<object-name>audio_swtg</object-name>
 		<object-name>eng_mode.mark.030</object-name>
 		<property>controls/navigation/switching/audio-pos</property>
-		<factor>-70</factor>
-		<offset-deg>35</offset-deg>
+		<factor>35</factor>
 		<axis>
 			<object-name>eng_mode.axis.025</object-name>
 		</axis>
