@@ -1035,9 +1035,11 @@
 			<DU>
 				<du1 type="double">1</du1>
 				<du2 type="double">1</du2>
+				<du2-layer type="double">1</du2-layer>
 				<du3 type="double">1</du3>
 				<du4 type="double">1</du4>
 				<du5 type="double">1</du5>
+				<du5-layer type="double">1</du5-layer>
 				<du6 type="double">1</du6>
 				<iesi type="double">1</iesi>
 				<mcdu1 type="double">1</mcdu1>
@@ -1174,8 +1176,8 @@
 			<emerCallLtC type="bool">0</emerCallLtC>
 			<landing-lights-l type="float">0.0</landing-lights-l>
 			<landing-lights-r type="float">0.0</landing-lights-r>
-			<loudspeaker-l type="float">0.0</loudspeaker-l>
-			<loudspeaker-r type="float">0.0</loudspeaker-r>
+			<loudspeaker-l type="float">1.0</loudspeaker-l>
+			<loudspeaker-r type="float">1.0</loudspeaker-r>
 			<LrainRpt type="bool">0</LrainRpt>
 			<mechCall type="bool">0</mechCall>
 			<no-smoking-sign type="double">0.5</no-smoking-sign>

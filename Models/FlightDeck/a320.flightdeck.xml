@@ -2266,6 +2266,35 @@
 
 	<animation>
 		<type>knob</type>
+		<object-name>brightness_nd_1_cpt</object-name>
+		<object-name>brightness_nd_1_cpt.mark</object-name>
+		<property>controls/lighting/DU/du2-layer</property>
+		<offset-deg>-125</offset-deg>
+		<factor>250</factor>
+		<axis>
+			<object-name>brightness_nd_cpt.axis</object-name>
+		</axis>
+		<action>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/DU/du2-layer</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nd_brt_cpt_layer-lbl</tooltip-id>
+				<label>WXR / TERR brightness control</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
 		<object-name>brightness_nd_2_cpt</object-name>
 		<object-name>brightness_nd_2_cpt.mark</object-name>
 		<property>controls/lighting/DU/du2</property>
@@ -2294,6 +2323,35 @@
 	</animation>
 
 	<!-- Dimmer Panel Right -->
+	<animation>
+		<type>knob</type>
+		<object-name>brightness_nd_1_fo</object-name>
+		<object-name>brightness_nd_1_fo.mark</object-name>
+		<property>controls/lighting/DU/du5-layer</property>
+		<offset-deg>-125</offset-deg>
+		<factor>250</factor>
+		<axis>
+			<object-name>brightness_nd_fo.axis</object-name>
+		</axis>
+		<action>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/DU/du5-layer</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nd_brt_fo_layer-lbl</tooltip-id>
+				<label>WXR / TERR brightness control</label>
+			</binding>
+		</hovered>
+	</animation>
+	
 	<animation>
 		<type>knob</type>
 		<object-name>brightness_nd_2_fo</object-name>
@@ -2549,6 +2607,84 @@
 				<property>/instrumentation/mk-viii/outputs/discretes/gpws-warning</property>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>gpws_gs_sw</object-name>
+		<object-name>gpws_gs_sw_gs_on</object-name>
+		<object-name>gpws_gs_sw_gpws_on</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-1</property>
+							<value>110</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>/instrumentation/mk-viii/inputs/discretes/self-test</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/ac-1</property>
+							<value>110</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>/instrumentation/mk-viii/inputs/discretes/glideslope-cancel</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/gpws_l-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/instrumentation/mk-viii/inputs/discretes/self-test</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>/instrumentation/mk-viii/inputs/discretes/glideslope-cancel</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/gpws_l-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>gpws_gs_sw</object-name>
+		<object-name>gpws_gs_sw_gs_on</object-name>
+		<object-name>gpws_gs_sw_gpws_on</object-name>
+		<property>/controls/cockpit/gpws_l-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
