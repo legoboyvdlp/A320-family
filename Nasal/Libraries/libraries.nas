@@ -192,6 +192,13 @@ var GPWSAlertStatus = 0;
 var gpws_alert_watch = maketimer(0.8, func() {	
 	if (GPWS.warning.getValue()) {
 		GPWSAlertStatus = 2; # MODE2 - warning - RED
+		
+		# Turn on Terr on ND after a GPWS warning
+		setprop("/controls/switches/terr_on_nd_l", 1);
+		setprop("/instrumentation/efis/inputs/terr", 1);
+		setprop("/controls/switches/terr_on_nd_r", 1);
+		setprop("/instrumentation/efis[1]/inputs/terr", 1);
+		
 	} else if (GPWS.alert.getValue()) {
 		GPWSAlertStatus = 1; # MODE1 - caution - YELLOW
 	} else {
