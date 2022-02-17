@@ -139,6 +139,16 @@
 			<input>/instrumentation/clock/et-selector</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/switches/seatbelt-sign-pos">
+			<input>/controls/switches/seatbelt-sign</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/no-smoking-sign-pos">
+			<input>/controls/switches/no-smoking-sign</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 

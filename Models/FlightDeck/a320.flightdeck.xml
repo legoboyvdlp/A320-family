@@ -12090,6 +12090,91 @@
 		<spot-cutoff>30.0</spot-cutoff>
 		<range-m>3.0</range-m>
 	</light>
+	
+	
+
+	<!-- Passenger signs -->
+	<animation>
+		<name>Seatbelt sign pick</name>
+		<type>knob</type>
+		<object-name>SeatBeltSwtch</object-name>
+		<property>controls/switches/seatbelt-sign-pos</property>
+		<factor>-70</factor>
+		<offset-deg>35</offset-deg>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.18311</x-m>
+			<y-m>0.037974</y-m>
+			<z-m>0.888303</z-m>
+		</center>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/seatbelt-sign</property>
+				<value>0.0</value>
+				<value>1.0</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>seatbelt-sign-lbl</tooltip-id>
+				<label>Seatbelt sign sign</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<name>No smoking sign pick</name>
+		<type>knob</type>
+		<object-name>NoSmokingSwtch</object-name>
+		<property>controls/switches/no-smoking-sign-pos</property>
+		<factor>-70</factor>
+		<offset-deg>35</offset-deg>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.18311</x-m>
+			<y-m>0.072264</y-m>
+			<z-m>0.888303</z-m>
+		</center>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/no-smoking-sign</property>
+				<value>0.0</value>
+				<value>0.5</value>
+				<value>1.0</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>no-smk-lbl</tooltip-id>
+				<label>No smoking sign</label>
+			</binding>
+		</hovered>
+	</animation>
 
 </PropertyList>
 
