@@ -200,6 +200,16 @@
 			<c1>20</c1>
 		</lag_filter>
 		
+		<lag_filter name="/controls/lighting/stby-compass-switch-pos">
+			<input>/controls/lighting/stby-compass-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/dome-norm-pos">
+			<input>/controls/lighting/dome-norm</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<lag_filter name="/controls/switches/annun-test-pos">
 			<input>/controls/switches/annun-test</input>
 			<c1>20</c1>

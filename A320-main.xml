@@ -1078,6 +1078,7 @@
 			<reading-light-left-knb type="double">0</reading-light-left-knb>
 			<reading-light-right-knb type="double">0</reading-light-right-knb>
 			<strobe type="bool">0</strobe>
+			<stby-compass-switch type="bool">0</stby-compass-switch>
 			<no-smoking-sign type="bool">1</no-smoking-sign>
 			<seatbelt-sign type="bool">0</seatbelt-sign>
 			<taxi-light-switch type="float">0</taxi-light-switch>

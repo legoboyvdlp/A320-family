@@ -12491,32 +12491,6 @@
 	
 	<animation>
 		<type>knob</type>
-		<object-name>AnnunciatorLtSwtch</object-name>
-		<property>controls/switches/annun-test-pos</property>
-		<axis>
-			<object-name>AnnunciatorLtSwtch.axis</object-name>
-		</axis>
-		<offset-deg>0</offset-deg>
-		<factor>30</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/switches/annun-test</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>knob</type>
 		<object-name>EmerExtLtSwtch</object-name>
 		<property>controls/switches/emer-lights-pos</property>
 		<offset-deg>-30</offset-deg>
@@ -12559,6 +12533,137 @@
 			</or>
 		</condition>
 	</animation>
+	
+	<!-- Interior lights -->
+	<animation>
+		<type>knob</type>
+		<object-name>OHPMarkLtKnb</object-name>
+		<object-name>flood_lt_main.mark.002</object-name>
+		<property>controls/lighting/overhead-panel-knb</property>
+		<offset-deg>-125</offset-deg>
+		<factor>250</factor>
+		<axis>
+			<object-name>OHPMarkLtKnb.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/overhead-panel-knb</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ohp-mark-brt-lbl</tooltip-id>
+				<label>Overhead Panel Brightness</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>StbyCompassLtSwtch</object-name>
+		<property>controls/lighting/stby-compass-switch-pos</property>
+		<axis>
+			<object-name>StbyCompassLtSwtch.axis</object-name>
+		</axis>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/stby-compass-switch</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>stby-compass-lt-lbl</tooltip-id>
+				<label>Standby compass light switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>DomeLtSwtch</object-name>
+		<property>controls/lighting/dome-norm-pos</property>
+		<axis>
+			<object-name>DomeLtSwtch.axis</object-name>
+		</axis>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/dome-norm</property>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>dome-lt-lbl</tooltip-id>
+				<label>Dome light switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>AnnunciatorLtSwtch</object-name>
+		<property>controls/switches/annun-test-pos</property>
+		<axis>
+			<object-name>AnnunciatorLtSwtch.axis</object-name>
+		</axis>
+		<offset-deg>0</offset-deg>
+		<factor>30</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/annun-test</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>audio-swtg-lbl</tooltip-id>
+				<label>Annunciator light test switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
 
 	<animation>
 		<type>knob</type>
