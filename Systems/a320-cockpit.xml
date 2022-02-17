@@ -140,6 +140,51 @@
 			<c1>20</c1>
 		</lag_filter>
 		
+		<lag_filter name="/controls/navigation/switching/audio-pos">
+			<input>/controls/navigation/switching/audio</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/turnoff-light-switch-pos">
+			<input>/controls/lighting/turnoff-light-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/landing-lights-l-pos">
+			<input>/controls/switches/landing-lights-l</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/landing-lights-r-pos">
+			<input>/controls/switches/landing-lights-r</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/taxi-light-switch-pos">
+			<input>/controls/lighting/taxi-light-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/strobe-pos">
+			<input>/controls/switches/strobe</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/beacon-pos">
+			<input>/controls/switches/beacon</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/wing-lights-pos">
+			<input>/controls/switches/wing-lights</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/nav-lights-switch-pos">
+			<input>/controls/lighting/nav-lights-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<lag_filter name="/controls/switches/seatbelt-sign-pos">
 			<input>/controls/switches/seatbelt-sign</input>
 			<c1>20</c1>
@@ -150,8 +195,13 @@
 			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="/controls/navigation/switching/audio-pos">
-			<input>/controls/navigation/switching/audio</input>
+		<lag_filter name="/controls/switches/emer-lights-pos">
+			<input>/controls/switches/emer-lights</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/annun-test-pos">
+			<input>/controls/switches/annun-test</input>
 			<c1>20</c1>
 		</lag_filter>
 	

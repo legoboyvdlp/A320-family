@@ -12151,35 +12151,294 @@
 		<range-m>3.0</range-m>
 	</light>
 	
+	<!-- Exterior lights -->
+	<animation>
+		<type>knob</type>
+		<object-name>TurnoffLtSwtch</object-name>
+		<property>controls/lighting/turnoff-light-switch-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>TurnoffLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/turnoff-light-switch</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Turnoff lights switch</label>
+			</binding>
+		</hovered>
+	</animation>
 	
+	<animation>
+		<type>knob</type>
+		<object-name>LandingLtSwtch</object-name>
+		<property>controls/switches/landing-lights-l-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>LandingLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/landing-lights-l</property>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Landing light switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>LandingLtRSwtch</object-name>
+		<property>controls/switches/landing-lights-r-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>LandingLtRSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/landing-lights-r</property>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Landing light switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>NoseLtSwtch</object-name>
+		<property>controls/lighting/taxi-light-switch-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>NoseLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/taxi-light-switch</property>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Landing light switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>StrobeLtSwtch</object-name>
+		<property>controls/switches/strobe-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>StrobeLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/strobe</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Strobe lights switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>BeaconLtSwtch</object-name>
+		<property>controls/switches/beacon-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>BeaconLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/beacon</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Beacon lights switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>WingLtSwtch</object-name>
+		<property>controls/switches/wing-lights-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>WingLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/wing-lights</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Wing lights switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>NavLogoLtSwtch</object-name>
+		<property>controls/lighting/nav-lights-switch-pos</property>
+		<factor>35</factor>
+		<offset-deg>-35</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>NavLogoLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/nav-lights-switch</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Navigation lights switch</label>
+			</binding>
+		</hovered>
+	</animation>
 
 	<!-- Passenger signs -->
 	<animation>
-		<name>Seatbelt sign pick</name>
 		<type>knob</type>
 		<object-name>SeatBeltSwtch</object-name>
 		<property>controls/switches/seatbelt-sign-pos</property>
-		<factor>-70</factor>
-		<offset-deg>35</offset-deg>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<object-name>SeatBeltSwtch.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.18311</x-m>
-			<y-m>0.037974</y-m>
-			<z-m>0.888303</z-m>
-		</center>
 		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/switches/seatbelt-sign</property>
-				<value>0.0</value>
-				<value>1.0</value>
+				<value>0</value>
+				<value>1</value>
 				<wrap>false</wrap>
 			</binding>
 			<binding>
@@ -12197,29 +12456,23 @@
 	</animation>
 
 	<animation>
-		<name>No smoking sign pick</name>
 		<type>knob</type>
 		<object-name>NoSmokingSwtch</object-name>
 		<property>controls/switches/no-smoking-sign-pos</property>
-		<factor>-70</factor>
-		<offset-deg>35</offset-deg>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<object-name>NoSmokingSwtch.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.18311</x-m>
-			<y-m>0.072264</y-m>
-			<z-m>0.888303</z-m>
-		</center>
 		<action>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-adjust</command>
 				<property>controls/switches/no-smoking-sign</property>
-				<value>0.0</value>
-				<value>0.5</value>
-				<value>1.0</value>
+				<factor>0.5</factor>
+				<min>0.0</min>
+				<max>1.0</max>
 				<wrap>false</wrap>
 			</binding>
 			<binding>
@@ -12234,6 +12487,77 @@
 				<label>No smoking sign</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>AnnunciatorLtSwtch</object-name>
+		<property>controls/switches/annun-test-pos</property>
+		<axis>
+			<object-name>AnnunciatorLtSwtch.axis</object-name>
+		</axis>
+		<offset-deg>0</offset-deg>
+		<factor>30</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/annun-test</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>EmerExtLtSwtch</object-name>
+		<property>controls/switches/emer-lights-pos</property>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>EmerExtLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/emer-lights</property>
+				<value>0.0</value>
+				<value>0.5</value>
+				<value>1.0</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>emer-exit-lbl</tooltip-id>
+				<label>Emergency Exit Light Switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>EmerExtLtBtn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/switches/emer-lights</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
