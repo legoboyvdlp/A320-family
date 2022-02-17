@@ -149,6 +149,11 @@
 			<input>/controls/switches/no-smoking-sign</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/navigation/switching/audio-pos">
+			<input>/controls/navigation/switching/audio</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
