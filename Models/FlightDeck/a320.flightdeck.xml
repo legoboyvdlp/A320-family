@@ -2214,6 +2214,7 @@
 		<property>controls/gear/nws-switch-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>land_sw.axis</object-name>
 		</axis>
@@ -2592,6 +2593,7 @@
 		<property>controls/cabin/footwarmer-cpt-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>foot_warmer_cpt_sw.axis</object-name>
 		</axis>	
@@ -2625,6 +2627,7 @@
 		<property>controls/cabin/footwarmer-fo-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>foot_warmer_fo_sw.001</object-name>
 		</axis>	
@@ -11752,6 +11755,7 @@
         <property>/controls/lighting/console-floor-light-sw-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>light_console_cpt_sw.axis</object-name>
 		</axis>
@@ -11952,6 +11956,7 @@
         <property>/controls/lighting/console-floor-light-sw-right-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>light_console_fo_sw.axis</object-name>
 		</axis>
