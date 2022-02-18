@@ -274,6 +274,11 @@
 			<input>/controls/switches/annun-test</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/it-autoflight/config/altitude-dial-mode-pos">
+			<input>/it-autoflight/config/altitude-dial-mode</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
