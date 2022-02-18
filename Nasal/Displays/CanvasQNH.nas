@@ -27,7 +27,7 @@ var QNHCanvasParent = {
 			.setFontSize(13, 1)
 			.setColor([0.45,0.98,0.06])
 			.setAlignment("left-bottom-baseline")
-			.setFont("led.txf")
+			.setFont("Airbus7Seg.ttf")
 			.setText("8888");
 			
 		return QNHCanvas;
