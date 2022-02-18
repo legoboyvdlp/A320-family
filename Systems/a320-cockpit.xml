@@ -85,6 +85,26 @@
 			<c1>10</c1>
 		</lag_filter>
 		
+		<lag_filter name="/controls/cockpit/flaps-lever-translate-pos">
+			<input>/controls/cockpit/flaps-lever-translate</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/park-brk-translate-pos">
+			<input>/controls/cockpit/park-brk-translate</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/altimeter/inhg-left-pos">
+			<input>/instrumentation/altimeter/inhg-left</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/altimeter/inhg-right-pos">
+			<input>/instrumentation/altimeter/inhg-right</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<lag_filter name="/controls/doors/doorc-switch-pos">
 			<input>/controls/doors/doorc-switch</input>
 			<c1>20</c1>

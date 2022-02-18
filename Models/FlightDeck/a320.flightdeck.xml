@@ -1419,9 +1419,37 @@
 				<property>/controls/flight/rudder-trim</property>
 				<value>0</value>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/rudder-trim-reset-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/rudder-trim-reset-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>rud_trim_lbl</tooltip-id>
+				<label>Reset rudder trim</label>
+			</binding>
+		</hovered>
 	</animation>
-
+	
+	<animation>
+		<type>translate</type>
+		<object-name>RudderTrimReset</object-name>
+		<property>/controls/cockpit/rudder-trim-reset-translate</property>
+		<axis>
+			<z>-1</z>
+		</axis>
+	</animation>
+	
 	<text>
 		<name>rudder-trim-letter</name>
 		<offsets>
@@ -1479,21 +1507,6 @@
 	</text>
 
 	<animation>
-		<type>translate</type>
-		<object-name>ParkBrk</object-name>
-		<property>fdm/jsbsim/fcs/brake-lever</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>0.1</ind><dep>0.002</dep></entry>
-			<entry><ind>0.9</ind><dep>0.002</dep></entry>
-			<entry><ind>1</ind><dep>0</dep></entry>
-		</interpolation>
-		<axis>
-			<z>1</z>
-		</axis>
-	</animation>
-
-	<animation>
 		<type>knob</type>
 		<object-name>ParkBrk</object-name>
 		<property>fdm/jsbsim/fcs/brake-lever</property>
@@ -1505,10 +1518,25 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-toggle</command>
+				<command>property-adjust</command>
 				<property>controls/gear/brake-parking</property>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/park-brk-translate</property>
+				<value>0.0025</value>
 			</binding>
 		</action>
+		<release>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/park-brk-translate</property>
+				<value>0.0</value>
+			</binding>
+		</release>
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
@@ -1518,6 +1546,15 @@
 		</hovered>
 	</animation>
 
+	<animation>
+		<type>translate</type>
+		<object-name>ParkBrk</object-name>
+		<property>/controls/cockpit/park-brk-translate-pos</property>
+		<axis>
+			<z>1</z>
+		</axis>
+	</animation>
+
 	<!-- Cocktpit Door Switch  -->
 	
 	<animation>
@@ -1525,7 +1562,7 @@
 		<object-name>CockpitDoorSwitch</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
         <property>controls/doors/doorc-switch-pos</property>
-		<drag-direction>vertical</drag-direction>
+		<drag-direction>horizontal</drag-direction>
 		<drag-scale-px>14</drag-scale-px>
 		<factor>25</factor>
 		<axis>
@@ -1535,7 +1572,7 @@
 			<binding>	
 				<command>property-adjust</command>
 				<property>controls/doors/doorc-switch</property>
-				<factor>-1</factor>
+				<factor>1</factor>
 				<min>-1</min>
 				<max>1</max>
 				<wrap>0</wrap>
@@ -3784,15 +3821,37 @@
 				libraries.toggleSTD();
 				</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/qnh-cpt-knb-translate</property>
+				<value>0.0015</value>
+				<condition>
+					<not><property>instrumentation/altimeter/std</property></not>
+				</condition>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/qnh-cpt-knb-translate</property>
+				<value>0.004</value>
+				<condition>
+					<property>instrumentation/altimeter/std</property>
+				</condition>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
 		</action>
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter/setting-inhg", getprop("/instrumentation/altimeter/setting-inhg") + 0.01);
-				</script>
+				<command>property-adjust</command>
+				<property>/instrumentation/altimeter/setting-inhg</property>
+				<step>0.01</step>
+				<min>22.00</min>
+				<max>32.47</max>
+				<wrap>false</wrap>
 				<condition>
 					<and>
 						<equals>
@@ -3811,10 +3870,12 @@
 				</condition>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter/setting-hpa", getprop("/instrumentation/altimeter/setting-hpa") + 1.0);
-				</script>
+				<command>property-adjust</command>
+				<property>/instrumentation/altimeter/setting-hpa</property>
+				<step>1</step>
+				<min>745</min>
+				<max>1100</max>
+				<wrap>false</wrap>
 				<condition>
 					<and>
 						<equals>
@@ -3845,10 +3906,12 @@
 			<button>4</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter/setting-inhg", getprop("/instrumentation/altimeter/setting-inhg") - 0.01);
-				</script>
+				<command>property-adjust</command>
+				<property>/instrumentation/altimeter/setting-inhg</property>
+				<step>-0.01</step>
+				<min>22.00</min>
+				<max>32.47</max>
+				<wrap>false</wrap>
 				<condition>
 					<and>
 						<equals>
@@ -3867,10 +3930,12 @@
 				</condition>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter/setting-hpa", getprop("/instrumentation/altimeter/setting-hpa") - 1.0);
-				</script>
+				<command>property-adjust</command>
+				<property>/instrumentation/altimeter/setting-hpa</property>
+				<step>-1</step>
+				<min>745</min>
+				<max>1100</max>
+				<wrap>false</wrap>
 				<condition>
 					<and>
 						<equals>
@@ -3897,6 +3962,13 @@
 				<wrap>true</wrap>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>qnh_cpt-lbl</tooltip-id>
+				<label>Scroll for altimeter setting - click for STD</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -3918,15 +3990,37 @@
 				libraries.toggleSTD();
 				</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/qnh-fo-knb-translate</property>
+				<value>0.0015</value>
+				<condition>
+					<not><property>instrumentation/altimeter/std</property></not>
+				</condition>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/qnh-fo-knb-translate</property>
+				<value>0.004</value>
+				<condition>
+					<property>instrumentation/altimeter/std</property>
+				</condition>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
 		</action>
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter/setting-inhg", getprop("/instrumentation/altimeter/setting-inhg") + 0.01);
-				</script>
+				<command>property-adjust</command>
+				<property>/instrumentation/altimeter/setting-inhg</property>
+				<step>0.01</step>
+				<min>22.00</min>
+				<max>32.47</max>
+				<wrap>false</wrap>
 				<condition>
 					<and>
 						<equals>
@@ -3945,10 +4039,12 @@
 				</condition>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter/setting-hpa", getprop("/instrumentation/altimeter/setting-hpa") + 1.0);
-				</script>
+				<command>property-adjust</command>
+				<property>/instrumentation/altimeter/setting-hpa</property>
+				<step>1</step>
+				<min>745</min>
+				<max>1100</max>
+				<wrap>false</wrap>
 				<condition>
 					<and>
 						<equals>
@@ -3979,10 +4075,12 @@
 			<button>4</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter/setting-inhg", getprop("/instrumentation/altimeter/setting-inhg") - 0.01);
-				</script>
+				<command>property-adjust</command>
+				<property>/instrumentation/altimeter/setting-inhg</property>
+				<step>-0.01</step>
+				<min>22.00</min>
+				<max>32.47</max>
+				<wrap>false</wrap>
 				<condition>
 					<and>
 						<equals>
@@ -4001,10 +4099,12 @@
 				</condition>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/instrumentation/altimeter/setting-hpa", getprop("/instrumentation/altimeter/setting-hpa") - 1.0);
-				</script>
+				<command>property-adjust</command>
+				<property>/instrumentation/altimeter/setting-hpa</property>
+				<step>-1</step>
+				<min>745</min>
+				<max>1100</max>
+				<wrap>false</wrap>
 				<condition>
 					<and>
 						<equals>
@@ -4031,6 +4131,41 @@
 				<wrap>true</wrap>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>qnh_fo-lbl</tooltip-id>
+				<label>Scroll for altimeter setting - click for STD</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>qnh_cpt_knb</object-name>
+		<property>/controls/cockpit/qnh-cpt-knb-translate</property>
+		<axis>
+			<x1-m>-0.36567</x1-m>
+			<y1-m>-0.25113</y1-m>
+			<z1-m>0.46417</z1-m>
+			<x2-m>-0.33621</x2-m>
+			<y2-m>-0.25113</y2-m>
+			<z2-m>0.47319</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>qnh_fo_knb</object-name>
+		<property>/controls/cockpit/qnh-fo-knb-translate</property>
+		<axis>
+			<x1-m>-0.36567</x1-m>
+			<y1-m>-0.25113</y1-m>
+			<z1-m>0.46417</z1-m>
+			<x2-m>-0.33621</x2-m>
+			<y2-m>-0.25113</y2-m>
+			<z2-m>0.47319</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -4094,6 +4229,9 @@
 				<command>property-adjust</command>
 				<property>/instrumentation/altimeter[6]/setting-inhg</property>
 				<step>0.01</step>
+				<min>22.00</min>
+				<max>32.47</max>
+				<wrap>false</wrap>
 				<condition>
 					<and>
 						<equals>
@@ -4131,6 +4269,9 @@
 				<command>property-adjust</command>
 				<property>/instrumentation/altimeter[6]/setting-inhg</property>
 				<step>-0.01</step>
+				<min>22.00</min>
+				<max>32.47</max>
+				<wrap>false</wrap>
 				<condition>
 					<and>
 						<equals>
@@ -4166,7 +4307,7 @@
 			<binding>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_iesi-lbl</tooltip-id>
-				<label>Scroll for altimeter Setting - click for STD</label>
+				<label>Scroll for altimeter setting - click for STD</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -4186,54 +4327,72 @@
 	</animation>
 	
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>qnh_cpt_sw</object-name>
+		<property>instrumentation/altimeter/inhg-left-pos</property>
+		<offset-deg>40</offset-deg>
+		<factor>-43</factor>
+		<axis>
+			<object-name>qnh_cpt_sw.axis</object-name>
+		</axis>
 		<action>
-			<button>0</button>
-			<button>1</button>
-			<button>3</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/altimeter/inhg-left</property>
-				<value>0</value>
 				<value>1</value>
+				<value>0</value>
+				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>qnh_cpt_toggle-lbl</tooltip-id>
+				<label>Toggle inHg / hPa</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>qnh_fo_sw</object-name>
+		<property>instrumentation/altimeter/inhg-right-pos</property>
+		<offset-deg>40</offset-deg>
+		<factor>-43</factor>
+		<axis>
+			<object-name>qnh_fo_sw.axis</object-name>
+		</axis>
 		<action>
-			<button>0</button>
-			<button>1</button>
-			<button>3</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/altimeter/inhg-right</property>
-				<value>0</value>
 				<value>1</value>
+				<value>0</value>
+				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sounde/knb1", 1);</script>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>qnh_fo_toggle-lbl</tooltip-id>
+				<label>Toggle inHg / hPa</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
 		<type>rotate</type>
 		<object-name>qnh_cpt_knb</object-name>
 		<property>controls/switches/qnh-knb</property>
-		<factor>11.25</factor>
+		<factor>-11.25</factor>
 		<axis>
 			<object-name>qnh_cpt_knb.axis</object-name>
 		</axis>
@@ -4243,35 +4402,9 @@
 		<type>rotate</type>
 		<object-name>qnh_fo_knb</object-name>
 		<property>controls/switches/qnh-knb</property>
-		<factor>11.25</factor>
+		<factor>-11.25</factor>
 		<axis>
 			<object-name>qnh_fo_knb.axis</object-name>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>qnh_cpt_sw</object-name>
-		<property>instrumentation/altimeter/inhg-left</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>40</dep></entry>
-			<entry><ind>1</ind><dep>-3</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>qnh_cpt_sw.axis</object-name>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>qnh_fo_sw</object-name>
-		<property>instrumentation/altimeter/inhg-right</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>40</dep></entry>
-			<entry><ind>1</ind><dep>-3</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>qnh_fo_sw.axis</object-name>
 		</axis>
 	</animation>
 
@@ -4598,8 +4731,21 @@
 					setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/fd-1-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/fd-1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>fd1_led</object-name>
@@ -4615,6 +4761,21 @@
 				</equals>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>fd1</object-name>
+		<object-name>fd1_led</object-name>
+		<property>/controls/cockpit/fd-1-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -4637,8 +4798,21 @@
 				<command>nasal</command>
 				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/ls-1-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/ls-1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>ils_led</object-name>
@@ -4654,6 +4828,21 @@
 				</equals>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>ils</object-name>
+		<object-name>ils_led</object-name>
+		<property>/controls/cockpit/ls-1-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -4676,8 +4865,21 @@
 				<command>nasal</command>
 				<script>setprop("sim/sounde/btn1", 1);</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/ls-2-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/ls-2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>ils2_led</object-name>
@@ -4694,6 +4896,21 @@
 			</or>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>ils2</object-name>
+		<object-name>ils2_led</object-name>
+		<property>/controls/cockpit/ls-2-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -4708,8 +4925,21 @@
 					setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/fd-2-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/fd-2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>fd2_led</object-name>
@@ -4725,6 +4955,21 @@
 				</equals>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>fd2</object-name>
+		<object-name>fd2_led</object-name>
+		<property>/controls/cockpit/fd-2-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<!-- FCU ND Controls -->
@@ -7019,6 +7264,8 @@
 	<!-- Flap Lever -->
 	<animation>
 		<type>knob</type>
+		<object-name>FlapsLever</object-name>
+		<object-name>FlapsLever_low</object-name>
 		<property>fdm/jsbsim/fcs/flap-lever</property>
 		<drag-scale-px>30</drag-scale-px>
 		<interpolation>
@@ -7031,12 +7278,16 @@
 		<axis>
 			<object-name>FlapsLever.axis</object-name>
 		</axis>
-		<object-name>FlapsLever</object-name>
 		<increase>
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
 				<script>controls.flapsDown(1);</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/flaps-lever-translate</property>
+				<value>0.003</value>
 			</binding>
 		</increase>
 		<decrease>
@@ -7045,7 +7296,19 @@
 				<command>nasal</command>
 				<script>controls.flapsDown(-1);</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/flaps-lever-translate</property>
+				<value>0.003</value>
+			</binding>
 		</decrease>
+		<release>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/flaps-lever-translate</property>
+				<value>0</value>
+			</binding>
+		</release>
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
@@ -7057,23 +7320,8 @@
 
 	<animation>
 		<type>translate</type>
-		<object-name>FlapsLever</object-name>
-		<property>fdm/jsbsim/fcs/flap-lever</property>
-		<interpolation>
-			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.1</ind><dep>0.002</dep></entry>
-			<entry><ind>0.9</ind><dep>0.002</dep></entry>
-			<entry><ind>1.0</ind><dep>0.0</dep></entry>
-			<entry><ind>1.1</ind><dep>0.002</dep></entry>
-			<entry><ind>1.9</ind><dep>0.002</dep></entry>
-			<entry><ind>2.0</ind><dep>0.0</dep></entry>
-			<entry><ind>2.1</ind><dep>0.002</dep></entry>
-			<entry><ind>2.9</ind><dep>0.002</dep></entry>
-			<entry><ind>3.0</ind><dep>0.0</dep></entry>
-			<entry><ind>3.1</ind><dep>0.002</dep></entry>
-			<entry><ind>3.9</ind><dep>0.002</dep></entry>
-			<entry><ind>4.0</ind><dep>0.0</dep></entry>
-		</interpolation>
+		<object-name>FlapsLever_low</object-name>
+		<property>/controls/cockpit/flaps-lever-translate-pos</property>
 		<axis>
 			<x1-m>0.064759</x1-m>
 			<y1-m>0.080047</y1-m>
@@ -8258,6 +8506,13 @@
 				<script>libraries.deploySpeedbrake();</script>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>rud_trim_lbl</tooltip-id>
+				<label>Click to arm ground spoilers, scroll for speedbrakes</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -9562,6 +9817,7 @@
 		<object-name>gravity_gear</object-name>
 		<object-name>ped_footrest</object-name>
 		<object-name>FlapsLever</object-name>
+		<object-name>FlapsLever_low</object-name>
 		<object-name>SpdBrk</object-name>
 	</effect>
 	
@@ -12303,6 +12559,7 @@
 				<command>property-cycle</command>
 				<property>controls/switches/strobe</property>
 				<value>0</value>
+				<value>0.5</value>
 				<value>1</value>
 				<wrap>false</wrap>
 			</binding>
@@ -12569,7 +12826,13 @@
 		<object-name>StbyCompassLtSwtch</object-name>
 		<property>controls/lighting/stby-compass-switch-pos</property>
 		<axis>
-			<object-name>StbyCompassLtSwtch.axis</object-name>
+			<!--<object-name>StbyCompassLtSwtch.axis</object-name>-->
+			<x1-m>-0.13725</x1-m>
+			<y1-m>0.06933</y1-m>
+			<z1-m>0.9063</z1-m>
+			<x2-m>-0.13725</x2-m>
+			<y2-m>0.06745</y2-m>
+			<z2-m>0.9063</z2-m>
 		</axis>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
