@@ -4621,18 +4621,9 @@
 		<object-name>qnh-inhg-left</object-name>
 		<condition>
 			<and>
-				<not-equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</not-equals>
-				<equals>
-					<property>instrumentation/altimeter/inhg-left</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/altimeter/std</property>
-					<value>0</value>
-				</equals>
+				<not><property>controls/switches/annun-test</property></not>
+				<property>instrumentation/altimeter/inhg-left</property>
+				<not><property>instrumentation/altimeter/std</property></not>
 			</and>
 		</condition>
 	</animation>
@@ -4642,18 +4633,9 @@
 		<object-name>qnh-hpa-left</object-name>
 		<condition>
 			<and>
-				<not-equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</not-equals>
-				<equals>
-					<property>instrumentation/altimeter/inhg-left</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>instrumentation/altimeter/std</property>
-					<value>0</value>
-				</equals>
+				<not><property>controls/switches/annun-test</property></not>
+				<not><property>instrumentation/altimeter/inhg-left</property></not>
+				<not><property>instrumentation/altimeter/std</property></not>
 			</and>
 		</condition>
 	</animation>
@@ -4663,18 +4645,9 @@
 		<object-name>qnh-inhg-right</object-name>
 		<condition>
 			<and>
-				<not-equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</not-equals>
-				<equals>
-					<property>instrumentation/altimeter/inhg-right</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/altimeter/std</property>
-					<value>0</value>
-				</equals>
+				<not><property>controls/switches/annun-test</property></not>
+				<property>instrumentation/altimeter/inhg-right</property>
+				<not><property>instrumentation/altimeter/std</property></not>
 			</and>
 		</condition>
 	</animation>
@@ -4684,18 +4657,9 @@
 		<object-name>qnh-hpa-right</object-name>
 		<condition>
 			<and>
-				<not-equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</not-equals>
-				<equals>
-					<property>instrumentation/altimeter/inhg-right</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>instrumentation/altimeter/std</property>
-					<value>0</value>
-				</equals>
+				<not><property>controls/switches/annun-test</property></not>
+				<not><property>instrumentation/altimeter/inhg-right</property></not>
+				<not><property>instrumentation/altimeter/std</property></not>
 			</and>
 		</condition>
 	</animation>
@@ -4706,14 +4670,8 @@
 		<object-name>qnh-std</object-name>
 		<condition>
 			<and>
-				<not-equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</not-equals>
-				<equals>
-					<property>instrumentation/altimeter/std</property>
-					<value>1</value>
-				</equals>
+				<not><property>controls/switches/annun-test</property></not>
+				<property>instrumentation/altimeter/std</property>
 			</and>
 		</condition>
 	</animation>
@@ -4744,6 +4702,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fd-1-lbl</tooltip-id>
+				<label>Toggle FD1</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -4751,14 +4716,8 @@
 		<object-name>fd1_led</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>it-autoflight/output/fd1</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>it-autoflight/output/fd1</property>
 			</or>
 		</condition>
 	</animation>
@@ -4811,6 +4770,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ls-1-lbl</tooltip-id>
+				<label>Toggle LS1</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -4818,14 +4784,8 @@
 		<object-name>ils_led</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>modes/pfd/ILS1</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>modes/pfd/ILS1</property>
 			</or>
 		</condition>
 	</animation>
@@ -4878,6 +4838,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ls-2-lbl</tooltip-id>
+				<label>Toggle LS2</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -4885,14 +4852,8 @@
 		<object-name>ils2_led</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>modes/pfd/ILS2</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>modes/pfd/ILS2</property>
 			</or>
 		</condition>
 	</animation>
@@ -4938,6 +4899,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fd-2-lbl</tooltip-id>
+				<label>Toggle FD2</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -4945,14 +4913,8 @@
 		<object-name>fd2_led</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>it-autoflight/output/fd2</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>it-autoflight/output/fd2</property>
 			</or>
 		</condition>
 	</animation>
@@ -5009,6 +4971,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>cstr-1-lbl</tooltip-id>
+				<label>Toggle CSTR layer</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -5073,6 +5042,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>cstr-2-lbl</tooltip-id>
+				<label>Toggle CSTR layer</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -5137,6 +5113,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>wpt-1-lbl</tooltip-id>
+				<label>Toggle WPT layer</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -5201,6 +5184,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>wpt-2-lbl</tooltip-id>
+				<label>Toggle WPT layer</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -5265,6 +5255,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>vor-1-lbl</tooltip-id>
+				<label>Toggle VOR layer</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -5329,6 +5326,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>vor-2-lbl</tooltip-id>
+				<label>Toggle VOR layer</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -5393,6 +5397,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ndb-1-lbl</tooltip-id>
+				<label>Toggle NDB layer</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -5457,6 +5468,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ndb-2-lbl</tooltip-id>
+				<label>Toggle NDB layer</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -5521,6 +5539,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>arpt-1-lbl</tooltip-id>
+				<label>Toggle ARPT layer</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -5585,6 +5610,13 @@
 				</binding>
 			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>arpt-2-lbl</tooltip-id>
+				<label>Toggle ARPT layer</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
