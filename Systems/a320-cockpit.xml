@@ -105,6 +105,46 @@
 			<c1>20</c1>
 		</lag_filter>
 		
+		<lag_filter name="/instrumentation/efis/mfd/pnl_mode-num-pos">
+			<input>/instrumentation/efis/mfd/pnl_mode-num</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[1]/mfd/pnl_mode-num-pos">
+			<input>/instrumentation/efis[1]/mfd/pnl_mode-num</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[0]/input/lh-vor-adf-pos">
+			<input>/instrumentation/efis[0]/input/lh-vor-adf</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[0]/input/rh-vor-adf-pos">
+			<input>/instrumentation/efis[0]/input/rh-vor-adf</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[1]/input/lh-vor-adf-pos">
+			<input>/instrumentation/efis[1]/input/lh-vor-adf</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[1]/input/rh-vor-adf-pos">
+			<input>/instrumentation/efis[1]/input/rh-vor-adf</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis/inputs/range-nm-pos">
+			<input>/instrumentation/efis/inputs/range-nm</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[1]/inputs/range-nm-pos">
+			<input>/instrumentation/efis[1]/inputs/range-nm</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<lag_filter name="/controls/doors/doorc-switch-pos">
 			<input>/controls/doors/doorc-switch</input>
 			<c1>20</c1>

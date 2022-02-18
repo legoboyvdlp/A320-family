@@ -1847,6 +1847,20 @@
 			<volume type="double">0</volume>
 		</dme>
 		
+		<efis n="0">
+			<input>
+				<lh-vor-adf type="int">0</lh-vor-adf>
+				<rh-vor-adf type="int">0</rh-vor-adf>
+			</input>
+		</efis>
+		
+		<efis n="1">
+			<input>
+				<lh-vor-adf type="int">0</lh-vor-adf>
+				<rh-vor-adf type="int">0</rh-vor-adf>
+			</input>
+		</efis>
+		
 		<groundradar>
 			<range type="double">1.0</range>
 		</groundradar>

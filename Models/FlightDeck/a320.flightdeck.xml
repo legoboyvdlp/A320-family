@@ -4993,29 +4993,48 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<command>property-assign</command>
+				<property>/controls/cockpit/cstr-1-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/cstr-1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>cstr_led</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/efis/inputs/CSTR</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>instrumentation/efis/inputs/CSTR</property>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>cstr</object-name>
+		<object-name>cstr_led</object-name>
+		<property>/controls/cockpit/cstr-1-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -5038,29 +5057,48 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<command>property-assign</command>
+				<property>/controls/cockpit/cstr-2-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/cstr-2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>cstr_led.001</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/efis[1]/inputs/CSTR</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>instrumentation/efis[1]/inputs/CSTR</property>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>cstr.001</object-name>
+		<object-name>cstr_led.001</object-name>
+		<property>/controls/cockpit/cstr-2-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -5083,29 +5121,48 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<command>property-assign</command>
+				<property>/controls/cockpit/wpt-1-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/wpt-1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>wpt_led</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/efis/inputs/wpt</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>instrumentation/efis/inputs/wpt</property>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>wpt</object-name>
+		<object-name>wpt_led</object-name>
+		<property>/controls/cockpit/wpt-1-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -5128,29 +5185,48 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<command>property-assign</command>
+				<property>/controls/cockpit/wpt-2-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/wpt-2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>wpt_led.001</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/efis[1]/inputs/wpt</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>instrumentation/efis[1]/inputs/wpt</property>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>wpt.001</object-name>
+		<object-name>wpt_led.001</object-name>
+		<property>/controls/cockpit/wpt-2-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -5173,31 +5249,50 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<command>property-assign</command>
+				<property>/controls/cockpit/vor-1-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/vor-1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>vord_led</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/efis/inputs/VORD</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>instrumentation/efis/inputs/VORD</property>
 			</or>
 		</condition>
 	</animation>
-
+	
+	<animation>
+		<type>translate</type>
+		<object-name>vord</object-name>
+		<object-name>vord_led</object-name>
+		<property>/controls/cockpit/vor-1-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>vord.001</object-name>
@@ -5218,29 +5313,48 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<command>property-assign</command>
+				<property>/controls/cockpit/vor-2-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/vor-2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>vord_led.001</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/efis[1]/inputs/VORD</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>instrumentation/efis[1]/inputs/VORD</property>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>vord.001</object-name>
+		<object-name>vord_led.001</object-name>
+		<property>/controls/cockpit/vor-2-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -5263,31 +5377,50 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<command>property-assign</command>
+				<property>/controls/cockpit/ndb-1-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/ndb-1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>ndb_led</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/efis/inputs/NDB</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>instrumentation/efis/inputs/NDB</property>
 			</or>
 		</condition>
 	</animation>
-
+	
+	<animation>
+		<type>translate</type>
+		<object-name>ndb</object-name>
+		<object-name>ndb_led</object-name>
+		<property>/controls/cockpit/ndb-1-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>ndb.001</object-name>
@@ -5308,29 +5441,48 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<command>property-assign</command>
+				<property>/controls/cockpit/ndb-2-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/ndb-2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>ndb_led.001</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/efis[1]/inputs/NDB</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>instrumentation/efis[1]/inputs/NDB</property>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>ndb.001</object-name>
+		<object-name>ndb_led.001</object-name>
+		<property>/controls/cockpit/ndb-2-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -5353,29 +5505,48 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<command>property-assign</command>
+				<property>/controls/cockpit/arpt-1-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/arpt-1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>arpt_led</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/efis/inputs/arpt</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>instrumentation/efis/inputs/arpt</property>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>arpt</object-name>
+		<object-name>arpt_led</object-name>
+		<property>/controls/cockpit/arpt-1-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -5398,57 +5569,54 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
+				setprop("sim/sounde/btn1", 1);
 				</script>
 			</binding>
 			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<command>property-assign</command>
+				<property>/controls/cockpit/arpt-2-translate</property>
+				<value>0.0015</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/arpt-2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
 	<animation>
 		<type>select</type>
 		<object-name>arpt_led.001</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>instrumentation/efis[1]/inputs/arpt</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
+				<property>instrumentation/efis[1]/inputs/arpt</property>
 			</or>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>arpt.001</object-name>
+		<object-name>arpt_led.001</object-name>
+		<property>/controls/cockpit/arpt-2-translate</property>
+		<axis>
+			<x1-m>-0.366265</x1-m>
+			<y1-m>0.39799</y1-m>
+			<z1-m>0.481225</z1-m>
+			<x2-m>-0.375885</x2-m>
+			<y2-m>0.39799</y2-m>
+			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>nd_mode</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>fcu.setCptND(1);</script>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>fcu.setCptND(-1);</script>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
-		<object-name>nd_mode</object-name>
-		<property>instrumentation/efis/mfd/pnl_mode-num</property>
+		<property>instrumentation/efis/mfd/pnl_mode-num-pos</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>  0</dep></entry>
 			<entry><ind>1</ind><dep> 45</dep></entry>
@@ -5459,34 +5627,37 @@
 		<axis>
 			<object-name>nd_mode.axis</object-name>
 		</axis>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>nd_mode_fo</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>false</repeatable>
+		<increase>
 			<binding>
 				<command>nasal</command>
-				<script>fcu.setFoND(1);</script>
+				<script>
+					fcu.setCptND(1);
+					setprop("sim/sounde/knb1", 1);
+				</script>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>false</repeatable>
+		</increase>
+		<decrease>
 			<binding>
 				<command>nasal</command>
-				<script>fcu.setFoND(-1);</script>
+				<script>
+					fcu.setCptND(-1);
+					setprop("sim/sounde/knb1", 1);
+				</script>
 			</binding>
-		</action>
+		</decrease>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ndmode-cpt-lbl</tooltip-id>
+				<label>ND mode</label>
+			</binding>
+		</hovered>
 	</animation>
+	
 	<animation>
-		<type>rotate</type>
+		<type>knob</type>
 		<object-name>nd_mode_fo</object-name>
-		<property>instrumentation/efis[1]/mfd/pnl_mode-num</property>
+		<property>instrumentation/efis[1]/mfd/pnl_mode-num-pos</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>  0</dep></entry>
 			<entry><ind>1</ind><dep> 45</dep></entry>
@@ -5497,34 +5668,37 @@
 		<axis>
 			<object-name>nd_mode_fo.axis</object-name>
 		</axis>
+		<increase>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.setFoND(1);
+					setprop("sim/sounde/knb1", 1);
+				</script>
+			</binding>
+		</increase>
+		<decrease>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.setFoND(-1);
+					setprop("sim/sounde/knb1", 1);
+				</script>
+			</binding>
+		</decrease>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ndmode-fo-lbl</tooltip-id>
+				<label>ND mode</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>nd_range</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>fcu.setNDRange(0, 1);</script>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>fcu.setNDRange(0, -1);</script>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
-		<object-name>nd_range</object-name>
-		<property>instrumentation/efis/inputs/range-nm</property>
+		<property>instrumentation/efis/inputs/range-nm-pos</property>
 		<interpolation>
 			<entry><ind> 10</ind><dep>  0</dep></entry>
 			<entry><ind> 20</ind><dep> 45</dep></entry>
@@ -5536,34 +5710,37 @@
 		<axis>
 			<object-name>nd_range.axis</object-name>
 		</axis>
+		<increase>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.setNDRange(0, 1);
+					setprop("sim/sounde/knb1", 1);
+				</script>
+			</binding>
+		</increase>
+		<decrease>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.setNDRange(0, -1);
+					setprop("sim/sounde/knb1", 1);
+				</script>
+			</binding>
+		</decrease>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ndrange-cpt-lbl</tooltip-id>
+				<label>ND range</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
-		<type>pick</type>
+		<type>knob</type>
 		<object-name>nd_range_fo</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>fcu.setNDRange(1, 1);</script>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>fcu.setNDRange(1, -1);</script>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
-		<object-name>nd_range_fo</object-name>
-		<property>instrumentation/efis[1]/inputs/range-nm</property>
+		<property>instrumentation/efis[1]/inputs/range-nm-pos</property>
 		<interpolation>
 			<entry><ind> 10</ind><dep>  0</dep></entry>
 			<entry><ind> 20</ind><dep> 45</dep></entry>
@@ -5575,198 +5752,159 @@
 		<axis>
 			<object-name>nd_range_fo.axis</object-name>
 		</axis>
+		<increase>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.setNDRange(1, 1);
+					setprop("sim/sounde/knb1", 1);
+				</script>
+			</binding>
+		</increase>
+		<decrease>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.setNDRange(1, -1);
+					setprop("sim/sounde/knb1", 1);
+				</script>
+			</binding>
+		</decrease>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ndrange-fo-lbl</tooltip-id>
+				<label>ND range</label>
+			</binding>
+		</hovered>
 	</animation>
-
+	
 	<animation>
-		<type>pick</type>
-		<object-name>vor-adf-1</object-name>
+		<type>knob</type>
+		<object-name>vor-adf1</object-name>
+		<property>instrumentation/efis[0]/input/lh-vor-adf-pos</property>
+		<factor>25</factor>
+		<axis>
+			<object-name>vor-adf1.axis</object-name>
+		</axis>
+		<drag-direction>horizontal</drag-direction>
 		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/efis[0]/input/lh-vor-adf</property>
+				<value>-1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
-				<value>1</value> <!-- VOR -->
-				<value>-1</value> <!-- ADF -->
+				<value>1</value> <!-- ADF -->
+				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
+		<hovered>
 			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/efis[0]/input/lh-vor-adf</property>
-				<value>-1</value> <!-- ADF -->
-				<value>1</value> <!-- VOR -->
-				<value>0</value> <!-- OFF -->
+				<command>set-tooltip</command>
+				<tooltip-id>voradf-1-cpt-lbl</tooltip-id>
+				<label>Toggle VOR1 / ADF1</label>
 			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
+		</hovered>
 	</animation>
+	
 	<animation>
-		<type>rotate</type>
-		<object-name>vor-adf-1</object-name>
-		<property>instrumentation/efis[0]/input/lh-vor-adf</property>
-		<interpolation>
-			<entry><ind>-1</ind><dep>-25</dep></entry>
-			<entry><ind> 0</ind><dep>  0</dep></entry>
-			<entry><ind> 1</ind><dep> 25</dep></entry>
-		</interpolation>
+		<type>knob</type>
+		<object-name>vor-adf1-right</object-name>
+		<property>instrumentation/efis[1]/input/lh-vor-adf-pos</property>
+		<factor>25</factor>
 		<axis>
-			<object-name>vor-adf-1.axis</object-name>
+			<object-name>vor-adf1-right.axis</object-name>
 		</axis>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>vor-adf-1-right</object-name>
+		<drag-direction>horizontal</drag-direction>
 		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/efis[1]/input/lh-vor-adf</property>
+				<value>-1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
-				<value>1</value> <!-- VOR -->
-				<value>-1</value> <!-- ADF -->
+				<value>1</value> <!-- ADF -->
+				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
+		<hovered>
 			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/efis[1]/input/lh-vor-adf</property>
-				<value>-1</value> <!-- ADF -->
-				<value>1</value> <!-- VOR -->
-				<value>0</value> <!-- OFF -->
+				<command>set-tooltip</command>
+				<tooltip-id>voradf-2-cpt-lbl</tooltip-id>
+				<label>Toggle VOR2 / ADF2</label>
 			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
+		</hovered>
 	</animation>
+	
 	<animation>
-		<type>rotate</type>
-		<object-name>vor-adf-1-right</object-name>
-		<property>instrumentation/efis[1]/input/lh-vor-adf</property>
-		<interpolation>
-			<entry><ind>-1</ind><dep>-25</dep></entry>
-			<entry><ind> 0</ind><dep>  0</dep></entry>
-			<entry><ind> 1</ind><dep> 25</dep></entry>
-		</interpolation>
+		<type>knob</type>
+		<object-name>vor-adf2</object-name>
+		<property>instrumentation/efis[0]/input/rh-vor-adf-pos</property>
+		<factor>25</factor>
 		<axis>
-			<object-name>vor-adf-1-right.axis</object-name>
+			<object-name>vor-adf2.axis</object-name>
 		</axis>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>vor-adf-2</object-name>
+		<drag-direction>horizontal</drag-direction>
 		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/efis[0]/input/rh-vor-adf</property>
+				<value>-1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
-				<value>1</value> <!-- VOR -->
-				<value>-1</value> <!-- ADF -->
+				<value>1</value> <!-- ADF -->
+				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
+		<hovered>
 			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/efis[0]/input/rh-vor-adf</property>
-				<value>-1</value> <!-- ADF -->
-				<value>1</value> <!-- VOR -->
-				<value>0</value> <!-- OFF -->
+				<command>set-tooltip</command>
+				<tooltip-id>voradf-1-fo-lbl</tooltip-id>
+				<label>Toggle VOR1 / ADF1</label>
 			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
+		</hovered>
 	</animation>
+	
 	<animation>
-		<type>rotate</type>
-		<object-name>vor-adf-2</object-name>
-		<property>instrumentation/efis[0]/input/rh-vor-adf</property>
-		<interpolation>
-			<entry><ind>-1</ind><dep>-25</dep></entry>
-			<entry><ind> 0</ind><dep>  0</dep></entry>
-			<entry><ind> 1</ind><dep> 25</dep></entry>
-		</interpolation>
+		<type>knob</type>
+		<object-name>vor-adf2-right</object-name>
+		<property>instrumentation/efis[1]/input/rh-vor-adf-pos</property>
+		<factor>25</factor>
 		<axis>
-			<object-name>vor-adf-2.axis</object-name>
+			<object-name>vor-adf2-right.axis</object-name>
 		</axis>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>vor-adf-2-right</object-name>
+		<drag-direction>horizontal</drag-direction>
 		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/efis[1]/input/rh-vor-adf</property>
+				<value>-1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
-				<value>1</value> <!-- VOR -->
-				<value>-1</value> <!-- ADF -->
+				<value>1</value> <!-- ADF -->
+				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sounde/switch1", 1);</script>
 			</binding>
 		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
+		<hovered>
 			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/efis[1]/input/rh-vor-adf</property>
-				<value>-1</value> <!-- ADF -->
-				<value>1</value> <!-- VOR -->
-				<value>0</value> <!-- OFF -->
+				<command>set-tooltip</command>
+				<tooltip-id>voradf-2-fo-lbl</tooltip-id>
+				<label>Toggle VOR2 / ADF2</label>
 			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
-		<object-name>vor-adf-2-right</object-name>
-		<property>instrumentation/efis[1]/input/rh-vor-adf</property>
-		<interpolation>
-			<entry><ind>-1</ind><dep>-25</dep></entry>
-			<entry><ind> 0</ind><dep>  0</dep></entry>
-			<entry><ind> 1</ind><dep> 25</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>vor-adf-2-right.axis</object-name>
-		</axis>
+		</hovered>
 	</animation>
 
 	<!-- FCU AP Controls/Lights -->
