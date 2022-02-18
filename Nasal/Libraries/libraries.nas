@@ -317,22 +317,17 @@ var pilotComfortOnePos = func(prop) {
 var lTray = func() {
 	pilotComfortTwoPos("/controls/tray/lefttrayext");
 }
+
 var rTray = func() {
 	pilotComfortTwoPos("/controls/tray/righttrayext");
 }
 
-var l1Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-cpt[0]");
-}
-var l2Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-cpt[1]");
+var lFootrest = func() {
+	pilotComfortOnePos("/controls/footrest-cpt");
 }
 
-var r1Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-fo[0]");
-}
-var r2Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-fo[1]");
+var rFootrest = func() {
+	pilotComfortOnePos("/controls/footrest-fo");
 }
 
 if (pts.Controls.Flight.autoCoordination.getBoolValue()) {

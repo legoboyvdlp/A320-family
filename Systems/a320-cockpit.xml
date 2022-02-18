@@ -279,6 +279,21 @@
 			<input>/it-autoflight/config/altitude-dial-mode</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/navigation/switching/air-data-pos">
+			<input>/controls/navigation/switching/air-data</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/navigation/switching/att-hdg-pos">
+			<input>/controls/navigation/switching/att-hdg</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/emer-canc-cover-pos">
+			<input>/controls/cockpit/emer-canc-cover</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
