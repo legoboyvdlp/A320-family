@@ -4447,7 +4447,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%2.2f</format>
-		<font type="string">Airbus7Seg.ttf</font>
+		<property>instrumentation/altimeter/setting-inhg</property>
 		<truncate>false</truncate>
 		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
