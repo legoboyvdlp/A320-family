@@ -309,6 +309,26 @@
 			<input>/instrumentation/wxr/enabled</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/thrt-all-pos">
+			<input>/controls/atc/thrt-all</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/system-knob-pos">
+			<input>/controls/atc/system-knob</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/atc-mode-knob-pos">
+			<input>/controls/atc/mode-knob</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/abv-blw-pos">
+			<input>/controls/atc/abv-blw</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 

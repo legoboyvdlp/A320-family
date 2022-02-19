@@ -1172,29 +1172,6 @@
 		</condition>
 	</animation>
 
-	<animation>
-		<name>Panel lighting</name>
-		<type>material</type>
-		<object-name>audio_body</object-name>
-		<object-name>audio_int_rad</object-name>
-		<emission>
-			<red>0.3</red>
-			<green>0.3</green>
-			<blue>0.3</blue>
-			<factor-prop>sim/model/lights/dome-light</factor-prop>
-		</emission>
-	</animation>
-
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/Model/cockpit-irradiance</inherits-from>
-		<object-name>audio_body</object-name>
-		<object-name>audio_int_rad</object-name>
-	</effect>
-	
-	<effect>
-		<inherits-from>Effects/model-transparent</inherits-from>
-		<object-name>audio_glare</object-name>
-	</effect>
 
 	<animation>
 		<type>select</type>
