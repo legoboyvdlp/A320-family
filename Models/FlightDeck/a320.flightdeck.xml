@@ -2857,7 +2857,7 @@
 			<entry><ind>1.00</ind><dep>-90.0</dep></entry>
 		</interpolation>
 		<axis>
-			<object-name>WindowOpenerFo.axis</object-name>
+			<object-name>WindowOpenerFo.axis.001</object-name>
 		</axis>
 	</animation>
 	
@@ -7540,6 +7540,238 @@
 			<z2-m>-0.06595</z2-m>
 		</axis>
 	</animation>
+
+	<!-- Pitch Trim -->
+	<animation>
+		<type>knob</type>
+		<object-name>trim_1</object-name>
+		<property>controls/flight/elevator-trim</property>
+		<factor>1000</factor>
+		<axis>
+			<object-name>trim.axis</object-name>
+		</axis>
+		<increase>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.slewPitchWheel(-1);</script>
+			</binding>
+		</increase>
+		<decrease>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.slewPitchWheel(1);</script>
+			</binding>
+		</decrease>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>pitch-trim-lbl</tooltip-id>
+				<label>Pitch trim control</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>trim_2_lts</object-name>
+		<property>fdm/jsbsim/hydraulics/stabilizer/cmd-deg</property>
+		<factor>15.55</factor>
+		<offset-deg>1.4</offset-deg>
+		<axis>
+			<object-name>trim.axis</object-name>
+		</axis>
+	</animation>
+	
+	<!-- Throttles -->
+	<animation>
+		<type>knob</type>
+		<object-name>thr_l</object-name>
+		<property>fdm/jsbsim/fadec/throttle-lever[0]</property>
+		<factor>45</factor>
+		<axis>
+			<object-name>trim.axis</object-name>
+		</axis>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/engines/engine[0]/throttle</property>
+				<factor>0.01</factor>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>eng-thrt1-lbl</tooltip-id>
+				<label>Engine 1 throttle</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>thr_l_button</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.FCUController.ATDisc();
+				</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/athr-disco-left-btn-translate</property>
+				<value>0.001</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/athr-disco-left-btn-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>disconnect-athr-lbl</tooltip-id>
+				<label>Soft ATHR disconnect</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>thr_l_button</object-name>
+		<property>/controls/cockpit/athr-disco-left-btn-translate</property>
+		<axis>
+			<y>1</y>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>thr_button</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<command>nasal</command>
+				<script>
+					fcu.FCUController.ATDisc();
+				</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/athr-disco-right-btn-translate</property>
+				<value>-0.001</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/athr-disco-right-btn-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>disconnect-athr-r-lbl</tooltip-id>
+				<label>Soft ATHR disconnect</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>thr_button</object-name>
+		<property>/controls/cockpit/athr-disco-right-btn-translate</property>
+		<axis>
+			<y>1</y>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>thr_r</object-name>
+		<property>fdm/jsbsim/fadec/throttle-lever[1]</property>
+		<factor>45</factor>
+		<axis>
+			<object-name>trim.axis</object-name>
+		</axis>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/engines/engine[1]/throttle</property>
+				<factor>0.01</factor>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>eng-thrt2-lbl</tooltip-id>
+				<label>Engine 2 throttle</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<!-- Reverse region -->
+	<animation>
+		<type>rotate</type>
+		<object-name>thr_l</object-name>
+		<property>fdm/jsbsim/fadec/reverse-lever[0]</property>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
+			<entry><ind>0.25</ind><dep> -3.5</dep></entry>
+			<entry><ind>1.00</ind><dep>-23.5</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>trim.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>thr_r</object-name>
+		<property>fdm/jsbsim/fadec/reverse-lever[1]</property>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
+			<entry><ind>0.25</ind><dep> -3.5</dep></entry>
+			<entry><ind>1.00</ind><dep>-23.5</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>trim.axis</object-name>
+		</axis>
+	</animation>
+
+	<!-- Reverse levers -->
+	<animation>
+		<type>rotate</type>
+		<object-name>rev_l</object-name>
+		<property>controls/engines/engine[0]/reverser</property>
+		<factor>60</factor>
+		<axis>
+			<object-name>rev_l.axis</object-name>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>rev_r</object-name>
+		<property>controls/engines/engine[1]/reverser</property>
+		<factor>60</factor>
+		<axis>
+			<object-name>rev_r.axis</object-name>
+		</axis>
+	</animation>
 	
 	<!-- Engine Panel -->
 	
@@ -7625,6 +7857,139 @@
 				<command>set-tooltip</command>
 				<tooltip-id>eng_mode_switch_lbl</tooltip-id>
 				<label>Engine mode selector</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<!-- Pedestal Lighting Panel -->
+	<animation>
+		<type>knob</type>
+		<object-name>flood_lt_main</object-name>
+		<object-name>flood_lt_main.mark</object-name>
+		<property>controls/lighting/main-flood-knb</property>
+		<factor>250</factor>
+		<offset-deg>-125</offset-deg>
+		<axis>
+			<object-name>flood_lt_main.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/main-flood-knb</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>flood-main-lbl</tooltip-id>
+				<label>Main panel flood light control</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>integ_lt</object-name>
+		<object-name>integ_lt.mark</object-name>
+		<property>controls/lighting/main-panel-knb</property>
+		<factor>250</factor>
+		<offset-deg>-125</offset-deg>
+		<axis>
+			<object-name>integ_lt.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/main-panel-knb</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>integlt-lbl</tooltip-id>
+				<label>Panel backlight control</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>flood_lt_ped</object-name>
+		<object-name>flood_lt_ped.mark</object-name>
+		<property>controls/lighting/ped-flood-knb</property>
+		<factor>250</factor>
+		<offset-deg>-125</offset-deg>
+		<axis>
+			<object-name>flood_lt_ped.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/ped-flood-knb</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>flood-ped-lbl</tooltip-id>
+				<label>Pedestal flood light control</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<!-- WX Radar -->
+	<animation>
+		<type>knob</type>
+		<object-name>radar_sys</object-name>
+		<property>/controls/cockpit/wxr-radar-sw-pos</property>
+		<factor>-20</factor>
+		<axis>
+			<object-name>radar_sys.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>/instrumentation/efis[0]/inputs/wxr</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>property-cycle</command>
+				<property>/instrumentation/efis[1]/inputs/wxr</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>property-cycle</command>
+				<property>/instrumentation/wxr/enabled</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>wxr-radar-lbl</tooltip-id>
+				<label>Display weather on ND</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -8030,6 +8395,921 @@
 		</axis>
 	</animation>
 
+	<!-- Overhead Panel -->
+	
+	<!-- Rain protection -->
+	<animation>
+		<type>pick</type>
+		<object-name>LeftRainTest</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+						<or>
+							<not>
+								<property>gear/gear[1]/wow</property>
+							</not>
+							<equals>
+								<property>/engines/engine[0]/state</property>
+								<value>3</value>
+							</equals>
+							<equals>
+								<property>/engines/engine[1]/state</property>
+								<value>3</value>
+							</equals>
+						</or>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/switches/LrainRpt</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/LrainRpt-translate</property>
+				<value>-0.00075</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/LrainRpt-translate</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/switches/LrainRpt</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>left-rpt-lbl</tooltip-id>
+				<label>Left rain repellent control</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>LeftRainTest</object-name>
+		<property>controls/cockpit/LrainRpt-translate</property>
+		<axis>
+			<x1-m>-0.134358</x1-m>
+			<y1-m>-0.259398</y1-m>
+			<z1-m>0.892231</z1-m>
+			<x2-m>-0.133481</x2-m>
+			<y2-m>-0.259101</y2-m>
+			<z2-m>0.889991</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>LeftWiperKnb</object-name>
+		<object-name>LeftWiperKnb.mark</object-name>
+		<property>controls/switches/wiperLspd-pos</property>
+		<factor>55</factor>
+		<axis>
+			<object-name>eng_mode.axis.001</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/wiperLspd</property>
+				<min>0</min>
+				<max>2</max>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>left-wiper-lbl</tooltip-id>
+				<label>Left wiper control</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>RightWiperKnb</object-name>
+		<object-name>RightWiperKnb.mark</object-name>
+		<property>controls/switches/wiperRspd-pos</property>
+		<factor>55</factor>
+		<axis>
+			<object-name>eng_mode.axis.001</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/wiperRspd</property>
+				<min>0</min>
+				<max>2</max>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>right-wiper-lbl</tooltip-id>
+				<label>Right wiper control</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>RightRainTest</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<and>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-2</property>
+							<value>25</value>
+						</greater-than-equals>
+						<or>
+							<not>
+								<property>gear/gear[1]/wow</property>
+							</not>
+							<equals>
+								<property>/engines/engine[0]/state</property>
+								<value>3</value>
+							</equals>
+							<equals>
+								<property>/engines/engine[1]/state</property>
+								<value>3</value>
+							</equals>
+						</or>
+					</and>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/switches/RrainRpt</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/RrainRpt-translate</property>
+				<value>-0.00075</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/RrainRpt-translate</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/switches/RrainRpt</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>right-rpt-lbl</tooltip-id>
+				<label>Right rain repellent control</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>RightRainTest</object-name>
+		<property>controls/cockpit/RrainRpt-translate</property>
+		<axis>
+			<x1-m>-0.134266</x1-m>
+			<y1-m>0.260132</y1-m>
+			<z1-m>0.892073</z1-m>
+			<x2-m>-0.133386</x2-m>
+			<y2-m>0.259835</y2-m>
+			<z2-m>0.889834</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Exterior lights -->
+	<animation>
+		<type>knob</type>
+		<object-name>TurnoffLtSwtch</object-name>
+		<property>controls/lighting/turnoff-light-switch-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>TurnoffLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/turnoff-light-switch</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Turnoff lights switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>LandingLtSwtch</object-name>
+		<property>controls/switches/landing-lights-l-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>LandingLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/landing-lights-l</property>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Landing light switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>LandingLtRSwtch</object-name>
+		<property>controls/switches/landing-lights-r-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>LandingLtRSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/landing-lights-r</property>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Landing light switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>NoseLtSwtch</object-name>
+		<property>controls/lighting/taxi-light-switch-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>NoseLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/taxi-light-switch</property>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Landing light switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>StrobeLtSwtch</object-name>
+		<property>controls/switches/strobe-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>StrobeLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/strobe</property>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Strobe lights switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>BeaconLtSwtch</object-name>
+		<property>controls/switches/beacon-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>BeaconLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/beacon</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Beacon lights switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>WingLtSwtch</object-name>
+		<property>controls/switches/wing-lights-pos</property>
+		<factor>60</factor>
+		<offset-deg>-30</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>WingLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/wing-lights</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Wing lights switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>NavLogoLtSwtch</object-name>
+		<property>controls/lighting/nav-lights-switch-pos</property>
+		<factor>35</factor>
+		<offset-deg>-35</offset-deg>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>NavLogoLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/nav-lights-switch</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nav-sw-lbl</tooltip-id>
+				<label>Navigation lights switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<!-- APU -->
+	<animation>
+		<type>pick</type>
+		<object-name>APUMasterBtn</object-name>
+		<object-name>APUMasterBtn1F</object-name>
+		<object-name>APUMasterBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/apu/master</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/apu-master-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/apu-master-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>apu-master-lbl</tooltip-id>
+				<label>APU master switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>APUMasterBtn</object-name>
+		<object-name>APUMasterBtn1F</object-name>
+		<object-name>APUMasterBtn2O</object-name>
+		<property>/controls/cockpit/apu-master-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>APUMasterBtn1F</object-name>
+		<condition>
+			<or>
+				<property>systems/apu/fault</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>APUMasterBtn2O</object-name>
+		<condition>
+			<or>
+				<property>controls/apu/master</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>APUStartBtn</object-name>
+		<object-name>APUStartBtn1A</object-name>
+		<object-name>APUStartBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-bat</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>nasal</command>
+				<script>
+				if (systems.APUNodes.Controls.master.getBoolValue()) {
+					systems.APUController.APU.startCommand();
+				}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/apu-start-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/apu-start-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>apu-start-lbl</tooltip-id>
+				<label>APU start switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>APUStartBtn</object-name>
+		<object-name>APUStartBtn1A</object-name>
+		<object-name>APUStartBtn2O</object-name>
+		<property>/controls/cockpit/apu-start-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>APUStartBtn1A</object-name>
+		<condition>
+			<or>
+				<property>systems/apu/available</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>APUStartBtn2O</object-name>
+		<condition>
+			<or>
+				<property>systems/apu/start</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- Passenger signs -->
+	<animation>
+		<type>knob</type>
+		<object-name>SeatBeltSwtch</object-name>
+		<property>controls/switches/seatbelt-sign-pos</property>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>SeatBeltSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/seatbelt-sign</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>seatbelt-sign-lbl</tooltip-id>
+				<label>Seatbelt sign sign</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>NoSmokingSwtch</object-name>
+		<property>controls/switches/no-smoking-sign-pos</property>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>NoSmokingSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/switches/no-smoking-sign</property>
+				<factor>0.5</factor>
+				<min>0.0</min>
+				<max>1.0</max>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>no-smk-lbl</tooltip-id>
+				<label>No smoking sign</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>EmerExtLtSwtch</object-name>
+		<property>controls/switches/emer-lights-pos</property>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>EmerExtLtSwtch.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/emer-lights</property>
+				<value>0.0</value>
+				<value>0.5</value>
+				<value>1.0</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>emer-exit-lbl</tooltip-id>
+				<label>Emergency Exit Light Switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>EmerExtLtBtn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/switches/emer-lights</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- Interior lights -->
+	<animation>
+		<type>knob</type>
+		<object-name>OHPMarkLtKnb</object-name>
+		<object-name>flood_lt_main.mark.002</object-name>
+		<property>controls/lighting/overhead-panel-knb</property>
+		<offset-deg>-125</offset-deg>
+		<factor>250</factor>
+		<axis>
+			<object-name>OHPMarkLtKnb.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/overhead-panel-knb</property>
+				<factor>0.05</factor>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ohp-mark-brt-lbl</tooltip-id>
+				<label>Overhead Panel Brightness</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>StbyCompassLtSwtch</object-name>
+		<property>controls/lighting/stby-compass-switch-pos</property>
+		<axis>
+			<!--<object-name>StbyCompassLtSwtch.axis</object-name>-->
+			<x1-m>-0.13725</x1-m>
+			<y1-m>0.06933</y1-m>
+			<z1-m>0.9063</z1-m>
+			<x2-m>-0.13725</x2-m>
+			<y2-m>0.06745</y2-m>
+			<z2-m>0.9063</z2-m>
+		</axis>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/stby-compass-switch</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>stby-compass-lt-lbl</tooltip-id>
+				<label>Standby compass light switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>DomeLtSwtch</object-name>
+		<property>controls/lighting/dome-norm-pos</property>
+		<axis>
+			<object-name>DomeLtSwtch.axis</object-name>
+		</axis>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/dome-norm</property>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>dome-lt-lbl</tooltip-id>
+				<label>Dome light switch</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>AnnunciatorLtSwtch</object-name>
+		<property>controls/switches/annun-test-pos</property>
+		<axis>
+			<object-name>AnnunciatorLtSwtch.axis</object-name>
+		</axis>
+		<offset-deg>0</offset-deg>
+		<factor>30</factor>
+		<drag-scale-px>3</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/annun-test</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>audio-swtg-lbl</tooltip-id>
+				<label>Annunciator light test switch</label>
+			</binding>
+		</hovered>
+	</animation>
 	
 	
 	
@@ -10922,126 +12202,6 @@
 	</animation>
 	
 
-	<!-- Lighting -->
-	<animation>
-		<type>pick</type>
-		<object-name>flood_lt_main</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/main-flood-knb</property>
-				<step>0.05</step>
-				<max>1</max>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/main-flood-knb</property>
-				<step>-0.05</step>
-				<min>0</min>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
-		<object-name>flood_lt_main</object-name>
-		<object-name>flood_lt_main.mark</object-name>
-		<property>controls/lighting/main-flood-knb</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-129</dep></entry>
-			<entry><ind>1</ind><dep>129</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>flood_lt_main.axis</object-name>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>flood_lt_ped</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/ped-flood-knb</property>
-				<step>0.05</step>
-				<max>1</max>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/ped-flood-knb</property>
-				<step>-0.05</step>
-				<min>0</min>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
-		<object-name>flood_lt_ped</object-name>
-		<object-name>flood_lt_ped.mark</object-name>
-		<property>controls/lighting/ped-flood-knb</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-129</dep></entry>
-			<entry><ind>1</ind><dep>129</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>flood_lt_ped.axis</object-name>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>integ_lt</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/main-panel-knb</property>
-				<step>0.05</step>
-				<max>1</max>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/main-panel-knb</property>
-				<step>-0.05</step>
-				<min>0</min>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<type>rotate</type>
-		<object-name>integ_lt</object-name>
-		<object-name>integ_lt.mark</object-name>
-		<property>controls/lighting/main-panel-knb</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-129</dep></entry>
-			<entry><ind>1</ind><dep>129</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>integ_lt.axis</object-name>
-		</axis>
-	</animation>
 	
 	<animation>
 		<name>Main Panel and Pedestal lighting</name>
@@ -11357,179 +12517,6 @@
 			<blue>0.20</blue>
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
-	</animation>
-
-	<!-- Pitch Trim -->
-	<animation>
-		<type>pick</type>
-		<object-name>trim_wheel</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.slewPitchWheel(1);</script>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.slewPitchWheel(-1);</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>trim_2_lts</object-name>
-		<property>fdm/jsbsim/hydraulics/stabilizer/cmd-deg</property>
-		<factor>15.55</factor>
-		<offset-deg>1.4</offset-deg>
-		<axis>
-			<object-name>trim.axis</object-name>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>trim_1</object-name>
-		<property>controls/flight/elevator-trim</property>
-		<factor>1000</factor>
-		<axis>
-			<object-name>trim.axis</object-name>
-		</axis>
-	</animation>
-	
-
-
-	<!-- Throttles -->
-	<animation>
-		<name>Engine 1 throttle lever pick</name>
-		<type>pick</type>
-		<object-name>thr_l</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/engines/engine[0]/throttle</property>
-				<step>0.01</step>
-				<max>1</max>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/engines/engine[0]/throttle</property>
-				<step>-0.01</step>
-				<min>0</min>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<name>Engine 1 throttle lever</name>
-		<type>rotate</type>
-		<object-name>thr_l</object-name>
-		<property>fdm/jsbsim/fadec/throttle-lever[0]</property>
-		<factor>45</factor>
-		<axis>
-			<object-name>trim.axis</object-name>
-		</axis>
-	</animation>
-	<animation>
-		<name>Engine 1 throttle lever rev</name>
-		<type>rotate</type>
-		<object-name>thr_l</object-name>
-		<property>fdm/jsbsim/fadec/reverse-lever[0]</property>
-		<interpolation>
-			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
-			<entry><ind>0.25</ind><dep> -3.5</dep></entry>
-			<entry><ind>1.00</ind><dep>-23.5</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>trim.axis</object-name>
-		</axis>
-	</animation>
-	<animation>
-		<name>Engine 2 throttle lever pick</name>
-		<type>pick</type>
-		<object-name>thr_r</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/engines/engine[1]/throttle</property>
-				<step>0.01</step>
-				<max>1</max>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/engines/engine[1]/throttle</property>
-				<step>-0.01</step>
-				<min>0</min>
-			</binding>
-		</action>
-	</animation>
-	<animation>
-		<name>Engine 2 throttle lever</name>
-		<type>rotate</type>
-		<object-name>thr_r</object-name>
-		<property>fdm/jsbsim/fadec/throttle-lever[1]</property>
-		<factor>45</factor>
-		<axis>
-			<object-name>trim.axis</object-name>
-		</axis>
-	</animation>
-	<animation>
-		<name>Engine 2 throttle lever rev</name>
-		<type>rotate</type>
-		<object-name>thr_r</object-name>
-		<property>fdm/jsbsim/fadec/reverse-lever[1]</property>
-		<interpolation>
-			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
-			<entry><ind>0.25</ind><dep> -3.5</dep></entry>
-			<entry><ind>1.00</ind><dep>-23.5</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>trim.axis</object-name>
-		</axis>
-	</animation>
-
-	<animation>
-		<name>Reverse Thrust left lever</name>
-		<type>rotate</type>
-		<object-name>rev_l</object-name>
-		<property>controls/engines/engine[0]/reverser</property>
-		<factor>60</factor>
-		<axis>
-			<object-name>rev_l.axis</object-name>
-		</axis>
-	</animation>
-
-	<animation>
-		<name>Reverse Thrust right lever</name>
-		<type>rotate</type>
-		<object-name>rev_r</object-name>
-		<property>controls/engines/engine[1]/reverser</property>
-		<factor>60</factor>
-		<axis>
-			<object-name>rev_r.axis</object-name>
-		</axis>
 	</animation>
 
 
@@ -12352,569 +13339,8 @@
 		</action>
 	</animation>
 	
-	<!-- WX Radar -->
 	
-	<animation>
-		<type>pick</type>
-		<object-name>radar_sys</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-toggle</command>
-				<property>/instrumentation/efis[0]/inputs/wxr</property>
-			</binding>
-			<binding>
-				<command>property-toggle</command>
-				<property>/instrumentation/efis[1]/inputs/wxr</property>
-			</binding>
-			<binding>
-				<command>property-toggle</command>
-				<property>/instrumentation/wxr/enabled</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-	</animation>
 	
-	<animation>
-		<type>rotate</type>
-		<object-name>radar_sys</object-name>
-		<factor>-20</factor>
-		<property>/instrumentation/wxr/enabled</property>
-		<center>
-			<x-m>0.020282</x-m>
-			<y-m>-0.210647</y-m>
-			<z-m>-0.140496</z-m>
-		</center>
-		<axis>
-			<x>1</x>
-			<y>0</y>
-			<z>0</z>
-		</axis>
-	</animation>
-	
-	<!-- Exterior lights -->
-	<animation>
-		<type>knob</type>
-		<object-name>TurnoffLtSwtch</object-name>
-		<property>controls/lighting/turnoff-light-switch-pos</property>
-		<factor>60</factor>
-		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>TurnoffLtSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/lighting/turnoff-light-switch</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>nav-sw-lbl</tooltip-id>
-				<label>Turnoff lights switch</label>
-			</binding>
-		</hovered>
-	</animation>
-	
-	<animation>
-		<type>knob</type>
-		<object-name>LandingLtSwtch</object-name>
-		<property>controls/switches/landing-lights-l-pos</property>
-		<factor>60</factor>
-		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>LandingLtSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/switches/landing-lights-l</property>
-				<value>0</value>
-				<value>0.5</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>nav-sw-lbl</tooltip-id>
-				<label>Landing light switch</label>
-			</binding>
-		</hovered>
-	</animation>
-	
-	<animation>
-		<type>knob</type>
-		<object-name>LandingLtRSwtch</object-name>
-		<property>controls/switches/landing-lights-r-pos</property>
-		<factor>60</factor>
-		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>LandingLtRSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/switches/landing-lights-r</property>
-				<value>0</value>
-				<value>0.5</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>nav-sw-lbl</tooltip-id>
-				<label>Landing light switch</label>
-			</binding>
-		</hovered>
-	</animation>
-	
-	<animation>
-		<type>knob</type>
-		<object-name>NoseLtSwtch</object-name>
-		<property>controls/lighting/taxi-light-switch-pos</property>
-		<factor>60</factor>
-		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>NoseLtSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/lighting/taxi-light-switch</property>
-				<value>0</value>
-				<value>0.5</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>nav-sw-lbl</tooltip-id>
-				<label>Landing light switch</label>
-			</binding>
-		</hovered>
-	</animation>
-	
-	<animation>
-		<type>knob</type>
-		<object-name>StrobeLtSwtch</object-name>
-		<property>controls/switches/strobe-pos</property>
-		<factor>60</factor>
-		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>StrobeLtSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/switches/strobe</property>
-				<value>0</value>
-				<value>0.5</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>nav-sw-lbl</tooltip-id>
-				<label>Strobe lights switch</label>
-			</binding>
-		</hovered>
-	</animation>
-	
-	<animation>
-		<type>knob</type>
-		<object-name>BeaconLtSwtch</object-name>
-		<property>controls/switches/beacon-pos</property>
-		<factor>60</factor>
-		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>BeaconLtSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/switches/beacon</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>nav-sw-lbl</tooltip-id>
-				<label>Beacon lights switch</label>
-			</binding>
-		</hovered>
-	</animation>
-
-	<animation>
-		<type>knob</type>
-		<object-name>WingLtSwtch</object-name>
-		<property>controls/switches/wing-lights-pos</property>
-		<factor>60</factor>
-		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>WingLtSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/switches/wing-lights</property>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>nav-sw-lbl</tooltip-id>
-				<label>Wing lights switch</label>
-			</binding>
-		</hovered>
-	</animation>
-
-	<animation>
-		<type>knob</type>
-		<object-name>NavLogoLtSwtch</object-name>
-		<property>controls/lighting/nav-lights-switch-pos</property>
-		<factor>35</factor>
-		<offset-deg>-35</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>NavLogoLtSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/lighting/nav-lights-switch</property>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>nav-sw-lbl</tooltip-id>
-				<label>Navigation lights switch</label>
-			</binding>
-		</hovered>
-	</animation>
-
-	<!-- Passenger signs -->
-	<animation>
-		<type>knob</type>
-		<object-name>SeatBeltSwtch</object-name>
-		<property>controls/switches/seatbelt-sign-pos</property>
-		<offset-deg>-30</offset-deg>
-		<factor>60</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>SeatBeltSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/switches/seatbelt-sign</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>seatbelt-sign-lbl</tooltip-id>
-				<label>Seatbelt sign sign</label>
-			</binding>
-		</hovered>
-	</animation>
-
-	<animation>
-		<type>knob</type>
-		<object-name>NoSmokingSwtch</object-name>
-		<property>controls/switches/no-smoking-sign-pos</property>
-		<offset-deg>-30</offset-deg>
-		<factor>60</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>NoSmokingSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/switches/no-smoking-sign</property>
-				<factor>0.5</factor>
-				<min>0.0</min>
-				<max>1.0</max>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>no-smk-lbl</tooltip-id>
-				<label>No smoking sign</label>
-			</binding>
-		</hovered>
-	</animation>
-	
-	<animation>
-		<type>knob</type>
-		<object-name>EmerExtLtSwtch</object-name>
-		<property>controls/switches/emer-lights-pos</property>
-		<offset-deg>-30</offset-deg>
-		<factor>60</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<axis>
-			<object-name>EmerExtLtSwtch.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/switches/emer-lights</property>
-				<value>0.0</value>
-				<value>0.5</value>
-				<value>1.0</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>emer-exit-lbl</tooltip-id>
-				<label>Emergency Exit Light Switch</label>
-			</binding>
-		</hovered>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>EmerExtLtBtn2O</object-name>
-		<condition>
-			<or>
-				<not><property>controls/switches/emer-lights</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
-	</animation>
-	
-	<!-- Interior lights -->
-	<animation>
-		<type>knob</type>
-		<object-name>OHPMarkLtKnb</object-name>
-		<object-name>flood_lt_main.mark.002</object-name>
-		<property>controls/lighting/overhead-panel-knb</property>
-		<offset-deg>-125</offset-deg>
-		<factor>250</factor>
-		<axis>
-			<object-name>OHPMarkLtKnb.axis</object-name>
-		</axis>
-		<action>
-			<binding>
-				<command>property-adjust</command>
-				<property>controls/lighting/overhead-panel-knb</property>
-				<factor>0.05</factor>
-				<min>0</min>
-				<max>1</max>
-				<wrap>false</wrap>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>ohp-mark-brt-lbl</tooltip-id>
-				<label>Overhead Panel Brightness</label>
-			</binding>
-		</hovered>
-	</animation>
-	
-	<animation>
-		<type>knob</type>
-		<object-name>StbyCompassLtSwtch</object-name>
-		<property>controls/lighting/stby-compass-switch-pos</property>
-		<axis>
-			<!--<object-name>StbyCompassLtSwtch.axis</object-name>-->
-			<x1-m>-0.13725</x1-m>
-			<y1-m>0.06933</y1-m>
-			<z1-m>0.9063</z1-m>
-			<x2-m>-0.13725</x2-m>
-			<y2-m>0.06745</y2-m>
-			<z2-m>0.9063</z2-m>
-		</axis>
-		<offset-deg>-30</offset-deg>
-		<factor>60</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/lighting/stby-compass-switch</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>stby-compass-lt-lbl</tooltip-id>
-				<label>Standby compass light switch</label>
-			</binding>
-		</hovered>
-	</animation>
-
-	<animation>
-		<type>knob</type>
-		<object-name>DomeLtSwtch</object-name>
-		<property>controls/lighting/dome-norm-pos</property>
-		<axis>
-			<object-name>DomeLtSwtch.axis</object-name>
-		</axis>
-		<offset-deg>-30</offset-deg>
-		<factor>60</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/lighting/dome-norm</property>
-				<value>0</value>
-				<value>0.5</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>dome-lt-lbl</tooltip-id>
-				<label>Dome light switch</label>
-			</binding>
-		</hovered>
-	</animation>
-
-	<animation>
-		<type>knob</type>
-		<object-name>AnnunciatorLtSwtch</object-name>
-		<property>controls/switches/annun-test-pos</property>
-		<axis>
-			<object-name>AnnunciatorLtSwtch.axis</object-name>
-		</axis>
-		<offset-deg>0</offset-deg>
-		<factor>30</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
-		<action>
-			<binding>
-				<command>property-cycle</command>
-				<property>controls/switches/annun-test</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
-			</binding>
-		</action>
-		<hovered>
-			<binding>
-				<command>set-tooltip</command>
-				<tooltip-id>audio-swtg-lbl</tooltip-id>
-				<label>Annunciator light test switch</label>
-			</binding>
-		</hovered>
-	</animation>
 
 
 	<animation>

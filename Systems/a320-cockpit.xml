@@ -294,6 +294,21 @@
 			<input>/controls/cockpit/emer-canc-cover</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/switches/wiperLspd-pos">
+			<input>/controls/switches/wiperLspd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/wiperRspd-pos">
+			<input>/controls/switches/wiperRspd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/wxr-radar-sw-pos">
+			<input>/instrumentation/wxr/enabled</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
