@@ -329,6 +329,16 @@
 			<input>/controls/atc/abv-blw</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/outflowpos-man-sw-pos">
+			<input>/systems/pressurization/outflowpos-man-sw</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/ditching-pos">
+			<input>/controls/OH/protectors/ditching</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 

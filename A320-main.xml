@@ -1131,17 +1131,17 @@
 		</navigation>
 		<OH>
 			<protectors>
-				<ditching type="bool">0</ditching>
-				<elecratman type="bool">0</elecratman>
-				<eng1-manstart type="bool">0</eng1-manstart>
-				<eng2-manstart type="bool">0</eng2-manstart>
-				<eng1-n1 type="bool">0</eng1-n1>
-				<eng2-n1 type="bool">0</eng2-n1>
-				<idg1 type="bool">0</idg1>
-				<idg2 type="bool">0</idg2>
-				<maskman type="bool">0</maskman>
-				<ramair type="bool">0</ramair>
-				<ratman type="bool">0</ratman>
+				<ditching type="int">0</ditching>
+				<elecratman type="int">0</elecratman>
+				<eng1-manstart type="int">0</eng1-manstart>
+				<eng2-manstart type="int">0</eng2-manstart>
+				<eng1-n1 type="int">0</eng1-n1>
+				<eng2-n1 type="int">0</eng2-n1>
+				<idg1 type="int">0</idg1>
+				<idg2 type="int">0</idg2>
+				<maskman type="int">0</maskman>
+				<ramair type="int">0</ramair>
+				<ratman type="int">0</ratman>
 			</protectors>
 		</OH>
 		<oxygen>
@@ -1662,6 +1662,7 @@
 			<cabinalt-norm type="double">0</cabinalt-norm>
 			<cabinpsi type="double">14.7</cabinpsi>
 			<ditchingpb type="double">14.7</ditchingpb>
+			<outflowpos-man-sw type="int">0</outflowpos-man-sw>
 		</pressurization>
 		
 		<pitot n="0">
