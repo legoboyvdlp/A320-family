@@ -354,6 +354,36 @@
 			<input>/controls/navigation/adirscp/switches/ir-3-mode</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-cover-1-pos">
+			<input>/controls/engines/engine[0]/fire-btn-cover</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-1-pos">
+			<input>/controls/engines/engine[0]/fire-btn</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-cover-apu-pos">
+			<input>/controls/apu/fire-btn-cover</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-apu-pos">
+			<input>/controls/apu/fire-btn</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-cover-2-pos">
+			<input>/controls/engines/engine[1]/fire-btn-cover</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-2-pos">
+			<input>/controls/engines/engine[1]/fire-btn</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
