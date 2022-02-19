@@ -332,8 +332,8 @@
 		<object-name>Gen2Btn2O</object-name>
 		<object-name>IDG1Btn1F</object-name>
 		<object-name>IDG2Btn1F</object-name>
-		<object-name>SEC1Btn1F</object-name>
-		<object-name>SEC1Btn2O</object-name>
+		<object-name>SEC1Btn1F.001</object-name>
+		<object-name>SEC1Btn2O.001</object-name>
 		<object-name>VentBlowBtn1F</object-name>
 		<object-name>VentBlowBtn2O</object-name>
 		<object-name>VentExtractBtn1F</object-name>
@@ -14267,9 +14267,1091 @@
 	</animation>
 
 	
+	<!-- ADIRS -->
+
+	<!-- IRS 1 -->
+	<animation>
+		<type>knob</type>
+		<object-name>IR1ModeKnb</object-name>
+		<object-name>IR1ModeKnb.mark</object-name>
+		<property>controls/cockpit/ir-mode-1-pos</property>
+		<offset-deg>-35</offset-deg>
+		<factor>35</factor>
+		<axis>
+			<object-name>IR1ModeKnb.axis</object-name>
+		</axis>
+		<increase>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRS.Switches.irModeSw[0].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRS.Switches.irModeSw[0].getValue() + 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(0, 0);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</increase>
+		<decrease>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRS.Switches.irModeSw[0].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRS.Switches.irModeSw[0].getValue() - 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(0, 2);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</decrease>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ir1-lbl</tooltip-id>
+				<label>IR1</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>IR1Btn1F</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/ir-1-fault</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>IR1Btn2O</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/ir-1-off</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- IRS 2 -->
+	<animation>
+		<type>knob</type>
+		<object-name>IR2ModeKnb</object-name>
+		<object-name>IR2ModeKnb.mark</object-name>
+		<property>controls/cockpit/ir-mode-2-pos</property>
+		<offset-deg>-35</offset-deg>
+		<factor>35</factor>
+		<axis>
+			<object-name>IR2ModeKnb.axis</object-name>
+		</axis>
+		<increase>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRS.Switches.irModeSw[1].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRS.Switches.irModeSw[1].getValue() + 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(1, 0);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</increase>
+		<decrease>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRS.Switches.irModeSw[1].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRS.Switches.irModeSw[1].getValue() - 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(1, 2);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</decrease>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ir2-lbl</tooltip-id>
+				<label>IR2</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>IR2Btn1F</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/ir-2-fault</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>IR2Btn2O</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/ir-2-off</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- IRS 3 -->
+	<animation>
+		<type>knob</type>
+		<object-name>IR3ModeKnb</object-name>
+		<object-name>IR3ModeKnb.mark</object-name>
+		<property>controls/cockpit/ir-mode-3-pos</property>
+		<offset-deg>-35</offset-deg>
+		<factor>35</factor>
+		<axis>
+			<object-name>IR3ModeKnb.axis</object-name>
+		</axis>
+		<increase>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRS.Switches.irModeSw[2].getValue() != 2) {
+						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRS.Switches.irModeSw[2].getValue() + 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(2, 0);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</increase>
+		<decrease>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (systems.ADIRS.Switches.irModeSw[2].getValue() != 0) {
+						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRS.Switches.irModeSw[2].getValue() - 1);
+					} else {
+						systems.ADIRSControlPanel.irModeSw(2, 2);
+					}
+				</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/knb1", 1);</script>
+			</binding>
+		</decrease>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ir3-lbl</tooltip-id>
+				<label>IR3</label>
+			</binding>
+		</hovered>
+	</animation>
 	
+	<animation>
+		<type>select</type>
+		<object-name>IR3Btn1F</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/ir-3-fault</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>IR3Btn2O</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/ir-3-off</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- On Bat Light -->
+	<animation>
+		<type>select</type>
+		<object-name>IrsOnBatLightOB</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/on-bat</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- ADR 1 -->
+	<animation>
+		<type>pick</type>
+		<object-name>ADR1Btn</object-name>
+		<object-name>ADR1Btn1F</object-name>
+		<object-name>ADR1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>nasal</command>
+				<script>systems.ADIRSControlPanel.adrSw(0);</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/adr1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/adr1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>adr1-lbl</tooltip-id>
+				<label>ADR1 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
 	
+	<animation>
+		<type>translate</type>
+		<object-name>ADR1Btn</object-name>
+		<object-name>ADR1Btn1F</object-name>
+		<object-name>ADR1Btn2O</object-name>
+		<property>/controls/cockpit/adr1-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ADR1Btn1F</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/adr-1-fault</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 	
+	<animation>
+		<type>select</type>
+		<object-name>ADR1Btn2O</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/adr-1-off</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- ADR 2 -->
+	<animation>
+		<type>pick</type>
+		<object-name>ADR2Btn</object-name>
+		<object-name>ADR2Btn1F</object-name>
+		<object-name>ADR2Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>nasal</command>
+				<script>systems.ADIRSControlPanel.adrSw(1);</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/adr2-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/adr2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>adr2-lbl</tooltip-id>
+				<label>ADR2 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>ADR2Btn</object-name>
+		<object-name>ADR2Btn1F</object-name>
+		<object-name>ADR2Btn2O</object-name>
+		<property>/controls/cockpit/adr2-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ADR2Btn1F</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/adr-2-fault</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>ADR2Btn2O</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/adr-2-off</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- ADR 3 -->
+	<animation>
+		<type>pick</type>
+		<object-name>ADR3Btn</object-name>
+		<object-name>ADR3Btn1F</object-name>
+		<object-name>ADR3Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>nasal</command>
+				<script>systems.ADIRSControlPanel.adrSw(2);</script>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/adr3-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/adr3-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>adr3-lbl</tooltip-id>
+				<label>ADR3 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>ADR3Btn</object-name>
+		<object-name>ADR3Btn1F</object-name>
+		<object-name>ADR3Btn2O</object-name>
+		<property>/controls/cockpit/adr3-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ADR3Btn1F</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/adr-3-fault</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>ADR3Btn2O</object-name>
+		<condition>
+			<or>
+				<property>controls/navigation/adirscp/lights/adr-3-off</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- FCTL -->
+
+	<!-- ELAC 1 -->
+	<animation>
+		<type>pick</type>
+		<object-name>ELAC1Btn</object-name>
+		<object-name>ELAC1Btn1F</object-name>
+		<object-name>ELAC1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fctl/switches/elac1</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/elac1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/elac1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>elac1-lbl</tooltip-id>
+				<label>ELAC1 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>ELAC1Btn</object-name>
+		<object-name>ELAC1Btn1F</object-name>
+		<object-name>ELAC1Btn2O</object-name>
+		<property>/controls/cockpit/elac1-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ELAC1Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/fctl/lights/elac1-fault</property>
+					<property>controls/fctl/switches/elac1</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ELAC1Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fctl/switches/elac1</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- SEC 1 -->
+	<animation>
+		<type>pick</type>
+		<object-name>SEC1Btn</object-name>
+		<object-name>SEC1Btn1F.001</object-name>
+		<object-name>SEC1Btn2O.001</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fctl/switches/sec1</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/sec1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/sec1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>sec1-lbl</tooltip-id>
+				<label>SEC1 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>SEC1Btn</object-name>
+		<object-name>SEC1Btn1F.001</object-name>
+		<object-name>SEC1Btn2O.001</object-name>
+		<property>/controls/cockpit/sec1-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>SEC1Btn1F.001</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/fctl/lights/sec1-fault</property>
+					<property>controls/fctl/switches/sec1</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>SEC1Btn2O.001</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fctl/switches/sec1</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- FAC 1 -->
+	<animation>
+		<type>pick</type>
+		<object-name>FAC1Btn</object-name>
+		<object-name>FAC1Btn1F</object-name>
+		<object-name>FAC1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fctl/switches/fac1</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/fac1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/fac1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fac1-lbl</tooltip-id>
+				<label>FAC1 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>FAC1Btn</object-name>
+		<object-name>FAC1Btn1F</object-name>
+		<object-name>FAC1Btn2O</object-name>
+		<property>/controls/cockpit/fac1-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>FAC1Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/fctl/lights/fac1-fault</property>
+					<property>controls/fctl/switches/fac1</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>FAC1Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fctl/switches/fac1</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- ELAC 2 -->
+	<animation>
+		<type>pick</type>
+		<object-name>ELAC2Btn</object-name>
+		<object-name>ELAC2Btn1F</object-name>
+		<object-name>ELAC2Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fctl/switches/elac2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/elac2-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/elac2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>elac2-lbl</tooltip-id>
+				<label>ELAC2 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>ELAC2Btn</object-name>
+		<object-name>ELAC2Btn1F</object-name>
+		<object-name>ELAC2Btn2O</object-name>
+		<property>/controls/cockpit/elac2-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ELAC2Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/fctl/lights/elac2-fault</property>
+					<property>controls/fctl/switches/elac2</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ELAC2Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fctl/switches/elac2</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- SEC 2 -->
+	<animation>
+		<type>pick</type>
+		<object-name>SEC2Btn</object-name>
+		<object-name>SEC2Btn1F</object-name>
+		<object-name>SEC2Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fctl/switches/sec2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/sec2-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/sec2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>sec2-lbl</tooltip-id>
+				<label>SEC2 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>SEC2Btn</object-name>
+		<object-name>SEC2Btn1F</object-name>
+		<object-name>SEC2Btn2O</object-name>
+		<property>/controls/cockpit/sec2-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>SEC2Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/fctl/lights/sec2-fault</property>
+					<property>controls/fctl/switches/sec2</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>SEC2Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fctl/switches/sec2</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- SEC 3 -->
+	<animation>
+		<type>pick</type>
+		<object-name>SEC3Btn</object-name>
+		<object-name>SEC3Btn1F</object-name>
+		<object-name>SEC3Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fctl/switches/sec3</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/sec3-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/sec3-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>sec3-lbl</tooltip-id>
+				<label>SEC3 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>SEC3Btn</object-name>
+		<object-name>SEC3Btn1F</object-name>
+		<object-name>SEC3Btn2O</object-name>
+		<property>/controls/cockpit/sec3-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>SEC3Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/fctl/lights/sec3-fault</property>
+					<property>controls/fctl/switches/sec3</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>SEC3Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fctl/switches/sec3</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<!-- FAC 2 -->
+	<animation>
+		<type>pick</type>
+		<object-name>FAC2Btn</object-name>
+		<object-name>FAC2Btn1F</object-name>
+		<object-name>FAC2Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fctl/switches/fac2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/fac2-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/fac2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fac2-lbl</tooltip-id>
+				<label>FAC2 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>FAC2Btn</object-name>
+		<object-name>FAC2Btn1F</object-name>
+		<object-name>FAC2Btn2O</object-name>
+		<property>/controls/cockpit/fac2-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>FAC2Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/fctl/lights/fac2-fault</property>
+					<property>controls/fctl/switches/fac2</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>FAC2Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fctl/switches/fac2</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 	
 	
 	

@@ -14,15 +14,8 @@
 		<type>select</type>
 		<object-name>VentBlowBtn1F</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>controls/ventilation/blowFail</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/ventilation/blowFail</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -33,14 +26,8 @@
 		<object-name>FwdCargoSmkBtn1S</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>systems/fire/cargo/fwd/warning-active</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/fire/cargo/fwd/warning-active</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -50,14 +37,8 @@
 		<object-name>AftCargoSmkBtn1S</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>systems/fire/cargo/aft/warning-active</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/fire/cargo/aft/warning-active</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -67,18 +48,9 @@
 		<object-name>FwdCargoSmkBtn2D</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>systems/fire/cargo/disch</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>systems/fire/cargo/disch-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/fire/cargo/disch</property>
+				<property>systems/fire/cargo/disch-test</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -88,18 +60,9 @@
 		<object-name>AftCargoSmkBtn2D</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>systems/fire/cargo/disch</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>systems/fire/cargo/disch-test</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>systems/fire/cargo/disch</property>
+				<property>systems/fire/cargo/disch-test</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -312,967 +275,6 @@
 		</axis>
 	</animation>
 
-	<!-- IRS 1 -->
-	<animation>
-		<type>pick</type>
-		<object-name>IR1ModeKnb</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>
-					if (systems.ADIRS.Switches.irModeSw[0].getValue() != 2) {
-						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRS.Switches.irModeSw[0].getValue() + 1);
-					} else {
-						systems.ADIRSControlPanel.irModeSw(0, 0);
-					}
-				</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>
-					if (systems.ADIRS.Switches.irModeSw[0].getValue() != 0) {
-						systems.ADIRSControlPanel.irModeSw(0, systems.ADIRS.Switches.irModeSw[0].getValue() - 1);
-					} else {
-						systems.ADIRSControlPanel.irModeSw(0, 2);
-					}
-				</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>IR1ModeKnb</object-name>
-		<property>controls/navigation/adirscp/switches/ir-1-mode</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-35</dep></entry>
-			<entry><ind>1</ind><dep>0</dep></entry>
-			<entry><ind>2</ind><dep>35</dep></entry>
-		</interpolation>
-		<axis>
-			<x1-m>0.01578</x1-m>
-			<y1-m>-0.29391</y1-m>
-			<z1-m>0.17819</z1-m>
-			<x2-m>0.00637</x2-m>
-			<y2-m>-0.29509</y2-m>
-			<z2-m>0.17819</z2-m>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>IR1Btn1F</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/ir-1-fault</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-	<animation>
-		<type>select</type>
-		<object-name>IR1Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/ir-1-off</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- IRS 2 -->
-	<animation>
-		<type>pick</type>
-		<object-name>IR2ModeKnb</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>
-					if (systems.ADIRS.Switches.irModeSw[1].getValue() != 2) {
-						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRS.Switches.irModeSw[1].getValue() + 1);
-					} else {
-						systems.ADIRSControlPanel.irModeSw(1, 0);
-					}
-				</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>
-					if (systems.ADIRS.Switches.irModeSw[1].getValue() != 0) {
-						systems.ADIRSControlPanel.irModeSw(1, systems.ADIRS.Switches.irModeSw[1].getValue() - 1);
-					} else {
-						systems.ADIRSControlPanel.irModeSw(1, 2);
-					}
-				</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>IR2ModeKnb</object-name>
-		<property>controls/navigation/adirscp/switches/ir-2-mode</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-35</dep></entry>
-			<entry><ind>1</ind><dep>0</dep></entry>
-			<entry><ind>2</ind><dep>35</dep></entry>
-		</interpolation>
-		<axis>
-			<x1-m>0.00444</x1-m>
-			<y1-m>-0.20312</y1-m>
-			<z1-m>0.17819</z1-m>
-			<x2-m>-0.00498</x2-m>
-			<y2-m>-0.20429</y2-m>
-			<z2-m>0.17819</z2-m>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>IR2Btn1F</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/ir-2-fault</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-	<animation>
-		<type>select</type>
-		<object-name>IR2Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/ir-2-off</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- IRS 3 -->
-	<animation>
-		<type>pick</type>
-		<object-name>IR3ModeKnb</object-name>
-		<action>
-			<button>0</button>
-			<button>3</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>
-					if (systems.ADIRS.Switches.irModeSw[2].getValue() != 2) {
-						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRS.Switches.irModeSw[2].getValue() + 1);
-					} else {
-						systems.ADIRSControlPanel.irModeSw(2, 0);
-					}
-				</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
-			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<button>4</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<command>nasal</command>
-				<script>
-					if (systems.ADIRS.Switches.irModeSw[2].getValue() != 0) {
-						systems.ADIRSControlPanel.irModeSw(2, systems.ADIRS.Switches.irModeSw[2].getValue() - 1);
-					} else {
-						systems.ADIRSControlPanel.irModeSw(2, 2);
-					}
-				</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>IR3ModeKnb</object-name>
-		<property>controls/navigation/adirscp/switches/ir-3-mode</property>
-		<interpolation>
-			<entry><ind>0</ind><dep>-35</dep></entry>
-			<entry><ind>1</ind><dep>0</dep></entry>
-			<entry><ind>2</ind><dep>35</dep></entry>
-		</interpolation>
-		<axis>
-			<x1-m>0.01021</x1-m>
-			<y1-m>-0.24926</y1-m>
-			<z1-m>0.17819</z1-m>
-			<x2-m>0.00082</x2-m>
-			<y2-m>-0.25062</y2-m>
-			<z2-m>0.17819</z2-m>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>IR3Btn1F</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/ir-3-fault</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-	<animation>
-		<type>select</type>
-		<object-name>IR3Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/ir-3-off</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- On Bat Light -->
-	<animation>
-		<type>select</type>
-		<object-name>IrsOnBatLightOB</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/on-bat</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- ADR 1 -->
-
-	<animation>
-		<type>pick</type>
-		<object-name>ADR1Btn1</object-name>
-		<object-name>ADR1Btn2</object-name>
-		<object-name>ADR1Btn1F</object-name>
-		<object-name>ADR1Btn2O</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>nasal</command>
-				<script>systems.ADIRSControlPanel.adrSw(0);</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>ADR1Btn1F</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/adr-1-fault</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>select</type>
-		<object-name>ADR1Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/adr-1-off</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- ADR 2 -->
-
-	<animation>
-		<type>pick</type>
-		<object-name>ADR2Btn1</object-name>
-		<object-name>ADR2Btn2</object-name>
-		<object-name>ADR2Btn1F</object-name>
-		<object-name>ADR2Btn2O</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>nasal</command>
-				<script>systems.ADIRSControlPanel.adrSw(1);</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>ADR2Btn1F</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/adr-2-fault</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>select</type>
-		<object-name>ADR2Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/adr-2-off</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- ADR 3 -->
-
-	<animation>
-		<type>pick</type>
-		<object-name>ADR3Btn1</object-name>
-		<object-name>ADR3Btn2</object-name>
-		<object-name>ADR3Btn1F</object-name>
-		<object-name>ADR3Btn2O</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>nasal</command>
-				<script>systems.ADIRSControlPanel.adrSw(2);</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>ADR3Btn1F</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/adr-3-fault</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>select</type>
-		<object-name>ADR3Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/navigation/adirscp/lights/adr-3-off</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- ELAC 1 -->
-	<animation>
-		<type>pick</type>
-		<object-name>ELAC1Btn1</object-name>
-		<object-name>ELAC1Btn2</object-name>
-		<object-name>ELAC1Btn1F</object-name>
-		<object-name>ELAC1Btn2O</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>controls/fctl/switches/elac1</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>ELAC1Btn1F</object-name>
-		<condition>
-			<or>
-				<and>
-					<equals>
-						<property>systems/fctl/lights/elac1-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/fctl/switches/elac1</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>ELAC1Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/fctl/switches/elac1</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- SEC 1 -->
-	<animation>
-		<type>pick</type>
-		<object-name>SEC1Btn1</object-name>
-		<object-name>SEC1Btn2</object-name>
-		<object-name>SEC1Btn1F</object-name>
-		<object-name>SEC1Btn2O</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>controls/fctl/switches/sec1</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>SEC1Btn1F</object-name>
-		<condition>
-			<or>
-				<and>
-					<equals>
-						<property>systems/fctl/lights/sec1-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/fctl/switches/sec1</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>SEC1Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/fctl/switches/sec1</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- FAC 1 -->
-	<animation>
-		<type>pick</type>
-		<object-name>FAC1Btn1</object-name>
-		<object-name>FAC1Btn2</object-name>
-		<object-name>FAC1Btn1F</object-name>
-		<object-name>FAC1Btn2O</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>controls/fctl/switches/fac1</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>FAC1Btn1F</object-name>
-		<condition>
-			<or>
-				<and>
-					<equals>
-						<property>systems/fctl/lights/fac1-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/fctl/switches/fac1</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>FAC1Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/fctl/switches/fac1</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- ELAC 2 -->
-	<animation>
-		<type>pick</type>
-		<object-name>ELAC2Btn1</object-name>
-		<object-name>ELAC2Btn2</object-name>
-		<object-name>ELAC2Btn1F</object-name>
-		<object-name>ELAC2Btn2O</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>controls/fctl/switches/elac2</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>ELAC2Btn1F</object-name>
-		<condition>
-			<or>
-				<and>
-					<equals>
-						<property>systems/fctl/lights/elac2-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/fctl/switches/elac2</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>ELAC2Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/fctl/switches/elac2</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- SEC 2 -->
-	<animation>
-		<type>pick</type>
-		<object-name>SEC2Btn1</object-name>
-		<object-name>SEC2Btn2</object-name>
-		<object-name>SEC2Btn1F</object-name>
-		<object-name>SEC2Btn2O</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>controls/fctl/switches/sec2</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>SEC2Btn1F</object-name>
-		<condition>
-			<or>
-				<and>
-					<equals>
-						<property>systems/fctl/lights/sec2-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/fctl/switches/sec2</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>SEC2Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/fctl/switches/sec2</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- SEC 3 -->
-	<animation>
-		<type>pick</type>
-		<object-name>SEC3Btn1</object-name>
-		<object-name>SEC3Btn2</object-name>
-		<object-name>SEC3Btn1F</object-name>
-		<object-name>SEC3Btn2O</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>controls/fctl/switches/sec3</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>SEC3Btn1F</object-name>
-		<condition>
-			<or>
-				<and>
-					<equals>
-						<property>systems/fctl/lights/sec3-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/fctl/switches/sec3</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>SEC3Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/fctl/switches/sec3</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- FAC 2 -->
-	<animation>
-		<type>pick</type>
-		<object-name>FAC2Btn1</object-name>
-		<object-name>FAC2Btn2</object-name>
-		<object-name>FAC2Btn1F</object-name>
-		<object-name>FAC2Btn2O</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>controls/fctl/switches/fac2</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>FAC2Btn1F</object-name>
-		<condition>
-			<or>
-				<and>
-					<equals>
-						<property>systems/fctl/lights/fac2-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/fctl/switches/fac2</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>FAC2Btn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/fctl/switches/fac2</property>
-					<value>0</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-
 	<!-- GPWS -->
 	<animation>
 		<name>GPWS terrain system pick</name>
@@ -1351,10 +353,7 @@
 						<value>0</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -1368,10 +367,7 @@
 					<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -1418,10 +414,7 @@
 						<value>0</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -1435,10 +428,7 @@
 					<property>instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -1478,10 +468,7 @@
 					<property>instrumentation/mk-viii/inputs/discretes/glideslope-inhibit</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -1521,10 +508,7 @@
 					<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -1564,10 +548,7 @@
 					<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -1934,10 +915,7 @@
 					<property>systems/fuel/valves/crossfeed-valve</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -1950,10 +928,7 @@
 					<property>controls/fuel/switches/crossfeed</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -1999,10 +974,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2015,10 +987,7 @@
 					<property>controls/fuel/switches/pump-left-1</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2064,10 +1033,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2080,10 +1046,7 @@
 					<property>controls/fuel/switches/pump-left-2</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2129,10 +1092,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2145,10 +1105,7 @@
 					<property>controls/fuel/switches/pump-center-1</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2193,10 +1150,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2209,10 +1163,7 @@
 					<property>controls/fuel/switches/center-mode</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2258,10 +1209,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2274,10 +1222,7 @@
 					<property>controls/fuel/switches/pump-center-2</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2323,10 +1268,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2339,10 +1281,7 @@
 					<property>controls/fuel/switches/pump-right-1</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2388,10 +1327,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2404,10 +1340,7 @@
 					<property>controls/fuel/switches/pump-right-2</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2454,10 +1387,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2471,10 +1401,7 @@
 					<property>controls/electrical/switches/galley</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2515,10 +1442,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2532,10 +1456,7 @@
 					<property>controls/electrical/switches/bat-1</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2576,10 +1497,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2593,10 +1511,7 @@
 					<property>controls/electrical/switches/bat-2</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2707,10 +1622,7 @@
 					<property>systems/electrical/light/idg-1-fault</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2768,10 +1680,7 @@
 					<property>controls/electrical/switches/gen-1</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2817,10 +1726,7 @@
 					<property>systems/electrical/light/ac-ess-feed-fault</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2834,10 +1740,7 @@
 					<property>controls/electrical/switches/ac-ess-feed</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2881,10 +1784,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2898,10 +1798,7 @@
 					<property>controls/electrical/switches/apu</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2946,10 +1843,7 @@
 					<property>controls/electrical/switches/bus-tie</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -2990,10 +1884,7 @@
 					<property>controls/electrical/switches/ground-cart</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3073,10 +1964,7 @@
 					<property>controls/electrical/switches/gen-2</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3187,10 +2075,7 @@
 					<property>systems/electrical/light/idg-2-fault</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3762,10 +2647,7 @@
 		<condition>
 			<or>
 				<property>/systems/air-conditioning/warnings/pack-1-fault-light</property>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3779,10 +2661,7 @@
 					<property>controls/pneumatics/switches/pack-1</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3835,10 +2714,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3852,10 +2728,7 @@
 					<property>controls/pneumatics/switches/bleed-1</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3908,10 +2781,7 @@
 						<value>1</value>
 					</equals>
 				</and> leak not simulated yet -->
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3925,10 +2795,7 @@
 					<property>controls/pneumatics/switches/apu</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3981,10 +2848,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -3998,10 +2862,7 @@
 					<property>controls/pneumatics/switches/bleed-2</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -4047,10 +2908,7 @@
 						<value>1</value>
 					</equals>
 				</and>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -4064,10 +2922,7 @@
 					<property>controls/pneumatics/switches/hot-air</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -4111,10 +2966,7 @@
 		<condition>
 			<or>
 				<property>/systems/air-conditioning/warnings/pack-2-fault-light</property>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -4128,10 +2980,7 @@
 					<property>controls/pneumatics/switches/pack-2</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -4229,10 +3078,7 @@
 					<property>controls/pneumatics/switches/ram-air</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -4274,10 +3120,7 @@
 					<property>controls/pneumatics/switches/cabin-fans</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -4383,10 +3226,7 @@
 					<property>controls/engines/engine[0]/man-start</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -4488,10 +3328,7 @@
 					<property>controls/engines/engine[1]/man-start</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -4733,10 +3570,7 @@
 					<property>controls/fire/test-btn-1</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -4754,10 +3588,7 @@
 					<property>controls/fire/test-btn-1</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -5010,10 +3841,7 @@
 					<property>controls/fire/apu-test-btn</property>
 					<value>true</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -5031,10 +3859,7 @@
 					<property>controls/fire/apu-test-btn</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -5269,10 +4094,7 @@
 					<property>controls/fire/test-btn-2</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -5290,10 +4112,7 @@
 					<property>controls/fire/test-btn-2</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -5396,10 +4215,7 @@
 					<property>/systems/oxygen/passenger-oxygen/sys-on-light</property>
 					<value>1</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
@@ -5437,10 +4253,7 @@
 					<property>controls/oxygen/cockpit-oxygen-supply-pb</property>
 					<value>0</value>
 				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>

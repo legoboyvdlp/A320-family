@@ -339,6 +339,21 @@
 			<input>/controls/OH/protectors/ditching</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/ir-mode-1-pos">
+			<input>/controls/navigation/adirscp/switches/ir-1-mode</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/ir-mode-2-pos">
+			<input>/controls/navigation/adirscp/switches/ir-2-mode</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/ir-mode-3-pos">
+			<input>/controls/navigation/adirscp/switches/ir-3-mode</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
