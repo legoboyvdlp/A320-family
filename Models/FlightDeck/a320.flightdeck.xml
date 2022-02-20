@@ -14759,6 +14759,7 @@
 	<animation>
 		<type>pick</type>
 		<object-name>eng1.firebtnbase</object-name>
+		<object-name>firebtn1</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -14820,6 +14821,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>eng1.firebtnbase</object-name>
+		<object-name>firebtn1</object-name>
 		<property>controls/cockpit/fire-btn-1-pos</property>
 		<factor>-0.0175</factor>
 		<axis>
@@ -14834,7 +14836,7 @@
 
 	<animation>
 		<type>material</type>
-		<object-name>eng1.firebtnbase</object-name>
+		<object-name>firebtn1</object-name>
 		<condition>
 			<and>
 				<or>
@@ -14870,6 +14872,7 @@
 	<animation>
 		<type>pick</type>
 		<object-name>apu.firebtnbase</object-name>
+		<object-name>firebtnapu</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -14931,6 +14934,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>apu.firebtnbase</object-name>
+		<object-name>firebtnapu</object-name>
 		<property>controls/cockpit/fire-btn-apu-pos</property>
 		<factor>-0.0175</factor>
 		<axis>
@@ -14945,7 +14949,7 @@
 
 	<animation>
 		<type>material</type>
-		<object-name>apu.firebtnbase</object-name>
+		<object-name>firebtnapu</object-name>
 		<condition>
 			<and>
 				<or>
@@ -14981,6 +14985,7 @@
 	<animation>
 		<type>pick</type>
 		<object-name>eng2.firebtnbase</object-name>
+		<object-name>firebtn2</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -15042,6 +15047,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>eng2.firebtnbase</object-name>
+		<object-name>firebtn2</object-name>
 		<property>controls/cockpit/fire-btn-2-pos</property>
 		<factor>-0.0175</factor>
 		<axis>
@@ -15056,7 +15062,7 @@
 
 	<animation>
 		<type>material</type>
-		<object-name>eng2.firebtnbase</object-name>
+		<object-name>firebtn2</object-name>
 		<condition>
 			<and>
 				<or>
@@ -16820,6 +16826,9 @@
 		<object-name>apu.firebtnbase</object-name>
 		<object-name>eng1.firebtnbase</object-name>
 		<object-name>eng2.firebtnbase</object-name>
+		<object-name>firebtnapu</object-name>
+		<object-name>firebtn1</object-name>
+		<object-name>firebtn2</object-name>
 		<object-name>RATManGuard</object-name>
 		<object-name>Eng1FireTst</object-name>
 		<object-name>Eng2FireTst</object-name>
@@ -17184,6 +17193,9 @@
 		<object-name>apu.firebtnbase</object-name>
 		<object-name>eng1.firebtnbase</object-name>
 		<object-name>eng2.firebtnbase</object-name>
+		<object-name>firebtnapu</object-name>
+		<object-name>firebtn1</object-name>
+		<object-name>firebtn2</object-name>
 		<object-name>RATManGuard</object-name>
 		<object-name>Eng1FireTst</object-name>
 		<object-name>Eng2FireTst</object-name>
