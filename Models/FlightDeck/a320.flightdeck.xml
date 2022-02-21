@@ -11151,6 +11151,8 @@
 	<animation>
 		<type>knob</type>
 		<object-name>thr_l_body</object-name>
+		<object-name>thr_l_button</object-name>
+		<object-name>rev_l</object-name>
 		<property>fdm/jsbsim/fadec/throttle-lever[0]</property>
 		<factor>45</factor>
 		<axis>
@@ -11263,6 +11265,8 @@
 	<animation>
 		<type>knob</type>
 		<object-name>thr_r_body</object-name>
+		<object-name>thr_r_button</object-name>
+		<object-name>rev_r</object-name>
 		<property>fdm/jsbsim/fadec/throttle-lever[1]</property>
 		<factor>45</factor>
 		<axis>
