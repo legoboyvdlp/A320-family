@@ -384,6 +384,16 @@
 			<input>/controls/engines/engine[1]/fire-btn</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/engines/engine[0]/reverse-cmd-pos">
+			<input>/controls/engines/engine[0]/reverse-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/engines/engine[1]/reverse-cmd-pos">
+			<input>/controls/engines/engine[1]/reverse-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 

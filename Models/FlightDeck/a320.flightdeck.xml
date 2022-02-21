@@ -11151,8 +11151,6 @@
 	<animation>
 		<type>knob</type>
 		<object-name>thr_l_body</object-name>
-		<object-name>thr_l_button</object-name>
-		<object-name>rev_l</object-name>
 		<property>fdm/jsbsim/fadec/throttle-lever[0]</property>
 		<factor>45</factor>
 		<axis>
@@ -11176,6 +11174,16 @@
 				<label>Engine 1 throttle</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>thr_l_button</object-name>
+		<property>fdm/jsbsim/fadec/throttle-lever[0]</property>
+		<factor>45</factor>
+		<axis>
+			<object-name>trim.axis</object-name>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -11265,8 +11273,6 @@
 	<animation>
 		<type>knob</type>
 		<object-name>thr_r_body</object-name>
-		<object-name>thr_r_button</object-name>
-		<object-name>rev_r</object-name>
 		<property>fdm/jsbsim/fadec/throttle-lever[1]</property>
 		<factor>45</factor>
 		<axis>
@@ -11292,10 +11298,22 @@
 		</hovered>
 	</animation>
 	
+	<animation>
+		<type>rotate</type>
+		<object-name>thr_r_button</object-name>
+		<property>fdm/jsbsim/fadec/throttle-lever[1]</property>
+		<factor>45</factor>
+		<axis>
+			<object-name>trim.axis</object-name>
+		</axis>
+	</animation>
+	
 	<!-- Reverse region -->
 	<animation>
 		<type>rotate</type>
 		<object-name>thr_l_body</object-name>
+		<object-name>thr_l_button</object-name>
+		<object-name>rev_l</object-name>
 		<property>fdm/jsbsim/fadec/reverse-lever[0]</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
@@ -11310,6 +11328,8 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>thr_r_body</object-name>
+		<object-name>thr_r_button</object-name>
+		<object-name>rev_r</object-name>
 		<property>fdm/jsbsim/fadec/reverse-lever[1]</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
@@ -11325,7 +11345,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>rev_l</object-name>
-		<property>controls/engines/engine[0]/reverser</property>
+		<property>controls/engines/engine[0]/reverse-cmd-pos</property>
 		<factor>60</factor>
 		<axis>
 			<object-name>rev_l.axis</object-name>
@@ -11335,11 +11355,40 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>rev_r</object-name>
-		<property>controls/engines/engine[1]/reverser</property>
+		<property>controls/engines/engine[1]/reverse-cmd-pos</property>
 		<factor>60</factor>
 		<axis>
 			<object-name>rev_r.axis</object-name>
 		</axis>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>rev_l</object-name>
+		<object-name>rev_r</object-name>
+		<action>
+			<repeatable>false</repeatable>
+			<button>0</button>
+			<binding>
+				<command>nasal</command>
+				<script>systems.doRevThrust();</script>
+			</binding>
+		</action>
+		<action>
+			<repeatable>false</repeatable>
+			<button>1</button>
+			<binding>
+				<command>nasal</command>
+				<script>systems.unRevThrust();</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>rev-thrust-lbl</tooltip-id>
+				<label>Left click to apply reverse throttle, mmb to cancel</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<!-- Engine Panel -->
@@ -11559,6 +11608,99 @@
 				<label>Pedestal flood light control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<!-- Pushbuttons -->
+	<animation>
+		<type>pick</type>
+		<object-name>vu112_aids</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/vu112_aids-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/vu112_aids-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>vu112_aids-lbl</tooltip-id>
+				<label>AIDS Print (INOP)</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>vu112_aids</object-name>
+		<property>/controls/cockpit/vu112_aids-translate</property>
+		<axis>
+			<x1-m>-0.052391</x1-m>
+			<y1-m>0.222278</y1-m>
+			<z1-m>-0.127904</z1-m>
+			<x2-m>-0.052646</x2-m>
+			<y2-m>0.22228</y2-m>
+			<z2-m>-0.129444</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>vu112_dfdr</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/vu112_dfdr-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/vu112_dfdr-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>vu112_dfdr-lbl</tooltip-id>
+				<label>DFDR mark event (INOP)</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>vu112_dfdr</object-name>
+		<property>/controls/cockpit/vu112_dfdr-translate</property>
+		<axis>
+			<x1-m>-0.052391</x1-m>
+			<y1-m>0.222278</y1-m>
+			<z1-m>-0.127904</z1-m>
+			<x2-m>-0.052646</x2-m>
+			<y2-m>0.22228</y2-m>
+			<z2-m>-0.129444</z2-m>
+		</axis>
 	</animation>
 	
 	<!-- WX Radar -->
@@ -12400,6 +12542,10 @@
 				<value>0</value>
 			</binding>
 			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+			<binding>
 				<command>property-assign</command>
 				<property>/controls/cockpit/rudder-trim-reset-translate</property>
 				<value>0.0015</value>
@@ -12544,6 +12690,47 @@
 				</equals>
 			</or>
 		</condition>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>CockpitDoorVideoButton</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/cockpit-video-translate</property>
+				<value>0.0015</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/cockpit-video-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>cockpit_door-lbl</tooltip-id>
+				<label>Cockpit door video (INOP)</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>CockpitDoorVideoButton</object-name>
+		<property>/controls/cockpit/cockpit-video-translate</property>
+		<axis>
+			<z>-1</z>
+		</axis>
 	</animation>
 	
 	<!-- Spoiler Lever -->
