@@ -22,7 +22,7 @@
 	<!-- Multi-purpose Control and Display Units -->
 	<model>
 		<name>MCDU1</name>
-		<path>Aircraft/A320-family/Models/Instruments/MCDU/MCDU1.xml</path>
+		<path>Aircraft/A320-family/Models/Instruments/MCDU/MCDU1bad.xml</path>
 	</model>
 
 	<model>
@@ -11150,7 +11150,7 @@
 	<!-- Throttles -->
 	<animation>
 		<type>knob</type>
-		<object-name>thr_l</object-name>
+		<object-name>thr_l_body</object-name>
 		<property>fdm/jsbsim/fadec/throttle-lever[0]</property>
 		<factor>45</factor>
 		<axis>
@@ -11220,7 +11220,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>thr_button</object-name>
+		<object-name>thr_r_button</object-name>
 		<action>
 			<button>0</button>
 			<binding>
@@ -11253,7 +11253,7 @@
 	
 	<animation>
 		<type>translate</type>
-		<object-name>thr_button</object-name>
+		<object-name>thr_r_button</object-name>
 		<property>/controls/cockpit/athr-disco-right-btn-translate</property>
 		<axis>
 			<y>1</y>
@@ -11262,7 +11262,7 @@
 	
 	<animation>
 		<type>knob</type>
-		<object-name>thr_r</object-name>
+		<object-name>thr_r_body</object-name>
 		<property>fdm/jsbsim/fadec/throttle-lever[1]</property>
 		<factor>45</factor>
 		<axis>
@@ -11291,7 +11291,7 @@
 	<!-- Reverse region -->
 	<animation>
 		<type>rotate</type>
-		<object-name>thr_l</object-name>
+		<object-name>thr_l_body</object-name>
 		<property>fdm/jsbsim/fadec/reverse-lever[0]</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
@@ -11305,7 +11305,7 @@
 	
 	<animation>
 		<type>rotate</type>
-		<object-name>thr_r</object-name>
+		<object-name>thr_r_body</object-name>
 		<property>fdm/jsbsim/fadec/reverse-lever[1]</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
@@ -17124,15 +17124,13 @@
 		<object-name>sts.004</object-name>
 		<object-name>sts.006</object-name>
 		<object-name>sts.007</object-name>
-		<object-name>thr_l</object-name>
 		<object-name>rev_l</object-name>
 		<object-name>thr_l_body</object-name>
 		<object-name>thr_l_button</object-name>
 		<object-name>thr_l_screw</object-name>
 		<object-name>thr_quad</object-name>
-		<object-name>thr_r</object-name>
 		<object-name>rev_r</object-name>
-		<object-name>thr_button</object-name>
+		<object-name>thr_r_button</object-name>
 		<object-name>thr_r_body</object-name>
 		<object-name>thr_r_screw</object-name>
 		<object-name>tiller</object-name>
