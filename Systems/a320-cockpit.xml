@@ -394,6 +394,16 @@
 			<input>/controls/engines/engine[1]/reverse-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/aftdisch-pos">
+			<input>/controls/OH/protectors/aftdisch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/fwddisch-pos">
+			<input>/controls/OH/protectors/fwddisch</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 

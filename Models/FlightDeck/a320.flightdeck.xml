@@ -14460,7 +14460,6 @@
 			</or>
 		</condition>
 	</animation>
-
 	
 	<!-- ADIRS -->
 
@@ -16522,7 +16521,302 @@
 			</or>
 		</condition>
 	</animation>
+
+	<!-- Cargo Smoke -->
+	<animation>
+		<type>knob</type>
+		<object-name>FwdCargoDischGuard</object-name>
+		<property>controls/OH/protectors/fwddisch-pos</property>
+		<factor>145</factor>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>FwdCargoDischGuard.axis</object-name>
+		</axis>
+		<action>
+			<repeatable>true</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/OH/protectors/fwddisch</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fwdguard-lbl</tooltip-id>
+				<label>FWD cargo guard</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>FwdCargoDischBtn</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/fire/cargo/fwddisch</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/fwd-cargo-disch-btn-translate</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/fwd-cargo-disch-btn-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fwddisch-lbl</tooltip-id>
+				<label>FWD cargo hold - discharge agent</label>
+			</binding>
+		</hovered>
+	</animation>
 	
+	<animation>
+		<type>translate</type>
+		<object-name>FwdCargoDischBtn</object-name>
+		<property>/controls/cockpit/fwd-cargo-disch-btn-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<name>Cargo Smoke Test</name>
+		<type>pick</type>
+		<object-name>CargoSmkTest</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/fire/cargo/test</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding><binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/cargo-fire-test-translate</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/cargo-fire-test-translate</property>
+					<value>0.0</value>
+				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/fire/cargo/test</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fwddisch-lbl</tooltip-id>
+				<label>Hold for cargo fire test</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>CargoSmkTest</object-name>
+		<property>/controls/cockpit/cargo-fire-test-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>AftCargoDischBtn</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/fire/cargo/aftdisch</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/aft-cargo-disch-btn-translate</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/aft-cargo-disch-btn-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>aftguard-lbl</tooltip-id>
+				<label>AFT cargo guard</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>AftCargoDischBtn</object-name>
+		<property>/controls/cockpit/aft-cargo-disch-btn-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>AftCargoDischGuard</object-name>
+		<property>controls/OH/protectors/aftdisch-pos</property>
+		<factor>145</factor>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>AftCargoDischGuard.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/OH/protectors/aftdisch</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>aftdisch-lbl</tooltip-id>
+				<label>AFT cargo hold - discharge agent</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FwdCargoSmkBtn1S</object-name>
+		<condition>
+			<or>
+				<property>systems/fire/cargo/fwd/warning-active</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>AftCargoSmkBtn1S</object-name>
+		<condition>
+			<or>
+				<property>systems/fire/cargo/aft/warning-active</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>FwdCargoSmkBtn2D</object-name>
+		<condition>
+			<or>
+				<property>systems/fire/cargo/disch</property>
+				<property>systems/fire/cargo/disch-test</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>AftCargoSmkBtn2D</object-name>
+		<condition>
+			<or>
+				<property>systems/fire/cargo/disch</property>
+				<property>systems/fire/cargo/disch-test</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- Ventilation -->
+	<animation>
+		<type>select</type>
+		<object-name>VentBlowBtn1F</object-name>
+		<condition>
+			<or>
+				<property>controls/ventilation/blowFail</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 	
 	
 

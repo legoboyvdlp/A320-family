@@ -1131,12 +1131,14 @@
 		</navigation>
 		<OH>
 			<protectors>
+				<aftdisch type="int">0</aftdisch>
 				<ditching type="int">0</ditching>
 				<elecratman type="int">0</elecratman>
 				<eng1-manstart type="int">0</eng1-manstart>
 				<eng2-manstart type="int">0</eng2-manstart>
 				<eng1-n1 type="int">0</eng1-n1>
 				<eng2-n1 type="int">0</eng2-n1>
+				<fwddisch type="int">0</fwddisch>
 				<idg1 type="int">0</idg1>
 				<idg2 type="int">0</idg2>
 				<maskman type="int">0</maskman>

@@ -9,278 +9,10 @@
 	<!-- ANIMATIONS -->
 
 
-	<!-- Ventilation -->
-	<animation>
-		<type>select</type>
-		<object-name>VentBlowBtn1F</object-name>
-		<condition>
-				<property>controls/ventilation/blowFail</property>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
-	</animation>
-
-	<!-- Cargo Smoke -->
-	<animation>
-		<type>select</type>
-		<object-name>FwdCargoSmkBtn1S</object-name>
-		<condition>
-			<or>
-				<property>systems/fire/cargo/fwd/warning-active</property>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>AftCargoSmkBtn1S</object-name>
-		<condition>
-			<or>
-				<property>systems/fire/cargo/aft/warning-active</property>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>FwdCargoSmkBtn2D</object-name>
-		<condition>
-			<or>
-				<property>systems/fire/cargo/disch</property>
-				<property>systems/fire/cargo/disch-test</property>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>AftCargoSmkBtn2D</object-name>
-		<condition>
-			<or>
-				<property>systems/fire/cargo/disch</property>
-				<property>systems/fire/cargo/disch-test</property>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<name>Cargo Smoke Test</name>
-		<type>pick</type>
-		<object-name>CargoSmkTest</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-assign</command>
-				<property>controls/fire/cargo/test</property>
-				<value>1</value>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-			<mod-up>
-				<binding>
-					<condition>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</condition>
-					<command>property-assign</command>
-					<property>controls/fire/cargo/test</property>
-					<value>0</value>
-				</binding>
-			</mod-up>
-		</action>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>FwdCargoDischBtn</object-name>
-		<action>
-			<button>0</button>
-			<binding>
-				<condition>
-					<and>
-						<equals>
-							<property>controls/OH/protectors/fwddisch</property>
-							<value>1</value>
-						</equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</and>
-				</condition>
-				<command>property-assign</command>
-				<property>controls/fire/cargo/fwddisch</property>
-				<value>1</value>
-			</binding>
-			<binding>
-				<condition>
-					<and>
-						<equals>
-							<property>controls/OH/protectors/fwddisch</property>
-							<value>1</value>
-						</equals>
-					</and>
-				</condition>
-				<command>property-assign</command>
-				<property>controls/OH/protectors/fwddisch</property>
-				<value>0</value>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>controls/OH/protectors/aftdisch</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>AftCargoDischBtn</object-name>
-		<action>
-			<button>0</button>
-			<binding>
-				<condition>
-					<and>
-						<equals>
-							<property>controls/OH/protectors/aftdisch</property>
-							<value>1</value>
-						</equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc-ess</property>
-							<value>25</value>
-						</greater-than-equals>
-					</and>
-				</condition>
-				<command>property-assign</command>
-				<property>controls/fire/cargo/aftdisch</property>
-				<value>1</value>
-			</binding>
-			<binding>
-				<condition>
-					<and>
-						<equals>
-							<property>controls/OH/protectors/aftdisch</property>
-							<value>1</value>
-						</equals>
-					</and>
-				</condition>
-				<command>property-assign</command>
-				<property>controls/OH/protectors/aftdisch</property>
-				<value>0</value>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>controls/OH/protectors/aftdisch</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>FwdCargoDischGuard</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-toggle</command>
-				<property>controls/OH/protectors/fwddisch</property>
-			</binding>
-			<binding>
-				<condition>
-					<not>
-						<property>controls/OH/protectors/fwddisch</property>
-					</not>
-				</condition>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-cover", 1);</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>pick</type>
-		<object-name>AftCargoDischGuard</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>true</repeatable>
-			<binding>
-				<command>property-toggle</command>
-				<property>controls/OH/protectors/aftdisch</property>
-			</binding>
-			<binding>
-				<condition>
-					<not>
-						<property>controls/OH/protectors/aftdisch</property>
-					</not>
-				</condition>
-				<command>nasal</command>
-				<script>setprop("sim/sounde/oh-cover", 1);</script>
-			</binding>
-		</action>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>FwdCargoDischGuard</object-name>
-		<property>controls/OH/protectors/fwddisch</property>
-		<factor>-145</factor>
-		<axis>
-			<x1-m>-0.0067</x1-m>
-			<y1-m>0.19051</y1-m>
-			<z1-m>-0.11153</z1-m>
-			<x2-m>-0.00524</x2-m>
-			<y2-m>0.20242</y2-m>
-			<z2-m>-0.11153</z2-m>
-		</axis>
-	</animation>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>AftCargoDischGuard</object-name>
-		<property>controls/OH/protectors/aftdisch</property>
-		<factor>-145</factor>
-		<axis>
-			<x1-m>0.00633</x1-m>
-			<y1-m>0.29475</y1-m>
-			<z1-m>-0.11153</z1-m>
-			<x2-m>0.00779</x2-m>
-			<y2-m>0.30666</y2-m>
-			<z2-m>-0.11153</z2-m>
-		</axis>
-	</animation>
-
 	<!-- GPWS -->
 	<animation>
-		<name>GPWS terrain system pick</name>
 		<type>pick</type>
-		<object-name>GPWSTerrBtn1</object-name>
-		<object-name>GPWSTerrBtn2</object-name>
+		<object-name>GPWSTerrBtn</object-name>
 		<object-name>GPWSTerrBtn1F</object-name>
 		<object-name>GPWSTerrBtn2O</object-name>
 		<action>
@@ -319,6 +51,18 @@
 				<value>0</value>
 			</binding>
 			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/gpws-terr-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/gpws-terr-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+			<binding>
 				<condition>
 					<equals>					
 						<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
@@ -336,47 +80,34 @@
 				<script>libraries.pushbutton();</script>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>gpws-terr-lbl</tooltip-id>
+				<label>GPWS terrain pushbutton</label>
+			</binding>
+		</hovered>
 	</animation>
-
+	
 	<animation>
-		<type>select</type>
+		<type>translate</type>
+		<object-name>GPWSTerrBtn</object-name>
 		<object-name>GPWSTerrBtn1F</object-name>
-		<condition>
-			<or>
-				<and>
-					<equals>
-						<property>instrumentation/mk-viii/serviceable</property>
-						<value>0</value>
-					</equals>
-					<equals>
-						<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
-						<value>0</value>
-					</equals>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
 		<object-name>GPWSTerrBtn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
-					<value>1</value>
-				</equals>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
+		<property>/controls/cockpit/gpws-terr-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
-		<name>GPWS system pick</name>
 		<type>pick</type>
-		<object-name>GPWSBtn1</object-name>
-		<object-name>GPWSBtn2</object-name>
+		<object-name>GPWSBtn</object-name>
 		<object-name>GPWSBtn1F</object-name>
 		<object-name>GPWSBtn2O</object-name>
 		<action>
@@ -396,48 +127,47 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/gpws-sys-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/gpws-sys-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>gpws-sys-lbl</tooltip-id>
+				<label>GPWS system pushbutton</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
-		<type>select</type>
+		<type>translate</type>
+		<object-name>GPWSBtn</object-name>
 		<object-name>GPWSBtn1F</object-name>
-		<condition>
-			<or>
-				<and>
-					<equals>
-						<property>instrumentation/mk-viii/serviceable</property>
-						<value>0</value>
-					</equals>
-					<equals>
-						<property>instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
-						<value>0</value>
-					</equals>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
 		<object-name>GPWSBtn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
-					<value>1</value>
-				</equals>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
+		<property>/controls/cockpit/gpws-sys-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
-		<name>GPWS glideslope pick</name>
 		<type>pick</type>
-		<object-name>GPWSGSBtn1</object-name>
-		<object-name>GPWSGSBtn2</object-name>
+		<object-name>GPWSGSBtn</object-name>
 		<object-name>GPWSGSBtn2O</object-name>
 		<action>
 			<button>0</button>
@@ -456,28 +186,46 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/gpws-gs-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/gpws-gs-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>gpws-gs-lbl</tooltip-id>
+				<label>GPWS inhibit glideslope warning</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
-		<type>select</type>
+		<type>translate</type>
+		<object-name>GPWSGSBtn</object-name>
 		<object-name>GPWSGSBtn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>instrumentation/mk-viii/inputs/discretes/glideslope-inhibit</property>
-					<value>1</value>
-				</equals>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
+		<property>/controls/cockpit/gpws-gs-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
-		<name>GPWS flaps pick</name>
 		<type>pick</type>
-		<object-name>GPWSFlpBtn1</object-name>
-		<object-name>GPWSFlpBtn2</object-name>
+		<object-name>GPWSFlpBtn</object-name>
 		<object-name>GPWSFlpBtn2O</object-name>
 		<action>
 			<button>0</button>
@@ -496,28 +244,46 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/gpws-flap-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/gpws-flap-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>gpws-flap-lbl</tooltip-id>
+				<label>GPWS inhibit flaps warning</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
-		<type>select</type>
+		<type>translate</type>
+		<object-name>GPWSFlpBtn</object-name>
 		<object-name>GPWSFlpBtn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override</property>
-					<value>1</value>
-				</equals>
-				<property>controls/switches/annun-test</property>
-			</or>
-		</condition>
+		<property>/controls/cockpit/gpws-flap-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
-		<name>GPWS flaps pick</name>
 		<type>pick</type>
-		<object-name>GPWSFlp3Btn1</object-name>
-		<object-name>GPWSFlp3Btn2</object-name>
+		<object-name>GPWSFlp3Btn</object-name>
 		<object-name>GPWSFlp3Btn2O</object-name>
 		<action>
 			<button>0</button>
@@ -536,7 +302,113 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/gpws-flap3-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/gpws-flap3-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>flaps3-lbl</tooltip-id>
+				<label>GPWS land with flaps 3</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>GPWSFlp3Btn</object-name>
+		<object-name>GPWSFlp3Btn2O</object-name>
+		<property>/controls/cockpit/gpws-flap3-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>GPWSTerrBtn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>instrumentation/mk-viii/serviceable</property></not>
+					<not><property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property></not>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>GPWSTerrBtn2O</object-name>
+		<condition>
+			<or>
+				<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>GPWSBtn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>instrumentation/mk-viii/serviceable</property></not>
+					<not><property>instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property></not>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>GPWSBtn2O</object-name>
+		<condition>
+			<or>
+				<property>instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>GPWSGSBtn2O</object-name>
+		<condition>
+			<or>
+				<property>instrumentation/mk-viii/inputs/discretes/glideslope-inhibit</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>GPWSFlpBtn2O</object-name>
+		<condition>
+			<or>
+				<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -544,10 +416,7 @@
 		<object-name>GPWSFlp3Btn2O</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override</property>
-					<value>1</value>
-				</equals>
+				<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
