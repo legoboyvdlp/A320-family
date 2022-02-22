@@ -404,6 +404,16 @@
 			<input>/controls/OH/protectors/fwddisch</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/ratman-pos">
+			<input>/controls/OH/protectors/ratman</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/blueelec-pos">
+			<input>/controls/OH/protectors/blueelec</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 

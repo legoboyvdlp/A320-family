@@ -383,8 +383,8 @@
 		<object-name>LFuelTank2Btn1F</object-name>
 		<object-name>LFuelTank2Btn2O</object-name>
 		<object-name>PrbWinHeatBtn2O</object-name>
-		<object-name>PTU1F</object-name>
-		<object-name>PTU2O</object-name>
+		<object-name>PTU21F</object-name>
+		<object-name>PTU22O</object-name>
 		<object-name>RFuelTank2Btn1F</object-name>
 		<object-name>RFuelTank2Btn2O</object-name>
 		<object-name>SEC2Btn1F</object-name>
@@ -449,13 +449,13 @@
 		<object-name>FwdCargoSmkBtn2D</object-name>
 		<object-name>GPWSBtn1F</object-name>
 		<object-name>GPWSBtn2O</object-name>
-		<object-name>GPWSFlpBtn2O</object-name>
+		<object-name>GPWSFlpBtn1O</object-name>
 		<object-name>GPWSFlp3Btn2O</object-name>
-		<object-name>GPWSGSBtn2O</object-name>
+		<object-name>GPWSGSBtn1O</object-name>
 		<object-name>GPWSTerrBtn1F</object-name>
 		<object-name>GPWSTerrBtn2O</object-name>
-		<object-name>GreenEngPump1F</object-name>
-		<object-name>GreenEngPump2O</object-name>
+		<object-name>GreenEngPump21F</object-name>
+		<object-name>GreenEngPump22O</object-name>
 		<object-name>HotAirBtn1F</object-name>
 		<object-name>HotAirBtn2O</object-name>
 		<object-name>IR1Btn1F</object-name>
@@ -15922,9 +15922,9 @@
 	<animation>
 		<name>Green Eng Pump pick</name>
 		<type>pick</type>
-		<object-name>GreenEngPump</object-name>
-		<object-name>GreenEngPump1F</object-name>
-		<object-name>GreenEngPump2O</object-name>
+		<object-name>GreenEngPump2</object-name>
+		<object-name>GreenEngPump21F</object-name>
+		<object-name>GreenEngPump22O</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -15936,6 +15936,18 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/green-eng-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/green-eng-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 		<hovered>
 			<binding>
@@ -15945,10 +15957,26 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>GreenEngPump2</object-name>
+		<object-name>GreenEngPump21F</object-name>
+		<object-name>GreenEngPump22O</object-name>
+		<property>controls/cockpit/green-eng-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<type>select</type>
-		<object-name>GreenEngPump1F</object-name>
+		<object-name>GreenEngPump21F</object-name>
 		<condition>
 			<or>
 				<property>systems/hydraulic/lights/green-edp-fault</property>
@@ -15959,7 +15987,7 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>GreenEngPump2O</object-name>
+		<object-name>GreenEngPump22O</object-name>
 		<condition>
 			<or>
 				<not><property>controls/hydraulic/switches/green-edp</property></not>
@@ -15984,12 +16012,23 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/rathyd-translate</property>
+				<value>0.00075</value>
+			</binding>
 			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/rathyd-translate</property>
+					<value>0.0</value>
+				</binding>
 				<binding>
 					<command>property-assign</command>
 					<property>controls/hydraulic/switches/rat-man</property>
 					<value>0</value>
 				</binding>
+			</mod-up>
 		</action>
 		<hovered>
 			<binding>
@@ -15999,12 +16038,27 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>RATMan</object-name>
+		<property>controls/cockpit/rathyd-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<type>knob</type>
 		<object-name>RATManGuard</object-name>
-		<property>controls/OH/protectors/ratman</property>
+		<property>controls/OH/protectors/ratman-pos</property>
 		<factor>145</factor>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>RATManGuard.axis</object-name>
 		</axis>
@@ -16031,7 +16085,6 @@
 	</animation>
 
 	<animation>
-		<name>Blue Elec Pump pick</name>
 		<type>pick</type>
 		<object-name>BlueElecPump</object-name>
 		<object-name>BlueElecPump1F</object-name>
@@ -16040,13 +16093,34 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
+				<condition>
+					<property>controls/OH/protectors/blueelec</property>
+				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/switches/blue-elec</property>
 			</binding>
 			<binding>
+				<condition>
+					<property>controls/OH/protectors/blueelec</property>
+				</condition>
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<condition>
+					<property>controls/OH/protectors/blueelec</property>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/cockpit/blue-elec-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/blue-elec-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 		<hovered>
 			<binding>
@@ -16055,6 +16129,53 @@
 				<label>Blue electrical pump pushbutton</label>
 			</binding>
 		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>BlueElecPumpProt</object-name>
+		<property>controls/OH/protectors/blueelec-pos</property>
+		<factor>-145</factor>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<object-name>BlueElecPump.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/OH/protectors/blueelec</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>blueelecguard-lbl</tooltip-id>
+				<label>Blue electric pump guard</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>BlueElecPump</object-name>
+		<object-name>BlueElecPump1F</object-name>
+		<object-name>BlueElecPump2O</object-name>
+		<property>controls/cockpit/blue-elec-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
 	</animation>
 
 	<animation>
@@ -16080,11 +16201,10 @@
 	</animation>
 
 	<animation>
-		<name>PTU pick</name>
 		<type>pick</type>
-		<object-name>PTU</object-name>
-		<object-name>PTU1F</object-name>
-		<object-name>PTU2O</object-name>
+		<object-name>PTU2</object-name>
+		<object-name>PTU21F</object-name>
+		<object-name>PTU22O</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -16096,6 +16216,18 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/ptu-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/ptu-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 		<hovered>
 			<binding>
@@ -16105,10 +16237,26 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>PTU2</object-name>
+		<object-name>PTU21F</object-name>
+		<object-name>PTU22O</object-name>
+		<property>controls/cockpit/ptu-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<type>select</type>
-		<object-name>PTU1F</object-name>
+		<object-name>PTU21F</object-name>
 		<condition>
 			<or>
 				<property>systems/hydraulic/lights/ptu-fault</property>
@@ -16119,7 +16267,7 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>PTU2O</object-name>
+		<object-name>PTU22O</object-name>
 		<condition>
 			<or>
 				<not><property>controls/hydraulic/switches/ptu</property></not>
@@ -16144,6 +16292,18 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/yellow-eng-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/yellow-eng-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 		<hovered>
 			<binding>
@@ -16175,6 +16335,22 @@
 			</or>
 		</condition>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>YellowEngPump</object-name>
+		<object-name>YellowEngPump1F</object-name>
+		<object-name>YellowEngPump2O</object-name>
+		<property>controls/cockpit/yellow-eng-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -16192,6 +16368,18 @@
 				<command>nasal</command>
 				<script>libraries.pushbutton();</script>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/yellow-elec-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/yellow-elec-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
 		</action>
 		<hovered>
 			<binding>
@@ -16222,6 +16410,22 @@
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>YellowElecPump</object-name>
+		<object-name>YellowElecPump1F</object-name>
+		<object-name>YellowElecPump2O</object-name>
+		<property>controls/cockpit/yellow-elec-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
 	</animation>
 	
 	<!-- FCTL -->
@@ -16987,7 +17191,7 @@
 	<animation>
 		<type>pick</type>
 		<object-name>GPWSGSBtn</object-name>
-		<object-name>GPWSGSBtn2O</object-name>
+		<object-name>GPWSGSBtn1O</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -17030,7 +17234,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>GPWSGSBtn</object-name>
-		<object-name>GPWSGSBtn2O</object-name>
+		<object-name>GPWSGSBtn1O</object-name>
 		<property>/controls/cockpit/gpws-gs-translate</property>
 		<axis>
 			<x1-m>-0.13646</x1-m>
@@ -17045,7 +17249,7 @@
 	<animation>
 		<type>pick</type>
 		<object-name>GPWSFlpBtn</object-name>
-		<object-name>GPWSFlpBtn2O</object-name>
+		<object-name>GPWSFlpBtn1O</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -17088,7 +17292,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>GPWSFlpBtn</object-name>
-		<object-name>GPWSFlpBtn2O</object-name>
+		<object-name>GPWSFlpBtn1O</object-name>
 		<property>/controls/cockpit/gpws-flap-translate</property>
 		<axis>
 			<x1-m>-0.13646</x1-m>
@@ -17210,7 +17414,7 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>GPWSGSBtn2O</object-name>
+		<object-name>GPWSGSBtn1O</object-name>
 		<condition>
 			<or>
 				<property>instrumentation/mk-viii/inputs/discretes/glideslope-inhibit</property>
@@ -17221,7 +17425,7 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>GPWSFlpBtn2O</object-name>
+		<object-name>GPWSFlpBtn1O</object-name>
 		<condition>
 			<or>
 				<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override</property>

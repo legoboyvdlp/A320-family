@@ -1132,6 +1132,7 @@
 		<OH>
 			<protectors>
 				<aftdisch type="int">0</aftdisch>
+				<blueelec type="int">0</blueelec>
 				<ditching type="int">0</ditching>
 				<elecratman type="int">0</elecratman>
 				<eng1-manstart type="int">0</eng1-manstart>
