@@ -885,6 +885,7 @@
 		<cockpit>
 			<alt-knb-translate type="double">0.002</alt-knb-translate>
 			<emer-canc-cover type="bool">0</emer-canc-cover>
+			<evac-capt-purs type="int">1</evac-capt-purs>
 			<flaps-lever-translate type="double">0</flaps-lever-translate>
 			<park-brk-translate type="double">0</park-brk-translate>
 			<qnh-cpt-knb-translate type="double">0.0015</qnh-cpt-knb-translate>
@@ -1135,10 +1136,12 @@
 				<blueelec type="int">0</blueelec>
 				<ditching type="int">0</ditching>
 				<elecratman type="int">0</elecratman>
+				<emercall type="int">0</emercall>
 				<eng1-manstart type="int">0</eng1-manstart>
 				<eng2-manstart type="int">0</eng2-manstart>
 				<eng1-n1 type="int">0</eng1-n1>
 				<eng2-n1 type="int">0</eng2-n1>
+				<evac type="int">0</evac>
 				<fwddisch type="int">0</fwddisch>
 				<idg1 type="int">0</idg1>
 				<idg2 type="int">0</idg2>

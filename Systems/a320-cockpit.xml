@@ -414,6 +414,26 @@
 			<input>/controls/OH/protectors/blueelec</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/evac-pos">
+			<input>/controls/OH/protectors/evac</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/evac-capt-purs-pos">
+			<input>/controls/cockpit/evac-capt-purs</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/maskman-pos">
+			<input>/controls/OH/protectors/maskman</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/emercall-pos">
+			<input>/controls/OH/protectors/emercall</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
