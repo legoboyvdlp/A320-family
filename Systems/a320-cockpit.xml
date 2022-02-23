@@ -444,6 +444,16 @@
 			<input>/controls/OH/protectors/elecratman</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/eng1-manstart-pos">
+			<input>/controls/OH/protectors/eng1-manstart</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/eng2-manstart-pos">
+			<input>/controls/OH/protectors/eng2-manstart</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 

@@ -445,8 +445,8 @@
 		<object-name>ExtPwrBtn2O</object-name>
 		<object-name>FuelModeBtn1F</object-name>
 		<object-name>FuelModeBtn2O</object-name>
-		<object-name>FwdCargoSmkBtn1S</object-name>
-		<object-name>FwdCargoSmkBtn2D</object-name>
+		<object-name>FwdCargoSmokeBtn1S</object-name>
+		<object-name>FwdCargoSmokeBtn2D</object-name>
 		<object-name>GPWSBtn1F</object-name>
 		<object-name>GPWSBtn2O</object-name>
 		<object-name>GPWSFlpBtn1O</object-name>
@@ -18686,7 +18686,7 @@
 			<binding>
 				<command>set-tooltip</command>
 				<tooltip-id>fwddisch-lbl</tooltip-id>
-				<label>Hold for cargo fire test</label>
+				<label>Hold 2 sec for cargo fire test</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -18794,7 +18794,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>FwdCargoSmkBtn1S</object-name>
+		<object-name>FwdCargoSmokeBtn1S</object-name>
 		<condition>
 			<or>
 				<property>systems/fire/cargo/fwd/warning-active</property>
@@ -18816,7 +18816,7 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>FwdCargoSmkBtn2D</object-name>
+		<object-name>FwdCargoSmokeBtn2D</object-name>
 		<condition>
 			<or>
 				<property>systems/fire/cargo/disch</property>
@@ -18840,6 +18840,56 @@
 	
 	<!-- Ventilation -->
 	<animation>
+		<type>pick</type>
+		<object-name>VentBlowBtn</object-name>
+		<object-name>VentBlowBtn1F</object-name>
+		<object-name>VentBlowBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/ventblow-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/ventblow-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ventblow-lbl</tooltip-id>
+				<label>Turn off avionics cooling blower fan (INOP)</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>VentBlowBtn</object-name>
+		<object-name>VentBlowBtn1F</object-name>
+		<object-name>VentBlowBtn2O</object-name>
+		<property>/controls/cockpit/ventblow-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
 		<type>select</type>
 		<object-name>VentBlowBtn1F</object-name>
 		<condition>
@@ -18849,7 +18899,473 @@
 			</or>
 		</condition>
 	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>VentExtractBtn</object-name>
+		<object-name>VentExtractBtn1F</object-name>
+		<object-name>VentExtractBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/ventextract-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/ventextract-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>ventblow-lbl</tooltip-id>
+				<label>Turn off avionics cooling extract fan (INOP)</label>
+			</binding>
+		</hovered>
+	</animation>
 	
+	<animation>
+		<type>translate</type>
+		<object-name>VentExtractBtn</object-name>
+		<object-name>VentExtractBtn1F</object-name>
+		<object-name>VentExtractBtn2O</object-name>
+		<property>/controls/cockpit/ventextract-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>CabinFansBtn</object-name>
+		<object-name>CabinFansBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/pneumatics/switches/cabin-fans</property>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/cabinfans-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/cabinfans-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>cabinfans-lbl</tooltip-id>
+				<label>Toggle cabin fans</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>CabinFansBtn</object-name>
+		<object-name>CabinFansBtn2O</object-name>
+		<property>/controls/cockpit/cabinfans-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>CabinFansBtn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/pneumatics/switches/cabin-fans</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- Cargo Heat -->
+	<animation>
+		<type>pick</type>
+		<object-name>CargoHotAirBtn</object-name>
+		<object-name>CargoHotAirBtn1F</object-name>
+		<object-name>CargoHotAirBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/cargo-hotair-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/cargo-hotair-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>cabinfans-lbl</tooltip-id>
+				<label>Toggle cargo heat (INOP)</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>CargoHotAirBtn</object-name>
+		<object-name>CargoHotAirBtn1F</object-name>
+		<object-name>CargoHotAirBtn2O</object-name>
+		<property>/controls/cockpit/cargo-hotair-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>AftCargoIsoBtn</object-name>
+		<object-name>AftCargoIsoBtn1F</object-name>
+		<object-name>AftCargoIsoBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/aft-isol-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/aft-isol-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>cabinfans-lbl</tooltip-id>
+				<label>Isolate aft cargo hold (INOP)</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>AftCargoIsoBtn</object-name>
+		<object-name>AftCargoIsoBtn1F</object-name>
+		<object-name>AftCargoIsoBtn2O</object-name>
+		<property>/controls/cockpit/aft-isol-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Manual Start -->
+	<animation>
+		<type>knob</type>
+		<object-name>Eng1ManStartProt</object-name>
+		<property>controls/OH/protectors/eng1-manstart-pos</property>
+		<factor>145</factor>
+		<axis>
+			<object-name>Eng1ManStartProt.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/OH/protectors/eng1-manstart</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>eng1guard-lbl</tooltip-id>
+				<label>Engine 1 man start guard</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>Eng2ManStartProt</object-name>
+		<property>controls/OH/protectors/eng2-manstart-pos</property>
+		<factor>145</factor>
+		<axis>
+			<object-name>Eng2ManStartProt.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/OH/protectors/eng2-manstart</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>eng2guard-lbl</tooltip-id>
+				<label>Engine 2 man start guard</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>Eng1ManStartBtn</object-name>
+		<object-name>Eng1ManStartBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>controls/OH/protectors/eng1-manstart</property>
+							<value>1</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/engines/engine[0]/man-start</property>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng1-manstart</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng1-manstart</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/eng1man-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/eng1-manstart</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>/controls/cockpit/eng1man-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>eng1start-lbl</tooltip-id>
+				<label>Engine 1 manual engine start pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>Eng2ManStartBtn</object-name>
+		<object-name>Eng2ManStartBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>controls/OH/protectors/eng2-manstart</property>
+							<value>1</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/engines/engine[1]/man-start</property>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng2-manstart</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng2-manstart</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/eng2man-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/eng2-manstart</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>/controls/cockpit/eng2man-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>eng1start-lbl</tooltip-id>
+				<label>Engine 1 manual engine start pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Eng1ManStartBtn</object-name>
+		<object-name>Eng1ManStartBtn2O</object-name>
+		<property>/controls/cockpit/eng1man-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Eng2ManStartBtn</object-name>
+		<object-name>Eng2ManStartBtn2O</object-name>
+		<property>/controls/cockpit/eng2man-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>Eng1ManStartBtn2O</object-name>
+		<condition>
+			<or>
+				<property>controls/engines/engine[0]/man-start</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Eng2ManStartBtn2O</object-name>
+		<condition>
+			<or>
+				<property>controls/engines/engine[1]/man-start</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
 	
 
 

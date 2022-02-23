@@ -1171,6 +1171,8 @@
 				<bleed-2 type="bool">1</bleed-2>
 				<blower type="bool">0</blower>
 				<cabin-fans type="bool">1</cabin-fans>
+				<eng1-manstart type="int">0</eng1-manstart>
+				<eng2-manstart type="int">0</eng2-manstart>
 				<extract type="bool">0</extract>
 				<ground-air type="bool">0</ground-air>
 				<hot-air type="bool">1</hot-air>
