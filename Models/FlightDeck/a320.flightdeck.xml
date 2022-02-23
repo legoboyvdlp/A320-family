@@ -15100,6 +15100,260 @@
 		</hovered>
 	</animation>
 	
+	<!-- Emer Gen Panel -->
+	<animation>
+		<type>knob</type>
+		<object-name>EmerGenTestGuard</object-name>
+		<property>controls/OH/protectors/emergentest-pos</property>
+		<factor>-145</factor>
+		<axis>
+			<object-name>EmerGenTestGuard.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/OH/protectors/emergentest</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>emergentest-guard-lbl</tooltip-id>
+				<label>Emer Gen test button guard</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>EmerGenTest</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/electrical/switches/emer-gen-test</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/electrical/switches/emer-gen-test</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>emergentest-lbl</tooltip-id>
+				<label>Emer Gen test button</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>EmerGenTest</object-name>
+		<property>controls/electrical/switches/emer-gen-test</property>
+		<factor>-0.00075</factor>
+		<axis>
+			<x1-m>-0.134358</x1-m>
+			<y1-m>-0.259398</y1-m>
+			<z1-m>0.892231</z1-m>
+			<x2-m>-0.133481</x2-m>
+			<y2-m>-0.259101</y2-m>
+			<z2-m>0.889991</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>Gen1LineBtn</object-name>
+		<object-name>Gen1LineBtn1S</object-name>
+		<object-name>Gen1LineBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/electrical/switches/gen-1-line-contactor</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/genlinecontactor-translate</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/genlinecontactor-translate</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>gen-1-glc-lbl</tooltip-id>
+				<label>Gen 1 line contactor</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Gen1LineBtn</object-name>
+		<object-name>Gen1LineBtn1S</object-name>
+		<object-name>Gen1LineBtn2O</object-name>
+		<property>controls/cockpit/genlinecontactor-translate</property>
+		<axis>
+			<x1-m>-0.134358</x1-m>
+			<y1-m>-0.259398</y1-m>
+			<z1-m>0.892231</z1-m>
+			<x2-m>-0.133481</x2-m>
+			<y2-m>-0.259101</y2-m>
+			<z2-m>0.889991</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>Gen1LineBtn2O</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<or>
+					<property>controls/electrical/switches/gen-1-line-contactor</property>
+					<property>controls/switches/annun-test</property>
+				</or>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>EmerGenInd1F</object-name>
+		<condition>
+			<and>
+				<or>
+					<property>systems/electrical/light/rat-emer-gen-fault</property>
+					<property>controls/switches/annun-test</property>
+				</or>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>EmerElecManOnBtn</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-hot-1</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/electrical/switches/emer-elec-man-on</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>=
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/electrical/switches/emer-elec-man-on</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>emergendeploy-lbl</tooltip-id>
+				<label>Deploy RAT</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>EmerElecManOnBtn</object-name>
+		<property>controls/electrical/switches/emer-elec-man-on</property>
+		<factor>-0.00075</factor>
+		<axis>
+			<x1-m>-0.134358</x1-m>
+			<y1-m>-0.259398</y1-m>
+			<z1-m>0.892231</z1-m>
+			<x2-m>-0.133481</x2-m>
+			<y2-m>-0.259101</y2-m>
+			<z2-m>0.889991</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>EmerManOnGuard</object-name>
+		<property>controls/OH/protectors/elecratman-pos</property>
+		<factor>-145</factor>
+		<axis>
+			<object-name>EmerManOnGuard.axis</object-name>
+		</axis>
+		<action>
+			<button>0</button>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/OH/protectors/elecratman</property>
+			</binding>
+			<binding>
+				<condition>
+					<not>
+						<property>controls/OH/protectors/elecratman</property>
+					</not>
+				</condition>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>emergendeployguard-lbl</tooltip-id>
+				<label>RAT guard</label>
+			</binding>
+		</hovered>
+	</animation>
+	
 	<!-- Oxygen -->
 	<animation>
 		<type>knob</type>

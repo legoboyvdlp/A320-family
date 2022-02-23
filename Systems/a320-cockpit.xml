@@ -434,6 +434,16 @@
 			<input>/controls/OH/protectors/emercall</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/emergentest-pos">
+			<input>/controls/OH/protectors/emergentest</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/elecratman-pos">
+			<input>/controls/OH/protectors/elecratman</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
