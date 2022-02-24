@@ -256,8 +256,8 @@
 		<object-name>GalleyPwrBtn2O</object-name>
 		<object-name>Gen1LineBtn1S</object-name>
 		<object-name>Gen1LineBtn2O</object-name>
-		<object-name>FuelXfeedBtn1O</object-name>
-		<object-name>FuelXfeedBtn2O</object-name>
+		<object-name>FuelXFeedBtn1O</object-name>
+		<object-name>FuelXFeedBtn2O</object-name>
 		<object-name>LFuelTank1Btn1F</object-name>
 		<object-name>LFuelTank1Btn2O</object-name>
 		<object-name>PassOxyInd1S.001</object-name>
@@ -753,10 +753,10 @@
 		<offsets>
 			<x-m>0.114295</x-m>
 			<y-m>-0.05412</y-m>
-			<z-m>1.0057</z-m>
-			<pitch-deg>62</pitch-deg>
-			<roll-deg>88</roll-deg>
-			<heading-deg>32</heading-deg>
+			<z-m>1.000</z-m>
+			<pitch-deg>90</pitch-deg>
+			<roll-deg>90</roll-deg>
+			<heading-deg>0</heading-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
@@ -779,10 +779,10 @@
 		<offsets>
 			<x-m>0.114295</x-m>
 			<y-m>-0.05412</y-m>
-			<z-m>1.0057</z-m>
-			<pitch-deg>62</pitch-deg>
-			<roll-deg>88</roll-deg>
-			<heading-deg>32</heading-deg>
+			<z-m>1.000</z-m>
+			<pitch-deg>90</pitch-deg>
+			<roll-deg>90</roll-deg>
+			<heading-deg>0</heading-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
@@ -805,10 +805,10 @@
 		<offsets>
 			<x-m>0.114303</x-m>
 			<y-m>0.034005</y-m>
-			<z-m>1.0027</z-m>
-			<pitch-deg>62</pitch-deg>
-			<roll-deg>88</roll-deg>
-			<heading-deg>32</heading-deg>
+			<z-m>1.000</z-m>
+			<pitch-deg>90</pitch-deg>
+			<roll-deg>90</roll-deg>
+			<heading-deg>0</heading-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
@@ -831,8 +831,10 @@
 		<offsets>
 			<x-m>0.114303</x-m>
 			<y-m>0.034005</y-m>
-			<z-m>1.0057</z-m>
-			<pitch-deg>62</pitch-deg>
+			<z-m>1.000</z-m>
+			<pitch-deg>90</pitch-deg>
+			<roll-deg>90</roll-deg>
+			<heading-deg>0</heading-deg>
 		</offsets>
 		<alignment>center-center</alignment>
 		<axis-alignment>xy-plane</axis-alignment>
@@ -17527,6 +17529,687 @@
 		<object-name>YellowElecPump1F</object-name>
 		<object-name>YellowElecPump2O</object-name>
 		<property>controls/cockpit/yellow-elec-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Fuel -->
+	<animation>
+		<type>pick</type>
+		<object-name>LFuelTank1Btn</object-name>
+		<object-name>LFuelTank1Btn1F</object-name>
+		<object-name>LFuelTank1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-1</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fuel/switches/pump-left-1</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/leftfuel1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/leftfuel1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>leftfuel1-lbl</tooltip-id>
+				<label>Left fuel pump 1 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>LFuelTank1Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/failures/fuel/left-tank-pump-1</property>
+					<property>controls/fuel/switches/pump-left-1</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>LFuelTank1Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fuel/switches/pump-left-1</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>LFuelTank1Btn</object-name>
+		<object-name>LFuelTank1Btn1F</object-name>
+		<object-name>LFuelTank1Btn2O</object-name>
+		<property>controls/cockpit/leftfuel1-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>LFuelTank2Btn</object-name>
+		<object-name>LFuelTank2Btn1F</object-name>
+		<object-name>LFuelTank2Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-1</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fuel/switches/pump-left-2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/leftfuel2-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/leftfuel2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>leftfuel2-lbl</tooltip-id>
+				<label>Left fuel pump 2 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>LFuelTank2Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/failures/fuel/left-tank-pump-2</property>
+					<property>controls/fuel/switches/pump-left-2</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>LFuelTank2Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fuel/switches/pump-left-2</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>LFuelTank2Btn</object-name>
+		<object-name>LFuelTank2Btn1F</object-name>
+		<object-name>LFuelTank2Btn2O</object-name>
+		<property>controls/cockpit/leftfuel2-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>CFuelTank1Btn</object-name>
+		<object-name>CFuelTank1Btn1F</object-name>
+		<object-name>CFuelTank1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-1</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fuel/switches/pump-center-1</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/centerfuel1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/centerfuel1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>centerfuel1-lbl</tooltip-id>
+				<label>Center fuel pump 1 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>CFuelTank1Btn1F</object-name>
+		<condition>
+			<or>
+				<and>>
+					<property>systems/failures/fuel/center-tank-pump-1</property>
+					<property>controls/fuel/switches/pump-center-1</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>CFuelTank1Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fuel/switches/pump-center-1</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>CFuelTank1Btn</object-name>
+		<object-name>CFuelTank1Btn1F</object-name>
+		<object-name>CFuelTank1Btn2O</object-name>
+		<property>controls/cockpit/centerfuel1-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>FuelModeBtn</object-name>
+		<object-name>FuelModeBtn1F</object-name>
+		<object-name>FuelModeBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fuel/switches/center-mode</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/fuelmode-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/fuelmode-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fuelmode-lbl</tooltip-id>
+				<label>Toggle fuel manual / auto mode</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>FuelModeBtn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/fuel/mode-fault</property>
+					<property>controls/fuel/switches/center-mode</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FuelModeBtn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fuel/switches/center-mode</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>FuelModeBtn</object-name>
+		<object-name>FuelModeBtn1F</object-name>
+		<object-name>FuelModeBtn2O</object-name>
+		<property>controls/cockpit/fuelmode-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>FuelXFeedBtn</object-name>
+		<object-name>FuelXFeedBtn1O</object-name>
+		<object-name>FuelXFeedBtn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fuel/switches/crossfeed</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/xfeed-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/xfeed-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>xfeed-lbl</tooltip-id>
+				<label>Toggle fuel crossfeed valve</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>FuelXFeedBtn1O</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>systems/fuel/valves/crossfeed-valve</property>
+					<value>1</value>
+				</equals>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FuelXFeedBtn2O</object-name>
+		<condition>
+			<or>
+				<property>controls/fuel/switches/crossfeed</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>FuelXFeedBtn</object-name>
+		<object-name>FuelXFeedBtn1O</object-name>
+		<object-name>FuelXFeedBtn2O</object-name>
+		<property>controls/cockpit/xfeed-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>CFuelTank2Btn</object-name>
+		<object-name>CFuelTank2Btn1F</object-name>
+		<object-name>CFuelTank2Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-2</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fuel/switches/pump-center-2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/centerfuel2-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/centerfuel2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>centerfuel2-lbl</tooltip-id>
+				<label>Center fuel pump 2 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>CFuelTank2Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/failures/fuel/center-tank-pump-2</property>
+					<property>controls/fuel/switches/pump-center-2</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>CFuelTank2Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fuel/switches/pump-center-2</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>CFuelTank2Btn</object-name>
+		<object-name>CFuelTank2Btn1F</object-name>
+		<object-name>CFuelTank2Btn2O</object-name>
+		<property>controls/cockpit/centerfuel2-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>RFuelTank1Btn</object-name>
+		<object-name>RFuelTank1Btn1F</object-name>
+		<object-name>RFuelTank1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-2</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fuel/switches/pump-right-1</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/rightfuel1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/rightfuel1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>rightfuel1-lbl</tooltip-id>
+				<label>Right fuel pump 1 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>RFuelTank1Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/failures/fuel/right-tank-pump-1</property>
+					<property>controls/fuel/switches/pump-right-1</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>RFuelTank1Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fuel/switches/pump-right-1</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>RFuelTank1Btn</object-name>
+		<object-name>RFuelTank1Btn1F</object-name>
+		<object-name>RFuelTank1Btn2O</object-name>
+		<property>controls/cockpit/rightfuel1-translate</property>
+		<axis>
+			<x1-m>-0.13646</x1-m>
+			<y1-m>0.000025</y1-m>
+			<z1-m>0.904695</z1-m>
+			<x2-m>-0.14011</x2-m>
+			<y2-m>0.000025</y2-m>
+			<z2-m>0.914005</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>RFuelTank2Btn</object-name>
+		<object-name>RFuelTank2Btn1F</object-name>
+		<object-name>RFuelTank2Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-2</property>
+						<value>25</value>
+					</greater-than-equals>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/fuel/switches/pump-right-2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/rightfuel2-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/cockpit/rightfuel2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>rightfuel2-lbl</tooltip-id>
+				<label>Right fuel pump 2 pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>RFuelTank2Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>systems/failures/fuel/right-tank-pump-2</property>
+					<property>controls/fuel/switches/pump-right-2</property>
+				</and>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>RFuelTank2Btn2O</object-name>
+		<condition>
+			<or>
+				<not><property>controls/fuel/switches/pump-right-2</property></not>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>RFuelTank2Btn</object-name>
+		<object-name>RFuelTank2Btn1F</object-name>
+		<object-name>RFuelTank2Btn2O</object-name>
+		<property>controls/cockpit/rightfuel2-translate</property>
 		<axis>
 			<x1-m>-0.13646</x1-m>
 			<y1-m>0.000025</y1-m>
