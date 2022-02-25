@@ -454,6 +454,51 @@
 			<input>/controls/OH/protectors/eng2-manstart</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/pneumatics/switches/pack-flow-pos">
+			<input>/controls/pneumatics/switches/pack-flow</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/pneumatics/switches/x-bleed-pos">
+			<input>/controls/pneumatics/switches/x-bleed</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/pneumatics/switches/temp-cockpit-pos">
+			<input>/controls/pneumatics/switches/temp-cockpit</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/pneumatics/switches/temp-cabin-fwd-pos">
+			<input>/controls/pneumatics/switches/temp-cabin-fwd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/pneumatics/switches/temp-cabin-aft-pos">
+			<input>/controls/pneumatics/switches/temp-cabin-aft</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/ramair-pos">
+			<input>/controls/OH/protectors/ramair</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/ramair-pos">
+			<input>/controls/OH/protectors/ramair</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/idg1-pos">
+			<input>/controls/OH/protectors/idg1</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/idg2-pos">
+			<input>/controls/OH/protectors/idg2</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
