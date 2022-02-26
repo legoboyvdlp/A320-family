@@ -18325,7 +18325,7 @@
 		<offset-deg>-135</offset-deg>
 		<factor>270</factor>
 		<axis>
-			<object-name>AltCabinACKnb.axis</object-name>
+			<object-name>AftCabinACKnb.axis</object-name>
 		</axis>
 		<action>
 			<binding>
