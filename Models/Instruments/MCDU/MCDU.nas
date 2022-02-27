@@ -24,7 +24,6 @@ var myCRZWIND = [nil, nil];
 var myDESWIND = [nil, nil];
 var myHISTWIND = [nil, nil];
 var myAtis = [nil, nil];
-var default = "HoneywellMCDU.ttf";
 var normal = 60;
 var small = 46;
 var page = "";
@@ -1200,9 +1199,6 @@ var canvas_MCDU_base = {
 				me["Simple_L1"].setText("[    ]");
 				me["Simple_L2"].setText("[   ]");
 				me["Simple_L3"].setText("[  ]°");
-				me["Simple_L1"].setFont(symbol);
-				me["Simple_L2"].setFont(symbol);
-				me["Simple_L3"].setFont(symbol);
 				me["Simple_L5S"].setText(" INPUTS");
 				me["Simple_L5"].setText(" ERASE");
 				me["Simple_L6S"].setText(" ATC MENU");
@@ -1214,9 +1210,6 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText("[  ]");
 				me["Simple_R2"].setText("[  ]/[    ]");
 				me["Simple_R3"].setText("[  ]°");
-				me["Simple_R1"].setFont(symbol);
-				me["Simple_R2"].setFont(symbol);
-				me["Simple_R3"].setFont(symbol);
 				me["Simple_R4S"].setText("WHEN CAN WE EXPECT ");
 				me["Simple_R4"].setText("BACK ON ROUTE ");
 				me["Simple_R5"].setText("ADD TEXT ");
@@ -1265,7 +1258,6 @@ var canvas_MCDU_base = {
 				me["Simple_L2S"].setText(" CRZ CLB TO");
 				me["Simple_L1"].setText(" HIGHER ALT");
 				me["Simple_L2"].setText("[    ]");
-				me["Simple_L2"].setFont(symbol);
 				me["Simple_L5S"].setText(" INPUTS");
 				me["Simple_L5"].setText(" ERASE");
 				me["Simple_L6S"].setText(" ATC MENU");
@@ -1276,8 +1268,6 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText("LOWER ALT ");
 				me["Simple_R2"].setText("[  ]");
 				me["Simple_R3"].setText("[  ]/[  ]");
-				me["Simple_R2"].setFont(symbol);
-				me["Simple_R3"].setFont(symbol);
 				me["Simple_R4S"].setText("WHEN CAN WE EXPECT ");
 				me["Simple_R4"].setText("BACK ON ROUTE ");
 				me["Simple_R5"].setText("ADD TEXT ");
@@ -1331,8 +1321,6 @@ var canvas_MCDU_base = {
 				me["Simple_L1"].setText("[    ]/[     ]");
 				me["Simple_L2"].setText("[    ]/[     ]");
 				me["Simple_L3"].setText(" HIGHER ALT");
-				me["Simple_L1"].setFont(symbol);
-				me["Simple_L2"].setFont(symbol);
 				me["Simple_L5S"].setText(" INPUTS");
 				me["Simple_L5"].setText(" ERASE");
 				me["Simple_L6S"].setText(" ATC MENU");
@@ -1343,11 +1331,8 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText("[   ]");
 				me["Simple_R2"].setText("[   ]");
 				me["Simple_R3"].setText("LOWER ALT ");
-				me["Simple_R1"].setFont(symbol);
-				me["Simple_R2"].setFont(symbol);
 				me["Simple_R4S"].setText("WHEN CAN SPD ");
 				me["Simple_R4"].setText("[    ]");
-				me["Simple_R4"].setFont(symbol);
 				me["Simple_R5"].setText("ADD TEXT ");
 				me["Simple_R6S"].setText("ATC ");
 				me["Simple_R6"].setText("REQ DISPL ");
@@ -1400,11 +1385,8 @@ var canvas_MCDU_base = {
 				me["Simple_L1"].setText("[    ]/[     ]");
 				me["Simple_L2"].setText("[    ]");
 				me["Simple_L3"].setText(" HIGHER ALT");
-				me["Simple_L1"].setFont(symbol);
-				me["Simple_L2"].setFont(symbol);
 				me["Simple_L4S"].setText(" CRZ CLB TO");
 				me["Simple_L4"].setText("[    ]");
-				me["Simple_L4"].setFont(symbol);
 				me["Simple_L5S"].setText(" INPUTS");
 				me["Simple_L5"].setText(" ERASE");
 				me["Simple_L6S"].setText(" ATC MENU");
@@ -1415,10 +1397,8 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].setText("DESCENT ");
 				me["Simple_R2"].setText("[   ]/[   ]");
 				me["Simple_R3"].setText("LOWER ALT ");
-				me["Simple_R2"].setFont(symbol);
 				me["Simple_R4S"].setText("SPD RANGE ");
 				me["Simple_R4"].setText("[   ]/[   ]");
-				me["Simple_R4"].setFont(symbol);
 				me["Simple_R5"].setText("ADD TEXT ");
 				me["Simple_R6S"].setText("ATC ");
 				me["Simple_R6"].setText("REQ DISPL ");
@@ -1463,11 +1443,8 @@ var canvas_MCDU_base = {
 				
 				me["Simple_L1S"].setText(" VOICE");
 				me["Simple_L1"].setText(" CONTACT----[       ]");
-				me["Simple_L1"].setFont(symbol);
 				me["Simple_L2"].setText(" OWN SEPARATION & VMC");
-				me["Simple_L2"].setFont(symbol);
 				me["Simple_L3"].setText(" CLEARANCE");
-				me["Simple_L3"].setFont(symbol);
 				me["Simple_L5S"].setText(" INPUTS");
 				me["Simple_L5"].setText(" ERASE");
 				me["Simple_L6S"].setText(" ATC MENU");
@@ -1609,7 +1586,6 @@ var canvas_MCDU_base = {
 				me["arrowsDepArr"].hide();
 				
 				me.standardFontSize();
-				me["Simple_L4"].setFont(symbol);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "wht", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -1620,7 +1596,6 @@ var canvas_MCDU_base = {
 				
 				for (var x = 1; x <= 4; x = x + 1) {
 					me["Simple_L" ~ x].setText("[                      ]");
-					me["Simple_L" ~ x].setFont(symbol);
 				}
 				me["Simple_C4S"].hide();
 				me["Simple_L5"].setText(" ERASE");
@@ -1690,13 +1665,10 @@ var canvas_MCDU_base = {
 				me["Simple_R1S"].setText("EMERG ADS:OFF ");
 				me["Simple_R2S"].setText("DESCENDING TO ");
 				me["Simple_R2"].setText("[   ] ");
-				me["Simple_R2"].setFont(symbol);
 				me["Simple_R3S"].setText("DIVERTING/VIA ");
 				me["Simple_R3"].setText("[   ]/[   ] ");
-				me["Simple_R3"].setFont(symbol);
 				me["Simple_R4S"].setText("FREQ ");
 				me["Simple_R4"].setText("[      ] ");
-				me["Simple_R4"].setFont(symbol);
 				me["Simple_R5"].setText("ADD TEXT ");
 				me["Simple_R6S"].setText("ATC ");
 				me["Simple_R6"].setText("REQ DISPL ");
@@ -1847,7 +1819,6 @@ var canvas_MCDU_base = {
 			for (var x = 0; x <= 3; x = x + 1) {
 				if (atsu.ATISInstances[x].station != nil) {	
 					me["Simple_L" ~ (x + 1)].setText(" " ~ atsu.ATISInstances[x].station ~ "/" ~ (atsu.ATISInstances[x].type == 0 ? "ARR" : "DEP"));
-					me["Simple_L" ~ (x + 1)].setFont(default);
 					if (atsu.ATISInstances[x].received) {
 						me["Simple_L" ~ (x + 1) ~ "_Arrow"].show();
 					} else {
@@ -1855,7 +1826,6 @@ var canvas_MCDU_base = {
 					}
 				} else {
 					me["Simple_L" ~ (x + 1)].setText(" [  ]/[  ]");
-					me["Simple_L" ~ (x + 1)].setFont(symbol);
 					me["Simple_L" ~ (x + 1) ~ "_Arrow"].hide();
 				}
 				
