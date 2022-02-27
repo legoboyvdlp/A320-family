@@ -21951,6 +21951,13 @@
 				<property>/FMGC/keyboard-left</property>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>mcdukb-lbl</tooltip-id>
+				<label>MCDU: toggle keyboard mode</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -21973,7 +21980,40 @@
 				<step>0.05</step>
 				<wrap>false</wrap>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdubrt1-rotate2</property>
+				<value>-5</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdubrt1-rotate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>mcdubrt1-lbl</tooltip-id>
+				<label>MCDU: increase screen brightness</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>BRT.cpt</object-name>
+		<property>/controls/cockpit/mcdubrt1-rotate2</property>
+		<axis>
+			<x1-m>-0.34805</x1-m>
+			<y1-m>-0.13204</y1-m>
+			<z1-m>-0.07093</z1-m>
+			<x2-m>-0.34805</x2-m>
+			<y2-m>-0.12404</y2-m>
+			<z2-m>-0.07093</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -21996,7 +22036,40 @@
 				<step>-0.05</step>
 				<wrap>false</wrap>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdudim1-rotate2</property>
+				<value>5</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdudim1-rotate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>mcdudim1-lbl</tooltip-id>
+				<label>MCDU: decrease screen brightness</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>DIM.cpt</object-name>
+		<property>/controls/cockpit/mcdudim1-rotate2</property>
+		<axis>
+			<x1-m>-0.34559</x1-m>
+			<y1-m>-0.13204</y1-m>
+			<z1-m>-0.07134</z1-m>
+			<x2-m>-0.34559</x2-m>
+			<y2-m>-0.12404</y2-m>
+			<z2-m>-0.07134</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22021,7 +22094,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduradnav-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduradnav-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>radnav.cpt</object-name>
+		<property>/controls/cockpit/mcduradnav-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22046,7 +22145,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduinit-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduinit-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>init.cpt</object-name>
+		<property>/controls/cockpit/mcduinit-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22071,7 +22196,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdudata-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdudata-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>data.cpt</object-name>
+		<property>/controls/cockpit/mcdudata-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22096,7 +22247,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduatc-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduatc-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>atc_comm.cpt</object-name>
+		<property>/controls/cockpit/mcduatc-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22121,7 +22298,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdumcdu-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdumcdu-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>mcdu.cpt</object-name>
+		<property>/controls/cockpit/mcdumcdu-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22146,7 +22349,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduprog-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduprog-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>prog.cpt</object-name>
+		<property>/controls/cockpit/mcduprog-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22171,7 +22400,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduperf-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduperf-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>perf.cpt</object-name>
+		<property>/controls/cockpit/mcduperf-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22196,7 +22451,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdufpln-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdufpln-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>f-pln.cpt</object-name>
+		<property>/controls/cockpit/mcdufpln-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22221,7 +22502,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdufuelpred-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdufuelpred-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>fuel-pred.cpt</object-name>
+		<property>/controls/cockpit/mcdufuelpred-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22246,7 +22553,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdudir-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdudir-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>dir.cpt</object-name>
+		<property>/controls/cockpit/mcdudir-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22271,28 +22604,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("1", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul1-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul1-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L1.cpt</object-name>
+		<property>/controls/cockpit/mcdul1-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>L2.cpt</object-name>
@@ -22315,28 +22655,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("2", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul2-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul2-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L2.cpt</object-name>
+		<property>/controls/cockpit/mcdul2-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>L3.cpt</object-name>
@@ -22359,28 +22706,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("3", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul3-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul3-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L3.cpt</object-name>
+		<property>/controls/cockpit/mcdul3-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>L4.cpt</object-name>
@@ -22403,28 +22757,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("4", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul4-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul4-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L4.cpt</object-name>
+		<property>/controls/cockpit/mcdul4-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>L5.cpt</object-name>
@@ -22447,28 +22808,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("5", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul5-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul5-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L5.cpt</object-name>
+		<property>/controls/cockpit/mcdul5-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>L6.cpt</object-name>
@@ -22491,27 +22859,33 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("6", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul6-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul6-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L6.cpt</object-name>
+		<property>/controls/cockpit/mcdul6-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22536,28 +22910,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("1", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur1-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur1-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R1.cpt</object-name>
+		<property>/controls/cockpit/mcdur1-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>R2.cpt</object-name>
@@ -22580,28 +22961,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("2", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur2-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur2-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R2.cpt</object-name>
+		<property>/controls/cockpit/mcdur2-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>R3.cpt</object-name>
@@ -22624,28 +23012,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("3", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur3-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur3-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R3.cpt</object-name>
+		<property>/controls/cockpit/mcdur3-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>R4.cpt</object-name>
@@ -22668,28 +23063,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("4", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur4-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur4-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R4.cpt</object-name>
+		<property>/controls/cockpit/mcdur4-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>R5.cpt</object-name>
@@ -22712,28 +23114,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("5", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur5-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur5-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R5.cpt</object-name>
+		<property>/controls/cockpit/mcdur5-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>R6.cpt</object-name>
@@ -22756,27 +23165,33 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("6", 0);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-1</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu1</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur6-translate1</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur6-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R6.cpt</object-name>
+		<property>/controls/cockpit/mcdur6-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22801,7 +23216,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduairport-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduairport-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>airport.cpt</object-name>
+		<property>/controls/cockpit/mcduairport-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -22826,8 +23267,35 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduleft-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduleft-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>left.cpt</object-name>
+		<property>/controls/cockpit/mcduleft-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>right.cpt</object-name>
@@ -22850,8 +23318,35 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduright-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduright-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>right.cpt</object-name>
+		<property>/controls/cockpit/mcduright-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>up.cpt</object-name>
@@ -22874,8 +23369,35 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduup-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduup-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>up.cpt</object-name>
+		<property>/controls/cockpit/mcduup-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>down.cpt</object-name>
@@ -22898,7 +23420,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdudown-translate1</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdudown-translate1</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>down.cpt</object-name>
+		<property>/controls/cockpit/mcdudown-translate1</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -23928,6 +24476,7 @@
 		</action>
 	</animation>
 	
+	
 	<animation>
 		<type>pick</type>
 		<object-name>KBMode.Toggle.fo</object-name>
@@ -23944,6 +24493,13 @@
 				<property>/FMGC/keyboard-right</property>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>mcdukb-lbl</tooltip-id>
+				<label>MCDU: toggle keyboard mode</label>
+			</binding>
+		</hovered>
 	</animation>
 
 	<animation>
@@ -23966,7 +24522,40 @@
 				<step>0.05</step>
 				<wrap>false</wrap>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdubrt2-rotate2</property>
+				<value>-5</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdubrt2-rotate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>mcdubrt2-lbl</tooltip-id>
+				<label>MCDU: increase screen brightness</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>BRT.fo</object-name>
+		<property>/controls/cockpit/mcdubrt2-rotate2</property>
+		<axis>
+			<x1-m>-0.34805</x1-m>
+			<y1-m>-0.13204</y1-m>
+			<z1-m>-0.07093</z1-m>
+			<x2-m>-0.34805</x2-m>
+			<y2-m>-0.12404</y2-m>
+			<z2-m>-0.07093</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -23989,7 +24578,40 @@
 				<step>-0.05</step>
 				<wrap>false</wrap>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdudim2-rotate2</property>
+				<value>5</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdudim2-rotate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>mcdudim2-lbl</tooltip-id>
+				<label>MCDU: decrease screen brightness</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>DIM.fo</object-name>
+		<property>/controls/cockpit/mcdudim2-rotate2</property>
+		<axis>
+			<x1-m>-0.34559</x1-m>
+			<y1-m>-0.13204</y1-m>
+			<z1-m>-0.07134</z1-m>
+			<x2-m>-0.34559</x2-m>
+			<y2-m>-0.12404</y2-m>
+			<z2-m>-0.07134</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24000,7 +24622,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("radnav", 1);</script>
+				<script>mcdu.pagebutton("radnav", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24014,7 +24636,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduradnav-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduradnav-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>radnav.fo</object-name>
+		<property>/controls/cockpit/mcduradnav-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24025,7 +24673,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("init", 1);</script>
+				<script>mcdu.pagebutton("init", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24039,7 +24687,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduinit-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduinit-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>init.fo</object-name>
+		<property>/controls/cockpit/mcduinit-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24050,7 +24724,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("data", 1);</script>
+				<script>mcdu.pagebutton("data", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24064,7 +24738,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdudata-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdudata-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>data.fo</object-name>
+		<property>/controls/cockpit/mcdudata-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24075,7 +24775,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("atc", 1);</script>
+				<script>mcdu.pagebutton("atc", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24089,7 +24789,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduatc-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduatc-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>atc_comm.fo</object-name>
+		<property>/controls/cockpit/mcduatc-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24100,7 +24826,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("mcdu", 1);</script>
+				<script>mcdu.pagebutton("mcdu", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24114,7 +24840,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdumcdu-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdumcdu-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>mcdu.fo</object-name>
+		<property>/controls/cockpit/mcdumcdu-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24125,7 +24877,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("prog", 1);</script>
+				<script>mcdu.pagebutton("prog", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24139,7 +24891,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduprog-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduprog-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>prog.fo</object-name>
+		<property>/controls/cockpit/mcduprog-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24150,7 +24928,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("perf", 1);</script>
+				<script>mcdu.pagebutton("perf", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24164,7 +24942,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduperf-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduperf-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>perf.fo</object-name>
+		<property>/controls/cockpit/mcduperf-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24175,7 +24979,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("f-pln", 1);</script>
+				<script>mcdu.pagebutton("f-pln", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24189,7 +24993,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdufpln-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdufpln-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>f-pln.fo</object-name>
+		<property>/controls/cockpit/mcdufpln-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24200,7 +25030,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("fuel-pred", 1);</script>
+				<script>mcdu.pagebutton("fuel-pred", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24214,7 +25044,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdufuelpred-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdufuelpred-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>fuel-pred.fo</object-name>
+		<property>/controls/cockpit/mcdufuelpred-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24225,7 +25081,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("dirto", 1);</script>
+				<script>mcdu.pagebutton("dirto", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24239,7 +25095,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdudir-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdudir-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>dir.fo</object-name>
+		<property>/controls/cockpit/mcdudir-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24250,7 +25132,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.lskbutton("1", 1);</script>
+				<script>mcdu.lskbutton("1", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24264,28 +25146,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("1", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul1-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul1-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L1.fo</object-name>
+		<property>/controls/cockpit/mcdul1-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>L2.fo</object-name>
@@ -24294,7 +25183,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.lskbutton("2", 1);</script>
+				<script>mcdu.lskbutton("2", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24308,28 +25197,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("2", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul2-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul2-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L2.fo</object-name>
+		<property>/controls/cockpit/mcdul2-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>L3.fo</object-name>
@@ -24338,7 +25234,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.lskbutton("3", 1);</script>
+				<script>mcdu.lskbutton("3", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24352,28 +25248,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("3", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul3-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul3-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L3.fo</object-name>
+		<property>/controls/cockpit/mcdul3-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>L4.fo</object-name>
@@ -24382,7 +25285,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.lskbutton("4", 1);</script>
+				<script>mcdu.lskbutton("4", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24396,28 +25299,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("4", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul4-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul4-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L4.fo</object-name>
+		<property>/controls/cockpit/mcdul4-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>L5.fo</object-name>
@@ -24426,7 +25336,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.lskbutton("5", 1);</script>
+				<script>mcdu.lskbutton("5", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24440,28 +25350,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("5", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul5-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul5-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L5.fo</object-name>
+		<property>/controls/cockpit/mcdul5-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>L6.fo</object-name>
@@ -24470,7 +25387,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.lskbutton("6", 1);</script>
+				<script>mcdu.lskbutton("6", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24484,27 +25401,33 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.lskbutton_b("6", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdul6-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdul6-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>L6.fo</object-name>
+		<property>/controls/cockpit/mcdul6-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24515,7 +25438,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.rskbutton("1", 1);</script>
+				<script>mcdu.rskbutton("1", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24529,28 +25452,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("1", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur1-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur1-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R1.fo</object-name>
+		<property>/controls/cockpit/mcdur1-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>R2.fo</object-name>
@@ -24559,7 +25489,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.rskbutton("2", 1);</script>
+				<script>mcdu.rskbutton("2", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24573,28 +25503,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("2", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur2-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur2-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R2.fo</object-name>
+		<property>/controls/cockpit/mcdur2-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>R3.fo</object-name>
@@ -24603,7 +25540,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.rskbutton("3", 1);</script>
+				<script>mcdu.rskbutton("3", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24617,28 +25554,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("3", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur3-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur3-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R3.fo</object-name>
+		<property>/controls/cockpit/mcdur3-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>R4.fo</object-name>
@@ -24647,7 +25591,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.rskbutton("4", 1);</script>
+				<script>mcdu.rskbutton("4", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24661,28 +25605,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("4", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur4-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur4-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R4.fo</object-name>
+		<property>/controls/cockpit/mcdur4-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>R5.fo</object-name>
@@ -24691,7 +25642,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.rskbutton("5", 1);</script>
+				<script>mcdu.rskbutton("5", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24705,28 +25656,35 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("5", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur5-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur5-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R5.fo</object-name>
+		<property>/controls/cockpit/mcdur5-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>R6.fo</object-name>
@@ -24735,7 +25693,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.rskbutton("6", 1);</script>
+				<script>mcdu.rskbutton("6", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24749,27 +25707,33 @@
 					</and>
 				</condition>
 			</binding>
-		</action>
-		<action>
-			<button>1</button>
-			<repeatable>false</repeatable>
 			<binding>
-				<command>nasal</command>
-				<script>mcdu.rskbutton_b("6", 1);</script>
-				<condition>
-					<and>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-2</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than>
-							<property>controls/lighting/DU/mcdu2</property>
-							<value>0.01</value>
-						</greater-than>
-					</and>
-				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdur6-translate2</property>
+				<value>-0.00075</value>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdur6-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>R6.fo</object-name>
+		<property>/controls/cockpit/mcdur6-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24780,7 +25744,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("airport", 1);</script>
+				<script>mcdu.pagebutton("airport", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24794,7 +25758,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduairport-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduairport-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>airport.fo</object-name>
+		<property>/controls/cockpit/mcduairport-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -24805,7 +25795,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.arrowbutton("left", 1);</script>
+				<script>mcdu.arrowbutton("left", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24819,8 +25809,35 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduleft-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduleft-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>left.fo</object-name>
+		<property>/controls/cockpit/mcduleft-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>right.fo</object-name>
@@ -24829,7 +25846,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.arrowbutton("right", 1);</script>
+				<script>mcdu.arrowbutton("right", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24843,8 +25860,35 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduright-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduright-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>right.fo</object-name>
+		<property>/controls/cockpit/mcduright-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>up.fo</object-name>
@@ -24853,7 +25897,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.arrowbutton("up", 1);</script>
+				<script>mcdu.arrowbutton("up", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24867,8 +25911,35 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcduup-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcduup-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
 	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>up.fo</object-name>
+		<property>/controls/cockpit/mcduup-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>down.fo</object-name>
@@ -24877,7 +25948,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.arrowbutton("down", 1);</script>
+				<script>mcdu.arrowbutton("down", 0);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
@@ -24891,7 +25962,33 @@
 					</and>
 				</condition>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/mcdudown-translate2</property>
+				<value>-0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/mcdudown-translate2</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>down.fo</object-name>
+		<property>/controls/cockpit/mcdudown-translate2</property>
+		<axis>
+			<x1-m>-0.34911</x1-m>
+			<y1-m>-0.15054</y1-m>
+			<z1-m>-0.0712</z1-m>
+			<x2-m>-0.34878</x2-m>
+			<y2-m>-0.15054</y2-m>
+			<z2-m>-0.0692</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
