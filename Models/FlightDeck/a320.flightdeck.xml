@@ -12902,7 +12902,7 @@
 			</binding>
 		</hovered>
 	</animation>
-
+	
 	<animation>
 		<type>knob</type>
         <object-name>RReadingLtKnb</object-name>
@@ -27041,67 +27041,10 @@
 	<animation>
 		<name>Main Panel and Pedestal Backlighting</name>
 		<type>material</type>
-		<object-name>main_panel_label</object-name>
-		<object-name>terr_on_nd_label</object-name>
-		<object-name>gear_labels</object-name>
+		<object-name>clock_glare</object-name>
+		<object-name>pedestal_low_glare</object-name>
 		<object-name>thr_quad_lts</object-name>
 		<object-name>trim_2_lts</object-name>
-		<object-name>brightness_panel_left_glare</object-name>
-		<object-name>brightness_panel_right_glare</object-name>
-		<object-name>ped_labels_1</object-name>
-		<object-name>pedestal_low_glare</object-name>
-		<object-name>mcdu_glare</object-name>
-		<object-name>radio_glare</object-name>
-		<object-name>audio_glare</object-name>
-		<object-name>audio_int_rad.mark</object-name>
-		<object-name>vu111_glare</object-name>
-		<object-name>vu112_glare</object-name>
-		<object-name>radar_glare</object-name>
-		<object-name>radar_mode.mark</object-name>
-		<object-name>atc_glare</object-name>
-		<object-name>atc_thrt.mark</object-name>
-		<object-name>atc_sys.mark</object-name>
-		<object-name>atc_abv.mark</object-name>
-		<object-name>engine_glare</object-name>
-		<object-name>eng_mode.mark</object-name>
-		<object-name>flaps_scale</object-name>
-		<object-name>gear_lever_glare</object-name>
-		<object-name>brakes_glare</object-name>
-		<object-name>brakes_accum_psi.mark</object-name>
-		<object-name>brakes_lb_psi.mark</object-name>
-		<object-name>brakes_rb_psi.mark</object-name>
-		<object-name>flood_lt_main.mark</object-name>
-		<object-name>flood_lt_ped.mark</object-name>
-		<object-name>integ_lt.mark</object-name>
-		<object-name>RudderTrim.mark</object-name>
-		<object-name>CockpitDoorSwitch.mark</object-name>
-		<object-name>ecam_brt_upper.mark</object-name>
-		<object-name>ecam_brt_lower.mark</object-name>
-		<object-name>ecam_att_hdg.mark</object-name>
-		<object-name>ecam_air_data.mark</object-name>
-		<object-name>ecam_eis_dmc.mark</object-name>
-		<object-name>ecam_nd_xfr.mark</object-name>
-		<object-name>ecam_glare_up</object-name>
-		<object-name>ecam_glare_down</object-name>
-		<object-name>pfd_brt_cpt.mark</object-name>
-		<object-name>speaker_volume_cpt.mark</object-name>
-		<object-name>light_console_cpt_sw.mark</object-name>
-		<object-name>foot_warmer_cpt_sw.mark</object-name>
-		<object-name>brightness_nd_2_cpt.mark</object-name>
-		<object-name>brightness_nd_1_cpt.mark</object-name>
-		<object-name>pfd_brt_fo.mark</object-name>
-		<object-name>speaker_volume_fo.mark</object-name>
-		<object-name>light_console_fo_sw.mark</object-name>
-		<object-name>foot_warmer_fo_sw.mark</object-name>
-		<object-name>brightness_nd_2_fo.mark</object-name>
-		<object-name>brightness_nd_1_fo.mark</object-name>
-		<object-name>iesi_labels</object-name>
-		<object-name>iesi_btn_ls</object-name>
-		<object-name>iesi_btn_bugs</object-name>
-		<object-name>iesi_btn_plus</object-name>
-		<object-name>iesi_btn_minus</object-name>
-		<object-name>iesi_btn_rst</object-name>
-		<object-name>dcduBtnGlare</object-name>
 		<condition>
 			<not>
 				<and>
@@ -27127,87 +27070,10 @@
 	<animation>
 		<name>Main Panel and Pedestal Backlighting (dome)</name>
 		<type>material</type>
-		<object-name>main_panel_label</object-name>
-		<object-name>terr_on_nd_label</object-name>
-		<object-name>gear_labels</object-name>
+		<object-name>clock_glare</object-name>
+		<object-name>pedestal_low_glare</object-name>
 		<object-name>thr_quad_lts</object-name>
 		<object-name>trim_2_lts</object-name>
-		<object-name>brightness_panel_left_glare</object-name>
-		<object-name>brightness_panel_right_glare</object-name>
-		<object-name>ped_labels_1</object-name>
-		<object-name>pedestal_low_glare</object-name>
-		<object-name>mcdu_glare</object-name>
-		<object-name>radio_glare</object-name>
-		<object-name>audio_glare</object-name>
-		<object-name>audio_vhf1_glare</object-name>
-		<object-name>audio_vhf2_glare</object-name>
-		<object-name>audio_vhf3_glare</object-name>
-		<object-name>audio_hf1_glare</object-name>
-		<object-name>audio_hf2_glare</object-name>
-		<object-name>audio_int_glare</object-name>
-		<object-name>audio_cab_glare</object-name>
-		<object-name>audio_pa_rot_glare</object-name>
-		<object-name>audio_vor1_glare</object-name>
-		<object-name>audio_vor2_glare</object-name>
-		<object-name>audio_mkr_glare</object-name>
-		<object-name>audio_ils_glare</object-name>
-		<object-name>audio_mls_glare</object-name>
-		<object-name>audio_adf1_glare</object-name>
-		<object-name>audio_adf2_glare</object-name>
-		<object-name>audio_int_rad.mark</object-name>
-		<object-name>vu111_glare</object-name>
-		<object-name>vu112_glare</object-name>
-		<object-name>radar_glare</object-name>
-		<object-name>radar_mode.mark</object-name>
-		<object-name>atc_glare</object-name>
-		<object-name>atc_thrt.mark</object-name>
-		<object-name>atc_sys.mark</object-name>
-		<object-name>atc_abv.mark</object-name>
-		<object-name>engine_glare</object-name>
-		<object-name>eng_mode.mark</object-name>
-		<object-name>flaps_scale</object-name>
-		<object-name>gear_lever_glare</object-name>
-		<object-name>brakes_glare</object-name>
-		<object-name>brakes_accum_psi.mark</object-name>
-		<object-name>brakes_lb_psi.mark</object-name>
-		<object-name>brakes_rb_psi.mark</object-name>
-		<object-name>et_knob</object-name>
-		<object-name>clock_knob</object-name>
-		<object-name>chrono_reset</object-name>
-		<object-name>chrono_btn</object-name>
-		<object-name>clock_set</object-name>
-		<object-name>flood_lt_main.mark</object-name>
-		<object-name>flood_lt_ped.mark</object-name>
-		<object-name>integ_lt.mark</object-name>
-		<object-name>RudderTrim.mark</object-name>
-		<object-name>CockpitDoorSwitch.mark</object-name>
-		<object-name>ecam_brt_upper.mark</object-name>
-		<object-name>ecam_brt_lower.mark</object-name>
-		<object-name>ecam_att_hdg.mark</object-name>
-		<object-name>ecam_air_data.mark</object-name>
-		<object-name>ecam_eis_dmc.mark</object-name>
-		<object-name>ecam_nd_xfr.mark</object-name>
-		<object-name>ecam_glare_up</object-name>
-		<object-name>ecam_glare_down</object-name>
-		<object-name>pfd_brt_cpt.mark</object-name>
-		<object-name>speaker_volume_cpt.mark</object-name>
-		<object-name>light_console_cpt_sw.mark</object-name>
-		<object-name>foot_warmer_cpt_sw.mark</object-name>
-		<object-name>brightness_nd_2_cpt.mark</object-name>
-		<object-name>brightness_nd_1_cpt.mark</object-name>
-		<object-name>pfd_brt_fo.mark</object-name>
-		<object-name>speaker_volume_fo.mark</object-name>
-		<object-name>light_console_fo_sw.mark</object-name>
-		<object-name>foot_warmer_fo_sw.mark</object-name>
-		<object-name>brightness_nd_2_fo.mark</object-name>
-		<object-name>brightness_nd_1_fo.mark</object-name>
-		<object-name>iesi_labels</object-name>
-		<object-name>iesi_btn_ls</object-name>
-		<object-name>iesi_btn_bugs</object-name>
-		<object-name>iesi_btn_plus</object-name>
-		<object-name>iesi_btn_minus</object-name>
-		<object-name>iesi_btn_rst</object-name>
-		<object-name>dcduBtnGlare</object-name>
 		<condition>
 			<and>
 				<not>
@@ -27234,12 +27100,6 @@
 		<name>FCU Panel Backlighting</name>
 		<type>material</type>
 		<object-name>fcu_labels</object-name>
-		<object-name>fcu_labels_hud</object-name>
-		<object-name>fcu_panel_emit</object-name>
-		<object-name>nd_mode.mark</object-name>
-		<object-name>nd_range.mark</object-name>
-		<object-name>nd_mode_fo.mark</object-name>
-		<object-name>nd_range_fo.mark</object-name>
 		<object-name>hud_brt.mark</object-name>
 		<condition>
 			<not>
@@ -27267,12 +27127,6 @@
 		<name>FCU Panel Backlighting (dome)</name>
 		<type>material</type>
 		<object-name>fcu_labels</object-name>
-		<object-name>fcu_labels_hud</object-name>
-		<object-name>fcu_panel_emit</object-name>
-		<object-name>nd_mode.mark</object-name>
-		<object-name>nd_range.mark</object-name>
-		<object-name>nd_mode_fo.mark</object-name>
-		<object-name>nd_range_fo.mark</object-name>
 		<object-name>hud_brt.mark</object-name>
 		<condition>
 			<and>
@@ -27297,11 +27151,12 @@
 	</animation>
 
 	<animation>
-		<name>Aft Overhead Panel Backlighting</name>
+		<name>Overhead Panel Backlighting</name>
 		<type>material</type>
-		<object-name>MarkingLts</object-name>
-		<object-name>ohpanel2_knob.mark</object-name>
-		<object-name>ohpanel2_illu</object-name>
+		<object-name>fd_main.001</object-name>
+		<object-name>flood_lt_main.mark.001</object-name>
+		<object-name>flood_lt_main.mark.005</object-name>
+		<object-name>eng_mode.mark.030</object-name>
 		<condition>
 			<not>
 				<and>
@@ -27327,9 +27182,10 @@
 	<animation>
 		<name>Overhead Panel Backlighting (dome)</name>
 		<type>material</type>
-		<object-name>MarkingLts</object-name>
-		<object-name>ohpanel2_knob.mark</object-name>
-		<object-name>ohpanel2_illu</object-name>
+		<object-name>fd_main.001</object-name>
+		<object-name>flood_lt_main.mark.001</object-name>
+		<object-name>flood_lt_main.mark.005</object-name>
+		<object-name>eng_mode.mark.030</object-name>
 		<condition>
 			<and>
 				<not>
@@ -27993,36 +27849,16 @@
 	<!-- Transparent -->
 	<effect>
 		<inherits-from>Effects/model-transparent</inherits-from>
-		<object-name>atc_glare</object-name>
-		<object-name>audio_glare</object-name>
-		<object-name>brightness_nd_1_fo.mark</object-name>
-		<object-name>brightness_nd_1_cpt.mark</object-name>
-		<object-name>brightness_nd_2_cpt.mark</object-name>
-		<object-name>brightness_nd_2_fo.mark</object-name>
-		<object-name>brightness_panel_left_glare</object-name>
-		<object-name>brightness_panel_right_glare</object-name>
-		<object-name>dcduBtnGlare</object-name>
-		<object-name>ecam_glare_down</object-name>
-		<object-name>ecam_glare_up</object-name>
-		<object-name>engine_glare</object-name>
+		<object-name>clock_glare</object-name>
+		<object-name>eng_mode.mark.030</object-name>
 		<object-name>fcu_labels</object-name>
-		<object-name>foot_warmer_cpt_sw.mark</object-name>
-		<object-name>foot_warmer_fo_sw.mark</object-name>
-		<object-name>gear_labels</object-name>
-		<object-name>iesi_labels</object-name>
-		<object-name>MarkingLts</object-name>
-		<object-name>main_panel_signboard</object-name>
-		<object-name>mcdu_glare.cpt</object-name>
-		<object-name>mcdu_glare.fo</object-name>
+		<object-name>fd_main.001</object-name>
+		<object-name>flood_lt_main.mark.001</object-name>
+		<object-name>flood_lt_main.mark.005</object-name>
+		<object-name>hud_brt.mark</object-name>
 		<object-name>pedestal_low_glare</object-name>
-		<object-name>radio_glare</object-name>
-		<object-name>radio_nav_lit</object-name>
-		<object-name>radar_glare</object-name>
 		<object-name>thr_quad_lts</object-name>
 		<object-name>trim_2_lts</object-name>
-		<object-name>terr_on_nd_label</object-name>
-		<object-name>vu111_glare</object-name>
-		<object-name>vu112_glare</object-name>
 		<object-name>WindowGlassCpt</object-name>
 		<object-name>WindowGlassFo</object-name>
 	</effect>
