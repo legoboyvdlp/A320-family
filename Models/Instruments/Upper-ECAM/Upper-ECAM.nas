@@ -209,12 +209,6 @@ var canvas_upperECAM = {
 			props.UpdateManager.FromHashValue("N1thr_2", 0.01, func(val) {
 				obj["N12-thr"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashList(["reverser_1","eng1_n1","eng1_epr","N1_mode_1"], nil, func(val) {
-				obj.updateFadecN1Power1(val);
-			}),
-			props.UpdateManager.FromHashList(["reverser_2","eng2_n1","eng2_epr","N1_mode_2"], nil, func(val) {
-				obj.updateFadecN1Power2(val);
-			}),
 		];
 		
 		obj.update_items_fadec_powered_epr = [
@@ -243,6 +237,15 @@ var canvas_upperECAM = {
 			}),
 			props.UpdateManager.FromHashValue("EPRthr_2", 0.0001, func(val) {
 				obj["EPR2-thr"].setRotation((val + 90) * D2R);
+			}),
+		];
+		
+		obj.update_items_fadec_powered = [
+			props.UpdateManager.FromHashList(["reverser_1","eng1_n1","eng1_epr","N1_mode_1"], nil, func(val) {
+				obj.updateFadecN1Power1(val);
+			}),
+			props.UpdateManager.FromHashList(["reverser_2","eng2_n1","eng2_epr","N1_mode_2"], nil, func(val) {
+				obj.updateFadecN1Power2(val);
 			}),
 		];
 		
@@ -336,8 +339,8 @@ var canvas_upperECAM = {
 					obj["FlxLimTemp"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("N1_mode_1", nil, func(val) {
-				if (fadec.FADEC.Eng1.n1.getValue() == 1 and val) {
+			props.UpdateManager.FromHashList(["eng1_n1", "N1_mode_1"], nil, func(val) {
+				if (val.eng1_n1 and val.N1_mode_1) {
 					obj["N11-thr"].show();
 					obj["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
 				} else {
@@ -345,8 +348,8 @@ var canvas_upperECAM = {
 					obj["N11-ylim"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("N1_mode_2", nil, func(val) {
-				if (fadec.FADEC.Eng2.n1.getValue() == 1 and val) {
+			props.UpdateManager.FromHashList(["eng2_n1", "N1_mode_2"], nil, func(val) {
+				if (val.eng2_n1 == 1 and val.N1_mode_2) {
 					obj["N12-thr"].show();
 					obj["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
 				} else {
@@ -551,6 +554,13 @@ var canvas_upperECAM = {
 		}
 		if (fadec.FADEC.Eng2.ff != me._cachedFF[1]) {
 			me.updateFF2();
+		}
+		
+		if (notification.eng1_n1 or notification.eng2_n1 or notification.eng1_epr or notification.eng2_epr) {
+			foreach(var update_item; me.update_items_fadec_powered)
+			{
+				update_item.update(notification);
+			}
 		}
 		
 		if (notification.eng1_n1 or notification.eng2_n1) {
@@ -859,6 +869,7 @@ var canvas_upperECAM = {
 				me["EPR1-thr"].hide();
 			}
 		} else {
+			# This is for CFM only -- the IAE show / hiding is done via an emesary node. Potentially they can be merged.
 			if (val.reverser_1 < 0.01 and val.eng1_n1 == 1) {
 				me["N11-thr"].show();
 			} else {
