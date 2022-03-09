@@ -466,6 +466,7 @@ var canvas_upperECAM = {
 		obj._cachedEGT = [nil, nil];
 		obj._cachedEPR = [nil, nil];
 		obj._cachedFF = [nil, nil];
+		obj._doneNoPower = 0;
 		
 		obj.updateFadecN1Power1({reverser_1: 0, eng1_n1: 0, eng1_epr: 0, N1_mode_1: 0});
 		obj.updateFadecN1Power2({reverser_2: 0, eng2_n1: 0, eng2_epr: 0, N1_mode_2: 0});
@@ -557,9 +558,16 @@ var canvas_upperECAM = {
 		}
 		
 		if (notification.eng1_n1 or notification.eng2_n1 or notification.eng1_epr or notification.eng2_epr) {
+			me._doneNoPower = 0;
 			foreach(var update_item; me.update_items_fadec_powered)
 			{
 				update_item.update(notification);
+			}
+		} else {
+			if (!me._doneNoPower) {
+				me._doneNoPower = 1;
+				me.updateFadecN1Power1(notification);
+				me.updateFadecN1Power2(notification);
 			}
 		}
 		
