@@ -54,7 +54,11 @@ var FADEC_S = {
 		
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110 or systems.ELEC.Bus.acEss.getValue() >= 110) {
 			if (powerAvailTemp != 1) {
-				me.Power.poweredTime.setValue(elapsedSec);
+				if (acconfig.SYSTEM.autoConfigRunning.getBoolValue()) {
+					me.Power.poweredTime.setValue(elapsedSec - 300);
+				} else {
+					me.Power.poweredTime.setValue(elapsedSec);
+				}
 				me.Power.powerAvail.setValue(1);
 			}
 		} else {
@@ -115,7 +119,7 @@ var FADEC_S = {
 		
 		state1 = pts.Engines.Engine.state[0].getValue();
 		state2 = pts.Engines.Engine.state[1].getValue();
-		modeSel =  pts.Controls.Engines.startSw.getValue();
+		modeSel =  systems.ENGINE.startSw.getValue();
 		
 		if (state1 == 3) {
 			me.Power.powered1.setValue(1);
