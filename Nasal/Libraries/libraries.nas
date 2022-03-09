@@ -131,8 +131,8 @@ var systemsInit = func() {
 	systems.HYD.init();
 	systems.FUEL.init();
 	systems.ADIRS.init();
-	systems.eng_init();
 	systems.ENGINE.init();
+	systems.IGNITION.init();
 	systems.FADEC.init();
 	systems.APUController.init();
 	systems.BrakeSys.reset();
@@ -200,14 +200,6 @@ var systemsLoop = func(notification) {
 		if (systems.PNEU.Switch.groundAir.getBoolValue()) {
 			systems.PNEU.Switch.groundAir.setBoolValue(0);
 		}
-	}
-	
-	if (notification.engine1State >= 2 and pts.Fdm.JSBsim.Propulsion.Tank.contentsLbs[5].getValue() < 1) {
-		systems.cutoff_one();
-	}
-	
-	if (notification.engine2State >= 2 and pts.Fdm.JSBsim.Propulsion.Tank.contentsLbs[6].getValue() < 1) {
-		systems.cutoff_two();
 	}
 }
 

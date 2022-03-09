@@ -31,7 +31,6 @@ var Consumables = {
 
 var Controls = {
 	Engines: {
-		startSw: props.globals.getNode("/controls/engines/engine-start-switch"),
 		Engine: {
 			cutoff: [props.globals.getNode("/controls/engines/engine[0]/cutoff"), props.globals.getNode("/controls/engines/engine[1]/cutoff")],
 			cutoffSw: [props.globals.getNode("/controls/engines/engine[0]/cutoff-switch"), props.globals.getNode("/controls/engines/engine[1]/cutoff-switch")],
@@ -138,14 +137,14 @@ var Fdm = {
 			wow: props.globals.getNode("/fdm/jsbsim/position/wow"),
 		},
 		Propulsion: {
-			tatC: props.globals.getNode("/fdm/jsbsim/propulsion/tat-c"),
 			Engine: {
 				fuelUsed: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/fuel-used-lbs")],
 				reverserAngle: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad")],
 			},
+			setRunning: props.globals.getNode("/fdm/jsbsim/propulsion/set-running"),
+			tatC: props.globals.getNode("/fdm/jsbsim/propulsion/tat-c"),
 			Tank: {
-				contentsLbs: [props.globals.getNode("/fdm/jsbsim/propulsion/tank[0]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[1]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs"), 
-					props.globals.getNode("/fdm/jsbsim/propulsion/tank[3]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[4]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[5]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[6]/contents-lbs")],
+				contentsLbs: [props.globals.getNode("/fdm/jsbsim/propulsion/tank[0]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[1]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[3]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[4]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[5]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[6]/contents-lbs")],
 			},
 		},
 	},
@@ -358,6 +357,11 @@ var Sim = {
 };
 
 var Systems = {
+	Acconfig: {
+		Options: {
+			igniterSelect: [props.globals.getNode("/systems/acconfig/options/igniter-select-1"), props.globals.getNode("/systems/acconfig/options/igniter-select-2")],
+		}
+	},
 	Navigation: {
 		ADR: {
 			Output: {
