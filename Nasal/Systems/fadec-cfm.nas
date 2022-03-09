@@ -119,7 +119,7 @@ var FADEC_S = {
 		
 		state1 = pts.Engines.Engine.state[0].getValue();
 		state2 = pts.Engines.Engine.state[1].getValue();
-		modeSel =  systems.ENGINE.startSw.getValue();
+		modeSel = pts.Controls.Engines.startSw.getValue();
 		
 		if (state1 == 3) {
 			me.Power.powered1.setValue(1);
