@@ -499,6 +499,16 @@
 			<input>/controls/OH/protectors/idg2</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/rmp-l-on-pos">
+			<input>/controls/radio/rmp[0]/on</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/rmp-r-on-pos">
+			<input>/controls/radio/rmp[1]/on</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
