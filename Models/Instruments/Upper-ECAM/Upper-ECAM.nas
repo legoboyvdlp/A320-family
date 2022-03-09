@@ -243,15 +243,6 @@ var canvas_upperECAM = {
 			}),
 		];
 		
-		obj.update_items_fadec_powered = [
-			props.UpdateManager.FromHashList(["reverser_1","eng1_n1","eng1_epr","N1_mode_1"], nil, func(val) {
-				obj.updateFadecN1Power1(val);
-			}),
-			props.UpdateManager.FromHashList(["reverser_2","eng2_n1","eng2_epr","N1_mode_2"], nil, func(val) {
-				obj.updateFadecN1Power2(val);
-			}),
-		];
-		
 		obj.update_items_fadec_powered_n2 = [
 			props.UpdateManager.FromHashValue("N2_actual_1", 0.025, func(val) {
 				obj["N21"].setText(sprintf("%s", math.floor(val + 0.05)));
@@ -616,12 +607,10 @@ var canvas_upperECAM = {
 			me.updateFF2();
 		}
 		
-		if (notification.eng1_n1 or notification.eng2_n1 or notification.eng1_epr or notification.eng2_epr) {
+		if (notification.fadecPower1 or notification.fadecPower2 or notification.fadecPowerStart) {
 			me._doneNoPower = 0;
-			foreach(var update_item; me.update_items_fadec_powered)
-			{
-				update_item.update(notification);
-			}
+			me.updateFadecN1Power1(notification);
+			me.updateFadecN1Power2(notification);
 		} else {
 			if (!me._doneNoPower) {
 				me._doneNoPower = 1;
