@@ -3078,7 +3078,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/engines/engine-start-switch</property>
+				<property>controls/ignition/start-sw</property>
 				<value>0</value>
 				<value>1</value>
 				<value>2</value>
@@ -3090,7 +3090,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/engines/engine-start-switch</property>
+				<property>controls/ignition/start-sw</property>
 				<value>2</value>
 				<value>1</value>
 				<value>0</value>
@@ -3102,7 +3102,7 @@
 		<type>rotate</type>
 		<object-name>eng_mode</object-name>
 		<object-name>eng_mode.mark</object-name>
-		<property>controls/engines/engine-start-switch</property>
+		<property>controls/ignition/start-sw</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-53</dep></entry>
 			<entry><ind>1</ind><dep>  0</dep></entry>

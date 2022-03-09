@@ -5792,7 +5792,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/engines/engine[0]/man-start</property>
+				<property>controls/engines/engine[0]/start-switch</property>
 			</binding>
 			<binding>
 				<condition>
@@ -5864,7 +5864,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/engines/engine[0]/man-start</property>
+					<property>controls/engines/engine[0]/start-switch</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -5897,7 +5897,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/engines/engine[1]/man-start</property>
+				<property>controls/engines/engine[1]/start-switch</property>
 			</binding>
 			<binding>
 				<condition>
@@ -5969,7 +5969,7 @@
 		<condition>
 			<or>
 				<equals>
-					<property>controls/engines/engine[1]/man-start</property>
+					<property>controls/engines/engine[1]/start-switch</property>
 					<value>1</value>
 				</equals>
 				<equals>

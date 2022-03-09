@@ -1121,7 +1121,7 @@
 		<switch name="/ECAM/warnings/logic/cranking-35-sec-input">
 			<default value="0"/>
 			<test value="1">
-				/controls/engines/engine-start-switch eq 0
+				/controls/ignition/start-sw eq 0
 			</test>
 		</switch>
 		
@@ -1129,7 +1129,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				<test logic="OR">
-					/controls/engines/engine-start-switch eq 0
+					/controls/ignition/start-sw eq 0
 					/ECAM/warnings/timer/cranking-35-sec eq 1
 				</test>
 				/controls/pneumatics/switches/pack-1 eq 1
@@ -1143,7 +1143,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				<test logic="OR">
-					/controls/engines/engine-start-switch eq 0
+					/controls/ignition/start-sw eq 0
 					/ECAM/warnings/timer/cranking-35-sec eq 1
 				</test>
 				/controls/pneumatics/switches/pack-2 eq 1
@@ -1174,7 +1174,7 @@
 			<test logic="OR" value="1">
 				/systems/pneumatics/valves/starter-valve-1 ne 0
 				/systems/pneumatics/valves/starter-valve-2 ne 0
-				/controls/engines/engine-start-switch eq 2
+				/controls/ignition/start-sw eq 2
 				/engines/engine[0]/state eq 1
 				/engines/engine[0]/state eq 2
 				/engines/engine[1]/state eq 1

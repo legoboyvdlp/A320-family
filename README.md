@@ -84,13 +84,13 @@ For the FO Sidestick, use `side=2`
 		<repeatable type="string">false</repeatable>
 		<binding>
 			<command>property-assign</command>
-			<property>controls/engines/engine-start-switch</property>
+			<property>controls/ignition/start-sw</property>
 			<value>0</value>
 		</binding>
 		<mod-up>
 			<binding>
 				<command>property-assign</command>
-				<property>controls/engines/engine-start-switch</property>
+				<property>controls/ignition/start-sw</property>
 				<value>1</value>
 			</binding>
 		</mod-up>
@@ -100,13 +100,13 @@ For the FO Sidestick, use `side=2`
 		<repeatable type="string">false</repeatable>
 		<binding>
 			<command>property-assign</command>
-			<property>controls/engines/engine-start-switch</property>
+			<property>controls/ignition/start-sw</property>
 			<value>2</value>
 		</binding>
 		<mod-up>
 			<binding>
 				<command>property-assign</command>
-				<property>controls/engines/engine-start-switch</property>
+				<property>controls/ignition/start-sw</property>
 				<value>1</value>
 			</binding>
 		</mod-up>

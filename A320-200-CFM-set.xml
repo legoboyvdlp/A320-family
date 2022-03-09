@@ -230,4 +230,11 @@
 		<model-number type="string">A320-214</model-number>
 	</options>
 	
+	<systems n="0">
+		<ignition n="0">
+			<starter-cutoff-n2 type="double">50</starter-cutoff-n2>
+			<starter-engage-n2 type="double">16</starter-engage-n2>
+		</ignition>
+	</systems>
+	
 </PropertyList>
