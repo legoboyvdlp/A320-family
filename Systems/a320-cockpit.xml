@@ -509,6 +509,16 @@
 			<input>/controls/radio/rmp[1]/on</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/radio/rmp[0]/nav-protect-pos">
+			<input>/controls/radio/rmp[0]/nav-protect</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/radio/rmp[1]/nav-protect-pos">
+			<input>/controls/radio/rmp[1]/nav-protect</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 
