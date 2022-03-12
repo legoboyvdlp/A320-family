@@ -1069,7 +1069,7 @@
 				<property>/FMGC/internal/accel-agl-ft</property>
 			</expression>
 		</input>
-		<output>/it-autoflight/settings/accel-agl-ft</output>
+		<output>/it-autoflight/settings/accel-ft</output>
 	</filter>
  
 </PropertyList>
