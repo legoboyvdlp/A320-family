@@ -21,6 +21,7 @@
 		<enable>
 			<condition>
 				<and>
+					<property>/it-autoflight/output/apfd-on</property>
 					<or>
 						<equals>
 							<property>/it-autoflight/output/lat</property>
@@ -31,7 +32,6 @@
 							<value>1</value>
 						</equals>
 					</or>
-					<property>/it-autoflight/output/apfd-on</property>
 				</and>
 			</condition>
 		</enable>
@@ -60,11 +60,11 @@
 		<enable>
 			<condition>
 				<and>
+					<property>/it-autoflight/output/apfd-on</property>
 					<equals>
 						<property>/it-autoflight/output/lat</property>
 						<value>2</value>
 					</equals>
-					<property>/it-autoflight/output/apfd-on</property>
 				</and>
 			</condition>
 		</enable>
