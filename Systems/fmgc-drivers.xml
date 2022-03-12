@@ -5,6 +5,47 @@
 
 <PropertyList>
 	
+	<!-- Logic -->
+	<logic>
+		<input>
+			<or>
+				<equals>
+					<property>/it-autoflight/output/ap1</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>/it-autoflight/output/ap2</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>/it-autoflight/output/fd1</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>/it-autoflight/output/fd2</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</input>
+		<output>/it-autoflight/output/apfd-on</output>
+	</logic>
+	
+	<logic>
+		<input>
+			<or>
+				<equals>
+					<property>/it-autoflight/output/ap1</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>/it-autoflight/output/ap2</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</input>
+		<output>/it-autoflight/output/ap-on</output>
+	</logic>
+	
 	<!-- Predictors -->
 	<predict-simple>
 		<name>IAS 5 Second Predictor</name>
@@ -288,24 +329,7 @@
 							<value>7</value>
 						</equals>
 					</or>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd2</property>
-							<value>1</value>
-						</equals>
-					</or>
+					<property>/it-autoflight/output/apfd-on</property>
 					<equals>
 						<property>/gear/gear[1]/wow</property>
 						<value>0</value>
@@ -638,6 +662,28 @@
 		<initialize-to>output</initialize-to>
 		<input>
 			<condition>
+				<not>
+					<and>
+						<property>/it-autoflight/output/ap-on</property>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/gear/gear[1]/wow</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>/gear/gear[2]/wow</property>
+							<value>0</value>
+						</equals>
+					</and>
+				</not>
+			</condition>
+			<property>/it-autoflight/internal/vert-speed-fpm</property>
+		</input>
+		<input>
+			<condition>
 				<property>/it-autoflight/internal/overspeed-vs-prot</property>
 			</condition>
 			<property>/it-autoflight/internal/overspeed-vs</property>
@@ -653,16 +699,7 @@
 		<max-rate-of-change>
 			<condition>
 				<and>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-					</or>
+					<property>/it-autoflight/output/ap-on</property>
 					<not><property>/it-autoflight/internal/overspeed-vs-prot</property></not>
 					<not><property>/it-autoflight/internal/underspeed-vs-prot</property></not>
 					<equals>

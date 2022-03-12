@@ -339,7 +339,7 @@ setlistener("/controls/flight/auto-coordination", func() {
 	print("System: Auto Coordination has been turned off as it is not compatible with the fly-by-wire of this aircraft.");
 	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
 	screen.log.write("Tiller will now be controlled by aileron, rather than rudder", 1, 0, 0);
-}, 1, 0);
+}, 0, 0);
 
 # Legacy FCU
 var APPanel = {

@@ -37,24 +37,7 @@
 						<value>7</value>
 					</equals>
 				</or>
-				<or>
-					<equals>
-						<property>/it-autoflight/output/ap1</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>/it-autoflight/output/ap2</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>/it-autoflight/output/fd1</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>/it-autoflight/output/fd2</property>
-						<value>1</value>
-					</equals>
-				</or>
+				<property>/it-autoflight/output/apfd-on</property>
 			</and>
 		</input>
 		<output>/it-autoflight/internal/flch-active</output>
@@ -185,24 +168,7 @@
 					<property>/it-autoflight/output/vert</property>
 					<value>5</value>
 				</equals>
-				<or>
-					<equals>
-						<property>/it-autoflight/output/ap1</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>/it-autoflight/output/ap2</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>/it-autoflight/output/fd1</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>/it-autoflight/output/fd2</property>
-						<value>1</value>
-					</equals>
-				</or>
+				<property>/it-autoflight/output/apfd-on</property>
 			</and>
 		</input>
 		<output>/it-autoflight/internal/fpa-active</output>
@@ -497,16 +463,7 @@
 						<property>/gear/gear[2]/wow</property>
 						<value>0</value>
 					</equals>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-					</or>
+					<property>/it-autoflight/output/ap-on</property>
 					<not-equals>
 						<property>/it-autoflight/output/vert</property>
 						<value>9</value>
@@ -653,16 +610,7 @@
 							<property>/gear/gear[2]/wow</property>
 							<value>0</value>
 						</equals>
-						<or>
-							<equals>
-								<property>/it-autoflight/output/ap1</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/ap2</property>
-								<value>1</value>
-							</equals>
-						</or>
+						<property>/it-autoflight/output/ap-on</property>
 						<not-equals>
 							<property>/it-autoflight/output/vert</property>
 							<value>9</value>
