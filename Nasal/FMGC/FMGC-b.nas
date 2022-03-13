@@ -379,7 +379,6 @@ var ITAF = {
 		} else {
 			Internal.bankLimitAuto = 30;
 		}
-		
 		Internal.bankLimit.setValue(Internal.bankLimitAuto);
 		
 		# If in LNAV mode and route is not longer active, switch to HDG HLD

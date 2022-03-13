@@ -1723,7 +1723,7 @@ var canvas_pfd = {
 		} else {
 			me["FMA_combined"].hide();
 			me["FMA_combined_box"].hide();
-			if ((notification.ap1 or notification.ap2) and fmgc.Modes.PFD.FMA.pitchMode == "V/S" and (notification.overspeedVsProt or notification.underspeedVsProt)) {
+			if ((notification.ap1 or notification.ap2) and (fmgc.Modes.PFD.FMA.pitchMode == "V/S" or fmgc.Modes.PFD.FMA.pitchMode == "FPA") and (notification.overspeedVsProt or notification.underspeedVsProt)) {
 				me.amberBoxVS = 1;
 			} else {
 				me.amberBoxVS = 0;
