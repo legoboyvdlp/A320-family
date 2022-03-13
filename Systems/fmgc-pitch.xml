@@ -167,7 +167,7 @@
 	</logic>
 	
 	<filter>
-		<name>Vertical Speed Filter</name>
+		<name>Vertical Speed FPM Filter</name>
 		<type>noise-spike</type>
 		<input>
 			<condition>
