@@ -644,13 +644,13 @@
 				<name>Outer Right Wing</name>
 			</tank>
 			<tank n="5">
-				<name>Engine 1 Pipes</name>
+				<name>Engine 1 Pipe</name>
 			</tank>
 			<tank n="6">
-				<name>Engine 2 Pipes</name>
+				<name>Engine 2 Pipe</name>
 			</tank>
 			<tank n="7">
-				<name>APU Pipes</name>
+				<name>APU Pipe</name>
 			</tank>
 		</fuel>
 	</consumables>
@@ -926,21 +926,18 @@
 			</switches>
 		</electrical>
 		<engines n="0">
-			<engine-start-switch type="int">1</engine-start-switch>
 			<engine n="0">
 				<cutoff type="bool">true</cutoff>
 				<cutoff-switch type="bool">true</cutoff-switch>
 				<fire-btn type="bool">0</fire-btn>
 				<fire-btn-cover type="bool">0</fire-btn-cover>
 				<fire-light type="bool">0</fire-light>
-				<man-start type="bool">0</man-start>
 				<starter type="bool">0</starter>
-				<starter-switch type="bool">0</starter-switch>
+				<start-switch type="bool">0</start-switch>
 				<reverse-cmd type="bool">0</reverse-cmd>
 				<reverse-lever type="double">0</reverse-lever>
 				<igniter-a type="bool">0</igniter-a>
 				<igniter-b type="bool">0</igniter-b>
-				<last-igniter type="string">B</last-igniter>
 			</engine>
 			<engine n="1">
 				<cutoff type="bool">true</cutoff>
@@ -948,14 +945,12 @@
 				<fire-btn type="bool">0</fire-btn>
 				<fire-btn-cover type="bool">0</fire-btn-cover>
 				<fire-light type="bool">0</fire-light>
-				<man-start type="bool">0</man-start>
 				<starter type="bool">0</starter>
-				<starter-switch type="bool">0</starter-switch>
+				<start-switch type="bool">0</start-switch>
 				<reverse-cmd type="bool">0</reverse-cmd>
 				<reverse-lever type="double">0</reverse-lever>
 				<igniter-a type="bool">0</igniter-a>
 				<igniter-b type="bool">0</igniter-b>
-				<last-igniter type="string">B</last-igniter>
 			</engine>
 			<engine n="2">
 				<cutoff type="bool">true</cutoff>
@@ -1095,6 +1090,9 @@
 			<leftturnoff type="bool">0</leftturnoff>
 			<rightturnoff type="bool">0</rightturnoff>
 		</lighting>
+		<ignition n="0">
+			<start-sw type="int">1</start-sw>
+		</ignition>
 		<navigation>
 			<adirscp>
 				<switches>
@@ -1279,22 +1277,22 @@
 	</gear>
 	
 	<network>
-        <cpdlc>
-            <link>
-                <status type="int">0</status>
-                <data-authority type="string"></data-authority>
-            </link>
-            <rx>
-                <message type="string"/> 
-                <new-message type="bool">0</new-message> 
-            </rx>
-        </cpdlc>
-        <mpirc>
-            <irc-ready type="bool">0</irc-ready>
-            <msg-count-in type="int">0</msg-count-in>
-            <msg-count-out type="int">0</msg-count-out>
-        </mpirc>
-    </network>
+		<cpdlc>
+			<link>
+				<status type="int">0</status>
+				<data-authority type="string"></data-authority>
+			</link>
+			<rx>
+				<message type="string"/> 
+				<new-message type="bool">0</new-message> 
+			</rx>
+		</cpdlc>
+		<mpirc>
+			<irc-ready type="bool">0</irc-ready>
+			<msg-count-in type="int">0</msg-count-in>
+			<msg-count-out type="int">0</msg-count-out>
+		</mpirc>
+	</network>
 	
 	<services n="0">
 		<chocks n="0">
@@ -1321,6 +1319,8 @@
 					<mct-t type="double">0.83</mct-t>
 					<toga-b type="double">0.95</toga-b>
 				</fadec>
+				<igniter-select-1 type="int">0</igniter-select-1>
+				<igniter-select-2 type="int">0</igniter-select-2>
 				<seperate-tiller-axis type="bool">0</seperate-tiller-axis>
 			</options>
 		</acconfig>
@@ -1560,15 +1560,6 @@
 		</fire>
 		<fuel n="0">
 			<only-use-ctr-tank type="bool">0</only-use-ctr-tank>
-			<tank n="0">
-				<feed type="bool">0</feed>
-			</tank>
-			<tank n="1">
-				<feed type="bool">0</feed>
-			</tank>
-			<tank n="2">
-				<feed type="bool">0</feed>
-			</tank>
 			<ctr-pump-cmd-on-eng-start type="bool">0</ctr-pump-cmd-on-eng-start>
 			<refuel>
 				<left-valve type="bool">0</left-valve>
@@ -2377,7 +2368,7 @@
 				</binding>
 				<binding>
 					<condition>
-				    	<property>/options/system/fgcamera-keys-enabled</property>
+						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
 					<camera-id>1</camera-id>
@@ -2423,7 +2414,7 @@
 				</binding>
 				<binding>
 					<condition>
-     					<property>/options/system/fgcamera-keys-enabled</property>
+						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
 					<camera-id>2</camera-id>
@@ -2470,7 +2461,7 @@
 				</binding>
 				<binding>
 					<condition>
-				    	<property>/options/system/fgcamera-keys-enabled</property>
+						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
 					<camera-id>3</camera-id>
@@ -2517,7 +2508,7 @@
 				</binding>
 				<binding>
 					<condition>
-				    	<property>/options/system/fgcamera-keys-enabled</property>
+						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
 					<camera-id>4</camera-id>
@@ -2564,7 +2555,7 @@
 				</binding>
 				<binding>
 					<condition>
-				    	<property>/options/system/fgcamera-keys-enabled</property>
+						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
 					<camera-id>5</camera-id>
@@ -2613,7 +2604,7 @@
 				</binding>
 				<binding>
 					<condition>
-				    	<property>/options/system/fgcamera-keys-enabled</property>
+						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
 					<camera-id>6</camera-id>
@@ -2670,7 +2661,7 @@
 				</binding-->
 				<binding>
 					<condition>
-				    	<property>/options/system/fgcamera-keys-enabled</property>
+						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
 					<camera-id>7</camera-id>
@@ -2706,7 +2697,7 @@
 				</binding>
 				<binding>
 					<condition>
-				    	<property>/options/system/fgcamera-keys-enabled</property>
+						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
 					<camera-id>8</camera-id>
@@ -2753,7 +2744,7 @@
 				</binding>
 				<binding>
 					<condition>
-				    	<property>/options/system/fgcamera-keys-enabled</property>
+						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
 					<camera-id>9</camera-id>
@@ -3108,16 +3099,16 @@
 					<command>nasal</command>
 					<script>controls.gearDown(1)</script>
 				</binding>
-			  	<mod-up>
-			   		<binding>
-			   			<condition>
+				<mod-up>
+					<binding>
+						<condition>
 							<not><property>/FMGC/keyboard-left</property></not>
 							<not><property>/FMGC/keyboard-right</property></not>
 						</condition>
 						<command>nasal</command>
 						<script>controls.gearDown(0)</script>
-			   		</binding>
-			  	</mod-up>
+					</binding>
+				</mod-up>
 			</key>
 			<key n="72">
 				<name>SHIFT-h</name>
@@ -4802,9 +4793,9 @@
 	</options>
 	
 	<nasal>
-        <notifications>
-            <file>Aircraft/A320-family/Nasal/emesary/M_frame_notification.nas</file>
-        </notifications>
+		<notifications>
+			<file>Aircraft/A320-family/Nasal/emesary/M_frame_notification.nas</file>
+		</notifications>
 		<pts>
 			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
 		</pts>
@@ -4833,7 +4824,7 @@
 			<file>Aircraft/A320-family/Nasal/Systems/pneumatics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/hydraulics.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fuel.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/Engines/engines-common.nas</file>
+			<file>Aircraft/A320-family/Nasal/Systems/engines.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/fadec-common.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/ADIRS/ADR.nas</file>
 			<file>Aircraft/A320-family/Nasal/Panels/SwitchingPanel.nas</file>

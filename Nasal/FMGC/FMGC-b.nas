@@ -163,7 +163,7 @@ var Text = {
 };
 
 var Settings = {
-	reducAglFt: props.globals.initNode("/it-autoflight/settings/accel-agl-ft", 1500, "INT"), # Changable from MCDU, eventually set to 1500 above runway
+	accelFt: props.globals.initNode("/it-autoflight/settings/accel-ft", 1500, "INT"), # Changable from MCDU, eventually set to 1500 above runway
 };
 
 var Sound = {
@@ -307,7 +307,7 @@ var ITAF = {
 		
 		# FLCH Engagement
 		if (Text.vertTemp == "T/O CLB") {
-			me.checkFlch(Settings.reducAglFt.getValue());
+			me.checkFlch(Settings.accelFt.getValue());
 		}
 		
 		# Altitude Capture/Sync Logic
@@ -379,7 +379,6 @@ var ITAF = {
 		} else {
 			Internal.bankLimitAuto = 30;
 		}
-		
 		Internal.bankLimit.setValue(Internal.bankLimitAuto);
 		
 		# If in LNAV mode and route is not longer active, switch to HDG HLD

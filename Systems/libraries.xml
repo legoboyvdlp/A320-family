@@ -111,38 +111,37 @@
 		<filter-gain>0.0</filter-gain>
 	</predict-simple>
 	
+	<!-- Because overwriting from JSBsim doesn't work -->
 	<filter>
-		<name>OIL PSI 1</name>
+		<name>Engine 1 Cutoff</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<property>/engines/engine[0]/n2-actual</property>
-					<entry><ind>11</ind><dep> 2</dep></entry>
-					<entry><ind>58</ind><dep>48</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/engines/engine[0]/oil-psi-actual</output>
+		<input>/systems/ignition/cutoff-jsb-1</input>
+		<output>/controls/engines/engine[0]/cutoff</output>
 	</filter>
-
+	
 	<filter>
-		<name>OIL PSI 2</name>
+		<name>Engine 2 Cutoff</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<property>/engines/engine[1]/n2-actual</property>
-					<entry><ind>11</ind><dep> 2</dep></entry>
-					<entry><ind>58</ind><dep>48</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/engines/engine[1]/oil-psi-actual</output>
+		<input>/systems/ignition/cutoff-jsb-2</input>
+		<output>/controls/engines/engine[1]/cutoff</output>
+	</filter>
+	
+	<filter>
+		<name>Engine 1 Starter</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>/systems/ignition/starter-jsb-1</input>
+		<output>/controls/engines/engine[0]/starter</output>
+	</filter>
+	
+	<filter>
+		<name>Engine 2 Starter</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>/systems/ignition/starter-jsb-2</input>
+		<output>/controls/engines/engine[1]/starter</output>
 	</filter>
 
 	<filter>

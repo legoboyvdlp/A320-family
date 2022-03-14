@@ -39,12 +39,12 @@ var canvas_lowerECAMPageEng =
 					obj.quantity[0] = sprintf("%2.1f",(0.1 * math.round(val * QT2LTR * 10,5)));
 					obj["OilQT1"].setText(sprintf("%s", left(obj.quantity[0], (size(obj.quantity[0]) == 4 ? 2 : 1))));
 					obj["OilQT1-decimal"].setText(sprintf("%s", right(obj.quantity[0],1)));
-					obj["OilQT1-needle"].setRotation(((val * QT2LTR) + 90) * D2R);
+					obj["OilQT1-needle"].setRotation(((val * QT2LTR)) * D2R);
 				} else {
 					obj.quantity[0] = sprintf("%2.1f",(0.1 * math.round(val * 10,5)));
 					obj["OilQT1"].setText(sprintf("%s", left(obj.quantity[0], (size(obj.quantity[0]) == 4 ? 2 : 1))));
 					obj["OilQT1-decimal"].setText(sprintf("%s", right(obj.quantity[0],1)));
-					obj["OilQT1-needle"].setRotation((val + 90) * D2R);
+					obj["OilQT1-needle"].setRotation((val) * D2R);
 				}
 			}),
 			props.UpdateManager.FromHashValue("engOilQt2", 0.005, func(val) {
@@ -52,12 +52,12 @@ var canvas_lowerECAMPageEng =
 					obj.quantity[1] = sprintf("%2.1f",(0.1 * math.round(val * QT2LTR * 10,5)));
 					obj["OilQT2"].setText(sprintf("%s", left(obj.quantity[1], (size(obj.quantity[1]) == 4 ? 2 : 1))));
 					obj["OilQT2-decimal"].setText(sprintf("%s", right(obj.quantity[1],1)));
-					obj["OilQT2-needle"].setRotation(((val * QT2LTR) + 90) * D2R);
+					obj["OilQT2-needle"].setRotation(((val * QT2LTR)) * D2R);
 				} else {
 					obj.quantity[1] = sprintf("%2.1f",(0.1 * math.round(val * 10,5)));
 					obj["OilQT2"].setText(sprintf("%s", left(obj.quantity[1], (size(obj.quantity[1]) == 4 ? 2 : 1))));
 					obj["OilQT2-decimal"].setText(sprintf("%s", right(obj.quantity[1],1)));
-					obj["OilQT2-needle"].setRotation((val + 90) * D2R);
+					obj["OilQT2-needle"].setRotation((val) * D2R);
 				}
 			}),
 			props.UpdateManager.FromHashValue("engOilPsi1", 0.25, func(val) {
@@ -70,7 +70,7 @@ var canvas_lowerECAMPageEng =
 				}
 
 				obj["OilPSI1"].setText(sprintf("%s", math.round(val)));
-				obj["OilPSI1-needle"].setRotation((val + 90) * D2R);
+				obj["OilPSI1-needle"].setRotation((val) * D2R);
 			}),
 			props.UpdateManager.FromHashValue("engOilPsi2", 0.25, func(val) {
 				if (val >= 13) {
@@ -82,7 +82,7 @@ var canvas_lowerECAMPageEng =
 				}
 				
 				obj["OilPSI2"].setText(sprintf("%s", math.round(val)));
-				obj["OilPSI2-needle"].setRotation((val + 90) * D2R);
+				obj["OilPSI2-needle"].setRotation((val) * D2R);
 			}),
 			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
 				if (val) {

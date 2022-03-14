@@ -222,7 +222,7 @@
 	</limits>
 	
 	<options n="0">
-		<eng type="string">CFM</eng> <!-- Apparently PW PurePower uses N1, not EPR.... sooo I use CFM ECAM, and no N1 mode switches -->
+		<eng type="string">CFM</eng> <!-- PW PurePower uses N1, not EPR... so I use CFM, and no N1 mode switches -->
 		<eng-int type="int">0</eng-int>
 		<engine-name type="string">PW1127G-JM</engine-name>
 		<maxblock type="double">52.3</maxblock>
@@ -232,5 +232,12 @@
 			<sharklet type="bool">1</sharklet>
 		</model-options>
 	</options>
+	
+	<systems n="0">
+		<ignition n="0">
+			<starter-cutoff-n2 type="double">50</starter-cutoff-n2> <!-- Check -->
+			<starter-engage-n2 type="double">16</starter-engage-n2> <!-- Check -->
+		</ignition>
+	</systems>
 
 </PropertyList>

@@ -218,7 +218,7 @@ var SystemDisplayController = {
 			}
 		}
 		
-		me.tempEngineModeSel = pts.Controls.Engines.startSw.getValue();
+		me.tempEngineModeSel = systems.IGNITION.startSw.getValue();
 		if (me.tempEngineModeSel == 0 or me.tempEngineModeSel == 2) {
 			if (!me.Display.Engine) {
 				me.Display.Engine = 1;

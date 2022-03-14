@@ -11464,7 +11464,7 @@
 		<type>knob</type>
 		<object-name>eng_mode</object-name>
 		<object-name>eng_mode.mark</object-name>
-		<property>controls/engines/engine-start-switch-knob</property>
+		<property>controls/ignition/start-sw-knob</property>
 		<factor>53</factor>
 		<offset-deg>-53</offset-deg>
 		<axis>
@@ -11474,7 +11474,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/engines/engine-start-switch</property>
+				<property>controls/ignition/start-sw</property>
 				<value>0</value>
 				<value>1</value>
 				<value>2</value>
@@ -26124,7 +26124,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/engines/engine[0]/man-start</property>
+				<property>controls/engines/engine[0]/start-switch</property>
 			</binding>
 			<binding>
 				<condition>
@@ -26191,7 +26191,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>controls/engines/engine[1]/man-start</property>
+				<property>controls/engines/engine[1]/start-switch</property>
 			</binding>
 			<binding>
 				<condition>
@@ -26272,7 +26272,7 @@
 		<object-name>Eng1ManStartBtn2O</object-name>
 		<condition>
 			<or>
-				<property>controls/engines/engine[0]/man-start</property>
+				<property>controls/engines/engine[0]/start-switch</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26283,7 +26283,7 @@
 		<object-name>Eng2ManStartBtn2O</object-name>
 		<condition>
 			<or>
-				<property>controls/engines/engine[1]/man-start</property>
+				<property>controls/engines/engine[1]/start-switch</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>

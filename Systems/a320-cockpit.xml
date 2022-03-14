@@ -37,8 +37,8 @@
 			<c1>12</c1>
 		</lag_filter>
 		
-		<lag_filter name="/controls/engines/engine-start-switch-knob">
-			<input>/controls/engines/engine-start-switch</input>
+		<lag_filter name="/controls/ignition/start-sw-knob">
+			<input>/controls/ignition/start-sw</input>
 			<c1>20</c1>
 		</lag_filter>
 		

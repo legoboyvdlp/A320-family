@@ -131,8 +131,8 @@ var systemsInit = func() {
 	systems.HYD.init();
 	systems.FUEL.init();
 	systems.ADIRS.init();
-	systems.eng_init();
 	systems.ENGINE.init();
+	systems.IGNITION.init();
 	systems.FADEC.init();
 	systems.APUController.init();
 	systems.BrakeSys.reset();
@@ -200,14 +200,6 @@ var systemsLoop = func(notification) {
 		if (systems.PNEU.Switch.groundAir.getBoolValue()) {
 			systems.PNEU.Switch.groundAir.setBoolValue(0);
 		}
-	}
-	
-	if (notification.engine1State >= 2 and pts.Fdm.JSBsim.Propulsion.Tank.contentsLbs[5].getValue() < 1) {
-		systems.cutoff_one();
-	}
-	
-	if (notification.engine2State >= 2 and pts.Fdm.JSBsim.Propulsion.Tank.contentsLbs[6].getValue() < 1) {
-		systems.cutoff_two();
 	}
 }
 
@@ -341,6 +333,7 @@ setlistener("/controls/flight/auto-coordination", func() {
     pts.Controls.Flight.autoCoordination.setBoolValue(0);
 	print("System: Auto Coordination has been turned off as it is not compatible with the fly-by-wire of this aircraft.");
 	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
+	screen.log.write("Tiller will now be controlled by aileron, rather than rudder", 1, 0, 0);
 }, 0, 0);
 
 # Legacy FCU

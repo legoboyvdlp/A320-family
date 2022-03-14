@@ -276,7 +276,7 @@ var colddark = func {
 		setprop("/controls/gear/brake-right", 1);
 		# Initial shutdown, and reinitialization.
 		setprop("/services/chocks/enable", 1);
-		setprop("/controls/engines/engine-start-switch", 1);
+		setprop("/controls/ignition/start-sw", 1);
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
 		setprop("/controls/flight/flaps", 0);
@@ -336,7 +336,7 @@ var beforestart = func {
 		setprop("/controls/gear/brake-right", 1);
 		# First, we set everything to cold and dark.
 		setprop("/services/chocks/enable", 1);
-		setprop("/controls/engines/engine-start-switch", 1);
+		setprop("/controls/ignition/start-sw", 1);
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
 		setprop("/controls/flight/flaps", 0);
@@ -433,7 +433,7 @@ var taxi = func {
 		setprop("/controls/gear/brake-right", 1);
 		# First, we set everything to cold and dark.
 		setprop("/services/chocks/enable", 0);
-		setprop("/controls/engines/engine-start-switch", 1);
+		setprop("/controls/ignition/start-sw", 1);
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
 		setprop("/controls/flight/flaps", 0);
@@ -527,9 +527,8 @@ var taxi_c = func {
 		colddark();
 		return 0; # auto-config aborted
 	}
-	setprop("/controls/engines/engine-start-switch", 2);
-	setprop("/controls/engines/engine[0]/cutoff-switch", 0);
-	setprop("/controls/engines/engine[1]/cutoff-switch", 0);
+	systems.IGNITION.fastStart(0);
+	systems.IGNITION.fastStart(1);
 	settimer(func {
 		taxi_d();
 	}, 10);
@@ -540,7 +539,6 @@ var taxi_d = func {
 		return 0; # auto-config aborted
 	}
 	# After Start items.
-	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/apu/master", 0);
 	setprop("/controls/pneumatics/switches/apu", 0);
 	setprop("/controls/gear/brake-left", 0);
