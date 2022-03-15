@@ -148,7 +148,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -166,7 +166,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -184,7 +184,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -202,7 +202,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -220,7 +220,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -238,7 +238,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -256,7 +256,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -273,7 +273,7 @@
 	<filter>
 		<name>V/S PFD</name>
 		<type>noise-spike</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -296,7 +296,7 @@
 		<name>Target Pressurize Altitude CMD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -318,7 +318,7 @@
 		<name>Target Pressurize Altitude</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<or>
@@ -350,7 +350,7 @@
 		<name>Cabin PSI target</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -376,7 +376,7 @@
 		<name>VS-target</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<equals>
@@ -402,7 +402,7 @@
 		<name>Ambient PSI (ICAO std)</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -462,7 +462,7 @@
 		<name>Outflow logic</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<equals>
@@ -518,7 +518,7 @@
 		<name>VS-target-cmd</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -544,7 +544,7 @@
 		<name>VS-target-cmd-man</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -562,7 +562,7 @@
 		<name>VS-target</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<equals>
@@ -588,7 +588,7 @@
 		<name>optalt</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -620,7 +620,7 @@
 		<name>Ambient Temp (ICAO std)</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -670,7 +670,7 @@
 		<name>Difference to ISA Temp (Actual - ISA)</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<difference>
 				<property>/environment/temperature-degc</property>
@@ -684,7 +684,7 @@
 		<name>Force Auto Coordination Off</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<enable>
 			<condition>
 				<property>/controls/flight/aileron-drives-tiller</property>
@@ -698,7 +698,7 @@
 		<name>Left Door</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -717,7 +717,7 @@
 		<name>Left Door Conversion to Degrees</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -734,7 +734,7 @@
 		<name>Right Door</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -753,7 +753,7 @@
 		<name>Right Door Conversion to Degrees</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -770,7 +770,7 @@
 		<name>Nose Door</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -789,7 +789,7 @@
 		<name>NLG Left Door Conversion to Degrees</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -806,7 +806,7 @@
 		<name>NLG Right Door Conversion to Degrees</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1234,7 +1234,7 @@
 		<name>Minimums Selector</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<not-equals>
@@ -1252,7 +1252,7 @@
 		<name>Minimums Selector</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<not-equals>
@@ -1298,7 +1298,7 @@
 		<name>Minimums Selector</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<not-equals>
@@ -1325,7 +1325,7 @@
 		<name>Minimums Minus 50</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input> 
 			<expression>
 				<difference>
@@ -1341,7 +1341,7 @@
 		<name>Minimums Plus 50</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<sum>
@@ -1357,7 +1357,7 @@
 		<name>Minimums Plus 100</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<sum>
@@ -1451,6 +1451,40 @@
 			</expression>
 		</input>
 		<output>/engines/engine[1]/egt-actual</output>
+	</filter>
+	
+	<filter>
+		<name>OIL PSI 1</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs>0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[0]/n2-actual</property>
+					<entry><ind>11</ind><dep> 2</dep></entry>
+					<entry><ind>58</ind><dep>48</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/engines/engine[0]/oil-psi-actual</output>
+	</filter>
+
+	<filter>
+		<name>OIL PSI 2</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs>0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[1]/n2-actual</property>
+					<entry><ind>11</ind><dep> 2</dep></entry>
+					<entry><ind>58</ind><dep>48</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/engines/engine[1]/oil-psi-actual</output>
 	</filter>
 	
 	<filter>
