@@ -21924,7 +21924,13 @@
 		<property>controls/switches/wiperLspd-pos</property>
 		<factor>55</factor>
 		<axis>
-			<object-name>eng_mode.axis.001</object-name>
+			<!--<object-name>eng_mode.axis.001</object-name>-->
+			<x1-m>-0.14547</x1-m>
+			<y1-m>-0.2133</y1-m>
+			<z1-m>0.89251</z1-m>
+			<x2-m>-0.14606</x2-m>
+			<y2-m>-0.21351</y2-m>
+			<z2-m>0.89402</z2-m>
 		</axis>
 		<action>
 			<binding>
@@ -21955,7 +21961,13 @@
 		<property>controls/switches/wiperRspd-pos</property>
 		<factor>55</factor>
 		<axis>
-			<object-name>eng_mode.axis.001</object-name>
+			<!--<object-name>RightWiperKnb.axis</object-name>-->
+			<x1-m>-0.14547</x1-m>
+			<y1-m>0.21407</y1-m>
+			<z1-m>0.89251</z1-m>
+			<x2-m>-0.14606</x2-m>
+			<y2-m>0.21428</y2-m>
+			<z2-m>0.89402</z2-m>
 		</axis>
 		<action>
 			<binding>
@@ -36025,10 +36037,20 @@
 	<animation>
 		<name>Overhead Panel Backlighting</name>
 		<type>material</type>
+		<object-name>AftCabinACKnb.mark</object-name>
+		<object-name>CockpitACKnb.mark</object-name>
+		<object-name>eng_mode.mark.002</object-name>
+		<object-name>eng_mode.mark.030</object-name>
 		<object-name>fd_main.001</object-name>
 		<object-name>flood_lt_main.mark.001</object-name>
+		<object-name>flood_lt_main.mark.002</object-name>
 		<object-name>flood_lt_main.mark.005</object-name>
-		<object-name>eng_mode.mark.030</object-name>
+		<object-name>FwdCabinACKnb.mark</object-name>
+		<object-name>IR1ModeKnb.mark</object-name>
+		<object-name>IR2ModeKnb.mark</object-name>
+		<object-name>IR3ModeKnb.mark</object-name>
+		<object-name>LeftWiperKnb.mark</object-name>
+		<object-name>RightWiperKnb.mark</object-name>
 		<condition>
 			<not>
 				<and>
