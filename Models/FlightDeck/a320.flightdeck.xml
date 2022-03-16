@@ -506,7 +506,6 @@
 	<!-- Special for master warning -->
 	<animation>
 		<type>select</type>
-		<object-name>autoland_light_on</object-name>
 		<object-name>master_caution_on</object-name>
 		<object-name>master_warning_on</object-name>
 		<condition>
@@ -524,6 +523,54 @@
 					<value>110</value>
 				</greater-than>
 			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>autoland_light_on</object-name>
+		<condition>
+			<and>
+				<not><property>options/enable-hud</property></not>
+				<or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-si-bus</property>
+						<value>110</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-ess-shed</property>
+						<value>110</value>
+					</greater-than-equals>
+					<greater-than>
+						<property>/systems/electrical/bus/ac-2</property>
+						<value>110</value>
+					</greater-than>
+				</or>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>autoland_light_on.plug</object-name>
+		<condition>
+			<and>
+				<property>options/enable-hud</property>
+				<or>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-si-bus</property>
+						<value>110</value>
+					</greater-than-equals>
+					<greater-than-equals>
+						<property>systems/electrical/bus/ac-ess-shed</property>
+						<value>110</value>
+					</greater-than-equals>
+					<greater-than>
+						<property>/systems/electrical/bus/ac-2</property>
+						<value>110</value>
+					</greater-than>
+				</or>
+			</and>
 		</condition>
 	</animation>
 	
@@ -787,6 +834,29 @@
 	</text>
 	
 	<!-- Overhead panel battery voltmeter -->
+	<animation>
+		<type>material</type>
+		<object-name>batt_voltage.canvas</object-name>
+		<emission>
+			<red>1</red>
+			<green>1</green>
+			<blue>1</blue>
+			<factor-prop>controls/lighting/overhead-panel-norm-digital</factor-prop>
+		</emission>
+	</animation>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/displays/lcd</inherits-from>
+		<parameters>
+			<inner-angle>90</inner-angle> <!-- 0-90, use 90 for LED or plasma display-->
+			<outer-angle>90</outer-angle> <!-- 0-90, but greater than inner -->
+			<black-angle>90</black-angle> <!-- 0-90, but greater than outer -->
+			<dirt-factor>0.09</dirt-factor>
+			<contrast><use>instrumentation/battery/lcd-contrast</use></contrast>
+		</parameters>
+		<object-name>batt_voltage.canvas</object-name>
+	</effect>
+	
 	<text>
 		<name>Battery-volt1</name>
 		<offsets>
@@ -2712,6 +2782,7 @@
 	<!-- show / hide HUD -->
 	<animation>
 		<type>select</type>
+		<object-name>autoland_light.plug</object-name>
 		<object-name>hud</object-name>
 		<object-name>hud_box</object-name>
 		<object-name>hud_brt</object-name>
@@ -2719,7 +2790,8 @@
 		<object-name>hud_norm_sw</object-name>
 		<object-name>hud_declutter_btn</object-name>
 		<object-name>hud_ceiling</object-name>
-		<object-name>fcu_labels_hud</object-name>
+		<object-name>fcu_hud.plug</object-name>
+		<object-name>fcu_labels_hud.plug</object-name>
 		<condition>
 			<property>options/enable-hud</property>
 		</condition>
@@ -2727,9 +2799,10 @@
 
 	<animation>
 		<type>select</type>
+		<object-name>autoland_light</object-name>
+		<object-name>cpit_lamp_cpt</object-name>
 		<object-name>visor_glass_cpt</object-name>
 		<object-name>visor_cpt</object-name>
-		<object-name>cpit_lamp_cpt</object-name>
 		<condition>
 			<not><property>options/enable-hud</property></not>
 		</condition>
@@ -3483,15 +3556,35 @@
 	<!-- Autoland light -->
 	<animation>
 		<type>select</type>
+		<object-name>autoland_light_on.plug</object-name>
+		<condition>
+			<and>
+				<property>options/enable-hud</property>
+				<or>
+					<property>controls/switches/annun-test</property>
+					<equals>
+						<property>instrumentation/pfd/lights/autoland-on</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
 		<object-name>autoland_light_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>instrumentation/pfd/lights/autoland-on</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<and>
+				<not><property>options/enable-hud</property></not>
+				<or>
+					<property>controls/switches/annun-test</property>
+					<equals>
+						<property>instrumentation/pfd/lights/autoland-on</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</and>
 		</condition>
 	</animation>
 	
@@ -9040,6 +9133,7 @@
 	<animation>
 		<type>pick</type>
 		<object-name>footrest_cpt</object-name>
+		<object-name>footrest_cpt2</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -9053,6 +9147,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>footrest_cpt</object-name>
+		<object-name>footrest_cpt2</object-name>
 		<property>controls/footrest-cpt</property>
 		<factor>50</factor>
 		<axis>
@@ -9063,6 +9158,7 @@
 	<animation>
 		<type>pick</type>
 		<object-name>footrest_fo</object-name>
+		<object-name>footrest_fo2</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -9076,10 +9172,11 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>footrest_fo</object-name>
+		<object-name>footrest_fo2</object-name>
 		<property>controls/footrest-fo</property>
-		<factor>-50</factor>
+		<factor>50</factor>
 		<axis>
-         <object-name>footrest_fo.axis</object-name>
+         <object-name>footrest_cpt.axis</object-name>
 		</axis>
 	</animation>
 	
@@ -35984,6 +36081,7 @@
 		<name>FCU Panel Backlighting</name>
 		<type>material</type>
 		<object-name>fcu_labels</object-name>
+		<object-name>fcu_labels_hud.plug</object-name>
 		<object-name>hud_brt.mark</object-name>
 		<condition>
 			<not>
@@ -36011,6 +36109,7 @@
 		<name>FCU Panel Backlighting (dome)</name>
 		<type>material</type>
 		<object-name>fcu_labels</object-name>
+		<object-name>fcu_labels_hud.plug</object-name>
 		<object-name>hud_brt.mark</object-name>
 		<condition>
 			<and>
@@ -36751,6 +36850,7 @@
 		<object-name>clock_glare</object-name>
 		<object-name>eng_mode.mark.030</object-name>
 		<object-name>fcu_labels</object-name>
+		<object-name>fcu_labels_hud.plug</object-name>
 		<object-name>fd_main.001</object-name>
 		<object-name>flood_lt_main.mark.001</object-name>
 		<object-name>flood_lt_main.mark.005</object-name>
