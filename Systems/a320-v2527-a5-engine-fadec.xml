@@ -1947,6 +1947,72 @@
 			<output>/engines/engine[1]/epr-actual</output>
 		</fcs_function>
 		
+		<fcs_function name="fadec/egt-cmd-1">
+			<function>
+				<sum>
+					<property>propulsion/tat-c</property>
+					<table>
+						<independentVar lookup="row">/engines/engine[0]/n2</independentVar>
+						<independentVar lookup="column">atmosphere/density-altitude</independentVar>
+						<independentVar lookup="table">/controls/engines/engine[0]/cutoff</independentVar>
+						<tableData breakPoint="0">
+							         0    50000
+							 10.0    0    0
+							 45.0  440  340
+							 50.0  435  335
+							 60.9  380  285
+							100.0  510  390
+						</tableData>
+						<tableData breakPoint="1">
+							       0    50000
+							 30.0  0    0
+							 60.9  380  265
+							100.0  510  370
+						</tableData>
+					</table>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="fadec/egt-actual-1">
+			<input>fadec/egt-cmd-1</input>
+			<c1>0.35</c1>
+			<output>/engines/engine[0]/egt-actual</output>
+		</lag_filter>
+		
+		<fcs_function name="fadec/egt-cmd-2">
+			<function>
+				<sum>
+					<property>propulsion/tat-c</property>
+					<table>
+						<independentVar lookup="row">/engines/engine[1]/n2</independentVar>
+						<independentVar lookup="column">atmosphere/density-altitude</independentVar>
+						<independentVar lookup="table">/controls/engines/engine[1]/cutoff</independentVar>
+						<tableData breakPoint="0">
+							         0    50000
+							 10.0    0    0
+							 45.0  440  340
+							 50.0  435  335
+							 60.9  380  285
+							100.0  510  390
+						</tableData>
+						<tableData breakPoint="1">
+							       0    50000
+							 30.0  0    0
+							 60.9  380  285
+							100.0  510  390
+						</tableData>
+					</table>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="fadec/egt-actual-2">
+			<input>fadec/egt-cmd-2</input>
+			<c1>0.35</c1>
+			<output>/engines/engine[1]/egt-actual</output>
+		</lag_filter>
+		
 		<lag_filter name="fadec/n2-actual-1">
 			<input>/engines/engine[0]/n2</input>
 			<c1>2.25</c1>
