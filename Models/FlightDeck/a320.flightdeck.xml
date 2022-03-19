@@ -2801,10 +2801,35 @@
 		<type>select</type>
 		<object-name>autoland_light</object-name>
 		<object-name>cpit_lamp_cpt</object-name>
+		<object-name>fcu_no_hud.plug</object-name>
 		<object-name>visor_glass_cpt</object-name>
 		<object-name>visor_cpt</object-name>
 		<condition>
 			<not><property>options/enable-hud</property></not>
+		</condition>
+	</animation>
+	
+	<!-- Overhead variants -->
+	<animation>
+		<type>select</type>
+		<object-name>ovh_eng_cfm.plug</object-name>
+		<condition>
+			<equals>
+				<property>options/eng</property>
+				<value>CFM</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>ovh_eng_iae.plug</object-name>
+		<object-name>glare_ovh_eng_iae.plug</object-name>
+		<condition>
+			<equals>
+				<property>options/eng</property>
+				<value>IAE</value>
+			</equals>
 		</condition>
 	</animation>
 	
@@ -36141,6 +36166,7 @@
 		<object-name>eng_mode.mark.002</object-name>
 		<object-name>eng_mode.mark.030</object-name>
 		<object-name>fd_main.001</object-name>
+		<object-name>glare_ovh_eng_iae.plug</object-name>
 		<object-name>flood_lt_main.mark.001</object-name>
 		<object-name>flood_lt_main.mark.002</object-name>
 		<object-name>flood_lt_main.mark.005</object-name>
@@ -36176,6 +36202,7 @@
 		<name>Overhead Panel Backlighting (dome)</name>
 		<type>material</type>
 		<object-name>fd_main.001</object-name>
+		<object-name>glare_ovh_eng_iae.plug</object-name>
 		<object-name>flood_lt_main.mark.001</object-name>
 		<object-name>flood_lt_main.mark.005</object-name>
 		<object-name>eng_mode.mark.030</object-name>
@@ -36348,6 +36375,10 @@
 		<object-name>dcduBtnR.pgeminus</object-name>
 		<object-name>dcduBtnR.pgeplus</object-name>
 		<object-name>fd_main</object-name>
+		<object-name>fcu_hud.plug</object-name>
+		<object-name>fcu_no_hud.plug</object-name>
+		<object-name>ovh_eng_cfm.plug</object-name>
+		<object-name>ovh_eng_iae.plug</object-name>
 		<object-name>Eng1FireCover</object-name>
 		<object-name>Eng2FireCover</object-name>
 		<object-name>APUFireCover</object-name>
@@ -36441,6 +36472,11 @@
 	<!-- Effects -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/cockpit-irradiance</inherits-from>
+		<object-name>fcu_hud.plug</object-name>
+		<object-name>fcu_no_hud.plug</object-name>
+		<object-name>fd_main</object-name>
+		<object-name>ovh_eng_cfm.plug</object-name>
+		<object-name>ovh_eng_iae.plug</object-name>
 		<object-name>ACP</object-name>
 		<object-name>atc_0</object-name>
 		<object-name>atc_1</object-name>
@@ -36852,6 +36888,7 @@
 		<object-name>fcu_labels</object-name>
 		<object-name>fcu_labels_hud.plug</object-name>
 		<object-name>fd_main.001</object-name>
+		<object-name>glare_ovh_eng_iae.plug</object-name>
 		<object-name>flood_lt_main.mark.001</object-name>
 		<object-name>flood_lt_main.mark.005</object-name>
 		<object-name>hud_brt.mark</object-name>
