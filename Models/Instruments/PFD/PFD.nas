@@ -191,19 +191,31 @@ var canvas_pfd = {
 		obj["LOC_scale"].hide();
 		obj["GS_scale"].hide();
 		
+		obj.temporaryNodes = {
+			showGroundReferenceAGL: 0,
+			showTailstrikeAGL: 0,
+			showTailstrikeGroundspeed: 0,
+			showTailstrikeThrust: 0,
+		};
+		
+		obj.AICenter = obj["AI_center"].getCenter();
+		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("pitchPFD", nil, func(val) {
+			props.UpdateManager.FromHashValue("pitchPFD", 0.05, func(val) {
 				obj.AI_horizon_trans.setTranslation(0, val * 11.825);
 			}),
-			props.UpdateManager.FromHashValue("roll", nil, func(val) {
-				obj.AI_horizon_rot.setRotation(-val * D2R, obj["AI_center"].getCenter());
-				obj.AI_horizon_ground_rot.setRotation(-val * D2R, obj["AI_center"].getCenter());
-				obj.AI_horizon_sky_rot.setRotation(-val * D2R, obj["AI_center"].getCenter());
+			props.UpdateManager.FromHashValue("roll", 0.1, func(val) {
+				obj.AI_horizon_rot.setRotation(-val * D2R, obj.AICenter);
+				obj.AI_horizon_ground_rot.setRotation(-val * D2R, obj.AICenter);
+				obj.AI_horizon_sky_rot.setRotation(-val * D2R, obj.AICenter);
+				obj.AI_horizon_hdg_rot.setRotation(-val * D2R, obj.AICenter);
 				obj["AI_bank"].setRotation(-val * D2R);
 				obj["AI_agl_g"].setRotation(-val * D2R);
-				obj.AI_horizon_hdg_rot.setRotation(-val * D2R, obj["AI_center"].getCenter());
 			}),
-			props.UpdateManager.FromHashValue("fbwLaw", nil, func(val) {
+			props.UpdateManager.FromHashValue("roll", nil, func(val) {
+				obj.AI_horizon_hdg_rot.setRotation(-val * D2R, obj.AICenter);
+			}),
+			props.UpdateManager.FromHashValue("fbwLaw", 1, func(val) {
 				if (val == 0) {
 					obj["AI_bank_lim"].show();
 					obj["AI_pitch_lim"].show();
@@ -216,22 +228,22 @@ var canvas_pfd = {
 					obj["AI_pitch_lim_X"].show();
 				}
 			}),
-			props.UpdateManager.FromHashValue("horizonGround", nil, func(val) {
+			props.UpdateManager.FromHashValue("horizonGround", 0.1, func(val) {
 				obj.AI_horizon_ground_trans.setTranslation(0, val * 11.825);
 			}),
-			props.UpdateManager.FromHashValue("horizonPitch", nil, func(val) {
+			props.UpdateManager.FromHashValue("horizonPitch", 0.1, func(val) {
 				obj.AI_horizon_hdg_trans.setTranslation(obj.middleOffset, val * 11.825);
 			}),
-			props.UpdateManager.FromHashValue("slipSkid", nil, func(val) {
+			props.UpdateManager.FromHashValue("slipSkid", 0.1, func(val) {
 				obj["AI_slipskid"].setTranslation(math.clamp(val, -15, 15) * 7, 0);
 			}),
-			props.UpdateManager.FromHashValue("FDRollBar", nil, func(val) {
+			props.UpdateManager.FromHashValue("FDRollBar", 0.2, func(val) {
 				obj["FD_roll"].setTranslation(val * 2.2, 0);
 			}),
-			props.UpdateManager.FromHashValue("FDPitchBar", nil, func(val) {
+			props.UpdateManager.FromHashValue("FDPitchBar", 0.2, func(val) {
 				obj["FD_pitch"].setTranslation(0, val * -3.8);
 			}),
-			props.UpdateManager.FromHashValue("agl", nil, func(val) {
+			props.UpdateManager.FromHashValue("agl", 0.5, func(val) {
 				if (val >= 50) {
 					obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500),10)));
 				} else if (val >= 5) {
@@ -240,29 +252,38 @@ var canvas_pfd = {
 					obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500))));
 				}
 				obj["ground_ref"].setTranslation(0, (-val / 100) * -48.66856);
-			}),
-			props.UpdateManager.FromHashList(["agl","gear1Wow", "gear2Wow","fmgcPhase"], nil, func(val) {
-				if (-val.agl >= -565 and -val.agl <= 565) {
-					if ((val.fmgcPhase == 5 or val.fmgcPhase == 6) and !val.gear1Wow and !val.gear2Wow) { # TODO: add std too
-						obj["ground"].setTranslation(0, (-val.agl / 100) * -48.66856);
-						obj["ground"].show();
-					} else {
-						obj["ground"].hide();
-					}
+				obj["ground"].setTranslation(0, (-val / 100) * -48.66856);
+				
+				if (abs(val) <= 565) {
+					obj.temporaryNodes.showGroundReferenceAGL = 1;
 				} else {
-					obj["ground"].hide();
+					obj.temporaryNodes.showGroundReferenceAGL = 0;
+				}
+				
+				if (val <= 400) {
+					obj.temporaryNodes.showTailstrikeAGL = 1;
+				} else {
+					obj.temporaryNodes.showTailstrikeAGL = 0;
 				}
 			}),
-			props.UpdateManager.FromHashValue("vsNeedle", nil, func(val) {
+			props.UpdateManager.FromHashValue("vsNeedle", 0.1, func(val) {
 				obj["VS_pointer"].setRotation(val * D2R);
 			}),
-			props.UpdateManager.FromHashValue("vsDigit", nil, func(val) {
+			props.UpdateManager.FromHashValue("vsDigit", 0.5, func(val) {
 				obj["VS_box"].setTranslation(0, val);
 			}),
-			props.UpdateManager.FromHashValue("localizer", nil, func(val) {
+			props.UpdateManager.FromHashValue("vsPFD", 0.5, func(val) {
+				if (val < 2) {
+					obj["VS_box"].hide();
+				} else {
+					obj["VS_digit"].setText(sprintf("%02d", val));
+					obj["VS_box"].show();
+				}
+			}),
+			props.UpdateManager.FromHashValue("localizer", 0.01, func(val) {
 				obj["LOC_pointer"].setTranslation(val * 197, 0);	
 			}),
-			props.UpdateManager.FromHashValue("glideslope", nil, func(val) {
+			props.UpdateManager.FromHashValue("glideslope", 0.01, func(val) {
 				obj["GS_pointer"].setTranslation(0, val * -197);
 			}),
 			props.UpdateManager.FromHashList(["athr", "thrustLvrClb"], nil, func(val) {
@@ -272,24 +293,11 @@ var canvas_pfd = {
 					obj["FMA_lvrclb"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["trackPFD","headingPFD"], nil, func(val) {
-				obj.track_diff = geo.normdeg180(val.trackPFD - val.headingPFD);
+			props.UpdateManager.FromHashList(["trackPFD","headingPFD"], 0.1, func(val) {
+				obj.track_diff = geo.normdeg180(val.trackPFD - val.headingPFD); # store this to use in FPV
 				obj["TRK_pointer"].setTranslation(obj.getTrackDiffPixels(obj.track_diff),0);
 			}),
-			props.UpdateManager.FromHashValue("vsPFD", nil, func(val) {
-				if (val < 2) {
-					obj["VS_box"].hide();
-				} else {
-					obj["VS_box"].show();
-				}
-				
-				if (val < 10) {
-					obj["VS_digit"].setText(sprintf("%02d", "0" ~ val));
-				} else {
-					obj["VS_digit"].setText(sprintf("%02d", val));
-				}
-			}),
-			props.UpdateManager.FromHashList(["vsAutopilot","agl"], nil, func(val) {
+			props.UpdateManager.FromHashList(["vsAutopilot","agl"], 5, func(val) {
 				if (abs(val.vsAutopilot) >= 6000 or (val.vsAutopilot <= -2000 and val.agl <= 2500) or (val.vsAutopilot <= -1200 and val.agl <= 1000)) {
 					obj["VS_digit"].setColor(0.7333,0.3803,0);
 					obj["VS_pointer"].setColor(0.7333,0.3803,0);
@@ -300,10 +308,10 @@ var canvas_pfd = {
 					obj["VS_pointer"].setColorFill(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashList(["aileronPFD","elevatorPFD"], nil, func(val) {
+			props.UpdateManager.FromHashList(["aileronPFD","elevatorPFD"], 0.01, func(val) {
 				obj["AI_stick_pos"].setTranslation(val.aileronPFD * 196.8, val.elevatorPFD * 151.5);
 			}),
-			props.UpdateManager.FromHashValue("headingScale", nil, func(val) {
+			props.UpdateManager.FromHashValue("headingScale", 0.025, func(val) {
 				obj.heading = val;
 				obj.heading10 = (obj.heading / 10);
 				obj.headOffset = obj.heading10 - int(obj.heading10);
@@ -368,7 +376,7 @@ var canvas_pfd = {
 				}
 			}),
 			props.UpdateManager.FromHashList(["apBox","apMode"], nil, func(val) {
-				obj["FMA_ap"].setText(sprintf("%s", val.apMode));
+				obj["FMA_athr"].setText(val.apMode);
 				if (val.apBox and val.apMode != " ") {
 					obj["FMA_ap_box"].show();
 				} else {
@@ -376,7 +384,7 @@ var canvas_pfd = {
 				}
 			}),
 			props.UpdateManager.FromHashList(["atBox","atMode"], nil, func(val) {
-				obj["FMA_athr"].setText(sprintf("%s", val.atMode));
+				obj["FMA_athr"].setText(val.atMode);
 				if (val.atBox and val.atMode != " ") {
 					obj["FMA_athr_box"].show();
 				} else {
@@ -384,26 +392,25 @@ var canvas_pfd = {
 				}
 			}),
 			props.UpdateManager.FromHashValue("rollMode", nil, func(val) {
-				obj["FMA_roll"].setText(sprintf("%s", val));
+				obj["FMA_roll"].setText(val);
 			}),
 			props.UpdateManager.FromHashValue("rollModeArmed", nil, func(val) {
-				obj["FMA_rollarm"].setText(sprintf("%s", val));
+				obj["FMA_rollarm"].setText(val);
 			}),
 			props.UpdateManager.FromHashList(["pitchMode","pitchModeBox","autopilotVS","autopilotFPA","pitchMode2Armed","pitchModeArmed","pitchMode2ArmedBox","pitchModeArmedBox","rollMode","rollModeBox","rollModeArmed","rollModeArmedBox","ap1","ap2","fd1","fd2"], nil, func(val) {
-				obj["FMA_combined"].setText(sprintf("%s", val.pitchMode));
+				obj["FMA_combined"].setText(val.pitchMode);
 				if (val.pitchMode == "V/S") {
-					obj["FMA_pitch"].setText(sprintf("%s     ", val.pitchMode));
+					obj["FMA_pitch"].setText("V/S     ");
 					obj["vsFMArate"].setText(sprintf("%+4.0f",val.autopilotVS));
 					obj["vsFMArate"].show();
 				} elsif (val.pitchMode == "FPA") {
-					obj["FMA_pitch"].setText(sprintf("%s     ", val.pitchMode));
+					obj["FMA_pitch"].setText("FPA     ");
 					obj["vsFMArate"].setText(sprintf("%+3.1f°",val.autopilotFPA));
 					obj["vsFMArate"].show();
 				} else {
-					obj["FMA_pitch"].setText(sprintf("%s", val.pitchMode));
+					obj["FMA_pitch"].setText(val.pitchMode);
 					obj["vsFMArate"].hide();
 				}
-				
 				
 				if (val.pitchMode == "LAND" or val.pitchMode == "FLARE" or val.pitchMode == "ROLL OUT") {
 					obj["FMA_pitch"].hide();
@@ -455,13 +462,13 @@ var canvas_pfd = {
 				}
 			}),
 			props.UpdateManager.FromHashValue("pitchModeArmed", nil, func(val) {
-				obj["FMA_pitcharm"].setText(sprintf("%s", val));
+				obj["FMA_pitcharm"].setText(val);
 			}),
 			props.UpdateManager.FromHashValue("pitchMode2Armed", nil, func(val) {
-				obj["FMA_pitcharm2"].setText(sprintf("%s", val));
+				obj["FMA_pitcharm2"].setText(val);
 			}),
 			props.UpdateManager.FromHashList(["fdBox","fdMode"], nil, func(val) {
-				obj["FMA_fd"].setText(sprintf("%s", val.fdMode));
+				obj["FMA_fd"].setText(val.fdMode);
 				if (val.fdBox and val.fdMode != " ") {
 					obj["FMA_fd_box"].show();
 				} else {
@@ -680,14 +687,21 @@ var canvas_pfd = {
 					obj["FMA_thrust_box"].setColor(0.8078,0.8039,0.8078);
 				}
 			}),
-			props.UpdateManager.FromHashValue("flexTemp", nil, func(val) {
+			props.UpdateManager.FromHashValue("flexTemp", 1, func(val) {
 				obj["FMA_flxtemp"].setText(sprintf("%s", "+" ~ val));
 			}),
-			props.UpdateManager.FromHashList(["agl","groundspeed","thr1","thr2"], nil, func(val) {
-				if (val.agl < 400 and val.groundspeed > 50 and val.thr1 < 0.78 and val.thr2 < 0.78) {
-					obj["tailstrikeInd"].show();
+			props.UpdateManager.FromHashValue("groundspeed", 1, func(val) {
+				if (val > 50) {
+					obj.temporaryNodes.showTailstrikeGroundspeed = 1;
 				} else {
-					obj["tailstrikeInd"].hide();
+					obj.temporaryNodes.showTailstrikeGroundspeed = 0;
+				}
+			}),
+			props.UpdateManager.FromHashList(["thr1","thr2"], 0.05, func(val) {
+				if (val.thr1 < 0.78 and val.thr2 < 0.78) {
+					obj.temporaryNodes.showTailstrikeThrust = 1;
+				} else {
+					obj.temporaryNodes.showTailstrikeThrust = 0;
 				}
 			}),
 			props.UpdateManager.FromHashList(["hdgDiff","showHdg","targetHeading"], nil, func(val) {
@@ -836,7 +850,7 @@ var canvas_pfd = {
 				me["FPV"].hide();	
 			} else {
 				me.AI_fpv_trans.setTranslation(me.getTrackDiffPixels(math.clamp(me.track_diff, -21, 21)), math.clamp(me.aoa, -20, 20) * 12.5); 
-				me.AI_fpv_rot.setRotation(-notification.roll * D2R, me["AI_center"].getCenter());
+				me.AI_fpv_rot.setRotation(-notification.roll * D2R, obj.AICenter);
 				me["FPV"].setRotation(notification.roll * D2R); # It shouldn't be rotated, only the axis should be
 				me["FPV"].show();
 			}
@@ -1238,7 +1252,7 @@ var canvas_pfd = {
 				me["ASI_trend_down"].hide();
 			}
 					
-			if (-notification.agl >= -565 and -notification.agl <= 565) {
+			if (me.temporaryNodes.showGroundReferenceAGL) {
 				me["ground_ref"].show();
 			} else {
 				me["ground_ref"].hide();
@@ -1762,6 +1776,22 @@ var canvas_pfd = {
 			me["ILS_HDG_R"].hide();
 			me["ILS_HDG_L"].hide();
 			me["CRS_pointer"].hide();
+		}
+		
+		if (me.temporaryNodes.showGroundReferenceAGL) {
+			if ((notification.fmgcPhase == 5 or notification.fmgcPhase == 6) and !notification.gear1Wow and !notification.gear2Wow) { # TODO: add std too
+				me["ground"].show();
+			} else {
+				me["ground"].hide();
+			}
+		} else {
+			me["ground"].hide();
+		}
+		
+		if (me.temporaryNodes.showTailstrikeAGL and me.temporaryNodes.showTailstrikeGroundspeed and me.temporaryNodes.showTailstrikeThrust) {
+			me["tailstrikeInd"].show();
+		} else {
+			me["tailstrikeInd"].hide();
 		}
 		
 		foreach(var update_item; me.update_items)
