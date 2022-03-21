@@ -211,9 +211,8 @@ var canvas_pfd = {
 				obj.AI_horizon_hdg_rot.setRotation(-val * D2R, obj.AICenter);
 				obj["AI_bank"].setRotation(-val * D2R);
 				obj["AI_agl_g"].setRotation(-val * D2R);
-			}),
-			props.UpdateManager.FromHashValue("roll", nil, func(val) {
-				obj.AI_horizon_hdg_rot.setRotation(-val * D2R, obj.AICenter);
+				obj.AI_fpv_rot.setRotation(-val * D2R, obj.AICenter);
+				obj["FPV"].setRotation(val * D2R); # It shouldn't be rotated, only the axis should 
 			}),
 			props.UpdateManager.FromHashValue("fbwLaw", 1, func(val) {
 				if (val == 0) {
@@ -231,8 +230,8 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashValue("horizonGround", 0.1, func(val) {
 				obj.AI_horizon_ground_trans.setTranslation(0, val * 11.825);
 			}),
-			props.UpdateManager.FromHashValue("horizonPitch", 0.1, func(val) {
-				obj.AI_horizon_hdg_trans.setTranslation(0, val * 11.825);
+			props.UpdateManager.FromHashList(["middleOffset","horizonPitch"], 0.1, func(val) {
+				obj.AI_horizon_hdg_trans.setTranslation(val.middleOffset, val.horizonPitch * 11.825);
 			}),
 			props.UpdateManager.FromHashValue("slipSkid", 0.1, func(val) {
 				obj["AI_slipskid"].setTranslation(math.clamp(val, -15, 15) * 7, 0);
@@ -297,6 +296,9 @@ var canvas_pfd = {
 				obj.track_diff = geo.normdeg180(val.trackPFD - val.headingPFD); # store this to use in FPV
 				obj["TRK_pointer"].setTranslation(obj.getTrackDiffPixels(obj.track_diff),0);
 			}),
+			props.UpdateManager.FromHashList(["trackPFD","headingPFD","aoaPFD"], 0.01, func(val) {
+				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -20, 20) * 12.5); 
+			}),
 			props.UpdateManager.FromHashList(["vsAutopilot","agl"], 5, func(val) {
 				if (abs(val.vsAutopilot) >= 6000 or (val.vsAutopilot <= -2000 and val.agl <= 2500) or (val.vsAutopilot <= -1200 and val.agl <= 1000)) {
 					obj["VS_digit"].setColor(0.7333,0.3803,0);
@@ -336,7 +338,6 @@ var canvas_pfd = {
 					obj.middleOffset = -obj.headOffset * 98.5416;
 				}
 				
-				obj.AI_horizon_hdg_trans.setTranslation(obj.middleOffset, 0);
 				obj["HDG_scale"].setTranslation(obj.middleOffset, 0);
 				obj["HDG_scale"].update();
 				
@@ -357,7 +358,7 @@ var canvas_pfd = {
 				obj["HDG_seven"].setFontSize(fontSizeHDG(obj.rightText3), 1);
 				obj["HDG_one"].setFontSize(fontSizeHDG(obj.leftText3), 1);
 			}),
-			props.UpdateManager.FromHashValue("altitudeAutopilot", nil, func(val) {
+			props.UpdateManager.FromHashValue("altitudeAutopilot", 50, func(val) {
 				obj["ALT_digit_UP_metric"].setText(sprintf("%5.0fM", val * 0.3048));
 			}),
 			props.UpdateManager.FromHashList(["fac1","fac2"], nil, func(val) {
@@ -763,6 +764,13 @@ var canvas_pfd = {
 					obj["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
 				}
 			}),
+			props.UpdateManager.FromHashValue("dmeDistance", 0.05, func(val) {
+				if (val < 19.95) {
+					obj["dme_dist"].setText(sprintf("%1.1f", val));
+				} else {
+					obj["dme_dist"].setText(sprintf("%2.0f", val));
+				}
+			}),
 		];
 		
 		obj.update_items_mismatch = [
@@ -809,6 +817,7 @@ var canvas_pfd = {
 	aoa: 0,
 	showMetricAlt: 0,
 	ASItrendIsShown: 0,
+	onsideADIRSOperating: 0,
 	update: func(notification) {
 		me.updatePower(notification);
 		
@@ -827,6 +836,12 @@ var canvas_pfd = {
 		
 		# Errors
 		if (systems.ADIRS.ADIRunits[(me.number == 0 ? 0 : 1)].operating == 1 or (systems.ADIRS.ADIRunits[2].operating == 1 and notification.attSwitch == (me.number == 0 ? -1 : 1))) {
+			me.onsideADIRSOperating = 1;
+		} else {
+			me.onsideADIRSOperating = 0;
+		}
+		
+		if (me.onsideADIRSOperating) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
@@ -844,15 +859,13 @@ var canvas_pfd = {
 			me["VS_group"].hide();
 		}
 		
+		notification.aoaPFD = (me.number == 0 ? me.getAOAForPFD1() : me.getAOAForPFD2());
+		notification.middleOffset = me.middleOffset;
 		# FPV
 		if (notification.trkFpa) {
-			me.aoa = (me.number == 0 ? me.getAOAForPFD1() : me.getAOAForPFD2());	
-			if (me.aoa == nil or (systems.ADIRS.ADIRunits[(me.number == 0 ? 0 : 1)].operating != 1) or (systems.ADIRS.ADIRunits[2].operating != 1 and notification.attSwitch == (me.number == 0 ? -1 : 1))){
+			if (notification.aoaPFD == nil or !me.onsideADIRSOperating){
 				me["FPV"].hide();	
 			} else {
-				me.AI_fpv_trans.setTranslation(me.getTrackDiffPixels(math.clamp(me.track_diff, -21, 21)), math.clamp(me.aoa, -20, 20) * 12.5); 
-				me.AI_fpv_rot.setRotation(-notification.roll * D2R, obj.AICenter);
-				me["FPV"].setRotation(notification.roll * D2R); # It shouldn't be rotated, only the axis should be
 				me["FPV"].show();
 			}
 		} else {
@@ -1720,12 +1733,6 @@ var canvas_pfd = {
 				if (notification.dmeInRange) {
 					me["dme_dist"].show();
 					me["dme_dist_legend"].show();
-					
-					if (notification.dmeDistance < 20.0) {
-						me["dme_dist"].setText(sprintf("%1.1f", notification.dmeDistance));
-					} else {
-						me["dme_dist"].setText(sprintf("%2.0f", notification.dmeDistance));
-					}
 				} else {
 					me["dme_dist"].hide();
 					me["dme_dist_legend"].hide();
