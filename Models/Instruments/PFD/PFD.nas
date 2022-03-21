@@ -232,7 +232,7 @@ var canvas_pfd = {
 				obj.AI_horizon_ground_trans.setTranslation(0, val * 11.825);
 			}),
 			props.UpdateManager.FromHashValue("horizonPitch", 0.1, func(val) {
-				obj.AI_horizon_hdg_trans.setTranslation(obj.middleOffset, val * 11.825);
+				obj.AI_horizon_hdg_trans.setTranslation(0, val * 11.825);
 			}),
 			props.UpdateManager.FromHashValue("slipSkid", 0.1, func(val) {
 				obj["AI_slipskid"].setTranslation(math.clamp(val, -15, 15) * 7, 0);
@@ -336,6 +336,7 @@ var canvas_pfd = {
 					obj.middleOffset = -obj.headOffset * 98.5416;
 				}
 				
+				obj.AI_horizon_hdg_trans.setTranslation(obj.middleOffset, 0);
 				obj["HDG_scale"].setTranslation(obj.middleOffset, 0);
 				obj["HDG_scale"].update();
 				
