@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+
+<PropertyList>
+
+	<path>res/IESI.ac</path>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>iesi.screen</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>canvas_iesi.showIESI();</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>iesi.screen</object-name>
+		<emission>
+			<red>1</red>
+			<green>1</green>
+			<blue>1</blue>
+			<factor-prop>controls/lighting/DU/iesi</factor-prop>
+		</emission>
+	</animation>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/displays/lcd</inherits-from>
+		<parameters>
+			<inner-angle>90</inner-angle> <!-- 0-90, use 90 for LED or plasma display-->
+			<outer-angle>90</outer-angle> <!-- 0-90, but greater than inner -->
+			<black-angle>90</black-angle> <!-- 0-90, but greater than outer -->
+			<dirt-factor>0.09</dirt-factor>
+			<contrast><use>instrumentation/iesi/lcd-contrast</use></contrast>
+		</parameters>
+		<object-name>iesi.screen</object-name>
+	</effect>
+
+</PropertyList>

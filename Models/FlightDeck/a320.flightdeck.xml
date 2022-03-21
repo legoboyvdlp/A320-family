@@ -836,7 +836,8 @@
 	<!-- Overhead panel battery voltmeter -->
 	<animation>
 		<type>material</type>
-		<object-name>batt_voltage.canvas</object-name>
+		<object-name>batt_voltage.canvas.L</object-name>
+		<object-name>batt_voltage.canvas.R</object-name>
 		<emission>
 			<red>1</red>
 			<green>1</green>
@@ -844,122 +845,6 @@
 			<factor-prop>controls/lighting/overhead-panel-norm-digital</factor-prop>
 		</emission>
 	</animation>
-	
-	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/displays/lcd</inherits-from>
-		<parameters>
-			<inner-angle>90</inner-angle> <!-- 0-90, use 90 for LED or plasma display-->
-			<outer-angle>90</outer-angle> <!-- 0-90, but greater than inner -->
-			<black-angle>90</black-angle> <!-- 0-90, but greater than outer -->
-			<dirt-factor>0.09</dirt-factor>
-			<contrast><use>instrumentation/battery/lcd-contrast</use></contrast>
-		</parameters>
-		<object-name>batt_voltage.canvas</object-name>
-	</effect>
-	
-	<text>
-		<name>Battery-volt1</name>
-		<offsets>
-			<x-m>0.114295</x-m>
-			<y-m>-0.05412</y-m>
-			<z-m>1.000</z-m>
-			<pitch-deg>90</pitch-deg>
-			<roll-deg>90</roll-deg>
-			<heading-deg>0</heading-deg>
-		</offsets>
-		<alignment>center-center</alignment>
-		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">number-value</type>
-		<format type="string">%2.1fV</format>
-		<property>systems/electrical/bus/dc-hot-1</property>
-		<font type="string">Airbus7Seg.ttf</font>
-		<draw-text type="bool">true</draw-text>
-		<draw-alignment type="bool">false</draw-alignment>
-		<draw-boundingbox type="bool">false</draw-boundingbox>
-		<character-size>0.007</character-size>
-		<font-resolution>
-			<width type="int">32</width>
-			<height type="int">32</height>
-		</font-resolution>
-	</text>
-
-	<text>
-		<name>Battery-volt1-test</name>
-		<offsets>
-			<x-m>0.114295</x-m>
-			<y-m>-0.05412</y-m>
-			<z-m>1.000</z-m>
-			<pitch-deg>90</pitch-deg>
-			<roll-deg>90</roll-deg>
-			<heading-deg>0</heading-deg>
-		</offsets>
-		<alignment>center-center</alignment>
-		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">text-value</type>
-		<format type="string">88.8V</format>
-		<property>autopilot/serviceable</property>
-		<font type="string">Airbus7Seg.ttf</font>
-		<draw-text type="bool">true</draw-text>
-		<draw-alignment type="bool">false</draw-alignment>
-		<draw-boundingbox type="bool">false</draw-boundingbox>
-		<character-size>0.007</character-size>
-		<font-resolution>
-			<width type="int">32</width>
-			<height type="int">32</height>
-		</font-resolution>
-	</text>
-
-	<text>
-		<name>Battery-volt2</name>
-		<offsets>
-			<x-m>0.114303</x-m>
-			<y-m>0.034005</y-m>
-			<z-m>1.000</z-m>
-			<pitch-deg>90</pitch-deg>
-			<roll-deg>90</roll-deg>
-			<heading-deg>0</heading-deg>
-		</offsets>
-		<alignment>center-center</alignment>
-		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">number-value</type>
-		<format type="string">%2.1fV</format>
-		<property>systems/electrical/bus/dc-hot-2</property>
-		<font type="string">Airbus7Seg.ttf</font>
-		<draw-text type="bool">true</draw-text>
-		<draw-alignment type="bool">false</draw-alignment>
-		<draw-boundingbox type="bool">false</draw-boundingbox>
-		<character-size>0.007</character-size>
-		<font-resolution>
-			<width type="int">32</width>
-			<height type="int">32</height>
-		</font-resolution>
-	</text>
-
-	<text>
-		<name>Battery-volt2-test</name>
-		<offsets>
-			<x-m>0.114303</x-m>
-			<y-m>0.034005</y-m>
-			<z-m>1.000</z-m>
-			<pitch-deg>90</pitch-deg>
-			<roll-deg>90</roll-deg>
-			<heading-deg>0</heading-deg>
-		</offsets>
-		<alignment>center-center</alignment>
-		<axis-alignment>xy-plane</axis-alignment>
-		<type type="string">text-value</type>
-		<format type="string">88.8V</format>
-		<property>autopilot/serviceable</property>
-		<font type="string">Airbus7Seg.ttf</font>
-		<draw-text type="bool">true</draw-text>
-		<draw-alignment type="bool">false</draw-alignment>
-		<draw-boundingbox type="bool">false</draw-boundingbox>
-		<character-size>0.007</character-size>
-		<font-resolution>
-			<width type="int">32</width>
-			<height type="int">32</height>
-		</font-resolution>
-	</text>
 	
 	<!-- DME -->
 	<text>
@@ -2202,37 +2087,6 @@
 			<blue>1.0</blue>
 		</emission>
 	</animation>
-	
-	<!-- Overhead digit lighting -->
-	<animation>
-		<type>material</type>
-		<object-name>Battery-volt1</object-name>
-		<object-name>Battery-volt2</object-name>
-		<object-name>Battery-volt1-test</object-name>
-		<object-name>Battery-volt2-test</object-name>
-		<diffuse>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
-			<factor-prop>controls/lighting/overhead-panel-norm-digital</factor-prop>
-		</diffuse>
-		<ambient>
-			<red>0</red>
-			<green>0</green>
-			<blue>0</blue>
-		</ambient>
-		<specular>
-			<red>0</red>
-			<green>0</green>
-			<blue>0</blue>
-		</specular>
-		<emission>
-			<red>1</red>
-			<green>1</green>
-			<blue>1</blue>
-			<factor-prop>controls/lighting/overhead-panel-norm-digital</factor-prop>
-		</emission>
-	</animation>
 
 	<!-- osgText show / hide -->
 	
@@ -2245,25 +2099,6 @@
 		</condition>
 	</animation>
 
-	<!-- Battery voltage show / hide -->
-	<animation>
-		<type>select</type>
-		<object-name>Battery-volt1</object-name>
-		<object-name>Battery-volt2</object-name>
-		<condition>
-			<not><property>controls/switches/annun-test</property></not>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>Battery-volt1-test</object-name>
-		<object-name>Battery-volt2-test</object-name>
-		<condition>
-			<property>controls/switches/annun-test</property>
-		</condition>
-	</animation>
-	
 	<!-- Chrono show / hide -->
 	<animation>
 		<type>select</type>

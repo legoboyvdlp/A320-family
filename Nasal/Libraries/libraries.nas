@@ -375,6 +375,7 @@ var input = {
 	"gearPosNorm2": "/gear/gear[2]/position-norm",
 	"engine1Running": "/engines/engine[0]/running",
 	"engine2Running": "/engines/engine[1]/running",
+	"annunTest": "/controls/switches/annun-test",
 };
 
 foreach (var name; keys(input)) {

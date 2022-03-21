@@ -4934,6 +4934,9 @@
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-wheel.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
 		</canvas_ecam>
+		<canvas_battery>
+			<file>Aircraft/A320-family/Models/Instruments/BatteryVoltage/BatteryVoltage.nas</file>
+		</canvas_battery>
 		<canvas_iesi>
 			<file>Aircraft/A320-family/Models/Instruments/IESI/IESI.nas</file>
 		</canvas_iesi>
