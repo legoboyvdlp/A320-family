@@ -35942,6 +35942,7 @@
 		<type>material</type>
 		<object-name>fcu_labels</object-name>
 		<object-name>fcu_labels_hud.plug</object-name>
+		<object-name>fcu_panel_emit</object-name>
 		<object-name>hud_brt.mark</object-name>
 		<condition>
 			<not>
@@ -35970,6 +35971,7 @@
 		<type>material</type>
 		<object-name>fcu_labels</object-name>
 		<object-name>fcu_labels_hud.plug</object-name>
+		<object-name>fcu_panel_emit</object-name>
 		<object-name>hud_brt.mark</object-name>
 		<condition>
 			<and>
