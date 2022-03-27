@@ -116,8 +116,7 @@ var Internal = {
 	altDiff: 0,
 	altTemp: 0,
 	altPredicted: props.globals.initNode("/it-autoflight/internal/altitude-predicted", 0, "DOUBLE"),
-	bankLimit: props.globals.initNode("/it-autoflight/internal/bank-limit", 30, "INT"),
-	bankLimitAuto: 30,
+	bankLimit: props.globals.initNode("/it-autoflight/internal/bank-limit", 0, "DOUBLE"),
 	captVs: 0,
 	driftAngle: props.globals.initNode("/it-autoflight/internal/drift-angle-deg", 0, "DOUBLE"),
 	driftAngleTemp: 0,
@@ -228,7 +227,6 @@ var ITAF = {
 		Internal.minVs.setValue(-500);
 		Internal.maxVs.setValue(500);
 		Internal.bankLimit.setValue(30);
-		Internal.bankLimitAuto = 30;
 		Internal.alt.setValue(10000);
 		Internal.altCaptureActive = 0;
 		Input.kts.setValue(100);
@@ -370,16 +368,6 @@ var ITAF = {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
 		FPLN.currentWpTemp = FPLN.currentWp.getValue();
-		
-		# Bank Limit
-		if (Velocities.trueAirspeedKtTemp >= 420) {
-			Internal.bankLimitAuto = 15;
-		} else if (Velocities.trueAirspeedKtTemp >= 340) {
-			Internal.bankLimitAuto = 20;
-		} else {
-			Internal.bankLimitAuto = 30;
-		}
-		Internal.bankLimit.setValue(Internal.bankLimitAuto);
 		
 		# If in LNAV mode and route is not longer active, switch to HDG HLD
 		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
