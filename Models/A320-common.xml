@@ -317,7 +317,7 @@
 
 	<model>
 		<name>Left strobe light ALS sharklet</name>
-		<path>Aircraft/A320-family/Models/Lights/right-strobe.xml</path>
+		<path>Aircraft/A320-family/Models/Lights/left-strobe.xml</path>
 		<offsets>
 			<x-m>2.31</x-m>
 			<y-m>-17.1</y-m>
