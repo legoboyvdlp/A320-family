@@ -4,43 +4,38 @@
 
 <PropertyList>
 
-	<path>red-navlight.ac</path>
-	<nopreview/>
-
-	<animation>
-		<type>noshadow</type>
-		<object-name>red-navlightals</object-name>
-	</animation>
-
-	<effect>
-			<inherits-from>Aircraft/A320-family/Models/lights/ALS/red-navlight</inherits-from>
-			<object-name>red-navlightals</object-name>
-	</effect>
-
-	<animation>
-		<type>scale</type>
-		<x-offset>0.5</x-offset>
-		<y-offset>0.5</y-offset>
-		<z-offset>0.5</z-offset>
-	</animation>
-
-	<animation>
-		<type>dist-scale</type>
-		<object-name>red-navlightals</object-name>
-		<interpolation>
-			<entry>
-				<ind>0</ind>
-				<dep>1</dep>
-			</entry>
-			<entry>
-				<ind>300</ind>
-				<dep>4</dep>
-			</entry>
-			<entry>
-				<ind>1500</ind>
-				<dep>8</dep>
-			</entry>
-		</interpolation>
-	</animation>
+	<!-- https://wiki.flightgear.org/Howto:Add_aircraft_lights#Combined_ALS_procedural_lights_and_Compositor_lights -->
+	<!-- Thanks to erik -->
+	<model>
+		<name>red-navlight</name>
+		<path>Aircraft/Generic/spotlight.xml</path>
+		<overlay>
+			<params>
+				<name>RedLight</name>
+				<power-source>/sim/model/lights/nav-lights</power-source>
+				<direction>
+					<x>1.0</x>
+					<y>0.97629600712</y>
+					<z>0</z>
+				</direction>
+				<ambient>
+					<r>1</r>
+					<g>0</g>
+					<b>0</b>
+				</ambient>
+				<specular>
+					<r>1.0</r>
+					<g>0.7</g>
+					<b>0.7</b>
+				</specular>
+				<attenuation>
+					<c>1.0</c>
+					<l>0.22</l>
+					<q>0.20</q>
+				</attenuation>
+				<spot-exponent>1</spot-exponent>
+			</params>
+		</overlay>
+	</model>
 
 </PropertyList>
