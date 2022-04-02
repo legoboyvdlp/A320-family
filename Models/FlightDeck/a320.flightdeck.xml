@@ -4940,6 +4940,7 @@
 	<animation>
 		<type>knob</type>
 		<object-name>nd_mode</object-name>
+		<object-name>nd_mode.mark</object-name>
 		<property>instrumentation/efis/mfd/pnl_mode-num-pos</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>  0</dep></entry>
@@ -4981,6 +4982,7 @@
 	<animation>
 		<type>knob</type>
 		<object-name>nd_mode_fo</object-name>
+		<object-name>nd_mode_fo.mark</object-name>
 		<property>instrumentation/efis[1]/mfd/pnl_mode-num-pos</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>  0</dep></entry>
@@ -5022,6 +5024,7 @@
 	<animation>
 		<type>knob</type>
 		<object-name>nd_range</object-name>
+		<object-name>nd_range.mark</object-name>
 		<property>instrumentation/efis/inputs/range-nm-pos</property>
 		<interpolation>
 			<entry><ind> 10</ind><dep>  0</dep></entry>
@@ -5064,6 +5067,7 @@
 	<animation>
 		<type>knob</type>
 		<object-name>nd_range_fo</object-name>
+		<object-name>nd_range_fo.mark</object-name>
 		<property>instrumentation/efis[1]/inputs/range-nm-pos</property>
 		<interpolation>
 			<entry><ind> 10</ind><dep>  0</dep></entry>
@@ -35944,6 +35948,10 @@
 		<object-name>fcu_labels_hud.plug</object-name>
 		<object-name>fcu_panel_emit</object-name>
 		<object-name>hud_brt.mark</object-name>
+		<object-name>nd_range.mark</object-name>
+		<object-name>nd_range_fo.mark</object-name>
+		<object-name>nd_mode.mark</object-name>
+		<object-name>nd_mode_fo.mark</object-name>
 		<condition>
 			<not>
 				<and>
