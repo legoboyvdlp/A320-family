@@ -4,43 +4,39 @@
 
 <PropertyList>
 
-	<path>left-strobe.ac</path>
-	<nopreview/>
-
-	<animation>
-		<type>noshadow</type>
-		<object-name>left-strobeals</object-name>
-	</animation>
-
-	<effect>
-			<inherits-from>Aircraft/A320-family/Models/lights/ALS/left-strobe</inherits-from>
-			<object-name>left-strobeals</object-name>
-	</effect>
-
-	<animation>
-		<type>scale</type>
-		<x-offset>0.75</x-offset>
-		<y-offset>0.75</y-offset>
-		<z-offset>0.75</z-offset>
-	</animation>
-
-	<animation>
-		<type>dist-scale</type>
-		<object-name>left-strobeals</object-name>
-		<interpolation>
-			<entry>
-				<ind>0</ind>
-				<dep>1</dep>
-			</entry>
-			<entry>
-				<ind>300</ind>
-				<dep>4</dep>
-			</entry>
-			<entry>
-				<ind>1500</ind>
-				<dep>8</dep>
-			</entry>
-		</interpolation>
-	</animation>
+	<!-- https://wiki.flightgear.org/Howto:Add_aircraft_lights#Combined_ALS_procedural_lights_and_Compositor_lights -->
+	<!-- Thanks to erik -->
+	<model>
+		<name>left-strobe</name>
+		<path>Aircraft/Generic/spotlight.xml</path>
+		<overlay>
+			<params>
+				<name>leftstrobe</name>
+				<power-source>/sim/model/lights/strobe/state</power-source>
+				<direction>
+					<x>-0.1</x>
+					<y>1.0</y>
+					<z>0</z>
+				</direction>
+				<ambient>
+					<r>1</r>
+					<g>1</g>
+					<b>1</b>
+				</ambient>
+				<specular>
+					<r>1.0</r>
+					<g>1.0</g>
+					<b>1.0</b>
+				</specular>
+				<attenuation>
+					<c>1.0</c>
+					<l>0.010</l>
+					<q>0.007</q>
+				</attenuation>
+				<spot-cutoff>75</spot-cutoff>
+				<spot-exponent>5.08</spot-exponent>
+			</params>
+		</overlay>
+	</model>
 
 </PropertyList>
