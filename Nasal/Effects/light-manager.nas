@@ -85,6 +85,14 @@ var lightManager = {
 	},
 	
 	init: func() {
+		var fgVersion = split(".", getprop("/sim/version/flightgear"));
+		var fgVersionMajor = fgVersion[0];
+		var fgVersionMinor = fgVersion[1];
+		if (fgVersionMajor >= 2020 and fgVersionMinor >= 4) {
+			# Using compositor lights
+			return;
+		}
+
 		setprop("/sim/rendering/als-secondary-lights/flash-radius", 13);
 		setprop("/sim/rendering/als-secondary-lights/num-lightspots", 5);
 		

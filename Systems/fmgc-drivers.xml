@@ -81,6 +81,23 @@
 	
 	<!-- Autopilot Helpers/Calculators -->
 	<filter>
+		<name>Auto Bank Limit</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<property>/velocities/mach</property>
+					<entry><ind>0.55</ind><dep>25</dep></entry>
+					<entry><ind>0.80</ind><dep>20</dep></entry>
+					<entry><ind>0.90</ind><dep>10</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/it-autoflight/internal/bank-limit</output>
+	</filter>
+	
+	<filter>
 		<name>FMGC Managed Knots</name>
 		<type>gain</type>
 		<gain>1.0</gain>
