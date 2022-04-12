@@ -55,7 +55,7 @@
 						<entry><ind>1.00</ind><dep>0.010</dep></entry>
 					</table>
 					<table>
-						<property>/fdm/jsbsim/aero/alpha-deg-norm</property>
+						<property>/fdm/jsbsim/aero/alpha-deg-fixed</property>
 						<entry><ind> 0.0</ind><dep>0.00</dep></entry>
 						<entry><ind> 7.5</ind><dep>0.01</dep></entry>
 						<entry><ind>17.0</ind><dep>0.03</dep></entry>

@@ -51,7 +51,7 @@
 		</fcs_function>
 		
 		<sensor name="/systems/navigation/probes/aoa-1">
-			<input>aero/alpha-deg-norm</input>
+			<input>aero/alpha-deg-fixed</input>
 			<quantization name="/systems/navigation/adr/output/aoa-1">
 				<bits>12</bits>
 				<min>-180</min>
@@ -60,7 +60,7 @@
 		</sensor>
 		
 		<sensor name="/systems/navigation/probes/aoa-2">
-			<input>aero/alpha-deg-norm</input>
+			<input>aero/alpha-deg-fixed</input>
 			<quantization name="/systems/navigation/adr/output/aoa-2">
 				<bits>12</bits>
 				<min>-180</min>
@@ -69,7 +69,7 @@
 		</sensor>
 		
 		<sensor name="/systems/navigation/probes/aoa-3">
-			<input>aero/alpha-deg-norm</input>
+			<input>aero/alpha-deg-fixed</input>
 			<quantization name="/systems/navigation/adr/output/aoa-3">
 				<bits>12</bits>
 				<min>-180</min>

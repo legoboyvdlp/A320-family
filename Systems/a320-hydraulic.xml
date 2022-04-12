@@ -142,7 +142,7 @@
 		<scheduled_gain name="/systems/hydraulic/sources/rat/rat-airspeed-cmd">
 			<input>velocities/vc-kts</input>
 			<table>
-				<independentVar lookup="row">aero/alpha-deg-norm</independentVar>
+				<independentVar lookup="row">aero/alpha-deg-fixed</independentVar>
 				<tableData>
 					-60	 0
 					  0	 1
