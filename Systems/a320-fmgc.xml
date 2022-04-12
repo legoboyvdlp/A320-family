@@ -4,7 +4,10 @@
 <!-- Copyright (c) 2022 Josh Davidson and Jonathan Redpath -->
 
 <system name="A320: FMGC">
+	
 	<property value="350">/FMGC/internal/vmo-kts</property>
+	<property value="100">test</property>
+	<property value="0.2">test2</property>
 	
 	<channel name="FMGC Power" execrate="8">
 	
@@ -188,6 +191,34 @@
 				</table>
 			</function>
 		</fcs_function>
+		
+		<!-- V alpha prot/max -->
+		<lag_filter name="/FMGC/internal/valphadot-lag">
+			<input>aero/alphadot-rad_sec</input>
+			<c1>test2</c1>
+		</lag_filter>
+		
+		<pure_gain name="/FMGC/internal/valphadot-offset">
+			<input>/FMGC/internal/valphadot-lag</input>
+			<gain>test</gain>
+		</pure_gain>
+		
+		<fcs_function name="/FMGC/internal/valpha-prot">
+			<function>
+				<sum>
+					<product>
+						<property>/FMGC/internal/vs1g-kts</property>
+						<value>1.09</value>
+					</product>
+					<property>/FMGC/internal/valphadot-offset</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<summer name="/FMGC/internal/valpha-max">
+			<input>/FMGC/internal/vs1g-kts</input>
+			<input>/FMGC/internal/valphadot-offset</input>
+		</summer>
 		
 		<!-- Extra VS1g tables for predictions etc -->
 		<fcs_function name="/FMGC/internal/vs1g-conf-0">

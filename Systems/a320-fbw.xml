@@ -1474,16 +1474,32 @@
 			</function>
 		</fcs_function>
 		
+		<summer name="fbw/pitch/stall-alpha-error">
+			<input>aero/alpha-deg-fixed</input>
+			<input>-fbw/stall-alpha-deg</input>
+		</summer>
+		
 		<fcs_function name="fbw/pitch/e-i-min">
 			<function>
-				<table>
-					<independentVar lookup="row">fbw/pitch/max-rad-error</independentVar>
-					<tableData>
-						-0.087266 -1.0
-						-0.034907 -0.1
-						 0.000000  0.0
-					</tableData>
-				</table>
+				<max>
+					<table>
+						<independentVar lookup="row">fbw/pitch/max-rad-error</independentVar>
+						<tableData>
+							-0.087266 -1.0
+							-0.034907 -0.1
+							 0.000000  0.0
+						</tableData>
+					</table>
+					<table>
+						<independentVar lookup="row">fbw/pitch/stall-alpha-error</independentVar>
+						<independentVar lookup="column">/it-fbw/law</independentVar>
+						<tableData>
+							      0  1
+							-2.5 -1 -1
+							 0.0  0 -1
+						</tableData>
+					</table>
+				</max>
 			</function>
 		</fcs_function>
 		
