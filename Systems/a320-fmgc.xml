@@ -6,8 +6,6 @@
 <system name="A320: FMGC">
 	
 	<property value="350">/FMGC/internal/vmo-kts</property>
-	<property value="100">test</property>
-	<property value="0.2">test2</property>
 	
 	<channel name="FMGC Power" execrate="8">
 	
@@ -195,12 +193,12 @@
 		<!-- V alpha prot/max -->
 		<lag_filter name="/FMGC/internal/valphadot-lag">
 			<input>aero/alphadot-rad_sec</input>
-			<c1>test2</c1>
+			<c1>0.75</c1>
 		</lag_filter>
 		
 		<pure_gain name="/FMGC/internal/valphadot-offset">
 			<input>/FMGC/internal/valphadot-lag</input>
-			<gain>test</gain>
+			<gain>125</gain>
 		</pure_gain>
 		
 		<fcs_function name="/FMGC/internal/valpha-prot">
