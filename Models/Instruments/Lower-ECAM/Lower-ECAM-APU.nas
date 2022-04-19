@@ -168,7 +168,6 @@ var canvas_lowerECAMPageApu =
 						obj["APUN"].setColor(0.0509,0.7529,0.2941);
 						obj["APUN-needle"].setColor(0.0509,0.7529,0.2941);
 					}
-					
 					obj["APUEGT"].setColor(0.0509,0.7529,0.2941);
 					obj["APUN-needle"].show();
 					obj["APUEGT-needle"].show();
@@ -176,6 +175,7 @@ var canvas_lowerECAMPageApu =
 					obj.showApuParams = 1;
 				} else {
 					obj["APUN"].setColor(0.7333,0.3803,0);
+					obj["APUN-needle"].setColor(0.7333,0.3803,0);
 					obj["APUEGT"].setColor(0.7333,0.3803,0);
 					obj["APUN-needle"].hide();
 					obj["APUEGT-needle"].hide();
