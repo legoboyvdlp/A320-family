@@ -409,7 +409,6 @@ var canvas_lowerECAMPageHyd =
 			}),
 		];
 		
-		obj.displayedGForce = 0;
 		obj.updateItemsBottom = [
 			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
 				obj.units = val;
@@ -419,25 +418,27 @@ var canvas_lowerECAMPageHyd =
 					obj["GW-weight-unit"].setText("LBS");
 				}
 			}),
-			props.UpdateManager.FromHashValue("hour", nil, func(val) {
+			props.UpdateManager.FromHashValue("hour", 1, func(val) {
 				obj["UTCh"].setText(sprintf("%02d", val));
 			}),
-			props.UpdateManager.FromHashValue("minute", nil, func(val) {
+			props.UpdateManager.FromHashValue("minute", 1, func(val) {
 				obj["UTCm"].setText(sprintf("%02d", val));
 			}),
 			props.UpdateManager.FromHashValue("gForce", 0.05, func(val) {
-				if (obj.displayedGForce) {
-					obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
-				}
+				obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
 			}),
 			props.UpdateManager.FromHashValue("gForceDisplay", nil, func(val) {
-				if ((val == 1 and !obj.displayedGForce) or (val != 0 and obj.displayedGForce)) {
-					obj.displayedGForce = 1;
+				if (val) {
 					obj["GLoad"].show();
 				} else {
-					obj.displayedGForce = 0;
 					obj["GLoad"].hide();
 				}
+			}),
+			props.UpdateManager.FromHashValue("satTemp", 0.5, func(val) {
+				obj["SAT"].setText(sprintf("%+2.0f", val));
+			}),
+			props.UpdateManager.FromHashValue("tatTemp", 0.5, func(val) {
+				obj["TAT"].setText(sprintf("%+2.0f", val));
 			}),
 		];
 		return obj;
@@ -452,11 +453,6 @@ var canvas_lowerECAMPageHyd =
 		"LO-AIR-PRESS-Yellow","LO-AIR-PRESS-Blue","OVHT-Green","OVHT-Blue","OVHT-Yellow","Quantity-Indicator-Green","Quantity-Indicator-Blue","Quantity-Indicator-Yellow","Green-label","Blue-label","Yellow-label","Fire-Valve-Yellow-Cross","Fire-Valve-Green-Cross","path5561","path5561-4","path5561-5"];
 	},
 	updateBottom: func(notification) {
-		foreach(var update_item_bottom; me.updateItemsBottom)
-        {
-            update_item_bottom.update(notification);
-        }
-		
 		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
 			if (me.units) {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
@@ -470,7 +466,7 @@ var canvas_lowerECAMPageHyd =
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
-			me["SAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
+			notification.satTemp = dmc.DMController.DMCs[1].outputs[4].getValue();
 			me["SAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["SAT"].setText(sprintf("%s", "XX"));
@@ -478,12 +474,17 @@ var canvas_lowerECAMPageHyd =
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[5] != nil) {
-			me["TAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
+			notification.tatTemp = dmc.DMController.DMCs[1].outputs[5].getValue();
 			me["TAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["TAT"].setText(sprintf("%s", "XX"));
 			me["TAT"].setColor(0.7333,0.3803,0);
 		}
+		
+		foreach(var update_item_bottom; me.updateItemsBottom)
+        {
+            update_item_bottom.update(notification);
+        }
 	},
 	update: func(notification) {
 		me.updatePower();
