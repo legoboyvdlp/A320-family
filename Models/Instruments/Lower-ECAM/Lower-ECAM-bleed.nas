@@ -153,7 +153,7 @@ var canvas_lowerECAMPageBleed =
 						obj["BLEED-Precooler-1-Inlet-Press"].setColor(0.0509,0.7529,0.2941);
 					}
 				} else {
-					obj["BLEED-Precooler-1-Inlet-Press"].setText(sprintf("%s", "XX"));
+					obj["BLEED-Precooler-1-Inlet-Press"].setText("XX");
 					obj["BLEED-Precooler-1-Inlet-Press"].setColor(0.7333,0.3803,0);
 				}
 			}),
@@ -171,7 +171,7 @@ var canvas_lowerECAMPageBleed =
 						obj["BLEED-Precooler-2-Inlet-Press"].setColor(0.0509,0.7529,0.2941);
 					}
 				} else {
-					obj["BLEED-Precooler-2-Inlet-Press"].setText(sprintf("%s", "XX"));
+					obj["BLEED-Precooler-2-Inlet-Press"].setText("XX");
 					obj["BLEED-Precooler-2-Inlet-Press"].setColor(0.7333,0.3803,0);
 				}
 			}),
@@ -189,7 +189,7 @@ var canvas_lowerECAMPageBleed =
 						obj["BLEED-Precooler-1-Outlet-Temp"].setColor(0.0509,0.7529,0.2941);
 					}
 				} else {
-					obj["BLEED-Precooler-1-Outlet-Temp"].setText(sprintf("%s", "XX"));
+					obj["BLEED-Precooler-1-Outlet-Temp"].setText("XX");
 					obj["BLEED-Precooler-1-Outlet-Temp"].setColor(0.7333,0.3803,0);
 				}
 			}),
@@ -207,7 +207,7 @@ var canvas_lowerECAMPageBleed =
 						obj["BLEED-Precooler-2-Outlet-Temp"].setColor(0.0509,0.7529,0.2941);
 					}
 				} else {
-					obj["BLEED-Precooler-2-Outlet-Temp"].setText(sprintf("%s", "XX"));
+					obj["BLEED-Precooler-2-Outlet-Temp"].setText("XX");
 					obj["BLEED-Precooler-2-Outlet-Temp"].setColor(0.7333,0.3803,0);
 				}
 			}),
@@ -453,7 +453,7 @@ var canvas_lowerECAMPageBleed =
 			notification.satTemp = dmc.DMController.DMCs[1].outputs[4].getValue();
 			me["SAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["SAT"].setText(sprintf("%s", "XX"));
+			me["SAT"].setText("XX");
 			me["SAT"].setColor(0.7333,0.3803,0);
 		}
 		
@@ -461,7 +461,7 @@ var canvas_lowerECAMPageBleed =
 			notification.tatTemp = dmc.DMController.DMCs[1].outputs[5].getValue();
 			me["TAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["TAT"].setText(sprintf("%s", "XX"));
+			me["TAT"].setText("XX");
 			me["TAT"].setColor(0.7333,0.3803,0);
 		}
 		

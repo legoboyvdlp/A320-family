@@ -26,46 +26,15 @@ var canvas_lowerECAMPageApu =
 		
 		# init
 		obj["APUGenOff"].hide();
+		obj.apuADRState = 0;
+		obj.apuBleedPsi = 0.0;
+		obj.apuEgt = 0.0;
+		obj.apuOilLevelLow = 0;
+		obj.showApuParams = 0;
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("apuFlap",1, func(val) {
-				if (val) {
-					obj["APUFlapOpen"].show();
-				} else {
-					obj["APUFlapOpen"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashValue("apuNeedleRot",0.1, func(val) {
-				obj["APUN-needle"].setRotation((val + 90) * D2R);
-			}),
-			props.UpdateManager.FromHashValue("apuEgtRot",0.1, func(val) {
-				obj["APUEGT-needle"].setRotation((val + 90) * D2R);
-			}),
-			props.UpdateManager.FromHashValue("apuAvailable", nil, func(val) {
-				if (val) {
-					obj["APUAvail"].show();
-				} else {
-					obj["APUAvail"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashList(["apuRpm","apuEgt","apuMaster","apuGenPB"], nil, func(val) {
-				if (val.apuRpm > 0.001) {
-					obj["APUN"].setColor(0.0509,0.7529,0.2941);
-					obj["APUN"].setText(sprintf("%s", math.round(val.apuRpm)));
-					obj["APUN-needle"].show();
-					obj["APUEGT"].setColor(0.0509,0.7529,0.2941);
-					obj["APUEGT"].setText(sprintf("%s", math.round(val.apuEgt, 5)));
-					obj["APUEGT-needle"].show();
-				} else {
-					obj["APUN"].setColor(0.7333,0.3803,0);
-					obj["APUN"].setText(sprintf("%s", "XX"));
-					obj["APUN-needle"].hide();
-					obj["APUEGT"].setColor(0.7333,0.3803,0);
-					obj["APUEGT"].setText(sprintf("%s", "XX"));
-					obj["APUEGT-needle"].hide();
-				}
-				
-				if (val.apuMaster or val.apuRpm >= 94.9) {
+			props.UpdateManager.FromHashList(["apuAvailable","apuMaster","apuGenPB"], nil, func(val) {
+				if (val.apuMaster or val.apuAvailable) {
 					obj["APUGenbox"].show();
 					if (val.apuGenPB) {
 						obj["APUGenOff"].hide();
@@ -104,34 +73,61 @@ var canvas_lowerECAMPageApu =
 					obj["APUfuelLO"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["apuRpm","apuOilLevel","gear0Wow"], nil, func(val) {
-				if (val.apuRpm >= 94.9 and val.gear0Wow and val.apuOilLevel < 3.69) {
-					obj["APU-low-oil"].show();
+			
+			
+			props.UpdateManager.FromHashValue("apuAdr", 0.5, func(val) {
+				obj.apuADRState = val;
+			}),
+			props.UpdateManager.FromHashValue("apuAvailable", nil, func(val) {
+				if (val) {
+					obj["APUAvail"].show();
 				} else {
-					obj["APU-low-oil"].hide();
+					obj["APUAvail"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["apuAdr","apuPsi","apuRpm"], nil, func(val) {
-				if (val.apuAdr and val.apuRpm > 0.001) {
-					obj["APUBleedPSI"].setColor(0.0509,0.7529,0.2941);
-					obj["APUBleedPSI"].setText(sprintf("%s", math.round(val.apuPsi)));
+			props.UpdateManager.FromHashValue("apuBleedValvePos", 0.1, func(val) {
+				if (val >= 0.9) {
+					obj["APUBleedValve"].setRotation(90 * D2R);
+					obj["APUBleedOnline"].show();
 				} else {
-					obj["APUBleedPSI"].setColor(0.7333,0.3803,0);
-					obj["APUBleedPSI"].setText(sprintf("%s", "XX"));
+					obj["APUBleedValve"].setRotation(0);
+					obj["APUBleedOnline"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("apuLoad", 0.1, func(val) {
-				obj["APUGenLoad"].setText(sprintf("%s", math.round(val)));
-				
-				if (val <= 100) {
-					obj["APUGenHz"].setColor(0.0509,0.7529,0.2941);
+			props.UpdateManager.FromHashValue("apuBleedValvePositionsMatch", 1, func(val) {
+				if (val) {
+					obj["APUBleedValveCrossBar"].setColor(0.0509,0.7529,0.2941);
+					obj["APUBleedValveCrossBar"].setColorFill(0.0509,0.7529,0.2941);
+					obj["APUBleedValve"].setColor(0.0509,0.7529,0.2941);
 				} else {
-					obj["APUGenHz"].setColor(0.7333,0.3803,0);
+					obj["APUBleedValveCrossBar"].setColor(0.7333,0.3803,0);
+					obj["APUBleedValveCrossBar"].setColorFill(0.7333,0.3803,0);
+					obj["APUBleedValve"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("apuHertz", 1, func(val) {
-				if (val == 0) {
-					obj["APUGenHz"].setText(sprintf("XX"));
+			props.UpdateManager.FromHashValue("apuEgt", 0.05, func(val) {
+				obj.apuEgt = sprintf("%s", math.round(val, 5));
+			}),
+			props.UpdateManager.FromHashValue("apuEgtRot", 0.1, func(val) {
+				obj["APUEGT-needle"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("apuFlap", 1, func(val) {
+				if (val) {
+					obj["APUFlapOpen"].show();
+				} else {
+					obj["APUFlapOpen"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("apuGLC", nil, func(val) {
+				if (val) {
+					obj["APUGenOnline"].show();
+				} else {
+					obj["APUGenOnline"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("apuHertz", 0.5, func(val) {
+				if (val < 0.5) {
+					obj["APUGenHz"].setText("XX");
 				} else {
 					obj["APUGenHz"].setText(sprintf("%s", math.round(val)));
 				}
@@ -142,39 +138,52 @@ var canvas_lowerECAMPageApu =
 					obj["APUGenHz"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("apuVolt", 0.1, func(val) {
+			props.UpdateManager.FromHashValue("apuLoad", 0.5, func(val) {
+				obj["APUGenLoad"].setText(sprintf("%s", math.round(val)));
+				
+				if (val <= 100) {
+					obj["APUGenLoad"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["APUGenLoad"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("apuNeedleRot", 0.1, func(val) {
+				obj["APUN-needle"].setRotation((val + 90) * D2R);
+			}),
+			props.UpdateManager.FromHashValue("apuOilLevel", 0.05, func(val) {
+				if (val < 3.7) {
+					obj.apuOilLevelLow = 1;
+				} else {
+					obj.apuOilLevelLow = 0;
+				}
+			}),
+			props.UpdateManager.FromHashValue("apuPsi", 0.5, func(val) {
+				obj.apuBleedPsi = sprintf("%s", math.round(val));
+			}),
+			props.UpdateManager.FromHashValue("apuRpm", 0.5, func(val) {
+				if (val >= 0.5) {
+					obj["APUN"].setColor(0.0509,0.7529,0.2941);
+					obj["APUEGT"].setColor(0.0509,0.7529,0.2941);
+					obj["APUN-needle"].show();
+					obj["APUEGT-needle"].show();
+					obj["APUN"].setText(sprintf("%s", math.round(val)));
+					obj.showApuParams = 1;
+				} else {
+					obj["APUN"].setColor(0.7333,0.3803,0);
+					obj["APUEGT"].setColor(0.7333,0.3803,0);
+					obj["APUN-needle"].hide();
+					obj["APUEGT-needle"].hide();
+					obj["APUN"].setText("XX");
+					obj.showApuParams = 0;
+				}
+			}),
+			props.UpdateManager.FromHashValue("apuVolt", 0.5, func(val) {
 				obj["APUGenVolt"].setText(sprintf("%s", math.round(val)));
 				
 				if (val >= 110 and val <= 120) {
 					obj["APUGenVolt"].setColor(0.0509,0.7529,0.2941);
 				} else {
 					obj["APUGenVolt"].setColor(0.7333,0.3803,0);
-				}
-			}),
-			props.UpdateManager.FromHashValue("apuGLC", nil, func(val) {
-				if (val) {
-					obj["APUGenOnline"].show();
-				} else {
-					obj["APUGenOnline"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashList(["apuBleedValvePos","apuBleedValveCmd"], nil, func(val) {
-				if (val.apuBleedValvePos == 1) {
-					obj["APUBleedValve"].setRotation(90 * D2R);
-					obj["APUBleedOnline"].show();
-				} else {
-					obj["APUBleedValve"].setRotation(0);
-					obj["APUBleedOnline"].hide();
-				}
-				
-				if (val.apuBleedValveCmd == val.apuBleedValvePos) {
-					obj["APUBleedValveCrossBar"].setColor(0.0509,0.7529,0.2941);
-					obj["APUBleedValveCrossBar"].setColorFill(0.0509,0.7529,0.2941);
-					obj["APUBleedValve"].setColor(0.0509,0.7529,0.2941);
-				} else {
-					obj["APUBleedValveCrossBar"].setColor(0.7333,0.3803,0);
-					obj["APUBleedValveCrossBar"].setColorFill(0.7333,0.3803,0);
-					obj["APUBleedValve"].setColor(0.7333,0.3803,0);
 				}
 			}),
 		];
@@ -236,7 +245,7 @@ var canvas_lowerECAMPageApu =
 			notification.satTemp = dmc.DMController.DMCs[1].outputs[4].getValue();
 			me["SAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["SAT"].setText(sprintf("%s", "XX"));
+			me["SAT"].setText("XX");
 			me["SAT"].setColor(0.7333,0.3803,0);
 		}
 		
@@ -244,7 +253,7 @@ var canvas_lowerECAMPageApu =
 			notification.tatTemp = dmc.DMController.DMCs[1].outputs[5].getValue();
 			me["TAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["TAT"].setText(sprintf("%s", "XX"));
+			me["TAT"].setText("XX");
 			me["TAT"].setColor(0.7333,0.3803,0);
 		}
 		
@@ -264,10 +273,36 @@ var canvas_lowerECAMPageApu =
 			return;
 		}
 		
+		if ((notification.apuBleedValveCmd >= 0.95 and notification.apuBleedValvePos) or (notification.apuBleedValveCmd <= 0.05 and !notification.apuBleedValvePos)) {
+			notification.apuBleedValvePositionsMatch = 1;
+		} else {
+			notification.apuBleedValvePositionsMatch = 0;
+		}
+		
 		foreach(var update_item; me.update_items)
         {
             update_item.update(notification);
         }
+		
+		if (me.showApuParams) {
+			me["APUEGT"].setText(me.apuEgt);
+		} else {
+			me["APUEGT"].setText("XX");
+		}
+		
+		if (notification.apuAvailable and notification.gear0Wow and me.apuOilLevelLow) {
+			me["APU-low-oil"].show();
+		} else {
+			me["APU-low-oil"].hide();
+		}
+		
+		if (me.apuADRState and me.showApuParams) {
+			me["APUBleedPSI"].setColor(0.0509,0.7529,0.2941);
+			me["APUBleedPSI"].setText(me.apuBleedPsi);
+		} else {
+			me["APUBleedPSI"].setColor(0.7333,0.3803,0);
+			me["APUBleedPSI"].setText("XX");
+		}
 		
 		me.updateBottom(notification);
 	},
