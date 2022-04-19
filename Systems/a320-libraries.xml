@@ -7,7 +7,7 @@
 	
 	<channel name="FDM Rate Libraries">
 		
-		<switch name="aero/alpha-deg-norm">
+		<switch name="aero/alpha-deg-fixed">
 			<default value="0"/>
 			<test value="aero/alpha-deg">
 				gear/unit[0]/WOW eq 0
@@ -15,7 +15,7 @@
 		</switch>
 		
 		<lag_filter name="aero/alpha-deg-damped">
-			<input>aero/alpha-deg-norm</input>
+			<input>aero/alpha-deg-fixed</input>
 			<c1>10</c1>
 		</lag_filter>
 		

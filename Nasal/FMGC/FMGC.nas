@@ -261,6 +261,7 @@ var FMGCNodes = {
 	clean: props.globals.getNode("/FMGC/internal/clean"),
 	flap2: props.globals.getNode("/FMGC/internal/flap-2"),
 	flap3: props.globals.getNode("/FMGC/internal/flap-3"),
+	ktsToMachFactor: props.globals.getNode("/FMGC/internal/kts-to-mach-factor"),
 	lw: props.globals.getNode("/FMGC/internal/lw"),
 	lwClean: props.globals.getNode("/FMGC/internal/lw-clean"),
 	lwVs1gConf0: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-0"),
@@ -269,14 +270,13 @@ var FMGCNodes = {
 	lwVs1gConf3: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-3"),
 	lwVs1gConfFull: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-full"),
 	mngSpdAlt: props.globals.getNode("/FMGC/internal/mng-alt-spd"),
-	ktsToMachFactor: props.globals.getNode("/FMGC/internal/kts-to-mach-factor"),
 	machToKtsFactor: props.globals.getNode("/FMGC/internal/mach-to-kts-factor"),
 	mngMachAlt: props.globals.getNode("/FMGC/internal/mng-alt-mach"),
-	slat: props.globals.getNode("/FMGC/internal/slat"),
 	Power: {
 		FMGC1Powered: props.globals.getNode("systems/fmgc/power/power-1-on"),
 		FMGC2Powered: props.globals.getNode("systems/fmgc/power/power-2-on"),
 	},
+	slat: props.globals.getNode("/FMGC/internal/slat"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
 	tow: props.globals.getNode("/FMGC/internal/tow"),
@@ -289,6 +289,8 @@ var FMGCNodes = {
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
 	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
 	phase: props.globals.initNode("/FMGC/internal/phase", 0, "INT"),
+	valphaMax: props.globals.getNode("/FMGC/internal/valpha-max"),
+	valphaProt: props.globals.getNode("/FMGC/internal/valpha-prot"),
 	vls: props.globals.getNode("/FMGC/internal/vls"),
 	vmax: props.globals.getNode("/FMGC/internal/vmax"),
 	vs1g: props.globals.getNode("/FMGC/internal/vs1g"),
@@ -823,8 +825,8 @@ var masterFMGC = maketimer(0.2, func {
 	aoa = getprop("/systems/navigation/adr/output/aoa-1");
 	cas = getprop("/systems/navigation/adr/output/cas-1");
 	if (aoa > -5) {
-		FMGCInternal.alpha_prot = cas * math.sqrt((aoa - aoa_0)/(aoa_prot - aoa_0));
-		FMGCInternal.alpha_max = cas * math.sqrt((aoa - aoa_0)/(aoa_max - aoa_0));
+		FMGCInternal.alpha_prot = FMGCNodes.valphaProt.getValue();
+		FMGCInternal.alpha_max = FMGCNodes.valphaMax.getValue();
 	} else {
 		FMGCInternal.alpha_prot = 0;
 		FMGCInternal.alpha_max = 0;

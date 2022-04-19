@@ -89,6 +89,8 @@ var canvas_pfd = {
 	tgt_kts: 0,
 	tgt_ias: 0,
 	vapp: 0,
+	valphaprot: 0,
+	valphamax: 0,
 	vls: 0,
 	new: func(svg, name, number) {
 		var obj = {parents: [canvas_pfd] };
@@ -656,6 +658,9 @@ var canvas_pfd = {
 			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
 				me.vls = fmgc.FMGCNodes.vls.getValue();
+				me.valphaprot = fmgc.FMGCNodes.valphaProt.getValue();
+				me.valphamax = fmgc.FMGCNodes.valphaMax.getValue();
+				
 				if (me.vls <= 30) {
 					me.VLSmin = 0 - me.ASI;
 				} else if (me.vls >= 420) {
@@ -664,20 +669,20 @@ var canvas_pfd = {
 					me.VLSmin = me.vls - 30 - me.ASI;
 				}
 				
-				if (fmgc.FMGCInternal.alpha_prot <= 30) {
+				if (me.valphaprot <= 30) {
 					me.ALPHAprot = 0 - me.ASI;
-				} else if (fmgc.FMGCInternal.alpha_prot >= 420) {
+				} else if (me.valphaprot >= 420) {
 					me.ALPHAprot = 390 - me.ASI;
 				} else {
-					me.ALPHAprot = fmgc.FMGCInternal.alpha_prot - 30 - me.ASI;
+					me.ALPHAprot = me.valphaprot - 30 - me.ASI;
 				}
 				
-				if (fmgc.FMGCInternal.alpha_max <= 30) {
+				if (me.valphamax <= 30) {
 					me.ALPHAmax = 0 - me.ASI;
-				} else if (fmgc.FMGCInternal.alpha_max >= 420) {
+				} else if (me.valphamax >= 420) {
 					me.ALPHAmax = 390 - me.ASI;
 				} else {
-					me.ALPHAmax = fmgc.FMGCInternal.alpha_max - 30 - me.ASI;
+					me.ALPHAmax = me.valphamax - 30 - me.ASI;
 				}
 				
 				if (fmgc.FMGCInternal.vsw <= 30) {

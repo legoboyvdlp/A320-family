@@ -1468,7 +1468,7 @@
 		
 		<!-- Alpha Floor and Toga Lk -->
 		<switch name="fadec/alpha-floor-engage">
-			<default value="9.5"/>
+			<default value="14.5"/>
 			<test logic="OR" value="15">
 				/controls/flight/flaps-pos eq 1
 				/controls/flight/flaps-pos eq 2
