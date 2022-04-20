@@ -77,13 +77,7 @@ var canvas_lowerECAMPageCruise =
 				}
 			}),
 			props.UpdateManager.FromHashValue("pressDelta", 0.05, func(val) {
-				if (val > 31.9) {
-					obj["deltaPSI"].setText(sprintf("%2.1f", 31.9));
-				} else if (val < -9.9) {
-					obj["deltaPSI"].setText(sprintf("%2.1f", -9.9));
-				} else {
-					obj["deltaPSI"].setText(sprintf("%2.1f", val));
-				}
+				obj["deltaPSI"].setText(sprintf("%2.1f", math.clamp(val, -9.9, 31.9)));
 				
 				if (val < -0.4 or val > 8.5) {
 					obj["deltaPSI"].setColor(0.7333,0.3803,0);
@@ -92,13 +86,7 @@ var canvas_lowerECAMPageCruise =
 				}
 			}),
 			props.UpdateManager.FromHashValue("pressVS", 25, func(val) {
-				if (val > 9950) {
-					obj["CABVS"].setText(sprintf("%4.0f", 9950));
-				} else if (val < -9950) {
-					obj["CABVS"].setText(sprintf("%4.0f", -9950));
-				} else {
-					obj["CABVS"].setText(sprintf("%-4.0f", math.round(val,50)));
-				}
+				obj["CABVS"].setText(sprintf("%-4.0f", math.clamp(math.round(val,50), -9950, 9950)));
 				
 				if (val >= 25) {
 					obj["VS-Arrow-UP"].show();
@@ -112,13 +100,7 @@ var canvas_lowerECAMPageCruise =
 				}
 			}),
 			props.UpdateManager.FromHashValue("pressAlt", 25, func(val) {
-				if (val > 32750) {
-					obj["CABALT"].setText(sprintf("%5.0f", 32750));
-				} else if (val < -9950) {
-					obj["CABALT"].setText(sprintf("%5.0f", -9950));
-				} else {
-					obj["CABALT"].setText(sprintf("%5.0f", math.round(val,50)));
-				}
+				obj["CABALT"].setText(sprintf("%5.0f", math.clamp(math.round(val,50), -9950, 32750)));
 				
 				if (val > 9550) {
 					obj["CABALT"].setColor(1,0,0);

@@ -55,23 +55,25 @@ var canvas_lowerECAMPageCond =
 			props.UpdateManager.FromHashValue("condTrimFwd", 0.01, func(val) {
 				obj["CONDTrimValveFWD"].setRotation(val * D2R);
 			}),
-			props.UpdateManager.FromHashList(["condHotAirSwitch","condHotAirValve","condHotAirCmd"], nil, func(val) {
-				if (!val.condHotAirSwitch or (val.condHotAirCmd == 1 and val.condHotAirValve == 0)) {
+			props.UpdateManager.FromHashList(["condHotAirSwitch","condHotAirValve","condHotAirCmd"], 0.01, func(val) {
+				if (val.condHotAirValve <= 0.01) {
 					obj["CONDHotAirValve"].setRotation(90 * D2R);
-					obj["CONDHotAirValve"].setColor(0.7333,0.3803,0);
-					obj["CONDHotAirValveCross"].setColorFill(0.7333,0.3803,0);
-				} elsif (val.condHotAirCmd == 0 and val.condHotAirValve == 0) {
-					obj["CONDHotAirValve"].setRotation(90 * D2R);
-					obj["CONDHotAirValve"].setColor(0.0509,0.7529,0.2941);
-					obj["CONDHotAirValveCross"].setColorFill(0.0509,0.7529,0.2941);
-				} elsif (val.condHotAirCmd == 0 and val.condHotAirValve != 0) {
-					obj["CONDHotAirValve"].setRotation(0);
-					obj["CONDHotAirValve"].setColor(0.7333,0.3803,0);
-					obj["CONDHotAirValveCross"].setColorFill(0.7333,0.3803,0);
+					if (val.condHotAirCmd) {
+						obj["CONDHotAirValve"].setColor(0.7333,0.3803,0);
+						obj["CONDHotAirValveCross"].setColorFill(0.7333,0.3803,0);
+					} else {
+						obj["CONDHotAirValve"].setColor(0.0509,0.7529,0.2941);
+						obj["CONDHotAirValveCross"].setColorFill(0.0509,0.7529,0.2941);
+					}
 				} else {
 					obj["CONDHotAirValve"].setRotation(0);
-					obj["CONDHotAirValve"].setColor(0.0509,0.7529,0.2941);
-					obj["CONDHotAirValveCross"].setColorFill(0.0509,0.7529,0.2941);
+					if (val.condHotAirCmd) {
+						obj["CONDHotAirValve"].setColor(0.0509,0.7529,0.2941);
+						obj["CONDHotAirValveCross"].setColorFill(0.0509,0.7529,0.2941);
+					} else {
+						obj["CONDHotAirValve"].setColor(0.7333,0.3803,0);
+						obj["CONDHotAirValveCross"].setColorFill(0.7333,0.3803,0);
+					}
 				}
 			}),
 		];
@@ -108,6 +110,8 @@ var canvas_lowerECAMPageCond =
 				obj["TAT"].setText(sprintf("%+2.0f", val));
 			}),
 		];
+		obj.timer = maketimestamp();
+		obj.times = [];
 		return obj;
 	},
 	getKeysBottom: func() {
@@ -152,6 +156,7 @@ var canvas_lowerECAMPageCond =
         }
 	},
 	update: func(notification) {
+		me.timer.stamp();
 		me.updatePower();
 		
 		if (me.test.getVisible() == 1) {
@@ -168,6 +173,7 @@ var canvas_lowerECAMPageCond =
         }
 		
 		me.updateBottom(notification);
+		append(me.times, me.timer.elapsedUSec());
 	},
 	updatePower: func() {
 		if (me.name == ecam.SystemDisplayController.displayedPage.name) {
