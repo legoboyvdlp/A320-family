@@ -106,7 +106,7 @@ var canvas_lowerECAMPageApu =
 				}
 			}),
 			props.UpdateManager.FromHashValue("apuEgt", 0.05, func(val) {
-				obj.apuEgt = sprintf("%s", math.round(val, 5));
+				obj.apuEgt = sprintf("%s", math.clamp(math.round(val, 5), 0, 9995));
 			}),
 			props.UpdateManager.FromHashValue("apuEgtRot", 0.1, func(val) {
 				obj["APUEGT-needle"].setRotation((val + 90) * D2R);
@@ -126,11 +126,7 @@ var canvas_lowerECAMPageApu =
 				}
 			}),
 			props.UpdateManager.FromHashValue("apuHertz", 0.5, func(val) {
-				if (val < 0.5) {
-					obj["APUGenHz"].setText("XX");
-				} else {
-					obj["APUGenHz"].setText(sprintf("%s", math.round(val)));
-				}
+				obj["APUGenHz"].setText(sprintf("%s", math.round(val)));
 				
 				if (val >= 390 and val <= 410) {
 					obj["APUGenHz"].setColor(0.0509,0.7529,0.2941);
@@ -162,7 +158,17 @@ var canvas_lowerECAMPageApu =
 			}),
 			props.UpdateManager.FromHashValue("apuRpm", 0.5, func(val) {
 				if (val >= 0.5) {
-					obj["APUN"].setColor(0.0509,0.7529,0.2941);
+					if (val >= 107) {
+						obj["APUN"].setColor(1,0,0);
+						obj["APUN-needle"].setColor(1,0,0);
+					} elsif (val >= 102) {
+						obj["APUN"].setColor(0.7333,0.3803,0);
+						obj["APUN-needle"].setColor(0.7333,0.3803,0);
+					} else {
+						obj["APUN"].setColor(0.0509,0.7529,0.2941);
+						obj["APUN-needle"].setColor(0.0509,0.7529,0.2941);
+					}
+					
 					obj["APUEGT"].setColor(0.0509,0.7529,0.2941);
 					obj["APUN-needle"].show();
 					obj["APUEGT-needle"].show();
