@@ -168,6 +168,7 @@ var canvas_lowerECAMPageApu =
 						obj["APUN"].setColor(0.0509,0.7529,0.2941);
 						obj["APUN-needle"].setColor(0.0509,0.7529,0.2941);
 					}
+					
 					obj["APUEGT"].setColor(0.0509,0.7529,0.2941);
 					obj["APUN-needle"].show();
 					obj["APUEGT-needle"].show();
