@@ -110,8 +110,6 @@ var canvas_lowerECAMPageCond =
 				obj["TAT"].setText(sprintf("%+2.0f", val));
 			}),
 		];
-		obj.timer = maketimestamp();
-		obj.times = [];
 		return obj;
 	},
 	getKeysBottom: func() {
@@ -156,7 +154,6 @@ var canvas_lowerECAMPageCond =
         }
 	},
 	update: func(notification) {
-		me.timer.stamp();
 		me.updatePower();
 		
 		if (me.test.getVisible() == 1) {
@@ -173,7 +170,6 @@ var canvas_lowerECAMPageCond =
         }
 		
 		me.updateBottom(notification);
-		append(me.times, me.timer.elapsedUSec());
 	},
 	updatePower: func() {
 		if (me.name == ecam.SystemDisplayController.displayedPage.name) {
