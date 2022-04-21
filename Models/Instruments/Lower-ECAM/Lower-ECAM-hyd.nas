@@ -165,63 +165,63 @@ var canvas_lowerECAMPageHyd =
 					obj["Pump-Yellow-label"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydBlueResvLoPrs", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydBlueResvLoPrs", 1, func(val) {
 				if (val) {
 					obj["LO-AIR-PRESS-Blue"].show();
 				} else {
 					obj["LO-AIR-PRESS-Blue"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydGreenResvLoPrs", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydGreenResvLoPrs", 1, func(val) {
 				if (val) {
 					obj["LO-AIR-PRESS-Green"].show();
 				} else {
 					obj["LO-AIR-PRESS-Green"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydYellowResvLoPrs", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydYellowResvLoPrs", 1, func(val) {
 				if (val) {
 					obj["LO-AIR-PRESS-Yellow"].show();
 				} else {
 					obj["LO-AIR-PRESS-Yellow"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydYellowElecPumpOvht", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydYellowElecPumpOvht", 1, func(val) {
 				if (val) {
 					obj["ELEC-OVHT-Yellow"].show();
 				} else {
 					obj["ELEC-OVHT-Yellow"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydBlueElecPumpOvht", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydBlueElecPumpOvht", 1, func(val) {
 				if (val) {
 					obj["ELEC-OVHT-Blue"].show();
 				} else {
 					obj["ELEC-OVHT-Blue"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydBlueResvOvht", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydBlueResvOvht", 1, func(val) {
 				if (val) {
 					obj["OVHT-Blue"].show();
 				} else {
 					obj["OVHT-Blue"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydGreenResvOvht", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydGreenResvOvht", 1, func(val) {
 				if (val) {
 					obj["OVHT-Green"].show();
 				} else {
 					obj["OVHT-Green"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydYellowResvOvht", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydYellowResvOvht", 1, func(val) {
 				if (val) {
 					obj["OVHT-Yellow"].show();
 				} else {
 					obj["OVHT-Yellow"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydRATPosition", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydRATPosition", 1, func(val) {
 				if (val) {
 					obj["RAT-stowed"].hide();
 					obj["RAT-not-stowed"].show();
@@ -230,8 +230,8 @@ var canvas_lowerECAMPageHyd =
 					obj["RAT-not-stowed"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydGreenFireValve", nil, func(val) {
-				if (val != 0) {
+			props.UpdateManager.FromHashValue("hydGreenFireValve", 0.1, func(val) {
+				if (val >= 0.1) {
 					obj["Fire-Valve-Green"].setColor(0.7333,0.3803,0);
 					obj["Fire-Valve-Green-Cross"].setColorFill(0.7333,0.3803,0);
 					obj["Fire-Valve-Green"].setRotation(90 * D2R);
@@ -241,8 +241,8 @@ var canvas_lowerECAMPageHyd =
 					obj["Fire-Valve-Green"].setRotation(0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydYellowFireValve", nil, func(val) {
-				if (val != 0) {
+			props.UpdateManager.FromHashValue("hydYellowFireValve", 0.1, func(val) {
+				if (val >= 0.1) {
 					obj["Fire-Valve-Yellow"].setColor(0.7333,0.3803,0);
 					obj["Fire-Valve-Yellow-Cross"].setColorFill(0.7333,0.3803,0);
 					obj["Fire-Valve-Yellow"].setRotation(90 * D2R);
@@ -266,7 +266,7 @@ var canvas_lowerECAMPageHyd =
 					obj["ELEC-Yellow-label"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["yellow","hydYellowElecPumpSwitch"], nil, func(val) {
+			props.UpdateManager.FromHashList(["yellow","hydYellowElecPumpSwitch"], 1, func(val) {
 				if (!val.hydYellowElecPumpSwitch) {
 					obj["ELEC-Yellow-on"].hide();
 					obj["ELEC-Yellow-off"].show();
@@ -280,7 +280,7 @@ var canvas_lowerECAMPageHyd =
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["blue","hydBlueElecPumpSwitch"], nil, func(val) {
+			props.UpdateManager.FromHashList(["blue","hydBlueElecPumpSwitch"], 1, func(val) {
 				if (val.hydBlueElecPumpSwitch) {
 					obj["Pump-Blue-off"].hide();
 					if (val.blue > 1450) {
@@ -302,7 +302,7 @@ var canvas_lowerECAMPageHyd =
 					obj["Pump-Blue"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["yellow","hydYellowEDPPumpSwitch"], nil, func(val) {
+			props.UpdateManager.FromHashList(["yellow","hydYellowEDPPumpSwitch"], 1, func(val) {
 				if (val.hydYellowEDPPumpSwitch) {
 					obj["Pump-Yellow-off"].hide();
 					if (val.yellow > 1450) {
@@ -324,7 +324,7 @@ var canvas_lowerECAMPageHyd =
 					obj["Pump-Yellow"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["green","hydGreenEDPPumpSwitch"], nil, func(val) {
+			props.UpdateManager.FromHashList(["green","hydGreenEDPPumpSwitch"], 1, func(val) {
 				if (val.hydGreenEDPPumpSwitch) {
 					obj["Pump-Green-off"].hide();
 					if (val.green > 1450) {
@@ -345,7 +345,7 @@ var canvas_lowerECAMPageHyd =
 					obj["Pump-Green"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["hydPTUSwitch","hydPTUDiff","hydPTUActive","hydPTUFault"], nil, func(val) {
+			props.UpdateManager.FromHashList(["hydPTUSwitch","hydPTUDiff","hydPTUActive","hydPTUFault"], 1, func(val) {
 				if (val.hydPTUSwitch and !val.hydPTUFault) {
 					obj["PTU-connection"].setColor(0.0509,0.7529,0.2941);
 
