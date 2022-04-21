@@ -99,6 +99,13 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(val, 10)));
 				}
 			}),
+			props.UpdateManager.FromHashValue("fuelCenterQty", 0.25, func(val) {
+				if (obj.units) {
+					obj["FUEL-Center-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
+				} else {
+					obj["FUEL-Center-quantity"].setText(sprintf("%s",  math.round(val, 10)));
+				}
+			}),
 			props.UpdateManager.FromHashValue("fuelLeftInnerQty", 0.25, func(val) {
 				if (obj.units) {
 					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
@@ -113,17 +120,11 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s",  math.round(val, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashList(["fadecPower1","fadecPower2","fadecPowerStart","fuelflow_1","fuelflow_2"], nil, func(val) {
-				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
-					obj["FUEL-Flow-per-min"].setColor(0.0509,0.7529,0.2941);
-					if (obj.units) {
-						obj["FUEL-Flow-per-min"].setText(sprintf("%s", math.round(((val.fuelflow_1 + val.fuelflow_2) * LBS2KGS) / 60, 10)));
-					} else {
-						obj["FUEL-Flow-per-min"].setText(sprintf("%s", math.round((val.fuelflow_1 + val.fuelflow_2) / 60, 10)));
-					}
+			props.UpdateManager.FromHashList(["fuelflow_1","fuelflow_2"], nil, func(val) {
+				if (obj.units) {
+					obj.fuelFlowPerMinute = sprintf("%s", math.round(((val.fuelflow_1 + val.fuelflow_2) * LBS2KGS) / 60, 10));
 				} else {
-					obj["FUEL-Flow-per-min"].setColor(0.7333,0.3803,0);
-					obj["FUEL-Flow-per-min"].setText("XX");
+					obj.fuelFlowPerMinute = sprintf("%s", math.round((val.fuelflow_1 + val.fuelflow_2) / 60, 10));
 				}
 			}),
 			props.UpdateManager.FromHashValue("N1_actual_1", 0.05, func(val) {
@@ -144,7 +145,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-ENG-2-label"].setColor(0.8078,0.8039,0.8078);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelLeftSwitch1", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelLeftSwitch1", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Left-1-Open"].show();
 					obj["FUEL-Pump-Left-1-Closed"].hide();
@@ -163,7 +164,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Left-1-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelLeftSwitch2", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelLeftSwitch2", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Left-2-Open"].show();
 					obj["FUEL-Pump-Left-2-Closed"].hide();
@@ -182,7 +183,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Left-2-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelCenterSwitch1", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelCenterSwitch1", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Center-1-Open"].show();
 					obj["FUEL-Pump-Center-1-Closed"].hide();
@@ -201,7 +202,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Center-1-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelCenterSwitch2", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelCenterSwitch2", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Center-2-Open"].show();
 					obj["FUEL-Pump-Center-2-Closed"].hide();
@@ -220,7 +221,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Center-2-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelRightSwitch1", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelRightSwitch1", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Right-1-Open"].show();
 					obj["FUEL-Pump-Right-1-Closed"].hide();
@@ -239,7 +240,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Right-1-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelRightSwitch2", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelRightSwitch2", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Right-2-Open"].show();
 					obj["FUEL-Pump-Right-2-Closed"].hide();
@@ -258,15 +259,15 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Right-2-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["fuelCenterSwitch1","fuelCenterSwitch2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["fuelCenterSwitch1","fuelCenterSwitch2"], 1, func(val) {
 				if (!val.fuelCenterSwitch1 and !val.fuelCenterSwitch2) {
 					obj["FUEL-Center-blocked"].show();
 				} else {
 					obj["FUEL-Center-blocked"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["fuelCrossfeedValve","fuelCrossfeedSwitch"], nil, func(val) {
-				if (val.fuelCrossfeedValve == 1) {
+			props.UpdateManager.FromHashList(["fuelCrossfeedValve","fuelCrossfeedSwitch"], 0.1, func(val) {
+				if (val.fuelCrossfeedValve >= 0.9) {
 					obj["FUEL-XFEED"].setRotation(0);
 					obj["FUEL-XFEED-pipes"].show();
 					if (val.fuelCrossfeedSwitch) {
@@ -278,7 +279,7 @@ var canvas_lowerECAMPageFuel =
 						obj["FUEL-XFEED"].setColorFill(0.7333,0.3803,0);
 						obj["FUEL-XFEED-Cross"].setColorFill(0.7333,0.3803,0);
 					}
-				} elsif (val.fuelCrossfeedValve == 0) {
+				} elsif (val.fuelCrossfeedValve <= 0.1) {
 					obj["FUEL-XFEED"].setRotation(90 * D2R);
 					obj["FUEL-XFEED-pipes"].hide();
 					if (!val.fuelCrossfeedSwitch) {
@@ -298,9 +299,9 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-XFEED-Cross"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["fuelEngine1Valve","engineCutoff1"], nil, func(val) {
-				if (val.fuelEngine1Valve) {
-					if (val.fuelEngine1Valve == 1) {
+			props.UpdateManager.FromHashList(["fuelEngine1Valve","engineCutoff1"], 0.1, func(val) {
+				if (val.fuelEngine1Valve > 0.1) {
+					if (val.fuelEngine1Valve >= 0.9) {
 						obj["FUEL-ENG-Master-1"].setRotation(0);
 					} else {
 						obj["FUEL-ENG-Master-1"].setRotation(45 * D2R);
@@ -327,9 +328,9 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-ENG-1-pipe"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["fuelEngine2Valve","engineCutoff2"], nil, func(val) {
-				if (val.fuelEngine2Valve) {
-					if (val.fuelEngine2Valve == 1) {
+			props.UpdateManager.FromHashList(["fuelEngine2Valve","engineCutoff2"], 0.1, func(val) {
+				if (val.fuelEngine2Valve > 0.1) {
+					if (val.fuelEngine1Valve >= 0.9) {
 						obj["FUEL-ENG-Master-2"].setRotation(0);
 					} else {
 						obj["FUEL-ENG-Master-2"].setRotation(45 * D2R);
@@ -356,11 +357,11 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-ENG-2-pipe"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTransferValve1", nil, func(val) {
-				if (val == 0) {
+			props.UpdateManager.FromHashValue("fuelTransferValve1", 0.1, func(val) {
+				if (val <= 0.1) {
 					obj["FUEL-Left-Transfer"].hide();
 				} else {
-					if (val == 1) {
+					if (val >= 0.9) {
 						obj["FUEL-Left-Transfer"].setColor(0.0509,0.7529,0.2941);
 					} else {
 						obj["FUEL-Left-Transfer"].setColor(0.7333,0.3803,0);
@@ -368,11 +369,11 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Left-Transfer"].show();
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTransferValve2", nil, func(val) {
-				if (val == 0) {
+			props.UpdateManager.FromHashValue("fuelTransferValve2", 0.1, func(val) {
+				if (val <= 0.1) {
 					obj["FUEL-Right-Transfer"].hide();
 				} else {
-					if (val == 1) {
+					if (val >= 0.9) {
 						obj["FUEL-Right-Transfer"].setColor(0.0509,0.7529,0.2941);
 					} else {
 						obj["FUEL-Right-Transfer"].setColor(0.7333,0.3803,0);
@@ -387,7 +388,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(val, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTempLeftOuter", 0.25, func(val) {
+			props.UpdateManager.FromHashValue("fuelTempLeftOuter", 0.5, func(val) {
 				obj["FUEL-Left-Outer-temp"].setText(sprintf("%s", math.round(val)));
 				if (val > 55 or val < -40) {
 					obj["FUEL-Left-Outer-temp"].setColor(0.7333,0.3803,0);
@@ -395,7 +396,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Left-Outer-temp"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTempLeftInner", 0.25, func(val) {
+			props.UpdateManager.FromHashValue("fuelTempLeftInner", 0.5, func(val) {
 				obj["FUEL-Left-Inner-temp"].setText(sprintf("%s", math.round(val)));
 				if (val > 45 or val < -40) {
 					obj["FUEL-Left-Inner-temp"].setColor(0.7333,0.3803,0);
@@ -403,7 +404,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Left-Inner-temp"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTempRightInner", 0.25, func(val) {
+			props.UpdateManager.FromHashValue("fuelTempRightInner", 0.5, func(val) {
 				obj["FUEL-Right-Inner-temp"].setText(sprintf("%s", math.round(val)));
 				if (val > 45 or val < -40) {
 					obj["FUEL-Right-Inner-temp"].setColor(0.7333,0.3803,0);
@@ -411,7 +412,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Right-Inner-temp"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTempRightOuter", 0.25, func(val) {
+			props.UpdateManager.FromHashValue("fuelTempRightOuter", 0.5, func(val) {
 				obj["FUEL-Right-Outer-temp"].setText(sprintf("%s", math.round(val)));
 				if (val > 55 or val < -40) {
 					obj["FUEL-Right-Outer-temp"].setColor(0.7333,0.3803,0);
@@ -544,6 +545,14 @@ var canvas_lowerECAMPageFuel =
         {
             update_item.update(notification);
         }
+		
+		if (notification.fadecPower1 or notification.fadecPower2 or notification.fadecPowerStart) {
+			me["FUEL-Flow-per-min"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-Flow-per-min"].setText(me.fuelFlowPerMinute);
+		} else {
+			me["FUEL-Flow-per-min"].setColor(0.7333,0.3803,0);
+			me["FUEL-Flow-per-min"].setText("XX");
+		}
 		
 		me.updateBottom(notification);
 	},

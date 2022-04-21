@@ -23,7 +23,7 @@ var canvas_lowerECAMPageFctl =
 		# init
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashList(["green","elac1","elac2","sec2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["green","elac1","elac2","sec2"], 1, func(val) {
 				if (val.green >= 1450) {
 					if (val.elac2 or val.sec2) {
 						obj["elevLgreen"].setColor(0.0509,0.7529,0.2941);
@@ -53,7 +53,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spdbrkgreen"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["yellow","elac2","sec2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["yellow","elac2","sec2"], 1, func(val) {
 				if (val.yellow >= 1450) {
 					if (val.elac2 or val.sec2) {
 						obj["elevRyellow"].setColor(0.0509,0.7529,0.2941);
@@ -70,7 +70,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spdbrkyellow"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["blue","elac1","elac2","sec1"], nil, func(val) {
+			props.UpdateManager.FromHashList(["blue","elac1","elac2","sec1"], 1, func(val) {
 				if (val.blue >= 1500) {
 					if (val.elac1) {
 						obj["ailLblue"].setColor(0.0509,0.7529,0.2941);
@@ -106,7 +106,7 @@ var canvas_lowerECAMPageFctl =
 			props.UpdateManager.FromHashValue("fctlAilR", 0.001, func(val) {
 				obj["ailR"].setTranslation(0, val * -100);
 			}),
-			props.UpdateManager.FromHashList(["blue","green","elac1","elac2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["blue","green","elac1","elac2"], 1, func(val) {
 				if ((val.blue < 1500 or !val.elac1) and (val.green < 1500 or !val.elac2)) {
 					obj["ailL"].setColor(0.7333,0.3803,0);
 				} else {
@@ -124,7 +124,7 @@ var canvas_lowerECAMPageFctl =
 			props.UpdateManager.FromHashValue("fctlElevR", 0.001, func(val) {
 				obj["elevR"].setTranslation(0, val * 100);
 			}),
-			props.UpdateManager.FromHashList(["blue","green","yellow","elac1","elac2","sec1","sec2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["blue","green","yellow","elac1","elac2","sec1","sec2"], 1, func(val) {
 				if ((val.blue < 1500 or (!val.elac1 and !val.sec1)) and (val.green < 1500 or (!val.elac2 and !val.sec2))) {
 					obj["elevL"].setColor(0.7333,0.3803,0);
 				} else {
@@ -149,7 +149,7 @@ var canvas_lowerECAMPageFctl =
 					obj["PTupdn"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("elac1", nil, func(val) {
+			props.UpdateManager.FromHashValue("elac1", 1, func(val) {
 				if (val) {
 					obj["elac1"].setColor(0.0509,0.7529,0.2941);
 					obj["path4249"].setColor(0.0509,0.7529,0.2941);
@@ -158,7 +158,7 @@ var canvas_lowerECAMPageFctl =
 					obj["path4249"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("elac2", nil, func(val) {
+			props.UpdateManager.FromHashValue("elac2", 1, func(val) {
 				if (val) {
 					obj["elac2"].setColor(0.0509,0.7529,0.2941);
 					obj["path4249-3"].setColor(0.0509,0.7529,0.2941);
@@ -167,7 +167,7 @@ var canvas_lowerECAMPageFctl =
 					obj["path4249-3"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("sec1", nil, func(val) {
+			props.UpdateManager.FromHashValue("sec1", 1, func(val) {
 				if (val) {
 					obj["sec1"].setColor(0.0509,0.7529,0.2941);
 					obj["path4249-3-6-7"].setColor(0.0509,0.7529,0.2941);
@@ -176,7 +176,7 @@ var canvas_lowerECAMPageFctl =
 					obj["path4249-3-6-7"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("sec2", nil, func(val) {
+			props.UpdateManager.FromHashValue("sec2", 1, func(val) {
 				if (val) {
 					obj["sec2"].setColor(0.0509,0.7529,0.2941);
 					obj["path4249-3-6-7-5"].setColor(0.0509,0.7529,0.2941);
@@ -185,7 +185,7 @@ var canvas_lowerECAMPageFctl =
 					obj["path4249-3-6-7-5"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("sec3", nil, func(val) {
+			props.UpdateManager.FromHashValue("sec3", 1, func(val) {
 				if (val) {
 					obj["sec3"].setColor(0.0509,0.7529,0.2941);
 					obj["path4249-3-6"].setColor(0.0509,0.7529,0.2941);
@@ -217,7 +217,7 @@ var canvas_lowerECAMPageFctl =
 			props.UpdateManager.FromHashValue("fctlRudderTrim", 0.01, func(val) {
 				obj["rudderTrimInd"].setRotation(val * -0.024);
 			}),
-			props.UpdateManager.FromHashValue("fctlTHSJam", nil, func(val) {
+			props.UpdateManager.FromHashValue("fctlTHSJam", 1, func(val) {
 				if (val) {
 					obj["pitchTrimStatus"].setColor(0.7333,0.3803,0);
 				} else {
@@ -314,7 +314,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spoiler5Rex"].show();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerL1Failure","spoilerL1","green"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerL1Failure","spoilerL1","green"], 1, func(val) {
 				if (val.spoilerL1Failure or val.green < 1500) {
 					obj["spoiler1Lex"].setColor(0.7333,0.3803,0);
 					obj["spoiler1Lrt"].setColor(0.7333,0.3803,0);
@@ -329,7 +329,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spoiler1Lf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerL2Failure","spoilerL2","yellow"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerL2Failure","spoilerL2","yellow"], 1, func(val) {
 				if (val.spoilerL2Failure or val.yellow < 1500) {
 					obj["spoiler2Lex"].setColor(0.7333,0.3803,0);
 					obj["spoiler2Lrt"].setColor(0.7333,0.3803,0);
@@ -344,7 +344,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spoiler2Lf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerL3Failure","spoilerL3","blue"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerL3Failure","spoilerL3","blue"], 1, func(val) {
 				if (val.spoilerL3Failure or val.blue < 1500) {
 					obj["spoiler3Lex"].setColor(0.7333,0.3803,0);
 					obj["spoiler3Lrt"].setColor(0.7333,0.3803,0);
@@ -359,7 +359,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spoiler3Lf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerL4Failure","spoilerL4","yellow"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerL4Failure","spoilerL4","yellow"], 1, func(val) {
 				if (val.spoilerL4Failure or val.yellow < 1500) {
 					obj["spoiler4Lex"].setColor(0.7333,0.3803,0);
 					obj["spoiler4Lrt"].setColor(0.7333,0.3803,0);
@@ -374,7 +374,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spoiler4Lf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerL5Failure","spoilerL5","green"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerL5Failure","spoilerL5","green"], 1, func(val) {
 				if (val.spoilerL5Failure or val.green < 1500) {
 					obj["spoiler5Lex"].setColor(0.7333,0.3803,0);
 					obj["spoiler5Lrt"].setColor(0.7333,0.3803,0);
@@ -389,7 +389,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spoiler5Lf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerR1Failure","spoilerR1","green"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerR1Failure","spoilerR1","green"], 1, func(val) {
 				if (val.spoilerR1Failure or val.green < 1500) {
 					obj["spoiler1Rex"].setColor(0.7333,0.3803,0);
 					obj["spoiler1Rrt"].setColor(0.7333,0.3803,0);
@@ -404,7 +404,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spoiler1Rf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerR2Failure","spoilerR2","yellow"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerR2Failure","spoilerR2","yellow"], 1, func(val) {
 				if (val.spoilerR2Failure or val.yellow < 1500) {
 					obj["spoiler2Rex"].setColor(0.7333,0.3803,0);
 					obj["spoiler2Rrt"].setColor(0.7333,0.3803,0);
@@ -419,7 +419,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spoiler2Rf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerR3Failure","spoilerR3","blue"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerR3Failure","spoilerR3","blue"], 1, func(val) {
 				if (val.spoilerR3Failure or val.blue < 1500) {
 					obj["spoiler3Rex"].setColor(0.7333,0.3803,0);
 					obj["spoiler3Rrt"].setColor(0.7333,0.3803,0);
@@ -434,7 +434,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spoiler3Rf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerR4Failure","spoilerR4","yellow"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerR4Failure","spoilerR4","yellow"], 1, func(val) {
 				if (val.spoilerR4Failure or val.yellow < 1500) {
 					obj["spoiler4Rex"].setColor(0.7333,0.3803,0);
 					obj["spoiler4Rrt"].setColor(0.7333,0.3803,0);
@@ -449,7 +449,7 @@ var canvas_lowerECAMPageFctl =
 					obj["spoiler4Rf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerR5Failure","spoilerR5","green"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerR5Failure","spoilerR5","green"], 1, func(val) {
 				if (val.spoilerR5Failure or val.green < 1500) {
 					obj["spoiler5Rex"].setColor(0.7333,0.3803,0);
 					obj["spoiler5Rrt"].setColor(0.7333,0.3803,0);
