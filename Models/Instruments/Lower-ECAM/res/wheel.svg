@@ -5,7 +5,7 @@
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg2"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    sodipodi:docname="wheel.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -22,7 +22,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -38,12 +37,12 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="986"
+     inkscape:window-height="974"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="1.8101934"
-     inkscape:cx="932.77328"
-     inkscape:cy="542.48348"
+     inkscape:zoom="0.9050967"
+     inkscape:cx="483.92619"
+     inkscape:cy="964.53782"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
@@ -323,13 +322,13 @@
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#bb6100;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="434.00464"
+     x="420.50464"
      y="552.28931"
      id="antiskidtext"
      inkscape:label="#text4269"><tspan
        sodipodi:role="line"
        id="tspan4271"
-       x="434.00464"
+       x="420.50464"
        y="552.28931"
        style="font-size:32px;line-height:1.25">ANTI SKID</tspan></text>
   <text
