@@ -50,7 +50,7 @@ var canvas_IESI = {
 		obj.AI_horizon_rot = obj["AI_horizon"].createTransform();
 		
 		obj._aiCenter = obj["AI_center"].getCenter();
-		obj._cachedInhg = nil;
+		obj._cachedInhg = -999;
 		obj._cachedMode = nil;
 		obj._canReset = 0;
 		obj._excessMotionInInit = 0;
@@ -62,10 +62,10 @@ var canvas_IESI = {
 		obj._roll = 0;
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("airspeed", nil, func(val) {
+			props.UpdateManager.FromHashValue("airspeed", 0.1, func(val) {
 				obj["ASI_scale"].setTranslation(0, math.clamp(val - 30, 0, 490) * 8.295);
 			}),
-			props.UpdateManager.FromHashList(["altitude","altitude_ind"], nil, func(val) {
+			props.UpdateManager.FromHashList(["altitude","altitude_ind"], 0.5, func(val) {
 				val.altitude = math.clamp(val.altitude, -2000, 50000);
 				if (val.altitude < 0) {
 					obj["negText"].show();
@@ -103,7 +103,7 @@ var canvas_IESI = {
 				obj.altTens = num(right(sprintf("%02d", val.altitude), 2));
 				obj["ALT_tens"].setTranslation(0, obj.altTens * 3.16);
 			}),
-			props.UpdateManager.FromHashValue("showMach", nil, func(val) {
+			props.UpdateManager.FromHashValue("showMach", 1, func(val) {
 				if (val) {
 					obj["ASI_mach_decimal"].show();
 					obj["ASI_mach"].show();
@@ -112,22 +112,18 @@ var canvas_IESI = {
 					obj["ASI_mach"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("mach", nil, func(val) {
-				if (val >= 0.999) {
-					obj["ASI_mach"].setText("99");
-				} else {
-					obj["ASI_mach"].setText(sprintf("%2.0f", val * 100));
-				}
+			props.UpdateManager.FromHashValue("mach", 0.001, func(val) {
+				obj["ASI_mach"].setText(sprintf("%2.0f", math.clamp(val * 100, 0, 99)));
 			}),
-			props.UpdateManager.FromHashValue("pitch", nil, func(val) {
+			props.UpdateManager.FromHashValue("pitch", 0.025, func(val) {
 				obj.AI_horizon_trans.setTranslation(0, val * 16.74);
 			}),
-			props.UpdateManager.FromHashValue("roll", nil, func(val) {
+			props.UpdateManager.FromHashValue("roll", 0.025, func(val) {
 				obj._roll = -val * D2R;
 				obj.AI_horizon_rot.setRotation(obj._roll, obj._aiCenter);
 				obj["AI_bank"].setRotation(obj._roll);
 			}),
-			props.UpdateManager.FromHashValue("skid", nil, func(val) {
+			props.UpdateManager.FromHashValue("skid", 0.1, func(val) {
 				if (abs(val) >= 84.99) {
 					obj["AI_slipskid"].hide();
 				} else {
@@ -146,7 +142,7 @@ var canvas_IESI = {
 		me._powerResult = me.updatePower(notification);
 		if (me._powerResult == 0) { return; }
 		
-		if (notification.qnh_inhg != me._cachedInhg or notification.altimeter_mode != me._cachedMode) {
+		if (math.abs(notification.qnh_inhg - me._cachedInhg) > 0.005 or notification.altimeter_mode != me._cachedMode) {
 			me._cachedInhg = notification.qnh_inhg;
 			me._cachedMode = notification.altimeter_mode;
 			me.updateQNH(notification);
