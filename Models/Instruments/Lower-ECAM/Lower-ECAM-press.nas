@@ -27,13 +27,7 @@ var canvas_lowerECAMPagePress =
 		
 		obj.update_items = [
 			props.UpdateManager.FromHashValue("pressDelta", 0.05, func(val) {
-				if (val > 31.9) {
-					obj["PRESS-deltaP"].setText(sprintf("%2.1f", 31.9));
-				} else if (val < -9.9) {
-					obj["PRESS-deltaP"].setText(sprintf("%2.1f", -9.9));
-				} else {
-					obj["PRESS-deltaP"].setText(sprintf("%2.1f", val));
-				}
+				obj["PRESS-deltaP"].setText(sprintf("%2.1f", math.clamp(val, -9.9, 31.9)));
 				
 				if (val < -0.4 or val > 8.5) {
 					obj["PRESS-deltaP"].setColor(0.7333,0.3803,0);
@@ -42,13 +36,7 @@ var canvas_lowerECAMPagePress =
 				}
 			}),
 			props.UpdateManager.FromHashValue("pressVS", 25, func(val) {
-				if (val > 9950) {
-					obj["PRESS-Cab-VS"].setText(sprintf("%4.0f", 9950));
-				} else if (val < -9950) {
-					obj["PRESS-Cab-VS"].setText(sprintf("%4.0f", -9950));
-				} else {
-					obj["PRESS-Cab-VS"].setText(sprintf("%-4.0f", math.round(val,50)));
-				}
+				obj["PRESS-Cab-VS"].setText(sprintf("%-4.0f", math.clamp(math.round(val,50), -9950, 9950)));
 				
 				if (abs(val) > 2000) {
 					obj["PRESS-Cab-VS"].setColor(0.7333,0.3803,0);
@@ -57,13 +45,7 @@ var canvas_lowerECAMPagePress =
 				}
 			}),
 			props.UpdateManager.FromHashValue("pressAlt", 25, func(val) {
-				if (val > 32750) {
-					obj["PRESS-Cab-Alt"].setText(sprintf("%5.0f", 32750));
-				} else if (val < -9950) {
-					obj["PRESS-Cab-Alt"].setText(sprintf("%5.0f", -9950));
-				} else {
-					obj["PRESS-Cab-Alt"].setText(sprintf("%5.0f", math.round(val,50)));
-				}
+				obj["PRESS-Cab-Alt"].setText(sprintf("%5.0f", math.clamp(math.round(val,50), -9950, 32750)));
 				
 				if (val > 9550) {
 					obj["PRESS-Cab-Alt"].setColor(1,0,0);
@@ -80,8 +62,8 @@ var canvas_lowerECAMPagePress =
 					obj["PRESS-Sys-1"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["flowCtlValve1","engine1State"], nil, func(val) {
-				if (val.flowCtlValve1 == 0 and val.engine1State == 3) {
+			props.UpdateManager.FromHashList(["flowCtlValve1","engine1State"], 0.1, func(val) {
+				if (val.flowCtlValve1 <= 0.1 and val.engine1State == 3) {
 					obj["PRESS-Pack-1-Triangle"].setColor(0.7333,0.3803,0);
 					obj["PRESS-Pack-1"].setColor(0.7333,0.3803,0);
 				} else {
@@ -89,8 +71,8 @@ var canvas_lowerECAMPagePress =
 					obj["PRESS-Pack-1"].setColor(0.8078,0.8039,0.8078);
 				}
 			}),
-			props.UpdateManager.FromHashList(["flowCtlValve2","engine2State"], nil, func(val) {
-				if (val.flowCtlValve2 == 0 and val.engine2State == 3) {
+			props.UpdateManager.FromHashList(["flowCtlValve2","engine2State"], 0.1, func(val) {
+				if (val.flowCtlValve2 <= 0.1 and val.engine2State == 3) {
 					obj["PRESS-Pack-2-Triangle"].setColor(0.7333,0.3803,0);
 					obj["PRESS-Pack-2"].setColor(0.7333,0.3803,0);
 				} else {
@@ -100,7 +82,6 @@ var canvas_lowerECAMPagePress =
 			}),
 		];
 		
-		obj.displayedGForce = 0;
 		obj.updateItemsBottom = [
 			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
 				obj.units = val;
@@ -110,25 +91,27 @@ var canvas_lowerECAMPagePress =
 					obj["GW-weight-unit"].setText("LBS");
 				}
 			}),
-			props.UpdateManager.FromHashValue("hour", nil, func(val) {
+			props.UpdateManager.FromHashValue("hour", 1, func(val) {
 				obj["UTCh"].setText(sprintf("%02d", val));
 			}),
-			props.UpdateManager.FromHashValue("minute", nil, func(val) {
+			props.UpdateManager.FromHashValue("minute", 1, func(val) {
 				obj["UTCm"].setText(sprintf("%02d", val));
 			}),
 			props.UpdateManager.FromHashValue("gForce", 0.05, func(val) {
-				if (obj.displayedGForce) {
-					obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
-				}
+				obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
 			}),
 			props.UpdateManager.FromHashValue("gForceDisplay", nil, func(val) {
-				if ((val == 1 and !obj.displayedGForce) or (val != 0 and obj.displayedGForce)) {
-					obj.displayedGForce = 1;
+				if (val) {
 					obj["GLoad"].show();
 				} else {
-					obj.displayedGForce = 0;
 					obj["GLoad"].hide();
 				}
+			}),
+			props.UpdateManager.FromHashValue("satTemp", 0.5, func(val) {
+				obj["SAT"].setText(sprintf("%+2.0f", val));
+			}),
+			props.UpdateManager.FromHashValue("tatTemp", 0.5, func(val) {
+				obj["TAT"].setText(sprintf("%+2.0f", val));
 			}),
 		];
 		return obj;
@@ -142,11 +125,6 @@ var canvas_lowerECAMPagePress =
 		"PRESS-Pack-1","PRESS-Pack-2"];
 	},
 	updateBottom: func(notification) {
-		foreach(var update_item_bottom; me.updateItemsBottom)
-        {
-            update_item_bottom.update(notification);
-        }
-		
 		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
 			if (me.units) {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
@@ -160,20 +138,25 @@ var canvas_lowerECAMPagePress =
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
-			me["SAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
+			notification.satTemp = dmc.DMController.DMCs[1].outputs[4].getValue();
 			me["SAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["SAT"].setText(sprintf("%s", "XX"));
+			me["SAT"].setText("XX");
 			me["SAT"].setColor(0.7333,0.3803,0);
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[5] != nil) {
-			me["TAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
+			notification.tatTemp = dmc.DMController.DMCs[1].outputs[5].getValue();
 			me["TAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["TAT"].setText(sprintf("%s", "XX"));
+			me["TAT"].setText("XX");
 			me["TAT"].setColor(0.7333,0.3803,0);
 		}
+		
+		foreach(var update_item_bottom; me.updateItemsBottom)
+        {
+            update_item_bottom.update(notification);
+        }
 	},
 	update: func(notification) {
 		me.updatePower();
