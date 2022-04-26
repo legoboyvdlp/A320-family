@@ -167,10 +167,10 @@ var canvas_upperECAM = {
 					obj["FlapDots"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("flexTemp", 1, func(val) {
+			props.UpdateManager.FromHashValue("flexTemp", 0.5, func(val) {
 				obj["FlxLimTemp"].setText(sprintf("%2.0d",val));
 			}),
-			props.UpdateManager.FromHashValue("slatLocked", nil, func(val) {
+			props.UpdateManager.FromHashValue("slatLocked", 1, func(val) {
 				if (val) {
 					if (slatLockGoing == 0) {
 						slatLockGoing = 1;
@@ -185,10 +185,10 @@ var canvas_upperECAM = {
 		];
 		
 		obj.update_items_fadec_powered_n1 = [
-			props.UpdateManager.FromHashValue("N1_1", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("N1_1", 0.1, func(val) {
 				obj["N11-needle"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("N1_2", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("N1_2", 0.1, func(val) {
 				obj["N12-needle"].setRotation((val + 90) * D2R);
 			}),
 			props.UpdateManager.FromHashValue("N1_actual_1", 0.025, func(val) {
@@ -199,23 +199,23 @@ var canvas_upperECAM = {
 				obj["N12"].setText(sprintf("%s", math.floor(val + 0.05)));
 				obj["N12-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
 			}),
-			props.UpdateManager.FromHashValue("N1_lim", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("N1_lim", 0.1, func(val) {
 				obj["N11-ylim"].setRotation((val + 90) * D2R);
 				obj["N12-ylim"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("N1thr_1", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("N1thr_1", 0.1, func(val) {
 				obj["N11-thr"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("N1thr_2", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("N1thr_2", 0.1, func(val) {
 				obj["N12-thr"].setRotation((val + 90) * D2R);
 			}),
 		];
 		
 		obj.update_items_fadec_powered_epr = [
-			props.UpdateManager.FromHashValue("EPR_1", 0.0001, func(val) {
+			props.UpdateManager.FromHashValue("EPR_1", 0.1, func(val) {
 				obj["EPR1-needle"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("EPR_2", 0.0001, func(val) {
+			props.UpdateManager.FromHashValue("EPR_2", 0.1, func(val) {
 				obj["EPR2-needle"].setRotation((val + 90) * D2R);
 			}),
 			props.UpdateManager.FromHashValue("EPR_actual_1", 0.0001, func(val) {
@@ -228,14 +228,14 @@ var canvas_upperECAM = {
 				obj["EPR2"].setText(sprintf("%1.0f", math.floor(epr2)));
 				obj["EPR2-decimal"].setText(sprintf("%03d", (epr2 - int(epr2)) * 1000));
 			}),
-			props.UpdateManager.FromHashValue("EPR_lim", 0.0001, func(val) {
+			props.UpdateManager.FromHashValue("EPR_lim", 0.1, func(val) {
 				obj["EPR1-ylim"].setRotation((val + 90) * D2R);
 				obj["EPR2-ylim"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("EPRthr_1", 0.0001, func(val) {
+			props.UpdateManager.FromHashValue("EPRthr_1", 0.1, func(val) {
 				obj["EPR1-thr"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("EPRthr_2", 0.0001, func(val) {
+			props.UpdateManager.FromHashValue("EPRthr_2", 0.1, func(val) {
 				obj["EPR2-thr"].setRotation((val + 90) * D2R);
 			}),
 		];
@@ -330,7 +330,7 @@ var canvas_upperECAM = {
 					obj["FlxLimTemp"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["eng1_n1", "N1_mode_1"], nil, func(val) {
+			props.UpdateManager.FromHashList(["eng1_n1", "N1_mode_1"], 1, func(val) {
 				if (val.eng1_n1 and val.N1_mode_1) {
 					obj["N11-thr"].show();
 					obj["N11-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
@@ -339,7 +339,7 @@ var canvas_upperECAM = {
 					obj["N11-ylim"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["eng2_n1", "N1_mode_2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["eng2_n1", "N1_mode_2"], 1, func(val) {
 				if (val.eng2_n1 == 1 and val.N1_mode_2) {
 					obj["N12-thr"].show();
 					obj["N12-ylim"].hide(); # Keep it hidden, since N1 mode limit calculation is not done yet
@@ -354,13 +354,13 @@ var canvas_upperECAM = {
 			props.UpdateManager.FromHashValue("egt_1", 0.5, func(val) {
 				obj["EGT1"].setText(sprintf("%s", math.round(val)));
 			}),
-			props.UpdateManager.FromHashValue("egt_1_needle", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("egt_1_needle", 0.1, func(val) {
 				obj["EGT1-needle"].setRotation((val + 90) * D2R);
 			}),
 			props.UpdateManager.FromHashValue("egt_2", 0.5, func(val) {
 				obj["EGT2"].setText(sprintf("%s", math.round(val)));
 			}),
-			props.UpdateManager.FromHashValue("egt_2_needle", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("egt_2_needle", 0.1, func(val) {
 				obj["EGT2-needle"].setRotation((val + 90) * D2R);
 			}),
 		];
