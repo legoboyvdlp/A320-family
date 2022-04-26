@@ -262,7 +262,7 @@ var canvas_upperECAM = {
 				obj["N1Lim"].setText(sprintf("%s", math.floor(val + 0.05)));
 				obj["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
 			}),
-			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart", "thrustLimit"], nil, func(val) {
+			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart", "thrustLimitInt"], 1, func(val) {
 				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
 					obj["N1Lim"].show();
 					obj["N1Lim-decimal"].show();
@@ -281,7 +281,7 @@ var canvas_upperECAM = {
 					obj["N1Lim-XX2"].show();
 				}
 				
-				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit == "FLX") {
+				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimitInt == 3) {
 					obj["FlxLimDegreesC"].show();
 					obj["FlxLimTemp"].show();
 				} else {
@@ -305,7 +305,7 @@ var canvas_upperECAM = {
 				obj["N1Lim"].setText(sprintf("%s", math.floor(val + 0.05)));
 				obj["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
 			}),
-			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart", "thrustLimit", "N1_mode_1", "N1_mode_2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart", "thrustLimitInt", "N1_mode_1", "N1_mode_2"], 1, func(val) {
 				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
 					if (val.N1_mode_1 > 0 and val.N1_mode_2 > 0) {
 						if (val.N1_mode_1 == 2 and val.N1_mode_2 == 2) {
@@ -315,13 +315,13 @@ var canvas_upperECAM = {
 							obj["N1Lim-percent"].hide();
 							obj["N1Lim-mode"].hide();
 							obj["N1Lim-XX"].show();
-							if (val.thrustLimit != "MREV") {
+							if (val.thrustLimitInt != 4) {
 								obj["N1Lim-XX2"].show();
 							} else {
 								obj["N1Lim-XX2"].hide();
 							}
 						} else {
-							if (val.thrustLimit != "MREV") {
+							if (val.thrustLimitInt != 4) {
 								obj["N1Lim"].show();
 								obj["N1Lim-decimal"].show();
 								obj["N1Lim-decpnt"].show();
@@ -339,7 +339,7 @@ var canvas_upperECAM = {
 						obj["EPRMode"].hide();
 						obj["N1Mode"].show();
 					} else {
-						if (val.thrustLimit != "MREV") {
+						if (val.thrustLimitInt != 4) {
 							obj["EPRLim"].show();
 							obj["EPRLim-decimal"].show();
 							obj["EPRLim-decpnt"].show();
@@ -365,7 +365,7 @@ var canvas_upperECAM = {
 					obj["N1Mode"].hide();
 				}
 				
-				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit == "FLX" and val.N1_mode_1 == 0 and val.N1_mode_2 == 0) {
+				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimitInt == 3 and val.N1_mode_1 == 0 and val.N1_mode_2 == 0) {
 					obj["FlxLimDegreesC"].show();
 					obj["FlxLimTemp"].show();
 				} else {
@@ -1178,6 +1178,7 @@ var input = {
 	alphaFloor: "/fdm/jsbsim/fadec/alpha-floor",
 	eprLimit: "/fdm/jsbsim/fadec/limit/active-epr",
 	thrustLimit: "/fdm/jsbsim/fadec/limit/active-mode",
+	thrustLimitInt: "/fdm/jsbsim/fadec/limit/active-mode-int",
 	n1Limit: "/fdm/jsbsim/fadec/limit/active-n1",
 	flexTemp: "/fdm/jsbsim/fadec/limit/flex-temp",
 	fadecPower1: "/systems/fadec/powered1",
