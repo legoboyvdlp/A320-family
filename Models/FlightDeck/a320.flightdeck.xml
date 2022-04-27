@@ -424,6 +424,9 @@
 		<object-name>YellowElecPump2O</object-name>
 		<object-name>YellowEngPump1F</object-name>
 		<object-name>YellowEngPump2O</object-name>
+		
+		<object-name>OVH_button_labels.009</object-name>
+		<object-name>OVH_button_labels.012</object-name>
 		<condition>
 			<greater-than>
 				<property>/systems/electrical/bus/ac-2</property>
@@ -698,6 +701,9 @@
 		<object-name>VentBlowBtn2O</object-name>
 		<object-name>VentExtractBtn1F</object-name>
 		<object-name>VentExtractBtn2O</object-name>
+		
+		<object-name>OVH_button_labels.009</object-name>
+		<object-name>OVH_button_labels.012</object-name>
 		<condition>
 			<equals>
 				<property>controls/switches/annun-test</property>
@@ -2671,8 +2677,7 @@
 	<!-- Show / hide headphones -->
 	<animation>
 		<type>select</type>
-		<object-name>HeadsetFo</object-name>
-		<object-name>HeadsetCpt</object-name>
+		<object-name>Circle.020</object-name>
 		<condition>
 			<not>
 				<property>controls/audio/headset-toggle</property>
@@ -2684,7 +2689,8 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>torch</object-name>
+		<object-name>torch_cpt</object-name>
+		<object-name>torch_fo</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -13957,7 +13963,7 @@
 	<!-- Headset show/hide on Audio Control Panel(click on body) -->
 	<animation>
 		<type>pick</type>
-		<object-name>audio_body.cpt</object-name>
+		<object-name>HeadsetHangerCpt</object-name>
 		<action>
 			<button>0</button>
 			<binding>
@@ -14061,6 +14067,17 @@
 				<label>PA system transmit</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>OVH_button_labels.009</object-name>
+		<condition>
+			<or>
+				<property>systems/audio/acp[0]/pa</property>
+				<property>systems/audio/acp[1]/pa</property>
+			</or>
+		</condition>
 	</animation>
 	
 	<animation>
