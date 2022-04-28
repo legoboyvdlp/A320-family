@@ -47,6 +47,7 @@ var autoland_ap_disc_ft = props.globals.initNode("/instrumentation/pfd/logic/aut
 
 var canvas_pfd = {
 	ASItrendIsShown: 0,
+	
 	middleOffset: 0,
 	heading: 0,
 	heading10: 0,
@@ -63,26 +64,6 @@ var canvas_pfd = {
 	magnetic_hdg: 0,
 	magnetic_hdg_dif: 0,
 	alt_diff_cur: 0,
-	ASI: 0,
-	ASImax: 0,
-	ASItrend: 0,
-	ASItrgt: 0,
-	ASItrgtdiff: 0,
-	V2trgt: 0,
-	Strgt: 0,
-	Ftrgt: 0,
-	flaptrgt: 0,
-	cleantrgt: 0,
-	SPDv2trgtdiff: 0,
-	SPDstrgtdiff: 0,
-	SPDftrgtdiff: 0,
-	SPDflaptrgtdiff: 0,
-	SPDcleantrgtdiff: 0,
-	ind_mach: 0,
-	ind_spd: 0,
-	tgt_kts: 0,
-	tgt_ias: 0,
-	vapp: 0,
 	new: func(svg, name, number) {
 		var obj = {parents: [canvas_pfd] };
 		obj.canvas = canvas.new({
@@ -151,26 +132,6 @@ var canvas_pfd = {
 		obj.magnetic_hdg = 0;
 		obj.magnetic_hdg_dif = 0;
 		obj.alt_diff_cur = 0;
-		obj.ASI = 0;
-		obj.ASImax = 0;
-		obj.ASItrend = 0;
-		obj.ASItrgt = 0;
-		obj.ASItrgtdiff = 0;
-		obj.V2trgt = 0;
-		obj.Strgt = 0;
-		obj.Ftrgt = 0;
-		obj.flaptrgt = 0;
-		obj.cleantrgt = 0;
-		obj.SPDv2trgtdiff = 0;
-		obj.SPDstrgtdiff = 0;
-		obj.SPDftrgtdiff = 0;
-		obj.SPDflaptrgtdiff = 0;
-		obj.SPDcleantrgtdiff = 0;
-		obj.ind_mach = 0;
-		obj.ind_spd = 0;
-		obj.tgt_kts = 0;
-		obj.tgt_ias = 0;
-		obj.vapp = 0;
 		
 		# hide non-updated objects
 		obj["FMA_catmode"].hide();
@@ -845,7 +806,7 @@ var canvas_pfd = {
 					if (val.agl < 55 and val.fmgcPhase <= 2 and abs(val.SPDv1trgtdiff) <= 42) {
 						obj["v1_group"].show();
 						obj["v1_text"].hide();
-					} else if (notification.agl < 55 and fmgc.FMGCInternal.phase <= 2) {
+					} else if (val.agl < 55 and fmgc.FMGCInternal.phase <= 2) {
 						obj["v1_group"].hide();
 						obj["v1_text"].show();
 					} else {
@@ -871,6 +832,18 @@ var canvas_pfd = {
 					obj["vr_speed"].hide();
 				}
 			}),
+			props.UpdateManager.FromHashList(["speedError","showV2","SPDv2trgtdiff","fmgcPhase","agl","V2trgt"], 0.5, func(val) {
+				if (!val.speedError and val.showVr) {
+					if (val.agl < 55 and val.fmgcPhase <= 2 and abs(val.SPDv2trgtdiff) <= 42) {
+						obj["ASI_target"].show();
+						obj["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
+						obj["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
+					} else if (val.agl < 55 and fmgc.FMGCInternal.phase <= 2) {
+						obj["ASI_target"].hide();
+						obj["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
+					}
+				}
+			}),
 			props.UpdateManager.FromHashList(["machError","ind_mach"], 0.001, func(val) {
 				if (val.machError) {
 					obj["ASI_mach"].hide();
@@ -888,6 +861,145 @@ var canvas_pfd = {
 						obj["ASI_mach"].show();
 					} else {
 						obj["ASI_mach"].hide();
+					}
+				}
+			}),
+			props.UpdateManager.FromHashList(["flapMaxSpeed","ASI"], 0.5, func(val) {
+				obj["flap_max"].setTranslation(0, (val.flapMaxSpeed - 30 - val.ASI) * -6.6);
+			}),
+			props.UpdateManager.FromHashList(["speedError","fac1","fac2","flapMaxSpeed","flapsInput","ind_spd"], 0.5, func(val) {
+				if (!val.speedError and (val.fac1 or val.fac2)) {
+					if (abs(val.flapMaxSpeed - val.ind_spd) <= 42 and val.flapsInput != 4) {
+						obj["flap_max"].show();
+					} else {
+						obj["flap_max"].hide();
+					}
+				} else {
+					obj["flap_max"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("Ctrgt", , 0.5, func(val) {
+				obj["clean_speed"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("Ftrgt", 0.5, func(val) {
+				obj["F_target"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("Strgt", 0.5, func(val) {
+				obj["S_target"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashList(["speedError","fac1","fac2","flapsInput","SPDstrgtdiff","SPDftrgtdiff","SPDcleantrgtdiff","agl"], 0.5, func(val) {
+				if (!val.speedError and (val.fac1 or val.fac2)) {
+					if (val.flapsInput == 1) {
+						obj["F_target"].hide();
+						obj["clean_speed"].hide();
+						
+						if (abs(val.SPDstrgtdiff) <= 42 and val.agl >= 400) {
+							obj["S_target"].show();
+						} else {
+							obj["S_target"].hide();
+						}
+					} else if (val.flapsInput == 2 or val.flapsInput == 3) {
+						obj["S_target"].hide();
+						obj["clean_speed"].hide();
+						
+						if (abs(val.SPDftrgtdiff) <= 42 and val.agl >= 400) {
+							obj["F_target"].show();
+						} else {
+							obj["F_target"].hide();
+						}
+					} else if (val.flapsInput == 4) {
+						obj["S_target"].hide();
+						obj["F_target"].hide();
+						obj["clean_speed"].hide();	
+					} else {
+						obj["S_target"].hide();
+						obj["F_target"].hide();
+						
+						if (abs(val.SPDcleantrgtdiff) <= 42) {
+							obj["clean_speed"].show();
+						} else {
+							obj["clean_speed"].hide();
+						}	
+						
+					}
+				} else {
+					obj["S_target"].hide();
+					obj["F_target"].hide();
+					obj["clean_speed"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("bussTranslate", 0.2, func(val) {
+				obj["ASI_buss"].setTranslation(0, val);
+				obj["ASI_buss_ref_blue"].setTranslation(0, val);
+			}),
+			props.UpdateManager.FromHashList(["speedError","fac1","fac2","fbwLaw","fmgcPhase","gear1Wow","gear2Wow","fmgcTakeoffState"], 1, func(val) {
+				if (!val.fmgcTakeoffState and val.fmgcPhase >= 1 and !val.gear1Wow and !val.gear2Wow and !val.speedError and (val.fac1 or val.fac2)) {
+					obj["VLS_min"].show();
+					if (val.fbwLaw == 0) {
+						obj["ALPHA_PROT"].show();
+						obj["ALPHA_MAX"].show();
+						obj["ALPHA_SW"].hide();
+					} else {
+						obj["ALPHA_PROT"].hide();
+						obj["ALPHA_MAX"].hide();
+						obj["ALPHA_SW"].show();
+					}
+				} else {
+					obj["VLS_min"].hide();
+					obj["ALPHA_PROT"].hide();
+					obj["ALPHA_MAX"].hide();
+					obj["ALPHA_SW"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("ALPHAprot", 0.5, func(val) {
+				obj["ALPHA_PROT"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("ALPHAmax", 0.5, func(val) {
+				obj["ALPHA_MAX"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("ALPHAvsw", 0.5, func(val) {
+				obj["ALPHA_SW"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("VLSmin", 0.5, func(val) {
+				obj["VLS_min"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("ASItrgt", 0.5, func(val) {
+				obj["ASI_target"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
+				if (!val.speedError) {
+					if (abs(val.ASItrgtdiff) <= 42) {
+						obj["ASI_digit_UP"].hide();
+						obj["ASI_decimal_UP"].hide();
+						obj["ASI_digit_DN"].hide();
+						obj["ASI_decimal_DN"].hide();
+						obj["ASI_target"].show();
+					} else if (val.ASItrgtdiff < -42) {
+						if (val.ktsMach) {
+							obj["ASI_digit_DN"].setText(sprintf("%3.0f", val.targetMach * 1000));
+							obj["ASI_decimal_UP"].hide();
+							obj["ASI_decimal_DN"].show();
+						} else {
+							obj["ASI_digit_DN"].setText(sprintf("%3.0f", val.tgt_kts));
+							obj["ASI_decimal_UP"].hide();
+							obj["ASI_decimal_DN"].hide();
+						}
+						obj["ASI_digit_DN"].show();
+						obj["ASI_digit_UP"].hide();
+						obj["ASI_target"].hide();
+					} else if (val.ASItrgtdiff > 42) {
+						if (val.ktsMach) {
+							obj["ASI_digit_UP"].setText(sprintf("%3.0f", val.targetMach * 1000));
+							obj["ASI_decimal_UP"].show();
+							obj["ASI_decimal_DN"].hide();
+						} else {
+							obj["ASI_digit_UP"].setText(sprintf("%3.0f", val.tgt_kts));
+							obj["ASI_decimal_UP"].hide();
+							obj["ASI_decimal_DN"].hide();
+						}
+						obj["ASI_digit_UP"].show();
+						obj["ASI_digit_DN"].hide();
+						obj["ASI_target"].hide();
 					}
 				}
 			}),
@@ -1036,6 +1148,7 @@ var canvas_pfd = {
 		# Airspeed
 		if (dmc.DMController.DMCs[me.number].outputs[0] != nil) {
 			me.ind_spd = dmc.DMController.DMCs[me.number].outputs[0].getValue();
+			notification.ind_spd = me.ind_spd;
 			notification.speedError = 0;
 			
 			if (me.ind_spd <= 30) {
@@ -1088,10 +1201,144 @@ var canvas_pfd = {
 				notification.showVr = 0;
 			}
 			
+			if (fmgc.FMGCInternal.v2set) {
+				if (fmgc.FMGCInternal.v2 <= 30) {
+					notification.V2trgt = 0 - notification.ASI;
+				} else if (fmgc.FMGCInternal.v2 >= 420) {
+					notification.V2trgt = 390 - notification.ASI;
+				} else {
+					notification.V2trgt = fmgc.FMGCInternal.v2 - 30 - notification.ASI;
+				}
+			
+				notification.SPDv2trgtdiff = fmgc.FMGCInternal.v2 - me.ind_spd;
+				notification.showV2 = 1;
+			} else {
+				notification.V2trgt = 0;
+				notification.SPDv2trgtdiff = 0;
+				notification.showV2 = 0;
+			}
+			
+			if (notification.fac1 or notification.fac2) {
+				if (notification.flapsInput == 1) {
+					if (fmgc.FMGCInternal.slat <= 30) {
+						notification.Strgt = 0 - notification.ASI;
+					} else if (fmgc.FMGCInternal.slat >= 420) {
+						notification.Strgt = 390 - notification.ASI;
+					} else {
+						notification.Strgt = fmgc.FMGCInternal.slat - 30 - notification.ASI;
+					}
+				
+					notification.SPDstrgtdiff = fmgc.FMGCInternal.slat - me.ind_spd;
+					notification.flapMaxSpeed = 200;
+				} else if (notification.flapsInput == 2) {
+					if (fmgc.FMGCInternal.flap2 <= 30) {
+						notification.Ftrgt = 0 - notification.ASI;
+					} else if (fmgc.FMGCInternal.flap2 >= 420) {
+						notification.Ftrgt = 390 - notification.ASI;
+					} else {
+						notification.Ftrgt = fmgc.FMGCInternal.flap2 - 30 - notification.ASI;
+					}
+				
+					me.SPDftrgtdiff = fmgc.FMGCInternal.flap2 - me.ind_spd;
+					notification.flapMaxSpeed = 185;
+				} else if (notification.flapsInput == 3) {
+					if (fmgc.FMGCInternal.flap3 <= 30) {
+						notification.Ftrgt = 0 - notification.ASI;
+					} else if (fmgc.FMGCInternal.flap3 >= 420) {
+						notification.Ftrgt = 390 - notification.ASI;
+					} else {
+						notification.Ftrgt = fmgc.FMGCInternal.flap3 - 30 - notification.ASI;
+					}
+				
+					notification.SPDftrgtdiff = fmgc.FMGCInternal.flap3 - me.ind_spd;
+					notification.flapMaxSpeed = 177;
+				} else if (notification.flapsInput == 0) {
+					notification.Ctrgt = fmgc.FMGCInternal.clean - 30 - notification.ASI;
+					
+					notification.SPDcleantrgtdiff = fmgc.FMGCInternal.clean - me.ind_spd;
+					notification.flapMaxSpeed = 230;
+				}
+			} else {
+				notification.SPDcleantrgtdiff = 0;
+				notification.SPDftrgtdiff = 0;
+				notification.SPDstrgtdiff = 0;
+				notification.Strgt = 0;
+				notification.Ftrgt = 0;
+				notification.Ctrgt = 0;
+				notification.flapMaxSpeed = 0;
+			}
+			
+			notification.fmgcTakeoffState = fmgc.FMGCInternal.takeoffState;
+			
+			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
+				if (fmgc.FMGCInternal.vls_min <= 30) {
+					notification.VLSmin = 0 - notification.ASI;
+				} else if (fmgc.FMGCInternal.vls_min >= 420) {
+					notification.VLSmin = 390 - notification.ASI;
+				} else {
+					notification.VLSmin = fmgc.FMGCInternal.vls_min - 30 - notification.ASI;
+				}
+				
+				if (fmgc.FMGCInternal.alpha_prot <= 30) {
+					notification.ALPHAprot = 0 - notification.ASI;
+				} else if (fmgc.FMGCInternal.alpha_prot >= 420) {
+					notification.ALPHAprot = 390 - notification.ASI;
+				} else {
+					notification.ALPHAprot = fmgc.FMGCInternal.alpha_prot - 30 - notification.ASI;
+				}
+				
+				if (fmgc.FMGCInternal.alpha_max <= 30) {
+					notification.ALPHAmax = 0 - notification.ASI;
+				} else if (fmgc.FMGCInternal.alpha_max >= 420) {
+					notification.ALPHAmax = 390 - notification.ASI;
+				} else {
+					notification.ALPHAmax = fmgc.FMGCInternal.alpha_max - 30 - notification.ASI;
+				}
+				
+				if (fmgc.FMGCInternal.vsw <= 30) {
+					notification.ALPHAvsw = 0 - notification.ASI;
+				} else if (fmgc.FMGCInternal.vsw >= 420) {
+					notification.ALPHAvsw = 390 - notification.ASI;
+				} else {
+					notification.ALPHAvsw = fmgc.FMGCInternal.vsw - 30 - notification.ASI;
+				}
+			} else {
+				notification.ALPHAprot = 0;
+				notification.ALPHAmax = 0;
+				notification.ALPHAvsw = 0;
+				notification.VLSmin = 0;
+			}
+			
+			
+			me.tgt_ias = notification.targetIasPFD;
+			me.tgt_kts = notification.targetKts;
+			
+			if (notification.managedSpd) {
+				if (fmgc.FMGCInternal.decel) {
+					me.tgt_ias = fmgc.FMGCInternal.vappSpeedSet ? fmgc.FMGCInternal.vapp_appr : fmgc.FMGCInternal.vapp;
+					me.tgt_kts = fmgc.FMGCInternal.vappSpeedSet ? fmgc.FMGCInternal.vapp_appr : fmgc.FMGCInternal.vapp;
+				} else if (fmgc.FMGCInternal.phase == 6) {
+					me.tgt_ias = fmgc.FMGCInternal.clean;
+					me.tgt_kts = fmgc.FMGCInternal.clean;
+				}
+			}
+			
+			notification.tgt_kts = me.tgt_kts;
+			
+			if (me.tgt_ias <= 30) {
+				notification.ASItrgt = 0 - notification.ASI;
+			} else if (me.tgt_ias >= 420) {
+				notification.ASItrgt = 390 - notification.ASI;
+			} else {
+				notification.ASItrgt = me.tgt_ias - 30 - notification.ASI;
+			}
+			
+			notification.ASItrgtdiff = me.tgt_ias - notification.ind_spd;
+			
 			notification.ASItrend = dmc.DMController.DMCs[me.number].outputs[6].getValue() - notification.ASI;
 			if (notification.ASItrend >= 2 or (me.ASItrendIsShown != 0 and notification.ASItrend >= 1)) {
 				me.ASItrendIsShown = 1;
-			} else if (me.ASItrend <= -2 or (me.ASItrendIsShown != 0 and notification.ASItrend <= -1)) {
+			} else if (notification.ASItrend <= -2 or (me.ASItrendIsShown != 0 and notification.ASItrend <= -1)) {
 				me.ASItrendIsShown = -1;
 			} else {
 				me.ASItrendIsShown = 0;
@@ -1104,15 +1351,13 @@ var canvas_pfd = {
 				me["ground_ref"].hide();
 			}
 		} else {
-			me.ind_spd = dmc.DMController.DMCs[me.number].outputs[0].getValue();
+			notification.ind_spd = 0;
 			notification.speedError = 1;
 			
 			if (!systems.ADIRS.Operating.adr[0].getValue() and !systems.ADIRS.Operating.adr[1].getValue() and !systems.ADIRS.Operating.adr[2].getValue()) {
 				me["ASI_buss"].show();
 				me["ASI_buss_ref"].show();
 				me["ASI_buss_ref_blue"].show();
-				me["ASI_buss"].setTranslation(0, notification.bussTranslate);
-				me["ASI_buss_ref_blue"].setTranslation(0, notification.bussTranslate);
 				me["ASI_error"].hide();
 			} else {
 				me["ASI_buss"].hide();
@@ -1121,13 +1366,33 @@ var canvas_pfd = {
 				me["ASI_error"].show();
 			}
 			
+			notification.ASI = 0;
+			notification.ASImax = 0;
+			notification.ASItrgt = 0;
+			notification.ASItrgtdiff = 0;
+			notification.ASItrend = 0;
+			notification.ALPHAprot = 0;
+			notification.ALPHAmax = 0;
+			notification.ALPHAvsw = 0;
 			notification.ASItrendIsShown = 0;
-			notification.V1trgt = 0;
-			notification.SPDv1trgtdiff = 0;
+			notification.Ctrgt = 0;
+			notification.flapMaxSpeed = 0;
+			notification.Ftrgt = 0;
+			notification.Strgt = 0;
 			notification.showV1 = 0;
-			notification.VRtrgt = 0;
-			notification.SPDvrtrgtdiff = 0;
 			notification.showVr = 0;
+			notification.showV2 = 0;
+			notification.SPDcleantrgtdiff = 0;
+			notification.SPDftrgtdiff = 0;
+			notification.SPDstrgtdiff = 0;
+			notification.SPDv1trgtdiff = 0;
+			notification.SPDvrtrgtdiff = 0;
+			notification.SPDv2trgtdiff = 0;
+			notification.tgt_kts = 0;
+			notification.V1trgt = 0;
+			notification.VRtrgt = 0;
+			notification.V2trgt = 0;
+			notification.VLSmin = 0;
 		}
 		
 		# Mach	
