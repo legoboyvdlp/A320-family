@@ -420,6 +420,7 @@
 		<object-name>SEC2Btn2O</object-name>
 		<object-name>SEC3Btn1F</object-name>
 		<object-name>SEC3Btn2O</object-name>
+		<object-name>ToiletBtn1O</object-name>
 		<object-name>YellowElecPump1F</object-name>
 		<object-name>YellowElecPump2O</object-name>
 		<object-name>YellowEngPump1F</object-name>
@@ -698,17 +699,14 @@
 		<object-name>EvacCommandBtn1E</object-name>
 		<object-name>EvacCommandBtn2O</object-name>
 		<object-name>Gen1LineBtn1S</object-name>
+		<object-name>ToiletBtn1O</object-name>
 		<object-name>VentBlowBtn2O</object-name>
 		<object-name>VentExtractBtn1F</object-name>
 		<object-name>VentExtractBtn2O</object-name>
 		
-		<object-name>OVH_button_labels.009</object-name>
 		<object-name>OVH_button_labels.012</object-name>
 		<condition>
-			<equals>
-				<property>controls/switches/annun-test</property>
-				<value>1</value>
-			</equals>
+			<property>controls/switches/annun-test</property>
 		</condition>
 	</animation>
 
@@ -14076,6 +14074,7 @@
 			<or>
 				<property>systems/audio/acp[0]/pa</property>
 				<property>systems/audio/acp[1]/pa</property>
+				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
 	</animation>
