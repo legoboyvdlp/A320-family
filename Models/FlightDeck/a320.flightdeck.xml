@@ -2741,6 +2741,8 @@
 	<animation>
 		<type>translate</type>
 		<object-name>WindowCpt</object-name>
+		<object-name>HeadsetHangerCpt</object-name>
+		<object-name>Circle.020</object-name>
 		<property>/sim/model/door-positions/windowLeft/position-norm</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>0</dep></entry>
@@ -2760,6 +2762,8 @@
 	<animation>
 		<type>translate</type>
 		<object-name>WindowCpt</object-name>
+		<object-name>HeadsetHangerCpt</object-name>
+		<object-name>Circle.020</object-name>
 		<property>/sim/model/door-positions/windowLeft/position-norm</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>0.0</dep></entry>
