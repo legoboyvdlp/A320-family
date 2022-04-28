@@ -836,7 +836,7 @@ var canvas_pfd = {
 				if (!val.speedError and val.showVr) {
 					if (val.agl < 55 and val.fmgcPhase <= 2 and abs(val.SPDv2trgtdiff) <= 42) {
 						obj["ASI_target"].show();
-						obj["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
+						obj["ASI_target"].setTranslation(0, val.V2trgt * -6.6);
 						obj["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
 					} else if (val.agl < 55 and fmgc.FMGCInternal.phase <= 2) {
 						obj["ASI_target"].hide();
