@@ -1239,7 +1239,7 @@ var canvas_pfd = {
 						notification.Ftrgt = fmgc.FMGCInternal.flap2 - 30 - notification.ASI;
 					}
 				
-					me.SPDftrgtdiff = fmgc.FMGCInternal.flap2 - me.ind_spd;
+					notification.SPDftrgtdiff = fmgc.FMGCInternal.flap2 - me.ind_spd;
 					notification.flapMaxSpeed = 185;
 				} else if (notification.flapsInput == 3) {
 					if (fmgc.FMGCInternal.flap3 <= 30) {
