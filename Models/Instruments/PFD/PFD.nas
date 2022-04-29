@@ -665,7 +665,7 @@ var canvas_pfd = {
 				obj["HDG_digit_L"].setText(sprintf("%3.0f", val));
 				obj["HDG_digit_R"].setText(sprintf("%3.0f", val));
 			}),
-			props.UpdateManager.FromHashValue("hdgDiff", 0.1, func(val) {
+			props.UpdateManager.FromHashValue("hdgDiff", 0.025, func(val) {
 				obj["HDG_target"].setTranslation((val / 10) * 98.5416, 0);
 			}),
 			props.UpdateManager.FromHashList(["hdgDiff","showHdg"], 0.01, func(val) {
