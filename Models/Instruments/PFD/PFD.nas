@@ -1003,6 +1003,285 @@ var canvas_pfd = {
 					}
 				}
 			}),
+			props.UpdateManager.FromHashList(["showPFDILS","magnetic_hdg_dif"], 0.01, func(val) {
+				if (val.showPFDILS) {
+					if (abs(val.magnetic_hdg_dif) <= 23.62) {
+						obj["CRS_pointer"].setTranslation((val.magnetic_hdg_dif / 10) * 98.5416, 0);
+						
+						obj["ILS_HDG_L"].hide();
+						obj["ILS_HDG_R"].hide();
+						obj["CRS_pointer"].show();
+					} else if (val.magnetic_hdg_dif < -23.62 and val.magnetic_hdg_dif >= -180) {
+						obj["ILS_HDG_L"].show();
+						obj["ILS_HDG_R"].hide();
+						obj["CRS_pointer"].hide();
+					} else if (val.magnetic_hdg_dif > 23.62 and val.magnetic_hdg_dif <= 180) {
+						obj["ILS_HDG_L"].hide();
+						obj["ILS_HDG_R"].show();
+						obj["CRS_pointer"].hide();
+					} else {
+						obj["ILS_HDG_L"].hide();
+						obj["ILS_HDG_R"].hide();
+						obj["CRS_pointer"].hide();
+					}
+				} else {
+					obj["ILS_HDG_L"].hide();
+					obj["ILS_HDG_R"].hide();
+					obj["CRS_pointer"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("ilsCrs", 0.5, func(val) {
+				if (int(val) < 10) {
+					obj["ILS_left"].setText(sprintf("00%1.0f", int(val)));
+					obj["ILS_right"].setText(sprintf("00%1.0f", int(val)));
+				} else if (int(val) < 100) {
+					obj["ILS_left"].setText(sprintf("0%2.0f", int(val)));
+					obj["ILS_right"].setText(sprintf("0%2.0f", int(val)));
+				} else {
+					obj["ILS_left"].setText(sprintf("%3.0f", int(val)));
+					obj["ILS_right"].setText(sprintf("%3.0f", int(val)));
+				}
+			}),
+			props.UpdateManager.FromHashValue("altimeterStd", 1, func(val) {
+				if (val) {
+					obj["QNH"].hide();
+					obj["QNH_setting"].hide();
+				} else {
+					obj["QNH_std"].hide();
+					obj["QNH_box"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashList(["showDecisionHeight","agl","decision","radio","baro","radioNo"], 0.5, func(val) {
+				if (val.showDecisionHeight) {
+					if (val.agl <= 2500) {
+						obj["AI_agl"].show();
+						if (val.agl <= val.decision) {
+							obj["AI_agl"].setColor(0.7333,0.3803,0);
+							obj["AI_agl"].setFontSize(55);
+						} else {
+							if (val.agl <= 400) {
+								obj["AI_agl"].setFontSize(55);
+							} else {
+								obj["AI_agl"].setFontSize(45);
+							}
+							obj["AI_agl"].setColor(0.0509,0.7529,0.2941);
+						}
+					} else {
+						obj["AI_agl"].hide();
+					}
+				} else {
+					obj["FMA_dh"].hide();
+					obj["FMA_dhn"].hide();
+					obj["FMA_nodh"].hide();
+					
+					if (val.agl <= 2500) {
+						obj["AI_agl"].show();
+						
+						# Minimums
+						if (int(val.radio) != 99999) {
+							obj["FMA_dh"].setText("RADIO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText(sprintf("%.0f", val.radio));
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+							hundredAbove.setValue(val.radio + 100);
+							minimum.setValue(val.radio);
+							
+							if (val.agl <= val.radio + 100) {
+								obj["AI_agl"].setColor(0.7333,0.3803,0);
+								obj["AI_agl"].setFontSize(55);
+							} else {
+								if (val.agl <= 400) {
+									obj["AI_agl"].setFontSize(55);
+								} else {
+									obj["AI_agl"].setFontSize(45);
+								}
+								obj["AI_agl"].setColor(0.0509,0.7529,0.2941);
+							}
+						} else if (int(val.baro) != 99999) {
+							obj["FMA_dh"].setText("BARO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText(sprintf("%.0f", val.baro));
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+							hundredAbove.setValue(val.baro + 100);
+							minimum.setValue(val.baro);
+							
+							if (val.agl <= val.baro + 100) {
+								obj["AI_agl"].setColor(0.7333,0.3803,0);
+								obj["AI_agl"].setFontSize(55);
+							} else {
+								if (val.agl <= 400) {
+									obj["AI_agl"].setFontSize(55);
+								} else {
+									obj["AI_agl"].setFontSize(45);
+								}
+								obj["AI_agl"].setColor(0.0509,0.7529,0.2941);
+							}
+						} else if (val.radioNo) {
+							obj["FMA_dh"].setText("BARO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText("100");
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+							hundredAbove.setValue(100);
+							minimum.setValue(0);
+							
+							if (val.agl <= 400) {
+								obj["AI_agl"].setFontSize(55);
+							} else {
+								obj["AI_agl"].setFontSize(45);
+							}
+							
+							if (val.agl <= 100) {
+								obj["AI_agl"].setColor(0.7333,0.3803,0);
+							} else {
+								obj["AI_agl"].setColor(0.0509,0.7529,0.2941);
+							}
+						} else {
+							obj["FMA_dh"].hide();
+							obj["FMA_dhn"].hide();
+							obj["FMA_nodh"].show();
+							hundredAbove.setValue(400);
+							minimum.setValue(300);
+							
+							if (val.agl <= 400) {
+								obj["AI_agl"].setColor(0.7333,0.3803,0);
+								obj["AI_agl"].setFontSize(55);
+							} else {
+								obj["AI_agl"].setColor(0.0509,0.7529,0.2941);
+								obj["AI_agl"].setFontSize(45);
+							}
+						}
+					} else {
+						obj["AI_agl"].hide();
+						obj["FMA_nodh"].hide();
+						
+						# Minimums
+						if (int(val.radio) != 99999) {
+							obj["FMA_dh"].setText("RADIO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText(sprintf("%.0f", val.radio));
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+						} else if (int(val.baro) != 99999) {
+							obj["FMA_dh"].setText("BARO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText(sprintf("%.0f", val.baro));
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+						} else if (fmgc.FMGCInternal.radioNo) {
+							obj["FMA_dh"].setText("BARO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText("100");
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+						} else {
+							obj["FMA_dh"].hide();
+							obj["FMA_dhn"].hide();
+							obj["FMA_nodh"].show();
+						}
+					}
+				}
+			}),
+			props.UpdateManager.FromHashValue("altError", 1, func(val) {
+				if (val) {
+					obj["ALT_error"].show();
+					obj["ALT_frame"].setColor(1,0,0);
+					obj["ALT_group"].hide();
+					obj["ALT_tens"].hide();
+					obj["ALT_neg"].hide();
+					obj["ALT_group2"].hide();
+					obj["ALT_scale"].hide();
+					obj["ALT_box_flash"].hide();
+					obj["ALT_box_amber"].hide();
+					obj["ALT_box"].hide();
+					obj["Metric_box"].hide();
+					obj["Metric_letter"].hide();
+					obj["Metric_cur_alt"].hide();
+					obj["ALT_digit_UP_metric"].hide();
+				} else {
+					obj["ALT_error"].hide();
+					obj["ALT_frame"].setColor(1,1,1);
+					obj["ALT_group"].show();
+					obj["ALT_tens"].show();
+					obj["ALT_box"].show();
+					obj["ALT_group2"].show();
+					obj["ALT_scale"].show();
+				}
+			}),
+			props.UpdateManager.FromHashList(["altError","showMetric"], 1, func(val) {
+				if (!val.altError and val.showMetric) {	
+					obj["ALT_digit_UP_metric"].show();
+					obj["Metric_box"].show();
+					obj["Metric_letter"].show();
+					obj["Metric_cur_alt"].show();
+				} else {
+					obj["ALT_digit_UP_metric"].hide();
+					obj["Metric_box"].hide();
+					obj["Metric_letter"].hide();
+					obj["Metric_cur_alt"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("altitude", 0.5, func(val) {
+				obj["Metric_cur_alt"].setText(sprintf("%5.0f", val * 0.3048));
+				
+				obj.middleAltText = roundaboutAlt(val / 100);
+				
+				obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText + 10)));
+				obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText + 5)));
+				obj["ALT_three"].setText(sprintf("%03d", abs(obj.middleAltText)));
+				obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText - 5)));
+				obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText - 10)));
+				
+				if (val < 0) {
+					obj["ALT_neg"].show();
+				} else {
+					obj["ALT_neg"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("altitude", 0.1, func(val) {
+				obj.altOffset = val / 500 - int(val / 500);
+				obj.middleAltOffset = nil;
+				
+				if (obj.altOffset > 0.5) {
+					obj.middleAltOffset = -(obj.altOffset - 1) * 243.3424;
+				} else {
+					obj.middleAltOffset = -obj.altOffset * 243.3424;
+				}
+				
+				obj["ALT_scale"].setTranslation(0, -obj.middleAltOffset);
+				obj["ALT_scale"].update();
+				obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", val), 2)) * 1.392);
+			}),
+			props.UpdateManager.FromHashValue("altitudeDigits", 1, func(val) {
+				obj["ALT_digits"].setText(sprintf("%d", val));
+			}),
+			props.UpdateManager.FromHashValue("altitudeDifference", 0.1, func(val) {
+				obj["ALT_target"].setTranslation(0, (val / 100) * -48.66856);
+			}),
+			props.UpdateManager.FromHashValue("altitudeAutopilot", 25, func(val) {
+				obj["ALT_target_digit"].setText(sprintf("%03d", math.round(val / 100)));
+			}),
+			props.UpdateManager.FromHashList(["altError","altitudeDifference"], 1, func(val) {
+				if (!val.altError and abs(val.altitudeDifference) <= 565) {
+					obj["ALT_digit_UP"].hide();
+					obj["ALT_digit_DN"].hide();
+					obj["ALT_target"].show();
+				} else {
+					if (val.altitudeDifference < -565 and !val.altError) {
+						obj["ALT_digit_DN"].show();
+						obj["ALT_digit_UP"].hide();
+					} else if (val.altitudeDifference > 565 and  !val.altError) {
+						obj["ALT_digit_UP"].show();
+						obj["ALT_digit_DN"].hide();
+					} else {
+						obj["ALT_digit_UP"].hide();
+						obj["ALT_digit_DN"].hide();
+					}
+					obj["ALT_target"].hide();
+				}
+			}),
 		];
 		
 		obj.update_items_mismatch = [
@@ -1404,72 +1683,13 @@ var canvas_pfd = {
 		}
 		
 		# Altitude
-		if (dmc.DMController.DMCs[me.number].outputs[1] != nil) {
-			me["ALT_error"].hide();
-			me["ALT_frame"].setColor(1,1,1);
-			me["ALT_group"].show();
-			me["ALT_tens"].show();
-			me["ALT_box"].show();
-			me["ALT_group2"].show();
-			me["ALT_scale"].show();
-			
-			me.altitude = dmc.DMController.DMCs[me.number].outputs[1].getValue();
+		notification.showMetric = me.showMetricAlt;
 		
-			if (me.showMetricAlt) {
-				me["ALT_digit_UP_metric"].show();
-				me["Metric_box"].show();
-				me["Metric_letter"].show();
-				me["Metric_cur_alt"].show();
-				me["Metric_cur_alt"].setText(sprintf("%5.0f", me.altitude * 0.3048));
-			} else {
-				me["ALT_digit_UP_metric"].hide();
-				me["Metric_box"].hide();
-				me["Metric_letter"].hide();
-				me["Metric_cur_alt"].hide();
-			}
-			
-			me.altOffset = me.altitude / 500 - int(me.altitude / 500);
-			me.middleAltText = roundaboutAlt(me.altitude / 100);
-			me.middleAltOffset = nil;
-			if (me.altOffset > 0.5) {
-				me.middleAltOffset = -(me.altOffset - 1) * 243.3424;
-			} else {
-				me.middleAltOffset = -me.altOffset * 243.3424;
-			}
-			me["ALT_scale"].setTranslation(0, -me.middleAltOffset);
-			me["ALT_scale"].update();
-			me["ALT_five"].setText(sprintf("%03d", abs(me.middleAltText+10)));
-			me["ALT_four"].setText(sprintf("%03d", abs(me.middleAltText+5)));
-			me["ALT_three"].setText(sprintf("%03d", abs(me.middleAltText)));
-			me["ALT_two"].setText(sprintf("%03d", abs(me.middleAltText-5)));
-			me["ALT_one"].setText(sprintf("%03d", abs(me.middleAltText-10)));
-			
-			if (me.altitude < 0) {
-				me["ALT_neg"].show();
-			} else {
-				me["ALT_neg"].hide();
-			}
-			
-			me["ALT_digits"].setText(sprintf("%d", dmc.DMController.DMCs[me.number].outputs[3].getValue()));
-			me["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", me.altitude), 2)) * 1.392);
-			
-			me.alt_diff_cur = dmc.DMController.DMCs[me.number].outputs[7].getValue();
-			if (me.alt_diff_cur >= -565 and me.alt_diff_cur <= 565) {
-				me["ALT_target"].setTranslation(0, (me.alt_diff_cur / 100) * -48.66856);
-				me["ALT_target_digit"].setText(sprintf("%03d", math.round(notification.altitudeAutopilot / 100)));
-				me["ALT_digit_UP"].hide();
-				me["ALT_digit_DN"].hide();
-				me["ALT_target"].show();
-			} else {
-				me["ALT_target"].hide();
-				if (me.alt_diff_cur < -565) {
-					me["ALT_digit_DN"].show();
-					me["ALT_digit_UP"].hide();
-				} else if (me.alt_diff_cur > 565) {
-					me["ALT_digit_UP"].show();
-					me["ALT_digit_DN"].hide();
-				}
-			}
+		if (dmc.DMController.DMCs[me.number].outputs[1] != nil) {
+			notification.altError = 0;
+			notification.altitude = dmc.DMController.DMCs[me.number].outputs[1].getValue();
+			notification.altitudeDigits = dmc.DMController.DMCs[me.number].outputs[3].getValue();
+			notification.altitudeDifference = dmc.DMController.DMCs[me.number].outputs[7].getValue();
 			
 			if (!ecam.altAlertFlash and !ecam.altAlertSteady) {
 				if (me.number == 0) {
@@ -1550,20 +1770,10 @@ var canvas_pfd = {
 				}
 			}
 		} else {
-			me["ALT_error"].show();
-			me["ALT_frame"].setColor(1,0,0);
-			me["ALT_group"].hide();
-			me["ALT_tens"].hide();
-			me["ALT_neg"].hide();
-			me["ALT_group2"].hide();
-			me["ALT_scale"].hide();
-			me["ALT_box_flash"].hide();
-			me["ALT_box_amber"].hide();
-			me["ALT_box"].hide();
-			me["Metric_box"].hide();
-			me["Metric_letter"].hide();
-			me["Metric_cur_alt"].hide();
-			me["ALT_digit_UP_metric"].hide();
+			notification.altError = 1;
+			notification.altitude = -9999;
+			notification.altitudeDigits = -9999;
+			notification.altitudeDifference = -9999;
 		}
 		
 		if (notification.pitchMode == "LAND" or notification.pitchMode == "FLARE" or notification.pitchMode == "ROLL OUT") {
@@ -1598,133 +1808,14 @@ var canvas_pfd = {
 			}
 		}
 		
+		notification.radioNo = fmgc.FMGCInternal.radioNo;
 		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist >= 250) {
-			me["FMA_dh"].hide();
-			me["FMA_dhn"].hide();
-			me["FMA_nodh"].hide();
-			if (notification.agl <= 2500) {
-				me["AI_agl"].show();
-				if (notification.agl <= notification.decision) {
-					me["AI_agl"].setColor(0.7333,0.3803,0);
-					me["AI_agl"].setFontSize(55);
-				} else {
-					if (notification.agl <= 400) {
-						me["AI_agl"].setFontSize(55);
-					} else {
-						me["AI_agl"].setFontSize(45);
-					}
-					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-				}
-			} else {
-				me["AI_agl"].hide();
-			}
+			notification.showDecisionHeight = 0;
 		} else {
-			if (notification.agl <= 2500) {
-				me["AI_agl"].show();
-				if (int(notification.radio) != 99999) {
-					me["FMA_dh"].setText("RADIO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", notification.radio));
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-					hundredAbove.setValue(notification.radio + 100);
-					minimum.setValue(notification.radio);
-					if (notification.agl <= notification.radio + 100) {
-						me["AI_agl"].setColor(0.7333,0.3803,0);
-						me["AI_agl"].setFontSize(55);
-					} else {
-						if (notification.agl <= 400) {
-							me["AI_agl"].setFontSize(55);
-						} else {
-							me["AI_agl"].setFontSize(45);
-						}
-						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-					}
-				} else if (int(notification.baro) != 99999) {
-					me["FMA_dh"].setText("BARO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", notification.baro));
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-					hundredAbove.setValue(notification.baro + 100);
-					minimum.setValue(notification.baro);
-					if (notification.agl <= notification.baro + 100) {
-						me["AI_agl"].setColor(0.7333,0.3803,0);
-						me["AI_agl"].setFontSize(55);
-					} else {
-						if (notification.agl <= 400) {
-							me["AI_agl"].setFontSize(55);
-						} else {
-							me["AI_agl"].setFontSize(45);
-						}
-						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-					}
-				} else if (fmgc.FMGCInternal.radioNo) {
-					me["FMA_dh"].setText("BARO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText("100");
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-					hundredAbove.setValue(100);
-					minimum.setValue(0);
-					if (notification.agl <= 400) {
-						me["AI_agl"].setFontSize(55);
-					} else {
-						me["AI_agl"].setFontSize(45);
-					}
-					
-					if (notification.agl <= 100) {
-						me["AI_agl"].setColor(0.7333,0.3803,0);
-					} else {
-						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-					}
-				} else {
-					me["FMA_dh"].hide();
-					me["FMA_dhn"].hide();
-					me["FMA_nodh"].show();
-					hundredAbove.setValue(400);
-					minimum.setValue(300);
-					if (notification.agl <= 400) {
-						me["AI_agl"].setColor(0.7333,0.3803,0);
-						me["AI_agl"].setFontSize(55);
-					} else {
-						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-						me["AI_agl"].setFontSize(45);
-					}
-				}
-			} else {
-				me["AI_agl"].hide();
-				me["FMA_nodh"].hide();
-				if (int(notification.radio) != 99999) {
-					me["FMA_dh"].setText("RADIO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", notification.radio));
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-				} else if (int(notification.baro) != 99999) {
-					me["FMA_dh"].setText("BARO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", notification.baro));
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-				} else if (fmgc.FMGCInternal.radioNo) {
-					me["FMA_dh"].setText("BARO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText("100");
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-				} else {
-					me["FMA_dh"].hide();
-					me["FMA_dhn"].hide();
-					me["FMA_nodh"].show();
-				}
-			}
+			notification.showDecisionHeight = 1;
 		}
 		
 		if (notification.altimeterStd == 1) {
-			me["QNH"].hide();
-			me["QNH_setting"].hide();
-			
 			if (notification.altitude < fmgc.FMGCInternal.transAlt and fmgc.FMGCInternal.phase == 4) {
 				if (me.number == 0) {
 					if (qnh_going1 == 0) {
@@ -1759,9 +1850,6 @@ var canvas_pfd = {
 				me["QNH_box"].show();
 			}
 		} else {
-			me["QNH_std"].hide();
-			me["QNH_box"].hide();
-		
 			if (notification.altitude >= fmgc.FMGCInternal.transAlt and fmgc.FMGCInternal.phase == 2) {
 				if (me.number == 0) {
 					if (qnh_going1 == 0) {
@@ -1827,44 +1915,11 @@ var canvas_pfd = {
 		}
 		
 		if (((me.number == 0 and notification.pfdILS1) or (me.number == 1 and notification.pfdILS2)) and size(me.split_ils) == 2) {
-			me.magnetic_hdg = notification.ilsCrs;
-			me.magnetic_hdg_dif = geo.normdeg180(me.magnetic_hdg - notification.headingPFD);
-			if (me.magnetic_hdg_dif >= -23.62 and me.magnetic_hdg_dif <= 23.62) {
-				me["CRS_pointer"].setTranslation((me.magnetic_hdg_dif / 10) * 98.5416, 0);
-				me["ILS_HDG_R"].hide();
-				me["ILS_HDG_L"].hide();
-				me["CRS_pointer"].show();
-			} else if (me.magnetic_hdg_dif < -23.62 and me.magnetic_hdg_dif >= -180) {
-				if (int(me.magnetic_hdg) < 10) {
-					me["ILS_left"].setText(sprintf("00%1.0f", int(me.magnetic_hdg)));
-				} else if (int(me.magnetic_hdg) < 100) {
-					me["ILS_left"].setText(sprintf("0%2.0f", int(me.magnetic_hdg)));
-				} else {
-					me["ILS_left"].setText(sprintf("%3.0f", int(me.magnetic_hdg)));
-				}
-				me["ILS_HDG_L"].show();
-				me["ILS_HDG_R"].hide();
-				me["CRS_pointer"].hide();
-			} else if (me.magnetic_hdg_dif > 23.62 and me.magnetic_hdg_dif <= 180) {
-				if (int(me.magnetic_hdg) < 10) {
-					me["ILS_right"].setText(sprintf("00%1.0f", int(me.magnetic_hdg)));
-				} else if (int(me.magnetic_hdg) < 100) {
-					me["ILS_right"].setText(sprintf("0%2.0f", int(me.magnetic_hdg)));
-				} else {
-					me["ILS_right"].setText(sprintf("%3.0f", int(me.magnetic_hdg)));
-				}
-				me["ILS_HDG_R"].show();
-				me["ILS_HDG_L"].hide();
-				me["CRS_pointer"].hide();
-			} else {
-				me["ILS_HDG_R"].hide();
-				me["ILS_HDG_L"].hide();
-				me["CRS_pointer"].hide();
-			}
+			notification.showPFDILS = 1;
+			notification.magnetic_hdg_dif = geo.normdeg180(me.magnetic_hdg - notification.headingPFD);
 		} else {
-			me["ILS_HDG_R"].hide();
-			me["ILS_HDG_L"].hide();
-			me["CRS_pointer"].hide();
+			notification.showPFDILS = 0;
+			notification.magnetic_hdg_dif = 0;
 		}
 		
 		if (me.temporaryNodes.showGroundReferenceAGL) {
