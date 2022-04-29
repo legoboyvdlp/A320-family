@@ -249,11 +249,9 @@ var canvas_pfd = {
 					obj["FMA_lvrclb"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["trackPFD","headingPFD"], 0.1, func(val) {
+			props.UpdateManager.FromHashList(["trackPFD","headingPFD","aoaPFD"], 0.01, func(val) {
 				obj.track_diff = geo.normdeg180(val.trackPFD - val.headingPFD); # store this to use in FPV
 				obj["TRK_pointer"].setTranslation(obj.getTrackDiffPixels(obj.track_diff),0);
-			}),
-			props.UpdateManager.FromHashList(["trackPFD","headingPFD","aoaPFD"], 0.01, func(val) {
 				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -20, 20) * 12.5); 
 			}),
 			props.UpdateManager.FromHashList(["vsAutopilot","agl"], 5, func(val) {
@@ -787,17 +785,17 @@ var canvas_pfd = {
 						obj["ASI_trend_down"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("ASI", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("ASI", 0.1, func(val) {
 				obj["ASI_scale"].setTranslation(0, val * 6.6);
 			}),
-			props.UpdateManager.FromHashValue("ASImax", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("ASImax", 0.1, func(val) {
 				obj["ASI_max"].setTranslation(0, val * -6.6);
 			}),
 			props.UpdateManager.FromHashValue("ASItrend", 0.1, func(val) {
 				obj["ASI_trend_up"].setTranslation(0, math.clamp(val, 0, 50) * -6.6);
 				obj["ASI_trend_down"].setTranslation(0, math.clamp(val, -50, 0) * -6.6);
 			}),
-			props.UpdateManager.FromHashValue("V1trgt", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("V1trgt", 0.1, func(val) {
 				obj["v1_group"].setTranslation(0, val * -6.6);
 				obj["v1_text"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v1));
 			}),
@@ -818,7 +816,7 @@ var canvas_pfd = {
 					obj["v1_text"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("VRtrgt", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("VRtrgt", 0.1, func(val) {
 				obj["vr_speed"].setTranslation(0, val * -6.6);
 			}),
 			props.UpdateManager.FromHashList(["speedError","showVr","SPDvrtrgtdiff","fmgcPhase","agl"], 0.5, func(val) {
@@ -864,7 +862,7 @@ var canvas_pfd = {
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["flapMaxSpeed","ASI"], 0.5, func(val) {
+			props.UpdateManager.FromHashList(["flapMaxSpeed","ASI"], 0.1, func(val) {
 				obj["flap_max"].setTranslation(0, (val.flapMaxSpeed - 30 - val.ASI) * -6.6);
 			}),
 			props.UpdateManager.FromHashList(["speedError","fac1","fac2","flapMaxSpeed","flapsInput","ind_spd"], 0.5, func(val) {
@@ -878,13 +876,13 @@ var canvas_pfd = {
 					obj["flap_max"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("Ctrgt", , 0.5, func(val) {
+			props.UpdateManager.FromHashValue("Ctrgt", , 0.1, func(val) {
 				obj["clean_speed"].setTranslation(0, val * -6.6);
 			}),
-			props.UpdateManager.FromHashValue("Ftrgt", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("Ftrgt", 0.1, func(val) {
 				obj["F_target"].setTranslation(0, val * -6.6);
 			}),
-			props.UpdateManager.FromHashValue("Strgt", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("Strgt", 0.1, func(val) {
 				obj["S_target"].setTranslation(0, val * -6.6);
 			}),
 			props.UpdateManager.FromHashList(["speedError","fac1","fac2","flapsInput","SPDstrgtdiff","SPDftrgtdiff","SPDcleantrgtdiff","agl"], 0.5, func(val) {
@@ -951,19 +949,19 @@ var canvas_pfd = {
 					obj["ALPHA_SW"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("ALPHAprot", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("ALPHAprot", 0.1, func(val) {
 				obj["ALPHA_PROT"].setTranslation(0, val * -6.6);
 			}),
-			props.UpdateManager.FromHashValue("ALPHAmax", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("ALPHAmax", 0.1, func(val) {
 				obj["ALPHA_MAX"].setTranslation(0, val * -6.6);
 			}),
-			props.UpdateManager.FromHashValue("ALPHAvsw", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("ALPHAvsw", 0.1, func(val) {
 				obj["ALPHA_SW"].setTranslation(0, val * -6.6);
 			}),
-			props.UpdateManager.FromHashValue("VLSmin", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("VLSmin", 0.1, func(val) {
 				obj["VLS_min"].setTranslation(0, val * -6.6);
 			}),
-			props.UpdateManager.FromHashValue("ASItrgt", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("ASItrgt", 0.1, func(val) {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
 			}),
 			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {

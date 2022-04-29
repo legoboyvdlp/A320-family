@@ -65,9 +65,10 @@ var canvas_IESI = {
 			props.UpdateManager.FromHashValue("airspeed", 0.1, func(val) {
 				obj["ASI_scale"].setTranslation(0, math.clamp(val - 30, 0, 490) * 8.295);
 			}),
-			props.UpdateManager.FromHashList(["altitude","altitude_ind"], 0.5, func(val) {
-				val.altitude = math.clamp(val.altitude, -2000, 50000);
-				if (val.altitude < 0) {
+			props.UpdateManager.FromHashValue("altitude", 0.5, func(val) {
+				val = math.clamp(val, -2000, 50000);
+				
+				if (val < 0) {
 					obj["negText"].show();
 					obj._isNegativeAlt = 1;
 				} else {
@@ -75,8 +76,8 @@ var canvas_IESI = {
 					obj._isNegativeAlt = 0;
 				}
 				
-				obj.altOffset = (val.altitude / 500) - int(val.altitude / 500);
-				obj.middleAltText = roundaboutAlt(val.altitude / 100);
+				obj.altOffset = (val / 500) - int(val / 500);
+				obj.middleAltText = roundaboutAlt(val / 100);
 				if (obj.altOffset > 0.5) {
 					obj._middleAltOffset = -(obj.altOffset - 1) * 258.5528;
 				} else {
@@ -85,23 +86,18 @@ var canvas_IESI = {
 				
 				obj["ALT_scale"].setTranslation(0, -obj._middleAltOffset);
 				obj["ALT_scale"].update();
-				obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText+10)));
-				obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText+5)));
+				obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText + 10)));
+				obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText + 5)));
 				obj["ALT_three"].setText(sprintf("%03d", abs(obj.middleAltText)));
-				obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText-5)));
-				obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText-10)));
+				obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText - 5)));
+				obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText - 10)));
 				
-				
-				if (val.altitude < 0 and val.altitude_ind > 20) {
-					val.altitude_ind = 20;
-				} elsif (val.altitude > 0 and val.altitude_ind > 500) {
-					val.altitude_ind = 500;
-				}
-				
-				obj["ALT_digits"].setText(sprintf("%s", val.altitude_ind));
-				obj["ALT_meters"].setText(sprintf("%5.0f", math.round(val.altitude * 0.3048, 10)));
-				obj.altTens = num(right(sprintf("%02d", val.altitude), 2));
+				obj["ALT_meters"].setText(sprintf("%5.0f", math.round(val * 0.3048, 10)));
+				obj.altTens = num(right(sprintf("%02d", val), 2));
 				obj["ALT_tens"].setTranslation(0, obj.altTens * 3.16);
+			}),
+			props.UpdateManager.FromHashValue("altitude_ind", 0.5, func(val) {
+				obj["ALT_digits"].setText(sprintf("%s", math.clamp(val, -20, 500)));
 			}),
 			props.UpdateManager.FromHashValue("showMach", 1, func(val) {
 				if (val) {
