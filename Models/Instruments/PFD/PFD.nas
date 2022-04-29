@@ -1052,7 +1052,11 @@ var canvas_pfd = {
 				}
 			}),
 			props.UpdateManager.FromHashList(["showDecisionHeight","agl","decision","radio","baro","radioNo"], 0.5, func(val) {
-				if (val.showDecisionHeight) {
+				if (!val.showDecisionHeight) {
+					obj["FMA_dh"].hide();
+					obj["FMA_dhn"].hide();
+					obj["FMA_nodh"].hide();
+					
 					if (val.agl <= 2500) {
 						obj["AI_agl"].show();
 						if (val.agl <= val.decision) {
@@ -1070,10 +1074,6 @@ var canvas_pfd = {
 						obj["AI_agl"].hide();
 					}
 				} else {
-					obj["FMA_dh"].hide();
-					obj["FMA_dhn"].hide();
-					obj["FMA_nodh"].hide();
-					
 					if (val.agl <= 2500) {
 						obj["AI_agl"].show();
 						
