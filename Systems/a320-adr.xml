@@ -27,6 +27,8 @@
 				velocities/r-aero-deg_sec_filter ge 2
 				velocities/v-north-fps_filter ge 0.5
 				velocities/v-east-fps_filter ge 0.5
+				velocities/v-north-fps_filter le -0.5
+				velocities/v-east-fps_filter le -0.5
 			</test>
 		</switch>
 		
