@@ -554,21 +554,23 @@ var fmaAthr = func {
 	}
 }
 
+var elapsedTimeBoxes = nil;
 var showAllBoxes = func {
+	elapsedTimeBoxes = pts.Sim.Time.elapsedSec.getValue();
 	if (Modes.PFD.FMA.rollMode.getValue() != " ") {
-		Modes.PFD.FMA.rollModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.rollModeTime.setValue(elapsedTimeBoxes);
 	}
 	if (Modes.PFD.FMA.pitchMode.getValue() != " ") {
-		Modes.PFD.FMA.pitchModeTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.pitchModeTime.setValue(elapsedTimeBoxes);
 	}
 	if (Modes.PFD.FMA.rollModeArmed.getValue() != " ") {
-		Modes.PFD.FMA.rollModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.rollModeArmedTime.setValue(elapsedTimeBoxes);
 	}
 	if (Modes.PFD.FMA.pitchModeArmed.getValue() != " ") {
-		Modes.PFD.FMA.pitchModeArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.pitchModeArmedTime.setValue(elapsedTimeBoxes);
 	}
 	if (Modes.PFD.FMA.pitchMode2Armed.getValue() != " ") {
-		Modes.PFD.FMA.pitchMode2ArmedTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		Modes.PFD.FMA.pitchMode2ArmedTime.setValue(elapsedTimeBoxes);
 	}
 }
 

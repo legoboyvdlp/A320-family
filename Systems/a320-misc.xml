@@ -571,6 +571,7 @@
 					<product>
 						<value>4</value>
 						<property>/controls/lighting/DU/iesi</property>
+						<property>/instrumentation/iesi/power/power-on</property>
 					</product>
 				</sum>
 			</function>

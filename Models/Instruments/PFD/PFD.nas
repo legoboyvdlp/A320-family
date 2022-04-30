@@ -16,7 +16,6 @@ var alt_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 
 var aoa_1 = props.globals.getNode("/systems/navigation/adr/output/aoa-1", 1);
 var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2", 1);
 var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3", 1);
-var elapsedtime = props.globals.getNode("/sim/time/elapsed-sec", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 
@@ -26,6 +25,7 @@ var amberFlash = [0, 0];
 var dhFlash = 0;
 var ilsFlash = [0,0];
 var qnhFlash = [0,0];
+var elapsedtime_act = nil;
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
 var du1_offtime = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
@@ -876,7 +876,7 @@ var canvas_pfd = {
 					obj["flap_max"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("Ctrgt", , 0.1, func(val) {
+			props.UpdateManager.FromHashValue("Ctrgt", 0.1, func(val) {
 				obj["clean_speed"].setTranslation(0, val * -6.6);
 			}),
 			props.UpdateManager.FromHashValue("Ftrgt", 0.1, func(val) {
@@ -1995,7 +1995,7 @@ var canvas_pfd = {
 			me.testTimeNode = du1_test_time;
 		}
 		
-		var elapsedtime_act = elapsedtime.getValue();
+		elapsedtime_act = pts.Sim.Time.elapsedSec.getValue();
 		if (me.powerNode.getValue() >= 110) {
 			if (!me.on) {
 				if (me.offTimeNode.getValue() + 3 < elapsedtime_act) { 
@@ -2245,20 +2245,19 @@ setlistener("/systems/electrical/bus/ac-2", func() {
 }, 0, 0);
 
 # Helper Functions
-
 var roundabout = func(x) {
-	var y = x - int(x);
-	return y < 0.5 ? int(x) : 1 + int(x);
+	return (x - int(x)) < 0.5 ? int(x) : 1 + int(x);
 };
 
 var roundaboutAlt = func(x) {
-	var y = x * 0.2 - int(x * 0.2);
-	return y < 0.5 ? 5 * int(x * 0.2) : 5 + 5 * int(x * 0.2);
+	return (x * 0.2 - int(x * 0.2)) < 0.5 ? 5 * int(x * 0.2) : 5 + 5 * int(x * 0.2);
 };
 
+var _fontSizeHDGTempVar = nil;
+
 var fontSizeHDG = func(input) {
-	var test = input / 3;
-	if (test == int(test)) {
+	_fontSizeHDGTempVar = input / 3;
+	if (_fontSizeHDGTempVar == int(_fontSizeHDGTempVar)) {
 		return 42;
 	} else {
 		return 32;
@@ -2274,6 +2273,7 @@ var showPFD2 = func {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
 	dlg.setCanvas(A320PFD2.MainScreen.canvas);
 }
+
 # Flash managers
 var ils_going1 = 0;
 var ilsTimer1 = maketimer(0.50, func {
@@ -2380,4 +2380,4 @@ setlistener("/modes/pfd/fma/pitch-mode", func(pitch) {
 	} else {
 		autoland_pitch_land.setBoolValue(0);
 	}
-},0,0);
+}, 0, 0);
