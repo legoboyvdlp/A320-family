@@ -29,16 +29,6 @@
 		
 	</channel>
 	
-	<channel name="IESI" execrate="8">
-		
-		<actuator name="/instrumentation/iesi/att-reset">
-			<input>/instrumentation/iesi/att-reset-cmd</input>
-			<rate_limit sense="incr">0.5</rate_limit>
-			<rate_limit sense="decr">100</rate_limit>
-		</actuator>
-		
-	</channel>
-	
 	<channel name="ADF" execrate="8">
 	
 		<switch name="/instrumentation/adf[0]/power-supply">
@@ -526,6 +516,12 @@
 	
 	<channel name="IESI" execrate="8">
 		
+		<actuator name="/instrumentation/iesi/att-reset">
+			<input>/instrumentation/iesi/att-reset-cmd</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
 		<switch name="/instrumentation/iesi/display/show-mach">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -576,6 +572,84 @@
 				</sum>
 			</function>
 		</fcs_function>
+		
+	</channel>
+	
+	<channel name="DU Power" execrate="8">
+		
+		<switch name="/instrumentation/displays/du3/power-command">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-ess ge 110
+				/controls/lighting/DU/du3 ge 0.01
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/displays/du3/power-transient-timer">
+			<input>/instrumentation/displays/du3/power-command</input>
+			<rate_limit sense="decr">5</rate_limit>
+			<rate_limit sene="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/instrumentation/displays/du3/power-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/displays/du3/power-transient-timer ne 0
+			</test>
+		</switch>
+		
+		<fcs_function name="/instrumentation/displays/du3/test-sum">
+			<function>
+				<sum>
+					<property>/instrumentation/du/du3-test-amount</property>
+					<property>/instrumentation/du/du3-test-time</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<switch name="/instrumentation/displays/du3/test-active">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/displays/du3/test-sum ge /sim/time/elapsed-sec
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/displays/du4/power-command">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-2 ge 110
+				/controls/lighting/DU/du4 ge 0.01
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/displays/du4/power-transient-timer">
+			<input>/instrumentation/displays/du4/power-command</input>
+			<rate_limit sense="decr">5</rate_limit>
+			<rate_limit sene="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/instrumentation/displays/du4/power-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/displays/du4/power-transient-timer ne 0
+			</test>
+		</switch>
+		
+		<fcs_function name="/instrumentation/displays/du4/test-sum">
+			<function>
+				<sum>
+					<property>/instrumentation/du/du4-test-amount</property>
+					<property>/instrumentation/du/du4-test-time</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<switch name="/instrumentation/displays/du4/test-active">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/displays/du4/test-sum ge /sim/time/elapsed-sec
+			</test>
+		</switch>
 		
 	</channel>
 	
