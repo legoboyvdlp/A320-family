@@ -1221,7 +1221,7 @@ var canvas_pfd = {
 					obj["Metric_cur_alt"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("altitude", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("altitudePFD", 0.5, func(val) {
 				obj["Metric_cur_alt"].setText(sprintf("%5.0f", val * 0.3048));
 				
 				obj.middleAltText = roundaboutAlt(val / 100);
@@ -1238,7 +1238,7 @@ var canvas_pfd = {
 					obj["ALT_neg"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("altitude", 0.1, func(val) {
+			props.UpdateManager.FromHashValue("altitudePFD", 0.1, func(val) {
 				obj.altOffset = val / 500 - int(val / 500);
 				obj.middleAltOffset = nil;
 				
@@ -1685,7 +1685,7 @@ var canvas_pfd = {
 		
 		if (dmc.DMController.DMCs[me.number].outputs[1] != nil) {
 			notification.altError = 0;
-			notification.altitude = dmc.DMController.DMCs[me.number].outputs[1].getValue();
+			notification.altitudePFD = dmc.DMController.DMCs[me.number].outputs[1].getValue();
 			notification.altitudeDigits = dmc.DMController.DMCs[me.number].outputs[3].getValue();
 			notification.altitudeDifference = dmc.DMController.DMCs[me.number].outputs[7].getValue();
 			
@@ -1769,7 +1769,7 @@ var canvas_pfd = {
 			}
 		} else {
 			notification.altError = 1;
-			notification.altitude = -9999;
+			notification.altitudePFD = -9999;
 			notification.altitudeDigits = -9999;
 			notification.altitudeDifference = -9999;
 		}
@@ -1814,7 +1814,7 @@ var canvas_pfd = {
 		}
 		
 		if (notification.altimeterStd == 1) {
-			if (notification.altitude < fmgc.FMGCInternal.transAlt and fmgc.FMGCInternal.phase == 4) {
+			if (notification.altitudePFD < fmgc.FMGCInternal.transAlt and fmgc.FMGCInternal.phase == 4) {
 				if (me.number == 0) {
 					if (qnh_going1 == 0) {
 						qnhTimer1.start();
@@ -1848,7 +1848,7 @@ var canvas_pfd = {
 				me["QNH_box"].show();
 			}
 		} else {
-			if (notification.altitude >= fmgc.FMGCInternal.transAlt and fmgc.FMGCInternal.phase == 2) {
+			if (notification.altitudePFD >= fmgc.FMGCInternal.transAlt and fmgc.FMGCInternal.phase == 2) {
 				if (me.number == 0) {
 					if (qnh_going1 == 0) {
 						qnhTimer1.start();

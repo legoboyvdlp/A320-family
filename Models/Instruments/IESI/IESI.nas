@@ -70,11 +70,21 @@ var canvas_IESI = {
 		obj["ATTflag"].hide();
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("airspeed", 0.1, func(val) {
+			props.UpdateManager.FromHashValue("airspeedIESI", 0.1, func(val) {
 				obj["ASI_scale"].setTranslation(0, math.clamp(val - 30, 0, 490) * 8.295);
 			}),
-			props.UpdateManager.FromHashValue("altitude", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("altitudeIESI", 0.5, func(val) {
 				val = math.clamp(val, -2000, 50000);
+				
+				obj["ALT_meters"].setText(sprintf("%5.0f", math.round(val * 0.3048, 10)));
+				
+				obj.middleAltText = roundaboutAlt(val / 100);
+				
+				obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText + 10)));
+				obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText + 5)));
+				obj["ALT_three"].setText(sprintf("%03d", abs(obj.middleAltText)));
+				obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText - 5)));
+				obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText - 10)));
 				
 				if (val < 0) {
 					obj["negText"].show();
@@ -83,9 +93,11 @@ var canvas_IESI = {
 					obj["negText"].hide();
 					obj._isNegativeAlt = 0;
 				}
+			}),
+			props.UpdateManager.FromHashValue("altitudeIESI", 0.1, func(val) {
+				val = math.clamp(val, -2000, 50000);
 				
 				obj.altOffset = (val / 500) - int(val / 500);
-				obj.middleAltText = roundaboutAlt(val / 100);
 				
 				if (obj.altOffset > 0.5) {
 					obj._middleAltOffset = -(obj.altOffset - 1) * 258.5528;
@@ -96,17 +108,9 @@ var canvas_IESI = {
 				obj["ALT_scale"].setTranslation(0, -obj._middleAltOffset);
 				obj["ALT_scale"].update();
 				
-				obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText + 10)));
-				obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText + 5)));
-				obj["ALT_three"].setText(sprintf("%03d", abs(obj.middleAltText)));
-				obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText - 5)));
-				obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText - 10)));
-				
-				obj["ALT_meters"].setText(sprintf("%5.0f", math.round(val * 0.3048, 10)));
-				
 				obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", val), 2)) * 3.16);
 			}),
-			props.UpdateManager.FromHashValue("altitude_ind", 0.5, func(val) {
+			props.UpdateManager.FromHashValue("altitude_indIESI", 0.5, func(val) {
 				obj["ALT_digits"].setText(sprintf("%s", math.clamp(val, -20, 500)));
 			}),
 			props.UpdateManager.FromHashValue("showMach", 1, func(val) {
@@ -359,9 +363,9 @@ emesary.GlobalTransmitter.Register(A320IESI);
 # Emesary Frame Notifiaction Properties
 var input = {
 	"acconfig": "/systems/acconfig/autoconfig-running",
-	"airspeed": "/instrumentation/airspeed-indicator[0]/indicated-speed-kt",
-	"altitude": "/instrumentation/altimeter[6]/indicated-altitude-ft",
-	"altitude_ind": "/instrumentation/altimeter[6]/indicated-altitude-ft-pfd",
+	"airspeedIESI": "/instrumentation/airspeed-indicator[0]/indicated-speed-kt",
+	"altitudeIESI": "/instrumentation/altimeter[6]/indicated-altitude-ft",
+	"altitude_indIESI": "/instrumentation/altimeter[6]/indicated-altitude-ft-pfd",
 	"altimeter_mode_iesi": "/instrumentation/altimeter[6]/std",
 	"attReset": "/instrumentation/iesi/att-reset",
 	"iesiBrt": "/controls/lighting/DU/iesi",
