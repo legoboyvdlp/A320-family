@@ -8985,6 +8985,13 @@
 				<script>libraries.lTray();</script>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>traytable-cpt-lbl</tooltip-id>
+				<label>Deploy captain's tray table</label>
+			</binding>
+		</hovered>
     </animation>
 
 	<animation>
@@ -8999,6 +9006,13 @@
 				<script>libraries.rTray();</script>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>traytable-fo-lbl</tooltip-id>
+				<label>Deploy first officer's tray table</label>
+			</binding>
+		</hovered>
     </animation>
 
 	<!-- Foot Rest -->
@@ -9014,6 +9028,13 @@
 				<script>libraries.lFootrest();</script>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>footrest-cpt-lbl</tooltip-id>
+				<label>Deploy captain's footrest</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -9039,6 +9060,13 @@
 				<script>libraries.rFootrest();</script>
 			</binding>
 		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>footrest-fo-lbl</tooltip-id>
+				<label>Deploy first officer's footrest</label>
+			</binding>
+		</hovered>
 	</animation>
 	
 	<animation>
@@ -36749,6 +36777,8 @@
 	<effect>
 		<inherits-from>Effects/model-transparent</inherits-from>
 		<object-name>clock_glare</object-name>
+		<object-name>EFB_cpt_glare</object-name>
+		<object-name>EFB_fo_glare</object-name>
 		<object-name>eng_mode.mark.030</object-name>
 		<object-name>fcu_labels</object-name>
 		<object-name>fcu_labels_hud.plug</object-name>
