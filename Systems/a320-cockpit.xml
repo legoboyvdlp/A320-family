@@ -529,6 +529,11 @@
 			<input>/controls/radio/rmp[1]/nav-protect</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/stby-compass-pos">
+			<input>/controls/cockpit/stby-compass</input>
+			<c1>5</c1>
+		</lag_filter>
 	
 	</channel>
 

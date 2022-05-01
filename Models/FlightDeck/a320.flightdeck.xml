@@ -21848,6 +21848,47 @@
 
 	<!-- Overhead Panel -->
 	
+	<!-- Standby Compass -->
+	<animation>
+		<type>pick</type>
+		<object-name>compass_box</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/cockpit/stby-compass</property>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>stby-compass-lbl</tooltip-id>
+				<label>Standby compass</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>compass_box</object-name>
+		<object-name>compass_box.wheel</object-name>
+		<property>controls/cockpit/stby-compass-pos</property>
+		<factor>0.055</factor>
+		<axis>
+			<z>-1</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>compass_box.wheel</object-name>
+		<property>/orientation/heading-magnetic-deg</property>
+		<axis>
+			<object-name>compass_box.wheel.axis</object-name>
+		</axis>
+	</animation>
+	
 	<!-- Rain protection -->
 	<animation>
 		<type>pick</type>

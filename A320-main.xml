@@ -898,6 +898,7 @@
 			<park-brk-translate type="double">0</park-brk-translate>
 			<qnh-cpt-knb-translate type="double">0.0015</qnh-cpt-knb-translate>
 			<qnh-fo-knb-translate type="double">0.0015</qnh-fo-knb-translate>
+			<stby-compass type="bool">false</stby-compass>
 		</cockpit>
 		<CVR>
 			<erase type="bool">0</erase>
