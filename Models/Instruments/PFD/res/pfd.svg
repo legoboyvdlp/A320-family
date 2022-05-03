@@ -22,7 +22,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -37,13 +36,13 @@
      units="pt"
      inkscape:snap-global="false"
      showguides="true"
-     inkscape:current-layer="ALT_group"
+     inkscape:current-layer="svg2"
      inkscape:window-maximized="1"
      inkscape:window-y="-11"
      inkscape:window-x="-11"
-     inkscape:cy="673.69595"
-     inkscape:cx="1065.6983"
-     inkscape:zoom="5.6568545"
+     inkscape:cy="228.04193"
+     inkscape:cx="941.86619"
+     inkscape:zoom="2.8284273"
      showgrid="false"
      id="namedview371"
      inkscape:window-height="974"
@@ -2397,15 +2396,15 @@
          inkscape:connector-curvature="0"
          id="path1283"
          d="m 856.4002,481.90842 2.2e-4,-15.92813 h 52.07464 v 93.34657 h -52.07457 v -15.26583"
-         style="fill:#000000;fill-opacity:1;stroke:#ffff00;stroke-width:3.19994998;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+         style="fill:#000000;fill-opacity:1;stroke:#ffff00;stroke-width:3.19995;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path1285"
          d="m 770.31078,481.90873 86.08971,-3.1e-4"
-         style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:3.19994998;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+         style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:3.19995;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
       <path
-         style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:3.19994998;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         style="fill:none;fill-opacity:1;stroke:#ffff00;stroke-width:3.19995;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          d="m 770.31078,544.06163 86.08971,-6e-4"
          id="path1287"
          inkscape:connector-curvature="0"
@@ -2631,26 +2630,26 @@
      transform="scale(0.87678236,1.1405339)"
      id="FMA_dh"
      y="115.05846"
-     x="831.23047"
+     x="826.09802"
      style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.657577"
      xml:space="preserve"
      inkscape:label="#text983"><tspan
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.657577"
        y="115.05846"
-       x="831.23047"
+       x="826.09802"
        id="tspan4301"
        sodipodi:role="line">RADIO</tspan></text>
   <text
      inkscape:label="#text983"
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.657577"
-     x="934.0097"
+     x="937.43134"
      y="115.05846"
      id="FMA_dhn"
      transform="scale(0.87678236,1.1405339)"><tspan
        sodipodi:role="line"
        id="tspan4305"
-       x="934.0097"
+       x="937.43134"
        y="115.05846"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:center;text-anchor:middle;fill:#179ab7;fill-opacity:1;stroke-width:0.657577">0250</tspan></text>
   <g
