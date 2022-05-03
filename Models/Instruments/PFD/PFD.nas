@@ -1078,6 +1078,7 @@ var canvas_pfd = {
 	getKeysMismatch: func() {
 		return ["ERRCODE"];
 	},
+	showMetricAlt: 0,
 	onsideADIRSOperating: 0,
 	update: func(notification) {
 		me.updatePower(notification);
