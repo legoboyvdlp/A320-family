@@ -1242,7 +1242,7 @@ var canvas_pfd = {
 			}),
 			props.UpdateManager.FromHashList(["altitudePFD","altError"], 0.1, func(val) {
 				if (!val.altError) {
-					obj.altOffset = val / 500 - int(val.altitudePFD / 500);
+					obj.altOffset = val.altitudePFD / 500 - int(val.altitudePFD / 500);
 					obj.middleAltOffset = nil;
 					
 					if (obj.altOffset > 0.5) {
