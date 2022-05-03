@@ -138,7 +138,7 @@ var canvas_lowerECAMPageFctl =
 				}
 			}),
 			props.UpdateManager.FromHashValue("fctlElevTrim", 0.01, func(val) {
-				obj["PT"].setText(sprintf("%2.1f", val));
+				obj["PT"].setText(sprintf("%4.1f", val));
 				if (val >= 0.09) {
 					obj["PTupdn"].setText("UP");
 					obj["PTupdn"].show();
