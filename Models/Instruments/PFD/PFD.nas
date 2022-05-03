@@ -234,10 +234,10 @@ var canvas_pfd = {
 					obj["VS_box"].show();
 				}
 			}),
-			props.UpdateManager.FromHashValue("localizer", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("localizer", 0.0025, func(val) {
 				obj["LOC_pointer"].setTranslation(val * 197, 0);	
 			}),
-			props.UpdateManager.FromHashValue("glideslope", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("glideslope", 0.0025, func(val) {
 				obj["GS_pointer"].setTranslation(0, val * -197);
 			}),
 			props.UpdateManager.FromHashList(["athr", "thrustLvrClb"], 1, func(val) {
@@ -331,7 +331,7 @@ var canvas_pfd = {
 				}
 			}),
 			props.UpdateManager.FromHashList(["apBox","apMode"], nil, func(val) {
-				obj["FMA_athr"].setText(val.apMode);
+				obj["FMA_ap"].setText(val.apMode);
 				if (val.apBox and val.apMode != " ") {
 					obj["FMA_ap_box"].show();
 				} else {
@@ -692,7 +692,7 @@ var canvas_pfd = {
 					obj["QNH_setting"].setText(sprintf("%2.2f", val.altimeterInhg));
 				}
 			}),
-			props.UpdateManager.FromHashList(["altimeterStd","altitudeAutopilot"], 25, func(val) {
+			props.UpdateManager.FromHashList(["altimeterStd","altitudeAutopilot"], 1, func(val) {
 				if (val.altimeterStd == 1) {
 					if (val.altitudeAutopilot < 10000) {
 						obj["ALT_digit_UP"].setText(sprintf("%s", "FL   " ~ val.altitudeAutopilot / 100));
@@ -1219,36 +1219,42 @@ var canvas_pfd = {
 					obj["Metric_cur_alt"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("altitudePFD", 0.5, func(val) {
-				obj["Metric_cur_alt"].setText(sprintf("%5.0f", val * 0.3048));
-				
-				obj.middleAltText = roundaboutAlt(val / 100);
-				
-				obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText + 10)));
-				obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText + 5)));
-				obj["ALT_three"].setText(sprintf("%03d", abs(obj.middleAltText)));
-				obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText - 5)));
-				obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText - 10)));
-				
-				if (val < 0) {
-					obj["ALT_neg"].show();
+			props.UpdateManager.FromHashList(["altitudePFD","altError"], 0.5, func(val) {
+				if (!val.altError) {
+					obj["Metric_cur_alt"].setText(sprintf("%5.0f", val.altitudePFD * 0.3048));
+					
+					obj.middleAltText = roundaboutAlt(val.altitudePFD / 100);
+					
+					obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText + 10)));
+					obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText + 5)));
+					obj["ALT_three"].setText(sprintf("%03d", abs(obj.middleAltText)));
+					obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText - 5)));
+					obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText - 10)));
+					
+					if (val.altitudePFD < 0) {
+						obj["ALT_neg"].show();
+					} else {
+						obj["ALT_neg"].hide();
+					}
 				} else {
 					obj["ALT_neg"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("altitudePFD", 0.1, func(val) {
-				obj.altOffset = val / 500 - int(val / 500);
-				obj.middleAltOffset = nil;
-				
-				if (obj.altOffset > 0.5) {
-					obj.middleAltOffset = -(obj.altOffset - 1) * 243.3424;
-				} else {
-					obj.middleAltOffset = -obj.altOffset * 243.3424;
+			props.UpdateManager.FromHashList(["altitudePFD","altError"], 0.1, func(val) {
+				if (!val.altError) {
+					obj.altOffset = val / 500 - int(val.altitudePFD / 500);
+					obj.middleAltOffset = nil;
+					
+					if (obj.altOffset > 0.5) {
+						obj.middleAltOffset = -(obj.altOffset - 1) * 243.3424;
+					} else {
+						obj.middleAltOffset = -obj.altOffset * 243.3424;
+					}
+					
+					obj["ALT_scale"].setTranslation(0, -obj.middleAltOffset);
+					obj["ALT_scale"].update();
+					obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", val.altitudePFD), 2)) * 1.392);
 				}
-				
-				obj["ALT_scale"].setTranslation(0, -obj.middleAltOffset);
-				obj["ALT_scale"].update();
-				obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", val), 2)) * 1.392);
 			}),
 			props.UpdateManager.FromHashValue("altitudeDigits", 1, func(val) {
 				obj["ALT_digits"].setText(sprintf("%d", val));
@@ -1695,6 +1701,7 @@ var canvas_pfd = {
 					alt_going2 = 0;
 					amber_going2 = 0;
 				}
+				me["ALT_box"].show();
 				me["ALT_box_flash"].hide();
 				me["ALT_box_amber"].hide();
 			} else {
@@ -2073,14 +2080,14 @@ var canvas_pfd = {
 	getAOAForPFD1: func() {
 		if (air_data_switch.getValue() != -1 and adr_1_switch.getValue() and !adr_1_fault.getValue()) return aoa_1.getValue();
 		if (air_data_switch.getValue() == -1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
-		return nil;
+		return 0;
 	},
 	
 	# Get Angle of Attack from ADR2 or, depending on Switching panel, ADR3
 	getAOAForPFD2: func() {
 		if (air_data_switch.getValue() != 1 and adr_2_switch.getValue() and !adr_2_fault.getValue()) return aoa_2.getValue();
 		if (air_data_switch.getValue() == 1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
-		return nil;
+		return 0;
 	},
 
 	# Convert difference between magnetic heading and track measured in degrees to pixel for display on PFDs
