@@ -61,7 +61,6 @@ var canvas_pfd = {
 	rightText3: 0,
 	track_diff: 0,
 	split_ils: 0,
-	magnetic_hdg: 0,
 	magnetic_hdg_dif: 0,
 	alt_diff_cur: 0,
 	new: func(svg, name, number) {
@@ -129,7 +128,6 @@ var canvas_pfd = {
 		obj.rightText3 = 0;
 		obj.track_diff = 0;
 		obj.split_ils = 0;
-		obj.magnetic_hdg = 0;
 		obj.magnetic_hdg_dif = 0;
 		obj.alt_diff_cur = 0;
 		
@@ -1914,7 +1912,7 @@ var canvas_pfd = {
 		
 		if (((me.number == 0 and notification.pfdILS1) or (me.number == 1 and notification.pfdILS2)) and size(me.split_ils) == 2) {
 			notification.showPFDILS = 1;
-			notification.magnetic_hdg_dif = geo.normdeg180(me.magnetic_hdg - notification.headingPFD);
+			notification.magnetic_hdg_dif = geo.normdeg180(notification.ilsCrs - notification.headingPFD);
 		} else {
 			notification.showPFDILS = 0;
 			notification.magnetic_hdg_dif = 0;
