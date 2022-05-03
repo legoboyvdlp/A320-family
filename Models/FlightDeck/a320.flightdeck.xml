@@ -18,35 +18,6 @@
 			<z2-m> 0.8</z2-m>
 		</axis>
 	</animation>
-	
-	<!-- Multi-purpose Control and Display Units -->
-	<model>
-		<name>MCDU1</name>
-		<path>Aircraft/A320-family/Models/Instruments/MCDU/MCDU1bad.xml</path>
-	</model>
-
-	<model>
-		<name>MCDU2</name>
-		<path>Aircraft/A320-family/Models/Instruments/MCDU/MCDU2.xml</path>
-	</model>
-
-	<!-- Radio -->
-	<model>
-		<path>Aircraft/A320-family/Models/Instruments/Radio/Radio1.xml</path>
-	</model>
-	
-	<model>
-		<path>Aircraft/A320-family/Models/Instruments/Radio/Radio2.xml</path>
-	</model>
-
-	<!-- Audio -->
-	<model>
-		<path>Aircraft/A320-family/Models/Instruments/Audio/Audio1.xml</path>
-	</model>
-	
-	<model>
-		<path>Aircraft/A320-family/Models/Instruments/Audio/Audio2.xml</path>
-	</model>
 
 	<!-- Primary Flight Displays -->
 	<model>
@@ -8905,7 +8876,7 @@
 		<object-name>tray2-cpt</object-name>
 		<property>controls/tray/lefttrayext</property>
 		<interpolation>
-			<entry><ind>0.47</ind><dep> 0</dep></entry>
+			<entry><ind>0.45</ind><dep> 0</dep></entry>
 			<entry><ind>0.50</ind><dep>18</dep></entry>
 		</interpolation>
 		<axis>
@@ -8952,8 +8923,8 @@
 		<object-name>tray2-fo</object-name>
 		<property>controls/tray/righttrayext</property>
 		<interpolation>
-			<entry><ind>0.47</ind><dep> 0</dep></entry>
-			<entry><ind>0.50</ind><dep>18</dep></entry>
+			<entry><ind>0.45</ind><dep> 0</dep></entry>
+			<entry><ind>0.50</ind><dep>-18</dep></entry>
 		</interpolation>
 		<axis>
 			<object-name>tray1-fo.axis</object-name>
@@ -21758,7 +21729,7 @@
 	<animation>
 		<type>knob</type>
         <object-name>LReadingLtKnb</object-name>
-		<object-name>flood_lt_main.mark.005</object-name>
+		<object-name>LReadingLtKnb.mark</object-name>
         <property>/controls/lighting/reading-light-left-knb</property>
 		<factor>180</factor>
 		<offset-deg>-90</offset-deg>
@@ -21787,7 +21758,7 @@
 	<animation>
 		<type>knob</type>
         <object-name>RReadingLtKnb</object-name>
-		<object-name>flood_lt_main.mark.001</object-name>
+		<object-name>RReadingLtKnb.mark</object-name>
         <property>/controls/lighting/reading-light-right-knb</property>
 		<factor>180</factor>
 		<offset-deg>-90</offset-deg>
@@ -21817,7 +21788,7 @@
 	<animation>
 		<type>knob</type>
 		<object-name>audio_swtg</object-name>
-		<object-name>eng_mode.mark.030</object-name>
+		<object-name>audio_swtg.mark</object-name>
 		<property>controls/navigation/switching/audio-pos</property>
 		<factor>35</factor>
 		<axis>
@@ -22683,7 +22654,7 @@
 	<animation>
 		<type>knob</type>
 		<object-name>OHPMarkLtKnb</object-name>
-		<object-name>flood_lt_main.mark.002</object-name>
+		<object-name>OHPMarkLtKnb.mark</object-name>
 		<property>controls/lighting/overhead-panel-knb</property>
 		<offset-deg>-125</offset-deg>
 		<factor>250</factor>
@@ -27283,7 +27254,7 @@
 	<animation>
 		<type>knob</type>
 		<object-name>XbleedKnb</object-name>>
-		<object-name>eng_mode.mark.002</object-name>
+		<object-name>XbleedKnb.mark</object-name>
 		<property>/controls/pneumatics/switches/x-bleed-pos</property>
 		<offset-deg>-50</offset-deg>
 		<factor>50</factor>
@@ -35975,8 +35946,53 @@
 	<animation>
 		<name>Main Panel and Pedestal Backlighting</name>
 		<type>material</type>
+		<object-name>atc_abv.mark</object-name>
+		<object-name>atc_sys.mark</object-name>
+		<object-name>atc_thrt.mark</object-name>
+		<object-name>audio_int_rad.mark.cpt</object-name>
+		<object-name>brightness_nd_1_cpt.mark</object-name>
+		<object-name>brightness_nd_2_cpt.mark</object-name>
+		<object-name>brightness_nd_1_fo.mark</object-name>
+		<object-name>brightness_nd_2_fo.mark</object-name>
 		<object-name>clock_glare</object-name>
+		<object-name>ecam_air_data.mark</object-name>
+		<object-name>ecam_att_hdg.mark</object-name>
+		<object-name>ecam_brt_lower.mark</object-name>
+		<object-name>ecam_brt_upper.mark</object-name>
+		<object-name>ecam_eis_dmc.mark</object-name>
+		<object-name>ecam_nd_xfr.mark</object-name>
+		<object-name>eng_mode.mark</object-name>
+		<object-name>flood_lt_main.mark</object-name>
+		<object-name>integ_lt.mark</object-name>
+		<object-name>flood_lt_ped.mark</object-name>
 		<object-name>pedestal_low_glare</object-name>
+		<object-name>pfd_brt_cpt.mark</object-name>
+		<object-name>pfd_brt_fo.mark</object-name>
+		<object-name>Plane.003</object-name>
+		<object-name>Plane.004</object-name>
+		<object-name>Plane.005</object-name>
+		<object-name>Plane.006</object-name>
+		<object-name>Plane.007</object-name>
+		<object-name>Plane.008</object-name>
+		<object-name>Plane.009</object-name>
+		<object-name>Plane.010</object-name>
+		<object-name>Plane.011</object-name>
+		<object-name>Plane.012</object-name>
+		<object-name>Plane.013</object-name>
+		<object-name>Plane.015</object-name>
+		<object-name>Plane.021</object-name>
+		<object-name>Plane.023</object-name>
+		<object-name>Plane.024</object-name>
+		<object-name>Plane.025</object-name>
+		<object-name>Plane.026</object-name>
+		<object-name>Plane.027</object-name>
+		<object-name>Plane.028</object-name>
+		<object-name>Plane.029</object-name>
+		<object-name>Plane.030</object-name>
+		<object-name>Plane.031</object-name>
+		<object-name>RudderTrim.mark</object-name>
+		<object-name>speaker_volume_cpt.mark</object-name>
+		<object-name>speaker_volume_fo.mark</object-name>
 		<object-name>thr_quad_lts</object-name>
 		<object-name>trim_2_lts</object-name>
 		<condition>
@@ -36004,8 +36020,53 @@
 	<animation>
 		<name>Main Panel and Pedestal Backlighting (dome)</name>
 		<type>material</type>
+		<object-name>atc_abv.mark</object-name>
+		<object-name>atc_sys.mark</object-name>
+		<object-name>atc_thrt.mark</object-name>
+		<object-name>audio_int_rad.mark.cpt</object-name>
+		<object-name>brightness_nd_1_cpt.mark</object-name>
+		<object-name>brightness_nd_2_cpt.mark</object-name>
+		<object-name>brightness_nd_1_fo.mark</object-name>
+		<object-name>brightness_nd_2_fo.mark</object-name>
 		<object-name>clock_glare</object-name>
+		<object-name>ecam_air_data.mark</object-name>
+		<object-name>ecam_att_hdg.mark</object-name>
+		<object-name>ecam_brt_lower.mark</object-name>
+		<object-name>ecam_brt_upper.mark</object-name>
+		<object-name>ecam_eis_dmc.mark</object-name>
+		<object-name>ecam_nd_xfr.mark</object-name>
+		<object-name>eng_mode.mark</object-name>
+		<object-name>flood_lt_main.mark</object-name>
+		<object-name>integ_lt.mark</object-name>
+		<object-name>flood_lt_ped.mark</object-name>
 		<object-name>pedestal_low_glare</object-name>
+		<object-name>pfd_brt_cpt.mark</object-name>
+		<object-name>pfd_brt_fo.mark</object-name>
+		<object-name>Plane.003</object-name>
+		<object-name>Plane.004</object-name>
+		<object-name>Plane.005</object-name>
+		<object-name>Plane.006</object-name>
+		<object-name>Plane.007</object-name>
+		<object-name>Plane.008</object-name>
+		<object-name>Plane.009</object-name>
+		<object-name>Plane.010</object-name>
+		<object-name>Plane.011</object-name>
+		<object-name>Plane.012</object-name>
+		<object-name>Plane.013</object-name>
+		<object-name>Plane.015</object-name>
+		<object-name>Plane.021</object-name>
+		<object-name>Plane.023</object-name>
+		<object-name>Plane.024</object-name>
+		<object-name>Plane.025</object-name>
+		<object-name>Plane.026</object-name>
+		<object-name>Plane.027</object-name>
+		<object-name>Plane.028</object-name>
+		<object-name>Plane.029</object-name>
+		<object-name>Plane.030</object-name>
+		<object-name>Plane.031</object-name>
+		<object-name>RudderTrim.mark</object-name>
+		<object-name>speaker_volume_cpt.mark</object-name>
+		<object-name>speaker_volume_fo.mark</object-name>
 		<object-name>thr_quad_lts</object-name>
 		<object-name>trim_2_lts</object-name>
 		<condition>
@@ -36095,21 +36156,23 @@
 	<animation>
 		<name>Overhead Panel Backlighting</name>
 		<type>material</type>
+		<object-name>audio_swtg.mark</object-name>
+		<object-name>ACFlowKnb.mark</object-name>
 		<object-name>AftCabinACKnb.mark</object-name>
 		<object-name>CockpitACKnb.mark</object-name>
-		<object-name>eng_mode.mark.002</object-name>
-		<object-name>eng_mode.mark.030</object-name>
 		<object-name>fd_main.001</object-name>
 		<object-name>glare_ovh_eng_iae.plug</object-name>
-		<object-name>flood_lt_main.mark.001</object-name>
-		<object-name>flood_lt_main.mark.002</object-name>
-		<object-name>flood_lt_main.mark.005</object-name>
 		<object-name>FwdCabinACKnb.mark</object-name>
 		<object-name>IR1ModeKnb.mark</object-name>
 		<object-name>IR2ModeKnb.mark</object-name>
 		<object-name>IR3ModeKnb.mark</object-name>
+		<object-name>LdgElevKnb.mark</object-name>
 		<object-name>LeftWiperKnb.mark</object-name>
+		<object-name>LReadingLtKnb.mark</object-name>
+		<object-name>OHPMarkLtKnb.mark</object-name>
 		<object-name>RightWiperKnb.mark</object-name>
+		<object-name>RReadingLtKnb.mark</object-name>
+		<object-name>XbleedKnb.mark</object-name>
 		<condition>
 			<not>
 				<and>
@@ -36135,11 +36198,23 @@
 	<animation>
 		<name>Overhead Panel Backlighting (dome)</name>
 		<type>material</type>
+		<object-name>audio_swtg.mark</object-name>
+		<object-name>ACFlowKnb.mark</object-name>
+		<object-name>AftCabinACKnb.mark</object-name>
+		<object-name>CockpitACKnb.mark</object-name>
 		<object-name>fd_main.001</object-name>
 		<object-name>glare_ovh_eng_iae.plug</object-name>
-		<object-name>flood_lt_main.mark.001</object-name>
-		<object-name>flood_lt_main.mark.005</object-name>
-		<object-name>eng_mode.mark.030</object-name>
+		<object-name>FwdCabinACKnb.mark</object-name>
+		<object-name>IR1ModeKnb.mark</object-name>
+		<object-name>IR2ModeKnb.mark</object-name>
+		<object-name>IR3ModeKnb.mark</object-name>
+		<object-name>LdgElevKnb.mark</object-name>
+		<object-name>LeftWiperKnb.mark</object-name>
+		<object-name>LReadingLtKnb.mark</object-name>
+		<object-name>OHPMarkLtKnb.mark</object-name>
+		<object-name>RightWiperKnb.mark</object-name>
+		<object-name>RReadingLtKnb.mark</object-name>
+		<object-name>XbleedKnb.mark</object-name>
 		<condition>
 			<and>
 				<not>
@@ -36820,13 +36895,10 @@
 		<object-name>clock_glare</object-name>
 		<object-name>EFB_cpt_glare</object-name>
 		<object-name>EFB_fo_glare</object-name>
-		<object-name>eng_mode.mark.030</object-name>
 		<object-name>fcu_labels</object-name>
 		<object-name>fcu_labels_hud.plug</object-name>
 		<object-name>fd_main.001</object-name>
 		<object-name>glare_ovh_eng_iae.plug</object-name>
-		<object-name>flood_lt_main.mark.001</object-name>
-		<object-name>flood_lt_main.mark.005</object-name>
 		<object-name>hud_brt.mark</object-name>
 		<object-name>pedestal_low_glare</object-name>
 		<object-name>radio_nav_lit.cpt</object-name>
