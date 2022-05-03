@@ -61,6 +61,11 @@ var input = {
 	gForceDisplay: "/ECAM/Lower/g-force-display",
 	hour: "/sim/time/utc/hour",
 	minute: "/sim/time/utc/minute",
+	du3Power: "/instrumentation/displays/du3/power-on",
+	du4Power: "/instrumentation/displays/du4/power-on",
+	du3InTest: "/instrumentation/displays/du3/test-active",
+	du4InTest: "/instrumentation/displays/du4/test-active",
+	ecamDuXfr: "/modes/ecam-du-xfr",
 };
 
 foreach (var name; keys(input)) {

@@ -194,6 +194,25 @@ var canvas_lowerECAMPageApu =
 			}),
 		];
 		
+		obj.updateItemsPower = [
+			props.UpdateManager.FromHashList(["du3Power","du4Power","du3InTest","du4InTest","ecamDuXfr","pageMatch"], 1, func(val) {
+				if (val.pageMatch) {
+					if (val.du4Power) {
+						obj.group.setVisible(val.du4InTest ? 0 : 1);
+						obj.test.setVisible(val.du4InTest ? 1 : 0);
+					} else if (val.ecamDuXfr and val.du3Power) {
+						obj.group.setVisible(val.du3InTest ? 0 : 1);
+						obj.test.setVisible(val.du3InTest ? 1 : 0);
+					} else {
+						obj.group.setVisible(0);
+						obj.test.setVisible(0);
+					}
+				} else {
+					obj.group.setVisible(0);
+				}
+			}),
+		];
+		
 		obj.updateItemsBottom = [
 			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
 				obj.units = val;
@@ -269,7 +288,7 @@ var canvas_lowerECAMPageApu =
         }
 	},
 	update: func(notification) {
-		me.updatePower();
+		me.updatePower(notification);
 		
 		if (me.test.getVisible() == 1) {
 			me.updateTest(notification);
@@ -312,38 +331,16 @@ var canvas_lowerECAMPageApu =
 		
 		me.updateBottom(notification);
 	},
-	updatePower: func() {
+	updatePower: func(notification) {
 		if (me.name == ecam.SystemDisplayController.displayedPage.name) {
-			if (du4_lgt.getValue() > 0.01 and systems.ELEC.Bus.ac2.getValue() >= 110) {
-				if (du4_test_time.getValue() + du4_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
-					me.group.setVisible(0);
-					me.test.setVisible(1);
-				} else {
-					me.group.setVisible(1);
-					me.test.setVisible(0);
-				}
-			} else {
-				if (pts.Modes.EcamDuXfr.getBoolValue()) {
-					if (du3_lgt.getValue() > 0.01 and systems.ELEC.Bus.acEss.getValue() >= 110) {
-						if (du3_test_time.getValue() + du3_test_amount.getValue() >= pts.Sim.Time.elapsedSec.getValue()) {
-							me.group.setVisible(0);
-							me.test.setVisible(1);
-						} else {
-							me.group.setVisible(1);
-							me.test.setVisible(0);
-						}
-					} else {
-						me.group.setVisible(0);
-						me.test.setVisible(0);
-					}
-				} else {
-					me.group.setVisible(0);
-					me.test.setVisible(0);
-				}
-			}
+			notification.pageMatch = 1;
 		} else {
-			me.group.setVisible(0);
-			# don't hide the test group; just let whichever page is active control it
+			notification.pageMatch = 0;
+		}
+		
+		foreach(var update_item; me.updateItemsPower)
+		{
+			update_item.update(notification);
 		}
 	},
 };

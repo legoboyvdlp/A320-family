@@ -16,7 +16,6 @@ var alt_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 
 var aoa_1 = props.globals.getNode("/systems/navigation/adr/output/aoa-1", 1);
 var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2", 1);
 var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3", 1);
-var elapsedtime = props.globals.getNode("/sim/time/elapsed-sec", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 
@@ -29,6 +28,7 @@ var togaLkFlash = 0;
 var ilsFlash = [0,0];
 var qnhFlash = [0,0];
 var vsFlash = [0, 0];
+var elapsedtime_act = nil;
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
 var du1_offtime = props.globals.initNode("/instrumentation/du/du1-off-time", 0.0, "DOUBLE");
@@ -49,6 +49,8 @@ var autoland_pitch_land = props.globals.initNode("/instrumentation/pfd/logic/aut
 var autoland_ap_disc_ft = props.globals.initNode("/instrumentation/pfd/logic/autoland/ap-disc-ft", 0, "INT");
 
 var canvas_pfd = {
+	ASItrendIsShown: 0,
+	
 	middleOffset: 0,
 	heading: 0,
 	heading10: 0,
@@ -62,36 +64,8 @@ var canvas_pfd = {
 	rightText3: 0,
 	track_diff: 0,
 	split_ils: 0,
-	magnetic_hdg: 0,
 	magnetic_hdg_dif: 0,
 	alt_diff_cur: 0,
-	ASI: 0,
-	ASImax: 0,
-	ASItrend: 0,
-	ASItrgt: 0,
-	ASItrgtdiff: 0,
-	V1trgt: 0,
-	VRtrgt: 0,
-	V2trgt: 0,
-	Strgt: 0,
-	Ftrgt: 0,
-	flaptrgt: 0,
-	cleantrgt: 0,
-	SPDv1trgtdiff: 0,
-	SPDvrtrgtdiff: 0,
-	SPDv2trgtdiff: 0,
-	SPDstrgtdiff: 0,
-	SPDftrgtdiff: 0,
-	SPDflaptrgtdiff: 0,
-	SPDcleantrgtdiff: 0,
-	ind_mach: 0,
-	ind_spd: 0,
-	tgt_kts: 0,
-	tgt_ias: 0,
-	vapp: 0,
-	valphaprot: 0,
-	valphamax: 0,
-	vls: 0,
 	new: func(svg, name, number) {
 		var obj = {parents: [canvas_pfd] };
 		obj.canvas = canvas.new({
@@ -143,6 +117,7 @@ var canvas_pfd = {
 		obj.units = acconfig_weight_kgs.getValue();
 		
 		# temporary vars
+		obj.ASItrendIsShown = 0;
 		obj.middleOffset = 0;
 		obj.heading = 0;
 		obj.heading10 = 0;
@@ -156,33 +131,8 @@ var canvas_pfd = {
 		obj.rightText3 = 0;
 		obj.track_diff = 0;
 		obj.split_ils = 0;
-		obj.magnetic_hdg = 0;
 		obj.magnetic_hdg_dif = 0;
 		obj.alt_diff_cur = 0;
-		obj.ASI = 0;
-		obj.ASImax = 0;
-		obj.ASItrend = 0;
-		obj.ASItrgt = 0;
-		obj.ASItrgtdiff = 0;
-		obj.V1trgt = 0;
-		obj.VRtrgt = 0;
-		obj.V2trgt = 0;
-		obj.Strgt = 0;
-		obj.Ftrgt = 0;
-		obj.flaptrgt = 0;
-		obj.cleantrgt = 0;
-		obj.SPDv1trgtdiff = 0;
-		obj.SPDvrtrgtdiff = 0;
-		obj.SPDv2trgtdiff = 0;
-		obj.SPDstrgtdiff = 0;
-		obj.SPDftrgtdiff = 0;
-		obj.SPDflaptrgtdiff = 0;
-		obj.SPDcleantrgtdiff = 0;
-		obj.ind_mach = 0;
-		obj.ind_spd = 0;
-		obj.tgt_kts = 0;
-		obj.tgt_ias = 0;
-		obj.vapp = 0;
 		
 		# hide non-updated objects
 		obj["FMA_catmode"].hide();
@@ -197,19 +147,30 @@ var canvas_pfd = {
 		obj["LOC_scale"].hide();
 		obj["GS_scale"].hide();
 		
+		obj.temporaryNodes = {
+			showGroundReferenceAGL: 0,
+			showTailstrikeAGL: 0,
+			showTailstrikeGroundspeed: 0,
+			showTailstrikeThrust: 0,
+		};
+		
+		obj.AICenter = obj["AI_center"].getCenter();
+		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("pitchPFD", nil, func(val) {
+			props.UpdateManager.FromHashValue("pitchPFD", 0.025, func(val) {
 				obj.AI_horizon_trans.setTranslation(0, val * 11.825);
 			}),
-			props.UpdateManager.FromHashValue("roll", nil, func(val) {
-				obj.AI_horizon_rot.setRotation(-val * D2R, obj["AI_center"].getCenter());
-				obj.AI_horizon_ground_rot.setRotation(-val * D2R, obj["AI_center"].getCenter());
-				obj.AI_horizon_sky_rot.setRotation(-val * D2R, obj["AI_center"].getCenter());
+			props.UpdateManager.FromHashValue("roll", 0.025, func(val) {
+				obj.AI_horizon_rot.setRotation(-val * D2R, obj.AICenter);
+				obj.AI_horizon_ground_rot.setRotation(-val * D2R, obj.AICenter);
+				obj.AI_horizon_sky_rot.setRotation(-val * D2R, obj.AICenter);
+				obj.AI_horizon_hdg_rot.setRotation(-val * D2R, obj.AICenter);
 				obj["AI_bank"].setRotation(-val * D2R);
 				obj["AI_agl_g"].setRotation(-val * D2R);
-				obj.AI_horizon_hdg_rot.setRotation(-val * D2R, obj["AI_center"].getCenter());
+				obj.AI_fpv_rot.setRotation(-val * D2R, obj.AICenter);
+				obj["FPV"].setRotation(val * D2R); # It shouldn't be rotated, only the axis should 
 			}),
-			props.UpdateManager.FromHashValue("fbwLaw", nil, func(val) {
+			props.UpdateManager.FromHashValue("fbwLaw", 1, func(val) {
 				if (val == 0) {
 					obj["AI_bank_lim"].show();
 					obj["AI_pitch_lim"].show();
@@ -222,73 +183,79 @@ var canvas_pfd = {
 					obj["AI_pitch_lim_X"].show();
 				}
 			}),
-			props.UpdateManager.FromHashValue("horizonGround", nil, func(val) {
+			props.UpdateManager.FromHashValue("horizonGround", 0.1, func(val) {
 				obj.AI_horizon_ground_trans.setTranslation(0, val * 11.825);
 			}),
-			props.UpdateManager.FromHashValue("horizonPitch", nil, func(val) {
-				obj.AI_horizon_hdg_trans.setTranslation(obj.middleOffset, val * 11.825);
+			props.UpdateManager.FromHashList(["middleOffset","horizonPitch"], 0.1, func(val) {
+				obj.AI_horizon_hdg_trans.setTranslation(val.middleOffset, val.horizonPitch * 11.825);
 			}),
-			props.UpdateManager.FromHashValue("slipSkid", nil, func(val) {
+			props.UpdateManager.FromHashValue("slipSkid", 0.1, func(val) {
 				obj["AI_slipskid"].setTranslation(math.clamp(val, -15, 15) * 7, 0);
 			}),
-			props.UpdateManager.FromHashValue("FDRollBar", nil, func(val) {
+			props.UpdateManager.FromHashValue("FDRollBar", 0.1, func(val) {
 				obj["FD_roll"].setTranslation(val * 2.2, 0);
 			}),
-			props.UpdateManager.FromHashValue("FDPitchBar", nil, func(val) {
-				obj["FD_pitch"].setTranslation(0, val * -11.825);
+			props.UpdateManager.FromHashValue("FDPitchBar", 0.1, func(val) {
+				obj["FD_pitch"].setTranslation(0, val * -3.8);
 			}),
-			props.UpdateManager.FromHashValue("agl", nil, func(val) {
+			props.UpdateManager.FromHashValue("agl", 0.5, func(val) {
+				var roundingFactor = 1;
 				if (val >= 50) {
-					obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500),10)));
+					roundingFactor = 10;
 				} else if (val >= 5) {
-					obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500),5)));
-				} else {
-					obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500))));
+					roundingFactor = 5;
 				}
+				
+				obj["AI_agl"].setText(sprintf("%s", math.round(math.clamp(val, 0, 2500), roundingFactor)));
+				
 				obj["ground_ref"].setTranslation(0, (-val / 100) * -48.66856);
-			}),
-			props.UpdateManager.FromHashList(["agl","gear1Wow", "gear2Wow","fmgcPhase"], nil, func(val) {
-				if (-val.agl >= -565 and -val.agl <= 565) {
-					if ((val.fmgcPhase == 5 or val.fmgcPhase == 6) and !val.gear1Wow and !val.gear2Wow) { # TODO: add std too
-						obj["ground"].setTranslation(0, (-val.agl / 100) * -48.66856);
-						obj["ground"].show();
-					} else {
-						obj["ground"].hide();
-					}
+				obj["ground"].setTranslation(0, (-val / 100) * -48.66856);
+				
+				if (abs(val) <= 565) {
+					obj.temporaryNodes.showGroundReferenceAGL = 1;
 				} else {
-					obj["ground"].hide();
+					obj.temporaryNodes.showGroundReferenceAGL = 0;
+				}
+				
+				if (val <= 400) {
+					obj.temporaryNodes.showTailstrikeAGL = 1;
+				} else {
+					obj.temporaryNodes.showTailstrikeAGL = 0;
 				}
 			}),
-			props.UpdateManager.FromHashValue("vsNeedle", nil, func(val) {
+			props.UpdateManager.FromHashValue("vsNeedle", 0.1, func(val) {
 				obj["VS_pointer"].setRotation(val * D2R);
 			}),
-			props.UpdateManager.FromHashValue("vsDigit", nil, func(val) {
+			props.UpdateManager.FromHashValue("vsDigit", 0.5, func(val) {
 				obj["VS_box"].setTranslation(0, val);
 			}),
-			props.UpdateManager.FromHashValue("localizer", nil, func(val) {
-				obj["LOC_pointer"].setTranslation(val * 197, 0);	
-			}),
-			props.UpdateManager.FromHashValue("glideslope", nil, func(val) {
-				obj["GS_pointer"].setTranslation(0, val * -197);
-			}),
-			props.UpdateManager.FromHashList(["trackPFD","headingPFD"], nil, func(val) {
-				obj.track_diff = geo.normdeg180(val.trackPFD - val.headingPFD);
-				obj["TRK_pointer"].setTranslation(obj.getTrackDiffPixels(obj.track_diff),0);
-			}),
-			props.UpdateManager.FromHashValue("vsPFD", nil, func(val) {
+			props.UpdateManager.FromHashValue("vsPFD", 0.5, func(val) {
 				if (val < 2) {
 					obj["VS_box"].hide();
 				} else {
+					obj["VS_digit"].setText(sprintf("%02d", val));
 					obj["VS_box"].show();
 				}
-				
-				if (val < 10) {
-					obj["VS_digit"].setText(sprintf("%02d", "0" ~ val));
+			}),
+			props.UpdateManager.FromHashValue("localizer", 0.0025, func(val) {
+				obj["LOC_pointer"].setTranslation(val * 197, 0);	
+			}),
+			props.UpdateManager.FromHashValue("glideslope", 0.0025, func(val) {
+				obj["GS_pointer"].setTranslation(0, val * -197);
+			}),
+			props.UpdateManager.FromHashList(["athr", "thrustLvrClb"], 1, func(val) {
+				if (val.athr and val.thrustLvrClb) {
+					obj["FMA_lvrclb"].show();
 				} else {
-					obj["VS_digit"].setText(sprintf("%02d", val));
+					obj["FMA_lvrclb"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["vsAutopilot","agl"], nil, func(val) {
+			props.UpdateManager.FromHashList(["trackPFD","headingPFD","aoaPFD"], 0.01, func(val) {
+				obj.track_diff = geo.normdeg180(val.trackPFD - val.headingPFD); # store this to use in FPV
+				obj["TRK_pointer"].setTranslation(obj.getTrackDiffPixels(obj.track_diff),0);
+				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -20, 20) * 12.5); 
+			}),
+			props.UpdateManager.FromHashList(["vsAutopilot","agl"], 5, func(val) {
 				if (abs(val.vsAutopilot) >= 6000 or (val.vsAutopilot <= -2000 and val.agl <= 2500) or (val.vsAutopilot <= -1200 and val.agl <= 1000)) {
 					obj["VS_digit"].setColor(0.7333,0.3803,0);
 					obj["VS_pointer"].setColor(0.7333,0.3803,0);
@@ -299,10 +266,10 @@ var canvas_pfd = {
 					obj["VS_pointer"].setColorFill(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashList(["aileronPFD","elevatorPFD"], nil, func(val) {
+			props.UpdateManager.FromHashList(["aileronPFD","elevatorPFD"], 0.01, func(val) {
 				obj["AI_stick_pos"].setTranslation(val.aileronPFD * 196.8, val.elevatorPFD * 151.5);
 			}),
-			props.UpdateManager.FromHashValue("headingScale", nil, func(val) {
+			props.UpdateManager.FromHashValue("headingScale", 0.025, func(val) {
 				obj.heading = val;
 				obj.heading10 = (obj.heading / 10);
 				obj.headOffset = obj.heading10 - int(obj.heading10);
@@ -347,10 +314,10 @@ var canvas_pfd = {
 				obj["HDG_seven"].setFontSize(fontSizeHDG(obj.rightText3), 1);
 				obj["HDG_one"].setFontSize(fontSizeHDG(obj.leftText3), 1);
 			}),
-			props.UpdateManager.FromHashValue("altitudeAutopilot", nil, func(val) {
+			props.UpdateManager.FromHashValue("altitudeAutopilot", 50, func(val) {
 				obj["ALT_digit_UP_metric"].setText(sprintf("%5.0fM", val * 0.3048));
 			}),
-			props.UpdateManager.FromHashList(["fac1","fac2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["fac1","fac2"], 1, func(val) {
 				if (obj.number == 0) { # LHS only acc to manual
 					if (!val.fac1 and !val.fac2) {
 						obj["spdLimError"].show();
@@ -359,7 +326,7 @@ var canvas_pfd = {
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["fd1","fd2","ap1","ap2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["fd1","fd2","ap1","ap2"], 1, func(val) {
 				if (val.fd1 or val.fd2 or val.ap1 or val.ap2) {
 					obj["FMA_pitcharm"].show();
 					obj["FMA_pitcharm2"].show();
@@ -374,7 +341,7 @@ var canvas_pfd = {
 					obj["FMA_roll"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["gear1Wow","gear2Wow","fmgcPhase","engine1State","engine2State"], nil, func(val) {
+			props.UpdateManager.FromHashList(["gear1Wow","gear2Wow","fmgcPhase","engine1State","engine2State"], 1, func(val) {
 				if ((val.gear1Wow or val.gear2Wow) and val.fmgcPhase != 0 and val.fmgcPhase != 1) {
 					obj["AI_stick"].show();
 					obj["AI_stick_pos"].show();
@@ -386,7 +353,7 @@ var canvas_pfd = {
 					obj["AI_stick_pos"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["markerO","markerM","markerI"], nil, func(val) {
+			props.UpdateManager.FromHashList(["markerO","markerM","markerI"], 1, func(val) {
 				if (val.markerO) {
 					obj["outerMarker"].show();
 					obj["middleMarker"].hide();
@@ -405,7 +372,7 @@ var canvas_pfd = {
 					obj["innerMarker"].hide();	
 				}
 			}),
-			props.UpdateManager.FromHashList(["pfdILS1","pfdILS2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["pfdILS1","pfdILS2"], 1, func(val) {
 				if ((obj.number == 0 and val.pfdILS1) or (obj.number == 1 and val.pfdILS2)) {
 					obj["LOC_scale"].show();
 					obj["GS_scale"].show();
@@ -426,29 +393,40 @@ var canvas_pfd = {
 					obj["GS_pointer"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("flexTemp", nil, func(val) {
+			props.UpdateManager.FromHashValue("flexTemp", 1, func(val) {
 				obj["FMA_flxtemp"].setText(sprintf("%s", "+" ~ val));
 			}),
-			props.UpdateManager.FromHashList(["agl","groundspeed","detent1","detent2"], nil, func(val) {
-				if (val.agl < 400 and val.groundspeed > 50 and val.detent1 <= 3 and val.detent2 <= 3) {
-					obj["tailstrikeInd"].show();
+			props.UpdateManager.FromHashValue("groundspeed", 1, func(val) {
+				if (val > 50) {
+					obj.temporaryNodes.showTailstrikeGroundspeed = 1;
 				} else {
-					obj["tailstrikeInd"].hide();
+					obj.temporaryNodes.showTailstrikeGroundspeed = 0;
 				}
 			}),
-			props.UpdateManager.FromHashList(["hdgDiff","showHdg","targetHeading"], nil, func(val) {
+			props.UpdateManager.FromHashList(["detent1","detent2"], 1, func(val) {
+				if (val.detent1 <= 3 and val.detent2 <= 3) {
+					obj.temporaryNodes.showTailstrikeThrust = 1;
+				} else {
+					obj.temporaryNodes.showTailstrikeThrust = 0;
+				}
+			}),
+			props.UpdateManager.FromHashValue("targetHeading", 0.5, func(val) {
+				obj["HDG_digit_L"].setText(sprintf("%3.0f", val));
+				obj["HDG_digit_R"].setText(sprintf("%3.0f", val));
+			}),
+			props.UpdateManager.FromHashValue("hdgDiff", 0.025, func(val) {
+				obj["HDG_target"].setTranslation((val / 10) * 98.5416, 0);
+			}),
+			props.UpdateManager.FromHashList(["hdgDiff","showHdg"], 0.01, func(val) {
 				if (val.showHdg and val.hdgDiff >= -23.62 and val.hdgDiff <= 23.62) {
-					obj["HDG_target"].setTranslation((val.hdgDiff / 10) * 98.5416, 0);
 					obj["HDG_digit_L"].hide();
 					obj["HDG_digit_R"].hide();
 					obj["HDG_target"].show();
 				} else if (val.showHdg and val.hdgDiff < -23.62 and val.hdgDiff >= -180) {
-					obj["HDG_digit_L"].setText(sprintf("%3.0f", val.targetHeading));
 					obj["HDG_digit_L"].show();
 					obj["HDG_digit_R"].hide();
 					obj["HDG_target"].hide();
 				} else if (val.showHdg and val.hdgDiff > 23.62 and val.hdgDiff <= 180) {
-					obj["HDG_digit_R"].setText(sprintf("%3.0f", val.targetHeading));
 					obj["HDG_digit_R"].show();
 					obj["HDG_digit_L"].hide();
 					obj["HDG_target"].hide();
@@ -458,14 +436,14 @@ var canvas_pfd = {
 					obj["HDG_target"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["altimeterHpa","altimeterInhg","altimeterInhgModeLeft","altimeterInhgModeRight"], nil, func(val) {
+			props.UpdateManager.FromHashList(["altimeterHpa","altimeterInhg","altimeterInhgModeLeft","altimeterInhgModeRight"], 0.005, func(val) {
 				if ((obj.number == 0 and val.altimeterInhgModeLeft == 0) or (obj.number == 1 and val.altimeterInhgModeRight == 0)) {
 					obj["QNH_setting"].setText(sprintf("%4.0f", val.altimeterHpa));
 				} else {
 					obj["QNH_setting"].setText(sprintf("%2.2f", val.altimeterInhg));
 				}
 			}),
-			props.UpdateManager.FromHashList(["altimeterStd","altitudeAutopilot"], nil, func(val) {
+			props.UpdateManager.FromHashList(["altimeterStd","altitudeAutopilot"], 1, func(val) {
 				if (val.altimeterStd == 1) {
 					if (val.altitudeAutopilot < 10000) {
 						obj["ALT_digit_UP"].setText(sprintf("%s", "FL   " ~ val.altitudeAutopilot / 100));
@@ -479,7 +457,7 @@ var canvas_pfd = {
 					obj["ALT_digit_DN"].setText(sprintf("%5.0f", val.altitudeAutopilot));
 				}
 			}),
-			props.UpdateManager.FromHashValue("managedSpd", nil, func(val) {
+			props.UpdateManager.FromHashValue("managedSpd", 1, func(val) {
 				if (val) {
 					obj["ASI_target"].setColor(0.6901,0.3333,0.7450);
 					obj["ASI_digit_UP"].setColor(0.6901,0.3333,0.7450);
@@ -492,6 +470,569 @@ var canvas_pfd = {
 					obj["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);
 					obj["ASI_digit_DN"].setColor(0.0901,0.6039,0.7176);
 					obj["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
+				}
+			}),
+			props.UpdateManager.FromHashValue("dmeDistance", 0.025, func(val) {
+				if (val < 19.95) {
+					obj["dme_dist"].setText(sprintf("%1.1f", val));
+				} else {
+					obj["dme_dist"].setText(sprintf("%2.0f", val));
+				}
+			}),
+			props.UpdateManager.FromHashValue("speedError", 1, func(val) {
+				if (!val) {
+					obj["ASI_error"].hide();
+					obj["ASI_buss"].hide();
+					obj["ASI_buss_ref"].hide();
+					obj["ASI_buss_ref_blue"].hide();
+					obj["ASI_frame"].setColor(1,1,1);
+					obj["ASI_group"].show();
+					obj["VLS_min"].hide();
+					obj["ALPHA_PROT"].hide();
+					obj["ALPHA_MAX"].hide();
+					obj["ALPHA_SW"].hide();
+				} else {
+					obj["ASI_group"].hide();
+					obj["ASI_frame"].setColor(1,0,0);
+					obj["clean_speed"].hide();
+					obj["S_target"].hide();
+					obj["F_target"].hide();
+					obj["flap_max"].hide();
+					obj["v1_group"].hide();
+					obj["v1_text"].hide();
+					obj["vr_speed"].hide();
+					obj["ground"].hide(); # Why?
+					obj["ground_ref"].hide();
+					obj["VLS_min"].hide();
+					obj["VLS_min"].hide();
+					obj["ALPHA_PROT"].hide();
+					obj["ALPHA_MAX"].hide();
+					obj["ALPHA_SW"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashList(["speedError","fac1","fac2"], 1, func(val) {
+				if (!val.speedError and (val.fac1 or val.fac2)) {
+					obj["ASI_max"].show();
+				} else {
+					obj["ASI_max"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashList(["speedError","fac1","fac2","ASItrendIsShown"], 1, func(val) {
+				if (!val.speedError and (val.fac1 or val.fac2)) {
+					if (val.ASItrendIsShown == 1) {
+						obj["ASI_trend_up"].show();
+						obj["ASI_trend_down"].hide();
+					} else if (val.ASItrendIsShown == -1) {
+						obj["ASI_trend_up"].hide();
+						obj["ASI_trend_down"].show();
+					} else {
+						obj["ASI_trend_up"].hide();
+						obj["ASI_trend_down"].hide();
+					}
+				} else {
+						obj["ASI_trend_up"].hide();
+						obj["ASI_trend_down"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("ASI", 0.1, func(val) {
+				obj["ASI_scale"].setTranslation(0, val * 6.6);
+			}),
+			props.UpdateManager.FromHashValue("ASImax", 0.1, func(val) {
+				obj["ASI_max"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("ASItrend", 0.1, func(val) {
+				obj["ASI_trend_up"].setTranslation(0, math.clamp(val, 0, 50) * -6.6);
+				obj["ASI_trend_down"].setTranslation(0, math.clamp(val, -50, 0) * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("V1trgt", 0.1, func(val) {
+				obj["v1_group"].setTranslation(0, val * -6.6);
+				obj["v1_text"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v1));
+			}),
+			props.UpdateManager.FromHashList(["speedError","showVr","SPDv1trgtdiff","fmgcPhase","agl"], 0.5, func(val) {
+				if (!val.speedError and val.showVr) {
+					if (val.agl < 55 and val.fmgcPhase <= 2 and abs(val.SPDv1trgtdiff) <= 42) {
+						obj["v1_group"].show();
+						obj["v1_text"].hide();
+					} else if (val.agl < 55 and fmgc.FMGCInternal.phase <= 2) {
+						obj["v1_group"].hide();
+						obj["v1_text"].show();
+					} else {
+						obj["v1_group"].hide();
+						obj["v1_text"].hide();
+					}
+				} else {
+					obj["v1_group"].hide();
+					obj["v1_text"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("VRtrgt", 0.1, func(val) {
+				obj["vr_speed"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashList(["speedError","showVr","SPDvrtrgtdiff","fmgcPhase","agl"], 0.5, func(val) {
+				if (!val.speedError and val.showVr) {
+					if (val.agl < 55 and val.fmgcPhase <= 2 and abs(val.SPDvrtrgtdiff) <= 42) {
+						obj["vr_speed"].show();
+					} else {
+						obj["vr_speed"].hide();
+					}
+				} else {
+					obj["vr_speed"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashList(["speedError","showV2","SPDv2trgtdiff","fmgcPhase","agl","V2trgt"], 0.5, func(val) {
+				if (!val.speedError and val.showVr) {
+					if (val.agl < 55 and val.fmgcPhase <= 2 and abs(val.SPDv2trgtdiff) <= 42) {
+						obj["ASI_target"].show();
+						obj["ASI_target"].setTranslation(0, val.V2trgt * -6.6);
+						obj["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
+					} else if (val.agl < 55 and fmgc.FMGCInternal.phase <= 2) {
+						obj["ASI_target"].hide();
+						obj["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
+					}
+				}
+			}),
+			props.UpdateManager.FromHashList(["machError","ind_mach"], 0.001, func(val) {
+				if (val.machError) {
+					obj["ASI_mach"].hide();
+					obj["machError"].show();
+				} else {
+					obj["machError"].hide();
+					
+					if (val.ind_mach >= 0.999) {
+						obj["ASI_mach"].setText(".999");
+					} else {
+						obj["ASI_mach"].setText(sprintf(".%3.0f", val.ind_mach * 1000));
+					}
+					
+					if (val.ind_mach >= 0.5) {
+						obj["ASI_mach"].show();
+					} else {
+						obj["ASI_mach"].hide();
+					}
+				}
+			}),
+			props.UpdateManager.FromHashList(["flapMaxSpeed","ASI"], 0.1, func(val) {
+				obj["flap_max"].setTranslation(0, (val.flapMaxSpeed - 30 - val.ASI) * -6.6);
+			}),
+			props.UpdateManager.FromHashList(["speedError","fac1","fac2","flapMaxSpeed","flapsInput","ind_spd"], 0.5, func(val) {
+				if (!val.speedError and (val.fac1 or val.fac2)) {
+					if (abs(val.flapMaxSpeed - val.ind_spd) <= 42 and val.flapsInput != 4) {
+						obj["flap_max"].show();
+					} else {
+						obj["flap_max"].hide();
+					}
+				} else {
+					obj["flap_max"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("Ctrgt", 0.1, func(val) {
+				obj["clean_speed"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("Ftrgt", 0.1, func(val) {
+				obj["F_target"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("Strgt", 0.1, func(val) {
+				obj["S_target"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashList(["speedError","fac1","fac2","flapsInput","SPDstrgtdiff","SPDftrgtdiff","SPDcleantrgtdiff","agl"], 0.5, func(val) {
+				if (!val.speedError and (val.fac1 or val.fac2)) {
+					if (val.flapsInput == 1) {
+						obj["F_target"].hide();
+						obj["clean_speed"].hide();
+						
+						if (abs(val.SPDstrgtdiff) <= 42 and val.agl >= 400) {
+							obj["S_target"].show();
+						} else {
+							obj["S_target"].hide();
+						}
+					} else if (val.flapsInput == 2 or val.flapsInput == 3) {
+						obj["S_target"].hide();
+						obj["clean_speed"].hide();
+						
+						if (abs(val.SPDftrgtdiff) <= 42 and val.agl >= 400) {
+							obj["F_target"].show();
+						} else {
+							obj["F_target"].hide();
+						}
+					} else if (val.flapsInput == 4) {
+						obj["S_target"].hide();
+						obj["F_target"].hide();
+						obj["clean_speed"].hide();	
+					} else {
+						obj["S_target"].hide();
+						obj["F_target"].hide();
+						
+						if (abs(val.SPDcleantrgtdiff) <= 42) {
+							obj["clean_speed"].show();
+						} else {
+							obj["clean_speed"].hide();
+						}	
+						
+					}
+				} else {
+					obj["S_target"].hide();
+					obj["F_target"].hide();
+					obj["clean_speed"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("bussTranslate", 0.2, func(val) {
+				obj["ASI_buss"].setTranslation(0, val);
+				obj["ASI_buss_ref_blue"].setTranslation(0, val);
+			}),
+			props.UpdateManager.FromHashList(["speedError","fac1","fac2","fbwLaw","fmgcPhase","gear1Wow","gear2Wow","fmgcTakeoffState"], 1, func(val) {
+				if (!val.fmgcTakeoffState and val.fmgcPhase >= 1 and !val.gear1Wow and !val.gear2Wow and !val.speedError and (val.fac1 or val.fac2)) {
+					obj["VLS_min"].show();
+					if (val.fbwLaw == 0) {
+						obj["ALPHA_PROT"].show();
+						obj["ALPHA_MAX"].show();
+						obj["ALPHA_SW"].hide();
+					} else {
+						obj["ALPHA_PROT"].hide();
+						obj["ALPHA_MAX"].hide();
+						obj["ALPHA_SW"].show();
+					}
+				} else {
+					obj["VLS_min"].hide();
+					obj["ALPHA_PROT"].hide();
+					obj["ALPHA_MAX"].hide();
+					obj["ALPHA_SW"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("ALPHAprot", 0.1, func(val) {
+				obj["ALPHA_PROT"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("ALPHAmax", 0.1, func(val) {
+				obj["ALPHA_MAX"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("ALPHAvsw", 0.1, func(val) {
+				obj["ALPHA_SW"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("VLSmin", 0.1, func(val) {
+				obj["VLS_min"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("ASItrgt", 0.1, func(val) {
+				obj["ASI_target"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
+				if (!val.speedError) {
+					if (abs(val.ASItrgtdiff) <= 42) {
+						obj["ASI_digit_UP"].hide();
+						obj["ASI_decimal_UP"].hide();
+						obj["ASI_digit_DN"].hide();
+						obj["ASI_decimal_DN"].hide();
+						obj["ASI_target"].show();
+					} else if (val.ASItrgtdiff < -42) {
+						if (val.ktsMach) {
+							obj["ASI_digit_DN"].setText(sprintf("%3.0f", val.targetMach * 1000));
+							obj["ASI_decimal_UP"].hide();
+							obj["ASI_decimal_DN"].show();
+						} else {
+							obj["ASI_digit_DN"].setText(sprintf("%3.0f", val.tgt_kts));
+							obj["ASI_decimal_UP"].hide();
+							obj["ASI_decimal_DN"].hide();
+						}
+						obj["ASI_digit_DN"].show();
+						obj["ASI_digit_UP"].hide();
+						obj["ASI_target"].hide();
+					} else if (val.ASItrgtdiff > 42) {
+						if (val.ktsMach) {
+							obj["ASI_digit_UP"].setText(sprintf("%3.0f", val.targetMach * 1000));
+							obj["ASI_decimal_UP"].show();
+							obj["ASI_decimal_DN"].hide();
+						} else {
+							obj["ASI_digit_UP"].setText(sprintf("%3.0f", val.tgt_kts));
+							obj["ASI_decimal_UP"].hide();
+							obj["ASI_decimal_DN"].hide();
+						}
+						obj["ASI_digit_UP"].show();
+						obj["ASI_digit_DN"].hide();
+						obj["ASI_target"].hide();
+					}
+				}
+			}),
+			props.UpdateManager.FromHashList(["showPFDILS","magnetic_hdg_dif"], 0.01, func(val) {
+				if (val.showPFDILS) {
+					if (abs(val.magnetic_hdg_dif) <= 23.62) {
+						obj["CRS_pointer"].setTranslation((val.magnetic_hdg_dif / 10) * 98.5416, 0);
+						
+						obj["ILS_HDG_L"].hide();
+						obj["ILS_HDG_R"].hide();
+						obj["CRS_pointer"].show();
+					} else if (val.magnetic_hdg_dif < -23.62 and val.magnetic_hdg_dif >= -180) {
+						obj["ILS_HDG_L"].show();
+						obj["ILS_HDG_R"].hide();
+						obj["CRS_pointer"].hide();
+					} else if (val.magnetic_hdg_dif > 23.62 and val.magnetic_hdg_dif <= 180) {
+						obj["ILS_HDG_L"].hide();
+						obj["ILS_HDG_R"].show();
+						obj["CRS_pointer"].hide();
+					} else {
+						obj["ILS_HDG_L"].hide();
+						obj["ILS_HDG_R"].hide();
+						obj["CRS_pointer"].hide();
+					}
+				} else {
+					obj["ILS_HDG_L"].hide();
+					obj["ILS_HDG_R"].hide();
+					obj["CRS_pointer"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("ilsCrs", 0.5, func(val) {
+				if (int(val) < 10) {
+					obj["ILS_left"].setText(sprintf("00%1.0f", int(val)));
+					obj["ILS_right"].setText(sprintf("00%1.0f", int(val)));
+				} else if (int(val) < 100) {
+					obj["ILS_left"].setText(sprintf("0%2.0f", int(val)));
+					obj["ILS_right"].setText(sprintf("0%2.0f", int(val)));
+				} else {
+					obj["ILS_left"].setText(sprintf("%3.0f", int(val)));
+					obj["ILS_right"].setText(sprintf("%3.0f", int(val)));
+				}
+			}),
+			props.UpdateManager.FromHashValue("altimeterStd", 1, func(val) {
+				if (val) {
+					obj["QNH"].hide();
+					obj["QNH_setting"].hide();
+				} else {
+					obj["QNH_std"].hide();
+					obj["QNH_box"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashList(["showDecisionHeight","agl","decision","radio","baro","radioNo"], 0.5, func(val) {
+				if (!val.showDecisionHeight) {
+					obj["FMA_dh"].hide();
+					obj["FMA_dhn"].hide();
+					obj["FMA_nodh"].hide();
+					
+					if (val.agl <= 2500) {
+						obj["AI_agl"].show();
+						if (val.agl <= val.decision) {
+							obj["AI_agl"].setColor(0.7333,0.3803,0);
+							obj["AI_agl"].setFontSize(55);
+						} else {
+							if (val.agl <= 400) {
+								obj["AI_agl"].setFontSize(55);
+							} else {
+								obj["AI_agl"].setFontSize(45);
+							}
+							obj["AI_agl"].setColor(0.0509,0.7529,0.2941);
+						}
+					} else {
+						obj["AI_agl"].hide();
+					}
+				} else {
+					if (val.agl <= 2500) {
+						obj["AI_agl"].show();
+						
+						# Minimums
+						if (int(val.radio) != 99999) {
+							obj["FMA_dh"].setText("RADIO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText(sprintf("%.0f", val.radio));
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+							hundredAbove.setValue(val.radio + 100);
+							minimum.setValue(val.radio);
+							
+							if (val.agl <= val.radio + 100) {
+								obj["AI_agl"].setColor(0.7333,0.3803,0);
+								obj["AI_agl"].setFontSize(55);
+							} else {
+								if (val.agl <= 400) {
+									obj["AI_agl"].setFontSize(55);
+								} else {
+									obj["AI_agl"].setFontSize(45);
+								}
+								obj["AI_agl"].setColor(0.0509,0.7529,0.2941);
+							}
+						} else if (int(val.baro) != 99999) {
+							obj["FMA_dh"].setText("BARO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText(sprintf("%.0f", val.baro));
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+							hundredAbove.setValue(val.baro + 100);
+							minimum.setValue(val.baro);
+							
+							if (val.agl <= val.baro + 100) {
+								obj["AI_agl"].setColor(0.7333,0.3803,0);
+								obj["AI_agl"].setFontSize(55);
+							} else {
+								if (val.agl <= 400) {
+									obj["AI_agl"].setFontSize(55);
+								} else {
+									obj["AI_agl"].setFontSize(45);
+								}
+								obj["AI_agl"].setColor(0.0509,0.7529,0.2941);
+							}
+						} else if (val.radioNo) {
+							obj["FMA_dh"].setText("BARO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText("100");
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+							hundredAbove.setValue(100);
+							minimum.setValue(0);
+							
+							if (val.agl <= 400) {
+								obj["AI_agl"].setFontSize(55);
+							} else {
+								obj["AI_agl"].setFontSize(45);
+							}
+							
+							if (val.agl <= 100) {
+								obj["AI_agl"].setColor(0.7333,0.3803,0);
+							} else {
+								obj["AI_agl"].setColor(0.0509,0.7529,0.2941);
+							}
+						} else {
+							obj["FMA_dh"].hide();
+							obj["FMA_dhn"].hide();
+							obj["FMA_nodh"].show();
+							hundredAbove.setValue(400);
+							minimum.setValue(300);
+							
+							if (val.agl <= 400) {
+								obj["AI_agl"].setColor(0.7333,0.3803,0);
+								obj["AI_agl"].setFontSize(55);
+							} else {
+								obj["AI_agl"].setColor(0.0509,0.7529,0.2941);
+								obj["AI_agl"].setFontSize(45);
+							}
+						}
+					} else {
+						obj["AI_agl"].hide();
+						obj["FMA_nodh"].hide();
+						
+						# Minimums
+						if (int(val.radio) != 99999) {
+							obj["FMA_dh"].setText("RADIO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText(sprintf("%.0f", val.radio));
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+						} else if (int(val.baro) != 99999) {
+							obj["FMA_dh"].setText("BARO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText(sprintf("%.0f", val.baro));
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+						} else if (fmgc.FMGCInternal.radioNo) {
+							obj["FMA_dh"].setText("BARO");
+							obj["FMA_dh"].show();
+							obj["FMA_dhn"].setText("100");
+							obj["FMA_dhn"].show();
+							obj["FMA_nodh"].hide();
+						} else {
+							obj["FMA_dh"].hide();
+							obj["FMA_dhn"].hide();
+							obj["FMA_nodh"].show();
+						}
+					}
+				}
+			}),
+			props.UpdateManager.FromHashValue("altError", 1, func(val) {
+				if (val) {
+					obj["ALT_error"].show();
+					obj["ALT_frame"].setColor(1,0,0);
+					obj["ALT_group"].hide();
+					obj["ALT_tens"].hide();
+					obj["ALT_neg"].hide();
+					obj["ALT_group2"].hide();
+					obj["ALT_scale"].hide();
+					obj["ALT_box_flash"].hide();
+					obj["ALT_box_amber"].hide();
+					obj["ALT_box"].hide();
+					obj["Metric_box"].hide();
+					obj["Metric_letter"].hide();
+					obj["Metric_cur_alt"].hide();
+					obj["ALT_digit_UP_metric"].hide();
+				} else {
+					obj["ALT_error"].hide();
+					obj["ALT_frame"].setColor(1,1,1);
+					obj["ALT_group"].show();
+					obj["ALT_tens"].show();
+					obj["ALT_box"].show();
+					obj["ALT_group2"].show();
+					obj["ALT_scale"].show();
+				}
+			}),
+			props.UpdateManager.FromHashList(["altError","showMetric"], 1, func(val) {
+				if (!val.altError and val.showMetric) {	
+					obj["ALT_digit_UP_metric"].show();
+					obj["Metric_box"].show();
+					obj["Metric_letter"].show();
+					obj["Metric_cur_alt"].show();
+				} else {
+					obj["ALT_digit_UP_metric"].hide();
+					obj["Metric_box"].hide();
+					obj["Metric_letter"].hide();
+					obj["Metric_cur_alt"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashList(["altitudePFD","altError"], 0.5, func(val) {
+				if (!val.altError) {
+					obj["Metric_cur_alt"].setText(sprintf("%5.0f", val.altitudePFD * 0.3048));
+					
+					obj.middleAltText = roundaboutAlt(val.altitudePFD / 100);
+					
+					obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText + 10)));
+					obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText + 5)));
+					obj["ALT_three"].setText(sprintf("%03d", abs(obj.middleAltText)));
+					obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText - 5)));
+					obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText - 10)));
+					
+					if (val.altitudePFD < 0) {
+						obj["ALT_neg"].show();
+					} else {
+						obj["ALT_neg"].hide();
+					}
+				} else {
+					obj["ALT_neg"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashList(["altitudePFD","altError"], 0.1, func(val) {
+				if (!val.altError) {
+					obj.altOffset = val.altitudePFD / 500 - int(val.altitudePFD / 500);
+					obj.middleAltOffset = nil;
+					
+					if (obj.altOffset > 0.5) {
+						obj.middleAltOffset = -(obj.altOffset - 1) * 243.3424;
+					} else {
+						obj.middleAltOffset = -obj.altOffset * 243.3424;
+					}
+					
+					obj["ALT_scale"].setTranslation(0, -obj.middleAltOffset);
+					obj["ALT_scale"].update();
+					obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", val.altitudePFD), 2)) * 1.392);
+				}
+			}),
+			props.UpdateManager.FromHashValue("altitudeDigits", 1, func(val) {
+				obj["ALT_digits"].setText(sprintf("%d", val));
+			}),
+			props.UpdateManager.FromHashValue("altitudeDifference", 0.1, func(val) {
+				obj["ALT_target"].setTranslation(0, (val / 100) * -48.66856);
+			}),
+			props.UpdateManager.FromHashValue("altitudeAutopilot", 25, func(val) {
+				obj["ALT_target_digit"].setText(sprintf("%03d", math.round(val / 100)));
+			}),
+			props.UpdateManager.FromHashList(["altError","altitudeDifference"], 1, func(val) {
+				if (!val.altError and abs(val.altitudeDifference) <= 565) {
+					obj["ALT_digit_UP"].hide();
+					obj["ALT_digit_DN"].hide();
+					obj["ALT_target"].show();
+				} else {
+					if (val.altitudeDifference < -565 and !val.altError) {
+						obj["ALT_digit_DN"].show();
+						obj["ALT_digit_UP"].hide();
+					} else if (val.altitudeDifference > 565 and  !val.altError) {
+						obj["ALT_digit_UP"].show();
+						obj["ALT_digit_DN"].hide();
+					} else {
+						obj["ALT_digit_UP"].hide();
+						obj["ALT_digit_DN"].hide();
+					}
+					obj["ALT_target"].hide();
 				}
 			}),
 		];
@@ -537,9 +1078,7 @@ var canvas_pfd = {
 	getKeysMismatch: func() {
 		return ["ERRCODE"];
 	},
-	aoa: 0,
-	showMetricAlt: 0,
-	ASItrendIsShown: 0,
+	onsideADIRSOperating: 0,
 	update: func(notification) {
 		me.updatePower(notification);
 		
@@ -558,6 +1097,12 @@ var canvas_pfd = {
 		
 		# Errors
 		if (systems.ADIRS.ADIRunits[(me.number == 0 ? 0 : 1)].operating == 1 or (systems.ADIRS.ADIRunits[2].operating == 1 and notification.attSwitch == (me.number == 0 ? -1 : 1))) {
+			me.onsideADIRSOperating = 1;
+		} else {
+			me.onsideADIRSOperating = 0;
+		}
+		
+		if (me.onsideADIRSOperating) {
 			me["AI_group"].show();
 			me["HDG_group"].show();
 			me["AI_error"].hide();
@@ -575,15 +1120,14 @@ var canvas_pfd = {
 			me["VS_group"].hide();
 		}
 		
+		notification.aoaPFD = (me.number == 0 ? me.getAOAForPFD1() : me.getAOAForPFD2());
+		notification.middleOffset = me.middleOffset;
+		
 		# FPV
 		if (notification.trkFpa) {
-			me.aoa = (me.number == 0 ? me.getAOAForPFD1() : me.getAOAForPFD2());	
-			if (me.aoa == nil or (systems.ADIRS.ADIRunits[(me.number == 0 ? 0 : 1)].operating != 1) or (systems.ADIRS.ADIRunits[2].operating != 1 and notification.attSwitch == (me.number == 0 ? -1 : 1))){
+			if (notification.aoaPFD == nil or !me.onsideADIRSOperating){
 				me["FPV"].hide();	
 			} else {
-				me.AI_fpv_trans.setTranslation(me.getTrackDiffPixels(math.clamp(me.track_diff, -21, 21)), math.clamp(me.aoa, -20, 20) * 12.5); 
-				me.AI_fpv_rot.setRotation(-notification.roll * D2R, me["AI_center"].getCenter());
-				me["FPV"].setRotation(notification.roll * D2R); # It shouldn't be rotated, only the axis should be
 				me["FPV"].show();
 			}
 		} else {
@@ -618,103 +1162,170 @@ var canvas_pfd = {
 			me["ilsError"].hide();
 		}
 		
+		# Airspeed
 		if (dmc.DMController.DMCs[me.number].outputs[0] != nil) {
 			me.ind_spd = dmc.DMController.DMCs[me.number].outputs[0].getValue();
-			me["ASI_error"].hide();
-			me["ASI_buss"].hide();
-			me["ASI_buss_ref"].hide();
-			me["ASI_buss_ref_blue"].hide();
-			me["ASI_frame"].setColor(1,1,1);
-			me["ASI_group"].show();
-			me["VLS_min"].hide();
-			me["ALPHA_PROT"].hide();
-			me["ALPHA_MAX"].hide();
-			me["ALPHA_SW"].hide();
+			notification.ind_spd = me.ind_spd;
+			notification.speedError = 0;
 			
 			if (me.ind_spd <= 30) {
-				me.ASI = 0;
+				notification.ASI = 0;
 			} else if (me.ind_spd >= 420) {
-				me.ASI = 390;
+				notification.ASI = 390;
 			} else {
-				me.ASI = me.ind_spd - 30;
+				notification.ASI = me.ind_spd - 30;
 			}
 			
 			if (fmgc.FMGCInternal.maxspeed <= 30) {
-				me.ASImax = 0 - me.ASI;
+				notification.ASImax = 0 - me.ASI;
 			} else if (fmgc.FMGCInternal.maxspeed >= 420) {
-				me.ASImax = 390 - me.ASI;
+				notification.ASImax = 390 - me.ASI;
 			} else {
-				me.ASImax = fmgc.FMGCInternal.maxspeed - 30 - me.ASI;
+				notification.ASImax = fmgc.FMGCInternal.maxspeed - 30 - notification.ASI;
 			}
 			
-			me["ASI_scale"].setTranslation(0, me.ASI * 6.6);
+			if (fmgc.FMGCInternal.v1set) {
+				if (fmgc.FMGCInternal.v1 <= 30) {
+					notification.V1trgt = 0 - notification.ASI;
+				} else if (fmgc.FMGCInternal.v1 >= 420) {
+					notification.V1trgt = 390 - notification.ASI;
+				} else {
+					notification.V1trgt = fmgc.FMGCInternal.v1 - 30 - notification.ASI;
+				}
+			
+				notification.SPDv1trgtdiff = fmgc.FMGCInternal.v1 - me.ind_spd;
+				notification.showV1 = 1;
+			} else {
+				notification.V1trgt = 0;
+				notification.SPDv1trgtdiff = 0;
+				notification.showV1 = 0;
+			}
+			
+			if (fmgc.FMGCInternal.vrset) {
+				if (fmgc.FMGCInternal.vr <= 30) {
+					notification.VRtrgt = 0 - notification.ASI;
+				} else if (fmgc.FMGCInternal.vr >= 420) {
+					notification.VRtrgt = 390 - notification.ASI;
+				} else {
+					notification.VRtrgt = fmgc.FMGCInternal.vr - 30 - notification.ASI;
+				}
+			
+				notification.SPDvrtrgtdiff = fmgc.FMGCInternal.vr - me.ind_spd;
+				notification.showVr = 1;
+			} else {
+				notification.VRtrgt = 0;
+				notification.SPDvrtrgtdiff = 0;
+				notification.showVr = 0;
+			}
+			
+			if (fmgc.FMGCInternal.v2set) {
+				if (fmgc.FMGCInternal.v2 <= 30) {
+					notification.V2trgt = 0 - notification.ASI;
+				} else if (fmgc.FMGCInternal.v2 >= 420) {
+					notification.V2trgt = 390 - notification.ASI;
+				} else {
+					notification.V2trgt = fmgc.FMGCInternal.v2 - 30 - notification.ASI;
+				}
+			
+				notification.SPDv2trgtdiff = fmgc.FMGCInternal.v2 - me.ind_spd;
+				notification.showV2 = 1;
+			} else {
+				notification.V2trgt = 0;
+				notification.SPDv2trgtdiff = 0;
+				notification.showV2 = 0;
+			}
 			
 			if (notification.fac1 or notification.fac2) {
-				me["ASI_max"].setTranslation(0, me.ASImax * -6.6);
-				me["ASI_max"].show();
+				if (notification.flapsInput == 1) {
+					if (fmgc.FMGCInternal.slat <= 30) {
+						notification.Strgt = 0 - notification.ASI;
+					} else if (fmgc.FMGCInternal.slat >= 420) {
+						notification.Strgt = 390 - notification.ASI;
+					} else {
+						notification.Strgt = fmgc.FMGCInternal.slat - 30 - notification.ASI;
+					}
+				
+					notification.SPDstrgtdiff = fmgc.FMGCInternal.slat - me.ind_spd;
+					notification.flapMaxSpeed = 200;
+				} else if (notification.flapsInput == 2) {
+					if (fmgc.FMGCInternal.flap2 <= 30) {
+						notification.Ftrgt = 0 - notification.ASI;
+					} else if (fmgc.FMGCInternal.flap2 >= 420) {
+						notification.Ftrgt = 390 - notification.ASI;
+					} else {
+						notification.Ftrgt = fmgc.FMGCInternal.flap2 - 30 - notification.ASI;
+					}
+				
+					notification.SPDftrgtdiff = fmgc.FMGCInternal.flap2 - me.ind_spd;
+					notification.flapMaxSpeed = 185;
+				} else if (notification.flapsInput == 3) {
+					if (fmgc.FMGCInternal.flap3 <= 30) {
+						notification.Ftrgt = 0 - notification.ASI;
+					} else if (fmgc.FMGCInternal.flap3 >= 420) {
+						notification.Ftrgt = 390 - notification.ASI;
+					} else {
+						notification.Ftrgt = fmgc.FMGCInternal.flap3 - 30 - notification.ASI;
+					}
+				
+					notification.SPDftrgtdiff = fmgc.FMGCInternal.flap3 - me.ind_spd;
+					notification.flapMaxSpeed = 177;
+				} else if (notification.flapsInput == 0) {
+					notification.Ctrgt = fmgc.FMGCInternal.clean - 30 - notification.ASI;
+					
+					notification.SPDcleantrgtdiff = fmgc.FMGCInternal.clean - me.ind_spd;
+					notification.flapMaxSpeed = 230;
+				}
 			} else {
-				me["ASI_max"].hide();
+				notification.SPDcleantrgtdiff = 0;
+				notification.SPDftrgtdiff = 0;
+				notification.SPDstrgtdiff = 0;
+				notification.Strgt = 0;
+				notification.Ftrgt = 0;
+				notification.Ctrgt = 0;
+				notification.flapMaxSpeed = 0;
 			}
 			
+			notification.fmgcTakeoffState = fmgc.FMGCInternal.takeoffState;
+			
 			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
-				me.vls = fmgc.FMGCNodes.vls.getValue();
-				me.valphaprot = fmgc.FMGCNodes.valphaProt.getValue();
-				me.valphamax = fmgc.FMGCNodes.valphaMax.getValue();
-				
-				if (me.vls <= 30) {
-					me.VLSmin = 0 - me.ASI;
-				} else if (me.vls >= 420) {
-					me.VLSmin = 390 - me.ASI;
+				if (notification.vls <= 30) {
+					notification.VLSmin = 0 - notification.ASI;
+				} else if (notification.vls >= 420) {
+					notification.VLSmin = 390 - notification.ASI;
 				} else {
-					me.VLSmin = me.vls - 30 - me.ASI;
+					notification.VLSmin = notification.vls - 30 - notification.ASI;
 				}
 				
-				if (me.valphaprot <= 30) {
-					me.ALPHAprot = 0 - me.ASI;
-				} else if (me.valphaprot >= 420) {
-					me.ALPHAprot = 390 - me.ASI;
+				if (notification.valphaProt <= 30) {
+					notification.ALPHAprot = 0 - notification.ASI;
+				} else if (notification.valphaProt >= 420) {
+					notification.ALPHAprot = 390 - notification.ASI;
 				} else {
-					me.ALPHAprot = me.valphaprot - 30 - me.ASI;
+					notification.ALPHAprot = notification.valphaProt - 30 - notification.ASI;
 				}
 				
-				if (me.valphamax <= 30) {
-					me.ALPHAmax = 0 - me.ASI;
-				} else if (me.valphamax >= 420) {
-					me.ALPHAmax = 390 - me.ASI;
+				if (notification.valphaMax <= 30) {
+					notification.ALPHAmax = 0 - notification.ASI;
+				} else if (notification.valphaMax >= 420) {
+					notification.ALPHAmax = 390 - notification.ASI;
 				} else {
-					me.ALPHAmax = me.valphamax - 30 - me.ASI;
+					notification.ALPHAmax = notification.valphaMax - 30 - notification.ASI;
 				}
 				
 				if (fmgc.FMGCInternal.vsw <= 30) {
-					me.ALPHAvsw = 0 - me.ASI;
+					notification.ALPHAvsw = 0 - notification.ASI;
 				} else if (fmgc.FMGCInternal.vsw >= 420) {
-					me.ALPHAvsw = 390 - me.ASI;
+					notification.ALPHAvsw = 390 - notification.ASI;
 				} else {
-					me.ALPHAvsw = fmgc.FMGCInternal.vsw - 30 - me.ASI;
+					notification.ALPHAvsw = fmgc.FMGCInternal.vsw - 30 - notification.ASI;
 				}
-				
-				if (notification.fac1 or notification.fac2) {
-					me["VLS_min"].setTranslation(0, me.VLSmin * -6.6);
-					me["VLS_min"].show();
-					if (notification.fbwLaw == 0) {
-						me["ALPHA_PROT"].setTranslation(0, me.ALPHAprot * -6.6);
-						me["ALPHA_MAX"].setTranslation(0, me.ALPHAmax * -6.6);
-						me["ALPHA_PROT"].show();
-						me["ALPHA_MAX"].show();
-						me["ALPHA_SW"].hide();
-					} else {
-						me["ALPHA_PROT"].hide();
-						me["ALPHA_MAX"].hide();
-						me["ALPHA_SW"].setTranslation(0, me.ALPHAvsw * -6.6);
-						me["ALPHA_SW"].show();
-					}
-				} else {
-					me["VLS_min"].hide();
-					me["ALPHA_PROT"].hide();
-					me["ALPHA_MAX"].hide();
-					me["ALPHA_SW"].hide();
-				}
+			} else {
+				notification.ALPHAprot = 0;
+				notification.ALPHAmax = 0;
+				notification.ALPHAvsw = 0;
+				notification.VLSmin = 0;
 			}
+			
 			
 			me.tgt_ias = notification.targetIasPFD;
 			me.tgt_kts = notification.targetKts;
@@ -729,278 +1340,41 @@ var canvas_pfd = {
 				}
 			}
 			
+			notification.tgt_kts = me.tgt_kts;
+			
 			if (me.tgt_ias <= 30) {
-				me.ASItrgt = 0 - me.ASI;
+				notification.ASItrgt = 0 - notification.ASI;
 			} else if (me.tgt_ias >= 420) {
-				me.ASItrgt = 390 - me.ASI;
+				notification.ASItrgt = 390 - notification.ASI;
 			} else {
-				me.ASItrgt = me.tgt_ias - 30 - me.ASI;
+				notification.ASItrgt = me.tgt_ias - 30 - notification.ASI;
 			}
 			
-			me.ASItrgtdiff = me.tgt_ias - me.ind_spd;
+			notification.ASItrgtdiff = me.tgt_ias - notification.ind_spd;
 			
-			if (me.ASItrgtdiff >= -42 and me.ASItrgtdiff <= 42) {
-				me["ASI_target"].setTranslation(0, me.ASItrgt * -6.6);
-				me["ASI_digit_UP"].hide();
-				me["ASI_decimal_UP"].hide();
-				me["ASI_digit_DN"].hide();
-				me["ASI_decimal_DN"].hide();
-				me["ASI_target"].show();
-			} else if (me.ASItrgtdiff < -42) {
-				if (notification.ktsMach) {
-					me["ASI_digit_DN"].setText(sprintf("%3.0f", notification.targetMach * 1000));
-					me["ASI_decimal_UP"].hide();
-					me["ASI_decimal_DN"].show();
-				} else {
-					me["ASI_digit_DN"].setText(sprintf("%3.0f", me.tgt_kts));
-					me["ASI_decimal_UP"].hide();
-					me["ASI_decimal_DN"].hide();
-				}
-				me["ASI_digit_DN"].show();
-				me["ASI_digit_UP"].hide();
-				me["ASI_target"].hide();
-			} else if (me.ASItrgtdiff > 42) {
-				if (notification.ktsMach) {
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", notification.targetMach * 1000));
-					me["ASI_decimal_UP"].show();
-					me["ASI_decimal_DN"].hide();
-				} else {
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", me.tgt_kts));
-					me["ASI_decimal_UP"].hide();
-					me["ASI_decimal_DN"].hide();
-				}
-				me["ASI_digit_UP"].show();
-				me["ASI_digit_DN"].hide();
-				me["ASI_target"].hide();
-			}
-			
-			if (fmgc.FMGCInternal.v1set) {
-				if (fmgc.FMGCInternal.v1 <= 30) {
-					me.V1trgt = 0 - me.ASI;
-				} else if (fmgc.FMGCInternal.v1 >= 420) {
-					me.V1trgt = 390 - me.ASI;
-				} else {
-					me.V1trgt = fmgc.FMGCInternal.v1 - 30 - me.ASI;
-				}
-			
-				me.SPDv1trgtdiff = fmgc.FMGCInternal.v1 - me.ind_spd;
-			
-				if (notification.agl < 55 and fmgc.FMGCInternal.phase <= 2 and me.SPDv1trgtdiff >= -42 and me.SPDv1trgtdiff <= 42) {
-					me["v1_group"].show();
-					me["v1_text"].hide();
-					me["v1_group"].setTranslation(0, me.V1trgt * -6.6);
-				} else if (notification.agl < 55 and fmgc.FMGCInternal.phase <= 2) {
-					me["v1_group"].hide();
-					me["v1_text"].show();
-					me["v1_text"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v1));
-				} else {
-					me["v1_group"].hide();
-					me["v1_text"].hide();
-				}
+			notification.ASItrend = dmc.DMController.DMCs[me.number].outputs[6].getValue() - notification.ASI;
+			if (notification.ASItrend >= 2 or (me.ASItrendIsShown != 0 and notification.ASItrend >= 1)) {
+				me.ASItrendIsShown = 1;
+			} else if (notification.ASItrend <= -2 or (me.ASItrendIsShown != 0 and notification.ASItrend <= -1)) {
+				me.ASItrendIsShown = -1;
 			} else {
-				me["v1_group"].hide();
-				me["v1_text"].hide();
+				me.ASItrendIsShown = 0;
 			}
+			notification.ASItrendIsShown = me.ASItrendIsShown;
 			
-			if (fmgc.FMGCInternal.vrset) {
-				if (fmgc.FMGCInternal.vr <= 30) {
-					me.VRtrgt = 0 - me.ASI;
-				} else if (fmgc.FMGCInternal.vr >= 420) {
-					me.VRtrgt = 390 - me.ASI;
-				} else {
-					me.VRtrgt = fmgc.FMGCInternal.vr - 30 - me.ASI;
-				}
-			
-				me.SPDvrtrgtdiff = fmgc.FMGCInternal.vr - me.ind_spd;
-			
-				if (notification.agl < 55 and fmgc.FMGCInternal.phase <= 2 and me.SPDvrtrgtdiff >= -42 and me.SPDvrtrgtdiff <= 42) {
-					me["vr_speed"].show();
-					me["vr_speed"].setTranslation(0, me.VRtrgt * -6.6);
-				} else {
-					me["vr_speed"].hide();
-				}
-			} else {
-				me["vr_speed"].hide();
-			}
-			
-			if (fmgc.FMGCInternal.v2set) {
-				if (fmgc.FMGCInternal.v2 <= 30) {
-					me.V2trgt = 0 - me.ASI;
-				} else if (fmgc.FMGCInternal.v2 >= 420) {
-					me.V2trgt = 390 - me.ASI;
-				} else {
-					me.V2trgt = fmgc.FMGCInternal.v2 - 30 - me.ASI;
-				}
-			
-				me.SPDv2trgtdiff = fmgc.FMGCInternal.v2 - me.ind_spd;
-			
-				if (notification.agl < 55 and fmgc.FMGCInternal.phase <= 2 and me.SPDv2trgtdiff >= -42 and me.SPDv2trgtdiff <= 42) {
-					me["ASI_target"].show();
-					me["ASI_target"].setTranslation(0, me.V2trgt * -6.6);
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
-				} else if (notification.agl < 55 and fmgc.FMGCInternal.phase <= 2) {
-					me["ASI_target"].hide();
-					me["ASI_digit_UP"].setText(sprintf("%3.0f", fmgc.FMGCInternal.v2));
-				}
-			}
-			
-			if (notification.fac1 or notification.fac2) {
-				if (notification.flapsInput == '1') {
-					me["F_target"].hide();
-					me["clean_speed"].hide();
-				
-					if (fmgc.FMGCInternal.slat <= 30) {
-						me.Strgt = 0 - me.ASI;
-					} else if (fmgc.FMGCInternal.slat >= 420) {
-						me.Strgt = 390 - me.ASI;
-					} else {
-						me.Strgt = fmgc.FMGCInternal.slat - 30 - me.ASI;
-					}
-				
-					me.SPDstrgtdiff = fmgc.FMGCInternal.slat - me.ind_spd;
-				
-					if (me.SPDstrgtdiff >= -42 and me.SPDstrgtdiff <= 42 and notification.agl >= 400) {
-						me["S_target"].show();
-						me["S_target"].setTranslation(0, me.Strgt * -6.6);
-					} else {
-						me["S_target"].hide();
-					}
-					
-					me.SPDflaptrgtdiff = 200 - me.ind_spd;
-				
-					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-						me["flap_max"].show();
-						me["flap_max"].setTranslation(0, (200 - 30 - me.ASI) * -6.6);
-					} else {
-						me["flap_max"].hide();
-					}
-				} else if (notification.flapsInput == '2') {
-					me["S_target"].hide();
-					me["clean_speed"].hide();
-					
-					if (fmgc.FMGCInternal.flap2 <= 30) {
-						me.Ftrgt = 0 - me.ASI;
-					} else if (fmgc.FMGCInternal.flap2 >= 420) {
-						me.Ftrgt = 390 - me.ASI;
-					} else {
-						me.Ftrgt = fmgc.FMGCInternal.flap2 - 30 - me.ASI;
-					}
-				
-					me.SPDftrgtdiff = fmgc.FMGCInternal.flap2 - me.ind_spd;
-				
-					if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42 and notification.agl >= 400) {
-						me["F_target"].show();
-						me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
-					} else {
-						me["F_target"].hide();
-					}
-					
-					me.SPDflaptrgtdiff = 185 - me.ind_spd;
-				
-					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-						me["flap_max"].show();
-						me["flap_max"].setTranslation(0, (185 - 30 - me.ASI) * -6.6);
-					} else {
-						me["flap_max"].hide();
-					}
-				} else if (notification.flapsInput == '3') {
-					me["S_target"].hide();
-					me["clean_speed"].hide();
-					
-					if (fmgc.FMGCInternal.flap3 <= 30) {
-						me.Ftrgt = 0 - me.ASI;
-					} else if (fmgc.FMGCInternal.flap3 >= 420) {
-						me.Ftrgt = 390 - me.ASI;
-					} else {
-						me.Ftrgt = fmgc.FMGCInternal.flap3 - 30 - me.ASI;
-					}
-				
-					me.SPDftrgtdiff = fmgc.FMGCInternal.flap3 - me.ind_spd;
-				
-					if (me.SPDftrgtdiff >= -42 and me.SPDftrgtdiff <= 42 and notification.agl >= 400) {
-						me["F_target"].show();
-						me["F_target"].setTranslation(0, me.Ftrgt * -6.6);
-					} else {
-						me["F_target"].hide();
-					}
-					
-					me.SPDflaptrgtdiff = 177 - me.ind_spd;
-				
-					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-						me["flap_max"].show();
-						me["flap_max"].setTranslation(0, (177 - 30 - me.ASI) * -6.6);
-					} else {
-						me["flap_max"].hide();
-					}
-				} else if (notification.flapsInput == '4') {
-					me["S_target"].hide();
-					me["F_target"].hide();
-					me["clean_speed"].hide();	
-					me["flap_max"].hide();
-				} else {
-					me["S_target"].hide();
-					me["F_target"].hide();
-					
-					me.SPDcleantrgtdiff = fmgc.FMGCInternal.clean - me.ind_spd;
-				
-					if (me.SPDcleantrgtdiff >= -42 and me.SPDcleantrgtdiff <= 42) {
-						me["clean_speed"].show();
-						me["clean_speed"].setTranslation(0, (fmgc.FMGCInternal.clean - 30 - me.ASI) * -6.6);
-					} else {
-						me["clean_speed"].hide();
-					}	
-					
-					me.SPDflaptrgtdiff = 230 - me.ind_spd;
-				
-					if (me.SPDflaptrgtdiff >= -42 and me.SPDflaptrgtdiff <= 42) {
-						me["flap_max"].show();
-						me["flap_max"].setTranslation(0, (230 - 30 - me.ASI) * -6.6);
-					} else {
-						me["flap_max"].hide();
-					}
-				}
-			} else {
-				me["S_target"].hide();
-				me["F_target"].hide();
-				me["clean_speed"].hide();
-				me["flap_max"].hide();
-			}
-			
-			me.ASItrend = dmc.DMController.DMCs[me.number].outputs[6].getValue() - me.ASI;
-			me["ASI_trend_up"].setTranslation(0, math.clamp(me.ASItrend, 0, 50) * -6.6);
-			me["ASI_trend_down"].setTranslation(0, math.clamp(me.ASItrend, -50, 0) * -6.6);
-			
-			if (notification.fac1 or notification.fac2) {
-				if (me.ASItrend >= 2 or (me.ASItrendIsShown and me.ASItrend >= 1)) {
-					me["ASI_trend_up"].show();
-					me["ASI_trend_down"].hide();
-					me.ASItrendIsShown = 1;
-				} else if (me.ASItrend <= -2 or (me.ASItrendIsShown and me.ASItrend <= -1)) {
-					me["ASI_trend_up"].hide();
-					me["ASI_trend_down"].show();
-					me.ASItrendIsShown = 1;
-				} else {
-					me["ASI_trend_up"].hide();
-					me["ASI_trend_down"].hide();
-				}
-			} else {
-				me["ASI_trend_up"].hide();
-				me["ASI_trend_down"].hide();
-			}
-					
-			if (-notification.agl >= -565 and -notification.agl <= 565) {
+			if (me.temporaryNodes.showGroundReferenceAGL) {
 				me["ground_ref"].show();
 			} else {
 				me["ground_ref"].hide();
 			}
 		} else {
-			me["ASI_group"].hide();
+			notification.ind_spd = 0;
+			notification.speedError = 1;
+			
 			if (!systems.ADIRS.Operating.adr[0].getValue() and !systems.ADIRS.Operating.adr[1].getValue() and !systems.ADIRS.Operating.adr[2].getValue()) {
 				me["ASI_buss"].show();
 				me["ASI_buss_ref"].show();
 				me["ASI_buss_ref_blue"].show();
-				me["ASI_buss"].setTranslation(0, notification.bussTranslate);
-				me["ASI_buss_ref_blue"].setTranslation(0, notification.bussTranslate);
 				me["ASI_error"].hide();
 			} else {
 				me["ASI_buss"].hide();
@@ -1008,109 +1382,52 @@ var canvas_pfd = {
 				me["ASI_buss_ref_blue"].hide();
 				me["ASI_error"].show();
 			}
-			me["ASI_frame"].setColor(1,0,0);
-			me["clean_speed"].hide();
-			me["S_target"].hide();
-			me["F_target"].hide();
-			me["flap_max"].hide();
-			me["v1_group"].hide();
-			me["v1_text"].hide();
-			me["vr_speed"].hide();
-			me["ground"].hide();
-			me["ground_ref"].hide();
-			me["VLS_min"].hide();
-			me["VLS_min"].hide();
-			me["ALPHA_PROT"].hide();
-			me["ALPHA_MAX"].hide();
-			me["ALPHA_SW"].hide();
+			
+			notification.ASI = 0;
+			notification.ASImax = 0;
+			notification.ASItrgt = 0;
+			notification.ASItrgtdiff = 0;
+			notification.ASItrend = 0;
+			notification.ALPHAprot = 0;
+			notification.ALPHAmax = 0;
+			notification.ALPHAvsw = 0;
+			notification.ASItrendIsShown = 0;
+			notification.Ctrgt = 0;
+			notification.flapMaxSpeed = 0;
+			notification.Ftrgt = 0;
+			notification.Strgt = 0;
+			notification.showV1 = 0;
+			notification.showVr = 0;
+			notification.showV2 = 0;
+			notification.SPDcleantrgtdiff = 0;
+			notification.SPDftrgtdiff = 0;
+			notification.SPDstrgtdiff = 0;
+			notification.SPDv1trgtdiff = 0;
+			notification.SPDvrtrgtdiff = 0;
+			notification.SPDv2trgtdiff = 0;
+			notification.tgt_kts = 0;
+			notification.V1trgt = 0;
+			notification.VRtrgt = 0;
+			notification.V2trgt = 0;
+			notification.VLSmin = 0;
 		}
 		
+		# Mach	
 		if (dmc.DMController.DMCs[me.number].outputs[2] != nil) {
-			me.ind_mach = dmc.DMController.DMCs[me.number].outputs[2].getValue();
-			me["machError"].hide();
-			
-			if (me.ind_mach >= 0.999) {
-				me["ASI_mach"].setText(".999");
-			} else {
-				me["ASI_mach"].setText(sprintf(".%3.0f", me.ind_mach * 1000));
-			}
-			
-			if (me.ind_mach >= 0.5) {
-				me["ASI_mach"].show();
-			} else {
-				me["ASI_mach"].hide();
-			}
+			notification.ind_mach = dmc.DMController.DMCs[me.number].outputs[2].getValue();
+			notification.machError = 0;
 		} else {
-			me["machError"].show();
+			notification.machError = 1;
 		}
 		
 		# Altitude
-		if (dmc.DMController.DMCs[me.number].outputs[1] != nil) {
-			me["ALT_error"].hide();
-			me["ALT_frame"].setColor(1,1,1);
-			me["ALT_group"].show();
-			me["ALT_tens"].show();
-			me["ALT_box"].show();
-			me["ALT_group2"].show();
-			me["ALT_scale"].show();
-			
-			me.altitude = dmc.DMController.DMCs[me.number].outputs[1].getValue();
+		notification.showMetric = me.showMetricAlt;
 		
-			if (me.showMetricAlt) {
-				me["ALT_digit_UP_metric"].show();
-				me["Metric_box"].show();
-				me["Metric_letter"].show();
-				me["Metric_cur_alt"].show();
-				me["Metric_cur_alt"].setText(sprintf("%5.0f", me.altitude * 0.3048));
-			} else {
-				me["ALT_digit_UP_metric"].hide();
-				me["Metric_box"].hide();
-				me["Metric_letter"].hide();
-				me["Metric_cur_alt"].hide();
-			}
-			
-			me.altOffset = me.altitude / 500 - int(me.altitude / 500);
-			me.middleAltText = roundaboutAlt(me.altitude / 100);
-			me.middleAltOffset = nil;
-			if (me.altOffset > 0.5) {
-				me.middleAltOffset = -(me.altOffset - 1) * 243.3424;
-			} else {
-				me.middleAltOffset = -me.altOffset * 243.3424;
-			}
-			me["ALT_scale"].setTranslation(0, -me.middleAltOffset);
-			me["ALT_scale"].update();
-			me["ALT_five"].setText(sprintf("%03d", abs(me.middleAltText+10)));
-			me["ALT_four"].setText(sprintf("%03d", abs(me.middleAltText+5)));
-			me["ALT_three"].setText(sprintf("%03d", abs(me.middleAltText)));
-			me["ALT_two"].setText(sprintf("%03d", abs(me.middleAltText-5)));
-			me["ALT_one"].setText(sprintf("%03d", abs(me.middleAltText-10)));
-			
-			if (me.altitude < 0) {
-				me["ALT_neg"].show();
-			} else {
-				me["ALT_neg"].hide();
-			}
-			
-			me["ALT_digits"].setText(sprintf("%d", dmc.DMController.DMCs[me.number].outputs[3].getValue()));
-			me["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", me.altitude), 2)) * 1.392);
-			
-			me.alt_diff_cur = dmc.DMController.DMCs[me.number].outputs[7].getValue();
-			if (me.alt_diff_cur >= -565 and me.alt_diff_cur <= 565) {
-				me["ALT_target"].setTranslation(0, (me.alt_diff_cur / 100) * -48.66856);
-				me["ALT_target_digit"].setText(sprintf("%03d", math.round(notification.altitudeAutopilot / 100)));
-				me["ALT_digit_UP"].hide();
-				me["ALT_digit_DN"].hide();
-				me["ALT_target"].show();
-			} else {
-				me["ALT_target"].hide();
-				if (me.alt_diff_cur < -565) {
-					me["ALT_digit_DN"].show();
-					me["ALT_digit_UP"].hide();
-				} else if (me.alt_diff_cur > 565) {
-					me["ALT_digit_UP"].show();
-					me["ALT_digit_DN"].hide();
-				}
-			}
+		if (dmc.DMController.DMCs[me.number].outputs[1] != nil) {
+			notification.altError = 0;
+			notification.altitudePFD = dmc.DMController.DMCs[me.number].outputs[1].getValue();
+			notification.altitudeDigits = dmc.DMController.DMCs[me.number].outputs[3].getValue();
+			notification.altitudeDifference = dmc.DMController.DMCs[me.number].outputs[7].getValue();
 			
 			if (!ecam.altAlertFlash and !ecam.altAlertSteady) {
 				if (me.number == 0) {
@@ -1120,6 +1437,7 @@ var canvas_pfd = {
 					alt_going2 = 0;
 					amber_going2 = 0;
 				}
+				me["ALT_box"].show();
 				me["ALT_box_flash"].hide();
 				me["ALT_box_amber"].hide();
 			} else {
@@ -1191,20 +1509,10 @@ var canvas_pfd = {
 				}
 			}
 		} else {
-			me["ALT_error"].show();
-			me["ALT_frame"].setColor(1,0,0);
-			me["ALT_group"].hide();
-			me["ALT_tens"].hide();
-			me["ALT_neg"].hide();
-			me["ALT_group2"].hide();
-			me["ALT_scale"].hide();
-			me["ALT_box_flash"].hide();
-			me["ALT_box_amber"].hide();
-			me["ALT_box"].hide();
-			me["Metric_box"].hide();
-			me["Metric_letter"].hide();
-			me["Metric_cur_alt"].hide();
-			me["ALT_digit_UP_metric"].hide();
+			notification.altError = 1;
+			notification.altitudePFD = -9999;
+			notification.altitudeDigits = -9999;
+			notification.altitudeDifference = -9999;
 		}
 		
 		if (fmgc.Modes.PFD.FMA.pitchMode == "LAND" or fmgc.Modes.PFD.FMA.pitchMode == "FLARE" or fmgc.Modes.PFD.FMA.pitchMode == "ROLL OUT") {
@@ -1380,141 +1688,15 @@ var canvas_pfd = {
 			}
 		}
 		
+		notification.radioNo = fmgc.FMGCInternal.radioNo;
 		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist >= 250) {
-			me["FMA_dh"].hide();
-			me["FMA_dhn"].hide();
-			me["FMA_nodh"].hide();
-			if (notification.agl <= 2500) {
-				me["AI_agl"].show();
-				if (notification.agl <= notification.decision) {
-					me["AI_agl"].setColor(0.7333,0.3803,0);
-					me["AI_agl"].setFontSize(55);
-				} else {
-					if (notification.agl <= 400) {
-						me["AI_agl"].setFontSize(55);
-					} else {
-						me["AI_agl"].setFontSize(45);
-					}
-					me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-				}
-			} else {
-				me["AI_agl"].hide();
-			}
+			notification.showDecisionHeight = 0;
 		} else {
-			if (notification.agl <= 2500) {
-				me["AI_agl"].show();
-				if (int(notification.radio) != 99999) {
-					me["FMA_dh"].setText("RADIO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", notification.radio));
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-					hundredAbove.setValue(notification.radio + 100);
-					minimum.setValue(notification.radio);
-					if (notification.agl <= notification.radio + 100) {
-						me["AI_agl"].setColor(0.7333,0.3803,0);
-						me["AI_agl"].setFontSize(55);
-					} else {
-						if (notification.agl <= 400) {
-							me["AI_agl"].setFontSize(55);
-						} else {
-							me["AI_agl"].setFontSize(45);
-						}
-						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-					}
-				} else if (int(notification.baro) != 99999) {
-					me["FMA_dh"].setText("BARO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", notification.baro));
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-					hundredAbove.setValue(notification.baro + 100);
-					minimum.setValue(notification.baro);
-					if (notification.agl <= notification.baro + 100) {
-						me["AI_agl"].setColor(0.7333,0.3803,0);
-						me["AI_agl"].setFontSize(55);
-					} else {
-						if (notification.agl <= 400) {
-							me["AI_agl"].setFontSize(55);
-						} else {
-							me["AI_agl"].setFontSize(45);
-						}
-						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-					}
-				} else if (fmgc.FMGCInternal.radioNo) {
-					me["FMA_dh"].setText("BARO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText("100");
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-					hundredAbove.setValue(100);
-					minimum.setValue(0);
-					if (notification.agl <= 400) {
-						me["AI_agl"].setFontSize(55);
-					} else {
-						me["AI_agl"].setFontSize(45);
-					}
-					
-					if (notification.agl <= 100) {
-						me["AI_agl"].setColor(0.7333,0.3803,0);
-					} else {
-						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-					}
-				} else {
-					me["FMA_dh"].hide();
-					me["FMA_dhn"].hide();
-					me["FMA_nodh"].show();
-					hundredAbove.setValue(400);
-					minimum.setValue(300);
-					if (notification.agl <= 400) {
-						me["AI_agl"].setColor(0.7333,0.3803,0);
-						me["AI_agl"].setFontSize(55);
-					} else {
-						me["AI_agl"].setColor(0.0509,0.7529,0.2941);
-						me["AI_agl"].setFontSize(45);
-					}
-				}
-			} else {
-				me["AI_agl"].hide();
-				me["FMA_nodh"].hide();
-				if (int(notification.radio) != 99999) {
-					me["FMA_dh"].setText("RADIO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", notification.radio));
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-				} else if (int(notification.baro) != 99999) {
-					me["FMA_dh"].setText("BARO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText(sprintf("%.0f", notification.baro));
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-				} else if (fmgc.FMGCInternal.radioNo) {
-					me["FMA_dh"].setText("BARO");
-					me["FMA_dh"].show();
-					me["FMA_dhn"].setText("100");
-					me["FMA_dhn"].show();
-					me["FMA_nodh"].hide();
-				} else {
-					me["FMA_dh"].hide();
-					me["FMA_dhn"].hide();
-					me["FMA_nodh"].show();
-				}
-			}
-		}
-		
-		if (notification.athr and notification.thrustLvrClb) {
-			me["FMA_lvrclb"].setText(systems.FADEC.lvrClbType);
-			me["FMA_lvrclb"].show();
-		} else {
-			me["FMA_lvrclb"].hide();
+			notification.showDecisionHeight = 1;
 		}
 		
 		if (notification.altimeterStd == 1) {
-			me["QNH"].hide();
-			me["QNH_setting"].hide();
-			
-			if (notification.altitude < fmgc.FMGCInternal.transAlt and fmgc.FMGCInternal.phase == 4) {
+			if (notification.altitudePFD < fmgc.FMGCInternal.transAlt and fmgc.FMGCInternal.phase == 4) {
 				if (me.number == 0) {
 					if (qnh_going1 == 0) {
 						qnhTimer1.start();
@@ -1548,10 +1730,7 @@ var canvas_pfd = {
 				me["QNH_box"].show();
 			}
 		} else {
-			me["QNH_std"].hide();
-			me["QNH_box"].hide();
-		
-			if (notification.altitude >= fmgc.FMGCInternal.transAlt and fmgc.FMGCInternal.phase == 2) {
+			if (notification.altitudePFD >= fmgc.FMGCInternal.transAlt and fmgc.FMGCInternal.phase == 2) {
 				if (me.number == 0) {
 					if (qnh_going1 == 0) {
 						qnhTimer1.start();
@@ -1603,12 +1782,6 @@ var canvas_pfd = {
 				if (notification.dmeInRange) {
 					me["dme_dist"].show();
 					me["dme_dist_legend"].show();
-					
-					if (notification.dmeDistance < 20.0) {
-						me["dme_dist"].setText(sprintf("%1.1f", notification.dmeDistance));
-					} else {
-						me["dme_dist"].setText(sprintf("%2.0f", notification.dmeDistance));
-					}
 				} else {
 					me["dme_dist"].hide();
 					me["dme_dist_legend"].hide();
@@ -1622,45 +1795,32 @@ var canvas_pfd = {
 		}
 		
 		if (((me.number == 0 and notification.pfdILS1) or (me.number == 1 and notification.pfdILS2)) and size(me.split_ils) == 2) {
-			me.magnetic_hdg = notification.ilsCrs;
-			me.magnetic_hdg_dif = geo.normdeg180(me.magnetic_hdg - notification.headingPFD);
-			if (me.magnetic_hdg_dif >= -23.62 and me.magnetic_hdg_dif <= 23.62) {
-				me["CRS_pointer"].setTranslation((me.magnetic_hdg_dif / 10) * 98.5416, 0);
-				me["ILS_HDG_R"].hide();
-				me["ILS_HDG_L"].hide();
-				me["CRS_pointer"].show();
-			} else if (me.magnetic_hdg_dif < -23.62 and me.magnetic_hdg_dif >= -180) {
-				if (int(me.magnetic_hdg) < 10) {
-					me["ILS_left"].setText(sprintf("00%1.0f", int(me.magnetic_hdg)));
-				} else if (int(me.magnetic_hdg) < 100) {
-					me["ILS_left"].setText(sprintf("0%2.0f", int(me.magnetic_hdg)));
-				} else {
-					me["ILS_left"].setText(sprintf("%3.0f", int(me.magnetic_hdg)));
-				}
-				me["ILS_HDG_L"].show();
-				me["ILS_HDG_R"].hide();
-				me["CRS_pointer"].hide();
-			} else if (me.magnetic_hdg_dif > 23.62 and me.magnetic_hdg_dif <= 180) {
-				if (int(me.magnetic_hdg) < 10) {
-					me["ILS_right"].setText(sprintf("00%1.0f", int(me.magnetic_hdg)));
-				} else if (int(me.magnetic_hdg) < 100) {
-					me["ILS_right"].setText(sprintf("0%2.0f", int(me.magnetic_hdg)));
-				} else {
-					me["ILS_right"].setText(sprintf("%3.0f", int(me.magnetic_hdg)));
-				}
-				me["ILS_HDG_R"].show();
-				me["ILS_HDG_L"].hide();
-				me["CRS_pointer"].hide();
+			notification.showPFDILS = 1;
+			notification.magnetic_hdg_dif = geo.normdeg180(notification.ilsCrs - notification.headingPFD);
+		} else {
+			notification.showPFDILS = 0;
+			notification.magnetic_hdg_dif = 0;
+		}
+		
+		if (me.temporaryNodes.showGroundReferenceAGL) {
+			if ((notification.fmgcPhase == 5 or notification.fmgcPhase == 6) and !notification.gear1Wow and !notification.gear2Wow) { # TODO: add std too
+				me["ground"].show();
 			} else {
-				me["ILS_HDG_R"].hide();
-				me["ILS_HDG_L"].hide();
-				me["CRS_pointer"].hide();
+				me["ground"].hide();
 			}
 		} else {
-			me["ILS_HDG_R"].hide();
-			me["ILS_HDG_L"].hide();
-			me["CRS_pointer"].hide();
+			me["ground"].hide();
 		}
+		
+		if (me.temporaryNodes.showTailstrikeAGL and me.temporaryNodes.showTailstrikeGroundspeed and me.temporaryNodes.showTailstrikeThrust) {
+			me["tailstrikeInd"].show();
+		} else {
+			me["tailstrikeInd"].hide();
+		}
+		
+		
+		# FMA
+		me["FMA_lvrclb"].setText(systems.FADEC.lvrClbType);
 		
 		me["FMA_ap"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.apMode));
 		if (fmgc.Modes.PFD.FMA.apModeBox and fmgc.Modes.PFD.FMA.apMode != " ") {
@@ -1874,7 +2034,7 @@ var canvas_pfd = {
 			me.testTimeNode = du1_test_time;
 		}
 		
-		var elapsedtime_act = elapsedtime.getValue();
+		elapsedtime_act = pts.Sim.Time.elapsedSec.getValue();
 		if (me.powerNode.getValue() >= 110) {
 			if (!me.on) {
 				if (me.offTimeNode.getValue() + 3 < elapsedtime_act) { 
@@ -1960,14 +2120,14 @@ var canvas_pfd = {
 	getAOAForPFD1: func() {
 		if (air_data_switch.getValue() != -1 and adr_1_switch.getValue() and !adr_1_fault.getValue()) return aoa_1.getValue();
 		if (air_data_switch.getValue() == -1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
-		return nil;
+		return 0;
 	},
 	
 	# Get Angle of Attack from ADR2 or, depending on Switching panel, ADR3
 	getAOAForPFD2: func() {
 		if (air_data_switch.getValue() != 1 and adr_2_switch.getValue() and !adr_2_fault.getValue()) return aoa_2.getValue();
 		if (air_data_switch.getValue() == 1 and adr_3_switch.getValue() and !adr_3_fault.getValue()) return aoa_3.getValue();
-		return nil;
+		return 0;
 	},
 
 	# Convert difference between magnetic heading and track measured in degrees to pixel for display on PFDs
@@ -2095,6 +2255,9 @@ var input = {
 	bussTranslate: "/instrumentation/pfd/buss/translate",
 	overspeedVsProt: "/it-autoflight/internal/overspeed-vs-prot",
 	underspeedVsProt: "/it-autoflight/internal/underspeed-vs-prot",
+	valphaMax: "/FMGC/internal/valpha-max",
+	valphaProt: "/FMGC/internal/valpha-prot",
+	vls: "/FMGC/internal/vls",
 };
 
 foreach (var name; keys(input)) {
@@ -2113,20 +2276,19 @@ setlistener("/systems/electrical/bus/ac-2", func() {
 }, 0, 0);
 
 # Helper Functions
-
 var roundabout = func(x) {
-	var y = x - int(x);
-	return y < 0.5 ? int(x) : 1 + int(x);
+	return (x - int(x)) < 0.5 ? int(x) : 1 + int(x);
 };
 
 var roundaboutAlt = func(x) {
-	var y = x * 0.2 - int(x * 0.2);
-	return y < 0.5 ? 5 * int(x * 0.2) : 5 + 5 * int(x * 0.2);
+	return (x * 0.2 - int(x * 0.2)) < 0.5 ? 5 * int(x * 0.2) : 5 + 5 * int(x * 0.2);
 };
 
+var _fontSizeHDGTempVar = nil;
+
 var fontSizeHDG = func(input) {
-	var test = input / 3;
-	if (test == int(test)) {
+	_fontSizeHDGTempVar = input / 3;
+	if (_fontSizeHDGTempVar == int(_fontSizeHDGTempVar)) {
 		return 42;
 	} else {
 		return 32;
@@ -2278,4 +2440,3 @@ setlistener(autoland_alarm, func(alarm) {
 		autoland_pulse.setBoolValue(0);
 	}
 }, 0, 0);
-

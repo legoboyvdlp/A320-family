@@ -1830,7 +1830,11 @@
 		</groundradar>
 		
 		<iesi>
+			<att-reset type="double">false</att-reset>
 			<att-reset-cmd type="bool">false</att-reset-cmd>
+			<display>
+				<show-mach type="bool">false</show-mach>
+			</display>
 		</iesi>
 		
 		<marker-beacon n="0">
