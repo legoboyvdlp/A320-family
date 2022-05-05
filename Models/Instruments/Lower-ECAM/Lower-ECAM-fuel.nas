@@ -21,7 +21,6 @@ var canvas_lowerECAMPageFuel =
 			obj[key] = obj.group.getElementById(key);
 		};
 		
-		obj.units = acconfig_weight_kgs.getValue();
 		
 		# init
 		obj["FUEL-Left-blocked"].hide();
@@ -33,95 +32,75 @@ var canvas_lowerECAMPageFuel =
 		obj["FUEL-Center-Inacc"].hide();
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
 				if (val) {
 					obj["FOB-weight-unit"].setText("KG");
 					obj["Fused-weight-unit"].setText("KG");
 					obj["FFlow-weight-unit"].setText("KG/MIN");
-					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.leftOuter.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.leftInner.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Center-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.center.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.rightInner.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.rightOuter.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Flow-per-min"].setText(sprintf("%s", math.round(((pts.Engines.Engine.fuelFlow[0].getValue() + pts.Engines.Engine.fuelFlow[1].getValue()) * LBS2KGS) / 60, 10)));
-					obj["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
-					obj["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
-					obj["FUEL-used-both"].setText(sprintf("%s", (math.round((fuel_used_lbs1.getValue() * LBS2KGS) + (fuel_used_lbs2.getValue() * LBS2KGS), 10))));
 				} else {
-					obj["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
-					obj["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
-					obj["FUEL-used-both"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue() + fuel_used_lbs2.getValue(), 10))));
-					obj["FUEL-Flow-per-min"].setText(sprintf("%s", math.round((pts.Engines.Engine.fuelFlow[0].getValue() + pts.Engines.Engine.fuelFlow[1].getValue()) / 60, 10)));
 					obj["FOB-weight-unit"].setText("LBS");
 					obj["Fused-weight-unit"].setText("LBS");
 					obj["FFlow-weight-unit"].setText("LBS/MIN");
-					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(pts.Consumables.Fuel.totalFuelLbs.getValue(), 10)));
-					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.leftOuter.getValue(), 10)));
-					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.leftInner.getValue(), 10)));
-					obj["FUEL-Center-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.center.getValue(), 10)));
-					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.rightInner.getValue(), 10)));
-					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.rightOuter.getValue(), 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("engFuelUsed1", 0.5, func(val) {
-				if (obj.units) {
-					obj["FUEL-used-1"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["engFuelUsed1","acconfigUnits"], 0.5, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-used-1"].setText(sprintf("%s", math.round(val.engFuelUsed1 * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-used-1"].setText(sprintf("%s", math.round(val, 10)));
+					obj["FUEL-used-1"].setText(sprintf("%s", math.round(val.engFuelUsed1, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("engFuelUsed2", 0.5, func(val) {
-				if (obj.units) {
-					obj["FUEL-used-2"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["engFuelUsed2","acconfigUnits"], 0.5, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-used-2"].setText(sprintf("%s", math.round(val.engFuelUsed2 * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-used-2"].setText(sprintf("%s", math.round(val, 10)));
+					obj["FUEL-used-2"].setText(sprintf("%s", math.round(val.engFuelUsed2, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashList(["engFuelUsed1","engFuelUsed2"], 0.5, func(val) {
-				if (obj.units) {
+			props.UpdateManager.FromHashList(["engFuelUsed1","engFuelUsed2","acconfigUnits"], 0.5, func(val) {
+				if (val.acconfigUnits) {
 					obj["FUEL-used-both"].setText(sprintf("%s", (math.round((val.engFuelUsed1 * LBS2KGS) + (val.engFuelUsed2 * LBS2KGS), 10))));
 				} else {
 					obj["FUEL-used-both"].setText(sprintf("%s", (math.round(val.engFuelUsed1 + val.engFuelUsed2, 10))));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelLeftOuterQty", 0.25, func(val) {
-				if (obj.units) {
-					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelLeftOuterQty","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(val.fuelLeftOuterQty * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(val, 10)));
+					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(val.fuelLeftOuterQty, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelRightOuterQty", 0.25, func(val) {
-				if (obj.units) {
-					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelRightOuterQty","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(val.fuelRightOuterQty * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(val, 10)));
+					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(val.fuelRightOuterQty, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelCenterQty", 0.25, func(val) {
-				if (obj.units) {
-					obj["FUEL-Center-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelCenterQty","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-Center-quantity"].setText(sprintf("%s",  math.round(val.fuelCenterQty * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-Center-quantity"].setText(sprintf("%s",  math.round(val, 10)));
+					obj["FUEL-Center-quantity"].setText(sprintf("%s",  math.round(val.fuelCenterQty, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelLeftInnerQty", 0.25, func(val) {
-				if (obj.units) {
-					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelLeftInnerQty","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s",  math.round(val.fuelLeftInnerQty * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s",  math.round(val, 10)));
+					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s",  math.round(val.fuelLeftInnerQty, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelRightInnerQty", 0.25, func(val) {
-				if (obj.units) {
-					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelRightInnerQty","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s",  math.round(val.fuelRightInnerQty * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s",  math.round(val, 10)));
+					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s",  math.round(val.fuelRightInnerQty, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashList(["fuelflow_1","fuelflow_2"], nil, func(val) {
-				if (obj.units) {
+			props.UpdateManager.FromHashList(["fuelflow_1","fuelflow_2","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
 					obj.fuelFlowPerMinute = sprintf("%s", math.round(((val.fuelflow_1 + val.fuelflow_2) * LBS2KGS) / 60, 10));
 				} else {
 					obj.fuelFlowPerMinute = sprintf("%s", math.round((val.fuelflow_1 + val.fuelflow_2) / 60, 10));
@@ -381,11 +360,11 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Right-Transfer"].show();
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTotalLbs", 1, func(val) {
-				if (obj.units) {
-					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelTotalLbs","acconfigUnits"], 1, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(val.fuelTotalLbs * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(val, 10)));
+					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(val.fuelTotalLbs, 10)));
 				}
 			}),
 			props.UpdateManager.FromHashValue("fuelTempLeftOuter", 0.5, func(val) {
@@ -452,8 +431,7 @@ var canvas_lowerECAMPageFuel =
 		];
 		
 		obj.updateItemsBottom = [
-			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
-				obj.units = val;
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
 				if (val) {
 					obj["GW-weight-unit"].setText("KG");
 				} else {
@@ -498,7 +476,7 @@ var canvas_lowerECAMPageFuel =
 	},
 	updateBottom: func(notification) {
 		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
-			if (me.units) {
+			if (notification.acconfigUnits) {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
 			} else {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
