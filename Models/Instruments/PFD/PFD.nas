@@ -687,23 +687,18 @@ var canvas_pfd = {
 			}),
 			props.UpdateManager.FromHashList(["altimeterHpa","altimeterInhg","altimeterInhgMode"], 0.005, func(val) {
 				if (val.altimeterInhgMode == 0) {
-					obj["QNH_setting"].setText(sprintf("%4.0f", val.altimeterHpa));
+					obj["QNH_setting"].setText(sprintf("%4d", val.altimeterHpa));
 				} else {
 					obj["QNH_setting"].setText(sprintf("%2.2f", val.altimeterInhg));
 				}
 			}),
 			props.UpdateManager.FromHashList(["altimeterStd","altitudeAutopilot"], 1, func(val) {
 				if (val.altimeterStd == 1) {
-					if (val.altitudeAutopilot < 10000) {
-						obj["ALT_digit_UP"].setText(sprintf("%s", "FL   " ~ val.altitudeAutopilot / 100));
-						obj["ALT_digit_DN"].setText(sprintf("%s", "FL   " ~ val.altitudeAutopilot / 100));
-					} else {
-						obj["ALT_digit_UP"].setText(sprintf("%s", "FL " ~ val.altitudeAutopilot / 100));
-						obj["ALT_digit_DN"].setText(sprintf("%s", "FL " ~ val.altitudeAutopilot / 100));
-					}
+					obj["ALT_digit_UP"].setText(sprintf("FL%3d", val.altitudeAutopilot / 100));
+					obj["ALT_digit_DN"].setText(sprintf("FL%3d", val.altitudeAutopilot / 100));
 				} else {
-					obj["ALT_digit_UP"].setText(sprintf("%5.0f", val.altitudeAutopilot));
-					obj["ALT_digit_DN"].setText(sprintf("%5.0f", val.altitudeAutopilot));
+					obj["ALT_digit_UP"].setText(sprintf("%5d", val.altitudeAutopilot));
+					obj["ALT_digit_DN"].setText(sprintf("%5d", val.altitudeAutopilot));
 				}
 			}),
 			props.UpdateManager.FromHashValue("managedSpd", 1, func(val) {

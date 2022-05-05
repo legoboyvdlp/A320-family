@@ -192,6 +192,9 @@ var ELEC = {
 		me.Fail.tr1Fault.setBoolValue(0);
 		me.Fail.tr2Fault.setBoolValue(0);
 	},
+	loop: func() {
+		# Empty, required for Emesary
+	},
 };
 
 setlistener("/systems/fmgc/power/power-1-on", func(val) {
