@@ -18,7 +18,6 @@ var canvas_lowerECAMPagePress =
 			obj[key] = obj.group.getElementById(key);
 		};
 		
-		obj.units = acconfig_weight_kgs.getValue();
 		
 		# init
 		obj["PRESS-Sys-2"].hide();
@@ -83,8 +82,7 @@ var canvas_lowerECAMPagePress =
 		];
 		
 		obj.updateItemsBottom = [
-			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
-				obj.units = val;
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
 				if (val) {
 					obj["GW-weight-unit"].setText("KG");
 				} else {
@@ -126,7 +124,7 @@ var canvas_lowerECAMPagePress =
 	},
 	updateBottom: func(notification) {
 		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
-			if (me.units) {
+			if (notification.acconfigUnits) {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
 			} else {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
