@@ -999,7 +999,7 @@ var canvas_pfd = {
 					
 					obj["ALT_scale"].setTranslation(0, -obj.middleAltOffset);
 					obj["ALT_scale"].update();
-					obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", val.altitudePFD), 2)) * 1.392);
+					obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", abs(val.altitudePFD)), 2)) * 1.498);
 				}
 			}),
 			props.UpdateManager.FromHashValue("altitudeDigits", 1, func(val) {
