@@ -40,6 +40,8 @@ var canvas_lowerECAMPageEng =
 				} else {
 					obj.quantity[0] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOilQT1 * 10, 5)), 0, 99.5));
 				}
+				obj["OilQT1"].setText(sprintf("%s", left(obj.quantity[0], (size(obj.quantity[0]) == 4 ? 2 : 1))));
+				obj["OilQT1-decimal"].setText(sprintf("%s", right(obj.quantity[0], 1)));
 				obj["OilQT1-needle"].setRotation(math.clamp(val.engOilQT1, 0, 27) * 6.66 * D2R);
 			}),
 			props.UpdateManager.FromHashList(["engOilQT2","acconfigUnits"], 0.005, func(val) {
@@ -48,6 +50,8 @@ var canvas_lowerECAMPageEng =
 				} else {
 					obj.quantity[1] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOilQT2 * 10, 5)), 0, 99.5));
 				}
+				obj["OilQT2"].setText(sprintf("%s", left(obj.quantity[1], (size(obj.quantity[1]) == 4 ? 2 : 1))));
+				obj["OilQT2-decimal"].setText(sprintf("%s", right(obj.quantity[1], 1)));
 				obj["OilQT2-needle"].setRotation(math.clamp(val.engOilQT2, 0, 27) * 6.66 * D2R);
 			}),
 			props.UpdateManager.FromHashValue("engOilPsi1", 0.25, func(val) {
@@ -134,7 +138,7 @@ var canvas_lowerECAMPageEng =
 	getKeys: func() {
 		return["OilQT1-needle","OilQT2-needle","OilQT1","OilQT2","OilQT1-decimal","OilQT2-decimal","OilPSI1-needle","OilPSI2-needle","OilPSI1","OilPSI2",
 		"FUEL-used-1","FUEL-used-2", "Fused-weight-unit","Fused-oil-unit","FUEL-clog-1","FUEL-clog-2","OIL-clog-1","OIL-clog-2","OilTemp1","OilTemp2",
-		"VIB-N1-1","VIB-N1-2","VIB-N2-1","VIB-N2-2","OilQT1-decimalpt","OilQT2-decimalpt"];
+		"VIB-N1-1","VIB-N1-2","VIB-N2-1","VIB-N2-2","OilQT1-decimalpt","OilQT2-decimalpt","OilQT1-XX","OilQT2-XX"];
 	},
 	updateBottom: func(notification) {
 		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
@@ -187,9 +191,8 @@ var canvas_lowerECAMPageEng =
         }
 		
 		if (notification.dc1 >= 25) {
-			me["OilQT1"].setColor(0.0509,0.7529,0.2941);
-			me["OilQT1"].setText(sprintf("%s", left(me.quantity[0], (size(me.quantity[0]) == 4 ? 2 : 1))));
-			me["OilQT1-decimal"].setText(sprintf("%s", right(me.quantity[0], 1)));
+			me["OilQT1-XX"].hide();
+			me["OilQT1"].show();
 			
 			me["OilPSI1"].setText(sprintf("%s", math.clamp(math.round(me.pressure[0], 2), 0, 998)));
 			if (me.pressure[0] >= 13) {
@@ -203,6 +206,8 @@ var canvas_lowerECAMPageEng =
 			me["OilQT1-needle"].show();
 			me["OilPSI1-needle"].show();
 		} else {
+			me["OilQT1"].hide();
+			me["OilQT1-XX"].show();
 			me["OilQT1"].setColor(0.7333,0.3803,0);
 			me["OilPSI1"].setColor(0.7333,0.3803,0);
 			me["OilQT1"].setText(" XX");
@@ -215,9 +220,8 @@ var canvas_lowerECAMPageEng =
 		}
 		
 		if (notification.dc2 >= 25) {
-			me["OilQT2"].setColor(0.0509,0.7529,0.2941);
-			me["OilQT2"].setText(sprintf("%s", left(me.quantity[1], (size(me.quantity[1]) == 4 ? 2 : 1))));
-			me["OilQT2-decimal"].setText(sprintf("%s", right(me.quantity[1], 1)));
+			me["OilQT2-XX"].hide();
+			me["OilQT2"].show();
 			
 			me["OilPSI2"].setText(sprintf("%s", math.clamp(math.round(me.pressure[0], 2), 0, 998)));
 			if (me.pressure[1] >= 13) {
@@ -231,9 +235,9 @@ var canvas_lowerECAMPageEng =
 			me["OilQT2-needle"].show();
 			me["OilPSI2-needle"].show();
 		} else {
-			me["OilQT2"].setColor(0.7333,0.3803,0);
+			me["OilQT2"].hide();
+			me["OilQT2-XX"].show();
 			me["OilPSI2"].setColor(0.7333,0.3803,0);
-			me["OilQT2"].setText(" XX");
 			me["OilPSI2"].setText("XX");
 			
 			me["OilQT2-decimalpt"].hide();
