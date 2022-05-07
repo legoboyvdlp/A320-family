@@ -751,7 +751,7 @@
 					</tableData>
 				</table>
 				<toradians><property>fcs/spoiler-symmetrical-deg</property></toradians>
-				<value>0.01</value>
+				<value>0.0105</value>
 			</product>
 		</function>
 	

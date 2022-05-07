@@ -619,7 +619,7 @@
 							<table>
 								<independentVar lookup="row">atmosphere/density-altitude</independentVar>
 								<tableData>
-										0  0.00
+									    0  0.00
 									43000  0.22
 								</tableData>
 							</table>
