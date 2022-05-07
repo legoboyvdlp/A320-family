@@ -18,8 +18,7 @@ var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2", 1);
 var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
-setprop("test", 0);
-setprop("test2", 0);
+
 # Create Nodes:
 var altFlash = [0,0];
 var amberFlash = [0, 0];
