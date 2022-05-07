@@ -736,6 +736,24 @@
 				<value>-2.575</value>
 			</product>
 		</function>
+		
+		<function name="aero/coefficient/Cmdsp">
+			<description>Pitch moment due to symmetrical spoiler</description>
+			<product>
+				<property>aero/qbar-psf</property>
+				<property>metrics/Sw-sqft</property>
+				<property>metrics/cbarw-ft</property>
+				<table>
+					<independentVar lookup="row">aero/h_b-mac-ft</independentVar>
+					<tableData>
+						0  0.5
+						1  1.0
+					</tableData>
+				</table>
+				<toradians><property>fcs/spoiler-symmetrical-deg</property></toradians>
+				<value>0.01</value>
+			</product>
+		</function>
 	
 	</axis>
 	

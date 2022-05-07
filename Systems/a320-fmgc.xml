@@ -611,22 +611,22 @@
 		
 		<fcs_function name="/FMGC/internal/vls">
 			<function>
-				<product>
-					<max>
+				<max>
+					<product>
 						<property>/FMGC/internal/vs1g-kts</property>
-						<value>113</value>
-					</max>
-					<sum>
-						<property>/FMGC/internal/vls-factor</property>
-						<table>
-							<independentVar lookup="row">atmosphere/density-altitude</independentVar>
-							<tableData>
-								    0  0.00
-								43000  0.22
-							</tableData>
-						</table>
-					</sum>
-				</product>
+						<sum>
+							<property>/FMGC/internal/vls-factor</property>
+							<table>
+								<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+								<tableData>
+										0  0.00
+									43000  0.22
+								</tableData>
+							</table>
+						</sum>
+					</product>
+					<value>113</value>
+				</max>
 			</function>
 			<clipto>
 				<min>/FMGC/internal/vs1g</min>
