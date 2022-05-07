@@ -18,7 +18,8 @@ var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2", 1);
 var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
-
+setprop("test", 0);
+setprop("test2", 0);
 # Create Nodes:
 var altFlash = [0,0];
 var amberFlash = [0, 0];
@@ -1225,20 +1226,21 @@ var canvas_pfd = {
 					obj["ALT_three"].setText(sprintf("%03d", abs(obj.middleAltText)));
 					obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText - 5)));
 					obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText - 10)));
-					
-					if (val.altitudePFD < 0) {
-						obj["ALT_neg"].show();
-					} else {
-						obj["ALT_neg"].hide();
-					}
-				} else {
-					obj["ALT_neg"].hide();
 				}
 			}),
 			props.UpdateManager.FromHashList(["altitudePFD","altError"], 0.1, func(val) {
 				if (!val.altError) {
 					obj.altOffset = val.altitudePFD / 500 - int(val.altitudePFD / 500);
 					obj.middleAltOffset = nil;
+					obj["ALT_tapes"].show();
+					
+					if (val.altitudePFD < 0) {
+						obj["ALT_neg"].show();
+						obj["ALT_tenthousands"].hide();
+					} else {
+						obj["ALT_neg"].hide();
+						obj["ALT_tenthousands"].show();
+					}
 					
 					if (obj.altOffset > 0.5) {
 						obj.middleAltOffset = -(obj.altOffset - 1) * 243.3424;
@@ -1248,11 +1250,28 @@ var canvas_pfd = {
 					
 					obj["ALT_scale"].setTranslation(0, -obj.middleAltOffset);
 					obj["ALT_scale"].update();
-					obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", abs(val.altitudePFD)), 2)) * 1.498);
+					
+					obj.altAbs = abs(val.altitudePFD);
+					
+					if (obj.altAbs < 9900) { # Prepare to show the zero at 10000
+						obj["ALT_thousands_zero"].hide();
+					} else {
+						obj["ALT_thousands_zero"].show();
+					}
+					
+					obj.altTenThousands = num(right(sprintf("%05d", obj.altAbs), 5)) / 100; # Unlikely it would be above 99999 but lets account for it anyways
+					obj["ALT_tenthousands"].setTranslation(0, genevaAltTenThousands(obj.altTenThousands) * 51.61);
+					
+					obj.altThousands = num(right(sprintf("%04d", obj.altAbs), 4)) / 100;
+					obj["ALT_thousands"].setTranslation(0, genevaAltThousands(obj.altThousands) * 51.61);
+					
+					obj.altHundreds = num(right(sprintf("%03d", obj.altAbs), 3)) / 100;
+					obj["ALT_hundreds"].setTranslation(0, genevaAltHundreds(obj.altHundreds) * 51.61);
+					
+					obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", obj.altAbs), 2)) * 1.498);
+				} else {
+					obj["ALT_tapes"].hide();
 				}
-			}),
-			props.UpdateManager.FromHashValue("altitudeDigits", 1, func(val) {
-				obj["ALT_digits"].setText(sprintf("%d", val));
 			}),
 			props.UpdateManager.FromHashValue("altitudeDifference", 0.1, func(val) {
 				obj["ALT_target"].setTranslation(0, (val / 100) * -48.66856);
@@ -1310,11 +1329,11 @@ var canvas_pfd = {
 		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
 		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
-		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP",
-		"ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer",
-		"HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError","ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend",
-		"ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground","ground_ref","FPV","spdLimError","vsFMArate","tailstrikeInd",
-		"Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue"];
+		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_tens","ALT_digit_UP","ALT_tapes","ALT_hundreds",
+		"ALT_thousands","ALT_thousands_zero","ALT_tenthousands","ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box",
+		"LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError",
+		"ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground",
+		"ground_ref","FPV","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue"];
 	},
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
@@ -1685,7 +1704,6 @@ var canvas_pfd = {
 		if (dmc.DMController.DMCs[me.number].outputs[1] != nil) {
 			notification.altError = 0;
 			notification.altitudePFD = dmc.DMController.DMCs[me.number].outputs[1].getValue();
-			notification.altitudeDigits = dmc.DMController.DMCs[me.number].outputs[3].getValue();
 			notification.altitudeDifference = dmc.DMController.DMCs[me.number].outputs[7].getValue();
 			
 			if (!ecam.altAlertFlash and !ecam.altAlertSteady) {
@@ -1770,7 +1788,6 @@ var canvas_pfd = {
 		} else {
 			notification.altError = 1;
 			notification.altitudePFD = -9999;
-			notification.altitudeDigits = -9999;
 			notification.altitudeDifference = -9999;
 		}
 		
@@ -2235,7 +2252,6 @@ foreach (var name; keys(input)) {
 
 
 # Power
-
 setlistener("/systems/electrical/bus/ac-ess", func() {
 	if (A320PFD1.MainScreen != nil) { A320PFD1.MainScreen.powerTransient() }
 }, 0, 0);
@@ -2252,6 +2268,26 @@ var roundabout = func(x) {
 var roundaboutAlt = func(x) {
 	return (x * 0.2 - int(x * 0.2)) < 0.5 ? 5 * int(x * 0.2) : 5 + 5 * int(x * 0.2);
 };
+
+var genevaAltTenThousands = func(input) {
+	var m = math.floor(input / 100);
+	var s = math.max(0, (math.mod(input, 1) - 0.8) * 5);
+	if (math.mod(input / 10, 1) < 0.9 or math.mod(input / 100, 1) < 0.9) s = 0;
+	return m + s;
+}
+
+var genevaAltThousands = func(input) {
+	var m = math.floor(input / 10);
+	var s = math.max(0, (math.mod(input, 1) - 0.8) * 5);
+	if (math.mod(input / 10, 1) < 0.9) s = 0;
+	return m + s;
+}
+
+var genevaAltHundreds = func(input) {
+	var m = math.floor(input);
+	var s = math.max(0, (math.mod(input, 1) - 0.8) * 5);
+	return m + s;
+}
 
 var _fontSizeHDGTempVar = nil;
 
