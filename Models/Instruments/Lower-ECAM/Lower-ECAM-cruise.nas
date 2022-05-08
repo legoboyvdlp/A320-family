@@ -23,18 +23,18 @@ var canvas_lowerECAMPageCruise =
 		obj.quantity = [0, 0];
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashList(["engOil1", "acconfigUnits"], 0.005, func(val) {
+			props.UpdateManager.FromHashList(["engOilQT1", "acconfigUnits"], 0.005, func(val) {
 				if (val.acconfigUnits) {
-					obj.quantity[0] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOil1 * QT2LTR * 10, 5)), 0, 99.5));
+					obj.quantity[0] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOilQT1 * QT2LTR * 10, 5)), 0, 99.5));
 				} else {
-					obj.quantity[0] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOil1 * 10, 5)), 0, 99.5));
+					obj.quantity[0] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOilQT1 * 10, 5)), 0, 99.5));
 				}
 			}),
-			props.UpdateManager.FromHashList(["engOil2", "acconfigUnits"], 0.005, func(val) {
+			props.UpdateManager.FromHashList(["engOilQT2", "acconfigUnits"], 0.005, func(val) {
 				if (val.acconfigUnits) {
-					obj.quantity[1] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOil2 * 10, 5)), 0, 99.5));
+					obj.quantity[1] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOilQT2 * QT2LTR * 10, 5)), 0, 99.5));
 				} else {
-					obj.quantity[1] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOil2 * 10, 5)), 0, 99.5));
+					obj.quantity[1] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOilQT2 * 10, 5)), 0, 99.5));
 				}
 			}),
 			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
@@ -201,13 +201,17 @@ var canvas_lowerECAMPageCruise =
 		
 		if (notification.dc1 >= 25) {
 			me["Oil1"].setText(me.quantity[0]);
+			me["Oil1"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["Oil1"].setText("XX");
+			me["Oil1"].setColor(0.7333,0.3803,0);
 		}
 		if (notification.dc2 >= 25) {
 			me["Oil2"].setText(me.quantity[1]);
+			me["Oil2"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["Oil2"].setText("XX");
+			me["Oil2"].setColor(0.7333,0.3803,0);
 		}
 		
 		me.updateBottom(notification);
