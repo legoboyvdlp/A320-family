@@ -191,32 +191,64 @@
 		</fcs_function>
 		
 		<!-- V alpha prot/max -->
-		<lag_filter name="/FMGC/internal/valphadot-lag">
-			<input>aero/alphadot-rad_sec</input>
-			<c1>0.75</c1>
+		<lag_filter name="/FMGC/internal/valpha-lag">
+			<input>aero/alpha-deg-fixed</input>
+			<c1>0.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="/FMGC/internal/valphadot-offset">
-			<input>/FMGC/internal/valphadot-lag</input>
-			<gain>125</gain>
-		</pure_gain>
-		
-		<fcs_function name="/FMGC/internal/valpha-prot">
+		<fcs_function name="/FMGC/internal/valpha-prot-input">
 			<function>
-				<sum>
-					<product>
-						<property>/FMGC/internal/vs1g-kts</property>
-						<value>1.09</value>
-					</product>
-					<property>/FMGC/internal/valphadot-offset</property>
-				</sum>
+				<sqrt>
+					<quotient>
+						<property>/FMGC/internal/valpha-lag</property>
+						<property>fbw/alpha-prot-deg</property>
+					</quotient>
+				</sqrt>
 			</function>
 		</fcs_function>
 		
-		<summer name="/FMGC/internal/valpha-max">
-			<input>/FMGC/internal/vs1g-kts</input>
-			<input>/FMGC/internal/valphadot-offset</input>
-		</summer>
+		<fcs_function name="/FMGC/internal/valpha-max-input">
+			<function>
+				<sqrt>
+					<quotient>
+						<property>/FMGC/internal/valpha-lag</property>
+						<property>fbw/alpha-max-deg</property>
+					</quotient>
+				</sqrt>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/valpha-prot">
+			<function>
+				<product>
+					<property>velocities/vc-kts</property>
+					<table>
+						<independentVar lookup="row">/FMGC/internal/valpha-prot-input</independentVar>
+						<tableData>
+							0  0.3
+							1  1.0
+							2  1.6
+						</tableData>
+					</table>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/valpha-max">
+			<function>
+				<product>
+					<property>velocities/vc-kts</property>
+					<table>
+						<independentVar lookup="row">/FMGC/internal/valpha-max-input</independentVar>
+						<tableData>
+							0  0.3
+							1  1.0
+							2  1.6
+						</tableData>
+					</table>
+				</product>
+			</function>
+		</fcs_function>
 		
 		<!-- Extra VS1g tables for predictions etc -->
 		<fcs_function name="/FMGC/internal/vs1g-conf-0">
@@ -588,12 +620,9 @@
 		</switch>
 		
 		<switch name="/FMGC/internal/vls-factor-cmd">
-			<default value="1.28"/> <!-- 1.28 VS1g -->
+			<default value="1.23"/>
 			<test value="1.13"> <!-- 1.13 VS1g -->
 				/FMGC/internal/takeoff-latch eq 1
-			</test>
-			<test value="1.23"> <!-- 1.23 VS1g -->
-				fcs/flap-pos-deg ge 0.1
 			</test>
 		</switch>
 		
@@ -625,7 +654,9 @@
 							</table>
 						</sum>
 					</product>
+					<!-- Never drop below either of the following -->
 					<value>113</value>
+					<property>/FMGC/internal/valpha-prot</property>
 				</max>
 			</function>
 			<clipto>
