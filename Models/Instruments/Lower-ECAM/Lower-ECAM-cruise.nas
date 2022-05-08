@@ -201,13 +201,17 @@ var canvas_lowerECAMPageCruise =
 		
 		if (notification.dc1 >= 25) {
 			me["Oil1"].setText(me.quantity[0]);
+			me["Oil1"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["Oil1"].setText("XX");
+			me["Oil1"].setColor(0.7333,0.3803,0);
 		}
 		if (notification.dc2 >= 25) {
 			me["Oil2"].setText(me.quantity[1]);
+			me["Oil2"].setColor(0.0509,0.7529,0.2941);
 		} else {
 			me["Oil2"].setText("XX");
+			me["Oil2"].setColor(0.7333,0.3803,0);
 		}
 		
 		me.updateBottom(notification);
