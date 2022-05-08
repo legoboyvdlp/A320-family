@@ -620,7 +620,7 @@
 		</switch>
 		
 		<switch name="/FMGC/internal/vls-factor-cmd">
-			<default value="1.23"/>
+			<default value="1.23"/> <!-- 1.23 VS1g -->
 			<test value="1.13"> <!-- 1.13 VS1g -->
 				/FMGC/internal/takeoff-latch eq 1
 			</test>
