@@ -1671,6 +1671,7 @@ var canvas_pfd = {
 			notification.ASItrendIsShown = 0;
 			notification.Ctrgt = 0;
 			notification.flapMaxSpeed = 0;
+			notification.fmgcTakeoffState = nil;
 			notification.Ftrgt = 0;
 			notification.Strgt = 0;
 			notification.showV1 = 0;
