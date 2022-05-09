@@ -986,6 +986,18 @@
 				</quotient>
 			</function>
 		</fcs_function>
+		
+		<fcs_function name="fcs/spoiler-symmetrical-deg">
+			<function>
+				<quotient>
+					<min>
+						<property>fcs/spoiler-left-sum</property>
+						<property>fcs/spoiler-right-sum</property>
+					</min>
+					<value>5</value>
+				</quotient>
+			</function>
+		</fcs_function>
 	
 	</channel>
 

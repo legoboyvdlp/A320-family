@@ -195,7 +195,7 @@ var ELEC = {
 		me.Fail.tr2Fault.setBoolValue(0);
 	},
 	loop: func() {
-		# Empty
+		# Empty, required for Emesary
 	},
 };
 

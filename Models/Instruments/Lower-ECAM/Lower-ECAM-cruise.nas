@@ -18,59 +18,50 @@ var canvas_lowerECAMPageCruise =
 			obj[key] = obj.group.getElementById(key);
 		};
 		
-		obj.units = acconfig_weight_kgs.getValue();
 		
 		# init
+		obj.quantity = [0, 0];
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("engOil1", 0.005, func(val) {
-				if (obj.units) {
-					obj["Oil1"].setText(sprintf("%2.1f",(0.1 * math.round(val * QT2LTR * 10,5))));
+			props.UpdateManager.FromHashList(["engOilQT1", "acconfigUnits"], 0.005, func(val) {
+				if (val.acconfigUnits) {
+					obj.quantity[0] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOilQT1 * QT2LTR * 10, 5)), 0, 99.5));
 				} else {
-					obj["Oil1"].setText(sprintf("%2.1f",(0.1 * math.round(val * 10,5))));
+					obj.quantity[0] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOilQT1 * 10, 5)), 0, 99.5));
 				}
 			}),
-			props.UpdateManager.FromHashValue("engOil2", 0.005, func(val) {
-				if (obj.units) {
-					obj["Oil2"].setText(sprintf("%2.1f",(0.1 * math.round(val * QT2LTR * 10,5))));
+			props.UpdateManager.FromHashList(["engOilQT2", "acconfigUnits"], 0.005, func(val) {
+				if (val.acconfigUnits) {
+					obj.quantity[1] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOilQT2 * QT2LTR * 10, 5)), 0, 99.5));
 				} else {
-					obj["Oil2"].setText(sprintf("%2.1f",(0.1 * math.round(val * 10,5))));
+					obj.quantity[1] = sprintf("%2.1f", math.clamp((0.1 * math.round(val.engOilQT2 * 10, 5)), 0, 99.5));
 				}
 			}),
-			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
 				if (val) {
 					obj["Fused-weight-unit"].setText("KG");
 					obj["OilUnit"].setText("LTR");
-					# immediately update parameters
-					obj["Oil1"].setText(sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[0].getValue() * QT2LTR * 10,5))));
-					obj["Oil2"].setText(sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[1].getValue() * QT2LTR * 10,5))));
-					obj["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
-					obj["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
 				} else {
 					obj["Fused-weight-unit"].setText("LBS");
 					obj["OilUnit"].setText("QT");
-					obj["Oil1"].setText(sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[0].getValue() * 10,5))));
-					obj["Oil2"].setText(sprintf("%2.1f",(0.1 * math.round(pts.Engines.Engine.oilQt[1].getValue() * 10,5))));
-					obj["FUsed1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
-					obj["FUsed2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("engFuelUsed1", 1, func(val) {
-				if (obj.units) {
-					obj["FUsed1"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["engFuelUsed1","acconfigUnits"], 1, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUsed1"].setText(sprintf("%s", math.round(val.engFuelUsed1 * LBS2KGS, 10)));
 				} else {
-					obj["FUsed1"].setText(sprintf("%s", math.round(val, 10)));
+					obj["FUsed1"].setText(sprintf("%s", math.round(val.engFuelUsed1, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("engFuelUsed2", 1, func(val) {
-				if (obj.units) {
-					obj["FUsed2"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["engFuelUsed2","acconfigUnits"], 1, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUsed2"].setText(sprintf("%s", math.round(val.engFuelUsed2 * LBS2KGS, 10)));
 				} else {
-					obj["FUsed2"].setText(sprintf("%s", math.round(val, 10)));
+					obj["FUsed2"].setText(sprintf("%s", math.round(val.engFuelUsed2, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashList(["engFuelUsed1","engFuelUsed2"], 1, func(val) {
-				if (obj.units) {
+			props.UpdateManager.FromHashList(["engFuelUsed1","engFuelUsed2","acconfigUnits"], 1, func(val) {
+				if (val.acconfigUnits) {
 					obj["FUsed"].setText(sprintf("%s", math.round((val.engFuelUsed1 + val.engFuelUsed2) * LBS2KGS, 10)));
 				} else {
 					obj["FUsed"].setText(sprintf("%s", math.round((val.engFuelUsed1 + val.engFuelUsed2), 10)));
@@ -120,8 +111,7 @@ var canvas_lowerECAMPageCruise =
 		];
 		
 		obj.updateItemsBottom = [
-			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
-				obj.units = val;
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
 				if (val) {
 					obj["GW-weight-unit"].setText("KG");
 				} else {
@@ -161,7 +151,7 @@ var canvas_lowerECAMPageCruise =
 	},
 	updateBottom: func(notification) {
 		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
-			if (me.units) {
+			if (notification.acconfigUnits) {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
 			} else {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
@@ -208,6 +198,21 @@ var canvas_lowerECAMPageCruise =
         {
             update_item.update(notification);
         }
+		
+		if (notification.dc1 >= 25) {
+			me["Oil1"].setText(me.quantity[0]);
+			me["Oil1"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["Oil1"].setText("XX");
+			me["Oil1"].setColor(0.7333,0.3803,0);
+		}
+		if (notification.dc2 >= 25) {
+			me["Oil2"].setText(me.quantity[1]);
+			me["Oil2"].setColor(0.0509,0.7529,0.2941);
+		} else {
+			me["Oil2"].setText("XX");
+			me["Oil2"].setColor(0.7333,0.3803,0);
+		}
 		
 		me.updateBottom(notification);
 	},

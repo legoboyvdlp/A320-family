@@ -70,7 +70,7 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="fbw/stall-alpha-deg">
+		<fcs_function name="fbw/alpha-stall-deg">
 			<function>
 				<table>
 					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
@@ -82,13 +82,41 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="fbw/alpha-prot-deg">
+			<function>
+				<table>
+					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+					<tableData>
+						       0    15
+						    0  9.5  10.5
+						43000  6.5   6.8
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/alpha-max-deg">
+			<function>
+				<table>
+					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+					<tableData>
+						       0     15
+						    0  13.5  14.5
+						43000   7.5   7.7
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<switch name="fbw/protections/overspeed">
 			<default value="fbw/protections/overspeed"/>
 			<test logic="OR" value="0">
 				position/wow eq 1
 				/it-fbw/law ne 0
 				/instrumentation/airspeed-indicator/indicated-speed-kt le /FMGC/internal/vmo-mmo
-				aero/alpha-deg-damped ge fbw/stall-alpha-deg
+				aero/alpha-deg-damped ge fbw/alpha-stall-deg
 			</test>
 			<test value="1">
 				/instrumentation/airspeed-indicator/indicated-speed-kt ge /FMGC/internal/vmo-mmo-plus-6
@@ -1474,11 +1502,6 @@
 			</function>
 		</fcs_function>
 		
-		<summer name="fbw/pitch/stall-alpha-error">
-			<input>aero/alpha-deg-fixed</input>
-			<input>-fbw/stall-alpha-deg</input>
-		</summer>
-		
 		<fcs_function name="fbw/pitch/e-i-min">
 			<function>
 				<max>
@@ -1488,15 +1511,6 @@
 							-0.087266 -1.0
 							-0.034907 -0.1
 							 0.000000  0.0
-						</tableData>
-					</table>
-					<table>
-						<independentVar lookup="row">fbw/pitch/stall-alpha-error</independentVar>
-						<independentVar lookup="column">/it-fbw/law</independentVar>
-						<tableData>
-							      0  1
-							-2.5 -1 -1
-							 0.0  0 -1
 						</tableData>
 					</table>
 				</max>

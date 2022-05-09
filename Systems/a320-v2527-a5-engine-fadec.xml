@@ -13,6 +13,7 @@
 	<property value="22.4">fadec/limit/min-n1</property>
 	<property value="100">fadec/limit/max-n1</property>
 	<property value="0">fadec/athr/cmd</property>
+	<property value="0">fadec/inhibit-alpha-floor</property>
 	
 	<channel name="Thrust Limits">
 		
@@ -1468,7 +1469,7 @@
 		
 		<!-- Alpha Floor and Toga Lk -->
 		<switch name="fadec/alpha-floor-engage">
-			<default value="14.5"/>
+			<default value="13"/>
 			<test logic="OR" value="15">
 				/controls/flight/flaps-pos eq 1
 				/controls/flight/flaps-pos eq 2
@@ -1483,7 +1484,7 @@
 		</switch>
 		
 		<switch name="fadec/alpha-floor-disengage">
-			<default value="8"/>
+			<default value="11"/>
 			<test logic="OR" value="13">
 				/controls/flight/flaps-pos eq 1
 				/controls/flight/flaps-pos eq 2
@@ -1502,6 +1503,7 @@
 			<test logic="OR" value="0"> <!-- Reset -->
 				position/wow eq 1
 				/it-fbw/law ne 0
+				fadec/inhibit-alpha-floor eq 1
 				/FMGC/FCU-working eq 0
 				position/gear-agl-ft lt 100
 				fadec/control-1/n1-mode eq 1
