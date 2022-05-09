@@ -1454,9 +1454,9 @@ var canvas_pfd = {
 			}
 			
 			if (fmgc.FMGCInternal.maxspeed <= 30) {
-				notification.ASImax = 0 - me.ASI;
+				notification.ASImax = 0 - notification.ASI;
 			} else if (fmgc.FMGCInternal.maxspeed >= 420) {
-				notification.ASImax = 390 - me.ASI;
+				notification.ASImax = 390 - notification.ASI;
 			} else {
 				notification.ASImax = fmgc.FMGCInternal.maxspeed - 30 - notification.ASI;
 			}
