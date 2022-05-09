@@ -149,38 +149,37 @@
 		<object-name>atc-code</object-name>
 		<object-name>atc-test</object-name>
 		<object-name>a-thr_led</object-name>
-		<object-name>audio_att_led.cpt</object-name>
-		<object-name>audio_att_sgn.cpt</object-name>
-		<object-name>audio_call_hf1_led.cpt</object-name>
-		<object-name>audio_call_hf2_led.cpt</object-name>
-		<object-name>audio_call_vhf1_led.cpt</object-name>
-		<object-name>audio_call_vhf2_led.cpt</object-name>
-		<object-name>audio_call_vhf3_led.cpt</object-name>
-		<object-name>audio_hf1_led.cpt</object-name>
-		<object-name>audio_hf2_led.cpt</object-name>
-		<object-name>audio_mech_led.cpt</object-name>
-		<object-name>audio_mech_sgn.cpt</object-name>
-		<object-name>audio_pa_led.cpt</object-name>
-		<object-name>audio_voice_led.cpt</object-name>
-		<object-name>audio_vhf1_led.cpt</object-name>
-		<object-name>audio_vhf2_led.cpt</object-name>
-		<object-name>audio_vhf3_led.cpt</object-name>
+		<object-name>audio_adf1_glare.fo</object-name>
+		<object-name>audio_adf2_glare.fo</object-name>
 		<object-name>audio_att_led.fo</object-name>
 		<object-name>audio_att_sgn.fo</object-name>
+		<object-name>audio_cab_glare.fo</object-name>
 		<object-name>audio_call_hf1_led.fo</object-name>
 		<object-name>audio_call_hf2_led.fo</object-name>
 		<object-name>audio_call_vhf1_led.fo</object-name>
 		<object-name>audio_call_vhf2_led.fo</object-name>
 		<object-name>audio_call_vhf3_led.fo</object-name>
 		<object-name>audio_hf1_led.fo</object-name>
+		<object-name>audio_hf1_glare.fo</object-name>
 		<object-name>audio_hf2_led.fo</object-name>
+		<object-name>audio_hf2_glare.fo</object-name>
+		<object-name>audio_int_glare.fo</object-name>
+		<object-name>audio_ils_glare.fo</object-name>
 		<object-name>audio_mech_led.fo</object-name>
 		<object-name>audio_mech_sgn.fo</object-name>
+		<object-name>audio_mls_glare.fo</object-name>
+		<object-name>audio_mkr_glare.fo</object-name>
+		<object-name>audio_pa_glare.fo</object-name>
 		<object-name>audio_pa_led.fo</object-name>
 		<object-name>audio_voice_led.fo</object-name>
+		<object-name>audio_vhf1_glare.fo</object-name>
+		<object-name>audio_vhf2_glare.fo</object-name>
+		<object-name>audio_vhf3_glare.fo</object-name>
 		<object-name>audio_vhf1_led.fo</object-name>
 		<object-name>audio_vhf2_led.fo</object-name>
 		<object-name>audio_vhf3_led.fo</object-name>
+		<object-name>audio_vor1_glare.fo</object-name>
+		<object-name>audio_vor2_glare.fo</object-name>
 		<object-name>cstr_led</object-name>
 		<object-name>cstr_led.001</object-name>
 		<object-name>exped_led</object-name>
@@ -279,6 +278,37 @@
 	-->
 	<animation>
 		<type>select</type>
+		<object-name>audio_adf1_glare.cpt</object-name>
+		<object-name>audio_adf2_glare.cpt</object-name>
+		<object-name>audio_att_led.cpt</object-name>
+		<object-name>audio_att_sgn.cpt</object-name>
+		<object-name>audio_cab_glare.cpt</object-name>
+		<object-name>audio_call_hf1_led.cpt</object-name>
+		<object-name>audio_call_hf2_led.cpt</object-name>
+		<object-name>audio_call_vhf1_led.cpt</object-name>
+		<object-name>audio_call_vhf2_led.cpt</object-name>
+		<object-name>audio_call_vhf3_led.cpt</object-name>
+		<object-name>audio_hf1_led.cpt</object-name>
+		<object-name>audio_hf1_glare.cpt</object-name>
+		<object-name>audio_hf2_led.cpt</object-name>
+		<object-name>audio_hf2_glare.cpt</object-name>
+		<object-name>audio_int_glare.cpt</object-name>
+		<object-name>audio_ils_glare.cpt</object-name>
+		<object-name>audio_mech_led.cpt</object-name>
+		<object-name>audio_mech_sgn.cpt</object-name>
+		<object-name>audio_mls_glare.cpt</object-name>
+		<object-name>audio_mkr_glare.cpt</object-name>
+		<object-name>audio_pa_glare.cpt</object-name>
+		<object-name>audio_pa_led.cpt</object-name>
+		<object-name>audio_voice_led.cpt</object-name>
+		<object-name>audio_vhf1_glare.cpt</object-name>
+		<object-name>audio_vhf2_glare.cpt</object-name>
+		<object-name>audio_vhf3_glare.cpt</object-name>
+		<object-name>audio_vhf1_led.cpt</object-name>
+		<object-name>audio_vhf2_led.cpt</object-name>
+		<object-name>audio_vhf3_led.cpt</object-name>
+		<object-name>audio_vor1_glare.cpt</object-name>
+		<object-name>audio_vor2_glare.cpt</object-name>
 		<object-name>engine_fire_1</object-name>
 		<object-name>engine_fire_2</object-name>
 		<object-name>gear_lever_down_arrow</object-name>
@@ -15072,7 +15102,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/vhf1-recive</property>
@@ -15081,7 +15110,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/vhf1-volume</property>
@@ -15094,7 +15122,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/vhf1-volume</property>
@@ -15112,6 +15139,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_vhf1_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/vhf1-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15119,7 +15157,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/vhf2-recive</property>
@@ -15128,7 +15165,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/vhf2-volume</property>
@@ -15141,7 +15177,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/vhf2-volume</property>
@@ -15159,6 +15194,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_vhf2_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/vhf2-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15166,7 +15212,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/vhf3-recive</property>
@@ -15175,7 +15220,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/vhf3-volume</property>
@@ -15188,7 +15232,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/vhf3-volume</property>
@@ -15206,6 +15249,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_vhf3_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/vhf3-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15213,7 +15267,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/hf1-recive</property>
@@ -15222,7 +15275,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/hf1-volume</property>
@@ -15235,7 +15287,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/hf1-volume</property>
@@ -15253,6 +15304,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_hf1_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/hf1-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15260,7 +15322,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/hf2-recive</property>
@@ -15269,7 +15330,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/hf2-volume</property>
@@ -15282,7 +15342,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/hf2-volume</property>
@@ -15300,6 +15359,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_hf2_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/hf2-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15307,7 +15377,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/int-recive</property>
@@ -15316,7 +15385,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/int-volume</property>
@@ -15329,7 +15397,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/int-volume</property>
@@ -15347,6 +15414,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_int_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/int-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15354,7 +15432,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/cab-recive</property>
@@ -15363,7 +15440,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/cab-volume</property>
@@ -15376,7 +15452,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/cab-volume</property>
@@ -15394,6 +15469,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_cab_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/cab-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15401,7 +15487,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/pa-recive</property>
@@ -15410,7 +15495,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/pa-volume</property>
@@ -15423,7 +15507,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/pa-volume</property>
@@ -15441,6 +15524,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_pa_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/pa-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15448,7 +15542,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/vor1-recive</property>
@@ -15457,7 +15550,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/vor1-volume</property>
@@ -15470,7 +15562,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/vor1-volume</property>
@@ -15487,6 +15578,17 @@
 				<label>VOR1 volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_vor1_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/vor1-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -15535,6 +15637,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_vor2_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/vor2-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15542,7 +15655,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/mkr-recive</property>
@@ -15551,7 +15663,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/mkr-volume</property>
@@ -15564,7 +15675,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/mkr-volume</property>
@@ -15582,6 +15692,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_mkr_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/mkr-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15589,7 +15710,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/ils-recive</property>
@@ -15598,7 +15718,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/ils-volume</property>
@@ -15611,7 +15730,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/ils-volume</property>
@@ -15629,6 +15747,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_ils_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/ils-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15636,7 +15765,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/mls-recive</property>
@@ -15645,7 +15773,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/mls-volume</property>
@@ -15658,7 +15785,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/mls-volume</property>
@@ -15675,6 +15801,17 @@
 				<label>MLS volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_mls_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/mls-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -15723,6 +15860,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_adf1_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/adf1-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<animation>
 		<type>pick</type>
@@ -15730,7 +15878,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[0]/adf2-recive</property>
@@ -15739,7 +15886,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/adf2-volume</property>
@@ -15752,7 +15898,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[0]/adf2-volume</property>
@@ -15770,6 +15915,17 @@
 			</binding>
 		</hovered>
 	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_adf2_glare.cpt</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[0]/adf2-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
 
 	<!-- Knob Animation -->
 	<animation>
@@ -15777,7 +15933,7 @@
 		<object-name>audio_vhf1.cpt</object-name>
 		<object-name>audio_vhf1_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/vhf1-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -15805,7 +15961,7 @@
 		<object-name>audio_vhf2.cpt</object-name>
 		<object-name>audio_vhf2_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/vhf2-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -15833,7 +15989,7 @@
 		<object-name>audio_vhf3.cpt</object-name>
 		<object-name>audio_vhf3_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/vhf3-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -15861,7 +16017,7 @@
 		<object-name>audio_hf1.cpt</object-name>
 		<object-name>audio_hf1_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/hf1-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -15889,7 +16045,7 @@
 		<object-name>audio_hf2.cpt</object-name>
 		<object-name>audio_hf2_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/hf2-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -15917,7 +16073,7 @@
 		<object-name>audio_int.cpt</object-name>
 		<object-name>audio_int_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/int-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -15945,7 +16101,7 @@
 		<object-name>audio_cab.cpt</object-name>
 		<object-name>audio_cab_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/cab-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -15973,7 +16129,7 @@
 		<object-name>audio_pa_rot.cpt</object-name>
 		<object-name>audio_pa_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/pa-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -16001,7 +16157,7 @@
 		<object-name>audio_vor1.cpt</object-name>
 		<object-name>audio_vor1_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/vor1-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -16029,7 +16185,7 @@
 		<object-name>audio_vor2.cpt</object-name>
 		<object-name>audio_vor2_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/vor2-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -16057,7 +16213,7 @@
 		<object-name>audio_mkr.cpt</object-name>
 		<object-name>audio_mkr_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/mkr-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -16085,7 +16241,7 @@
 		<object-name>audio_ils.cpt</object-name>
 		<object-name>audio_ils_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/ils-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -16113,7 +16269,7 @@
 		<object-name>audio_mls.cpt</object-name>
 		<object-name>audio_mls_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/mls-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -16141,7 +16297,7 @@
 		<object-name>audio_adf1.cpt</object-name>
 		<object-name>audio_adf1_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/adf1-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -16169,7 +16325,7 @@
 		<object-name>audio_adf2.cpt</object-name>
 		<object-name>audio_adf2_glare.cpt</object-name>
 		<property>controls/audio/acp[0]/adf2-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -19481,7 +19637,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/vhf1-recive</property>
@@ -19490,7 +19645,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/vhf1-volume</property>
@@ -19503,7 +19657,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/vhf1-volume</property>
@@ -19516,10 +19669,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2vhf1-lbl</tooltip-id>
+				<tooltip-id>acpvhf1knob-lbl</tooltip-id>
 				<label>VHF1 volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_vhf1_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/vhf1-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19528,7 +19692,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/vhf2-recive</property>
@@ -19537,7 +19700,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/vhf2-volume</property>
@@ -19550,7 +19712,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/vhf2-volume</property>
@@ -19563,10 +19724,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2vhf2-lbl</tooltip-id>
+				<tooltip-id>acpvhf2knob-lbl</tooltip-id>
 				<label>VHF2 volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_vhf2_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/vhf2-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19575,7 +19747,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/vhf3-recive</property>
@@ -19584,7 +19755,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/vhf3-volume</property>
@@ -19597,7 +19767,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/vhf3-volume</property>
@@ -19610,10 +19779,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2vhf3-lbl</tooltip-id>
+				<tooltip-id>acpvhf3knob-lbl</tooltip-id>
 				<label>VHF3 volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_vhf3_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/vhf3-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19622,7 +19802,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/hf1-recive</property>
@@ -19631,7 +19810,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/hf1-volume</property>
@@ -19644,7 +19822,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/hf1-volume</property>
@@ -19657,10 +19834,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2hf1-lbl</tooltip-id>
+				<tooltip-id>acphf1knob-lbl</tooltip-id>
 				<label>HF1 volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_hf1_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/hf1-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19669,7 +19857,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/hf2-recive</property>
@@ -19678,7 +19865,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/hf2-volume</property>
@@ -19691,7 +19877,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/hf2-volume</property>
@@ -19704,10 +19889,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2hf2-lbl</tooltip-id>
+				<tooltip-id>acphf2knob-lbl</tooltip-id>
 				<label>HF2 volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_hf2_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/hf2-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19716,7 +19912,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/int-recive</property>
@@ -19725,7 +19920,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/int-volume</property>
@@ -19738,7 +19932,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/int-volume</property>
@@ -19751,10 +19944,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2interphone-lbl</tooltip-id>
+				<tooltip-id>acintknob-lbl</tooltip-id>
 				<label>Interphone volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_int_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/int-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19763,7 +19967,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/cab-recive</property>
@@ -19772,7 +19975,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/cab-volume</property>
@@ -19785,7 +19987,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/cab-volume</property>
@@ -19798,10 +19999,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2cab-lbl</tooltip-id>
+				<tooltip-id>acpcabknob-lbl</tooltip-id>
 				<label>Cabin volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_cab_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/cab-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19810,7 +20022,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/pa-recive</property>
@@ -19819,7 +20030,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/pa-volume</property>
@@ -19832,7 +20042,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/pa-volume</property>
@@ -19845,10 +20054,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2pa-lbl</tooltip-id>
+				<tooltip-id>acppaknob-lbl</tooltip-id>
 				<label>PA volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_pa_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/pa-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19857,7 +20077,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/vor1-recive</property>
@@ -19866,7 +20085,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/vor1-volume</property>
@@ -19879,7 +20097,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/vor1-volume</property>
@@ -19892,10 +20109,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2vor1-lbl</tooltip-id>
+				<tooltip-id>acpvor1-lbl</tooltip-id>
 				<label>VOR1 volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_vor1_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/vor1-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19939,10 +20167,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2vor2-lbl</tooltip-id>
+				<tooltip-id>acpvor2-lbl</tooltip-id>
 				<label>VOR2 volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_vor2_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/vor2-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19951,7 +20190,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/mkr-recive</property>
@@ -19960,7 +20198,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/mkr-volume</property>
@@ -19973,7 +20210,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/mkr-volume</property>
@@ -19986,10 +20222,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2mkr-lbl</tooltip-id>
-				<label>Marker volume control</label>
+				<tooltip-id>acpmarker-lbl</tooltip-id>
+				<label>Markers volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_mkr_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/mkr-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -19998,7 +20245,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/ils-recive</property>
@@ -20007,7 +20253,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/ils-volume</property>
@@ -20020,7 +20265,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/ils-volume</property>
@@ -20033,10 +20277,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2ils-lbl</tooltip-id>
+				<tooltip-id>acpils-lbl</tooltip-id>
 				<label>ILS volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_ils_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/ils-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -20045,7 +20300,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/mls-recive</property>
@@ -20054,7 +20308,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/mls-volume</property>
@@ -20067,7 +20320,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/mls-volume</property>
@@ -20080,10 +20332,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2mls-lbl</tooltip-id>
+				<tooltip-id>acpmls-lbl</tooltip-id>
 				<label>MLS volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_mls_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/mls-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -20127,10 +20390,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2adf1-lbl</tooltip-id>
+				<tooltip-id>acpadf1-lbl</tooltip-id>
 				<label>ADF1 volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_adf1_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/adf1-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<animation>
@@ -20139,7 +20413,6 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
-
 			<binding>
 				<command>property-toggle</command>
 				<property>controls/audio/acp[1]/adf2-recive</property>
@@ -20148,7 +20421,6 @@
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/adf2-volume</property>
@@ -20161,7 +20433,6 @@
 		<action>
 			<button>4</button>
 			<repeatable>true</repeatable>
-
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/audio/acp[1]/adf2-volume</property>
@@ -20174,10 +20445,21 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>acp2adf2-lbl</tooltip-id>
+				<tooltip-id>acpadf2-lbl</tooltip-id>
 				<label>ADF2 volume control</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>audio_adf2_glare.fo</object-name>
+		<condition>
+			<or>
+				<property>controls/audio/acp[1]/adf2-recive</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
 	</animation>
 
 	<!-- Knob Animation -->
@@ -20186,7 +20468,7 @@
 		<object-name>audio_vhf1.fo</object-name>
 		<object-name>audio_vhf1_glare.fo</object-name>
 		<property>controls/audio/acp[1]/vhf1-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20214,7 +20496,7 @@
 		<object-name>audio_vhf2.fo</object-name>
 		<object-name>audio_vhf2_glare.fo</object-name>
 		<property>controls/audio/acp[1]/vhf2-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20242,7 +20524,7 @@
 		<object-name>audio_vhf3.fo</object-name>
 		<object-name>audio_vhf3_glare.fo</object-name>
 		<property>controls/audio/acp[1]/vhf3-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20270,7 +20552,7 @@
 		<object-name>audio_hf1.fo</object-name>
 		<object-name>audio_hf1_glare.fo</object-name>
 		<property>controls/audio/acp[1]/hf1-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20298,7 +20580,7 @@
 		<object-name>audio_hf2.fo</object-name>
 		<object-name>audio_hf2_glare.fo</object-name>
 		<property>controls/audio/acp[1]/hf2-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20326,7 +20608,7 @@
 		<object-name>audio_int.fo</object-name>
 		<object-name>audio_int_glare.fo</object-name>
 		<property>controls/audio/acp[1]/int-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20354,7 +20636,7 @@
 		<object-name>audio_cab.fo</object-name>
 		<object-name>audio_cab_glare.fo</object-name>
 		<property>controls/audio/acp[1]/cab-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20382,7 +20664,7 @@
 		<object-name>audio_pa_rot.fo</object-name>
 		<object-name>audio_pa_glare.fo</object-name>
 		<property>controls/audio/acp[1]/pa-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20410,7 +20692,7 @@
 		<object-name>audio_vor1.fo</object-name>
 		<object-name>audio_vor1_glare.fo</object-name>
 		<property>controls/audio/acp[1]/vor1-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20438,7 +20720,7 @@
 		<object-name>audio_vor2.fo</object-name>
 		<object-name>audio_vor2_glare.fo</object-name>
 		<property>controls/audio/acp[1]/vor2-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20466,7 +20748,7 @@
 		<object-name>audio_mkr.fo</object-name>
 		<object-name>audio_mkr_glare.fo</object-name>
 		<property>controls/audio/acp[1]/mkr-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20494,7 +20776,7 @@
 		<object-name>audio_ils.fo</object-name>
 		<object-name>audio_ils_glare.fo</object-name>
 		<property>controls/audio/acp[1]/ils-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20522,7 +20804,7 @@
 		<object-name>audio_mls.fo</object-name>
 		<object-name>audio_mls_glare.fo</object-name>
 		<property>controls/audio/acp[1]/mls-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20550,7 +20832,7 @@
 		<object-name>audio_adf1.fo</object-name>
 		<object-name>audio_adf1_glare.fo</object-name>
 		<property>controls/audio/acp[1]/adf1-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
@@ -20578,7 +20860,7 @@
 		<object-name>audio_adf2.fo</object-name>
 		<object-name>audio_adf2_glare.fo</object-name>
 		<property>controls/audio/acp[1]/adf2-recive</property>
-		<factor>-0.01</factor>
+		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
 			<y1-m>-0.23244</y1-m>
