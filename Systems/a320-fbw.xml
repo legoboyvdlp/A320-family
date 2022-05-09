@@ -87,10 +87,16 @@
 				<table>
 					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
 					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
-					<tableData>
-						       0    15
-						    0  9.5  10.5
-						43000  6.5   6.8
+					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
+					<tableData breakPoint="0">
+						       0    10    15
+						    0  9.0  11.0  10.5
+						43000  6.5   7.0   7.0
+					</tableData>
+					<tableData breakPoint="18">
+						       0     10    15
+						    0  10.0  11.0  10.5
+						43000   7.0   7.0   7.0
 					</tableData>
 				</table>
 			</function>
@@ -101,10 +107,16 @@
 				<table>
 					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
 					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
-					<tableData>
-						       0     15
-						    0  13.5  14.5
-						43000   7.5   7.7
+					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
+					<tableData breakPoint="0">
+						       0     10    15
+						    0  12.0  15.0  14.5
+						43000   7.4   7.7   7.7
+					</tableData>
+					<tableData breakPoint="18">
+						       0     10    15
+						    0  15.0  15.0  14.5
+						43000   7.7   7.7   7.7
 					</tableData>
 				</table>
 			</function>
