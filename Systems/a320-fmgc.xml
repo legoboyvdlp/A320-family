@@ -193,43 +193,24 @@
 		<!-- V alpha prot/max -->
 		<lag_filter name="/FMGC/internal/valpha-lag">
 			<input>aero/alpha-deg-fixed</input>
-			<c1>0.3</c1>
+			<c1>0.35</c1>
 		</lag_filter>
-		
-		<fcs_function name="/FMGC/internal/valpha-prot-input">
-			<function>
-				<sqrt>
-					<quotient>
-						<property>/FMGC/internal/valpha-lag</property>
-						<property>fbw/alpha-prot-deg</property>
-					</quotient>
-				</sqrt>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="/FMGC/internal/valpha-max-input">
-			<function>
-				<sqrt>
-					<quotient>
-						<property>/FMGC/internal/valpha-lag</property>
-						<property>fbw/alpha-max-deg</property>
-					</quotient>
-				</sqrt>
-			</function>
-		</fcs_function>
 		
 		<fcs_function name="/FMGC/internal/valpha-prot">
 			<function>
 				<product>
-					<property>velocities/vc-kts</property>
-					<table>
-						<independentVar lookup="row">/FMGC/internal/valpha-prot-input</independentVar>
-						<tableData>
-							0  0.3
-							1  1.0
-							2  1.6
-						</tableData>
-					</table>
+					<min>
+						<property>/systems/navigation/adr/output/cas-1</property>
+						<property>/systems/navigation/adr/output/cas-2</property>
+						<property>/systems/navigation/adr/output/cas-3</property>
+					</min>
+					<pow>
+						<quotient>
+							<property>/FMGC/internal/valpha-lag</property>
+							<property>fbw/alpha-prot-deg</property>
+						</quotient>
+						<value>0.28</value>
+					</pow>
 				</product>
 			</function>
 		</fcs_function>
@@ -237,15 +218,18 @@
 		<fcs_function name="/FMGC/internal/valpha-max">
 			<function>
 				<product>
-					<property>velocities/vc-kts</property>
-					<table>
-						<independentVar lookup="row">/FMGC/internal/valpha-max-input</independentVar>
-						<tableData>
-							0  0.3
-							1  1.0
-							2  1.6
-						</tableData>
-					</table>
+					<min>
+						<property>/systems/navigation/adr/output/cas-1</property>
+						<property>/systems/navigation/adr/output/cas-2</property>
+						<property>/systems/navigation/adr/output/cas-3</property>
+					</min>
+					<pow>
+						<quotient>
+							<property>/FMGC/internal/valpha-lag</property>
+							<property>fbw/alpha-max-deg</property>
+						</quotient>
+						<value>0.275</value>
+					</pow>
 				</product>
 			</function>
 		</fcs_function>
@@ -609,6 +593,16 @@
 		<!-- Vls -->
 		<switch name="/FMGC/internal/takeoff-latch">
 			<default value="/FMGC/internal/takeoff-latch"/>
+			<test logic="AND" value="0">
+				position/wow eq 0
+				fadec/eng-out eq 0
+				fadec/max-detent le 2
+			</test>
+			<test logic="AND" value="0">
+				position/wow eq 0
+				fadec/eng-out eq 1
+				fadec/max-detent le 4
+			</test>
 			<test logic="OR" value="1">
 				position/wow eq 1
 				/FMGC/internal/phase lt 2

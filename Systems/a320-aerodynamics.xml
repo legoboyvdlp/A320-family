@@ -118,10 +118,10 @@
 					<independentVar lookup="row">fcs/flap-pos-deg</independentVar>
 					<tableData>
 						 0  0.0000
-						10  0.1387
-						15  0.2377
-						20  0.3127
-						40  0.3894
+						10  0.0923
+						15  0.1463
+						20  0.2079
+						40  0.4112
 					</tableData>
 				</table>
 			</product>
@@ -137,9 +137,9 @@
 					<independentVar lookup="row">fcs/slat-pos-deg</independentVar>
 					<tableData>
 						 0  0.0000
-						18  0.2734
-						22  0.3187
-						27  0.3523
+						18  0.1814
+						22  0.2757
+						27  0.3975
 					</tableData>
 				</table>
 			</product>

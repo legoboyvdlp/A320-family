@@ -2357,7 +2357,8 @@
 			<volume>0.05</volume>
 		</pushback>
 
-        <gear-screech>
+		<!-- Antiskid stops this... but its not setup to detect slipping yet -->
+        <!--gear-screech>
             <name>gear-screech</name>
             <mode>once</mode>
             <path>Aircraft/A320-family/Sounds/Effects/tires-screech-asphalt.wav</path>
@@ -2397,7 +2398,7 @@
 			</volume>
             <reference-dist>10</reference-dist>
             <max-dist>200.0</max-dist>
-        </gear-screech>
+        </gear-screech-->
 
         <gear-screech-looped>
             <name>gear-screech looped</name>
