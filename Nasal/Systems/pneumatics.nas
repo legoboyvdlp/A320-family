@@ -70,7 +70,6 @@ var PNEU = {
 		blower: props.globals.getNode("/controls/pneumatics/switches/blower"),
 		cabinFans: props.globals.getNode("/controls/pneumatics/switches/cabin-fans"),
 		extract: props.globals.getNode("/controls/pneumatics/switches/extract"),
-		groundAir: props.globals.getNode("/controls/pneumatics/switches/ground-air"),
 		hotAir: props.globals.getNode("/controls/pneumatics/switches/hot-air"),
 		pack1: props.globals.getNode("/controls/pneumatics/switches/pack-1"),
 		pack2: props.globals.getNode("/controls/pneumatics/switches/pack-2"),
@@ -112,7 +111,6 @@ var PNEU = {
 		me.Switch.blower.setBoolValue(0);
 		me.Switch.cabinFans.setBoolValue(1);
 		me.Switch.extract.setBoolValue(0);
-		me.Switch.groundAir.setBoolValue(0);
 		me.Switch.hotAir.setBoolValue(1);
 		me.Switch.pack1.setBoolValue(0);
 		me.Switch.pack2.setBoolValue(0);
