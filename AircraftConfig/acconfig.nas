@@ -22,7 +22,7 @@ var spinning = maketimer(0.05, func {
 
 var failReset = func {
 	systems.ELEC.resetFail();
-	systems.PNEU.resetFail();
+	systems.PNEU.resetFailures();
 	fbw.FBW.resetFail();
 	systems.HYD.resetFail();
 }
