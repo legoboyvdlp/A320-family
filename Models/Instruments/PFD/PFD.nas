@@ -1326,12 +1326,12 @@ var canvas_pfd = {
 					notification.ALPHAmax = notification.valphaMax - 30 - notification.ASI;
 				}
 				
-				if (fmgc.FMGCInternal.vsw <= 30) {
+				if (notification.vsw <= 30) {
 					notification.ALPHAvsw = 0 - notification.ASI;
-				} else if (fmgc.FMGCInternal.vsw >= 420) {
+				} else if (notification.vsw >= 420) {
 					notification.ALPHAvsw = 390 - notification.ASI;
 				} else {
-					notification.ALPHAvsw = fmgc.FMGCInternal.vsw - 30 - notification.ASI;
+					notification.ALPHAvsw = notification.vsw - 30 - notification.ASI;
 				}
 			} else {
 				notification.ALPHAprot = 0;
@@ -2271,6 +2271,7 @@ var input = {
 	valphaMax: "/FMGC/internal/valpha-max",
 	valphaProt: "/FMGC/internal/valpha-prot",
 	vls: "/FMGC/internal/vls",
+	vsw: "/FMGC/internal/vsw",
 };
 
 foreach (var name; keys(input)) {

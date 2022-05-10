@@ -300,6 +300,7 @@ var FMGCNodes = {
 	vs1gConf2: props.globals.getNode("/FMGC/internal/vs1g-conf-2"),
 	vs1gConf3: props.globals.getNode("/FMGC/internal/vs1g-conf-3"),
 	vs1gConfFull: props.globals.getNode("/FMGC/internal/vs1g-conf-full"),
+	vsw: props.globals.getNode("/FMGC/internal/vsw"),
 };
 
 ############
@@ -732,7 +733,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	# Pull speeds from JSBsim
-	FMGCInternal.vsw = FMGCNodes.vs1g.getValue();
+	FMGCInternal.vsw = FMGCNodes.vsw.getValue();
 	FMGCInternal.vls = FMGCNodes.vls.getValue();
 	FMGCInternal.vs1g_conf_0 = FMGCNodes.vs1gConf0.getValue();
 	FMGCInternal.vs1g_conf_1 = FMGCNodes.vs1gConf1.getValue();

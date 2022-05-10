@@ -190,50 +190,6 @@
 			</function>
 		</fcs_function>
 		
-		<!-- V alpha prot/max -->
-		<lag_filter name="/FMGC/internal/valpha-lag">
-			<input>aero/alpha-deg-fixed</input>
-			<c1>0.35</c1>
-		</lag_filter>
-		
-		<fcs_function name="/FMGC/internal/valpha-prot">
-			<function>
-				<product>
-					<min>
-						<property>/systems/navigation/adr/output/cas-1</property>
-						<property>/systems/navigation/adr/output/cas-2</property>
-						<property>/systems/navigation/adr/output/cas-3</property>
-					</min>
-					<pow>
-						<quotient>
-							<property>/FMGC/internal/valpha-lag</property>
-							<property>fbw/alpha-prot-deg</property>
-						</quotient>
-						<value>0.28</value>
-					</pow>
-				</product>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="/FMGC/internal/valpha-max">
-			<function>
-				<product>
-					<min>
-						<property>/systems/navigation/adr/output/cas-1</property>
-						<property>/systems/navigation/adr/output/cas-2</property>
-						<property>/systems/navigation/adr/output/cas-3</property>
-					</min>
-					<pow>
-						<quotient>
-							<property>/FMGC/internal/valpha-lag</property>
-							<property>fbw/alpha-max-deg</property>
-						</quotient>
-						<value>0.275</value>
-					</pow>
-				</product>
-			</function>
-		</fcs_function>
-		
 		<!-- Extra VS1g tables for predictions etc -->
 		<fcs_function name="/FMGC/internal/vs1g-conf-0">
 			<function>
@@ -590,6 +546,69 @@
 			</clipto>
 		</pure_gain>
 		
+		<!-- Vsw -->
+		<fcs_function name="/FMGC/internal/vsw">
+			<function>
+				<sum>
+					<product>
+						<property>/FMGC/internal/vs1g</property>
+						<value>1.03</value>
+					</product>
+					<product>
+						<difference>
+							<property>fbw/pitch/load-factor</property>
+							<value>1</value>
+						</difference>
+						<value>10</value>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<!-- V alpha prot/max -->
+		<lag_filter name="/FMGC/internal/valpha-lag">
+			<input>aero/alpha-deg-fixed</input>
+			<c1>0.35</c1>
+		</lag_filter>
+		
+		<fcs_function name="/FMGC/internal/valpha-prot">
+			<function>
+				<product>
+					<min>
+						<property>/systems/navigation/adr/output/cas-1</property>
+						<property>/systems/navigation/adr/output/cas-2</property>
+						<property>/systems/navigation/adr/output/cas-3</property>
+					</min>
+					<pow>
+						<quotient>
+							<property>/FMGC/internal/valpha-lag</property>
+							<property>fbw/alpha-prot-deg</property>
+						</quotient>
+						<value>0.28</value>
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/valpha-max">
+			<function>
+				<product>
+					<min>
+						<property>/systems/navigation/adr/output/cas-1</property>
+						<property>/systems/navigation/adr/output/cas-2</property>
+						<property>/systems/navigation/adr/output/cas-3</property>
+					</min>
+					<pow>
+						<quotient>
+							<property>/FMGC/internal/valpha-lag</property>
+							<property>fbw/alpha-max-deg</property>
+						</quotient>
+						<value>0.275</value>
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+		
 		<!-- Vls -->
 		<switch name="/FMGC/internal/takeoff-latch">
 			<default value="/FMGC/internal/takeoff-latch"/>
@@ -650,7 +669,14 @@
 					</product>
 					<!-- Never drop below either of the following -->
 					<value>113</value>
-					<property>/FMGC/internal/valpha-prot</property>
+					<ifthen>
+						<eq>
+							<property>/it-fbw/law</property>
+							<value>0</value>
+						</eq>
+						<property>/FMGC/internal/valpha-prot</property>
+						<property>/FMGC/internal/vsw</property>
+					</ifthen>
 				</max>
 			</function>
 			<clipto>
