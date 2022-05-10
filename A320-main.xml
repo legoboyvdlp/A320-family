@@ -4766,9 +4766,10 @@
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
 		</acconfig>
 		<effects>
+			<file>Aircraft/A320-family/Nasal/Effects/icing.nas</file>
 			<file>Aircraft/A320-family/Nasal/Effects/light-manager.nas</file>
 			<file>Aircraft/A320-family/Nasal/Effects/thunder-effects.nas</file>
-			<file>Aircraft/A320-family/Nasal/Effects/icing.nas</file>
+			<file>Aircraft/A320-family/Nasal/Effects/tyresmoke.nas</file>
 		</effects>
 		<systems>
 			<file>Aircraft/A320-family/Nasal/Systems/APU.nas</file>
@@ -4785,7 +4786,6 @@
 			<file>Aircraft/A320-family/Nasal/Systems/ground_services.nas</file>
 			<file>Aircraft/A320-family/Nasal/Systems/payload.nas</file>
 			<file>Aircraft/A320-family/Nasal/Panels/clock.nas</file>
-			<file>Aircraft/A320-family/Nasal/Systems/tyresmoke.nas</file>
 		</systems>
 		<ecam>
 			<file>Aircraft/A320-family/Nasal/ECAM/SystemDisplay.nas</file>
