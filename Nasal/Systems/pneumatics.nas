@@ -110,7 +110,7 @@ var PNEU = {
 		me.Switch.bleed1.setBoolValue(1);
 		me.Switch.bleed2.setBoolValue(1);
 		me.Switch.blower.setBoolValue(0);
-		me.Switch.cabinFans.setBoolValue(0);
+		me.Switch.cabinFans.setBoolValue(1);
 		me.Switch.extract.setBoolValue(0);
 		me.Switch.groundAir.setBoolValue(0);
 		me.Switch.hotAir.setBoolValue(1);
