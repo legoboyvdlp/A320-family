@@ -77,6 +77,7 @@ var flightPlanController = {
 		me.arrivalIndex[n] = 0; # reset arrival index calculations
 	},
 	
+	oldCurrentWp: 0,
 	createTemporaryFlightPlan: func(n) {
 		me.resetFlightplan(n);
 		me.flightplans[n] = me.flightplans[2].clone();
@@ -91,6 +92,9 @@ var flightPlanController = {
 			canvas_mcdu.myAirways[n].updateTmpy();
 		}
 		fmgc.windController.createTemporaryWinds(n);
+		
+		me.oldCurrentWp = FPLN.currentWP.getValue();
+		
 		me.flightPlanChanged(n);
 	},
 	
@@ -161,6 +165,12 @@ var flightPlanController = {
 		}
 		
 		fmgc.windController.destroyTemporaryWinds(n, a);
+		
+		# TODO - handle changed wpt order
+		if (FPLN.currentWP.getValue() != me.oldCurrentWp) {
+			FPLN.currentWP.setValue(me.oldCurrentWp);
+		}
+		
 		me.flightPlanChanged(n);
 	},
 	
