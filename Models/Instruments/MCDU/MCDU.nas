@@ -442,22 +442,45 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setFont("HoneywellMCDUSmall.ttf");
 			me["Simple_R5S"].setFontSize(small);
 		}
-		if (page == "RECEIVEDMSG" or page == "ATISDETAIL") {
-			if (page == "RECEIVEDMSG") {
+		
+		if (page == "ARRIVAL") {
+			me["Simple_C4S"].setFont("HoneywellMCDU.ttf");
+			me["Simple_C5S"].setFont("HoneywellMCDU.ttf");
+			me["Simple_C6S"].setFont("HoneywellMCDU.ttf");
+		} else {
+			me["Simple_C4S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_C5S"].setFont("HoneywellMCDUSmall.ttf");
+			me["Simple_C6S"].setFont("HoneywellMCDUSmall.ttf");
+		}
+		
+		if (page == "RECEIVEDMSG" or page == "ATISDETAIL" or (page == "ARRIVAL" and myArrival[i] != nil)) {
+			if (page == "ARRIVAL") {
+				if (myArrival[i].activePage != 2) {
+					me["Simple_L2S"].setFont("HoneywellMCDUSmall.ttf");
+					me["Simple_L3S"].setFont("HoneywellMCDU.ttf");
+				} else {
+					me["Simple_L2S"].setFont("HoneywellMCDU.ttf");
+					me["Simple_L3S"].setFont("HoneywellMCDUSmall.ttf");
+				}
+			} else if (page == "RECEIVEDMSG") {
 				me["Simple_L2S"].setFontSize(normal);
 				me["Simple_L3S"].setFontSize(normal);
 				me["Simple_L4S"].setFontSize(normal);
 				me["Simple_L5S"].setFontSize(normal);
-			} else {
+				me["Simple_L2S"].setFont("HoneywellMCDU.ttf");
+				me["Simple_L3S"].setFont("HoneywellMCDU.ttf");
+				me["Simple_L4S"].setFont("HoneywellMCDU.ttf");
+				me["Simple_L5S"].setFont("HoneywellMCDU.ttf");
+			} else if (page == "ATISDETAIL") {
 				me["Simple_L2S"].setFontSize(small);
 				me["Simple_L3S"].setFontSize(small);
 				me["Simple_L4S"].setFontSize(small);
 				me["Simple_L5S"].setFontSize(small);
+				me["Simple_L2S"].setFont("HoneywellMCDU.ttf");
+				me["Simple_L3S"].setFont("HoneywellMCDU.ttf");
+				me["Simple_L4S"].setFont("HoneywellMCDU.ttf");
+				me["Simple_L5S"].setFont("HoneywellMCDU.ttf");
 			}
-			me["Simple_L2S"].setFont("HoneywellMCDU.ttf");
-			me["Simple_L3S"].setFont("HoneywellMCDU.ttf");
-			me["Simple_L4S"].setFont("HoneywellMCDU.ttf");
-			me["Simple_L5S"].setFont("HoneywellMCDU.ttf");
 		} else {
 			me["Simple_L2S"].setFont("HoneywellMCDUSmall.ttf");
 			me["Simple_L2S"].setFontSize(small);
@@ -5233,9 +5256,19 @@ var canvas_MCDU_base = {
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				
-				me.standardFontSize();
+				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
+				if (myArrival[i] != nil and myArrival[i].activePage != 2) {
+					me.fontSizeLeftS(small, small, normal, small, small, small);
+				} else {
+					me.fontSizeLeftS(small, normal, small, small, small, small);
+				}
+				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.fontSizeRightS(small, small, small, small, small, small);
+				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
+				me.fontSizeCenterS(small, small, small, small, small, small);
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenterS("wht", "wht", "wht", "blu", "blu", "blu");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				
 				if (myArrival[i].arrowsMatrix[0][1]) {
@@ -5264,11 +5297,9 @@ var canvas_MCDU_base = {
 					me.dynamicPageFunc(myArrival[i].C3, "Simple_C3");
 					me.dynamicPageFunc(myArrival[i].C4, "Simple_C4");
 					me.dynamicPageFunc(myArrival[i].C5, "Simple_C5");
+					me.dynamicPageFunc(myArrival[i].C6, "Simple_C6");
 					
 					me.colorCenter(myArrival[i].C1[2],myArrival[i].C2[2],myArrival[i].C3[2],myArrival[i].C4[2],myArrival[i].C5[2],myArrival[i].C6[2]);
-					
-					me["Simple_C6"].hide();
-					me["Simple_C6S"].hide();
 						
 					me.dynamicPageFunc(myArrival[i].R1, "Simple_R1");
 					me.dynamicPageFunc(myArrival[i].R2, "Simple_R2");
@@ -5846,8 +5877,13 @@ var canvas_MCDU_base = {
 			me[string].hide();
 			me[string ~ "S"].hide();
 		} else {
-			me[string].show();
-			me[string].setText(dynamic[0]);
+			if (dynamic[0] != "") {
+				me[string].show();
+				me[string].setText(dynamic[0]);
+			} else {
+				me[string].hide();
+			}
+			
 			if (dynamic[1] != nil) {
 				me[string ~ "S"].show();
 				me[string ~ "S"].setText(dynamic[1]);

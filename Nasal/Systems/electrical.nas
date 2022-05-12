@@ -24,6 +24,7 @@ var ELEC = {
 		acEssBusFault: props.globals.getNode("/systems/failures/electrical/ac-ess-bus"),
 		ac1BusFault: props.globals.getNode("/systems/failures/electrical/ac-1-bus"),
 		ac2BusFault: props.globals.getNode("/systems/failures/electrical/ac-2-bus"),
+		dcBatBusFault: props.globals.getNode("/systems/failures/electrical/dc-bat-bus"),
 		dcEssBusFault: props.globals.getNode("/systems/failures/electrical/dc-ess-bus"),
 		dc1BusFault: props.globals.getNode("/systems/failures/electrical/dc-1-bus"),
 		dc2BusFault: props.globals.getNode("/systems/failures/electrical/dc-2-bus"),
@@ -178,6 +179,7 @@ var ELEC = {
 		me.Fail.acEssBusFault.setBoolValue(0);
 		me.Fail.ac1BusFault.setBoolValue(0);
 		me.Fail.ac2BusFault.setBoolValue(0);
+		me.Fail.dcBatBusFault.setBoolValue(0);
 		me.Fail.dcEssBusFault.setBoolValue(0);
 		me.Fail.dc1BusFault.setBoolValue(0);
 		me.Fail.dc2BusFault.setBoolValue(0);
