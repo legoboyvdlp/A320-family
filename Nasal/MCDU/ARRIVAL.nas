@@ -25,7 +25,6 @@ var arrivalPage = {
 	R4: [nil, nil, "ack"],
 	R5: [nil, nil, "ack"],
 	R6: [nil, nil, "ack"],
-	apprIsRwyFlag: nil,
 	arrAirport: nil,
 	runways: nil,
 	selectedApproach: nil,
@@ -186,7 +185,7 @@ var arrivalPage = {
 	
 	# Functions to populate top row
 	updateActiveApproach: func() {
-		if (me.apprIsRwyFlag) {
+		if (me.selectedApproach == nil) {
 			if (fmgc.flightPlanController.temporaryFlag[me.computer]) {
 				if (fmgc.flightPlanController.flightplans[me.computer].destination_runway != nil) {
 					me.L1 = [fmgc.flightPlanController.flightplans[me.computer].destination_runway.id, " APPR", "yel"];
@@ -314,7 +313,6 @@ var arrivalPage = {
 	},
 	
 	updateApproaches: func() {
-		me.apprIsRwyFlag = 0;
 		if (me.arrAirport == nil) {
 			me.arrAirport = findAirportsByICAO(left(me.id, 4));
 		}
@@ -324,16 +322,30 @@ var arrivalPage = {
 		
 		me._approaches = me.arrAirport[0].getApproachList();
 		me.approaches = sort(me._approaches,func(a,b) cmp(a,b));
-		if (me.approaches == nil or size(me.approaches) == 0) {
-			me.apprIsRwyFlag = 1;
-			me._approaches = me.arrAirport[0].runways;
-			me.approaches = sort(keys(me._approaches),func(a,b) cmp(a,b));
+		
+		me._approaches = sort(keys(me.arrAirport[0].runways), func(a,b) cmp(a,b));
+		foreach (var approach; me._approaches) {
+			me.approaches = append(me.approaches, approach);
 		}
-		if (!me.apprIsRwyFlag) {
-			if (size(me.approaches) >= 1) {
+		
+		if (size(me.approaches) >= 1) {
+			me.IAPghost = me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]);
+			
+			if (me.IAPghost != nil) {
 				me.L3 = [" " ~ me.approaches[0 + me.scrollApproach], " APPR", "blu"];
-				me.C3 = [math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]).runways[0]].length) ~ "M", "AVAILABLE   ", "blu"];
-				me.R3 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]).runways[0]].heading), nil, "blu"];
+				me.C3 = [math.round(me.arrAirport[0].runways[me.IAPghost.runways[0]].length) ~ "M", "AVAILABLE  ", "blu"];
+				me.R3 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.IAPghost.runways[0]].heading), nil, "blu"];
+				if (me.approaches[0 + me.scrollApproach] != me.selectedApproach) {
+					me.arrowsMatrix[0][2] = 1;
+					me.arrowsColour[0][2] = "blu";
+				} else {
+					me.arrowsMatrix[0][2] = 0;
+					me.arrowsColour[0][2] = "ack";
+				}
+			} else {
+				me.L3 = [" " ~ me.arrAirport[0].runways[me.approaches[0 + me.scrollApproach]].id, " APPR", "blu"];
+				me.C3 = [math.round(me.arrAirport[0].runways[me.approaches[0 + me.scrollApproach]].length) ~ "M", "AVAILABLE  ", "blu"];
+				me.R3 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.approaches[0 + me.scrollApproach]].heading), nil, "blu"];
 				if (me.approaches[0 + me.scrollApproach] != me.selectedApproach) {
 					me.arrowsMatrix[0][2] = 1;
 					me.arrowsColour[0][2] = "blu";
@@ -342,14 +354,46 @@ var arrivalPage = {
 					me.arrowsColour[0][2] = "ack";
 				}
 			}
-			if (size(me.approaches) >= 2) {
+		}
+		if (size(me.approaches) >= 2) {
+			me.IAPghost_prev = me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]);
+			me.IAPghost = me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]);
+			
+			if (me.IAPghost != nil) {
 				me.L4 = [" " ~ me.approaches[1 + me.scrollApproach], nil, "blu"];
-				if (me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]).radio == "ILS") {
-					me.C4 = [math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).runways[0]].length) ~ "M", me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]).runways[0]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[0 + me.scrollApproach]).runways[0]].ils_frequency_mhz), "blu"];
+				
+				if (me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils != nil) {
+					me.C4 = [math.round(me.arrAirport[0].runways[me.IAPghost.runways[0]].length) ~ "M", me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils_frequency_mhz), "blu"];
 				} else {
-					me.C4 = [math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).runways[0]].length) ~ "M", nil, "blu"];
+					me.C4 = [math.round(me.arrAirport[0].runways[me.IAPghost.runways[0]].length) ~ "M", nil, "blu"];
 				}
-				me.R4 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).runways[0]].heading), nil, "blu"];
+				
+				me.R4 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.IAPghost.runways[0]].heading), nil, "blu"];
+				if (me.approaches[1 + me.scrollApproach] != me.selectedApproach) {
+					me.arrowsMatrix[0][3] = 1;
+					me.arrowsColour[0][3] = "blu";
+				} else {
+					me.arrowsMatrix[0][3] = 0;
+					me.arrowsColour[0][3] = "ack";
+				}
+			} else {
+				me.L4 = [" " ~ me.arrAirport[0].runways[me.approaches[1 + me.scrollApproach]].id, nil, "blu"];
+				
+				if (me.IAPghost_prev != nil) {
+					if (me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils != nil) {
+						me.C4 = [math.round(me.arrAirport[0].runways[me.approaches[1 + me.scrollApproach]].length) ~ "M", me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils_frequency_mhz), "blu"];
+					} else {
+						me.C4 = [math.round(me.arrAirport[0].runways[me.approaches[1 + me.scrollApproach]].length) ~ "M", nil, "blu"];
+					}
+				} else {
+					if (me.arrAirport[0].runways[me.approaches[0 + me.scrollApproach]].ils != nil) {
+						me.C4 = [math.round(me.arrAirport[0].runways[me.approaches[1 + me.scrollApproach]].length) ~ "M", me.arrAirport[0].runways[me.approaches[0 + me.scrollApproach]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.approaches[0 + me.scrollApproach]].ils_frequency_mhz), "blu"];
+					} else {
+						me.C4 = [math.round(me.arrAirport[0].runways[me.approaches[1 + me.scrollApproach]].length) ~ "M", nil, "blu"];
+					}
+				}
+				
+				me.R4 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.approaches[1 + me.scrollApproach]].heading), nil, "blu"];
 				if (me.approaches[1 + me.scrollApproach] != me.selectedApproach) {
 					me.arrowsMatrix[0][3] = 1;
 					me.arrowsColour[0][3] = "blu";
@@ -358,17 +402,28 @@ var arrivalPage = {
 					me.arrowsColour[0][3] = "ack";
 				}
 			}
-			if (size(me.approaches) >= 3) {
+		}
+		if (size(me.approaches) >= 3) {
+			me.IAPghost_prev = me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]);
+			me.IAPghost = me.arrAirport[0].getIAP(me.approaches[2 + me.scrollApproach]);
+			
+			if (me.IAPghost != nil) {
 				me.L5 = [" " ~ me.approaches[2 + me.scrollApproach], nil, "blu"];
-				if (me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).radio == "ILS") {
-					me.C5 = [math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[2 + me.scrollApproach]).runways[0]].length) ~ "M", me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).runways[0]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[1 + me.scrollApproach]).runways[0]].ils_frequency_mhz), "blu"];
+				
+				if (me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils != nil) {
+					me.C5 = [math.round(me.arrAirport[0].runways[me.IAPghost.runways[0]].length) ~ "M", me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils_frequency_mhz), "blu"];
 				} else {
-					me.C5 = [math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[2 + me.scrollApproach]).runways[0]].length) ~ "M", nil, "blu"];
+					me.C5 = [math.round(me.arrAirport[0].runways[me.IAPghost.runways[0]].length) ~ "M", nil, "blu"];
 				}
-				me.R5 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[2 + me.scrollApproach]).runways[0]].heading), nil, "blu"];
-				if (me.arrAirport[0].getIAP(me.approaches[2 + me.scrollApproach]).radio == "ILS") {
-					me.C6[1] = me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[2 + me.scrollApproach]).runways[0]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.arrAirport[0].getIAP(me.approaches[2 + me.scrollApproach]).runways[0]].ils_frequency_mhz);
+				
+				me.R5 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.IAPghost.runways[0]].heading), nil, "blu"];
+				
+				if (me.arrAirport[0].runways[me.IAPghost.runways[0]].ils != nil) {
+					me.C6 = ["", me.arrAirport[0].runways[me.IAPghost.runways[0]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.IAPghost.runways[0]].ils_frequency_mhz), "ack"]
+				} else {
+					me.C6 = [nil, nil, "ack"];
 				}
+				
 				if (me.approaches[2 + me.scrollApproach] != me.selectedApproach) {
 					me.arrowsMatrix[0][4] = 1;
 					me.arrowsColour[0][4] = "blu";
@@ -376,48 +431,31 @@ var arrivalPage = {
 					me.arrowsMatrix[0][3] = 0;
 					me.arrowsColour[0][3] = "ack";
 				}
-			}
-		} else {
-			# show runways, not IAPS if no approaches. Not realistic but people with no navigraph keep complaining
-			if (size(me.approaches) >= 1) {
-				me.L3 = [" " ~ me._approaches[me.approaches[0 + me.scrollApproach]].id, " RWY", "blu"];
-				me.C3 = [math.round(me._approaches[me.approaches[0 + me.scrollApproach]].length) ~ "M", "AVAILABLE   ", "blu"];
-				me.R3 = ["CRS" ~ math.round(me._approaches[me.approaches[0 + me.scrollApproach]].heading), nil, "blu"];
-				if (me.approaches[0 + me.scrollApproach] != me.selectedApproach) {
-					me.arrowsMatrix[0][2] = 1;
-					me.arrowsColour[0][2] = "blu";
+			} else {
+				me.L5 = [" " ~ me.arrAirport[0].runways[me.approaches[2 + me.scrollApproach]].id, nil, "blu"];
+				
+				if (me.IAPghost_prev != nil) {
+					if (me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils != nil) {
+						me.C5 = [math.round(me.arrAirport[0].runways[me.approaches[2 + me.scrollApproach]].length) ~ "M", me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.IAPghost_prev.runways[0]].ils_frequency_mhz), "blu"];
+					} else {
+						me.C5 = [math.round(me.arrAirport[0].runways[me.approaches[2 + me.scrollApproach]].length) ~ "M", nil, "blu"];
+					}
 				} else {
-					me.arrowsMatrix[0][2] = 0;
-					me.arrowsColour[0][2] = "ack";
+					if (me.arrAirport[0].runways[me.approaches[1 + me.scrollApproach]].ils != nil) {
+						me.C5 = [math.round(me.arrAirport[0].runways[me.approaches[2 + me.scrollApproach]].length) ~ "M", me.arrAirport[0].runways[me.approaches[1 + me.scrollApproach]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.approaches[1 + me.scrollApproach]].ils_frequency_mhz), "blu"];
+					} else {
+						me.C5 = [math.round(me.arrAirport[0].runways[me.approaches[2 + me.scrollApproach]].length) ~ "M", nil, "blu"];
+					}
 				}
-			}
-			if (size(me.approaches) >= 2) {
-				me.L4 = [" " ~ me._approaches[me.approaches[1 + me.scrollApproach]].id, nil, "blu"];
-				if (me._approaches[me.approaches[0 + me.scrollApproach]].ils != nil) {
-					me.C4 = [math.round(me._approaches[me.approaches[1 + me.scrollApproach]].length) ~ "M", me._approaches[me.approaches[0 + me.scrollApproach]].ils.id ~ "/" ~ sprintf("%7.2f", me._approaches[me.approaches[0 + me.scrollApproach]].ils_frequency_mhz), "blu"];
+				
+				me.R5 = ["CRS" ~ math.round(me.arrAirport[0].runways[me.approaches[2 + me.scrollApproach]].heading), nil, "blu"];
+				
+				if (me.arrAirport[0].runways[me.approaches[2 + me.scrollApproach]].ils != nil) {
+					me.C6 = ["", me.arrAirport[0].runways[me.approaches[2 + me.scrollApproach]].ils.id ~ "/" ~ sprintf("%7.2f", me.arrAirport[0].runways[me.approaches[2 + me.scrollApproach]].ils_frequency_mhz), "ack"];
 				} else {
-					me.C4 = [math.round(me._approaches[me.approaches[1 + me.scrollApproach]].length) ~ "M", nil, "blu"];
+					me.C6 = [nil, nil, "ack"];
 				}
-				me.R4 = ["CRS" ~ math.round(me._approaches[me.approaches[1 + me.scrollApproach]].heading), nil, "blu"];
-				if (me.approaches[1 + me.scrollApproach] != me.selectedApproach) {
-					me.arrowsMatrix[0][3] = 1;
-					me.arrowsColour[0][3] = "blu";
-				} else {
-					me.arrowsMatrix[0][3] = 0;
-					me.arrowsColour[0][3] = "ack";
-				}
-			}
-			if (size(me.approaches) >= 3) {
-				me.L5 = [" " ~ me._approaches[me.approaches[2 + me.scrollApproach]].id, nil, "blu"];
-				if (me._approaches[me.approaches[1 + me.scrollApproach]].ils != nil) {
-					me.C5 = [math.round(me._approaches[me.approaches[2 + me.scrollApproach]].length) ~ "M", me._approaches[me.approaches[1 + me.scrollApproach]].ils.id ~ "/" ~ sprintf("%7.2f", me._approaches[me.approaches[1 + me.scrollApproach]].ils_frequency_mhz), "blu"];
-				} else {
-					me.C5 = [math.round(me._approaches[me.approaches[2 + me.scrollApproach]].length) ~ "M", nil, "blu"];
-				}
-				me.R5 = ["CRS" ~ math.round(me._approaches[me.approaches[2 + me.scrollApproach]].heading), nil, "blu"];
-				if (me._approaches[me.approaches[2 + me.scrollApproach]].ils != nil) {
-					me.C6[1] = me._approaches[me.approaches[2 + me.scrollApproach]].ils.id ~ "/" ~ sprintf("%7.2f", me._approaches[me.approaches[2 + me.scrollApproach]].ils_frequency_mhz);
-				}
+				
 				if (me.approaches[2 + me.scrollApproach] != me.selectedApproach) {
 					me.arrowsMatrix[0][4] = 1;
 					me.arrowsColour[0][4] = "blu";
@@ -455,7 +493,8 @@ var arrivalPage = {
 		}
 		
 		if (size(me.stars) >= 1) {
-			me.L3 = [" " ~ me.stars[0 + me.scrollStars], "STARS", "blu"];
+			me.L3 = [" " ~ me.stars[0 + me.scrollStars], " STARS", "blu"];
+			me.C3 = ["", "AVAILABLE   ", "blu"];
 			if (me.stars[0 + me.scrollStars] != me.selectedSTAR) {
 				me.arrowsMatrix[0][2] = 1;
 				me.arrowsColour[0][2] = "blu";
@@ -787,13 +826,14 @@ var arrivalPage = {
 					isNoTransArr[me.computer] = 0;
 					isNoStar[me.computer] = 0;
 					me.makeTmpy();
-					if (!me.apprIsRwyFlag) {
-						me.selectedApproach = me.arrAirport[0].getIAP(me.approaches[index - 3 + me.scrollApproach]);
+					me.selectedApproach = me.arrAirport[0].getIAP(me.approaches[index - 3 + me.scrollApproach]);
+					if (me.selectedApproach != nil) {
 						fmgc.flightPlanController.flightplans[me.computer].destination_runway = me.arrAirport[0].runways[me.selectedApproach.runways[0]];
 						fmgc.flightPlanController.flightplans[me.computer].approach = me.selectedApproach;
 					} else {
 						me.selectedApproach = me.arrAirport[0].runways[index - 3 + me.scrollApproach];
 						fmgc.flightPlanController.flightplans[me.computer].destination_runway = me.arrAirport[0].runway(me.approaches[index - 3 + me.scrollApproach]);
+						fmgc.flightPlanController.flightplans[me.computer].approach = nil;
 					}
 					setprop("FMGC/internal/baro", 99999);
 					setprop("FMGC/internal/radio", 99999);
