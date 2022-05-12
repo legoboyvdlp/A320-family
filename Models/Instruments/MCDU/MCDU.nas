@@ -2776,6 +2776,7 @@ var canvas_MCDU_base = {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(BLUE);
 				fmgc.FMGCInternal.crzTemp = 15 - (2 * fmgc.FMGCInternal.crzFl / 10);
+				fmgc.FMGCInternal.crzTempSet = 1;
 				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%+3.0f°", fmgc.FMGCInternal.crzTemp));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
