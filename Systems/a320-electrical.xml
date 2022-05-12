@@ -1991,6 +1991,9 @@
 		
 		<switch name="/systems/electrical/bus/dc-bat">
             <default value="0"/>
+            <test logic="AND" value="0">
+                /systems/failures/electrical/dc-bat-bus eq 1
+            </test>
             <test logic="AND" value="/systems/electrical/relay/dc-bat-tie-dc-1/output-tie">
                 /systems/electrical/bus/dc-bat-src eq 1
             </test>
