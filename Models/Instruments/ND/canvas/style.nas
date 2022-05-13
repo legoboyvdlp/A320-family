@@ -593,7 +593,7 @@ canvas.NDStyles["Airbus"] = {
 		{
 			name: "DECEL",
 			isMapStructure: 1,
-			update_on: ["toggle_display_mode","toggle_range"],
+			update_on: [ {rate_hz: 1}, "toggle_display_mode","toggle_range"],
 			predicate: func(nd, layer) {
 				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting)) and getprop("/instrumentation/nd/symbols/decel/show");
 				layer.group.setVisible( visible );
