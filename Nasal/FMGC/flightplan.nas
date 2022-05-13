@@ -215,6 +215,8 @@ var flightPlanController = {
 	
 	autoSequencing: func() {
 		if (!me.active.getBoolValue()) { return; }
+		if (pts.Sim.Pause.getBoolValue()) { return; }
+		
 		me.calculateTimeAltitudeOnSequence();
 		
 		# Advancing logic
@@ -328,6 +330,7 @@ var flightPlanController = {
 			# fudge the altitude since we cannot create a hdgtoAlt from nasal. Assume 600 feet per mile - 2.5 miles 
 			me.flightplans[n].insertWP(createWP(me.childWPBearingDistance(wptStore, me.flightplans[n].departure_runway.heading, 2.5 + (me.flightplans[n].departure_runway.length * M2NM)), "1500", "sid"), 1);
 			me.flightplans[n].getWP(1).fly_type = "flyOver";
+			me.flightplans[n].getWP(1).setAltitude(1500, "at");
 			fmgc.windController.insertWind(n, 1, 0, "1500");
 		}
 		me.flightPlanChanged(n);

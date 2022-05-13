@@ -851,6 +851,8 @@ var lskbutton = func(btn, i) {
 			} else {
 				 if (canvas_mcdu.myDuplicate[i] != nil and canvas_mcdu.myDuplicate[i].flagPROG) {
 					pagebutton("prog",i);
+				 } else {
+					pageNode[i].setValue("F-PLNA");
 				 }
 			}
 		} else if (page == "ARRIVAL") {

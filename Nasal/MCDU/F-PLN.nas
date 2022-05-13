@@ -665,8 +665,9 @@ var decimalToShortString = func(dms, type) {
 	var degrees = split(".", sprintf(dms))[0];
 	if (type == "lat") {
 		var sign = degrees >= 0 ? "N" : "S";
+		return sprintf("%02d", abs(degrees)) ~ sign;
 	} else {
 		var sign = degrees >= 0 ? "E" : "W";
+		return sprintf("%03d", abs(degrees)) ~ sign;
 	}
-	return abs(degrees) ~ sign;
 }
