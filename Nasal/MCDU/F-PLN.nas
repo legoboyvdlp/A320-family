@@ -136,7 +136,7 @@ var fplnItem = {
 		if (me.index == 0 and left(me.wp.wp_name, 4) == fmgc.FMGCInternal.depApt and fmgc.FMGCInternal.v1set) {
 			return [sprintf("%3.0f", math.round(fmgc.FMGCInternal.v1)), "grn"]; # why "mag"? I think "grn"
 		} elsif (me.wp.speed_cstr != nil and me.wp.speed_cstr > 0) {
-			var tcol = (me.wp.speed_cstr_type == "computed" or me.wp.speed_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
+			var tcol = (me.wp.speed_cstr_type == "computed" or me.wp.speed_cstr_type == "computed_mach") ? "grn" : "mag";
 			return [sprintf("%3.0f", me.wp.speed_cstr), tcol];
 		} else {
 			return ["---", "wht"];
@@ -148,7 +148,7 @@ var fplnItem = {
 		} elsif (me.index == (fmgc.flightPlanController.currentToWptIndex.getValue() - 1) and fmgc.flightPlanController.fromWptAlt != nil) {
 			return [" " ~ fmgc.flightPlanController.fromWptAlt, "mag"];
 		} elsif (me.wp.alt_cstr != nil and me.wp.alt_cstr > 0) {
-			var tcol = (me.wp.alt_cstr_type == "computed" or me.wp.alt_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
+			var tcol = (me.wp.alt_cstr_type == "computed" or me.wp.alt_cstr_type == "computed_mach") ? "grn" : "mag";
 			var cstrAlt = "";
 			
 			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {

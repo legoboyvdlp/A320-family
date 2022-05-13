@@ -868,7 +868,6 @@ var flightPlanController = {
 		}
 		
 		if (me.active.getBoolValue() and me.currentToWptIndex.getValue() == -1) {
-			print("Setting index to " ~ me.lastSequencedCurrentWP);
 			me.currentToWptIndex.setValue(me.lastSequencedCurrentWP);
 		}
 		
