@@ -78,6 +78,7 @@ var flightPlanController = {
 	},
 	
 	oldCurrentWp: 0,
+	lastSequencedCurrentWP: 0,
 	createTemporaryFlightPlan: func(n) {
 		me.resetFlightplan(n);
 		me.flightplans[n] = me.flightplans[2].clone();
@@ -166,7 +167,6 @@ var flightPlanController = {
 		
 		fmgc.windController.destroyTemporaryWinds(n, a);
 		
-		# TODO - handle changed wpt order
 		if (FPLN.currentWP.getValue() != me.oldCurrentWp) {
 			FPLN.currentWP.setValue(me.oldCurrentWp);
 		}
@@ -230,6 +230,8 @@ var flightPlanController = {
 			fmgc.Input.lat.setValue(3);
 		} else {
 			me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
+			me.lastSequencedCurrentWP = me.currentToWptIndexTemp + 1;
+			
 			if (me.num[2].getValue() > 2 and me.currentToWptIndexTemp >= 1) {
 				for (var i = 0; i <= 2; i += 1) {
 					if (i == 2 or me.temporaryFlag[i]) {
@@ -863,6 +865,11 @@ var flightPlanController = {
 			}
 		} elsif (me.active.getBoolValue()) {
 			me.active.setValue(0);
+		}
+		
+		if (me.active.getBoolValue() and me.currentToWptIndex.getValue() == -1) {
+			print("Setting index to " ~ me.lastSequencedCurrentWP);
+			me.currentToWptIndex.setValue(me.lastSequencedCurrentWP);
 		}
 		
 		for (var n = 0; n <= 2; n += 1) {
