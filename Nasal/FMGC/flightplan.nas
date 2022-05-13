@@ -215,7 +215,7 @@ var flightPlanController = {
 	
 	autoSequencing: func() {
 		if (!me.active.getBoolValue()) { return; }
-		if (pts.Sim.Pause.getBoolValue()) { return; }
+		if (pts.Sim.pause.getBoolValue()) { return; }
 		
 		me.calculateTimeAltitudeOnSequence();
 		

@@ -83,7 +83,6 @@ var dirTo = {
 		var dirToLeftIndex = 0;
 		me.vector = [];
 		for (var i = 1 + (me.scroll); i < size(canvas_mcdu.myFpln[me.computer].planList) - 2; i = i + 1) {
-			debug.dump(canvas_mcdu.myFpln[me.computer].planList[i].wp);
 			if (canvas_mcdu.myFpln[me.computer].planList[i].wp == "PSEUDO" or canvas_mcdu.myFpln[me.computer].planList[i].wp == "STATIC" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "DISCONTINUITY" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "VECTORS" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "T-P" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_type == "hdgToAlt") { continue; }
 			if (canvas_mcdu.myFpln[me.computer].planList[i].index > fmgc.flightPlanController.arrivalIndex[2]) { continue; }
 			append(me.vector, canvas_mcdu.myFpln[me.computer].planList[i].wp);
