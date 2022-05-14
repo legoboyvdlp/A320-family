@@ -91,12 +91,12 @@
 					<tableData breakPoint="0">
 						       0    10    15
 						    0  9.0  11.0  10.5
-						43000  6.5   7.0   7.0
+						43000  7.5   7.5   7.5
 					</tableData>
 					<tableData breakPoint="18">
 						       0     10    15
 						    0  10.0  11.0  10.5
-						43000   7.0   7.0   7.0
+						43000   7.5   7.5   7.5
 					</tableData>
 				</table>
 			</function>
@@ -111,12 +111,12 @@
 					<tableData breakPoint="0">
 						       0     10    15
 						    0  12.0  15.0  14.5
-						43000   7.4   7.7   7.7
+						43000   7.8   7.8   7.8
 					</tableData>
 					<tableData breakPoint="18">
 						       0     10    15
 						    0  15.0  15.0  14.5
-						43000   7.7   7.7   7.7
+						43000   7.8   7.8   7.8
 					</tableData>
 				</table>
 			</function>
