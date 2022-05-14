@@ -808,6 +808,9 @@
 		<input n="0">
 			<kts type="int">100</kts>
 		</input>
+		<settings n="0">
+			<accel-ft type="double">1500</accel-ft>
+		</settings>
 		<output n="0">
 			<ap1 type="bool">0</ap1>
 			<ap2 type="bool">0</ap2>

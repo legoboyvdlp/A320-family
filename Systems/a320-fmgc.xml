@@ -620,13 +620,7 @@
 			<default value="/FMGC/internal/takeoff-latch"/>
 			<test logic="AND" value="0">
 				position/wow eq 0
-				fadec/eng-out eq 0
-				fadec/max-detent le 2
-			</test>
-			<test logic="AND" value="0">
-				position/wow eq 0
-				fadec/eng-out eq 1
-				fadec/max-detent le 4
+				/instrumentation/altimeter/indicated-altitude-ft ge /it-autoflight/settings/accel-ft
 			</test>
 			<test logic="OR" value="1">
 				position/wow eq 1
