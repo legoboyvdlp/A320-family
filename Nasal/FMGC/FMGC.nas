@@ -210,6 +210,13 @@ var FMGCInternal = {
 	fuelPredGw: 0,
 	cg: 0,
 	
+	# VAPP
+	approachSpeed: 0,
+	currentWindComponent: 0,
+	destWindComponent: 0,
+	gsMini: 0,
+	headwindComponent: 0,
+	tailwindComponent: 0,
 	
 	# Managed Speed
 	machSwitchover: 0,
@@ -597,6 +604,7 @@ var radios = maketimer(1, func() {
 });
 
 var newphase = nil;
+var windAngleDelta = nil;
 
 var masterFMGC = maketimer(0.2, func {
 	n1_left = pts.Engines.Engine.n1Actual[0].getValue();
@@ -755,14 +763,20 @@ var masterFMGC = maketimer(0.2, func {
 	weight_lbs = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000;
 	altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 	
+	if (FMGCInternal.destWindSet and flightPlanController.flightplans[2].destination_runway != nil) {
+		windAngleDelta = geo.normdeg180(FMGCInternal.destMag - flightPlanController.flightplans[2].destination_runway.heading - magvar(fmgc.flightPlanController.flightplans[2].destination_runway));
+		FMGCInternal.destWindComponent = FMGCInternal.destWind * math.cos(abs(windAngleDelta) * D2R);
+		
+		FMGCInternal.headwindComponent = math.clamp(FMGCInternal.destWindComponent / 3, 0, 15);
+		FMGCInternal.tailwindComponent = math.clamp(-FMGCInternal.destWindComponent, 0, 15);
+	} else {
+		FMGCInternal.headwindComponent = 0;
+		FMGCInternal.tailwindComponent = 0;
+		FMGCInternal.destWindComponent = 0;
+	}
+	
 	if (!fmgc.FMGCInternal.vappSpeedSet) {
-		if (FMGCInternal.destWind < 5) {
-			FMGCInternal.vapp = FMGCInternal.vls + 5;
-		} elsif (FMGCInternal.destWind > 15) {
-			FMGCInternal.vapp = FMGCInternal.vls + 15;
-		} else {
-			FMGCInternal.vapp = FMGCInternal.vls + FMGCInternal.destWind;
-		}
+		FMGCInternal.vapp = FMGCInternal.vls + math.max(5, FMGCInternal.headwindComponent);
 	}
 	
 	# predicted takeoff speeds
@@ -810,15 +824,16 @@ var masterFMGC = maketimer(0.2, func {
 			FMGCInternal.vls_appr = 113;
 		}
 		if (!fmgc.FMGCInternal.vappSpeedSet) {
-			if (FMGCInternal.destWind < 5) {
-				FMGCInternal.vapp_appr = FMGCInternal.vls_appr + 5;
-			} elsif (FMGCInternal.destWind > 15) {
-				FMGCInternal.vapp_appr = FMGCInternal.vls_appr + 15;
-			} else {
-				FMGCInternal.vapp_appr = FMGCInternal.vls_appr + FMGCInternal.destWind;
-			}
+			FMGCInternal.vapp_appr = FMGCInternal.vls_appr + math.max(5, FMGCInternal.headwindComponent);
 		}
 	}
+	
+	
+	windAngleDelta = geo.normdeg180(pts.Orientation.heading.getValue() - (pts.Instrumentation.PFD.windDirection.getValue() or 0));
+	FMGCInternal.currentWindComponent = pts.Instrumentation.PFD.windSpeed.getValue() or 0 * math.cos(abs(windAngleDelta) * D2R);
+	
+	FMGCInternal.gsMini = FMGCInternal.vapp_appr - math.max(10, FMGCInternal.headwindComponent);
+	FMGCInternal.approachSpeed = math.max(FMGCInternal.vapp_appr, FMGCInternal.gsMini + FMGCInternal.currentWindComponent);
 	
 	aoa_prot = 15;
 	aoa_max = 17.5;
@@ -967,14 +982,14 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
 				# Speed is maximum of greendot / climb speed limit
 				FMGCInternal.mngKtsMach = 0;
-				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
+				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.approachSpeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
 				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 				FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
 				if (FMGCInternal.decel) {
 					FMGCInternal.mngKtsMach = 0;
-					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
+					FMGCInternal.mngSpdCmd = FMGCInternal.approachSpeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
@@ -982,7 +997,7 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
 				FMGCInternal.mngKtsMach = 0;
 				# Speed is maximum of greendot / descent speed limit
-				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.approachSpeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
 			}
 			
 			# Clamp to minspeed, maxspeed
