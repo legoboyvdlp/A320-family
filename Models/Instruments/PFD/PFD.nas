@@ -708,7 +708,7 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashValue("ASItrgt", 0.1, func(val) {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
 			}),
-			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","targetKts","ktsMach"], 0.5, func(val) {
+			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
 				if (!val.speedError) {
 					if (abs(val.ASItrgtdiff) <= 42) {
 						obj["ASI_digit_UP"].hide();
@@ -722,7 +722,7 @@ var canvas_pfd = {
 							obj["ASI_decimal_UP"].hide();
 							obj["ASI_decimal_DN"].show();
 						} else {
-							obj["ASI_digit_DN"].setText(sprintf("%3.0f", val.targetKts));
+							obj["ASI_digit_DN"].setText(sprintf("%3.0f", val.tgt_kts));
 							obj["ASI_decimal_UP"].hide();
 							obj["ASI_decimal_DN"].hide();
 						}
@@ -735,7 +735,7 @@ var canvas_pfd = {
 							obj["ASI_decimal_UP"].show();
 							obj["ASI_decimal_DN"].hide();
 						} else {
-							obj["ASI_digit_UP"].setText(sprintf("%3.0f", val.targetKts));
+							obj["ASI_digit_UP"].setText(sprintf("%3.0f", val.tgt_kts));
 							obj["ASI_decimal_UP"].hide();
 							obj["ASI_decimal_DN"].hide();
 						}
@@ -1342,6 +1342,19 @@ var canvas_pfd = {
 			
 			
 			me.tgt_ias = notification.targetIasPFD;
+			me.tgt_kts = notification.targetKts;
+
+			if (notification.managedSpd) {
+				if (fmgc.FMGCInternal.decel) {
+					me.tgt_ias = fmgc.FMGCInternal.approachSpeed;
+					me.tgt_kts = fmgc.FMGCInternal.approachSpeed;
+				} else if (fmgc.FMGCInternal.phase == 6) {
+					me.tgt_ias = fmgc.FMGCInternal.clean;
+					me.tgt_kts = fmgc.FMGCInternal.clean;
+				}
+			}
+
+			notification.tgt_kts = me.tgt_kts;
 			
 			if (me.tgt_ias <= 30) {
 				notification.ASItrgt = 0 - notification.ASI;
@@ -1407,6 +1420,7 @@ var canvas_pfd = {
 			notification.SPDv1trgtdiff = 0;
 			notification.SPDvrtrgtdiff = 0;
 			notification.SPDv2trgtdiff = 0;
+			notification.tgt_kts = 0;
 			notification.V1trgt = 0;
 			notification.VRtrgt = 0;
 			notification.V2trgt = 0;
