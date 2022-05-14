@@ -580,10 +580,13 @@
 						<property>/systems/navigation/adr/output/cas-3</property>
 					</min>
 					<pow>
-						<quotient>
-							<property>/FMGC/internal/valpha-lag</property>
-							<property>fbw/alpha-prot-deg</property>
-						</quotient>
+						<max>
+							<quotient>
+								<property>/FMGC/internal/valpha-lag</property>
+								<property>fbw/alpha-prot-deg</property>
+							</quotient>
+							<value>0</value>
+						</max>
 						<value>0.28</value>
 					</pow>
 				</product>
@@ -599,11 +602,14 @@
 						<property>/systems/navigation/adr/output/cas-3</property>
 					</min>
 					<pow>
-						<quotient>
-							<property>/FMGC/internal/valpha-lag</property>
-							<property>fbw/alpha-max-deg</property>
-						</quotient>
-						<value>0.275</value>
+						<max>
+							<quotient>
+								<property>/FMGC/internal/valpha-lag</property>
+								<property>fbw/alpha-max-deg</property>
+							</quotient>
+							<value>0</value>
+						</max>
+						<value>0.28</value>
 					</pow>
 				</product>
 			</function>
