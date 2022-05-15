@@ -33,9 +33,9 @@ var GPSPath = "/instrumentation/gps";
 # route sequencing and activation
 #
 
-var A320GPSDeleagte = {
+var A320GPSDelegate = {
     new: func(fp) {
-        var m = { parents: [A320GPSDeleagte], flightplan:fp, landingCheck:nil };
+        var m = { parents: [A320GPSDelegate], flightplan:fp, landingCheck:nil };
 
         logprint(LOG_INFO, 'creating A320 GPS FPDelegate');
 
@@ -44,7 +44,7 @@ var A320GPSDeleagte = {
 		
         setprop(GPSPath ~ '/config/delegate-sequencing', 1);
 		
-        # enable 2020.2 C++ turn anticipation
+        # disable turn anticipation
         setprop(GPSPath ~ '/config/enable-fly-by', 0);
 		
 		# flyOver maximum distance
@@ -52,6 +52,7 @@ var A320GPSDeleagte = {
 		
         fp.followLegTrackToFix = 1;
         fp.aircraftCategory = 'C';
+		
         m._modeProp = props.globals.getNode(GPSPath ~ '/mode');
         return m;
     },
@@ -146,11 +147,11 @@ var A320GPSDeleagte = {
             (activeRunway != nil) and (me.flightplan.destination_runway != nil) and 
             (activeRunway.id == me.flightplan.destination_runway.id))
         {
-            me.landingCheck = maketimer(2.0, me, A320GPSDeleagte._landingCheckTimeout);
+            me.landingCheck = maketimer(2.0, me, A320GPSDelegate._landingCheckTimeout);
             me.landingCheck.start();
         }
     }
 };
 
-registerFlightPlanDelegate(A320GPSDeleagte.new);
+registerFlightPlanDelegate(A320GPSDelegate.new);
 
