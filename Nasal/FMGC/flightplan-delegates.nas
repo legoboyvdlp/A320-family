@@ -128,6 +128,8 @@ var A320GPSDelegate = {
 		if (me._modeProp.getValue() == 'leg') {
 			if (me.flightplan.nextWP().wp_type == 'discontinuity') {
 				logprint(LOG_INFO, "default GPS sequencing DISCONTINUITY in flightplan, switching to HDG");
+				me._captureCurrentCourse();
+				me._selectOBSMode();
 				# set HDG mode
 			} else {
 				logprint(LOG_INFO, "default GPS sequencing to next WP");
