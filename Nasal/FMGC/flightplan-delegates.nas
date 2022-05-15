@@ -122,7 +122,20 @@ var A320GPSDelegate = {
 
     sequence: func
     {
-		return;
+		if (!me.flightplan.active)
+            return;
+			
+		if (me._modeProp.getValue() == 'leg') {
+			if (me.flightplan.nextWP().wp_type == 'discontinuity') {
+				logprint(LOG_INFO, "default GPS sequencing DISCONTINUITY in flightplan, switching to HDG");
+				# set HDG mode
+			} else {
+				logprint(LOG_INFO, "default GPS sequencing to next WP");
+				me.flightplan.current = me.flightplan.current + 1;
+			}
+        } else {
+            # OBS, do nothing
+        }
     },
 
     currentWaypointChanged: func
