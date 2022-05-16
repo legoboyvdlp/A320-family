@@ -20,6 +20,127 @@
 # You can disable the default GPS behaviour *without* touching this delegate : they are
 # kept seperate since this first one is less likely to need changes
 
+
+var A320RouteManagerDelegate = {
+    new: func(fp) {
+        var m = { parents: [A320RouteManagerDelegate] };
+		
+        logprint(LOG_INFO, 'creating A320 Route Manager FPDelegate');
+		
+        m.flightplan = fp;
+        return m;
+    },
+
+    departureChanged: func
+    {
+        logprint(LOG_INFO, 'saw departure changed');
+        me.flightplan.clearWPType('sid');
+        if (me.flightplan.departure == nil)
+            return;
+
+        if (me.flightplan.departure_runway == nil) {
+        # no runway, only an airport, use that
+            var wp = createWPFrom(me.flightplan.departure);
+            wp.wp_role = 'sid';
+            me.flightplan.insertWP(wp, 0);
+            return;
+        }
+    # first, insert the runway itself
+        var wp = createWPFrom(me.flightplan.departure_runway);
+        wp.wp_role = 'sid';
+        me.flightplan.insertWP(wp, 0);
+        if (me.flightplan.sid == nil)
+            return;
+
+    # and we have a SID
+        var sid = me.flightplan.sid;
+        logprint(LOG_INFO, 'routing via SID ' ~ sid.id);
+        me.flightplan.insertWaypoints(sid.route(me.flightplan.departure_runway, me.flightplan.sid_trans), 1);
+		
+		for (var wpIdx = 0; wpIdx < me.flightplan.getPlanSize(); wpIdx = wpIdx + 1) {
+			if (me.flightplan.getWP(wpIdx).wp_type == "vectors" and (me.flightplan.getWP(wpIdx + 1) == nil or me.flightplan.getWP(wpIdx + 1).wp_type != "discontinuity")) {
+				me.flightplan.insertWP(createDiscontinuity(), wpIdx + 1);
+			}
+		}
+    },
+
+    arrivalChanged: func
+    {
+        me.flightplan.clearWPType('star');
+        me.flightplan.clearWPType('approach');
+        if (me.flightplan.destination == nil)
+            return;
+
+        if (me.flightplan.destination_runway == nil) {
+        # no runway, only an airport, use that
+            var wp = createWPFrom(me.flightplan.destination);
+            wp.wp_role = 'approach';
+            me.flightplan.appendWP(wp);
+            return;
+        }
+
+        var initialApproachFix = nil;
+        if (me.flightplan.star != nil) {
+            logprint(LOG_INFO, 'routing via STAR ' ~ me.flightplan.star.id);
+            var wps = me.flightplan.star.route(me.flightplan.destination_runway, me.flightplan.star_trans);
+            if (wps != nil) {
+                me.flightplan.insertWaypoints(wps, -1);
+                initialApproachFix = wps[-1]; # final waypoint of STAR
+            }
+        }
+
+        if (me.flightplan.approach != nil) {
+            var wps = nil;
+            var approachIdent = me.flightplan.approach.id;
+
+            if (me.flightplan.approach_trans != nil) {
+                # if an approach transition was specified, let's use it explicitly
+                wps = me.flightplan.approach.route(me.flightplan.destination_runway, me.flightplan.approach_trans);
+                if (wps == nil) {
+                    logprint(LOG_WARN, "couldn't route approach " ~ approachIdent ~ " based on specified transition:" ~ me.flightplan.approach_trans);
+                }
+            } else if (initialApproachFix != nil) {
+                # no explicit approach transition, let's use the IAF to guess one
+                wps = me.flightplan.approach.route(me.flightplan.destination_runway, initialApproachFix);
+                if (wps == nil) {
+                    logprint(LOG_INFO, "couldn't route approach " ~ approachIdent ~ " based on IAF:" ~ initialApproachFix.wp_name);
+                }
+            }
+
+            # depending on the order the user selects the approach or STAR, we might get into
+            # a mess here. If we failed to route so far, just try a direct to the approach
+            if (wps == nil) {
+                # route direct
+                 wps = me.flightplan.approach.route(me.flightplan.destination_runway);
+            }
+
+            if (wps == nil) {
+                logprint(LOG_WARN, 'routing via approach ' ~ approachIdent ~ ' failed entirely.');
+            } else {
+                me.flightplan.insertWaypoints(wps, -1);
+            }
+        } else {
+            # no approach, just use the runway waypoint
+            var wp = createWPFrom(me.flightplan.destination_runway);
+            wp.wp_role = 'approach';
+            me.flightplan.appendWP(wp);
+        }
+    },
+
+    cleared: func
+    {
+        logprint(LOG_INFO, "saw active flightplan cleared, deactivating");
+        # see http://https://code.google.com/p/flightgear-bugs/issues/detail?id=885
+        fgcommand("activate-flightplan", props.Node.new({"activate": 0}));
+    },
+
+    endOfFlightPlan: func
+    {
+        logprint(LOG_INFO, "end of flight-plan, deactivating");
+        fgcommand("activate-flightplan", props.Node.new({"activate": 0}));
+    }
+};
+
 var GPSPath = "/instrumentation/gps";
 
 # this delegate corresponds to the default behaviour of the built-in GPS.
@@ -129,13 +250,7 @@ var A320GPSDelegate = {
             if (me.flightplan.current + 1 >= me.flightplan.numWaypoints()) {
 				logprint(LOG_INFO, "default GPS sequencing, finishing flightplan");
 				me.flightplan.finish();
-            } elsif (me.flightplan.nextWP().wp_type == 'discontinuity') {
-				logprint(LOG_INFO, "default GPS sequencing DISCONTINUITY in flightplan, switching to HDG");
-				
-				me._captureCurrentCourse();
-				me._selectOBSMode();
-				# set HDG mode
-			} else {
+            } elsif (me.flightplan.nextWP().wp_type != 'discontinuity' and me.flightplan.nextWP().wp_type != 'vectors') {
 				logprint(LOG_INFO, "default GPS sequencing to next WP");
 				me.flightplan.current = me.flightplan.current + 1;
 			}
@@ -173,4 +288,5 @@ var A320GPSDelegate = {
 };
 
 registerFlightPlanDelegate(A320GPSDelegate.new);
+registerFlightPlanDelegate(A320RouteManagerDelegate.new);
 

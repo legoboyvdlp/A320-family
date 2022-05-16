@@ -120,10 +120,14 @@ var fplnItem = {
 	},
 	getBrg: func() {
 		var wp = fmgc.flightPlanController.flightplans[me.plan].getWP(me.index);
-		var courseDistanceFrom = courseAndDistance(wp);
-		me.brg = courseDistanceFrom[0] - magvar();
-		if (me.brg < 0) { me.brg += 360; }
-		if (me.brg > 360) { me.brg -= 360; }
+		if (wp.wp_type == "vectors") {
+			me.brg = pts.Orientation.heading.getValue();
+		} else {
+			var courseDistanceFrom = courseAndDistance(wp);
+			me.brg = courseDistanceFrom[0] - magvar();
+			if (me.brg < 0) { me.brg += 360; }
+			if (me.brg > 360) { me.brg -= 360; }
+		}
 		return sprintf("%03.0f", math.round(me.brg));
 	},
 	getTrack: func() {
@@ -174,7 +178,7 @@ var fplnItem = {
 		} else {
 			if (me.plan == 2 and decelShow and me.index == decelIndex and fmgc.flightPlanController.decelPoint != nil) {
 				return sprintf("%3.0f", courseAndDistance(fmgc.flightPlanController.decelPoint, me.wp)[1]);
-			} else if (prevwp != nil and prevwp.wp_name != "DISCONTINUITY") {
+			} else if (prevwp != nil and (prevwp.wp_name != "DISCONTINUITY" or find(prevwp.wp_name, "VECTORS"))) {
 				return sprintf("%3.0f", math.round(me.wp.leg_distance));
 			} else {
 				return " --";

@@ -229,6 +229,11 @@ var flightPlanController = {
 		if (me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_type == "discontinuity") {
 			fmgc.Input.lat.setValue(3);
 		} else {
+			if (me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_type == "vectors") {
+				fmgc.Input.lat.setValue(3);
+				me.flightplans[2].deleteWP(me.currentToWptIndexTemp + 2);
+			}
+			
 			me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
 			me.lastSequencedCurrentWP = me.currentToWptIndexTemp + 1;
 			
@@ -408,7 +413,7 @@ var flightPlanController = {
 					}
 				}
 			} else {
-				if (me.flightplans[n].getWP(index).id == "DISCONTINUITY" and index > 0 and me.flightplans[n].getWP(index - 1).id == "PPOS") {
+				if (me.flightplans[n].getWP(index).id == "DISCONTINUITY" and index > 0 and (me.flightplans[n].getWP(index - 1).id == "PPOS" or find(me.flightplans[n].getWP(index - 1).id, "VECTORS"))) {
 					return 1;
 				} else {
 					me.flightplans[n].deleteWP(index);
