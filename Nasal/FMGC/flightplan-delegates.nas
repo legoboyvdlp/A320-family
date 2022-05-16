@@ -55,7 +55,26 @@ var A320RouteManagerDelegate = {
     # and we have a SID
         var sid = me.flightplan.sid;
         logprint(LOG_INFO, 'routing via SID ' ~ sid.id);
-        me.flightplan.insertWaypoints(sid.route(me.flightplan.departure_runway, me.flightplan.sid_trans), 1);
+		
+		var wps = sid.route(me.flightplan.departure_runway, me.flightplan.sid_trans);
+		var lastWP = wps[-1];
+		var foundIdx = -999;
+		
+		for (var wptIdx = 0; wptIdx < me.flightplan.getPlanSize(); wptIdx = wptIdx + 1) {
+			if (me.flightplan.getWP(wptIdx).id == lastWP.id) {
+				foundIdx = wptIdx;
+				break;
+			}
+		}
+		
+		if (foundIdx != -999) {
+			while (foundIdx > 0) {
+				me.flightplan.deleteWP(1);
+				foundIdx -= 1;
+			}
+		}
+		
+        me.flightplan.insertWaypoints(wps, 1);
 		
 		for (var wpIdx = 0; wpIdx < me.flightplan.getPlanSize(); wpIdx = wpIdx + 1) {
 			if (me.flightplan.getWP(wpIdx).wp_type == "vectors" and (me.flightplan.getWP(wpIdx + 1) == nil or me.flightplan.getWP(wpIdx + 1).wp_type != "discontinuity")) {

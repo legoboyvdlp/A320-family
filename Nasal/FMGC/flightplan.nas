@@ -403,17 +403,16 @@ var flightPlanController = {
 	deleteWP: func(index, n, a = 0) { # a = 1, means adding a waypoint via deleting intermediate
 		var wp = me.flightplans[n].getWP(index);
 		if ((left(wp.wp_name, 4) != FMGCInternal.depApt and left(wp.wp_name, 4) != FMGCInternal.arrApt) and me.flightplans[n].getPlanSize() > 2) {
-
-			if (me.flightplans[n].getWP(index).id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
+			if (wp.id != "DISCONTINUITY" and a == 0) { # if it is a discont, don't make a new one
 				me.flightplans[n].deleteWP(index);
 				fmgc.windController.deleteWind(n, index);
-				if (me.flightplans[n].getWP(index) != nil) {
+				if (me.flightplans[n].getWP(index) != nil) { # This refers to the next one after the one we deleted
 					if (me.flightplans[n].getWP(index).id != "DISCONTINUITY") { # else, if the next one isn't a discont, add one
 						me.addDiscontinuity(index, n);
 					}
 				}
 			} else {
-				if (me.flightplans[n].getWP(index).id == "DISCONTINUITY" and index > 0 and (me.flightplans[n].getWP(index - 1).id == "PPOS" or find(me.flightplans[n].getWP(index - 1).id, "VECTORS"))) {
+				if (wp.id == "DISCONTINUITY" and index > 0 and (me.flightplans[n].getWP(index - 1).id == "PPOS" or find("VECTORS", me.flightplans[n].getWP(index - 1).id) != -1)) {
 					return 1;
 				} else {
 					me.flightplans[n].deleteWP(index);
