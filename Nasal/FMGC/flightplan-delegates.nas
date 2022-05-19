@@ -75,9 +75,9 @@ var A320RouteManagerDelegate = {
 		}
 		
         me.flightplan.insertWaypoints(wps, 1);
-		
+						
 		for (var wpIdx = 0; wpIdx < me.flightplan.getPlanSize(); wpIdx = wpIdx + 1) {
-			if (me.flightplan.getWP(wpIdx).wp_type == "vectors" and (me.flightplan.getWP(wpIdx + 1) == nil or me.flightplan.getWP(wpIdx + 1).wp_type != "discontinuity")) {
+			if (me.flightplan.getWP(wpIdx).wp_type == "vectors" and me.flightplan.getWP(wpIdx + 1) != nil and me.flightplan.getWP(wpIdx + 1).wp_type != "discontinuity") {
 				me.flightplan.insertWP(createDiscontinuity(), wpIdx + 1);
 			}
 		}
