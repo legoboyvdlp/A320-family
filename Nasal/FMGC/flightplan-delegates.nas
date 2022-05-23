@@ -75,12 +75,6 @@ var A320RouteManagerDelegate = {
 		}
 		
         me.flightplan.insertWaypoints(wps, 1);
-		
-		for (var wpIdx = 0; wpIdx < me.flightplan.getPlanSize(); wpIdx = wpIdx + 1) {
-			if (me.flightplan.getWP(wpIdx).wp_type == "vectors" and (me.flightplan.getWP(wpIdx + 1) == nil or me.flightplan.getWP(wpIdx + 1).wp_type != "discontinuity")) {
-				me.flightplan.insertWP(createDiscontinuity(), wpIdx + 1);
-			}
-		}
     },
 
     arrivalChanged: func
@@ -272,6 +266,12 @@ var A320GPSDelegate = {
             } elsif (me.flightplan.nextWP().wp_type != 'discontinuity' and me.flightplan.nextWP().wp_type != 'vectors') {
 				logprint(LOG_INFO, "default GPS sequencing to next WP");
 				me.flightplan.current = me.flightplan.current + 1;
+			} else {
+				logprint(LOG_INFO, "default GPS sequencing to next WP (special)");
+				fmgc.Input.lat.setValue(3);
+				if (me.flightplan.nextWP().wp_type == 'vectors') {
+					me.flightplan.current = me.flightplan.current + 2;
+				}
 			}
         } else {
             # OBS, do nothing

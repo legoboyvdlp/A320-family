@@ -226,14 +226,11 @@ var flightPlanController = {
 		# TODO - triple click - confirm, is it only with DES disengage, or also with the NAV loss?
 		# TODO - I think that it only goes to VS when in DES mode
 		
-		if (me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_type == "discontinuity") {
+		if (me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_type == "discontinuity" or me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_type == "vectors") {
 			fmgc.Input.lat.setValue(3);
+			me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 2);
+			me.lastSequencedCurrentWP = me.currentToWptIndexTemp + 2;
 		} else {
-			if (me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_type == "vectors") {
-				fmgc.Input.lat.setValue(3);
-				me.flightplans[2].deleteWP(me.currentToWptIndexTemp + 2);
-			}
-			
 			me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 1);
 			me.lastSequencedCurrentWP = me.currentToWptIndexTemp + 1;
 			
@@ -271,8 +268,10 @@ var flightPlanController = {
 	# Optional flag DEBUG_DISCONT to disable discontinuities totally
 	addDiscontinuity: func(index, plan, force = 0) {
 		if (DEBUG_DISCONT) { return; }
+		
 		if (force) {
 			me.flightplans[plan].insertWP(createDiscontinuity(), index);
+			return;
 		}
 		
 		if (me.flightplans[plan].getWP(index) != nil) { # index is not nil
