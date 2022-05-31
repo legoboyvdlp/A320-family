@@ -8,7 +8,7 @@
 	<property value="0">fbw/detent-1-feedback</property>
 	<property value="0">fbw/detent-2-feedback</property>
 	<property value="0">fbw/roll/pid</property>
-	<property value="0">fbw/pitch/alpha/pid</property>
+	<property value="0">fbw/pitch/alpha/output</property>
 	<property value="0">fbw/pitch/e-i-normal</property>
 	<property value="0">fbw/pitch/load-factor-pi</property>
 	<property value="0">fbw/pitch/pid</property>
@@ -1551,12 +1551,12 @@
 			<input>-fbw/pitch/alpha/target</input>
 		</summer>
 		
-		<pid name="fbw/pitch/alpha/pid-v">
+		<pid name="fbw/pitch/alpha/pd-v">
 			<input>fbw/pitch/alpha/error</input>
 			<kp>fbw/pitch/alpha/p-gain</kp>
 			<ki>0.0</ki>
 			<kd>fbw/pitch/alpha/d-gain</kd>
-			<output>fbw/pitch/alpha/pid</output>
+			<output>fbw/pitch/alpha/output</output>
 			<clipto>
 				<min>-0.5</min>
 				<max>0.5</max>
@@ -1672,7 +1672,7 @@
 		
 		<switch name="fbw/pitch/e-i-cmd">
 			<default value="fbw/pitch/e-i-normal"/>
-			<test logic="AND" value="fbw/pitch/alpha/pid">
+			<test logic="AND" value="fbw/pitch/alpha/output">
 				fbw/protections/alpha eq 1
 				position/wow eq 0
 			</test>
