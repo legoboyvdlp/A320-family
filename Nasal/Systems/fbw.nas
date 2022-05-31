@@ -87,6 +87,7 @@ var FBW = {
 		fac2: props.globals.getNode("/systems/fctl/lights/fac2-fault"),
 	},
 	Protections: {
+		alpha: props.globals.getNode("/fdm/jsbsim/fbw/protections/alpha"),
 		overspeed: props.globals.getNode("/fdm/jsbsim/fbw/protections/overspeed"),
 	},
 	Sidestick: {
@@ -237,7 +238,7 @@ var update_loop = func {
 		FBW.apOff = 0;
 	}
 	
-	if (FBW.Protections.overspeed.getBoolValue()) {
+	if (FBW.Protections.alpha.getBoolValue() or FBW.Protections.overspeed.getBoolValue()) {
 		if (fmgc.Input.ap1.getBoolValue() or fmgc.Input.ap2.getBoolValue()) {
 			fcu.apOff("hard", 0);
 		}

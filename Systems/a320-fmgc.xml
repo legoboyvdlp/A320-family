@@ -566,11 +566,6 @@
 		</fcs_function>
 		
 		<!-- V alpha prot/max -->
-		<lag_filter name="/FMGC/internal/valpha-lag">
-			<input>aero/alpha-deg-fixed</input>
-			<c1>0.35</c1>
-		</lag_filter>
-		
 		<fcs_function name="/FMGC/internal/valpha-prot">
 			<function>
 				<product>
@@ -582,12 +577,12 @@
 					<pow>
 						<max>
 							<quotient>
-								<property>/FMGC/internal/valpha-lag</property>
+								<property>fbw/protections/alpha-input</property>
 								<property>fbw/alpha-prot-deg</property>
 							</quotient>
 							<value>0</value>
 						</max>
-						<value>0.28</value>
+						<value>0.35</value>
 					</pow>
 				</product>
 			</function>
@@ -604,12 +599,12 @@
 					<pow>
 						<max>
 							<quotient>
-								<property>/FMGC/internal/valpha-lag</property>
+								<property>fbw/protections/alpha-input</property>
 								<property>fbw/alpha-max-deg</property>
 							</quotient>
 							<value>0</value>
 						</max>
-						<value>0.28</value>
+						<value>0.35</value>
 					</pow>
 				</product>
 			</function>
@@ -633,16 +628,19 @@
 		</switch>
 		
 		<switch name="/FMGC/internal/vls-factor-cmd">
-			<default value="1.23"/> <!-- 1.23 VS1g -->
+			<default value="1.25"/> <!-- 1.25 VS1g -->
 			<test value="1.13"> <!-- 1.13 VS1g -->
 				/FMGC/internal/takeoff-latch eq 1
+			</test>
+			<test value="1.23"> <!-- 1.23 VS1g -->
+				fcs/flap-pos-deg ge 0.1
 			</test>
 		</switch>
 		
 		<switch name="/FMGC/internal/vls-factor-rate">
 			<default value="10"/>
-			<test value="0.1">
-				position/wow eq 1
+			<test value="0.05">
+				position/wow eq 0
 			</test>
 		</switch>
 		
@@ -662,7 +660,7 @@
 								<independentVar lookup="row">atmosphere/density-altitude</independentVar>
 								<tableData>
 									    0  0.00
-									43000  0.22
+									43000  0.18
 								</tableData>
 							</table>
 						</sum>
