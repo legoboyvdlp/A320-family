@@ -1045,11 +1045,11 @@
 				fbw/protections/alpha-input gt fadec/alpha-floor-engage
 				<test logic="AND"> <!-- Alpha Protection -->
 					fbw/protections/alpha eq 1
-					fbw/pitch/e-i-normal lt -0.5
+					fbw/pitch/e-i-n lt -0.5
 				</test>
 				<test logic="AND"> <!-- Pitch Protection -->
 					fbw/pitch/e-i-min ge -0.1
-					fbw/pitch/e-i-normal lt -0.5
+					fbw/pitch/e-i-n lt -0.5
 				</test>
 			</test>
 			<test logic="AND" value="1"> <!-- Toga Lk -->

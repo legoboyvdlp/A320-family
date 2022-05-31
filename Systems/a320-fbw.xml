@@ -8,8 +8,8 @@
 	<property value="0">fbw/detent-1-feedback</property>
 	<property value="0">fbw/detent-2-feedback</property>
 	<property value="0">fbw/roll/pid</property>
-	<property value="0">fbw/pitch/alpha/output</property>
-	<property value="0">fbw/pitch/e-i-normal</property>
+	<property value="0">fbw/pitch/e-i-a</property>
+	<property value="0">fbw/pitch/e-i-n</property>
 	<property value="0">fbw/pitch/load-factor-pi</property>
 	<property value="0">fbw/pitch/pid</property>
 	<property value="0">fbw/yaw/tc-pd</property>
@@ -191,13 +191,13 @@
 				position/wow eq 1
 				/it-fbw/law ne 0
 				fbw/protections/alpha-input le fbw/protections/alpha-prot-d
-				fbw/pitch/e-i-normal ge 0.5
+				fbw/pitch/e-i-n ge 0.5
 				position/gear-agl-ft le 100
 			</test>
 			<test logic="AND" value="0">
 				position/gear-agl-ft le 200
 				fbw/protections/alpha-input le fbw/protections/alpha-prot-d
-				fbw/pitch/e-i-normal gt -0.5
+				fbw/pitch/e-i-n gt -0.5
 			</test>
 			<test value="1">
 				fbw/protections/alpha-input ge fbw/protections/alpha-prot-e
@@ -1464,7 +1464,7 @@
 			<input>-/FMGC/internal/vmo-mmo</input>
 		</summer>
 		
-		<fcs_function name="fbw/pitch/e-i-normal">
+		<fcs_function name="fbw/pitch/e-i-n">
 			<function>
 				<sum>
 					<property>fbw/sidestick/pitch-input</property>
@@ -1481,7 +1481,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fbw/pitch/e-i-overspeed">
+		<fcs_function name="fbw/pitch/e-i-o">
 			<function>
 				<table>
 					<independentVar lookup="row">fbw/sidestick/pitch-input</independentVar>
@@ -1556,7 +1556,7 @@
 			<kp>fbw/pitch/alpha/p-gain</kp>
 			<ki>0.0</ki>
 			<kd>fbw/pitch/alpha/d-gain</kd>
-			<output>fbw/pitch/alpha/output</output>
+			<output>fbw/pitch/e-i-a</output>
 			<clipto>
 				<min>-0.5</min>
 				<max>0.5</max>
@@ -1603,7 +1603,7 @@
 			<rate_limit sense="decr">fbw/pitch/flare-decr</rate_limit>
 		</actuator>
 		
-		<fcs_function name="fbw/pitch/e-i-flare">
+		<fcs_function name="fbw/pitch/e-i-f">
 			<function>
 				<product>
 					<property>fbw/pitch/flare-gain</property>
@@ -1671,12 +1671,12 @@
 		</fcs_function>
 		
 		<switch name="fbw/pitch/e-i-cmd">
-			<default value="fbw/pitch/e-i-normal"/>
-			<test logic="AND" value="fbw/pitch/alpha/output">
+			<default value="fbw/pitch/e-i-n"/>
+			<test logic="AND" value="fbw/pitch/e-i-a">
 				fbw/protections/alpha eq 1
 				position/wow eq 0
 			</test>
-			<test logic="AND" value="fbw/pitch/e-i-overspeed">
+			<test logic="AND" value="fbw/pitch/e-i-o">
 				fbw/protections/overspeed eq 1
 				position/wow eq 0
 			</test>
@@ -1722,7 +1722,7 @@
 		
 		<summer name="fbw/pitch/e-i-sum">
 			<input>fbw/pitch/e-i-cmd</input>
-			<input>fbw/pitch/e-i-flare</input>
+			<input>fbw/pitch/e-i-f</input>
 			<input>fbw/pitch/over-max</input>
 			<input>fbw/pitch/over-min</input>
 			<clipto>
