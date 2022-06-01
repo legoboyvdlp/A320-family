@@ -1603,7 +1603,7 @@
 			<rate_limit sense="decr">fbw/pitch/flare-decr</rate_limit>
 		</actuator>
 		
-		<fcs_function name="fbw/pitch/e-i-f">
+		<fcs_function name="fbw/pitch/e-i-fl">
 			<function>
 				<product>
 					<property>fbw/pitch/flare-gain</property>
@@ -1722,7 +1722,7 @@
 		
 		<summer name="fbw/pitch/e-i-sum">
 			<input>fbw/pitch/e-i-cmd</input>
-			<input>fbw/pitch/e-i-f</input>
+			<input>fbw/pitch/e-i-fl</input>
 			<input>fbw/pitch/over-max</input>
 			<input>fbw/pitch/over-min</input>
 			<clipto>
