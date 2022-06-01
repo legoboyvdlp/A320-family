@@ -3,21 +3,11 @@
 # Helper function for canvas_livery
 # Returns the Nk version for the given resolution
 var res2str = func(resolution) {
-	if (resolution == 1024) {
-		return "1k";
+	if (math.mod(resolution, 1024) == 0)
+	{
+		return (resolution / 1024) ~ "k";
 	}
-	if (resolution == 2048) {
-		return "2k";
-	}
-	if (resolution == 4096) {
-		return "4k";
-	}
-	if (resolution == 8192) {
-		return "8k";
-	}
-	if (resolution == 16384) {
-		return "16k";
-	}
+	print("ERROR: Non 1024 based resolution: " ~ resolution);
 	return nil;
 };
 
@@ -38,10 +28,19 @@ var findTexByRes = func(path, file, maxRes) {
 		}
 		res = res / 2;
 	}
-	print("No suiting texture found");
+	print("No suiting texture " ~ file ~ " found in " ~ path ~ " and resolution " ~ maxRes ~ " or lower");
 	return nil;
 };
 
+
+# =============================================================================
+# Listener to update the canvas size, when the property gets changed
+
+var livery_res_update = setlistener("/sim/model/livery/max-resolution", func {
+	livery_update.setResolution(getprop("/sim/model/livery/max-resolution"));
+	print("INIT: RES: " ~ resolution);
+	# TODO mp liveries
+}, 0, 0);
 
 
 # canvas_livery
@@ -49,32 +48,39 @@ var findTexByRes = func(path, file, maxRes) {
 # Class for Canvas based liveries
 #
 var canvas_livery = {
-	init: func(dir, nameprop = "sim/model/livery/name", sortprop = nil, resolution=4096) {
+	init: func(dir, nameprop = "sim/model/livery/name", sortprop = nil) {
 		var m = { parents: [canvas_livery, gui.OverlaySelector.new("Select Livery", dir, nameprop,
 				sortprop, "sim/model/livery/file")] };
 		m.dialog = m.parents[1];
 		m.liveriesdir = dir;
-		m.resolution = resolution;
+		m.resolution = getprop("/sim/model/livery/max-resolution");
 		m.targets = {};
 		return m;
 	},
 	setResolution: func(resolution) {
-		# TODO
+		maxSupportedRes = getprop("/sim/rendering/max-texture-size");
+		if (resolution > maxSupportedRes) {
+			resolution = maxSupportedRes;
+			me.targets[name].resolution = maxSupportedRes;
+		}
+	#	foreach (var target, me.targets)
+	#	{
+	#		target.resolution = resolution;
+	#		target.canvas.del();
+	#	}
 	},
-	createTarget: func(name, objects, property, defLiv, resolution=4096) {
+	createTarget: func(name, objects, property, defLiv) {
 		me.targets[name] = {
 			canvas: nil,
 			layers: {},
+			layersHidden: {},
 			groups: {},
 			listener: nil,
 			defaultLiv: defLiv,
-			resolution: resolution,
+			resolution: getprop("/sim/model/livery/max-resolution"),
 		};
-		maxRes = getprop("/sim/model/livery/max-resolution");
-		if (resolution > maxRes) {
-			resolution = maxRes;
-			me.targets[name].resolution = maxRes;
-		}
+		var resolution = getprop("/sim/model/livery/max-resolution");
+		me.targets[name].resolution = resolution;
 		# Make sure we never load too large textures
 		maxSupportedRes = getprop("/sim/rendering/max-texture-size");
 		if (resolution > maxSupportedRes) {
@@ -112,6 +118,7 @@ var canvas_livery = {
 			livery = me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)
 		}
 		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(livery).setSize(resolution,resolution);
+		me.targets[name].layersHidden["base"] = 0;
 		me.targets[name].listener = setlistener(property, func(property) {
 			resStr = findTexByRes(me.liveriesdir, property.getValue(), resolution);
 			if (resStr == nil) {
@@ -124,16 +131,20 @@ var canvas_livery = {
 	addLayer: func(target, name, file) {
 		me.targets[target].groups[name] = me.targets[target].canvas.createGroup(name);
 		me.targets[target].layers[name] = me.targets[target].groups[name].createChild("image").setFile(file).setSize(me.targets[target].resolution, me.targets[target].resolution);
+		me.targets[target].layersHidden[name] = 0;
 		},
 	removeLayer: func(target, name) {
 		me.targets[target].layers[name].removeAllChildren();
 		me.targets[target].layers[name] = nil;
+		me.targets[target].layersHidden[name] = nil;
 	},
 	showLayer: func(target, name) {
 		me.targets[target].layers[name].show();
+		me.targets[target].layersHidden[name] = 0;
 	},
 	hideLayer: func(target, name) {
 		me.targets[target].layers[name].hide();
+		me.targets[target].layersHidden[name] = 1;
 	},
 };
 
@@ -144,12 +155,12 @@ var canvas_livery = {
 # Class for Canvas based liveries
 #
 var canvas_livery_update = {
-	init: func(liveriesdir, module_id, rplayer, interval = 10.01, callback = nil, resolution=4096) {
+	init: func(liveriesdir, module_id, interval = 10.01, callback = nil) {
 		var m = { parents: [canvas_livery_update, overlay_update.new()] };
 		m.parents[1].add(liveriesdir, "sim/model/livery/file", callback);
 		m.parents[1].interval = interval;
 		m.liveriesdir = liveriesdir;
-		m.resolution = resolution;
+		m.resolution = getprop("/sim/model/livery/max-resolution");
 		m.targets = {};
 		m.module_id = module_id;
 		m.rplayer = rplayer;
@@ -158,20 +169,17 @@ var canvas_livery_update = {
 	setResolution: func(resolution) {
 		# TODO
 	},
-	createTarget: func(name, objects, property, defLiv, resolution=4096) {
+	createTarget: func(name, objects, property) {
 		me.targets[name] = {
 			canvas: nil,
 			layers: {},
 			groups: {},
 			listener: nil,
 			defaultLiv: defLiv,
-			resolution: resolution,
+			resolution: getprop("/sim/model/livery/max-resolution"),
 		};
-		maxRes = getprop("/sim/model/livery/max-resolution");
-		if (resolution > maxRes) {
-			resolution = maxRes;
-			me.targets[name].resolution = maxRes;
-		}
+		var resolution = getprop("/sim/model/livery/max-resolution");
+		me.targets[name].resolution = resolution;
 		# Make sure we never load too large textures
 		maxSupportedRes = getprop("/sim/rendering/max-texture-size");
 		if (resolution > maxSupportedRes) {
