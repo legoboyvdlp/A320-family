@@ -33,16 +33,6 @@ var findTexByRes = func(path, file, maxRes) {
 };
 
 
-# =============================================================================
-# Listener to update the canvas size, when the property gets changed
-
-var livery_res_update = setlistener("/sim/model/livery/max-resolution", func {
-	livery_update.setResolution(getprop("/sim/model/livery/max-resolution"));
-	print("INIT: RES: " ~ resolution);
-	# TODO mp liveries
-}, 0, 0);
-
-
 # canvas_livery
 # =============================================================================
 # Class for Canvas based liveries
@@ -55,6 +45,10 @@ var canvas_livery = {
 		m.liveriesdir = dir;
 		m.resolution = getprop("/sim/model/livery/max-resolution");
 		m.targets = {};
+		m.res_update = setlistener("/sim/model/livery/max-resolution", func {
+			m.setResolution(getprop("/sim/model/livery/max-resolution"));
+			# TODO mp liveries
+			}, 0, 0);
 		return m;
 	},
 	setResolution: func(resolution) {
@@ -63,11 +57,58 @@ var canvas_livery = {
 			resolution = maxSupportedRes;
 			me.targets[name].resolution = maxSupportedRes;
 		}
-	#	foreach (var target, me.targets)
-	#	{
-	#		target.resolution = resolution;
-	#		target.canvas.del();
-	#	}
+		foreach (var target; keys(me.targets))
+		{
+			print("Resizing target " ~ target);
+			me.targets[target].canvas.del();
+			# Make sure we never load too large textures
+			maxSupportedRes = getprop("/sim/rendering/max-texture-size");
+			if (resolution > maxSupportedRes) {
+				resolution = maxSupportedRes;
+				me.targets[target].resolution = maxSupportedRes;
+			}
+			var (major, minor, patch) = split(".", getprop("/sim/version/flightgear"));
+			if (num(major) == 2020 and num(minor) < 4) {
+				me.targets[target].canvas = canvas.new({
+					"target": target,
+					"size": [resolution, resolution],
+					"view": [resolution, resolution],
+					"mipmapping": 1,
+				});
+			} else {
+				me.targets[target].canvas = canvas.new({
+					"target": target,
+					"size": [resolution, resolution],
+					"view": [resolution, resolution],
+					"mipmapping": 1,
+					"anisotropy": 32.0
+				});
+			}
+			foreach (var object; me.targets[target].objects) {
+				me.targets[target].canvas.addPlacement({"node": object});
+			}
+			me.targets[target].groups["base"] = me.targets[target].canvas.createGroup("base");
+			var livery = "";
+			var property = me.targets[target].property;
+			resStr = findTexByRes(me.liveriesdir, getprop(property), resolution);
+			if (resStr == nil) {
+				livery = me.targets[target].defaultLiv;
+			}
+			else
+			{
+				livery = me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)
+			}
+			me.targets[target].layers["base"] = me.targets[target].groups["base"].createChild("image").setFile(livery).setSize(resolution,resolution);
+			me.targets[target].layersHidden["base"] = 0;
+			me.targets[target].listener = setlistener(property, func(property) {
+				resStr = findTexByRes(me.liveriesdir, property.getValue(), resolution);
+				if (resStr == nil) {
+					return nil;
+				}
+				me.targets[target].groups["base"].removeAllChildren();
+				me.targets[target].layers["base"] = me.targets[target].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ property.getValue()).setSize(resolution,resolution);
+			});
+		}
 	},
 	createTarget: func(name, objects, property, defLiv) {
 		me.targets[name] = {
@@ -78,6 +119,8 @@ var canvas_livery = {
 			listener: nil,
 			defaultLiv: defLiv,
 			resolution: getprop("/sim/model/livery/max-resolution"),
+			objects: objects,
+			property: property,
 		};
 		var resolution = getprop("/sim/model/livery/max-resolution");
 		me.targets[name].resolution = resolution;
@@ -150,6 +193,7 @@ var canvas_livery = {
 
 
 
+
 # canvas_livery_update
 # =============================================================================
 # Class for Canvas based liveries
@@ -176,7 +220,7 @@ var canvas_livery_update = {
 			groups: {},
 			listener: nil,
 			defaultLiv: defLiv,
-			resolution: getprop("/sim/model/livery/max-resolution"),
+			resolution: getprop("/sim/model/livery/max-resolution")
 		};
 		var resolution = getprop("/sim/model/livery/max-resolution");
 		me.targets[name].resolution = resolution;
