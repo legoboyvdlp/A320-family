@@ -41,9 +41,9 @@
      inkscape:window-maximized="1"
      inkscape:window-y="-8"
      inkscape:window-x="1592"
-     inkscape:cy="639.31164"
-     inkscape:cx="1047.0778"
-     inkscape:zoom="2.8284272"
+     inkscape:cy="700.39821"
+     inkscape:cx="666.95147"
+     inkscape:zoom="0.50000001"
      showgrid="false"
      id="namedview371"
      inkscape:window-height="1017"
@@ -6778,8 +6778,8 @@
      inkscape:label="#g4757"
      id="ASI_frame">
     <path
-       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:3.19995;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-       d="M 13.168124,235.4451 H 154.46884"
+       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:3.19994998;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       d="m 13.168124,235.4451 141.300876,0"
        id="path1062"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
@@ -6787,7 +6787,7 @@
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="path922"
-       d="M 13.167811,790.62913 H 121.24725"
+       d="m 13.167811,790.62913 141.301189,0"
        style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:3.19994998;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
   </g>
   <text
