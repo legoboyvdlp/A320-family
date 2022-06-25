@@ -170,11 +170,13 @@ var canvas_MCDU_base = {
 		me["Simple_L6S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_C1S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_C2S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_C3S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_C4S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_C5S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_C6S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_R1S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_R2S"].setFont("HoneywellMCDUSmall.ttf");
+		me["Simple_R3S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_R4S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_R5S"].setFont("HoneywellMCDUSmall.ttf");
 		me["Simple_R6S"].setFont("HoneywellMCDUSmall.ttf");
@@ -519,9 +521,7 @@ var canvas_MCDU_base = {
 				
 				me.hideAllArrows();
 				
-				me.fontSizeLeft(normal, normal, normal, normal, normal, normal);
-				me.fontSizeCenter(normal, normal, normal, normal, normal, normal);
-				me.fontSizeRight(normal, normal, normal, normal, normal, normal);
+				me.standardFontSize();
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -553,6 +553,7 @@ var canvas_MCDU_base = {
 				
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
@@ -2991,6 +2992,19 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "amb", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
+				me["Simple_L1S"].setText("CO RTE");
+				me["Simple_L2S"].setText("ALTN/CO RTE");
+				me["Simple_L3S"].setText("FLT NBR");
+				me["Simple_L5S"].setText("COST INDEX");
+				me["Simple_L6S"].setText("CRZ FL/TEMP");
+				me["Simple_R1S"].setText("FROM/TO   ");
+				me["Simple_R2S"].setText("INIT ");
+				me["Simple_R5S"].setText("TROPO");
+				me["Simple_R6S"].setText("GND TEMP");
+				me["Simple_R2"].setText("REQUEST ");
+				me["Simple_R3"].setText("IRS INIT ");
+				me["Simple_R4"].setText("WIND ");
+				
 				pageSwitch[i].setBoolValue(1);
 			}
 			
@@ -3023,13 +3037,13 @@ var canvas_MCDU_base = {
 			} else if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.crzTempSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(BLUE);
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%s°", fmgc.FMGCInternal.crzTemp));
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%+3.0f°", fmgc.FMGCInternal.crzTemp));
 			} else if (fmgc.FMGCInternal.crzSet) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(BLUE);
 				fmgc.FMGCInternal.crzTemp = 15 - (2 * fmgc.FMGCInternal.crzFl / 10);
 				fmgc.FMGCInternal.crzTempSet = 1;
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%s°", fmgc.FMGCInternal.crzTemp));
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ fmgc.FMGCInternal.crzFl) ~ sprintf("/%+3.0f°", fmgc.FMGCInternal.crzTemp));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
 				me["Simple_L6"].setColor(AMBER);
@@ -3072,6 +3086,7 @@ var canvas_MCDU_base = {
 					me["INITA_InitRequest"].hide();
 				}
 			}
+			
 			if (ADIRSMCDUBTN.getValue() != 1) {
 				me["INITA_AlignIRS"].show();
 				me["Simple_R3"].setColor(AMBER);
@@ -3081,41 +3096,34 @@ var canvas_MCDU_base = {
 				me["Simple_R3"].setColor(WHITE);
 				showRightArrow(me,0, 0, 1, 0, 0, 0);
 			}
+			
 			if (fmgc.FMGCInternal.tropoSet) {
 				me["Simple_R5"].setFontSize(normal); 
 			} else {
 				me["Simple_R5"].setFontSize(small); 
 			}
 			
-			me["Simple_R6S"].setText("GND TEMP");
-			if (fmgc.FMGCInternal.phase == 0 and !fmgc.FMGCInternal.gndTempSet) {
-				fmgc.FMGCInternal.gndTemp = 15 - (2 * getprop("/position/gear-agl-ft") / 1000);
-				me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
-				me["Simple_R6"].setFontSize(small); 
-			} else {
+			if (fmgc.FMGCInternal.phase == 0) {
 				if (fmgc.FMGCInternal.gndTempSet) {
+					me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
 					me["Simple_R6"].setFontSize(normal); 
+				} else if (fmgc.FMGCInternal.toFromSet) {
+					fmgc.FMGCInternal.gndTemp = 15 - (2 * (fmgc.flightPlanController.flightplans[2].departure.elevation * 3.28084) / 1000);
+					me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
+					me["Simple_R6"].setFontSize(small); 
 				} else {
+					me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
 					me["Simple_R6"].setFontSize(small); 
 				}
-				me["Simple_R6"].setText(sprintf("%.0f°", fmgc.FMGCInternal.gndTemp));
+			} else {
+				me["Simple_R6"].setText("---");
+				me["Simple_R6"].setFontSize(small); 
 			}
 			
-			me["Simple_L1S"].setText("CO RTE");
-			me["Simple_L2S"].setText("ALTN/CO RTE");
-			me["Simple_L3S"].setText("FLT NBR");
-			me["Simple_L5S"].setText("COST INDEX");
-			me["Simple_L6S"].setText("CRZ FL/TEMP");
 			#me["Simple_L1"].setText("NONE");  # manage before (coRoute)
 			me["Simple_L3"].setText(sprintf("%s", fmgc.FMGCInternal.flightNum));
-			me["Simple_R1S"].setText("FROM/TO   ");
-			me["Simple_R2S"].setText("INIT ");
-			me["Simple_R5S"].setText("TROPO");
 			
 			me["Simple_R1"].setText(sprintf("%s", fmgc.FMGCInternal.depApt ~ "/" ~ fmgc.FMGCInternal.arrApt));
-			me["Simple_R2"].setText("REQUEST ");
-			me["Simple_R3"].setText("IRS INIT ");
-			me["Simple_R4"].setText("WIND ");
 			me["Simple_R5"].setText(sprintf("%5.0f", fmgc.FMGCInternal.tropo));
 		} else if (page == "IRSINIT") {
 			if (!pageSwitch[i].getBoolValue()) {
@@ -3189,9 +3197,9 @@ var canvas_MCDU_base = {
 				degrees = getprop("/FMGC/internal/align-ref-lat-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-lat-minutes");
 				sign = getprop("/FMGC/internal/align-ref-lat-sign");
-				dms_lat = getprop("/FMGC/flightplan[2]/wp[0]/lat");
-				degrees_lat = int(dms_lat);
-				minutes_lat = sprintf("%.1f",abs((dms_lat - degrees_lat) * 60));
+				apt = airportinfo(fmgc.FMGCInternal.depApt);
+				degrees_lat = int(apt.lat);
+				minutes_lat = sprintf("%.1f",abs((apt.lat - degrees_lat) * 60));
 				sign_lat = degrees_lat >= 0 ? "N" : "S";
 				lat_same = degrees_lat == degrees and minutes_lat == minutes and sign_lat == sign;
 				me["Simple_L1"].setText(abs(sprintf("%.0f", degrees)) ~ "°" ~ sprintf("%.1f", minutes) ~ sign);
@@ -3199,15 +3207,14 @@ var canvas_MCDU_base = {
 				degrees = getprop("/FMGC/internal/align-ref-long-degrees");
 				minutes = getprop("/FMGC/internal/align-ref-long-minutes");
 				sign = getprop("/FMGC/internal/align-ref-long-sign");
-				dms_long = getprop("/FMGC/flightplan[2]/wp[0]/lon");
-				degrees_long = int(dms_long);
-				minutes_long = sprintf("%.1f",abs((dms_long - degrees_long) * 60));
+				degrees_long = int(apt.lon);
+				minutes_long = sprintf("%.1f",abs((apt.lon - degrees_long) * 60));
 				sign_long = degrees_long >= 0 ? "E" : "W";
 				long_same = degrees_long == degrees and minutes_long == minutes and sign_long == sign;
 				me["Simple_R1"].setText(abs(sprintf("%.0f", degrees)) ~ "°" ~ sprintf("%.1f", minutes) ~ sign);
 				
 				if (lat_same and long_same) {
-					me["Simple_C1"].setText(getprop("/FMGC/flightplan[2]/wp[0]/id"));
+					me["Simple_C1"].setText(getprop("/autopilot/route-manager/route/wp[0]/id"));
 					me["Simple_C1"].setColor(GREEN);
 				} else {
 					me["Simple_C1"].setText("----");
@@ -3836,18 +3843,6 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_L2"].setText(fmgc.FMGCInternal.altAirport);
 			}
-			
-			me["Simple_L1S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_L3S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_L4S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_L5S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_L6S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_C1S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_R1S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_R3S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_R4S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_R5S"].setFont("HoneywellMCDUSmall.ttf");
-			me["Simple_R6S"].setFont("HoneywellMCDUSmall.ttf");
 			
 			me["Simple_L1S"].setText("AT");
 			me["Simple_L3S"].setText("RTE RSV/%");

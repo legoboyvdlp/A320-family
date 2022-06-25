@@ -1702,7 +1702,7 @@ var canvas_pfd = {
 		}
 		
 		notification.radioNo = fmgc.FMGCInternal.radioNo;
-		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist >= 250) {
+		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist.getValue() >= 250) {
 			notification.showDecisionHeight = 0;
 		} else {
 			notification.showDecisionHeight = 1;

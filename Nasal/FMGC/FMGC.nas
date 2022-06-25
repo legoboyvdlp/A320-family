@@ -29,6 +29,8 @@ var mng_alt_spd = 0;
 var mng_alt_mach = 0;
 var altsel = 0;
 var crzFl = 0;
+var xtrkError = 0;
+var courseDistanceDecel = 0;
 var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
@@ -444,7 +446,7 @@ var updateFuel = func {
 	if (FMGCInternal.toFromSet and FMGCInternal.crzSet and FMGCInternal.crzTempSet and FMGCInternal.zfwSet) {
 		crz = FMGCInternal.crzFl;
 		temp = FMGCInternal.crzTemp;
-		dist = flightPlanController.arrivalDist;
+		dist = flightPlanController.arrivalDist.getValue();
 		
 		trpWind = FMGCInternal.tripWind;
 		wind_value = FMGCInternal.tripWindValue;
@@ -458,7 +460,7 @@ var updateFuel = func {
 		trip_fuel = math.clamp(trip_fuel, 400, 80000);
 		
 		# cruize temp correction
-		trip_fuel = trip_fuel + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist);
+		trip_fuel = trip_fuel + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist.getValue());
 		
 		trip_time = 9.095e-02 + (dist*-3.968e-02) + (dist*dist*4.302e-04) + (dist*dist*dist*2.005e-07) + (dist*dist*dist*dist*-6.876e-11) + (dist*dist*dist*dist*dist*1.432e-14) + (dist*dist*dist*dist*dist*dist*-1.177e-18) + (crz*7.348e-01) + (dist*crz*3.310e-03) + (dist*dist*crz*-8.700e-06) + (dist*dist*dist*crz*-4.214e-10) + (dist*dist*dist*dist*crz*5.652e-14) + (dist*dist*dist*dist*dist*crz*-6.379e-18) + (crz*crz*-1.449e-02) + (dist*crz*crz*-7.508e-06) + (dist*dist*crz*crz*4.529e-08) + (dist*dist*dist*crz*crz*3.699e-13) + (dist*dist*dist*dist*crz*crz*8.466e-18) + (crz*crz*crz*1.108e-04) + (dist*crz*crz*crz*-4.126e-08) + (dist*dist*crz*crz*crz*-9.645e-11) + (dist*dist*dist*crz*crz*crz*-1.544e-16) + (crz*crz*crz*crz*-4.123e-07) + (dist*crz*crz*crz*crz*1.831e-10) + (dist*dist*crz*crz*crz*crz*7.438e-14) + (crz*crz*crz*crz*crz*7.546e-10) + (dist*crz*crz*crz*crz*crz*-1.921e-13) + (crz*crz*crz*crz*crz*crz*-5.453e-13);
 		trip_time = math.clamp(trip_time, 10, 480);
@@ -643,12 +645,12 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	} elsif (FMGCInternal.phase == 3) {
 		if (FMGCInternal.crzFl >= 200) {
-			if ((flightPlanController.arrivalDist <= 200 and altSel < 20000)) {
+			if ((flightPlanController.arrivalDist.getValue() <= 200 or altSel < 20000)) {
 				newphase = 4;
 				systems.PNEU.pressMode.setValue("DE");
 			}
 		} else {
-			if ((flightPlanController.arrivalDist <= 200 and altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
+			if ((flightPlanController.arrivalDist.getValue() <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
 				newphase = 4;
 				systems.PNEU.pressMode.setValue("DE");
 			}
@@ -668,11 +670,18 @@ var masterFMGC = maketimer(0.2, func {
 			newphase = 2;
 		}
 	}
+	
+	xtrkError = getprop("/instrumentation/gps/wp/wp[1]/course-error-nm");
 
-	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and 
-	   flightPlanController.arrivalDist <= 15 and (Modes.PFD.FMA.rollMode == "NAV" or Modes.PFD.FMA.rollMode == "LOC" or Modes.PFD.FMA.rollMode == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
-		FMGCInternal.decel = 1;
-	} elsif (FMGCInternal.decel and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
+	if (flightPlanController.decelPoint != nil) {
+		courseDistanceDecel = courseAndDistance(flightPlanController.decelPoint.lat, flightPlanController.decelPoint.lon);
+		if (flightPlanController.num[2].getValue() > 0 and fmgc.flightPlanController.active.getBoolValue() and flightPlanController.decelPoint != nil and (courseDistanceDecel[1] <= 5 and (math.abs(courseDistanceDecel[0] - pts.Orientation.heading.getValue()) >= 90 and xtrkError <= 5) or courseDistanceDecel[1] <= 0.1) and (Modes.PFD.FMA.rollMode == "NAV" or Modes.PFD.FMA.rollMode == "LOC" or Modes.PFD.FMA.rollMode == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) {
+			FMGCInternal.decel = 1;
+			setprop("/instrumentation/nd/symbols/decel/show", 0); 
+		} elsif (FMGCInternal.decel and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
+			FMGCInternal.decel = 0;
+		}
+	} else {
 		FMGCInternal.decel = 0;
 	}
 	

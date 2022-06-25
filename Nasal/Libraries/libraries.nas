@@ -5,11 +5,13 @@ print("------------------------------------------------");
 print("Copyright (c) 2016-2022 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
+setprop("/autopilot/route-manager/disable-route-manager", 1);
+setprop("/autopilot/route-manager/disable-fms", 1);
+
 # Disable specific menubar items
 setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
-setprop("/sim/menubar/default/menu[3]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[9]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[10]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[11]/enabled", 0);

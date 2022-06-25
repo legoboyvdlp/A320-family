@@ -435,6 +435,24 @@
 	</filter>
 	
 	<filter>
+		<name>Get Back on Magenta</name>
+		<type>gain</type>
+		<gain>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/velocities/vc-kts</property>
+					<entry><ind>140</ind><dep>50</dep></entry>
+					<entry><ind>360</ind><dep>20</dep></entry>
+				</table>
+			</expression>
+		</gain>
+		<input>/instrumentation/gps/wp/wp[1]/course-error-nm</input>
+		<output>/it-autoflight/internal/course-error-deg</output>
+		<min>-45</min>
+		<max>45</max>
+	</filter>
+	
+	<filter>
 		<name>Heading Error Deg</name>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -485,7 +503,8 @@
 			</condition>
 			<expression>
 				<sum>
-					<property>/FMGC/flightplan[2]/current-leg-course</property>
+					<property>/instrumentation/gps/wp/leg-true-course-deg</property>
+					<property>/it-autoflight/internal/course-error-deg</property>
 					<product>
 						<property>/it-autoflight/internal/drift-angle-deg</property>
 						<value>-1.0</value>

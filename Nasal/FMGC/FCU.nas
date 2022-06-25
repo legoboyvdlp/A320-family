@@ -294,7 +294,10 @@ var FCUController = {
 	HDGPush: func() {
 		if (me.FCUworking) {
 			if (fmgc.Output.fd1.getBoolValue() or fmgc.Output.fd2.getBoolValue() or fmgc.Output.ap1.getBoolValue() or fmgc.Output.ap2.getBoolValue()) {
-				fmgc.Input.lat.setValue(1);
+				var wp = fmgc.flightPlanController.flightplans[2].getWP(fmgc.flightPlanController.currentToWptIndex.getValue());
+				if (wp != nil and wp.wp_type != "discontinuity" and wp.wp_type != "vectors") {
+					fmgc.Input.lat.setValue(1);
+				}
 			}
 		}
 	},

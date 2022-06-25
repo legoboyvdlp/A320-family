@@ -1,3 +1,6 @@
+# A3XX MCDU Received Messages Page
+# Copyright (c) 2022 Jonathan Redpath (legoboyvdlp)
+
 var receivedMessagesPage = {
 	title: nil,
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
