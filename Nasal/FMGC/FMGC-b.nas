@@ -379,7 +379,7 @@ var ITAF = {
 		# Waypoint Advance Logic
 		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1 and FPLN.currentWPTemp != -1) {
 			if ((FPLN.currentWPTemp + 1) < flightPlanController.num[2].getValue()) {
-				Velocities.groundspeedMps = pts.Velocities.groundspeed.getValue() * 0.5144444444444;
+				Velocities.groundspeedMps = pts.Velocities.groundspeedKt.getValue() * 0.5144444444444;
 				FPLN.currentCourse = getprop("/autopilot/route-manager/route/wp[" ~ FPLN.currentWPTemp ~ "]/leg-bearing-true-deg");
 				FPLN.nextCourse = getprop("/autopilot/route-manager/route/wp[" ~ (FPLN.currentWPTemp + 1) ~ "]/leg-bearing-true-deg");
 				FPLN.maxBankLimit = Internal.bankLimit.getValue();
