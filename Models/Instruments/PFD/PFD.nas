@@ -687,9 +687,9 @@ var canvas_pfd = {
 			}),
 			props.UpdateManager.FromHashList(["altimeterHpa","altimeterInhg","altimeterInhgMode"], 0.005, func(val) {
 				if (val.altimeterInhgMode == 0) {
-					obj["QNH_setting"].setText(sprintf("%4d", val.altimeterHpa));
+					obj["QNH_setting"].setText(sprintf("%4d", math.round(val.altimeterHpa)));
 				} else {
-					obj["QNH_setting"].setText(sprintf("%2.2f", val.altimeterInhg));
+					obj["QNH_setting"].setText(sprintf("%2.2f", math.round(val.altimeterInhg * 100) / 100));
 				}
 			}),
 			props.UpdateManager.FromHashList(["altimeterStd","altitudeAutopilot"], 1, func(val) {

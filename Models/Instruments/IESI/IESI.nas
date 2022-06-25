@@ -304,9 +304,9 @@ var canvas_IESI = {
 			me["QNH_std"].show();
 		} else {
 			if (pinPrograms.showInHg) {
-				me["QNH_setting"].setText(sprintf("%4.0f", notification.qnh_hpa_iesi) ~ "/" ~ sprintf("%2.2f", notification.qnh_inhg_iesi));
+				me["QNH_setting"].setText(sprintf("%4.0f", math.round(notification.qnh_hpa_iesi)) ~ "/" ~ sprintf("%2.2f", math.round(notification.qnh_inhg_iesi * 100) / 100));
 			} else {
-				me["QNH_setting"].setText(sprintf("%4.0f", notification.qnh_hpa_iesi));
+				me["QNH_setting"].setText(sprintf("%4.0f", math.round(notification.qnh_hpa_iesi)));
 			}
 			me["QNH_std"].hide();
 			me["QNH_setting"].show();
