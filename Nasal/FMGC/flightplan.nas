@@ -227,7 +227,9 @@ var flightPlanController = {
 		# TODO - I think that it only goes to VS when in DES mode
 		
 		if (me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_type == "discontinuity" or me.flightplans[2].getWP(me.currentToWptIndexTemp + 1).wp_type == "vectors") {
-			fmgc.Input.lat.setValue(3);
+			if (fmgc.Output.lat.getValue() == 1) {
+				fmgc.Input.lat.setValue(3);
+			}
 			me.currentToWptIndex.setValue(me.currentToWptIndexTemp + 2);
 			me.lastSequencedCurrentWP = me.currentToWptIndexTemp + 2;
 		} else {

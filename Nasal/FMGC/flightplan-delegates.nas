@@ -268,7 +268,9 @@ var A320GPSDelegate = {
 				me.flightplan.current = me.flightplan.current + 1;
 			} else {
 				logprint(LOG_INFO, "default GPS sequencing to next WP (special)");
-				fmgc.Input.lat.setValue(3);
+				if (fmgc.Output.lat.getValue() == 1) {
+					fmgc.Input.lat.setValue(3);
+				}
 				if (me.flightplan.nextWP().wp_type == 'vectors') {
 					me.flightplan.current = me.flightplan.current + 2;
 				}
