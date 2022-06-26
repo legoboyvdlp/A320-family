@@ -566,6 +566,11 @@
 		</fcs_function>
 		
 		<!-- V alpha prot/max -->
+		<lag_filter name="/FMGC/internal/alpha-input">
+			<input>aero/alpha-deg-fixed</input>
+			<c1>1.0</c1>
+		</lag_filter>
+		
 		<fcs_function name="/FMGC/internal/valpha-prot">
 			<function>
 				<product>
@@ -577,7 +582,7 @@
 					<pow>
 						<max>
 							<quotient>
-								<property>fbw/protections/alpha-input</property>
+								<property>/FMGC/internal/alpha-input</property>
 								<property>fbw/alpha-prot-deg</property>
 							</quotient>
 							<value>0</value>
@@ -599,7 +604,7 @@
 					<pow>
 						<max>
 							<quotient>
-								<property>fbw/protections/alpha-input</property>
+								<property>/FMGC/internal/alpha-input</property>
 								<property>fbw/alpha-max-deg</property>
 							</quotient>
 							<value>0</value>
