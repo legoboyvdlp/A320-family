@@ -223,7 +223,7 @@ var canvas_lowerECAMPageEng =
 			me["OilQT2-XX"].hide();
 			me["OilQT2"].show();
 			
-			me["OilPSI2"].setText(sprintf("%s", math.clamp(math.round(me.pressure[0], 2), 0, 998)));
+			me["OilPSI2"].setText(sprintf("%s", math.clamp(math.round(me.pressure[1], 2), 0, 998)));
 			if (me.pressure[1] >= 13) {
 				me["OilPSI2"].setColor(0.0509,0.7529,0.2941);
 			} else {
