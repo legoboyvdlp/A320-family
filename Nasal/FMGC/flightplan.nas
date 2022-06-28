@@ -45,6 +45,7 @@ var flightPlanController = {
 	_timeTemp: nil,
 	_altTemp: nil,
 	decelPoint: nil,
+	lvlOffPoint: nil,
 	
 	init: func() {
 		me.resetFlightplan(2);
@@ -60,8 +61,18 @@ var flightPlanController = {
 		me.resetFlightplan(0);
 		me.resetFlightplan(1);
 		me.resetFlightplan(2);
+		
 		me.decelPoint = nil;
 		setprop("/instrumentation/nd/symbols/decel/show", 0);
+		
+		me.lvlOffPoint = nil;
+		setprop("/autopilot/route-manager/vnav/ec/latitude-deg", 0); # necessary to prevent canvas glitching out because properties don't exist
+		setprop("/autopilot/route-manager/vnav/ed/latitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/ec/longitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/ed/longitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/ec/show", 0); 
+		setprop("/autopilot/route-manager/vnav/ed/show", 0); 
+		
 		me.flightplans[2].activate();
 	},
 	
@@ -763,6 +774,36 @@ var flightPlanController = {
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
 	
+	
+	calculateLvlOffPoint: func(deltaAltitude) {
+		me.distLvl = (deltaAltitude * pts.Velocities.groundspeedKt.getValue()) / (fmgc.Internal.vs.getValue() * 60);
+		
+		if (fmgc.Output.lat.getValue() == 1) { # NAV
+			me.lvlOffPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + abs(me.distLvl));
+		} elsif (fmgc.Output.lat.getValue() == 0) { # HDG TRK
+			#var coord = geo.aircraft_position();
+			#coord.apply_course_distance(fmgc.Internal.hdg.getValue(), me.distLvl * FT2M);
+			#me.lvlOffPoint = {lat: coord.lat(), lon: coord.lon()};
+			me.lvlOffPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue(), 10);
+		} else {
+			setprop("/autopilot/route-manager/vnav/ec/show", 0); 
+			setprop("/autopilot/route-manager/vnav/ed/show", 0); 
+			me.lvlOffPoint = nil;
+		}
+		
+		if (deltaAltitude >= 100 and me.lvlOffPoint != nil) {
+			setprop("/autopilot/route-manager/vnav/ec/latitude-deg", me.lvlOffPoint.lat); 
+			setprop("/autopilot/route-manager/vnav/ec/longitude-deg", me.lvlOffPoint.lon);
+			setprop("/autopilot/route-manager/vnav/ec/show", 1); 
+			setprop("/autopilot/route-manager/vnav/ed/show", 0); 
+		} elsif (deltaAltitude <= -100 and me.lvlOffPoint != nil) {
+			setprop("/autopilot/route-manager/vnav/ed/latitude-deg", me.lvlOffPoint.lat); 
+			setprop("/autopilot/route-manager/vnav/ed/longitude-deg", me.lvlOffPoint.lon);
+			setprop("/autopilot/route-manager/vnav/ec/show", 0); 
+			setprop("/autopilot/route-manager/vnav/ed/show", 1); 
+		}
+	},
+	
 	# insertPlaceBearingDistance - insert PBD waypoint at specified index,
 	# at some specified bearing, distance from a specified location
 	# args: wp, index, plan
@@ -896,6 +937,14 @@ var flightPlanController = {
 			
 		if (runDecel) {
 			me.calculateDecelPoint();
+		}
+		
+		var deltaAltitude = fmgc.Input.alt.getValue() - pts.Instrumentation.Altimeter.indicatedFt.getValue();
+		if (abs(deltaAltitude) >= 100) {
+			me.calculateLvlOffPoint(deltaAltitude);
+		} else {
+			setprop("/autopilot/route-manager/vnav/ec/show", 0); 
+			setprop("/autopilot/route-manager/vnav/ed/show", 0); 
 		}
 		
 		for (var i = 0; i <= 1; i += 1) {
