@@ -181,7 +181,7 @@ canvas.NDStyles["Airbus"] = {
 		{
 			name: "ALT-profile",
 			isMapStructure: 1,
-			update_on: ["toggle_display_mode","toggle_range", {rate_hz: 0.5}],
+			update_on: ["toggle_display_mode","toggle_range", {rate_hz: 2}],
 			predicate: func(nd, layer) {
 				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
