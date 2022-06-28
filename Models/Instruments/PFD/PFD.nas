@@ -196,7 +196,7 @@ var canvas_pfd = {
 				obj["FD_roll"].setTranslation(val * 2.2, 0);
 			}),
 			props.UpdateManager.FromHashValue("FDPitchBar", 0.1, func(val) {
-				obj["FD_pitch"].setTranslation(0, val * -3.8);
+				obj["FD_pitch"].setTranslation(0, val * -11.825);
 			}),
 			props.UpdateManager.FromHashValue("agl", 0.5, func(val) {
 				var roundingFactor = 1;

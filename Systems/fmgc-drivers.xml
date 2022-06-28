@@ -820,8 +820,7 @@
 	
 	<filter>
 		<name>FD Roll</name>
-		<type>gain</type>
-		<gain>1.0</gain>
+		<type>noise-spike</type>
 		<input>
 			<expression>
 				<difference>
@@ -833,6 +832,7 @@
 		<output>/it-autoflight/fd/roll-bar</output>
 		<min>-30</min>
 		<max>30</max>
+		<max-rate-of-change>20</max-rate-of-change>
 	</filter>
 	
 	<filter>
@@ -850,7 +850,7 @@
 				<product>
 					<table>
 						<property>/orientation/pitch-deg</property>
-						<entry><ind> 1</ind><dep>2.8</dep></entry>
+						<entry><ind> 1</ind><dep>1.8</dep></entry>
 						<entry><ind>10</ind><dep>0.0</dep></entry>
 					</table>
 					<table>
@@ -871,17 +871,23 @@
 		<input>
 			<expression>
 				<sum>
-					<product>
-						<difference>
-							<property>/it-autoflight/internal/target-common-fpm</property>
-							<property>/it-autoflight/internal/vert-speed-fpm</property>
-						</difference>
-						<table>
-							<property>/velocities/airspeed-kt</property>
-							<entry><ind>140</ind><dep>0.001848350</dep></entry>
-							<entry><ind>360</ind><dep>0.000924175</dep></entry>
-						</table>
-					</product>
+					<rad2deg>
+						<asin>
+							<div>
+								<difference>
+									<property>/it-autoflight/internal/target-common-fpm</property>
+									<property>/it-autoflight/internal/vert-speed-fpm</property>
+								</difference>
+								<product>
+									<max>
+										<property>/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
+										<value>50</value>
+									</max>
+									<value>151.90288713910761</value> <!-- FPM to Knot * 1.5 -->
+								</product>
+							</div>
+						</asin>
+					</rad2deg>
 					<property>/it-autoflight/fd/pitch-bar-takeoff</property>
 				</sum>
 			</expression>
