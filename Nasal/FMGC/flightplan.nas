@@ -778,13 +778,14 @@ var flightPlanController = {
 	calculateLvlOffPoint: func(deltaAltitude) {
 		me.distLvl = (deltaAltitude * pts.Velocities.groundspeedKt.getValue()) / (fmgc.Internal.vs.getValue() * 60);
 		
-		if (fmgc.Output.lat.getValue() == 1) { # NAV
-			me.lvlOffPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + abs(me.distLvl));
-		} elsif (fmgc.Output.lat.getValue() == 0) { # HDG TRK
-			#var coord = geo.aircraft_position();
-			#coord.apply_course_distance(fmgc.Internal.hdg.getValue(), me.distLvl * FT2M);
-			#me.lvlOffPoint = {lat: coord.lat(), lon: coord.lon()};
-			me.lvlOffPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue(), 10);
+		if (fmgc.Output.lat.getValue() == 1 and me.distLvl >= 0) { # NAV
+			me.lvlOffPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + me.distLvl);
+		} elsif (fmgc.Output.lat.getValue() == 0 and me.distLvl >= 0) { # HDG TRK
+			var coord = geo.aircraft_position();
+			coord.apply_course_distance(getprop("/orientation/track-magnetic-deg"), me.distLvl * NM2M);
+			var latGeo = coord.lat();
+			var lonGeo = coord.lon();
+			me.lvlOffPoint = {lat: latGeo, lon: lonGeo};
 		} else {
 			setprop("/autopilot/route-manager/vnav/ec/show", 0); 
 			setprop("/autopilot/route-manager/vnav/ed/show", 0); 
