@@ -776,7 +776,7 @@ var flightPlanController = {
 	
 	
 	calculateLvlOffPoint: func(deltaAltitude) {
-		me.distLvl = (deltaAltitude * pts.Velocities.groundspeedKt.getValue()) / (fmgc.Internal.vs.getValue() * 60);
+		me.distLvl = (deltaAltitude * pts.Velocities.groundspeed.getValue()) / (fmgc.Internal.vs.getValue() * 60);
 		
 		if (fmgc.Output.lat.getValue() == 1) { # NAV
 			me.lvlOffPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + abs(me.distLvl));
