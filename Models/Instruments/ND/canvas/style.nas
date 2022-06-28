@@ -181,7 +181,7 @@ canvas.NDStyles["Airbus"] = {
 		{
 			name: "ALT-profile",
 			isMapStructure: 1,
-			update_on: ["toggle_display_mode","toggle_range",{rate_hz: 2}],
+			update_on: ["toggle_display_mode","toggle_range", {rate_hz: 0.5}],
 			predicate: func(nd, layer) {
 				var visible = nd.in_mode("toggle_display_mode", ["MAP", "PLAN"])  and (nd.adirs_property.getValue() == 1 or (adirs_3.getValue()  == 1 and att_switch.getValue() == nd.attitude_heading_setting));
 				layer.group.setVisible( visible );
@@ -205,7 +205,6 @@ canvas.NDStyles["Airbus"] = {
 				#	/autopilot/route-manager/vnav/td/
 				# Each node should have the latitude-deg and longitude-deg properties.
 				# Available nodes are: 
-				#	tc (top of climb)
 				#	td (top of descent)
 				#	ec (end of climb)
 				#	ed (end of descent)
@@ -214,14 +213,13 @@ canvas.NDStyles["Airbus"] = {
 				# If ec and ed are altitude constraints, their node should have the 
 				# boolean "alt-cstr" property set to 1.
 				vnav_node: "/autopilot/route-manager/vnav/", 
-				types: ["tc", "td", "ec", "ed","sc","sd"],
+				types: ["ec","ed","sc","sd","td"],
 				svg_path: {
-					tc: get_local_path("res/airbus_tc.svg"),
-					td: get_local_path("res/airbus_td.svg"),
 					ec: get_local_path("res/airbus_ec.svg"),
 					ed: get_local_path("res/airbus_ed.svg"),
 					sc: get_local_path("res/airbus_sc.svg"),
-					sd: get_local_path("res/airbus_sd.svg")
+					sd: get_local_path("res/airbus_sd.svg"),
+					td: get_local_path("res/airbus_td.svg")
 				},
 				listen: [
 					"fplan_active",
@@ -233,31 +231,32 @@ canvas.NDStyles["Airbus"] = {
 				draw_callback: func(){
 					var name = me.model.getName();
 					var grp = me.element.getElementById(name~"_symbol");
-					if(grp == nil) return;
-					var dfcolor = me.getStyle("default_color");
-					var armed_color = me.getStyle("armed_color");
-					var managed_color = me.getStyle("managed_color");
-					#print("Draw: -> " ~ name);
-					if(name == "td" or name == "sd" or name == "sc"){
-						var vnav_armed = me.model.getValue("vnav-armed");
-						if(vnav_armed and name != "td")
-							grp.setColor(armed_color);
-						else
-							grp.setColor(dfcolor);
+					if (grp == nil) return;
+					
+					if (me.model.getValue("show")) {
+						grp.show();
+					} else {
+						grp.hide();
 					}
-					elsif(name == "ed" or name == "ec"){
-						var is_cstr = me.model.getValue("alt-cstr");
-						if(is_cstr)
-							grp.setColor(managed_color);
-						else
-							grp.setColor(armed_color);
+					
+					if (name == "ed" or name == "ec") {
+						if (me.model.getValue("alt-cstr")) {
+							grp.setColor(me.getStyle("managed_color"));
+						} else {
+							grp.setColor(me.getStyle("armed_color"));
+						}
+					} elsif(name == "td" or name == "sd" or name == "sc"){
+						if (me.model.getValue("vnav-armed") and name != "td") {
+							grp.setColor(me.getStyle("armed_color"));
+						} else {
+							grp.setColor(me.getStyle("default_color"));
+						}
 					}
 				},
 				init_after_callback: func{
 					var name = me.model.getName();
-					var grp = me.element.getElementById(name~"_symbol");
-					if(name != "td" and name != "sd" and name != "sc"){
-						grp.setTranslation(-66,0);
+					if (name != "td" and name != "sd" and name != "sc") {
+						me.element.getElementById(name~"_symbol").setTranslation(-66,0);
 					} 
 				}
 			}
