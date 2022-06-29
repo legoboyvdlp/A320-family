@@ -322,6 +322,15 @@
 			</expression>
 		</input>
 		<output>/it-autoflight/internal/flch-kts-error-cmd</output>
+		<min>
+			<condition>
+				<equals>
+					<property>/it-autoflight/output/vert</property>
+					<value>7</value>
+				</equals>
+			</condition>
+			<value>-0.8</value>
+		</min>
 		<min>-1.2</min>
 		<max>1.2</max>
 	</filter>
@@ -850,7 +859,7 @@
 				<product>
 					<table>
 						<property>/orientation/pitch-deg</property>
-						<entry><ind> 1</ind><dep>1.8</dep></entry>
+						<entry><ind> 1</ind><dep>4.8</dep></entry>
 						<entry><ind>10</ind><dep>0.0</dep></entry>
 					</table>
 					<table>
@@ -881,7 +890,7 @@
 								<product>
 									<max>
 										<property>/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
-										<value>50</value>
+										<value>100</value>
 									</max>
 									<value>151.90288713910761</value> <!-- FPM to Knot * 1.5 -->
 								</product>
