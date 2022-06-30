@@ -8,6 +8,8 @@
 	<property value="0">fbw/detent-1-feedback</property>
 	<property value="0">fbw/detent-2-feedback</property>
 	<property value="0">fbw/roll/pid</property>
+	<property value="0">fbw/pitch/e-i-a</property>
+	<property value="0">fbw/pitch/e-i-n</property>
 	<property value="0">fbw/pitch/load-factor-pi</property>
 	<property value="0">fbw/pitch/pid</property>
 	<property value="0">fbw/yaw/tc-pd</property>
@@ -23,6 +25,8 @@
 	<property value="0">fbw/pitch/p-gain</property>
 	<property value="0">fbw/pitch/i-gain</property>
 	<property value="0">fbw/pitch/d-gain</property>
+	<property value="0.28">fbw/pitch/alpha/p-gain</property>
+	<property value="0.25">fbw/pitch/alpha/d-gain</property>
 	<property value="0">fbw/yaw/yd-p-gain</property>
 	<property value="0">fbw/yaw/tc-p-gain</property>
 	<property value="0">fbw/yaw/tc-d-gain</property>
@@ -70,7 +74,19 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="fbw/alpha-stall-deg">
+		<switch name="fbw/protections/alpha-input-switched">
+			<default value="0"/>
+			<test value="aero/alpha-deg">
+				position/gear-agl-ft ge 100
+			</test>
+		</switch>
+		
+		<lag_filter name="fbw/protections/alpha-input">
+			<input>fbw/protections/alpha-input-switched</input>
+			<c1>1.0</c1>
+		</lag_filter>
+		
+		<fcs_function name="fbw/alpha-stall-deg"> <!-- Not used, for reference only -->
 			<function>
 				<table>
 					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
@@ -90,15 +106,60 @@
 					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
 					<tableData breakPoint="0">
 						       0    10    15
-						    0  9.0  11.0  10.5
-						43000  6.5   7.0   7.0
+						21000  8.4  11.0  10.5
+						43000  7.4   7.4   7.4
 					</tableData>
 					<tableData breakPoint="18">
 						       0     10    15
-						    0  10.0  11.0  10.5
-						43000   7.0   7.0   7.0
+						21000  10.0  11.0  10.5
+						43000   7.4   7.4   7.4
 					</tableData>
 				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/protections/alpha-prot-b">
+			<function>
+				<table>
+					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<tableData>
+						21000  0.10
+						43000  0.05
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/protections/alpha-prot-e">
+			<function>
+				<sum>
+					<property>fbw/alpha-prot-deg</property>
+					<product>
+						<property>fbw/protections/alpha-prot-b</property>
+						<product>
+							<sum>
+								<property>fbw/fmgc/enabled</property>
+								<value>1</value>
+							</sum>
+							<value>4.5</value>
+						</product>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/protections/alpha-prot-d">
+			<function>
+				<difference>
+					<property>fbw/alpha-prot-deg</property>
+					<table>
+						<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+						<tableData>
+							21000  2
+							43000  1
+						</tableData>
+					</table>
+				</difference>
 			</function>
 		</fcs_function>
 		
@@ -110,25 +171,55 @@
 					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
 					<tableData breakPoint="0">
 						       0     10    15
-						    0  12.0  15.0  14.5
-						43000   7.4   7.7   7.7
+						    0  11.7  15.0  14.5
+						21000  11.4  11.4  11.4
+						43000   7.8   7.8   7.8
 					</tableData>
 					<tableData breakPoint="18">
 						       0     10    15
 						    0  15.0  15.0  14.5
-						43000   7.7   7.7   7.7
+						21000  11.4  11.4  11.4
+						43000   7.8   7.8   7.8
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
+		
+		<switch name="fbw/protections/alpha">
+			<default value="fbw/protections/alpha"/>
+			<test logic="OR" value="0">
+				position/wow eq 1
+				/it-fbw/law ne 0
+				fbw/protections/alpha-input le fbw/protections/alpha-prot-d
+				fbw/pitch/e-i-n ge 0.5
+				position/gear-agl-ft le 100
+			</test>
+			<test logic="AND" value="0">
+				position/gear-agl-ft le 200
+				fbw/protections/alpha-input le fbw/protections/alpha-prot-d
+				fbw/pitch/e-i-n gt -0.5
+			</test>
+			<test value="1">
+				fbw/protections/alpha-input ge fbw/protections/alpha-prot-e
+			</test>
+		</switch>
+		
+		<switch name="fbw/pitch/alpha/gain-switch">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				fbw/pitch/gain-switch eq 1
+				fbw/protections/alpha eq 0
+			</test>
+		</switch>
 		
 		<switch name="fbw/protections/overspeed">
 			<default value="fbw/protections/overspeed"/>
 			<test logic="OR" value="0">
 				position/wow eq 1
 				/it-fbw/law ne 0
+				fbw/protections/alpha eq 1
 				/instrumentation/airspeed-indicator/indicated-speed-kt le /FMGC/internal/vmo-mmo
-				aero/alpha-deg-damped ge fbw/alpha-stall-deg
+				aero/alpha-deg-damped ge fbw/alpha-prot-deg
 			</test>
 			<test value="1">
 				/instrumentation/airspeed-indicator/indicated-speed-kt ge /FMGC/internal/vmo-mmo-plus-6
@@ -1373,7 +1464,7 @@
 			<input>-/FMGC/internal/vmo-mmo</input>
 		</summer>
 		
-		<fcs_function name="fbw/pitch/e-i-normal">
+		<fcs_function name="fbw/pitch/e-i-n">
 			<function>
 				<sum>
 					<property>fbw/sidestick/pitch-input</property>
@@ -1390,7 +1481,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fbw/pitch/e-i-overspeed">
+		<fcs_function name="fbw/pitch/e-i-o">
 			<function>
 				<table>
 					<independentVar lookup="row">fbw/sidestick/pitch-input</independentVar>
@@ -1422,6 +1513,56 @@
 				</table>
 			</function>
 		</fcs_function>
+		
+		<!-- Begin Alpha Law -->
+		<lag_filter name="fbw/pitch/alpha/input">
+			<input>fbw/pitch/e-i-f</input>
+			<c1>5</c1>
+		</lag_filter>
+		
+		<fcs_function name="fbw/pitch/alpha/target">
+			<function>
+				<sum>
+					<property>fbw/alpha-prot-deg</property>
+					<property>fbw/protections/alpha-prot-b</property>
+					<product>
+						<property>fbw/pitch/alpha/input</property>
+						<quotient>
+							<difference>
+								<property>fbw/alpha-max-deg</property>
+								<sum>
+									<property>fbw/alpha-prot-deg</property>
+									<property>fbw/protections/alpha-prot-b</property>
+								</sum>
+							</difference>
+							<value>-1</value>
+						</quotient>
+					</product>
+				</sum>
+			</function>
+			<clipto>
+				<min>fbw/alpha-prot-deg</min>
+				<max>fbw/alpha-max-deg</max>
+			</clipto>
+		</fcs_function>
+		
+		<summer name="fbw/pitch/alpha/error">
+			<input>aero/alpha-deg-damped</input>
+			<input>-fbw/pitch/alpha/target</input>
+		</summer>
+		
+		<pid name="fbw/pitch/alpha/pd-v">
+			<input>fbw/pitch/alpha/error</input>
+			<kp>fbw/pitch/alpha/p-gain</kp>
+			<ki>0.0</ki>
+			<kd>fbw/pitch/alpha/d-gain</kd>
+			<output>fbw/pitch/e-i-a</output>
+			<clipto>
+				<min>-0.5</min>
+				<max>0.5</max>
+			</clipto>
+		</pid>
+		<!-- End Alpha Law -->
 		
 		<switch name="fbw/pitch/flare-active">
 			<default value="0"/>
@@ -1462,7 +1603,7 @@
 			<rate_limit sense="decr">fbw/pitch/flare-decr</rate_limit>
 		</actuator>
 		
-		<fcs_function name="fbw/pitch/e-i-flare">
+		<fcs_function name="fbw/pitch/e-i-fl">
 			<function>
 				<product>
 					<property>fbw/pitch/flare-gain</property>
@@ -1516,22 +1657,24 @@
 		
 		<fcs_function name="fbw/pitch/e-i-min">
 			<function>
-				<max>
-					<table>
-						<independentVar lookup="row">fbw/pitch/max-rad-error</independentVar>
-						<tableData>
-							-0.087266 -1.0
-							-0.034907 -0.1
-							 0.000000  0.0
-						</tableData>
-					</table>
-				</max>
+				<table>
+					<independentVar lookup="row">fbw/pitch/max-rad-error</independentVar>
+					<tableData>
+						-0.087266 -1.0
+						-0.034907 -0.1
+						 0.000000  0.0
+					</tableData>
+				</table>
 			</function>
 		</fcs_function>
 		
 		<switch name="fbw/pitch/e-i-cmd">
-			<default value="fbw/pitch/e-i-normal"/>
-			<test logic="AND" value="fbw/pitch/e-i-overspeed">
+			<default value="fbw/pitch/e-i-n"/>
+			<test logic="AND" value="fbw/pitch/e-i-a">
+				fbw/protections/alpha eq 1
+				position/wow eq 0
+			</test>
+			<test logic="AND" value="fbw/pitch/e-i-o">
 				fbw/protections/overspeed eq 1
 				position/wow eq 0
 			</test>
@@ -1577,7 +1720,7 @@
 		
 		<summer name="fbw/pitch/e-i-sum">
 			<input>fbw/pitch/e-i-cmd</input>
-			<input>fbw/pitch/e-i-flare</input>
+			<input>fbw/pitch/e-i-fl</input>
 			<input>fbw/pitch/over-max</input>
 			<input>fbw/pitch/over-min</input>
 			<clipto>
@@ -1761,6 +1904,37 @@
 			</test>
 		</switch>
 		
+		<switch name="fbw/pitch/autotrim-up-limit">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				fbw/protections/alpha eq 1
+				fbw/pitch/load-factor gt 1.25
+				attitude/roll-rad lt -0.5846853
+				attitude/roll-rad gt 0.5846853
+			</test>
+		</switch>
+		
+		<switch name="fbw/pitch/autotrim-dn-limit">
+			<default value="0"/>
+			<test value="1">
+				fbw/protections/overspeed eq 1
+			</test>
+		</switch>
+		
+		<switch name="fbw/pitch/autotrim-up">
+			<default value="-1"/> <!-- 13.5 ANU -->
+			<test value="-0.814815"> <!-- 11 ANU -->
+				fbw/pitch/autotrim-dn-limit eq 1
+			</test>
+		</switch>
+		
+		<switch name="fbw/pitch/autotrim-dn">
+			<default value="0.296296"/> <!-- 4 AND -->
+			<test value="0.259259"> <!-- 3.5 AND -->
+				fbw/pitch/autotrim-up-limit eq 1
+			</test>
+		</switch>
+		
 		<switch name="fbw/pitch/autotrim-switch">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -1771,8 +1945,9 @@
 				fbw/pitch/pid-switched ge 0.01
 				fbw/pitch/g-instrumented ge 0.5
 				fbw/protections/overspeed ne 1
-				/controls/flight/elevator-trim le 0.32
 				position/wow eq 0
+				fbw/pitch/autotrim-dn-limit eq 0
+				/controls/flight/elevator-trim le fbw/pitch/autotrim-dn
 			</test>
 			<test logic="AND" value="2">
 				fbw/pitch/gain-switch eq 0
@@ -1782,8 +1957,9 @@
 				fbw/pitch/pid-switched le -0.01
 				fbw/pitch/g-instrumented ge 0.5
 				fbw/protections/overspeed ne 1
-				/controls/flight/elevator-trim ge -1.0
 				position/wow eq 0
+				fbw/pitch/autotrim-up-limit eq 0
+				/controls/flight/elevator-trim ge fbw/pitch/autotrim-up
 			</test>
 		</switch>
 		

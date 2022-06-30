@@ -549,10 +549,12 @@ var canvas_upperECAM = {
 				me.displayIdleTrigger = 1;
 			}
 			if ((notification.elapsedTime - enginesBothAtIdleTime.getValue()) < 10) {
-				if ((notification.elapsedTime - enginesBothAtIdleTimeSaved.getValue()) > 1) {
+				if ((notification.elapsedTime - enginesBothAtIdleTimeSaved.getValue()) > 0.5) {
 					enginesBothAtIdleTimeSaved.setValue(notification.elapsedTime);
 					me.displayIdleDim = !me.displayIdleDim;
 				}
+			} else {
+				me.displayIdleDim = 0;
 			}
 			me.displayIdle = 1;
 		} else {

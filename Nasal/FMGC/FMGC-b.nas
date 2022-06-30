@@ -14,21 +14,21 @@ var Controls = {
 };
 
 var FPLN = {
-	active: props.globals.getNode("/FMGC/flightplan[2]/active", 1),
+	active: props.globals.getNode("/autopilot/route-manager/active", 1),
 	activeTemp: 0,
 	currentCourse: 0,
-	currentWp: props.globals.getNode("/FMGC/flightplan[2]/current-wp", 1),
-	currentWpTemp: 0,
+	currentWP: props.globals.getNode("/autopilot/route-manager/current-wp", 1),
+	currentWPTemp: 0,
 	deltaAngle: 0,
 	deltaAngleRad: 0,
 	distCoeff: 0,
 	maxBank: 0,
 	maxBankLimit: 0,
 	nextCourse: 0,
-	R: 0,
 	radius: 0,
+	R: 0,
 	turnDist: 0,
-	wp0Dist: props.globals.getNode("/FMGC/flightplan[2]/current-leg-dist", 1),
+	wp0Dist: props.globals.getNode("/autopilot/route-manager/wp[0]/dist", 1),
 	wpFlyFrom: 0,
 	wpFlyTo: 0,
 };
@@ -367,26 +367,21 @@ var ITAF = {
 	slowLoop: func() {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
-		FPLN.currentWpTemp = FPLN.currentWp.getValue();
+		FPLN.currentWPTemp = FPLN.currentWP.getValue();
 		
 		# If in LNAV mode and route is not longer active, switch to HDG HLD
 		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
-			if (flightPlanController.num[2].getValue() == 0 or !FPLN.active.getBoolValue()) {
+			if (flightPlanController.num[2].getValue() == 0 or !FPLN.activeTemp) {
 				me.setLatMode(3);
 			}
 		}
 		
 		# Waypoint Advance Logic
-		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1) {
-			if ((FPLN.currentWpTemp + 1) < flightPlanController.num[2].getValue()) {
-				Velocities.groundspeedMps = Velocities.groundspeedKt.getValue() * 0.5144444444444;
-				FPLN.wpFlyFrom = FPLN.currentWpTemp;
-				if (FPLN.wpFlyFrom < 0) {
-					FPLN.wpFlyFrom = 0;
-				}
-				FPLN.currentCourse = fmgc.wpCourse[2][FPLN.wpFlyFrom].getValue();
-				FPLN.wpFlyTo = FPLN.currentWpTemp + 1;
-				FPLN.nextCourse = fmgc.wpCourse[2][FPLN.wpFlyTo].getValue();
+		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1 and FPLN.currentWPTemp != -1) {
+			if ((FPLN.currentWPTemp + 1) < flightPlanController.num[2].getValue()) {
+				Velocities.groundspeedMps = pts.Velocities.groundspeedKt.getValue() * 0.5144444444444;
+				FPLN.currentCourse = getprop("/autopilot/route-manager/route/wp[" ~ FPLN.currentWPTemp ~ "]/leg-bearing-true-deg");
+				FPLN.nextCourse = getprop("/autopilot/route-manager/route/wp[" ~ (FPLN.currentWPTemp + 1) ~ "]/leg-bearing-true-deg");
 				FPLN.maxBankLimit = Internal.bankLimit.getValue();
 
 				FPLN.deltaAngle = math.abs(geo.normdeg180(FPLN.currentCourse - FPLN.nextCourse));
@@ -405,11 +400,17 @@ var ITAF = {
 				if (Gear.wow0.getBoolValue() and FPLN.turnDist < 1) {
 					FPLN.turnDist = 1;
 				}
-				Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
 				
-				if (FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWpTemp).fly_type == "flyBy") {
+				# This is removed because sequencing is done by the flightplan controller
+				# Internal.lnavAdvanceNm.setValue(FPLN.turnDist);
+				
+				# TODO - if the waypoint is the DEST waypoint, crosstrack error must be less than 0.5nm and course error less than 30 deg
+				# TODO - if in HDG mode, if no distance, then crosstrack error must be less than 5nm
+				# TODO - if in nav, no distance condition applies, but DEST course error must be less than 30 (CONFIRM)
+				
+				if (abs(FPLN.deltaAngle) < 120 and FPLN.wp0Dist.getValue() <= FPLN.turnDist and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
 					flightPlanController.autoSequencing();
-				} elsif (FPLN.wp0Dist.getValue() <= 0.15) {
+				} elsif (FPLN.wp0Dist.getValue() <= 0.15 and !Gear.wow1.getBoolValue()) {
 					flightPlanController.autoSequencing();
 				}
 			}
@@ -961,6 +962,12 @@ var ITAF = {
 	},
 };
 
+setlistener(Gear.wow1, func(val) {
+	if (!val.getBoolValue() and FPLN.currentWP.getValue() == 0) {
+		flightPlanController.autoSequencing();
+	}
+});
+	
 setlistener("/it-autoflight/input/ap1", func() {
 	Input.ap1Temp = Input.ap1.getBoolValue();
 	if (Input.ap1Temp != Output.ap1.getBoolValue()) {

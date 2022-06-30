@@ -196,7 +196,7 @@ var canvas_pfd = {
 				obj["FD_roll"].setTranslation(val * 2.2, 0);
 			}),
 			props.UpdateManager.FromHashValue("FDPitchBar", 0.1, func(val) {
-				obj["FD_pitch"].setTranslation(0, val * -3.8);
+				obj["FD_pitch"].setTranslation(0, val * -11.825);
 			}),
 			props.UpdateManager.FromHashValue("agl", 0.5, func(val) {
 				var roundingFactor = 1;
@@ -438,9 +438,9 @@ var canvas_pfd = {
 			}),
 			props.UpdateManager.FromHashList(["altimeterHpa","altimeterInhg","altimeterInhgModeLeft","altimeterInhgModeRight"], 0.005, func(val) {
 				if ((obj.number == 0 and val.altimeterInhgModeLeft == 0) or (obj.number == 1 and val.altimeterInhgModeRight == 0)) {
-					obj["QNH_setting"].setText(sprintf("%4d", val.altimeterHpa));
+					obj["QNH_setting"].setText(sprintf("%4d", math.round(val.altimeterHpa)));
 				} else {
-					obj["QNH_setting"].setText(sprintf("%2.2f", val.altimeterInhg));
+					obj["QNH_setting"].setText(sprintf("%2.2f", math.round(val.altimeterInhg * 100) / 100));
 				}
 			}),
 			props.UpdateManager.FromHashList(["altimeterStd","altitudeAutopilot"], 1, func(val) {
@@ -1299,9 +1299,7 @@ var canvas_pfd = {
 				notification.flapMaxSpeed = 0;
 			}
 			
-			notification.fmgcTakeoffState = fmgc.FMGCInternal.takeoffState;
-			
-			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
+			if (!fmgc.FMGCNodes.toState.getValue() and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
 				if (notification.vls <= 30) {
 					notification.VLSmin = 0 - notification.ASI;
 				} else if (notification.vls >= 420) {
@@ -1343,17 +1341,17 @@ var canvas_pfd = {
 			
 			me.tgt_ias = notification.targetIasPFD;
 			me.tgt_kts = notification.targetKts;
-			
+
 			if (notification.managedSpd) {
 				if (fmgc.FMGCInternal.decel) {
-					me.tgt_ias = fmgc.FMGCInternal.vappSpeedSet ? fmgc.FMGCInternal.vapp_appr : fmgc.FMGCInternal.vapp;
-					me.tgt_kts = fmgc.FMGCInternal.vappSpeedSet ? fmgc.FMGCInternal.vapp_appr : fmgc.FMGCInternal.vapp;
+					me.tgt_ias = fmgc.FMGCInternal.minspeed;
+					me.tgt_kts = fmgc.FMGCInternal.minspeed;
 				} else if (fmgc.FMGCInternal.phase == 6) {
 					me.tgt_ias = fmgc.FMGCInternal.clean;
 					me.tgt_kts = fmgc.FMGCInternal.clean;
 				}
 			}
-			
+
 			notification.tgt_kts = me.tgt_kts;
 			
 			if (me.tgt_ias <= 30) {
@@ -1408,7 +1406,6 @@ var canvas_pfd = {
 			notification.ASItrendIsShown = 0;
 			notification.Ctrgt = 0;
 			notification.flapMaxSpeed = 0;
-			notification.fmgcTakeoffState = nil;
 			notification.Ftrgt = 0;
 			notification.Strgt = 0;
 			notification.showV1 = 0;
@@ -1702,7 +1699,7 @@ var canvas_pfd = {
 		}
 		
 		notification.radioNo = fmgc.FMGCInternal.radioNo;
-		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist >= 250) {
+		if (fmgc.FMGCInternal.phase < 3 or fmgc.flightPlanController.arrivalDist.getValue() >= 250) {
 			notification.showDecisionHeight = 0;
 		} else {
 			notification.showDecisionHeight = 1;
@@ -2227,6 +2224,7 @@ var input = {
 	thrustLvrClb: "/fdm/jsbsim/fadec/lvrclb",
 	
 	fmgcPhase: "/FMGC/internal/phase",
+	fmgcTakeoffState: "/FMGC/internal/to-state",
 	fd1: "/it-autoflight/output/fd1",
 	fd2: "/it-autoflight/output/fd2",
 	trkFpa: "/it-autoflight/custom/trk-fpa",

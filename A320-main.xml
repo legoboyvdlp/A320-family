@@ -614,6 +614,9 @@
 			<surveillance type="string">S</surveillance>
 		</icao>
 		<performance>
+			<!-- explicitly force the category to be 'E' instead of using tag heuristics
+			Although the A320 is a category 'C' aircraft, category 'E's profile fits better -->
+			<icao-category type="string">E</icao-category>
 			<minimum>
 				<takeoff-length-ft type="int">4500</takeoff-length-ft>
 				<landing-length-ft type="int">4500</landing-length-ft>
@@ -808,6 +811,9 @@
 		<input n="0">
 			<kts type="int">100</kts>
 		</input>
+		<settings n="0">
+			<accel-ft type="double">1500</accel-ft>
+		</settings>
 		<output n="0">
 			<ap1 type="bool">0</ap1>
 			<ap2 type="bool">0</ap2>
@@ -849,6 +855,9 @@
 			<to-state type="bool">0</to-state>
 			<tow type="double">0</tow>
 			<vmax type="double">350</vmax>
+			<vapp type="double">0</vapp>
+			<vapp-predicted type="double">0</vapp-predicted>
+			<vapp-set type="double">0</vapp-set>
 		</internal>
 		<simbrief-username type="string"></simbrief-username>
 	</FMGC>
@@ -4866,6 +4875,7 @@
 			<file>Aircraft/A320-family/Nasal/Panels/efis.nas</file>
 		</fcu>
 		<fmgc>
+			<file>Aircraft/A320-family/Nasal/FMGC/flightplan-delegates.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/flightplan-waypoints.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/flightplan.nas</file>
 			<file>Aircraft/A320-family/Nasal/FMGC/FMGC.nas</file>

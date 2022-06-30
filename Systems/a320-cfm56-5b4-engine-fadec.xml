@@ -1024,21 +1024,6 @@
 			</test>
 		</switch>
 		
-		<switch name="fadec/alpha-floor-disengage">
-			<default value="9"/>
-			<test logic="OR" value="14">
-				/controls/flight/flaps-pos eq 1
-				/controls/flight/flaps-pos eq 2
-				/controls/flight/flaps-pos eq 3
-			</test>
-			<test value="13">
-				/controls/flight/flaps-pos eq 4
-			</test>
-			<test value="12">
-				/controls/flight/flaps-pos eq 5
-			</test>
-		</switch>
-		
 		<switch name="fadec/alpha-floor-switch">
 			<default value="fadec/alpha-floor-switch"/>
 			<test logic="OR" value="0"> <!-- Reset -->
@@ -1056,12 +1041,20 @@
 				fadec/alpha-floor-switch eq 1
 				/it-autoflight/output/athr eq 0
 			</test>
-			<test value="2"> <!-- Alpha Floor -->
-				aero/alpha-deg-damped gt fadec/alpha-floor-engage
+			<test logic="OR" value="2"> <!-- Alpha Floor -->
+				fbw/protections/alpha-input gt fadec/alpha-floor-engage
+				<test logic="AND"> <!-- Alpha Protection -->
+					fbw/protections/alpha eq 1
+					fbw/pitch/e-i-n lt -0.5
+				</test>
+				<test logic="AND"> <!-- Pitch Protection -->
+					fbw/pitch/e-i-min ge -0.1
+					fbw/pitch/e-i-n lt -0.5
+				</test>
 			</test>
 			<test logic="AND" value="1"> <!-- Toga Lk -->
 				fadec/alpha-floor-switch eq 2
-				aero/alpha-deg-damped lt fadec/alpha-floor-disengage
+				fbw/protections/alpha-input lt fbw/alpha-prot-deg
 			</test>
 		</switch>
 		

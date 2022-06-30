@@ -565,10 +565,36 @@
 			</function>
 		</fcs_function>
 		
+		<!-- Minimum speed (Target speed for managed speed after decel) -->
+		<switch name="/FMGC/internal/minspeed">
+			<default value="0"/>
+			<test logic="OR" value="/FMGC/internal/clean">
+				/controls/flight/flaps-pos eq 0
+			</test>
+			<test logic="OR" value="/FMGC/internal/slat">
+				/controls/flight/flaps-pos eq 1
+				/controls/flight/flaps-pos eq 2
+			</test>
+			<test logic="OR" value="/FMGC/internal/flap-2">
+				/controls/flight/flaps-pos eq 3
+			</test>
+			<test logic="OR" value="/FMGC/internal/flap-3">
+				/controls/flight/flaps-pos eq 4
+			</test>
+			<test logic="AND" value="/FMGC/internal/vapp">
+				/controls/flight/flaps-pos eq 5
+				/FMGC/internal/vapp-set eq 0
+			</test>
+			<test logic="AND" value="/FMGC/internal/vapp-predicted">
+				/controls/flight/flaps-pos eq 5
+				/FMGC/internal/vapp-set eq 1
+			</test>
+		</switch>
+		
 		<!-- V alpha prot/max -->
-		<lag_filter name="/FMGC/internal/valpha-lag">
+		<lag_filter name="/FMGC/internal/alpha-input">
 			<input>aero/alpha-deg-fixed</input>
-			<c1>0.35</c1>
+			<c1>1.0</c1>
 		</lag_filter>
 		
 		<fcs_function name="/FMGC/internal/valpha-prot">
@@ -580,11 +606,14 @@
 						<property>/systems/navigation/adr/output/cas-3</property>
 					</min>
 					<pow>
-						<quotient>
-							<property>/FMGC/internal/valpha-lag</property>
-							<property>fbw/alpha-prot-deg</property>
-						</quotient>
-						<value>0.28</value>
+						<max>
+							<quotient>
+								<property>/FMGC/internal/alpha-input</property>
+								<property>fbw/alpha-prot-deg</property>
+							</quotient>
+							<value>0</value>
+						</max>
+						<value>0.35</value>
 					</pow>
 				</product>
 			</function>
@@ -599,11 +628,14 @@
 						<property>/systems/navigation/adr/output/cas-3</property>
 					</min>
 					<pow>
-						<quotient>
-							<property>/FMGC/internal/valpha-lag</property>
-							<property>fbw/alpha-max-deg</property>
-						</quotient>
-						<value>0.275</value>
+						<max>
+							<quotient>
+								<property>/FMGC/internal/alpha-input</property>
+								<property>fbw/alpha-max-deg</property>
+							</quotient>
+							<value>0</value>
+						</max>
+						<value>0.35</value>
 					</pow>
 				</product>
 			</function>
@@ -614,13 +646,7 @@
 			<default value="/FMGC/internal/takeoff-latch"/>
 			<test logic="AND" value="0">
 				position/wow eq 0
-				fadec/eng-out eq 0
-				fadec/max-detent le 2
-			</test>
-			<test logic="AND" value="0">
-				position/wow eq 0
-				fadec/eng-out eq 1
-				fadec/max-detent le 4
+				/instrumentation/altimeter/indicated-altitude-ft ge /it-autoflight/settings/accel-ft
 			</test>
 			<test logic="OR" value="1">
 				position/wow eq 1
@@ -633,16 +659,19 @@
 		</switch>
 		
 		<switch name="/FMGC/internal/vls-factor-cmd">
-			<default value="1.23"/> <!-- 1.23 VS1g -->
+			<default value="1.25"/> <!-- 1.25 VS1g -->
 			<test value="1.13"> <!-- 1.13 VS1g -->
 				/FMGC/internal/takeoff-latch eq 1
+			</test>
+			<test value="1.23"> <!-- 1.23 VS1g -->
+				fcs/flap-pos-deg ge 0.1
 			</test>
 		</switch>
 		
 		<switch name="/FMGC/internal/vls-factor-rate">
 			<default value="10"/>
-			<test value="0.1">
-				position/wow eq 1
+			<test value="0.05">
+				position/wow eq 0
 			</test>
 		</switch>
 		
@@ -662,7 +691,7 @@
 								<independentVar lookup="row">atmosphere/density-altitude</independentVar>
 								<tableData>
 									    0  0.00
-									43000  0.22
+									43000  0.18
 								</tableData>
 							</table>
 						</sum>
@@ -766,9 +795,19 @@
 			<gain>1.27</gain>
 		</pure_gain>
 		
+		<pure_gain name="/FMGC/internal/slat-tow">
+			<input>/FMGC/internal/tow-vs1g-conf-0</input>
+			<gain>1.27</gain>
+		</pure_gain>
+		
 		<!-- Flap 2 -->
 		<pure_gain name="/FMGC/internal/flap-2">
 			<input>/FMGC/internal/vs1g-conf-1f</input>
+			<gain>1.22</gain>
+		</pure_gain>
+		
+		<pure_gain name="/FMGC/internal/flap-2-tow">
+			<input>/FMGC/internal/tow-vs1g-conf-0</input>
 			<gain>1.22</gain>
 		</pure_gain>
 		
@@ -830,6 +869,18 @@
 				<max>5</max>
 			</clipto>
 		</fcs_function>
+		
+		<switch name="/FMGC/internal/to-state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/gear/gear[0]/wow eq 1
+				/controls/flight/flaps-pos lt 5
+				<test logic="OR">
+					/fdm/jsbsim/fadec/control-1/detent ge 4
+					/fdm/jsbsim/fadec/control-2/detent ge 4
+				</test>
+			</test>
+		</switch>
 		
 	</channel>
 	

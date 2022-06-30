@@ -6,15 +6,6 @@
 
 <PropertyList>
 
-	<nasal>
-		
-		<close>
-			<![CDATA[
-				systems.FUEL.Nodes.requestLbs.setValue(0);
-			]]>
-		</close>
-	</nasal>
-
     <name>fuel-dlg</name>
     <layout>vbox</layout>
     

@@ -322,8 +322,17 @@
 			</expression>
 		</input>
 		<output>/it-autoflight/internal/flch-kts-error-cmd</output>
-		<min>-1.5</min>
-		<max>1.5</max>
+		<min>
+			<condition>
+				<equals>
+					<property>/it-autoflight/output/vert</property>
+					<value>7</value>
+				</equals>
+			</condition>
+			<value>-0.8</value>
+		</min>
+		<min>-1.2</min>
+		<max>1.2</max>
 	</filter>
 	
 	<filter>
@@ -435,6 +444,24 @@
 	</filter>
 	
 	<filter>
+		<name>Get Back on Magenta</name>
+		<type>gain</type>
+		<gain>
+			<expression>
+				<table>
+					<property>/fdm/jsbsim/velocities/vc-kts</property>
+					<entry><ind>140</ind><dep>50</dep></entry>
+					<entry><ind>360</ind><dep>20</dep></entry>
+				</table>
+			</expression>
+		</gain>
+		<input>/instrumentation/gps/wp/wp[1]/course-error-nm</input>
+		<output>/it-autoflight/internal/course-error-deg</output>
+		<min>-45</min>
+		<max>45</max>
+	</filter>
+	
+	<filter>
 		<name>Heading Error Deg</name>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -485,7 +512,8 @@
 			</condition>
 			<expression>
 				<sum>
-					<property>/FMGC/flightplan[2]/current-leg-course</property>
+					<property>/instrumentation/gps/wp/leg-true-course-deg</property>
+					<property>/it-autoflight/internal/course-error-deg</property>
 					<product>
 						<property>/it-autoflight/internal/drift-angle-deg</property>
 						<value>-1.0</value>
@@ -801,8 +829,7 @@
 	
 	<filter>
 		<name>FD Roll</name>
-		<type>gain</type>
-		<gain>1.0</gain>
+		<type>noise-spike</type>
 		<input>
 			<expression>
 				<difference>
@@ -814,6 +841,7 @@
 		<output>/it-autoflight/fd/roll-bar</output>
 		<min>-30</min>
 		<max>30</max>
+		<max-rate-of-change>20</max-rate-of-change>
 	</filter>
 	
 	<filter>
@@ -831,7 +859,7 @@
 				<product>
 					<table>
 						<property>/orientation/pitch-deg</property>
-						<entry><ind> 1</ind><dep>2.8</dep></entry>
+						<entry><ind> 1</ind><dep>4.8</dep></entry>
 						<entry><ind>10</ind><dep>0.0</dep></entry>
 					</table>
 					<table>
@@ -852,17 +880,23 @@
 		<input>
 			<expression>
 				<sum>
-					<product>
-						<difference>
-							<property>/it-autoflight/internal/target-common-fpm</property>
-							<property>/it-autoflight/internal/vert-speed-fpm</property>
-						</difference>
-						<table>
-							<property>/velocities/airspeed-kt</property>
-							<entry><ind>140</ind><dep>0.001848350</dep></entry>
-							<entry><ind>360</ind><dep>0.000924175</dep></entry>
-						</table>
-					</product>
+					<rad2deg>
+						<asin>
+							<div>
+								<difference>
+									<property>/it-autoflight/internal/target-common-fpm</property>
+									<property>/it-autoflight/internal/vert-speed-fpm</property>
+								</difference>
+								<product>
+									<max>
+										<property>/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
+										<value>100</value>
+									</max>
+									<value>151.90288713910761</value> <!-- FPM to Knot * 1.5 -->
+								</product>
+							</div>
+						</asin>
+					</rad2deg>
 					<property>/it-autoflight/fd/pitch-bar-takeoff</property>
 				</sum>
 			</expression>
