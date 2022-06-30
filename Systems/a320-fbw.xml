@@ -1657,16 +1657,14 @@
 		
 		<fcs_function name="fbw/pitch/e-i-min">
 			<function>
-				<max>
-					<table>
-						<independentVar lookup="row">fbw/pitch/max-rad-error</independentVar>
-						<tableData>
-							-0.087266 -1.0
-							-0.034907 -0.1
-							 0.000000  0.0
-						</tableData>
-					</table>
-				</max>
+				<table>
+					<independentVar lookup="row">fbw/pitch/max-rad-error</independentVar>
+					<tableData>
+						-0.087266 -1.0
+						-0.034907 -0.1
+						 0.000000  0.0
+					</tableData>
+				</table>
 			</function>
 		</fcs_function>
 		
