@@ -855,6 +855,9 @@
 			<to-state type="bool">0</to-state>
 			<tow type="double">0</tow>
 			<vmax type="double">350</vmax>
+			<vapp type="double">0</vapp>
+			<vapp-predicted type="double">0</vapp-predicted>
+			<vapp-set type="double">0</vapp-set>
 		</internal>
 		<simbrief-username type="string"></simbrief-username>
 	</FMGC>

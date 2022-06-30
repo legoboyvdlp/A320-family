@@ -565,6 +565,32 @@
 			</function>
 		</fcs_function>
 		
+		<!-- Minimum speed (managed speed) -->
+		<switch name="/FMGC/internal/minspeed">
+			<default value="0"/>
+			<test logic="OR" value="/FMGC/internal/clean">
+				/controls/flight/flaps-pos eq 0
+			</test>
+			<test logic="OR" value="/FMGC/internal/slat">
+				/controls/flight/flaps-pos eq 1
+				/controls/flight/flaps-pos eq 2
+			</test>
+			<test logic="OR" value="/FMGC/internal/flap-2">
+				/controls/flight/flaps-pos eq 3
+			</test>
+			<test logic="OR" value="/FMGC/internal/flap-3">
+				/controls/flight/flaps-pos eq 4
+			</test>
+			<test logic="AND" value="/FMGC/internal/vapp">
+				/controls/flight/flaps-pos eq 5
+				/FMGC/internal/vapp-set eq 0
+			</test>
+			<test logic="AND" value="/FMGC/internal/vapp-predicted">
+				/controls/flight/flaps-pos eq 5
+				/FMGC/internal/vapp-set eq 1
+			</test>
+		</switch>
+		
 		<!-- V alpha prot/max -->
 		<lag_filter name="/FMGC/internal/alpha-input">
 			<input>aero/alpha-deg-fixed</input>
@@ -769,9 +795,19 @@
 			<gain>1.27</gain>
 		</pure_gain>
 		
+		<pure_gain name="/FMGC/internal/slat-tow">
+			<input>/FMGC/internal/tow-vs1g-conf-0</input>
+			<gain>1.27</gain>
+		</pure_gain>
+		
 		<!-- Flap 2 -->
 		<pure_gain name="/FMGC/internal/flap-2">
 			<input>/FMGC/internal/vs1g-conf-1f</input>
+			<gain>1.22</gain>
+		</pure_gain>
+		
+		<pure_gain name="/FMGC/internal/flap-2-tow">
+			<input>/FMGC/internal/tow-vs1g-conf-0</input>
 			<gain>1.22</gain>
 		</pure_gain>
 		
@@ -833,6 +869,18 @@
 				<max>5</max>
 			</clipto>
 		</fcs_function>
+		
+		<switch name="/FMGC/internal/to-state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/gear/gear[0]/wow eq 1
+				/controls/flight/flaps-pos lt 5
+				<test logic="OR">
+					/fdm/jsbsim/fadec/control-1/detent ge 4
+					/fdm/jsbsim/fadec/control-2/detent ge 4
+				</test>
+			</test>
+		</switch>
 		
 	</channel>
 	

@@ -1299,9 +1299,7 @@ var canvas_pfd = {
 				notification.flapMaxSpeed = 0;
 			}
 			
-			notification.fmgcTakeoffState = fmgc.FMGCInternal.takeoffState;
-			
-			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
+			if (!fmgc.FMGCNodes.toState.getValue() and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
 				if (notification.vls <= 30) {
 					notification.VLSmin = 0 - notification.ASI;
 				} else if (notification.vls >= 420) {
@@ -1408,7 +1406,6 @@ var canvas_pfd = {
 			notification.ASItrendIsShown = 0;
 			notification.Ctrgt = 0;
 			notification.flapMaxSpeed = 0;
-			notification.fmgcTakeoffState = nil;
 			notification.Ftrgt = 0;
 			notification.Strgt = 0;
 			notification.showV1 = 0;
@@ -2227,6 +2224,7 @@ var input = {
 	thrustLvrClb: "/fdm/jsbsim/fadec/lvrclb",
 	
 	fmgcPhase: "/FMGC/internal/phase",
+	fmgcTakeoffState: "/FMGC/internal/to-state",
 	fd1: "/it-autoflight/output/fd1",
 	fd2: "/it-autoflight/output/fd2",
 	trkFpa: "/it-autoflight/custom/trk-fpa",
