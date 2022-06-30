@@ -841,7 +841,7 @@ var masterFMGC = maketimer(0.2, func {
 	windAngleDelta = geo.normdeg180(pts.Orientation.heading.getValue() - (pts.Instrumentation.PFD.windDirection.getValue() or 0));
 	FMGCInternal.currentWindComponent = pts.Instrumentation.PFD.windSpeed.getValue() or 0 * math.cos(abs(windAngleDelta) * D2R);
 	
-	FMGCInternal.gsMini = FMGCInternal.vapp_appr - math.max(10, FMGCInternal.headwindComponent);
+	FMGCInternal.gsMini = FMGCInternal.vapp_appr - math.max(10, (FMGCInternal.headwindComponent * 3)); # because the headwind component nasal node is actually a third
 	FMGCInternal.approachSpeed = math.max(FMGCInternal.vapp_appr, FMGCInternal.gsMini + FMGCInternal.currentWindComponent);
 	
 	FMGCNodes.vapp.setValue(FMGCInternal.vapp);
