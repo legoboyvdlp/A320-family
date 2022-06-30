@@ -17,10 +17,10 @@ var canvas_battery = {
 		
 		obj.text = obj.group.createChild("text", "optional-id-for element");
 		obj.text.setText("28.8V");
-        obj.text.setTranslation(150, 128);
+        obj.text.setTranslation(50, 128);
         obj.text.setAlignment("left-center");
         obj.text.setFont("Airbus7Seg.ttf");
-		obj.text.setFontSize(100);
+		obj.text.setFontSize(180);
 		
 		obj.update_items = [
 			props.UpdateManager.FromHashValue("annunTest", 1, func(val) {
