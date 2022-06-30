@@ -110,6 +110,7 @@ var FMGCInternal = {
 	vs1g_conf_full_appr: 0,
 	slat_appr: 0,
 	flap2_appr: 0,
+	minspeed: 0,
 	vls_appr: 0,
 	vapp_appr: 0,
 	vappSpeedSet: 0,
@@ -846,6 +847,12 @@ var masterFMGC = maketimer(0.2, func {
 	FMGCNodes.vapp.setValue(FMGCInternal.vapp);
 	FMGCNodes.vapp_appr.setValue(FMGCInternal.vapp_appr);
 	FMGCNodes.vappSet.setValue(FMGCInternal.vappSpeedSet);
+	
+	if (flap == 5) {
+		FMGCInternal.minspeed = FMGCInternal.approachSpeed;
+	} else {
+		FMGCInternal.minspeed = FMGCNodes.minspeed.getValue();
+	}
 });
 
 ############################
@@ -969,14 +976,14 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
 				# Speed is maximum of greendot / climb speed limit
 				FMGCInternal.mngKtsMach = 0;
-				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.approachSpeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
+				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
 				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 				FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
 				if (FMGCInternal.decel) {
 					FMGCInternal.mngKtsMach = 0;
-					FMGCInternal.mngSpdCmd = FMGCInternal.approachSpeed;
+					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
@@ -984,15 +991,15 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
 				FMGCInternal.mngKtsMach = 0;
 				# Speed is maximum of greendot / descent speed limit
-				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.approachSpeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
 			}
 			
-			# Clamp to minspeed, maxspeed
+			# Clamp to vls, maxspeed
 			if (FMGCInternal.phase >= 2) {
 				if (!FMGCInternal.mngKtsMach) {
-					FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, FMGCNodes.minspeed.getValue(), FMGCInternal.maxspeed);
+					FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, FMGCInternal.vls, FMGCInternal.maxspeed);
 				} else {
-					FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, ktToMach(FMGCNodes.minspeed.getValue()), ktToMach(FMGCInternal.maxspeed));
+					FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, ktToMach(FMGCInternal.vls), ktToMach(FMGCInternal.maxspeed));
 				}
 			} else {
 				FMGCInternal.mngSpd = FMGCInternal.mngSpdCmd;

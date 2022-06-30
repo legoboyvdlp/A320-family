@@ -565,7 +565,7 @@
 			</function>
 		</fcs_function>
 		
-		<!-- Minimum speed (managed speed) -->
+		<!-- Minimum speed (Target speed for managed speed after decel) -->
 		<switch name="/FMGC/internal/minspeed">
 			<default value="0"/>
 			<test logic="OR" value="/FMGC/internal/clean">
