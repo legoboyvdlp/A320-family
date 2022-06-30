@@ -173,7 +173,7 @@
 						75000  168.43  143.60
 						80000  173.65  148.02
 					</tableData>
-					<tableData breakPoint="27">
+					<tableData breakPoint="18">
 						       0       10      15      20      35      40
 						35000   95.11   90.08   85.16   83.55   81.61   79.67
 						40000  101.59   96.03   90.31   88.77   86.71   84.65
@@ -426,7 +426,7 @@
 						70000  118.16
 						75000  122.28
 						80000  126.35
-						</tableData>
+					</tableData>
 				</table>
 			</function>
 		</fcs_function>
@@ -751,16 +751,16 @@
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<tableData>
-						-2000	112.0
-						 0		110.0
-						 2000	108.0
-						 4000	107.5
-						 6000	105.5
-						 8000	103.0
-						 9200	101.2
-						10000	100.0
-						12000	 96.5
-						14100	 93.5
+						-2000  112.0
+						    0  110.0
+						 2000  108.0
+						 4000  107.5
+						 6000  105.5
+						 8000  103.0
+						 9200  101.2
+						10000  100.0
+						12000   96.5
+						14100   93.5
 					</tableData>
 				</table>
 			</function>
@@ -773,48 +773,78 @@
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
 					<tableData>
-								10		15		20
-						-2000	111.5	109.5	109.0
-						 0		109.5	107.5	107.0
-						 2000	107.5	105.5	105.0
-						 4000	107.0	105.0	104.5
-						 6000	105.0	103.0	103.0
-						 8000	103.0	101.0	100.5
-						 9200	101.0	 99.0	 98.5
-						10000	100.0	 98.0	 97.5
-						12000	 96.5	 94.5	 94.0
-						14100	 93.0	 91.0	 91.0
+						       10     15     20
+						-2000  111.5  109.5  109.0
+						    0  109.5  107.5  107.0
+						 2000  107.5  105.5  105.0
+						 4000  107.0  105.0  104.5
+						 6000  105.0  103.0  103.0
+						 8000  103.0  101.0  100.5
+						 9200  101.0   99.0   98.5
+						10000  100.0   98.0   97.5
+						12000   96.5   94.5   94.0
+						14100   93.0   91.0   91.0
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
 		
 		<!-- Slat -->
+		<fcs_function name="/FMGC/internal/vls-factor-conf-0">
+			<function>
+				<sum>
+					<value>1.25</value>
+					<table>
+						<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+						<tableData>
+								0  0.00
+							43000  0.18
+						</tableData>
+					</table>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/FMGC/internal/vls-factor-conf-f">
+			<function>
+				<sum>
+					<value>1.23</value>
+					<table>
+						<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+						<tableData>
+								0  0.00
+							43000  0.18
+						</tableData>
+					</table>
+				</sum>
+			</function>
+		</fcs_function>
+		
 		<pure_gain name="/FMGC/internal/slat">
 			<input>/FMGC/internal/vs1g-conf-0</input>
-			<gain>1.27</gain>
+			<gain>/FMGC/internal/vls-factor-conf-0</gain>
 		</pure_gain>
 		
 		<pure_gain name="/FMGC/internal/slat-tow">
 			<input>/FMGC/internal/tow-vs1g-conf-0</input>
-			<gain>1.27</gain>
+			<gain>/FMGC/internal/vls-factor-conf-0</gain>
 		</pure_gain>
 		
 		<!-- Flap 2 -->
 		<pure_gain name="/FMGC/internal/flap-2">
 			<input>/FMGC/internal/vs1g-conf-1f</input>
-			<gain>1.22</gain>
+			<gain>/FMGC/internal/vls-factor-conf-f</gain>
 		</pure_gain>
 		
 		<pure_gain name="/FMGC/internal/flap-2-tow">
-			<input>/FMGC/internal/tow-vs1g-conf-0</input>
-			<gain>1.22</gain>
+			<input>/FMGC/internal/tow-vs1g-conf-1f</input>
+			<gain>/FMGC/internal/vls-factor-conf-f</gain>
 		</pure_gain>
 		
 		<!-- Flap 3 -->
 		<pure_gain name="/FMGC/internal/flap-3">
 			<input>/FMGC/internal/vs1g-conf-2</input>
-			<gain>1.22</gain>
+			<gain>/FMGC/internal/vls-factor-conf-f</gain>
 		</pure_gain>
 	
 	</channel>
