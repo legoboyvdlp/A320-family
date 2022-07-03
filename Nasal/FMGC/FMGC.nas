@@ -970,36 +970,58 @@ var ManagedSPD = maketimer(0.25, func {
 				FMGCInternal.machSwitchover = 0;
 			}
 			
+			var waypoint = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue());
+			var constraintSpeed = nil;
+		
+			if (waypoint != nil) {
+				constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
+			}
+			
 			if ((Modes.PFD.FMA.pitchMode == " " or Modes.PFD.FMA.pitchMode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
 				FMGCInternal.mngKtsMach = 0;
 				FMGCInternal.mngSpdCmd = srsSPD;
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
 				# Speed is maximum of greendot / climb speed limit
 				FMGCInternal.mngKtsMach = 0;
-				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
+				
+				if (constraintSpeed != nil and constraintSpeed != 0) {
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+				} else {
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
+				}
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
 				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-				FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
+				FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
 				if (FMGCInternal.decel) {
 					FMGCInternal.mngKtsMach = 0;
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
+					if (constraintSpeed != nil and constraintSpeed != 0) {
+						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
+					} else {
+						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
+					}
 				}
-			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
-				FMGCInternal.mngKtsMach = 0;
+			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
 				# Speed is maximum of greendot / descent speed limit
-				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+				FMGCInternal.mngKtsMach = 0;
+				
+				if (constraintSpeed != nil and constraintSpeed != 0) {
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+				} else {
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+				}
 			}
 			
-			# Clamp to vls, maxspeed
+			# Clamp to maneouvering speed of current configuration and maxspeed
+			# Use minspeed node rather than variable, because we don't want to take GS MINI into account
 			if (FMGCInternal.phase >= 2) {
 				if (!FMGCInternal.mngKtsMach) {
-					FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, FMGCInternal.vls, FMGCInternal.maxspeed);
+					FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, FMGCNodes.minspeed.getValue(), FMGCInternal.maxspeed);
 				} else {
-					FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, ktToMach(FMGCInternal.vls), ktToMach(FMGCInternal.maxspeed));
+					FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, ktToMach(FMGCNodes.minspeed.getValue()), ktToMach(FMGCInternal.maxspeed));
 				}
 			} else {
 				FMGCInternal.mngSpd = FMGCInternal.mngSpdCmd;

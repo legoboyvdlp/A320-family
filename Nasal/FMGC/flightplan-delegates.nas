@@ -193,7 +193,7 @@ var A320GPSDelegate = {
 
     _landingCheckTimeout: func
     {
-        if (pts.Gear.wow[0].getValue() and pts.Velocities.groundspeed.getValue() < 25)  {
+        if (pts.Gear.wow[0].getValue() and pts.Velocities.groundspeedKt.getValue() < 25)  {
           logprint(LOG_INFO, 'GPS saw speed < 25kts on destination runway, end of route.');
           me.landingCheck.stop();
           # record touch-down time?

@@ -778,7 +778,7 @@ var flightPlanController = {
 	calculateLvlOffPoint: func(deltaAltitude) {
 		me.distLvl = (deltaAltitude * pts.Velocities.groundspeedKt.getValue()) / (fmgc.Internal.vs.getValue() * 60);
 		
-		if (fmgc.Output.lat.getValue() == 1 and me.distLvl >= 0) { # NAV
+		if (me.active.getBoolValue() and fmgc.Output.lat.getValue() == 1 and me.distLvl >= 0) { # NAV
 			me.lvlOffPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + me.distLvl);
 		} elsif (fmgc.Output.lat.getValue() == 0 and me.distLvl >= 0) { # HDG TRK
 			var coord = geo.aircraft_position();
