@@ -534,6 +534,16 @@
 			<input>/controls/cockpit/stby-compass</input>
 			<c1>5</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/oxygen-mask-cockpit-door-cpt-pos">
+			<input>/controls/cockpit/oxygen-mask-cockpit-door-cpt</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/oxygen-mask-cockpit-door-fo-pos">
+			<input>/controls/cockpit/oxygen-mask-cockpit-door-fo</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 

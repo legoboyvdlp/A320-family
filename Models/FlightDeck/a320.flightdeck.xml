@@ -2676,10 +2676,31 @@
 	<!-- Show / hide headphones -->
 	<animation>
 		<type>select</type>
-		<object-name>Circle.020</object-name>
+		<object-name>Headset</object-name>
 		<condition>
 			<not>
 				<property>controls/audio/headset-toggle</property>
+			</not>
+		</condition>
+	</animation>
+	
+	<!-- Show / hide EFB -->
+	<animation>
+		<type>select</type>
+		<object-name>EFB_cpt</object-name>
+		<condition>
+			<not>
+				<property>controls/cockpit/show-efb-cpt</property>
+			</not>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>EFB_fo</object-name>
+		<condition>
+			<not>
+				<property>controls/cockpit/show-efb-fo</property>
 			</not>
 		</condition>
 	</animation>
@@ -2743,7 +2764,9 @@
 		<type>translate</type>
 		<object-name>WindowCpt</object-name>
 		<object-name>HeadsetHangerCpt</object-name>
-		<object-name>Circle.020</object-name>
+		<object-name>Headset</object-name>
+		<object-name>EFB_cpt</object-name>
+		<object-name>EFB_cpt_glare</object-name>
 		<property>/sim/model/door-positions/windowLeft/position-norm</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>0</dep></entry>
@@ -2764,7 +2787,9 @@
 		<type>translate</type>
 		<object-name>WindowCpt</object-name>
 		<object-name>HeadsetHangerCpt</object-name>
-		<object-name>Circle.020</object-name>
+		<object-name>Headset</object-name>
+		<object-name>EFB_cpt</object-name>
+		<object-name>EFB_cpt_glare</object-name>
 		<property>/sim/model/door-positions/windowLeft/position-norm</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>0.0</dep></entry>
@@ -2795,6 +2820,8 @@
 	<animation>
 		<type>translate</type>
 		<object-name>WindowFo</object-name>
+		<object-name>EFB_fo</object-name>
+		<object-name>EFB_fo_glare</object-name>
 		<property>/sim/model/door-positions/windowRight/position-norm</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>0</dep></entry>
@@ -2814,6 +2841,8 @@
 	<animation>
 		<type>translate</type>
 		<object-name>WindowFo</object-name>
+		<object-name>EFB_fo</object-name>
+		<object-name>EFB_fo_glare</object-name>
 		<property>/sim/model/door-positions/windowRight/position-norm</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>0.0</dep></entry>
@@ -2995,7 +3024,74 @@
 			<object-name>tillerFo.axis</object-name>
 		</axis>
 	</animation>
-
+	
+	<!-- Mask Stowage -->
+	<animation>
+		<type>knob</type>
+		<object-name>mask_stow_cpt</object-name>
+		<property>controls/cockpit/oxygen-mask-cockpit-door-cpt-pos</property>
+		<factor>-90</factor>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<x1-m>0.79412</x1-m>
+			<y1-m>-1.20993</y1-m>
+			<z1-m>-0.040185</z1-m>
+			<x2-m>0.39514</x2-m>
+			<y2-m>-1.21022</y2-m>
+			<z2-m>-0.04014</z2-m>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/cockpit/oxygen-mask-cockpit-door-cpt</property>
+				<factor>1</factor>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>oxy-mask-cockpit-door-lbl</tooltip-id>
+				<label>Oxygen mask door</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>mask_stow_fo</object-name>
+		<property>controls/cockpit/oxygen-mask-cockpit-door-fo-pos</property>
+		<factor>90</factor>
+		<drag-direction>vertical</drag-direction>
+		<axis>
+			<x1-m>0.79412</x1-m>
+			<y1-m>1.20993</y1-m>
+			<z1-m>-0.040185</z1-m>
+			<x2-m>0.39514</x2-m>
+			<y2-m>1.21022</y2-m>
+			<z2-m>-0.04014</z2-m>
+		</axis>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/cockpit/oxygen-mask-cockpit-door-fo</property>
+				<factor>1</factor>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>oxy-mask-fo-door-lbl</tooltip-id>
+				<label>Oxygen mask door</label>
+			</binding>
+		</hovered>
+	</animation>
+	
 	<!-- Main Panel -->
 	
 	<!-- Rudder Pedals -->
@@ -37012,11 +37108,14 @@
 		<object-name>wall_2</object-name>
 		<object-name>window_frame</object-name>
 		<object-name>WindowCpt</object-name>
+		<object-name>Headset</object-name>
 		<object-name>HeadsetCpt</object-name>
 		<object-name>WindowOpenerCpt</object-name>
 		<object-name>WindowFo</object-name>
 		<object-name>HeadsetFo</object-name>
 		<object-name>WindowOpenerFo</object-name>
+		<object-name>EFB_cpt</object-name>
+		<object-name>EFB_fo</object-name>
 		<object-name>WX</object-name>
 		<object-name>integ_lt</object-name>
 		<object-name>flood_lt_ped</object-name>

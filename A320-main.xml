@@ -904,6 +904,8 @@
 			<emer-canc-cover type="bool">0</emer-canc-cover>
 			<evac-capt-purs type="int">1</evac-capt-purs>
 			<flaps-lever-translate type="double">0</flaps-lever-translate>
+			<oxygen-mask-cockpit-door-cpt type="double">0</oxygen-mask-cockpit-door-cpt>
+			<oxygen-mask-cockpit-door-fo type="double">0</oxygen-mask-cockpit-door-fo>
 			<park-brk-translate type="double">0</park-brk-translate>
 			<qnh-cpt-knb-translate type="double">0.0015</qnh-cpt-knb-translate>
 			<qnh-fo-knb-translate type="double">0.0015</qnh-fo-knb-translate>
