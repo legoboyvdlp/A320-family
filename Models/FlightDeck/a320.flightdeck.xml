@@ -22232,7 +22232,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>compass_box.wheel</object-name>
-		<property>/orientation/heading-magnetic-deg</property>
+		<property>-/orientation/heading-magnetic-deg</property>
 		<axis>
 			<object-name>compass_box.wheel.axis</object-name>
 		</axis>
