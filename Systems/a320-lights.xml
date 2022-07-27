@@ -108,6 +108,13 @@
 				/systems/electrical/bus/dc-ess ge 25
 			</test>
 		</switch>
+		
+		<switch name="/controls/lighting/stby-compass-tied">
+			<default value="0" />
+			<test value="/controls/lighting/stby-compass-switch">
+				/systems/electrical/bus/dc-ess ge 25
+			</test>
+		</switch>
 	</channel>
 	
 	<channel name="Exterior Lights" execrate="8">

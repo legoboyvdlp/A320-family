@@ -46,6 +46,13 @@
     <filter>
         <type>gain</type>
         <gain>1.0</gain>
+        <input>/controls/lighting/stby-compass-tied</input>
+        <output>/controls/lighting/stby-compass</output>
+    </filter>
+	
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
         <input>
 			<property>/controls/lighting/overhead-panel-norm-tied</property>
 			<min>0.15</min>

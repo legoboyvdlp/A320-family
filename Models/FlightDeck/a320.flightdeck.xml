@@ -39632,6 +39632,58 @@
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
+	
+	<animation>
+		<name>Standby compass integral lighting</name>
+		<type>material</type>
+		<object-name>compass_box.wheel</object-name>
+		<condition>
+			<not>
+				<and>
+					<greater-than>
+						<property>sim/model/lights/dome-light</property>
+						<value>0</value>
+					</greater-than>
+					<less-than>
+						<property>controls/lighting/stby-compass</property>
+						<value>0.25</value>
+					</less-than>
+				</and>
+			</not>
+		</condition>
+		<emission>
+			<red>1</red>
+			<green>0.725</green>
+			<blue>0.259</blue>
+			<factor-prop>controls/lighting/stby-compass</factor-prop>
+		</emission>
+	</animation>
+	
+	<animation>
+		<name>Standby compass integral lighting (dome)</name>
+		<type>material</type>
+		<object-name>compass_box.wheel</object-name>
+		<condition>
+			<and>
+				<not>
+					<greater-than>
+						<property>controls/lighting/stby-compass</property>
+						<value>0.25</value>
+					</greater-than>
+				</not>
+				<greater-than>
+					<property>sim/model/lights/dome-light</property>
+					<value>0</value>
+				</greater-than>
+			</and>
+		</condition>
+		<emission>
+			<red>0.20</red>
+			<green>0.20</green>
+			<blue>0.20</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
 
 	<!-- Dome Light -->
 	<animation>
