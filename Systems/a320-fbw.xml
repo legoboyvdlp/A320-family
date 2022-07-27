@@ -16,7 +16,7 @@
 	<property value="1">fbw/pitch/mixer/sidestick-gain-feedback</property>
 	<property value="0">fbw/spoiler-output</property>
 	<property value="3">fbw/rate-c1</property>
-	<property value="0">fbw/pitch/ias-input</property>
+	<property value="0">fbw/pitch/ias-predict</property>
 	
 	<!-- Default gains for tuning -->
 	<property value="0">fbw/roll/p-gain</property>
@@ -105,14 +105,14 @@
 					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
 					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
 					<tableData breakPoint="0">
-						       0    10    15
-						21000  8.4  11.0  10.5
-						43000  7.4   7.4   7.4
+						       0    10    15    20    35
+						21000  8.6  11.5  11.0  11.0  10.5
+						43000  7.4   7.4   7.4   7.4   7.4
 					</tableData>
 					<tableData breakPoint="18">
-						       0     10    15
-						21000  10.0  11.0  10.5
-						43000   7.4   7.4   7.4
+						       0     10    15    20    35
+						21000  11.0  11.5  11.0  11.0  10.5
+						43000   7.4   7.4   7.4   7.4   7.4
 					</tableData>
 				</table>
 			</function>
@@ -1460,7 +1460,7 @@
 		</lag_filter>
 		
 		<summer name="fbw/pitch/vmo-mmo-error">
-			<input>fbw/pitch/ias-input</input>
+			<input>fbw/pitch/ias-predict</input>
 			<input>-/FMGC/internal/vmo-mmo</input>
 		</summer>
 		
@@ -1564,60 +1564,6 @@
 		</pid>
 		<!-- End Alpha Law -->
 		
-		<switch name="fbw/pitch/flare-active">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				fbw/fmgc/enabled eq 0
-				/position/gear-agl-ft le 30
-				/controls/flight/flaps-pos ge 4
-				/FMGC/internal/to-state eq 0
-				/it-fbw/law eq 0
-				gear/unit[0]/WOW eq 0
-				fbw/detent-1-feedback le 2
-				fbw/detent-2-feedback le 2
-				fadec/eng-out ne 1
-			</test>
-			<test logic="AND" value="1">
-				fbw/fmgc/enabled eq 0
-				/position/gear-agl-ft le 30
-				/controls/flight/flaps-pos ge 4
-				/FMGC/internal/to-state eq 0
-				/it-fbw/law eq 0
-				gear/unit[0]/WOW eq 0
-				fbw/detent-1-feedback le 4
-				fbw/detent-2-feedback le 4
-				fadec/eng-out eq 1
-			</test>
-		</switch>
-		
-		<switch name="fbw/pitch/flare-decr">
-			<default value="1"/>
-			<test logic="AND" value="100"> <!-- Instant -->
-				fbw/fmgc/enabled eq 1
-			</test>
-		</switch>
-		
-		<actuator name="fbw/pitch/flare-gain">
-			<input>fbw/pitch/flare-active</input>
-			<rate_limit sense="incr">1</rate_limit>
-			<rate_limit sense="decr">fbw/pitch/flare-decr</rate_limit>
-		</actuator>
-		
-		<fcs_function name="fbw/pitch/e-i-fl">
-			<function>
-				<product>
-					<property>fbw/pitch/flare-gain</property>
-					<table>
-						<independentVar lookup="row">/position/gear-agl-ft</independentVar>
-						<tableData>
-							 5  0.2
-							30  0.1
-						</tableData>
-					</table>
-				</product>
-			</function>
-		</fcs_function>
-		
 		<switch name="fbw/pitch/max-rad">
 			<default value="0.523599"/>
 			<test value="3.14159"> <!-- So its irrelevant -->
@@ -1692,6 +1638,60 @@
 			</clipto>
 		</switch>
 		
+		<switch name="fbw/pitch/flare-active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				fbw/fmgc/enabled eq 0
+				/position/gear-agl-ft le 30
+				/controls/flight/flaps-pos ge 4
+				/FMGC/internal/to-state eq 0
+				/it-fbw/law eq 0
+				gear/unit[0]/WOW eq 0
+				fbw/detent-1-feedback le 2
+				fbw/detent-2-feedback le 2
+				fadec/eng-out ne 1
+			</test>
+			<test logic="AND" value="1">
+				fbw/fmgc/enabled eq 0
+				/position/gear-agl-ft le 30
+				/controls/flight/flaps-pos ge 4
+				/FMGC/internal/to-state eq 0
+				/it-fbw/law eq 0
+				gear/unit[0]/WOW eq 0
+				fbw/detent-1-feedback le 4
+				fbw/detent-2-feedback le 4
+				fadec/eng-out eq 1
+			</test>
+		</switch>
+		
+		<switch name="fbw/pitch/flare-decr">
+			<default value="1"/>
+			<test logic="AND" value="100"> <!-- Instant -->
+				fbw/fmgc/enabled eq 1
+			</test>
+		</switch>
+		
+		<actuator name="fbw/pitch/flare-gain">
+			<input>fbw/pitch/flare-active</input>
+			<rate_limit sense="incr">1</rate_limit>
+			<rate_limit sense="decr">fbw/pitch/flare-decr</rate_limit>
+		</actuator>
+		
+		<fcs_function name="fbw/pitch/e-i-fl">
+			<function>
+				<product>
+					<property>fbw/pitch/flare-gain</property>
+					<table>
+						<independentVar lookup="row">/position/gear-agl-ft</independentVar>
+						<tableData>
+							 5  0.2
+							30  0.1
+						</tableData>
+					</table>
+				</product>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="fbw/pitch/over-max">
 			<function>
 				<table>
@@ -1730,15 +1730,15 @@
 		</summer>
 		
 		<switch name="fbw/pitch/load-factor-min">
-			<default value="-1.0"/>
-			<test value="0.0">
+			<default value="-1"/>
+			<test value="0">
 				/controls/flight/flaps-input-out ne 0
 			</test>
 		</switch>
 		
 		<switch name="fbw/pitch/load-factor-max">
 			<default value="2.5"/>
-			<test value="2.0">
+			<test value="2">
 				/controls/flight/flaps-input-out ne 0
 			</test>
 		</switch>
