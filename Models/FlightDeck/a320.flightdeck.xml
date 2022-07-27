@@ -39721,6 +39721,7 @@
 		<object-name>WindowCpt</object-name>
 		<object-name>WindowFo</object-name>
 		<object-name>ohpanel2</object-name>
+		<object-name>fd_leather</object-name>
 		<object-name>efis_box_1</object-name>
 		<object-name>efis_box_2</object-name>
 		<object-name>efis_box_3</object-name>
@@ -39736,6 +39737,8 @@
 		<object-name>sts.004</object-name>
 		<object-name>wall_1</object-name>
 		<object-name>carpet</object-name>
+		<object-name>seat6.001</object-name>
+		<object-name>pedestal_low_glare.001</object-name>
 		<object-name>DoorC</object-name>
 		<object-name>pedestal1</object-name>
 		<object-name>pedestal2</object-name>
