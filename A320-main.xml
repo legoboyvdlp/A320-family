@@ -889,6 +889,9 @@
 			<acp n="1">
 				<int-rad type="int">1</int-rad>
 			</acp>
+			<acp n="2">
+				<int-rad type="int">1</int-rad>
+			</acp>
 		</audio>
 		<autobrake>
 			<active type="bool">0</active>

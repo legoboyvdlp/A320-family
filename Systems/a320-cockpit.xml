@@ -52,6 +52,11 @@
 			<c1>20</c1>
 		</lag_filter>
 		
+		<lag_filter name="/controls/audio/acp[2]/int-rad-pos">
+			<input>/controls/audio/acp[2]/int-rad</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<fcs_function name="fadec/throttle-lever[0]">
 			<function>
 				<quotient>
