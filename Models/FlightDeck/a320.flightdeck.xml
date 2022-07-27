@@ -22138,6 +22138,144 @@
 	
 	<!-- Aft Overhead Panel -->
 	
+	<animation>
+		<type>knob</type>
+		<object-name>ELTSwGuard</object-name>
+		<property>/controls/cockpit/elt-guard-pos</property>
+		<axis>
+			<object-name>dummy_2.004.axis</object-name>
+		</axis>
+		<factor>-90</factor>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>/controls/elt/elt-switch-guard</property>
+				<min>0</min>
+				<max>1</max>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>elt-sw-guard-lbl</tooltip-id>
+				<label>ELT switch guard</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>ELTSw</object-name>
+		<property>/controls/cockpit/elt-switch-pos</property>
+		<axis>
+			<object-name>ELTSw.axis</object-name>
+		</axis>
+		<factor>-60</factor>
+		<action>
+			<binding>
+				<condition>
+					<property>/controls/elt/elt-switch-guard</property>
+				</condition>
+				<command>property-cycle</command>
+				<property>/controls/elt/elt-switch</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>elt-sw-lbl</tooltip-id>
+				<label>ELT switch</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>EltLedOn</object-name>
+		<condition>
+			<property>/systems/elt/light-on</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>EltLedOn</object-name>
+		<emission>
+			<red>1.00</red>
+			<green>0.0</green>
+			<blue>0.00</blue>
+			<property>/systems/elt/light-on</property>
+		</emission>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>EltTestRst</object-name>
+		<property>/controls/cockpit/elt-test-translate</property>
+		<axis>
+			<x1-m>0.883022</x1-m>
+			<y1-m>-0.204701</y1-m>
+			<z1-m>1.29746</z1-m>
+			<x2-m>0.880485</x2-m>
+			<y2-m>-0.205573</y2-m>
+			<z2-m>1.30393</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>EltTestRst</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/elt/elt-test-reset</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/elt-test-translate</property>
+				<value>0.001</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/elt/elt-test-reset</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/elt-test-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>elt-test-lbl</tooltip-id>
+				<label>ELT self-test or reset horn</label>
+			</binding>
+		</hovered>
+	</animation>
+	
 	<!-- INT/RAD switch -->
 	<animation>
 		<type>knob</type>

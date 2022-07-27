@@ -57,6 +57,16 @@
 			<c1>20</c1>
 		</lag_filter>
 		
+		<lag_filter name="/controls/cockpit/elt-guard-pos">
+			<input>/controls/elt/elt-switch-guard</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/elt-switch-pos">
+			<input>/controls/elt/elt-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<fcs_function name="fadec/throttle-lever[0]">
 			<function>
 				<quotient>

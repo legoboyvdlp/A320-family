@@ -1751,6 +1751,22 @@
 			</volume>
 		</switch>
 		
+		<elt>
+			<name>ELT Signal</name>
+			<mode>looped</mode>
+			<path>Aircraft/A320-family/Sounds/Cockpit/elt-horn.wav</path>
+			<condition>
+				<and>
+					<property>/sim/current-view/internal</property>
+					<property>/systems/elt/elt-horn</property>
+				</and>
+			</condition>
+			<volume>
+				<factor>1.0</factor>
+				<property>/sim/sound/atc/volume</property>
+			</volume>
+		</elt>
+		
 		<cvrtone>
 			<name>CVRtone</name>
 			<mode>once</mode>

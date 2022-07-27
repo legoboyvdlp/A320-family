@@ -948,6 +948,11 @@
 				<emer-elec-man-on type="bool">0</emer-elec-man-on>
 			</switches>
 		</electrical>
+		<elt>
+			<elt-switch type="bool">false</elt-switch>
+			<elt-switch-guard type="bool">false</elt-switch-guard>
+			<elt-test-reset type="bool">false</elt-test-reset>
+		</elt>
 		<engines n="0">
 			<engine n="0">
 				<cutoff type="bool">true</cutoff>
@@ -1435,7 +1440,9 @@
 				</bat-2>
 			</sources>
 		</electrical>
-		
+		<elt>
+			<light-on type="bool">false</light-on>
+		</elt>
 		<failures n="0">
 			<aileron-left type="bool">0</aileron-left>
 			<aileron-right type="bool">0</aileron-right>
