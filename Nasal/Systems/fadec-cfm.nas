@@ -17,6 +17,7 @@ var N22 = nil;
 
 var FADEC_S = {
 	Power: {
+		groundPower: [props.globals.initNode("/controls/fadec/gnd-power-1", 0, "BOOL"), props.globals.initNode("/controls/fadec/gnd-power-2", 0, "BOOL")],
 		powered1: props.globals.initNode("/systems/fadec/powered1", 0, "BOOL"),
 		powered2: props.globals.initNode("/systems/fadec/powered2", 0, "BOOL"),
 		powerup: props.globals.initNode("/systems/fadec/powerup", 0, "BOOL"),
@@ -125,6 +126,8 @@ var FADEC_S = {
 			me.Power.powered1.setValue(1);
 		} else if (powerAvailTemp and modeSel == 2) {
 			me.Power.powered1.setValue(1);
+		} else if (me.Power.groundPower[0].getBoolValue()) {
+			me.Power.powered1.setValue(1);
 		} else {
 			me.Power.powered1.setValue(0);
 		}
@@ -132,6 +135,8 @@ var FADEC_S = {
 		if (state2 == 3) {
 			me.Power.powered2.setValue(1);
 		} else if (powerAvailTemp and modeSel == 2) {
+			me.Power.powered2.setValue(1);
+		} else if (me.Power.groundPower[1].getBoolValue()) {
 			me.Power.powered2.setValue(1);
 		} else {
 			me.Power.powered2.setValue(0);

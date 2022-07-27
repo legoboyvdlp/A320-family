@@ -559,6 +559,21 @@
 			<input>/controls/cockpit/oxygen-mask-cockpit-door-fo</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fadec-gnd-pwr-1-guard-pos">
+			<input>/controls/cockpit/fadec-gnd-pwr-1-guard</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fadec-gnd-pwr-2-guard-pos">
+			<input>/controls/cockpit/fadec-gnd-pwr-2-guard</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/blue-ovrd-guard-pos">
+			<input>/controls/cockpit/blue-ovrd-guard</input>
+			<c1>20</c1>
+		</lag_filter>
 	
 	</channel>
 

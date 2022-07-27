@@ -298,6 +298,9 @@
 		<object-name>RFuelTank1Btn2O</object-name>
 		<object-name>WingAntiIceBtn1F</object-name>
 		<object-name>WingAntiIceBtn2O</object-name>
+		
+		<object-name>OVH_button_labels.092</object-name>
+		<object-name>OVH_button_labels.093</object-name>
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/ac-ess-shed</property>
@@ -463,6 +466,11 @@
 		
 		<object-name>OVH_button_labels.009</object-name>
 		<object-name>OVH_button_labels.012</object-name>
+		<object-name>OVH_button_labels.053</object-name>
+		<object-name>OVH_button_labels.059</object-name>
+		<object-name>OVH_button_labels.061</object-name>
+		<object-name>OVH_button_labels.063</object-name>
+		<object-name>OVH_button_labels.091</object-name>
 		<condition>
 			<greater-than>
 				<property>/systems/electrical/bus/ac-2</property>
@@ -534,6 +542,11 @@
 		<object-name>IR3Btn1F</object-name>
 		<object-name>IR3Btn2O</object-name>
 		<object-name>RcdrGndCtlBtn2O</object-name>
+		
+		<object-name>OVH_button_labels.051</object-name>
+		<object-name>OVH_button_labels.055</object-name>
+		<object-name>OVH_button_labels.057</object-name>
+		<object-name>OVH_button_labels.065</object-name>
 		<condition>
 			<greater-than>
 				<property>/systems/electrical/bus/ac-1</property>
@@ -740,6 +753,11 @@
 		<object-name>VentExtractBtn2O</object-name>
 		
 		<object-name>OVH_button_labels.012</object-name>
+		<object-name>OVH_button_labels.055</object-name>
+		<object-name>OVH_button_labels.059</object-name>
+		<object-name>OVH_button_labels.061</object-name>
+		<object-name>OVH_button_labels.063</object-name>
+		<object-name>OVH_button_labels.092</object-name>
 		<condition>
 			<property>controls/switches/annun-test</property>
 		</condition>
@@ -22274,6 +22292,503 @@
 				<label>ELT self-test or reset horn</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<!-- Oxygen Timer Reset -->
+	<animation>
+		<type>pick</type>
+		<object-name>OVH_button.047</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/oxygen/passenger-mask-reset</property>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/oxy-timer-reset-translate</property>
+				<value>0.0005</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/oxygen/passenger-mask-reset</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/oxy-timer-reset-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>oxy-tmr-rst-lbl</tooltip-id>
+				<label>Reset passenger oxygen system</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>OVH_button_labels.093</object-name>
+		<condition>
+			<or>
+				<property>/controls/oxygen/passenger-mask-reset</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>OVH_button.047</object-name>
+		<property>/controls/cockpit/oxy-timer-reset-translate</property>
+		<axis>
+			<x1-m>0.369388</x1-m>
+			<y1-m>0.2363</y1-m>
+			<z1-m>1.0866</z1-m>
+			<x2-m>0.36885</x2-m>
+			<y2-m>0.23648</y2-m>
+			<z2-m>1.08793</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Service Interphone Override -->
+	<animation>
+		<type>pick</type>
+		<object-name>OVH_button.026</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>/controls/cockpit/service-interphone-override</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/service-interphone-override-translate</property>
+				<value>0.0005</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/service-interphone-override-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>svc-int-lbl</tooltip-id>
+				<label>Enable service interphone in flight</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>OVH_button_labels.051</object-name>
+		<condition>
+			<or>
+				<property>/controls/cockpit/service-interphone-override</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>OVH_button.026</object-name>
+		<property>/controls/cockpit/service-interphone-override-translate</property>
+		<axis>
+			<x1-m>0.369388</x1-m>
+			<y1-m>0.2363</y1-m>
+			<z1-m>1.0866</z1-m>
+			<x2-m>0.36885</x2-m>
+			<y2-m>0.23648</y2-m>
+			<z2-m>1.08793</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- Avionics Compartment Light Control -->
+	<animation>
+		<type>pick</type>
+		<object-name>OVH_button.027</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>/controls/cockpit/avionics-compartment-light</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/cockpit/avionics-compartment-light-translate</property>
+				<value>0.0005</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/avionics-compartment-light-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>avionics-lt-lbl</tooltip-id>
+				<label>Toggle avionics compartment light</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>OVH_button_labels.053</object-name>
+		<condition>
+			<or>
+				<property>/controls/cockpit/avionics-compartment-light</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>OVH_button.027</object-name>
+		<property>/controls/cockpit/avionics-compartment-light-translate</property>
+		<axis>
+			<x1-m>0.369388</x1-m>
+			<y1-m>0.2363</y1-m>
+			<z1-m>1.0866</z1-m>
+			<x2-m>0.36885</x2-m>
+			<y2-m>0.23648</y2-m>
+			<z2-m>1.08793</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- BLUE PUMP OVRD -->
+	<animation>
+		<type>knob</type>
+		<object-name>Plane.018</object-name>
+		<property>/controls/cockpit/blue-ovrd-guard-pos</property>
+		<factor>145</factor>
+		<axis>
+			<object-name>Plane.axis.004</object-name>
+		</axis>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>/controls/cockpit/blue-ovrd-guard</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>blue-pump-ovrd-guard-lbl</tooltip-id>
+				<label>BLUE PUMP OVRD guard</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>OVH_button.033</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<property>/controls/cockpit/blue-ovrd-guard</property>
+				</condition>
+				<command>property-toggle</command>
+				<property>/controls/hydraulic/switches/blue-elec-ovrd</property>
+			</binding>
+			<binding>
+				<condition>
+					<property>/controls/cockpit/blue-ovrd-guard</property>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<condition>
+					<property>/controls/cockpit/blue-ovrd-guard</property>
+				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/blue-pump-ovrd-translate</property>
+				<value>0.0005</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/blue-pump-ovrd-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>blue-pump-ovrd-lbl</tooltip-id>
+				<label>Enable blue pump on ground with engines off</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>OVH_button_labels.065</object-name>
+		<condition>
+			<or>
+				<property>/controls/hydraulic/switches/blue-elec-ovrd</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>OVH_button.033</object-name>
+		<property>/controls/cockpit/blue-pump-ovrd-translate</property>
+		<axis>
+			<x1-m>0.369388</x1-m>
+			<y1-m>0.2363</y1-m>
+			<z1-m>1.0866</z1-m>
+			<x2-m>0.36885</x2-m>
+			<y2-m>0.23648</y2-m>
+			<z2-m>1.08793</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- FADEC GND PWR -->
+	<animation>
+		<type>knob</type>
+		<object-name>Plane.020</object-name>
+		<property>/controls/cockpit/fadec-gnd-pwr-1-guard-pos</property>
+		<factor>145</factor>
+		<axis>
+			<object-name>Plane.axis</object-name>
+		</axis>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>/controls/cockpit/fadec-gnd-pwr-1-guard</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fadecpwr1-lbl</tooltip-id>
+				<label>FADEC1 GND PWR guard</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>OVH_button.029</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<property>/controls/cockpit/fadec-gnd-pwr-1-guard</property>
+				</condition>
+				<command>property-toggle</command>
+				<property>/controls/fadec/gnd-power-1</property>
+			</binding>
+			<binding>
+				<condition>
+					<property>/controls/cockpit/fadec-gnd-pwr-1-guard</property>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<condition>
+					<property>/controls/cockpit/fadec-gnd-pwr-1-guard</property>
+				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/fadec-gnd-pwr-1-translate</property>
+				<value>0.0005</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/fadec-gnd-pwr-1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fadec-gnd-pwr-1-lbl</tooltip-id>
+				<label>FADEC1 - enable power</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>OVH_button_labels.057</object-name>
+		<condition>
+			<or>
+				<property>/controls/fadec/gnd-power-1</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>OVH_button.029</object-name>
+		<property>/controls/cockpit/fadec-gnd-pwr-1-translate</property>
+		<axis>
+			<x1-m>0.369388</x1-m>
+			<y1-m>0.2363</y1-m>
+			<z1-m>1.0866</z1-m>
+			<x2-m>0.36885</x2-m>
+			<y2-m>0.23648</y2-m>
+			<z2-m>1.08793</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>Plane.019</object-name>
+		<property>/controls/cockpit/fadec-gnd-pwr-2-guard-pos</property>
+		<factor>145</factor>
+		<axis>
+			<object-name>Plane.axis.002</object-name>
+		</axis>
+		<drag-direction>vertical</drag-direction>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>/controls/cockpit/fadec-gnd-pwr-2-guard</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sounde/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fadecpwr2-lbl</tooltip-id>
+				<label>FADEC2 GND PWR guard</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>OVH_button.046</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<property>/controls/cockpit/fadec-gnd-pwr-2-guard</property>
+				</condition>
+				<command>property-toggle</command>
+				<property>/controls/fadec/gnd-power-2</property>
+			</binding>
+			<binding>
+				<condition>
+					<property>/controls/cockpit/fadec-gnd-pwr-2-guard</property>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<condition>
+					<property>/controls/cockpit/fadec-gnd-pwr-2-guard</property>
+				</condition>
+				<command>property-assign</command>
+				<property>/controls/cockpit/fadec-gnd-pwr-2-translate</property>
+				<value>0.0005</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/cockpit/fadec-gnd-pwr-2-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fadec-gnd-pwr-2-lbl</tooltip-id>
+				<label>FADEC2 - enable power</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>OVH_button_labels.091</object-name>
+		<condition>
+			<or>
+				<property>/controls/fadec/gnd-power-2</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>translate</type>
+		<object-name>OVH_button.046</object-name>
+		<property>/controls/cockpit/fadec-gnd-pwr-2-translate</property>
+		<axis>
+			<x1-m>0.369388</x1-m>
+			<y1-m>0.2363</y1-m>
+			<z1-m>1.0866</z1-m>
+			<x2-m>0.36885</x2-m>
+			<y2-m>0.23648</y2-m>
+			<z2-m>1.08793</z2-m>
+		</axis>
 	</animation>
 	
 	<!-- INT/RAD switch -->
