@@ -2740,20 +2740,18 @@
 	<animation>
 		<type>select</type>
 		<object-name>EFB_cpt</object-name>
+		<object-name>EFB_cpt_glare</object-name>
 		<condition>
-			<not>
-				<property>controls/cockpit/show-efb-cpt</property>
-			</not>
+			<property>controls/cockpit/show-efb-cpt</property>
 		</condition>
 	</animation>
 	
 	<animation>
 		<type>select</type>
 		<object-name>EFB_fo</object-name>
+		<object-name>EFB_fo_glare</object-name>
 		<condition>
-			<not>
-				<property>controls/cockpit/show-efb-fo</property>
-			</not>
+			<property>controls/cockpit/show-efb-fo</property>
 		</condition>
 	</animation>
 	
