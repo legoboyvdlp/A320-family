@@ -4223,8 +4223,8 @@
 				</binding>
 			</key>
 			<key n="114">
-				<name>r</name>
-				<desc>MCDU</desc>
+				<name>o</name>
+				<desc>Change view to aft overhead</desc>
 				<binding>
 					<condition>
 						<property>/FMGC/keyboard-left</property>
@@ -4238,6 +4238,15 @@
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("R", 1);</script>
+				</binding>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>libraries.aftOverheadView();</script>
 				</binding>
 			</key>
 			<key n="115">
