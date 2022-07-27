@@ -50,14 +50,18 @@ var variousReset = func() {
 	setprop("/controls/lighting/taxi-light-switch", 0);
 	setprop("/controls/lighting/DU/du1", 1);
 	setprop("/controls/lighting/DU/du2", 1);
+	setprop("/controls/lighting/DU/du2-layer", 1);
 	setprop("/controls/lighting/DU/du3", 1);
 	setprop("/controls/lighting/DU/du4", 1);
 	setprop("/controls/lighting/DU/du5", 1);
+	setprop("/controls/lighting/DU/du5-layer", 1);
 	setprop("/controls/lighting/DU/du6", 1);
 	setprop("/controls/lighting/DU/mcdu1", 1);
 	setprop("/controls/lighting/DU/mcdu2", 1);
 	setprop("/controls/navigation/switching/att-hdg", 0);
 	setprop("/controls/navigation/switching/air-data", 0);
+	setprop("/controls/switches/loudspeaker-l", 1);
+	setprop("/controls/switches/loudspeaker-r", 1);
 	pts.Controls.Switches.noSmokingSwitch.setValue(0);
 	pts.Controls.Switches.seatbeltSwitch.setValue(0);
 	pts.Controls.Switches.emerLtsSwitch.setValue(0);

@@ -1110,6 +1110,44 @@
 	</filter>
 	
 	<filter>
+		<name>DDRMI: FLAG HDG</name>
+		<debug>false</debug>
+		<type>exponential</type>
+		<input>
+			<condition>
+				<and>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/ac-ess</property>
+						<value>110</value>
+					</greater-than-equals>
+					<or>
+						<and>
+							<property>/systems/navigation/aligned-1</property>
+							<not>
+								<equals>
+									<property>/controls/navigation/switching/att-hdg</property>
+									<value>-1</value>
+								</equals>
+							</not>
+						</and>
+						<and>
+							<property>/systems/navigation/aligned-3</property>
+							<equals>
+								<property>/controls/navigation/switching/att-hdg</property>
+								<value>-1</value>
+							</equals>
+						</and>
+					</or>
+				</and>
+			</condition>
+			<value>0</value>
+		</input>
+		<input>1</input>
+		<output>/instrumentation/ddrmi/flag-hdg</output>
+		<filter-time>0.1</filter-time>
+	</filter>
+	
+	<filter>
 		<name>DDRMI: FLAG 1</name>
 		<debug>false</debug>
 		<type>exponential</type>

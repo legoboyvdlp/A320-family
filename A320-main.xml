@@ -882,6 +882,17 @@
 			<start type="bool">0</start>
 			<bleed type="bool">0</bleed>
 		</apu>
+		<audio>
+			<acp n="0">
+				<int-rad type="int">1</int-rad>
+			</acp>
+			<acp n="1">
+				<int-rad type="int">1</int-rad>
+			</acp>
+			<acp n="2">
+				<int-rad type="int">1</int-rad>
+			</acp>
+		</audio>
 		<autobrake>
 			<active type="bool">0</active>
 			<brake-left type="double">0</brake-left>
@@ -891,6 +902,18 @@
 			<footwarmer-cpt type="bool">0</footwarmer-cpt>
 			<footwarmer-fo type="bool">0</footwarmer-fo>
 		</cabin>
+		<cockpit>
+			<alt-knb-translate type="double">0.002</alt-knb-translate>
+			<emer-canc-cover type="bool">0</emer-canc-cover>
+			<evac-capt-purs type="int">1</evac-capt-purs>
+			<flaps-lever-translate type="double">0</flaps-lever-translate>
+			<oxygen-mask-cockpit-door-cpt type="double">0</oxygen-mask-cockpit-door-cpt>
+			<oxygen-mask-cockpit-door-fo type="double">0</oxygen-mask-cockpit-door-fo>
+			<park-brk-translate type="double">0</park-brk-translate>
+			<qnh-cpt-knb-translate type="double">0.0015</qnh-cpt-knb-translate>
+			<qnh-fo-knb-translate type="double">0.0015</qnh-fo-knb-translate>
+			<stby-compass type="bool">false</stby-compass>
+		</cockpit>
 		<CVR>
 			<erase type="bool">0</erase>
 			<gndctl type="bool">0</gndctl>
@@ -925,6 +948,11 @@
 				<emer-elec-man-on type="bool">0</emer-elec-man-on>
 			</switches>
 		</electrical>
+		<elt>
+			<elt-switch type="bool">false</elt-switch>
+			<elt-switch-guard type="bool">false</elt-switch-guard>
+			<elt-test-reset type="bool">false</elt-test-reset>
+		</elt>
 		<engines n="0">
 			<engine n="0">
 				<cutoff type="bool">true</cutoff>
@@ -1039,9 +1067,11 @@
 			<DU>
 				<du1 type="double">1</du1>
 				<du2 type="double">1</du2>
+				<du2-layer type="double">1</du2-layer>
 				<du3 type="double">1</du3>
 				<du4 type="double">1</du4>
 				<du5 type="double">1</du5>
+				<du5-layer type="double">1</du5-layer>
 				<du6 type="double">1</du6>
 				<iesi type="double">1</iesi>
 				<mcdu1 type="double">1</mcdu1>
@@ -1080,6 +1110,7 @@
 			<reading-light-left-knb type="double">0</reading-light-left-knb>
 			<reading-light-right-knb type="double">0</reading-light-right-knb>
 			<strobe type="bool">0</strobe>
+			<stby-compass-switch type="bool">0</stby-compass-switch>
 			<no-smoking-sign type="bool">1</no-smoking-sign>
 			<seatbelt-sign type="bool">0</seatbelt-sign>
 			<taxi-light-switch type="float">0</taxi-light-switch>
@@ -1120,23 +1151,30 @@
 				</lights>
 			</adirscp>
 			<switching>
+				<audio type="int">0</audio>
 				<att-hdg type="int">0</att-hdg>
 				<air-data type="int">0</air-data>
 			</switching>
 		</navigation>
 		<OH>
 			<protectors>
-				<ditching type="bool">0</ditching>
-				<elecratman type="bool">0</elecratman>
-				<eng1-manstart type="bool">0</eng1-manstart>
-				<eng2-manstart type="bool">0</eng2-manstart>
-				<eng1-n1 type="bool">0</eng1-n1>
-				<eng2-n1 type="bool">0</eng2-n1>
-				<idg1 type="bool">0</idg1>
-				<idg2 type="bool">0</idg2>
-				<maskman type="bool">0</maskman>
-				<ramair type="bool">0</ramair>
-				<ratman type="bool">0</ratman>
+				<aftdisch type="int">0</aftdisch>
+				<blueelec type="int">0</blueelec>
+				<ditching type="int">0</ditching>
+				<elecratman type="int">0</elecratman>
+				<emercall type="int">0</emercall>
+				<emergentest type="int">0</emergentest>
+				<eng1-manstart type="int">0</eng1-manstart>
+				<eng2-manstart type="int">0</eng2-manstart>
+				<eng1-n1 type="int">0</eng1-n1>
+				<eng2-n1 type="int">0</eng2-n1>
+				<evac type="int">0</evac>
+				<fwddisch type="int">0</fwddisch>
+				<idg1 type="int">0</idg1>
+				<idg2 type="int">0</idg2>
+				<maskman type="int">0</maskman>
+				<ramair type="int">0</ramair>
+				<ratman type="int">0</ratman>
 			</protectors>
 		</OH>
 		<oxygen>
@@ -1159,6 +1197,8 @@
 				<bleed-2 type="bool">1</bleed-2>
 				<blower type="bool">0</blower>
 				<cabin-fans type="bool">1</cabin-fans>
+				<eng1-manstart type="int">0</eng1-manstart>
+				<eng2-manstart type="int">0</eng2-manstart>
 				<extract type="bool">0</extract>
 				<ground-air type="bool">0</ground-air>
 				<hot-air type="bool">1</hot-air>
@@ -1179,8 +1219,11 @@
 			<emerCall type="bool">0</emerCall>
 			<emerCallLtO type="bool">0</emerCallLtO>
 			<emerCallLtC type="bool">0</emerCallLtC>
+			<emer-lights type="float">0</emer-lights>
 			<landing-lights-l type="float">0.0</landing-lights-l>
 			<landing-lights-r type="float">0.0</landing-lights-r>
+			<loudspeaker-l type="float">1.0</loudspeaker-l>
+			<loudspeaker-r type="float">1.0</loudspeaker-r>
 			<LrainRpt type="bool">0</LrainRpt>
 			<mechCall type="bool">0</mechCall>
 			<no-smoking-sign type="double">0.5</no-smoking-sign>
@@ -1397,7 +1440,9 @@
 				</bat-2>
 			</sources>
 		</electrical>
-		
+		<elt>
+			<light-on type="bool">false</light-on>
+		</elt>
 		<failures n="0">
 			<aileron-left type="bool">0</aileron-left>
 			<aileron-right type="bool">0</aileron-right>
@@ -1647,6 +1692,7 @@
 			<cabinalt-norm type="double">0</cabinalt-norm>
 			<cabinpsi type="double">14.7</cabinpsi>
 			<ditchingpb type="double">14.7</ditchingpb>
+			<outflowpos-man-sw type="int">0</outflowpos-man-sw>
 		</pressurization>
 		
 		<pitot n="0">
@@ -1834,6 +1880,20 @@
 			<volume type="double">0</volume>
 		</dme>
 		
+		<efis n="0">
+			<input>
+				<lh-vor-adf type="int">0</lh-vor-adf>
+				<rh-vor-adf type="int">0</rh-vor-adf>
+			</input>
+		</efis>
+		
+		<efis n="1">
+			<input>
+				<lh-vor-adf type="int">0</lh-vor-adf>
+				<rh-vor-adf type="int">0</rh-vor-adf>
+			</input>
+		</efis>
+		
 		<groundradar>
 			<range type="double">1.0</range>
 		</groundradar>
@@ -1952,6 +2012,9 @@
 					<decision-height-ncd type="bool">0</decision-height-ncd>
 					<decision-height type="double">250</decision-height>
 				</arinc429>
+				<discretes>
+					<momentary-flap-all-override type="bool">0</momentary-flap-all-override>
+				</discretes>
 			</inputs>
 			<speaker>
 				<max-dist type="double">2</max-dist>
@@ -4167,8 +4230,8 @@
 				</binding>
 			</key>
 			<key n="114">
-				<name>r</name>
-				<desc>MCDU</desc>
+				<name>o</name>
+				<desc>Change view to aft overhead</desc>
 				<binding>
 					<condition>
 						<property>/FMGC/keyboard-left</property>
@@ -4182,6 +4245,15 @@
 					</condition>
 					<command>nasal</command>
 					<script>mcdu.button("R", 1);</script>
+				</binding>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<condition>
+						<not><property>/FMGC/keyboard-left</property></not>
+						<not><property>/FMGC/keyboard-right</property></not>
+					</condition>
+					<command>nasal</command>
+					<script>libraries.aftOverheadView();</script>
 				</binding>
 			</key>
 			<key n="115">
@@ -4898,6 +4970,9 @@
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM-wheel.nas</file>
 			<file>Aircraft/A320-family/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
 		</canvas_ecam>
+		<canvas_battery>
+			<file>Aircraft/A320-family/Models/Instruments/BatteryVoltage/BatteryVoltage.nas</file>
+		</canvas_battery>
 		<canvas_iesi>
 			<file>Aircraft/A320-family/Models/Instruments/IESI/IESI.nas</file>
 		</canvas_iesi>

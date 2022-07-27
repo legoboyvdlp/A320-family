@@ -44,6 +44,29 @@ var resetView = func() {
 	} 
 }
 
+var aftOverheadView = func() {
+	if (pts.Sim.CurrentView.viewNumberRaw.getValue() == 0) {
+		if (pts.Sim.Rendering.Headshake.enabled.getBoolValue()) {
+			shakeFlag = 1;
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(0);
+		} else {
+			shakeFlag = 0;
+		}
+		
+		pts.Sim.CurrentView.fieldOfView.setValue(105.8);
+		pts.Sim.CurrentView.headingOffsetDeg.setValue(360);
+		pts.Sim.CurrentView.pitchOffsetDeg.setValue(63.7);
+		pts.Sim.CurrentView.rollOffsetDeg.setValue(0);
+		pts.Sim.CurrentView.xOffsetM.setValue(0); 
+		pts.Sim.CurrentView.yOffsetM.setValue(0.765); 
+		pts.Sim.CurrentView.zOffsetM.setValue(-15.563);
+		
+		if (shakeFlag) {
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
+		}
+	} 
+}
+
 var autopilotView = func() {
 	if (pts.Sim.CurrentView.viewNumberRaw.getValue() == 0) {
 		if (pts.Sim.Rendering.Headshake.enabled.getBoolValue()) {

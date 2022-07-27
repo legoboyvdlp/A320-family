@@ -561,6 +561,107 @@
 		
 	</channel>
 	
+	<channel name="ELT" execrate="8">
+	
+		<actuator name="/systems/elt/elt-test-switch">
+			<rate_limit sense="incr">1</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+			<input>/controls/elt/elt-test-reset</input>
+		</actuator>
+		
+		<switch name="/systems/elt/elt-test-cmd">
+			<default value="/systems/elt/elt-test-cmd"/>
+			<test logic="AND" value="1">
+				/systems/elt/elt-operating ne 1
+				/systems/elt/elt-test-switch eq 1
+			</test>
+			<test logic="OR" value="0">
+				/systems/elt/elt-test eq 1.0
+				/systems/elt/elt-operating eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/elt/elt-test">
+			<rate_limit sense="incr">0.1</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+			<input>/systems/elt/elt-test-cmd</input>
+		</actuator>
+		
+		<switch name="/systems/elt/elt-operating">
+			<default value="/systems/elt/elt-operating"/>
+			<test logic="OR" value="1">
+				/controls/elt/elt-switch eq 1
+				<test logic="AND">
+					/accelerations/pilot-gdamped gt 5.0
+					/controls/elt/elt-switch eq 0
+				</test>
+			</test>
+			<test logic="OR" value="0">
+				/controls/elt/elt-test-reset eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/elt/elt-horn-cmd">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/elt/elt-test ge 0.3
+					/systems/elt/elt-test lt 0.5
+				</test>
+				/systems/elt/elt-operating eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/elt/elt-horn">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/elt/elt-horn-cmd eq 1
+					/instrumentation/comm/frequencies/selected-mhz eq 121.5
+					<test logic="OR">
+						/controls/audio/acp/vhf1-recive eq 1
+						/controls/audio/acp[1]/vhf1-recive eq 1
+						/controls/audio/acp[2]/vhf1-recive eq 1
+					</test>
+				</test>
+				<test logic="AND">
+					/systems/elt/elt-horn-cmd eq 1
+					/instrumentation/comm[1]/frequencies/selected-mhz eq 121.5
+					<test logic="OR">
+						/controls/audio/acp/vhf2-recive eq 1
+						/controls/audio/acp[1]/vhf2-recive eq 1
+						/controls/audio/acp[2]/vhf2-recive eq 1
+					</test>
+				</test>
+				<test logic="AND">
+					/systems/elt/elt-horn-cmd eq 1
+					/instrumentation/comm[2]/frequencies/selected-mhz eq 121.5
+					<test logic="OR">
+						/controls/audio/acp/vhf3-recive eq 1
+						/controls/audio/acp[1]/vhf3-recive eq 1
+						/controls/audio/acp[2]/vhf3-recive eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/elt/light-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/elt/elt-test gt 0.0
+					/systems/elt/elt-test lt 0.5
+				</test>
+				<test logic="AND">
+					/systems/elt/elt-test ge 0.9
+					/systems/elt/elt-test lt 1.0
+				</test>
+				/systems/elt/elt-operating eq 1
+			</test>
+		</switch>
+		
+	</channel>
+	
 	<channel name="DU Power" execrate="8">
 		
 		<switch name="/instrumentation/displays/du3/power-command">
