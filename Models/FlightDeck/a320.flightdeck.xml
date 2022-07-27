@@ -25208,6 +25208,139 @@
 
 	<!-- Overhead Panel -->
 	
+	<!-- Visor -->
+	<animation>
+		<type>pick</type>
+		<object-name>visor_glass_cpt</object-name>
+		<object-name>visor_cpt</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>/controls/cockpit/captain-visor</property>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>cpt-visor-lbl</tooltip-id>
+				<label>Stow / deploy visor</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>visor_glass_cpt</object-name>
+		<object-name>visor_cpt</object-name>
+		<property>/controls/cockpit/captain-visor-pos</property>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>0</dep></entry>
+			<entry><ind>0.5</ind><dep>45</dep></entry>
+			<entry><ind>1.00</ind><dep>90</dep></entry>
+		</interpolation>
+		<center>
+			<x-m>0.053431</x-m>
+			<y-m>-0.62716</y-m>
+			<z-m>0.903956</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>visor_glass_cpt</object-name>
+		<object-name>visor_cpt</object-name>
+		<property>/controls/cockpit/captain-visor-pos</property>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>0</dep></entry>
+			<entry><ind>0.5</ind><dep>18</dep></entry>
+			<entry><ind>0.7</ind><dep>36</dep></entry>
+			<entry><ind>1.00</ind><dep>90</dep></entry>
+		</interpolation>
+		<center>
+			<x-m>0.053431</x-m>
+			<y-m>-0.62716</y-m>
+			<z-m>0.903956</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>visor_glass_fo</object-name>
+		<object-name>visor_fo</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>/controls/cockpit/fo-visor</property>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>fo-visor-lbl</tooltip-id>
+				<label>Stow / deploy visor</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>visor_glass_fo</object-name>
+		<object-name>visor_fo</object-name>
+		<property>/controls/cockpit/fo-visor-pos</property>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>0</dep></entry>
+			<entry><ind>0.5</ind><dep>45</dep></entry>
+			<entry><ind>1.00</ind><dep>90</dep></entry>
+		</interpolation>
+		<center>
+			<x-m>0.053431</x-m>
+			<y-m>0.62716</y-m>
+			<z-m>0.903956</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>visor_glass_fo</object-name>
+		<object-name>visor_fo</object-name>
+		<property>/controls/cockpit/fo-visor-pos</property>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+		<interpolation>
+			<entry><ind>0.00</ind><dep>0</dep></entry>
+			<entry><ind>0.5</ind><dep>18</dep></entry>
+			<entry><ind>0.7</ind><dep>36</dep></entry>
+			<entry><ind>1.00</ind><dep>90</dep></entry>
+		</interpolation>
+		<center>
+			<x-m>0.053431</x-m>
+			<y-m>0.62716</y-m>
+			<z-m>0.903956</z-m>
+		</center>
+	</animation>
+	
 	<!-- Standby Compass -->
 	<animation>
 		<type>pick</type>

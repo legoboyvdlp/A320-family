@@ -905,11 +905,13 @@
 		<cockpit>
 			<alt-knb-translate type="double">0.002</alt-knb-translate>
 			<blue-ovrd-guard type="bool">0</blue-ovrd-guard>
+			<captain-visor type="bool">0</captain-visor>
 			<emer-canc-cover type="bool">0</emer-canc-cover>
 			<evac-capt-purs type="int">1</evac-capt-purs>
 			<flaps-lever-translate type="double">0</flaps-lever-translate>
 			<fadec-gnd-pwr-1-guard type="bool">false</fadec-gnd-pwr-1-guard>
 			<fadec-gnd-pwr-2-guard type="bool">false</fadec-gnd-pwr-2-guard>
+			<fo-visor type="bool">0</fo-visor>
 			<oxygen-mask-cockpit-door-cpt type="double">0</oxygen-mask-cockpit-door-cpt>
 			<oxygen-mask-cockpit-door-fo type="double">0</oxygen-mask-cockpit-door-fo>
 			<park-brk-translate type="double">0</park-brk-translate>

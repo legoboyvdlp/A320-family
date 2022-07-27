@@ -574,6 +574,16 @@
 			<input>/controls/cockpit/blue-ovrd-guard</input>
 			<c1>20</c1>
 		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/captain-visor-pos">
+			<input>/controls/cockpit/captain-visor</input>
+			<c1>2</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fo-visor-pos">
+			<input>/controls/cockpit/fo-visor</input>
+			<c1>2</c1>
+		</lag_filter>
 	
 	</channel>
 
