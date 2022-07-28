@@ -729,6 +729,13 @@
 		<object-name>audio_call_vhf2_led.fo</object-name>
 		<object-name>audio_call_vhf3_led.fo</object-name>
 		<object-name>audio_mech_sgn.fo</object-name>
+		<object-name>audio_att_sgn.ovh</object-name>
+		<object-name>audio_call_hf2_led.ovh</object-name>
+		<object-name>audio_call_hf1_led.ovh</object-name>
+		<object-name>audio_call_vhf1_led.ovh</object-name>
+		<object-name>audio_call_vhf2_led.ovh</object-name>
+		<object-name>audio_call_vhf3_led.ovh</object-name>
+		<object-name>audio_mech_sgn.ovh</object-name>
 		<object-name>ecam_c_b_led</object-name>
 		<object-name>ecam_el_dc_led</object-name>
 		<object-name>engine_fault_1</object-name>
@@ -758,6 +765,11 @@
 		<object-name>OVH_button_labels.061</object-name>
 		<object-name>OVH_button_labels.063</object-name>
 		<object-name>OVH_button_labels.092</object-name>
+		
+		<object-name>KBMode.Toggle.fo.000</object-name>
+		<object-name>KBMode.Toggle.fo.001</object-name>
+		<object-name>fd_main.002</object-name>
+		<object-name>fd_main.003</object-name>
 		<condition>
 			<property>controls/switches/annun-test</property>
 		</condition>
