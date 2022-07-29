@@ -301,6 +301,15 @@
 		
 		<object-name>OVH_button_labels.092</object-name>
 		<object-name>OVH_button_labels.093</object-name>
+		
+		<object-name>mcdu_ann_dash.cpt</object-name>
+		<object-name>mcdu_ann_fail.cpt</object-name>
+		<object-name>mcdu_ann_fm.cpt</object-name>
+		<object-name>mcdu_ann_fm1.cpt</object-name>
+		<object-name>mcdu_ann_fm2.cpt</object-name>
+		<object-name>mcdu_ann_ind.cpt</object-name>
+		<object-name>mcdu_ann_msg.cpt</object-name>
+		<object-name>mcdu_ann_rdy.cpt</object-name>
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/ac-ess-shed</property>
@@ -471,6 +480,16 @@
 		<object-name>OVH_button_labels.061</object-name>
 		<object-name>OVH_button_labels.063</object-name>
 		<object-name>OVH_button_labels.091</object-name>
+		
+		
+		<object-name>mcdu_ann_dash.fo</object-name>
+		<object-name>mcdu_ann_fail.fo</object-name>
+		<object-name>mcdu_ann_fm.fo</object-name>
+		<object-name>mcdu_ann_fm1.fo</object-name>
+		<object-name>mcdu_ann_fm2.fo</object-name>
+		<object-name>mcdu_ann_ind.fo</object-name>
+		<object-name>mcdu_ann_msg.fo</object-name>
+		<object-name>mcdu_ann_rdy.fo</object-name>
 		<condition>
 			<greater-than>
 				<property>/systems/electrical/bus/ac-2</property>
@@ -766,10 +785,22 @@
 		<object-name>OVH_button_labels.063</object-name>
 		<object-name>OVH_button_labels.092</object-name>
 		
-		<object-name>KBMode.Toggle.fo.000</object-name>
-		<object-name>KBMode.Toggle.fo.001</object-name>
-		<object-name>fd_main.002</object-name>
-		<object-name>fd_main.003</object-name>
+		<object-name>mcdu_ann_dash.cpt</object-name>
+		<object-name>mcdu_ann_fail.cpt</object-name>
+		<object-name>mcdu_ann_fm.cpt</object-name>
+		<object-name>mcdu_ann_fm1.cpt</object-name>
+		<object-name>mcdu_ann_fm2.cpt</object-name>
+		<object-name>mcdu_ann_ind.cpt</object-name>
+		<object-name>mcdu_ann_msg.cpt</object-name>
+		<object-name>mcdu_ann_rdy.cpt</object-name>
+		<object-name>mcdu_ann_dash.fo</object-name>
+		<object-name>mcdu_ann_fail.fo</object-name>
+		<object-name>mcdu_ann_fm.fo</object-name>
+		<object-name>mcdu_ann_fm1.fo</object-name>
+		<object-name>mcdu_ann_fm2.fo</object-name>
+		<object-name>mcdu_ann_ind.fo</object-name>
+		<object-name>mcdu_ann_msg.fo</object-name>
+		<object-name>mcdu_ann_rdy.fo</object-name>
 		<condition>
 			<property>controls/switches/annun-test</property>
 		</condition>
@@ -36916,10 +36947,9 @@
 		</action>
 	</animation>
 	
-	
 	<animation>
 		<type>pick</type>
-		<object-name>KBMode.Toggle.fo</object-name>
+		<object-name>KBMode.Toggle.fo.002</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
