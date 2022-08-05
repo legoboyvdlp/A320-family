@@ -552,7 +552,7 @@
 				<sum>
 					<product>
 						<property>/FMGC/internal/vs1g</property>
-						<value>1.03</value>
+						<value>1.10</value>
 					</product>
 					<product>
 						<difference>
