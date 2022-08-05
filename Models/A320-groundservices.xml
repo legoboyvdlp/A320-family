@@ -90,7 +90,7 @@
 		<path>Aircraft/A320-family/Models/Services/Catering/L_T_VolvoFM-4_5m-set.xml</path>
 		<condition>
 			<equals>
-				<property>services/catering/enable</property>
+				<property>services/catering-rear/enable</property>
 				<value>1</value>
 			</equals>
 		</condition>
