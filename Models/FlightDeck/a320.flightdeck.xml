@@ -5395,8 +5395,8 @@
 		<hovered>
 			<binding>
 				<command>set-tooltip</command>
-				<tooltip-id>voradf-1-fo-lbl</tooltip-id>
-				<label>Toggle VOR1 / ADF1</label>
+				<tooltip-id>voradf-2-cpt-lbl</tooltip-id>
+				<label>Toggle VOR2 / ADF2</label>
 			</binding>
 		</hovered>
 	</animation>
