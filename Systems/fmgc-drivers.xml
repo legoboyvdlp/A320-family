@@ -254,7 +254,40 @@
 		</input>
 		<input>/it-autoflight/internal/kts-rate-raw</input>
 		<output>/it-autoflight/internal/kts-rate</output>
-		<filter-time>0.08</filter-time>
+		<filter-time>0.16</filter-time>
+	</filter>
+	
+	<filter>
+		<name>Mach Rate</name>
+		<type>derivative</type>
+		<input>/velocities/mach</input>
+		<output>/it-autoflight/internal/mach-rate-raw</output>
+		<filter-time>1.0</filter-time>
+	</filter>
+	
+	<filter>
+		<name>Mach Rate Gain</name>
+		<type>gain</type>
+		<gain>750</gain>
+		<input>/it-autoflight/internal/mach-rate-raw</input>
+		<output>/it-autoflight/internal/mach-rate-gain</output>
+	</filter>
+	
+	<filter>
+		<name>Mach Rate Lag</name>
+		<type>exponential</type>
+		<input>
+			<condition>
+				<less-than>
+					<property>/velocities/airspeed-kt</property>
+					<value>1</value>
+				</less-than>
+			</condition>
+			<value>0</value>
+		</input>
+		<input>/it-autoflight/internal/mach-rate-gain</input>
+		<output>/it-autoflight/internal/mach-rate</output>
+		<filter-time>0.16</filter-time>
 	</filter>
 	
 	<filter>
@@ -277,7 +310,7 @@
 						</sum>
 						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
 					</difference>
-					<value>0.08</value>
+					<value>0.1</value>
 				</product>
 			</expression>
 		</input>
@@ -300,7 +333,7 @@
 						</max>
 						<property>/instrumentation/airspeed-indicator/indicated-mach</property>
 					</difference>
-					<value>80</value>
+					<value>100</value>
 				</product>
 			</expression>
 		</input>
@@ -317,7 +350,7 @@
 						</max>
 						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
 					</difference>
-					<value>0.08</value>
+					<value>0.1</value>
 				</product>
 			</expression>
 		</input>
@@ -366,7 +399,7 @@
 					</equals>
 				</and>
 			</condition>
-			<value>2.5</value>
+			<value>1.5</value>
 		</max-rate-of-change>
 		<max-rate-of-change>100</max-rate-of-change>
 	</filter>
@@ -444,7 +477,7 @@
 	</filter>
 	
 	<filter>
-		<name>Get Back on Magenta</name>
+		<name>LNAV Course Correction</name>
 		<type>gain</type>
 		<gain>
 			<expression>

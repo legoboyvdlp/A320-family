@@ -596,7 +596,7 @@ var canvas_pfd = {
 					if (val.ind_mach >= 0.999) {
 						obj["ASI_mach"].setText(".999");
 					} else {
-						obj["ASI_mach"].setText(sprintf(".%3.0f", val.ind_mach * 1000));
+						obj["ASI_mach"].setText(sprintf(".%3.0f", math.round(val.ind_mach * 1000)));
 					}
 					
 					if (val.ind_mach >= 0.5) {
