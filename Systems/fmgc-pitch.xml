@@ -301,15 +301,7 @@
 					<value>2</value>
 				</equals>
 			</condition>
-			<expression>
-				<max>
-					<value>120</value>
-					<difference>
-						<property>/it-autoflight/internal/vert-speed-fpm</property>
-						<value>2000</value>
-					</difference>
-				</max>
-			</expression>
+			<value>120</value>
 		</min>
 		<min>-100000</min>
 		<max>
@@ -334,15 +326,7 @@
 					<value>1</value>
 				</equals>
 			</condition>
-			<expression>
-				<min>
-					<value>-120</value>
-					<sum>
-						<property>/it-autoflight/internal/vert-speed-fpm</property>
-						<value>2000</value>
-					</sum>
-				</min>
-			</expression>
+			<value>-120</value>
 		</max>
 		<max>100000</max>
 	</filter>
