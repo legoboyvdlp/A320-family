@@ -4,7 +4,7 @@
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
-
+		<toggle-tooltips type="bool">false</toggle-tooltips>
 		<animation>
 			<fire-services type="bool">0</fire-services>
 		</animation>

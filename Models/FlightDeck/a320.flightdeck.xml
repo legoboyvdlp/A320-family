@@ -3145,6 +3145,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>oxy-mask-cockpit-door-lbl</tooltip-id>
 				<label>Oxygen mask door</label>
@@ -3178,6 +3181,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>oxy-mask-fo-door-lbl</tooltip-id>
 				<label>Oxygen mask door</label>
@@ -3517,6 +3523,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>warn-lbl</tooltip-id>
 				<label>Cancel warning</label>
@@ -3574,6 +3583,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>caut-lbl</tooltip-id>
 				<label>Cancel caution</label>
@@ -3694,6 +3706,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc_msg-lbl</tooltip-id>
 				<label>Cancel ATC msg</label>
@@ -3880,6 +3895,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_cpt-lbl</tooltip-id>
 				<label>Scroll for altimeter setting - click for STD</label>
@@ -4049,6 +4067,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_fo-lbl</tooltip-id>
 				<label>Scroll for altimeter setting - click for STD</label>
@@ -4108,6 +4129,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_cpt_toggle-lbl</tooltip-id>
 				<label>Toggle inHg / hPa</label>
@@ -4139,6 +4163,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_fo_toggle-lbl</tooltip-id>
 				<label>Toggle inHg / hPa</label>
@@ -4194,6 +4221,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fd-1-lbl</tooltip-id>
 				<label>Toggle FD1</label>
@@ -4262,6 +4292,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ls-1-lbl</tooltip-id>
 				<label>Toggle LS1</label>
@@ -4330,6 +4363,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ls-2-lbl</tooltip-id>
 				<label>Toggle LS2</label>
@@ -4391,6 +4427,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fd-2-lbl</tooltip-id>
 				<label>Toggle FD2</label>
@@ -4463,6 +4502,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cstr-1-lbl</tooltip-id>
 				<label>Toggle CSTR layer</label>
@@ -4534,6 +4576,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cstr-2-lbl</tooltip-id>
 				<label>Toggle CSTR layer</label>
@@ -4605,6 +4650,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>wpt-1-lbl</tooltip-id>
 				<label>Toggle WPT layer</label>
@@ -4676,6 +4724,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>wpt-2-lbl</tooltip-id>
 				<label>Toggle WPT layer</label>
@@ -4747,6 +4798,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vor-1-lbl</tooltip-id>
 				<label>Toggle VOR layer</label>
@@ -4818,6 +4872,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vor-2-lbl</tooltip-id>
 				<label>Toggle VOR layer</label>
@@ -4889,6 +4946,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndb-1-lbl</tooltip-id>
 				<label>Toggle NDB layer</label>
@@ -4960,6 +5020,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndb-2-lbl</tooltip-id>
 				<label>Toggle NDB layer</label>
@@ -5031,6 +5094,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>arpt-1-lbl</tooltip-id>
 				<label>Toggle ARPT layer</label>
@@ -5102,6 +5168,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>arpt-2-lbl</tooltip-id>
 				<label>Toggle ARPT layer</label>
@@ -5170,6 +5239,9 @@
 		</decrease>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndmode-cpt-lbl</tooltip-id>
 				<label>ND mode</label>
@@ -5212,6 +5284,9 @@
 		</decrease>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndmode-fo-lbl</tooltip-id>
 				<label>ND mode</label>
@@ -5255,6 +5330,9 @@
 		</decrease>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndrange-cpt-lbl</tooltip-id>
 				<label>ND range</label>
@@ -5298,6 +5376,9 @@
 		</decrease>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndrange-fo-lbl</tooltip-id>
 				<label>ND range</label>
@@ -5330,6 +5411,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>voradf-1-cpt-lbl</tooltip-id>
 				<label>Toggle VOR1 / ADF1</label>
@@ -5362,6 +5446,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>voradf-1-fo-lbl</tooltip-id>
 				<label>Toggle VOR1 / ADF1</label>
@@ -5394,6 +5481,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>voradf-2-cpt-lbl</tooltip-id>
 				<label>Toggle VOR2 / ADF2</label>
@@ -5426,6 +5516,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>voradf-2-fo-lbl</tooltip-id>
 				<label>Toggle VOR2 / ADF2</label>
@@ -5507,6 +5600,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>spd-mach-lbl</tooltip-id>
 				<label>Toggle speeed / mach</label>
@@ -5654,6 +5750,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>spd-lbl</tooltip-id>
 				<label>Scroll for speed target, click to push, shift-click or middle mouse to pull</label>
@@ -5801,6 +5900,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hdg-lbl</tooltip-id>
 				<label>Scroll for heading target, click to push, shift-click or middle mouse to pull</label>
@@ -5850,6 +5952,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>loc-lbl</tooltip-id>
 				<label>Arm LOC mode</label>
@@ -5931,6 +6036,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hdg-vs-lbl</tooltip-id>
 				<label>Toggle heading / track and vs / fpa</label>
@@ -5980,6 +6088,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ap1-lbl</tooltip-id>
 				<label>Hard AP1 disconnect (Shift - D for soft disconnect)</label>
@@ -6041,6 +6152,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ap2-lbl</tooltip-id>
 				<label>Hard AP2 disconnect (Shift - D for soft disconnect)</label>
@@ -6102,6 +6216,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>athr-lbl</tooltip-id>
 				<label>Hard ATHR disconnect (Ctrl - D for soft disconnect)</label>
@@ -6261,6 +6378,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>alt-lbl</tooltip-id>
 				<label>Scroll for altitude target, click to push, shift-click or middle mouse to pull</label>
@@ -6306,6 +6426,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>alt-sel-mode-lbl</tooltip-id>
 				<label>Altitude select 100 / 1000ft</label>
@@ -6439,6 +6562,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hdg-lbl</tooltip-id>
 				<label>Scroll for vs / fpa target, click to push, shift-click or middle mouse to pull</label>
@@ -6492,6 +6618,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>appr-lbl</tooltip-id>
 				<label>Arm APPR mode</label>
@@ -6561,6 +6690,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>metric-altitude-lbl</tooltip-id>
 				<label>Display metric altitude on PFDs</label>
@@ -6615,6 +6747,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>chrono-1-lbl</tooltip-id>
 				<label>Start / Stop / Reset Chrono</label>
@@ -6668,6 +6803,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>chrono-2-lbl</tooltip-id>
 				<label>Start / Stop / Reset Chrono</label>
@@ -6710,6 +6848,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fcu-panel_lt-lbl</tooltip-id>
 				<label>FCU backlight brightness</label>
@@ -6737,6 +6878,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fcu-digit_lt-lbl</tooltip-id>
 				<label>FCU display brightness</label>
@@ -6778,6 +6922,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>clock-chrono-reset-lbl</tooltip-id>
 				<label>Reset Chrono</label>
@@ -6831,6 +6978,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>clock-chrono-lbl</tooltip-id>
 				<label>Start / Stop Chrono</label>
@@ -6886,6 +7036,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>clock-set-lbl</tooltip-id>
 				<label>Toggle Time / Date</label>
@@ -6932,6 +7085,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>utc-select-lbl</tooltip-id>
 				<label>(INOP) Select Clock Source</label>
@@ -6973,6 +7129,9 @@
         </release>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>et-ctl-lbl</tooltip-id>
 				<label>Elapsed timer control</label>
@@ -7270,6 +7429,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_iesi-lbl</tooltip-id>
 				<label>Scroll for altimeter setting - click for STD</label>
@@ -7316,6 +7478,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>iesi-reset-lbl</tooltip-id>
 				<label>Hold for 2 seconds to reset IESI</label>
@@ -7370,6 +7535,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>iesi-plus-lbl</tooltip-id>
 				<label>Increase IESI brightness</label>
@@ -7424,6 +7592,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>iesi-minus-lbl</tooltip-id>
 				<label>Decrease IESI brightness</label>
@@ -7554,6 +7725,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-brt-l-lbl</tooltip-id>
 				<label>Increase DCDU screen brightness</label>
@@ -7606,6 +7780,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-dim-l-lbl</tooltip-id>
 				<label>Decrease DCDU screen brightness</label>
@@ -7658,6 +7835,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-brt-r-lbl</tooltip-id>
 				<label>Increase DCDU screen brightness</label>
@@ -7710,6 +7890,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-dim-r-lbl</tooltip-id>
 				<label>Decrease DCDU screen brightness</label>
@@ -7793,6 +7976,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-r2-l-lbl</tooltip-id>
 				<label>DCDU button R2</label>
@@ -7843,6 +8029,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-r2-r-lbl</tooltip-id>
 				<label>DCDU button R2</label>
@@ -7937,6 +8126,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ddrmi-1-lbl</tooltip-id>
 				<label>Toggle VOR1 / ADF1</label>
@@ -7968,6 +8160,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ddrmi-2-lbl</tooltip-id>
 				<label>Toggle VOR2 / ADF2</label>
@@ -8375,6 +8570,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>terr_cpt-lbl</tooltip-id>
 				<label>Show terrain on ND</label>
@@ -8434,6 +8632,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>terr_fo-lbl</tooltip-id>
 				<label>Show terrain on ND</label>
@@ -8546,6 +8747,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>brk-fan-lbl</tooltip-id>
 				<label>Toggle brake fans</label>
@@ -8714,6 +8918,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>autobrk-lo-lbl</tooltip-id>
 				<label>Autobrake Low</label>
@@ -8780,6 +8987,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>autobrk-med-lbl</tooltip-id>
 				<label>Autobrake Medium</label>
@@ -8846,6 +9056,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>autobrk-max-lbl</tooltip-id>
 				<label>Autobrake Max / Takeoff</label>
@@ -8896,6 +9109,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nws-switch-lbl</tooltip-id>
 				<label>Toggle nose wheel steering</label>
@@ -9028,6 +9244,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gear-lbl</tooltip-id>
 				<label>Landing gear</label>
@@ -9177,6 +9396,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>traytable-cpt-lbl</tooltip-id>
 				<label>Deploy captain's tray table</label>
@@ -9198,6 +9420,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>traytable-fo-lbl</tooltip-id>
 				<label>Deploy first officer's tray table</label>
@@ -9220,6 +9445,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>footrest-cpt-lbl</tooltip-id>
 				<label>Deploy captain's footrest</label>
@@ -9252,6 +9480,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>footrest-fo-lbl</tooltip-id>
 				<label>Deploy first officer's footrest</label>
@@ -9295,6 +9526,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pfd_brt_cpt-lbl</tooltip-id>
 				<label>PFD brightness control</label>
@@ -9324,6 +9558,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pfd_brt_fo-lbl</tooltip-id>
 				<label>PFD brightness control</label>
@@ -9366,6 +9603,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pfd_xfr-cpt-lbl</tooltip-id>
 				<label>Switch PFD / ND</label>
@@ -9421,6 +9661,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pfd_xfr-fo-lbl</tooltip-id>
 				<label>Switch PFD / ND</label>
@@ -9465,6 +9708,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nd_brt_cpt_layer-lbl</tooltip-id>
 				<label>WXR / TERR brightness control</label>
@@ -9494,6 +9740,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nd_brt_cpt-lbl</tooltip-id>
 				<label>ND brightness control</label>
@@ -9523,6 +9772,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nd_brt_fo_layer-lbl</tooltip-id>
 				<label>WXR / TERR brightness control</label>
@@ -9552,6 +9804,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nd_brt_fo-lbl</tooltip-id>
 				<label>ND brightness control</label>
@@ -9582,6 +9837,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>speaker_volume_cpt-lbl</tooltip-id>
 				<label>Radio volume control</label>
@@ -9611,6 +9869,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>speaker_volume_fo-lbl</tooltip-id>
 				<label>Radio volume control</label>
@@ -9646,6 +9907,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>warmer_cpt_lbl</tooltip-id>
 				<label>Captain's foot warmer</label>
@@ -9680,6 +9944,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>warmer_fo_lbl</tooltip-id>
 				<label>F/O's foot warmer</label>
@@ -9714,6 +9981,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>console_lt_cpt_lbl</tooltip-id>
 				<label>Console and floor light switch</label>
@@ -9747,6 +10017,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>console_lt_fo_lbl</tooltip-id>
 				<label>Console and floor light switch</label>
@@ -9841,6 +10114,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-lbl</tooltip-id>
 				<label>Cancel glideslope warning or self test GPWS</label>
@@ -9910,6 +10186,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-lbl</tooltip-id>
 				<label>Cancel glideslope warning or self test GPWS</label>
@@ -10038,6 +10317,9 @@
 		</decrease>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>air_data_lbl</tooltip-id>
 				<label>Switch air data source</label>
@@ -10068,6 +10350,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ewd_brt_lbl</tooltip-id>
 				<label>E/WD brightness control</label>
@@ -10097,6 +10382,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ewd_brt_lbl</tooltip-id>
 				<label>SD brightness control</label>
@@ -10146,6 +10434,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>toconfig-lbl</tooltip-id>
 				<label>Hold for takeoff config test</label>
@@ -10192,6 +10483,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emercanc_lid-lbl</tooltip-id>
 				<label>Emer Canc Guard</label>
@@ -10384,6 +10678,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng-lbl</tooltip-id>
 				<label>Show ENG page</label>
@@ -10446,6 +10743,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apu-lbl</tooltip-id>
 				<label>Show APU page</label>
@@ -10508,6 +10808,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bleed-lbl</tooltip-id>
 				<label>Show BLEED page</label>
@@ -10570,6 +10873,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cond-lbl</tooltip-id>
 				<label>Show COND page</label>
@@ -10632,6 +10938,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>press-lbl</tooltip-id>
 				<label>Show PRESS page</label>
@@ -10694,6 +11003,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>door-lbl</tooltip-id>
 				<label>Show DOOR page</label>
@@ -10756,6 +11068,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elec-lbl</tooltip-id>
 				<label>Show ELEC page</label>
@@ -10818,6 +11133,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>wheel-lbl</tooltip-id>
 				<label>Show WHEEL page</label>
@@ -10880,6 +11198,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hyd-lbl</tooltip-id>
 				<label>Show HYD page</label>
@@ -10942,6 +11263,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fctl-lbl</tooltip-id>
 				<label>Show F/CTL page</label>
@@ -11004,6 +11328,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fuel-lbl</tooltip-id>
 				<label>Show FUEL page</label>
@@ -11052,6 +11379,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fuel-lbl</tooltip-id>
 				<label>Display all pages in sequence (INOP)</label>
@@ -11117,6 +11447,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>clrl-lbl</tooltip-id>
 				<label>Clear ECAM</label>
@@ -11179,6 +11512,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>sts-lbl</tooltip-id>
 				<label>Show STS page</label>
@@ -11244,6 +11580,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rcl-lbl</tooltip-id>
 				<label>Recall last warning</label>
@@ -11308,6 +11647,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>clrr-lbl</tooltip-id>
 				<label>Clear ECAM</label>
@@ -11354,6 +11696,9 @@
 		</decrease>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pitch-trim-lbl</tooltip-id>
 				<label>Pitch trim control</label>
@@ -11394,6 +11739,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng-thrt1-lbl</tooltip-id>
 				<label>Engine 1 throttle</label>
@@ -11437,6 +11785,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>disconnect-athr-lbl</tooltip-id>
 				<label>Soft ATHR disconnect</label>
@@ -11479,6 +11830,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>disconnect-athr-r-lbl</tooltip-id>
 				<label>Soft ATHR disconnect</label>
@@ -11516,6 +11870,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng-thrt2-lbl</tooltip-id>
 				<label>Engine 2 throttle</label>
@@ -11609,6 +11966,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rev-thrust-lbl</tooltip-id>
 				<label>Left click to apply reverse throttle, mmb to cancel</label>
@@ -11637,6 +11997,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>l_cutoff_lbl</tooltip-id>
 				<label>Left engine cutoff</label>
@@ -11662,6 +12025,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>r_cutoff_lbl</tooltip-id>
 				<label>Right engine cutoff</label>
@@ -11697,6 +12063,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng_mode_switch_lbl</tooltip-id>
 				<label>Engine mode selector</label>
@@ -11770,6 +12139,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>flood-main-lbl</tooltip-id>
 				<label>Main panel flood light control</label>
@@ -11799,6 +12171,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>integlt-lbl</tooltip-id>
 				<label>Panel backlight control</label>
@@ -11828,6 +12203,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>flood-ped-lbl</tooltip-id>
 				<label>Pedestal flood light control</label>
@@ -11861,6 +12239,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vu112_aids-lbl</tooltip-id>
 				<label>AIDS Print (INOP)</label>
@@ -11907,6 +12288,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vu112_dfdr-lbl</tooltip-id>
 				<label>DFDR mark event (INOP)</label>
@@ -11966,6 +12350,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>wxr-radar-lbl</tooltip-id>
 				<label>Display weather on ND</label>
@@ -12736,6 +13123,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1freqkhz-lbl</tooltip-id>
 				<label>Adjust frequency (8.33 KHz channel)</label>
@@ -13122,6 +13512,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1freqmhz-lbl</tooltip-id>
 				<label>Adjust frequency (1 MHz)</label>
@@ -13154,6 +13547,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1on-lbl</tooltip-id>
 				<label>Toggle left RMP</label>
@@ -13201,6 +13597,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1vhf1-lbl</tooltip-id>
 				<label>Select VHF1 radio</label>
@@ -13262,6 +13661,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1vhf2-lbl</tooltip-id>
 				<label>Select VHF2 radio</label>
@@ -13322,6 +13724,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1vhf3-lbl</tooltip-id>
 				<label>Select VHF3 radio</label>
@@ -13383,6 +13788,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1hf1-lbl</tooltip-id>
 				<label>Select HF1 radio</label>
@@ -13443,6 +13851,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1hf2-lbl</tooltip-id>
 				<label>Select HF2 radio</label>
@@ -13513,6 +13924,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1am-lbl</tooltip-id>
 				<label>Select AM modulation</label>
@@ -13573,6 +13987,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmpxfrfo-lbl</tooltip-id>
 				<label>Swap standby / active frequencies</label>
@@ -13864,6 +14281,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav1guard-lbl</tooltip-id>
 				<label>STBY NAV guard</label>
@@ -13911,6 +14331,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav1-lbl</tooltip-id>
 				<label>Enable STBY NAV mode</label>
@@ -13973,6 +14396,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vor1-lbl</tooltip-id>
 				<label>Adjust VOR frequency</label>
@@ -14034,6 +14460,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ls1-lbl</tooltip-id>
 				<label>Adjust LS frequency</label>
@@ -14095,6 +14524,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>adf1-lbl</tooltip-id>
 				<label>Adjust ADF frequency</label>
@@ -14159,6 +14591,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bfo1-lbl</tooltip-id>
 				<label>Enable ADF Beat Frequency Oscillator to hear ADF ident</label>
@@ -14193,6 +14628,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>headset-lbl</tooltip-id>
 				<label>Show / hide headset</label>
@@ -14240,6 +14678,9 @@
         </release>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ptt1-lbl</tooltip-id>
 				<label>Push to talk (INT for interphone, RAD for radio)</label>
@@ -14282,6 +14723,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pa1-lbl</tooltip-id>
 				<label>PA system transmit</label>
@@ -14368,6 +14812,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acptreset1-lbl</tooltip-id>
 				<label>Reset call lights (INOP)</label>
@@ -14465,6 +14912,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf1acp1-lbl</tooltip-id>
 				<label>VHF1 system select for transmission</label>
@@ -14562,6 +15012,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf2acp1-lbl</tooltip-id>
 				<label>VHF2 system select for transmission</label>
@@ -14659,6 +15112,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf3acp1-lbl</tooltip-id>
 				<label>VHF3 system select for transmission</label>
@@ -14756,6 +15212,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf1acp1-lbl</tooltip-id>
 				<label>HF1 system select for transmission</label>
@@ -14853,6 +15312,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf2acp1-lbl</tooltip-id>
 				<label>HF2 system select for transmission</label>
@@ -14950,6 +15412,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mechacp1-lbl</tooltip-id>
 				<label>MECH intercom select for transmission</label>
@@ -15047,6 +15512,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabattacp1-lbl</tooltip-id>
 				<label>Cabin intercom select for transmission</label>
@@ -15104,6 +15572,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>attonvoice1-lbl</tooltip-id>
 				<label>Filter out navaid ident</label>
@@ -15323,6 +15794,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf1knob-lbl</tooltip-id>
 				<label>VHF1 volume control</label>
@@ -15378,6 +15852,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf2knob-lbl</tooltip-id>
 				<label>VHF2 volume control</label>
@@ -15433,6 +15910,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf3knob-lbl</tooltip-id>
 				<label>VHF3 volume control</label>
@@ -15488,6 +15968,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf1knob-lbl</tooltip-id>
 				<label>HF1 volume control</label>
@@ -15543,6 +16026,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf2knob-lbl</tooltip-id>
 				<label>HF2 volume control</label>
@@ -15598,6 +16084,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acintknob-lbl</tooltip-id>
 				<label>Interphone volume control</label>
@@ -15653,6 +16142,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpcabknob-lbl</tooltip-id>
 				<label>Cabin volume control</label>
@@ -15708,6 +16200,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acppaknob-lbl</tooltip-id>
 				<label>PA volume control</label>
@@ -15763,6 +16258,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor1-lbl</tooltip-id>
 				<label>VOR1 volume control</label>
@@ -15821,6 +16319,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor2-lbl</tooltip-id>
 				<label>VOR2 volume control</label>
@@ -15876,6 +16377,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmarker-lbl</tooltip-id>
 				<label>Markers volume control</label>
@@ -15931,6 +16435,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpils-lbl</tooltip-id>
 				<label>ILS volume control</label>
@@ -15986,6 +16493,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmls-lbl</tooltip-id>
 				<label>MLS volume control</label>
@@ -16044,6 +16554,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf1-lbl</tooltip-id>
 				<label>ADF1 volume control</label>
@@ -16099,6 +16612,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf2-lbl</tooltip-id>
 				<label>ADF2 volume control</label>
@@ -17303,6 +17819,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2freqkhz-lbl</tooltip-id>
 				<label>Adjust frequency (8.33 KHz channel)</label>
@@ -17690,6 +18209,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2freqmhz-lbl</tooltip-id>
 				<label>Adjust frequency (1 MHz)</label>
@@ -17722,6 +18244,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2on-lbl</tooltip-id>
 				<label>Toggle right RMP</label>
@@ -17769,6 +18294,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2vhf1-lbl</tooltip-id>
 				<label>Select VHF1 radio</label>
@@ -17829,6 +18357,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2vhf2-lbl</tooltip-id>
 				<label>Select VHF2 radio</label>
@@ -17889,6 +18420,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2vhf3-lbl</tooltip-id>
 				<label>Select VHF3 radio</label>
@@ -17950,6 +18484,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2hf1-lbl</tooltip-id>
 				<label>Select HF1 radio</label>
@@ -18010,6 +18547,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2hf2-lbl</tooltip-id>
 				<label>Select HF2 radio</label>
@@ -18080,6 +18620,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2am-lbl</tooltip-id>
 				<label>Select AM modulation</label>
@@ -18140,6 +18683,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmpxfrfo-lbl</tooltip-id>
 				<label>Swap standby / active frequencies</label>
@@ -18431,6 +18977,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav2guard-lbl</tooltip-id>
 				<label>STBY NAV guard</label>
@@ -18478,6 +19027,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav2-lbl</tooltip-id>
 				<label>Enable STBY NAV mode</label>
@@ -18540,6 +19092,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vor2-lbl</tooltip-id>
 				<label>Adjust VOR frequency</label>
@@ -18601,6 +19156,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ls2-lbl</tooltip-id>
 				<label>Adjust LS frequency</label>
@@ -18662,6 +19220,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>adf2-lbl</tooltip-id>
 				<label>Adjust ADF frequency</label>
@@ -18726,6 +19287,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bfo2-lbl</tooltip-id>
 				<label>Enable ADF Beat Frequency Oscillator to hear ADF ident</label>
@@ -18787,6 +19351,9 @@
         </release>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ptt2-lbl</tooltip-id>
 				<label>Push to talk (INT for interphone, RAD for radio)</label>
@@ -18829,6 +19396,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pa2-lbl</tooltip-id>
 				<label>PA system transmit</label>
@@ -18902,6 +19472,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acptreset2-lbl</tooltip-id>
 				<label>Reset call lights (INOP)</label>
@@ -18999,6 +19572,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf1acp2-lbl</tooltip-id>
 				<label>VHF1 system select for transmission</label>
@@ -19096,6 +19672,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf2acp2-lbl</tooltip-id>
 				<label>VHF2 system select for transmission</label>
@@ -19193,6 +19772,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf3acp2-lbl</tooltip-id>
 				<label>VHF3 system select for transmission</label>
@@ -19290,6 +19872,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf1acp2-lbl</tooltip-id>
 				<label>HF1 system select for transmission</label>
@@ -19387,6 +19972,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf2acp2-lbl</tooltip-id>
 				<label>HF2 system select for transmission</label>
@@ -19484,6 +20072,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mechacp2-lbl</tooltip-id>
 				<label>MECH intercom select for transmission</label>
@@ -19581,6 +20172,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabattacp2-lbl</tooltip-id>
 				<label>Cabin intercom select for transmission</label>
@@ -19638,6 +20232,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>attonvoice1-lbl</tooltip-id>
 				<label>Filter out navaid ident</label>
@@ -19858,6 +20455,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf1knob-lbl</tooltip-id>
 				<label>VHF1 volume control</label>
@@ -19913,6 +20513,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf2knob-lbl</tooltip-id>
 				<label>VHF2 volume control</label>
@@ -19968,6 +20571,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf3knob-lbl</tooltip-id>
 				<label>VHF3 volume control</label>
@@ -20023,6 +20629,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf1knob-lbl</tooltip-id>
 				<label>HF1 volume control</label>
@@ -20078,6 +20687,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf2knob-lbl</tooltip-id>
 				<label>HF2 volume control</label>
@@ -20133,6 +20745,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acintknob-lbl</tooltip-id>
 				<label>Interphone volume control</label>
@@ -20188,6 +20803,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpcabknob-lbl</tooltip-id>
 				<label>Cabin volume control</label>
@@ -20243,6 +20861,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acppaknob-lbl</tooltip-id>
 				<label>PA volume control</label>
@@ -20298,6 +20919,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor1-lbl</tooltip-id>
 				<label>VOR1 volume control</label>
@@ -20356,6 +20980,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor2-lbl</tooltip-id>
 				<label>VOR2 volume control</label>
@@ -20411,6 +21038,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmarker-lbl</tooltip-id>
 				<label>Markers volume control</label>
@@ -20466,6 +21096,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpils-lbl</tooltip-id>
 				<label>ILS volume control</label>
@@ -20521,6 +21154,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmls-lbl</tooltip-id>
 				<label>MLS volume control</label>
@@ -20579,6 +21215,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf1-lbl</tooltip-id>
 				<label>ADF1 volume control</label>
@@ -20634,6 +21273,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf2-lbl</tooltip-id>
 				<label>ADF2 volume control</label>
@@ -21105,6 +21747,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc0-lbl</tooltip-id>
 				<label>Transponder code keypad</label>
@@ -21155,6 +21800,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc1-lbl</tooltip-id>
 				<label>Transponder code keypad</label>
@@ -21205,6 +21853,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc2-lbl</tooltip-id>
 				<label>Transponder code keypad</label>
@@ -21255,6 +21906,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc3-lbl</tooltip-id>
 				<label>Transponder code keypad</label>
@@ -21305,6 +21959,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc4-lbl</tooltip-id>
 				<label>Transponder code keypad</label>
@@ -21355,6 +22012,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc5-lbl</tooltip-id>
 				<label>Transponder code keypad</label>
@@ -21405,6 +22065,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc6-lbl</tooltip-id>
 				<label>Transponder code keypad</label>
@@ -21455,6 +22118,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc7-lbl</tooltip-id>
 				<label>Transponder code keypad</label>
@@ -21505,6 +22171,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atcclr-lbl</tooltip-id>
 				<label>Clear transponder (press twice)</label>
@@ -21551,6 +22220,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>thrt-lbl</tooltip-id>
 				<label>Toggle displayed contacts</label>
@@ -21585,6 +22257,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>sys-lbl</tooltip-id>
 				<label>Toggle active transponder</label>
@@ -21617,6 +22292,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>abv-blw-lbl</tooltip-id>
 				<label>Display aircraft above or below your altitude</label>
@@ -21687,6 +22365,9 @@
         </decrease>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 			<command>set-tooltip</command>
 			<tooltip-id>atc_stby_mode</tooltip-id>
 			<label>Mode: %s</label>
@@ -21728,6 +22409,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>thrt-lbl</tooltip-id>
 				<label>Transponder ident</label>
@@ -21830,6 +22514,9 @@
 		</release>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rud_trim_lbl</tooltip-id>
 				<label>Rudder trim control</label>
@@ -21885,6 +22572,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rud_trim_lbl</tooltip-id>
 				<label>Reset rudder trim</label>
@@ -21935,6 +22625,9 @@
 		</release>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>park_brk_lbl</tooltip-id>
 				<label>Parking brake</label>
@@ -21982,6 +22675,9 @@
 		</release>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>doorc-switch-lock</tooltip-id>
 				<label>Cockpit door switch</label>
@@ -22042,6 +22738,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cockpit_door-lbl</tooltip-id>
 				<label>Cockpit door video (INOP)</label>
@@ -22095,6 +22794,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rud_trim_lbl</tooltip-id>
 				<label>Click to arm ground spoilers, scroll for speedbrakes</label>
@@ -22174,6 +22876,9 @@
 		</release>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>flap_lbl</tooltip-id>
 				<label>Flaps</label>
@@ -22220,6 +22925,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elt-sw-guard-lbl</tooltip-id>
 				<label>ELT switch guard</label>
@@ -22253,6 +22961,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elt-sw-lbl</tooltip-id>
 				<label>ELT switch</label>
@@ -22328,6 +23039,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elt-test-lbl</tooltip-id>
 				<label>ELT self-test or reset horn</label>
@@ -22371,6 +23085,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>oxy-tmr-rst-lbl</tooltip-id>
 				<label>Reset passenger oxygen system</label>
@@ -22433,6 +23150,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>svc-int-lbl</tooltip-id>
 				<label>Enable service interphone in flight</label>
@@ -22495,6 +23215,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>avionics-lt-lbl</tooltip-id>
 				<label>Toggle avionics compartment light</label>
@@ -22552,6 +23275,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>blue-pump-ovrd-guard-lbl</tooltip-id>
 				<label>BLUE PUMP OVRD guard</label>
@@ -22597,6 +23323,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>blue-pump-ovrd-lbl</tooltip-id>
 				<label>Enable blue pump on ground with engines off</label>
@@ -22654,6 +23383,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fadecpwr1-lbl</tooltip-id>
 				<label>FADEC1 GND PWR guard</label>
@@ -22699,6 +23431,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fadec-gnd-pwr-1-lbl</tooltip-id>
 				<label>FADEC1 - enable power</label>
@@ -22755,6 +23490,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fadecpwr2-lbl</tooltip-id>
 				<label>FADEC2 GND PWR guard</label>
@@ -22800,6 +23538,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fadec-gnd-pwr-2-lbl</tooltip-id>
 				<label>FADEC2 - enable power</label>
@@ -22872,6 +23613,9 @@
         </release>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ptt3-lbl</tooltip-id>
 				<label>Push to talk (INT for interphone, RAD for radio)</label>
@@ -22914,6 +23658,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pa3-lbl</tooltip-id>
 				<label>PA system transmit</label>
@@ -22987,6 +23734,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acptreset3-lbl</tooltip-id>
 				<label>Reset call lights (INOP)</label>
@@ -23084,6 +23834,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf1acp3-lbl</tooltip-id>
 				<label>VHF1 system select for transmission</label>
@@ -23181,6 +23934,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf2acp3-lbl</tooltip-id>
 				<label>VHF2 system select for transmission</label>
@@ -23278,6 +24034,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf3acp3-lbl</tooltip-id>
 				<label>VHF3 system select for transmission</label>
@@ -23375,6 +24134,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf1acp3-lbl</tooltip-id>
 				<label>HF1 system select for transmission</label>
@@ -23472,6 +24234,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf2acp3-lbl</tooltip-id>
 				<label>HF2 system select for transmission</label>
@@ -23569,6 +24334,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mechacp3-lbl</tooltip-id>
 				<label>MECH intercom select for transmission</label>
@@ -23666,6 +24434,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabattacp3-lbl</tooltip-id>
 				<label>Cabin intercom select for transmission</label>
@@ -23723,6 +24494,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>attonvoice3-lbl</tooltip-id>
 				<label>Filter out navaid ident</label>
@@ -23942,6 +24716,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf1knob-lbl</tooltip-id>
 				<label>VHF1 volume control</label>
@@ -23997,6 +24774,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf2knob-lbl</tooltip-id>
 				<label>VHF2 volume control</label>
@@ -24052,6 +24832,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf3knob-lbl</tooltip-id>
 				<label>VHF3 volume control</label>
@@ -24107,6 +24890,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf1knob-lbl</tooltip-id>
 				<label>HF1 volume control</label>
@@ -24162,6 +24948,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf2knob-lbl</tooltip-id>
 				<label>HF2 volume control</label>
@@ -24217,6 +25006,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acintknob-lbl</tooltip-id>
 				<label>Interphone volume control</label>
@@ -24272,6 +25064,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpcabknob-lbl</tooltip-id>
 				<label>Cabin volume control</label>
@@ -24327,6 +25122,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acppaknob-lbl</tooltip-id>
 				<label>PA volume control</label>
@@ -24382,6 +25180,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor3-lbl</tooltip-id>
 				<label>VOR1 volume control</label>
@@ -24440,6 +25241,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor3-lbl</tooltip-id>
 				<label>VOR2 volume control</label>
@@ -24495,6 +25299,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmarker-lbl</tooltip-id>
 				<label>Markers volume control</label>
@@ -24550,6 +25357,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpils-lbl</tooltip-id>
 				<label>ILS volume control</label>
@@ -24605,6 +25415,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmls-lbl</tooltip-id>
 				<label>MLS volume control</label>
@@ -24663,6 +25476,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf3-lbl</tooltip-id>
 				<label>ADF1 volume control</label>
@@ -24718,6 +25534,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf3-lbl</tooltip-id>
 				<label>ADF2 volume control</label>
@@ -25180,6 +25999,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>readinglt-l-lbl</tooltip-id>
 				<label>Left reading light</label>
@@ -25209,6 +26031,9 @@
         </action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>readinglt-r-lbl</tooltip-id>
 				<label>Right reading light</label>
@@ -25242,6 +26067,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>audio-swtg-lbl</tooltip-id>
 				<label>Switch audio control to ACP3</label>
@@ -25266,6 +26094,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cpt-visor-lbl</tooltip-id>
 				<label>Stow / deploy visor</label>
@@ -25332,6 +26163,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fo-visor-lbl</tooltip-id>
 				<label>Stow / deploy visor</label>
@@ -25398,6 +26232,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>stby-compass-lbl</tooltip-id>
 				<label>Standby compass</label>
@@ -25483,6 +26320,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>left-rpt-lbl</tooltip-id>
 				<label>Left rain repellent control</label>
@@ -25534,6 +26374,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>left-wiper-lbl</tooltip-id>
 				<label>Left wiper control</label>
@@ -25571,6 +26414,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>right-wiper-lbl</tooltip-id>
 				<label>Right wiper control</label>
@@ -25634,6 +26480,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>right-rpt-lbl</tooltip-id>
 				<label>Right rain repellent control</label>
@@ -25682,6 +26531,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
 				<label>Turnoff lights switch</label>
@@ -25716,6 +26568,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
 				<label>Landing light switch</label>
@@ -25750,6 +26605,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
 				<label>Landing light switch</label>
@@ -25784,6 +26642,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
 				<label>Landing light switch</label>
@@ -25818,6 +26679,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
 				<label>Strobe lights switch</label>
@@ -25851,6 +26715,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
 				<label>Beacon lights switch</label>
@@ -25885,6 +26752,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
 				<label>Wing lights switch</label>
@@ -25919,6 +26789,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
 				<label>Navigation lights switch</label>
@@ -25970,6 +26843,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apu-master-lbl</tooltip-id>
 				<label>APU master switch</label>
@@ -26058,6 +26934,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apu-start-lbl</tooltip-id>
 				<label>APU start switch</label>
@@ -26130,6 +27009,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>seatbelt-sign-lbl</tooltip-id>
 				<label>Seatbelt sign sign</label>
@@ -26164,6 +27046,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>no-smk-lbl</tooltip-id>
 				<label>No smoking sign</label>
@@ -26198,6 +27083,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emer-exit-lbl</tooltip-id>
 				<label>Emergency Exit Light Switch</label>
@@ -26239,6 +27127,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ohp-mark-brt-lbl</tooltip-id>
 				<label>Overhead Panel Brightness</label>
@@ -26278,6 +27169,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>stby-compass-lt-lbl</tooltip-id>
 				<label>Standby compass light switch</label>
@@ -26312,6 +27206,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dome-lt-lbl</tooltip-id>
 				<label>Dome light switch</label>
@@ -26345,6 +27242,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>audio-swtg-lbl</tooltip-id>
 				<label>Annunciator light test switch</label>
@@ -26390,6 +27290,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>wngaice-lbl</tooltip-id>
 				<label>Wing anti-ice control</label>
@@ -26473,6 +27376,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>lengaice-lbl</tooltip-id>
 				<label>Left engine anti-ice control</label>
@@ -26556,6 +27462,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rengaice-lbl</tooltip-id>
 				<label>Right engine anti-ice control</label>
@@ -26640,6 +27549,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>prbht-lbl</tooltip-id>
 				<label>Window + Probe heat toggle on / auto</label>
@@ -26721,6 +27633,9 @@
 		</release>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>manvs-lbl</tooltip-id>
 				<label>Manual pressurization control</label>
@@ -26765,6 +27680,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pressmode-lbl</tooltip-id>
 				<label>Pressurization mode toggle</label>
@@ -26870,6 +27788,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ditch-lbl</tooltip-id>
 				<label>Ditching pushbutton</label>
@@ -26915,6 +27836,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ditch_guard-lbl</tooltip-id>
 				<label>Ditching guard</label>
@@ -26980,6 +27904,9 @@
 		</decrease>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ir1-lbl</tooltip-id>
 				<label>IR1</label>
@@ -27053,6 +27980,9 @@
 		</decrease>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ir2-lbl</tooltip-id>
 				<label>IR2</label>
@@ -27126,6 +28056,9 @@
 		</decrease>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ir3-lbl</tooltip-id>
 				<label>IR3</label>
@@ -27204,6 +28137,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>adr1-lbl</tooltip-id>
 				<label>ADR1 pushbutton</label>
@@ -27287,6 +28223,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>adr2-lbl</tooltip-id>
 				<label>ADR2 pushbutton</label>
@@ -27370,6 +28309,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>adr3-lbl</tooltip-id>
 				<label>ADR3 pushbutton</label>
@@ -27440,6 +28382,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ratguard-lbl</tooltip-id>
 				<label>EVAC command guard</label>
@@ -27474,6 +28419,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>evac-lbl</tooltip-id>
 				<label>EVAC pushbutton (INOP)</label>
@@ -27522,6 +28470,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>evac-horn-lbl</tooltip-id>
 				<label>Silence evacuation horn (INOP)</label>
@@ -27568,6 +28519,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ratguard-lbl</tooltip-id>
 				<label>EVAC select switch (INOP)</label>
@@ -27599,6 +28553,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emergentest-guard-lbl</tooltip-id>
 				<label>Emer Gen test button guard</label>
@@ -27631,6 +28588,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emergentest-lbl</tooltip-id>
 				<label>Emer Gen test button</label>
@@ -27690,6 +28650,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gen-1-glc-lbl</tooltip-id>
 				<label>Gen 1 line contactor</label>
@@ -27774,6 +28737,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emergendeploy-lbl</tooltip-id>
 				<label>Deploy RAT</label>
@@ -27822,6 +28788,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emergendeployguard-lbl</tooltip-id>
 				<label>RAT guard</label>
@@ -27854,6 +28823,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>maskmanguard-lbl</tooltip-id>
 				<label>Oxygen mask guard</label>
@@ -27898,6 +28870,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>maskman-lbl</tooltip-id>
 				<label>Deploy passenger oxygen masks</label>
@@ -27967,6 +28942,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>crewoxy-lbl</tooltip-id>
 				<label>Toggle crew oxygen masks</label>
@@ -28037,6 +29015,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>evac-lbl</tooltip-id>
 				<label>Toggle flight recorder ground control</label>
@@ -28210,6 +29191,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>groundcall-lbl</tooltip-id>
 				<label>Call ground</label>
@@ -28266,6 +29250,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>allcall-lbl</tooltip-id>
 				<label>Call all crew</label>
@@ -28322,6 +29309,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fwdcall-lbl</tooltip-id>
 				<label>Call fwd galley</label>
@@ -28378,6 +29368,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>aftcall-lbl</tooltip-id>
 				<label>Call aft galley</label>
@@ -28429,6 +29422,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emercall-lbl</tooltip-id>
 				<label>Emer Call guard</label>
@@ -28482,6 +29478,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emercall-lbl</tooltip-id>
 				<label>Emer call</label>
@@ -28551,6 +29550,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1-fire-lbl</tooltip-id>
 				<label>Engine 1 Fire Pushbutton</label>
@@ -28585,6 +29587,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1-fire-cover-lbl</tooltip-id>
 				<label>Engine 1 Fire Cover</label>
@@ -28664,6 +29669,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apu-fire-btn-lbl</tooltip-id>
 				<label>APU Fire Pushbutton</label>
@@ -28698,6 +29706,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apu-fire-cover-lbl</tooltip-id>
 				<label>APU Fire Cover</label>
@@ -28777,6 +29788,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng2-fire-btn-lbl</tooltip-id>
 				<label>Engine 2 Fire Pushbutton</label>
@@ -28811,6 +29825,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng2-fire-cover-lbl</tooltip-id>
 				<label>Engine 2 Fire Cover</label>
@@ -29535,6 +30552,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>green-eng-lbl</tooltip-id>
 				<label>Green engine pump pushbutton</label>
@@ -29616,6 +30636,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rat-lbl</tooltip-id>
 				<label>Deploy Ram Air Turbine</label>
@@ -29661,6 +30684,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ratguard-lbl</tooltip-id>
 				<label>RAT guard</label>
@@ -29708,6 +30734,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>blue-elec-lbl</tooltip-id>
 				<label>Blue electrical pump pushbutton</label>
@@ -29739,6 +30768,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>blueelecguard-lbl</tooltip-id>
 				<label>Blue electric pump guard</label>
@@ -29815,6 +30847,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>PTU-lbl</tooltip-id>
 				<label>Power transfer unit pushbutton</label>
@@ -29891,6 +30926,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>yellow-eng-lbl</tooltip-id>
 				<label>Yellow engine pump pushbutton</label>
@@ -29967,6 +31005,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>yellow-elec-lbl</tooltip-id>
 				<label>Yellow electrical pump pushbutton</label>
@@ -30050,6 +31091,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>leftfuel1-lbl</tooltip-id>
 				<label>Left fuel pump 1 pushbutton</label>
@@ -30135,6 +31179,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>leftfuel2-lbl</tooltip-id>
 				<label>Left fuel pump 2 pushbutton</label>
@@ -30220,6 +31267,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>centerfuel1-lbl</tooltip-id>
 				<label>Center fuel pump 1 pushbutton</label>
@@ -30305,6 +31355,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fuelmode-lbl</tooltip-id>
 				<label>Toggle fuel manual / auto mode</label>
@@ -30390,6 +31443,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>xfeed-lbl</tooltip-id>
 				<label>Toggle fuel crossfeed valve</label>
@@ -30475,6 +31531,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>centerfuel2-lbl</tooltip-id>
 				<label>Center fuel pump 2 pushbutton</label>
@@ -30560,6 +31619,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rightfuel1-lbl</tooltip-id>
 				<label>Right fuel pump 1 pushbutton</label>
@@ -30645,6 +31707,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rightfuel2-lbl</tooltip-id>
 				<label>Right fuel pump 2 pushbutton</label>
@@ -30723,6 +31788,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>packflow-lbl</tooltip-id>
 				<label>Adjust pack flow rate</label>
@@ -30752,6 +31820,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cockpittemp-lbl</tooltip-id>
 				<label>Adjust cockpit temperature</label>
@@ -30781,6 +31852,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fwdcabin-lbl</tooltip-id>
 				<label>Adjust forward cabin temperature</label>
@@ -30810,6 +31884,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>aftcabin-lbl</tooltip-id>
 				<label>Adjust aft cabin temperature</label>
@@ -30843,6 +31920,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>xbleed-lbl</tooltip-id>
 				<label>Crossbleed valve control</label>
@@ -30893,6 +31973,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pack1-lbl</tooltip-id>
 				<label>Engine 1 pack pushbutton</label>
@@ -30981,6 +32064,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bleed1-lbl</tooltip-id>
 				<label>Engine 1 bleed pushbutton</label>
@@ -31052,6 +32138,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ramairguard-lbl</tooltip-id>
 				<label>Ram air guard</label>
@@ -31107,6 +32196,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ramair-lbl</tooltip-id>
 				<label>Ram air pushbutton</label>
@@ -31183,6 +32275,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apubleed-lbl</tooltip-id>
 				<label>APU bleed pushbutton</label>
@@ -31280,6 +32375,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bleed2-lbl</tooltip-id>
 				<label>Engine 2 bleed pushbutton</label>
@@ -31365,6 +32463,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bleed2-lbl</tooltip-id>
 				<label>Hot air pushbutton</label>
@@ -31456,6 +32557,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pack2-lbl</tooltip-id>
 				<label>Engine 2 pack pushbutton</label>
@@ -31539,6 +32643,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>galley-lbl</tooltip-id>
 				<label>Galley power pushbutton</label>
@@ -31588,6 +32695,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>commercial-lbl</tooltip-id>
 				<label>Commercial power pushbutton (INOP)</label>
@@ -31666,6 +32776,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>battery1-lbl</tooltip-id>
 				<label>Connect battery 1 to busses</label>
@@ -31745,6 +32858,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>battery2-lbl</tooltip-id>
 				<label>Connect battery 2 to busses</label>
@@ -31933,6 +33049,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gen1-lbl</tooltip-id>
 				<label>Gen 1 pushbutton</label>
@@ -32024,6 +33143,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gen1-lbl</tooltip-id>
 				<label>Switch AC ESS power to AC2</label>
@@ -32103,6 +33225,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apugen-lbl</tooltip-id>
 				<label>APU generator pushbutton</label>
@@ -32193,6 +33318,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apugen-lbl</tooltip-id>
 				<label>Open / close bus ties</label>
@@ -32263,6 +33391,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>extpwr-lbl</tooltip-id>
 				<label>Connect external power</label>
@@ -32348,6 +33479,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gen2-lbl</tooltip-id>
 				<label>Gen 2 pushbutton</label>
@@ -32541,6 +33675,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elac1-lbl</tooltip-id>
 				<label>ELAC1 pushbutton</label>
@@ -32627,6 +33764,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>sec1-lbl</tooltip-id>
 				<label>SEC1 pushbutton</label>
@@ -32713,6 +33853,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fac1-lbl</tooltip-id>
 				<label>FAC1 pushbutton</label>
@@ -32799,6 +33942,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elac2-lbl</tooltip-id>
 				<label>ELAC2 pushbutton</label>
@@ -32885,6 +34031,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>sec2-lbl</tooltip-id>
 				<label>SEC2 pushbutton</label>
@@ -32971,6 +34120,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>sec3-lbl</tooltip-id>
 				<label>SEC3 pushbutton</label>
@@ -33057,6 +34209,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fac2-lbl</tooltip-id>
 				<label>FAC2 pushbutton</label>
@@ -33178,6 +34333,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-terr-lbl</tooltip-id>
 				<label>GPWS terrain pushbutton</label>
@@ -33238,6 +34396,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-sys-lbl</tooltip-id>
 				<label>GPWS system pushbutton</label>
@@ -33297,6 +34458,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-gs-lbl</tooltip-id>
 				<label>GPWS inhibit glideslope warning</label>
@@ -33355,6 +34519,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-flap-lbl</tooltip-id>
 				<label>GPWS inhibit flaps warning</label>
@@ -33413,6 +34580,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>flaps3-lbl</tooltip-id>
 				<label>GPWS land with flaps 3</label>
@@ -33544,6 +34714,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fwdguard-lbl</tooltip-id>
 				<label>FWD cargo guard</label>
@@ -33586,6 +34759,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fwddisch-lbl</tooltip-id>
 				<label>FWD cargo hold - discharge agent</label>
@@ -33648,6 +34824,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fwddisch-lbl</tooltip-id>
 				<label>Hold 2 sec for cargo fire test</label>
@@ -33704,6 +34883,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>aftguard-lbl</tooltip-id>
 				<label>AFT cargo guard</label>
@@ -33749,6 +34931,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>aftdisch-lbl</tooltip-id>
 				<label>AFT cargo hold - discharge agent</label>
@@ -33830,6 +35015,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ventblow-lbl</tooltip-id>
 				<label>Turn off avionics cooling blower fan (INOP)</label>
@@ -33890,6 +35078,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ventblow-lbl</tooltip-id>
 				<label>Turn off avionics cooling extract fan (INOP)</label>
@@ -33949,6 +35140,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabinfans-lbl</tooltip-id>
 				<label>Toggle cabin fans</label>
@@ -34010,6 +35204,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabinfans-lbl</tooltip-id>
 				<label>Toggle cargo heat (INOP)</label>
@@ -34060,6 +35257,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabinfans-lbl</tooltip-id>
 				<label>Isolate aft cargo hold (INOP)</label>
@@ -34107,6 +35307,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1guard-lbl</tooltip-id>
 				<label>Engine 1 man start guard</label>
@@ -34137,6 +35340,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng2guard-lbl</tooltip-id>
 				<label>Engine 2 man start guard</label>
@@ -34204,6 +35410,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1start-lbl</tooltip-id>
 				<label>Engine 1 manual engine start pushbutton</label>
@@ -34271,6 +35480,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1start-lbl</tooltip-id>
 				<label>Engine 1 manual engine start pushbutton</label>
@@ -34424,6 +35636,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdukb-lbl</tooltip-id>
 				<label>MCDU: toggle keyboard mode</label>
@@ -34466,6 +35681,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdubrt1-lbl</tooltip-id>
 				<label>MCDU: increase screen brightness</label>
@@ -34522,6 +35740,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdudim1-lbl</tooltip-id>
 				<label>MCDU: decrease screen brightness</label>
@@ -36965,6 +38186,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdukb-lbl</tooltip-id>
 				<label>MCDU: toggle keyboard mode</label>
@@ -37007,6 +38231,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdubrt2-lbl</tooltip-id>
 				<label>MCDU: increase screen brightness</label>
@@ -37063,6 +38290,9 @@
 		</action>
 		<hovered>
 			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdudim2-lbl</tooltip-id>
 				<label>MCDU: decrease screen brightness</label>
