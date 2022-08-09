@@ -230,25 +230,6 @@
 		<max-rate-of-change>10000</max-rate-of-change>
 	</filter>
 	
-	<logic>
-		<input>
-			<and>
-				<property>/it-autoflight/output/apfd-on</property>
-				<or>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>4</value>
-					</equals>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>7</value>
-					</equals>
-				</or>
-			</and>
-		</input>
-		<output>/it-autoflight/internal/flch-active</output>
-	</logic>
-	
 	<filter>
 		<name>IT-CONTROLLER: Speed By Pitch Delta</name>
 		<type>gain</type>
