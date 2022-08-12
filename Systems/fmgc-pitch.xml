@@ -646,6 +646,12 @@
 		<type>noise-spike</type>
 		<input>
 			<condition>
+				<not><property>/it-autoflight/internal/vs-active</property></not>
+			</condition>
+			<property>/it-autoflight/internal/vert-speed-fpm</property>
+		</input>
+		<input>
+			<condition>
 				<equals>
 					<property>/it-autoflight/output/vert</property>
 					<value>1</value>
