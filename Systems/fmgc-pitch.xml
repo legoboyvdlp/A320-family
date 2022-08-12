@@ -238,7 +238,7 @@
 				<table>
 					<property>/velocities/airspeed-kt</property>
 					<entry><ind>140</ind><dep> 900</dep></entry>
-					<entry><ind>360</ind><dep>1200</dep></entry>
+					<entry><ind>360</ind><dep>1400</dep></entry>
 				</table>
 			</expression>
 		</gain>
@@ -263,7 +263,7 @@
 		<type>exponential</type>
 		<input>/it-autoflight/internal/flch-raw</input>
 		<output>/it-autoflight/internal/flch-lag</output>
-		<filter-time>0.32</filter-time>
+		<filter-time>0.16</filter-time>
 	</filter>
 	
 	<filter>
@@ -677,7 +677,7 @@
 			<condition>
 				<property>/it-autoflight/internal/vs-active</property>
 			</condition>
-			<value>500</value>
+			<value>700</value>
 		</max-rate-of-change>
 		<max-rate-of-change>10000</max-rate-of-change>
 	</filter>

@@ -233,9 +233,25 @@
 	</filter>
 	
 	<filter>
+		<name>Knots Lag</name>
+		<type>exponential</type>
+		<input>/velocities/airspeed-kt</input>
+		<output>/it-autoflight/internal/kts-input-lag</output>
+		<filter-time>0.32</filter-time>
+	</filter>
+	
+	<filter>
+		<name>Knots Average</name>
+		<type>moving-average</type>
+		<input>/it-autoflight/internal/kts-input-lag</input>
+		<output>/it-autoflight/internal/kts-input-avg</output>
+		<samples>60</samples>
+	</filter>
+	
+	<filter>
 		<name>Knots Rate</name>
 		<type>derivative</type>
-		<input>/velocities/airspeed-kt</input>
+		<input>/it-autoflight/internal/kts-input-avg</input>
 		<output>/it-autoflight/internal/kts-rate-raw</output>
 		<filter-time>1.0</filter-time>
 	</filter>
@@ -258,9 +274,25 @@
 	</filter>
 	
 	<filter>
+		<name>Mach Lag</name>
+		<type>exponential</type>
+		<input>/velocities/mach</input>
+		<output>/it-autoflight/internal/mach-input-lag</output>
+		<filter-time>0.32</filter-time>
+	</filter>
+	
+	<filter>
+		<name>Mach Average</name>
+		<type>moving-average</type>
+		<input>/it-autoflight/internal/mach-input-lag</input>
+		<output>/it-autoflight/internal/mach-input-avg</output>
+		<samples>60</samples>
+	</filter>
+	
+	<filter>
 		<name>Mach Rate</name>
 		<type>derivative</type>
-		<input>/velocities/mach</input>
+		<input>/it-autoflight/internal/mach-input-avg</input>
 		<output>/it-autoflight/internal/mach-rate-raw</output>
 		<filter-time>1.0</filter-time>
 	</filter>
@@ -268,7 +300,7 @@
 	<filter>
 		<name>Mach Rate Gain</name>
 		<type>gain</type>
-		<gain>750</gain>
+		<gain>650</gain>
 		<input>/it-autoflight/internal/mach-rate-raw</input>
 		<output>/it-autoflight/internal/mach-rate-gain</output>
 	</filter>
