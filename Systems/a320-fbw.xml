@@ -2359,8 +2359,8 @@
 					<table>
 						<independentVar lookup="row">fbw/laf/load-error</independentVar>
 						<tableData>
-							0.3  0.0
-							0.6  0.2
+							0.3  0.00
+							0.6  0.11
 						</tableData>
 					</table>
 					<property>fbw/laf/enable</property>
@@ -2379,8 +2379,8 @@
 					<table>
 						<independentVar lookup="row">fbw/laf/load-error</independentVar>
 						<tableData>
-							0.3  0.0
-							0.6  0.1
+							0.3  0.00
+							0.6  0.06
 						</tableData>
 					</table>
 					<property>fbw/laf/enable</property>
