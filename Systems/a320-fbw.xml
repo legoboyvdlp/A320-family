@@ -235,131 +235,15 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="fbw/roll/p-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
-					<independentVar lookup="column">fbw/roll/gain-switch</independentVar>
-					<tableData>
-						     0     1  
-						140 -20.0  0.0
-						350  -5.0  0.0
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="fbw/roll/i-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
-					<independentVar lookup="column">fbw/roll/gain-switch</independentVar>
-					<tableData>
-						     0     1
-						140 -35.0  0.0
-						350 -10.0  0.0
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="fbw/roll/d-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
-					<independentVar lookup="column">fbw/roll/gain-switch</independentVar>
-					<tableData>
-						     0    1
-						140 -1.9  0.0
-						350 -0.4  0.0
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="fbw/pitch/p-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
-					<independentVar lookup="column">fbw/pitch/gain-switch</independentVar>
-					<tableData>
-						     0   1  
-						140  28  0
-						350  20  0
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="fbw/pitch/i-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
-					<independentVar lookup="column">fbw/pitch/gain-switch</independentVar>
-					<tableData>
-						     0   1
-						140  60  0
-						350  40  0
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="fbw/pitch/d-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
-					<independentVar lookup="column">fbw/pitch/gain-switch</independentVar>
-					<tableData>
-						     0    1
-						140  2.0  0.0
-						350  0.3  0.0
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="fbw/yaw/yd-p-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
-					<independentVar lookup="column">fbw/yaw/gain-switch</independentVar>
-					<tableData>
-						     0    1
-						140 -7.0  0.0
-						350 -1.2  0.0
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="fbw/yaw/tc-p-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
-					<independentVar lookup="column">fbw/yaw/gain-switch</independentVar>
-					<tableData>
-						     0    1
-						140  3.0  0.0
-						350  1.5  0.0
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="fbw/yaw/tc-d-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
-					<independentVar lookup="column">fbw/yaw/gain-switch</independentVar>
-					<tableData>
-						     0    1
-						140  6.0  0.0
-						350  3.0  0.0
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
+		<switch name="fbw/laf/enable">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				position/wow eq 0
+				/it-fbw/law eq 0
+				/controls/flight/flaps-input-out eq 0
+				/options/model-options/sharklet eq 1
+			</test>
+		</switch>
 		
 		<pure_gain name="fbw/pitch/g-instrumented">
 			<input>/accelerations/pilot-g</input>
@@ -1019,6 +903,136 @@
 				/systems/fctl/fac2-healthy-signal eq 1
 			</test>
 		</switch>
+	
+	</channel>
+	
+	<channel name="Gains">
+		
+		<fcs_function name="fbw/roll/p-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="column">fbw/roll/gain-switch</independentVar>
+					<tableData>
+						     0     1  
+						140 -20.0  0.0
+						350  -5.0  0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/roll/i-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="column">fbw/roll/gain-switch</independentVar>
+					<tableData>
+						     0     1
+						140 -35.0  0.0
+						350 -10.0  0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/roll/d-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="column">fbw/roll/gain-switch</independentVar>
+					<tableData>
+						     0    1
+						140 -1.9  0.0
+						350 -0.4  0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/pitch/p-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="column">fbw/pitch/gain-switch</independentVar>
+					<tableData>
+						     0   1  
+						140  28  0
+						350  20  0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/pitch/i-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="column">fbw/pitch/gain-switch</independentVar>
+					<tableData>
+						     0   1
+						140  60  0
+						350  40  0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/pitch/d-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="column">fbw/pitch/gain-switch</independentVar>
+					<tableData>
+						     0    1
+						140  2.0  0.0
+						350  0.3  0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/yaw/yd-p-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="column">fbw/yaw/gain-switch</independentVar>
+					<tableData>
+						     0    1
+						140 -7.0  0.0
+						350 -1.2  0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/yaw/tc-p-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="column">fbw/yaw/gain-switch</independentVar>
+					<tableData>
+						     0    1
+						140  3.0  0.0
+						350  1.5  0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fbw/yaw/tc-d-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<independentVar lookup="column">fbw/yaw/gain-switch</independentVar>
+					<tableData>
+						     0    1
+						140  6.0  0.0
+						350  3.0  0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
 	
 	</channel>
 	
@@ -2315,6 +2329,69 @@
 				<max>1.0</max>
 			</clipto>
 		</summer>
+	
+	</channel>
+	
+	<channel name="FBW: LAF">
+		
+		<lead_lag_filter name="fbw/laf/load-factor-leadlag">
+			<input>fbw/pitch/load-factor</input>
+			<c1>1.1</c1>
+			<c2>1.0</c2>
+			<c3>0.9</c3>
+			<c4>1.0</c4>
+		</lead_lag_filter>
+		
+		<actuator name="fbw/laf/load-factor-demand">
+			<input>fbw/pitch/load-factor-demand</input>
+			<rate_limit sense="incr">2.5</rate_limit>
+			<rate_limit sense="decr">1.25</rate_limit>
+		</actuator>
+		
+		<summer name="fbw/laf/load-error">
+			<input>fbw/laf/load-factor-leadlag</input>
+			<input>-fbw/laf/load-factor-demand</input>
+		</summer>
+		
+		<fcs_function name="fbw/laf/cmd-ail">
+			<function>
+				<product>
+					<table>
+						<independentVar lookup="row">fbw/laf/load-error</independentVar>
+						<tableData>
+							0.3  0.0
+							0.6  0.2
+						</tableData>
+					</table>
+					<property>fbw/laf/enable</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="fbw/laf/output-ail">
+			<input>fbw/laf/cmd-ail</input>
+			<c1>10</c1>
+		</lag_filter>
+		
+		<fcs_function name="fbw/laf/cmd-sp">
+			<function>
+				<product>
+					<table>
+						<independentVar lookup="row">fbw/laf/load-error</independentVar>
+						<tableData>
+							0.3  0.0
+							0.6  0.1
+						</tableData>
+					</table>
+					<property>fbw/laf/enable</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="fbw/laf/output-sp">
+			<input>fbw/laf/cmd-sp</input>
+			<c1>10</c1>
+		</lag_filter>
 	
 	</channel>
 

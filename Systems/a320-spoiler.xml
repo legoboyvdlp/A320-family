@@ -405,13 +405,16 @@
 		
 		<fcs_function name="hydraulics/spoiler-l4/retracted">
 			<function>
-				<table>
-					<independentVar lookup="row">fbw/roll/s-l-4</independentVar>
-					<tableData>
-						-1.0  0.7
-						 0.0  0.0
-					</tableData>
-				</table>
+				<sum>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-l-4</independentVar>
+						<tableData>
+							-1.0  0.7
+							 0.0  0.0
+						</tableData>
+					</table>
+					<property>fbw/laf/output-sp</property>
+				</sum>
 			</function>
 		</fcs_function>
 		
@@ -482,13 +485,16 @@
 		
 		<fcs_function name="hydraulics/spoiler-l5/retracted">
 			<function>
-				<table>
-					<independentVar lookup="row">fbw/roll/s-l-5</independentVar>
-					<tableData>
-						-1.0  0.7
-						 0.0  0.0
-					</tableData>
-				</table>
+				<sum>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-l-5</independentVar>
+						<tableData>
+							-1.0  0.7
+							 0.0  0.0
+						</tableData>
+					</table>
+					<property>fbw/laf/output-sp</property>
+				</sum>
 			</function>
 		</fcs_function>
 		
@@ -822,13 +828,16 @@
 		
 		<fcs_function name="hydraulics/spoiler-r4/retracted">
 			<function>
-				<table>
-					<independentVar lookup="row">fbw/roll/s-r-4</independentVar>
-					<tableData>
-						0.0  0.0
-						1.0  0.7
-					</tableData>
-				</table>
+				<sum>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-r-4</independentVar>
+						<tableData>
+							0.0  0.0
+							1.0  0.7
+						</tableData>
+					</table>
+					<property>fbw/laf/output-sp</property>
+				</sum>
 			</function>
 		</fcs_function>
 		
@@ -899,13 +908,16 @@
 		
 		<fcs_function name="hydraulics/spoiler-r5/retracted">
 			<function>
-				<table>
-					<independentVar lookup="row">fbw/roll/s-r-5</independentVar>
-					<tableData>
-						0.0  0.0
-						1.0  0.7
-					</tableData>
-				</table>
+				<sum>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-r-5</independentVar>
+						<tableData>
+							0.0  0.0
+							1.0  0.7
+						</tableData>
+					</table>
+					<property>fbw/laf/output-sp</property>
+				</sum>
 			</function>
 		</fcs_function>
 		

@@ -228,6 +228,9 @@
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">35</maxflap>
 		<model-number type="string">A320-214</model-number>
+		<model-options>
+			<sharklet type="bool">0</sharklet>
+		</model-options>
 	</options>
 	
 	<systems n="0">

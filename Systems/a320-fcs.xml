@@ -91,11 +91,20 @@
 	
 	<channel name="Aileron L">
 		
+		<summer name="hydraulics/aileron-l/input">
+			<input>fbw/aileron-output</input>
+			<input>-fbw/laf/output-ail</input>
+			<clipto>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</clipto>
+		</summer>
+		
 		<fcs_function name="hydraulics/aileron-l/extended">
 			<function>
 				<sum>
 					<value>-1</value>
-					<property>fbw/aileron-output</property>
+					<property>hydraulics/aileron-l/input</property>
 				</sum>
 			</function>
 		</fcs_function>
@@ -103,7 +112,7 @@
 		<fcs_function name="hydraulics/aileron-l/retracted">
 			<function>
 				<sum>
-					<property>fbw/aileron-output</property>
+					<property>hydraulics/aileron-l/input</property>
 					<table>
 						<independentVar lookup="row">/fdm/jsbsim/fcs/flap-pos-deg</independentVar>
 						<tableData>
@@ -177,12 +186,21 @@
 	
 	<channel name="Aileron R">
 		
+		<summer name="hydraulics/aileron-r/input">
+			<input>fbw/aileron-output</input>
+			<input>fbw/laf/output-ail</input>
+			<clipto>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</clipto>
+		</summer>
+		
 		<fcs_function name="hydraulics/aileron-r/extended">
 			<function>
 				<product>
 					<sum>
 						<value>1</value>
-						<property>fbw/aileron-output</property>
+						<property>hydraulics/aileron-r/input</property>
 					</sum>
 					<value>-1.0</value>
 				</product>
@@ -193,7 +211,7 @@
 			<function>
 				<sum>
 					<product>
-						<property>fbw/aileron-output</property>
+						<property>hydraulics/aileron-r/input</property>
 						<value>-1.0</value>
 					</product>
 					<table>
