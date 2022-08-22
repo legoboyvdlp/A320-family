@@ -245,11 +245,6 @@
 			</test>
 		</switch>
 		
-		<pure_gain name="fbw/pitch/g-instrumented">
-			<input>/accelerations/pilot-g</input>
-			<gain>1.0</gain>
-		</pure_gain>
-		
 		<actuator name="fbw/roll/mixer/sidestick-gain">
 			<input>position/wow</input>
 			<rate_limit>2</rate_limit> <!-- 0.5 seconds -->
@@ -2018,7 +2013,7 @@
 				attitude/roll-rad lt 0.628319
 				attitude/roll-rad gt -0.628319
 				fbw/pitch/pid-switched ge 0.01
-				fbw/pitch/g-instrumented ge 0.5
+				fbw/pitch/load-factor ge 0.5
 				fbw/protections/overspeed ne 1
 				position/wow eq 0
 				fbw/pitch/autotrim-dn-limit eq 0
@@ -2030,7 +2025,7 @@
 				attitude/roll-rad lt 0.628319
 				attitude/roll-rad gt -0.628319
 				fbw/pitch/pid-switched le -0.01
-				fbw/pitch/g-instrumented ge 0.5
+				fbw/pitch/load-factor ge 0.5
 				fbw/protections/overspeed ne 1
 				position/wow eq 0
 				fbw/pitch/autotrim-up-limit eq 0
