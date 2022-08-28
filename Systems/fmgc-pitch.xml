@@ -230,6 +230,25 @@
 		<max-rate-of-change>10000</max-rate-of-change>
 	</filter>
 	
+	<logic>
+		<input>
+			<and>
+				<property>/it-autoflight/output/apfd-on</property>
+				<or>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>4</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>7</value>
+					</equals>
+				</or>
+			</and>
+		</input>
+		<output>/it-autoflight/internal/flch-active</output>
+	</logic>
+	
 	<filter>
 		<name>IT-CONTROLLER: Speed By Pitch Delta</name>
 		<type>gain</type>
@@ -254,27 +273,54 @@
 		<input>/it-autoflight/internal/kts-rate</input>
 		<reference>/it-autoflight/internal/flch-kts-error</reference>
 		<output>/it-autoflight/internal/flch-raw</output>
+		<min>
+			<condition>
+				<or>
+					<equals>
+						<property>/gear/gear[1]/wow</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/gear/gear[2]/wow</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</condition>
+			<value>0</value>
+		</min>
 		<min>-2000</min>
 		<max>2000</max>
 	</filter>
 	
 	<filter>
-		<name>IT-CONTROLLER: Speed By Pitch Delta Lag</name>
-		<type>exponential</type>
-		<input>/it-autoflight/internal/flch-raw</input>
-		<output>/it-autoflight/internal/flch-lag</output>
-		<filter-time>0.16</filter-time>
+		<name>Speed By Pitch Filter</name>
+		<type>noise-spike</type>
+		<input>
+			<condition>
+				<property>/it-autoflight/internal/flch-active</property>
+			</condition>
+			<property>/it-autoflight/internal/flch-raw</property>
+		</input>
+		<input>/it-autoflight/internal/vert-speed-fpm</input>
+		<output>/it-autoflight/internal/flch-filtered</output>
+		<max-rate-of-change>
+			<condition>
+				<property>/it-autoflight/internal/flch-active</property>
+			</condition>
+			<value>1500</value>
+		</max-rate-of-change>
+		<max-rate-of-change>10000</max-rate-of-change>
 	</filter>
 	
 	<filter>
-		<name>IT-CONTROLLER: Speed By Pitch</name>
+		<name>Speed By Pitch Final</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
 			<expression>
 				<sum>
 					<property>/it-autoflight/internal/vert-speed-fpm</property>
-					<property>/it-autoflight/internal/flch-lag</property>
+					<property>/it-autoflight/internal/flch-filtered</property>
 				</sum>
 			</expression>
 		</input>

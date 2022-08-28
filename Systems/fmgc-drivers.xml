@@ -237,7 +237,7 @@
 		<type>exponential</type>
 		<input>/velocities/airspeed-kt</input>
 		<output>/it-autoflight/internal/kts-input-lag</output>
-		<filter-time>0.16</filter-time>
+		<filter-time>0.04</filter-time>
 	</filter>
 	
 	<filter>
@@ -270,7 +270,7 @@
 		</input>
 		<input>/it-autoflight/internal/kts-rate-raw</input>
 		<output>/it-autoflight/internal/kts-rate</output>
-		<filter-time>0.16</filter-time>
+		<filter-time>0.04</filter-time>
 	</filter>
 	
 	<filter>
@@ -278,7 +278,7 @@
 		<type>exponential</type>
 		<input>/velocities/mach</input>
 		<output>/it-autoflight/internal/mach-input-lag</output>
-		<filter-time>0.16</filter-time>
+		<filter-time>0.04</filter-time>
 	</filter>
 	
 	<filter>
@@ -319,7 +319,7 @@
 		</input>
 		<input>/it-autoflight/internal/mach-rate-gain</input>
 		<output>/it-autoflight/internal/mach-rate</output>
-		<filter-time>0.16</filter-time>
+		<filter-time>0.04</filter-time>
 	</filter>
 	
 	<filter>
@@ -868,110 +868,6 @@
 		<output>/it-autoflight/internal/fpa</output>
 	</filter>
 	
-	<!-- Flight Director -->
-	<filter>
-		<name>FD Target Roll Filter</name>
-		<type>noise-spike</type>
-		<input>/it-autoflight/internal/target-roll-deg</input>
-		<output>/it-autoflight/internal/target-roll-fd</output>
-		<max-rate-of-change>
-			<condition>
-				<and>
-					<not-equals>
-						<property>/it-autoflight/output/fd1</property>
-						<value>1</value>
-					</not-equals>
-					<not-equals>
-						<property>/it-autoflight/output/fd1</property>
-						<value>1</value>
-					</not-equals>
-				</and>
-			</condition>
-			<value>1000</value>
-		</max-rate-of-change>
-		<max-rate-of-change>15</max-rate-of-change>
-	</filter>
-	
-	<filter>
-		<name>FD Roll</name>
-		<type>noise-spike</type>
-		<input>
-			<expression>
-				<difference>
-					<property>/it-autoflight/internal/target-roll-fd</property>
-					<property>/orientation/roll-deg</property>
-				</difference>
-			</expression>
-		</input>
-		<output>/it-autoflight/fd/roll-bar</output>
-		<min>-30</min>
-		<max>30</max>
-		<max-rate-of-change>20</max-rate-of-change>
-	</filter>
-	
-	<filter>
-		<name>FD Pitch Takeoff</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/it-autoflight/mode/vert</property>
-					<value>T/O CLB</value>
-				</equals>
-			</condition>
-			<expression>
-				<product>
-					<table>
-						<property>/orientation/pitch-deg</property>
-						<entry><ind> 1</ind><dep>1</dep></entry>
-						<entry><ind>10</ind><dep>0</dep></entry>
-					</table>
-					<table>
-						<property>/position/gear-agl-ft</property>
-						<entry><ind> 5</ind><dep>1</dep></entry>
-						<entry><ind>30</ind><dep>0</dep></entry>
-					</table>
-				</product>
-			</expression>
-		</input>
-		<input>0</input>
-		<output>/it-autoflight/fd/pitch-bar-takeoff</output>
-	</filter>
-	
-	<filter>
-		<name>FD Pitch</name>
-		<type>noise-spike</type>
-		<input>
-			<expression>
-				<sum>
-					<rad2deg>
-						<asin>
-							<div>
-								<difference>
-									<property>/it-autoflight/internal/target-common-fpm</property>
-									<property>/it-autoflight/internal/vert-speed-fpm</property>
-								</difference>
-								<product>
-									<max>
-										<property>/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
-										<value>100</value>
-									</max>
-									<value>151.90288713910761</value> <!-- FPM to Knot * 1.5 -->
-								</product>
-							</div>
-						</asin>
-					</rad2deg>
-					<property>/it-autoflight/fd/pitch-bar-takeoff</property>
-				</sum>
-			</expression>
-		</input>
-		<output>/it-autoflight/fd/pitch-bar</output>
-		<min>-15</min>
-		<max>15</max>
-		<max-rate-of-change>10</max-rate-of-change>
-	</filter>
-	
 	<filter>
 		<name>Accel Altitude</name>
 		<type>gain</type>
@@ -1015,6 +911,110 @@
 			</expression>
 		</input>
 		<output>/it-autoflight/settings/accel-ft</output>
+	</filter>
+	
+	<!-- Flight Director -->
+	<filter>
+		<name>FD Target Roll Filter</name>
+		<type>noise-spike</type>
+		<input>/it-autoflight/internal/target-roll-deg</input>
+		<output>/it-autoflight/internal/target-roll-fd</output>
+		<max-rate-of-change>
+			<condition>
+				<and>
+					<not-equals>
+						<property>/it-autoflight/output/fd1</property>
+						<value>1</value>
+					</not-equals>
+					<not-equals>
+						<property>/it-autoflight/output/fd1</property>
+						<value>1</value>
+					</not-equals>
+				</and>
+			</condition>
+			<value>1000</value>
+		</max-rate-of-change>
+		<max-rate-of-change>15</max-rate-of-change>
+	</filter>
+	
+	<filter>
+		<name>FD Roll</name>
+		<type>noise-spike</type>
+		<input>
+			<expression>
+				<difference>
+					<property>/it-autoflight/internal/target-roll-fd</property>
+					<property>/orientation/roll-deg</property>
+				</difference>
+			</expression>
+		</input>
+		<output>/it-autoflight/fd/roll-bar</output>
+		<min>-30</min>
+		<max>30</max>
+		<max-rate-of-change>20</max-rate-of-change>
+	</filter>
+	
+	<filter>
+		<name>FD Pitch Takeoff</name>
+		<type>noise-spike</type>
+		<input>
+			<condition>
+				<equals>
+					<property>/it-autoflight/mode/vert</property>
+					<value>T/O CLB</value>
+				</equals>
+			</condition>
+			<expression>
+				<product>
+					<table>
+						<property>/orientation/pitch-deg</property>
+						<entry><ind> 1</ind><dep>1</dep></entry>
+						<entry><ind>10</ind><dep>0</dep></entry>
+					</table>
+					<table>
+						<property>/position/gear-agl-ft</property>
+						<entry><ind> 5</ind><dep>1</dep></entry>
+						<entry><ind>30</ind><dep>0</dep></entry>
+					</table>
+				</product>
+			</expression>
+		</input>
+		<input>0</input>
+		<output>/it-autoflight/fd/pitch-bar-takeoff</output>
+		<max-rate-of-change>7.5</max-rate-of-change>
+	</filter>
+	
+	<filter>
+		<name>FD Pitch</name>
+		<type>noise-spike</type>
+		<input>
+			<expression>
+				<sum>
+					<rad2deg>
+						<asin>
+							<div>
+								<difference>
+									<property>/it-autoflight/internal/target-common-fpm</property>
+									<property>/it-autoflight/internal/vert-speed-fpm</property>
+								</difference>
+								<product>
+									<max>
+										<property>/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
+										<value>100</value>
+									</max>
+									<value>151.90288713910761</value> <!-- FPM to Knot * 1.5 -->
+								</product>
+							</div>
+						</asin>
+					</rad2deg>
+					<property>/it-autoflight/fd/pitch-bar-takeoff</property>
+				</sum>
+			</expression>
+		</input>
+		<output>/it-autoflight/fd/pitch-bar</output>
+		<min>-15</min>
+		<max>15</max>
+		<max-rate-of-change>10</max-rate-of-change>
 	</filter>
  
 </PropertyList>
