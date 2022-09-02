@@ -295,13 +295,7 @@
 	<filter>
 		<name>Speed By Pitch Filter</name>
 		<type>noise-spike</type>
-		<input>
-			<condition>
-				<property>/it-autoflight/internal/flch-active</property>
-			</condition>
-			<property>/it-autoflight/internal/flch-raw</property>
-		</input>
-		<input>/it-autoflight/internal/vert-speed-fpm</input>
+		<input>/it-autoflight/internal/flch-raw</input>
 		<output>/it-autoflight/internal/flch-filtered</output>
 		<max-rate-of-change>
 			<condition>
