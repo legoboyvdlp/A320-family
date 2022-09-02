@@ -22808,7 +22808,7 @@
 		<type>rotate</type>
 		<object-name>SpdBrk</object-name>
 		<property>fdm/jsbsim/spoilers/main-lever</property>
-		<factor>45</factor>
+		<factor>-45</factor>
 		<axis>
 			<object-name>SpdBrk.axis</object-name>
 		</axis>
@@ -22834,11 +22834,11 @@
 		<property>fdm/jsbsim/fcs/flap-lever</property>
 		<drag-scale-px>30</drag-scale-px>
 		<interpolation>
-			<entry><ind>0</ind><dep> 0</dep></entry>
-			<entry><ind>1</ind><dep>14</dep></entry>
-			<entry><ind>2</ind><dep>28</dep></entry>
-			<entry><ind>3</ind><dep>42</dep></entry>
-			<entry><ind>4</ind><dep>56</dep></entry>
+			<entry><ind>0</ind><dep>  0</dep></entry>
+			<entry><ind>1</ind><dep>-14</dep></entry>
+			<entry><ind>2</ind><dep>-28</dep></entry>
+			<entry><ind>3</ind><dep>-42</dep></entry>
+			<entry><ind>4</ind><dep>-56</dep></entry>
 		</interpolation>
 		<axis>
 			<object-name>FlapsLever.axis</object-name>
@@ -42570,4 +42570,3 @@
 	</light>
 	
 </PropertyList>
-
