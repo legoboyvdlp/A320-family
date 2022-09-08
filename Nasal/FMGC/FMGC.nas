@@ -26,14 +26,13 @@ var altitude = 0;
 var flap = 0;
 var flaps = 0;
 var ktsmach = 0;
-var kts_sel = 0;
-var mach_sel = 0;
 var srsSPD = 0;
-var decel = 0;
 var mng_alt_spd = 0;
 var mng_alt_mach = 0;
 var altsel = 0;
 var crzFl = 0;
+var xtrkError = 0;
+var courseDistanceDecel = 0;
 var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
@@ -75,6 +74,7 @@ var FMGCinit = func {
 var FMGCInternal = {
 	# phase logic
 	phase: 0,
+	decel: 0,
 	minspeed: 0,
 	maxspeed: 0,
 	clbSpdLim: 250,
@@ -132,6 +132,9 @@ var FMGCInternal = {
 	vrset: 0,
 	v2: 0,
 	v2set: 0,
+	toFlap: 0,
+	toThs: 0,
+	toFlapThsSet: 0,
 	
 	# PERF APPR
 	destMag: 0,
@@ -258,13 +261,16 @@ var postInit = func() {
 
 var FMGCNodes = {
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
-	decel: props.globals.initNode("/FMGC/internal/decel", 0, "BOOL"),
 	flexSet: props.globals.initNode("/FMGC/internal/flex-set", 0, "BOOL"),
 	flexTemp: props.globals.initNode("/FMGC/internal/flex", 0, "INT"),
 	mngSpdAlt: props.globals.getNode("/FMGC/internal/mng-alt-spd"),
 	ktsToMachFactor: props.globals.getNode("/FMGC/internal/kts-to-mach-factor"),
 	machToKtsFactor: props.globals.getNode("/FMGC/internal/mach-to-kts-factor"),
 	mngMachAlt: props.globals.getNode("/FMGC/internal/mng-alt-mach"),
+	Power: {
+		FMGC1Powered: props.globals.getNode("systems/fmgc/power/power-1-on"),
+		FMGC2Powered: props.globals.getNode("systems/fmgc/power/power-2-on"),
+	},
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
@@ -302,9 +308,15 @@ var updateARPT = func {
 	}
 }
 
-var updateArptLatLon = func {
+var apt = nil;
+var dms = nil;
+var degrees = nil;
+var minutes = nil;
+var sign = nil;
+var updateArptLatLon = func() {
 	#ref lat
-	dms = getprop("/FMGC/flightplan[2]/wp[0]/lat");
+	apt = airportinfo(FMGCInternal.depApt);
+	dms = apt.lat;
 	degrees = int(dms);
 	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 	sign = degrees >= 0 ? "N" : "S";
@@ -312,7 +324,7 @@ var updateArptLatLon = func {
 	setprop("/FMGC/internal/align-ref-lat-minutes", minutes);
 	setprop("/FMGC/internal/align-ref-lat-sign", sign);
 	#ref long
-	dms = getprop("/FMGC/flightplan[2]/wp[0]/lon");
+	dms = apt.lon;
 	degrees = int(dms);
 	minutes = sprintf("%.1f",abs((dms - degrees) * 60));
 	sign = degrees >= 0 ? "E" : "W";
@@ -401,7 +413,7 @@ var updateFuel = func {
 	if (FMGCInternal.toFromSet and FMGCInternal.crzSet and FMGCInternal.crzTempSet and FMGCInternal.zfwSet) {
 		crz = FMGCInternal.crzFl;
 		temp = FMGCInternal.crzTemp;
-		dist = flightPlanController.arrivalDist;
+		dist = flightPlanController.arrivalDist.getValue();
 		
 		trpWind = FMGCInternal.tripWind;
 		wind_value = FMGCInternal.tripWindValue;
@@ -415,7 +427,7 @@ var updateFuel = func {
 		trip_fuel = math.clamp(trip_fuel, 400, 80000);
 		
 		# cruize temp correction
-		trip_fuel = trip_fuel + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist);
+		trip_fuel = trip_fuel + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist.getValue());
 		
 		trip_time = 9.095e-02 + (dist*-3.968e-02) + (dist*dist*4.302e-04) + (dist*dist*dist*2.005e-07) + (dist*dist*dist*dist*-6.876e-11) + (dist*dist*dist*dist*dist*1.432e-14) + (dist*dist*dist*dist*dist*dist*-1.177e-18) + (crz*7.348e-01) + (dist*crz*3.310e-03) + (dist*dist*crz*-8.700e-06) + (dist*dist*dist*crz*-4.214e-10) + (dist*dist*dist*dist*crz*5.652e-14) + (dist*dist*dist*dist*dist*crz*-6.379e-18) + (crz*crz*-1.449e-02) + (dist*crz*crz*-7.508e-06) + (dist*dist*crz*crz*4.529e-08) + (dist*dist*dist*crz*crz*3.699e-13) + (dist*dist*dist*dist*crz*crz*8.466e-18) + (crz*crz*crz*1.108e-04) + (dist*crz*crz*crz*-4.126e-08) + (dist*dist*crz*crz*crz*-9.645e-11) + (dist*dist*dist*crz*crz*crz*-1.544e-16) + (crz*crz*crz*crz*-4.123e-07) + (dist*crz*crz*crz*crz*1.831e-10) + (dist*dist*crz*crz*crz*crz*7.438e-14) + (crz*crz*crz*crz*crz*7.546e-10) + (dist*crz*crz*crz*crz*crz*-1.921e-13) + (crz*crz*crz*crz*crz*crz*-5.453e-13);
 		trip_time = math.clamp(trip_time, 10, 480);
@@ -599,18 +611,18 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	} elsif (FMGCInternal.phase == 3) {
 		if (FMGCInternal.crzFl >= 200) {
-			if ((flightPlanController.arrivalDist <= 200 and altSel < 20000)) {
+			if ((flightPlanController.arrivalDist.getValue() <= 200 or altSel < 20000)) {
 				newphase = 4;
 				systems.PNEU.pressMode.setValue("DE");
 			}
 		} else {
-			if ((flightPlanController.arrivalDist <= 200 and altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
+			if ((flightPlanController.arrivalDist.getValue() <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
 				newphase = 4;
 				systems.PNEU.pressMode.setValue("DE");
 			}
 		}
 	} elsif (FMGCInternal.phase == 4) {
-		if (FMGCNodes.decel.getValue()) {
+		if (FMGCInternal.decel) {
 			newphase = 5;
 		}
 	} elsif (FMGCInternal.phase == 5) {
@@ -624,14 +636,20 @@ var masterFMGC = maketimer(0.2, func {
 			newphase = 2;
 		}
 	}
-
-	if (flightPlanController.num[2].getValue() > 0 and getprop("/FMGC/flightplan[2]/active") == 1 and 
-	   flightPlanController.arrivalDist <= 15 and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) { #todo decel pseudo waypoint
-		FMGCNodes.decel.setValue(1);
-	} elsif (FMGCNodes.decel.getValue() and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
-		FMGCNodes.decel.setValue(0);
-	}
 	
+	xtrkError = getprop("/instrumentation/gps/wp/wp[1]/course-error-nm");
+
+	if (flightPlanController.decelPoint != nil) {
+		courseDistanceDecel = courseAndDistance(flightPlanController.decelPoint.lat, flightPlanController.decelPoint.lon);
+		if (flightPlanController.num[2].getValue() > 0 and fmgc.flightPlanController.active.getBoolValue() and flightPlanController.decelPoint != nil and (courseDistanceDecel[1] <= 5 and (math.abs(courseDistanceDecel[0] - pts.Orientation.heading.getValue()) >= 90 and xtrkError <= 5) or courseDistanceDecel[1] <= 0.1) and (modelat == "NAV" or modelat == "LOC" or modelat == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) {
+			FMGCInternal.decel = 1;
+			setprop("/instrumentation/nd/symbols/decel/show", 0); 
+		} elsif (FMGCInternal.decel and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
+			FMGCInternal.decel = 0;
+		}
+	} else {
+		FMGCInternal.decel = 0;
+	}
 	
 	tempOverspeed = systems.ADIRS.overspeedVFE.getValue();
 	if (tempOverspeed != 1024) {
@@ -994,7 +1012,6 @@ var ManagedSPD = maketimer(0.25, func {
 	if (FMGCInternal.crzSet and FMGCInternal.costIndexSet) {
 		if (Custom.Input.spdManaged.getBoolValue()) {
 			altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
-			decel = FMGCNodes.decel.getValue();
 			ktsmach = Input.ktsMach.getValue();
 			mode = Modes.PFD.FMA.pitchMode.getValue();
 			srsSPD = srsSpeedNode.getValue();
@@ -1015,12 +1032,12 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
 				# Speed is maximum of greendot / climb speed limit
 				FMGCInternal.mngKtsMach = 0;
-				FMGCInternal.mngSpdCmd = decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
+				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
 				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 				FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
-				if (decel) {
+				if (FMGCInternal.decel) {
 					FMGCInternal.mngKtsMach = 0;
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				} else {
@@ -1030,7 +1047,7 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
 				FMGCInternal.mngKtsMach = 0;
 				# Speed is maximum of greendot / descent speed limit
-				FMGCInternal.mngSpdCmd = decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
 			}
 			
 			# Clamp to minspeed, maxspeed

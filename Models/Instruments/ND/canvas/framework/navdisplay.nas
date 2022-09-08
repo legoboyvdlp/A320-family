@@ -637,11 +637,9 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.dmeRDist.setText("");
 	}
 
-	# Hide heading bug 10 secs after change
-	var vhdg_bug = getprop("/it-autoflight/input/hdg") or 0;
-	var hdg_bug_active = getprop("/it-autoflight/custom/show-hdg");
-	if (hdg_bug_active == nil)
-		hdg_bug_active = 1;
+	# Hide heading bug 45 secs after change
+	var vhdg_bug = fmgc.Input.hdg.getValue();
+	var hdg_bug_active = fmgc.Custom.showHdg.getBoolValue();
 
 	if((me.in_mode("toggle_display_mode", ["MAP"]) and me.get_switch("toggle_display_type") == "CRT")
 	   or (me.get_switch("toggle_track_heading") and me.get_switch("toggle_display_type") == "LCD"))

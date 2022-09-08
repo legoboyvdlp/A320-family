@@ -168,11 +168,6 @@
 		<suction>/systems/vacuum/suction-inhg</suction>
 	</heading-indicator>
 	
-	<KT-70>
-		<name>kt-70</name>
-		<number>0</number>
-	</KT-70>
-	
 	<magnetic-compass>
 		<name>magnetic-compass</name>
 		<number>0</number>

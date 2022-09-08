@@ -34,39 +34,44 @@
 		
 		<text>
 			<halign>left</halign>
-			<label>This model works best with certain rendering settings. It seems like these differ from your current settings.</label>
+			<label>Your rendering settings will not allow all graphical features of the aircraft to be visible!</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>This means lighting effects on the exterior and in the virtual cockpit will not be visible.</label>
+			<label>This means certain lighting effects will not be usable, including cockpit floodlights. </label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>To use the lights, ALS must be enabled.</label>
+			<label>For the best experience:</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>Landmass shader must be at least 4 for lights to display on pavement.</label>
+			<label>* Atmospheric Light Scattering should be enabled</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>Model shader must be at least 2 for cockpit lights to work.</label>
+			<label>* Landmass shader should be at least 4 for external lights to illuminate the ground</label>
+		</text>
+		
+		<text>
+			<halign>left</halign>
+			<label>* Model shader should be at least 2 for lighting to illuminate the aircraft model</label>
 		</text>
 		
 		<hrule/>
 		
 		<text>
 			<halign>left</halign>
-			<label>You may automatically set these settings by using the buttons below</label>
+			<label>Would you like Aircraft Config to automatically set these minimum basic settings?</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>If the settings do not save after updating, try quitting FlightGear through File -&gt; Exit after fixing.</label>
+			<label>To save these settings, make sure to quit FlightGear with File -&gt; Exit after your flight is complete.</label>
 		</text>
 	
 	</group>
@@ -77,7 +82,7 @@
 		<layout>hbox</layout>
 	
 		<checkbox>
-			<label>Don't show this information again</label>
+			<label>Do not warn me about rendering settings again</label>
 			<halign>center</halign>
 			<property>/systems/acconfig/options/no-rendering-warn</property>
 			<binding>
@@ -105,8 +110,8 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Automatically update graphics settings</legend>
-			<pref-width>180</pref-width>
+			<legend>Apply minimum settings</legend>
+			<pref-width>200</pref-width>
 			<binding>
 				<command>nasal</command>
 				<script>
@@ -120,8 +125,8 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Open graphics settings</legend>
-			<pref-width>180</pref-width>
+			<legend>Advanced: View Shader Settings</legend>
+			<pref-width>200</pref-width>
 			<binding>
 				<command>nasal</command>
 				<script>
@@ -143,8 +148,8 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Close</legend>
-			<pref-width>180</pref-width>
+			<legend>Ignore</legend>
+			<pref-width>150</pref-width>
 			<binding>
 				<command>dialog-close</command>
 			</binding>

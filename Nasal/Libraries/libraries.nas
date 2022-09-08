@@ -7,11 +7,13 @@ print("------------------------------------------------");
 print("Copyright (c) 2016-2020 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
+setprop("/autopilot/route-manager/disable-route-manager", 1);
+setprop("/autopilot/route-manager/disable-fms", 1);
+
 # Disable specific menubar items
 setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
-setprop("/sim/menubar/default/menu[3]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[9]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[10]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[11]/enabled", 0);
@@ -192,6 +194,13 @@ var GPWSAlertStatus = 0;
 var gpws_alert_watch = maketimer(0.8, func() {	
 	if (GPWS.warning.getValue()) {
 		GPWSAlertStatus = 2; # MODE2 - warning - RED
+		
+		# Turn on Terr on ND after a GPWS warning
+		setprop("/controls/switches/terr_on_nd_l", 1);
+		setprop("/instrumentation/efis/inputs/terr", 1);
+		setprop("/controls/switches/terr_on_nd_r", 1);
+		setprop("/instrumentation/efis[1]/inputs/terr", 1);
+		
 	} else if (GPWS.alert.getValue()) {
 		GPWSAlertStatus = 1; # MODE1 - caution - YELLOW
 	} else {

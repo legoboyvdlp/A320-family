@@ -263,7 +263,10 @@ var FCUController = {
 	HDGPush: func() {
 		if (me.FCUworking) {
 			if (fmgc.Output.fd1.getBoolValue() or fmgc.Output.fd2.getBoolValue() or fmgc.Output.ap1.getBoolValue() or fmgc.Output.ap2.getBoolValue()) {
-				fmgc.Input.lat.setValue(1);
+				var wp = fmgc.flightPlanController.flightplans[2].getWP(fmgc.flightPlanController.currentToWptIndex.getValue());
+				if (wp != nil and wp.wp_type != "discontinuity" and wp.wp_type != "vectors") {
+					fmgc.Input.lat.setValue(1);
+				}
 			}
 		}
 	},
@@ -507,6 +510,9 @@ var apOff = func(type, side) {
 	} elsif (side == 2) {
 		fmgc.Input.ap2.setValue(0);
 	}
+
+    var radarft = (side == 2) ? getprop("/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected") : getprop("/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected");
+	setprop("/instrumentation/pfd/logic/autoland/ap-disc-ft",radarft);
 }
 
 # Autothrust Disconnection

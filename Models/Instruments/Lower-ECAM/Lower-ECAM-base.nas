@@ -73,8 +73,7 @@ var canvas_lowerECAM_base =
 		}
 	},
 	# Due to weirdness of the parents hash / me reference
-	# you need to access it using me.Test_white rather than
-	# me["Test_white"]
+	# you need to access it using me.Test_white
 	updateTest: func(notification) {
 		if (du4_test_time.getValue() + 1 >= notification.elapsedTime) {
 			me.Test_white.show();

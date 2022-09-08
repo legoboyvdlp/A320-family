@@ -1,7 +1,6 @@
 var duplicateNamesPage = {
 	title: nil,
 	subtitle: [nil, nil],
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -49,7 +48,6 @@ var duplicateNamesPage = {
 		me.title = "DUPLICATE NAMES";
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
-		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		
 		me.distances = [];
 		for (var i = 0; i < size(me.vector); i += 1) {

@@ -4,7 +4,6 @@
 
 # props.nas nodes
 var iesi_init = props.globals.initNode("/instrumentation/iesi/iesi-init", 0, "BOOL");
-var iesi_reset = props.globals.initNode("/instrumentation/iesi/att-reset", 0, "DOUBLE");
 
 var pinPrograms = {
 	metricAltitude: 1,
@@ -29,6 +28,7 @@ var canvas_IESI = {
 		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
+		
  		foreach(var key; obj.getKeys()) {
 			obj[key] = obj.group.getElementById(key);
 			
@@ -46,271 +46,288 @@ var canvas_IESI = {
 				obj[key].set("clip-frame", canvas.Element.PARENT);
 			}
 		};
+		
 		obj.AI_horizon_trans = obj["AI_horizon"].createTransform();
 		obj.AI_horizon_rot = obj["AI_horizon"].createTransform();
 		
-		obj._cachedInhg = nil;
-		obj._excessMotion = 0;
-		obj._fast = 0;
+		obj._aiCenter = obj["AI_center"].getCenter();
+		
+		obj._cachedInhg = -999;
+		obj._cachedMetric = pinPrograms.metricAltitude;
+		obj._cachedMode = nil;
+		obj._cachedShowInhg = pinPrograms.showInHg;
+		obj._canReset = 0;
+		obj._excessMotionInInit = 0;
+		obj._fastInit = 0;
 		obj._IESITime = 0;
-		obj._showIESI = 0;
-		obj.ASI = 0;
-		obj.canReset = 0;
-		obj.isNegativeAlt = 0;
-		obj.middleAltOffset = nil;
+		obj._isNegativeAlt = 0;
+		obj._middleAltOffset = nil;
+		obj.iesiInAlign = 0;
+		
+		
+		obj["IESI"].hide(); 
+		obj["IESI_Init"].show();
+		obj["ATTflag"].hide();
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("airspeed", nil, func(val) {
-				# Subtract 30, since the scale starts at 30, but don't allow less than 0, or more than 520 knots
-				if (val <= 30) {
-					obj.ASI = 0;
-				} else if (val >= 520) {
-					obj.ASI = 490;
-				} else {
-					obj.ASI = val - 30;
-				}
-				obj["ASI_scale"].setTranslation(0, obj.ASI * 8.295);
+			props.UpdateManager.FromHashValue("airspeedIESI", 0.1, func(val) {
+				obj["ASI_scale"].setTranslation(0, math.clamp(val - 30, 0, 490) * 8.295);
 			}),
-			props.UpdateManager.FromHashList(["altitude","altitude_ind"], nil, func(val) {
-				if (val.altitude > 50000) {
-					val.altitude = 50000;
-				} elsif (val.altitude < -2000) {
-					val.altitude = -2000;
-				}
+			props.UpdateManager.FromHashValue("altitudeIESI", 0.5, func(val) {
+				val = math.clamp(val, -2000, 50000);
 				
-				if (val.altitude < 0) {
+				obj["ALT_meters"].setText(sprintf("%5.0f", math.round(val * 0.3048, 10)));
+				
+				obj.middleAltText = roundaboutAlt(val / 100);
+				
+				obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText + 10)));
+				obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText + 5)));
+				obj["ALT_three"].setText(sprintf("%03d", abs(obj.middleAltText)));
+				obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText - 5)));
+				obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText - 10)));
+				
+				if (val < 0) {
 					obj["negText"].show();
-					obj.isNegativeAlt = 1;
+					obj._isNegativeAlt = 1;
 				} else {
 					obj["negText"].hide();
-					obj.isNegativeAlt = 0;
+					obj._isNegativeAlt = 0;
 				}
-				
-				obj.altOffset = (val.altitude / 500) - int(val.altitude / 500);
-				obj.middleAltText = roundaboutAlt(val.altitude / 100);
-				if (obj.altOffset > 0.5) {
-					obj.middleAltOffset = -(obj.altOffset - 1) * 258.5528;
-				} else {
-					obj.middleAltOffset = -obj.altOffset * 258.5528;
-				}
-				
-				obj["ALT_scale"].setTranslation(0, -obj.middleAltOffset);
-				obj["ALT_scale"].update();
-				obj["ALT_five"].setText(sprintf("%03d", abs(obj.middleAltText+10)));
-				obj["ALT_four"].setText(sprintf("%03d", abs(obj.middleAltText+5)));
-				obj["ALT_three"].setText(sprintf("%03d", abs(obj.middleAltText)));
-				obj["ALT_two"].setText(sprintf("%03d", abs(obj.middleAltText-5)));
-				obj["ALT_one"].setText(sprintf("%03d", abs(obj.middleAltText-10)));
-				
-				
-				if (val.altitude < 0 and val.altitude_ind > 20) {
-					val.altitude_ind = 20;
-				} elsif (val.altitude > 0 and val.altitude_ind > 500) {
-					val.altitude_ind = 500;
-				}
-				
-				obj["ALT_digits"].setText(sprintf("%s", val.altitude_ind));
-				obj["ALT_meters"].setText(sprintf("%5.0f", math.round(val.altitude * 0.3048, 10)));
-				obj.altTens = num(right(sprintf("%02d", val.altitude), 2));
-				obj["ALT_tens"].setTranslation(0, obj.altTens * 3.16);
 			}),
-			props.UpdateManager.FromHashValue("mach", nil, func(val) {
-				if (val >= 0.5) {
-					obj._machWasAbove50 = 1;
-					obj["ASI_mach_decimal"].show();
-					obj["ASI_mach"].show();
-				} elsif (val >= 0.45 and obj._machWasAbove50) {
+			props.UpdateManager.FromHashValue("altitudeIESI", 0.1, func(val) {
+				val = math.clamp(val, -2000, 50000);
+				
+				obj.altOffset = (val / 500) - int(val / 500);
+				
+				if (obj.altOffset > 0.5) {
+					obj._middleAltOffset = -(obj.altOffset - 1) * 258.5528;
+				} else {
+					obj._middleAltOffset = -obj.altOffset * 258.5528;
+				}
+				
+				obj["ALT_scale"].setTranslation(0, -obj._middleAltOffset);
+				obj["ALT_scale"].update();
+				
+				obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", val), 2)) * 3.16);
+			}),
+			props.UpdateManager.FromHashValue("altitude_indIESI", 0.5, func(val) {
+				obj["ALT_digits"].setText(sprintf("%s", math.clamp(val, -20, 500)));
+			}),
+			props.UpdateManager.FromHashValue("showMach", 1, func(val) {
+				if (val) {
 					obj["ASI_mach_decimal"].show();
 					obj["ASI_mach"].show();
 				} else {
-					obj._machWasAbove50 = 0;
 					obj["ASI_mach_decimal"].hide();
 					obj["ASI_mach"].hide();
 				}
-				
-				if (val >= 0.999) {
-					obj["ASI_mach"].setText("99");
-				} else {
-					obj["ASI_mach"].setText(sprintf("%2.0f", val * 100));
-				}
 			}),
-			props.UpdateManager.FromHashValue("pitch", nil, func(val) {
+			props.UpdateManager.FromHashValue("mach", 0.001, func(val) {
+				obj["ASI_mach"].setText(sprintf("%2.0f", math.clamp(val * 100, 0, 99)));
+			}),
+			props.UpdateManager.FromHashValue("iesiPitch", 0.025, func(val) {
 				obj.AI_horizon_trans.setTranslation(0, val * 16.74);
 			}),
-			props.UpdateManager.FromHashValue("roll", nil, func(val) {
-				obj.AI_horizon_rot.setRotation(-val * D2R, obj["AI_center"].getCenter());
+			props.UpdateManager.FromHashValue("roll", 0.025, func(val) {
+				obj.AI_horizon_rot.setRotation(-val * D2R, obj._aiCenter);
 				obj["AI_bank"].setRotation(-val * D2R);
 			}),
-			props.UpdateManager.FromHashValue("skid", nil, func(val) {
-				if (abs(val) >= 84.99) {
+			props.UpdateManager.FromHashValue("skid", 0.1, func(val) {
+				if (abs(val) >= 85) {
 					obj["AI_slipskid"].hide();
 				} else {
 					obj["AI_slipskid"].setTranslation(-val, 0);
 					obj["AI_slipskid"].show();
 				}
 			}),
-			props.UpdateManager.FromHashList(["altimeter_mode","qnh_hpa","qnh_inhg"], nil, func(val) {
-				obj.updateQNH(val);
+		];
+		
+		obj.update_items_init = [
+			props.UpdateManager.FromHashList(["iesiAlignTime","elapsedTime"], 0.5, func(val) {
+				if (val.iesiAlignTime + 90 >= val.elapsedTime) {
+					obj.iesiInAlign = 1;
+				} else {
+					obj.iesiInAlign = 0;
+				}
+			}),
+			props.UpdateManager.FromHashList(["iesiInAlign","iesiFastInit","irAlignFault"], 1, func(val) {
+				if (val.iesiInAlign) {
+					if (!val.iesiFastInit and val.irAlignFault) {
+						obj._excessMotionInInit = 1;
+					}
+				}
+			}),
+			props.UpdateManager.FromHashList(["iesiExcessMotion","iesiFastInit","iesiInAlign"], 1, func(val) {
+				if (val.iesiInAlign) {
+					if (val.iesiFastInit) {
+						obj["IESI"].show(); 
+						obj["IESI_Init"].hide();
+						obj["AI_bank"].hide();
+						obj["AI_bank_center"].hide();
+						obj["AI_bank_scale"].hide();
+						obj["AI_horizon"].hide();
+						obj["AI_sky_bank"].hide();
+						obj["ATTflag_text"].setText("ATT 10s");
+						obj["ATTflag_text"].setColor(0,0,0);
+						obj["ATTflag_rect"].setScale(1.5,1);
+						obj["ATTflag_rect"].setTranslation(-250,0);
+						obj["ATTflag_rect"].setColorFill(1,1,0);
+						obj["ATTflag_rect"].setColor(1,1,0);
+						obj["ATTflag"].show();
+						obj["attRst"].hide();
+						obj["attRstRect"].hide();
+					} else {
+						obj["IESI"].hide(); 
+						obj["IESI_Init"].show();
+						obj["ATTflag"].hide();
+					}
+				} else {
+					if (!val.iesiExcessMotion) {
+						obj["IESI_Init"].hide();
+						obj["IESI"].show();
+						obj["AI_bank"].show();
+						obj["AI_bank_center"].show();
+						obj["AI_bank_scale"].show();
+						obj["AI_index"].show();
+						obj["AI_horizon"].show();
+						obj["AI_sky_bank"].show();
+						obj["ATTflag"].hide();
+					} else {
+						obj["IESI_Init"].hide();
+						obj["IESI"].show();
+						obj["AI_bank"].hide();
+						obj["AI_bank_center"].hide();
+						obj["AI_bank_scale"].hide();
+						obj["AI_horizon"].hide();
+						obj["AI_sky_bank"].hide();
+						obj["ATTflag_text"].setText("ATT");
+						obj["ATTflag_text"].setColor(1,0,0);
+						obj["ATTflag_rect"].setScale(1,1);
+						obj["ATTflag_rect"].setTranslation(0,0);
+						obj["ATTflag_rect"].setColorFill(0,0,0);
+						obj["ATTflag_rect"].setColor(0,0,0);
+						obj["ATTflag"].show();
+						obj["attRst"].show();
+						obj["attRstRect"].show();
+					}
+				}
+			}),
+		];
+		
+		obj.update_items_power = [
+			props.UpdateManager.FromHashList(["iesiPowered","iesiBrt"], 0.005, func(val) {
+				if (val.iesiPowered and val.iesiBrt > 0.01) {
+					obj.group.setVisible(1);
+				} else {
+					obj.group.setVisible(0);
+				}
+			}),
+			props.UpdateManager.FromHashList(["iesiPowered","acconfig","iesiInit"], 1, func(val) {
+				if (val.iesiPowered) {
+					if (val.iesiInit) return;
+					obj.initIESI(val.acconfig);
+				} elsif (val.iesiInit) {
+					obj._canReset = 0;
+					obj._excessMotionInInit = 0;
+					obj._fastInit = 0;
+					iesi_init.setBoolValue(0);
+				}
 			}),
 		];
 		return obj;
-	},	
+	},
 	getKeys: func() {
 		return ["IESI","IESI_Init","attRst","attRstRect","att90s","ATTflag","ATTflag_rect","ATTflag_text","ALTwarn","SPDwarn","ASI_scale","ASI_mach","ASI_mach_decimal","AI_center","AI_index","AI_horizon","AI_sky_bank","AI_bank","AI_bank_center","AI_slipskid","ALT_scale","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_meters","QNH_setting","QNH_std","negText","negText2","AI_bank_scale","metricM","metricBox"];
 	},
 	update: func(notification) {
-		if (notification.qnh_inhg != me._cachedInhg) {
-			me._cachedInhg = notification.qnh_inhg;
+		me.updatePower(notification);
+		
+		foreach(var update_item; me.update_items_power)
+        {
+            update_item.update(notification);
+        }
+		
+		if (!me.group.getVisible()) { return; }
+		
+		notification.iesiAlignTime = me._IESITime;
+		notification.iesiExcessMotion = me._excessMotionInInit;
+		notification.iesiFastInit = me._fastInit;
+		notification.iesiInAlign = me.iesiInAlign;
+		
+		foreach(var update_item; me.update_items_init)
+        {
+            update_item.update(notification);
+        }
+		
+		if (math.abs(notification.qnh_inhg_iesi - me._cachedInhg) > 0.005 or notification.altimeter_mode_iesi != me._cachedMode or pinPrograms.showInHg != me._cachedShowInhg) {
+			me._cachedInhg = notification.qnh_inhg_iesi;
+			me._cachedMode = notification.altimeter_mode_iesi;
+			me._cachedShowInhg = pinPrograms.showInHg;
 			me.updateQNH(notification);
 		}
 		
-		me.updatePower(notification);
-		if (me.group.getVisible() == 0) {
-			return;
-		}
-		
-		if (me._IESITime + 90 >= notification.elapsedTime) {
-			if (notification.groundspeed > 2) {
-				me._excessMotion = 1;
-			}
-			
-			if (me._fast) {
-				me["IESI"].show(); 
-				me["IESI_Init"].hide();
-				me["AI_bank"].hide();
-				me["AI_bank_center"].hide();
-				me["AI_bank_scale"].hide();
-				me["AI_horizon"].hide();
-				me["AI_sky_bank"].hide();
-				me["ATTflag_text"].setText("ATT 10s");
-				me["ATTflag_text"].setColor(0,0,0);
-				me["ATTflag_rect"].setScale(1.5,1);
-				me["ATTflag_rect"].setTranslation(-250,0);
-				me["ATTflag_rect"].setColorFill(1,1,0);
-				me["ATTflag_rect"].setColor(1,1,0);
-				me["ATTflag"].show();
-				me["attRst"].hide();
-				me["attRstRect"].hide();
-			} else {
-				me["IESI"].hide(); 
-				me["IESI_Init"].show();
-				me["ATTflag"].hide();
-			}
-			return;
-		} else {
-			if (pinPrograms.metricAltitude) {
-				me["ALT_meters"].show();
-				me["metricM"].show();
-				me["metricBox"].show();
-				
-				if (me.isNegativeAlt) {
-					me["negText2"].show();
-				} else {
-					me["negText2"].hide();
-				}
-			} else {
-				me["ALT_meters"].hide();
-				me["metricM"].hide();
-				me["metricBox"].hide();
-				me["negText2"].hide();
-			}
-			
-			if (!me._excessMotion) {
-				me["IESI_Init"].hide();
-				me["IESI"].show();
-				me["AI_bank"].show();
-				me["AI_bank_center"].show();
-				me["AI_bank_scale"].show();
-				me["AI_index"].show();
-				me["AI_horizon"].show();
-				me["AI_sky_bank"].show();
-				me["ATTflag"].hide();
-			} else {
-				me["IESI_Init"].hide();
-				me["IESI"].show();
-				me["AI_bank"].hide();
-				me["AI_bank_center"].hide();
-				me["AI_bank_scale"].hide();
-				me["AI_horizon"].hide();
-				me["AI_sky_bank"].hide();
-				me["ATTflag_text"].setText("ATT");
-				me["ATTflag_text"].setColor(1,0,0);
-				me["ATTflag_rect"].setScale(1,1);
-				me["ATTflag_rect"].setTranslation(0,0);
-				me["ATTflag_rect"].setColorFill(0,0,0);
-				me["ATTflag_rect"].setColor(0,0,0);
-				me["ATTflag"].show();
-				me["attRst"].show();
-				me["attRstRect"].show();
-			}
-		}
+		if (me.iesiInAlign and !me._fastInit) return;
 		
 		foreach(var update_item; me.update_items)
         {
             update_item.update(notification);
         }
+		
+		if (!me.iesiInAlign and pinPrograms.metricAltitude != me._cachedMetric) {
+			me._cachedMetric = pinPrograms.metricAltitude;
+			me.updateMetric(pinPrograms.metricAltitude);
+		}
+		
+		if (pinPrograms.metricAltitude) {
+			if (me._isNegativeAlt) {
+				me["negText2"].show();
+			} else {
+				me["negText2"].hide();
+			}
+		}
+	},
+	updateMetric: func(val) {
+		if (val) {
+			me["ALT_meters"].show();
+			me["metricM"].show();
+			me["metricBox"].show();
+		} else {
+			me["ALT_meters"].hide();
+			me["metricM"].hide();
+			me["metricBox"].hide();
+			me["negText2"].hide();
+		}
 	},
 	updateQNH: func(notification) {
-		if (notification.altimeter_mode) {
+		if (notification.altimeter_mode_iesi) {
 			me["QNH_setting"].hide();
 			me["QNH_std"].show();
 		} else {
 			if (pinPrograms.showInHg) {
-				me["QNH_setting"].setText(sprintf("%4.0f", notification.qnh_hpa) ~ "/" ~ sprintf("%2.2f", notification.qnh_inhg));
+				me["QNH_setting"].setText(sprintf("%4.0f", math.round(notification.qnh_hpa_iesi)) ~ "/" ~ sprintf("%2.2f", math.round(notification.qnh_inhg_iesi * 100) / 100));
 			} else {
-				me["QNH_setting"].setText(sprintf("%4.0f", notification.qnh_hpa));
+				me["QNH_setting"].setText(sprintf("%4.0f", math.round(notification.qnh_hpa_iesi)));
 			}
-			me["QNH_setting"].show();
 			me["QNH_std"].hide();
+			me["QNH_setting"].show();
 		}
 	},
-	_transientVar: 0,
 	updatePower: func(notification) {
-		# todo 20W power consumption
-		if (notification.attReset == 1 and me.canReset) {
-			me.canReset = 0;
-			me._excessMotion = 0;
-			me._fast = 1;
+		if (notification.attReset == 1 and me._canReset) {
+			me._canReset = 0;
+			me._excessMotionInInit = 0;
+			me._fastInit = 1;
 			iesi_init.setBoolValue(0);
-		} else if (me._IESITime + 90 < notification.elapsedTime and notification.iesiInit and !me.canReset) {
-			me.canReset = 1;
+		} else if (me._IESITime + 90 < notification.elapsedTime and notification.iesiInit and !me._canReset) {
+			me._canReset = 1;
 		}
-		
-		if (notification.dcEss >= 25 or (notification.relay7XB and notification.dcHot1703 >= 25)) {
-			me._showIESI = 1;
-			if (notification.acconfig != 1 and notification.iesiInit != 1) {
-				iesi_init.setBoolValue(1);
-				if (me._fast) {
-					me._IESITime = notification.elapsedTime - 80;
-				} else {
-					me._IESITime = notification.elapsedTime;
-				}
-			} else if (notification.acconfig == 1 and notification.iesiInit != 1) {
-				iesi_init.setBoolValue(1);
-				me._IESITime = notification.elapsedTime - 87;
-			}
-		} elsif (notification.iesiInit) {
-			if (!me._transientVar) {
-				me._transientVar = 1;
-				settimer(func() {
-					if (systems.ELEC.Bus.dcEss.getValue() >= 25 or (systems.ELEC.Bus.dcHot1703.getValue() >= 25 and systems.ELEC.Relay.relay7XB.getValue())) {
-						me._transientVar = 0;
-					} else {
-						me.canReset = 0;
-						me._excessMotion = 0;
-						me._fast = 0;
-						me._showIESI = 0;
-						me._transientVar = 0;
-						iesi_init.setBoolValue(0);
-					}
-				}, 0.2); # 200ms delay power transients
-			}
-		}
-		
-		if (me._showIESI and notification.iesiBrt > 0.01) {
-			me.group.setVisible(1);
+	},
+	initIESI: func(acconfig) {
+		iesi_init.setBoolValue(1);
+		if (!acconfig) {
+			me._IESITime = pts.Sim.Time.elapsedSec.getValue() - (me._fastInit ? 80 : 0);
 		} else {
-			me.group.setVisible(0);
+			me._IESITime = pts.Sim.Time.elapsedSec.getValue() - 87;
 		}
 	},
 };
@@ -343,39 +360,41 @@ var IESIRecipient =
 var A320IESI = IESIRecipient.new("A320 IESI");
 emesary.GlobalTransmitter.Register(A320IESI);
 
+# Emesary Frame Notifiaction Properties
 var input = {
 	"acconfig": "/systems/acconfig/autoconfig-running",
-	"airspeed": "/instrumentation/airspeed-indicator[0]/indicated-speed-kt",
-	"altitude": "/instrumentation/altimeter[6]/indicated-altitude-ft",
-	"altitude_ind": "/instrumentation/altimeter[6]/indicated-altitude-ft-pfd",
-	"altimeter_mode": "/instrumentation/altimeter[6]/std",
+	"airspeedIESI": "/instrumentation/airspeed-indicator[0]/indicated-speed-kt",
+	"altitudeIESI": "/instrumentation/altimeter[6]/indicated-altitude-ft",
+	"altitude_indIESI": "/instrumentation/altimeter[6]/indicated-altitude-ft-pfd",
+	"altimeter_mode_iesi": "/instrumentation/altimeter[6]/std",
 	"attReset": "/instrumentation/iesi/att-reset",
 	"iesiBrt": "/controls/lighting/DU/iesi",
 	"iesiInit": "/instrumentation/iesi/iesi-init",
+	"iesiPitch": "/instrumentation/iesi/pitch-deg",
+	"iesiPowered": "/instrumentation/iesi/power/power-on",
+	"irAlignFault": "/systems/navigation/align-fault",
 	"mach": "/instrumentation/airspeed-indicator/indicated-mach",
-	"pitch": "/instrumentation/iesi/pitch-deg",
-	"qnh_hpa": "/instrumentation/altimeter[6]/setting-hpa",
-	"qnh_inhg": "/instrumentation/altimeter[6]/setting-inhg",
+	"qnh_hpa_iesi": "/instrumentation/altimeter[6]/setting-hpa",
+	"qnh_inhg_iesi": "/instrumentation/altimeter[6]/setting-inhg",
 	"roll": "/orientation/roll-deg",
+	"showMach": "/instrumentation/iesi/display/show-mach",
 	"skid": "/instrumentation/iesi/slip-skid",
-	"relay7XB": "/systems/electrical/sources/si-1/inverter-control/relay-7xb",
 };
 
 foreach (var name; keys(input)) {
 	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 IESI", name, input[name]));
 }
 
+# Helper functions
 var showIESI = func {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
 	dlg.setCanvas(A320IESI.MainScreen.canvas);
 }
 
 var roundabout = func(x) {
-	var y = x - int(x);
-	return y < 0.5 ? int(x) : 1 + int(x);
+	return (x - int(x)) < 0.5 ? int(x) : 1 + int(x);
 };
 
 var roundaboutAlt = func(x) {
-	var y = x * 0.2 - int(x * 0.2);
-	return y < 0.5 ? 5 * int(x * 0.2) : 5 + 5 * int(x * 0.2);
+	return (x * 0.2 - int(x * 0.2)) < 0.5 ? 5 * int(x * 0.2) : 5 + 5 * int(x * 0.2);
 };

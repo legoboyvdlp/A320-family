@@ -207,6 +207,7 @@ var initInputB = func(key, i) {
 					fmgc.blockCalculating.setValue(1);
 				}
 				mcdu_scratchpad.scratchpads[i].empty();
+				perfTOCheckVSpeedsLimitations(i);
 			} else if (find("/", scratchpad) != -1) {
 				if (acconfig_weight_kgs.getValue() == 1) {
 					scratchpad = scratchpad / LBS2KGS;
@@ -238,6 +239,7 @@ var initInputB = func(key, i) {
 							fmgc.blockCalculating.setValue(1);
 						}
 						mcdu_scratchpad.scratchpads[i].empty();
+						perfTOCheckVSpeedsLimitations(i);
 					} else {
 						mcdu_message(i, "ENTRY OUT OF RANGE");
 					}
@@ -275,6 +277,7 @@ var initInputB = func(key, i) {
 						fmgc.blockCalculating.setValue(1);
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
+					perfTOCheckVSpeedsLimitations(i);
 				} else {
 					mcdu_message(i, "ENTRY OUT OF RANGE");
 				}

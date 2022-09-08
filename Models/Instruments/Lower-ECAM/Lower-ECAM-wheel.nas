@@ -18,7 +18,6 @@ var canvas_lowerECAMPageWheel =
 			obj[key] = obj.group.getElementById(key);
 		};
 		
-		obj.units = acconfig_weight_kgs.getValue();
 		
 		# init
 		obj["leftuplock"].hide();
@@ -33,16 +32,16 @@ var canvas_lowerECAMPageWheel =
 
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashList(["gearPosNorm","gearPosNorm1","gearPosNorm2","gearLever"], nil, func(val) {
-				if (val.gearLever and (val.gearPosNorm != 1 or val.gearPosNorm1 != 1 or val.gearPosNorm2 != 1)) {
+			props.UpdateManager.FromHashList(["gearPosNorm","gearPosNorm1","gearPosNorm2","gearLever"], 0.01, func(val) {
+				if (val.gearLever and (val.gearPosNorm <= 0.99 or val.gearPosNorm1 <= 0.99 or val.gearPosNorm2 <= 0.99)) {
 					obj["lgctltext"].show();
-				} elsif (!val.gearLever and (val.gearPosNorm != 0 or val.gearPosNorm1 != 0 or val.gearPosNorm2 != 0)) {
+				} elsif (!val.gearLever and (val.gearPosNorm >= 0.01 or val.gearPosNorm1 >= 0.01 or val.gearPosNorm2 >= 0.01)) {
 					obj["lgctltext"].show();
 				} else {
 					obj["lgctltext"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("gearPosNorm", nil, func(val) {
+			props.UpdateManager.FromHashValue("gearPosNorm", 0.01, func(val) {
 				if (val < 0.2) {
 					obj["Triangle-Nose1"].hide();
 					obj["Triangle-Nose2"].hide();
@@ -51,7 +50,7 @@ var canvas_lowerECAMPageWheel =
 					obj["Triangle-Nose2"].show();
 				}
 
-				if (val == 1) {
+				if (val >= 0.99) {
 					obj["Triangle-Nose1"].setColor(0.0509,0.7529,0.2941);
 					obj["Triangle-Nose2"].setColor(0.0509,0.7529,0.2941);
 				} else {
@@ -59,7 +58,7 @@ var canvas_lowerECAMPageWheel =
 					obj["Triangle-Nose2"].setColor(1,0,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("gearPosNorm1", nil, func(val) {
+			props.UpdateManager.FromHashValue("gearPosNorm1", 0.01, func(val) {
 				if (val < 0.2) {
 					obj["Triangle-Left1"].hide();
 					obj["Triangle-Left2"].hide();
@@ -68,7 +67,7 @@ var canvas_lowerECAMPageWheel =
 					obj["Triangle-Left2"].show();
 				}
 
-				if (val == 1) {
+				if (val >= 0.99) {
 					obj["Triangle-Left1"].setColor(0.0509,0.7529,0.2941);
 					obj["Triangle-Left2"].setColor(0.0509,0.7529,0.2941);
 				} else {
@@ -76,7 +75,7 @@ var canvas_lowerECAMPageWheel =
 					obj["Triangle-Left2"].setColor(1,0,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("gearPosNorm2", nil, func(val) {
+			props.UpdateManager.FromHashValue("gearPosNorm2", 0.01, func(val) {
 				if (val < 0.2) {
 					obj["Triangle-Right1"].hide();
 					obj["Triangle-Right2"].hide();
@@ -85,7 +84,7 @@ var canvas_lowerECAMPageWheel =
 					obj["Triangle-Right2"].show();
 				}
 
-				if (val == 1) {
+				if (val >= 0.99) {
 					obj["Triangle-Right1"].setColor(0.0509,0.7529,0.2941);
 					obj["Triangle-Right2"].setColor(0.0509,0.7529,0.2941);
 				} else {
@@ -93,7 +92,7 @@ var canvas_lowerECAMPageWheel =
 					obj["Triangle-Right2"].setColor(1,0,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["yellow","green","NWSSwitch","brakesMode","val.accumPressPsiPressPsi","leftBrakeFCS","rightBrakeFCS"], nil, func(val) {
+			props.UpdateManager.FromHashList(["yellow","green","accumPressPsi","brakesMode","NWSSwitch"], 1, func(val) {
 				if (val.NWSSwitch and val.yellow >= 1500) {
 					obj["NWStext"].hide();
 					obj["NWS"].hide();
@@ -125,18 +124,6 @@ var canvas_lowerECAMPageWheel =
 					obj["BSCU2"].hide();
 				}
 				
-				if (val.green >= 1500) {
-					obj["normbrkhyd"].setColor(0.0509,0.7529,0.2941);
-				} else {
-					obj["normbrkhyd"].setColor(0.7333,0.3803,0);
-				}
-				
-				if (val.yellow >= 1500) {
-					obj["altnbrkhyd"].setColor(0.0509,0.7529,0.2941);
-				} else {
-					obj["altnbrkhyd"].setColor(0.7333,0.3803,0);
-				}
-				
 				if (!val.NWSSwitch or val.green < 1500) {
 					obj["NORMbrk"].show();
 					obj["normbrk-rect"].show();
@@ -161,7 +148,7 @@ var canvas_lowerECAMPageWheel =
 						obj["ALTNbrk"].setColor(0.0509,0.7529,0.2941);
 					}
 				}
-
+				
 				if (val.brakesMode == 2 and val.accumPressPsi < 200 and val.yellow < 1500) {
 					obj["accuonlyarrow"].hide();
 					obj["accuonly"].hide();
@@ -185,7 +172,22 @@ var canvas_lowerECAMPageWheel =
 					obj["brakearrow"].hide();
 					obj["accupress_text"].hide();
 				}
-				
+			}),
+			props.UpdateManager.FromHashValue("green", 1, func(val) {
+				if (val >= 1500) {
+					obj["normbrkhyd"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["normbrkhyd"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashValue("yellow", 1, func(val) {
+				if (val >= 1500) {
+					obj["altnbrkhyd"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["altnbrkhyd"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashList(["brakesMode","leftBrakeFCS","rightBrakeFCS"], 0.1, func(val) {
 				if (val.brakesMode == 1) {
 					obj["releaseL1"].hide();
 					obj["releaseL2"].hide();
@@ -196,7 +198,7 @@ var canvas_lowerECAMPageWheel =
 					obj["releaseR3"].hide();
 					obj["releaseR4"].hide();
 				} else { # Display if the brakes are released and in alternate braking
-					if (val.leftBrakeFCS == 0) {
+					if (val.leftBrakeFCS <= 0.1) {
 						obj["releaseL1"].show();
 						obj["releaseL2"].show();
 						obj["releaseL3"].show();
@@ -208,7 +210,7 @@ var canvas_lowerECAMPageWheel =
 						obj["releaseL4"].hide();
 					}
 					
-					if (val.rightBrakeFCS == 0) {
+					if (val.rightBrakeFCS <= 0.1) {
 						obj["releaseR1"].show();
 						obj["releaseR2"].show();
 						obj["releaseR3"].show();
@@ -221,7 +223,7 @@ var canvas_lowerECAMPageWheel =
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["brakeAutobrkMode","NWSSwitch"], nil, func(val) {
+			props.UpdateManager.FromHashList(["brakeAutobrkMode","NWSSwitch"], 1, func(val) {
 				if (val.brakeAutobrkMode == 0) {
 					obj["autobrkind"].hide();
 				} elsif (val.brakeAutobrkMode == 1) {
@@ -319,15 +321,15 @@ var canvas_lowerECAMPageWheel =
 			props.UpdateManager.FromHashValue("wheelRightDoor", 0.5, func(val) {
 				obj["rightdoor"].setRotation(val * D2R);
 			}),
-			props.UpdateManager.FromHashValue("wheelLeftDoorPos", 0.01, func(val) {
-				if (val == 0) {
+			props.UpdateManager.FromHashValue("wheelLeftDoorPos", 0.1, func(val) {
+				if (val <= 0.1) {
 					obj["leftdoor"].setColorFill(0.0509,0.7529,0.2941);
 				} else {
 					obj["leftdoor"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("wheelNoseDoorPos", 0.01, func(val) {
-				if (val == 0) {
+			props.UpdateManager.FromHashValue("wheelNoseDoorPos", 0.1, func(val) {
+				if (val <= 0.1) {
 					obj["nosegeardoorL"].setColorFill(0.0509,0.7529,0.2941);
 					obj["nosegeardoorR"].setColorFill(0.0509,0.7529,0.2941);
 				} else {
@@ -335,8 +337,8 @@ var canvas_lowerECAMPageWheel =
 					obj["nosegeardoorR"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("wheelRightDoorPos", 0.01, func(val) {
-				if (val == 0) {
+			props.UpdateManager.FromHashValue("wheelRightDoorPos", 0.1, func(val) {
+				if (val <= 0.1) {
 					obj["rightdoor"].setColorFill(0.0509,0.7529,0.2941);
 				} else {
 					obj["rightdoor"].setColorFill(0.7333,0.3803,0);
@@ -432,7 +434,7 @@ var canvas_lowerECAMPageWheel =
 					obj["spoiler5Rex"].show();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerL1Failure","spoilerL1","green"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerL1Failure","spoilerL1","green"], 0.5, func(val) {
 				if (val.spoilerL1Failure or val.green < 1500) {
 					obj["spoiler1Lex"].setColor(0.7333,0.3803,0);
 					obj["spoiler1Lrt"].setColor(0.7333,0.3803,0);
@@ -447,7 +449,7 @@ var canvas_lowerECAMPageWheel =
 					obj["spoiler1Lf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerL2Failure","spoilerL2","yellow"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerL2Failure","spoilerL2","yellow"], 0.5, func(val) {
 				if (val.spoilerL2Failure or val.yellow < 1500) {
 					obj["spoiler2Lex"].setColor(0.7333,0.3803,0);
 					obj["spoiler2Lrt"].setColor(0.7333,0.3803,0);
@@ -462,7 +464,7 @@ var canvas_lowerECAMPageWheel =
 					obj["spoiler2Lf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerL3Failure","spoilerL3","blue"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerL3Failure","spoilerL3","blue"], 0.5, func(val) {
 				if (val.spoilerL3Failure or val.blue < 1500) {
 					obj["spoiler3Lex"].setColor(0.7333,0.3803,0);
 					obj["spoiler3Lrt"].setColor(0.7333,0.3803,0);
@@ -477,7 +479,7 @@ var canvas_lowerECAMPageWheel =
 					obj["spoiler3Lf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerL4Failure","spoilerL4","yellow"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerL4Failure","spoilerL4","yellow"], 0.5, func(val) {
 				if (val.spoilerL4Failure or val.yellow < 1500) {
 					obj["spoiler4Lex"].setColor(0.7333,0.3803,0);
 					obj["spoiler4Lrt"].setColor(0.7333,0.3803,0);
@@ -492,7 +494,7 @@ var canvas_lowerECAMPageWheel =
 					obj["spoiler4Lf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerL5Failure","spoilerL5","green"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerL5Failure","spoilerL5","green"], 0.5, func(val) {
 				if (val.spoilerL5Failure or val.green < 1500) {
 					obj["spoiler5Lex"].setColor(0.7333,0.3803,0);
 					obj["spoiler5Lrt"].setColor(0.7333,0.3803,0);
@@ -507,7 +509,7 @@ var canvas_lowerECAMPageWheel =
 					obj["spoiler5Lf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerR1Failure","spoilerR1","green"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerR1Failure","spoilerR1","green"], 0.5, func(val) {
 				if (val.spoilerR1Failure or val.green < 1500) {
 					obj["spoiler1Rex"].setColor(0.7333,0.3803,0);
 					obj["spoiler1Rrt"].setColor(0.7333,0.3803,0);
@@ -522,7 +524,7 @@ var canvas_lowerECAMPageWheel =
 					obj["spoiler1Rf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerR2Failure","spoilerR2","yellow"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerR2Failure","spoilerR2","yellow"], 0.5, func(val) {
 				if (val.spoilerR2Failure or val.yellow < 1500) {
 					obj["spoiler2Rex"].setColor(0.7333,0.3803,0);
 					obj["spoiler2Rrt"].setColor(0.7333,0.3803,0);
@@ -537,7 +539,7 @@ var canvas_lowerECAMPageWheel =
 					obj["spoiler2Rf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerR3Failure","spoilerR3","blue"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerR3Failure","spoilerR3","blue"], 0.5, func(val) {
 				if (val.spoilerR3Failure or val.blue < 1500) {
 					obj["spoiler3Rex"].setColor(0.7333,0.3803,0);
 					obj["spoiler3Rrt"].setColor(0.7333,0.3803,0);
@@ -552,7 +554,7 @@ var canvas_lowerECAMPageWheel =
 					obj["spoiler3Rf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerR4Failure","spoilerR4","yellow"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerR4Failure","spoilerR4","yellow"], 0.5, func(val) {
 				if (val.spoilerR4Failure or val.yellow < 1500) {
 					obj["spoiler4Rex"].setColor(0.7333,0.3803,0);
 					obj["spoiler4Rrt"].setColor(0.7333,0.3803,0);
@@ -567,7 +569,7 @@ var canvas_lowerECAMPageWheel =
 					obj["spoiler4Rf"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["spoilerR5Failure","spoilerR5","green"], nil, func(val) {
+			props.UpdateManager.FromHashList(["spoilerR5Failure","spoilerR5","green"], 0.5, func(val) {
 				if (val.spoilerR5Failure or val.green < 1500) {
 					obj["spoiler5Rex"].setColor(0.7333,0.3803,0);
 					obj["spoiler5Rrt"].setColor(0.7333,0.3803,0);
@@ -584,35 +586,35 @@ var canvas_lowerECAMPageWheel =
 			}),
 		];
 		
-		obj.displayedGForce = 0;
 		obj.updateItemsBottom = [
-			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
-				obj.units = val;
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
 				if (val) {
 					obj["GW-weight-unit"].setText("KG");
 				} else {
 					obj["GW-weight-unit"].setText("LBS");
 				}
 			}),
-			props.UpdateManager.FromHashValue("hour", nil, func(val) {
+			props.UpdateManager.FromHashValue("hour", 1, func(val) {
 				obj["UTCh"].setText(sprintf("%02d", val));
 			}),
-			props.UpdateManager.FromHashValue("minute", nil, func(val) {
+			props.UpdateManager.FromHashValue("minute", 1, func(val) {
 				obj["UTCm"].setText(sprintf("%02d", val));
 			}),
 			props.UpdateManager.FromHashValue("gForce", 0.05, func(val) {
-				if (obj.displayedGForce) {
-					obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
-				}
+				obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
 			}),
 			props.UpdateManager.FromHashValue("gForceDisplay", nil, func(val) {
-				if ((val == 1 and !obj.displayedGForce) or (val != 0 and obj.displayedGForce)) {
-					obj.displayedGForce = 1;
+				if (val) {
 					obj["GLoad"].show();
 				} else {
-					obj.displayedGForce = 0;
 					obj["GLoad"].hide();
 				}
+			}),
+			props.UpdateManager.FromHashValue("satTemp", 0.5, func(val) {
+				obj["SAT"].setText(sprintf("%+2.0f", val));
+			}),
+			props.UpdateManager.FromHashValue("tatTemp", 0.5, func(val) {
+				obj["TAT"].setText(sprintf("%+2.0f", val));
 			}),
 		];
 		return obj;
@@ -632,13 +634,8 @@ var canvas_lowerECAMPageWheel =
 		"releaseL3","releaseL4","releaseR3","releaseR4"];
 	},
 	updateBottom: func(notification) {
-		foreach(var update_item_bottom; me.updateItemsBottom)
-        {
-            update_item_bottom.update(notification);
-        }
-		
 		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
-			if (me.units) {
+			if (notification.acconfigUnits) {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
 			} else {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
@@ -650,20 +647,25 @@ var canvas_lowerECAMPageWheel =
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
-			me["SAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
+			notification.satTemp = dmc.DMController.DMCs[1].outputs[4].getValue();
 			me["SAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["SAT"].setText(sprintf("%s", "XX"));
+			me["SAT"].setText("XX");
 			me["SAT"].setColor(0.7333,0.3803,0);
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[5] != nil) {
-			me["TAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
+			notification.tatTemp = dmc.DMController.DMCs[1].outputs[5].getValue();
 			me["TAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["TAT"].setText(sprintf("%s", "XX"));
+			me["TAT"].setText("XX");
 			me["TAT"].setColor(0.7333,0.3803,0);
 		}
+		
+		foreach(var update_item_bottom; me.updateItemsBottom)
+        {
+            update_item_bottom.update(notification);
+        }
 	},
 	update: func(notification) {
 		me.updatePower();

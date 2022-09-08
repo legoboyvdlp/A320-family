@@ -4,7 +4,7 @@
   <fx>
 	<!-- cockpit -->
 	<engine>
-		<name>a320_startup_left</name>
+		<name>a320_starter_left</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_starter.wav</path>
 		<condition>
@@ -25,7 +25,7 @@
 	</engine>
 	
 	<engine>
-		<name>a320_startup_right</name>
+		<name>a320_starter_right</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_starter.wav</path>
 		<condition>
@@ -46,7 +46,7 @@
 	</engine>
 	
 	<engine>
-		<name>a320_startup_left_2</name>
+		<name>a320_startup_left</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_startup.wav</path>
 		<condition>
@@ -67,7 +67,7 @@
 	</engine>
 	
 	<engine>
-		<name>a320_startup_right_2</name>
+		<name>a320_startup_right</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/CFM56B/start/A320_cockpit_startup.wav</path>
 		<condition>

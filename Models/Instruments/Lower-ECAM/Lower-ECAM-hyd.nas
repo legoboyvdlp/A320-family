@@ -32,7 +32,6 @@ var canvas_lowerECAMPageHyd =
 			obj[key] = obj.group.getElementById(key);
 		};
 		
-		obj.units = acconfig_weight_kgs.getValue();
 		
 		# init
 		
@@ -63,7 +62,7 @@ var canvas_lowerECAMPageHyd =
 						obj["Blue-label"].setColor(0.7333,0.3803,0);
 					}
 				} else {
-					obj["Press-Blue"].setText(sprintf("%s", "XX"));
+					obj["Press-Blue"].setText("XX");
 					obj["Blue-Line"].setColor(0.7333,0.3803,0);
 					obj["Blue-Line"].setColorFill(0.7333,0.3803,0);
 					obj["Blue-Line-Top"].setColorFill(0.7333,0.3803,0);
@@ -101,7 +100,7 @@ var canvas_lowerECAMPageHyd =
 						obj["Yellow-label"].setColor(0.7333,0.3803,0);
 					}
 				} else {
-					obj["Press-Yellow"].setText(sprintf("%s", "XX"));
+					obj["Press-Yellow"].setText("XX");
 					obj["Yellow-Line"].setColor(0.7333,0.3803,0);
 					obj["Yellow-Line"].setColorFill(0.7333,0.3803,0);
 					obj["Yellow-Line-Top"].setColorFill(0.7333,0.3803,0);
@@ -140,7 +139,7 @@ var canvas_lowerECAMPageHyd =
 						obj["Green-label"].setColor(0.7333,0.3803,0);
 					}
 				} else {
-					obj["Press-Green"].setText(sprintf("%s", "XX"));
+					obj["Press-Green"].setText("XX");
 					obj["Green-Line"].setColor(0.7333,0.3803,0);
 					obj["Green-Line"].setColorFill(0.7333,0.3803,0);
 					obj["Green-Line-Top"].setColorFill(0.7333,0.3803,0);
@@ -165,63 +164,63 @@ var canvas_lowerECAMPageHyd =
 					obj["Pump-Yellow-label"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydBlueResvLoPrs", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydBlueResvLoPrs", 1, func(val) {
 				if (val) {
 					obj["LO-AIR-PRESS-Blue"].show();
 				} else {
 					obj["LO-AIR-PRESS-Blue"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydGreenResvLoPrs", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydGreenResvLoPrs", 1, func(val) {
 				if (val) {
 					obj["LO-AIR-PRESS-Green"].show();
 				} else {
 					obj["LO-AIR-PRESS-Green"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydYellowResvLoPrs", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydYellowResvLoPrs", 1, func(val) {
 				if (val) {
 					obj["LO-AIR-PRESS-Yellow"].show();
 				} else {
 					obj["LO-AIR-PRESS-Yellow"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydYellowElecPumpOvht", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydYellowElecPumpOvht", 1, func(val) {
 				if (val) {
 					obj["ELEC-OVHT-Yellow"].show();
 				} else {
 					obj["ELEC-OVHT-Yellow"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydBlueElecPumpOvht", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydBlueElecPumpOvht", 1, func(val) {
 				if (val) {
 					obj["ELEC-OVHT-Blue"].show();
 				} else {
 					obj["ELEC-OVHT-Blue"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydBlueResvOvht", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydBlueResvOvht", 1, func(val) {
 				if (val) {
 					obj["OVHT-Blue"].show();
 				} else {
 					obj["OVHT-Blue"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydGreenResvOvht", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydGreenResvOvht", 1, func(val) {
 				if (val) {
 					obj["OVHT-Green"].show();
 				} else {
 					obj["OVHT-Green"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydYellowResvOvht", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydYellowResvOvht", 1, func(val) {
 				if (val) {
 					obj["OVHT-Yellow"].show();
 				} else {
 					obj["OVHT-Yellow"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydRATPosition", nil, func(val) {
+			props.UpdateManager.FromHashValue("hydRATPosition", 1, func(val) {
 				if (val) {
 					obj["RAT-stowed"].hide();
 					obj["RAT-not-stowed"].show();
@@ -230,8 +229,8 @@ var canvas_lowerECAMPageHyd =
 					obj["RAT-not-stowed"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydGreenFireValve", nil, func(val) {
-				if (val != 0) {
+			props.UpdateManager.FromHashValue("hydGreenFireValve", 0.1, func(val) {
+				if (val >= 0.1) {
 					obj["Fire-Valve-Green"].setColor(0.7333,0.3803,0);
 					obj["Fire-Valve-Green-Cross"].setColorFill(0.7333,0.3803,0);
 					obj["Fire-Valve-Green"].setRotation(90 * D2R);
@@ -241,8 +240,8 @@ var canvas_lowerECAMPageHyd =
 					obj["Fire-Valve-Green"].setRotation(0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("hydYellowFireValve", nil, func(val) {
-				if (val != 0) {
+			props.UpdateManager.FromHashValue("hydYellowFireValve", 0.1, func(val) {
+				if (val >= 0.1) {
 					obj["Fire-Valve-Yellow"].setColor(0.7333,0.3803,0);
 					obj["Fire-Valve-Yellow-Cross"].setColorFill(0.7333,0.3803,0);
 					obj["Fire-Valve-Yellow"].setRotation(90 * D2R);
@@ -266,7 +265,7 @@ var canvas_lowerECAMPageHyd =
 					obj["ELEC-Yellow-label"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["yellow","hydYellowElecPumpSwitch"], nil, func(val) {
+			props.UpdateManager.FromHashList(["yellow","hydYellowElecPumpSwitch"], 1, func(val) {
 				if (!val.hydYellowElecPumpSwitch) {
 					obj["ELEC-Yellow-on"].hide();
 					obj["ELEC-Yellow-off"].show();
@@ -280,7 +279,7 @@ var canvas_lowerECAMPageHyd =
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["blue","hydBlueElecPumpSwitch"], nil, func(val) {
+			props.UpdateManager.FromHashList(["blue","hydBlueElecPumpSwitch"], 1, func(val) {
 				if (val.hydBlueElecPumpSwitch) {
 					obj["Pump-Blue-off"].hide();
 					if (val.blue > 1450) {
@@ -302,7 +301,7 @@ var canvas_lowerECAMPageHyd =
 					obj["Pump-Blue"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["yellow","hydYellowEDPPumpSwitch"], nil, func(val) {
+			props.UpdateManager.FromHashList(["yellow","hydYellowEDPPumpSwitch"], 1, func(val) {
 				if (val.hydYellowEDPPumpSwitch) {
 					obj["Pump-Yellow-off"].hide();
 					if (val.yellow > 1450) {
@@ -324,7 +323,7 @@ var canvas_lowerECAMPageHyd =
 					obj["Pump-Yellow"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["green","hydGreenEDPPumpSwitch"], nil, func(val) {
+			props.UpdateManager.FromHashList(["green","hydGreenEDPPumpSwitch"], 1, func(val) {
 				if (val.hydGreenEDPPumpSwitch) {
 					obj["Pump-Green-off"].hide();
 					if (val.green > 1450) {
@@ -345,7 +344,7 @@ var canvas_lowerECAMPageHyd =
 					obj["Pump-Green"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["hydPTUSwitch","hydPTUDiff","hydPTUActive","hydPTUFault"], nil, func(val) {
+			props.UpdateManager.FromHashList(["hydPTUSwitch","hydPTUDiff","hydPTUActive","hydPTUFault"], 1, func(val) {
 				if (val.hydPTUSwitch and !val.hydPTUFault) {
 					obj["PTU-connection"].setColor(0.0509,0.7529,0.2941);
 
@@ -409,35 +408,35 @@ var canvas_lowerECAMPageHyd =
 			}),
 		];
 		
-		obj.displayedGForce = 0;
 		obj.updateItemsBottom = [
-			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
-				obj.units = val;
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
 				if (val) {
 					obj["GW-weight-unit"].setText("KG");
 				} else {
 					obj["GW-weight-unit"].setText("LBS");
 				}
 			}),
-			props.UpdateManager.FromHashValue("hour", nil, func(val) {
+			props.UpdateManager.FromHashValue("hour", 1, func(val) {
 				obj["UTCh"].setText(sprintf("%02d", val));
 			}),
-			props.UpdateManager.FromHashValue("minute", nil, func(val) {
+			props.UpdateManager.FromHashValue("minute", 1, func(val) {
 				obj["UTCm"].setText(sprintf("%02d", val));
 			}),
 			props.UpdateManager.FromHashValue("gForce", 0.05, func(val) {
-				if (obj.displayedGForce) {
-					obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
-				}
+				obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
 			}),
 			props.UpdateManager.FromHashValue("gForceDisplay", nil, func(val) {
-				if ((val == 1 and !obj.displayedGForce) or (val != 0 and obj.displayedGForce)) {
-					obj.displayedGForce = 1;
+				if (val) {
 					obj["GLoad"].show();
 				} else {
-					obj.displayedGForce = 0;
 					obj["GLoad"].hide();
 				}
+			}),
+			props.UpdateManager.FromHashValue("satTemp", 0.5, func(val) {
+				obj["SAT"].setText(sprintf("%+2.0f", val));
+			}),
+			props.UpdateManager.FromHashValue("tatTemp", 0.5, func(val) {
+				obj["TAT"].setText(sprintf("%+2.0f", val));
 			}),
 		];
 		return obj;
@@ -452,13 +451,8 @@ var canvas_lowerECAMPageHyd =
 		"LO-AIR-PRESS-Yellow","LO-AIR-PRESS-Blue","OVHT-Green","OVHT-Blue","OVHT-Yellow","Quantity-Indicator-Green","Quantity-Indicator-Blue","Quantity-Indicator-Yellow","Green-label","Blue-label","Yellow-label","Fire-Valve-Yellow-Cross","Fire-Valve-Green-Cross","path5561","path5561-4","path5561-5"];
 	},
 	updateBottom: func(notification) {
-		foreach(var update_item_bottom; me.updateItemsBottom)
-        {
-            update_item_bottom.update(notification);
-        }
-		
 		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
-			if (me.units) {
+			if (notification.acconfigUnits) {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
 			} else {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
@@ -470,20 +464,25 @@ var canvas_lowerECAMPageHyd =
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
-			me["SAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
+			notification.satTemp = dmc.DMController.DMCs[1].outputs[4].getValue();
 			me["SAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["SAT"].setText(sprintf("%s", "XX"));
+			me["SAT"].setText("XX");
 			me["SAT"].setColor(0.7333,0.3803,0);
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[5] != nil) {
-			me["TAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
+			notification.tatTemp = dmc.DMController.DMCs[1].outputs[5].getValue();
 			me["TAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["TAT"].setText(sprintf("%s", "XX"));
+			me["TAT"].setText("XX");
 			me["TAT"].setColor(0.7333,0.3803,0);
 		}
+		
+		foreach(var update_item_bottom; me.updateItemsBottom)
+        {
+            update_item_bottom.update(notification);
+        }
 	},
 	update: func(notification) {
 		me.updatePower();

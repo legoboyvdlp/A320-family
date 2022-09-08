@@ -19,6 +19,7 @@ var engOpt     = props.globals.getNode("/options/eng", 1);
 var thrustState = [nil, nil];
 
 # local variables
+var takeoffConfig = 0;
 var transmitFlag1 = 0;
 var transmitFlag2 = 0;
 var phaseVar3 = nil;
@@ -2323,6 +2324,40 @@ var messages_priority_2 = func {
 		fctlSpdBrkStillOut.active = 1;
 	} else {
 		ECAM_controller.warningReset(fctlSpdBrkStillOut);
+	}
+	
+	if (fctlPitchTrimDisag.clearFlag == 0 and takeoffConfig and fmgc.FMGCInternal.toFlapThsSet and abs(-getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") - fmgc.FMGCInternal.toThs) >= 1.3) {
+		fctlPitchTrimDisag.active = 1;
+		fctlPitchTrimDisag2.active = 1;
+	} else {
+		ECAM_controller.warningReset(fctlPitchTrimDisag);
+		ECAM_controller.warningReset(fctlPitchTrimDisag2);
+	}
+	
+	if (fctlFlapsDisag.clearFlag == 0 and takeoffConfig and fmgc.FMGCInternal.toFlapThsSet and (fmgc.FMGCInternal.toFlap + 1 != pts.Controls.Flight.flapsPos.getValue())) {
+		fctlFlapsDisag.active = 1;
+	} else {
+		ECAM_controller.warningReset(fctlFlapsDisag);
+	}
+	
+	if (toSpdsDisag.clearFlag == 0 and takeoffConfig and fmgc.FMGCInternal.v1set and fmgc.FMGCInternal.vrset and fmgc.FMGCInternal.v2set and !(fmgc.FMGCInternal.v1 <= fmgc.FMGCInternal.vr and fmgc.FMGCInternal.vr <= fmgc.FMGCInternal.v2)) {
+		toSpdsDisag.active = 1;
+	} else {
+		ECAM_controller.warningReset(toSpdsDisag);
+	}
+	
+	if (toSpdsTooLow.clearFlag == 0 and takeoffConfig and 
+		fmgc.FMGCInternal.toFlapThsSet and fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet and fmgc.FMGCInternal.v1set and fmgc.FMGCInternal.vrset and fmgc.FMGCInternal.v2set
+		and (fmgc.FMGCInternal.v1 < mcdu.VMCG.getValue() or fmgc.FMGCInternal.vr < (mcdu.VMCA.getValue() * 1.05) or fmgc.FMGCInternal.v2 < (mcdu.VMCA.getValue() * 1.10) or fmgc.FMGCInternal.v2 < (1.13 * mcdu.chooseVS1G()))) {
+		toSpdsTooLow.active = 1;
+	} else {
+		ECAM_controller.warningReset(toSpdsTooLow);
+	}
+	
+	if (toSpdsNotInserted.clearFlag == 0 and takeoffConfig and (!fmgc.FMGCInternal.v1set or !fmgc.FMGCInternal.vrset or !fmgc.FMGCInternal.v2set)) {
+		toSpdsNotInserted.active = 1;
+	} else {
+		ECAM_controller.warningReset(toSpdsNotInserted);
 	}
 	
 	gearPosition = pts.Gear.position[1].getValue();

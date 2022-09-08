@@ -22,7 +22,7 @@ var spinning = maketimer(0.05, func {
 
 var failReset = func {
 	systems.ELEC.resetFail();
-	systems.PNEU.resetFail();
+	systems.PNEU.resetFailures();
 	fbw.FBW.resetFail();
 	systems.HYD.resetFail();
 }
@@ -496,6 +496,7 @@ var taxi_b = func {
 		libraries.toggleSTD();
 	}
 	setprop("/instrumentation/altimeter[0]/setting-inhg", getprop("/environment/metar[0]/pressure-inhg") or 29.92);
+	setprop("/instrumentation/altimeter[6]/setting-inhg", getprop("/environment/metar[0]/pressure-inhg") or 29.92);
 	settimer(taxi_c, 2);
 }
 var taxi_c = func {

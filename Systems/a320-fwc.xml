@@ -2499,6 +2499,7 @@
 		<switch name="/instrumentation/pfd/logic/autoland/autoland-armed">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				/instrumentation/pfd/logic/autoland/pitch-land eq 1
 				<test logic="OR">
 					/systems/electrical/bus/ac-2 ge 110
 					/systems/electrical/bus/ac-ess-shed ge 110
@@ -2519,32 +2520,33 @@
 		<switch name="/instrumentation/pfd/logic/autoland/autoland-alarm">
 			<default value="0"/>
 			<test logic="AND" value="1">			
-			  /instrumentation/pfd/logic/autoland/autoland-armed eq 1
-			  /instrumentation/pfd/logic/autoland/pitch-land eq 1
-			  <test logic="OR">
-				<test logic="AND">
-					/it-autoflight/output/ap1 eq 0
-					/it-autoflight/output/ap2 eq 0			    
-			    </test>
-				/instrumentation/radar-altimeter-difference-ft gt 15
-				<test logic="AND">
-					<test logic="OR">
-						/instrumentation/nav[0]/gs-needle-deflection-norm gt 0.5
-						/instrumentation/nav[0]/gs-needle-deflection-norm lt -0.5
+				/instrumentation/pfd/logic/autoland/autoland-armed eq 1						  				
+				<test logic="OR">
+					<test logic="AND">
+						/it-autoflight/output/ap1 eq 0
+						/it-autoflight/output/ap2 eq 0
+						/instrumentation/pfd/logic/autoland/ap-disc-ft lt 200
+						/instrumentation/pfd/logic/autoland/ap-disc-ft gt 0
+					</test>					
+					/instrumentation/radar-altimeter-difference-ft gt 15
+					<test logic="AND">
+						<test logic="OR">
+							/instrumentation/nav[0]/gs-needle-deflection-norm gt 0.5
+							/instrumentation/nav[0]/gs-needle-deflection-norm lt -0.5
+						</test>
+						/position/gear-agl-ft ge 100
 					</test>
-					/position/gear-agl-ft ge 100
-				</test>
-				<test logic="AND">
-					<test logic="OR">
-						/instrumentation/nav[0]/heading-needle-deflection-norm gt 0.125
-						/instrumentation/nav[0]/heading-needle-deflection-norm lt -0.125
+					<test logic="AND">
+						<test logic="OR">
+							/instrumentation/nav[0]/heading-needle-deflection-norm gt 0.125
+							/instrumentation/nav[0]/heading-needle-deflection-norm lt -0.125
+						</test>
+						/position/gear-agl-ft ge 15
 					</test>
-					/position/gear-agl-ft ge 15
+					<!-- TODO 
+					- Loss of localizer signal
+					-->
 				</test>
-				<!-- TODO 
-				- Loss of localizer signal
-				-->
-			  </test>
 		    </test>
 		</switch>		
 
@@ -3444,7 +3446,7 @@
 		<actuator name="/ECAM/warnings/fctl/altn-law-output">
 			<input>/ECAM/warnings/fctl/altn-law</input>
 			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-			<rate_limit sense="incr">3.33333333333</rate_limit> <!-- 0.3 seconds -->
+			<rate_limit sense="incr">0.3</rate_limit>
 		</actuator>
 		
 		

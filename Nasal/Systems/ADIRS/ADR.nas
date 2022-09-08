@@ -144,13 +144,9 @@ var ADIRU = {
 		}
 	},
 	_excessMotion: 0,
+	alignFault: props.globals.getNode("/systems/navigation/align-fault"),
 	alignLoop: func() {
-		me._roll = pts.Orientation.roll.getValue();
-		me._pitch = pts.Orientation.pitch.getValue();
-		me._gs = pts.Velocities.groundspeed.getValue();
-		
-		# todo use IR values
-		if (me._gs > 5 or abs(me._pitch) > 5 or abs(me._roll) > 10) {
+		if (me.alignFault.getBoolValue()) {
 			me.stopAlignNoAlign();
 			me._excessMotion = 1;
 			me.update(); # update operative
