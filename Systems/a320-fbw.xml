@@ -2246,7 +2246,6 @@
 			<test logic="OR" value="0">
 				position/wow eq 1
 				/position/gear-agl-ft lt 50
-				fbw/yaw/autoland-switch eq 1
 			</test>
 		</switch>
 		
@@ -2280,8 +2279,9 @@
 		
 		<switch name="fbw/yaw/tc-pd-s">
 			<default value="fbw/yaw/tc-pd"/>
-			<test value="0">
+			<test logic="OR" value="0">
 				position/wow eq 1
+				fcc/yaw/autoland-switch eq 1
 			</test>
 		</switch>
 		
