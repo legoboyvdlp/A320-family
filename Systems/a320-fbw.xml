@@ -2281,7 +2281,7 @@
 			<default value="fbw/yaw/tc-pd"/>
 			<test logic="OR" value="0">
 				position/wow eq 1
-				fcc/yaw/autoland-switch eq 1
+				fbw/yaw/autoland-switch eq 1
 			</test>
 		</switch>
 		
