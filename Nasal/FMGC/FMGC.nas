@@ -24,7 +24,6 @@ var altitude = 0;
 var flap = 0;
 var flaps = 0;
 var ktsmach = 0;
-var srsSPD = 0;
 var mng_alt_spd = 0;
 var mng_alt_mach = 0;
 var altsel = 0;
@@ -284,6 +283,7 @@ var FMGCNodes = {
 	slat: props.globals.getNode("/FMGC/internal/slat"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
+	togaSpd: props.globals.getNode("/it-autoflight/settings/togaspd", 1),
 	tow: props.globals.getNode("/FMGC/internal/tow"),
 	towClean: props.globals.getNode("/FMGC/internal/tow-clean"),
 	towFlap2: props.globals.getNode("/FMGC/internal/flap-2-tow"),
@@ -853,6 +853,12 @@ var masterFMGC = maketimer(0.2, func {
 	} else {
 		FMGCInternal.minspeed = FMGCNodes.minspeed.getValue();
 	}
+	
+	if (fmgc.FMGCInternal.v2set) {
+		FMGCNodes.togaSpd.setValue(FMGCInternal.v2);
+	} else { # This should never happen, but lets add a fallback just in case
+		FMGCNodes.togaSpd.setValue(FMGCNodes.vls.getValue() + 15);
+	}
 });
 
 ############################
@@ -948,8 +954,6 @@ var reset_FMGC = func {
 #################
 # Managed Speed #
 #################
-var srsSpeedNode = props.globals.getNode("/it-autoflight/settings/togaspd", 1);
-
 var ktToMach = func(val) { return val * FMGCNodes.ktsToMachFactor.getValue(); }
 var machToKt = func(val) { return val * FMGCNodes.machToKtsFactor.getValue(); }
 			
@@ -958,7 +962,6 @@ var ManagedSPD = maketimer(0.25, func {
 		if (Custom.Input.spdManaged.getBoolValue()) {
 			altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 			ktsmach = Input.ktsMach.getValue();
-			srsSPD = srsSpeedNode.getValue();
 			
 			mng_alt_spd = math.round(FMGCNodes.mngSpdAlt.getValue(), 1);
 			mng_alt_mach = math.round(FMGCNodes.mngMachAlt.getValue(), 0.001);
@@ -979,7 +982,7 @@ var ManagedSPD = maketimer(0.25, func {
 			
 			if ((Modes.PFD.FMA.pitchMode == " " or Modes.PFD.FMA.pitchMode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
 				FMGCInternal.mngKtsMach = 0;
-				FMGCInternal.mngSpdCmd = srsSPD;
+				FMGCInternal.mngSpdCmd = FMGCInternal.v2;
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
 				# Speed is maximum of greendot / climb speed limit
 				FMGCInternal.mngKtsMach = 0;

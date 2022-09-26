@@ -16,7 +16,6 @@ var MCDU_init = func(i) {
 var MCDU_reset = func(i) {
 	setprop("/MCDU[" ~ i ~ "]/active", 0);
 	setprop("/MCDU[" ~ i ~ "]/atsu-active", 0);
-	setprop("/it-autoflight/settings/togaspd", 157); #aka v2 clone
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/last-atsu-page", "ATSUDLINK");
 	setprop("/MCDU[" ~ i ~ "]/active-system","");
