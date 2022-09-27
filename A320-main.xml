@@ -1819,8 +1819,8 @@
 		
 		<comm n="0">
 			<frequencies>
-				<selected-mhz type="double">118.7</selected-mhz>
-				<standby-mhz type="double">121.4</standby-mhz>
+				<selected-mhz type="double">121.4</selected-mhz>
+				<standby-mhz type="double">118.1</standby-mhz>
 			</frequencies>
 			<serviceable type="bool">true</serviceable>
 			<volume type="double">0.6</volume>
