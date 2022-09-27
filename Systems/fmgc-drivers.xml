@@ -736,7 +736,7 @@
 					<value>1</value>
 				</not-equals>
 			</condition>
-			<value>-1200</value>
+			<value>-1500</value>
 		</min>
 		<min>
 			<condition>
