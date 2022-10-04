@@ -414,6 +414,12 @@
 		<object-name>ReverserLDoorLEAP</object-name>
 		<object-name>ReverserRDoorLEAP</object-name>
 	</effect>
+
+i	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>EngineLEAP.Placards</object-name>
+	</effect>
+
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-matt-engine-LEAP</inherits-from>

@@ -383,6 +383,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>ReverserLDoor</object-name>
+		<object-name>ReverserLDoor.Placards</object-name>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
@@ -395,6 +396,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>ReverserRDoor</object-name>
+		<object-name>ReverserRDoor.Placards</object-name>
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
@@ -459,7 +461,9 @@
 	
 	<effect>
 		<inherits-from>Effects/model-transparent</inherits-from>
-		<object-name>EngineIAEV2500L.Placards</object-name>
+		<object-name>EngineIAEV2500.Placards</object-name>
+		<object-name>ReverserRDoor.Placards</object-name>
+		<object-name>ReverserLDoor.Placards</object-name>
 	</effect>
 	
 	<effect>

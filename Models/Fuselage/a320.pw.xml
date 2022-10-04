@@ -383,7 +383,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>ReverserLDoorPWPP.Inner</object-name>
-		<object-name>ReverserLDoorLPWPP</object-name>
+		<object-name>ReverserLDoorPWPP</object-name>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
@@ -396,7 +396,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>ReverserRDoorPWPP.Inner</object-name>
-		<object-name>ReverserLDoorRPWPP</object-name>
+		<object-name>ReverserRDoorPWPP</object-name>
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
@@ -409,16 +409,23 @@
 	<!-- Effect -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-engine-PW</inherits-from>
-		<object-name>EnginePWPP</object-name>
+		<object-name>EnginePWPPL</object-name>
 		<object-name>EnginePWPPR</object-name>
-		<object-name>ReverserLDoorLPWPP</object-name>
-		<object-name>ReverserLDoorRPWPP</object-name>
+		<object-name>ReverserLDoorPWPP</object-name>
+		<object-name>ReverserRDoorPWPP</object-name>
+	</effect>
+
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>EnginePWPP.Placards</object-name>
+		<object-name>ReverserLDoorPWPP.Placards</object-name>
+		<object-name>ReverserRDoorPWPP.Placards</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-matt-engine-PW</inherits-from>
-		<object-name>EngineLEAPL.Inner</object-name>
-        <object-name>EngineLEAPR.Inner</object-name>
+		<object-name>EnginePWPPL.Inner</object-name>
+        <object-name>EnginePWPPR.Inner</object-name>
 		<object-name>PylonPWPPL</object-name>
 		<object-name>PylonPWPPR</object-name>
 		<object-name>ReverserLDoorPWPP.Inner</object-name>

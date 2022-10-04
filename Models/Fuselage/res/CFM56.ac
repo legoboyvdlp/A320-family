@@ -16459,13 +16459,8 @@ refs 4
 SURF 0X12
 mat 3
 refs 2
-892 0 0
-1431 0 0
-SURF 0X12
-mat 3
-refs 2
-553 0 0
-554 0 0
+559 0 0
+558 0 0
 SURF 0X12
 mat 3
 refs 2
@@ -16484,8 +16479,13 @@ refs 2
 SURF 0X12
 mat 3
 refs 2
-559 0 0
-558 0 0
+553 0 0
+554 0 0
+SURF 0X12
+mat 3
+refs 2
+892 0 0
+1431 0 0
 kids 0
 OBJECT poly
 name "EngineCFM56R"
@@ -73931,6 +73931,8 @@ name "ReverserLDoor1.Placards"
 data 9
 Plane.006
 crease 40.0
+texture "placards.png"
+texrep 1 1
 numvert 8
 -4.6614 -2.22699 6.60036
 -4.74461 -2.22699 6.60912
@@ -73942,14 +73944,14 @@ numvert 8
 -5.10264 -1.70557 6.51087
 numsurf 2
 SURF 0X0
-mat 0
+mat 1
 refs 4
 1 0.953264 0.849648
 0 0.983581 0.849648
 3 0.983581 0.879965
 2 0.953264 0.879965
 SURF 0X10
-mat 0
+mat 1
 refs 4
 4 0.935478 0.848319
 5 0.934411 0.831144
@@ -74432,6 +74434,8 @@ name "ReverserLDoor2.Placards"
 data 9
 Plane.007
 crease 40.0
+texture "placards.png"
+texrep 1 1
 numvert 8
 -4.6614 -2.57413 6.56987
 -4.74461 -2.57414 6.57863
@@ -74443,14 +74447,14 @@ numvert 8
 -5.11392 -2.99245 6.38849
 numsurf 2
 SURF 0X0
-mat 0
+mat 1
 refs 4
 1 0.953264 0.849648
 0 0.983581 0.849648
 3 0.983581 0.879965
 2 0.953264 0.879965
 SURF 0X10
-mat 0
+mat 1
 refs 4
 7 0.986038 0.830519
 6 0.986044 0.84756
@@ -75070,6 +75074,8 @@ name "ReverserLDoor3.Placards"
 data 9
 Plane.010
 crease 40.0
+texture "placards.png"
+texrep 1 1
 numvert 8
 -4.6614 -2.22699 4.66128
 -4.74461 -2.22699 4.65252
@@ -75081,14 +75087,14 @@ numvert 8
 -5.10264 -1.70557 4.75077
 numsurf 2
 SURF 0X0
-mat 0
+mat 1
 refs 4
 1 0.983581 0.849648
 2 0.983581 0.879965
 3 0.953264 0.879965
 0 0.953264 0.849648
 SURF 0X10
-mat 0
+mat 1
 refs 4
 4 0.987788 0.848319
 6 0.934629 0.848241
@@ -75563,6 +75569,8 @@ name "ReverserLDoor4.Placards"
 data 9
 Plane.011
 crease 40.0
+texture "placards.png"
+texrep 1 1
 numvert 8
 -4.6614 -2.57413 4.69178
 -4.74461 -2.57414 4.68301
@@ -75574,14 +75582,14 @@ numvert 8
 -5.11392 -2.99245 4.87316
 numsurf 2
 SURF 0X0
-mat 0
+mat 1
 refs 4
 1 0.983581 0.849648
 2 0.983581 0.879965
 3 0.953264 0.879965
 0 0.953264 0.849648
 SURF 0X10
-mat 0
+mat 1
 refs 4
 7 0.936169 0.830519
 5 0.986046 0.830603
@@ -76201,6 +76209,8 @@ name "ReverserRDoor1.Placards"
 data 9
 Plane.004
 crease 40.0
+texture "placards.png"
+texrep 1 1
 numvert 8
 -4.6614 -2.22699 -4.66128
 -4.74461 -2.22699 -4.65252
@@ -76212,14 +76222,14 @@ numvert 8
 -5.10264 -1.70557 -4.75077
 numsurf 2
 SURF 0X0
-mat 0
+mat 1
 refs 4
 1 0.953264 0.849648
 0 0.983581 0.849648
 3 0.983581 0.879965
 2 0.953264 0.879965
 SURF 0X10
-mat 0
+mat 1
 refs 4
 4 0.935478 0.848319
 5 0.934411 0.831144
@@ -76702,6 +76712,8 @@ name "ReverserRDoor2.Placards"
 data 9
 Plane.005
 crease 40.0
+texture "placards.png"
+texrep 1 1
 numvert 8
 -4.6614 -2.57413 -4.69178
 -4.74461 -2.57414 -4.68301
@@ -76713,14 +76725,14 @@ numvert 8
 -5.11392 -2.99245 -4.87316
 numsurf 2
 SURF 0X0
-mat 0
+mat 1
 refs 4
 1 0.953264 0.849648
 0 0.983581 0.849648
 3 0.983581 0.879965
 2 0.953264 0.879965
 SURF 0X10
-mat 0
+mat 1
 refs 4
 7 0.986038 0.830519
 6 0.986044 0.84756
@@ -77340,6 +77352,8 @@ name "ReverserRDoor3.Placards"
 data 9
 Plane.008
 crease 40.0
+texture "placards.png"
+texrep 1 1
 numvert 8
 -4.6614 -2.22699 -6.60036
 -4.74461 -2.22699 -6.60912
@@ -77351,14 +77365,14 @@ numvert 8
 -5.10264 -1.70557 -6.51087
 numsurf 2
 SURF 0X0
-mat 0
+mat 1
 refs 4
 1 0.983581 0.849648
 2 0.983581 0.879965
 3 0.953264 0.879965
 0 0.953264 0.849648
 SURF 0X10
-mat 0
+mat 1
 refs 4
 4 0.987788 0.848319
 6 0.934629 0.848241
@@ -77833,6 +77847,8 @@ name "ReverserRDoor4.Placards"
 data 9
 Plane.009
 crease 40.0
+texture "placards.png"
+texrep 1 1
 numvert 8
 -4.6614 -2.57413 -6.56987
 -4.74461 -2.57414 -6.57863
@@ -77844,14 +77860,14 @@ numvert 8
 -5.11392 -2.99245 -6.38849
 numsurf 2
 SURF 0X0
-mat 0
+mat 1
 refs 4
 1 0.983581 0.849648
 2 0.983581 0.879965
 3 0.953264 0.879965
 0 0.953264 0.849648
 SURF 0X10
-mat 0
+mat 1
 refs 4
 7 0.936169 0.830519
 5 0.986046 0.830603
