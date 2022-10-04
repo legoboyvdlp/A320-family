@@ -52,7 +52,7 @@ if (aero == "A320-200-CFM") {
 	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/CFM-NEO/4k/SAS-fuselage.png";
 } else if (aero == "A320neo-PW") {
 	var livery = aircraft.canvas_livery.init("Models/Liveries/PW-NEO");
-	elements = ["EnginePWPP", "EnginePWPPL.Inner", "EnginePWPPR", "EnginePWPPR.Inner", "Exhaust3PWPPL", "Exhaust3PWPPR", "Exxhaust2PWPPL", "Exxhaust2PWPPR", "IntakePWPPL", "IntakePWPPR", "PylonPWPPL", "PylonPWPPR", "ReverserLDoorLPWPP", "ReverserLDoorRPWPP"];
+	elements = ["EnginePWPPL", "EnginePWPPL.Inner", "EnginePWPPR", "EnginePWPPR.Inner", "Exhaust3PWPPL", "Exhaust3PWPPR", "Exxhaust2PWPPL", "Exxhaust2PWPPR", "IntakePWPPL", "IntakePWPPR", "PylonPWPPL", "PylonPWPPR", "ReverserRDoorPWPP", "ReverserLDoorPWPP"];
 	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/PW-NEO/2k/NKS-engine.png");
 #	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/PW-NEO/engine-dirt.png");
 	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/PW-NEO/4k/NKS-fuselage.png";
