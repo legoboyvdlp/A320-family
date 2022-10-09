@@ -968,7 +968,7 @@
 				<starter type="bool">0</starter>
 				<start-switch type="bool">0</start-switch>
 				<reverse-cmd type="bool">0</reverse-cmd>
-				<reverse-lever type="double">0</reverse-lever>
+				<reverse-engage type="double">0</reverse-engage>
 				<igniter-a type="bool">0</igniter-a>
 				<igniter-b type="bool">0</igniter-b>
 			</engine>
@@ -981,7 +981,7 @@
 				<starter type="bool">0</starter>
 				<start-switch type="bool">0</start-switch>
 				<reverse-cmd type="bool">0</reverse-cmd>
-				<reverse-lever type="double">0</reverse-lever>
+				<reverse-engage type="double">0</reverse-engage>
 				<igniter-a type="bool">0</igniter-a>
 				<igniter-b type="bool">0</igniter-b>
 			</engine>
@@ -4598,10 +4598,10 @@
 			</key>
 			<key n="127">
 				<name>DEL</name>
-				<desc>Simple Engage/Disengage reversers</desc>
+				<desc>Toggle reversers</desc>
 				<binding>
 					<command>nasal</command>
-					<script>systems.toggleFastRevThrust();</script>
+					<script>systems.toggleRevThrust();</script>
 				</binding>
 			</key>
 			<key n="257">

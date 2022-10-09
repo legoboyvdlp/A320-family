@@ -87,12 +87,12 @@
 		
 		<lag_filter name="fadec/reverse-lever[0]">
 			<input>/controls/engines/engine[0]/reverse-lever</input>
-			<c1>16</c1>
+			<c1>20</c1>
 		</lag_filter>
 		
 		<lag_filter name="fadec/reverse-lever[1]">
 			<input>/controls/engines/engine[1]/reverse-lever</input>
-			<c1>16</c1>
+			<c1>20</c1>
 		</lag_filter>
 		
 		<lag_filter name="fcs/engine-cutoff[0]">
@@ -407,16 +407,6 @@
 		
 		<lag_filter name="/controls/cockpit/fire-btn-2-pos">
 			<input>/controls/engines/engine[1]/fire-btn</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="/controls/engines/engine[0]/reverse-cmd-pos">
-			<input>/controls/engines/engine[0]/reverse-cmd</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="/controls/engines/engine[1]/reverse-cmd-pos">
-			<input>/controls/engines/engine[1]/reverse-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		

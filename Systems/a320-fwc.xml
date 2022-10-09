@@ -2948,8 +2948,8 @@
 					/ECAM/warning-phase ne 7
 				</test>
 				<test logic="OR">
-					/controls/engines/engine[0]/reverse-lever gt 0.0
-					/controls/engines/engine[1]/reverse-lever gt 0.0
+					/controls/engines/engine[0]/reverse-engage eq 1
+					/controls/engines/engine[1]/reverse-engage eq 1
 				</test>
 			</test>
 		</switch>

@@ -11898,9 +11898,9 @@
 		<object-name>rev_l</object-name>
 		<property>fdm/jsbsim/fadec/reverse-lever[0]</property>
 		<interpolation>
-			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
-			<entry><ind>0.25</ind><dep> -3.5</dep></entry>
-			<entry><ind>1.00</ind><dep>-23.5</dep></entry>
+			<entry><ind>0.10</ind><dep>  0</dep></entry>
+			<entry><ind>0.25</ind><dep> -6</dep></entry>
+			<entry><ind>1.00</ind><dep>-23</dep></entry>
 		</interpolation>
 		<axis>
 			<object-name>trim.axis</object-name>
@@ -11914,9 +11914,9 @@
 		<object-name>rev_r</object-name>
 		<property>fdm/jsbsim/fadec/reverse-lever[1]</property>
 		<interpolation>
-			<entry><ind>0.00</ind><dep>  0.0</dep></entry>
-			<entry><ind>0.25</ind><dep> -3.5</dep></entry>
-			<entry><ind>1.00</ind><dep>-23.5</dep></entry>
+			<entry><ind>0.10</ind><dep>  0</dep></entry>
+			<entry><ind>0.25</ind><dep> -6</dep></entry>
+			<entry><ind>1.00</ind><dep>-23</dep></entry>
 		</interpolation>
 		<axis>
 			<object-name>trim.axis</object-name>
@@ -11927,8 +11927,11 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>rev_l</object-name>
-		<property>controls/engines/engine[0]/reverse-cmd-pos</property>
-		<factor>60</factor>
+		<property>fdm/jsbsim/fadec/reverse-lever[0]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep> 0</dep></entry>
+			<entry><ind>0.1</ind><dep>60</dep></entry>
+		</interpolation>
 		<axis>
 			<object-name>rev_l.axis</object-name>
 		</axis>
@@ -11937,8 +11940,11 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>rev_r</object-name>
-		<property>controls/engines/engine[1]/reverse-cmd-pos</property>
-		<factor>60</factor>
+		<property>fdm/jsbsim/fadec/reverse-lever[1]</property>
+		<interpolation>
+			<entry><ind>0.0</ind><dep> 0</dep></entry>
+			<entry><ind>0.1</ind><dep>60</dep></entry>
+		</interpolation>
 		<axis>
 			<object-name>rev_r.axis</object-name>
 		</axis>
