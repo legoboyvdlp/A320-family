@@ -11989,18 +11989,30 @@
 		<type>knob</type>
 		<object-name>Lcutoff</object-name>
 		<property>fdm/jsbsim/fcs/engine-cutoff[0]</property>
+		<drag-direction>vertical</drag-direction>
+		<drag-scale-px>20</drag-scale-px>
 		<factor>-55</factor>
 		<axis>
 			<object-name>Lcutoff.axis</object-name>
 		</axis>
-		<action>
+		<increase>
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-toggle</command>
+				<command>property-assign</command>
 				<property>controls/engines/engine[0]/cutoff-switch</property>
+				<value>0</value>
 			</binding>
-		</action>
+		</increase>
+		<decrease>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/engines/engine[0]/cutoff-switch</property>
+				<value>1</value>
+			</binding>
+		</decrease>
 		<hovered>
 			<binding>
 				<condition>
@@ -12017,18 +12029,30 @@
 		<type>knob</type>
 		<object-name>Rcutoff</object-name>
 		<property>fdm/jsbsim/fcs/engine-cutoff[1]</property>
+		<drag-direction>vertical</drag-direction>
+		<drag-scale-px>20</drag-scale-px>
 		<factor>-55</factor>
 		<axis>
 			<object-name>Rcutoff.axis</object-name>
 		</axis>
-		<action>
+		<increase>
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-toggle</command>
+				<command>property-assign</command>
 				<property>controls/engines/engine[1]/cutoff-switch</property>
+				<value>0</value>
 			</binding>
-		</action>
+		</increase>
+		<decrease>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/engines/engine[1]/cutoff-switch</property>
+				<value>1</value>
+			</binding>
+		</decrease>
 		<hovered>
 			<binding>
 				<condition>
@@ -22838,7 +22862,8 @@
 		<object-name>FlapsLever</object-name>
 		<object-name>FlapsLever_low</object-name>
 		<property>fdm/jsbsim/fcs/flap-lever</property>
-		<drag-scale-px>30</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<drag-scale-px>20</drag-scale-px>
 		<interpolation>
 			<entry><ind>0</ind><dep> 0</dep></entry>
 			<entry><ind>1</ind><dep>14</dep></entry>
@@ -22853,7 +22878,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>controls.flapsDown(1);</script>
+				<script>controls.flapsDown(-1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -22865,7 +22890,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>controls.flapsDown(-1);</script>
+				<script>controls.flapsDown(1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
