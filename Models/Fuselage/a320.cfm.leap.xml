@@ -424,7 +424,7 @@ i	<effect>
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-matt-engine-LEAP</inherits-from>
 		<object-name>EngineLEAPL.Inner</object-name>
-                <object-name>EngineLEAPR.Inner</object-name>
+		<object-name>EngineLEAPR.Inner</object-name>
 		<object-name>PylonLEAPL</object-name>
 		<object-name>PylonLEAPR</object-name>
 		<object-name>ReverserLDoorLEAP.Inner</object-name>

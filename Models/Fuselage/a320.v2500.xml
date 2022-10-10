@@ -454,6 +454,7 @@
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-engine-IAE</inherits-from>
 		<object-name>EngineIAEV2500L</object-name>
+		<object-name>EngineIAEV2500L.001</object-name> <!-- Object on the front cowling of left engine (inner side) -->
 		<object-name>EngineIAEV2500R</object-name>
 		<object-name>ReverserLDoor</object-name>
 		<object-name>ReverserRDoor</object-name>
@@ -482,5 +483,7 @@
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-chrome-engine-IAE</inherits-from>
 		<object-name>IntakeIAEV2500L</object-name>
 		<object-name>IntakeIAEV2500R</object-name>
+		<object-name>ExhaustIAEV2500L</object-name>
+		<object-name>ExhaustIAEV2500R</object-name>
 	</effect>
 </PropertyList>

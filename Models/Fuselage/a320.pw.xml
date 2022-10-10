@@ -384,6 +384,7 @@
 		<type>translate</type>
 		<object-name>ReverserLDoorPWPP.Inner</object-name>
 		<object-name>ReverserLDoorPWPP</object-name>
+		<object-name>ReverserLDoorPWPP.Placards</object-name>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
@@ -397,6 +398,7 @@
 		<type>translate</type>
 		<object-name>ReverserRDoorPWPP.Inner</object-name>
 		<object-name>ReverserRDoorPWPP</object-name>
+		<object-name>ReverserRDoorPWPP.Placards</object-name>
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<factor>0.50</factor> <!-- According to photo reference -->
 		<axis>
