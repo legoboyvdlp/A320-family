@@ -22872,19 +22872,8 @@
 		<type>knob</type>
 		<object-name>FlapsLever</object-name>
 		<object-name>FlapsLever_low</object-name>
-		<property>controls/cockpit/flaps-lever-rotate</property>
 		<drag-direction>vertical</drag-direction>
 		<drag-scale-px>20</drag-scale-px>
-		<interpolation>
-			<entry><ind>0</ind><dep> 0</dep></entry>
-			<entry><ind>1</ind><dep>14</dep></entry>
-			<entry><ind>2</ind><dep>28</dep></entry>
-			<entry><ind>3</ind><dep>42</dep></entry>
-			<entry><ind>4</ind><dep>56</dep></entry>
-		</interpolation>
-		<axis>
-			<object-name>FlapsLever.axis</object-name>
-		</axis>
 		<increase>
 			<repeatable>false</repeatable>
 			<binding>
@@ -22926,6 +22915,23 @@
 				<label>Flaps</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>FlapsLever</object-name>
+		<object-name>FlapsLever_low</object-name>
+		<property>controls/cockpit/flaps-lever-rotate</property>
+		<interpolation>
+			<entry><ind>0</ind><dep> 0</dep></entry>
+			<entry><ind>1</ind><dep>14</dep></entry>
+			<entry><ind>2</ind><dep>28</dep></entry>
+			<entry><ind>3</ind><dep>42</dep></entry>
+			<entry><ind>4</ind><dep>56</dep></entry>
+		</interpolation>
+		<axis>
+			<object-name>FlapsLever.axis</object-name>
+		</axis>
 	</animation>
 	
 	<animation>
