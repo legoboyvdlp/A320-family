@@ -3224,7 +3224,7 @@
 		<type>rotate</type>
 		<object-name>LRudderPedalL</object-name>
 		<object-name>LRudderPedalR</object-name>
-		<property>controls/cockpit/brake-left</property>
+		<property>controls/cockpit/brake-pedal-left</property>
 		<factor>-15</factor>
 		<axis>
 			<object-name>LRudderPedalL.axis</object-name>
@@ -3235,7 +3235,7 @@
 		<type>rotate</type>
 		<object-name>RRudderPedalL</object-name>
 		<object-name>RRudderPedalR</object-name>
-		<property>controls/cockpit/brake-right</property>
+		<property>controls/cockpit/brake-pedal-right</property>
 		<factor>-15</factor>
 		<axis>
 			<object-name>RRudderPedalL.axis</object-name>
