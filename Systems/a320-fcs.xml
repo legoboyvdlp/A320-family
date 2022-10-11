@@ -761,11 +761,6 @@
 			</test>
 		</switch>
 		
-		<lag_filter name="fcs/flap-lever">
-			<input>/controls/flight/flaps-input</input>
-			<c1>8</c1>
-		</lag_filter>
-		
 		<switch name="fcs/sfcc/unit1-avail">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -1002,11 +997,6 @@
 			<rate_limit>0.16</rate_limit> <!-- 12/75 -->
 		</actuator>
 		
-		<lag_filter name="fbw/tiller-handle">
-			<input>fbw/tiller-handle-cmd</input>
-			<c1>20</c1>
-		</lag_filter>
-		
 		<pure_gain name="/controls/gear/steering-deg">
 			<input>/controls/gear/steering</input>
 			<gain>75</gain>
@@ -1179,11 +1169,6 @@
 	</channel>
 	
 	<channel name="Brakes">
-		
-		<lag_filter name="fcs/brake-lever">
-			<input>/controls/gear/brake-parking</input>
-			<c1>10</c1>
-		</lag_filter>
 		
 		<actuator name="fcs/brake-left">
 			<input>/controls/gear/brake-left</input>

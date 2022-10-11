@@ -7,34 +7,39 @@
 	
 	<channel name="Animations">
 		
-		<lag_filter name="fbw/aileron-sidestick">
+		<lag_filter name="/controls/cockpit/aileron-sidestick">
 			<input>fbw/sidestick/roll-input-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="fbw/elevator-sidestick">
+		<lag_filter name="/controls/cockpit/elevator-sidestick">
 			<input>fbw/sidestick/pitch-input-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="fbw/rudder-pedal">
+		<lag_filter name="/controls/cockpit/rudder-pedal">
 			<input>fbw/sidestick/yaw-input-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="spoilers/main-lever">
+		<lag_filter name="/controls/cockpit/spoilers-lever-rotate">
 			<input>spoilers/lever-cmd</input>
-			<c1>8</c1>
+			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="spoilers/lever-arm">
+		<lag_filter name="/controls/cockpit/spoilers-lever-translate">
 			<input>/controls/flight/speedbrake-arm</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/tiller-handle">
+			<input>fbw/tiller-handle-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		
 		<lag_filter name="/controls/switches/rudder-trim-knob">
 			<input>/controls/switches/rudder-trim</input>
-			<c1>12</c1>
+			<c1>20</c1>
 		</lag_filter>
 		
 		<lag_filter name="/controls/ignition/start-sw-knob">
@@ -67,7 +72,7 @@
 			<c1>20</c1>
 		</lag_filter>
 		
-		<fcs_function name="fadec/throttle-lever[0]">
+		<fcs_function name="/controls/cockpit/throttle-lever[0]">
 			<function>
 				<quotient>
 					<property>fadec/control-1/lever/angle</property>
@@ -76,7 +81,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/throttle-lever[1]">
+		<fcs_function name="/controls/cockpit/throttle-lever[1]">
 			<function>
 				<quotient>
 					<property>fadec/control-2/lever/angle</property>
@@ -85,34 +90,39 @@
 			</function>
 		</fcs_function>
 		
-		<lag_filter name="fadec/reverse-lever[0]">
+		<lag_filter name="/controls/cockpit/reverse-lever[0]">
 			<input>/controls/engines/engine[0]/reverse-lever</input>
 			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="fadec/reverse-lever[1]">
+		<lag_filter name="/controls/cockpit/reverse-lever[1]">
 			<input>/controls/engines/engine[1]/reverse-lever</input>
 			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="fcs/engine-cutoff[0]">
+		<lag_filter name="/controls/cockpit/engine-cutoff[0]">
 			<input>/controls/engines/engine[0]/cutoff-switch</input>
 			<c1>10</c1>
 		</lag_filter>
 		
-		<lag_filter name="fcs/engine-cutoff[1]">
+		<lag_filter name="/controls/cockpit/engine-cutoff[1]">
 			<input>/controls/engines/engine[1]/cutoff-switch</input>
 			<c1>10</c1>
 		</lag_filter>
 		
-		<lag_filter name="fcs/engine-cutoff[1]">
-			<input>/controls/engines/engine[1]/cutoff-switch</input>
-			<c1>10</c1>
+		<lag_filter name="/controls/cockpit/flaps-lever-rotate">
+			<input>/controls/flight/flaps-input</input>
+			<c1>20</c1>
 		</lag_filter>
 		
 		<lag_filter name="/controls/cockpit/flaps-lever-translate-pos">
 			<input>/controls/cockpit/flaps-lever-translate</input>
 			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/park-brk-rotate">
+			<input>/controls/gear/brake-parking</input>
+			<c1>10</c1>
 		</lag_filter>
 		
 		<lag_filter name="/controls/cockpit/park-brk-translate-pos">
