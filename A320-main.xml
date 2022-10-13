@@ -821,12 +821,12 @@
 			<vert type="int">0</vert>
 		</output>
 		<custom n="0">
-			<alt-knb type="int">0</alt-knb>
-			<hdg-knb type="int">0</hdg-knb>
+			<alt-knb type="int">50000</alt-knb>
+			<hdg-knb type="int">49984</hdg-knb> <!-- So the symbol is upright -->
 			<show-hdg type="bool">0</show-hdg>
-			<spd-knb type="int">0</spd-knb>
+			<spd-knb type="int">50000</spd-knb>
 			<trk-fpa type="bool">0</trk-fpa>
-			<vs-knb type="int">0</vs-knb>
+			<vs-knb type="int">50000</vs-knb>
 		</custom>
 	</it-autoflight>
 

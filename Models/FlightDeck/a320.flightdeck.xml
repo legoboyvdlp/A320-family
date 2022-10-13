@@ -4177,7 +4177,7 @@
 		<type>rotate</type>
 		<object-name>qnh_cpt_knb</object-name>
 		<property>controls/switches/qnh-knb</property>
-		<factor>-11.25</factor>
+		<factor>11.25</factor>
 		<axis>
 			<object-name>qnh_cpt_knb.axis</object-name>
 		</axis>
@@ -4187,7 +4187,7 @@
 		<type>rotate</type>
 		<object-name>qnh_fo_knb</object-name>
 		<property>controls/switches/qnh-knb</property>
-		<factor>-11.25</factor>
+		<factor>11.25</factor>
 		<axis>
 			<object-name>qnh_fo_knb.axis</object-name>
 		</axis>
@@ -5722,7 +5722,7 @@
 				<property>it-autoflight/custom/spd-knb</property>
 				<step>1</step>
 				<min>0</min>
-				<max>10000</max>
+				<max>100000</max>
 				<wrap>true</wrap>
 			</binding>
 		</action>
@@ -5748,7 +5748,7 @@
 				<property>it-autoflight/custom/spd-knb</property>
 				<step>-1</step>
 				<min>0</min>
-				<max>10000</max>
+				<max>100000</max>
 				<wrap>true</wrap>
 			</binding>
 		</action>
@@ -5872,7 +5872,7 @@
 				<property>it-autoflight/custom/hdg-knb</property>
 				<step>1</step>
 				<min>0</min>
-				<max>10000</max>
+				<max>100000</max>
 				<wrap>true</wrap>
 			</binding>
 		</action>
@@ -5898,7 +5898,7 @@
 				<property>it-autoflight/custom/hdg-knb</property>
 				<step>-1</step>
 				<min>0</min>
-				<max>10000</max>
+				<max>100000</max>
 				<wrap>true</wrap>
 			</binding>
 		</action>
@@ -6350,7 +6350,7 @@
 				<property>it-autoflight/custom/alt-knb</property>
 				<step>1</step>
 				<min>0</min>
-				<max>10000</max>
+				<max>100000</max>
 				<wrap>true</wrap>
 			</binding>
 		</action>
@@ -6376,7 +6376,7 @@
 				<property>it-autoflight/custom/alt-knb</property>
 				<step>-1</step>
 				<min>0</min>
-				<max>10000</max>
+				<max>100000</max>
 				<wrap>true</wrap>
 			</binding>
 		</action>
@@ -6535,7 +6535,7 @@
 				<property>it-autoflight/custom/vs-knb</property>
 				<step>1</step>
 				<min>0</min>
-				<max>10000</max>
+				<max>100000</max>
 				<wrap>true</wrap>
 			</binding>
 		</action>
@@ -6561,7 +6561,7 @@
 				<property>it-autoflight/custom/vs-knb</property>
 				<step>-1</step>
 				<min>0</min>
-				<max>10000</max>
+				<max>100000</max>
 				<wrap>true</wrap>
 			</binding>
 		</action>
@@ -22480,7 +22480,7 @@
 		<object-name>RudderTrim.mark</object-name>
 		<property>controls/switches/rudder-trim-knob</property>
 		<drag-scale-px>15</drag-scale-px>
-		<factor>30</factor>
+		<factor>-30</factor>
 		<axis>
 			<object-name>RudderTrim.axis</object-name>
 		</axis>

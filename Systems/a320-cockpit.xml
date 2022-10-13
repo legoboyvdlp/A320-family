@@ -132,12 +132,12 @@
 		
 		<lag_filter name="/controls/cockpit/brake-pedal-left">
 			<input>/controls/gear/brake-left</input>
-			<c1>10</c1>
+			<c1>5</c1>
 		</lag_filter>
 		
 		<lag_filter name="/controls/cockpit/brake-pedal-right">
 			<input>/controls/gear/brake-right</input>
-			<c1>10</c1>
+			<c1>5</c1>
 		</lag_filter>
 		
 		<lag_filter name="/instrumentation/altimeter/inhg-left-pos">
