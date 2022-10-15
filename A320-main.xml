@@ -1823,7 +1823,7 @@
 				<standby-mhz type="double">118.1</standby-mhz>
 			</frequencies>
 			<serviceable type="bool">true</serviceable>
-			<volume type="double">0.6</volume>
+			<volume type="double">0</volume>
 		</comm>
 		
 		<comm n="1">
@@ -1832,7 +1832,7 @@
 				<standby-mhz type="double">122.6</standby-mhz>
 			</frequencies>
 			<serviceable type="bool">true</serviceable>
-			<volume type="double">0.6</volume>
+			<volume type="double">0</volume>
 		</comm>
 		
 		<comm n="2">
@@ -1841,7 +1841,7 @@
 				<standby-mhz type="double">123.2</standby-mhz>
 			</frequencies>
 			<serviceable type="bool">true</serviceable>
-			<volume type="double">0.6</volume>
+			<volume type="double">0</volume>
 		</comm>
 		
 		<ddrmi n="0">
