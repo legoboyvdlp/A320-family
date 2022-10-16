@@ -193,10 +193,10 @@
 		</previews>
 		
 		<rating>
-			<FDM type="int">4</FDM>
+			<FDM type="int">5</FDM>
 			<systems type="int">5</systems>
 			<cockpit type="int">5</cockpit>
-			<model type="int">4</model>
+			<model type="int">5</model>
 		</rating>
 		
 		<status>Pre V1.0</status>
