@@ -100,14 +100,24 @@
 			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="/controls/cockpit/engine-cutoff[0]">
+		<lag_filter name="/controls/cockpit/engine-cutoff-rotate[0]">
 			<input>/controls/engines/engine[0]/cutoff-switch</input>
-			<c1>10</c1>
+			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="/controls/cockpit/engine-cutoff[1]">
+		<lag_filter name="/controls/cockpit/engine-cutoff-rotate[1]">
 			<input>/controls/engines/engine[1]/cutoff-switch</input>
-			<c1>10</c1>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/engine-cutoff-translate[0]">
+			<input>/controls/cockpit/engine-cutoff-translate-cmd[0]</input>
+			<c1>30</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/engine-cutoff-translate[1]">
+			<input>/controls/cockpit/engine-cutoff-translate-cmd[1]</input>
+			<c1>30</c1>
 		</lag_filter>
 		
 		<lag_filter name="/controls/cockpit/flaps-lever-rotate">

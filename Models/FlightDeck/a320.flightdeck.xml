@@ -11995,13 +11995,8 @@
 	<animation>
 		<type>knob</type>
 		<object-name>Lcutoff</object-name>
-		<property>fdm/jsbsim/fcs/engine-cutoff[0]</property>
 		<drag-direction>vertical</drag-direction>
 		<drag-scale-px>20</drag-scale-px>
-		<factor>-55</factor>
-		<axis>
-			<object-name>Lcutoff.axis</object-name>
-		</axis>
 		<increase>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -12009,6 +12004,11 @@
 				<command>property-assign</command>
 				<property>controls/engines/engine[0]/cutoff-switch</property>
 				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/engine-cutoff-translate-cmd[0]</property>
+				<value>1</value>
 			</binding>
 		</increase>
 		<decrease>
@@ -12019,7 +12019,19 @@
 				<property>controls/engines/engine[0]/cutoff-switch</property>
 				<value>1</value>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/engine-cutoff-translate-cmd[0]</property>
+				<value>1</value>
+			</binding>
 		</decrease>
+		<release>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/engine-cutoff-translate-cmd[0]</property>
+				<value>0</value>
+			</binding>
+		</release>
 		<hovered>
 			<binding>
 				<condition>
@@ -12033,15 +12045,36 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
-		<object-name>Rcutoff</object-name>
-		<property>fdm/jsbsim/fcs/engine-cutoff[1]</property>
-		<drag-direction>vertical</drag-direction>
-		<drag-scale-px>20</drag-scale-px>
+		<type>rotate</type>
+		<object-name>Lcutoff</object-name>
+		<property>controls/cockpit/engine-cutoff-rotate[0]</property>
 		<factor>-55</factor>
 		<axis>
-			<object-name>Rcutoff.axis</object-name>
+			<object-name>Lcutoff.axis</object-name>
 		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Lcutoff</object-name>
+		<property>controls/cockpit/engine-cutoff-translate[0]</property>
+		<factor>0.003</factor>
+		<axis>
+			<x1-m>-0.02072</x1-m>
+			<y1-m>0</y1-m>
+			<z1-m>-0.12097</z1-m>
+			<x2-m>-0.0237</x2-m>
+			<y2-m>0</y2-m>
+			<z2-m>-0.1127</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>Rcutoff</object-name>
+		<property>controls/cockpit/engine-cutoff-rotate[1]</property>
+		<drag-direction>vertical</drag-direction>
+		<drag-scale-px>20</drag-scale-px>
 		<increase>
 			<button>0</button>
 			<repeatable>false</repeatable>
@@ -12049,6 +12082,11 @@
 				<command>property-assign</command>
 				<property>controls/engines/engine[1]/cutoff-switch</property>
 				<value>0</value>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/engine-cutoff-translate-cmd[1]</property>
+				<value>1</value>
 			</binding>
 		</increase>
 		<decrease>
@@ -12059,7 +12097,19 @@
 				<property>controls/engines/engine[1]/cutoff-switch</property>
 				<value>1</value>
 			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/engine-cutoff-translate-cmd[1]</property>
+				<value>1</value>
+			</binding>
 		</decrease>
+		<release>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/cockpit/engine-cutoff-translate-cmd[1]</property>
+				<value>0</value>
+			</binding>
+		</release>
 		<hovered>
 			<binding>
 				<condition>
@@ -12070,6 +12120,31 @@
 				<label>Right engine cutoff</label>
 			</binding>
 		</hovered>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>Rcutoff</object-name>
+		<property>controls/cockpit/engine-cutoff-rotate[1]</property>
+		<factor>-55</factor>
+		<axis>
+			<object-name>Rcutoff.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Rcutoff</object-name>
+		<property>controls/cockpit/engine-cutoff-translate[1]</property>
+		<factor>0.003</factor>
+		<axis>
+			<x1-m>-0.02072</x1-m>
+			<y1-m>0</y1-m>
+			<z1-m>-0.12097</z1-m>
+			<x2-m>-0.0237</x2-m>
+			<y2-m>0</y2-m>
+			<z2-m>-0.1127</z2-m>
+		</axis>
 	</animation>
 	
 	<!-- Engine Mode Selector -->
@@ -22883,7 +22958,7 @@
 			<binding>
 				<command>property-assign</command>
 				<property>controls/cockpit/flaps-lever-translate</property>
-				<value>0.003</value>
+				<value>1</value>
 			</binding>
 		</increase>
 		<decrease>
@@ -22895,7 +22970,7 @@
 			<binding>
 				<command>property-assign</command>
 				<property>controls/cockpit/flaps-lever-translate</property>
-				<value>0.003</value>
+				<value>1</value>
 			</binding>
 		</decrease>
 		<release>
@@ -22938,6 +23013,7 @@
 		<type>translate</type>
 		<object-name>FlapsLever_low</object-name>
 		<property>controls/cockpit/flaps-lever-translate-pos</property>
+		<factor>0.003</factor>
 		<axis>
 			<x1-m>0.064759</x1-m>
 			<y1-m>0.080047</y1-m>

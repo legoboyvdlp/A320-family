@@ -907,6 +907,8 @@
 			<blue-ovrd-guard type="bool">0</blue-ovrd-guard>
 			<captain-visor type="bool">0</captain-visor>
 			<emer-canc-cover type="bool">0</emer-canc-cover>
+			<engine-cutoff-translate-cmd n="0" type="double">0</engine-cutoff-translate-cmd>
+			<engine-cutoff-translate-cmd n="1" type="double">0</engine-cutoff-translate-cmd>
 			<evac-capt-purs type="int">1</evac-capt-purs>
 			<flaps-lever-translate type="double">0</flaps-lever-translate>
 			<fadec-gnd-pwr-1-guard type="bool">false</fadec-gnd-pwr-1-guard>
