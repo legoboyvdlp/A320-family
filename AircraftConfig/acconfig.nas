@@ -159,7 +159,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 		update_dlg.open();
 		print("System: The A320-family is out of date!");
 	} 
-	#mismatch_chk();
+	mismatch_chk();
 	readSettings();
 	if (getprop("/systems/acconfig/out-of-date") != 1 and getprop("/systems/acconfig/options/revision") < current_revision and getprop("/systems/acconfig/mismatch-code") == "0x000") {
 		updated_dlg.open();
