@@ -80,6 +80,9 @@ var canvas_pfd = {
 		obj.font_mapper = func(family, weight) {
 			return "ECAMFontRegular.ttf";
 		};
+		obj.font_mapper_ls = func(family, weight) {
+			return "LiberationFonts/LiberationSans-Regular.ttf";
+		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
  		foreach(var key; obj.getKeys()) {
@@ -101,7 +104,7 @@ var canvas_pfd = {
 		};
 		
 		canvas.parsesvg(obj.test, "Aircraft/A320-family/Models/Instruments/Common/res/du-test.svg", {"font-mapper": obj.font_mapper} );
-		canvas.parsesvg(obj.mismatch, "Aircraft/A320-family/Models/Instruments/Common/res/mismatch.svg", {"font-mapper": obj.font_mapper} );
+		canvas.parsesvg(obj.mismatch, "Aircraft/A320-family/Models/Instruments/Common/res/Error.svg", {"font-mapper": obj.font_mapper_ls} );
 		
 		foreach(var key; obj.getKeysTest()) {
 			obj[key] = obj.test.getElementById(key);
@@ -1301,7 +1304,7 @@ var canvas_pfd = {
 		
 		obj.update_items_mismatch = [
 			props.UpdateManager.FromHashValue("acconfigMismatch", nil, func(val) {
-				obj["ERRCODE"].setText(val);
+				obj["Error_Code"].setText(val);
 			}),
 		];
 		
@@ -1338,7 +1341,7 @@ var canvas_pfd = {
 		return ["Test_white","Test_text"];
 	},
 	getKeysMismatch: func() {
-		return ["ERRCODE"];
+		return ["Error_Code"];
 	},
 	aoa: 0,
 	showMetricAlt: 0,
