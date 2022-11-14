@@ -1,5 +1,5 @@
 # A3XX PFD
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
@@ -13,9 +13,9 @@ var air_data_switch = props.globals.getNode("/controls/navigation/switching/air-
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 var alt_hpa = props.globals.getNode("/instrumentation/altimeter/setting-hpa", 1);
 var alt_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg", 1);
-var aoa_1 = props.globals.getNode("/systems/navigation/adr/output/aoa-1", 1);
-var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2", 1);
-var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3", 1);
+var aoa_1 = props.globals.getNode("/systems/navigation/adr/output/aoa-1-damped", 1);
+var aoa_2 = props.globals.getNode("/systems/navigation/adr/output/aoa-2-damped", 1);
+var aoa_3 = props.globals.getNode("/systems/navigation/adr/output/aoa-3-damped", 1);
 var hundredAbove = props.globals.getNode("/instrumentation/pfd/hundred-above", 1);
 var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 
@@ -253,8 +253,8 @@ var canvas_pfd = {
 					obj["FMA_lvrclb"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["trackPFD","headingPFD","aoaPFD"], 0.01, func(val) {
-				obj.track_diff = geo.normdeg180(val.trackPFD - val.headingPFD); # store this to use in FPV
+			props.UpdateManager.FromHashList(["trackHdgDiff","aoaPFD"], 0.01, func(val) {
+				obj.track_diff = val.trackHdgDiff; # store this to use in FPV
 				obj["TRK_pointer"].setTranslation(obj.getTrackDiffPixels(obj.track_diff),0);
 				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -20, 20) * 12.5); 
 			}),
@@ -2201,7 +2201,7 @@ var input = {
 	vsNeedle: "/instrumentation/pfd/vs-needle",
 	vsPFD: "/it-autoflight/internal/vert-speed-fpm-pfd",
 	
-	trackPFD: "/instrumentation/pfd/track-deg",
+	trackHdgDiff: "/instrumentation/pfd/track-hdg-diff",
 	headingPFD: "/instrumentation/pfd/heading-deg",
 	headingScale: "/instrumentation/pfd/heading-scale",
 	localizer: "/instrumentation/nav[0]/heading-needle-deflection-norm",

@@ -61,6 +61,11 @@
 			</quantization>
 		</sensor>
 		
+		<lag_filter name="/systems/navigation/adr/output/aoa-1-damped">
+			<input>/systems/navigation/adr/output/aoa-1</input>
+			<c1>10</c1>
+		</lag_filter>
+		
 		<sensor name="/systems/navigation/probes/aoa-2">
 			<input>aero/alpha-deg-fixed</input>
 			<quantization name="/systems/navigation/adr/output/aoa-2">
@@ -70,6 +75,11 @@
 			</quantization>
 		</sensor>
 		
+		<lag_filter name="/systems/navigation/adr/output/aoa-2-damped">
+			<input>/systems/navigation/adr/output/aoa-2</input>
+			<c1>10</c1>
+		</lag_filter>
+		
 		<sensor name="/systems/navigation/probes/aoa-3">
 			<input>aero/alpha-deg-fixed</input>
 			<quantization name="/systems/navigation/adr/output/aoa-3">
@@ -78,6 +88,11 @@
 				<max>180</max>
 			</quantization>
 		</sensor>
+		
+		<lag_filter name="/systems/navigation/adr/output/aoa-3-damped">
+			<input>/systems/navigation/adr/output/aoa-3</input>
+			<c1>10</c1>
+		</lag_filter>
        
 		<sensor name="/systems/navigation/probes/pitot-1">
 			<input>/systems/pitot[0]/measured-total-pressure-inhg</input>

@@ -2041,6 +2041,7 @@
 			<horizon-ground type="double">0</horizon-ground>
 			<horizon-pitch type="double">0</horizon-pitch>
 			<track-deg type="double">0</track-deg>
+			<track-hdg-diff type="double">0</track-hdg-diff>
 		</pfd>
 		
 		<radar-altimeter n="0">
