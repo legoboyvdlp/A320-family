@@ -41,9 +41,9 @@
      inkscape:window-maximized="1"
      inkscape:window-y="-8"
      inkscape:window-x="1592"
-     inkscape:cy="693.1507"
-     inkscape:cx="1036.3363"
-     inkscape:zoom="0.50000001"
+     inkscape:cy="637.51473"
+     inkscape:cx="564.90369"
+     inkscape:zoom="5.6568544"
      showgrid="false"
      id="namedview371"
      inkscape:window-height="1009"
@@ -878,29 +878,29 @@
          style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:7.20948505;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect4864"
          width="26.21059"
-         height="9.5405254"
+         height="7.5320001"
          x="454.79132"
-         y="-448.55917" />
+         y="-447.55499" />
       <path
-         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:9.54052925;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 462.33255,502.24797 c 0,10.24192 -8.30251,18.54462 -18.54421,18.54462 -10.24169,0 -18.5442,-8.3027 -18.5442,-18.54462 0,-10.24193 8.30251,-18.54462 18.5442,-18.54462 10.2417,0 18.54421,8.30269 18.54421,18.54462 z"
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:7.53197833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 465.15665,502.24797 c 0,11.80167 -9.5669,21.36878 -21.36831,21.36878 -11.8014,0 -21.3683,-9.56711 -21.3683,-21.36878 0,-11.80168 9.5669,-21.36878 21.3683,-21.36878 11.80141,0 21.36831,9.5671 21.36831,21.36878 z"
          id="path4858"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="zzzzz" />
       <rect
-         y="497.478"
-         x="369.83731"
-         height="9.540534"
-         width="53.938961"
+         y="498.48233"
+         x="366.81927"
+         height="7.5319567"
+         width="56.956985"
          id="rect4860"
          style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:7.20948505;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <rect
          style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:7.20948505;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect4862"
-         width="53.939117"
-         height="9.540534"
+         width="56.956985"
+         height="7.5319567"
          x="463.82291"
-         y="497.478" />
+         y="498.48233" />
     </g>
     <g
        id="AI_stick_pos"
@@ -999,8 +999,8 @@
          sodipodi:nodetypes="cccccccccccc"
          inkscape:connector-curvature="0"
          id="fixed_aircraft_outline_1"
-         d="m 279.39676,473.84829 20.67975,-1.3e-4 0,15.43882 0,0 1.8e-4,25.65723 -15.4389,0 -0.14628,-25.65723 0,0 -81.2588,-5e-5 0,-15.43891 76.16405,2.1e-4 z"
-         style="fill:none;fill-opacity:1;stroke:#c9d121;stroke-width:3.75005385;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 279.39676,473.84829 20.67975,-1.3e-4 0,15.43882 0,0 1.8e-4,25.65723 -15.58542,0 2.4e-4,-25.65723 -2.4e-4,0 -81.25856,-5e-5 0,-15.43891 76.16405,2.1e-4 z"
+         style="fill:none;fill-opacity:1;stroke:#c9d121;stroke-width:3.75005388;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          inkscape:label="fixed_aircraft_outline_1" />
     </g>
     <g
@@ -1021,8 +1021,8 @@
          x="286.12354"
          y="486.37204" />
       <path
-         style="fill:none;fill-opacity:1;stroke:#c9d121;stroke-width:3.75005385;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 279.39676,473.84829 20.67975,-1.3e-4 0,15.43882 0,0 1.8e-4,25.65723 -15.4389,0 -0.14628,-25.65723 0,0 -81.2588,-5e-5 0,-15.43891 76.16405,2.1e-4 z"
+         style="fill:none;fill-opacity:1;stroke:#c9d121;stroke-width:3.75005388;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 279.39676,473.84829 20.67975,-1.3e-4 0,15.43882 0,0 1.8e-4,25.65723 -15.58555,0 3.7e-4,-25.65723 -3.7e-4,0 -81.25843,-5e-5 0,-15.43891 76.16405,2.1e-4 z"
          id="fixed_aircraft_outline_2"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccccccccccc"
