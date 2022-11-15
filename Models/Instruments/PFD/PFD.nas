@@ -49,23 +49,22 @@ var autoland_pitch_land = props.globals.initNode("/instrumentation/pfd/logic/aut
 var autoland_ap_disc_ft = props.globals.initNode("/instrumentation/pfd/logic/autoland/ap-disc-ft", 0, "INT");
 
 var canvas_pfd = {
+	alt_diff_cur: 0,
 	ASItrendIsShown: 0,
-	
-	middleOffset: 0,
-	heading: 0,
-	heading10: 0,
-	headOffset: 0,
-	middleText: 0,
 	leftText1: 0,
 	leftText2: 0,
 	leftText3: 0,
+	heading: 0,
+	heading10: 0,
+	headOffset: 0,
+	magnetic_hdg_dif: 0,
+	middleOffset: 0,
+	middleText: 0,
 	rightText1: 0,
 	rightText2: 0,
 	rightText3: 0,
-	track_diff: 0,
 	split_ils: 0,
-	magnetic_hdg_dif: 0,
-	alt_diff_cur: 0,
+	track_diff: 0,
 	new: func(svg, name, number) {
 		var obj = {parents: [canvas_pfd] };
 		obj.canvas = canvas.new({
@@ -121,21 +120,21 @@ var canvas_pfd = {
 		
 		# temporary vars
 		obj.ASItrendIsShown = 0;
-		obj.middleOffset = 0;
+		obj.alt_diff_cur = 0;
 		obj.heading = 0;
 		obj.heading10 = 0;
 		obj.headOffset = 0;
-		obj.middleText = 0;
 		obj.leftText1 = 0;
 		obj.leftText2 = 0;
 		obj.leftText3 = 0;
+		obj.magnetic_hdg_dif = 0;
+		obj.middleOffset = 0;
+		obj.middleText = 0;
 		obj.rightText1 = 0;
 		obj.rightText2 = 0;
 		obj.rightText3 = 0;
-		obj.track_diff = 0;
 		obj.split_ils = 0;
-		obj.magnetic_hdg_dif = 0;
-		obj.alt_diff_cur = 0;
+		obj.track_diff = 0;
 		
 		# hide non-updated objects
 		obj["FMA_catmode"].hide();
@@ -171,7 +170,11 @@ var canvas_pfd = {
 				obj["AI_bank"].setRotation(-val * D2R);
 				obj["AI_agl_g"].setRotation(-val * D2R);
 				obj.AI_fpv_rot.setRotation(-val * D2R, obj.AICenter);
-				obj["FPV"].setRotation(val * D2R); # It shouldn't be rotated, only the axis should 
+				obj["FPV"].setRotation(val * D2R); # It shouldn't be rotated, only the axis should
+			}),
+			props.UpdateManager.FromHashList(["FDRollBar","roll"], 0.025, func(val) {
+				obj.AI_fpd_rot.setRotation(-val.roll * D2R, obj.AICenter);
+				obj["FPD"].setRotation((val.roll + val.FDRollBar) * D2R); # It shouldn't be rotated, only the axis should + FD rotation
 			}),
 			props.UpdateManager.FromHashValue("fbwLaw", 1, func(val) {
 				if (val == 0) {
@@ -253,10 +256,11 @@ var canvas_pfd = {
 					obj["FMA_lvrclb"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["trackHdgDiff","aoaPFD"], 0.01, func(val) {
+			props.UpdateManager.FromHashList(["trackHdgDiff","aoaPFD","FDPitchBar"], 0.01, func(val) {
 				obj.track_diff = val.trackHdgDiff; # store this to use in FPV
 				obj["TRK_pointer"].setTranslation(obj.getTrackDiffPixels(obj.track_diff),0);
-				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -20, 20) * 12.5); 
+				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -20, 20) * 11.825); 
+				obj.AI_fpd_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD - val.FDPitchBar, -20, 20) * 11.825); 
 			}),
 			props.UpdateManager.FromHashList(["vsAutopilot","agl"], 5, func(val) {
 				if (abs(val.vsAutopilot) >= 6000 or (val.vsAutopilot <= -2000 and val.agl <= 2500) or (val.vsAutopilot <= -1200 and val.agl <= 1000)) {
@@ -1073,6 +1077,9 @@ var canvas_pfd = {
 		obj.AI_fpv_trans = obj["FPV"].createTransform();
 		obj.AI_fpv_rot = obj["FPV"].createTransform();
 		
+		obj.AI_fpd_trans = obj["FPD"].createTransform();
+		obj.AI_fpd_rot = obj["FPD"].createTransform();
+		
 		obj.page = obj.group;
 		
 		return obj;
@@ -1086,7 +1093,7 @@ var canvas_pfd = {
 		"ALT_thousands","ALT_thousands_zero","ALT_tenthousands","ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box",
 		"LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError",
 		"ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground",
-		"ground_ref","FPV","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue"];
+		"ground_ref","FPV","FPD","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue"];
 	},
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
@@ -1143,7 +1150,7 @@ var canvas_pfd = {
 		# FPV
 		if (notification.trkFpa) {
 			if (notification.aoaPFD == nil or !me.onsideADIRSOperating){
-				me["FPV"].hide();	
+				me["FPV"].hide();
 			} else {
 				me["FPV"].show();
 			}
@@ -1971,19 +1978,33 @@ var canvas_pfd = {
 			me["FMA_thrust_box"].setColor(0.8078,0.8039,0.8078);
 		}
 		
-		if (((me.number == 0 and notification.fd1) or (me.number == 1 and notification.fd2)) and notification.trkFpa == 0 and notification.pitchPFD < 25 and notification.pitchPFD > -13 and notification.roll < 45 and notification.roll > -45) {
-			if (fmgc.Modes.PFD.FMA.rollMode != " " and !notification.gear1Wow) {
-				me["FD_roll"].show();
-			} else {
+		if (((me.number == 0 and notification.fd1) or (me.number == 1 and notification.fd2)) and notification.pitchPFD < 25 and notification.pitchPFD > -13 and notification.roll < 45 and notification.roll > -45) {
+			if (notification.trkFpa) {
 				me["FD_roll"].hide();
-			}
-			
-			if (fmgc.Modes.PFD.FMA.pitchMode != " ") {
-				me["FD_pitch"].show();
-			} else {
 				me["FD_pitch"].hide();
+				
+				if (fmgc.Modes.PFD.FMA.rollMode != " " and fmgc.Modes.PFD.FMA.pitchMode != " " and !notification.gear1Wow) {
+					me["FPD"].show();
+				} else {
+					me["FPD"].hide();
+				}
+			} else {
+				me["FPD"].hide();
+				
+				if (fmgc.Modes.PFD.FMA.rollMode != " " and !notification.gear1Wow) {
+					me["FD_roll"].show();
+				} else {
+					me["FD_roll"].hide();
+				}
+				
+				if (fmgc.Modes.PFD.FMA.pitchMode != " ") {
+					me["FD_pitch"].show();
+				} else {
+					me["FD_pitch"].hide();
+				}
 			}
 		} else {
+			me["FPD"].hide();
 			me["FD_roll"].hide();
 			me["FD_pitch"].hide();
 		}
