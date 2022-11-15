@@ -253,7 +253,7 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashList(["trackHdgDiff","aoaPFD"], 0.01, func(val) {
 				obj.track_diff = val.trackHdgDiff; # store this to use in FPV
 				obj["TRK_pointer"].setTranslation(obj.getTrackDiffPixels(obj.track_diff),0);
-				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -20, 20) * 12.5); 
+				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -20, 20) * 11.825); 
 			}),
 			props.UpdateManager.FromHashList(["vsAutopilot","agl"], 5, func(val) {
 				if (abs(val.vsAutopilot) >= 6000 or (val.vsAutopilot <= -2000 and val.agl <= 2500) or (val.vsAutopilot <= -1200 and val.agl <= 1000)) {
