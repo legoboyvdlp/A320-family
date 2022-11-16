@@ -256,11 +256,11 @@ var canvas_pfd = {
 					obj["FMA_lvrclb"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["trackHdgDiff","aoaPFD","FDPitchBar"], 0.01, func(val) {
+			props.UpdateManager.FromHashList(["trackHdgDiff","aoaPFD","FPDPitch"], 0.01, func(val) {
 				obj.track_diff = val.trackHdgDiff; # store this to use in FPV
 				obj["TRK_pointer"].setTranslation(obj.getTrackDiffPixels(obj.track_diff),0);
-				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -20, 20) * 11.825); 
-				obj.AI_fpd_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD - val.FDPitchBar, -20, 20) * 11.825); 
+				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -15, 15) * 11.825); 
+				obj.AI_fpd_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), val.FPDPitch * 11.825); 
 			}),
 			props.UpdateManager.FromHashList(["vsAutopilot","agl"], 5, func(val) {
 				if (abs(val.vsAutopilot) >= 6000 or (val.vsAutopilot <= -2000 and val.agl <= 2500) or (val.vsAutopilot <= -1200 and val.agl <= 1000)) {
@@ -2217,6 +2217,7 @@ var input = {
 	fbwLaw: "/it-fbw/law",
 	FDRollBar: "/it-autoflight/fd/roll-bar",
 	FDPitchBar: "/it-autoflight/fd/pitch-bar",
+	FPDPitch: "/it-autoflight/fd/fpd-pitch",
 	vsAutopilot: "/it-autoflight/internal/vert-speed-fpm",
 	vsDigit: "/instrumentation/pfd/vs-digit-trans",
 	vsNeedle: "/instrumentation/pfd/vs-needle",

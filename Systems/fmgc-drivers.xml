@@ -1008,5 +1008,49 @@
 		<max>15</max>
 		<max-rate-of-change>10</max-rate-of-change>
 	</filter>
- 
+	
+	<filter>
+		<name>FPD Pitch</name>
+		<type>noise-spike</type>
+		<input>
+			<condition>
+				<equals>
+					<property>/it-autoflight/output/vert</property>
+					<value>5</value>
+				</equals>
+			</condition>
+			<expression>
+				<difference>
+					<property>/orientation/pitch-deg</property>
+					<property>/it-autoflight/input/fpa</property>
+				</difference>
+			</expression>
+		</input>
+		<input> <!-- Slews the FPV to the FPA target -->
+			<expression>
+				<difference>
+					<property>/orientation/pitch-deg</property>
+					<rad2deg>
+						<asin>
+							<div>
+								<property>/it-autoflight/internal/target-common-fpm</property>
+								<product>
+									<max>
+										<property>/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
+										<value>100</value>
+									</max>
+									<value>101.26859142607174</value> <!-- FPM to Knot -->
+								</product>
+							</div>
+						</asin>
+					</rad2deg>
+				</difference>
+			</expression>
+		</input>
+		<output>/it-autoflight/fd/fpd-pitch</output>
+		<min>-15</min>
+		<max>15</max>
+		<max-rate-of-change>10</max-rate-of-change>
+	</filter>
+
 </PropertyList>
