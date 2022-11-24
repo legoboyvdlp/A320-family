@@ -5,14 +5,11 @@
 
 <system name="A320: V2500 Engine">
 	
-	<property value="1">fadec/epr/c1</property> <!-- Done in property rule because its easier to tune -->
-	<property value="1">fadec/epr/c2</property> <!-- Done in property rule because its easier to tune -->
 	<property value="46">fadec/limit/rated-temp</property>
 	<property value="30">fadec/limit/flex-rated-temp</property>
 	<property value="26600">fadec/limit/rated-thrust</property>
 	<property value="22.4">fadec/limit/min-n1</property>
 	<property value="100">fadec/limit/max-n1</property>
-	<property value="0">fadec/athr/cmd</property>
 	<property value="0">fadec/inhibit-alpha-floor</property>
 	
 	<channel name="Thrust Limits">

@@ -10,13 +10,11 @@
 	<property value="0">fbw/roll/pid</property>
 	<property value="0">fbw/pitch/e-i-a</property>
 	<property value="0">fbw/pitch/e-i-n</property>
-	<property value="0">fbw/pitch/load-factor-pi</property>
 	<property value="0">fbw/pitch/pid</property>
 	<property value="0">fbw/yaw/tc-pd</property>
 	<property value="1">fbw/pitch/mixer/sidestick-gain-feedback</property>
 	<property value="0">fbw/spoiler-output</property>
 	<property value="3">fbw/rate-c1</property>
-	<property value="0">fbw/pitch/ias-predict</property>
 	
 	<!-- Default gains for tuning -->
 	<property value="0">fbw/roll/p-gain</property>
@@ -30,11 +28,6 @@
 	<property value="0">fbw/yaw/yd-p-gain</property>
 	<property value="0">fbw/yaw/tc-p-gain</property>
 	<property value="0">fbw/yaw/tc-d-gain</property>
-	
-	<!-- FMGC stuff -->
-	<property value="0">fbw/fmgc/roll-cmd</property>
-	<property value="0">fbw/fmgc/pitch-cmd</property>
-	<property value="0">fbw/fmgc/yaw-cmd</property>
 	
 	<channel name="Libraries">
 		

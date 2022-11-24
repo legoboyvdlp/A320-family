@@ -711,6 +711,9 @@
 			</external_reactions>
 			<fadec n="0">
 				<alpha-floor type="bool">0</alpha-floor>
+				<athr n="0">
+					<cmd type="double">0</cmd>
+				</athr>
 				<clbreduc-ft type="double">1500</clbreduc-ft>
 				<control-1 n="0">
 					<detent-text type="string">IDLE</detent-text>
@@ -721,6 +724,10 @@
 					<n1-mode-sw type="bool">0</n1-mode-sw>
 				</control-2>
 				<eng-out type="bool">0</eng-out>
+				<epr n="0">
+					<c1 type="double">1</c1>
+					<c2 type="double">1</c2>
+				</epr>
 				<limit n="0">
 					<active-mode type="string">TOGA</active-mode>
 					<active-mode-int type="int">0</active-mode-int>
@@ -738,6 +745,15 @@
 				<thr-locked-time type="double">0</thr-locked-time>
 			</fadec>
 			<fbw n="0">
+				<fmgc n="0">
+					<pitch-cmd type="double">0</pitch-cmd>
+					<roll-cmd type="double">0</roll-cmd>
+					<yaw-cmd type="double">0</yaw-cmd>
+				</fmgc>
+				<pitch n="0">
+					<ias-predict type="double">0</ias-predict>
+					<load-factor-pi type="double">0</load-factor-pi>
+				</pitch>
 				<sidestick n="0">
 					<active type="bool" n="0">1</active>
 					<active type="bool" n="1">1</active>
