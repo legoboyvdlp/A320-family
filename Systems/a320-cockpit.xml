@@ -150,6 +150,12 @@
 			<c1>5</c1>
 		</lag_filter>
 		
+		<actuator name="/controls/cockpit/gear-lever">
+			<input>/controls/gear/lever-cockpit</input>
+			<rate_limit>4.5</rate_limit>
+			<lag>20</lag>
+		</actuator>
+		
 		<lag_filter name="/instrumentation/altimeter/inhg-left-pos">
 			<input>/instrumentation/altimeter/inhg-left</input>
 			<c1>20</c1>
@@ -237,11 +243,6 @@
 		
 		<lag_filter name="/controls/lighting/console-floor-light-sw-right-pos">
 			<input>/controls/lighting/console-floor-light-sw-right</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="/controls/gear/gear-down-pos">
-			<input>/controls/gear/gear-down</input>
 			<c1>20</c1>
 		</lag_filter>
 		

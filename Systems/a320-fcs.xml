@@ -936,29 +936,193 @@
 	
 	</channel>
 	
-	<channel name="Landing Gear">
+	<channel name="Gear Common">
 		
-		<switch name="gear/gear-cmd-switch">
-			<default value="gear/gear-cmd-norm"/>
-			<test logic="OR" value="gear/gear-pos-norm">
-				/systems/failures/gear eq 1
+		<switch name="/controls/gear/lever">
+			<default value="1"/>
+			<test value="0">
+				/controls/gear/lever-cockpit le 1
+			</test>
+		</switch>
+	
+	</channel>
+	
+	<channel name="Nose Gear">
+		
+		<switch name="gear/unit[0]/rate-incr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/nose-actuator eq 1
+			</test>
+			<test value="0.2222222"> <!-- About 4.5 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+			<test logic="AND" value="0.0166667"> <!-- About 60 sec -->
+				/controls/hydraulic/switches/gear-gravity-ext eq 1
+				/accelerations/pilot-g ge 0.5
 			</test>
 		</switch>
 		
-		<kinematic name="rubbish/gear-pos-norm">
-			<input>gear/gear-cmd-switch</input>
-			<traverse>
-				<setting>
-					<position>0</position>
-					<time>0</time>
-				</setting>
-				<setting>
-					<position>1</position>
-					<time>10</time>
-				</setting>
-			</traverse>
-			<output>gear/gear-pos-norm</output>
-		</kinematic>
+		<switch name="gear/unit[0]/rate-decr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/nose-actuator eq 1
+			</test>
+			<test value="0.4"> <!-- About 2.5 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+		</switch>
+		
+		<actuator name="gear/unit[0]/pos-norm-actuator">
+			<input>/controls/gear/lever</input>
+			<rate_limit sense="incr">gear/unit[0]/rate-incr</rate_limit>
+			<rate_limit sense="decr">gear/unit[0]/rate-decr</rate_limit>
+			<output>gear/unit[0]/pos-norm</output>
+		</actuator>
+	
+	</channel>
+	
+	<channel name="Left Main Gear">
+		
+		<switch name="gear/unit[1]/rate-incr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/left-actuator eq 1
+			</test>
+			<test value="0.0740741"> <!-- About 13.5 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+			<test logic="AND" value="0.0222222"> <!-- About 45 sec -->
+				/controls/hydraulic/switches/gear-gravity-ext eq 1
+				/accelerations/pilot-g ge 0.5
+			</test>
+		</switch>
+		
+		<switch name="gear/unit[1]/rate-decr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/left-actuator eq 1
+			</test>
+			<test value="0.1111111"> <!-- About 9 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+		</switch>
+		
+		<actuator name="gear/unit[1]/pos-norm-actuator">
+			<input>/controls/gear/lever</input>
+			<rate_limit sense="incr">gear/unit[1]/rate-incr</rate_limit>
+			<rate_limit sense="decr">gear/unit[1]/rate-decr</rate_limit>
+			<output>gear/unit[1]/pos-norm</output>
+		</actuator>
+	
+	</channel>
+	
+	<channel name="Right Main Gear">
+		
+		<switch name="gear/unit[2]/rate-incr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/right-actuator eq 1
+			</test>
+			<test value="0.0769231"> <!-- About 13 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+			<test logic="AND" value="0.0222222"> <!-- About 45 sec -->
+				/controls/hydraulic/switches/gear-gravity-ext eq 1
+				/accelerations/pilot-g ge 0.5
+			</test>
+		</switch>
+		
+		<switch name="gear/unit[2]/rate-decr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/right-actuator eq 1
+			</test>
+			<test value="0.1052632"> <!-- About 9.5 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+		</switch>
+		
+		<actuator name="gear/unit[2]/pos-norm-actuator">
+			<input>/controls/gear/lever</input>
+			<rate_limit sense="incr">gear/unit[2]/rate-incr</rate_limit>
+			<rate_limit sense="decr">gear/unit[2]/rate-decr</rate_limit>
+			<output>gear/unit[2]/pos-norm</output>
+		</actuator>
+	
+	</channel>
+	
+	<channel name="Gear Misc">
+		
+		<fcs_function name="gear/gear-all-norm">
+			<function>
+				<product>
+					<property>gear/unit[0]/pos-norm-actuator</property>
+					<property>gear/unit[1]/pos-norm-actuator</property>
+					<property>gear/unit[2]/pos-norm-actuator</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<switch name="gear/unit[0]/status">
+			<default value="1"/> <!-- In transit -->
+			<test logic="AND" value="0"> <!-- Up -->
+				/controls/gear/lever-cockpit eq 0
+				gear/unit[0]/pos-norm-actuator lt 0.01
+			</test>
+			<test logic="AND" value="2"> <!-- Down -->
+				/controls/gear/lever-cockpit eq 3
+				gear/unit[0]/pos-norm-actuator gt 0.99
+			</test>
+		</switch>
+		
+		<switch name="gear/unit[1]/status">
+			<default value="1"/> <!-- In transit -->
+			<test logic="AND" value="0"> <!-- Up -->
+				/controls/gear/lever-cockpit eq 0
+				gear/unit[1]/pos-norm-actuator lt 0.01
+			</test>
+			<test logic="AND" value="2"> <!-- Down -->
+				/controls/gear/lever-cockpit eq 3
+				gear/unit[1]/pos-norm-actuator gt 0.99
+			</test>
+		</switch>
+		
+		<switch name="gear/unit[2]/status">
+			<default value="1"/> <!-- In transit -->
+			<test logic="AND" value="0"> <!-- Up -->
+				/controls/gear/lever-cockpit eq 0
+				gear/unit[2]/pos-norm-actuator lt 0.01
+			</test>
+			<test logic="AND" value="2"> <!-- Down -->
+				/controls/gear/lever-cockpit eq 3
+				gear/unit[2]/pos-norm-actuator gt 0.99
+			</test>
+		</switch>
 	
 	</channel>
 	

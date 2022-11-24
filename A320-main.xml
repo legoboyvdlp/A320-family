@@ -326,15 +326,6 @@
 							</script>
 						</binding>
 					</item>
-					<item>
-						<label>About This Aircraft</label>
-						<binding>
-							<command>nasal</command>
-							<script>
-							acconfig.about_dlg.open();
-							</script>
-						</binding>
-					</item>
 				</menu>
 				<menu n="102">
 					<label>FMGC</label>
@@ -535,7 +526,7 @@
 						</binding>
 					</item>
 					<item>
-						<label>Failures</label>
+						<label>System Failures</label>
 						<binding>
 							<command>nasal</command>
 							<script>
@@ -1045,6 +1036,7 @@
 		<gear>
 			<brake-fans type="bool">0</brake-fans>
 			<brake-parking type="bool">0</brake-parking>
+			<lever-cockpit type="int">3</lever-cockpit>
 			<nws-switch type="double">1</nws-switch>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
 			<tiller-enabled type="bool">0</tiller-enabled>
@@ -1053,6 +1045,7 @@
 			<switches>
 				<blue-elec type="bool">0</blue-elec>
 				<blue-elec-ovrd type="bool">0</blue-elec-ovrd>
+				<gear-gravity-ext type="bool">0</gear-gravity-ext>
 				<green-edp type="bool">0</green-edp>
 				<ptu type="bool">0</ptu>
 				<rat-man type="bool">0</rat-man>
@@ -1496,7 +1489,11 @@
 				<right-tank-pump-1 type="bool">0</right-tank-pump-1>
 				<right-tank-pump-2 type="bool">0</right-tank-pump-2>
 			</fuel>
-			<gear type="bool">0</gear>
+			<gear n="0">
+				<left-actuator type="bool">0</left-actuator>
+				<nose-actuator type="bool">0</nose-actuator>
+				<right-actuator type="bool">0</right-actuator>
+			</gear>
 			<hydraulic>
 				<blue-elec type="bool">0</blue-elec>
 				<blue-elec-ovht type="bool">0</blue-elec-ovht>

@@ -258,7 +258,7 @@ var input = {
 	"apWarn": "/it-autoflight/output/ap-warning",
 	"apOffTime": "/ECAM/warnings/ap-off-time",
 	"elevatorFBW": "/fdm/jsbsim/fbw/elevator-sidestick",
-	"gearLever": "/controls/gear/gear-down",
+	"gearLever": "/controls/gear/lever",
 	"masterCaution": "/ECAM/warnings/master-caution-light",
 	"masterWarn": "/ECAM/warnings/master-warning-light",
 };

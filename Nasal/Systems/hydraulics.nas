@@ -211,13 +211,6 @@ var HYD = {
 	},
 };
 
-# Restrict gear raising on the ground
-setlistener("/controls/gear/gear-down", func {
-	if (!pts.Controls.Gear.gearDown.getValue() and (pts.Gear.wow[0].getValue() or pts.Gear.wow[1].getValue() or pts.Gear.wow[2].getValue())) {
-		pts.Controls.Gear.gearDown.setValue(1);
-	}
-});
-
 # Emesary
 var A320Hydraulic = notifications.SystemRecipient.new("A320 Hydraulic",HYD.loop,HYD);
 emesary.GlobalTransmitter.Register(A320Hydraulic);

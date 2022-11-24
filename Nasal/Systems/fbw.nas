@@ -224,7 +224,7 @@ var update_loop = func {
 		}
 		
 		if (!pts.Gear.wow[1].getBoolValue() and !pts.Gear.wow[2].getBoolValue()) {
-			if (degradeLaw == 1 and pts.Controls.Gear.gearDown.getBoolValue()) {
+			if (degradeLaw == 1 and pts.Controls.Gear.lever.getValue() == 1) {
 				FBW.degradeLaw.setValue(2); # todo 3 sec timer
 			} else {
 				FBW.degradeLaw.setValue(degradeLaw)

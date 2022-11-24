@@ -3526,7 +3526,7 @@
 		<switch name="/ECAM/warnings/fctl/gear-lever-down">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/controls/gear/gear-down eq 1
+				/controls/gear/lever eq 1
 				<test logic="OR">
 					/ECAM/warning-phase eq 6
 					/ECAM/warning-phase eq 7
@@ -4093,7 +4093,7 @@
 						/gear/gear[2]/position-norm ge 0.99
 					</test>
 					<test logic="AND">
-						/controls/gear/gear-down eq 1
+						/controls/gear/lever eq 1
 						fcs/slat-pos-deg ge 4
 					</test>
 				</test>

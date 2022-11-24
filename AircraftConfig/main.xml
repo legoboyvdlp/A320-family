@@ -77,23 +77,30 @@
 				</button>
 				<button>
 					<halign>center</halign>
+					<legend>Checklists</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>dialog-show</command>
+						<dialog-name>checklist</dialog-name>
+					</binding>
+				</button>
+				<button>
+					<halign>center</halign>
+					<legend>Aircraft Help</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>dialog-show</command>
+						<dialog-name>acconfig-help</dialog-name>
+					</binding>
+				</button>
+				<button>
+					<halign>center</halign>
 					<legend>DU Quality</legend>
 					<pref-width>140</pref-width>
 					<binding>
 						<command>nasal</command>
 						<script>
 						acconfig.du_quality.open();
-						</script>
-					</binding>
-				</button>
-				<button>
-					<halign>center</halign>
-					<legend>About Aircraft</legend>
-					<pref-width>140</pref-width>
-					<binding>
-						<command>nasal</command>
-						<script>
-						acconfig.about_dlg.open();
 						</script>
 					</binding>
 				</button>

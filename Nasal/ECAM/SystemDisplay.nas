@@ -61,7 +61,7 @@ var SystemDisplayController = {
 		} else if (me.tempFWCPhase == 3 or me.tempFWCPhase == 4 or me.tempFWCPhase == 5) {
 			me.displayedPage = me.PageList.enginePage;
 		} else if (me.tempFWCPhase == 6) {
-			if (pts.Controls.Gear.gearDown.getValue() and me.altitudeBelow16000) {
+			if (pts.Controls.Gear.lever.getValue() == 1 and me.altitudeBelow16000) {
 				me.displayedPage = me.PageList.wheelPage;
 			} else if (me.Display.Cruise) {
 				me.displayedPage = me.PageList.cruisePage;
@@ -324,7 +324,7 @@ setlistener("/ECAM/warning-phase", func() {
 	}
 }, 0, 0);
 
-setlistener("/controls/gear/gear-down", func() {
+setlistener("/controls/gear/lever", func() {
 	if (SystemDisplayController.mode == 3) {
 		SystemDisplayController.autoCall();
 	}

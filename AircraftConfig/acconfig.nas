@@ -75,7 +75,6 @@ var init_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/init/dialog", "Aircraft
 var help_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/help/dialog", "Aircraft/A320-family/AircraftConfig/help.xml");
 var fbw_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/fbw/dialog", "Aircraft/A320-family/AircraftConfig/fbw.xml");
 var fail_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/fail/dialog", "Aircraft/A320-family/AircraftConfig/fail.xml");
-var about_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/about/dialog", "Aircraft/A320-family/AircraftConfig/about.xml");
 var update_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/update/dialog", "Aircraft/A320-family/AircraftConfig/update.xml");
 var updated_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/updated/dialog", "Aircraft/A320-family/AircraftConfig/updated.xml");
 var error_mismatch = gui.Dialog.new("/sim/gui/dialogs/acconfig/error/mismatch/dialog", "Aircraft/A320-family/AircraftConfig/error-mismatch.xml");
@@ -285,7 +284,7 @@ var colddark = func {
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
-		setprop("/controls/gear/gear-down", 1);
+		setprop("/controls/gear/lever", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		setprop("/controls/switches/beacon", 0);
 		setprop("/controls/switches/strobe", 0.0);
@@ -345,7 +344,7 @@ var beforestart = func {
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
-		setprop("/controls/gear/gear-down", 1);
+		setprop("/controls/gear/lever", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		libraries.variousReset();
@@ -442,7 +441,7 @@ var taxi = func {
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
-		setprop("/controls/gear/gear-down", 1);
+		setprop("/controls/gear/lever", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		libraries.variousReset();

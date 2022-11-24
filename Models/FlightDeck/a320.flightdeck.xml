@@ -9134,16 +9134,10 @@
 		<condition>
 			<or>
 				<property>controls/switches/annun-test</property>
-				<and>
-					<not-equals>
-						<property>gear/gear[1]/position-norm</property>
-						<value>0</value>
-					</not-equals>
-					<not-equals>
-						<property>gear/gear[1]/position-norm</property>
-						<value>1</value>
-					</not-equals>
-				</and>
+				<equals>
+					<property>fdm/jsbsim/gear/unit[1]/status</property>
+					<value>1</value>
+				</equals>
 			</or>
 		</condition>
 	</animation>
@@ -9155,8 +9149,8 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<equals>
-					<property>gear/gear[1]/position-norm</property>
-					<value>1</value>
+					<property>fdm/jsbsim/gear/unit[1]/status</property>
+					<value>2</value>
 				</equals>
 			</or>
 		</condition>
@@ -9168,16 +9162,10 @@
 		<condition>
 			<or>
 				<property>controls/switches/annun-test</property>
-				<and>
-					<not-equals>
-						<property>gear/gear[0]/position-norm</property>
-						<value>0</value>
-					</not-equals>
-					<not-equals>
-						<property>gear/gear[0]/position-norm</property>
-						<value>1</value>
-					</not-equals>
-				</and>
+				<equals>
+					<property>fdm/jsbsim/gear/unit[0]/status</property>
+					<value>1</value>
+				</equals>
 			</or>
 		</condition>
 	</animation>
@@ -9189,8 +9177,8 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<equals>
-					<property>gear/gear[0]/position-norm</property>
-					<value>1</value>
+					<property>fdm/jsbsim/gear/unit[0]/status</property>
+					<value>2</value>
 				</equals>
 			</or>
 		</condition>
@@ -9202,16 +9190,10 @@
 		<condition>
 			<or>
 				<property>controls/switches/annun-test</property>
-				<and>
-					<not-equals>
-						<property>gear/gear[2]/position-norm</property>
-						<value>0</value>
-					</not-equals>
-					<not-equals>
-						<property>gear/gear[2]/position-norm</property>
-						<value>1</value>
-					</not-equals>
-				</and>
+				<equals>
+					<property>fdm/jsbsim/gear/unit[2]/status</property>
+					<value>1</value>
+				</equals>
 			</or>
 		</condition>
 	</animation>
@@ -9223,8 +9205,8 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<equals>
-					<property>gear/gear[2]/position-norm</property>
-					<value>1</value>
+					<property>fdm/jsbsim/gear/unit[2]/status</property>
+					<value>2</value>
 				</equals>
 			</or>
 		</condition>
@@ -9232,23 +9214,54 @@
 	
 	<!-- Landing Gear Lever -->
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>gear_lever</object-name>
-		<drag-direction>vertical</drag-direction>
-		<property>controls/gear/gear-down-pos</property>
-		<factor>-50</factor>
+		<property>controls/cockpit/gear-lever</property>
+		<interpolation>
+			<entry><ind>1</ind><dep>  0</dep></entry>
+			<entry><ind>2</ind><dep>-50</dep></entry>
+		</interpolation>
 		<axis>
 			<object-name>gear_lever.axis</object-name>
 		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>gear_lever</object-name>
+		<property>controls/cockpit/gear-lever</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>0.00</dep></entry>
+			<entry><ind>1</ind><dep>0.01</dep></entry>
+			<entry><ind>2</ind><dep>0.01</dep></entry>
+			<entry><ind>3</ind><dep>0.00</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-0.55056</x1-m>
+			<y1-m>-0.14748</y1-m>
+			<z1-m>0.09933</z1-m>
+			<x2-m>-0.49486</x2-m>
+			<y2-m>-0.14748</y2-m>
+			<z2-m>0.14019</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>gear_lever</object-name>
 		<action>
+			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
-				<property>controls/gear/gear-down</property>
-				<value>1</value>
-				<value>0</value>
-				<wrap>false</wrap>
+				<command>nasal</command>
+				<script>controls.gearDownSmart(1)</script>
 			</binding>
+			<mod-up>
+				<binding>
+					<command>nasal</command>
+					<script>controls.gearDownSmart(0);</script>
+				</binding>
+			</mod-up>
 		</action>
 		<hovered>
 			<binding>
@@ -9261,7 +9274,7 @@
 			</binding>
 		</hovered>
 	</animation>
-
+	
 	<animation>
 		<type>select</type>
 		<object-name>gear_lever_down_arrow</object-name>

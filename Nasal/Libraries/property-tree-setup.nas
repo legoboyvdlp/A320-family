@@ -59,7 +59,8 @@ var Controls = {
 	Gear: {
 		brake: [props.globals.getNode("/controls/gear/brake-left"),props.globals.getNode("/controls/gear/brake-right")],
 		brakeParking: props.globals.getNode("/controls/gear/brake-parking"),
-		gearDown: props.globals.getNode("/controls/gear/gear-down"),
+		lever: props.globals.getNode("/controls/gear/lever"),
+		leverCockpit: props.globals.getNode("/controls/gear/lever-cockpit"),
 	},
 	Lighting: {
 		landingLights: [props.globals.getNode("/controls/lighting/landing-lights[0]"),props.globals.getNode("/controls/lighting/landing-lights[1]"),props.globals.getNode("/controls/lighting/landing-lights[2]")],
@@ -134,6 +135,7 @@ var Fdm = {
 		},
 		Position: {
 			wow: props.globals.getNode("/fdm/jsbsim/position/wow"),
+			wowTemp: 0,
 		},
 		Propulsion: {
 			Engine: {
