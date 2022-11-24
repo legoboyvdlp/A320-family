@@ -222,6 +222,7 @@
 		<object-name>fpa-text</object-name>
 		<object-name>hdg-text</object-name>
 		<object-name>hdg-text-test</object-name>
+		<object-name>lat.dash</object-name>
 		<object-name>ils_led</object-name>
 		<object-name>ils2_led</object-name>
 		<object-name>loc_led</object-name>
@@ -258,10 +259,12 @@
 		<object-name>radio_vhf2_led.fo</object-name>
 		<object-name>radio_vhf3_led.fo</object-name>
 		<object-name>radio_vor_led.fo</object-name>
+		<object-name>spd.dash</object-name>
 		<object-name>spd-text</object-name>
 		<object-name>spd-text-test</object-name>
 		<object-name>vord_led</object-name>
 		<object-name>vord_led.001</object-name>
+		<object-name>vs.dash</object-name>
 		<object-name>vs-text</object-name>
 		<object-name>vs-text-last-2-digits</object-name>
 		<object-name>vs-text-test</object-name>
