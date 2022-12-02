@@ -11783,6 +11783,16 @@
 	</animation>
 	
 	<animation>
+		<type>rotate</type>
+		<object-name>rev_l</object-name>
+		<property>controls/cockpit/throttle-lever[0]</property>
+		<factor>45</factor>
+		<axis>
+			<object-name>trim.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
 		<type>pick</type>
 		<object-name>thr_l_button</object-name>
 		<action>
@@ -11906,6 +11916,16 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>thr_r_button</object-name>
+		<property>controls/cockpit/throttle-lever[1]</property>
+		<factor>45</factor>
+		<axis>
+			<object-name>trim.axis</object-name>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>rev_r</object-name>
 		<property>controls/cockpit/throttle-lever[1]</property>
 		<factor>45</factor>
 		<axis>

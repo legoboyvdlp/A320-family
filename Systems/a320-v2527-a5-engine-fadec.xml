@@ -890,6 +890,14 @@
 			</function>
 		</fcs_function>
 		
+		<switch name="fadec/reverse-1/active">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				fadec/reverse-1/position-cmd eq 1
+				fadec/reverse-1/position-norm ne 0
+			</test>
+		</switch>
+		
 		<!-- Engine 2 -->
 		<switch name="fadec/reverse-2/position-cmd">
 			<default value="0"/>
@@ -977,6 +985,14 @@
 				</product>
 			</function>
 		</fcs_function>
+		
+		<switch name="fadec/reverse-2/active">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				fadec/reverse-2/position-cmd eq 1
+				fadec/reverse-2/position-norm ne 0
+			</test>
+		</switch>
 	
 	</channel>
 	
@@ -986,7 +1002,7 @@
 		<switch name="fadec/control-1/throttle-pos">
 			<default value="/controls/engines/engine[0]/throttle"/>
 			<test value="0">
-				fadec/reverse-1/position-norm ne 0
+				fadec/reverse-1/active eq 1
 			</test>
 		</switch>
 		
@@ -1262,7 +1278,7 @@
 		<switch name="fadec/control-2/throttle-pos">
 			<default value="/controls/engines/engine[1]/throttle"/>
 			<test value="0">
-				fadec/reverse-2/position-norm ne 0
+				fadec/reverse-2/active eq 1
 			</test>
 		</switch>
 		
@@ -1869,7 +1885,7 @@
 		<switch name="fadec/control-1/throttle-output">
 			<default value="fadec/control-1/lever-norm"/>
 			<test value="fadec/reverse-1/throttle-rev">
-				fadec/reverse-1/position-norm ne 0
+				fadec/reverse-1/active eq 1
 			</test>
 			<test value="fadec/limit/toga-norm">
 				fadec/alpha-floor-switch gt 0
@@ -1907,7 +1923,7 @@
 		<switch name="fadec/control-2/throttle-output">
 			<default value="fadec/control-2/lever-norm"/>
 			<test value="fadec/reverse-2/throttle-rev">
-				fadec/reverse-2/position-norm ne 0
+				fadec/reverse-2/active eq 1
 			</test>
 			<test value="fadec/limit/toga-norm">
 				fadec/alpha-floor-switch gt 0
