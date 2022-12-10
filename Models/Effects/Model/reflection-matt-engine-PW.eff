@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<PropertyList>
+	<name>reflection</name>
+	<inherits-from>Effects/model-combined-deferred</inherits-from>
+	<parameters>
+		<rain-enabled type="int">2</rain-enabled>
+		<reflection-enabled type="int">1</reflection-enabled>
+		<reflection-dynamic type="int">1</reflection-dynamic>
+		<reflect_map-enabled type="int">0</reflect_map-enabled>
+		<reflection-correction type="float"><use>/sim/model/reflection/reflection-correction-wing</use></reflection-correction>
+		<reflection-type type="int">2</reflection-type>
+		<ambient-correction type="float"><use>/sim/model/reflection/ambient-correction-wing</use></ambient-correction>
+		<lightmap-enabled type="int">1</lightmap-enabled>
+		<lightmap-multi type="int">0</lightmap-multi>
+		<normalmap-enabled type="int">1</normalmap-enabled>
+		<texture n="2">
+			<image>Aircraft/A320-family/Models/Effects/Lightmaps/Engine-LEAPA1-Normal.png</image>
+			<filter>linear-mipmap-linear</filter>
+			<wrap-s>clamp</wrap-s>
+			<wrap-t>clamp</wrap-t>
+		</texture>
+		<lightmap-factor type="float" n="0"><use>/controls/lighting/wing-lights</use></lightmap-factor>
+        <lightmap-color type="vec3d" n="0">1.0 1.0 1.0</lightmap-color>
+        <texture n="3">
+            <image>Aircraft/A320-family/Models/Effects/WingLight/PW1100-light.png</image>
+            <filter>linear-mipmap-linear</filter>
+            <wrap-s>clamp</wrap-s>
+            <wrap-t>clamp</wrap-t>
+            <internal-format>normalized</internal-format>
+        </texture>
+		<texture n="5">
+			<type>cubemap</type>
+			<images>
+				<positive-x>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/1.png</positive-x>
+				<negative-x>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/4.png</negative-x>
+				<positive-y>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/2.png</positive-y>
+				<negative-y>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/3.png</negative-y>
+				<positive-z>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/6.png</positive-z>
+				<negative-z>Aircraft/Generic/Effects/CubeMaps/fgfs-sky/5.png</negative-z>
+			</images>
+		</texture>
+	</parameters>
+	
+	<!-- ####################
+    ### NORMALMAP INCLUDE ###
+    ######################### -->
+    <generate>
+        <tangent type="int">6</tangent>
+        <binormal type="int">7</binormal>
+    </generate>
+    <technique n="4">
+        <pass>
+            <program>
+                <attribute>
+                    <name>tangent</name>
+                    <index>6</index>
+                </attribute>
+                <attribute>
+                    <name>binormal</name>
+                    <index>7</index>
+                </attribute>
+            </program>
+        </pass>
+    </technique>
+    <technique n="7">
+        <pass>
+            <program>
+                <attribute>
+                    <name>tangent</name>
+                    <index>6</index>
+                </attribute>
+                <attribute>
+                    <name>binormal</name>
+                    <index>7</index>
+                </attribute>
+            </program>
+        </pass>
+    </technique>
+    <technique n="9">
+        <pass>
+            <program>
+                <attribute>
+                    <name>tangent</name>
+                    <index>6</index>
+                </attribute>
+                <attribute>
+                    <name>binormal</name>
+                    <index>7</index>
+                </attribute>
+            </program>
+        </pass>
+    </technique>
+    <!-- ########################
+    ### END NORMALMAP INCLUDE ###
+    ############################# -->
+</PropertyList>

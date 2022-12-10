@@ -21,12 +21,6 @@
 				<value>1</value>
 			</equals>
 		</condition>
-		<offsets>
-			<x-m>26.11094</x-m>
-			<y-m>-29.16832</y-m>
-			<z-m>0.95</z-m>
-			<heading-deg>170</heading-deg>
-		</offsets>
 	</model>
 	
 	<animation>
@@ -63,9 +57,9 @@
 			</equals>
 		</condition>
 		<offsets>
-			<x-m>-3</x-m>
+			<x-m>-24</x-m>
 			<y-m>9.5</y-m>
-			<z-m>-4</z-m>
+			<z-m>-4.2</z-m>
 			<heading-deg>160</heading-deg>
 		</offsets>
 	</model>
@@ -82,10 +76,29 @@
 			</equals>
 		</condition>
 		<offsets>
-			<x-m>6.84</x-m>
+			<x-m>-14.54</x-m>
 			<y-m>6.62</y-m>
-			<z-m>-4.1</z-m>
+			<z-m>-4.17</z-m>
 			<heading-deg>93.412</heading-deg>
+		</offsets>
+	</model>
+	
+	<!-- Catering Truck - 2nd door -->
+	
+	<model>
+		<name>cater-truck</name>
+		<path>Aircraft/A320-family/Models/Services/Catering/L_T_VolvoFM-4_5m-set.xml</path>
+		<condition>
+			<equals>
+				<property>services/catering-rear/enable</property>
+				<value>1</value>
+			</equals>
+		</condition>
+		<offsets>
+			<x-m>11.2</x-m>
+			<y-m>6.32</y-m>
+			<z-m>-4.17</z-m>
+			<heading-deg>82</heading-deg>
 		</offsets>
 	</model>
 	
@@ -100,11 +113,6 @@
 				<value>1</value>
 			</equals>
 		</condition>
-		<offsets>
-			<x-m>9.52482</x-m>
-			<y-m>0</y-m>
-			<z-m>0.5</z-m>            
-		</offsets>
 	</model>
 	
 	<!-- External Power -->
@@ -114,14 +122,14 @@
 		<path>Aircraft/A320-family/Models/Services/External-Power/ext-pwr-box.ac</path>
 		<condition>
 			<equals>
-				<property>controls/electrical/ground-cart</property>
+				<property>controls/electrical/switches/ground-cart</property>
 				<value>1</value>
 			</equals>
 		</condition>
 		<offsets>
-			<x-m>5</x-m>
-			<y-m>2</y-m>
-			<z-m>0.5</z-m>
+			<x-m>-17.8</x-m>
+			<y-m>3.2</y-m>
+			<z-m>0.55</z-m>
 		</offsets>
 	</model>
 	
@@ -131,13 +139,10 @@
 		<name>chock_nose</name>
 		<path>Aircraft/A320-family/Models/Services/Chocks/chock_nose.ac</path>
 		<condition>
-			<equals>
-				<property>services/chocks/enable</property>
-				<value>1</value>
-			</equals>
+			<property>sim/multiplay/generic/bool[0]</property>
 		</condition>
 		<offsets>
-			<x-m>23.5</x-m>
+			<x-m>2.35</x-m>
 			<z-m>1.25</z-m>
 		</offsets>
 	</model>
@@ -146,13 +151,10 @@
 		<name>chock_left</name>
 		<path>Aircraft/A320-family/Models/Services/Chocks/chock_left.ac</path>
 		<condition>
-			<equals>
-				<property>services/chocks/enable</property>
-				<value>1</value>
-			</equals>
+			<property>sim/multiplay/generic/bool[0]</property>
 		</condition>
 		<offsets>
-			<x-m>15.5</x-m>
+			<x-m>-6.0</x-m>
 			<y-m>1.05</y-m>
 			<z-m>1.25</z-m>
 		</offsets>
@@ -162,25 +164,22 @@
 		<name>chock_right</name>
 		<path>Aircraft/A320-family/Models/Services/Chocks/chock_right.ac</path>
 		<condition>
-			<equals>
-				<property>services/chocks/enable</property>
-				<value>1</value>
-			</equals>
+			<property>sim/multiplay/generic/bool[0]</property>
 		</condition>
 		<offsets>
-			<x-m>15.5</x-m>
+			<x-m>-6.0</x-m>
 			<y-m>-1.05</y-m>
 			<z-m>1.25</z-m>
 		</offsets>
 	</model>
+	
 	<!-- Stairways -->
 	
-
 	<model>
 		<path>Aircraft/A320-family/Models/Services/Stairs/stairs.xml</path>
 		<name>l1</name>
 		<offsets>
-			<x-m>7.32829</x-m>
+			<x-m>-14</x-m>
 			<y-m>-0.10833</y-m>
 			<z-m>-0.6</z-m>
 			<heading-deg>-4.037</heading-deg>
@@ -194,7 +193,7 @@
 		<path>Aircraft/A320-family/Models/Services/Stairs/stairs.xml</path>
 		<name>l4</name>
 		<offsets>
-			<x-m>31.68355</x-m>
+			<x-m>10.2</x-m>
 			<y-m>0.04962</y-m>
 			<z-m>-0.6</z-m>
 			<heading-deg>6.705</heading-deg>

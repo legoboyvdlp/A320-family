@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>British Airways (G-TTNR)</name>
+				<texture-fuselage>BAW-fuselage.png</texture-fuselage>
+				<texture-engine>BAW-engine.png</texture-engine>
+				<texture-placards>Fuselage/res/placards.png</texture-placards>
+			</livery>
+		</model>
+	</sim>
+	
+	<options>
+		<engine-name type="string">LEAP-1A26</engine-name>
+		<model-number type="string">A320-251N</model-number>
+		<EIS2 type="bool">1</EIS2>
+		<company-options>
+			<idle-factor>+0.0</idle-factor>
+			<perf-factor>+0.0</perf-factor>
+		</company-options>
+		<model-options>
+			<registration type="string">G-TTNR</registration>
+			<three-letter type="string">BAW</three-letter>
+			<two-letter type="string">BA</two-letter>
+			<sharklet type="bool">1</sharklet>
+			<wifi-aft type="bool">0</wifi-aft>
+			<wifi-fwd type="bool">0</wifi-fwd>
+		</model-options>
+	</options>
+</PropertyList>

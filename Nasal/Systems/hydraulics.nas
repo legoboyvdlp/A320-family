@@ -83,7 +83,7 @@ var HYD = {
 		yellowReservoirOvht: props.globals.getNode("/systems/hydraulic/relays/yellow-reservoir-overheat"),
 	},
 	init: func() {
-		me.resetFail();
+		me.resetFailures();
 		me.Qty.blueInput.setValue(8);
 		me.Qty.greenInput.setValue(16);
 		me.Qty.yellowInput.setValue(15);
@@ -96,7 +96,7 @@ var HYD = {
 		me.Switch.yellowElec.setValue(0);
 		me.Brakes.accumPressPsi.setValue(3000);
 	},
-	resetFail: func() {
+	resetFailures: func() {
 		me.Fail.blueElec.setBoolValue(0);
 		me.Fail.blueElecOvht.setBoolValue(0);
 		me.Fail.blueLeak.setBoolValue(0);
@@ -210,13 +210,6 @@ var HYD = {
 		}
 	},
 };
-
-# Restrict gear raising on the ground
-setlistener("/controls/gear/gear-down", func {
-	if (!pts.Controls.Gear.gearDown.getValue() and (pts.Gear.wow[0].getValue() or pts.Gear.wow[1].getValue() or pts.Gear.wow[2].getValue())) {
-		pts.Controls.Gear.gearDown.setValue(1);
-	}
-});
 
 # Emesary
 var A320Hydraulic = notifications.SystemRecipient.new("A320 Hydraulic",HYD.loop,HYD);

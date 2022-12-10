@@ -1,18 +1,19 @@
 AC3Db
-MATERIAL "buttonlights.001" rgb 1 1 1  amb 1 1 1  emis 1 1 1  spec 0 0 0  shi 0  trans 0
+MATERIAL "buttonlights.003" rgb 0 0 0  amb 0 0 0  emis 1 1 1  spec 0 0 0  shi 0  trans 0
 OBJECT world
 kids 2
 OBJECT poly
 name "uecam.screen"
-data 21
-uecam.screen.mesh.008
+loc 0.00468563 0.00107889 -0.584945
+data 16
+pfd1.screen.mesh
 texture "screen.png"
 crease 30.000000
 numvert 4
--0.58049 0.30536 0.06855
--0.53427 0.14966 0.06855
--0.53427 0.14966 -0.09384
--0.58049 0.30536 -0.09384
+-0.585972 0.307175 0.656334
+-0.539107 0.148191 0.656334
+-0.539107 0.148191 0.488037
+-0.585972 0.307175 0.488037
 numsurf 1
 SURF 0x0
 mat 0
@@ -24,15 +25,16 @@ refs 4
 kids 0
 OBJECT poly
 name "uecam.screen2"
-data 21
-uecam.screen.mesh.008
+loc 0.00468563 0.00107889 -0.584945
+data 16
+pfd1.screen.mesh
 texture "screen.png"
 crease 30.000000
 numvert 4
--0.58049 0.30536 -0.09384
--0.53427 0.14966 -0.09384
--0.53427 0.14966 0.06855
--0.58049 0.30536 0.06855
+-0.585972 0.307175 0.488037
+-0.539107 0.148191 0.488037
+-0.539107 0.148191 0.656334
+-0.585972 0.307175 0.656334
 numsurf 1
 SURF 0x0
 mat 0

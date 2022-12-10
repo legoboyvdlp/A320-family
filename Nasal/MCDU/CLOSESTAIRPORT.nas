@@ -164,6 +164,7 @@ var closestAirportPage = {
 			mcdu_message(me.computer, "NOT IN DATA BASE");
 		} else {
 			me.manAirport = airportinfo(id);
+			me.fontMatrix[0][4] = 0;
 			me.L5 = [id, nil, "grn"];
 			me.R5 = ["----", nil, "grn"];
 			mcdu_scratchpad.scratchpads[me.computer].empty();

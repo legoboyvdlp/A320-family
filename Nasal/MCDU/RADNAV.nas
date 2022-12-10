@@ -1,5 +1,5 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 
 var radNavScratchpad = nil;
 var radNavScratchpadSize = nil;
@@ -278,7 +278,7 @@ var radnavInput = func(key, i) {
 			}
 		} else if (key == "R1") {
 			if (radNavScratchpad == "CLR") {
-				fmgc.FMGCInternal.VOR2.freqSet = 0;
+				fmgc.FMGCInternal.VOR1.freqSet = 0;
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				if (size(split("/", radNavScratchpad)) == 2) {

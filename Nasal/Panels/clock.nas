@@ -40,7 +40,6 @@ var clock = {
 	hhMM: props.globals.initNode("/instrumentation/clock/clock_hh_mm", 0, "STRING"),
 	utcDate: [props.globals.initNode("/instrumentation/clock/utc-date", "", "STRING"), props.globals.initNode("/instrumentation/clock/utc-date1", "", "STRING"),
 		props.globals.initNode("/instrumentation/clock/utc-date2", "", "STRING"),props.globals.initNode("/instrumentation/clock/utc-date3", "", "STRING")],
-	
 };
 
 var chrono = {
@@ -79,7 +78,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	chr.reset();
 	clk.stop();
 	clk.reset();
-  	chrono_cpt.reset();
+	chrono_cpt.reset();
 	chrono_fo.reset();
 	rudderTrim.rudderTrimDisplay.setValue(sprintf("%2.1f", pts.Fdm.JSBsim.Hydraulics.Rudder.trimDeg.getValue()));
 	start_loop.start();
@@ -178,6 +177,31 @@ setlistener("/instrumentation/clock/et-selector", func(et){
 	}
 }, 0, 0);
 
+#Chrono
+setlistener("instrumentation/efis[0]/inputs/CHRONO", func(et){
+		chrono0 = et.getValue();
+		if (chrono0 == 1){
+			chrono_cpt.start();
+		} elsif (chrono0 == 2) {
+			chrono_cpt.stop();
+		} elsif (chrono0 == 0) {
+			chrono_cpt.reset();
+			setprop("instrumentation/ndchrono[0]/elapsetime-sec", 0);
+		}
+}, 0, 0);
+
+setlistener("instrumentation/efis[1]/inputs/CHRONO", func(et){
+		chrono1 = et.getValue();
+		if (chrono1 == 1){
+			chrono_fo.start();
+		} elsif (chrono1 == 2) {
+			chrono_fo.stop();
+		} elsif (chrono1 == 0) {
+			chrono_fo.reset();
+			setprop("instrumentation/ndchrono[1]/elapsetime-sec", 0);
+		}
+}, 0, 0);
+
 var start_loop = maketimer(0.1, func {
 	if (systems.ELEC.Bus.dcEss.getValue() < 25) { return; }
 	
@@ -200,9 +224,9 @@ var start_loop = maketimer(0.1, func {
 		chrono.etString.setValue("88 88");
 		clock.elapsedString.setValue("88:88");
 	} else {
-		day = pts.Sim.Time.UTC.day.getValue();
-		month = pts.Sim.Time.UTC.month.getValue();
-		year = pts.Sim.Time.UTC.year.getValue();
+		day = pts.Sim.Time.Utc.day.getValue();
+		month = pts.Sim.Time.Utc.month.getValue();
+		year = pts.Sim.Time.Utc.year.getValue();
 		
 		# Clock
 		UTC_date = sprintf("%02d %02d %02d", month, day, substr(sprintf("%2d", year),1,2));
@@ -272,7 +296,7 @@ var start_loop = maketimer(0.1, func {
 			item.update(nil);
 		}
 	}
-
+	
 	#Cpt Chrono
 	chr0_tmp = chrono_cpt_node.getValue();
 	if (chr0_tmp >= 360000) {

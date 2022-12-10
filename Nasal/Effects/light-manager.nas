@@ -85,26 +85,34 @@ var lightManager = {
 	},
 	
 	init: func() {
+		var fgVersion = split(".", getprop("/sim/version/flightgear"));
+		var fgVersionMajor = fgVersion[0];
+		var fgVersionMinor = fgVersion[1];
+		if (fgVersionMajor >= 2020 and fgVersionMinor >= 4) {
+			# Using compositor lights
+			return;
+		}
+
 		setprop("/sim/rendering/als-secondary-lights/flash-radius", 13);
 		setprop("/sim/rendering/als-secondary-lights/num-lightspots", 5);
 		
-		me.Lights.light1.setPos(100,0,2);
-		me.Lights.light2.setPos(60,0,2);
-		me.Lights.light3.setPos(-2,18,2);
-		me.Lights.light4.setPos(-2,-18,2);
-		me.Lights.light5.setPos(-25,0,2);
+		me.Lights.light1.setPos(100,0,-3.84073);
+		me.Lights.light2.setPos(60,0,-3.84073);
+		me.Lights.light3.setPos(8,18,-3.84073);
+		me.Lights.light4.setPos(8,-18,-3.84073);
+		me.Lights.light5.setPos(-15,0,-3.84073);
 		
-		me.Lights.light1.setColor(0.7,0.7,0.7);
-		me.Lights.light2.setColor(0.7,0.7,0.7);
-		me.Lights.light3.setColor(0.4,0.0,0.0);
-		me.Lights.light4.setColor(0.0,0.4,0.0);
-		me.Lights.light5.setColor(0.4,0.4,0.4);
+		me.Lights.light1.setColor(1.0,1.0,1.0);
+		me.Lights.light2.setColor(1.0,1.0,1.0);
+		me.Lights.light3.setColor(1.0,0.0,0.0);
+		me.Lights.light4.setColor(0.0,1.0,0.0);
+		me.Lights.light5.setColor(1.0,1.0,1.0);
 		
 		me.Lights.light1.setSize(12);
 		me.Lights.light2.setSize(6);
-		me.Lights.light3.setSize(4);
-		me.Lights.light4.setSize(4);
-		me.Lights.light5.setSize(5);
+		me.Lights.light3.setSize(6);
+		me.Lights.light4.setSize(6);
+		me.Lights.light5.setSize(6);
 		
 		me.Lights.light1.setStretch(6);
 		me.Lights.light2.setStretch(6);

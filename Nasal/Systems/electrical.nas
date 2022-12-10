@@ -71,17 +71,17 @@ var ELEC = {
 		dcTie2: props.globals.getNode("/systems/electrical/relay/dc-bat-tie-dc-2/contact-pos"),
 		glc1: props.globals.getNode("/systems/electrical/relay/gen-1-glc/contact-pos"),
 		glc2: props.globals.getNode("/systems/electrical/relay/gen-2-glc/contact-pos"),
-		tr1Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/contact-pos"),
-		tr2Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-2/contact-pos"),
 		relay7XB: props.globals.getNode("/systems/electrical/sources/si-1/inverter-control/relay-7xb"),
 		relay15XE2: props.globals.getNode("/systems/electrical/relay/relay-15XE2/contact-pos"),
+		tr1Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/contact-pos"),
+		tr2Contactor: props.globals.getNode("/systems/electrical/relay/tr-contactor-2/contact-pos"),
 	},
 	SomeThing: {
 		emerGenSignal: props.globals.getNode("/systems/electrical/some-electric-thingie/emer-gen-operate"),
 		galley: props.globals.getNode("/systems/electrical/some-electric-thingie/galley-shed"),
 	},
 	Source: {
-		APU: {
+		Apu: {
 			volts: props.globals.getNode("/systems/electrical/sources/apu/output-volt"),
 			hertz: props.globals.getNode("/systems/electrical/sources/apu/output-hertz"),
 			contact: props.globals.getNode("/systems/electrical/relay/apu-glc/contact-pos"),
@@ -112,6 +112,20 @@ var ELEC = {
 			volts: props.globals.getNode("/systems/electrical/sources/ext/output-volt"),
 			hertz: props.globals.getNode("/systems/electrical/sources/ext/output-hertz"),
 		},
+		Idg1: {
+			gcrRelay: props.globals.getNode("/systems/electrical/sources/idg-1/gcr-relay"),
+			hertz: props.globals.getNode("/systems/electrical/sources/idg-1/output-hertz"),
+			volts: props.globals.getNode("/systems/electrical/sources/idg-1/output-volt"),
+		},
+		Idg2: {
+			gcrRelay: props.globals.getNode("/systems/electrical/sources/idg-2/gcr-relay"),
+			hertz: props.globals.getNode("/systems/electrical/sources/idg-2/output-hertz"),
+			volts: props.globals.getNode("/systems/electrical/sources/idg-2/output-volt"),
+		},
+		Inverter: {
+			hertz: props.globals.getNode("/systems/electrical/sources/si-1/output-hertz"),
+			volts: props.globals.getNode("/systems/electrical/sources/si-1/output-volt"),
+		},
 		tr1: {
 			outputVolt: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/output"),
 			outputAmp: props.globals.getNode("/systems/electrical/relay/tr-contactor-1/output-amp"),
@@ -126,26 +140,13 @@ var ELEC = {
 			outputVoltRelay: props.globals.getNode("/systems/electrical/relay/ess-tr-contactor/output"),
 			outputAmpRelay: props.globals.getNode("/systems/electrical/relay/ess-tr-contactor/output-amp"),
 		},
-		IDG1: {
-			gcrRelay: props.globals.getNode("/systems/electrical/sources/idg-1/gcr-relay"),
-			hertz: props.globals.getNode("/systems/electrical/sources/idg-1/output-hertz"),
-			volts: props.globals.getNode("/systems/electrical/sources/idg-1/output-volt"),
-		},
-		IDG2: {
-			gcrRelay: props.globals.getNode("/systems/electrical/sources/idg-2/gcr-relay"),
-			hertz: props.globals.getNode("/systems/electrical/sources/idg-2/output-hertz"),
-			volts: props.globals.getNode("/systems/electrical/sources/idg-2/output-volt"),
-		},
-		Inverter: {
-			hertz: props.globals.getNode("/systems/electrical/sources/si-1/output-hertz"),
-			volts: props.globals.getNode("/systems/electrical/sources/si-1/output-volt"),
-		},
 	},
 	Switch: {
 		acEssFeed: props.globals.getNode("/controls/electrical/switches/ac-ess-feed"),
 		bat1: props.globals.getNode("/controls/electrical/switches/bat-1"),
 		bat2: props.globals.getNode("/controls/electrical/switches/bat-2"),
 		busTie: props.globals.getNode("/controls/electrical/switches/bus-tie"),
+		emerElecManOn: props.globals.getNode("/controls/electrical/switches/emer-elec-man-on"), # non-reset
 		emerGenTest: props.globals.getNode("/controls/electrical/switches/emer-gen-test"),
 		extPwr: props.globals.getNode("/controls/electrical/switches/ext-pwr"),
 		galley: props.globals.getNode("/controls/electrical/switches/galley"),
@@ -153,12 +154,12 @@ var ELEC = {
 		gen2: props.globals.getNode("/controls/electrical/switches/gen-2"),
 		genApu: props.globals.getNode("/controls/electrical/switches/apu"),
 		gen1Line: props.globals.getNode("/controls/electrical/switches/gen-1-line-contactor"),
+		groundCart: props.globals.getNode("/controls/electrical/switches/ground-cart"),
 		idg1Disc: props.globals.getNode("/controls/electrical/switches/idg-1-disc"),
 		idg2Disc: props.globals.getNode("/controls/electrical/switches/idg-2-disc"),
-		emerElecManOn: props.globals.getNode("/controls/electrical/switches/emer-elec-man-on"), # non-reset
 	},
 	init: func() {
-		me.resetFail();
+		me.resetFailures();
 		me.SomeThing.emerGenSignal.setBoolValue(0);
 		me.Switch.acEssFeed.setBoolValue(0);
 		me.Switch.bat1.setBoolValue(0);
@@ -171,11 +172,12 @@ var ELEC = {
 		me.Switch.gen2.setBoolValue(1);
 		me.Switch.genApu.setBoolValue(1);
 		me.Switch.gen1Line.setBoolValue(0);
+		me.Switch.groundCart.setBoolValue(0);
 		me.Switch.idg1Disc.setBoolValue(1);
 		me.Switch.idg2Disc.setBoolValue(1);
 		me.Switch.emerElecManOn.setBoolValue(0);
 	},
-	resetFail: func() {
+	resetFailures: func() {
 		me.Fail.acEssBusFault.setBoolValue(0);
 		me.Fail.ac1BusFault.setBoolValue(0);
 		me.Fail.ac2BusFault.setBoolValue(0);

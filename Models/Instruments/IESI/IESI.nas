@@ -1,6 +1,6 @@
 # A3XX IESI
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 
 # props.nas nodes
 var iesi_init = props.globals.initNode("/instrumentation/iesi/iesi-init", 0, "BOOL");
@@ -218,8 +218,10 @@ var canvas_IESI = {
 			props.UpdateManager.FromHashList(["iesiPowered","iesiBrt"], 0.005, func(val) {
 				if (val.iesiPowered and val.iesiBrt > 0.01) {
 					obj.group.setVisible(1);
+					pts.Instrumentation.Iesi.lcdOn.setBoolValue(1);
 				} else {
 					obj.group.setVisible(0);
+					pts.Instrumentation.Iesi.lcdOn.setBoolValue(0);
 				}
 			}),
 			props.UpdateManager.FromHashList(["iesiPowered","acconfig","iesiInit"], 1, func(val) {

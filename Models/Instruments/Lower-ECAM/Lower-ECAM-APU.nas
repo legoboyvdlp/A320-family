@@ -1,5 +1,5 @@
 # A3XX Lower ECAM Canvas
-# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath
 
 var apu_load = props.globals.initNode("/systems/electrical/extra/apu-load", 0, "DOUBLE");
 var gen1_load = props.globals.initNode("/systems/electrical/extra/gen1-load", 0, "DOUBLE");
@@ -175,6 +175,7 @@ var canvas_lowerECAMPageApu =
 					obj.showApuParams = 1;
 				} else {
 					obj["APUN"].setColor(0.7333,0.3803,0);
+					obj["APUN-needle"].setColor(0.7333,0.3803,0);
 					obj["APUEGT"].setColor(0.7333,0.3803,0);
 					obj["APUN-needle"].hide();
 					obj["APUEGT-needle"].hide();

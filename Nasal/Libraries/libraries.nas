@@ -1,10 +1,8 @@
 # A320 Main Libraries
-# Joshua Davidson (Octal450)
-
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 
 print("------------------------------------------------");
-print("Copyright (c) 2016-2020 Josh Davidson (Octal450)");
+print("Copyright (c) 2016-2022 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
 setprop("/autopilot/route-manager/disable-route-manager", 1);
@@ -24,39 +22,53 @@ var qty2 = math.round((rand() * 5 ) + 20, 0.1);
 setprop("/engines/engine[0]/oil-qt-actual", qty1);
 setprop("/engines/engine[1]/oil-qt-actual", qty2);
 
-##########
-# Lights #
-##########
+# Aircraft Visual
 var beacon = aircraft.light.new("/sim/model/lights/beacon", [0.1, 1], "/controls/lighting/beacon");
 var strobe = aircraft.light.new("/sim/model/lights/strobe", [0.05, 0.06, 0.05, 1], "/controls/lighting/strobe");
 var tail_strobe = aircraft.light.new("/sim/model/lights/tailstrobe", [0.1, 1], "/controls/lighting/strobe");
 
-###########
-# Effects #
-###########
-
 var tiresmoke_system = aircraft.tyresmoke_system.new(0, 1, 2);
 aircraft.rain.init();
 
-aircraft.livery.init(getprop("/sim/model/livery-dir"));
+var aero = getprop("/sim/aero");
+var defaultFuseLiv = "";
+if (aero == "A320-200-CFM") {
+	var livery = aircraft.canvas_livery.init("Models/Liveries/CFM");
+	elements = ["EngineCFM56L","EngineCFM56R","ReverserLDoor1","ReverserLDoor2","ReverserLDoor3","ReverserLDoor4","ReverserRDoor1","ReverserRDoor2","ReverserRDoor3","ReverserRDoor4","PylonCFM56L","PylonCFM56R","IntakeCFM56L","IntakeCFM56R"];
+	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/CFM/2k/SWR-engine.png");
+	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/CFM/engine-dirt.png");
+	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/CFM/4k/SWR-fuselage.png";
+} else if (aero == "A320-200-IAE") {
+	var livery = aircraft.canvas_livery.init("Models/Liveries/IAE");
+	elements = ["EngineIAEV2500L","EngineIAEV2500R","ReverserLDoor","ReverserRDoor","PylonIAEV2500L","PylonIAEV2500R","IntakeIAEV2500L","IntakeIAEV2500R"];
+	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/IAE/2k/QTR-engine.png");
+	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/IAE/engine-dirt.png");
+	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/IAE/4k/QTR-fuselage.png";
+} else if (aero == "A320neo-CFM") {
+	var livery = aircraft.canvas_livery.init("Models/Liveries/CFM-NEO");
+	elements = ["EngineLEAPL", "EngineLEAPL.007", "EngineLEAPL.Inner", "EngineLEAPR", "EngineLEAPR.Inner", "Exhaust2LEAPL", "Exhaust2LEAPR", "Exhaust3LEAPL", "Exhaust3LEAPR", "IntakeLEAPL", "IntakeLEAPR", "PylonLEAPL", "PylonLEAPR", "ReverserLDoorLEAP", "ReverserRDoorLEAP"];
+	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/CFM-NEO/2k/SAS-engine.png");
+#	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/CFM-NEO/engine-dirt.png");
+	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/CFM-NEO/4k/SAS-fuselage.png";
+} else if (aero == "A320neo-PW") {
+	var livery = aircraft.canvas_livery.init("Models/Liveries/PW-NEO");
+	elements = ["EnginePWPPL", "EnginePWPPL.Inner", "EnginePWPPR", "EnginePWPPR.Inner", "Exhaust3PWPPL", "Exhaust3PWPPR", "Exxhaust2PWPPL", "Exxhaust2PWPPR", "IntakePWPPL", "IntakePWPPR", "PylonPWPPL", "PylonPWPPR", "ReverserRDoorPWPP", "ReverserLDoorPWPP"];
+	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/PW-NEO/2k/NKS-engine.png");
+#	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/PW-NEO/engine-dirt.png");
+	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/PW-NEO/4k/NKS-fuselage.png";
+}
 
-#########
-# Doors #
-#########
+var elements = ["AileronL","AileronR","Antenna1","Antenna2","ApuFlap","AvionicsVentDoor","Cargo1","Cargo2","Cargo3","DoorL1","DoorL4","DoorR1","DoorR4","ElevatorL","ElevatorR","EngineFairingL","EngineFairingR","FairingL1","FairingL2","FairingL3","FairingR1","FairingR2","FairingR3","FlapL1","FlapL2","FlapR1","FlapR2","Fuselage","GPUServiceDoor","Hstabs","MLGGearDoorL","MLGGearDoorR","MLGWingDoorL1","MLGWingDoorL2","MLGWingDoorR1","MLGWingDoorR2","NLGAftDoorL","NLGAftDoorR","NLGFittingPanel","NLGForewardDoorL","NLGForewardDoorR","OutflowValveDoor1","OutflowValveDoor2","RatDoorL","RatDoorR","Rudder","Sharklet","SlatL1","SlatL2","SlatR1","SlatR2","SpoilerL1","SpoilerL2","SpoilerL3","SpoilerL4","SpoilerL5","SpoilerR1","SpoilerR2","SpoilerR3","SpoilerR4","SpoilerR5","Wings","WingtipFence"];
+livery.createTarget("fuselage", elements, "sim/model/livery/texture-fuselage", defaultFuseLiv, resolution=16384);
+livery.addLayer("fuselage", "dirt", "Aircraft/A320-family/Models/Liveries/fuselage-dirt.png");
 
 # Front doors
-var doorl1 = aircraft.door.new("/sim/model/door-positions/doorl1", 4);
-var doorr1 = aircraft.door.new("/sim/model/door-positions/doorr1", 4);
-
-# Middle doors (A321 only)
-var doorl2 = aircraft.door.new("/sim/model/door-positions/doorl2", 4);
-var doorr2 = aircraft.door.new("/sim/model/door-positions/doorr2", 4);
-var doorl3 = aircraft.door.new("/sim/model/door-positions/doorl3", 4);
-var doorr3 = aircraft.door.new("/sim/model/door-positions/doorr3", 4);
+var doorl1 = aircraft.door.new("/sim/model/door-positions/doorl1", 5);
+var doorr1 = aircraft.door.new("/sim/model/door-positions/doorr1", 5);
 
 # Rear doors
-var doorl4 = aircraft.door.new("/sim/model/door-positions/doorl4", 4);
-var doorr4 = aircraft.door.new("/sim/model/door-positions/doorr4", 4);
+var doorl4 = aircraft.door.new("/sim/model/door-positions/doorl4", 5);
+var doorr4 = aircraft.door.new("/sim/model/door-positions/doorr4", 5);
 
 # Cargo holds
 var cargobulk = aircraft.door.new("/sim/model/door-positions/cargobulk", 3);
@@ -65,6 +77,8 @@ var cargofwd = aircraft.door.new("/sim/model/door-positions/cargofwd", 10);
 
 # Seat armrests in the flight deck (unused)
 var armrests = aircraft.door.new("/sim/model/door-positions/armrests", 2);
+var windowLeft = aircraft.door.new("/sim/model/door-positions/windowLeft", 1);
+var windowRight = aircraft.door.new("/sim/model/door-positions/windowRight", 1);
 
 # Cockpit door - TODO animation
 var cockpitdoor = aircraft.door.new("/sim/model/door-positions/doorc", 1);
@@ -76,7 +90,7 @@ var triggerDoor = func(door, doorName, doorDesc) {
 		gui.popupTip("Closing " ~ doorDesc ~ " door");
 		door.toggle();
 	} else {
-		if (pts.Velocities.groundspeed.getValue() > 5) {
+		if (pts.Velocities.groundspeedKt.getValue() > 5) {
 			gui.popupTip("You cannot open the doors while the aircraft is moving!");
 		} else {
 			gui.popupTip("Opening " ~ doorDesc ~ " door");
@@ -119,14 +133,15 @@ var systemsInit = func() {
 	systems.HYD.init();
 	systems.FUEL.init();
 	systems.ADIRS.init();
-	systems.eng_init();
+	systems.ENGINE.init();
+	systems.IGNITION.init();
+	systems.FADEC.init();
 	systems.APUController.init();
 	systems.BrakeSys.reset();
 	systems.Autobrake.init();
 	systems.fire_init();
 	fmgc.flightPlanController.reset();
 	fmgc.windController.reset();
-	fadec.FADEC.init();
 	fmgc.ITAF.init();
 	fmgc.FMGCinit();
 	mcdu.MCDU_init(0);
@@ -165,7 +180,7 @@ var systemsLoop = func(notification) {
 	systems.BrakeSys.update(notification);
 	systems.HFLoop(notification);
 	systems.APUController.loop();
-	fadec.FADEC.loop();
+	systems.FADEC.loop();
 	rmp.rmpUpdate();
 	fcu.FCUController.loop(notification);
 	atc.Transponders.vector[atc.transponderPanel.atcSel - 1].update(notification);
@@ -173,12 +188,20 @@ var systemsLoop = func(notification) {
 	atsu.ATSU.loop();
 	libraries.BUTTONS.update();
 	
-	if (notification.engine1State >= 2 and pts.Fdm.JSBsim.Propulsion.Tank.contentsLbs[5].getValue() < 1) {
-		systems.cutoff_one();
+	pts.Services.Chocks.enableTemp = pts.Services.Chocks.enable.getBoolValue();
+	pts.Velocities.groundspeedKtTemp = pts.Velocities.groundspeedKt.getValue();
+	if ((pts.Velocities.groundspeedKtTemp >= 2 or !pts.Fdm.JSBsim.Position.wow.getBoolValue()) and pts.Services.Chocks.enableTemp) {
+		pts.Services.Chocks.enable.setBoolValue(0);
 	}
 	
-	if (notification.engine2State >= 2 and pts.Fdm.JSBsim.Propulsion.Tank.contentsLbs[6].getValue() < 1) {
-		systems.cutoff_two();
+	if ((pts.Velocities.groundspeedKtTemp >= 2 or (!pts.Controls.Gear.brakeParking.getBoolValue() and !pts.Services.Chocks.enableTemp)) and !acconfig.SYSTEM.autoConfigRunning.getBoolValue()) {
+		if (systems.ELEC.Switch.groundCart.getBoolValue() or systems.ELEC.Switch.extPwr.getBoolValue()) {
+			systems.ELEC.Switch.groundCart.setBoolValue(0);
+			systems.ELEC.Switch.extPwr.setBoolValue(0);
+		}
+		if (systems.PNEU.Switch.groundAir.getBoolValue()) {
+			systems.PNEU.Switch.groundAir.setBoolValue(0);
+		}
 	}
 }
 
@@ -264,10 +287,7 @@ canvas.Element.setVisible = func(vis) {
 	me.setBool("visible", vis);
 };
 
-##########
-# Misc   #
-##########
-
+# Misc
 var pilotComfortTwoPos = func(prop) {
 	var item = getprop(prop);
 	if (item < 0.5) {
@@ -291,27 +311,18 @@ var pilotComfortOnePos = func(prop) {
 var lTray = func() {
 	pilotComfortTwoPos("/controls/tray/lefttrayext");
 }
+
 var rTray = func() {
 	pilotComfortTwoPos("/controls/tray/righttrayext");
 }
 
-var l1Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-cpt[0]");
-}
-var l2Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-cpt[1]");
+var lFootrest = func() {
+	pilotComfortOnePos("/controls/footrest-cpt");
 }
 
-var r1Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-fo[0]");
+var rFootrest = func() {
+	pilotComfortOnePos("/controls/footrest-fo");
 }
-var r2Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-fo[1]");
-}
-
-#####################
-# Auto-coordination #
-#####################
 
 if (pts.Controls.Flight.autoCoordination.getBoolValue()) {
     pts.Controls.Flight.autoCoordination.setBoolValue(0);
@@ -324,11 +335,10 @@ setlistener("/controls/flight/auto-coordination", func() {
     pts.Controls.Flight.autoCoordination.setBoolValue(0);
 	print("System: Auto Coordination has been turned off as it is not compatible with the fly-by-wire of this aircraft.");
 	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
+	screen.log.write("Tiller will now be controlled by aileron, rather than rudder", 1, 0, 0);
 }, 0, 0);
 
-##############
-# Legacy FCU #
-##############
+# Legacy FCU
 var APPanel = {
 	APDisc: func() {
 		fcu.FCUController.APDisc();
@@ -367,11 +377,34 @@ var input = {
 	"gearPosNorm2": "/gear/gear[2]/position-norm",
 	"engine1Running": "/engines/engine[0]/running",
 	"engine2Running": "/engines/engine[1]/running",
+	"annunTest": "/controls/switches/annun-test",
 };
 
 foreach (var name; keys(input)) {
 	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Libraries", name, input[name]));
 }
+
+var hideCanvas = props.globals.getNode("/options/hide-canvas-outside");
+var internal = props.globals.getNode("/sim/current-view/internal");
+var toggleScreen = func() {
+	if (!internal.getValue() and hideCanvas.getValue()) {
+		canvas_nd.nd_update.stop();
+		canvas_dcdu.DCDU_update.stop();
+		canvas_mcdu.MCDU_update.stop();
+	} else {
+		canvas_nd.rateApply();
+		canvas_dcdu.rateApply();
+		canvas_mcdu.MCDU_update.start();
+	}
+};
+
+setlistener("/options/hide-canvas-outside", func() {
+	toggleScreen();
+}, 0, 0);
+
+setlistener("/sim/current-view/internal", func() {
+	toggleScreen();
+}, 0, 0);
 
 # TODO split EFIS altimeters
 var newinhg = nil;

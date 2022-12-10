@@ -1,5 +1,6 @@
-<!-- Airbus A320 ADR -->
+<?xml version="1.0"?>
 
+<!-- Airbus A320 ADR -->
 <!-- Copyright (c) 2019 Jonathan Redpath -->
 
 <system name="A320: ADR">
@@ -35,7 +36,6 @@
 	</channel>
 	
     <channel name="ADR Inputs" execrate="2">
-		
 		<fcs_function name="aero/alpha-deg-corrected">
 			<function>
 				<product>
@@ -53,7 +53,7 @@
 		</fcs_function>
 		
 		<sensor name="/systems/navigation/probes/aoa-1">
-			<input>aero/alpha-deg-corrected</input>
+			<input>aero/alpha-deg-fixed</input>
 			<quantization name="/systems/navigation/adr/output/aoa-1">
 				<bits>12</bits>
 				<min>-180</min>
@@ -61,8 +61,13 @@
 			</quantization>
 		</sensor>
 		
+		<lag_filter name="/systems/navigation/adr/output/aoa-1-damped">
+			<input>/systems/navigation/adr/output/aoa-1</input>
+			<c1>10</c1>
+		</lag_filter>
+		
 		<sensor name="/systems/navigation/probes/aoa-2">
-			<input>aero/alpha-deg-corrected</input>
+			<input>aero/alpha-deg-fixed</input>
 			<quantization name="/systems/navigation/adr/output/aoa-2">
 				<bits>12</bits>
 				<min>-180</min>
@@ -70,14 +75,24 @@
 			</quantization>
 		</sensor>
 		
+		<lag_filter name="/systems/navigation/adr/output/aoa-2-damped">
+			<input>/systems/navigation/adr/output/aoa-2</input>
+			<c1>10</c1>
+		</lag_filter>
+		
 		<sensor name="/systems/navigation/probes/aoa-3">
-			<input>aero/alpha-deg-corrected</input>
+			<input>aero/alpha-deg-fixed</input>
 			<quantization name="/systems/navigation/adr/output/aoa-3">
 				<bits>12</bits>
 				<min>-180</min>
 				<max>180</max>
 			</quantization>
 		</sensor>
+		
+		<lag_filter name="/systems/navigation/adr/output/aoa-3-damped">
+			<input>/systems/navigation/adr/output/aoa-3</input>
+			<c1>10</c1>
+		</lag_filter>
        
 		<sensor name="/systems/navigation/probes/pitot-1">
 			<input>/systems/pitot[0]/measured-total-pressure-inhg</input>
@@ -772,12 +787,17 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="/systems/navigation/adr/computation/underspeed-difference">
-			<default value="2"/>
-			<test logic="OR" value="19">
-				/controls/flight/speedbrake eq 1.0
-			</test>
-		</switch>
+		<fcs_function name="/systems/navigation/adr/computation/underspeed-difference">
+			<function>
+				<sum>
+					<value>2</value>
+					<product>
+						<property>/controls/flight/speedbrake</property>
+						<value>17</value>
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
 		
 		<fcs_function name="/systems/navigation/adr/computation/underspeed">
 			<function>
@@ -789,7 +809,7 @@
 							<property>/systems/navigation/adr/output/cas-3</property>
 						</max>
 						<difference>
-							<property>/FMGC/internal/vls-min</property>
+							<property>/FMGC/internal/vls</property>
 							<property>/systems/navigation/adr/computation/underspeed-difference</property>
 						</difference>
 					</lt>

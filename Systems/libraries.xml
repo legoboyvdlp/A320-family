@@ -1,9 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <PropertyList>
-
+	
+	<!-- Not in JSBsim, cause then it takes too long to tune -->
+	<filter>
+		<name>EPR C1</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<table>
+					<product>
+						<property>/position/altitude-ft</property>
+						<table>
+							<property>/fdm/jsbsim/velocities/mach</property>
+							<entry><ind>0.09</ind><dep>0.1</dep></entry>
+							<entry><ind>0.15</ind><dep>1.0</dep></entry>
+						</table>
+					</product>
+					<entry><ind>    0</ind><dep>0.674</dep></entry>
+					<entry><ind>43000</ind><dep>1.120</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/fdm/jsbsim/fadec/epr/c1</output>
+	</filter>
+	
+	<filter>
+		<name>EPR C2</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<table>
+						<product>
+							<property>/position/altitude-ft</property>
+							<table>
+								<property>/fdm/jsbsim/velocities/mach</property>
+								<entry><ind>0.09</ind><dep>0.1</dep></entry>
+								<entry><ind>0.15</ind><dep>1.0</dep></entry>
+							</table>
+						</product>
+						<entry><ind>    0</ind><dep>0.9852</dep></entry>
+						<entry><ind>43000</ind><dep>0.8584</dep></entry>
+					</table>
+					<table>
+						<property>/fdm/jsbsim/velocities/mach</property>
+						<entry><ind>0.09</ind><dep>0.000</dep></entry>
+						<entry><ind>0.15</ind><dep>0.016</dep></entry>
+						<entry><ind>0.22</ind><dep>0.022</dep></entry>
+						<entry><ind>1.00</ind><dep>0.010</dep></entry>
+					</table>
+					<table>
+						<property>/fdm/jsbsim/aero/alpha-deg-fixed</property>
+						<entry><ind> 0.0</ind><dep>0.00</dep></entry>
+						<entry><ind> 7.5</ind><dep>0.01</dep></entry>
+						<entry><ind>17.0</ind><dep>0.03</dep></entry>
+					</table>
+				</difference>
+			</expression>
+		</input>
+		<output>/fdm/jsbsim/fadec/epr/c2-raw</output>
+	</filter>
+	
+	<filter>
+		<name>EPR Scale 2 Sum/Difference Exponential</name>
+		<type>exponential</type>
+		<gain>1.0</gain>
+		<input>/fdm/jsbsim/fadec/epr/c2-raw</input>
+		<output>/fdm/jsbsim/fadec/epr/c2</output>
+		<filter-time>0.32</filter-time>
+	</filter>
+	
 	<filter>
 		<name>Groundspeed Meters Per Second</name>
 		<type>gain</type>
@@ -31,36 +102,6 @@
 		<output>/fdm/jsbsim/velocities/r-aero-deg_sec</output>
 	</filter>
 	
-	<filter>
-		<name>Gear AGL Altitude FT</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<dif>
-					<property>/position/altitude-agl-ft</property>
-					<value>14.201</value>
-				</dif>
-			</expression>
-		</input>
-		<output>/position/gear-agl-ft</output>
-	</filter>
-	
-	<filter>
-		<name>Gear AGL Altitude M</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<product>
-					<property>/position/gear-agl-ft</property>
-					<value>0.3048</value>
-				</product>
-			</expression>
-		</input>
-		<output>/position/gear-agl-m</output>
-	</filter>
-
 	<predict-simple>
 		<name>Gear AGL Altitude</name>
 		<debug>false</debug>
@@ -70,61 +111,44 @@
 		<filter-gain>0.0</filter-gain>
 	</predict-simple>
 	
+	<!-- Because overwriting from JSBsim doesn't work -->
 	<filter>
-		<name>FF 1</name>
-		<type>exponential</type>
-		<input>/engines/engine[0]/fuel-flow_pph</input>
-		<output>/engines/engine[0]/fuel-flow_actual</output>
-		<filter-time>0.32</filter-time>
+		<name>Engine 1 Cutoff</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>/systems/ignition/cutoff-jsb-1</input>
+		<output>/controls/engines/engine[0]/cutoff</output>
 	</filter>
 	
 	<filter>
-		<name>FF 2</name>
-		<type>exponential</type>
-		<input>/engines/engine[1]/fuel-flow_pph</input>
-		<output>/engines/engine[1]/fuel-flow_actual</output>
-		<filter-time>0.32</filter-time>
+		<name>Engine 2 Cutoff</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>/systems/ignition/cutoff-jsb-2</input>
+		<output>/controls/engines/engine[1]/cutoff</output>
 	</filter>
 	
 	<filter>
-		<name>OIL PSI 1</name>
+		<name>Engine 1 Starter</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<property>/engines/engine[0]/n2-actual</property>
-					<entry><ind>11</ind><dep> 2</dep></entry>
-					<entry><ind>58</ind><dep>48</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/engines/engine[0]/oil-psi-actual</output>
+		<input>/systems/ignition/starter-jsb-1</input>
+		<output>/controls/engines/engine[0]/starter</output>
 	</filter>
-
+	
 	<filter>
-		<name>OIL PSI 2</name>
+		<name>Engine 2 Starter</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<input>
-			<expression>
-				<table>
-					<property>/engines/engine[1]/n2-actual</property>
-					<entry><ind>11</ind><dep> 2</dep></entry>
-					<entry><ind>58</ind><dep>48</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/engines/engine[1]/oil-psi-actual</output>
+		<input>/systems/ignition/starter-jsb-2</input>
+		<output>/controls/engines/engine[1]/starter</output>
 	</filter>
 
 	<filter>
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -142,7 +166,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -160,7 +184,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -178,7 +202,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -196,7 +220,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -214,7 +238,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -232,7 +256,7 @@
 		<name>Altitude PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -249,7 +273,7 @@
 	<filter>
 		<name>V/S PFD</name>
 		<type>noise-spike</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<floor>
@@ -269,66 +293,10 @@
 	</filter>
 
 	<filter>
-		<name>Throttle L</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[0]/reverser</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<property>/controls/engines/engine[0]/throttle</property>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[0]/reverser</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<value>0</value>
-		</input>
-		<output>
-			<property>/controls/engines/engine[0]/throttle-lever</property>
-			<property>/controls/engines/engine[0]/throttle-pos</property>
-		</output>
-	</filter>
-
-	<filter>
-		<name>Throttle R</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[1]/reverser</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<property>/controls/engines/engine[1]/throttle</property>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/controls/engines/engine[1]/reverser</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<value>0</value>
-		</input>
-		<output>
-			<property>/controls/engines/engine[1]/throttle-lever</property>
-			<property>/controls/engines/engine[1]/throttle-pos</property>
-		</output>
-	</filter>
-
-	<filter>
 		<name>Target Pressurize Altitude CMD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -350,7 +318,7 @@
 		<name>Target Pressurize Altitude</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<or>
@@ -382,7 +350,7 @@
 		<name>Cabin PSI target</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -408,7 +376,7 @@
 		<name>VS-target</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<equals>
@@ -434,7 +402,7 @@
 		<name>Ambient PSI (ICAO std)</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -494,7 +462,7 @@
 		<name>Outflow logic</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<equals>
@@ -550,7 +518,7 @@
 		<name>VS-target-cmd</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -576,7 +544,7 @@
 		<name>VS-target-cmd-man</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -594,7 +562,7 @@
 		<name>VS-target</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<equals>
@@ -617,24 +585,10 @@
 	</filter>
 	
 	<filter>
-		<name>LBtoKG</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
-		<input>
-			<product>
-				<property>/fdm/jsbsim/inertia/weight-lbs</property>
-				<value>0.45359237</value>
-			</product>
-		</input>
-		<output>/fdm/jsbsim/inertia/weight-kg</output>
-	</filter>
-	
-	<filter>
 		<name>optalt</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -666,7 +620,7 @@
 		<name>Ambient Temp (ICAO std)</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -716,7 +670,7 @@
 		<name>Difference to ISA Temp (Actual - ISA)</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<difference>
 				<property>/environment/temperature-degc</property>
@@ -730,7 +684,7 @@
 		<name>Force Auto Coordination Off</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<enable>
 			<condition>
 				<property>/controls/flight/aileron-drives-tiller</property>
@@ -744,7 +698,7 @@
 		<name>Left Door</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -763,7 +717,7 @@
 		<name>Left Door Conversion to Degrees</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -780,7 +734,7 @@
 		<name>Right Door</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -799,7 +753,7 @@
 		<name>Right Door Conversion to Degrees</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -816,7 +770,7 @@
 		<name>Nose Door</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -835,7 +789,7 @@
 		<name>NLG Left Door Conversion to Degrees</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -852,7 +806,7 @@
 		<name>NLG Right Door Conversion to Degrees</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.05</update-interval-secs>
+		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
 				<table>
@@ -1156,6 +1110,44 @@
 	</filter>
 	
 	<filter>
+		<name>DDRMI: FLAG HDG</name>
+		<debug>false</debug>
+		<type>exponential</type>
+		<input>
+			<condition>
+				<and>
+					<greater-than-equals>
+						<property>/systems/electrical/bus/ac-ess</property>
+						<value>110</value>
+					</greater-than-equals>
+					<or>
+						<and>
+							<property>/systems/navigation/aligned-1</property>
+							<not>
+								<equals>
+									<property>/controls/navigation/switching/att-hdg</property>
+									<value>-1</value>
+								</equals>
+							</not>
+						</and>
+						<and>
+							<property>/systems/navigation/aligned-3</property>
+							<equals>
+								<property>/controls/navigation/switching/att-hdg</property>
+								<value>-1</value>
+							</equals>
+						</and>
+					</or>
+				</and>
+			</condition>
+			<value>0</value>
+		</input>
+		<input>1</input>
+		<output>/instrumentation/ddrmi/flag-hdg</output>
+		<filter-time>0.1</filter-time>
+	</filter>
+	
+	<filter>
 		<name>DDRMI: FLAG 1</name>
 		<debug>false</debug>
 		<type>exponential</type>
@@ -1280,7 +1272,7 @@
 		<name>Minimums Selector</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<not-equals>
@@ -1298,7 +1290,7 @@
 		<name>Minimums Selector</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<not-equals>
@@ -1344,7 +1336,7 @@
 		<name>Minimums Selector</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<condition>
 				<not-equals>
@@ -1371,7 +1363,7 @@
 		<name>Minimums Minus 50</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input> 
 			<expression>
 				<difference>
@@ -1387,7 +1379,7 @@
 		<name>Minimums Plus 50</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<sum>
@@ -1403,7 +1395,7 @@
 		<name>Minimums Plus 100</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs type="double">0.1</update-interval-secs>
+		<update-interval-secs>0.1</update-interval-secs>
 		<input>
 			<expression>
 				<sum>
@@ -1416,15 +1408,369 @@
 	</filter>
 	
 	<logic>
-		<!-- somewhat confusing : this input is not 'are the flaps in landing configration', but rather,
-		'are the flaps NOT in a landing configuration'. There is a configuration bit to flip
-		the sense of this, if required. -->
+		<!-- True when flaps are NOT in landing config -->
 		<input>
-			<less-than>
-				<property>/controls/flight/flaps</property>
-				<value>0.8</value>
-			</less-than>
+			<or>
+				<less-than>
+					<property>/controls/flight/flaps-input</property>
+					<value>3</value>
+				</less-than>
+				<and>
+					<less-than>
+						<property>/controls/flight/flaps-input</property>
+						<value>4</value>
+					</less-than>
+					<not-equals>
+						<property>/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override</property>
+						<value>1</value>
+					</not-equals>
+				</and>
+			</or>
 		</input>
 		<output>/instrumentation/mk-viii/inputs/discretes/landing-flaps</output>
 	</logic>
+	
+	<filter>
+		<name>OIL PSI 1</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs>0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[0]/n2-actual</property>
+					<entry><ind>11</ind><dep> 2</dep></entry>
+					<entry><ind>58</ind><dep>48</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/engines/engine[0]/oil-psi-actual</output>
+	</filter>
+
+	<filter>
+		<name>OIL PSI 2</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<update-interval-secs>0.05</update-interval-secs>
+		<input>
+			<expression>
+				<table>
+					<property>/engines/engine[1]/n2-actual</property>
+					<entry><ind>11</ind><dep> 2</dep></entry>
+					<entry><ind>58</ind><dep>48</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/engines/engine[1]/oil-psi-actual</output>
+	</filter>
+	
+	<filter>
+		<name>DU1 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du1-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du1-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DU2 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du2-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du2-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DU3 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du3-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du3-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DU4 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du4-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du4-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DU5 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du5-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du5-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DU6 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/du6-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/du/du6-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>IESI LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/iesi/lcd-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/iesi/lcd-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>MCDU1 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/mcdu/mcdu1-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/mcdu/mcdu1-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>MCDU2 LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/mcdu/mcdu2-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/mcdu/mcdu2-contrast</output>
+	</filter>
+	
+	<filter>
+		<name>DCDU LCD Contrast</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not>
+					<property>/instrumentation/du/dcdu-on</property>
+				</not>
+			</condition>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.97</dep></entry>
+					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<input>
+			<expression>
+				<table>
+					<property>/rendering/scene/diffuse/red</property>
+					<entry><ind>0.8</ind><dep>0.95</dep></entry>
+					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+				</table>
+			</expression>
+		</input>
+		<output>/instrumentation/dcdu/lcd-contrast</output>
+	</filter>
+	
+	<predict-simple>
+		<name>FBW Pitch IAS Predictor</name>
+		<debug>false</debug>
+		<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
+		<output>/fdm/jsbsim/fbw/pitch/ias-predict</output>
+		<seconds>1.0</seconds>
+		<filter-gain>0</filter-gain>
+	</predict-simple>
+
 </PropertyList>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -117,7 +117,7 @@
         <checkbox>
             <label>Enable External Power Box</label>
             <halign>left</halign>
-            <property>/controls/electrical/ground-cart</property>
+            <property>/controls/electrical/switches/ground-cart</property>
             <binding>
                 <command>property-assign</command>
                 <property>/controls/electrical/switches/ext-pwr</property>
@@ -138,10 +138,10 @@
         <checkbox>
             <label>Enable External Air</label>
             <halign>left</halign>
-            <property>/controls/pneumatics/switches/groundair</property>
+            <property>/controls/pneumatics/switches/ground-air</property>
             <binding>
                 <command>property-toggle</command>
-                <property>/controls/pneumatics/switches/groundair</property>
+                <property>/controls/pneumatics/switches/ground-air</property>
             </binding>
             <enable>
 				<less-than>
@@ -251,12 +251,25 @@
             <live>true</live>
         </checkbox>
 
+        <checkbox>
+            <label>Enable Rear Catering Truck</label>
+            <halign>left</halign>
+            <property>/services/catering-rear/enable</property>
+            <binding>
+                <command>dialog-apply</command>
+            </binding>
+            <live>true</live>
+        </checkbox>
+
         <button>
             <legend>Toggle Catering</legend>
             <halign>center</halign>
             <padding>5</padding>
             <enable>
-                <property>/services/catering/enable</property>
+				<or>
+					<property>/services/catering/enable</property>
+					<property>/services/catering-rear/enable</property>
+				</or>
             </enable>
             <binding>
                 <condition>

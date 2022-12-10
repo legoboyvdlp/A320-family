@@ -1,0 +1,641 @@
+<?xml version="1.0"?>
+
+<!-- Airbus A320 Cockpit -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+
+<system name="A320: Cockpit"> <!-- Everything here is after all systems -->
+	
+	<channel name="Animations">
+		
+		<lag_filter name="/controls/cockpit/aileron-sidestick">
+			<input>fbw/sidestick/roll-input-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/elevator-sidestick">
+			<input>fbw/sidestick/pitch-input-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/rudder-pedal">
+			<input>fbw/sidestick/yaw-input-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/spoilers-lever-rotate">
+			<input>spoilers/lever-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/spoilers-lever-translate">
+			<input>/controls/flight/speedbrake-arm</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/tiller-handle">
+			<input>fbw/tiller-handle-cmd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/rudder-trim-knob">
+			<input>/controls/switches/rudder-trim</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/ignition/start-sw-knob">
+			<input>/controls/ignition/start-sw</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/audio/acp[0]/int-rad-pos">
+			<input>/controls/audio/acp[0]/int-rad</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/audio/acp[1]/int-rad-pos">
+			<input>/controls/audio/acp[1]/int-rad</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/audio/acp[2]/int-rad-pos">
+			<input>/controls/audio/acp[2]/int-rad</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/elt-guard-pos">
+			<input>/controls/elt/elt-switch-guard</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/elt-switch-pos">
+			<input>/controls/elt/elt-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<fcs_function name="/controls/cockpit/throttle-lever[0]">
+			<function>
+				<quotient>
+					<property>fadec/control-1/lever/angle</property>
+					<value>45</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="/controls/cockpit/throttle-lever[1]">
+			<function>
+				<quotient>
+					<property>fadec/control-2/lever/angle</property>
+					<value>45</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<lag_filter name="/controls/cockpit/reverse-lever[0]">
+			<input>/controls/engines/engine[0]/reverse-lever</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/reverse-lever[1]">
+			<input>/controls/engines/engine[1]/reverse-lever</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/engine-cutoff-rotate[0]">
+			<input>/controls/engines/engine[0]/cutoff-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/engine-cutoff-rotate[1]">
+			<input>/controls/engines/engine[1]/cutoff-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/engine-cutoff-translate[0]">
+			<input>/controls/cockpit/engine-cutoff-translate-cmd[0]</input>
+			<c1>30</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/engine-cutoff-translate[1]">
+			<input>/controls/cockpit/engine-cutoff-translate-cmd[1]</input>
+			<c1>30</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/flaps-lever-rotate">
+			<input>/controls/flight/flaps-input</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/flaps-lever-translate-pos">
+			<input>/controls/cockpit/flaps-lever-translate</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/park-brk-rotate">
+			<input>/controls/gear/brake-parking</input>
+			<c1>10</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/park-brk-translate-pos">
+			<input>/controls/cockpit/park-brk-translate</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/brake-pedal-left">
+			<input>/controls/gear/brake-left</input>
+			<c1>5</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/brake-pedal-right">
+			<input>/controls/gear/brake-right</input>
+			<c1>5</c1>
+		</lag_filter>
+		
+		<actuator name="/controls/cockpit/gear-lever">
+			<input>/controls/gear/lever-cockpit</input>
+			<rate_limit>4.5</rate_limit>
+			<lag>20</lag>
+		</actuator>
+		
+		<lag_filter name="/instrumentation/altimeter/inhg-left-pos">
+			<input>/instrumentation/altimeter/inhg-left</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/altimeter/inhg-right-pos">
+			<input>/instrumentation/altimeter/inhg-right</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis/mfd/pnl_mode-num-pos">
+			<input>/instrumentation/efis/mfd/pnl_mode-num</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[1]/mfd/pnl_mode-num-pos">
+			<input>/instrumentation/efis[1]/mfd/pnl_mode-num</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[0]/input/lh-vor-adf-pos">
+			<input>/instrumentation/efis[0]/input/lh-vor-adf</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[0]/input/rh-vor-adf-pos">
+			<input>/instrumentation/efis[0]/input/rh-vor-adf</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[1]/input/lh-vor-adf-pos">
+			<input>/instrumentation/efis[1]/input/lh-vor-adf</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[1]/input/rh-vor-adf-pos">
+			<input>/instrumentation/efis[1]/input/rh-vor-adf</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis/inputs/range-nm-pos">
+			<input>/instrumentation/efis/inputs/range-nm</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/efis[1]/inputs/range-nm-pos">
+			<input>/instrumentation/efis[1]/inputs/range-nm</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/doors/doorc-switch-pos">
+			<input>/controls/doors/doorc-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/gear/nws-switch-pos">
+			<input>/controls/gear/nws-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cabin/footwarmer-cpt-pos">
+			<input>/controls/cabin/footwarmer-cpt</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/ddrmi/vor-adf-1-pos">
+			<input>/instrumentation/ddrmi/vor-adf-1</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/ddrmi/vor-adf-2-pos">
+			<input>/instrumentation/ddrmi/vor-adf-2</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cabin/footwarmer-fo-pos">
+			<input>/controls/cabin/footwarmer-fo</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/console-floor-light-sw-pos">
+			<input>/controls/lighting/console-floor-light-sw</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/console-floor-light-sw-right-pos">
+			<input>/controls/lighting/console-floor-light-sw-right</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/clock/utc-selector-pos">
+			<input>/instrumentation/clock/utc-selector</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/instrumentation/clock/et-selector-pos">
+			<input>/instrumentation/clock/et-selector</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/navigation/switching/audio-pos">
+			<input>/controls/navigation/switching/audio</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/turnoff-light-switch-pos">
+			<input>/controls/lighting/turnoff-light-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/landing-lights-l-pos">
+			<input>/controls/switches/landing-lights-l</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/landing-lights-r-pos">
+			<input>/controls/switches/landing-lights-r</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/taxi-light-switch-pos">
+			<input>/controls/lighting/taxi-light-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/strobe-pos">
+			<input>/controls/switches/strobe</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/beacon-pos">
+			<input>/controls/switches/beacon</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/wing-lights-pos">
+			<input>/controls/switches/wing-lights</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/nav-lights-switch-pos">
+			<input>/controls/lighting/nav-lights-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/seatbelt-sign-pos">
+			<input>/controls/switches/seatbelt-sign</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/no-smoking-sign-pos">
+			<input>/controls/switches/no-smoking-sign</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/emer-lights-pos">
+			<input>/controls/switches/emer-lights</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/stby-compass-switch-pos">
+			<input>/controls/lighting/stby-compass-switch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/lighting/dome-norm-pos">
+			<input>/controls/lighting/dome-norm</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/annun-test-pos">
+			<input>/controls/switches/annun-test</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/it-autoflight/config/altitude-dial-mode-pos">
+			<input>/it-autoflight/config/altitude-dial-mode</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/navigation/switching/air-data-pos">
+			<input>/controls/navigation/switching/air-data</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/navigation/switching/att-hdg-pos">
+			<input>/controls/navigation/switching/att-hdg</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/emer-canc-cover-pos">
+			<input>/controls/cockpit/emer-canc-cover</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/wiperLspd-pos">
+			<input>/controls/switches/wiperLspd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/switches/wiperRspd-pos">
+			<input>/controls/switches/wiperRspd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/wxr-radar-sw-pos">
+			<input>/instrumentation/wxr/enabled</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/thrt-all-pos">
+			<input>/controls/atc/thrt-all</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/system-knob-pos">
+			<input>/controls/atc/system-knob</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/atc-mode-knob-pos">
+			<input>/controls/atc/mode-knob</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/abv-blw-pos">
+			<input>/controls/atc/abv-blw</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/outflowpos-man-sw-pos">
+			<input>/systems/pressurization/outflowpos-man-sw</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/ditching-pos">
+			<input>/controls/OH/protectors/ditching</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/ir-mode-1-pos">
+			<input>/controls/navigation/adirscp/switches/ir-1-mode</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/ir-mode-2-pos">
+			<input>/controls/navigation/adirscp/switches/ir-2-mode</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/ir-mode-3-pos">
+			<input>/controls/navigation/adirscp/switches/ir-3-mode</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-cover-1-pos">
+			<input>/controls/engines/engine[0]/fire-btn-cover</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-1-pos">
+			<input>/controls/engines/engine[0]/fire-btn</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-cover-apu-pos">
+			<input>/controls/apu/fire-btn-cover</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-apu-pos">
+			<input>/controls/apu/fire-btn</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-cover-2-pos">
+			<input>/controls/engines/engine[1]/fire-btn-cover</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fire-btn-2-pos">
+			<input>/controls/engines/engine[1]/fire-btn</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/aftdisch-pos">
+			<input>/controls/OH/protectors/aftdisch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/fwddisch-pos">
+			<input>/controls/OH/protectors/fwddisch</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/ratman-pos">
+			<input>/controls/OH/protectors/ratman</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/blueelec-pos">
+			<input>/controls/OH/protectors/blueelec</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/evac-pos">
+			<input>/controls/OH/protectors/evac</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/evac-capt-purs-pos">
+			<input>/controls/cockpit/evac-capt-purs</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/maskman-pos">
+			<input>/controls/OH/protectors/maskman</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/emercall-pos">
+			<input>/controls/OH/protectors/emercall</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/emergentest-pos">
+			<input>/controls/OH/protectors/emergentest</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/elecratman-pos">
+			<input>/controls/OH/protectors/elecratman</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/eng1-manstart-pos">
+			<input>/controls/OH/protectors/eng1-manstart</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/eng2-manstart-pos">
+			<input>/controls/OH/protectors/eng2-manstart</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/pneumatics/switches/pack-flow-pos">
+			<input>/controls/pneumatics/switches/pack-flow</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/pneumatics/switches/x-bleed-pos">
+			<input>/controls/pneumatics/switches/x-bleed</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/pneumatics/switches/temp-cockpit-pos">
+			<input>/controls/pneumatics/switches/temp-cockpit</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/pneumatics/switches/temp-cabin-fwd-pos">
+			<input>/controls/pneumatics/switches/temp-cabin-fwd</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/pneumatics/switches/temp-cabin-aft-pos">
+			<input>/controls/pneumatics/switches/temp-cabin-aft</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/ramair-pos">
+			<input>/controls/OH/protectors/ramair</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/ramair-pos">
+			<input>/controls/OH/protectors/ramair</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/idg1-pos">
+			<input>/controls/OH/protectors/idg1</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/idg2-pos">
+			<input>/controls/OH/protectors/idg2</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/rmp-l-on-pos">
+			<input>/controls/radio/rmp[0]/on</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/rmp-r-on-pos">
+			<input>/controls/radio/rmp[1]/on</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/radio/rmp[0]/nav-protect-pos">
+			<input>/controls/radio/rmp[0]/nav-protect</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/radio/rmp[1]/nav-protect-pos">
+			<input>/controls/radio/rmp[1]/nav-protect</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/stby-compass-pos">
+			<input>/controls/cockpit/stby-compass</input>
+			<c1>5</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/oxygen-mask-cockpit-door-cpt-pos">
+			<input>/controls/cockpit/oxygen-mask-cockpit-door-cpt</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/oxygen-mask-cockpit-door-fo-pos">
+			<input>/controls/cockpit/oxygen-mask-cockpit-door-fo</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fadec-gnd-pwr-1-guard-pos">
+			<input>/controls/cockpit/fadec-gnd-pwr-1-guard</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fadec-gnd-pwr-2-guard-pos">
+			<input>/controls/cockpit/fadec-gnd-pwr-2-guard</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/blue-ovrd-guard-pos">
+			<input>/controls/cockpit/blue-ovrd-guard</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/captain-visor-pos">
+			<input>/controls/cockpit/captain-visor</input>
+			<c1>2</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/fo-visor-pos">
+			<input>/controls/cockpit/fo-visor</input>
+			<c1>2</c1>
+		</lag_filter>
+	
+	</channel>
+
+	<channel name="Loudspeakers">
+		
+		<switch name="Loudspeaker">
+			<default value="0"/>
+			<test logic="OR" value ="/controls/switches/loudspeaker-l">
+				<test logic="AND">
+					/systems/electrical/bus/dc-ess ge 25
+					/controls/switches/loudspeaker-l ge /controls/switches/loudspeaker-r 
+				</test>
+				<test logic="AND">
+					/systems/electrical/bus/dc-1 ge 25
+					/controls/navigation/switching/audio eq -1
+				</test>
+			</test>
+			<test logic="AND" value ="/controls/switches/loudspeaker-r">
+				<test logic="AND">
+					/systems/electrical/bus/dc-ess ge 25
+					/controls/switches/loudspeaker-r gt /controls/switches/loudspeaker-r 
+				</test>
+				<test logic="AND">
+					/systems/electrical/bus/dc-1 ge 25
+					/controls/navigation/switching/audio eq 1
+				</test>
+			</test>
+			<output>/sim/sound/atc/volume</output>
+			<output>/sim/sound/chatter/volume</output>
+		</switch>
+		
+	</channel>
+	
+</system>

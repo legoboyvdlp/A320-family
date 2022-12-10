@@ -1,7 +1,7 @@
 # A3XX Buttons
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 
 var OnLt = props.globals.getNode("/controls/switches/emerCallLtO");
 var CallLt = props.globals.getNode("/controls/switches/emerCallLtC");
@@ -14,8 +14,6 @@ var cvr_tone = props.globals.getNode("/controls/CVR/tone");
 var variousReset = func() {
 	setprop("/modes/cpt-du-xfr", 0);
 	setprop("/modes/fo-du-xfr", 0);
-	setprop("/controls/fadec/n1mode1", 0);
-	setprop("/controls/fadec/n1mode2", 0);
 	setprop("/instrumentation/mk-viii/serviceable", 1);
 	setprop("/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit", 0);
 	setprop("/instrumentation/mk-viii/inputs/discretes/gpws-inhibit", 0);
@@ -25,6 +23,7 @@ var variousReset = func() {
 	setprop("/controls/switches/cabinCall", 0);
 	setprop("/controls/switches/mechCall", 0);
 	pts.Controls.Switches.emerLtsSwitch.setValue(0.5);
+	pts.Controls.Gear.brakeParking.setBoolValue(0);
 	# cockpit voice recorder stuff
 	setprop("/controls/CVR/power", 0);
 	setprop("/controls/CVR/test", 0);
@@ -51,15 +50,18 @@ var variousReset = func() {
 	setprop("/controls/lighting/taxi-light-switch", 0);
 	setprop("/controls/lighting/DU/du1", 1);
 	setprop("/controls/lighting/DU/du2", 1);
+	setprop("/controls/lighting/DU/du2-layer", 1);
 	setprop("/controls/lighting/DU/du3", 1);
 	setprop("/controls/lighting/DU/du4", 1);
 	setprop("/controls/lighting/DU/du5", 1);
+	setprop("/controls/lighting/DU/du5-layer", 1);
 	setprop("/controls/lighting/DU/du6", 1);
 	setprop("/controls/lighting/DU/mcdu1", 1);
 	setprop("/controls/lighting/DU/mcdu2", 1);
-	setprop("/modes/fcu/hdg-time", -45);
 	setprop("/controls/navigation/switching/att-hdg", 0);
 	setprop("/controls/navigation/switching/air-data", 0);
+	setprop("/controls/switches/loudspeaker-l", 1);
+	setprop("/controls/switches/loudspeaker-r", 1);
 	pts.Controls.Switches.noSmokingSwitch.setValue(0);
 	pts.Controls.Switches.seatbeltSwitch.setValue(0);
 	pts.Controls.Switches.emerLtsSwitch.setValue(0);
@@ -135,7 +137,7 @@ var MechCallFunc = func() {
 
 var _CVRtestRunning = 0;
 var CVR_test = func() {
-	if (pts.Controls.Gear.parkingBrake.getValue()) {
+	if (pts.Controls.Gear.brakeParking.getValue()) {
 		if (!_CVRtestRunning) {
 			_CVRtestRunning = 1;
 			cvr_tone.setValue(1);
@@ -175,3 +177,13 @@ var toggleSTDIESI = func() {
 		pts.Instrumentation.Altimeter.stdIESI.setBoolValue(1);
 	}
 }
+
+# Commonality
+var apPanel = {
+	apDisc: func() {
+		fcu.FCUController.APDisc();
+	},
+	atDisc: func() {
+		fcu.FCUController.ATDisc();
+	},
+};

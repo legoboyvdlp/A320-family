@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 FCS -->
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <system name="A320: FCS">
 	
@@ -12,10 +12,22 @@
 		<fcs_function name="hydraulics/aileron-droop">
 			<function>
 				<table>
-					<independentVar lookup="row">/velocities/airspeed-kt</independentVar>
+					<independentVar lookup="row">aero/qbar-psf</independentVar>
 					<tableData>
-						 62  1.0
-						116  0.0
+						 7  1
+						31  0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="hydraulics/aileron-droop-rate">
+			<function>
+				<table>
+					<independentVar lookup="row">aero/qbar-psf</independentVar>
+					<tableData>
+						 7  0.333333
+						31  2
 					</tableData>
 				</table>
 			</function>
@@ -24,10 +36,22 @@
 		<fcs_function name="hydraulics/elevator-droop">
 			<function>
 				<table>
-					<independentVar lookup="row">/velocities/airspeed-kt</independentVar>
+					<independentVar lookup="row">aero/qbar-psf</independentVar>
 					<tableData>
-						 72  1.0
-						121  0.0
+						 8  1
+						32  0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="hydraulics/elevator-droop-rate">
+			<function>
+				<table>
+					<independentVar lookup="row">aero/qbar-psf</independentVar>
+					<tableData>
+						 8  0.333333
+						32  2
 					</tableData>
 				</table>
 			</function>
@@ -67,11 +91,20 @@
 	
 	<channel name="Aileron L">
 		
+		<summer name="hydraulics/aileron-l/input">
+			<input>fbw/aileron-output</input>
+			<input>-fbw/laf/output-ail</input>
+			<clipto>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</clipto>
+		</summer>
+		
 		<fcs_function name="hydraulics/aileron-l/extended">
 			<function>
 				<sum>
 					<value>-1</value>
-					<property>fbw/aileron-output</property>
+					<property>hydraulics/aileron-l/input</property>
 				</sum>
 			</function>
 		</fcs_function>
@@ -79,7 +112,7 @@
 		<fcs_function name="hydraulics/aileron-l/retracted">
 			<function>
 				<sum>
-					<property>fbw/aileron-output</property>
+					<property>hydraulics/aileron-l/input</property>
 					<table>
 						<independentVar lookup="row">/fdm/jsbsim/fcs/flap-pos-deg</independentVar>
 						<tableData>
@@ -105,18 +138,24 @@
 			</test>
 		</switch>
 		
+		<switch name="hydraulics/aileron-l/actuator-enabled">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				hydraulics/aileron-l/pressure-switch-or eq 1
+				/systems/failures/aileron-left eq 0
+			</test>
+		</switch>
+		
 		<switch name="hydraulics/aileron-l/switch">
 			<default value="hydraulics/aileron-droop"/>
 			<test logic="AND" value="hydraulics/aileron-l/extended">
-				hydraulics/aileron-l/pressure-switch-or eq 1
+				hydraulics/aileron-l/actuator-enabled eq 1
 				spoilers/anti-droop-final ne 0
 				/gear/gear[1]/wow eq 1
 				/gear/gear[2]/wow eq 1
-				/systems/failures/aileron-left eq 0
 			</test>
-			<test logic="AND" value="hydraulics/aileron-l/retracted">
-				hydraulics/aileron-l/pressure-switch-or eq 1
-				/systems/failures/aileron-left eq 0
+			<test value="hydraulics/aileron-l/retracted">
+				hydraulics/aileron-l/actuator-enabled eq 1
 			</test>
 			<clipto>
 				<min>-1.0</min>
@@ -129,9 +168,16 @@
 			<gain>25</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/aileron-l/rate">
+			<default value="hydraulics/aileron-droop-rate"/>
+			<test value="82">
+				hydraulics/aileron-l/actuator-enabled eq 1
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/aileron-l/final-actuator">
 			<input>hydraulics/aileron-l/cmd-deg</input>
-			<rate_limit>82</rate_limit>
+			<rate_limit>hydraulics/aileron-l/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/aileron-l/final-deg</output>
 		</actuator>
@@ -140,12 +186,21 @@
 	
 	<channel name="Aileron R">
 		
+		<summer name="hydraulics/aileron-r/input">
+			<input>fbw/aileron-output</input>
+			<input>fbw/laf/output-ail</input>
+			<clipto>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</clipto>
+		</summer>
+		
 		<fcs_function name="hydraulics/aileron-r/extended">
 			<function>
 				<product>
 					<sum>
 						<value>1</value>
-						<property>fbw/aileron-output</property>
+						<property>hydraulics/aileron-r/input</property>
 					</sum>
 					<value>-1.0</value>
 				</product>
@@ -156,7 +211,7 @@
 			<function>
 				<sum>
 					<product>
-						<property>fbw/aileron-output</property>
+						<property>hydraulics/aileron-r/input</property>
 						<value>-1.0</value>
 					</product>
 					<table>
@@ -184,18 +239,24 @@
 			</test>
 		</switch>
 		
+		<switch name="hydraulics/aileron-r/actuator-enabled">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				hydraulics/aileron-r/pressure-switch-or eq 1
+				/systems/failures/aileron-right eq 0
+			</test>
+		</switch>
+		
 		<switch name="hydraulics/aileron-r/switch">
 			<default value="hydraulics/aileron-droop"/>
 			<test logic="AND" value="hydraulics/aileron-r/extended">
-				hydraulics/aileron-r/pressure-switch-or eq 1
+				hydraulics/aileron-r/actuator-enabled eq 1
 				spoilers/anti-droop-final ne 0
 				/gear/gear[1]/wow eq 1
 				/gear/gear[2]/wow eq 1
-				/systems/failures/aileron-right eq 0
 			</test>
-			<test logic="AND" value="hydraulics/aileron-r/retracted">
-				hydraulics/aileron-r/pressure-switch-or eq 1
-				/systems/failures/aileron-right eq 0
+			<test value="hydraulics/aileron-r/retracted">
+				hydraulics/aileron-r/actuator-enabled eq 1
 			</test>
 			<clipto>
 				<min>-1.0</min>
@@ -208,9 +269,16 @@
 			<gain>25</gain>
 		</pure_gain>
 		
+		<switch name="hydraulics/aileron-r/rate">
+			<default value="hydraulics/aileron-droop-rate"/>
+			<test value="82">
+				hydraulics/aileron-r/actuator-enabled eq 1
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/aileron-r/final-actuator">
 			<input>hydraulics/aileron-r/cmd-deg</input>
-			<rate_limit>82</rate_limit>
+			<rate_limit>hydraulics/aileron-r/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/aileron-r/final-deg</output>
 		</actuator>
@@ -258,25 +326,29 @@
 			</test>
 		</switch>
 		
-		<switch name="hydraulics/elevator-l/switch">
-			<default value="hydraulics/elevator-droop"/>
-			<test logic="AND" value="0">
+		<switch name="hydraulics/elevator-l/actuator-enabled">
+			<default value="0"/>
+			<test logic="AND" value="1"> <!-- Don't use pressure-switch-or -->
 				<test logic="OR">
 					/systems/hydraulic/blue-psi ge 1500
 					/systems/hydraulic/green-psi ge 1500
 				</test>
 				/systems/failures/elevator-left eq 0
-				<test logic="AND"> <!-- only pitch trim available -->
-					/systems/fctl/elac1 eq 0
-					/systems/fctl/sec1 eq 0
-					/systems/fctl/elac2 eq 0
-					/systems/fctl/sec2 eq 0
-				</test>
+			</test>
+		</switch>
+		
+		<switch name="hydraulics/elevator-l/switch">
+			<default value="hydraulics/elevator-droop"/>
+			<test logic="AND" value="0"> <!-- Only pitch trim available -->
+				hydraulics/elevator-l/actuator-enabled eq 1
+				/systems/fctl/elac1 eq 0
+				/systems/fctl/sec1 eq 0
+				/systems/fctl/elac2 eq 0
+				/systems/fctl/sec2 eq 0
 			</test>
 			<test logic="AND" value="hydraulics/elevator-output-switch">
+				hydraulics/elevator-l/actuator-enabled eq 1
 				hydraulics/elevator-l/pressure-switch-or eq 1
-				/systems/failures/elevator-left eq 0
-				/it-fbw/law ne 3
 			</test>
 			<clipto>
 				<min>-1.0</min>
@@ -293,9 +365,16 @@
 			</clipto>
 		</pure_gain>
 		
+		<switch name="hydraulics/elevator-l/rate">
+			<default value="hydraulics/elevator-droop-rate"/>
+			<test value="82">
+				hydraulics/elevator-l/actuator-enabled eq 1
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/elevator-l/final-actuator">
 			<input>hydraulics/elevator-l/cmd-deg</input>
-			<rate_limit>82</rate_limit>
+			<rate_limit>hydraulics/elevator-l/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/elevator-l/final-deg</output>
 		</actuator>
@@ -324,25 +403,29 @@
 			</test>
 		</switch>
 		
-		<switch name="hydraulics/elevator-r/switch">
-			<default value="hydraulics/elevator-droop"/>
-			<test logic="AND" value="0">
+		<switch name="hydraulics/elevator-r/actuator-enabled">
+			<default value="0"/>
+			<test logic="AND" value="1"> <!-- Don't use pressure-switch-or -->
 				<test logic="OR">
 					/systems/hydraulic/blue-psi ge 1500
 					/systems/hydraulic/yellow-psi ge 1500
 				</test>
-				/systems/failures/elevator-right eq 0
-				<test logic="AND">  <!-- only pitch trim available -->
-					/systems/fctl/elac1 eq 0
-					/systems/fctl/sec1 eq 0
-					/systems/fctl/elac2 eq 0
-					/systems/fctl/sec2 eq 0
-				</test>
+				/systems/failures/elevator-left eq 0
+			</test>
+		</switch>
+		
+		<switch name="hydraulics/elevator-r/switch">
+			<default value="hydraulics/elevator-droop"/>
+			<test logic="AND" value="0"> <!-- Only pitch trim available -->
+				hydraulics/elevator-r/actuator-enabled eq 1
+				/systems/fctl/elac1 eq 0
+				/systems/fctl/sec1 eq 0
+				/systems/fctl/elac2 eq 0
+				/systems/fctl/sec2 eq 0
 			</test>
 			<test logic="AND" value="hydraulics/elevator-output-switch">
+				hydraulics/elevator-r/actuator-enabled eq 1
 				hydraulics/elevator-r/pressure-switch-or eq 1
-				/systems/failures/elevator-right eq 0
-				/it-fbw/law ne 3
 			</test>
 			<clipto>
 				<min>-1.0</min>
@@ -359,18 +442,25 @@
 			</clipto>
 		</pure_gain>
 		
+		<switch name="hydraulics/elevator-r/rate">
+			<default value="hydraulics/elevator-droop-rate"/>
+			<test value="82">
+				hydraulics/elevator-r/actuator-enabled eq 1
+			</test>
+		</switch>
+		
 		<actuator name="hydraulics/elevator-r/final-actuator">
 			<input>hydraulics/elevator-r/cmd-deg</input>
-			<rate_limit>82</rate_limit>
+			<rate_limit>hydraulics/elevator-r/rate</rate_limit>
 			<lag>26.5</lag>
 			<output>hydraulics/elevator-r/final-deg</output>
 		</actuator>
 	
 	</channel>
 	
-	<channel name="Pitch Trim">
+	<channel name="Stabilizer">
 		
-		<switch name="hydraulics/elevator-trim/rate">
+		<switch name="hydraulics/stabilizer/rate">
 			<default value="0"/> <!-- only mechanical input to hyd actuator. So it does need hydraulic power -->
 			<test value="0">
 				/systems/failures/fctl/ths-jam eq 1
@@ -382,7 +472,7 @@
 			</test>
 		</switch>
 		
-		<aerosurface_scale name="hydraulics/elevator-trim/cmd-deg">
+		<aerosurface_scale name="hydraulics/stabilizer/cmd-deg">
 			<input>/controls/flight/elevator-trim</input>
 			<domain>
 				<min>-1.0</min>
@@ -394,11 +484,11 @@
 			</range>
 		</aerosurface_scale>
 		
-		<actuator name="hydraulics/elevator-trim/final-actuator">
-			<input>hydraulics/elevator-trim/cmd-deg</input>
-			<rate_limit>hydraulics/elevator-trim/rate</rate_limit>
+		<actuator name="hydraulics/stabilizer/final-actuator">
+			<input>hydraulics/stabilizer/cmd-deg</input>
+			<rate_limit>hydraulics/stabilizer/rate</rate_limit>
 			<lag>22.5</lag>
-			<output>hydraulics/elevator-trim/final-deg</output>
+			<output>hydraulics/stabilizer/final-deg</output>
 		</actuator>
 	
 	</channel>
@@ -484,7 +574,7 @@
 			<input>hydraulics/rudder/trim-deg</input>
 			<domain>
 				<min>-20</min>
-				<max> 20</max>
+				<max>20</max>
 			</domain>
 			<range>
 				<min>-0.8</min>
@@ -506,10 +596,12 @@
 				<product>
 					<property>hydraulics/rudder-swing</property>
 					<sin>
-						<toradians><difference>
-							<property>/orientation/heading-deg</property>
-							<property>/environment/wind-from-heading-deg</property>
-						</difference></toradians>
+						<toradians>
+							<difference>
+								<property>/orientation/heading-deg</property>
+								<property>/environment/wind-from-heading-deg</property>
+							</difference>
+						</toradians>
 					</sin>
 					<property>/environment/wind-speed-kt</property>
 					<value>1.6666</value>
@@ -525,7 +617,7 @@
 			<input>hydraulics/rudder/swing-deg</input>
 			<domain>
 				<min>-25</min>
-				<max> 25</max>
+				<max>25</max>
 			</domain>
 			<range>
 				<min>-1.0</min>
@@ -562,90 +654,6 @@
 			<lag>25.5</lag>
 			<output>hydraulics/rudder/final-deg</output>
 		</actuator>
-	
-	</channel>
-	
-	<channel name="FADEC">
-		
-		<lag_filter name="fcs/throttle1">
-			<input>/controls/engines/engine[0]/throttle-output</input>
-			<c1>0.95</c1>
-			<output>fcs/throttle-pos-norm[0]</output>
-		</lag_filter>
-		
-		<lag_filter name="fcs/throttle2">
-			<input>/controls/engines/engine[1]/throttle-output</input>
-			<c1>0.95</c1>
-			<output>fcs/throttle-pos-norm[1]</output>
-		</lag_filter>
-		
-		<lag_filter name="fcs/n1-actual1">
-			<input>/engines/engine[0]/n1</input>
-			<c1>2.25</c1>
-			<output>/engines/engine[0]/n1-actual</output>
-			<output>/engines/engine[3]/n1</output>
-		</lag_filter>
-		
-		<lag_filter name="fcs/n1-actual2">
-			<input>/engines/engine[1]/n1</input>
-			<c1>2.25</c1>
-			<output>/engines/engine[1]/n1-actual</output>
-			<output>/engines/engine[4]/n1</output>
-		</lag_filter>
-		
-		<lag_filter name="fcs/n2-actual1">
-			<input>/engines/engine[0]/n2</input>
-			<c1>2.25</c1>
-			<output>/engines/engine[0]/n2-actual</output>
-			<output>/engines/engine[3]/n2</output>
-		</lag_filter>
-		
-		<lag_filter name="fcs/n2-actual2">
-			<input>/engines/engine[1]/n2</input>
-			<c1>2.25</c1>
-			<output>/engines/engine[1]/n2-actual</output>
-			<output>/engines/engine[4]/n2</output>
-		</lag_filter>
-		
-		<lag_filter name="fcs/throttle-lever[0]">
-			<input>/controls/engines/engine[0]/throttle-lever</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/throttle-lever[1]">
-			<input>/controls/engines/engine[1]/throttle-lever</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/reverse-lever[0]">
-			<input>/controls/engines/engine[0]/reverser</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/reverse-lever[1]">
-			<input>/controls/engines/engine[1]/reverser</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/reverse-thr-lever[0]">
-			<input>/controls/engines/engine[0]/throttle-rev</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/reverse-thr-lever[1]">
-			<input>/controls/engines/engine[1]/throttle-rev</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/engine-cutoff[0]">
-			<input>/controls/engines/engine[0]/cutoff-switch</input>
-			<c1>20</c1>
-		</lag_filter>
-		
-		<lag_filter name="fcs/engine-cutoff[1]">
-			<input>/controls/engines/engine[1]/cutoff-switch</input>
-			<c1>20</c1>
-		</lag_filter>
 	
 	</channel>
 	
@@ -752,11 +760,6 @@
 				/controls/flight/flaps-input eq 1
 			</test>
 		</switch>
-		
-		<lag_filter name="fcs/flap-lever">
-			<input>/controls/flight/flaps-input</input>
-			<c1>20</c1>
-		</lag_filter>
 		
 		<switch name="fcs/sfcc/unit1-avail">
 			<default value="0"/>
@@ -933,43 +936,207 @@
 	
 	</channel>
 	
-	<channel name="Landing Gear">
+	<channel name="Gear Common">
 		
-		<switch name="gear/gear-cmd-switch">
-			<default value="gear/gear-cmd-norm"/>
-			<test logic="OR" value="gear/gear-pos-norm">
-				/systems/failures/gear eq 1
+		<switch name="/controls/gear/lever">
+			<default value="1"/>
+			<test value="0">
+				/controls/gear/lever-cockpit le 1
+			</test>
+		</switch>
+	
+	</channel>
+	
+	<channel name="Nose Gear">
+		
+		<switch name="gear/unit[0]/rate-incr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/nose-actuator eq 1
+			</test>
+			<test value="0.2222222"> <!-- About 4.5 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+			<test logic="AND" value="0.0166667"> <!-- About 60 sec -->
+				/controls/hydraulic/switches/gear-gravity-ext eq 1
+				/accelerations/pilot-g ge 0.5
 			</test>
 		</switch>
 		
-		<kinematic name="rubbish/gear-pos-norm">
-			<input>gear/gear-cmd-switch</input>
-			<traverse>
-				<setting>
-					<position>0</position>
-					<time>0</time>
-				</setting>
-				<setting>
-					<position>1</position>
-					<time>10</time>
-				</setting>
-			</traverse>
-			<output>gear/gear-pos-norm</output>
-		</kinematic>
+		<switch name="gear/unit[0]/rate-decr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/nose-actuator eq 1
+			</test>
+			<test value="0.4"> <!-- About 2.5 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+		</switch>
+		
+		<actuator name="gear/unit[0]/pos-norm-actuator">
+			<input>/controls/gear/lever</input>
+			<rate_limit sense="incr">gear/unit[0]/rate-incr</rate_limit>
+			<rate_limit sense="decr">gear/unit[0]/rate-decr</rate_limit>
+			<output>gear/unit[0]/pos-norm</output>
+		</actuator>
+	
+	</channel>
+	
+	<channel name="Left Main Gear">
+		
+		<switch name="gear/unit[1]/rate-incr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/left-actuator eq 1
+			</test>
+			<test value="0.0740741"> <!-- About 13.5 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+			<test logic="AND" value="0.0222222"> <!-- About 45 sec -->
+				/controls/hydraulic/switches/gear-gravity-ext eq 1
+				/accelerations/pilot-g ge 0.5
+			</test>
+		</switch>
+		
+		<switch name="gear/unit[1]/rate-decr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/left-actuator eq 1
+			</test>
+			<test value="0.1111111"> <!-- About 9 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+		</switch>
+		
+		<actuator name="gear/unit[1]/pos-norm-actuator">
+			<input>/controls/gear/lever</input>
+			<rate_limit sense="incr">gear/unit[1]/rate-incr</rate_limit>
+			<rate_limit sense="decr">gear/unit[1]/rate-decr</rate_limit>
+			<output>gear/unit[1]/pos-norm</output>
+		</actuator>
+	
+	</channel>
+	
+	<channel name="Right Main Gear">
+		
+		<switch name="gear/unit[2]/rate-incr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/right-actuator eq 1
+			</test>
+			<test value="0.0769231"> <!-- About 13 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+			<test logic="AND" value="0.0222222"> <!-- About 45 sec -->
+				/controls/hydraulic/switches/gear-gravity-ext eq 1
+				/accelerations/pilot-g ge 0.5
+			</test>
+		</switch>
+		
+		<switch name="gear/unit[2]/rate-decr">
+			<default value="0"/>
+			<test logic="AND" value="1000">
+				/systems/acconfig/autoconfig-running eq 1
+				position/wow eq 1
+			</test>
+			<test value="0">
+				/systems/failures/gear/right-actuator eq 1
+			</test>
+			<test value="0.1052632"> <!-- About 9.5 sec -->
+				/systems/hydraulic/green-psi ge 1500
+			</test>
+		</switch>
+		
+		<actuator name="gear/unit[2]/pos-norm-actuator">
+			<input>/controls/gear/lever</input>
+			<rate_limit sense="incr">gear/unit[2]/rate-incr</rate_limit>
+			<rate_limit sense="decr">gear/unit[2]/rate-decr</rate_limit>
+			<output>gear/unit[2]/pos-norm</output>
+		</actuator>
+	
+	</channel>
+	
+	<channel name="Gear Misc">
+		
+		<fcs_function name="gear/gear-all-norm">
+			<function>
+				<product>
+					<property>gear/unit[0]/pos-norm-actuator</property>
+					<property>gear/unit[1]/pos-norm-actuator</property>
+					<property>gear/unit[2]/pos-norm-actuator</property>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<switch name="gear/unit[0]/status">
+			<default value="1"/> <!-- In transit -->
+			<test logic="AND" value="0"> <!-- Up -->
+				/controls/gear/lever-cockpit eq 0
+				gear/unit[0]/pos-norm-actuator lt 0.01
+			</test>
+			<test logic="AND" value="2"> <!-- Down -->
+				/controls/gear/lever-cockpit eq 3
+				gear/unit[0]/pos-norm-actuator gt 0.99
+			</test>
+		</switch>
+		
+		<switch name="gear/unit[1]/status">
+			<default value="1"/> <!-- In transit -->
+			<test logic="AND" value="0"> <!-- Up -->
+				/controls/gear/lever-cockpit eq 0
+				gear/unit[1]/pos-norm-actuator lt 0.01
+			</test>
+			<test logic="AND" value="2"> <!-- Down -->
+				/controls/gear/lever-cockpit eq 3
+				gear/unit[1]/pos-norm-actuator gt 0.99
+			</test>
+		</switch>
+		
+		<switch name="gear/unit[2]/status">
+			<default value="1"/> <!-- In transit -->
+			<test logic="AND" value="0"> <!-- Up -->
+				/controls/gear/lever-cockpit eq 0
+				gear/unit[2]/pos-norm-actuator lt 0.01
+			</test>
+			<test logic="AND" value="2"> <!-- Down -->
+				/controls/gear/lever-cockpit eq 3
+				gear/unit[2]/pos-norm-actuator gt 0.99
+			</test>
+		</switch>
 	
 	</channel>
 	
 	<channel name="Tiller">
 		
 		<switch name="/controls/gear/steering-switched">
-			<default value="/controls/flight/rudder"/>
+			<default value="fbw/sidestick/yaw-input"/>
 			<test value="0">
 				/gear/gear[0]/wow ne 1
 			</test>
 			<test value="/controls/gear/steering">
 				/systems/acconfig/options/seperate-tiller-axis eq 1
 			</test>
-			<test value="/controls/flight/aileron">
+			<test value="fbw/sidestick/roll-input">
 				/controls/flight/aileron-drives-tiller eq 1
 			</test>
 		</switch>
@@ -993,11 +1160,6 @@
 			<input>fbw/tiller-handle-scheduled</input>
 			<rate_limit>0.16</rate_limit> <!-- 12/75 -->
 		</actuator>
-		
-		<lag_filter name="fbw/tiller-handle">
-			<input>fbw/tiller-handle-cmd</input>
-			<c1>20</c1>
-		</lag_filter>
 		
 		<pure_gain name="/controls/gear/steering-deg">
 			<input>/controls/gear/steering</input>
@@ -1023,8 +1185,8 @@
 		</scheduled_gain>
 		
 		<switch name="hydraulics/tiller/rudder-cmd-input">
-			<default value="/controls/flight/rudder"/>
-			<test value="/controls/flight/aileron">
+			<default value="fbw/sidestick/yaw-input"/>
+			<test value="fbw/sidestick/roll-input">
 				/controls/flight/aileron-drives-tiller eq 1
 			</test>
 		</switch>
@@ -1172,11 +1334,6 @@
 	
 	<channel name="Brakes">
 		
-		<lag_filter name="fcs/brake-lever">
-			<input>/controls/gear/brake-parking</input>
-			<c1>20</c1>
-		</lag_filter>
-		
 		<actuator name="fcs/brake-left">
 			<input>/controls/gear/brake-left</input>
 			<rate_limit>2</rate_limit>
@@ -1266,6 +1423,104 @@
 			<output>fcs/right-brake-cmd-norm</output>
 		</switch>
 	
+	</channel>
+	
+	<channel name="Wipers">
+	
+		<switch name="fcs/left-wiper-cmd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				fcs/left-wiper-pos-norm gt 0.001
+				fcs/left-wiper-has-been-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				fcs/left-wiper-has-been-1 eq 0
+				/controls/switches/wiperLspd ne 0
+			</test>
+		</switch>
+		
+		<switch name="fcs/left-wiper-has-been-1">
+			<default value="0"/>
+			<test value="0">
+				fcs/left-wiper-pos-norm le 0.001
+			</test>
+			<test value="1">
+				fcs/left-wiper-has-been-1 eq 1
+			</test>
+			<test value="1">
+				fcs/left-wiper-pos-norm ge 0.999
+			</test>
+		</switch>
+		
+		<switch name="fcs/left-wiper-speed">
+			<default value="0"/>
+			<test logic="AND" value="fcs/left-wiper-speed">
+				/controls/switches/wiperLspd eq 0
+				fcs/left-wiper-pos-norm ge 0.001
+				/systems/electrical/bus/dc-1 ge 25
+			</test>
+			<test logic="AND" value="3.167">
+				/controls/switches/wiperLspd eq 1
+				/systems/electrical/bus/dc-1 ge 25
+			</test>
+			<test logic="AND" value="4.667">
+				/controls/switches/wiperLspd eq 2
+				/systems/electrical/bus/dc-1 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="fcs/left-wiper-pos-norm">
+			<input>fcs/left-wiper-cmd</input>
+			<rate_limit>fcs/left-wiper-speed</rate_limit>
+		</actuator>
+		
+		<switch name="fcs/right-wiper-cmd">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				fcs/right-wiper-pos-norm gt 0.001
+				fcs/right-wiper-has-been-1 eq 1
+			</test>
+			<test logic="AND" value="1">
+				fcs/right-wiper-has-been-1 eq 0
+				/controls/switches/wiperRspd ne 0
+			</test>
+		</switch>
+		
+		<switch name="fcs/right-wiper-has-been-1">
+			<default value="0"/>
+			<test value="0">
+				fcs/right-wiper-pos-norm le 0.001
+			</test>
+			<test value="1">
+				fcs/right-wiper-has-been-1 eq 1
+			</test>
+			<test value="1">
+				fcs/right-wiper-pos-norm ge 0.999
+			</test>
+		</switch>
+		
+		<switch name="fcs/right-wiper-speed">
+			<default value="0"/>
+			<test logic="AND" value="fcs/right-wiper-speed">
+				/controls/switches/wiperRspd eq 0
+				fcs/right-wiper-pos-norm ge 0.001
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+			<test logic="AND" value="3.167">
+				/controls/switches/wiperRspd eq 1
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+			<test logic="AND" value="4.667">
+				/controls/switches/wiperRspd eq 2
+				/systems/electrical/bus/dc-2 ge 25
+			</test>
+		</switch>
+		
+		<actuator name="fcs/right-wiper-pos-norm">
+			<input>fcs/right-wiper-cmd</input>
+			<rate_limit>fcs/right-wiper-speed</rate_limit>
+		</actuator>
+		
 	</channel>
 
 </system>

@@ -1,7 +1,7 @@
 # A3XX ECAM
 # Joshua Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
-# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var ap_active = 0;
 var athr_active = 0;
@@ -258,7 +258,7 @@ var input = {
 	"apWarn": "/it-autoflight/output/ap-warning",
 	"apOffTime": "/ECAM/warnings/ap-off-time",
 	"elevatorFBW": "/fdm/jsbsim/fbw/elevator-sidestick",
-	"gearLever": "/controls/gear/gear-down",
+	"gearLever": "/controls/gear/lever",
 	"masterCaution": "/ECAM/warnings/master-caution-light",
 	"masterWarn": "/ECAM/warnings/master-warning-light",
 };
