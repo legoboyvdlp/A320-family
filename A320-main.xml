@@ -150,7 +150,7 @@
 				<reflection-correction-wing type="double">-0.15</reflection-correction-wing>
 			</reflection>
 			<livery>
-				<max-resolution type="int" userarchive="y">4096</max-resolution>
+				<max-resolution type="int" userarchive="y">16384</max-resolution>
 			</livery>
 		</model>
 		

@@ -30,10 +30,13 @@ var res2str = func(resolution) {
 # than the given limit
 var findTexByRes = func(path, file, maxRes) {
 	res = maxRes;
-	checkFile = os.path.new(getprop("/sim/aircraft-dir") ~ "/" ~ path);
+	#checkFile = os.path.new(getprop("/sim/aircraft-dir") ~ "/" ~ path);
+	checkFile = os.path.new(path);
 	while (res >= 1024) {
-		checkFile.set(getprop("/sim/aircraft-dir") ~ "/" ~ path ~ "/" ~ res2str(res) ~ "/" ~ file);
+		#checkFile.set(getprop("/sim/aircraft-dir") ~ "/" ~ path ~ "/" ~ res2str(res) ~ "/" ~ file);
+		checkFile.set(path ~ "/" ~ res2str(res) ~ "/" ~ file);
 		if (checkFile.isFile()) {
+			print("USING TEXTURE SIZE " ~ res);
 			return res2str(res);
 		}
 		res = res / 2;
