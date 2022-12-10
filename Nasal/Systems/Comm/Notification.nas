@@ -1,7 +1,7 @@
 # A3XX Notification System
 # Jonathan Redpath
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 var defaultServer = "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&mostRecent=true&hoursBeforeNow=12&stationString=";
 var result = nil;
 
@@ -20,16 +20,17 @@ var notificationSystem = {
 	notifyAirport: nil,
 	hasNotified: 0,
 	inputAirport: func(airport) {
-		if (!fmgc.FMGCInternal.flightNumSet or size(airport) != 4) { return 1; }
-		var airportList = findAirportsByICAO(airport);
-		if (size(airportList) == 0) { return 2; }
+		#if (!fmgc.FMGCInternal.flightNumSet or size(airport) != 4) { return 1; }
+		#var airportList = findAirportsByICAO(airport);
+		#if (size(airportList) == 0) { return 2; }
 		if (me.hasNotified) { me.hasNotified = 0; }
-		me.notifyAirport = airportList[0].id;
+		me.notifyAirport = airport;
 		return 0;
 	},
 	notify: func() {
 		if (me.notifyAirport != nil) {
 			me.hasNotified = 1;
+			fgcommand("cpdlc-connect", props.Node.new( {atc: me.notifyAirport} ));
 			# todo - send notification to ATC
 			return 0;
 		} else {
@@ -37,9 +38,9 @@ var notificationSystem = {
 		}
 	},
 	automaticTransfer: func(station) {
-		var airportList = findAirportsByICAO(station);
-		if (size(airportList) == 0) { return 2; }
-		me.notifyAirport = airportList[0].id;
+		#var airportList = findAirportsByICAO(station);
+		#if (size(airportList) == 0) { return 2; }
+		me.notifyAirport = station;
 		return 0;
 	},
 };

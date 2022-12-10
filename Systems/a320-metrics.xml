@@ -1,32 +1,32 @@
-<!-- Airbus A320 JSBsim -->
+<?xml version="1.0"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Airbus A320 JSBsim -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <metrics>
-	<wingarea  unit="FT2"> 1319.79 </wingarea>
-	<wingspan  unit="FT" >  117.26 </wingspan>
-	<wing_incidence      >    1.03 </wing_incidence>
-	<chord     unit="FT" >   20.76 </chord>
-	<htailarea unit="FT2">  334.24 </htailarea>
-	<htailarm  unit="FT" >   57.88 </htailarm>
-	<vtailarea unit="FT2">  248.79 </vtailarea>
-	<vtailarm  unit="FT" >   57.33 </vtailarm>
+	
+	<wingarea unit="FT2">1319.79</wingarea>
+	<wingspan unit="FT">117.26</wingspan>
+	<chord unit="FT">20.76</chord>
+	<htailarea unit="FT2">334.24</htailarea>
+	<vtailarea unit="FT2">248.79</vtailarea>
 	
 	<location name="AERORP" unit="M">
-		<x> 19.2274 </x>
-		<y> 0 </y>
-		<z> 0.19249 </z>
+		<x>-2.2658</x>
+		<y>0</y>
+		<z>-0.934</z>
 	</location>
 	
 	<location name="EYEPOINT" unit="M">
-		<x> 0 </x>
-		<y> 0 </y>
-		<z> 0 </z>
+		<x>0</x>
+		<y>0</y>
+		<z>0</z>
 	</location>
 	
 	<location name="VRP" unit="M">
-		<x> 18.8499 </x>
-		<y> 0 </y>
-		<z> -1.7005004 </z>
+		<x>0</x>
+		<y>0</y>
+		<z>0</z>
 	</location>
+
 </metrics>

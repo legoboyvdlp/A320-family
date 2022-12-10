@@ -5,8 +5,9 @@
 
 var SwitchingPanel = {
 	Switches: {
-		attHdg: props.globals.getNode("/controls/navigation/switching/att-hdg"),
+		audio: props.globals.getNode("/controls/navigation/switching/audio"),
 		airData: props.globals.getNode("/controls/navigation/switching/air-data"),
+		attHdg: props.globals.getNode("/controls/navigation/switching/att-hdg"),
 		eisDmc: props.globals.getNode("/controls/navigation/switching/eis-dmc"),
 	},
 	

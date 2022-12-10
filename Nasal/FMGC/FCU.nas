@@ -1,5 +1,5 @@
 # A3XX FCU
-# Copyright (c) 2020 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2022 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
 
 # Nodes
 var altSetMode = props.globals.getNode("/it-autoflight/config/altitude-dial-mode", 1);
@@ -8,6 +8,8 @@ var apWarningNode = props.globals.getNode("/it-autoflight/output/ap-warning");
 var athrWarningNode = props.globals.getNode("/it-autoflight/output/athr-warning");
 var apDiscBtn = props.globals.getNode("/sim/sounde/apdiscbtn");
 var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
+var SidestickPriorityPressedLast = 0;
+var priorityTimer = 0;
 
 var FCU = {
 	elecSupply: "",
@@ -76,7 +78,7 @@ var FCUController = {
 			}
 		),
 	],
-	resetFail: func() {
+	resetFailures: func() {
 		if (me._init == 0) { return; }
 		me.FCU1.restore();
 		me.FCU2.restore();
@@ -130,7 +132,8 @@ var FCUController = {
 			}
 		}
 	},
-	APDisc: func() {
+	APDisc: func(side = 0, press = 0) {
+		# side: 0 = none, 1 = capt, 2 = fo
 		# physical button sound - so put it outside here as you get a sound even if it doesn't work!
 		apDiscBtn.setValue(1);
 		settimer(func {
@@ -140,14 +143,42 @@ var FCUController = {
 		if (me.FCUworking) {
 			if (fmgc.Output.ap1.getBoolValue() or fmgc.Output.ap2.getBoolValue()) {
 				apOff("soft", 0);
-			} else {
-				if (apOffSound[0].getValue() or apOffSound[1].getValue()) {
-					apOffSound[0].setValue(0);
-					apOffSound[1].setValue(0);
+			} else if (apOffSound[0].getValue() or apOffSound[1].getValue() or apWarningNode.getValue() != 0) {
+				if (press == 1) {
+					if (apOffSound[0].getValue() or apOffSound[1].getValue()) {
+						apOffSound[0].setValue(0);
+						apOffSound[1].setValue(0);
+					}
+					if (apWarningNode.getValue() != 0) {
+						apWarningNode.setValue(0);
+						ecam.lights[0].setValue(0);
+					}
 				}
-				if (apWarningNode.getValue() != 0) {
-					apWarningNode.setValue(0);
-					ecam.lights[0].setValue(0);
+			} else if (side != 0) {
+				if (press == 1) {
+					setprop("/fdm/jsbsim/fbw/sidestick/active[" ~ (2 - side) ~ "]", 0);
+					setprop("/fdm/jsbsim/fbw/sidestick/active[" ~ (side - 1) ~ "]", 1);
+					SidestickPriorityPressedLast = side;
+					if (side == 1) {
+						setprop("/sim/sound/priority-left", 1);
+						settimer(func {
+							setprop("/sim/sound/priority-left", 0);
+						}, 1.5);
+					} else {
+						setprop("/sim/sound/priority-right", 1);
+						settimer(func {
+							setprop("/sim/sound/priority-right", 0);
+						}, 1.5);
+					}
+					priorityTimer = pts.Sim.Time.elapsedSec.getValue();
+				} else {
+					# Only release, if this side has pressed the button last
+					# to avoide the first pressed side getting activated again
+					# when released.
+					if (SidestickPriorityPressedLast == side and priorityTimer + 40 >= pts.Sim.Time.elapsedSec.getValue()) {
+						setprop("/fdm/jsbsim/fbw/sidestick/active[0]", 1);
+						setprop("/fdm/jsbsim/fbw/sidestick/active[1]", 1);
+					}
 				}
 			}
 		}
@@ -316,12 +347,12 @@ var FCUController = {
 				if (fmgc.Output.lat.getValue() == 2) {
 					fmgc.Input.lat.setValue(0);
 				} else {
-					fmgc.ITAF.disarmLOC();
+					fmgc.ITAF.disarmLoc();
 				}
 				if (me.vertTemp == 2 or me.vertTemp == 6) {
 					me.VSPull();
 				} else {
-					fmgc.ITAF.disarmGS();
+					fmgc.ITAF.disarmAppr();
 				}
 			} else {
 				if (pts.Position.gearAglFt.getValue() >= 400 and me.vertTemp != 7) {
@@ -329,7 +360,7 @@ var FCUController = {
 					if (me.vertTemp == 2 or me.vertTemp == 6) {
 						me.VSPull();
 					} else {
-						fmgc.ITAF.disarmGS();
+						fmgc.ITAF.disarmAppr();
 					}
 				}
 			}
@@ -459,12 +490,12 @@ var FCUController = {
 				if (fmgc.Output.lat.getValue() == 2) {
 					fmgc.Input.lat.setValue(0);
 				} else {
-					fmgc.ITAF.disarmLOC();
+					fmgc.ITAF.disarmLoc();
 				}
 				if (me.vertTemp == 2 or me.vertTemp == 6) {
 					me.VSPull();
 				} else {
-					fmgc.ITAF.disarmGS();
+					fmgc.ITAF.disarmAppr();
 				}
 			} else {
 				if (pts.Position.gearAglFt.getValue() >= 400 and me.vertTemp != 7) {
@@ -517,9 +548,9 @@ var apOff = func(type, side) {
 
 # Autothrust Disconnection
 var athrOff = func(type) {
-	if (fmgc.Input.athr.getValue() == 1) {
+	if (fmgc.Input.athr.getValue() == 1 and !systems.FADEC.alphaFloor.getBoolValue()) {
 		if (type == "hard") {
-			fadec.lockThr();
+			systems.lockThr();
 		}
 		fmgc.Input.athr.setValue(0);
 		ecam.doAthrWarn(type);
@@ -530,6 +561,6 @@ var athrOff = func(type) {
 var hdgInput = func {
 	if (fmgc.Output.lat.getValue() != 0) {
 		fmgc.Custom.showHdg.setBoolValue(1);
-		fmgc.Custom.hdgTime.setValue(pts.Sim.Time.elapsedSec.getValue());
+		fmgc.Custom.hdgTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 }

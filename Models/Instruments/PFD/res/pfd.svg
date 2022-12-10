@@ -41,9 +41,9 @@
      inkscape:window-maximized="1"
      inkscape:window-y="-8"
      inkscape:window-x="1592"
-     inkscape:cy="637.51473"
-     inkscape:cx="564.90369"
-     inkscape:zoom="5.6568544"
+     inkscape:cy="587.80468"
+     inkscape:cx="578.84016"
+     inkscape:zoom="4.0000001"
      showgrid="false"
      id="namedview371"
      inkscape:window-height="1009"
@@ -868,6 +868,29 @@
        id="FD_pitch"
        style="fill:#0dc04b;fill-opacity:1;stroke:none;stroke-width:2.87750006;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        transform="matrix(0,1,-1,0,0,0)" />
+    <g
+       id="FPD"
+       inkscape:label="#g5240"
+       transform="matrix(0.99999977,0,0,1.0000168,87.308868,-54.009547)">
+      <path
+         sodipodi:nodetypes="ccccccc"
+         inkscape:connector-curvature="0"
+         id="path5272"
+         d="m 290.7841,567.165 -32.246,10.99629 -7.071,0 0,-21.99258 7.071,0 32.246,10.99629 58.2229,0"
+         style="fill:none;fill-rule:evenodd;stroke:#0dc04b;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 366.66497,567.1645 c 0,4.81402 -3.90242,8.71654 -8.71632,8.71654 -4.8139,0 -8.71632,-3.90252 -8.71632,-8.71654 0,-4.81403 3.90242,-8.71654 8.71632,-8.71654 4.8139,0 8.71632,3.90251 8.71632,8.71654 z"
+         id="path5260"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="zzzzz" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#0dc04b;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 425.11296,567.165 32.24603,10.99629 7.07101,0 0,-21.99258 -7.07101,0 -32.24603,10.99629 -58.22296,0"
+         id="path5238"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc" />
+    </g>
     <g
        id="FPV"
        inkscape:label="#g4866"
@@ -2299,24 +2322,25 @@
       <rect
          inkscape:label="#rect4671"
          y="483.91519"
-         x="771.4729"
+         x="767.51312"
          height="58.155445"
-         width="83.838371"
+         width="91.757973"
          id="rect4796"
-         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.4;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.4000001;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#179ab7;fill-opacity:1;stroke:none;stroke-width:0.75"
-         x="890.99316"
+         x="900.48224"
          y="506.26898"
          id="ALT_target_digit"
          transform="scale(0.95383277,1.0484018)"
-         inkscape:label="#text975"><tspan
+         inkscape:label="#text975"
+         sodipodi:linespacing="0%"><tspan
            sodipodi:role="line"
            id="tspan4800"
-           x="890.99316"
+           x="900.48224"
            y="506.26898"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:48.8348px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:end;text-anchor:end;fill:#179ab7;fill-opacity:1;stroke-width:0.75">000</tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:48.83480072px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:end;text-anchor:end;fill:#179ab7;fill-opacity:1;stroke-width:0.75">000</tspan></text>
     </g>
     <text
        xml:space="preserve"

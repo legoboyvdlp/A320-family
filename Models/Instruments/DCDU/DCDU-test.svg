@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="DCDU-test.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   id="svg2"
+   version="1.1"
+   viewBox="0 0 766 511.99999"
+   height="512pt"
+   width="766pt">
+  <metadata
+     id="metadata375">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs373" />
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     fit-margin-bottom="0"
+     fit-margin-right="0"
+     fit-margin-left="0"
+     fit-margin-top="0"
+     units="pt"
+     inkscape:snap-global="false"
+     showguides="true"
+     inkscape:current-layer="svg2"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="195.55698"
+     inkscape:cx="9.3859482"
+     inkscape:zoom="0.45254834"
+     showgrid="true"
+     id="namedview371"
+     inkscape:window-height="705"
+     inkscape:window-width="1366"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="1"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="20"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#000000"
+     inkscape:document-units="px">
+    <inkscape:grid
+       originy="0"
+       originx="0"
+       id="grid5153"
+       type="xygrid" />
+  </sodipodi:namedview>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:6px;line-height:1.5;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="384.00595"
+     y="195.90379"
+     id="Test_text"
+     inkscape:label="#text4335"><tspan
+       sodipodi:role="line"
+       id="tspan4337"
+       x="384.00595"
+       y="195.90379"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46px;line-height:1.25;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';text-align:center;text-anchor:middle;fill:#0dc04b;fill-opacity:1;stroke-width:0.5px">WAITING FOR DATA</tspan><tspan
+       sodipodi:role="line"
+       x="384.00595"
+       y="253.40379"
+       id="tspan4339"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46px;line-height:1.25;font-family:'Lucida Sans';-inkscape-font-specification:'Lucida Sans';text-align:center;text-anchor:middle;fill:#0dc04b;fill-opacity:1;stroke-width:0.5px">(MAX 30 SECONDS)</tspan></text>
+</svg>

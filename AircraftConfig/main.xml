@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -71,8 +71,26 @@
 					<binding>
 						<command>nasal</command>
 						<script>
-						aircraft.livery.dialog.toggle();
+						libraries.livery.dialog.toggle();
 						</script>
+					</binding>
+				</button>
+				<button>
+					<halign>center</halign>
+					<legend>Checklists</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>dialog-show</command>
+						<dialog-name>checklist</dialog-name>
+					</binding>
+				</button>
+				<button>
+					<halign>center</halign>
+					<legend>Aircraft Help</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>dialog-show</command>
+						<dialog-name>acconfig-help</dialog-name>
 					</binding>
 				</button>
 				<button>
@@ -83,17 +101,6 @@
 						<command>nasal</command>
 						<script>
 						acconfig.du_quality.open();
-						</script>
-					</binding>
-				</button>
-				<button>
-					<halign>center</halign>
-					<legend>About Aircraft</legend>
-					<pref-width>140</pref-width>
-					<binding>
-						<command>nasal</command>
-						<script>
-						acconfig.about_dlg.open();
 						</script>
 					</binding>
 				</button>
@@ -305,6 +312,26 @@
 			</checkbox>
 			
 			<checkbox>
+				<label>Display tooltips on switches</label>
+				<halign>left</halign>
+				<property>/options/system/toggle-tooltips</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/options/system/toggle-tooltips</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
 				<label>Allow APU Oil Consumption</label>
 				<halign>left</halign>
 				<property>/systems/apu/oil/allow-oil-consumption</property>
@@ -364,6 +391,26 @@
 				<live>true</live>
 			</checkbox>
 
+			<checkbox>
+				<label>Disable Canvas in External Views</label>
+				<halign>left</halign>
+				<property>/systems/acconfig/options/hide-canvas-outside</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>options/hide-canvas-outside</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
 			<checkbox>
 				<!-- TODO there might be a better way to formulate this. -->
 				<label>Save States Between Sessions</label>

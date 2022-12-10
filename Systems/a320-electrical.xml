@@ -717,7 +717,7 @@
 			<function>
 				<ifthen>
 					<eq>
-						<property>/controls/electrical/ground-cart</property>
+						<property>/controls/electrical/switches/ground-cart</property>
 						<value>1</value>
 					</eq>
 					<value>115</value>
@@ -1174,7 +1174,7 @@
 			<test logic="AND" value="1">
 				/systems/electrical/sources/ext/output-volt ge 110
 				/controls/electrical/switches/ext-pwr eq 1
-				/controls/electrical/ground-cart eq 1
+				/controls/electrical/switches/ground-cart eq 1
 			</test>
 		</switch>
 		

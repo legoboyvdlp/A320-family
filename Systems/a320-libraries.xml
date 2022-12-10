@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+
+<!-- Airbus A320 Libraries -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+
+<system name="A320: Libraries">
+	
+	<channel name="FDM Rate Libraries">
+		
+		<switch name="aero/alpha-deg-fixed">
+			<default value="0"/>
+			<test value="aero/alpha-deg">
+				gear/unit[0]/WOW eq 0
+			</test>
+		</switch>
+		
+		<lag_filter name="aero/alpha-deg-damped">
+			<input>aero/alpha-deg-fixed</input>
+			<c1>10</c1>
+		</lag_filter>
+		
+		<switch name="position/wow">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				gear/unit[0]/WOW eq 1
+				gear/unit[1]/WOW eq 1
+				gear/unit[2]/WOW eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="position/gear-agl-ft">
+			<function>
+				<difference>
+					<property>/position/altitude-agl-ft</property>
+					<value>17.283</value>
+				</difference>
+			</function>
+			<output>/position/gear-agl-ft</output> <!-- So flight recorder can override it -->
+		</fcs_function>
+		
+		<pure_gain name="position/gear-agl-m">
+			<input>position/gear-agl-ft</input>
+			<gain>0.3048</gain>
+			<output>/position/gear-agl-m</output> <!-- So flight recorder can override it -->
+		</pure_gain>
+		
+		<pure_gain name="inertia/weight-kg">
+			<input>inertia/weight-lbs</input>
+			<gain>0.45359237</gain>
+		</pure_gain>
+	
+	</channel>
+	
+	<channel name="Execrate 8 Libraries" execrate="8">
+		
+		<switch name="libraries/multi-engine-out">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/state ne 3
+				/engines/engine[1]/state ne 3
+			</test>
+		</switch>
+	
+	</channel>
+
+</system>

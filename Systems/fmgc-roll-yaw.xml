@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 
 <!-- IT-AUTOFLIGHT -->
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
 	<!-- Roll Axis -->
 	<filter>
 		<name>IT-CONTROLLER: Heading/LNAV</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/velocities/vc-kts</property>
-					<entry><ind>140</ind><dep>1.8</dep></entry>
-					<entry><ind>360</ind><dep>2.8</dep></entry>
+					<property>/velocities/airspeed-kt</property>
+					<entry><ind>140</ind><dep>1.6</dep></entry>
+					<entry><ind>360</ind><dep>2.6</dep></entry>
 				</table>
 			</expression>
 		</gain>
 		<enable>
 			<condition>
 				<and>
+					<property>/it-autoflight/output/apfd-on</property>
 					<or>
 						<equals>
 							<property>/it-autoflight/output/lat</property>
@@ -29,24 +29,6 @@
 						</equals>
 						<equals>
 							<property>/it-autoflight/output/lat</property>
-							<value>1</value>
-						</equals>
-					</or>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd2</property>
 							<value>1</value>
 						</equals>
 					</or>
@@ -65,42 +47,24 @@
 	
 	<filter>
 		<name>IT-CONTROLLER: VOR/LOC</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/velocities/vc-kts</property>
-					<entry><ind>140</ind><dep>1.8</dep></entry>
-					<entry><ind>360</ind><dep>2.8</dep></entry>
+					<property>/velocities/airspeed-kt</property>
+					<entry><ind>140</ind><dep>1.6</dep></entry>
+					<entry><ind>360</ind><dep>2.6</dep></entry>
 				</table>
 			</expression>
 		</gain>
 		<enable>
 			<condition>
 				<and>
+					<property>/it-autoflight/output/apfd-on</property>
 					<equals>
 						<property>/it-autoflight/output/lat</property>
 						<value>2</value>
 					</equals>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd2</property>
-							<value>1</value>
-						</equals>
-					</or>
 				</and>
 			</condition>
 		</enable>
@@ -116,8 +80,8 @@
 	
 	<filter>
 		<name>IT-CONTROLLER: Align/Rollout/Takeoff</name>
-		<debug>false</debug>
-		<type>noise-spike</type>
+		<type>gain</type>
+		<gain>1.0</gain>
 		<enable>
 			<condition>
 				<or>
@@ -138,29 +102,17 @@
 	
 	<filter>
 		<name>System Command: Roll Target Inactive Sync</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>
 			<condition>
-				<and>
-					<not-equals>
-						<property>/it-autoflight/output/ap1</property>
-						<value>1</value>
-					</not-equals>
-					<not-equals>
-						<property>/it-autoflight/output/ap2</property>
-						<value>1</value>
-					</not-equals>
-					<not-equals>
-						<property>/it-autoflight/output/fd1</property>
-						<value>1</value>
-					</not-equals>
-					<not-equals>
-						<property>/it-autoflight/output/fd2</property>
-						<value>1</value>
-					</not-equals>
-				</and>
+				<or>
+					<not><property>/it-autoflight/output/apfd-on</property></not>
+					<equals>
+						<property>/it-autoflight/output/lat</property>
+						<value>9</value>
+					</equals>
+				</or>
 			</condition>
 		</enable>
 		<input>/orientation/roll-deg</input>
@@ -174,45 +126,24 @@
 	
 	<filter>
 		<name>System Command: Target Roll Filter</name>
-		<debug>false</debug>
 		<type>noise-spike</type>
 		<input>/it-autoflight/internal/target-roll-deg</input>
 		<output>/it-autoflight/internal/target-roll</output>
 		<max-rate-of-change>
 			<condition>
-				<and>
-					<not-equals>
-						<property>/it-autoflight/output/ap1</property>
-						<value>1</value>
-					</not-equals>
-					<not-equals>
-						<property>/it-autoflight/output/ap2</property>
-						<value>1</value>
-					</not-equals>
-					<not-equals>
-						<property>/it-autoflight/output/fd1</property>
-						<value>1</value>
-					</not-equals>
-					<not-equals>
-						<property>/it-autoflight/output/fd2</property>
-						<value>1</value>
-					</not-equals>
-				</and>
+				<or>
+					<not><property>/it-autoflight/output/apfd-on</property></not>
+					<equals>
+						<property>/it-autoflight/output/lat</property>
+						<value>9</value>
+					</equals>
+				</or>
 			</condition>
-			<value>50</value>
+			<value>1000</value>
 		</max-rate-of-change>
 		<max-rate-of-change>
 			<condition>
-				<and>
-					<not-equals>
-						<property>/it-autoflight/output/ap1</property>
-						<value>1</value>
-					</not-equals>
-					<not-equals>
-						<property>/it-autoflight/output/ap2</property>
-						<value>1</value>
-					</not-equals>
-				</and>
+				<not><property>/it-autoflight/output/ap-on</property></not>
 			</condition>
 			<value>15</value>
 		</max-rate-of-change>
@@ -221,20 +152,18 @@
 	
 	<filter>
 		<name>System Command: Roll Rate Target</name>
-		<debug>false</debug>
 		<type>gain</type>
-		<gain>-0.1</gain>
+		<gain>-0.06</gain>
 		<input>/orientation/roll-deg</input>
 		<reference>/it-autoflight/internal/target-roll</reference>
 		<output>/fdm/jsbsim/fbw/fmgc/roll-cmd</output> <!-- Inputs to the FBW Roll -->
-		<min>-0.32</min>
-		<max>0.32</max>
+		<min>-0.33</min>
+		<max>0.33</max>
 	</filter>
 	
 	<!-- Yaw Axis -->
 	<pi-simple-controller>
 		<name>IT-CONTROLLER: Yaw VOR/LOC</name>
-		<debug>false</debug>
 		<enable>
 			<condition>
 				<equals>
@@ -271,21 +200,11 @@
 	
 	<filter>
 		<name>System Command: Rudder</name>
-		<debug>false</debug>
 		<type>noise-spike</type>
 		<input>
 			<condition>
 				<and>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-					</or>
+					<property>/it-autoflight/output/ap-on</property>
 					<equals>
 						<property>/it-autoflight/output/lat</property>
 						<value>4</value>

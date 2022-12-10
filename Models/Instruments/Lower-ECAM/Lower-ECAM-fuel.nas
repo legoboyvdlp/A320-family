@@ -1,5 +1,5 @@
 # A3XX Lower ECAM Canvas
-# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath
 
 var fuel_used_lbs1 = props.globals.getNode("/systems/fuel/fuel-used-1", 1);
 var fuel_used_lbs2 = props.globals.getNode("/systems/fuel/fuel-used-2", 1);

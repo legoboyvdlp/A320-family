@@ -29,6 +29,103 @@ You can generate a QR-code to lauch directly on your smartphone/tablet, first in
 If you have issues installing, please check INSTALL.MD!
 Specifically, make sure you remove -dev from the folder name!
 
+## Hardware configuration
+Here are bindings for commonly used buttons
+
+### FO Sidestick
+Bind the axis to:
+* elevator: `/controls/flight/elevator[1]`
+* aileron: `/controls/flight/aileron[1]`
+
+### AP Disconnect
+```
+  <button n="X">
+    <desc type="string">Custom</desc>
+    <binding>
+      <command type="string">nasal</command>
+      <script type="string">
+        fcu.FCUController.APDisc(side=1, press=1);
+        </script>
+      <module type="string">__js3</module>
+      <offset type="double">1</offset>
+    </binding>
+    <mod-up>
+         <binding>
+           <command type="string">nasal</command>
+                <script type="string">
+                  fcu.FCUController.APDisc(side=1, press=0);
+                  </script>
+           <module type="string">__js3</module>
+           <offset type="double">1</offset>
+         </binding>
+    </mod-up>
+    <repeatable type="double">0</repeatable>
+  </button>
+```
+For the FO Sidestick, use `side=2`
+
+### A/THR Disconnect
+```
+  <button n="X">
+    <desc type="string">A/THR Disc</desc>
+    <binding>
+      <command type="string">nasal</command>
+      <script type="string">
+        fcu.FCUController.ATDisc();
+      </script>
+    </binding>
+  </button>
+```
+
+### ENG Mode Selector
+```
+	<button n="6">
+		<desc type="string">ENG Mode Crank</desc>
+		<repeatable type="string">false</repeatable>
+		<binding>
+			<command>property-assign</command>
+			<property>controls/ignition/start-sw</property>
+			<value>0</value>
+		</binding>
+		<mod-up>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/ignition/start-sw</property>
+				<value>1</value>
+			</binding>
+		</mod-up>
+	</button>
+	<button n="7">
+		<desc type="string">ENG Mode Start</desc>
+		<repeatable type="string">false</repeatable>
+		<binding>
+			<command>property-assign</command>
+			<property>controls/ignition/start-sw</property>
+			<value>2</value>
+		</binding>
+		<mod-up>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/ignition/start-sw</property>
+				<value>1</value>
+			</binding>
+		</mod-up>
+	</button>
+```
+
+If you only want these bindings for the A320 family,
+add the following to the script:
+```
+if (string.match(getprop("/sim/aero"), "A3[12][0189]*"))
+{
+	<command-above>
+}
+else
+{
+	<other-command>
+}
+```
+
 ## External tools
 Some external tools you might want to checkout and use with this Model.  
 NOTE: These are external tools so make sure to check their terms of use

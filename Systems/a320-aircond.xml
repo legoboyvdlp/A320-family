@@ -133,6 +133,19 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="/systems/pneumatics/jsbsim-bleed-factor-1"> <!-- Can detail later -->
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/air-conditioning/packs/pack-flow-1-calc</independentVar>
+					<tableData>
+						0  0.002
+						1  0.030
+					</tableData>
+				</table>
+			</function>
+			<output>propulsion/engine[0]/bleed-factor</output>
+		</fcs_function>
+		
 		<lag_filter name="/systems/air-conditioning/packs/pack-flow-1">
 			<input>/systems/air-conditioning/packs/pack-flow-1-calc</input>
 			<c1>5</c1>
@@ -157,6 +170,19 @@
 					<property>/systems/air-conditioning/packs/pack-flow</property>
 				</product>
 			</function>
+		</fcs_function>
+		
+		<fcs_function name="/systems/pneumatics/jsbsim-bleed-factor-2"> <!-- Can detail later -->
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/air-conditioning/packs/pack-flow-2-calc</independentVar>
+					<tableData>
+						0  0.002
+						1  0.030
+					</tableData>
+				</table>
+			</function>
+			<output>propulsion/engine[1]/bleed-factor</output>
 		</fcs_function>
 		
 		<lag_filter name="/systems/air-conditioning/packs/pack-flow-2">
@@ -728,6 +754,7 @@
 			<input>/systems/air-conditioning/valves/trim-fwd-cmd</input>
 			<rate_limit>/systems/air-conditioning/valves/trim-power-cabin-fwd</rate_limit>
 		</actuator>
+	
 	</channel>
 	
 	<channel name="Recirculation" execrate="8">

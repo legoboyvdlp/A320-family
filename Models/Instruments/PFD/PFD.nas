@@ -22,9 +22,12 @@ var minimum = props.globals.getNode("/instrumentation/pfd/minimums", 1);
 # Create Nodes:
 var altFlash = [0,0];
 var amberFlash = [0, 0];
+var aFloorFlash = 0;
 var dhFlash = 0;
+var togaLkFlash = 0;
 var ilsFlash = [0,0];
 var qnhFlash = [0,0];
+var vsFlash = [0, 0];
 var elapsedtime_act = nil;
 var du1_test = props.globals.initNode("/instrumentation/du/du1-test", 0, "BOOL");
 var du1_test_time = props.globals.initNode("/instrumentation/du/du1-test-time", 0.0, "DOUBLE");
@@ -46,23 +49,22 @@ var autoland_pitch_land = props.globals.initNode("/instrumentation/pfd/logic/aut
 var autoland_ap_disc_ft = props.globals.initNode("/instrumentation/pfd/logic/autoland/ap-disc-ft", 0, "INT");
 
 var canvas_pfd = {
+	alt_diff_cur: 0,
 	ASItrendIsShown: 0,
-	
-	middleOffset: 0,
-	heading: 0,
-	heading10: 0,
-	headOffset: 0,
-	middleText: 0,
 	leftText1: 0,
 	leftText2: 0,
 	leftText3: 0,
+	heading: 0,
+	heading10: 0,
+	headOffset: 0,
+	magnetic_hdg_dif: 0,
+	middleOffset: 0,
+	middleText: 0,
 	rightText1: 0,
 	rightText2: 0,
 	rightText3: 0,
-	track_diff: 0,
 	split_ils: 0,
-	magnetic_hdg_dif: 0,
-	alt_diff_cur: 0,
+	track_diff: 0,
 	new: func(svg, name, number) {
 		var obj = {parents: [canvas_pfd] };
 		obj.canvas = canvas.new({
@@ -118,21 +120,21 @@ var canvas_pfd = {
 		
 		# temporary vars
 		obj.ASItrendIsShown = 0;
-		obj.middleOffset = 0;
+		obj.alt_diff_cur = 0;
 		obj.heading = 0;
 		obj.heading10 = 0;
 		obj.headOffset = 0;
-		obj.middleText = 0;
 		obj.leftText1 = 0;
 		obj.leftText2 = 0;
 		obj.leftText3 = 0;
+		obj.magnetic_hdg_dif = 0;
+		obj.middleOffset = 0;
+		obj.middleText = 0;
 		obj.rightText1 = 0;
 		obj.rightText2 = 0;
 		obj.rightText3 = 0;
-		obj.track_diff = 0;
 		obj.split_ils = 0;
-		obj.magnetic_hdg_dif = 0;
-		obj.alt_diff_cur = 0;
+		obj.track_diff = 0;
 		
 		# hide non-updated objects
 		obj["FMA_catmode"].hide();
@@ -168,7 +170,11 @@ var canvas_pfd = {
 				obj["AI_bank"].setRotation(-val * D2R);
 				obj["AI_agl_g"].setRotation(-val * D2R);
 				obj.AI_fpv_rot.setRotation(-val * D2R, obj.AICenter);
-				obj["FPV"].setRotation(val * D2R); # It shouldn't be rotated, only the axis should 
+				obj["FPV"].setRotation(val * D2R); # It shouldn't be rotated, only the axis should
+			}),
+			props.UpdateManager.FromHashList(["FDRollBar","roll"], 0.025, func(val) {
+				obj.AI_fpd_rot.setRotation(-val.roll * D2R, obj.AICenter);
+				obj["FPD"].setRotation((val.roll + val.FDRollBar) * D2R); # It shouldn't be rotated, only the axis should + FD rotation
 			}),
 			props.UpdateManager.FromHashValue("fbwLaw", 1, func(val) {
 				if (val == 0) {
@@ -196,7 +202,7 @@ var canvas_pfd = {
 				obj["FD_roll"].setTranslation(val * 2.2, 0);
 			}),
 			props.UpdateManager.FromHashValue("FDPitchBar", 0.1, func(val) {
-				obj["FD_pitch"].setTranslation(0, val * -3.8);
+				obj["FD_pitch"].setTranslation(0, val * -11.825);
 			}),
 			props.UpdateManager.FromHashValue("agl", 0.5, func(val) {
 				var roundingFactor = 1;
@@ -250,10 +256,11 @@ var canvas_pfd = {
 					obj["FMA_lvrclb"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["trackHdgDiff","aoaPFD"], 0.01, func(val) {
+			props.UpdateManager.FromHashList(["trackHdgDiff","aoaPFD","FPDPitch"], 0.01, func(val) {
 				obj.track_diff = val.trackHdgDiff; # store this to use in FPV
 				obj["TRK_pointer"].setTranslation(obj.getTrackDiffPixels(obj.track_diff),0);
-				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -20, 20) * 11.825); 
+				obj.AI_fpv_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), math.clamp(val.aoaPFD, -15, 15) * 11.825); 
+				obj.AI_fpd_trans.setTranslation(obj.getTrackDiffPixels(math.clamp(obj.track_diff, -21, 21)), val.FPDPitch * 11.825); 
 			}),
 			props.UpdateManager.FromHashList(["vsAutopilot","agl"], 5, func(val) {
 				if (abs(val.vsAutopilot) >= 6000 or (val.vsAutopilot <= -2000 and val.agl <= 2500) or (val.vsAutopilot <= -1200 and val.agl <= 1000)) {
@@ -326,113 +333,6 @@ var canvas_pfd = {
 					}
 				}
 			}),
-			props.UpdateManager.FromHashValue("athrArm", 1, func(val) {
-				if (val != 1) {
-					obj["FMA_athr"].setColor(0.8078,0.8039,0.8078);
-				} else {
-					obj["FMA_athr"].setColor(0.0901,0.6039,0.7176);
-				}
-			}),
-			props.UpdateManager.FromHashList(["apBox","apMode"], nil, func(val) {
-				obj["FMA_ap"].setText(val.apMode);
-				if (val.apBox and val.apMode != " ") {
-					obj["FMA_ap_box"].show();
-				} else {
-					obj["FMA_ap_box"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashList(["atBox","atMode"], nil, func(val) {
-				obj["FMA_athr"].setText(val.atMode);
-				if (val.atBox and val.atMode != " ") {
-					obj["FMA_athr_box"].show();
-				} else {
-					obj["FMA_athr_box"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashValue("rollMode", nil, func(val) {
-				obj["FMA_roll"].setText(val);
-			}),
-			props.UpdateManager.FromHashValue("rollModeArmed", nil, func(val) {
-				obj["FMA_rollarm"].setText(val);
-			}),
-			props.UpdateManager.FromHashList(["pitchMode","pitchModeBox","autopilotVS","autopilotFPA","pitchMode2Armed","pitchModeArmed","pitchMode2ArmedBox","pitchModeArmedBox","rollMode","rollModeBox","rollModeArmed","rollModeArmedBox","ap1","ap2","fd1","fd2"], nil, func(val) {
-				obj["FMA_combined"].setText(val.pitchMode);
-				if (val.pitchMode == "V/S") {
-					obj["FMA_pitch"].setText("V/S     ");
-					obj["vsFMArate"].setText(sprintf("%+4.0f",val.autopilotVS));
-					obj["vsFMArate"].show();
-				} elsif (val.pitchMode == "FPA") {
-					obj["FMA_pitch"].setText("FPA     ");
-					obj["vsFMArate"].setText(sprintf("%+3.1f°",val.autopilotFPA));
-					obj["vsFMArate"].show();
-				} else {
-					obj["FMA_pitch"].setText(val.pitchMode);
-					obj["vsFMArate"].hide();
-				}
-				
-				if (val.pitchMode == "LAND" or val.pitchMode == "FLARE" or val.pitchMode == "ROLL OUT") {
-					obj["FMA_pitch"].hide();
-					obj["FMA_roll"].hide();
-					obj["FMA_pitch_box"].hide();
-					obj["FMA_roll_box"].hide();
-					obj["FMA_pitcharm_box"].hide();
-					obj["FMA_rollarm_box"].hide();
-					obj["FMA_Middle1"].hide();
-					obj["FMA_Middle2"].hide();
-					obj["FMA_combined"].show();
-					
-					if (val.pitchModeBox and val.pitchMode != " ") {
-						obj["FMA_combined_box"].show();
-					} else {
-						obj["FMA_combined_box"].hide();
-					}
-				} else {
-					obj["FMA_combined"].hide();
-					obj["FMA_combined_box"].hide();
-					
-					if (val.pitchModeBox and val.pitchMode != " " and (val.ap1 or val.ap2 or val.fd1 or val.fd2)) {
-						obj["FMA_pitch_box"].show();
-					} else {
-						obj["FMA_pitch_box"].hide();
-					}
-					
-					if (val.pitchModeArmed == " " and val.pitchMode2Armed == " ") {
-						obj["FMA_pitcharm_box"].hide();
-					} else {
-						if ((val.pitchModeArmedBox or val.pitchMode2ArmedBox) and (val.ap1 or val.ap2 or val.fd1 or val.fd2)) {
-							obj["FMA_pitcharm_box"].show();
-						} else {
-							obj["FMA_pitcharm_box"].hide();
-						}
-					}
-					
-					if (val.rollModeBox == 1 and val.rollMode != " " and (val.ap1 or val.ap2 or val.fd1 or val.fd2)) {
-						obj["FMA_roll_box"].show();
-					} else {
-						obj["FMA_roll_box"].hide();
-					}
-					
-					if (val.rollModeArmedBox == 1 and val.rollModeArmed != " " and (val.ap1 or val.ap2 or val.fd1 or val.fd2)) {
-						obj["FMA_rollarm_box"].show();
-					} else {
-						obj["FMA_rollarm_box"].hide();
-					}
-				}
-			}),
-			props.UpdateManager.FromHashValue("pitchModeArmed", nil, func(val) {
-				obj["FMA_pitcharm"].setText(val);
-			}),
-			props.UpdateManager.FromHashValue("pitchMode2Armed", nil, func(val) {
-				obj["FMA_pitcharm2"].setText(val);
-			}),
-			props.UpdateManager.FromHashList(["fdBox","fdMode"], nil, func(val) {
-				obj["FMA_fd"].setText(val.fdMode);
-				if (val.fdBox and val.fdMode != " ") {
-					obj["FMA_fd_box"].show();
-				} else {
-					obj["FMA_fd_box"].hide();
-				}
-			}),
 			props.UpdateManager.FromHashList(["fd1","fd2","ap1","ap2"], 1, func(val) {
 				if (val.fd1 or val.fd2 or val.ap1 or val.ap2) {
 					obj["FMA_pitcharm"].show();
@@ -500,151 +400,6 @@ var canvas_pfd = {
 					obj["GS_pointer"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["fd1","fd2","rollMode","pitchMode","trkFpa","pitchWithinLimits","rollWithinLimits","gear1Wow"], nil, func(val) {
-				if (((obj.number == 0 and val.fd1) or (obj.number == 1 and val.fd2)) and val.trkFpa == 0 and val.pitchWithinLimits and val.rollWithinLimits) {
-					if (val.rollMode != " " and !val.gear1Wow) {
-						obj["FD_roll"].show();
-					} else {
-						obj["FD_roll"].hide();
-					}
-					
-					if (val.pitchMode != " ") {
-						obj["FD_pitch"].show();
-					} else {
-						obj["FD_pitch"].hide();
-					}
-				} else {
-					obj["FD_roll"].hide();
-					obj["FD_pitch"].hide();
-				}
-			}),
-			props.UpdateManager.FromHashList(["thrust1","thrust2","engOut"], nil, func(val) {
-				if ((val.thrust1 == "CL" and val.thrust2 != "CL") or (val.thrust1 != "CL" and val.thrust2 == "CL") and val.engOut != 1) {
-					obj["FMA_lvrclb"].setText("LVR ASYM");
-				} else {
-					if (val.engOut == 1) {
-						obj["FMA_lvrclb"].setText("LVR MCT");
-					} else {
-						obj["FMA_lvrclb"].setText("LVR CLB");
-					}
-				}
-			}),
-			props.UpdateManager.FromHashList(["alphaFloor","togaLk","thrust1","thrust2","throttleMode","throttleModeBox","thrustLimit","engOut","thr1","thr2","athr"], nil, func(val) {
-				if (val.athr and (val.thrust1 == "TOGA" or val.thrust1 == "MCT" or val.thrust1 == "MAN THR" or val.thrust2 == "TOGA" or val.thrust2 == "MCT" or val.thrust2 == "MAN THR") and val.engOut != 1 and val.alphaFloor != 1 and 
-				val.togaLk != 1) {
-					obj["FMA_man"].show();
-					if (val.thrust1 == "TOGA" or val.thrust2 == "TOGA") {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("TOGA");
-						obj["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-					} else if ((val.thrust1 == "MAN THR" and val.thr1 >= 0.83) or (val.thrust2 == "MAN THR" and val.thr2 >= 0.83)) {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("THR");
-						obj["FMA_man_box"].setColor(0.7333,0.3803,0);
-					} else if ((val.thrust1 == "MCT" or val.thrust2 == "MCT") and val.thrustLimit != "FLX") {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("MCT");
-						obj["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-					} else if ((val.thrust1 == "MCT" or val.thrust2 == "MCT") and val.thrustLimit == "FLX") {
-						obj["FMA_man_box"].hide();
-						obj["FMA_flx_box"].show();
-						obj["FMA_flxtemp"].show();
-						obj["FMA_manmode"].hide();
-						obj["FMA_flxmode"].show();
-						obj["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-					} else if ((val.thrust1 == "MAN THR" and val.thr1 < 0.83) or (val.thrust2 == "MAN THR" and val.thr2 < 0.83)) {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("THR");
-						obj["FMA_man_box"].setColor(0.7333,0.3803,0);
-					}
-				} else if (val.athr and (val.thrust1 == "TOGA" or (val.thrust1 == "MCT" and val.thrustLimit == "FLX") or (val.thrust1 == "MAN THR" and val.thr1 >= 0.83) or val.thrust2 == "TOGA" or (val.thrust2 == "MCT" and 
-				val.thrustLimit == "FLX") or (val.thrust2 == "MAN THR" and val.thr2 >= 0.83)) and val.engOut and val.alphaFloor != 1 and val.togaLk != 1) {
-					obj["FMA_man"].show();
-					if (val.thrust1 == "TOGA" or val.thrust2 == "TOGA") {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("TOGA");
-						obj["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-					} else if ((val.thrust1 == "MAN THR" and val.thr1 >= 0.83) or (val.thrust2 == "MAN THR" and val.thr2 >= 0.83)) {
-						obj["FMA_flx_box"].hide();
-						obj["FMA_flxtemp"].hide();
-						obj["FMA_man_box"].show();
-						obj["FMA_manmode"].show();
-						obj["FMA_flxmode"].hide();
-						obj["FMA_manmode"].setText("THR");
-						obj["FMA_man_box"].setColor(0.7333,0.3803,0);
-					} else if ((val.thrust1 == "MCT" or val.thrust2 == "MCT") and val.thrustLimit == "FLX") {
-						obj["FMA_man_box"].hide();
-						obj["FMA_flx_box"].show();
-						obj["FMA_flxtemp"].show();
-						obj["FMA_manmode"].hide();
-						obj["FMA_flxmode"].show();
-						obj["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
-					}
-				} else {
-					obj["FMA_man"].hide();
-					obj["FMA_manmode"].hide();
-					obj["FMA_man_box"].hide();
-					obj["FMA_flx_box"].hide();
-					obj["FMA_flxtemp"].hide();
-					obj["FMA_flxmode"].hide();
-				}
-				
-				if (val.alphaFloor != 1 and val.togaLk != 1) {
-					if (val.athr and val.engOut != 1 and (val.thrust1 == "MAN" or val.thrust1 == "CL") and (val.thrust2 == "MAN" or val.thrust2 == "CL")) {
-						obj["FMA_thrust"].show();
-						if (val.throttleModeBox and val.throttleMode != " ") {
-							obj["FMA_thrust_box"].show();
-						} else {
-							obj["FMA_thrust_box"].hide();
-						}
-					} else if (val.athr and val.engOut and (val.thrust1 == "MAN" or val.thrust1 == "CL" or (val.thrust1 == "MAN THR" and val.thr1 < 0.83) or (val.thrust1 == "MCT" and val.thrustLimit != "FLX")) and 
-					(val.thrust2 == "MAN" or val.thrust2 == "CL" or (val.thrust2 == "MAN THR" and val.thr2 < 0.83) or (val.thrust2 == "MCT" and val.thrustLimit != "FLX"))) {
-						obj["FMA_thrust"].show();
-						if (val.throttleModeBox and val.throttleMode != " ") {
-							obj["FMA_thrust_box"].show();
-						} else {
-							obj["FMA_thrust_box"].hide();
-						}
-					} else {
-						obj["FMA_thrust"].hide();
-						obj["FMA_thrust_box"].hide();
-					}
-				} else {
-					obj["FMA_thrust"].show();
-					obj["FMA_thrust_box"].show();
-				}
-				
-				if (val.alphaFloor) {
-					obj["FMA_thrust"].setText("A.FLOOR");
-					obj["FMA_thrust_box"].setColor(0.7333,0.3803,0);
-				} else if (val.togaLk) {
-					obj["FMA_thrust"].setText("TOGA LK");
-					obj["FMA_thrust_box"].setColor(0.7333,0.3803,0);
-				} else {
-					obj["FMA_thrust"].setText(sprintf("%s", val.throttleMode));
-					obj["FMA_thrust_box"].setColor(0.8078,0.8039,0.8078);
-				}
-			}),
 			props.UpdateManager.FromHashValue("flexTemp", 1, func(val) {
 				obj["FMA_flxtemp"].setText(sprintf("%s", "+" ~ val));
 			}),
@@ -655,8 +410,8 @@ var canvas_pfd = {
 					obj.temporaryNodes.showTailstrikeGroundspeed = 0;
 				}
 			}),
-			props.UpdateManager.FromHashList(["thr1","thr2"], 0.005, func(val) {
-				if (val.thr1 < 0.78 and val.thr2 < 0.78) {
+			props.UpdateManager.FromHashList(["detent1","detent2"], 1, func(val) {
+				if (val.detent1 <= 3 and val.detent2 <= 3) {
 					obj.temporaryNodes.showTailstrikeThrust = 1;
 				} else {
 					obj.temporaryNodes.showTailstrikeThrust = 0;
@@ -688,8 +443,8 @@ var canvas_pfd = {
 					obj["HDG_target"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["altimeterHpa","altimeterInhg","altimeterInhgMode"], 0.005, func(val) {
-				if (val.altimeterInhgMode == 0) {
+			props.UpdateManager.FromHashList(["altimeterHpa","altimeterInhg","altimeterInhgModeLeft","altimeterInhgModeRight"], 0.005, func(val) {
+				if ((obj.number == 0 and val.altimeterInhgModeLeft == 0) or (obj.number == 1 and val.altimeterInhgModeRight == 0)) {
 					obj["QNH_setting"].setText(sprintf("%4d", math.round(val.altimeterHpa)));
 				} else {
 					obj["QNH_setting"].setText(sprintf("%2.2f", math.round(val.altimeterInhg * 100) / 100));
@@ -848,7 +603,7 @@ var canvas_pfd = {
 					if (val.ind_mach >= 0.999) {
 						obj["ASI_mach"].setText(".999");
 					} else {
-						obj["ASI_mach"].setText(sprintf(".%3.0f", val.ind_mach * 1000));
+						obj["ASI_mach"].setText(sprintf(".%3.0f", math.round(val.ind_mach * 1000)));
 					}
 					
 					if (val.ind_mach >= 0.5) {
@@ -1322,6 +1077,9 @@ var canvas_pfd = {
 		obj.AI_fpv_trans = obj["FPV"].createTransform();
 		obj.AI_fpv_rot = obj["FPV"].createTransform();
 		
+		obj.AI_fpd_trans = obj["FPD"].createTransform();
+		obj.AI_fpd_rot = obj["FPD"].createTransform();
+		
 		obj.page = obj.group;
 		
 		return obj;
@@ -1335,7 +1093,7 @@ var canvas_pfd = {
 		"ALT_thousands","ALT_thousands_zero","ALT_tenthousands","ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box",
 		"LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError",
 		"ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground",
-		"ground_ref","FPV","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue"];
+		"ground_ref","FPV","FPD","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue"];
 	},
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
@@ -1343,7 +1101,6 @@ var canvas_pfd = {
 	getKeysMismatch: func() {
 		return ["Error_Code"];
 	},
-	aoa: 0,
 	showMetricAlt: 0,
 	onsideADIRSOperating: 0,
 	update: func(notification) {
@@ -1390,23 +1147,10 @@ var canvas_pfd = {
 		notification.aoaPFD = (me.number == 0 ? me.getAOAForPFD1() : me.getAOAForPFD2());
 		notification.middleOffset = me.middleOffset;
 		
-		# FD Hide / Show
-		if (notification.pitchPFD < 25 and notification.pitchPFD > -13) {
-			notification.pitchWithinLimits = 1;
-		} else {
-			notification.pitchWithinLimits = 0;
-		}
-		
-		if (abs(notification.roll) < 45) {
-			notification.rollWithinLimits = 1;
-		} else {
-			notification.rollWithinLimits = 0;
-		}
-		
 		# FPV
 		if (notification.trkFpa) {
 			if (notification.aoaPFD == nil or !me.onsideADIRSOperating){
-				me["FPV"].hide();	
+				me["FPV"].hide();
 			} else {
 				me["FPV"].show();
 			}
@@ -1565,39 +1309,37 @@ var canvas_pfd = {
 				notification.flapMaxSpeed = 0;
 			}
 			
-			notification.fmgcTakeoffState = fmgc.FMGCInternal.takeoffState;
-			
-			if (!fmgc.FMGCInternal.takeoffState and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
-				if (fmgc.FMGCInternal.vls_min <= 30) {
+			if (!fmgc.FMGCNodes.toState.getValue() and fmgc.FMGCInternal.phase >= 1 and !notification.gear1Wow and !notification.gear2Wow) {
+				if (notification.vls <= 30) {
 					notification.VLSmin = 0 - notification.ASI;
-				} else if (fmgc.FMGCInternal.vls_min >= 420) {
+				} else if (notification.vls >= 420) {
 					notification.VLSmin = 390 - notification.ASI;
 				} else {
-					notification.VLSmin = fmgc.FMGCInternal.vls_min - 30 - notification.ASI;
+					notification.VLSmin = notification.vls - 30 - notification.ASI;
 				}
 				
-				if (fmgc.FMGCInternal.alpha_prot <= 30) {
+				if (notification.valphaProt <= 30) {
 					notification.ALPHAprot = 0 - notification.ASI;
-				} else if (fmgc.FMGCInternal.alpha_prot >= 420) {
+				} else if (notification.valphaProt >= 420) {
 					notification.ALPHAprot = 390 - notification.ASI;
 				} else {
-					notification.ALPHAprot = fmgc.FMGCInternal.alpha_prot - 30 - notification.ASI;
+					notification.ALPHAprot = notification.valphaProt - 30 - notification.ASI;
 				}
 				
-				if (fmgc.FMGCInternal.alpha_max <= 30) {
+				if (notification.valphaMax <= 30) {
 					notification.ALPHAmax = 0 - notification.ASI;
-				} else if (fmgc.FMGCInternal.alpha_max >= 420) {
+				} else if (notification.valphaMax >= 420) {
 					notification.ALPHAmax = 390 - notification.ASI;
 				} else {
-					notification.ALPHAmax = fmgc.FMGCInternal.alpha_max - 30 - notification.ASI;
+					notification.ALPHAmax = notification.valphaMax - 30 - notification.ASI;
 				}
 				
-				if (fmgc.FMGCInternal.vsw <= 30) {
+				if (notification.vsw <= 30) {
 					notification.ALPHAvsw = 0 - notification.ASI;
-				} else if (fmgc.FMGCInternal.vsw >= 420) {
+				} else if (notification.vsw >= 420) {
 					notification.ALPHAvsw = 390 - notification.ASI;
 				} else {
-					notification.ALPHAvsw = fmgc.FMGCInternal.vsw - 30 - notification.ASI;
+					notification.ALPHAvsw = notification.vsw - 30 - notification.ASI;
 				}
 			} else {
 				notification.ALPHAprot = 0;
@@ -1609,17 +1351,17 @@ var canvas_pfd = {
 			
 			me.tgt_ias = notification.targetIasPFD;
 			me.tgt_kts = notification.targetKts;
-			
+
 			if (notification.managedSpd) {
 				if (fmgc.FMGCInternal.decel) {
-					me.tgt_ias = fmgc.FMGCInternal.vappSpeedSet ? fmgc.FMGCInternal.vapp_appr : fmgc.FMGCInternal.vapp;
-					me.tgt_kts = fmgc.FMGCInternal.vappSpeedSet ? fmgc.FMGCInternal.vapp_appr : fmgc.FMGCInternal.vapp;
+					me.tgt_ias = fmgc.FMGCInternal.minspeed;
+					me.tgt_kts = fmgc.FMGCInternal.minspeed;
 				} else if (fmgc.FMGCInternal.phase == 6) {
 					me.tgt_ias = fmgc.FMGCInternal.clean;
 					me.tgt_kts = fmgc.FMGCInternal.clean;
 				}
 			}
-			
+
 			notification.tgt_kts = me.tgt_kts;
 			
 			if (me.tgt_ias <= 30) {
@@ -1641,7 +1383,7 @@ var canvas_pfd = {
 				me.ASItrendIsShown = 0;
 			}
 			notification.ASItrendIsShown = me.ASItrendIsShown;
-				
+			
 			if (me.temporaryNodes.showGroundReferenceAGL) {
 				me["ground_ref"].show();
 			} else {
@@ -1674,7 +1416,6 @@ var canvas_pfd = {
 			notification.ASItrendIsShown = 0;
 			notification.Ctrgt = 0;
 			notification.flapMaxSpeed = 0;
-			notification.fmgcTakeoffState = nil;
 			notification.Ftrgt = 0;
 			notification.Strgt = 0;
 			notification.showV1 = 0;
@@ -1794,7 +1535,13 @@ var canvas_pfd = {
 			notification.altitudeDifference = -9999;
 		}
 		
-		if (notification.pitchMode == "LAND" or notification.pitchMode == "FLARE" or notification.pitchMode == "ROLL OUT") {
+		if (fmgc.Modes.PFD.FMA.pitchMode == "LAND" or fmgc.Modes.PFD.FMA.pitchMode == "FLARE" or fmgc.Modes.PFD.FMA.pitchMode == "ROLL OUT") {
+			if (fmgc.Modes.PFD.FMA.pitchMode == "LAND") {
+				autoland_pitch_land.setBoolValue(1);
+			} else {
+				autoland_pitch_land.setBoolValue(0);
+			}
+			
 			if (ecam.directLaw.active) {
 				me["FMA_ctr_msg"].setText("USE MAN PITCH TRIM");
 				me["FMA_ctr_msg"].setColor(0.7333,0.3803,0);
@@ -1823,6 +1570,141 @@ var canvas_pfd = {
 				me["FMA_ctr_msg"].hide();
 				me["FMA_Middle1"].show();
 				me["FMA_Middle2"].hide();
+			}
+		}
+		
+		if (notification.athr and (notification.thrust1 == "TOGA" or notification.thrust1 == "MCT" or notification.thrust1 == "MAN THR" or notification.thrust2 == "TOGA" or notification.thrust2 == "MCT" or notification.thrust2 == "MAN THR") and notification.engOut != 1 and notification.alphaFloor != 1 and 
+		notification.togaLk != 1) {
+			me["FMA_man"].show();
+			if (notification.thrust1 == "TOGA" or notification.thrust2 == "TOGA") {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("TOGA");
+				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
+			} else if ((notification.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (notification.thrust2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("THR");
+				me["FMA_man_box"].setColor(0.7333,0.3803,0);
+			} else if ((notification.thrust1 == "MCT" or notification.thrust2 == "MCT") and notification.thrustLimit != "FLX") {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("MCT");
+				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
+			} else if ((notification.thrust1 == "MCT" or notification.thrust2 == "MCT") and notification.thrustLimit == "FLX") {
+				me["FMA_man_box"].hide();
+				me["FMA_flx_box"].show();
+				me["FMA_flxtemp"].show();
+				me["FMA_manmode"].hide();
+				me["FMA_flxmode"].show();
+				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
+			} else if ((notification.thrust1 == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (notification.thrust2 == "MAN THR" and !systems.FADEC.manThrAboveMct[1])) {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("THR");
+				me["FMA_man_box"].setColor(0.7333,0.3803,0);
+			}
+		} else if (notification.athr and (notification.thrust1 == "TOGA" or (notification.thrust1 == "MCT" and notification.thrustLimit == "FLX") or (notification.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or notification.thrust2 == "TOGA" or (notification.thrust2 == "MCT" and 
+		notification.thrustLimit == "FLX") or (notification.thrust2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) and notification.engOut and notification.alphaFloor != 1 and notification.togaLk != 1) {
+			me["FMA_man"].show();
+			if (notification.thrust1 == "TOGA" or notification.thrust2 == "TOGA") {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("TOGA");
+				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
+			} else if ((notification.thrust1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (notification.thrust2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])) {
+				me["FMA_flx_box"].hide();
+				me["FMA_flxtemp"].hide();
+				me["FMA_man_box"].show();
+				me["FMA_manmode"].show();
+				me["FMA_flxmode"].hide();
+				me["FMA_manmode"].setText("THR");
+				me["FMA_man_box"].setColor(0.7333,0.3803,0);
+			} else if ((notification.thrust1 == "MCT" or notification.thrust2 == "MCT") and notification.thrustLimit == "FLX") {
+				me["FMA_man_box"].hide();
+				me["FMA_flx_box"].show();
+				me["FMA_flxtemp"].show();
+				me["FMA_manmode"].hide();
+				me["FMA_flxmode"].show();
+				me["FMA_man_box"].setColor(0.8078,0.8039,0.8078);
+			}
+		} else {
+			me["FMA_man"].hide();
+			me["FMA_manmode"].hide();
+			me["FMA_man_box"].hide();
+			me["FMA_flx_box"].hide();
+			me["FMA_flxtemp"].hide();
+			me["FMA_flxmode"].hide();
+		}
+			
+		if (notification.alphaFloor != 1 and notification.togaLk != 1) {
+			if (notification.athr and notification.engOut != 1 and (notification.thrust1 == "MAN" or notification.thrust1 == "CL") and (notification.thrust2 == "MAN" or notification.thrust2 == "CL")) {
+				me["FMA_thrust"].show();
+				if (fmgc.Modes.PFD.FMA.throttleModeBox and fmgc.Modes.PFD.FMA.throttleMode != " ") {
+					me["FMA_thrust_box"].show();
+				} else {
+					me["FMA_thrust_box"].hide();
+				}
+			} else if (notification.athr and notification.engOut and (notification.thrust1 == "MAN" or notification.thrust1 == "CL" or (notification.thrust1 == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (notification.thrust1 == "MCT" and notification.thrustLimit != "FLX")) and 
+			(notification.thrust2 == "MAN" or notification.thrust2 == "CL" or (notification.thrust2 == "MAN THR" and !systems.FADEC.manThrAboveMct[1]) or (notification.thrust2 == "MCT" and notification.thrustLimit != "FLX"))) {
+				me["FMA_thrust"].show();
+				if (fmgc.Modes.PFD.FMA.throttleModeBox and fmgc.Modes.PFD.FMA.throttleMode != " ") {
+					me["FMA_thrust_box"].show();
+				} else {
+					me["FMA_thrust_box"].hide();
+				}
+			} else {
+				me["FMA_thrust"].hide();
+				me["FMA_thrust_box"].hide();
+			}
+		} else {
+			me["FMA_thrust"].show();
+			if (notification.alphaFloor) {
+				if (!afloor_going) {
+					aFloorTimer.start();
+					afloor_going = 1;
+				}
+				
+				if (aFloorFlash and afloor_going) {
+					me["FMA_thrust_box"].show();
+				} else {
+					me["FMA_thrust_box"].hide();
+				}
+			} else {
+				aFloorTimer.stop();
+				afloor_going = 0;
+			
+			}
+			if (notification.togaLk) {
+				if (!togalk_going) {
+					togaLkTimer.start();
+					togalk_going = 1;
+				}
+				
+				if (togaLkFlash and togalk_going) {
+					me["FMA_thrust_box"].show();
+				} else {
+					me["FMA_thrust_box"].hide();
+				}
+			} else {
+				togaLkTimer.stop();
+				togalk_going = 0;
+			
 			}
 		}
 		
@@ -1956,6 +1838,177 @@ var canvas_pfd = {
 			me["tailstrikeInd"].hide();
 		}
 		
+		
+		# FMA
+		me["FMA_lvrclb"].setText(systems.FADEC.lvrClbType);
+		
+		me["FMA_ap"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.apMode));
+		if (fmgc.Modes.PFD.FMA.apModeBox and fmgc.Modes.PFD.FMA.apMode != " ") {
+			me["FMA_ap_box"].show();
+		} else {
+			me["FMA_ap_box"].hide();
+		}
+		
+		me["FMA_athr"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.athrMode));
+		if (fmgc.Modes.PFD.FMA.athrModeBox and fmgc.Modes.PFD.FMA.athrMode != " ") {
+			me["FMA_athr_box"].show();
+		} else {
+			me["FMA_athr_box"].hide();
+		}
+		
+		me["FMA_fd"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.fdMode));
+		if (fmgc.Modes.PFD.FMA.fdModeBox and fmgc.Modes.PFD.FMA.fdMode != " ") {
+			me["FMA_fd_box"].show();
+		} else {
+			me["FMA_fd_box"].hide();
+		}
+		
+		if (fmgc.Modes.PFD.FMA.athrArmed != 1) {
+			me["FMA_athr"].setColor(0.8078,0.8039,0.8078);
+		} else {
+			me["FMA_athr"].setColor(0.0901,0.6039,0.7176);
+		}
+		
+		me["FMA_roll"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.rollMode));
+		me["FMA_rollarm"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.rollModeArmed));
+		me["FMA_combined"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.pitchMode));
+		me["FMA_pitcharm"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.pitchModeArmed));
+		me["FMA_pitcharm2"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.pitchMode2Armed));
+		
+		if (fmgc.Modes.PFD.FMA.pitchMode == "V/S") {
+			me["FMA_pitch"].setText(sprintf("%s       ", fmgc.Modes.PFD.FMA.pitchMode));
+			me["vsFMArate"].setText(sprintf("%+4.0f",notification.autopilotVS));
+			me["vsFMArate"].show();
+		} elsif (fmgc.Modes.PFD.FMA.pitchMode == "FPA") {
+			me["FMA_pitch"].setText(sprintf("%s       ", fmgc.Modes.PFD.FMA.pitchMode));
+			me["vsFMArate"].setText(sprintf("%+3.1f°",notification.autopilotFPA));
+			me["vsFMArate"].show();
+		} else {
+			me["FMA_pitch"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.pitchMode));
+			me["vsFMArate"].hide();
+		}
+		
+		
+		if (fmgc.Modes.PFD.FMA.pitchMode == "LAND" or fmgc.Modes.PFD.FMA.pitchMode == "FLARE" or fmgc.Modes.PFD.FMA.pitchMode == "ROLL OUT") {
+			me["FMA_pitch"].hide();
+			me["FMA_roll"].hide();
+			me["FMA_pitch_box"].hide();
+			me["FMA_roll_box"].hide();
+			me["FMA_pitcharm_box"].hide();
+			me["FMA_rollarm_box"].hide();
+			me["FMA_Middle1"].hide();
+			me["FMA_Middle2"].hide();
+			me["FMA_combined"].show();
+			
+			if (fmgc.Modes.PFD.FMA.pitchModeBox and fmgc.Modes.PFD.FMA.pitchMode != " ") {
+				me["FMA_combined_box"].show();
+			} else {
+				me["FMA_combined_box"].hide();
+			}
+		} else {
+			me["FMA_combined"].hide();
+			me["FMA_combined_box"].hide();
+			if ((notification.ap1 or notification.ap2) and (fmgc.Modes.PFD.FMA.pitchMode == "V/S" or fmgc.Modes.PFD.FMA.pitchMode == "FPA") and (notification.overspeedVsProt or notification.underspeedVsProt)) {
+				me.amberBoxVS = 1;
+			} else {
+				me.amberBoxVS = 0;
+			}
+			
+			if ((me.amberBoxVS or fmgc.Modes.PFD.FMA.pitchModeBox) and fmgc.Modes.PFD.FMA.pitchMode != " " and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
+				if (me.amberBoxVS) {
+					me["FMA_pitch_box"].setColor(0.7333,0.3803,0.0000);
+					if (me.number == 0 and vs_going1 == 0) {
+						vs_going1 = 1;
+						vsTimer1.start();
+					} else if (me.number == 1 and vs_going2 == 0) {
+						vs_going2 = 1;
+						vsTimer2.start();
+					}
+					
+					if ((me.number == 0 and vs_going1 == 1) and (me.number == 0 and vs_going2 == 1)) {
+						if (vsFlash[me.number]) {
+							me["FMA_pitch_box"].show();
+						} else {
+							me["FMA_pitch_box"].hide();
+						}
+					}
+				} else {
+					me["FMA_pitch_box"].setColor(1,1,1);
+					me["FMA_pitch_box"].show();
+				}
+			} else {
+				me["FMA_pitch_box"].hide();
+				vs_going1 = 0;
+				vsTimer1.stop();
+				vs_going2 = 0;
+				vsTimer2.stop();
+			}
+			
+			if (fmgc.Modes.PFD.FMA.pitchModeArmed == " " and fmgc.Modes.PFD.FMA.pitchMode2Armed == " ") {
+				me["FMA_pitcharm_box"].hide();
+			} else {
+				if ((fmgc.Modes.PFD.FMA.pitchModeArmedBox or fmgc.Modes.PFD.FMA.pitchMode2ArmedBox) and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
+					me["FMA_pitcharm_box"].show();
+				} else {
+					me["FMA_pitcharm_box"].hide();
+				}
+			}
+			
+			if (fmgc.Modes.PFD.FMA.rollModeBox == 1 and fmgc.Modes.PFD.FMA.rollMode != " "  and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
+				me["FMA_roll_box"].show();
+			} else {
+				me["FMA_roll_box"].hide();
+			}
+			
+			if (fmgc.Modes.PFD.FMA.rollModeArmedBox == 1 and fmgc.Modes.PFD.FMA.rollModeArmed != " " and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
+				me["FMA_rollarm_box"].show();
+			} else {
+				me["FMA_rollarm_box"].hide();
+			}
+		}
+		
+		if (notification.alphaFloor) {
+			me["FMA_thrust"].setText("A.FLOOR");
+			me["FMA_thrust_box"].setColor(0.7333,0.3803,0);
+		} else if (notification.togaLk) {
+			me["FMA_thrust"].setText("TOGA LK");
+			me["FMA_thrust_box"].setColor(0.7333,0.3803,0);
+		} else {
+			me["FMA_thrust"].setText(sprintf("%s", fmgc.Modes.PFD.FMA.throttleMode));
+			me["FMA_thrust_box"].setColor(0.8078,0.8039,0.8078);
+		}
+		
+		if (((me.number == 0 and notification.fd1) or (me.number == 1 and notification.fd2)) and notification.pitchPFD < 25 and notification.pitchPFD > -13 and notification.roll < 45 and notification.roll > -45) {
+			if (notification.trkFpa) {
+				me["FD_roll"].hide();
+				me["FD_pitch"].hide();
+				
+				if (fmgc.Modes.PFD.FMA.rollMode != " " and fmgc.Modes.PFD.FMA.pitchMode != " " and !notification.gear1Wow) {
+					me["FPD"].show();
+				} else {
+					me["FPD"].hide();
+				}
+			} else {
+				me["FPD"].hide();
+				
+				if (fmgc.Modes.PFD.FMA.rollMode != " " and !notification.gear1Wow) {
+					me["FD_roll"].show();
+				} else {
+					me["FD_roll"].hide();
+				}
+				
+				if (fmgc.Modes.PFD.FMA.pitchMode != " ") {
+					me["FD_pitch"].show();
+				} else {
+					me["FD_pitch"].hide();
+				}
+			}
+		} else {
+			me["FPD"].hide();
+			me["FD_roll"].hide();
+			me["FD_pitch"].hide();
+		}
+		
 		foreach(var update_item; me.update_items)
         {
             update_item.update(notification);
@@ -2053,6 +2106,7 @@ var canvas_pfd = {
 			
 			if (me.number == 1) {
 				if (notification.elecAC2 >= 110 and notification.du6Lgt > 0.01) {
+					pts.Instrumentation.Du.du6On.setBoolValue(1);
 					if (du6_test_time.getValue() + du6_test_amount.getValue() >= notification.elapsedTime and notification.foDuXfr != 1) {
 						me.group.setVisible(0);
 						me.test.setVisible(1);
@@ -2064,11 +2118,13 @@ var canvas_pfd = {
 						me.test.setVisible(0);
 					}
 				} else {
+					pts.Instrumentation.Du.du6On.setBoolValue(0);
 					me.group.setVisible(0);
 					me.test.setVisible(0);
 				}
 			} else {
 				if (notification.elecACEss >= 110 and notification.du1Lgt > 0.01) {
+					pts.Instrumentation.Du.du1On.setBoolValue(1);
 					if (du1_test_time.getValue() + du1_test_amount.getValue() >= notification.elapsedTime and notification.cptDuXfr != 1) {
 						me.group.setVisible(0);
 						me.test.setVisible(1);
@@ -2080,11 +2136,14 @@ var canvas_pfd = {
 						me.test.setVisible(0);
 					}
 				} else {
+					pts.Instrumentation.Du.du1On.setBoolValue(0);
 					me.group.setVisible(0);
 					me.test.setVisible(0);
 				}
 			}
 		} else {
+			pts.Instrumentation.Du.du1On.setBoolValue(1);
+			pts.Instrumentation.Du.du6On.setBoolValue(1);
 			me.mismatch.setVisible(1);
 			me.group.setVisible(0);
 			me.test.setVisible(0);
@@ -2149,27 +2208,7 @@ var input = {
 	du6Lgt: "/controls/lighting/DU/du6",
 	attSwitch: "/controls/navigation/switching/att-hdg",
 	
-	atMode: "/modes/pfd/fma/at-mode",
-	apMode: "/modes/pfd/fma/ap-mode",
-	fdMode: "/modes/pfd/fma/fd-mode",
-	atBox: "/modes/pfd/fma/athr-mode-box",
-	apBox: "/modes/pfd/fma/ap-mode-box",
-	fdBox: "/modes/pfd/fma/fd-mode-box",
 	athr: "/it-autoflight/output/athr",
-	athrArm: "/modes/pfd/fma/athr-armed",
-	rollMode: "/modes/pfd/fma/roll-mode",
-	rollModeArmed: "/modes/pfd/fma/roll-mode-armed",
-	rollModeBox: "/modes/pfd/fma/roll-mode-box",
-	rollModeArmedBox: "/modes/pfd/fma/roll-mode-armed-box",
-	pitchMode: "/modes/pfd/fma/pitch-mode",
-	pitchModeArmed: "/modes/pfd/fma/pitch-mode-armed",
-	pitchMode2Armed: "/modes/pfd/fma/pitch-mode2-armed",
-	pitchModeBox: "/modes/pfd/fma/pitch-mode-box",
-	pitchModeArmedBox: "/modes/pfd/fma/pitch-mode-armed-box",
-	pitchMode2ArmedBox: "/modes/pfd/fma/pitch-mode2-armed-box",
-	throttleMode: "/modes/pfd/fma/throttle-mode",
-	throttleModeBox: "/modes/pfd/fma/throttle-mode-box",
-	
 	altitudeAutopilot: "/it-autoflight/internal/alt",
 	pitchPFD: "/instrumentation/pfd/pitch-deg-non-linear",
 	horizonGround: "/instrumentation/pfd/horizon-ground",
@@ -2178,6 +2217,7 @@ var input = {
 	fbwLaw: "/it-fbw/law",
 	FDRollBar: "/it-autoflight/fd/roll-bar",
 	FDPitchBar: "/it-autoflight/fd/pitch-bar",
+	FPDPitch: "/it-autoflight/fd/fpd-pitch",
 	vsAutopilot: "/it-autoflight/internal/vert-speed-fpm",
 	vsDigit: "/instrumentation/pfd/vs-digit-trans",
 	vsNeedle: "/instrumentation/pfd/vs-needle",
@@ -2202,13 +2242,14 @@ var input = {
 	autopilotFPA: "/it-autoflight/input/fpa",
 	autopilotVS: "/it-autoflight/input/vs",
 	
-	aileronPFD: "/controls/flight/aileron-input-fast",
-	elevatorPFD: "/controls/flight/elevator-input-fast",
+	aileronPFD: "/fdm/jsbsim/fbw/roll/a-i-pfd",
+	elevatorPFD: "/fdm/jsbsim/fbw/pitch/e-i-pfd",
 	flapsInput: "/controls/flight/flaps-input",
 	
-	thrustLvrClb: "/systems/thrust/lvrclb",
+	thrustLvrClb: "/fdm/jsbsim/fadec/lvrclb",
 	
 	fmgcPhase: "/FMGC/internal/phase",
+	fmgcTakeoffState: "/FMGC/internal/to-state",
 	fd1: "/it-autoflight/output/fd1",
 	fd2: "/it-autoflight/output/fd2",
 	trkFpa: "/it-autoflight/custom/trk-fpa",
@@ -2221,7 +2262,8 @@ var input = {
 	markerI: "/instrumentation/marker-beacon/inner",
 	
 	altimeterStd: "/instrumentation/altimeter/std",
-	altimeterInhgMode: "/instrumentation/altimeter/inhg",
+	altimeterInhgModeLeft: "/instrumentation/altimeter/inhg-left",
+	altimeterInhgModeRight: "/instrumentation/altimeter/inhg-right",
 	altimeterInhg: "/instrumentation/altimeter/setting-inhg",
 	altimeterHpa: "/instrumentation/altimeter/setting-hpa",
 	targetIasPFD: "/FMGC/internal/target-ias-pfd",
@@ -2233,20 +2275,26 @@ var input = {
 	showHdg: "/it-autoflight/custom/show-hdg",
 	hdgDiff: "/instrumentation/pfd/hdg-diff",
 	
-	thrust1: "/systems/thrust/state1",
-	thrust2: "/systems/thrust/state2",
-	engOut: "/systems/thrust/eng-out",
-	alphaFloor: "/systems/thrust/alpha-floor",
-	togaLk: "/systems/thrust/toga-lk",
-	thrustLimit: "/controls/engines/thrust-limit",
-	thr1: "/controls/engines/engine[0]/throttle-pos",
-	thr2: "/controls/engines/engine[1]/throttle-pos",
+	thrust1: "/fdm/jsbsim/fadec/control-1/detent-text",
+	thrust2: "/fdm/jsbsim/fadec/control-2/detent-text",
+	engOut: "/fdm/jsbsim/fadec/eng-out",
+	alphaFloor: "/fdm/jsbsim/fadec/alpha-floor",
+	togaLk: "/fdm/jsbsim/fadec/toga-lk",
+	thrustLimit: "/fdm/jsbsim/fadec/limit/active-mode",
+	detent1: "/fdm/jsbsim/fadec/control-1/detent",
+	detent2: "/fdm/jsbsim/fadec/control-2/detent",
 	
 	decision: "/instrumentation/mk-viii/inputs/arinc429/decision-height",
 	radio: "/FMGC/internal/radio",
 	baro: "/FMGC/internal/baro",
 	
 	bussTranslate: "/instrumentation/pfd/buss/translate",
+	overspeedVsProt: "/it-autoflight/internal/overspeed-vs-prot",
+	underspeedVsProt: "/it-autoflight/internal/underspeed-vs-prot",
+	valphaMax: "/FMGC/internal/valpha-max",
+	valphaProt: "/FMGC/internal/valpha-prot",
+	vls: "/FMGC/internal/vls",
+	vsw: "/FMGC/internal/vsw",
 };
 
 foreach (var name; keys(input)) {
@@ -2312,7 +2360,6 @@ var showPFD2 = func {
 	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
 	dlg.setCanvas(A320PFD2.MainScreen.canvas);
 }
-
 # Flash managers
 var ils_going1 = 0;
 var ilsTimer1 = maketimer(0.50, func {
@@ -2347,6 +2394,15 @@ var qnhTimer2 = maketimer(0.50, func {
 		qnhFlash[1] = 1;
 	} else {
 		qnhFlash[1] = 0;
+	}
+});
+
+var afloor_going = 0;
+var aFloorTimer = maketimer(0.50, func {
+	if (!aFloorFlash) {
+		aFloorFlash = 1;
+	} else {
+		aFloorFlash = 0;
 	}
 });
 
@@ -2386,6 +2442,24 @@ var amberTimer2 = maketimer(0.50, func {
 	}
 });
 
+var vs_going1 = 0;
+var vsTimer1 = maketimer(0.50, func {
+	if (!vsFlash[0]) {
+		vsFlash[0] = 1;
+	} else {
+		vsFlash[0] = 0;
+	}
+});
+
+var vs_going2 = 0;
+var vsTimer2 = maketimer(0.50, func {
+	if (!vsFlash[1]) {
+		vsFlash[1] = 1;
+	} else {
+		vsFlash[1] = 0;
+	}
+});
+
 var dh_going = 0;
 var dhTimer = maketimer(0.50, func {
 	if (!dhFlash) {
@@ -2394,6 +2468,16 @@ var dhTimer = maketimer(0.50, func {
 		dhFlash = 0;
 	}
 });
+
+var togalk_going = 0;
+var togaLkTimer = maketimer(0.50, func {
+	if (!togaLkFlash) {
+		togaLkFlash = 1;
+	} else {
+		togaLkFlash = 0;
+	}
+});
+
 
 var autolandTimer = maketimer(0.5, func {
 	if (autoland_pulse.getBoolValue()) {
@@ -2410,13 +2494,5 @@ setlistener(autoland_alarm, func(alarm) {
 	} else {
 		autolandTimer.stop();
 		autoland_pulse.setBoolValue(0);
-	}
-}, 0, 0);
-
-setlistener("/modes/pfd/fma/pitch-mode", func(pitch) {
-	if (pitch.getValue() == "LAND") {
-		autoland_pitch_land.setBoolValue(1);
-	} else {
-		autoland_pitch_land.setBoolValue(0);
 	}
 }, 0, 0);

@@ -1,18 +1,19 @@
-<!-- Airbus A320 JSBsim -->
+<?xml version="1.0"?>
 
-<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+<!-- Airbus A320 JSBsim -->
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
 
 <external_reactions>
 	<force name="tractor" frame="BODY">
 		<location unit="M">
-			<x> 7.52385 </x>
-			<y> 0 </y>
-			<z> -3.2846 </z>
+			<x>-13.6573</x>
+			<y>0</y>
+			<z>-2.25489</z>
 		</location>
 		<direction>
-			<x> 1 </x>
-			<y> 0 </y>
-			<z> 0 </z>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
 		</direction>
 	</force>
 </external_reactions>

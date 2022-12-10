@@ -674,7 +674,7 @@
 		<fcs_function name="/systems/pneumatics/source/gnd-psi">
 			<function>
 				<product>
-					<property>/controls/pneumatics/switches/groundair</property>
+					<property>/controls/pneumatics/switches/ground-air</property>
 					<value>34</value>
 				</product>
 			</function>
@@ -746,7 +746,7 @@
 				</table>
 			</function>
 		</fcs_function>
-		
+	
 	</channel>
 	
 	<channel name="System PSI" execrate="8">

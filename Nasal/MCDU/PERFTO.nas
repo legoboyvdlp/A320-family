@@ -1,6 +1,6 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2020 Josh Davidson (Octal450)
+# Copyright (c) 2022 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 # TODO - DepArp elevation or current elevation (on ground only!!) ->  math.round(fmgc.flightPlanController.flightplans[2].departure.elevation * M2FT))
@@ -113,7 +113,6 @@ var perfTOInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.v2 = 0;
 			fmgc.FMGCInternal.v2set = 0;
-			setprop("/it-autoflight/settings/togaspd", 157);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tfs = size(scratchpad);
@@ -121,8 +120,7 @@ var perfTOInput = func(key, i) {
 				if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
 					fmgc.FMGCInternal.v2 = scratchpad;
 					fmgc.FMGCInternal.v2set = 1;
-					fmgc.updatePitchArm2();
-					setprop("/it-autoflight/settings/togaspd", scratchpad);
+					fmgc.setFmaText("pitchMode2Armed", fmgc.FMGCInternal.v2set ? "CLB" : " ", fmgc.genericCallback, "pitchMode2ArmedTime");
 					mcdu_scratchpad.scratchpads[i].empty();
 
 					perfTOCheckVSpeedsConsistency(i); 
@@ -151,7 +149,7 @@ var perfTOInput = func(key, i) {
 		}
 	} else if (key == "L5" and modifiable) {
 		if (scratchpad == "CLR") {
-			setprop("/systems/thrust/clbreduc-ft", 1500);
+			setprop("/fdm/jsbsim/fadec/clbreduc-ft", 1500);
 			setprop("/FMGC/internal/accel-agl-ft", 1500);
 			setprop("MCDUC/thracc-set", 0);
 			mcdu_scratchpad.scratchpads[i].empty();
@@ -169,7 +167,7 @@ var perfTOInput = func(key, i) {
 				if (int(thrred) != nil and (thrreds >= 3 and thrreds <= 5) and thrred >= 400 and thrred <= 39000 and int(acc) != nil and (accs == 3 or accs == 4 or accs == 5) and acc >= 400 and acc <= 39000) {
 
 					if (thrred<=acc) { # validation
-						setprop("/systems/thrust/clbreduc-ft", int(thrred / 10) * 10);
+						setprop("/fdm/jsbsim/fadec/clbreduc-ft", int(thrred / 10) * 10);
 						setprop("/FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 						setprop("MCDUC/thracc-set", 1);
 						mcdu_scratchpad.scratchpads[i].empty();
@@ -183,7 +181,7 @@ var perfTOInput = func(key, i) {
 					mcdu_message(i, "NOT ALLOWED");
 				}
 			} else if (num(scratchpad) != nil and (tfs >= 3 and tfs <= 5) and scratchpad >= 400 and scratchpad <= 39000) {
-				setprop("/systems/thrust/clbreduc-ft", int(scratchpad / 10) * 10);
+				setprop("/fdm/jsbsim/fadec/clbreduc-ft", int(scratchpad / 10) * 10);
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -289,17 +287,15 @@ var perfTOInput = func(key, i) {
 		}
 	} else if (key == "R4" and modifiable) {
 		if (scratchpad == "CLR") {
-			setprop("/FMGC/internal/flex", 0);
-			setprop("/FMGC/internal/flex-set", 0);
+			systems.FADEC.Limit.flexTemp.setValue(30);
+			systems.FADEC.Limit.flexActiveCmd.setBoolValue(0);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 1 or tfs == 2) {
 				if (int(scratchpad) != nil and scratchpad >= 0 and scratchpad <= 99) {
-					setprop("/FMGC/internal/flex", scratchpad);
-					setprop("/FMGC/internal/flex-set", 1);
-					var flex_calc = getprop("/FMGC/internal/flex") - getprop("environment/temperature-degc");
-					setprop("/FMGC/internal/flex-cmd", flex_calc);
+					systems.FADEC.Limit.flexTemp.setValue(scratchpad);
+					systems.FADEC.Limit.flexActiveCmd.setBoolValue(1);
 					perfTOCheckVSpeedsLimitations(i);
 					perfToCheckTakeoffData(i);
 					mcdu_scratchpad.scratchpads[i].empty();

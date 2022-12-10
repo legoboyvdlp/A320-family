@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+
+<PropertyList>
+
+	<!-- https://wiki.flightgear.org/Howto:Add_aircraft_lights#Combined_ALS_procedural_lights_and_Compositor_lights -->
+	<!-- Thanks to erik -->
+	<model>
+		<name>left-strobe</name>
+		<path>Aircraft/Generic/spotlight.xml</path>
+		<overlay>
+			<params>
+				<name>leftstrobe</name>
+				<power-source>/sim/model/lights/strobe/state</power-source>
+				<direction>
+					<x>-0.1</x>
+					<y>1.0</y>
+					<z>0</z>
+				</direction>
+				<ambient>
+					<r>1</r>
+					<g>1</g>
+					<b>1</b>
+				</ambient>
+				<specular>
+					<r>1.0</r>
+					<g>1.0</g>
+					<b>1.0</b>
+				</specular>
+				<attenuation>
+					<c>1.0</c>
+					<l>0.010</l>
+					<q>0.007</q>
+				</attenuation>
+				<spot-cutoff>75</spot-cutoff>
+				<spot-exponent>5.08</spot-exponent>
+			</params>
+		</overlay>
+	</model>
+
+</PropertyList>
