@@ -3509,7 +3509,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -3569,7 +3569,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -3692,7 +3692,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -3773,7 +3773,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -3945,7 +3945,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<action>
@@ -4127,7 +4127,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -4161,7 +4161,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -4206,7 +4206,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.FD1();
-					setprop("sim/sounde/btn1", 1);
+					setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -4278,7 +4278,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -4349,7 +4349,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -4412,7 +4412,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.FD2();
-					setprop("sim/sounde/btn1", 1);
+					setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -4487,7 +4487,7 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
+				setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -4561,7 +4561,7 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
+				setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -4635,7 +4635,7 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
+				setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -4709,7 +4709,7 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
+				setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -4783,7 +4783,7 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
+				setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -4857,7 +4857,7 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
+				setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -4931,7 +4931,7 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
+				setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -5005,7 +5005,7 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
+				setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -5079,7 +5079,7 @@
 				} else {
 					fcu.cpt_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
+				setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -5153,7 +5153,7 @@
 				} else {
 					fcu.fo_efis_btns("off");
 				}
-				setprop("sim/sounde/btn1", 1);
+				setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -5228,7 +5228,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.setCptND(1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
 			</binding>
 		</increase>
@@ -5237,7 +5237,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.setCptND(-1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
 			</binding>
 		</decrease>
@@ -5274,7 +5274,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.setFoND(1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
 			</binding>
 		</increase>
@@ -5283,7 +5283,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.setFoND(-1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
 			</binding>
 		</decrease>
@@ -5321,7 +5321,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.setNDRange(0, 1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
 			</binding>
 		</increase>
@@ -5330,7 +5330,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.setNDRange(0, -1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
 			</binding>
 		</decrease>
@@ -5368,7 +5368,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.setNDRange(1, 1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
 			</binding>
 		</increase>
@@ -5377,7 +5377,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.setNDRange(1, -1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
 			</binding>
 		</decrease>
@@ -5413,7 +5413,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -5448,7 +5448,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -5483,7 +5483,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -5518,7 +5518,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -5585,7 +5585,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.IASMach();
-					setprop("sim/sounde/btn1", 1);
+					setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -5653,7 +5653,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -5688,7 +5688,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -5803,7 +5803,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -5838,7 +5838,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -5941,7 +5941,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.LOCButton();
-					setprop("sim/sounde/btn1", 1);
+					setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -6025,7 +6025,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.TRKFPA();
-					setprop("sim/sounde/btn1", 1);
+					setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -6077,7 +6077,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.AP1();
-					setprop("sim/sounde/btn1", 1);
+					setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -6141,7 +6141,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.AP2();
-					setprop("sim/sounde/btn1", 1);
+					setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -6205,7 +6205,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.ATHR();
-					setprop("sim/sounde/btn1", 1);
+					setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -6281,7 +6281,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -6316,7 +6316,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -6429,7 +6429,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -6466,7 +6466,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<condition>
@@ -6501,7 +6501,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -6604,7 +6604,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.APPRButton();
-					setprop("sim/sounde/btn1", 1);
+					setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -6680,7 +6680,7 @@
 				<command>nasal</command>
 				<script>
 					fcu.FCUController.MetricAlt();
-					setprop("sim/sounde/btn1", 1);
+					setprop("sim/sound/btn1", 1);
 				</script>
 			</binding>
 			<binding>
@@ -6738,7 +6738,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -6794,7 +6794,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -6918,7 +6918,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -6974,7 +6974,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -7032,7 +7032,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -7088,7 +7088,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -7122,7 +7122,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
        </action>
         <!-- Release action, limit to 0 and 1. 2 is spring loaded reset position -->
@@ -7340,7 +7340,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -7716,7 +7716,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -7771,7 +7771,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -7826,7 +7826,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -7881,7 +7881,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -7967,7 +7967,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -8020,7 +8020,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -8129,7 +8129,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -8163,7 +8163,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -8904,7 +8904,7 @@
 				} else {
 					systems.Autobrake.arm_autobrake(0);
 				}
-				setprop("sim/sounde/oh-btn", 1);
+				setprop("sim/sound/oh-btn", 1);
 				</script>
 			</binding>
 			<binding>
@@ -8973,7 +8973,7 @@
 				} else {
 					systems.Autobrake.arm_autobrake(0);
 				}
-				setprop("sim/sounde/oh-btn", 1);
+				setprop("sim/sound/oh-btn", 1);
 				</script>
 			</binding>
 			<binding>
@@ -9042,7 +9042,7 @@
 				} else {
 					systems.Autobrake.arm_autobrake(0);
 				}
-				setprop("sim/sounde/oh-btn", 1);
+				setprop("sim/sound/oh-btn", 1);
 				</script>
 			</binding>
 			<binding>
@@ -9112,7 +9112,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -9607,7 +9607,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -9665,7 +9665,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -9923,7 +9923,7 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sounde/switch1</property>
+				<property>/sim/sound/switch1</property>
 			</binding>
 		</action>
 		<hovered>
@@ -9960,7 +9960,7 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sounde/switch1</property>
+				<property>/sim/sound/switch1</property>
 			</binding>
 		</action>
 		<hovered>
@@ -9997,7 +9997,7 @@
             </binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
         </action>
 		<hovered>
@@ -10033,7 +10033,7 @@
             </binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
         </action>
 		<hovered>
@@ -10275,7 +10275,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</increase>
 		<decrease>
@@ -10289,7 +10289,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</decrease>
 			<binding>
@@ -10321,7 +10321,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</increase>
 		<decrease>
@@ -10335,7 +10335,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</decrease>
 		<hovered>
@@ -10501,7 +10501,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -12207,7 +12207,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -12376,7 +12376,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -12425,7 +12425,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -12494,7 +12494,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -13691,7 +13691,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -14425,7 +14425,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -14809,7 +14809,7 @@
             </binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
         </action>
         <release>
@@ -14822,7 +14822,7 @@
             </binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
         </release>
 		<hovered>
@@ -18388,7 +18388,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -19121,7 +19121,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -19482,7 +19482,7 @@
             </binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
         </action>
         <release>
@@ -19495,7 +19495,7 @@
             </binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
         </release>
 		<hovered>
@@ -21884,7 +21884,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -21937,7 +21937,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -21990,7 +21990,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -22043,7 +22043,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -22096,7 +22096,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -22149,7 +22149,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -22202,7 +22202,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -22255,7 +22255,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -22308,7 +22308,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -22364,7 +22364,7 @@
             </binding>
 			<binding>
 				<command>nasal</command>
-                <script>setprop("sim/sounde/knb1", 1);</script>
+                <script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
         </action>
 		<hovered>
@@ -22400,7 +22400,7 @@
                 <command>nasal</command>
                 <script>
 					atc.transponderPanel.atcSwitch(getprop("controls/atc/system-knob") + 1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
             </binding>
         </action>
@@ -22436,7 +22436,7 @@
             </binding>
 			<binding>
 				<command>nasal</command>
-                <script>setprop("sim/sounde/knb1", 1);</script>
+                <script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
         </action>
 		<hovered>
@@ -22489,7 +22489,7 @@
                 <command>nasal</command>
                 <script>
 					atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
             </binding>
         </increase>
@@ -22508,7 +22508,7 @@
                 <command>nasal</command>
                 <script>
 					atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);
-					setprop("sim/sounde/knb1", 1);
+					setprop("sim/sound/knb1", 1);
 				</script>
             </binding>
         </decrease>
@@ -22546,7 +22546,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -22705,7 +22705,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -22877,7 +22877,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -23080,7 +23080,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -23116,7 +23116,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -23430,7 +23430,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -23538,7 +23538,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -23645,7 +23645,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -23755,7 +23755,7 @@
             </binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
         </action>
         <release>
@@ -23768,7 +23768,7 @@
             </binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
         </release>
 		<hovered>
@@ -26223,7 +26223,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -26531,7 +26531,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -26572,7 +26572,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -26689,7 +26689,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -26726,7 +26726,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -26763,7 +26763,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -26800,7 +26800,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -26837,7 +26837,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -26873,7 +26873,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -26910,7 +26910,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -26947,7 +26947,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -27167,7 +27167,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -27204,7 +27204,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -27241,7 +27241,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -27327,7 +27327,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -27364,7 +27364,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -27400,7 +27400,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -27791,7 +27791,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</release>
 		<hovered>
@@ -27994,7 +27994,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -28045,7 +28045,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</increase>
 		<decrease>
@@ -28059,7 +28059,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</decrease>
 		<hovered>
@@ -28118,7 +28118,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</increase>
 		<decrease>
@@ -28132,7 +28132,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</decrease>
 		<hovered>
@@ -28191,7 +28191,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</increase>
 		<decrease>
@@ -28205,7 +28205,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</decrease>
 		<hovered>
@@ -28531,7 +28531,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -28612,7 +28612,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -28668,7 +28668,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/switch1", 1);</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -28702,7 +28702,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -28730,7 +28730,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -28937,7 +28937,7 @@
 					</not>
 				</condition>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -28972,7 +28972,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -29006,7 +29006,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -29229,7 +29229,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -29283,7 +29283,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -29328,7 +29328,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -29387,7 +29387,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -29446,7 +29446,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -29505,7 +29505,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -29571,7 +29571,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -29736,7 +29736,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -29855,7 +29855,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -29974,7 +29974,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -30833,7 +30833,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -30917,7 +30917,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -31938,7 +31938,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -32071,7 +32071,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/knb1", 1);</script>
+				<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -32289,7 +32289,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -33084,7 +33084,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -33704,7 +33704,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -34865,7 +34865,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -35082,7 +35082,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -35458,7 +35458,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -35491,7 +35491,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sounde/btn1", 1);</script>
+				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 		</action>
 		<hovered>

@@ -268,26 +268,23 @@
 		</systems>
 		
 		<sound>
-			<suppress-warning type="bool">1</suppress-warning>
-		</sound>
-	
-		<sounde>
-			<seatbelt-sign type="bool">0</seatbelt-sign>
-			<no-smoking-sign type="bool">0</no-smoking-sign>
 			<btn1 type="bool">0</btn1>
 			<btn3 type="bool">0</btn3>
-			<gear-vol type="double">0.40</gear-vol>
-			<knb1 type="bool">0</knb1>
-			<oh-btn type="bool">0</oh-btn>
-			<switch1 type="bool">0</switch1>
 			<flaps-click type="bool">0</flaps-click>
+			<gear-vol type="double">1.2</gear-vol>
+			<knb1 type="bool">0</knb1>
+			<no-smoking-sign type="bool">0</no-smoking-sign>
+			<oh-btn type="bool">0</oh-btn>
 			<pushbutton type="bool">0</pushbutton>
-			<spdbrk-click type="bool">0</spdbrk-click>
 			<relay-batt-1 type="bool">0</relay-batt-1>
 			<relay-batt-2 type="bool">0</relay-batt-2>
 			<relay-apu type="bool">0</relay-apu>
 			<relay-ext type="bool">0</relay-ext>
-		</sounde>
+			<seatbelt-sign type="bool">0</seatbelt-sign>
+			<spdbrk-click type="bool">0</spdbrk-click>
+			<suppress-warning type="bool">1</suppress-warning>
+			<switch1 type="bool">0</switch1>
+		</sound>
 
 		<instrumentation>
 			<path>Aircraft/A320-family/Systems/instrumentation.xml</path>

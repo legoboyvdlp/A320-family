@@ -96,7 +96,7 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Open A/C Config</legend>
+			<legend>Aircraft Config</legend>
 			<pref-width>210</pref-width>
 			<binding>
 				<command>nasal</command>

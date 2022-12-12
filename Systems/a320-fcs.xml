@@ -958,7 +958,7 @@
 			<test value="0">
 				/systems/failures/gear/nose-actuator eq 1
 			</test>
-			<test value="0.0769231"> <!-- About 13 sec -->
+			<test value="0.0833333"> <!-- About 12 sec -->
 				/systems/hydraulic/green-psi ge 1500
 			</test>
 			<test logic="AND" value="0.0166667"> <!-- About 60 sec -->
