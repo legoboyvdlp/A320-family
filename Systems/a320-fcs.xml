@@ -958,7 +958,7 @@
 			<test value="0">
 				/systems/failures/gear/nose-actuator eq 1
 			</test>
-			<test value="0.2222222"> <!-- About 4.5 sec -->
+			<test value="0.0769231"> <!-- About 13 sec -->
 				/systems/hydraulic/green-psi ge 1500
 			</test>
 			<test logic="AND" value="0.0166667"> <!-- About 60 sec -->
@@ -976,7 +976,7 @@
 			<test value="0">
 				/systems/failures/gear/nose-actuator eq 1
 			</test>
-			<test value="0.4"> <!-- About 2.5 sec -->
+			<test value="0.0952381"> <!-- About 10.5 sec -->
 				/systems/hydraulic/green-psi ge 1500
 			</test>
 		</switch>
@@ -1001,7 +1001,7 @@
 			<test value="0">
 				/systems/failures/gear/left-actuator eq 1
 			</test>
-			<test value="0.0740741"> <!-- About 13.5 sec -->
+			<test value="0.0625"> <!-- About 16 sec -->
 				/systems/hydraulic/green-psi ge 1500
 			</test>
 			<test logic="AND" value="0.0222222"> <!-- About 45 sec -->
@@ -1044,7 +1044,7 @@
 			<test value="0">
 				/systems/failures/gear/right-actuator eq 1
 			</test>
-			<test value="0.0769231"> <!-- About 13 sec -->
+			<test value="0.0625"> <!-- About 16 sec -->
 				/systems/hydraulic/green-psi ge 1500
 			</test>
 			<test logic="AND" value="0.0222222"> <!-- About 45 sec -->
@@ -1062,7 +1062,7 @@
 			<test value="0">
 				/systems/failures/gear/right-actuator eq 1
 			</test>
-			<test value="0.1052632"> <!-- About 9.5 sec -->
+			<test value="0.1111111"> <!-- About 9 sec -->
 				/systems/hydraulic/green-psi ge 1500
 			</test>
 		</switch>
