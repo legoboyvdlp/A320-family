@@ -12,7 +12,7 @@ var state1Node = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
 var wing_pb    = props.globals.getNode("/controls/ice-protection/wing", 1);
 var apu_bleedSw   = props.globals.getNode("/controls/pneumatics/switches/apu", 1);
-var gear       = props.globals.getNode("/gear/gear-pos-norm", 1);
+var gear       = props.globals.getNode("/fdm/jsbsim/gear/gear-all-norm", 1);
 var stallVoice = props.globals.initNode("/sim/sound/warnings/stall-voice", 0, "BOOL");
 var engOpt     = props.globals.getNode("/options/eng", 1);
 
@@ -3675,7 +3675,7 @@ var messages_config_memo = func {
 		ECAM_controller.warningReset(toMemoLine5);
 	}
 	
-	if (getprop("/fdm/jsbsim/gear/gear-pos-norm") == 1) {
+	if (getprop("/fdm/jsbsim/gear/gear-all-norm") == 1) {
 		ldgMemoLine1.msg = "LDG LDG GEAR DN";
 		ldgMemoLine1.colour = "g";
 	} else {

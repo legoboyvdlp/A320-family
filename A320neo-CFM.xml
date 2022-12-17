@@ -5,7 +5,7 @@
 <fdm_config name="A320" version="2.0" release="BETA">
 
 	<fileheader>
-		<author>Joshua Davidson (Octal450)</author>
+		<author>Josh Davidson (Octal450)</author>
 		<version>Pre V1.0</version>
 		<description>A32X FDE</description>
 	</fileheader>
