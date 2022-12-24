@@ -263,11 +263,12 @@ var lskbutton = func(btn, i) {
 				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else if (page == "AIRWAYS") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != nil and canvas_mcdu.myAirways[i].index == "L1") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "L1") {
 				canvas_mcdu.myAirways[i].L1 = [mcdu_scratchpad.scratchpads[i].scratchpad, "  VIA", "wht"];
 				canvas_mcdu.myAirways[i].index = "R1";
 				canvas_mcdu.myAirways[i].R1 = ["[    ]", nil, "blu"];
 				mcdu_scratchpad.scratchpads[i].empty();
+				canvas_mcdu.myAirways[i].updateTmpy();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
@@ -416,11 +417,12 @@ var lskbutton = func(btn, i) {
 		} else if (page == "DATA") {
 			dataInput("L2",i);
 		} else if (page == "AIRWAYS") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != nil and canvas_mcdu.myAirways[i].index == "L2") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "L2") {
 				canvas_mcdu.myAirways[i].L2 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
 				canvas_mcdu.myAirways[i].index = "R2";
 				canvas_mcdu.myAirways[i].R2 = ["[    ]", nil, "blu"];
 				mcdu_scratchpad.scratchpads[i].empty();
+				canvas_mcdu.myAirways[i].updateTmpy();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
@@ -574,11 +576,12 @@ var lskbutton = func(btn, i) {
 				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else if (page == "AIRWAYS") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != nil and canvas_mcdu.myAirways[i].index == "L3") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "L3") {
 				canvas_mcdu.myAirways[i].L3 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
 				canvas_mcdu.myAirways[i].index = "R3";
 				canvas_mcdu.myAirways[i].R3 = ["[    ]", nil, "blu"];
 				mcdu_scratchpad.scratchpads[i].empty();
+				canvas_mcdu.myAirways[i].updateTmpy();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
@@ -690,11 +693,12 @@ var lskbutton = func(btn, i) {
 		} else if (page == "RADNAV") {
 			radnavInput("L4",i);
 		} else if (page == "AIRWAYS") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != nil and canvas_mcdu.myAirways[i].index == "L4") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "L4") {
 				canvas_mcdu.myAirways[i].L4 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
 				canvas_mcdu.myAirways[i].index = "R4";
 				canvas_mcdu.myAirways[i].R4 = ["[    ]", nil, "blu"];
 				mcdu_scratchpad.scratchpads[i].empty();
+				canvas_mcdu.myAirways[i].updateTmpy();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
@@ -821,11 +825,12 @@ var lskbutton = func(btn, i) {
 		} else if (page == "DATA2") {
 			data2Input("L5",i);
 		} else if (page == "AIRWAYS") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != nil and canvas_mcdu.myAirways[i].index == "L5") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "L5") {
 				canvas_mcdu.myAirways[i].L5 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
 				canvas_mcdu.myAirways[i].index = "R5";
 				canvas_mcdu.myAirways[i].R5 = ["[    ]", nil, "blu"];
 				mcdu_scratchpad.scratchpads[i].empty();
+				canvas_mcdu.myAirways[i].updateTmpy();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
@@ -983,14 +988,15 @@ var rskbutton = func(btn, i) {
 				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else if (page == "AIRWAYS") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != nil and canvas_mcdu.myAirways[i].index == "R1") {
-				canvas_mcdu.myAirways[i].R1 = [mcdu_scratchpad.scratchpads[i].scratchpad, "TO  ", "wht"];
-				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == nil) {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "R1") {
+				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == 0) {
 					mcdu_message(i, "NOT IN DATA BASE");
 				} else {
+					canvas_mcdu.myAirways[i].R1 = [mcdu_scratchpad.scratchpads[i].scratchpad, "TO  ", "wht"];
 					canvas_mcdu.myAirways[i].index = "L2";
 					canvas_mcdu.myAirways[i].L2 = ["[    ]", nil, "blu"];
 					mcdu_scratchpad.scratchpads[i].empty();
+					canvas_mcdu.myAirways[i].updateTmpy();
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -1075,14 +1081,15 @@ var rskbutton = func(btn, i) {
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(2);
 		} else if (page == "AIRWAYS") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != nil and canvas_mcdu.myAirways[i].index == "R2") {
-				canvas_mcdu.myAirways[i].R2 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
-				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == nil) {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "R2") {
+				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == 0) {
 					mcdu_message(i, "NOT IN DATA BASE");
 				} else {
+					canvas_mcdu.myAirways[i].R2 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
 					canvas_mcdu.myAirways[i].index = "L3";
 					canvas_mcdu.myAirways[i].L3 = ["[    ]", nil, "blu"];
 					mcdu_scratchpad.scratchpads[i].empty();
+					canvas_mcdu.myAirways[i].updateTmpy();
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -1137,14 +1144,15 @@ var rskbutton = func(btn, i) {
 				mcdu_message(i, "NOT ALLOWED");
 			}
 		} else if (page == "AIRWAYS") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != nil and canvas_mcdu.myAirways[i].index == "R3") {
-				canvas_mcdu.myAirways[i].R3 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
-				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == nil) {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "R3") {
+				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == 0) {
 					mcdu_message(i, "NOT IN DATA BASE");
 				} else {
+					canvas_mcdu.myAirways[i].R3 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
 					canvas_mcdu.myAirways[i].index = "L4";
 					canvas_mcdu.myAirways[i].L4 = ["[    ]", nil, "blu"];
 					mcdu_scratchpad.scratchpads[i].empty();
+					canvas_mcdu.myAirways[i].updateTmpy();
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -1233,14 +1241,15 @@ var rskbutton = func(btn, i) {
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(4);
 		} else if (page == "AIRWAYS") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != nil and canvas_mcdu.myAirways[i].index == "R4") {
-				canvas_mcdu.myAirways[i].R4 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
-				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == nil) {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "R4") {
+				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == 0) {
 					mcdu_message(i, "NOT IN DATA BASE");
 				} else {
+					canvas_mcdu.myAirways[i].R4 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
 					canvas_mcdu.myAirways[i].index = "L5";
 					canvas_mcdu.myAirways[i].L5 = ["[    ]", nil, "blu"];
 					mcdu_scratchpad.scratchpads[i].empty();
+					canvas_mcdu.myAirways[i].updateTmpy();
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -1325,13 +1334,14 @@ var rskbutton = func(btn, i) {
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(5);
 		} else if (page == "AIRWAYS") {
-			if (mcdu_scratchpad.scratchpads[i].scratchpad != nil and canvas_mcdu.myAirways[i].index == "R5") {
-				canvas_mcdu.myAirways[i].R5 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
-				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == nil) {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "R5") {
+				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == 0) {
 					mcdu_message(i, "NOT IN DATA BASE");
 				} else {
+					canvas_mcdu.myAirways[i].R5 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
 					canvas_mcdu.myAirways[i].index = nil;
 					mcdu_scratchpad.scratchpads[i].empty();
+					canvas_mcdu.myAirways[i].updateTmpy();
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
