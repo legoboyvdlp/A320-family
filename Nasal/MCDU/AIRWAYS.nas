@@ -24,7 +24,7 @@ var airwaysPage = {
 	scroll: 0,
 	vector: [],
 	index: "L1",
-	wpIndex: nil
+	wpIndex: nil,
 	computer: nil,
 	titleColour: nil,
 	new: func(computer, waypoint) {
