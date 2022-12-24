@@ -78,11 +78,7 @@ var airwaysPage = {
 			return 0;
 		}
 		fix = createWPFrom(fix[0]);
-		#var rtGhosts = airwaysRoute(me.curWP, fix);
 		var rt = airwaysRoute(me.curWP, fix);
-		#foreach (var wp; rtGhosts) {
-		#	append(rt, createWPFrom(wp));
-		#}
 		append(rt, fix);
 		fmgc.flightPlanController.flightplans[me.computer].insertWaypoints(rt, fmgc.flightPlanController.flightplans[me.computer].indexOfWP(me.curWP) + 1);
 		fmgc.flightPlanController.flightPlanChanged(me.computer);
