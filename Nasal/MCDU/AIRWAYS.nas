@@ -23,7 +23,8 @@ var airwaysPage = {
 	R6: [nil, nil, "ack"],
 	scroll: 0,
 	vector: [],
-	index: nil,
+	index: "L1",
+	wpIndex: nil
 	computer: nil,
 	titleColour: nil,
 	new: func(computer, waypoint) {
@@ -44,6 +45,7 @@ var airwaysPage = {
 		me.R1 = [nil, "TO  ", "blu"];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
+		me.wpIndex = me.waypoint;
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	makeTmpy: func() {
@@ -64,17 +66,18 @@ var airwaysPage = {
 			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
 	},
-	updateAirways: func(index, airwayName) {
-		if (index == 1) {
-			me.L1[0] = airwayName;
-		} elsif (index == 2) {
-			me.L2[0] = airwayName;
-		} elsif (index == 3) {
-			me.L3[0] = airwayName;
-		} elsif (index == 4) {
-			me.L4[0] = airwayName;
-		} elsif (index == 5) {
-			me.L5[0] = airwayName;
+	updateAirways: func(name) { # Find route to waypoint by airway
+		var fix = findFixesByID(name);
+		if (fix == nil) {
+			return nil;
 		}
+		fix = fix[0];
+		var rt = airwaysRoute(me.wpIndex, fix);
+		if (rt == nil) {
+			return nil;
+		}
+		fmgc.flightPlanController.flightplans[me.computer].insertWaypoints(rt, fmgc.flightPlanController.flightplans[me.computer].indexOfWP(me.wpIndex) + 1);
+		me.wpIndex = rt[-1];
+		return 1;
 	},
 };
