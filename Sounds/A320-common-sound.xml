@@ -179,12 +179,12 @@
 			<max-dist>100.0</max-dist>
 		</callout>
 		
-<!-- Custom GPWS -->
+		<!-- Custom GPWS -->
 	    <gpws>
 			<name>2500</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/2500.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -217,18 +217,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>2000</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/2000.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -261,18 +255,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>1000</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/1000.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -305,18 +293,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>500</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/500.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -349,18 +331,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>400</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/400.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -393,18 +369,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>300</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/300.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -437,18 +407,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>200</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/200.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -481,18 +445,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>100</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/100.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -525,18 +483,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>50</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/50.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -565,18 +517,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>40</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/40.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -605,18 +551,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>30</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/30.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -645,18 +585,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>20</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/20.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -685,18 +619,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>10</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/10.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -739,18 +667,12 @@
 					</or>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>5</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/5.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -791,18 +713,12 @@
 					</equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>100above</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/100-above.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -827,18 +743,12 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
 	    <gpws>
 			<name>Minimum</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/minimum.wav</path>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -863,20 +773,13 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</gpws>
-	
-<!-- Retard Warning -->
+		
 		<retard>
 			<name>retard</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/retard.wav</path>
-			<mode>looped</mode>
             <type>avionics</type>
+			<mode>looped</mode>
 			<condition>
 				<and>
 					<greater-than>
@@ -941,35 +844,23 @@
 					</greater-than-equals>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</retard>
 		
 		<retard>
 			<name>retard2</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/retard.wav</path>
-			<mode>looped</mode>
             <type>avionics</type>
+			<mode>looped</mode>
 			<condition>
 				<property>/sim/sound/warnings/retard</property> <!-- must be EMER CANCEL -->
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>8.0</factor>
-			</volume>
-			<reference-dist>20.0</reference-dist>
-			<max-dist>100.0</max-dist>
 		</retard>
 		
 		<apoff>
 			<name>apoff-looped</name>
-			<mode>looped</mode>
-            <type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-loop.wav</path>
+            <type>avionics</type>
+			<mode>looped</mode>
 			<condition>
 				<and>
 					<equals>
@@ -990,17 +881,13 @@
 					</or>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>40.0</factor>
-			</volume>
 		</apoff>
 		
 		<apoff>
 			<name>apoff-single</name>
-			<mode>once</mode>
-            <type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-once.wav</path>
+            <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<and>
 					<equals>
@@ -1021,48 +908,39 @@
 					</or>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>40.0</factor>
-			</volume>
 		</apoff>
 
 		<priority-left>
 			<name>priority-left</name>
-			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/priority-left.wav</path>
+            <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<equals>
 					<property>/sim/sound/priority-left</property>
 					<value>1</value>
 				</equals>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>40.0</factor>
-			</volume>
 		</priority-left>
 		
 		<priority-right>
 			<name>priority-right</name>
-			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/priority-right.wav</path>
+            <type>avionics</type>
+			<mode>once</mode>
 			<condition>
 				<equals>
 					<property>/sim/sound/priority-right</property>
 					<value>1</value>
 				</equals>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>40.0</factor>
-			</volume>
 		</priority-right>
 
 		<dual-input>
 			<name>dual-input</name>
-			<mode>looped</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/dual-input.wav</path>
+            <type>avionics</type>
+			<mode>looped</mode>
 			<condition>
 				<and>
 					<and>
@@ -1113,16 +991,12 @@
 					</or>
 				</and>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>40.0</factor>
-			</volume>
 		</dual-input>
 		
 		<autolandwarning>
 			<name>autolandwarning-single</name>
-			<mode>once</mode>
             <type>avionics</type>
+			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/click.wav</path>
 			<condition>
 				<equals>
@@ -1130,10 +1004,6 @@
 					<value>1</value>
 				</equals>
 			</condition>
-			<volume>
-				<property>/sim/current-view/internal</property>
-				<factor>40.0</factor>
-			</volume>
 		</autolandwarning>
 		
 		<gear>
