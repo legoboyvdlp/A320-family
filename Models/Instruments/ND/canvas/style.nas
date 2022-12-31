@@ -2,7 +2,7 @@
 # Joshua Davidson (Octal450)
 # Based on work by artix
 
-# Copyright (c) 2022 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 var ALWAYS = func 1;
 var NOTHING = func nil;

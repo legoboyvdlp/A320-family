@@ -1,5 +1,5 @@
 # A3XX Lower ECAM Canvas
-# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath
 
 var canvas_lowerECAMPageElec =
 {

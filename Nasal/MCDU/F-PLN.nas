@@ -1,5 +1,5 @@
 # A3XX FMGC Flightplan Page
-# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 # Local vars
 var decelIndex = 0;

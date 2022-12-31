@@ -1,6 +1,6 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2022 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 # TODO - DepArp elevation or current elevation (on ground only!!) ->  math.round(fmgc.flightPlanController.flightplans[2].departure.elevation * M2FT))

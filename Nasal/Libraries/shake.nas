@@ -1,6 +1,6 @@
 # A3XX Shaking
 
-# Copyright (c) 2022 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 var shakeEffectA3XX = props.globals.initNode("/systems/shake/effect", 0, "BOOL");
 var shakeA3XX = props.globals.initNode("/systems/shake/shaking", 0, "DOUBLE");
