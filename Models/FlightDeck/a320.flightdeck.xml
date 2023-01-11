@@ -3126,8 +3126,8 @@
 		<type>knob</type>
 		<object-name>mask_stow_cpt</object-name>
 		<property>controls/cockpit/oxygen-mask-cockpit-door-cpt-pos</property>
-		<factor>-90</factor>
 		<drag-direction>vertical</drag-direction>
+		<factor>-90</factor>
 		<axis>
 			<x1-m>0.79412</x1-m>
 			<y1-m>-1.20993</y1-m>
@@ -3162,8 +3162,8 @@
 		<type>knob</type>
 		<object-name>mask_stow_fo</object-name>
 		<property>controls/cockpit/oxygen-mask-cockpit-door-fo-pos</property>
-		<factor>90</factor>
 		<drag-direction>vertical</drag-direction>
+		<factor>90</factor>
 		<axis>
 			<x1-m>0.79412</x1-m>
 			<y1-m>1.20993</y1-m>
@@ -4112,6 +4112,7 @@
 		<type>knob</type>
 		<object-name>qnh_cpt_sw</object-name>
 		<property>instrumentation/altimeter/inhg-left-pos</property>
+		<drag-scale-px>15</drag-scale-px>
 		<offset-deg>40</offset-deg>
 		<factor>-43</factor>
 		<axis>
@@ -4146,6 +4147,7 @@
 		<type>knob</type>
 		<object-name>qnh_fo_sw</object-name>
 		<property>instrumentation/altimeter/inhg-right-pos</property>
+		<drag-scale-px>15</drag-scale-px>
 		<offset-deg>40</offset-deg>
 		<factor>-43</factor>
 		<axis>
@@ -5394,22 +5396,43 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>vor-adf1</object-name>
 		<property>instrumentation/efis[0]/input/lh-vor-adf-pos</property>
 		<factor>25</factor>
 		<axis>
 			<object-name>vor-adf1.axis</object-name>
 		</axis>
-		<drag-direction>horizontal</drag-direction>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>vor-adf1</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/efis[0]/input/lh-vor-adf</property>
 				<value>-1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
 				<value>1</value> <!-- ADF -->
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/efis[0]/input/lh-vor-adf</property>
+				<value>1</value> <!-- VOR -->
+				<value>0</value> <!-- OFF -->
+				<value>-1</value> <!-- ADF -->
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5429,22 +5452,43 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>vor-adf-1-right</object-name>
 		<property>instrumentation/efis[1]/input/lh-vor-adf-pos</property>
 		<factor>25</factor>
 		<axis>
 			<object-name>vor-adf1-right-axis</object-name>
 		</axis>
-		<drag-direction>horizontal</drag-direction>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>vor-adf-1-right</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/efis[1]/input/lh-vor-adf</property>
 				<value>-1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
 				<value>1</value> <!-- ADF -->
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/efis[1]/input/lh-vor-adf</property>
+				<value>1</value> <!-- VOR -->
+				<value>0</value> <!-- OFF -->
+				<value>-1</value> <!-- ADF -->
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5464,22 +5508,43 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>vor-adf2</object-name>
 		<property>instrumentation/efis[0]/input/rh-vor-adf-pos</property>
 		<factor>25</factor>
 		<axis>
 			<object-name>vor-adf2.axis</object-name>
 		</axis>
-		<drag-direction>horizontal</drag-direction>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>vor-adf2</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/efis[0]/input/rh-vor-adf</property>
 				<value>-1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
 				<value>1</value> <!-- ADF -->
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/efis[0]/input/rh-vor-adf</property>
+				<value>1</value> <!-- VOR -->
+				<value>0</value> <!-- OFF -->
+				<value>-1</value> <!-- ADF -->
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5499,22 +5564,43 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>vor-adf-2-right</object-name>
 		<property>instrumentation/efis[1]/input/rh-vor-adf-pos</property>
 		<factor>25</factor>
 		<axis>
 			<object-name>vor-adf2-right-axis</object-name>
 		</axis>
-		<drag-direction>horizontal</drag-direction>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>vor-adf-2-right</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>instrumentation/efis[1]/input/rh-vor-adf</property>
 				<value>-1</value> <!-- VOR -->
 				<value>0</value> <!-- OFF -->
 				<value>1</value> <!-- ADF -->
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>instrumentation/efis[1]/input/rh-vor-adf</property>
+				<value>1</value> <!-- VOR -->
+				<value>0</value> <!-- OFF -->
+				<value>-1</value> <!-- ADF -->
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -9095,9 +9181,9 @@
 		<type>knob</type>
 		<object-name>land_sw</object-name>
 		<property>controls/gear/nws-switch-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>land_sw.axis</object-name>
 		</axis>
@@ -9902,24 +9988,29 @@
 
 	<!-- Foot warner switches -->
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>foot_warmer_cpt_sw</object-name>
 		<object-name>foot_warmer_cpt_sw.mark</object-name>
 		<property>controls/cabin/footwarmer-cpt-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>foot_warmer_cpt_sw.axis</object-name>
-		</axis>	
-		<action>	
+		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>foot_warmer_cpt_sw</object-name>
+		<object-name>foot_warmer_cpt_sw.mark</object-name>
+		<action>
+			<button>0</button>
+			<button>1</button>
+			<button>3</button>
+			<button>4</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-toggle</command>
 				<property>controls/cabin/footwarmer-cpt</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>property-toggle</command>
@@ -9939,24 +10030,29 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>foot_warmer_fo_sw</object-name>
 		<object-name>foot_warmer_fo_sw.mark</object-name>
 		<property>controls/cabin/footwarmer-fo-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>foot_warmer_fo_sw.001</object-name>
-		</axis>	
-		<action>	
+		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>foot_warmer_fo_sw</object-name>
+		<object-name>foot_warmer_fo_sw.mark</object-name>
+		<action>
+			<button>0</button>
+			<button>1</button>
+			<button>3</button>
+			<button>4</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-toggle</command>
 				<property>controls/cabin/footwarmer-fo</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>property-toggle</command>
@@ -9977,23 +10073,44 @@
 	
 	<!-- Console Lighting Switches -->
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
         <object-name>light_console_cpt_sw</object-name>
         <property>controls/lighting/console-floor-light-sw-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>light_console_cpt_sw.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+        <object-name>light_console_cpt_sw</object-name>
         <action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
             <binding>
-                <command>property-adjust</command>
+                <command>property-cycle</command>
                 <property>controls/lighting/console-floor-light-sw</property>
-				<factor>0.5</factor>
-                <min>0</min>
-                <max>1</max>                
-                <wrap>false</wrap>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+            </binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+        </action>
+        <action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/lighting/console-floor-light-sw</property>
+				<value>1</value>
+				<value>0.5</value>
+				<value>0</value>
             </binding>
 			<binding>
 				<command>nasal</command>
@@ -10013,23 +10130,44 @@
 	</animation>
 
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
         <object-name>light_console_fo_sw</object-name>
         <property>controls/lighting/console-floor-light-sw-right-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>light_console_fo_sw.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+        <object-name>light_console_fo_sw</object-name>
         <action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
             <binding>
-                <command>property-adjust</command>
+                <command>property-cycle</command>
                 <property>controls/lighting/console-floor-light-sw-right</property>
-				<factor>0.5</factor>
-                <min>0</min>
-                <max>1</max>                
-                <wrap>false</wrap>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+            </binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+        </action>
+        <action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+            <binding>
+                <command>property-cycle</command>
+                <property>controls/lighting/console-floor-light-sw-right</property>
+				<value>1</value>
+				<value>0.5</value>
+				<value>0</value>
             </binding>
 			<binding>
 				<command>nasal</command>
@@ -11745,11 +11883,11 @@
 		<type>knob</type>
 		<object-name>thr_l_body</object-name>
 		<property>controls/cockpit/throttle-lever[0]</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>45</factor>
 		<axis>
 			<object-name>trim.axis</object-name>
 		</axis>
-		<drag-direction>vertical</drag-direction>
 		<action>
 			<binding>
 				<command>property-adjust</command>
@@ -11886,11 +12024,11 @@
 		<type>knob</type>
 		<object-name>thr_r_body</object-name>
 		<property>controls/cockpit/throttle-lever[1]</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>45</factor>
 		<axis>
 			<object-name>trim.axis</object-name>
 		</axis>
-		<drag-direction>vertical</drag-direction>
 		<action>
 			<binding>
 				<command>property-adjust</command>
@@ -14410,8 +14548,8 @@
 		<type>knob</type>
 		<object-name>radio_nav_lit.cpt</object-name>
 		<property>controls/radio/rmp[0]/nav-protect-pos</property>
-		<factor>-90</factor>
 		<drag-direction>vertical</drag-direction>
+		<factor>-90</factor>
 		<axis>
 			<object-name>radio_nav_lit.axis.002</object-name>
 		</axis>
@@ -14793,12 +14931,12 @@
 		<object-name>audio_int_rad.cpt</object-name>
 		<object-name>audio_int_rad.mark.cpt</object-name>
 		<property>controls/audio/acp[0]/int-rad-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<offset-deg>-20</offset-deg>
 		<factor>20</factor>
 		<axis>
 			<object-name>audio_int_rad.axis.cpt</object-name>
 		</axis>
-		<drag-direction>vertical</drag-direction>
 		<action>
             <binding>
                 <command>property-adjust</command>
@@ -19106,8 +19244,8 @@
 		<type>knob</type>
 		<object-name>radio_nav_lit.fo</object-name>
 		<property>controls/radio/rmp[1]/nav-protect-pos</property>
-		<factor>-90</factor>
 		<drag-direction>vertical</drag-direction>
+		<factor>-90</factor>
 		<axis>
 			<object-name>radio_nav_lit.axis.001</object-name>
 		</axis>
@@ -19466,12 +19604,12 @@
 		<object-name>audio_int_rad.fo</object-name>
 		<object-name>audio_int_rad.mark.fo</object-name>
 		<property>controls/audio/acp[1]/int-rad-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<offset-deg>-20</offset-deg>
 		<factor>20</factor>
 		<axis>
 			<object-name>audio_int_rad.axis.fo</object-name>
 		</axis>
-		<drag-direction>vertical</drag-direction>
 		<action>
             <binding>
                 <command>property-adjust</command>
@@ -22801,8 +22939,8 @@
 		<object-name>CockpitDoorSwitch</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
         <property>controls/doors/doorc-switch-pos</property>
-		<drag-direction>horizontal</drag-direction>
-		<drag-scale-px>14</drag-scale-px>
+		<drag-direction>vertical</drag-direction>
+		<drag-scale-px>15</drag-scale-px>
 		<factor>25</factor>
 		<axis>
 			<object-name>CockpitDoorSwitch.axis</object-name>
@@ -22811,7 +22949,7 @@
 			<binding>	
 				<command>property-adjust</command>
 				<property>controls/doors/doorc-switch</property>
-				<factor>1</factor>
+				<factor>-1</factor>
 				<min>-1</min>
 				<max>1</max>
 				<wrap>0</wrap>
@@ -22978,7 +23116,6 @@
 	</animation>
 	
 	<!-- Flap Lever -->
-	
 	<animation>
 		<type>knob</type>
 		<object-name>FlapsLever</object-name>
@@ -23415,11 +23552,11 @@
 		<type>knob</type>
 		<object-name>Plane.018</object-name>
 		<property>controls/cockpit/blue-ovrd-guard-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>145</factor>
 		<axis>
 			<object-name>Plane.axis.004</object-name>
 		</axis>
-		<drag-direction>vertical</drag-direction>
 		<action>
 			<binding>
 				<command>property-cycle</command>
@@ -23523,11 +23660,11 @@
 		<type>knob</type>
 		<object-name>Plane.020</object-name>
 		<property>controls/cockpit/fadec-gnd-pwr-1-guard-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>145</factor>
 		<axis>
 			<object-name>Plane.axis</object-name>
 		</axis>
-		<drag-direction>vertical</drag-direction>
 		<action>
 			<binding>
 				<command>property-cycle</command>
@@ -23630,11 +23767,11 @@
 		<type>knob</type>
 		<object-name>Plane.019</object-name>
 		<property>controls/cockpit/fadec-gnd-pwr-2-guard-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>145</factor>
 		<axis>
 			<object-name>Plane.axis.002</object-name>
 		</axis>
-		<drag-direction>vertical</drag-direction>
 		<action>
 			<binding>
 				<command>property-cycle</command>
@@ -23739,12 +23876,12 @@
 		<object-name>audio_int_rad.ovh</object-name>
 		<object-name>audio_int_rad.mark.ovh</object-name>
 		<property>controls/audio/acp[2]/int-rad-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<offset-deg>-20</offset-deg>
 		<factor>20</factor>
 		<axis>
 			<object-name>audio_int_rad.axis.ovh</object-name>
 		</axis>
-		<drag-direction>vertical</drag-direction>
 		<action>
             <binding>
                 <command>property-adjust</command>
@@ -26669,23 +26806,27 @@
 	
 	<!-- Exterior lights -->
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>TurnoffLtSwtch</object-name>
 		<property>controls/lighting/turnoff-light-switch-pos</property>
 		<factor>60</factor>
 		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>TurnoffLtSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>TurnoffLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>1</button>
+			<button>3</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-toggle</command>
 				<property>controls/lighting/turnoff-light-switch</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -26705,24 +26846,44 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>LandingLtSwtch</object-name>
 		<property>controls/switches/landing-lights-l-pos</property>
 		<factor>60</factor>
 		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>LandingLtSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>LandingLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/switches/landing-lights-l</property>
 				<value>0</value>
 				<value>0.5</value>
 				<value>1</value>
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/landing-lights-l</property>
+				<value>1</value>
+				<value>0.5</value>
+				<value>0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -26742,24 +26903,44 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>LandingLtRSwtch</object-name>
 		<property>controls/switches/landing-lights-r-pos</property>
 		<factor>60</factor>
 		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>LandingLtRSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>LandingLtRSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/switches/landing-lights-r</property>
 				<value>0</value>
 				<value>0.5</value>
 				<value>1</value>
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/landing-lights-r</property>
+				<value>1</value>
+				<value>0.5</value>
+				<value>0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -26779,24 +26960,44 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>NoseLtSwtch</object-name>
 		<property>controls/lighting/taxi-light-switch-pos</property>
 		<factor>60</factor>
 		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>NoseLtSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>NoseLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/lighting/taxi-light-switch</property>
 				<value>0</value>
 				<value>0.5</value>
 				<value>1</value>
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/taxi-light-switch</property>
+				<value>1</value>
+				<value>0.5</value>
+				<value>0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -26816,24 +27017,44 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>StrobeLtSwtch</object-name>
 		<property>controls/switches/strobe-pos</property>
 		<factor>60</factor>
 		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>StrobeLtSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>StrobeLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/switches/strobe</property>
 				<value>0</value>
 				<value>0.5</value>
 				<value>1</value>
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/strobe</property>
+				<value>1</value>
+				<value>0.5</value>
+				<value>0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -26853,23 +27074,27 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>BeaconLtSwtch</object-name>
 		<property>controls/switches/beacon-pos</property>
 		<factor>60</factor>
 		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>BeaconLtSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>BeaconLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>1</button>
+			<button>3</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-toggle</command>
 				<property>controls/switches/beacon</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -26889,24 +27114,27 @@
 	</animation>
 
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>WingLtSwtch</object-name>
 		<property>controls/switches/wing-lights-pos</property>
 		<factor>60</factor>
 		<offset-deg>-30</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>WingLtSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>WingLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>1</button>
+			<button>3</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-toggle</command>
 				<property>controls/switches/wing-lights</property>
-				<value>0</value>
-				<value>1</value>
-				<value>2</value>
-				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -26926,24 +27154,44 @@
 	</animation>
 
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>NavLogoLtSwtch</object-name>
 		<property>controls/lighting/nav-lights-switch-pos</property>
 		<factor>35</factor>
 		<offset-deg>-35</offset-deg>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>NavLogoLtSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>NavLogoLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/lighting/nav-lights-switch</property>
 				<value>0</value>
 				<value>1</value>
 				<value>2</value>
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/nav-lights-switch</property>
+				<value>2</value>
+				<value>1</value>
+				<value>0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -27147,23 +27395,44 @@
 	
 	<!-- Passenger signs -->
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>SeatBeltSwtch</object-name>
 		<property>controls/switches/seatbelt-sign-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>SeatBeltSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>SeatBeltSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/switches/seatbelt-sign</property>
 				<value>0</value>
+				<value>0.5</value>
 				<value>1</value>
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/seatbelt-sign</property>
+				<value>1</value>
+				<value>0.5</value>
+				<value>0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -27183,24 +27452,44 @@
 	</animation>
 
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>NoSmokingSwtch</object-name>
 		<property>controls/switches/no-smoking-sign-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>NoSmokingSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>NoSmokingSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
-				<command>property-adjust</command>
+				<command>property-cycle</command>
 				<property>controls/switches/no-smoking-sign</property>
-				<factor>0.5</factor>
-				<min>0.0</min>
-				<max>1.0</max>
-				<wrap>false</wrap>
+				<value>0</value>
+				<value>0.5</value>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/no-smoking-sign</property>
+				<value>1</value>
+				<value>0.5</value>
+				<value>0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -27220,24 +27509,44 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>EmerExtLtSwtch</object-name>
 		<property>controls/switches/emer-lights-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>EmerExtLtSwtch.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>EmerExtLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/switches/emer-lights</property>
-				<value>0.0</value>
+				<value>0</value>
 				<value>0.5</value>
-				<value>1.0</value>
-				<wrap>false</wrap>
+				<value>1</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/emer-lights</property>
+				<value>1</value>
+				<value>0.5</value>
+				<value>0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -27301,9 +27610,11 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>StbyCompassLtSwtch</object-name>
 		<property>controls/lighting/stby-compass-switch-pos</property>
+		<offset-deg>-30</offset-deg>
+		<factor>60</factor>
 		<axis>
 			<!--<object-name>StbyCompassLtSwtch.axis</object-name>-->
 			<x1-m>-0.13725</x1-m>
@@ -27313,17 +27624,19 @@
 			<y2-m>0.06745</y2-m>
 			<z2-m>0.9063</z2-m>
 		</axis>
-		<offset-deg>-30</offset-deg>
-		<factor>60</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>StbyCompassLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>1</button>
+			<button>3</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-toggle</command>
 				<property>controls/lighting/stby-compass-switch</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -27343,7 +27656,7 @@
 	</animation>
 
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>DomeLtSwtch</object-name>
 		<property>controls/lighting/dome-norm-pos</property>
 		<axis>
@@ -27351,16 +27664,36 @@
 		</axis>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>DomeLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
 				<property>controls/lighting/dome-norm</property>
 				<value>0</value>
 				<value>0.5</value>
 				<value>1</value>
-				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/switch1", 1);</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/dome-norm</property>
+				<value>1</value>
+				<value>0.5</value>
+				<value>0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -27380,23 +27713,27 @@
 	</animation>
 
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>AnnunciatorLtSwtch</object-name>
 		<property>controls/switches/annun-test-pos</property>
+		<offset-deg>0</offset-deg>
+		<factor>30</factor>
 		<axis>
 			<object-name>AnnunciatorLtSwtch.axis</object-name>
 		</axis>
-		<offset-deg>0</offset-deg>
-		<factor>30</factor>
-		<drag-scale-px>3</drag-scale-px>
-		<drag-direction>vertical</drag-direction>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>AnnunciatorLtSwtch</object-name>
 		<action>
+			<button>0</button>
+			<button>1</button>
+			<button>3</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-toggle</command>
 				<property>controls/switches/annun-test</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -27753,13 +28090,12 @@
 		<type>knob</type>
 		<object-name>ManVSCTLSwitch</object-name>
 		<property>controls/cockpit/outflowpos-man-sw-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>30</factor>
 		<axis>
 			<object-name>ManVSCTLSwitch.axis</object-name>
 		</axis>
 		<increase>
-			<button>0</button>
-			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
 				<script>libraries.increaseManVS();</script>
@@ -27771,8 +28107,6 @@
 			</binding>
 		</increase>
 		<decrease>
-			<button>1</button>
-			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
 				<script>libraries.decreaseManVS();</script>
@@ -27980,6 +28314,7 @@
 		<type>knob</type>
 		<object-name>DitchProt</object-name>
 		<property>controls/OH/protectors/ditching-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>-145</factor>
 		<axis>
 			<object-name>DitchProt.axis</object-name>
@@ -28649,26 +28984,31 @@
 	</animation>
 	
 	<animation>
-		<type>knob</type>
+		<type>rotate</type>
 		<object-name>EvacCapt-Purs</object-name>
 		<property>controls/cockpit/evac-capt-purs-pos</property>
 		<offset-deg>30</offset-deg>
 		<factor>-60</factor>
-		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>EvacCapt-Purs.axis</object-name>
 		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>EvacCapt-Purs</object-name>
 		<action>
+			<button>0</button>
+			<button>1</button>
+			<button>3</button>
+			<button>4</button>
+			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-toggle</command>
 				<property>controls/cockpit/evac-capt-purs</property>
-				<value>0</value>
-				<value>1</value>
-				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("sim/sound/switch1", 1);</script>
+				<script>libraries.Sound.switch1();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -28678,7 +29018,7 @@
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ratguard-lbl</tooltip-id>
-				<label>EVAC select switch (INOP)</label>
+				<label>EVAC select switch</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -28689,6 +29029,7 @@
 		<object-name>EmerGenTestGuard</object-name>
 		<property>controls/OH/protectors/emergentest-pos</property>
 		<factor>-145</factor>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>EmerGenTestGuard.axis</object-name>
 		</axis>
@@ -28921,14 +29262,17 @@
 		<object-name>EmerManOnGuard</object-name>
 		<property>controls/OH/protectors/elecratman-pos</property>
 		<factor>-145</factor>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>EmerManOnGuard.axis</object-name>
 		</axis>
 		<action>
-			<button>0</button>
 			<binding>
-				<command>property-toggle</command>
+				<command>property-cycle</command>
 				<property>controls/OH/protectors/elecratman</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
 			</binding>
 			<binding>
 				<condition>
@@ -28959,6 +29303,7 @@
 		<object-name>MaskManOnGuard</object-name>
 		<property>controls/OH/protectors/maskman-pos</property>
 		<factor>-145</factor>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>MaskManOnGuard.axis</object-name>
 		</axis>
@@ -32275,6 +32620,7 @@
 		<type>knob</type>
 		<object-name>RamAirBtnProt</object-name>
 		<property>controls/OH/protectors/ramair-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>-145</factor>
 		<axis>
 			<object-name>RamAirBtnProt.axis</object-name>
@@ -33069,6 +33415,7 @@
 		<type>knob</type>
 		<object-name>IDG1Prot</object-name>
 		<property>controls/OH/protectors/idg1-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>-145</factor>
 		<axis>
 			<object-name>IDG2Prot.axis.001</object-name>
@@ -33690,6 +34037,7 @@
 		<type>knob</type>
 		<object-name>IDG2Prot</object-name>
 		<property>controls/OH/protectors/idg2-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>-145</factor>
 		<axis>
 			<object-name>IDG2Prot.axis</object-name>
@@ -35444,6 +35792,7 @@
 		<type>knob</type>
 		<object-name>Eng1ManStartProt</object-name>
 		<property>controls/OH/protectors/eng1-manstart-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>145</factor>
 		<axis>
 			<object-name>Eng1ManStartProt.axis</object-name>
@@ -35477,6 +35826,7 @@
 		<type>knob</type>
 		<object-name>Eng2ManStartProt</object-name>
 		<property>controls/OH/protectors/eng2-manstart-pos</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>145</factor>
 		<axis>
 			<object-name>Eng2ManStartProt.axis</object-name>
