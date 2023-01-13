@@ -1136,10 +1136,10 @@
 
 	<!-- Clock -->
 	<text>
-		<name>chrono1</name>
+		<name>chrono_min</name>
 		<offsets>
 			<x-m>-0.553</x-m>
-			<y-m>0.160</y-m>
+			<y-m>0.152</y-m>
 			<z-m>0.2155</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
@@ -1148,15 +1148,15 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">%s</format>
-		<property>instrumentation/chrono/chr-et-string</property>
+		<property>instrumentation/clock/chrono/chr-et-min</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font type="string">Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size>0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio>1.0</character-aspect-ratio>
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.050</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -1167,7 +1167,100 @@
 	</text>
 
 	<text>
-		<name>chrono2_1</name>
+		<name>chrono_sep</name>
+		<offsets>
+			<x-m>-0.553</x-m>
+			<y-m>0.160</y-m>
+			<z-m>0.2155</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">literal</type>
+		<format type="string">%s</format>
+		<text type="string">:</text>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.050</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>chrono_sec</name>
+		<offsets>
+			<x-m>-0.553</x-m>
+			<y-m>0.168</y-m>
+			<z-m>0.2155</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/chrono/chr-et-sec</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.050</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>clock_hh</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.146</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/indicated-hours</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>clock_mm</name>
 		<offsets>
 			<x-m>-0.547</x-m>
 			<y-m>0.167</y-m>
@@ -1179,15 +1272,15 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">%s</format>
-		<property>instrumentation/clock/clock_hh_mm</property>
+		<property>instrumentation/clock/indicated-minutes</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font type="string">Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size>0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio>1.0</character-aspect-ratio>
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -1198,7 +1291,7 @@
 	</text>
 
 	<text>
-		<name>chrono2_2</name>
+		<name>clock_sec</name>
 		<offsets>
 			<x-m>-0.547</x-m>
 			<y-m>0.175</y-m>
@@ -1216,9 +1309,9 @@
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font type="string">Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size>0.008</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio>1.0</character-aspect-ratio>
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.006</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -1229,7 +1322,7 @@
 	</text>
 
 	<text>
-		<name>UTC_1</name>
+		<name>UTC1</name>
 		<offsets>
 			<x-m>-0.547</x-m>
 			<y-m>0.146</y-m>
@@ -1241,15 +1334,15 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">%s</format>
-		<property>instrumentation/clock/utc-date1</property>
+		<property>instrumentation/clock/date-month</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font type="string">Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size>0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio>1.1</character-aspect-ratio>
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.1</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -1260,7 +1353,7 @@
 	</text>
 
 	<text>
-		<name>UTC_2</name>
+		<name>UTC2</name>
 		<offsets>
 			<x-m>-0.547</x-m>
 			<y-m>0.160</y-m>
@@ -1272,15 +1365,15 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">%s</format>
-		<property>instrumentation/clock/utc-date2</property>
+		<property>instrumentation/clock/date-day</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font type="string">Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size>0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio>1.0</character-aspect-ratio>
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.1</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -1291,7 +1384,7 @@
 	</text>
 
 	<text>
-		<name>UTC_3</name>
+		<name>UTC3</name>
 		<offsets>
 			<x-m>-0.547</x-m>
 			<y-m>0.175</y-m>
@@ -1303,15 +1396,15 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">%s</format>
-		<property>instrumentation/clock/utc-date3</property>
+		<property>instrumentation/clock/date-year</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font type="string">Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size>0.008</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio>1.0</character-aspect-ratio>
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.006</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.060</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -1322,10 +1415,227 @@
 	</text>
 
 	<text>
-		<name>chrono3</name>
+		<name>clock_int_hh</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.146</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/internal/indicated-hours</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>clock_int_sep</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.1535</y-m>
+			<z-m>0.195</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">literal</type>
+		<format type="string">%s</format>
+		<text type="string">:</text>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>clock_int_mm</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.167</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>right-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/internal/indicated-minutes</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>clock_int_sec</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.175</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/internal/indicated-seconds</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.006</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>clock_int_UTC1</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.146</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/internal/date-month</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.1</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>clock_int_UTC2</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.160</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/internal/date-day</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.1</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>clock_int_UTC3</name>
+		<offsets>
+			<x-m>-0.547</x-m>
+			<y-m>0.175</y-m>
+			<z-m>0.196</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/internal/date-year</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.006</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.060</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>ET_clock_hh</name>
 		<offsets>
 			<x-m>-0.54</x-m>
-			<y-m>0.1595</y-m>
+			<y-m>0.151</y-m>
 			<z-m>0.1785</z-m>
 			<heading-deg>90</heading-deg>
 			<roll-deg>72.81</roll-deg>
@@ -1334,15 +1644,77 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">text-value</type>
 		<format type="string">%s</format>
-		<property>instrumentation/clock/elapsed-string</property>
+		<property>instrumentation/clock/et/indicated-hours</property>
 		<truncate>false</truncate>
 		<layout>left-to-right</layout>
 		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
 		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
 		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
-		<font type="string">Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
-		<character-size>0.010</character-size> <!-- size (height) im meters -->
-		<character-aspect-ratio>1.0</character-aspect-ratio>
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>ET_clock_sep</name>
+		<offsets>
+			<x-m>-0.54</x-m>
+			<y-m>0.159</y-m>
+			<z-m>0.1775</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">literal</type>
+		<format type="string">%s</format>
+		<text type="string">:</text>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
+		<max-height>0.012</max-height> <!-- the maximum height of the text -->
+		<max-width>0.040</max-width> <!-- the maximum width of the text -->
+		<font-resolution>
+		<width type="int">32</width>
+		<height type="int">32</height>
+		</font-resolution>
+		<kerning>default</kerning>
+	</text>
+
+	<text>
+		<name>ET_clock_mm</name>
+		<offsets>
+			<x-m>-0.54</x-m>
+			<y-m>0.166</y-m>
+			<z-m>0.1785</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>72.81</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>instrumentation/clock/et/indicated-min</property>
+		<truncate>false</truncate>
+		<layout>left-to-right</layout>
+		<draw-text type="bool">true</draw-text> <!-- draw the text itself -->
+		<draw-alignment type="bool">false</draw-alignment> <!-- draw crosshair at object center -->
+		<draw-boundingbox type="bool">false</draw-boundingbox> <!-- draw a bounding box -->
+		<font>Airbus7Seg.ttf</font> <!-- The font file name, relative to data/Fonts -->
+		<character-size type="double">0.008</character-size> <!-- size (height) im meters -->
+		<character-aspect-ratio type="double">1.0</character-aspect-ratio>
 		<max-height>0.012</max-height> <!-- the maximum height of the text -->
 		<max-width>0.040</max-width> <!-- the maximum width of the text -->
 		<font-resolution>
@@ -2162,13 +2534,25 @@
 	<!-- Clock Digit Lighting -->
 	<animation>
 		<type>material</type>
-		<object-name>chrono1</object-name>
-		<object-name>chrono2_1</object-name>
-		<object-name>chrono2_2</object-name>
-		<object-name>chrono3</object-name>
-		<object-name>UTC_1</object-name>
-		<object-name>UTC_2</object-name>
-		<object-name>UTC_3</object-name>
+		<object-name>chrono_min</object-name>
+		<object-name>chrono_sep</object-name>
+		<object-name>chrono_sec</object-name>
+		<object-name>clock_hh</object-name>
+		<object-name>clock_mm</object-name>
+		<object-name>clock_sec</object-name>
+		<object-name>clock_int_hh</object-name>
+		<object-name>clock_int_sep</object-name>
+		<object-name>clock_int_mm</object-name>
+		<object-name>clock_int_sec</object-name>
+		<object-name>UTC1</object-name>
+		<object-name>UTC2</object-name>
+		<object-name>UTC3</object-name>
+		<object-name>clock_int_UTC1</object-name>
+		<object-name>clock_int_UTC2</object-name>
+		<object-name>clock_int_UTC3</object-name>
+		<object-name>ET_clock_hh</object-name>
+		<object-name>ET_clock_sep</object-name>
+		<object-name>ET_clock_mm</object-name>
 		<emission>
 			<red>1.0</red>
 			<green>1.0</green>
@@ -2202,10 +2586,11 @@
 		</condition>
 	</animation>
 
-	<!-- Chrono show / hide -->
+	<!-- Chrono -->
 	<animation>
 		<type>select</type>
-		<object-name>chrono1</object-name>
+		<object-name>chrono_min</object-name>
+		<object-name>chrono_sec</object-name>
 		<condition>
 			<and>
 				<greater-than-equals>
@@ -2213,18 +2598,21 @@
 					<value>25</value>
 				</greater-than-equals>
 				<or>
-					<property>controls/switches/annun-test</property>
 					<equals>
-						<property>instrumentation/chrono/chrono-reset</property>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>instrumentation/clock/chrono/chrono-reset</property>
 						<value>0</value>
 					</equals>
 					<and>
 						<equals>
-							<property>instrumentation/chrono/chrono-reset</property>
+							<property>instrumentation/clock/chrono/chrono-reset</property>
 							<value>1</value>
 						</equals>
 						<greater-than>
-							<property>instrumentation/chrono/elapsetime-sec</property>
+							<property>instrumentation/clock/chrono/elapsetime-sec</property>
 							<value>0</value>
 						</greater-than>
 					</and>
@@ -2235,107 +2623,44 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>chrono2_1</object-name>
+		<object-name>chrono_sep</object-name>
 		<condition>
 			<and>
 				<greater-than-equals>
 					<property>systems/electrical/bus/dc-ess</property>
 					<value>25</value>
 				</greater-than-equals>
-				<property>instrumentation/clock/serviceable</property>
 				<or>
 					<equals>
-						<property>instrumentation/clock/set-knob</property>
+						<property>controls/switches/annun-test</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>instrumentation/clock/chrono/chrono-reset</property>
 						<value>0</value>
 					</equals>
 					<and>
 						<equals>
-							<property>instrumentation/clock/set-knob</property>
+							<property>instrumentation/clock/chrono/chrono-reset</property>
 							<value>1</value>
 						</equals>
-						<equals>
-							<property>instrumentation/clock/utc-selector</property>
-							<value>2</value>
-						</equals>
+						<greater-than>
+							<property>instrumentation/clock/chrono/elapsetime-sec</property>
+							<value>0</value>
+						</greater-than>
 					</and>
 				</or>
-			</and>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>chrono2_2</object-name>
-		<condition>
-			<and>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
-				</greater-than-equals>
-				<property>instrumentation/clock/serviceable</property>
-				<not-equals>
-					<property>instrumentation/chrono[0]/chrono-reset</property>
-					<value>2</value>
-				</not-equals>
-				<or>
-					<equals>
-						<property>instrumentation/clock/set-knob</property>
-						<value>0</value>
-					</equals>
-					<and>
-						<equals>
-							<property>instrumentation/clock/set-knob</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>instrumentation/clock/utc-selector</property>
-							<value>2</value>
-						</equals>
-					</and>
-				</or>
-			</and>
-		</condition>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>UTC_1</object-name>
-		<object-name>UTC_2</object-name>
-		<object-name>UTC_3</object-name>
-		<condition>
-			<and>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
-				</greater-than-equals>
 				<not>
-					<and>
-						<property>instrumentation/clock/serviceable</property>
-						<or>
-							<equals>
-								<property>instrumentation/clock/set-knob</property>
-								<value>0</value>
-							</equals>
-							<and>
-								<equals>
-									<property>instrumentation/clock/set-knob</property>
-									<value>1</value>
-								</equals>
-								<equals>
-									<property>instrumentation/clock/utc-selector</property>
-									<value>2</value>
-								</equals>
-							</and>
-						</or>
-					</and>
+					<property>instrumentation/clock/chrono/paused</property>
 				</not>
 			</and>
 		</condition>
 	</animation>
 
+	<!-- Clock GPS mode-->
 	<animation>
 		<type>select</type>
-		<object-name>chrono3</object-name>
+		<object-name>clock_hh</object-name>
 		<condition>
 			<and>
 				<greater-than-equals>
@@ -2343,10 +2668,432 @@
 					<value>25</value>
 				</greater-than-equals>
 				<property>instrumentation/clock/serviceable</property>
+				<equals>
+					<!-- Clock in UTC Mode -->
+					<property>instrumentation/clock/utc-selector</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<!-- Clock not in Date Mode -->
+					<property>instrumentation/clock/set-knob</property>
+					<value>0</value>
+				</equals>
 			</and>
 		</condition>
 	</animation>
-	
+
+	<animation>
+		<type>select</type>
+		<object-name>clock_mm</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<equals>
+					<!-- Clock in UTC Mode -->
+					<property>instrumentation/clock/utc-selector</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<!-- Clock not in Date Mode -->
+					<property>instrumentation/clock/set-knob</property>
+					<value>0</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>clock_sec</object-name>
+		<condition>
+				<and>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+					<property>instrumentation/clock/serviceable</property>
+					<equals>
+						<!-- Clock in UTC Mode -->
+						<property>instrumentation/clock/utc-selector</property>
+						<value>0</value>
+					</equals>
+					<equals>
+						<!-- Clock not in Date Mode -->
+						<property>instrumentation/clock/set-knob</property>
+						<value>0</value>
+					</equals>
+				</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>UTC1</object-name>
+		<object-name>UTC2</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<equals>
+					<!-- Clock in UTC Mode -->
+					<property>instrumentation/clock/utc-selector</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<!-- Clock in Date Mode -->
+					<property>instrumentation/clock/set-knob</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>UTC3</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<equals>
+					<!-- Clock in UTC Mode -->
+					<property>instrumentation/clock/utc-selector</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<!-- Clock in Date Mode -->
+					<property>instrumentation/clock/set-knob</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+
+	<!-- Clock INT and SET mode-->
+	<animation>
+		<type>select</type>
+		<object-name>clock_int_hh</object-name>
+		<condition>
+			<or>
+				<and>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+					<property>instrumentation/clock/serviceable</property>
+					<equals>
+						<!-- Clock not in UTC Mode -->
+						<property>instrumentation/clock/utc-selector</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<!-- Clock not in Date Mode -->
+						<property>instrumentation/clock/set-knob</property>
+						<value>0</value>
+					</equals>
+				</and>
+				<and>
+					<equals>
+						<property>instrumentation/clock/set-knob</property>
+						<value>0</value>
+					</equals>
+					<less-than-equals>
+						<property>instrumentation/clock/internal/set-cont</property>
+						<value>2</value>
+					</less-than-equals>
+					<equals>
+						<property>instrumentation/clock/utc-selector</property>
+						<value>2</value>
+					</equals>
+					<equals>
+						<property>instrumentation/clock/internal/blink-hh</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>clock_int_sep</object-name>
+		<condition>
+			<or>
+				<and>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+					<property>instrumentation/clock/serviceable</property>
+					<not-equals>
+						<!-- Clock not in SET Mode -->
+						<property>instrumentation/clock/utc-selector</property>
+						<value>2</value>
+					</not-equals>
+					<equals>
+						<!-- Clock not in Date Mode -->
+						<property>instrumentation/clock/set-knob</property>
+						<value>0</value>
+					</equals>
+				</and>
+				<and>
+					<!-- Clock in SET Mode -->
+					<equals>
+						<property>instrumentation/clock/set-knob</property>
+						<value>0</value>
+					</equals>
+					<less-than-equals>
+						<property>instrumentation/clock/internal/set-cont</property>
+						<value>2</value>
+					</less-than-equals>
+					<equals>
+						<property>instrumentation/clock/utc-selector</property>
+						<value>2</value>
+					</equals>
+				</and>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>clock_int_mm</object-name>
+		<condition>
+			<or>
+				<and>
+					<greater-than-equals>
+						<property>systems/electrical/bus/dc-ess</property>
+						<value>25</value>
+					</greater-than-equals>
+					<property>instrumentation/clock/serviceable</property>
+					<equals>
+						<!-- Clock not in UTC Mode -->
+						<property>instrumentation/clock/utc-selector</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<!-- Clock not in Date Mode -->
+						<property>instrumentation/clock/set-knob</property>
+						<value>0</value>
+					</equals>
+				</and>
+				<and>
+					<equals>
+						<property>instrumentation/clock/set-knob</property>
+						<value>0</value>
+					</equals>
+					<less-than-equals>
+						<property>instrumentation/clock/internal/set-cont</property>
+						<value>2</value>
+					</less-than-equals>
+					<equals>
+						<property>instrumentation/clock/utc-selector</property>
+						<value>2</value>
+					</equals>
+					<equals>
+						<property>instrumentation/clock/internal/blink-mm</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</or>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>clock_int_sec</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<equals>
+					<!-- Clock not in UTC Mode -->
+					<property>instrumentation/clock/utc-selector</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<!-- Clock not in Date Mode -->
+					<property>instrumentation/clock/set-knob</property>
+					<value>0</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>clock_int_UTC1</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<or>
+					<and>
+						<equals>
+							<!-- Clock in INT Mode -->
+							<property>instrumentation/clock/utc-selector</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<!-- Clock in Date Mode -->
+							<property>instrumentation/clock/set-knob</property>
+							<value>1</value>
+						</equals>
+					</and>
+					<and>
+						<equals>
+							<property>instrumentation/clock/internal/blink-month</property>
+							<value>1</value>
+						</equals>
+						<greater-than>
+							<property>instrumentation/clock/internal/set-cont</property>
+							<value>2</value>
+						</greater-than>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+					</and>
+				</or>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>clock_int_UTC2</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<or>
+					<and>
+						<equals>
+							<!-- Clock in INT Mode -->
+							<property>instrumentation/clock/utc-selector</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<!-- Clock in Date Mode -->
+							<property>instrumentation/clock/set-knob</property>
+							<value>1</value>
+						</equals>
+					</and>
+					<and>
+						<equals>
+							<property>instrumentation/clock/internal/blink-day</property>
+							<value>1</value>
+						</equals>
+						<greater-than>
+							<property>instrumentation/clock/internal/set-cont</property>
+							<value>2</value>
+						</greater-than>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+					</and>
+				</or>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>clock_int_UTC3</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<or>
+					<and>
+						<equals>
+							<!-- Clock in INT Mode -->
+							<property>instrumentation/clock/utc-selector</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<!-- Clock in Date Mode -->
+							<property>instrumentation/clock/set-knob</property>
+							<value>1</value>
+						</equals>
+					</and>
+					<and>
+						<equals>
+							<property>instrumentation/clock/internal/blink-year</property>
+							<value>1</value>
+						</equals>
+						<greater-than>
+							<property>instrumentation/clock/internal/set-cont</property>
+							<value>2</value>
+						</greater-than>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+					</and>
+				</or>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ET_clock_hh</object-name>
+		<object-name>ET_clock_mm</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<property>instrumentation/clock/et/visible</property>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ET_clock_sep</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+				<property>instrumentation/clock/serviceable</property>
+				<property>instrumentation/clock/et/visible</property>
+				<equals>
+					<property>instrumentation/clock/et/et-selector</property>
+					<value>0</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+
 	<!-- FCU autopilot modes show / hide -->
 	<animation>
 		<type>select</type>
@@ -6808,7 +7555,7 @@
 		</axis>
 	</animation>
 	
-	<!-- Chrono -->
+	<!-- ND_L chrono -->
 	<animation>
 		<type>pick</type>
 		<object-name>chrono_cpt</object-name>
@@ -6864,7 +7611,8 @@
 			<z2-m>0.478435</z2-m>
 		</axis>
 	</animation>
-	
+
+	<!-- ND_R chrono -->
 	<animation>
 		<type>pick</type>
 		<object-name>chrono_fo</object-name>
@@ -6981,21 +7729,19 @@
 			</binding>
 		</hovered>
 	</animation>
-	
-	<!-- Clock -->
-	
+
 	<!-- Chrono -->
 	<animation>
 		<type>pick</type>
 		<object-name>chrono_reset</object-name>
-		<property>instrumentation/chrono/chrono-reset</property>
+		<property>instrumentation/clock/chrono/chrono-reset-btn</property>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>instrumentation/chrono/chrono-reset</property>
-				<value>2</value>
+				<property>instrumentation/clock/chrono/chrono-reset-btn</property>
+				<value>1</value>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -7007,6 +7753,11 @@
 				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>instrumentation/clock/chrono/chrono-reset-btn</property>
+					<value>0</value>
+				</binding>
 				<binding>
 					<command>property-assign</command>
 					<property>controls/cockpit/clock-chrono-reset-translate</property>
@@ -7025,7 +7776,7 @@
 			</binding>
 		</hovered>
 	</animation>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>chrono_reset</object-name>
@@ -7043,15 +7794,14 @@
 	<animation>
 		<type>pick</type>
 		<object-name>chrono_btn</object-name>
-		<property>instrumentation/chrono/chrono-reset</property>
+		<property>instrumentation/clock/chrono/chrono-btn</property>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
-				<property>instrumentation/chrono/chrono-reset</property>
-				<value>1</value><!-- Start Timer -->
-				<value>0</value><!-- Stop Timer -->
+				<command>property-assign</command>
+				<property>instrumentation/clock/chrono/chrono-btn</property>
+				<value>1</value><!-- Start / Pause Timer -->
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -7063,6 +7813,11 @@
 				<script>setprop("sim/sound/btn1", 1);</script>
 			</binding>
 			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>instrumentation/clock/chrono/chrono-btn</property>
+					<value>0</value>
+				</binding>
 				<binding>
 					<command>property-assign</command>
 					<property>controls/cockpit/clock-chrono-translate</property>
@@ -7081,7 +7836,7 @@
 			</binding>
 		</hovered>
 	</animation>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>chrono_btn</object-name>
@@ -7106,10 +7861,9 @@
 			<button>1</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-assign</command>
 				<property>instrumentation/clock/set-knob</property>
-				<value>0</value><!-- Date Mode -->
-				<value>1</value><!-- Time Mode -->
+				<value>1</value><!-- Date Mode -->
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -7126,6 +7880,11 @@
 					<property>controls/cockpit/clock-set-translate</property>
 					<value>0.0</value>
 				</binding>
+				<binding>
+					<command>property-assign</command>
+					<property>instrumentation/clock/set-knob</property>
+					<value>0</value><!-- Time Mode -->
+				</binding>
 			</mod-up>
 		</action>
 		<hovered>
@@ -7139,7 +7898,245 @@
 			</binding>
 		</hovered>
 	</animation>
-	
+
+	<animation>
+		<type>knob</type>
+		<object-name>clock_set</object-name>
+		<action>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/internal/set-cont</property>
+							<value>5</value>
+						</equals>
+						<or>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>3</value>
+							</equals>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>5</value>
+							</equals>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>7</value>
+							</equals>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>8</value>
+							</equals>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>10</value>
+							</equals>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>12</value>
+							</equals>
+						</or>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/clock/internal/day</property>
+				<factor>1</factor>
+				<min>1</min>
+				<max>32</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/internal/set-cont</property>
+							<value>5</value>
+						</equals>
+						<or>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>11</value>
+							</equals>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>4</value>
+							</equals>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>6</value>
+							</equals>
+							<equals>
+								<property>instrumentation/clock/internal/month</property>
+								<value>9</value>
+							</equals>
+						</or>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/clock/internal/day</property>
+				<factor>1</factor>
+				<min>1</min>
+				<max>31</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/internal/set-cont</property>
+							<value>5</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/internal/month</property>
+							<value>2</value>
+						</equals>
+						<property>instrumentation/clock/internal/bisextile-year</property>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/clock/internal/day</property>
+				<factor>1</factor>
+				<min>1</min>
+				<max>30</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/internal/set-cont</property>
+							<value>5</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/internal/month</property>
+							<value>2</value>
+						</equals>
+						<not>
+							<property>instrumentation/clock/internal/bisextile-year</property>
+						</not>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/clock/internal/day</property>
+				<factor>1</factor>
+				<min>1</min>
+				<max>29</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>instrumentation/clock/set-knb-pos</property>
+				<factor>1</factor>
+				<min>0</min>
+				<max>32</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/internal/set-cont</property>
+							<value>2</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/clock/internal/hr</property>
+				<factor>1</factor>
+				<min>0</min>
+				<max>24</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+						<or>
+							<equals>
+								<property>instrumentation/clock/internal/set-cont</property>
+								<value>0</value>
+							</equals>
+							<equals>
+								<property>instrumentation/clock/internal/set-cont</property>
+								<value>1</value>
+							</equals>
+						</or>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/clock/internal/min</property>
+				<factor>1</factor>
+				<min>0</min>
+				<max>60</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/internal/set-cont</property>
+							<value>3</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/clock/internal/year</property>
+				<factor>1</factor>
+			</binding>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>instrumentation/clock/utc-selector</property>
+							<value>2</value>
+						</equals>
+						<equals>
+							<property>instrumentation/clock/internal/set-cont</property>
+							<value>4</value>
+						</equals>
+					</and>
+				</condition>
+				<command>property-adjust</command>
+				<property>instrumentation/clock/internal/month</property>
+				<factor>1</factor>
+				<min>1</min>
+				<max>13</max>
+				<wrap>true</wrap>
+			</binding>
+		</action>
+	</animation>
+
 	<animation>
 		<type>translate</type>
 		<object-name>clock_set</object-name>
@@ -7151,6 +8148,16 @@
 			<x2-m>-0.375885</x2-m>
 			<y2-m>0.39799</y2-m>
 			<z2-m>0.478435</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>clock_set</object-name>
+		<property>instrumentation/clock/set-knb-pos</property>
+		<factor>11.25</factor>
+		<axis>
+			<object-name>clock_set.axis</object-name>
 		</axis>
 	</animation>
 
@@ -7184,7 +8191,7 @@
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>utc-select-lbl</tooltip-id>
-				<label>(INOP) Select Clock Source</label>
+				<label>Select Clock Source</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -7193,7 +8200,7 @@
 	<animation>
 		<type>knob</type>
 		<object-name>et_knob</object-name>
-		<property>instrumentation/clock/et-selector-pos</property>
+		<property>instrumentation/clock/et/et-selector-pos</property>
 		<factor>22.5</factor>
 		<axis>
 			<object-name>et_knob.axis</object-name>
@@ -7201,7 +8208,7 @@
 		<action>
 			<binding>
 				<command>property-adjust</command>
-				<property>instrumentation/clock/et-selector</property>
+				<property>instrumentation/clock/et/et-selector</property>
 				<min>0</min>
 				<max>2</max>
 				<wrap>false</wrap>
@@ -7215,7 +8222,7 @@
 		<release>
             <binding>
                 <command>property-adjust</command>
-                <property>instrumentation/clock/et-selector</property>
+                <property>instrumentation/clock/et/et-selector</property>
                 <step>0</step>
                 <min>0</min>
                 <max>1</max>
@@ -8698,7 +9705,7 @@
 							<property>systems/electrical/bus/dc-ess</property>
 							<value>25</value>
 						</greater-than-equals>
-						<equals>					
+						<equals>
 							<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
 							<value>0</value>
 						</equals>
@@ -38676,7 +39683,7 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>KBMode.Toggle.fo.002</object-name>
+		<object-name>KBMode.Toggle.fo</object-name>
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>

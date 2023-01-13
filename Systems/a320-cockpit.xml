@@ -251,8 +251,8 @@
 			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="/instrumentation/clock/et-selector-pos">
-			<input>/instrumentation/clock/et-selector</input>
+		<lag_filter name="/instrumentation/clock/et/et-selector-pos">
+			<input>/instrumentation/clock/et/et-selector</input>
 			<c1>20</c1>
 		</lag_filter>
 		
