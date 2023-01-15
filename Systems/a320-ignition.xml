@@ -68,8 +68,9 @@
 		<!-- Engine 1 -->
 		<switch name="/systems/ignition/can-run-1">
 			<default value="0"/>
-			<test value="1">
+			<test logic="AND" value="1">
 				propulsion/tank[5]/contents-lbs ge 1
+				/systems/fuel/pumps/all-eng-pump-off eq 0
 			</test>
 		</switch>
 		
@@ -195,8 +196,9 @@
 		<!-- Engine 2 -->
 		<switch name="/systems/ignition/can-run-2">
 			<default value="0"/>
-			<test value="1">
+			<test logic="AND" value="1">
 				propulsion/tank[6]/contents-lbs ge 1
+				/systems/fuel/pumps/all-eng-pump-off eq 0
 			</test>
 		</switch>
 		
