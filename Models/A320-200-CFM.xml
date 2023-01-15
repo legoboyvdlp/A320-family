@@ -19,7 +19,7 @@
 
 	<animation>
 		<type>material</type>
-		<object-name>EngineCFM56R.Placards</object-name>
+		<object-name>EngineCFM56.Placards</object-name>
 		<property-base>sim/model/livery/</property-base>
 		<texture-prop>texture-placards</texture-prop>
 		<texture>placards.png</texture>

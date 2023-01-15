@@ -18,7 +18,7 @@
 
 	<animation>
 		<type>material</type>
-		<object-name>EngineIAEV2500L.Placards</object-name>
+		<object-name>EngineIAEV2500.Placards</object-name>
 		<property-base>sim/model/livery/</property-base>
 		<texture-prop>texture-placards</texture-prop>
 		<texture>placards.png</texture>
