@@ -7,13 +7,23 @@
 	
 	<channel name="Animations">
 		
-		<lag_filter name="/controls/cockpit/aileron-sidestick">
-			<input>fbw/sidestick/roll-input-cmd</input>
+		<lag_filter name="/controls/cockpit/aileron-sidestick-capt">
+			<input>/controls/flight/aileron</input>
 			<c1>20</c1>
 		</lag_filter>
 		
-		<lag_filter name="/controls/cockpit/elevator-sidestick">
-			<input>fbw/sidestick/pitch-input-cmd</input>
+		<lag_filter name="/controls/cockpit/aileron-sidestick-fo">
+			<input>/controls/flight/aileron[1]</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/elevator-sidestick-capt">
+			<input>/controls/flight/elevator</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/cockpit/elevator-sidestick-fo">
+			<input>/controls/flight/elevator[1]</input>
 			<c1>20</c1>
 		</lag_filter>
 		

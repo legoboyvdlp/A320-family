@@ -10,12 +10,12 @@
 		<type>translate</type>
 		<property>systems/shake/shaking</property>
 		<axis>
-			<x1-m> 0.0</x1-m>
-			<y1-m> 0.0</y1-m>
-			<z1-m> 0.0</z1-m>
-			<x2-m> 0.5</x2-m>
+			<x1-m>0.0</x1-m>
+			<y1-m>0.0</y1-m>
+			<z1-m>0.0</z1-m>
+			<x2-m>0.5</x2-m>
 			<y2-m>-0.5</y2-m>
-			<z2-m> 0.8</z2-m>
+			<z2-m>0.8</z2-m>
 		</axis>
 	</animation>
 
@@ -3719,7 +3719,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>sidestick_1</object-name>
-		<property>controls/flight/elevator</property>
+		<property>controls/cockpit/elevator-sidestick-capt</property>
 		<factor>-5</factor>
 		<axis>
 			<object-name>sidestick_1.y.axis</object-name>
@@ -3729,7 +3729,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>sidestick_1</object-name>
-		<property>controls/flight/aileron</property>
+		<property>controls/cockpit/aileron-sidestick-capt</property>
 		<factor>5</factor>
 		<axis>
 			<object-name>sidestick_1.x.axis</object-name>
@@ -3740,7 +3740,7 @@
 		<type>rotate</type>
 		<object-name>sidestick_1</object-name>
 		<object-name>level3</object-name>
-		<property>controls/flight/elevator</property>
+		<property>controls/cockpit/elevator-sidestick-capt</property>
 		<factor>-4</factor>
 		<axis>
 			<object-name>sidestick_1.y.axis</object-name>
@@ -3751,7 +3751,7 @@
 		<type>rotate</type>
 		<object-name>sidestick_1</object-name>
 		<object-name>level3</object-name>
-		<property>controls/flight/aileron</property>
+		<property>controls/cockpit/aileron-sidestick-capt</property>
 		<factor>4</factor>
 		<axis>
 			<object-name>sidestick_1.x.axis</object-name>
@@ -3763,7 +3763,7 @@
 		<object-name>sidestick_1</object-name>
 		<object-name>level3</object-name>
 		<object-name>level2</object-name>
-		<property>controls/flight/elevator</property>
+		<property>controls/cockpit/elevator-sidestick-capt</property>
 		<factor>-3</factor>
 		<axis>
 			<object-name>sidestick_1.y.axis</object-name>
@@ -3775,7 +3775,7 @@
 		<object-name>sidestick_1</object-name>
 		<object-name>level3</object-name>
 		<object-name>level2</object-name>
-		<property>controls/flight/aileron</property>
+		<property>controls/cockpit/aileron-sidestick-capt</property>
 		<factor>3</factor>
 		<axis>
 			<object-name>sidestick_1.x.axis</object-name>
@@ -3788,7 +3788,7 @@
 		<object-name>level3</object-name>
 		<object-name>level2</object-name>
 		<object-name>level1</object-name>
-		<property>controls/flight/elevator</property>
+		<property>controls/cockpit/elevator-sidestick-capt</property>
 		<factor>-2</factor>
 		<axis>
 			<object-name>sidestick_1.y.axis</object-name>
@@ -3801,7 +3801,7 @@
 		<object-name>level3</object-name>
 		<object-name>level2</object-name>
 		<object-name>level1</object-name>
-		<property>controls/flight/aileron</property>
+		<property>controls/cockpit/aileron-sidestick-capt</property>
 		<factor>2</factor>
 		<axis>
 			<object-name>sidestick_1.x.axis</object-name>
@@ -3812,7 +3812,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>sidestick_2</object-name>
-		<property>controls/flight/elevator[1]</property>
+		<property>controls/cockpit/elevator-sidestick-fo</property>
 		<factor>5</factor>
 		<axis>
 			<object-name>sidestick_2.y.axis</object-name>
@@ -3822,7 +3822,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>sidestick_2</object-name>
-		<property>controls/flight/aileron[1]</property>
+		<property>controls/cockpit/aileron-sidestick-fo</property>
 		<factor>5</factor>
 		<axis>
 			<object-name>sidestick_2.x.axis</object-name>
@@ -3833,7 +3833,7 @@
 		<type>rotate</type>
 		<object-name>sidestick_2</object-name>
 		<object-name>level3_2</object-name>
-		<property>controls/flight/elevator[1]</property>
+		<property>controls/cockpit/elevator-sidestick-fo</property>
 		<factor>4</factor>
 		<axis>
 			<object-name>sidestick_2.y.axis</object-name>
@@ -3844,7 +3844,7 @@
 		<type>rotate</type>
 		<object-name>sidestick_2</object-name>
 		<object-name>level3_2</object-name>
-		<property>controls/flight/aileron[1]</property>
+		<property>controls/cockpit/aileron-sidestick-fo</property>
 		<factor>4</factor>
 		<axis>
 			<object-name>sidestick_2.x.axis</object-name>
@@ -3856,7 +3856,7 @@
 		<object-name>sidestick_2</object-name>
 		<object-name>level3_2</object-name>
 		<object-name>level2_2</object-name>
-		<property>controls/flight/elevator[1]</property>
+		<property>controls/cockpit/elevator-sidestick-fo</property>
 		<factor>3</factor>
 		<axis>
 			<object-name>sidestick_2.y.axis</object-name>
@@ -3868,7 +3868,7 @@
 		<object-name>sidestick_2</object-name>
 		<object-name>level3_2</object-name>
 		<object-name>level2_2</object-name>
-		<property>controls/flight/aileron[1]</property>
+		<property>controls/cockpit/aileron-sidestick-fo</property>
 		<factor>3</factor>
 		<axis>
 			<object-name>sidestick_2.x.axis</object-name>
@@ -3881,7 +3881,7 @@
 		<object-name>level3_2</object-name>
 		<object-name>level2_2</object-name>
 		<object-name>level1_2</object-name>
-		<property>controls/flight/elevator[1]</property>
+		<property>controls/cockpit/elevator-sidestick-fo</property>
 		<factor>2</factor>
 		<axis>
 			<object-name>sidestick_2.y.axis</object-name>
@@ -3894,7 +3894,7 @@
 		<object-name>level3_2</object-name>
 		<object-name>level2_2</object-name>
 		<object-name>level1_2</object-name>
-		<property>controls/flight/aileron[1]</property>
+		<property>controls/cockpit/aileron-sidestick-fo</property>
 		<factor>2</factor>
 		<axis>
 			<object-name>sidestick_2.x.axis</object-name>
