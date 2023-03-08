@@ -179,11 +179,20 @@
 			<nasal>
 				<load>
 					<![CDATA[
+						var textureIndex = 15;
+						foreach (var texture; props.globals.getNode("/canvas/by-index").getChildren("texture")) {
+							var name = texture.getChild("name");
+							if (name != nil and name.getValue() == "MCDU1") {
+								textureIndex = texture.getIndex();
+								break;
+							}
+						}
+
 						var mcdu_canvas_dlg = canvas.get(cmdarg());
 						var root = mcdu_canvas_dlg.createGroup();
 						root.setScale(0.285, 0.25);
 						mcdu_canvas_dlg.setColorBackground(0, 0, 0, 1.0);
-						root.createChild("image").set("src", "canvas://by-index/texture[15]");
+						root.createChild("image").set("src", "canvas://by-index/texture[" ~ textureIndex ~ "]");
 					]]>
 				</load>
 				<unload>
