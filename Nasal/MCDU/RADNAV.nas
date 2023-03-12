@@ -278,7 +278,7 @@ var radnavInput = func(key, i) {
 			}
 		} else if (key == "R1") {
 			if (radNavScratchpad == "CLR") {
-				fmgc.FMGCInternal.VOR1.freqSet = 0;
+				fmgc.FMGCInternal.VOR2.freqSet = 0;
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				if (size(split("/", radNavScratchpad)) == 2) {
