@@ -309,12 +309,12 @@ var canvas_lowerECAMPageFuel =
 			}),
 			props.UpdateManager.FromHashList(["fuelEngine2Valve","engineCutoff2"], 0.1, func(val) {
 				if (val.fuelEngine2Valve > 0.1) {
-					if (val.fuelEngine1Valve >= 0.9) {
+					if (val.fuelEngine2Valve >= 0.9) {
 						obj["FUEL-ENG-Master-2"].setRotation(0);
 					} else {
 						obj["FUEL-ENG-Master-2"].setRotation(45 * D2R);
 					}
-					if (val.engineCutoff1) {
+					if (val.engineCutoff2) {
 						obj["FUEL-ENG-Master-2"].setColor(0.7333,0.3803,0);
 						obj["FUEL-ENG-Master-2"].setColorFill(0.7333,0.3803,0);
 						obj["FUEL-ENG-Master-2-Cross"].setColorFill(0.7333,0.3803,0);
