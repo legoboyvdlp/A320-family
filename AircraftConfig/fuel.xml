@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
 <PropertyList>
-
-	<nasal>
-		
-		<close>
-			<![CDATA[
-				systems.FUEL.Nodes.requestLbs.setValue(0);
-			]]>
-		</close>
-	</nasal>
 
     <name>fuel-dlg</name>
     <layout>vbox</layout>

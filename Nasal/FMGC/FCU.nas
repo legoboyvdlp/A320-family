@@ -1,12 +1,12 @@
 # A3XX FCU
-# Copyright (c) 2022 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2023 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
 
 # Nodes
 var altSetMode = props.globals.getNode("/it-autoflight/config/altitude-dial-mode", 1);
 var apOffSound = [props.globals.getNode("/it-autoflight/sound/apoffsound"),props.globals.getNode("/it-autoflight/sound/apoffsound2")];
 var apWarningNode = props.globals.getNode("/it-autoflight/output/ap-warning");
 var athrWarningNode = props.globals.getNode("/it-autoflight/output/athr-warning");
-var apDiscBtn = props.globals.getNode("/sim/sounde/apdiscbtn");
+var apDiscBtn = props.globals.getNode("/sim/sound/apdiscbtn");
 var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
 var SidestickPriorityPressedLast = 0;
 var priorityTimer = 0;
@@ -294,7 +294,10 @@ var FCUController = {
 	HDGPush: func() {
 		if (me.FCUworking) {
 			if (fmgc.Output.fd1.getBoolValue() or fmgc.Output.fd2.getBoolValue() or fmgc.Output.ap1.getBoolValue() or fmgc.Output.ap2.getBoolValue()) {
-				fmgc.Input.lat.setValue(1);
+				var wp = fmgc.flightPlanController.flightplans[2].getWP(fmgc.flightPlanController.currentToWptIndex.getValue());
+				if (wp != nil and wp.wp_type != "discontinuity" and wp.wp_type != "vectors") {
+					fmgc.Input.lat.setValue(1);
+				}
 			}
 		}
 	},
@@ -538,6 +541,9 @@ var apOff = func(type, side) {
 	} elsif (side == 2) {
 		fmgc.Input.ap2.setValue(0);
 	}
+
+    var radarft = (side == 2) ? getprop("/instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected") : getprop("/instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected");
+	setprop("/instrumentation/pfd/logic/autoland/ap-disc-ft",radarft);
 }
 
 # Autothrust Disconnection

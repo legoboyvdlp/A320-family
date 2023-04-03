@@ -1,10 +1,10 @@
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <PropertyList include="A320-common-sound.xml">
   <fx>
 	<!-- cockpit -->
 	<engine>
-		<name>a320_startup_left</name>
+		<name>a320_starter_left</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start1.wav</path>
 		<condition>
@@ -25,7 +25,7 @@
 	</engine>
 	
 	<engine>
-		<name>a320_startup_right</name>
+		<name>a320_starter_right</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start1.wav</path>
 		<condition>
@@ -46,7 +46,7 @@
 	</engine>
 	
 	<engine>
-		<name>a320_startup_left_2</name>
+		<name>a320_startup_left</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start2.wav</path>
 		<condition>
@@ -67,7 +67,7 @@
 	</engine>
 	
 	<engine>
-		<name>a320_startup_right_2</name>
+		<name>a320_startup_right</name>
 		<mode>once</mode>
 		<path>Aircraft/A320-family/Sounds/SASA/V2500/start/v2500-start2.wav</path>
 		<condition>

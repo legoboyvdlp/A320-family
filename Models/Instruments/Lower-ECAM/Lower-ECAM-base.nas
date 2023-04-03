@@ -1,5 +1,5 @@
 # A3XX Lower ECAM Canvas
-# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath
 
 var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3");
 var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");
@@ -73,8 +73,7 @@ var canvas_lowerECAM_base =
 		}
 	},
 	# Due to weirdness of the parents hash / me reference
-	# you need to access it using me.Test_white rather than
-	# me["Test_white"]
+	# you need to access it using me.Test_white
 	updateTest: func(notification) {
 		if (du4_test_time.getValue() + 1 >= notification.elapsedTime) {
 			me.Test_white.show();

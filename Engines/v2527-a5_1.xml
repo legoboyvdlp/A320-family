@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <turbine_engine name="V2527-A5">
 	
 	<milthrust>26600</milthrust> <!-- @ 0.2 Mach, 24800 at 0 Mach, handled in fadec file -->
 	<tsfc>0.335</tsfc>
-	<bleed>0.03</bleed>
-	<ignitionn1>4.8</ignitionn1>
-	<ignitionn2>23.9</ignitionn2>
-	<n1spinup>0.37</n1spinup>
-	<n2spinup>1.85</n2spinup>
+	<bleed>0</bleed> <!-- Set by pneumatic system -->
+	<ignitionn1>5.3</ignitionn1>
+	<ignitionn2>28.5</ignitionn2>
+	<n1spinup>0.343</n1spinup>
+	<n2spinup>1.845</n2spinup>
 	<n1startrate>0.365</n1startrate>
 	<n2startrate>0.767</n2startrate>
 	<idlen1>22.4</idlen1>
 	<idlen2>60.9</idlen2>
-	<maxn1>100.0</maxn1>
-	<maxn2>100.0</maxn2>
+	<maxn1>100</maxn1>
+	<maxn2>100</maxn2>
 	<augmented>0</augmented>
 	<injected>0</injected>
 	

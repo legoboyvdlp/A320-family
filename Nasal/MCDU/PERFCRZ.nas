@@ -33,6 +33,7 @@ var perfCRZInput = func(key, i) {
 					setprop("/FMGC/internal/activate-twice", 1);
 					fmgc.FMGCInternal.phase = 5;
 					fmgc.FMGCInternal.decel = 1;
+					setprop("/instrumentation/nd/symbols/decel/show", 0); 
 					setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
 				} else {
 					mcdu_message(i, "NOT ALLOWED");

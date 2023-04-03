@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
@@ -49,7 +49,6 @@
 	<filter>
 		<name>Track heading diff</name>
 		<type>gain</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
 		<gain>1.0</gain>
 		<input>
 			<property>/orientation/track-deg</property>
@@ -63,7 +62,6 @@
 	<filter>
 		<name>Heading scale</name>
 		<type>gain</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
 		<gain>1.0</gain>
 		<input>
 			<condition>
@@ -78,7 +76,6 @@
 	<filter>
 		<name>Heading bug diff</name>
 		<type>gain</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
 		<gain>1.0</gain>
 		<input>
 			<property>/it-autoflight/input/hdg</property>
@@ -104,7 +101,6 @@
 	<filter>
 		<name>Track bug diff</name>
 		<type>gain</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
 		<gain>1.0</gain>
 		<input>
 			<property>/instrumentation/pfd/track-deg</property>
@@ -114,17 +110,25 @@
 			</period>
 		</input>
 		<reference>
-			<property>/instrumentation/pfd/heading-scale</property>
+			<property>/instrumentation/pfd/heading-deg</property>
 			<period>
 				<min>-180.0</min>
 				<max>180.0</max>
 			</period>
 		</reference>
-		<output>/instrumentation/pfd/track-hdg-diff</output>
+		<output>/instrumentation/pfd/track-hdg-diff-cmd</output>
 		<period>
 			<min>-180.0</min>
 			<max>180.0</max>
 		</period>
+	</filter>
+	
+	<filter>
+		<name>Track bug diff smoothed</name>
+		<type>exponential</type>
+		<input>/instrumentation/pfd/track-hdg-diff-cmd</input>
+		<output>/instrumentation/pfd/track-hdg-diff</output>
+		<filter-time>0.16</filter-time>
 	</filter>
 	
 	<filter>

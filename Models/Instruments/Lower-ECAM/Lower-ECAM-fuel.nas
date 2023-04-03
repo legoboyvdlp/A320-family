@@ -1,5 +1,5 @@
 # A3XX Lower ECAM Canvas
-# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath
 
 var fuel_used_lbs1 = props.globals.getNode("/systems/fuel/fuel-used-1", 1);
 var fuel_used_lbs2 = props.globals.getNode("/systems/fuel/fuel-used-2", 1);
@@ -21,7 +21,6 @@ var canvas_lowerECAMPageFuel =
 			obj[key] = obj.group.getElementById(key);
 		};
 		
-		obj.units = acconfig_weight_kgs.getValue();
 		
 		# init
 		obj["FUEL-Left-blocked"].hide();
@@ -33,97 +32,78 @@ var canvas_lowerECAMPageFuel =
 		obj["FUEL-Center-Inacc"].hide();
 		
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
 				if (val) {
 					obj["FOB-weight-unit"].setText("KG");
 					obj["Fused-weight-unit"].setText("KG");
 					obj["FFlow-weight-unit"].setText("KG/MIN");
-					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(pts.Consumables.Fuel.totalFuelLbs.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.leftOuter.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.leftInner.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Center-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.center.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.rightInner.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.rightOuter.getValue() * LBS2KGS, 10)));
-					obj["FUEL-Flow-per-min"].setText(sprintf("%s", math.round(((pts.Engines.Engine.fuelFlow[0].getValue() + pts.Engines.Engine.fuelFlow[1].getValue()) * LBS2KGS) / 60, 10)));
-					obj["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue() * LBS2KGS, 10)));
-					obj["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue() * LBS2KGS, 10)));
-					obj["FUEL-used-both"].setText(sprintf("%s", (math.round((fuel_used_lbs1.getValue() * LBS2KGS) + (fuel_used_lbs2.getValue() * LBS2KGS), 10))));
 				} else {
-					obj["FUEL-used-1"].setText(sprintf("%s", math.round(fuel_used_lbs1.getValue(), 10)));
-					obj["FUEL-used-2"].setText(sprintf("%s", math.round(fuel_used_lbs2.getValue(), 10)));
-					obj["FUEL-used-both"].setText(sprintf("%s", (math.round(fuel_used_lbs1.getValue() + fuel_used_lbs2.getValue(), 10))));
-					obj["FUEL-Flow-per-min"].setText(sprintf("%s", math.round((pts.Engines.Engine.fuelFlow[0].getValue() + pts.Engines.Engine.fuelFlow[1].getValue()) / 60, 10)));
 					obj["FOB-weight-unit"].setText("LBS");
 					obj["Fused-weight-unit"].setText("LBS");
 					obj["FFlow-weight-unit"].setText("LBS/MIN");
-					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(pts.Consumables.Fuel.totalFuelLbs.getValue(), 10)));
-					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.leftOuter.getValue(), 10)));
-					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.leftInner.getValue(), 10)));
-					obj["FUEL-Center-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.center.getValue(), 10)));
-					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s", math.round(systems.FUEL.Quantity.rightInner.getValue(), 10)));
-					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(systems.FUEL.Quantity.rightOuter.getValue(), 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("engFuelUsed1", 0.5, func(val) {
-				if (obj.units) {
-					obj["FUEL-used-1"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["engFuelUsed1","acconfigUnits"], 0.5, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-used-1"].setText(sprintf("%s", math.round(val.engFuelUsed1 * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-used-1"].setText(sprintf("%s", math.round(val, 10)));
+					obj["FUEL-used-1"].setText(sprintf("%s", math.round(val.engFuelUsed1, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("engFuelUsed2", 0.5, func(val) {
-				if (obj.units) {
-					obj["FUEL-used-2"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["engFuelUsed2","acconfigUnits"], 0.5, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-used-2"].setText(sprintf("%s", math.round(val.engFuelUsed2 * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-used-2"].setText(sprintf("%s", math.round(val, 10)));
+					obj["FUEL-used-2"].setText(sprintf("%s", math.round(val.engFuelUsed2, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashList(["engFuelUsed1","engFuelUsed2"], 0.5, func(val) {
-				if (obj.units) {
+			props.UpdateManager.FromHashList(["engFuelUsed1","engFuelUsed2","acconfigUnits"], 0.5, func(val) {
+				if (val.acconfigUnits) {
 					obj["FUEL-used-both"].setText(sprintf("%s", (math.round((val.engFuelUsed1 * LBS2KGS) + (val.engFuelUsed2 * LBS2KGS), 10))));
 				} else {
 					obj["FUEL-used-both"].setText(sprintf("%s", (math.round(val.engFuelUsed1 + val.engFuelUsed2, 10))));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelLeftOuterQty", 0.25, func(val) {
-				if (obj.units) {
-					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelLeftOuterQty","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(val.fuelLeftOuterQty * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(val, 10)));
+					obj["FUEL-Left-Outer-quantity"].setText(sprintf("%s",  math.round(val.fuelLeftOuterQty, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelRightOuterQty", 0.25, func(val) {
-				if (obj.units) {
-					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelRightOuterQty","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(val.fuelRightOuterQty * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(val, 10)));
+					obj["FUEL-Right-Outer-quantity"].setText(sprintf("%s",  math.round(val.fuelRightOuterQty, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelLeftInnerQty", 0.25, func(val) {
-				if (obj.units) {
-					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelCenterQty","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-Center-quantity"].setText(sprintf("%s",  math.round(val.fuelCenterQty * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s",  math.round(val, 10)));
+					obj["FUEL-Center-quantity"].setText(sprintf("%s",  math.round(val.fuelCenterQty, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelRightInnerQty", 0.25, func(val) {
-				if (obj.units) {
-					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s",  math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelLeftInnerQty","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s",  math.round(val.fuelLeftInnerQty * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s",  math.round(val, 10)));
+					obj["FUEL-Left-Inner-quantity"].setText(sprintf("%s",  math.round(val.fuelLeftInnerQty, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashList(["fadecPower1","fadecPower2","fadecPowerStart","fuelflow_1","fuelflow_2"], nil, func(val) {
-				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
-					obj["FUEL-Flow-per-min"].setColor(0.0509,0.7529,0.2941);
-					if (obj.units) {
-						obj["FUEL-Flow-per-min"].setText(sprintf("%s", math.round(((val.fuelflow_1 + val.fuelflow_2) * LBS2KGS) / 60, 10)));
-					} else {
-						obj["FUEL-Flow-per-min"].setText(sprintf("%s", math.round((val.fuelflow_1 + val.fuelflow_2) / 60, 10)));
-					}
+			props.UpdateManager.FromHashList(["fuelRightInnerQty","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s",  math.round(val.fuelRightInnerQty * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-Flow-per-min"].setColor(0.7333,0.3803,0);
-					obj["FUEL-Flow-per-min"].setText("XX");
+					obj["FUEL-Right-Inner-quantity"].setText(sprintf("%s",  math.round(val.fuelRightInnerQty, 10)));
+				}
+			}),
+			props.UpdateManager.FromHashList(["fuelflow_1","fuelflow_2","acconfigUnits"], 0.25, func(val) {
+				if (val.acconfigUnits) {
+					obj.fuelFlowPerMinute = sprintf("%s", math.round(((val.fuelflow_1 + val.fuelflow_2) * LBS2KGS) / 60, 10));
+				} else {
+					obj.fuelFlowPerMinute = sprintf("%s", math.round((val.fuelflow_1 + val.fuelflow_2) / 60, 10));
 				}
 			}),
 			props.UpdateManager.FromHashValue("N1_actual_1", 0.05, func(val) {
@@ -144,7 +124,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-ENG-2-label"].setColor(0.8078,0.8039,0.8078);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelLeftSwitch1", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelLeftSwitch1", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Left-1-Open"].show();
 					obj["FUEL-Pump-Left-1-Closed"].hide();
@@ -163,7 +143,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Left-1-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelLeftSwitch2", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelLeftSwitch2", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Left-2-Open"].show();
 					obj["FUEL-Pump-Left-2-Closed"].hide();
@@ -182,7 +162,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Left-2-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelCenterSwitch1", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelCenterSwitch1", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Center-1-Open"].show();
 					obj["FUEL-Pump-Center-1-Closed"].hide();
@@ -201,7 +181,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Center-1-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelCenterSwitch2", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelCenterSwitch2", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Center-2-Open"].show();
 					obj["FUEL-Pump-Center-2-Closed"].hide();
@@ -220,7 +200,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Center-2-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelRightSwitch1", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelRightSwitch1", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Right-1-Open"].show();
 					obj["FUEL-Pump-Right-1-Closed"].hide();
@@ -239,7 +219,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Right-1-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelRightSwitch2", nil, func(val) {
+			props.UpdateManager.FromHashValue("fuelRightSwitch2", 1, func(val) {
 				if (val) {
 					obj["FUEL-Pump-Right-2-Open"].show();
 					obj["FUEL-Pump-Right-2-Closed"].hide();
@@ -258,15 +238,15 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Pump-Right-2-Closed"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["fuelCenterSwitch1","fuelCenterSwitch2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["fuelCenterSwitch1","fuelCenterSwitch2"], 1, func(val) {
 				if (!val.fuelCenterSwitch1 and !val.fuelCenterSwitch2) {
 					obj["FUEL-Center-blocked"].show();
 				} else {
 					obj["FUEL-Center-blocked"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["fuelCrossfeedValve","fuelCrossfeedSwitch"], nil, func(val) {
-				if (val.fuelCrossfeedValve == 1) {
+			props.UpdateManager.FromHashList(["fuelCrossfeedValve","fuelCrossfeedSwitch"], 0.1, func(val) {
+				if (val.fuelCrossfeedValve >= 0.9) {
 					obj["FUEL-XFEED"].setRotation(0);
 					obj["FUEL-XFEED-pipes"].show();
 					if (val.fuelCrossfeedSwitch) {
@@ -278,7 +258,7 @@ var canvas_lowerECAMPageFuel =
 						obj["FUEL-XFEED"].setColorFill(0.7333,0.3803,0);
 						obj["FUEL-XFEED-Cross"].setColorFill(0.7333,0.3803,0);
 					}
-				} elsif (val.fuelCrossfeedValve == 0) {
+				} elsif (val.fuelCrossfeedValve <= 0.1) {
 					obj["FUEL-XFEED"].setRotation(90 * D2R);
 					obj["FUEL-XFEED-pipes"].hide();
 					if (!val.fuelCrossfeedSwitch) {
@@ -298,9 +278,9 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-XFEED-Cross"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["fuelEngine1Valve","engineCutoff1"], nil, func(val) {
-				if (val.fuelEngine1Valve) {
-					if (val.fuelEngine1Valve == 1) {
+			props.UpdateManager.FromHashList(["fuelEngine1Valve","engineCutoff1"], 0.1, func(val) {
+				if (val.fuelEngine1Valve > 0.1) {
+					if (val.fuelEngine1Valve >= 0.9) {
 						obj["FUEL-ENG-Master-1"].setRotation(0);
 					} else {
 						obj["FUEL-ENG-Master-1"].setRotation(45 * D2R);
@@ -327,14 +307,14 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-ENG-1-pipe"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["fuelEngine2Valve","engineCutoff2"], nil, func(val) {
-				if (val.fuelEngine2Valve) {
-					if (val.fuelEngine2Valve == 1) {
+			props.UpdateManager.FromHashList(["fuelEngine2Valve","engineCutoff2"], 0.1, func(val) {
+				if (val.fuelEngine2Valve > 0.1) {
+					if (val.fuelEngine2Valve >= 0.9) {
 						obj["FUEL-ENG-Master-2"].setRotation(0);
 					} else {
 						obj["FUEL-ENG-Master-2"].setRotation(45 * D2R);
 					}
-					if (val.engineCutoff1) {
+					if (val.engineCutoff2) {
 						obj["FUEL-ENG-Master-2"].setColor(0.7333,0.3803,0);
 						obj["FUEL-ENG-Master-2"].setColorFill(0.7333,0.3803,0);
 						obj["FUEL-ENG-Master-2-Cross"].setColorFill(0.7333,0.3803,0);
@@ -356,11 +336,11 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-ENG-2-pipe"].setColorFill(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTransferValve1", nil, func(val) {
-				if (val == 0) {
+			props.UpdateManager.FromHashValue("fuelTransferValve1", 0.1, func(val) {
+				if (val <= 0.1) {
 					obj["FUEL-Left-Transfer"].hide();
 				} else {
-					if (val == 1) {
+					if (val >= 0.9) {
 						obj["FUEL-Left-Transfer"].setColor(0.0509,0.7529,0.2941);
 					} else {
 						obj["FUEL-Left-Transfer"].setColor(0.7333,0.3803,0);
@@ -368,11 +348,11 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Left-Transfer"].show();
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTransferValve2", nil, func(val) {
-				if (val == 0) {
+			props.UpdateManager.FromHashValue("fuelTransferValve2", 0.1, func(val) {
+				if (val <= 0.1) {
 					obj["FUEL-Right-Transfer"].hide();
 				} else {
-					if (val == 1) {
+					if (val >= 0.9) {
 						obj["FUEL-Right-Transfer"].setColor(0.0509,0.7529,0.2941);
 					} else {
 						obj["FUEL-Right-Transfer"].setColor(0.7333,0.3803,0);
@@ -380,14 +360,14 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Right-Transfer"].show();
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTotalLbs", 1, func(val) {
-				if (obj.units) {
-					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(val * LBS2KGS, 10)));
+			props.UpdateManager.FromHashList(["fuelTotalLbs","acconfigUnits"], 1, func(val) {
+				if (val.acconfigUnits) {
+					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(val.fuelTotalLbs * LBS2KGS, 10)));
 				} else {
-					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(val, 10)));
+					obj["FUEL-On-Board"].setText(sprintf("%s", math.round(val.fuelTotalLbs, 10)));
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTempLeftOuter", 0.25, func(val) {
+			props.UpdateManager.FromHashValue("fuelTempLeftOuter", 0.5, func(val) {
 				obj["FUEL-Left-Outer-temp"].setText(sprintf("%s", math.round(val)));
 				if (val > 55 or val < -40) {
 					obj["FUEL-Left-Outer-temp"].setColor(0.7333,0.3803,0);
@@ -395,7 +375,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Left-Outer-temp"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTempLeftInner", 0.25, func(val) {
+			props.UpdateManager.FromHashValue("fuelTempLeftInner", 0.5, func(val) {
 				obj["FUEL-Left-Inner-temp"].setText(sprintf("%s", math.round(val)));
 				if (val > 45 or val < -40) {
 					obj["FUEL-Left-Inner-temp"].setColor(0.7333,0.3803,0);
@@ -403,7 +383,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Left-Inner-temp"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTempRightInner", 0.25, func(val) {
+			props.UpdateManager.FromHashValue("fuelTempRightInner", 0.5, func(val) {
 				obj["FUEL-Right-Inner-temp"].setText(sprintf("%s", math.round(val)));
 				if (val > 45 or val < -40) {
 					obj["FUEL-Right-Inner-temp"].setColor(0.7333,0.3803,0);
@@ -411,7 +391,7 @@ var canvas_lowerECAMPageFuel =
 					obj["FUEL-Right-Inner-temp"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashValue("fuelTempRightOuter", 0.25, func(val) {
+			props.UpdateManager.FromHashValue("fuelTempRightOuter", 0.5, func(val) {
 				obj["FUEL-Right-Outer-temp"].setText(sprintf("%s", math.round(val)));
 				if (val > 55 or val < -40) {
 					obj["FUEL-Right-Outer-temp"].setColor(0.7333,0.3803,0);
@@ -450,35 +430,35 @@ var canvas_lowerECAMPageFuel =
 			}),
 		];
 		
-		obj.displayedGForce = 0;
 		obj.updateItemsBottom = [
-			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
-				obj.units = val;
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
 				if (val) {
 					obj["GW-weight-unit"].setText("KG");
 				} else {
 					obj["GW-weight-unit"].setText("LBS");
 				}
 			}),
-			props.UpdateManager.FromHashValue("hour", nil, func(val) {
+			props.UpdateManager.FromHashValue("hour", 1, func(val) {
 				obj["UTCh"].setText(sprintf("%02d", val));
 			}),
-			props.UpdateManager.FromHashValue("minute", nil, func(val) {
+			props.UpdateManager.FromHashValue("minute", 1, func(val) {
 				obj["UTCm"].setText(sprintf("%02d", val));
 			}),
 			props.UpdateManager.FromHashValue("gForce", 0.05, func(val) {
-				if (obj.displayedGForce) {
-					obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
-				}
+				obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
 			}),
 			props.UpdateManager.FromHashValue("gForceDisplay", nil, func(val) {
-				if ((val == 1 and !obj.displayedGForce) or (val != 0 and obj.displayedGForce)) {
-					obj.displayedGForce = 1;
+				if (val) {
 					obj["GLoad"].show();
 				} else {
-					obj.displayedGForce = 0;
 					obj["GLoad"].hide();
 				}
+			}),
+			props.UpdateManager.FromHashValue("satTemp", 0.5, func(val) {
+				obj["SAT"].setText(sprintf("%+2.0f", val));
+			}),
+			props.UpdateManager.FromHashValue("tatTemp", 0.5, func(val) {
+				obj["TAT"].setText(sprintf("%+2.0f", val));
 			}),
 		];
 		return obj;
@@ -495,13 +475,8 @@ var canvas_lowerECAMPageFuel =
 		"Fused-weight-unit","FFlow-weight-unit","FOB-weight-unit","FUEL-ENG-Master-1-Cross","FUEL-ENG-Master-2-Cross","FUEL-Pump-Left-1-Square","FUEL-Pump-Left-2-Square","FUEL-Pump-Center-1-Square","FUEL-Pump-Center-2-Square","FUEL-Pump-Right-1-Square","FUEL-Pump-Right-2-Square"];
 	},
 	updateBottom: func(notification) {
-		foreach(var update_item_bottom; me.updateItemsBottom)
-        {
-            update_item_bottom.update(notification);
-        }
-		
 		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
-			if (me.units) {
+			if (notification.acconfigUnits) {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
 			} else {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
@@ -513,20 +488,25 @@ var canvas_lowerECAMPageFuel =
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
-			me["SAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
+			notification.satTemp = dmc.DMController.DMCs[1].outputs[4].getValue();
 			me["SAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["SAT"].setText(sprintf("%s", "XX"));
+			me["SAT"].setText("XX");
 			me["SAT"].setColor(0.7333,0.3803,0);
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[5] != nil) {
-			me["TAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
+			notification.tatTemp = dmc.DMController.DMCs[1].outputs[5].getValue();
 			me["TAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["TAT"].setText(sprintf("%s", "XX"));
+			me["TAT"].setText("XX");
 			me["TAT"].setColor(0.7333,0.3803,0);
 		}
+		
+		foreach(var update_item_bottom; me.updateItemsBottom)
+        {
+            update_item_bottom.update(notification);
+        }
 	},
 	update: func(notification) {
 		me.updatePower();
@@ -543,6 +523,14 @@ var canvas_lowerECAMPageFuel =
         {
             update_item.update(notification);
         }
+		
+		if (notification.fadecPower1 or notification.fadecPower2 or notification.fadecPowerStart) {
+			me["FUEL-Flow-per-min"].setColor(0.0509,0.7529,0.2941);
+			me["FUEL-Flow-per-min"].setText(me.fuelFlowPerMinute);
+		} else {
+			me["FUEL-Flow-per-min"].setColor(0.7333,0.3803,0);
+			me["FUEL-Flow-per-min"].setText("XX");
+		}
 		
 		me.updateBottom(notification);
 	},

@@ -1,5 +1,5 @@
 # A3XX Lower ECAM Canvas
-# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath
 
 var canvas_lowerECAMPageElec =
 {
@@ -18,7 +18,6 @@ var canvas_lowerECAMPageElec =
 			obj[key] = obj.group.getElementById(key);
 		};
 		
-		obj.units = acconfig_weight_kgs.getValue();
 		
 		# init
 		obj["IDG1-LOPR"].hide();
@@ -30,21 +29,17 @@ var canvas_lowerECAMPageElec =
 		obj["IDG1-RISE-Value"].hide();
 
 		obj.update_items = [
-			props.UpdateManager.FromHashValue("apuLoad", 0.1, func(val) {
+			props.UpdateManager.FromHashValue("apuLoad", 0.5, func(val) {
 				obj["APUGenLoad"].setText(sprintf("%s", math.round(val)));
 				
-				if (val < 110) {
-					obj["APUGenHz"].setColor(0.0509,0.7529,0.2941);
+				if (val <= 100) {
+					obj["APUGenLoad"].setColor(0.0509,0.7529,0.2941);
 				} else {
-					obj["APUGenHz"].setColor(0.7333,0.3803,0);
+					obj["APUGenLoad"].setColor(0.7333,0.3803,0);
 				}
 			}),
 			props.UpdateManager.FromHashValue("apuHertz", 0.5, func(val) {
-				if (val == 0) {
-					obj["APUGenHz"].setText(sprintf("XX"));
-				} else {
-					obj["APUGenHz"].setText(sprintf("%s", math.round(val)));
-				}
+				obj["APUGenHz"].setText(sprintf("%s", math.round(val)));
 				
 				if (val >= 390 and val <= 410) {
 					obj["APUGenHz"].setColor(0.0509,0.7529,0.2941);
@@ -52,7 +47,7 @@ var canvas_lowerECAMPageElec =
 					obj["APUGenHz"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashValue("apuVolt", 0.1, func(val) {
+			props.UpdateManager.FromHashValue("apuVolt", 0.5, func(val) {
 				obj["APUGenVolt"].setText(sprintf("%s", math.round(val)));
 				
 				if (val >= 110 and val <= 120) {
@@ -61,7 +56,7 @@ var canvas_lowerECAMPageElec =
 					obj["APUGenVolt"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["apuMaster","apuVolt","apuLoad","apuHertz","apuGLC"], nil, func(val) {
+			props.UpdateManager.FromHashList(["apuMaster","apuVolt","apuLoad","apuHertz","apuGLC"], 0.5, func(val) {
 				if (val.apuMaster == 0) {
 					obj["APUGentext"].setColor(0.8078,0.8039,0.8078);
 				} else {
@@ -74,7 +69,7 @@ var canvas_lowerECAMPageElec =
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["apuMaster","apuGenPB"], nil, func(val) {
+			props.UpdateManager.FromHashList(["apuMaster","apuGenPB"], 1, func(val) {
 				if (val.apuMaster == 0) {
 					obj["APU-content"].hide();
 					obj["APUGEN-off"].hide();
@@ -90,7 +85,7 @@ var canvas_lowerECAMPageElec =
 					}
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecIDG1Disc", nil, func(val) {
+			props.UpdateManager.FromHashValue("elecIDG1Disc", 1, func(val) {
 				if (!val) {
 					obj["IDG1-DISC"].show();
 					obj["ELEC-IDG-1-label"].setColor(0.7333,0.3803,0);
@@ -99,7 +94,7 @@ var canvas_lowerECAMPageElec =
 					obj["ELEC-IDG-1-label"].setColor(0.8078,0.8039,0.8078);
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecIDG2Disc", nil, func(val) {
+			props.UpdateManager.FromHashValue("elecIDG2Disc", 1, func(val) {
 				if (!val) {
 					obj["IDG2-DISC"].show();
 					obj["ELEC-IDG-2-label"].setColor(0.7333,0.3803,0);
@@ -108,7 +103,7 @@ var canvas_lowerECAMPageElec =
 					obj["ELEC-IDG-2-label"].setColor(0.8078,0.8039,0.8078);
 				}
 			}),
-			props.UpdateManager.FromHashValue("engine1Running", nil, func(val) {
+			props.UpdateManager.FromHashValue("engine1Running", 1, func(val) {
 				if (val == 0) {
 					obj["ELEC-IDG-1-num-label"].setColor(0.7333,0.3803,0);
 					obj["GEN1-num-label"].setColor(0.7333,0.3803,0);
@@ -117,7 +112,7 @@ var canvas_lowerECAMPageElec =
 					obj["GEN1-num-label"].setColor(0.8078,0.8039,0.8078);
 				}
 			}),
-			props.UpdateManager.FromHashValue("engine2Running", nil, func(val) {
+			props.UpdateManager.FromHashValue("engine2Running", 1, func(val) {
 				if (val == 0) {
 					obj["ELEC-IDG-2-num-label"].setColor(0.7333,0.3803,0);
 					obj["GEN2-num-label"].setColor(0.7333,0.3803,0);
@@ -165,14 +160,14 @@ var canvas_lowerECAMPageElec =
 					obj["ELEC-Line-AC2-TR2"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecGen1GLC","elecAcTie1"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecGen1GLC","elecAcTie1"], 1, func(val) {
 				if (val.elecGen1GLC or val.elecAcTie1) {
 					obj["AC1-in"].show();
 				} else {
 					obj["AC1-in"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecGen2GLC","elecAcTie2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecGen2GLC","elecAcTie2"], 1, func(val) {
 				if (val.elecGen2GLC or val.elecAcTie2) {
 					obj["AC2-in"].show();
 				} else {
@@ -193,14 +188,14 @@ var canvas_lowerECAMPageElec =
 					obj["ACESS-SHED"].show();
 				}
 			}),
-			props.UpdateManager.FromHashValue("ElecGalleyShed", nil, func(val) {
+			props.UpdateManager.FromHashValue("ElecGalleyShed", 1, func(val) {
 				if (val) {
 					obj["GalleyShed"].show();
 				} else {
 					obj["GalleyShed"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecBat1Switch","elecBat2Switch","dcBat"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecBat1Switch","elecBat2Switch","dcBat"], 0.5, func(val) {
 				if (val.elecBat1Switch or val.elecBat2Switch) {
 					obj["ELEC-DCBAT-label"].setText("DC BAT");
 					if (val.dcBat > 25) {
@@ -213,7 +208,55 @@ var canvas_lowerECAMPageElec =
 					obj["ELEC-DCBAT-label"].setColor(0.7333,0.3803,0);
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecBat1Switch","elecBat1Volt","elecBat1Amp","elecBat1Direction","elecBat1Fault"], nil, func(val) {
+			props.UpdateManager.FromHashValue("elecBat1Volt", 0.5, func(val) {
+				obj["Bat1Volt"].setText(sprintf("%2.0f", val));
+				if (val >= 25 and val <= 31) {
+					obj["Bat1Volt"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["Bat1Volt"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashList(["elecBat1Amp","elecBat1Direction"], 0.5, func(val) {
+				obj["Bat1Ampere"].setText(sprintf("%2.0f", val.elecBat1Amp));
+					
+				if (val.elecBat1Amp > 5 and val.elecBat1Direction == 1) {
+					obj["Bat1Ampere"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["Bat1Ampere"].setColor(0.0509,0.7529,0.2941);
+				}
+			}),
+			props.UpdateManager.FromHashList(["elecBat1Volt","elecBat1Amp","elecBat1Fault"], 0.5, func(val) {
+				if (val.elecBat1Fault or val.elecBat1Volt < 25 or val.elecBat1Volt > 31 or val.elecBat1Amp > 5) {
+					obj["BAT1-label"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["BAT1-label"].setColor(0.8078,0.8039,0.8078);
+				}
+			}),
+			props.UpdateManager.FromHashValue("elecBat2Volt", 0.5, func(val) {
+				obj["Bat2Volt"].setText(sprintf("%2.0f", val));
+				if (val >= 25 and val <= 31) {
+					obj["Bat2Volt"].setColor(0.0509,0.7529,0.2941);
+				} else {
+					obj["Bat2Volt"].setColor(0.7333,0.3803,0);
+				}
+			}),
+			props.UpdateManager.FromHashList(["elecBat2Amp","elecBat2Direction"], 0.5, func(val) {
+				obj["Bat2Ampere"].setText(sprintf("%2.0f", val.elecBat2Amp));
+					
+				if (val.elecBat2Amp > 5 and val.elecBat2Direction == 1) {
+					obj["Bat2Ampere"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["Bat2Ampere"].setColor(0.0509,0.7529,0.2941);
+				}
+			}),
+			props.UpdateManager.FromHashList(["elecBat2Volt","elecBat2Amp","elecBat2Fault"], 0.5, func(val) {
+				if (val.elecBat2Fault or val.elecBat2Volt < 25 or val.elecBat2Volt > 31 or val.elecBat2Amp > 5) {
+					obj["BAT2-label"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["BAT2-label"].setColor(0.8078,0.8039,0.8078);
+				}
+			}),
+			props.UpdateManager.FromHashList(["elecBat1Switch","elecBat1Direction"], 1, func(val) {
 				if (val.elecBat1Switch == 0) {
 					obj["BAT1-OFF"].show();
 					obj["BAT1-content"].hide();
@@ -222,22 +265,7 @@ var canvas_lowerECAMPageElec =
 				} else {
 					obj["BAT1-OFF"].hide();
 					obj["BAT1-content"].show();
-					obj["Bat1Ampere"].setText(sprintf("%2.0f", val.elecBat1Amp));
 					
-					obj["Bat1Volt"].setText(sprintf("%2.0f", val.elecBat1Volt));
-
-					if (val.elecBat1Volt >= 24.95 and val.elecBat1Volt <= 31.05) {
-						obj["Bat1Volt"].setColor(0.0509,0.7529,0.2941);
-					} else {
-						obj["Bat1Volt"].setColor(0.7333,0.3803,0);
-					}
-
-					if (val.elecBat1Amp > 5 and val.elecBat1Direction == 1) {
-						obj["Bat1Ampere"].setColor(0.7333,0.3803,0);
-					} else {
-						obj["Bat1Ampere"].setColor(0.0509,0.7529,0.2941);
-					}
-
 					if (val.elecBat1Direction == 0) {
 						obj["BAT1-discharge"].hide();
 						obj["BAT1-charge"].hide();
@@ -251,14 +279,8 @@ var canvas_lowerECAMPageElec =
 						}
 					}
 				}
-				
-				if (val.elecBat1Fault or val.elecBat1Volt < 25 or val.elecBat1Volt > 31 or val.elecBat1Amp > 5) {
-					obj["BAT1-label"].setColor(0.7333,0.3803,0);
-				} else {
-					obj["BAT1-label"].setColor(0.8078,0.8039,0.8078);
-				}
 			}),
-			props.UpdateManager.FromHashList(["elecBat2Switch","elecBat2Volt","elecBat2Amp","elecBat2Direction","elecBat2Fault"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecBat2Switch","elecBat2Direction"], 1, func(val) {
 				if (val.elecBat2Switch == 0) {
 					obj["BAT2-OFF"].show();
 					obj["BAT2-content"].hide();
@@ -267,22 +289,7 @@ var canvas_lowerECAMPageElec =
 				} else {
 					obj["BAT2-OFF"].hide();
 					obj["BAT2-content"].show();
-					obj["Bat2Ampere"].setText(sprintf("%2.0f", val.elecBat2Amp));
 					
-					obj["Bat2Volt"].setText(sprintf("%2.0f", val.elecBat2Volt));
-
-					if (val.elecBat2Volt >= 24.95 and val.elecBat2Volt <= 31.05) {
-						obj["Bat2Volt"].setColor(0.0509,0.7529,0.2941);
-					} else {
-						obj["Bat2Volt"].setColor(0.7333,0.3803,0);
-					}
-
-					if (val.elecBat2Amp > 5 and val.elecBat2Direction == 1) {
-						obj["Bat2Ampere"].setColor(0.7333,0.3803,0);
-					} else {
-						obj["Bat2Ampere"].setColor(0.0509,0.7529,0.2941);
-					}
-
 					if (val.elecBat2Direction == 0) {
 						obj["BAT2-discharge"].hide();
 						obj["BAT2-charge"].hide();
@@ -296,14 +303,8 @@ var canvas_lowerECAMPageElec =
 						}
 					}
 				}
-				
-				if (val.elecBat2Fault or val.elecBat2Volt < 25 or val.elecBat2Volt > 31 or val.elecBat2Amp > 5) {
-					obj["BAT2-label"].setColor(0.7333,0.3803,0);
-				} else {
-					obj["BAT2-label"].setColor(0.8078,0.8039,0.8078);
-				}
 			}),
-			props.UpdateManager.FromHashList(["elecTR1Amp","elecTR1Volt"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecTR1Amp","elecTR1Volt"], 0.5, func(val) {
 				obj["TR1Volt"].setText(sprintf("%s", math.round(val.elecTR1Volt)));
 				obj["TR1Ampere"].setText(sprintf("%s", math.round(val.elecTR1Amp)));
 
@@ -325,7 +326,7 @@ var canvas_lowerECAMPageElec =
 					obj["TR1Ampere"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecTR2Amp","elecTR2Volt"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecTR2Amp","elecTR2Volt"], 0.5, func(val) {
 				obj["TR2Volt"].setText(sprintf("%s", math.round(val.elecTR2Volt)));
 				obj["TR2Ampere"].setText(sprintf("%s", math.round(val.elecTR2Amp)));
 
@@ -347,41 +348,37 @@ var canvas_lowerECAMPageElec =
 					obj["TR2Ampere"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecExtHertz","elecExtVolt","elecGroundCart"], nil, func(val) {
-				if (val.elecGroundCart == 0) {
-					obj["EXTPWR-group"].hide();
+			props.UpdateManager.FromHashValue("elecExtHertz", 0.5, func(val) {
+				if (val > 410 or val < 390) {
+					obj["ExtHz"].setColor(0.7333,0.3803,0);
 				} else {
-					obj["EXTPWR-group"].show();
-					obj["ExtVolt"].setText(sprintf("%s", math.round(val.elecExtVolt)));
-					obj["ExtHz"].setText(sprintf("%s", math.round(val.elecExtHertz)));
-
-					if (val.elecExtHertz > 410 or val.elecExtHertz < 390 or val.elecExtVolt > 120 or val.elecExtVolt < 110) {
-						obj["EXTPWR-label"].setColor(0.7333,0.3803,0);
-					} else {
-						obj["EXTPWR-label"].setColor(0.0509,0.7529,0.2941);
-					}
-
-					if (val.elecExtHertz > 410 or val.elecExtHertz < 390) {
-						obj["ExtHz"].setColor(0.7333,0.3803,0);
-					} else {
-						obj["ExtHz"].setColor(0.0509,0.7529,0.2941);
-					}
-
-					if (val.elecExtVolt > 120 or val.elecExtVolt < 110) {
-						obj["ExtVolt"].setColor(0.7333,0.3803,0);
-					} else {
-						obj["ExtVolt"].setColor(0.0509,0.7529,0.2941);
-					}
+					obj["ExtHz"].setColor(0.0509,0.7529,0.2941);
+				}
+				obj.extPwrHertz = sprintf("%s", math.round(val));
+			}),
+			props.UpdateManager.FromHashValue("elecExtVolt", 0.5, func(val) {
+				if (val > 120 or val < 110) {
+					obj["ExtVolt"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["ExtVolt"].setColor(0.0509,0.7529,0.2941);
+				}
+				obj.extPwrVoltage = sprintf("%s", math.round(val));
+			}),
+			props.UpdateManager.FromHashList(["elecExtHertz","elecExtVolt"], 0.5, func(val) {
+				if (val.elecExtHertz > 410 or val.elecExtHertz < 390 or val.elecExtVolt > 120 or val.elecExtVolt < 110) {
+					obj["EXTPWR-label"].setColor(0.7333,0.3803,0);
+				} else {
+					obj["EXTPWR-label"].setColor(0.0509,0.7529,0.2941);
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecDCTie1", nil, func(val) {
+			props.UpdateManager.FromHashValue("elecDCTie1", 1, func(val) {
 				if (val) {
 					obj["ELEC-Line-DC1-DCESS_DCBAT"].show();
 				} else {
 					obj["ELEC-Line-DC1-DCESS_DCBAT"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecDCTie2", nil, func(val) {
+			props.UpdateManager.FromHashValue("elecDCTie2", 1, func(val) {
 				if (val) {
 					obj["ELEC-Line-DC2-DCESS_DCBAT"].show();
 					obj["ELEC-Line-DC2-DCBAT"].show();
@@ -390,28 +387,28 @@ var canvas_lowerECAMPageElec =
 					obj["ELEC-Line-DC2-DCBAT"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecDCTie1", nil, func(val) {
+			props.UpdateManager.FromHashValue("elecDCTie1", 1, func(val) {
 				if (val) {
 					obj["ELEC-Line-DC1-DCBAT"].show();
 				} else {
 					obj["ELEC-Line-DC1-DCBAT"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecDcEssFeedBat", nil, func(val) {
+			props.UpdateManager.FromHashValue("elecDcEssFeedBat", 1, func(val) {
 				if (val) {
 					obj["ELEC-Line-DC1-DCESS"].show();
 				} else {
 					obj["ELEC-Line-DC1-DCESS"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecTrEssContact", nil, func(val) {
+			props.UpdateManager.FromHashValue("elecTrEssContact", 1, func(val) {
 				if (val) {
 					obj["ELEC-Line-ESSTR-DCESS"].show();
 				} else {
 					obj["ELEC-Line-ESSTR-DCESS"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecEmerGenVoltsRelay","elec15XE1"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecEmerGenVoltsRelay","elec15XE1"], 1, func(val) {
 				if (val.elecEmerGenVoltsRelay) {
 					if (val.elec15XE1) {
 						obj["EMERGEN-out"].show();
@@ -424,7 +421,7 @@ var canvas_lowerECAMPageElec =
 					obj["ELEC-Line-Emergen-ESSTR"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecTREssAmp","elecTREssVolt","elecTrEssContact"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecTREssAmp","elecTREssVolt","elecTrEssContact"], 0.5, func(val) {
 				if (val.elecTrEssContact) {
 					obj["ESSTR-group"].show();
 					obj["ESSTR-Volt"].setText(sprintf("%s", math.round(val.elecTREssVolt)));
@@ -451,8 +448,8 @@ var canvas_lowerECAMPageElec =
 					obj["ESSTR-group"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecEmerGenHertz","elecEmerGenVolts","elecEmerGenVoltsRelay"], nil, func(val) {
-				if (val.elecEmerGenVolts == 0) {
+			props.UpdateManager.FromHashList(["elecEmerGenHertz","elecEmerGenVolts","elecEmerGenVoltsRelay"], 0.5, func(val) {
+				if (val.elecEmerGenVolts < 110) {
 					obj["EMERGEN-group"].hide();
 					obj["ELEC-Line-Emergen-ESSTR"].hide();
 					obj["ELEC-Line-Emergen-ESSTR-off"].show();
@@ -485,7 +482,7 @@ var canvas_lowerECAMPageElec =
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecGen1Switch","elecGen1Hertz","elecGen1Volt","engine1Running","elecGen1Relay"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecGen1Switch","elecGen1Hertz","elecGen1Volt","engine1Running","elecGen1Relay"], 0.5, func(val) {
 				if (val.elecGen1Switch == 0) {
 					obj["GEN1-content"].hide();
 					obj["GEN1-off"].show();
@@ -524,7 +521,7 @@ var canvas_lowerECAMPageElec =
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecGen2Switch","elecGen2Hertz","elecGen2Volt","engine1Running","elecGen2Relay"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecGen2Switch","elecGen2Hertz","elecGen2Volt","engine1Running","elecGen2Relay"], 0.5, func(val) {
 				if (val.elecGen2Switch == 0) {
 					obj["GEN2-content"].hide();
 					obj["GEN2-off"].show();
@@ -563,21 +560,21 @@ var canvas_lowerECAMPageElec =
 					}
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecTR1Contact","elecAC1"], nil, func(val) {
-				if (val.elecTR1Contact) {
+			props.UpdateManager.FromHashValue("elecTR1Contact", 1, func(val) {
+				if (val) {
 					obj["ELEC-Line-TR1-DC1"].show();
 				} else {
 					obj["ELEC-Line-TR1-DC1"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecTR2Contact","elecAC2"], nil, func(val) {
-				if (val.elecTR2Contact) {
+			props.UpdateManager.FromHashValue("elecTR2Contact", 1, func(val) {
+				if (val) {
 					obj["ELEC-Line-TR2-DC2"].show();
 				} else {
 					obj["ELEC-Line-TR2-DC2"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecAcEssFeed1","elecAcEssFeed2","elecAC1","elecAC2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecAcEssFeed1","elecAcEssFeed2","elecAC1","elecAC2"], 0.5, func(val) {
 				if (val.elecAcEssFeed1) {
 					if (val.elecAC1 >= 110) {
 						obj["ELEC-Line-AC1-ACESS"].show();
@@ -597,49 +594,49 @@ var canvas_lowerECAMPageElec =
 					obj["ELEC-Line-AC2-ACESS"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecGen1Volt","elecGen1GLC"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecGen1Volt","elecGen1GLC"], 0.5, func(val) {
 				if (val.elecGen1Volt >= 110 and val.elecGen1GLC) {
 					obj["ELEC-Line-GEN1-AC1"].show();
 				} else {
 					obj["ELEC-Line-GEN1-AC1"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashList(["elecGen2Volt","elecGen2GLC"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecGen2Volt","elecGen2GLC"], 0.5, func(val) {
 				if (val.elecGen2Volt >= 110 and val.elecGen2GLC) {
 					obj["ELEC-Line-GEN2-AC2"].show();
 				} else {
 					obj["ELEC-Line-GEN2-AC2"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecAcTie1", nil, func(val) {
+			props.UpdateManager.FromHashValue("elecAcTie1", 1, func(val) {
 				if (val) {
 					obj["ELEC-Line-APU-AC1"].show();
 				} else {
 					obj["ELEC-Line-APU-AC1"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecAcTie2", nil, func(val) {
+			props.UpdateManager.FromHashValue("elecAcTie2", 1, func(val) {
 				if (val) {
 					obj["ELEC-Line-EXT-AC2"].show();
 				} else {
 					obj["ELEC-Line-EXT-AC2"].hide();
 				}
 			}),	
-			props.UpdateManager.FromHashList(["elecAcTie1","elecAcTie2","apuGLC","elecExtEPC"], nil, func(val) {
+			props.UpdateManager.FromHashList(["elecAcTie1","elecAcTie2","apuGLC","elecExtEPC"], 1, func(val) {
 				if ((val.apuGLC and val.elecAcTie2) or (val.elecExtEPC and val.elecAcTie1) or (val.elecAcTie1 and val.elecAcTie2)) {
 					obj["ELEC-Line-APU-EXT"].show();
 				} else {
 					obj["ELEC-Line-APU-EXT"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("elecExtEPC", nil, func(val) {
+			props.UpdateManager.FromHashValue("elecExtEPC", 1, func(val) {
 				if (val) {
 					obj["EXT-out"].show();
 				} else {
 					obj["EXT-out"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("apuGLC", nil, func(val) {
+			props.UpdateManager.FromHashValue("apuGLC", 1, func(val) {
 				if (val) {
 					obj["APU-out"].show();
 				} else {
@@ -653,50 +650,50 @@ var canvas_lowerECAMPageElec =
 					obj["ELEC-Line-ACESS-TRESS"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("elec15XE2", nil, func(val) {
+			props.UpdateManager.FromHashValue("elec15XE2", 1, func(val) {
 				if (val) {
 					obj["STATINV-group"].show();
 				} else {
 					obj["STATINV-group"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("statInvVolts", 0.1, func(val) {
-				obj["StatVolt"].setText(sprintf("%s",math.round(val)));
+			props.UpdateManager.FromHashValue("statInvVolts", 0.5, func(val) {
+				obj["StatVolt"].setText(sprintf("%s", math.round(val)));
 			}),
 			props.UpdateManager.FromHashValue("statInvHertz", 0.5, func(val) {
-				obj["StatHz"].setText(sprintf("%s",math.round(val)));
+				obj["StatHz"].setText(sprintf("%s", math.round(val)));
 			}),
 		];
 		
-		obj.displayedGForce = 0;
 		obj.updateItemsBottom = [
-			props.UpdateManager.FromHashValue("acconfigUnits", nil, func(val) {
-				obj.units = val;
+			props.UpdateManager.FromHashValue("acconfigUnits", 1, func(val) {
 				if (val) {
 					obj["GW-weight-unit"].setText("KG");
 				} else {
 					obj["GW-weight-unit"].setText("LBS");
 				}
 			}),
-			props.UpdateManager.FromHashValue("hour", nil, func(val) {
+			props.UpdateManager.FromHashValue("hour", 1, func(val) {
 				obj["UTCh"].setText(sprintf("%02d", val));
 			}),
-			props.UpdateManager.FromHashValue("minute", nil, func(val) {
+			props.UpdateManager.FromHashValue("minute", 1, func(val) {
 				obj["UTCm"].setText(sprintf("%02d", val));
 			}),
 			props.UpdateManager.FromHashValue("gForce", 0.05, func(val) {
-				if (obj.displayedGForce) {
-					obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
-				}
+				obj["GLoad"].setText("G.LOAD " ~ sprintf("%3.1f", val));
 			}),
 			props.UpdateManager.FromHashValue("gForceDisplay", nil, func(val) {
-				if ((val == 1 and !obj.displayedGForce) or (val != 0 and obj.displayedGForce)) {
-					obj.displayedGForce = 1;
+				if (val) {
 					obj["GLoad"].show();
 				} else {
-					obj.displayedGForce = 0;
 					obj["GLoad"].hide();
 				}
+			}),
+			props.UpdateManager.FromHashValue("satTemp", 0.5, func(val) {
+				obj["SAT"].setText(sprintf("%+2.0f", val));
+			}),
+			props.UpdateManager.FromHashValue("tatTemp", 0.5, func(val) {
+				obj["TAT"].setText(sprintf("%+2.0f", val));
 			}),
 		];
 		return obj;
@@ -714,13 +711,8 @@ var canvas_lowerECAMPageElec =
 		"ELEC-ACESS-SHED-label","ELEC-DCBAT-label","ELEC-DCESS-label","ELEC-DC2-label","ELEC-DC1-label","ELEC-AC1-label","ELEC-AC2-label","ELEC-ACESS-label","ELEC-Line-ESSTR-DCESS-off","ELEC-Line-Emergen-ESSTR-off","STATINV-group","StatVolt","StatHz"];
 	},
 	updateBottom: func(notification) {
-		foreach(var update_item_bottom; me.updateItemsBottom)
-        {
-            update_item_bottom.update(notification);
-        }
-		
 		if (fmgc.FMGCInternal.fuelRequest and fmgc.FMGCInternal.blockConfirmed and !fmgc.FMGCInternal.fuelCalculating and notification.FWCPhase != 1) {
-			if (me.units) {
+			if (notification.acconfigUnits) {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000 * LBS2KGS, 100)));
 			} else {
 				me["GW"].setText(sprintf("%s", math.round(fmgc.FMGCInternal.fuelPredGw * 1000, 100)));
@@ -732,20 +724,25 @@ var canvas_lowerECAMPageElec =
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[4] != nil) {
-			me["SAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[4].getValue()));
+			notification.satTemp = dmc.DMController.DMCs[1].outputs[4].getValue();
 			me["SAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["SAT"].setText(sprintf("%s", "XX"));
+			me["SAT"].setText("XX");
 			me["SAT"].setColor(0.7333,0.3803,0);
 		}
 		
 		if (dmc.DMController.DMCs[1].outputs[5] != nil) {
-			me["TAT"].setText(sprintf("%+2.0f", dmc.DMController.DMCs[1].outputs[5].getValue()));
+			notification.tatTemp = dmc.DMController.DMCs[1].outputs[5].getValue();
 			me["TAT"].setColor(0.0509,0.7529,0.2941);
 		} else {
-			me["TAT"].setText(sprintf("%s", "XX"));
+			me["TAT"].setText("XX");
 			me["TAT"].setColor(0.7333,0.3803,0);
 		}
+		
+		foreach(var update_item_bottom; me.updateItemsBottom)
+        {
+            update_item_bottom.update(notification);
+        }
 	},
 	update: func(notification) {
 		me.updatePower();
@@ -763,6 +760,14 @@ var canvas_lowerECAMPageElec =
             update_item.update(notification);
         }
 		
+		if (notification.elecGroundCart == 0) {
+			me["EXTPWR-group"].hide();
+		} else {
+			me["EXTPWR-group"].show();
+			me["ExtVolt"].setText(me.extPwrVoltage);
+			me["ExtHz"].setText(me.extPwrHertz);
+		}
+
 		me.updateBottom(notification);
 	},
 	updatePower: func() {

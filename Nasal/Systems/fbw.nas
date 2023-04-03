@@ -1,5 +1,5 @@
 # Airbus A3XX FBW/Flight Control Computer System
-# Copyright (c) 2022 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 var mmoIAS = 0;
 var cas = 0;
@@ -87,6 +87,7 @@ var FBW = {
 		fac2: props.globals.getNode("/systems/fctl/lights/fac2-fault"),
 	},
 	Protections: {
+		alpha: props.globals.getNode("/fdm/jsbsim/fbw/protections/alpha"),
 		overspeed: props.globals.getNode("/fdm/jsbsim/fbw/protections/overspeed"),
 	},
 	Sidestick: {
@@ -223,7 +224,7 @@ var update_loop = func {
 		}
 		
 		if (!pts.Gear.wow[1].getBoolValue() and !pts.Gear.wow[2].getBoolValue()) {
-			if (degradeLaw == 1 and pts.Controls.Gear.gearDown.getBoolValue()) {
+			if (degradeLaw == 1 and pts.Controls.Gear.lever.getValue() == 1) {
 				FBW.degradeLaw.setValue(2); # todo 3 sec timer
 			} else {
 				FBW.degradeLaw.setValue(degradeLaw)
@@ -237,7 +238,7 @@ var update_loop = func {
 		FBW.apOff = 0;
 	}
 	
-	if (FBW.Protections.overspeed.getBoolValue()) {
+	if (FBW.Protections.alpha.getBoolValue() or FBW.Protections.overspeed.getBoolValue()) {
 		if (fmgc.Input.ap1.getBoolValue() or fmgc.Input.ap2.getBoolValue()) {
 			fcu.apOff("hard", 0);
 		}

@@ -571,6 +571,9 @@
 		
 		<switch name="/systems/air-conditioning/valves/hot-air-power">
 			<default value="0"/>
+			<test logic="OR" value="0">
+				/systems/failures/pneumatics/hot-air-valve eq 1
+			</test>
 			<test logic="OR" value="0.5"> <!-- ?? unsure about power src, use pack controllers -->
 				/systems/electrical/bus/ac-1 ge 110
 				/systems/electrical/bus/ac-2 ge 110
@@ -796,7 +799,7 @@
 		<switch name="/systems/air-conditioning/recirc/cabin-fans">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/controls/switches/pneumatics/cabin-fans eq 1
+				/controls/pneumatics/switches/cabin-fans eq 1
 				/systems/failures/pneumatics/cabin-fans eq 0
 			</test>
 		</switch>

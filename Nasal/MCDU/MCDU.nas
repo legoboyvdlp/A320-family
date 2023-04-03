@@ -1,11 +1,12 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2022 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var pageNode = [props.globals.getNode("/MCDU[0]/page"), props.globals.getNode("/MCDU[1]/page")];
 var page = nil;
 var msg = nil;
+var airportPress = [0,0];
 
 var scratchpadNode = [nil, nil];
 var MCDU_init = func(i) {
@@ -15,7 +16,6 @@ var MCDU_init = func(i) {
 var MCDU_reset = func(i) {
 	setprop("/MCDU[" ~ i ~ "]/active", 0);
 	setprop("/MCDU[" ~ i ~ "]/atsu-active", 0);
-	setprop("/it-autoflight/settings/togaspd", 157); #aka v2 clone
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/last-atsu-page", "ATSUDLINK");
 	setprop("/MCDU[" ~ i ~ "]/active-system","");
@@ -68,7 +68,7 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.depApt = "";
 	fmgc.FMGCInternal.flightNum = "";
 	fmgc.FMGCInternal.flightNumSet = 0;
-	fmgc.FMGCInternal.gndTemp = -99;
+	fmgc.FMGCInternal.gndTemp = 15;
 	fmgc.FMGCInternal.gndTempSet = 0;
 	fmgc.FMGCInternal.toFromSet = 0;
 	fmgc.FMGCNodes.toFromSet.setValue(0);
@@ -293,6 +293,7 @@ var lskbutton = func(btn, i) {
 				if (atsu.ATISInstances[0].sent != 1) {
 					if (fmgc.FMGCInternal.depApt != "") {
 						atsu.ATISInstances[0].newStation(fmgc.FMGCInternal.depApt);
+						atsu.ATISInstances[0].setType(1);
 					} else {
 						atsu.ATISInstances[0].station = nil;
 					}
@@ -355,6 +356,8 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "HOLD") {
+			canvas_mcdu.myHold[i].pushbuttonLeft(1);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 0;
 			atsu.freeTexts[i].changed = 1;
@@ -437,6 +440,7 @@ var lskbutton = func(btn, i) {
 				if (atsu.ATISInstances[1].sent != 1) {
 					if (fmgc.FMGCInternal.arrApt != "") {
 						atsu.ATISInstances[1].newStation(fmgc.FMGCInternal.arrApt);
+						atsu.ATISInstances[1].setType(0);
 					} else {
 						atsu.ATISInstances[1].station = nil;
 					}
@@ -501,6 +505,8 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (page == "VERTREV") {
 			canvas_mcdu.myVertRev[i].pushButtonLeft(2);
+		} else if (page == "HOLD") {
+			canvas_mcdu.myHold[i].pushbuttonLeft(2);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 1;
 			atsu.freeTexts[i].changed = 1;
@@ -564,6 +570,7 @@ var lskbutton = func(btn, i) {
 				if (atsu.ATISInstances[2].sent != 1) {
 					if (fmgc.FMGCInternal.altAirportSet) {
 						atsu.ATISInstances[2].newStation(fmgc.FMGCInternal.altAirport);
+						atsu.ATISInstances[1].setType(0);
 					} else {
 						atsu.ATISInstances[2].station = nil;
 					}
@@ -628,6 +635,8 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (page == "VERTREV") {
 			canvas_mcdu.myVertRev[i].pushButtonLeft(3);
+		} else if (page == "HOLD") {
+			canvas_mcdu.myHold[i].pushbuttonLeft(3);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 2;
 			atsu.freeTexts[i].changed = 1;
@@ -845,6 +854,8 @@ var lskbutton = func(btn, i) {
 			} else {
 				 if (canvas_mcdu.myDuplicate[i] != nil and canvas_mcdu.myDuplicate[i].flagPROG) {
 					pagebutton("prog",i);
+				 } else {
+					pageNode[i].setValue("F-PLNA");
 				 }
 			}
 		} else if (page == "ARRIVAL") {
@@ -952,13 +963,19 @@ var rskbutton = func(btn, i) {
 		} else if (page == "AOCMENU") {
 			pageNode[i].setValue("FLTLOG");
 		} else if (page == "WEATHERREQ") {
-			var result = atsu.AOC.newStation(mcdu_scratchpad.scratchpads[i].scratchpad, i);
-			if (result == 1) {
-				mcdu_message(i, "NOT ALLOWED");
-			} elsif (result == 2) {
-				mcdu_message(i, "NOT IN DATA BASE");
+			if (mcdu_scratchpad.scratchpads[i].scratchpad != "CLR") {
+				var result = atsu.AOC.newStation(mcdu_scratchpad.scratchpads[i].scratchpad, i);
+				if (result == 1) {
+					mcdu_message(i, "NOT ALLOWED");
+				} elsif (result == 2) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} else {
+					mcdu_scratchpad.scratchpads[i].empty();
+				}
 			} else {
-				mcdu_scratchpad.scratchpads[i].empty();
+				atsu.AOC.sent = 0;
+				atsu.AOC.received = 0;
+				atsu.AOC.station = nil;
 			}
 		} else if (page == "WEATHERTYPE") {
 			atsu.AOC.selectedType = "TERM FCST";
@@ -1490,25 +1507,32 @@ var pagebutton = func(btn, i) {
 		} else if (btn == "mcdu") {
 			mcdu_message(i, "SELECT DESIRED SYSTEM");
 			pageNode[i].setValue("MCDU");
-		} else if (btn == "f-pln" or btn == "airport") {
+		} else if (btn == "f-pln") {
 			if (canvas_mcdu.myFpln[i] == nil) {
 				canvas_mcdu.myFpln[i] = fplnPage.new(2, i);
 			}
-			if (btn == "airport") {
-				if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
-					canvas_mcdu.myFpln[i].scroll = 0;
-				} else {
-					if (fmgc.flightPlanController.temporaryFlag[i]) {
-						canvas_mcdu.myFpln[i].scroll = fmgc.flightPlanController.arrivalIndex[i];
+			canvas_mcdu.myFpln[i].scroll = 0;
+			pageNode[i].setValue("F-PLNA");
+		} else if (btn == "airport") {
+			if (airportPress[i] == 0 or fmgc.FMGCInternal.phase >= 1) {
+				if (fmgc.flightPlanController.temporaryFlag[i]) {
+					if (fmgc.flightPlanController.currentToWptIndex.getValue() == fmgc.flightPlanController.arrivalIndex[i]) {
+						canvas_mcdu.myFpln[i].scroll = (fmgc.flightPlanController.arrivalIndex[i] - fmgc.flightPlanController.currentToWptIndex.getValue());
 					} else {
-						canvas_mcdu.myFpln[i].scroll = fmgc.flightPlanController.arrivalIndex[2];
+						canvas_mcdu.myFpln[i].scroll = (fmgc.flightPlanController.arrivalIndex[i] - fmgc.flightPlanController.currentToWptIndex.getValue()) - 1;
+					}
+				} else {
+					if (fmgc.flightPlanController.currentToWptIndex.getValue() == fmgc.flightPlanController.arrivalIndex[2]) {
+						canvas_mcdu.myFpln[i].scroll = (fmgc.flightPlanController.arrivalIndex[2] - fmgc.flightPlanController.currentToWptIndex.getValue());
+					} else {
+						canvas_mcdu.myFpln[i].scroll = (fmgc.flightPlanController.arrivalIndex[2] - fmgc.flightPlanController.currentToWptIndex.getValue()) - 1;
 					}
 				}
-			} else {
+				airportPress[i] = 1;
+			} else if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 				canvas_mcdu.myFpln[i].scroll = 0;
+				airportPress[i] = 0;
 			}
-			pageNode[i].setValue("F-PLNA");
-			
 		} else if (btn == "fuel-pred") {
 			pageNode[i].setValue("FUELPRED");
 		} else if (btn == "dirto") {

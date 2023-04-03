@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	<name>Fuselage</name>
@@ -3014,7 +3014,7 @@
 		<name>AOA Vane L1</name>
 		<type>rotate</type>
 		<object-name>AOASensorL1</object-name>
-		<property>fdm/jsbsim/aero/alpha-deg-norm</property>
+		<property>fdm/jsbsim/aero/alpha-deg-fixed</property>
 		<interpolation>
 			<entry><ind>-60</ind><dep>85</dep></entry>
 			<entry><ind>-35</ind><dep>60</dep></entry>
@@ -3038,7 +3038,7 @@
 		<name>AOA Vane R</name>
 		<type>rotate</type>
 		<object-name>AOASensorR</object-name>
-		<property>fdm/jsbsim/aero/alpha-deg-norm</property>
+		<property>fdm/jsbsim/aero/alpha-deg-fixed</property>
 		<interpolation>
 			<entry><ind>-60</ind><dep>-85</dep></entry>
 			<entry><ind>-35</ind><dep>-60</dep></entry>
@@ -3062,7 +3062,7 @@
 		<name>AOA Vane L2</name>
 		<type>rotate</type>
 		<object-name>AOASensorL2</object-name>
-		<property>fdm/jsbsim/aero/alpha-deg-norm</property>
+		<property>fdm/jsbsim/aero/alpha-deg-fixed</property>
 		<interpolation>
 			<entry><ind>-60</ind><dep>85</dep></entry>
 			<entry><ind>-35</ind><dep>60</dep></entry>

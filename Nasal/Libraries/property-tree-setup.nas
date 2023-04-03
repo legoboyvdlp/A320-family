@@ -1,5 +1,5 @@
 # A320 Property Tree Setup
-# Copyright (c) 2022 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath
 # Nodes organized like property tree, except when lots of identical (example: Gear wow), where vectors are used to make it easier
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
@@ -31,13 +31,11 @@ var Consumables = {
 
 var Controls = {
 	Engines: {
-		startSw: props.globals.getNode("/controls/engines/engine-start-switch"),
 		Engine: {
 			cutoff: [props.globals.getNode("/controls/engines/engine[0]/cutoff"), props.globals.getNode("/controls/engines/engine[1]/cutoff")],
 			cutoffSw: [props.globals.getNode("/controls/engines/engine[0]/cutoff-switch"), props.globals.getNode("/controls/engines/engine[1]/cutoff-switch")],
 			firePb: [props.globals.getNode("/controls/engines/engine[0]/fire-btn"), props.globals.getNode("/controls/engines/engine[1]/fire-btn")],
 			reverseCmd: [props.globals.getNode("/controls/engines/engine[0]/reverse-cmd"), props.globals.getNode("/controls/engines/engine[1]/reverse-cmd")],
-			reverseLever: [props.globals.getNode("/controls/engines/engine[0]/reverse-lever"), props.globals.getNode("/controls/engines/engine[1]/reverse-lever")],
 			starter: [props.globals.getNode("/controls/engines/engine[0]/starter"), props.globals.getNode("/controls/engines/engine[1]/starter")],
 			throttle: [props.globals.getNode("/controls/engines/engine[0]/throttle"), props.globals.getNode("/controls/engines/engine[1]/throttle")],
 		},
@@ -61,7 +59,8 @@ var Controls = {
 	Gear: {
 		brake: [props.globals.getNode("/controls/gear/brake-left"),props.globals.getNode("/controls/gear/brake-right")],
 		brakeParking: props.globals.getNode("/controls/gear/brake-parking"),
-		gearDown: props.globals.getNode("/controls/gear/gear-down"),
+		lever: props.globals.getNode("/controls/gear/lever"),
+		leverCockpit: props.globals.getNode("/controls/gear/lever-cockpit"),
 	},
 	Lighting: {
 		landingLights: [props.globals.getNode("/controls/lighting/landing-lights[0]"),props.globals.getNode("/controls/lighting/landing-lights[1]"),props.globals.getNode("/controls/lighting/landing-lights[2]")],
@@ -108,7 +107,7 @@ var Fdm = {
 	JSBsim: {
 		Aero: {
 			alpha: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg"),
-			alphaNorm: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg-norm"),
+			alphaNorm: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg-fixed"),
 		},
 		Fadec: {
 			detent: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent"),props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent")],
@@ -136,16 +135,17 @@ var Fdm = {
 		},
 		Position: {
 			wow: props.globals.getNode("/fdm/jsbsim/position/wow"),
+			wowTemp: 0,
 		},
 		Propulsion: {
-			tatC: props.globals.getNode("/fdm/jsbsim/propulsion/tat-c"),
 			Engine: {
 				fuelUsed: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/fuel-used-lbs")],
 				reverserAngle: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad")],
 			},
+			setRunning: props.globals.getNode("/fdm/jsbsim/propulsion/set-running"),
+			tatC: props.globals.getNode("/fdm/jsbsim/propulsion/tat-c"),
 			Tank: {
-				contentsLbs: [props.globals.getNode("/fdm/jsbsim/propulsion/tank[0]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[1]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs"), 
-					props.globals.getNode("/fdm/jsbsim/propulsion/tank[3]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[4]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[5]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[6]/contents-lbs")],
+				contentsLbs: [props.globals.getNode("/fdm/jsbsim/propulsion/tank[0]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[1]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[2]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[3]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[4]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[5]/contents-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/tank[6]/contents-lbs")],
 			},
 		},
 	},
@@ -358,6 +358,11 @@ var Sim = {
 };
 
 var Systems = {
+	Acconfig: {
+		Options: {
+			igniterSelect: [props.globals.getNode("/systems/acconfig/options/igniter-select-1"), props.globals.getNode("/systems/acconfig/options/igniter-select-2")],
+		}
+	},
 	Navigation: {
 		ADR: {
 			Output: {

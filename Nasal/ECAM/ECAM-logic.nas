@@ -12,7 +12,7 @@ var state1Node = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
 var wing_pb    = props.globals.getNode("/controls/ice-protection/wing", 1);
 var apu_bleedSw   = props.globals.getNode("/controls/pneumatics/switches/apu", 1);
-var gear       = props.globals.getNode("/gear/gear-pos-norm", 1);
+var gear       = props.globals.getNode("/fdm/jsbsim/gear/gear-all-norm", 1);
 var stallVoice = props.globals.initNode("/sim/sound/warnings/stall-voice", 0, "BOOL");
 var engOpt     = props.globals.getNode("/options/eng", 1);
 
@@ -733,7 +733,7 @@ var messages_priority_3 = func {
 				ECAM_controller.warningReset(excessCabAltSPD);
 			}
 			
-			if (excessCabAltENG.clearFlag == 0 and pts.Controls.Engines.startSw.getValue() != 1) {
+			if (excessCabAltENG.clearFlag == 0 and systems.IGNITION.startSw.getValue() != 1) {
 				excessCabAltENG.active = 1;
 			} else {
 				ECAM_controller.warningReset(excessCabAltENG);
@@ -1148,7 +1148,7 @@ var messages_priority_3 = func {
 			ECAM_controller.warningReset(emerconfigManOn);
 		}
 		
-		if (pts.Controls.Engines.startSw.getValue() != 2 and emerconfigEngMode.clearFlag == 0) {
+		if (systems.IGNITION.startSw.getValue() != 2 and emerconfigEngMode.clearFlag == 0) {
 			emerconfigEngMode.active = 1;
 		} else {
 			ECAM_controller.warningReset(emerconfigEngMode);
@@ -1476,7 +1476,7 @@ var messages_priority_2 = func {
 			ECAM_controller.warningReset(shaftFailure1);
 		}
 		
-		if (phaseVar2 != 2 and phaseVar2 != 9 and pts.Controls.Engines.startSw.getValue() != 2 and eng1FailModeSel.clearFlag == 0) { # and not stall and not EGT protect
+		if (phaseVar2 != 2 and phaseVar2 != 9 and systems.IGNITION.startSw.getValue() != 2 and eng1FailModeSel.clearFlag == 0) { # and not stall and not EGT protect
 			eng1FailModeSel.active = 1;
 		} else {
 			ECAM_controller.warningReset(eng1FailModeSel);
@@ -1584,7 +1584,7 @@ var messages_priority_2 = func {
 		}
 		
 		if (FWC.Timer.gnd.getValue() == 0 or systems.fireButtons[0].getValue() == 0) {
-			if (eng1ShutDownModeSel.clearFlag == 0 and pts.Controls.Engines.startSw.getValue() != 2) {
+			if (eng1ShutDownModeSel.clearFlag == 0 and systems.IGNITION.startSw.getValue() != 2) {
 				eng1ShutDownModeSel.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng1ShutDownModeSel);
@@ -1683,7 +1683,7 @@ var messages_priority_2 = func {
 			ECAM_controller.warningReset(shaftFailure2);
 		}
 		
-		if (phaseVar2 != 2 and phaseVar2 != 9 and pts.Controls.Engines.startSw.getValue() != 2 and eng2FailModeSel.clearFlag == 0) { # and not stall and not EGT protect
+		if (phaseVar2 != 2 and phaseVar2 != 9 and systems.IGNITION.startSw.getValue() != 2 and eng2FailModeSel.clearFlag == 0) { # and not stall and not EGT protect
 			eng2FailModeSel.active = 1;
 		} else {
 			ECAM_controller.warningReset(eng2FailModeSel);
@@ -1797,7 +1797,7 @@ var messages_priority_2 = func {
 		}
 		
 		if (FWC.Timer.gnd.getValue() == 0 or systems.fireButtons[1].getValue() == 0) {
-			if (eng2ShutDownModeSel.clearFlag == 0 and pts.Controls.Engines.startSw.getValue() != 2) {
+			if (eng2ShutDownModeSel.clearFlag == 0 and systems.IGNITION.startSw.getValue() != 2) {
 				eng2ShutDownModeSel.active = 1;
 			} else {
 				ECAM_controller.warningReset(eng2ShutDownModeSel);
@@ -2326,7 +2326,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(fctlSpdBrkStillOut);
 	}
 	
-	if (fctlPitchTrimDisag.clearFlag == 0 and takeoffConfig and fmgc.FMGCInternal.toFlapThsSet and abs(-getprop("/fdm/jsbsim/hydraulics/elevator-trim/final-deg") - fmgc.FMGCInternal.toThs) >= 1.3) {
+	if (fctlPitchTrimDisag.clearFlag == 0 and takeoffConfig and fmgc.FMGCInternal.toFlapThsSet and abs(-getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") - fmgc.FMGCInternal.toThs) >= 1.3) {
 		fctlPitchTrimDisag.active = 1;
 		fctlPitchTrimDisag2.active = 1;
 	} else {
@@ -3675,7 +3675,7 @@ var messages_config_memo = func {
 		ECAM_controller.warningReset(toMemoLine5);
 	}
 	
-	if (getprop("/fdm/jsbsim/gear/gear-pos-norm") == 1) {
+	if (getprop("/fdm/jsbsim/gear/gear-all-norm") == 1) {
 		ldgMemoLine1.msg = "LDG LDG GEAR DN";
 		ldgMemoLine1.colour = "g";
 	} else {
@@ -3975,7 +3975,7 @@ var messages_right_memo = func {
 		pax_oxy.active = 0;
 	}
 	
-	if (getprop("/controls/engines/engine[0]/igniter-a") == 1 or getprop("/controls/engines/engine[0]/igniter-b") == 1 or getprop("/controls/engines/engine[1]/igniter-a") == 1 or getprop("/controls/engines/engine[1]/igniter-b") == 1) {
+	if (getprop("/systems/ignition/ign-1/igniter-a") == 1 or getprop("/systems/ignition/ign-1/igniter-b") == 1 or getprop("/systems/ignition/ign-2/igniter-a") == 1 or getprop("/systems/ignition/ign-2/igniter-b") == 1) {
 		ignition.active = 1;
 	} else {
 		ignition.active = 0;

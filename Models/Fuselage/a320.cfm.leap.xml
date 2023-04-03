@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	<path>res/CFMLEAP1A.ac</path>
@@ -414,11 +414,17 @@
 		<object-name>ReverserLDoorLEAP</object-name>
 		<object-name>ReverserRDoorLEAP</object-name>
 	</effect>
+
+i	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>EngineLEAP.Placards</object-name>
+	</effect>
+
 	
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-matt-engine-LEAP</inherits-from>
 		<object-name>EngineLEAPL.Inner</object-name>
-                <object-name>EngineLEAPR.Inner</object-name>
+		<object-name>EngineLEAPR.Inner</object-name>
 		<object-name>PylonLEAPL</object-name>
 		<object-name>PylonLEAPR</object-name>
 		<object-name>ReverserLDoorLEAP.Inner</object-name>

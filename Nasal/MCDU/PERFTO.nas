@@ -1,6 +1,6 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2022 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 # TODO - DepArp elevation or current elevation (on ground only!!) ->  math.round(fmgc.flightPlanController.flightplans[2].departure.elevation * M2FT))
@@ -113,7 +113,6 @@ var perfTOInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.v2 = 0;
 			fmgc.FMGCInternal.v2set = 0;
-			setprop("/it-autoflight/settings/togaspd", 157);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tfs = size(scratchpad);
@@ -122,7 +121,6 @@ var perfTOInput = func(key, i) {
 					fmgc.FMGCInternal.v2 = scratchpad;
 					fmgc.FMGCInternal.v2set = 1;
 					fmgc.setFmaText("pitchMode2Armed", fmgc.FMGCInternal.v2set ? "CLB" : " ", fmgc.genericCallback, "pitchMode2ArmedTime");
-					setprop("/it-autoflight/settings/togaspd", scratchpad);
 					mcdu_scratchpad.scratchpads[i].empty();
 
 					perfTOCheckVSpeedsConsistency(i); 

@@ -1,7 +1,7 @@
 # A3XX Buttons
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2022 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 var OnLt = props.globals.getNode("/controls/switches/emerCallLtO");
 var CallLt = props.globals.getNode("/controls/switches/emerCallLtC");
@@ -30,7 +30,6 @@ var variousReset = func() {
 	setprop("/controls/CVR/tone", 0);
 	setprop("/controls/CVR/gndctl", 0);
 	setprop("/controls/CVR/erase", 0);
-	setprop("/controls/switches/pneumatics/cabin-fans", 1);
 	setprop("/controls/switches/emerCallLtO", 0); # ON light, flashes white for 10s
 	setprop("/controls/switches/emerCallLtC", 0); # CALL light, flashes amber for 10s
 	setprop("/controls/switches/emerCall", 0);
@@ -51,14 +50,18 @@ var variousReset = func() {
 	setprop("/controls/lighting/taxi-light-switch", 0);
 	setprop("/controls/lighting/DU/du1", 1);
 	setprop("/controls/lighting/DU/du2", 1);
+	setprop("/controls/lighting/DU/du2-layer", 1);
 	setprop("/controls/lighting/DU/du3", 1);
 	setprop("/controls/lighting/DU/du4", 1);
 	setprop("/controls/lighting/DU/du5", 1);
+	setprop("/controls/lighting/DU/du5-layer", 1);
 	setprop("/controls/lighting/DU/du6", 1);
 	setprop("/controls/lighting/DU/mcdu1", 1);
 	setprop("/controls/lighting/DU/mcdu2", 1);
 	setprop("/controls/navigation/switching/att-hdg", 0);
 	setprop("/controls/navigation/switching/air-data", 0);
+	setprop("/controls/switches/loudspeaker-l", 1);
+	setprop("/controls/switches/loudspeaker-r", 1);
 	pts.Controls.Switches.noSmokingSwitch.setValue(0);
 	pts.Controls.Switches.seatbeltSwitch.setValue(0);
 	pts.Controls.Switches.emerLtsSwitch.setValue(0);

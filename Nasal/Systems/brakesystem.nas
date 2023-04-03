@@ -1,7 +1,7 @@
 # A3XX Autobrake and Braking
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2022 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 
 ##########################################################################
@@ -415,7 +415,7 @@ var Autobrake = {
 			}
 		}
 		
-		if (me._mode == 3 and !pts.Controls.Gear.gearDown.getBoolValue()) {
+		if (me._mode == 3 and pts.Controls.Gear.lever.getValue() == 0) {
 			me.arm_autobrake(0);
 		}
 		if (me._mode != 0 and me._wow0 and me._active and (pts.Controls.Gear.brake[0].getValue() > 0.05 or pts.Controls.Gear.brake[1].getValue() > 0.05)) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -77,23 +77,30 @@
 				</button>
 				<button>
 					<halign>center</halign>
+					<legend>Checklists</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>dialog-show</command>
+						<dialog-name>checklist</dialog-name>
+					</binding>
+				</button>
+				<button>
+					<halign>center</halign>
+					<legend>Aircraft Help</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>dialog-show</command>
+						<dialog-name>acconfig-help</dialog-name>
+					</binding>
+				</button>
+				<button>
+					<halign>center</halign>
 					<legend>DU Quality</legend>
 					<pref-width>140</pref-width>
 					<binding>
 						<command>nasal</command>
 						<script>
 						acconfig.du_quality.open();
-						</script>
-					</binding>
-				</button>
-				<button>
-					<halign>center</halign>
-					<legend>About Aircraft</legend>
-					<pref-width>140</pref-width>
-					<binding>
-						<command>nasal</command>
-						<script>
-						acconfig.about_dlg.open();
 						</script>
 					</binding>
 				</button>
@@ -291,6 +298,26 @@
 				<binding>
 					<command>property-toggle</command>
 					<property>/controls/adirs/skip</property>
+				</binding>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>
+					acconfig.writeSettings();
+					</script>
+				</binding>
+				<live>true</live>
+			</checkbox>
+			
+			<checkbox>
+				<label>Display tooltips on switches</label>
+				<halign>left</halign>
+				<property>/options/system/toggle-tooltips</property>
+				<binding>
+					<command>property-toggle</command>
+					<property>/options/system/toggle-tooltips</property>
 				</binding>
 				<binding>
 					<command>dialog-apply</command>

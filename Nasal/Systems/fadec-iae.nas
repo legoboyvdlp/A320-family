@@ -1,5 +1,5 @@
 # A3XX IAE FADEC
-# Copyright (c) 2022 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 var powerAvailTemp = nil;
 var master1 = nil;
@@ -17,6 +17,7 @@ var N22 = nil;
 
 var FADEC_S = {
 	Power: {
+		groundPower: [props.globals.initNode("/controls/fadec/gnd-power-1", 0, "BOOL"), props.globals.initNode("/controls/fadec/gnd-power-2", 0, "BOOL")],
 		powered1: props.globals.initNode("/systems/fadec/powered1", 0, "BOOL"),
 		powered2: props.globals.initNode("/systems/fadec/powered2", 0, "BOOL"),
 		powerup: props.globals.initNode("/systems/fadec/powerup", 0, "BOOL"),
@@ -54,7 +55,11 @@ var FADEC_S = {
 		
 		if (systems.ELEC.Bus.ac1.getValue() >= 110 or systems.ELEC.Bus.ac2.getValue() >= 110 or systems.ELEC.Bus.acEss.getValue() >= 110) {
 			if (powerAvailTemp != 1) {
-				me.Power.poweredTime.setValue(elapsedSec);
+				if (acconfig.SYSTEM.autoConfigRunning.getBoolValue()) {
+					me.Power.poweredTime.setValue(elapsedSec - 300);
+				} else {
+					me.Power.poweredTime.setValue(elapsedSec);
+				}
 				me.Power.powerAvail.setValue(1);
 			}
 		} else {
@@ -115,11 +120,13 @@ var FADEC_S = {
 		
 		state1 = pts.Engines.Engine.state[0].getValue();
 		state2 = pts.Engines.Engine.state[1].getValue();
-		modeSel =  pts.Controls.Engines.startSw.getValue();
+		modeSel = systems.IGNITION.startSw.getValue();
 		
 		if (state1 == 3) {
 			me.Power.powered1.setValue(1);
 		} else if (powerAvailTemp and modeSel == 2) {
+			me.Power.powered1.setValue(1);
+		} else if (me.Power.groundPower[0].getBoolValue()) {
 			me.Power.powered1.setValue(1);
 		} else {
 			me.Power.powered1.setValue(0);
@@ -128,6 +135,8 @@ var FADEC_S = {
 		if (state2 == 3) {
 			me.Power.powered2.setValue(1);
 		} else if (powerAvailTemp and modeSel == 2) {
+			me.Power.powered2.setValue(1);
+		} else if (me.Power.groundPower[1].getBoolValue()) {
 			me.Power.powered2.setValue(1);
 		} else {
 			me.Power.powered2.setValue(0);

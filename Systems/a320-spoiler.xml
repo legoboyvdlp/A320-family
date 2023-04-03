@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 Spoilers -->
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <system name="A320: Spoilers">
 	
@@ -242,7 +242,6 @@
 			<test logic="AND" value="hydraulics/spoiler-l2/retracted">
 				/systems/hydraulic/yellow-psi ge 1500
 				/systems/failures/spoilers/spoiler-l2 eq 0
-				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
 				<min>0.0</min>
@@ -338,7 +337,6 @@
 			<test logic="AND" value="hydraulics/spoiler-l3/retracted">
 				/systems/hydraulic/blue-psi ge 1500
 				/systems/failures/spoilers/spoiler-l3 eq 0
-				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
 				<min>0.0</min>
@@ -407,13 +405,16 @@
 		
 		<fcs_function name="hydraulics/spoiler-l4/retracted">
 			<function>
-				<table>
-					<independentVar lookup="row">fbw/roll/s-l-4</independentVar>
-					<tableData>
-						-1.0  0.7
-						 0.0  0.0
-					</tableData>
-				</table>
+				<sum>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-l-4</independentVar>
+						<tableData>
+							-1.0  0.7
+							 0.0  0.0
+						</tableData>
+					</table>
+					<property>fbw/laf/output-sp</property>
+				</sum>
 			</function>
 		</fcs_function>
 		
@@ -434,7 +435,6 @@
 			<test logic="AND" value="hydraulics/spoiler-l4/retracted">
 				/systems/hydraulic/yellow-psi ge 1500
 				/systems/failures/spoilers/spoiler-l4 eq 0
-				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
 				<min>0.0</min>
@@ -485,13 +485,16 @@
 		
 		<fcs_function name="hydraulics/spoiler-l5/retracted">
 			<function>
-				<table>
-					<independentVar lookup="row">fbw/roll/s-l-5</independentVar>
-					<tableData>
-						-1.0  0.7
-						 0.0  0.0
-					</tableData>
-				</table>
+				<sum>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-l-5</independentVar>
+						<tableData>
+							-1.0  0.7
+							 0.0  0.0
+						</tableData>
+					</table>
+					<property>fbw/laf/output-sp</property>
+				</sum>
 			</function>
 		</fcs_function>
 		
@@ -506,7 +509,6 @@
 			<test logic="AND" value="hydraulics/spoiler-l5/retracted">
 				/systems/hydraulic/green-psi ge 1500
 				/systems/failures/spoilers/spoiler-l5 eq 0
-				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
 				<min>0.0</min>
@@ -663,7 +665,6 @@
 			<test logic="AND" value="hydraulics/spoiler-r2/retracted">
 				/systems/hydraulic/yellow-psi ge 1500
 				/systems/failures/spoilers/spoiler-r2 eq 0
-				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
 				<min>0.0</min>
@@ -704,8 +705,8 @@
 					<table>
 						<independentVar lookup="row">fbw/roll/s-r-3</independentVar>
 						<tableData>
-							0.0  0.0
-							1.0 -0.7
+							-1.0 -0.7
+							 0.0  0.0
 						</tableData>
 					</table>
 				</sum>
@@ -722,8 +723,8 @@
 					<table>
 						<independentVar lookup="row">fbw/roll/s-r-3</independentVar>
 						<tableData>
-							0.0  0.0
-							1.0 -0.7
+							-1.0 -0.7
+							 0.0  0.0
 						</tableData>
 					</table>
 				</sum>
@@ -735,8 +736,8 @@
 				<table>
 					<independentVar lookup="row">fbw/roll/s-r-3</independentVar>
 					<tableData>
-						 0.0  0.0
-						 1.0  0.7
+						0.0  0.0
+						1.0  0.7
 					</tableData>
 				</table>
 			</function>
@@ -759,7 +760,6 @@
 			<test logic="AND" value="hydraulics/spoiler-r3/retracted">
 				/systems/hydraulic/blue-psi ge 1500
 				/systems/failures/spoilers/spoiler-r3 eq 0
-				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
 				<min>0.0</min>
@@ -800,8 +800,8 @@
 					<table>
 						<independentVar lookup="row">fbw/roll/s-r-4</independentVar>
 						<tableData>
-							0.0  0.0
-							1.0 -0.7
+							-1.0 -0.7
+							 0.0  0.0
 						</tableData>
 					</table>
 				</sum>
@@ -818,8 +818,8 @@
 					<table>
 						<independentVar lookup="row">fbw/roll/s-r-4</independentVar>
 						<tableData>
-							0.0  0.0
-							1.0 -0.7
+							-1.0 -0.7
+							 0.0  0.0
 						</tableData>
 					</table>
 				</sum>
@@ -828,13 +828,16 @@
 		
 		<fcs_function name="hydraulics/spoiler-r4/retracted">
 			<function>
-				<table>
-					<independentVar lookup="row">fbw/roll/s-r-4</independentVar>
-					<tableData>
-						 0.0  0.0
-						 1.0  0.7
-					</tableData>
-				</table>
+				<sum>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-r-4</independentVar>
+						<tableData>
+							0.0  0.0
+							1.0  0.7
+						</tableData>
+					</table>
+					<property>fbw/laf/output-sp</property>
+				</sum>
 			</function>
 		</fcs_function>
 		
@@ -855,7 +858,6 @@
 			<test logic="AND" value="hydraulics/spoiler-r4/retracted">
 				/systems/hydraulic/yellow-psi ge 1500
 				/systems/failures/spoilers/spoiler-r4 eq 0
-				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
 				<min>0.0</min>
@@ -906,13 +908,16 @@
 		
 		<fcs_function name="hydraulics/spoiler-r5/retracted">
 			<function>
-				<table>
-					<independentVar lookup="row">fbw/roll/s-r-5</independentVar>
-					<tableData>
-						0.0  0.0
-						1.0  0.7
-					</tableData>
-				</table>
+				<sum>
+					<table>
+						<independentVar lookup="row">fbw/roll/s-r-5</independentVar>
+						<tableData>
+							0.0  0.0
+							1.0  0.7
+						</tableData>
+					</table>
+					<property>fbw/laf/output-sp</property>
+				</sum>
 			</function>
 		</fcs_function>
 		
@@ -927,7 +932,6 @@
 			<test logic="AND" value="hydraulics/spoiler-r5/retracted">
 				/systems/hydraulic/green-psi ge 1500
 				/systems/failures/spoilers/spoiler-r5 eq 0
-				spoilers/main-cmd eq 0
 			</test>
 			<clipto>
 				<min>0.0</min>
@@ -990,6 +994,18 @@
 			<function>
 				<quotient>
 					<property>fcs/spoiler-right-sum</property>
+					<value>5</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fcs/spoiler-symmetrical-deg">
+			<function>
+				<quotient>
+					<min>
+						<property>fcs/spoiler-left-sum</property>
+						<property>fcs/spoiler-right-sum</property>
+					</min>
 					<value>5</value>
 				</quotient>
 			</function>

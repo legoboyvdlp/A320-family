@@ -29,16 +29,6 @@
 		
 	</channel>
 	
-	<channel name="IESI" execrate="8">
-		
-		<actuator name="/instrumentation/iesi/att-reset">
-			<input>/instrumentation/iesi/att-reset-cmd</input>
-			<rate_limit sense="incr">0.5</rate_limit>
-			<rate_limit sense="decr">100</rate_limit>
-		</actuator>
-		
-	</channel>
-	
 	<channel name="ADF" execrate="8">
 	
 		<switch name="/instrumentation/adf[0]/power-supply">
@@ -512,6 +502,12 @@
 	
 	<channel name="IESI" execrate="8">
 		
+		<actuator name="/instrumentation/iesi/att-reset">
+			<input>/instrumentation/iesi/att-reset-cmd</input>
+			<rate_limit sense="incr">0.5</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+		</actuator>
+		
 		<switch name="/instrumentation/iesi/display/show-mach">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -557,10 +553,190 @@
 					<product>
 						<value>4</value>
 						<property>/controls/lighting/DU/iesi</property>
+						<property>/instrumentation/iesi/power/power-on</property>
 					</product>
 				</sum>
 			</function>
 		</fcs_function>
+		
+	</channel>
+	
+	<channel name="ELT" execrate="8">
+	
+		<actuator name="/systems/elt/elt-test-switch">
+			<rate_limit sense="incr">1</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+			<input>/controls/elt/elt-test-reset</input>
+		</actuator>
+		
+		<switch name="/systems/elt/elt-test-cmd">
+			<default value="/systems/elt/elt-test-cmd"/>
+			<test logic="AND" value="1">
+				/systems/elt/elt-operating ne 1
+				/systems/elt/elt-test-switch eq 1
+			</test>
+			<test logic="OR" value="0">
+				/systems/elt/elt-test eq 1.0
+				/systems/elt/elt-operating eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/systems/elt/elt-test">
+			<rate_limit sense="incr">0.1</rate_limit>
+			<rate_limit sense="decr">100</rate_limit>
+			<input>/systems/elt/elt-test-cmd</input>
+		</actuator>
+		
+		<switch name="/systems/elt/elt-operating">
+			<default value="/systems/elt/elt-operating"/>
+			<test logic="OR" value="1">
+				/controls/elt/elt-switch eq 1
+				<test logic="AND">
+					/accelerations/pilot-gdamped gt 5.0
+					/controls/elt/elt-switch eq 0
+				</test>
+			</test>
+			<test logic="OR" value="0">
+				/controls/elt/elt-test-reset eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/elt/elt-horn-cmd">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/elt/elt-test ge 0.3
+					/systems/elt/elt-test lt 0.5
+				</test>
+				/systems/elt/elt-operating eq 1
+			</test>
+		</switch>
+		
+		<switch name="/systems/elt/elt-horn">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/elt/elt-horn-cmd eq 1
+					/instrumentation/comm/frequencies/selected-mhz eq 121.5
+					<test logic="OR">
+						/controls/audio/acp/vhf1-recive eq 1
+						/controls/audio/acp[1]/vhf1-recive eq 1
+						/controls/audio/acp[2]/vhf1-recive eq 1
+					</test>
+				</test>
+				<test logic="AND">
+					/systems/elt/elt-horn-cmd eq 1
+					/instrumentation/comm[1]/frequencies/selected-mhz eq 121.5
+					<test logic="OR">
+						/controls/audio/acp/vhf2-recive eq 1
+						/controls/audio/acp[1]/vhf2-recive eq 1
+						/controls/audio/acp[2]/vhf2-recive eq 1
+					</test>
+				</test>
+				<test logic="AND">
+					/systems/elt/elt-horn-cmd eq 1
+					/instrumentation/comm[2]/frequencies/selected-mhz eq 121.5
+					<test logic="OR">
+						/controls/audio/acp/vhf3-recive eq 1
+						/controls/audio/acp[1]/vhf3-recive eq 1
+						/controls/audio/acp[2]/vhf3-recive eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+		
+		<switch name="/systems/elt/light-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					/systems/elt/elt-test gt 0.0
+					/systems/elt/elt-test lt 0.5
+				</test>
+				<test logic="AND">
+					/systems/elt/elt-test ge 0.9
+					/systems/elt/elt-test lt 1.0
+				</test>
+				/systems/elt/elt-operating eq 1
+			</test>
+		</switch>
+		
+	</channel>
+	
+	<channel name="DU Power" execrate="8">
+		
+		<switch name="/instrumentation/displays/du3/power-command">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-ess ge 110
+				/controls/lighting/DU/du3 ge 0.01
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/displays/du3/power-transient-timer">
+			<input>/instrumentation/displays/du3/power-command</input>
+			<rate_limit sense="decr">5</rate_limit>
+			<rate_limit sene="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/instrumentation/displays/du3/power-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/displays/du3/power-transient-timer ne 0
+			</test>
+		</switch>
+		
+		<fcs_function name="/instrumentation/displays/du3/test-sum">
+			<function>
+				<sum>
+					<property>/instrumentation/du/du3-test-amount</property>
+					<property>/instrumentation/du/du3-test-time</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<switch name="/instrumentation/displays/du3/test-active">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/displays/du3/test-sum ge /sim/time/elapsed-sec
+			</test>
+		</switch>
+		
+		<switch name="/instrumentation/displays/du4/power-command">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/electrical/bus/ac-2 ge 110
+				/controls/lighting/DU/du4 ge 0.01
+			</test>
+		</switch>
+		
+		<actuator name="/instrumentation/displays/du4/power-transient-timer">
+			<input>/instrumentation/displays/du4/power-command</input>
+			<rate_limit sense="decr">5</rate_limit>
+			<rate_limit sene="incr">100</rate_limit>
+		</actuator>
+		
+		<switch name="/instrumentation/displays/du4/power-on">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/displays/du4/power-transient-timer ne 0
+			</test>
+		</switch>
+		
+		<fcs_function name="/instrumentation/displays/du4/test-sum">
+			<function>
+				<sum>
+					<property>/instrumentation/du/du4-test-amount</property>
+					<property>/instrumentation/du/du4-test-time</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<switch name="/instrumentation/displays/du4/test-active">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/instrumentation/displays/du4/test-sum ge /sim/time/elapsed-sec
+			</test>
+		</switch>
 		
 	</channel>
 	

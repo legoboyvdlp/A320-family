@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -183,7 +183,7 @@
 						var root = mcdu_canvas_dlg.createGroup();
 						root.setScale(0.285, 0.25);
 						mcdu_canvas_dlg.setColorBackground(0, 0, 0, 1.0);
-						root.createChild("image").set("src", "canvas://by-index/texture[13]");
+						root.createChild("image").set("src", "canvas://by-index/texture[15]");
 					]]>
 				</load>
 				<unload>

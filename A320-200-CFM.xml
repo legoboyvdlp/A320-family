@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <fdm_config name="A320" version="2.0" release="BETA">
 
 	<fileheader>
-		<author>Joshua Davidson (Octal450)</author>
+		<author>Josh Davidson (Octal450)</author>
 		<version>Pre V1.0</version>
 		<description>A32X FDE</description>
 	</fileheader>
@@ -27,7 +27,7 @@
 			<z>-0.934</z>
 		</location>
 		
-		<pointmass name="Crew">
+		<pointmass name="Cockpit Crew">
 			<weight unit="LBS">320</weight>
 			<location name="POINTMASS" unit="M">
 				<x>-15.44</x>
@@ -91,16 +91,6 @@
 	
 	<propulsion>
 		<engine file="cfm56-5b4_1">
-			<location unit="M">
-				<x>-5.34904</x>
-				<y>-2.8775</y>
-				<z>-1.04768</z>
-			</location>
-			<orient unit="DEG">
-				<roll>0.0</roll>
-				<pitch>2.2</pitch>
-				<yaw>1</yaw>
-			</orient>
 			<feed>5</feed>
 			<thruster file="direct">
 				<location unit="M">
@@ -117,16 +107,6 @@
 		</engine>
 		
 		<engine file="cfm56-5b4_2">
-			<location unit="M">
-				<x>-5.34904</x>
-				<y>2.8775</y>
-				<z>-1.04768</z>
-			</location>
-			<orient unit="DEG">
-				<roll>0.0</roll>
-				<pitch>2.2</pitch>
-				<yaw>-1</yaw>
-			</orient>
 			<feed>6</feed>
 			<thruster file="direct">
 				<location unit="M">
@@ -143,16 +123,6 @@
 		</engine>
 		
 		<engine file="APS3200">
-			<location unit="M">
-				<x>38.9</x>
-				<y>0</y>
-				<z>0.95</z>
-			</location>
-			<orient unit="DEG">
-				<roll>0.0</roll>
-				<pitch>0.0</pitch>
-				<yaw>0.0</yaw>
-			</orient>
 			<feed>7</feed>
 			<thruster file="direct">
 				<location unit="M">
@@ -281,6 +251,7 @@
 	<system file="a320-hydraulic"/>
     <system file="a320-pneumatic"/>
     <system file="a320-aircond"/> <!-- after pneu -->
+	<system file="a320-ignition"/>
 	<system file="a320-lights"/>
 	<system file="a320-engine-fire"/>
 	<system file="a320-adr"/>

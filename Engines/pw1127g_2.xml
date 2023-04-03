@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2022 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <turbine_engine name="PW1127G-JM">
 	
 	<milthrust>27000</milthrust>
 	<tsfc>0.335</tsfc>
-	<bleed>0.03</bleed>
-	<ignitionn1>2.3</ignitionn1>
-	<ignitionn2>22.2</ignitionn2>
-	<n1spinup>0.19</n1spinup>
-	<n2spinup>1.85</n2spinup>
+	<bleed>0</bleed> <!-- Set by pneumatic system -->
+	<ignitionn1>1.7</ignitionn1>
+	<ignitionn2>28.5</ignitionn2>
+	<n1spinup>0.11</n1spinup>
+	<n2spinup>1.845</n2spinup>
 	<n1startrate>0.503</n1startrate>
 	<n2startrate>1.127</n2startrate>
 	<idlen1>18.9</idlen1>
 	<idlen2>59.4</idlen2>
-	<maxn1>104.0</maxn1>
-	<maxn2>105.0</maxn2>
+	<maxn1>104</maxn1>
+	<maxn2>105</maxn2>
 	<augmented>0</augmented>
 	<injected>0</injected>
 	

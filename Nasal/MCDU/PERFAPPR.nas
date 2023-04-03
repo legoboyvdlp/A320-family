@@ -77,7 +77,7 @@ var perfAPPRInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.vappSpeedSet = 0;
 			mcdu_scratchpad.scratchpads[i].empty();
-		} else if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
+		} else if (int(scratchpad) != nil and scratchpad >= fmgc.FMGCInternal.vls_appr and scratchpad <= 350) {
 			fmgc.FMGCInternal.vappSpeedSet = 1;
 			fmgc.FMGCInternal.vapp_appr = scratchpad;
 			mcdu_scratchpad.scratchpads[i].empty();

@@ -1,15 +1,17 @@
 # A320 Main Libraries
-# Copyright (c) 2022 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 print("------------------------------------------------");
-print("Copyright (c) 2016-2022 Josh Davidson (Octal450)");
+print("Copyright (c) 2016-2023 Josh Davidson (Octal450)");
 print("------------------------------------------------");
+
+setprop("/autopilot/route-manager/disable-route-manager", 1);
+setprop("/autopilot/route-manager/disable-fms", 1);
 
 # Disable specific menubar items
 setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
-setprop("/sim/menubar/default/menu[3]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[9]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[10]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[11]/enabled", 0);
@@ -50,7 +52,7 @@ if (aero == "A320-200-CFM") {
 	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/CFM-NEO/4k/SAS-fuselage.png";
 } else if (aero == "A320neo-PW") {
 	var livery = aircraft.canvas_livery.init("Models/Liveries/PW-NEO");
-	elements = ["EnginePWPP", "EnginePWPPL.Inner", "EnginePWPPR", "EnginePWPPR.Inner", "Exhaust3PWPPL", "Exhaust3PWPPR", "Exxhaust2PWPPL", "Exxhaust2PWPPR", "IntakePWPPL", "IntakePWPPR", "PylonPWPPL", "PylonPWPPR", "ReverserLDoorLPWPP", "ReverserLDoorRPWPP"];
+	elements = ["EnginePWPPL", "EnginePWPPL.Inner", "EnginePWPPR", "EnginePWPPR.Inner", "Exhaust3PWPPL", "Exhaust3PWPPR", "Exxhaust2PWPPL", "Exxhaust2PWPPR", "IntakePWPPL", "IntakePWPPR", "PylonPWPPL", "PylonPWPPR", "ReverserRDoorPWPP", "ReverserLDoorPWPP"];
 	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/PW-NEO/2k/NKS-engine.png");
 #	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/PW-NEO/engine-dirt.png");
 	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/PW-NEO/4k/NKS-fuselage.png";
@@ -108,7 +110,7 @@ var triggerDoor = func(door, doorName, doorDesc) {
 };
 
 setlistener("/controls/doors/doorc-switch",func(a){
-	setprop("sim/sounde/switch1", 1);
+	setprop("sim/sound/switch1", 1);
 	if (systems.ELEC.Bus.dc1.getValue() > 25 or systems.ELEC.Bus.dc2.getValue() > 25) {
 		var pos = a.getValue();
 		var current = getprop("/sim/model/door-positions/doorc/lock-status");
@@ -141,8 +143,8 @@ var systemsInit = func() {
 	systems.HYD.init();
 	systems.FUEL.init();
 	systems.ADIRS.init();
-	systems.eng_init();
 	systems.ENGINE.init();
+	systems.IGNITION.init();
 	systems.FADEC.init();
 	systems.APUController.init();
 	systems.BrakeSys.reset();
@@ -211,14 +213,6 @@ var systemsLoop = func(notification) {
 			systems.PNEU.Switch.groundAir.setBoolValue(0);
 		}
 	}
-	
-	if (notification.engine1State >= 2 and pts.Fdm.JSBsim.Propulsion.Tank.contentsLbs[5].getValue() < 1) {
-		systems.cutoff_one();
-	}
-	
-	if (notification.engine2State >= 2 and pts.Fdm.JSBsim.Propulsion.Tank.contentsLbs[6].getValue() < 1) {
-		systems.cutoff_two();
-	}
 }
 
 # GPWS
@@ -233,6 +227,13 @@ var GPWSAlertStatus = 0;
 var gpws_alert_watch = maketimer(0.8, func() {	
 	if (GPWS.warning.getValue()) {
 		GPWSAlertStatus = 2; # MODE2 - warning - RED
+		
+		# Turn on Terr on ND after a GPWS warning
+		setprop("/controls/switches/terr_on_nd_l", 1);
+		setprop("/instrumentation/efis/inputs/terr", 1);
+		setprop("/controls/switches/terr_on_nd_r", 1);
+		setprop("/instrumentation/efis[1]/inputs/terr", 1);
+		
 	} else if (GPWS.alert.getValue()) {
 		GPWSAlertStatus = 1; # MODE1 - caution - YELLOW
 	} else {
@@ -320,22 +321,17 @@ var pilotComfortOnePos = func(prop) {
 var lTray = func() {
 	pilotComfortTwoPos("/controls/tray/lefttrayext");
 }
+
 var rTray = func() {
 	pilotComfortTwoPos("/controls/tray/righttrayext");
 }
 
-var l1Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-cpt[0]");
-}
-var l2Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-cpt[1]");
+var lFootrest = func() {
+	pilotComfortOnePos("/controls/footrest-cpt");
 }
 
-var r1Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-fo[0]");
-}
-var r2Pedal = func() {
-	pilotComfortOnePos("/controls/footrest-fo[1]");
+var rFootrest = func() {
+	pilotComfortOnePos("/controls/footrest-fo");
 }
 
 if (pts.Controls.Flight.autoCoordination.getBoolValue()) {
@@ -349,6 +345,7 @@ setlistener("/controls/flight/auto-coordination", func() {
     pts.Controls.Flight.autoCoordination.setBoolValue(0);
 	print("System: Auto Coordination has been turned off as it is not compatible with the fly-by-wire of this aircraft.");
 	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
+	screen.log.write("Tiller will now be controlled by aileron, rather than rudder", 1, 0, 0);
 }, 0, 0);
 
 # Legacy FCU
@@ -390,6 +387,7 @@ var input = {
 	"gearPosNorm2": "/gear/gear[2]/position-norm",
 	"engine1Running": "/engines/engine[0]/running",
 	"engine2Running": "/engines/engine[1]/running",
+	"annunTest": "/controls/switches/annun-test",
 };
 
 foreach (var name; keys(input)) {
