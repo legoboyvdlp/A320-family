@@ -382,8 +382,6 @@
 		<object-name>APUStartBtn2O</object-name>
 		<object-name>BatteryBtn11F</object-name>
 		<object-name>BatteryBtn21F</object-name>
-		<object-name>BatteryBtn12O</object-name>
-		<object-name>BatteryBtn22O</object-name>
 		<object-name>BusTieBtn2O</object-name>
 		<object-name>CabinPressModeBtn1F</object-name>
 		<object-name>CabinPressModeBtn2M</object-name>
@@ -428,6 +426,28 @@
 					<value>110</value>
 				</greater-than-equals>
 			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>BatteryBtn12O</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>systems/electrical/bus/dc-bat</property>
+				<value>25</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>BatteryBtn22O</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>systems/electrical/bus/dc-bat</property>
+				<value>25</value>
+			</greater-than-equals>
 		</condition>
 	</animation>
 	
