@@ -19,18 +19,46 @@ var res2str = func(resolution) {
 # Looks for the largest available livery texture in resolution equal or smaller
 # than the given limit
 var findTexByRes = func(path, file, maxRes) {
-	res = maxRes;
-	checkFile = os.path.new(getprop("/sim/aircraft-dir") ~ "/" ~ path);
-	while (res >= 1024) {
-		checkFile.set(getprop("/sim/aircraft-dir") ~ "/" ~ path ~ "/" ~ res2str(res) ~ "/" ~ file);
-		if (checkFile.isFile()) {
-			return res2str(res);
+	foundMax = 0;
+	foundMaxPath = "";
+	var paths = [getprop("/sim/aircraft-dir") ~ "/" ~ path, getprop("/sim/fg-home") ~ "/Export/Liveries/" ~ getprop("/sim/aircraft-id")];
+	checkFile = os.path.new(getprop("/sim/aircraft-dir"));
+	foreach (var p; paths)
+	{
+		res = maxRes;
+		while (res >= 1024) {
+			checkFile.set(p ~ "/" ~ res2str(res) ~ "/" ~ file);
+			if (checkFile.isFile()) {
+				print("FOUND TEXTURE SIZE " ~ res);
+				if (res > foundMax)
+				{
+					foundMax = res;
+					foundMaxPath = p;
+				}
+			}
+			res = res / 2;
 		}
-		res = res / 2;
 	}
-	print("No suiting texture " ~ file ~ " found in " ~ path ~ " and resolution " ~ maxRes ~ " or lower");
-	return nil;
+	if (foundMax != 0)
+	{
+		print("USING TEXTURE SIZE " ~ foundMax);
+		return [res2str(foundMax), foundMaxPath];
+	}
+	else
+	{
+		print("No suiting texture " ~ file ~ " found in resolution " ~ maxRes ~ " or lower");
+		return nil;
+	}
 };
+
+
+# =============================================================================
+# Listener to update the canvas size, when the property gets changed
+
+var livery_res_update = setlistener("/sim/model/livery/max-resolution", func {
+	livery_update.setResolution(getprop("/sim/model/livery/max-resolution"));
+	# TODO mp liveries
+}, 0, 0);
 
 
 # canvas_livery
@@ -123,6 +151,7 @@ var canvas_livery = {
 			property: property,
 		};
 		var resolution = getprop("/sim/model/livery/max-resolution");
+		print("INIT: RES: " ~ resolution);
 		me.targets[name].resolution = resolution;
 		# Make sure we never load too large textures
 		maxSupportedRes = getprop("/sim/rendering/max-texture-size");
@@ -152,23 +181,27 @@ var canvas_livery = {
 		}
 		me.targets[name].groups["base"] = me.targets[name].canvas.createGroup("base");
 		var livery = "";
-		resStr = findTexByRes(me.liveriesdir, getprop(property), resolution);
+		ret = findTexByRes(me.liveriesdir, getprop(property), resolution);
+		resStr = ret[0];
+		path = ret[1];
 		if (resStr == nil) {
 			livery = me.targets[name].defaultLiv;
 		}
 		else
 		{
-			livery = me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)
+			livery = path ~ "/" ~ resStr ~ "/" ~ getprop(property)
 		}
 		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(livery).setSize(resolution,resolution);
 		me.targets[name].layersHidden["base"] = 0;
 		me.targets[name].listener = setlistener(property, func(property) {
-			resStr = findTexByRes(me.liveriesdir, property.getValue(), resolution);
+			ret = findTexByRes(me.liveriesdir, property.getValue(), resolution);
+			resStr = ret[0];
+			path = ret[1];
 			if (resStr == nil) {
 				return nil;
 			}
 			me.targets[name].groups["base"].removeAllChildren();
-			me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ property.getValue()).setSize(resolution,resolution);
+			me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(path ~ "/" ~ resStr ~ "/" ~ property.getValue()).setSize(resolution,resolution);
 		});
 	},
 	addLayer: func(target, name, file) {
@@ -252,22 +285,26 @@ var canvas_livery_update = {
 		}
 		me.targets[name].groups["base"] = me.targets[name].canvas.createGroup("base");
 		var livery = "";
-		resStr = findTexByRes(me.liveriesdir, getprop(property), resolution);
+		ret = findTexByRes(me.liveriesdir, getprop(property), resolution);
+		resStr = ret[0];
+		path = ret[1];
 		if (resStr == nil) {
 			livery = me.targets[name].defaultLiv;
 		}
 		else
 		{
-			livery = me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)
+			livery = path ~ "/" ~ resStr ~ "/" ~ getprop(property)
 		}
 		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)).setSize(resolution,resolution);
 		me.targets[name].listener = setlistener(me.rplayer.getNode(property, 1).getPath(), func(property) {
-			resStr = findTexByRes(me.liveriesdir, property.getValue(), resolution);
+			ret = findTexByRes(me.liveriesdir, property.getValue(), resolution);
+			resStr = ret[0];
+			path = ret[1];
 			if (resStr == nil) {
 				return nil;
 			}
 			me.targets[name].groups["base"].removeAllChildren();
-			me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ property.getValue()).setSize(resolution,resolution);
+			me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(path ~ "/" ~ resStr ~ "/" ~ property.getValue()).setSize(resolution,resolution);
 		});
 	},
 	addLayer: func(target, name, file) {

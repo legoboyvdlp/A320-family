@@ -29,7 +29,7 @@
 		<load><![CDATA[
 			var livery_update = aircraft.canvas_livery_update.init("Models/Liveries/IAE", _module_id, cmdarg());
 			var elements = ["AileronL","AileronR","Antenna1","Antenna2","ApuFlap","AvionicsVentDoor","Cargo1","Cargo2","Cargo3","DoorL1","DoorL4","DoorR1","DoorR4","ElevatorL","ElevatorR","EngineFairingL","EngineFairingR","FairingL1","FairingL2","FairingL3","FairingR1","FairingR2","FairingR3","FlapL1","FlapL2","FlapR1","FlapR2","Fuselage","GPUServiceDoor","Hstabs","MLGGearDoorL","MLGGearDoorR","MLGWingDoorL1","MLGWingDoorL2","MLGWingDoorR1","MLGWingDoorR2","NLGAftDoorL","NLGAftDoorR","NLGFittingPanel","NLGForewardDoorL","NLGForewardDoorR","OutflowValveDoor1","OutflowValveDoor2","RatDoorL","RatDoorR","Rudder","Sharklet","SlatL1","SlatL2","SlatR1","SlatR2","SpoilerL1","SpoilerL2","SpoilerL3","SpoilerL4","SpoilerL5","SpoilerR1","SpoilerR2","SpoilerR3","SpoilerR4","SpoilerR5","Wings","WingtipFence","AOASensorL1","AOASensorL2","AOASensorR"];
-			livery_update.createTarget("fuselage", elements, "sim/model/livery/texture-fuselage", "Aircraft/A320-family/Models/Liveries/IAE/4k/QTR-fuselage.png", resolution=8192);
+			livery_update.createTarget("fuselage", elements, "sim/model/livery/texture-fuselage", "Aircraft/A320-family/Models/Liveries/IAE/4k/QTR-fuselage.png");
 
 			elements = ["EngineIAEV2500L","EngineIAEV2500R","ReverserLDoor","ReverserRDoor","PylonIAEV2500L","PylonIAEV2500R","IntakeIAEV2500L","IntakeIAEV2500R"];
 			livery_update.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/IAE/2k/QTR-engine.png");

@@ -39,7 +39,8 @@ if (aero == "A320-200-CFM") {
 	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/CFM/engine-dirt.png");
 	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/CFM/4k/SWR-fuselage.png";
 } else if (aero == "A320-200-IAE") {
-	var livery = aircraft.canvas_livery.init("Models/Liveries/IAE");
+	#var livery = aircraft.canvas_livery.init("Models/Liveries/IAE");
+	var livery = aircraft.canvas_livery.init(getprop('sim/fg-home') ~ "/Export/Liveries/A320-200-IAE");
 	elements = ["EngineIAEV2500L","EngineIAEV2500R","ReverserLDoor","ReverserRDoor","PylonIAEV2500L","PylonIAEV2500R","IntakeIAEV2500L","IntakeIAEV2500R"];
 	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/IAE/2k/QTR-engine.png");
 	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/IAE/engine-dirt.png");
