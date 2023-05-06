@@ -1,6 +1,6 @@
 # A3XX ND Canvas
 
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 io.include("A3XX_ND.nas");
 
@@ -69,7 +69,7 @@ var myCockpit_switches = {
 var canvas_nd_base = {
 	init: func(canvas_group, file = nil) {
 		var font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "ECAMFontRegular.ttf";
 		};
 
 		if (file != nil) {
@@ -268,7 +268,7 @@ var canvas_ND_2 = {
 var canvas_ND_1_test = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "ECAMFontRegular.ttf";
 		};
 
 		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
@@ -310,7 +310,7 @@ var canvas_ND_1_test = {
 var canvas_ND_2_test = {
 	init: func(canvas_group, file) {
 		var font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "ECAMFontRegular.ttf";
 		};
 
 		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});

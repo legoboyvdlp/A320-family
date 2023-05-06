@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <turbine_engine name="CFM56-5B4">
 	
 	<milthrust>27000</milthrust>
-	<tsfc>0.445</tsfc>
-	<bleed>0.03</bleed>
-	<ignitionn1>0.6</ignitionn1>
-	<ignitionn2>22.2</ignitionn2>
-	<n1spinup>0.05</n1spinup>
-	<n2spinup>1.85</n2spinup>
-	<n1startrate>0.573</n1startrate>
+	<tsfc>0.335</tsfc>
+	<bleed>0</bleed> <!-- Set by pneumatic system -->
+	<ignitionn1>1.7</ignitionn1>
+	<ignitionn2>28.5</ignitionn2>
+	<n1spinup>0.11</n1spinup>
+	<n2spinup>1.845</n2spinup>
+	<n1startrate>0.503</n1startrate>
 	<n2startrate>1.127</n2startrate>
 	<idlen1>18.9</idlen1>
 	<idlen2>59.4</idlen2>
-	<maxn1>104.0</maxn1>
-	<maxn2>105.0</maxn2>
+	<maxn1>104</maxn1>
+	<maxn2>105</maxn2>
 	<augmented>0</augmented>
 	<injected>0</injected>
 	
@@ -92,6 +92,7 @@
 				0.6  0.0000  0.0000  0.0000  0.0000  0.0181  0.0362  0.0000
 				0.8  0.0000  0.0000  0.0000  0.0000  0.0158  0.0315  0.0000
 				1.0  0.0000  0.0000  0.0000  0.0000  0.0000  0.0204  0.0000
+				1.2  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
 			</tableData>
 		</table>
 	</function>
@@ -111,7 +112,6 @@
 					0.9  1.2580  1.0200  0.7820  0.5220  0.2710  0.1270  0.0000
 					1.0  1.1810  0.9510  0.7210  0.4410  0.1740  0.0580  0.0000
 					1.2  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
-					1.4  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
 				</tableData>
 			</table>
 			<property>fadec/limit/rated-thrust-factor</property>

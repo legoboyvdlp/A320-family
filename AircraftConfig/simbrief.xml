@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <!-- A3XX Load Flightplans -->
 
@@ -43,7 +43,7 @@
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>1. ACARS is only available if VHF3 is not in voice mode, and the appropriate electrical power is available.</label>
+			<label>1. ACARS is only available if your VHF3 radio is in data mode, and the radio is supplied with electrical power</label>
 		</text>
 		<text>
 			<halign>left</halign>
@@ -51,18 +51,26 @@
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>3. GIGO... there is no sanity check on inputs!</label>
+			<label>3. If your FlightGear has installed Navigraph procedure files, it is reccomended not to include a SID or STAR in your</label>
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>4. Please enter your username in the following text field (not case sensitive)</label>
+			<label>SimBrief flightplan, as you will probably not be able to select a different procedure afterwards if you need to.  </label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>If you don't have procedures installed, then it's fine to leave them in. </label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>4. Please enter your username (alias for Navigraph accounts) in the following text field (not case sensitive)</label>
 		</text>
 		<group>
 			<layout>hbox</layout>
 			<input>
 				<width>200</width>
 				<height>25</height>	
-				<label>Username</label>
+				<label>Username / Alias</label>
 				<property>/FMGC/simbrief-username</property>
                 <binding>
                     <command>dialog-apply</command>

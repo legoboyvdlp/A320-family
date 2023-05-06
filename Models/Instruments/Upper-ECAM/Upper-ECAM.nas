@@ -51,7 +51,7 @@ var canvas_upperECAM = {
 		obj.typeString = type;
 		
 		obj.font_mapper = func(family, weight) {
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+			return "ECAMFontRegular.ttf";
 		};
 		
 		canvas.parsesvg(obj.group, svg, {"font-mapper": obj.font_mapper} );
@@ -78,6 +78,23 @@ var canvas_upperECAM = {
 		foreach(var key; obj.getKeysTest()) {
 			obj[key] = obj.test.getElementById(key);
 		};
+		
+		obj["ECAML1"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML2"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML3"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML4"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML5"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML6"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML7"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAML8"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR1"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR2"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR3"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR4"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR5"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR6"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR7"].setFont("ECAMFontBold100em.ttf");
+		obj["ECAMR8"].setFont("ECAMFontBold100em.ttf");
 		
 		obj.units = acconfig_weight_kgs.getValue();
 		
@@ -153,10 +170,10 @@ var canvas_upperECAM = {
 					obj["FlapDots"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("flexTemp", 1, func(val) {
+			props.UpdateManager.FromHashValue("flexTemp", 0.5, func(val) {
 				obj["FlxLimTemp"].setText(sprintf("%2.0d",val));
 			}),
-			props.UpdateManager.FromHashValue("slatLocked", nil, func(val) {
+			props.UpdateManager.FromHashValue("slatLocked", 1, func(val) {
 				if (val) {
 					if (slatLockGoing == 0) {
 						slatLockGoing = 1;
@@ -171,10 +188,10 @@ var canvas_upperECAM = {
 		];
 		
 		obj.update_items_fadec_powered_n1 = [
-			props.UpdateManager.FromHashValue("N1_1", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("N1_1", 0.1, func(val) {
 				obj["N11-needle"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("N1_2", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("N1_2", 0.1, func(val) {
 				obj["N12-needle"].setRotation((val + 90) * D2R);
 			}),
 			props.UpdateManager.FromHashValue("N1_actual_1", 0.025, func(val) {
@@ -185,49 +202,43 @@ var canvas_upperECAM = {
 				obj["N12"].setText(sprintf("%s", math.floor(val + 0.05)));
 				obj["N12-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
 			}),
-			props.UpdateManager.FromHashValue("N1_lim", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("N1_lim", 0.1, func(val) {
 				obj["N11-ylim"].setRotation((val + 90) * D2R);
 				obj["N12-ylim"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("N1thr_1", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("N1thr_1", 0.1, func(val) {
 				obj["N11-thr"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("N1thr_2", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("N1thr_2", 0.1, func(val) {
 				obj["N12-thr"].setRotation((val + 90) * D2R);
-			}),
-			props.UpdateManager.FromHashList(["reverser_1","eng1_n1","eng1_epr","N1_mode_1"], nil, func(val) {
-				obj.updateFadecN1Power1(val);
-			}),
-			props.UpdateManager.FromHashList(["reverser_2","eng2_n1","eng2_epr","N1_mode_2"], nil, func(val) {
-				obj.updateFadecN1Power2(val);
 			}),
 		];
 		
 		obj.update_items_fadec_powered_epr = [
-			props.UpdateManager.FromHashValue("EPR_1", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("EPR_1", 0.1, func(val) {
 				obj["EPR1-needle"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("EPR_2", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("EPR_2", 0.1, func(val) {
 				obj["EPR2-needle"].setRotation((val + 90) * D2R);
 			}),
 			props.UpdateManager.FromHashValue("EPR_actual_1", 0.0001, func(val) {
-				epr1 = math.round(val, 0.001);
+				epr1 = val + 0.0005;
 				obj["EPR1"].setText(sprintf("%1.0f", math.floor(epr1)));
 				obj["EPR1-decimal"].setText(sprintf("%03d", (epr1 - int(epr1)) * 1000));
 			}),
 			props.UpdateManager.FromHashValue("EPR_actual_2", 0.0001, func(val) {
-				epr2 = math.round(val, 0.001);
+				epr2 = val + 0.0005;
 				obj["EPR2"].setText(sprintf("%1.0f", math.floor(epr2)));
 				obj["EPR2-decimal"].setText(sprintf("%03d", (epr2 - int(epr2)) * 1000));
 			}),
-			props.UpdateManager.FromHashValue("EPR_lim", 0.005, func(val) {
+			props.UpdateManager.FromHashValue("EPR_lim", 0.1, func(val) {
 				obj["EPR1-ylim"].setRotation((val + 90) * D2R);
 				obj["EPR2-ylim"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("EPRthr_1", 0.005, func(val) {
+			props.UpdateManager.FromHashValue("EPRthr_1", 0.1, func(val) {
 				obj["EPR1-thr"].setRotation((val + 90) * D2R);
 			}),
-			props.UpdateManager.FromHashValue("EPRthr_2", 0.005, func(val) {
+			props.UpdateManager.FromHashValue("EPRthr_2", 0.1, func(val) {
 				obj["EPR2-thr"].setRotation((val + 90) * D2R);
 			}),
 		];
@@ -251,7 +262,7 @@ var canvas_upperECAM = {
 				obj["N1Lim"].setText(sprintf("%s", math.floor(val + 0.05)));
 				obj["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
 			}),
-			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart", "thrustLimit"], nil, func(val) {
+			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart", "thrustLimitInt"], 1, func(val) {
 				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
 					obj["N1Lim"].show();
 					obj["N1Lim-decimal"].show();
@@ -270,7 +281,7 @@ var canvas_upperECAM = {
 					obj["N1Lim-XX2"].show();
 				}
 				
-				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit == "FLX") {
+				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimitInt == 3) {
 					obj["FlxLimDegreesC"].show();
 					obj["FlxLimTemp"].show();
 				} else {
@@ -285,8 +296,8 @@ var canvas_upperECAM = {
 				obj["EPRLim-mode"].setText(sprintf("%s", val));
 				obj["N1Lim-mode"].setText(sprintf("%s", val));
 			}),
-			props.UpdateManager.FromHashValue("eprLimit", 0.0005, func(val) {
-				eprLim = math.round(val, 0.001);
+			props.UpdateManager.FromHashValue("eprLimit", 0.0001, func(val) {
+				eprLim = val + 0.0005;
 				obj["EPRLim"].setText(sprintf("%1.0f", math.floor(eprLim)));
 				obj["EPRLim-decimal"].setText(sprintf("%03d", (eprLim - int(eprLim)) * 1000));
 			}),
@@ -294,7 +305,7 @@ var canvas_upperECAM = {
 				obj["N1Lim"].setText(sprintf("%s", math.floor(val + 0.05)));
 				obj["N1Lim-decimal"].setText(sprintf("%s", int(10 * math.mod(val + 0.05, 1))));
 			}),
-			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart", "thrustLimit", "N1_mode_1", "N1_mode_2"], nil, func(val) {
+			props.UpdateManager.FromHashList(["fadecPower1", "fadecPower2", "fadecPowerStart", "thrustLimitInt", "N1_mode_1", "N1_mode_2"], 1, func(val) {
 				if (val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) {
 					if (val.N1_mode_1 > 0 and val.N1_mode_2 > 0) {
 						if (val.N1_mode_1 == 2 and val.N1_mode_2 == 2) {
@@ -304,13 +315,13 @@ var canvas_upperECAM = {
 							obj["N1Lim-percent"].hide();
 							obj["N1Lim-mode"].hide();
 							obj["N1Lim-XX"].show();
-							if (val.thrustLimit != "MREV") {
+							if (val.thrustLimitInt != 4) {
 								obj["N1Lim-XX2"].show();
 							} else {
 								obj["N1Lim-XX2"].hide();
 							}
 						} else {
-							if (val.thrustLimit != "MREV") {
+							if (val.thrustLimitInt != 4) {
 								obj["N1Lim"].show();
 								obj["N1Lim-decimal"].show();
 								obj["N1Lim-decpnt"].show();
@@ -328,7 +339,7 @@ var canvas_upperECAM = {
 						obj["EPRMode"].hide();
 						obj["N1Mode"].show();
 					} else {
-						if (val.thrustLimit != "MREV") {
+						if (val.thrustLimitInt != 4) {
 							obj["EPRLim"].show();
 							obj["EPRLim-decimal"].show();
 							obj["EPRLim-decpnt"].show();
@@ -354,7 +365,7 @@ var canvas_upperECAM = {
 					obj["N1Mode"].hide();
 				}
 				
-				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimit == "FLX" and val.N1_mode_1 == 0 and val.N1_mode_2 == 0) {
+				if ((val.fadecPower1 or val.fadecPower2 or val.fadecPowerStart) and val.thrustLimitInt == 3 and val.N1_mode_1 == 0 and val.N1_mode_2 == 0) {
 					obj["FlxLimDegreesC"].show();
 					obj["FlxLimTemp"].show();
 				} else {
@@ -368,13 +379,13 @@ var canvas_upperECAM = {
 			props.UpdateManager.FromHashValue("egt_1", 0.5, func(val) {
 				obj["EGT1"].setText(sprintf("%s", math.round(val)));
 			}),
-			props.UpdateManager.FromHashValue("egt_1_needle", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("egt_1_needle", 0.1, func(val) {
 				obj["EGT1-needle"].setRotation((val + 90) * D2R);
 			}),
 			props.UpdateManager.FromHashValue("egt_2", 0.5, func(val) {
 				obj["EGT2"].setText(sprintf("%s", math.round(val)));
 			}),
-			props.UpdateManager.FromHashValue("egt_2_needle", 0.01, func(val) {
+			props.UpdateManager.FromHashValue("egt_2_needle", 0.1, func(val) {
 				obj["EGT2-needle"].setRotation((val + 90) * D2R);
 			}),
 		];
@@ -465,29 +476,13 @@ var canvas_upperECAM = {
 		obj.createListenerForLine("/ECAM/rightmsg/linec7", ECAM_line7rc, "ECAMR7");
 		obj.createListenerForLine("/ECAM/rightmsg/linec8", ECAM_line8rc, "ECAMR8");
 		
-		obj["ECAML1"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML2"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML3"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML4"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML5"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML6"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML7"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAML8"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR1"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR2"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR3"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR4"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR5"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR6"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR7"].setFont("LiberationMonoCustom.ttf");
-		obj["ECAMR8"].setFont("LiberationMonoCustom.ttf");
-		
 		# cache
 		obj._cachedN1 = [nil, nil];
 		obj._cachedN2 = [nil, nil];
 		obj._cachedEGT = [nil, nil];
 		obj._cachedEPR = [nil, nil];
 		obj._cachedFF = [nil, nil];
+		obj._doneNoPower = 0;
 		
 		obj.updateFadecN1Power1({reverser_1: 0, eng1_n1: 0, eng1_epr: 0, N1_mode_1: 0});
 		obj.updateFadecN1Power2({reverser_2: 0, eng2_n1: 0, eng2_epr: 0, N1_mode_2: 0});
@@ -554,10 +549,12 @@ var canvas_upperECAM = {
 				me.displayIdleTrigger = 1;
 			}
 			if ((notification.elapsedTime - enginesBothAtIdleTime.getValue()) < 10) {
-				if ((notification.elapsedTime - enginesBothAtIdleTimeSaved.getValue()) > 1) {
+				if ((notification.elapsedTime - enginesBothAtIdleTimeSaved.getValue()) > 0.5) {
 					enginesBothAtIdleTimeSaved.setValue(notification.elapsedTime);
 					me.displayIdleDim = !me.displayIdleDim;
 				}
+			} else {
+				me.displayIdleDim = 0;
 			}
 			me.displayIdle = 1;
 		} else {
@@ -610,6 +607,18 @@ var canvas_upperECAM = {
 		}
 		if (systems.FADEC_S.Eng2.ff != me._cachedFF[1]) {
 			me.updateFF2();
+		}
+		
+		if (notification.fadecPower1 or notification.fadecPower2 or notification.fadecPowerStart) {
+			me._doneNoPower = 0;
+			me.updateFadecN1Power1(notification);
+			me.updateFadecN1Power2(notification);
+		} else {
+			if (!me._doneNoPower) {
+				me._doneNoPower = 1;
+				me.updateFadecN1Power1(notification);
+				me.updateFadecN1Power2(notification);
+			}
 		}
 		
 		if (notification.eng1_n1 or notification.eng2_n1) {
@@ -942,6 +951,7 @@ var canvas_upperECAM = {
 				}
 			}
 		} else {
+			# This is for CFM only -- the IAE show / hiding is done via an emesary node. Potentially they can be merged.
 			if (val.reverser_1 < 0.01 and val.eng1_n1 == 1) {
 				me["N11-thr"].show();
 			} else {
@@ -1117,7 +1127,7 @@ emesary.GlobalTransmitter.Register(A320EWD);
 
 var input = {
 	fuelTotalLbs: "/consumables/fuel/total-fuel-lbs",
-	slatLocked: "/fdm/jsbsim/fcs/slat-locked",
+	slatLocked: "/fdm/jsbsim/fcs/sfcc/slat-locked",
 	
 	# N1 parameters
 	N1_1: "/instrumentation/upper-ecam/n1[0]",
@@ -1170,6 +1180,7 @@ var input = {
 	alphaFloor: "/fdm/jsbsim/fadec/alpha-floor",
 	eprLimit: "/fdm/jsbsim/fadec/limit/active-epr",
 	thrustLimit: "/fdm/jsbsim/fadec/limit/active-mode",
+	thrustLimitInt: "/fdm/jsbsim/fadec/limit/active-mode-int",
 	n1Limit: "/fdm/jsbsim/fadec/limit/active-n1",
 	flexTemp: "/fdm/jsbsim/fadec/limit/flex-temp",
 	fadecPower1: "/systems/fadec/powered1",

@@ -1,7 +1,7 @@
 # A3XX ECAM
 # Joshua Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
-# Copyright (c) 2021 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var ap_active = 0;
 var athr_active = 0;
@@ -233,7 +233,7 @@ var ECAMRecipient =
 				if (math.mod(notifications.frameNotification.FrameCount,10) == 0) {
 					phaseLoop();
 				}
-				if (math.mod(notifications.frameNotification.FrameCount,10) == 5) {
+				if (isint(notifications.frameNotification.FrameCount / 5)) {
 					ECAM_controller.loop(notification);
 				}
 				return emesary.Transmitter.ReceiptStatus_OK;
@@ -258,7 +258,7 @@ var input = {
 	"apWarn": "/it-autoflight/output/ap-warning",
 	"apOffTime": "/ECAM/warnings/ap-off-time",
 	"elevatorFBW": "/fdm/jsbsim/fbw/elevator-sidestick",
-	"gearLever": "/controls/gear/gear-down",
+	"gearLever": "/controls/gear/lever",
 	"masterCaution": "/ECAM/warnings/master-caution-light",
 	"masterWarn": "/ECAM/warnings/master-warning-light",
 };

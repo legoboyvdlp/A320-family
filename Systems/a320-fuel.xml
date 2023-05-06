@@ -187,7 +187,6 @@
 		</switch>
 		
 		<actuator name="/systems/fuel/pumps/center-control-low-level">
-            <description>Timer for the Fuel Center pumps</description>
             <input>/systems/fuel/quantity/center-low</input>
             <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">0.00333</rate_limit> <!-- 300 seconds -->
@@ -278,7 +277,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/engines/engine[0]/fire-btn eq 0
-				/controls/engines/engine[0]/cutoff-switch eq 0
+				/engines/engine[0]/state ge 1
 			</test>
 		</switch>
 		
@@ -299,7 +298,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/engines/engine[1]/fire-btn eq 0
-				/controls/engines/engine[1]/cutoff-switch eq 0
+				/engines/engine[1]/state ge 1
 			</test>
 		</switch>
 		
@@ -553,32 +552,6 @@
 			</test>
 		</switch>
 		
-		<switch name="rubbish/pipes-unusable-volume-1">
-			<default value="0"/>
-			<test logic="AND" value="1.5">
-				/systems/acconfig/autoconfig-running eq 0
-				/systems/fuel/valves/engine-1-lp-valve eq 0
-			</test>
-			<output>propulsion/tank[5]/unusable-volume-gal</output>
-		</switch>
-		
-		<switch name="rubbish/pipes-unusable-volume-2">
-			<default value="0"/>
-			<test logic="AND" value="1.5">
-				/systems/acconfig/autoconfig-running eq 0
-				/systems/fuel/valves/engine-2-lp-valve eq 0
-			</test>
-			<output>propulsion/tank[6]/unusable-volume-gal</output>
-		</switch>
-		
-		<switch name="rubbish/pipes-unusable-volume-apu">
-			<default value="0"/>
-			<test logic="AND" value="1.5">
-				/systems/acconfig/autoconfig-running eq 0
-				/systems/fuel/valves/apu-lp-valve eq 0
-			</test>
-			<output>propulsion/tank[7]/unusable-volume-gal</output>
-		</switch>
 		<!-- Feed system -->
 		
 		<switch name="/systems/fuel/internal/apu-source"> <!-- this only when all pumps off -->

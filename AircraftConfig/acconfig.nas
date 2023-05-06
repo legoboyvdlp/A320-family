@@ -1,7 +1,7 @@
 # Aircraft Config Center
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 var spinning = maketimer(0.05, func {
 	var spinning = getprop("/systems/acconfig/spinning");
@@ -21,10 +21,10 @@ var spinning = maketimer(0.05, func {
 });
 
 var failReset = func {
-	systems.ELEC.resetFail();
-	systems.PNEU.resetFail();
-	fbw.FBW.resetFail();
-	systems.HYD.resetFail();
+	systems.ELEC.resetFailures();
+	systems.PNEU.resetFailures();
+	fbw.FBW.resetFailures();
+	systems.HYD.resetFailures();
 }
 
 var failResetOld = func {
@@ -51,8 +51,10 @@ setprop("/systems/acconfig/out-of-date", 0);
 setprop("/systems/acconfig/mismatch-code", "0x000");
 setprop("/systems/acconfig/mismatch-reason", "XX");
 setprop("/systems/acconfig/options/keyboard-mode", 0);
+setprop("/systems/acconfig/options/fgcamera-keys-enabled", 0);
 setprop("/systems/acconfig/options/weight-kgs", 1);
 setprop("/systems/acconfig/options/adirs-skip", 0);
+setprop("/systems/acconfig/options/toggle-tooltips", 1);
 setprop("/systems/acconfig/options/allow-oil-consumption", 0);
 setprop("/systems/acconfig/options/atis-server", "faa");
 setprop("/systems/acconfig/options/wxr-server", "noaa");
@@ -61,12 +63,8 @@ setprop("/systems/acconfig/options/no-rendering-warn", 0);
 setprop("/systems/acconfig/options/save-state", 0);
 setprop("/systems/acconfig/options/hide-canvas-outside", 0);
 setprop("/systems/acconfig/options/seperate-tiller-axis", 0);
-setprop("/systems/acconfig/options/pfd-rate", 1);
 setprop("/systems/acconfig/options/nd-rate", 1);
 setprop("/systems/acconfig/options/dcdu-rate", 1);
-setprop("/systems/acconfig/options/uecam-rate", 1);
-setprop("/systems/acconfig/options/lecam-rate", 1);
-setprop("/systems/acconfig/options/iesi-rate", 1);
 setprop("/systems/acconfig/options/autopush/show-route", 1);
 setprop("/systems/acconfig/options/autopush/show-wingtip", 1);
 var main_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/main/dialog", "Aircraft/A320-family/AircraftConfig/main.xml");
@@ -77,7 +75,6 @@ var init_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/init/dialog", "Aircraft
 var help_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/help/dialog", "Aircraft/A320-family/AircraftConfig/help.xml");
 var fbw_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/fbw/dialog", "Aircraft/A320-family/AircraftConfig/fbw.xml");
 var fail_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/fail/dialog", "Aircraft/A320-family/AircraftConfig/fail.xml");
-var about_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/about/dialog", "Aircraft/A320-family/AircraftConfig/about.xml");
 var update_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/update/dialog", "Aircraft/A320-family/AircraftConfig/update.xml");
 var updated_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/updated/dialog", "Aircraft/A320-family/AircraftConfig/updated.xml");
 var error_mismatch = gui.Dialog.new("/sim/gui/dialogs/acconfig/error/mismatch/dialog", "Aircraft/A320-family/AircraftConfig/error-mismatch.xml");
@@ -94,6 +91,10 @@ var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
 print("A320-family Revision: " ~ current_revision);
 setprop("/systems/acconfig/revision", current_revision);
+
+var SYSTEM = { # Prepare for migration to ACCONFIG V2
+	autoConfigRunning: props.globals.getNode("/systems/acconfig/autoconfig-running"),
+};
 
 var foViewNode = props.globals.initNode("/systems/acconfig/options/fo-view", 0, "BOOL");
 setprop("/systems/acconfig/options/simbrief-username", "");
@@ -220,9 +221,11 @@ var renderingSettings = {
 var readSettings = func {
 	io.read_properties(pts.Sim.fgHome.getValue() ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 	setprop("/options/system/keyboard-mode", getprop("/systems/acconfig/options/keyboard-mode"));
+	if (getprop("/sim/fgcamera/enable")) setprop("/options/system/fgcamera-keys-enabled", getprop("/systems/acconfig/options/fgcamera-keys-enabled")); # read only when FGCamera enabled
 	setprop("/options/system/weight-kgs", getprop("/systems/acconfig/options/weight-kgs"));
 	setprop("/options/system/save-state", getprop("/systems/acconfig/options/save-state"));
 	setprop("/controls/adirs/skip", getprop("/systems/acconfig/options/adirs-skip"));
+	setprop("/options/system/toggle-tooltips", getprop("/systems/acconfig/options/toggle-tooltips"));
 	setprop("/systems/apu/oil/allow-oil-consumption", getprop("/systems/acconfig/options/allow-oil-consumption"));
 	setprop("/sim/model/autopush/route/show", getprop("/systems/acconfig/options/autopush/show-route"));
 	setprop("/sim/model/autopush/route/show-wingtip", getprop("/systems/acconfig/options/autopush/show-wingtip"));
@@ -235,9 +238,11 @@ var readSettings = func {
 
 var writeSettings = func {
 	setprop("/systems/acconfig/options/keyboard-mode", getprop("/options/system/keyboard-mode"));
+	setprop("/systems/acconfig/options/fgcamera-keys-enabled", getprop("/options/system/fgcamera-keys-enabled"));
 	setprop("/systems/acconfig/options/weight-kgs", getprop("/options/system/weight-kgs"));
 	setprop("/systems/acconfig/options/save-state", getprop("/options/system/save-state"));
 	setprop("/systems/acconfig/options/adirs-skip", getprop("/controls/adirs/skip"));
+	setprop("/systems/acconfig/options/toggle-tooltips", getprop("/options/system/toggle-tooltips"));
 	setprop("/systems/acconfig/options/allow-oil-consumption", getprop("/systems/apu/oil/allow-oil-consumption"));
 	setprop("/systems/acconfig/options/autopush/show-route", getprop("/sim/model/autopush/route/show"));
 	setprop("/systems/acconfig/options/autopush/show-wingtip", getprop("/sim/model/autopush/route/show-wingtip"));
@@ -272,13 +277,14 @@ var colddark = func {
 		setprop("/controls/gear/brake-left", 1);
 		setprop("/controls/gear/brake-right", 1);
 		# Initial shutdown, and reinitialization.
-		setprop("/controls/engines/engine-start-switch", 1);
+		setprop("/services/chocks/enable", 1);
+		setprop("/controls/ignition/start-sw", 1);
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
-		setprop("/controls/gear/gear-down", 1);
+		setprop("/controls/gear/lever", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		setprop("/controls/switches/beacon", 0);
 		setprop("/controls/switches/strobe", 0.0);
@@ -331,13 +337,14 @@ var beforestart = func {
 		setprop("/controls/gear/brake-left", 1);
 		setprop("/controls/gear/brake-right", 1);
 		# First, we set everything to cold and dark.
-		setprop("/controls/engines/engine-start-switch", 1);
+		setprop("/services/chocks/enable", 1);
+		setprop("/controls/ignition/start-sw", 1);
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
-		setprop("/controls/gear/gear-down", 1);
+		setprop("/controls/gear/lever", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		libraries.variousReset();
@@ -399,9 +406,9 @@ var beforestart_b = func {
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
-	libraries.noSmokingSwitch.setValue(0.5);
-	libraries.seatbeltSwitch.setValue(1.0);
-	libraries.emerLtsSwitch.setValue(0.5);
+	pts.Controls.Switches.noSmokingSwitch.setValue(0.5);
+	pts.Controls.Switches.seatbeltSwitch.setValue(1.0);
+	pts.Controls.Switches.emerLtsSwitch.setValue(0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
@@ -427,13 +434,14 @@ var taxi = func {
 		setprop("/controls/gear/brake-left", 1);
 		setprop("/controls/gear/brake-right", 1);
 		# First, we set everything to cold and dark.
-		setprop("/controls/engines/engine-start-switch", 1);
+		setprop("/services/chocks/enable", 0);
+		setprop("/controls/ignition/start-sw", 1);
 		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
 		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
-		setprop("/controls/gear/gear-down", 1);
+		setprop("/controls/gear/lever", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
 		libraries.variousReset();
@@ -496,9 +504,9 @@ var taxi_b = func {
 	setprop("/controls/switches/beacon", 1);
 	setprop("/controls/switches/wing-lights", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
-	libraries.noSmokingSwitch.setValue(0.5);
-	libraries.seatbeltSwitch.setValue(1.0);
-	libraries.emerLtsSwitch.setValue(0.5);
+	pts.Controls.Switches.noSmokingSwitch.setValue(0.5);
+	pts.Controls.Switches.seatbeltSwitch.setValue(1.0);
+	pts.Controls.Switches.emerLtsSwitch.setValue(0.5);
 	setprop("/controls/radio/rmp[0]/on", 1);
 	setprop("/controls/radio/rmp[1]/on", 1);
 	setprop("/controls/radio/rmp[2]/on", 1);
@@ -514,6 +522,7 @@ var taxi_b = func {
 		libraries.toggleSTD();
 	}
 	setprop("/instrumentation/altimeter[0]/setting-inhg", getprop("/environment/metar[0]/pressure-inhg") or 29.92);
+	setprop("/instrumentation/altimeter[6]/setting-inhg", getprop("/environment/metar[0]/pressure-inhg") or 29.92);
 	settimer(taxi_c, 2);
 }
 var taxi_c = func {
@@ -521,9 +530,8 @@ var taxi_c = func {
 		colddark();
 		return 0; # auto-config aborted
 	}
-	setprop("/controls/engines/engine-start-switch", 2);
-	setprop("/controls/engines/engine[0]/cutoff-switch", 0);
-	setprop("/controls/engines/engine[1]/cutoff-switch", 0);
+	systems.IGNITION.fastStart(0);
+	systems.IGNITION.fastStart(1);
 	settimer(func {
 		taxi_d();
 	}, 10);
@@ -534,10 +542,8 @@ var taxi_d = func {
 		return 0; # auto-config aborted
 	}
 	# After Start items.
-	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/apu/master", 0);
 	setprop("/controls/pneumatics/switches/apu", 0);
-	setprop("/controls/gear/brake-parking", 0);
 	setprop("/controls/gear/brake-left", 0);
 	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);
@@ -572,3 +578,9 @@ var takeoff = func {
 		});
 	}
 }
+
+setlistener("/systems/start-up-on-start", func() {
+	if (getprop("/systems/start-up-on-start")) {
+		settimer(takeoff, 5);
+	}
+}, 1, 0);

@@ -2,7 +2,6 @@ var latRev = {
 	title: [nil, nil, nil],
 	titleColour: "wht",
 	subtitle: [nil, nil],
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -48,22 +47,22 @@ var latRev = {
 	_setupPageWithData: func() {
 		if (me.type == 2) { 
 			me.title = ["LAT REV", " FROM ", "PPOS"];
+			var acPos = geo.aircraft_position();
+			me.subtitle = [dmsToString(sprintf(acPos.lat()), "lat"), dmsToString(sprintf(acPos.lon()), "lon")];
 			me.L2 = [" OFFSET", nil, "wht"];
 			me.L3 = [" HOLD", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R1 = ["FIX INFO ", nil, "wht"];
-			me.R2 = ["[    ]°/[   ]°/[  ]", "LL XING/INCR/NO", "blu"];
+			me.R2 = ["[  ]°/[]°/[]", "LL XING/INCR/NO", "blu"];
 			me.arrowsMatrix = [[0, 1, 1, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "wht", "wht", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
-			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]];
 		} elsif (me.type == 4) { 
 			me.title = ["LAT REV", " FROM ", "DISCON"];
-			me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
-			me.R4 = ["[     ]", "NEW DEST", "blu"];
+			me.R3 = ["[   ]", "NEXT WPT ", "blu"];
+			me.R4 = ["[   ]", "NEW DEST ", "blu"];
 			me.L6 = [" RETURN", nil, "wht"];
 			me.arrowsMatrix = [[0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "ack", "ack", "ack", "ack", "wht"], ["ack", "ack", "ack", "ack", "ack", "ack"]];
-			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
 		} else {
 			if (me.type == 0) {	
 				me.title = ["LAT REV", " FROM ", left(me.wpt.wp_name, 4)];
@@ -72,48 +71,60 @@ var latRev = {
 				} else {
 					me.depAirport = findAirportsByICAO(me.wpt.wp_name);
 				}
-				me.subtitle = [dmsToString(sprintf(me.depAirport[0].lat), "lat"), dmsToString(sprintf(me.depAirport[0].lon), "lon")];
+				if (size(me.depAirport) > 0) {
+					me.subtitle = [dmsToString(sprintf(me.depAirport[0].lat), "lat"), dmsToString(sprintf(me.depAirport[0].lon), "lon")];
+				}
 				me.L1 = [" DEPARTURE", nil, "wht"];
 				me.L2 = [" OFFSET", nil, "wht"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["FIX INFO ", nil, "wht"];
-				me.R2 = ["[    ]°/[   ]°/[  ]", "LL XING/INCR/NO", "blu"];
-				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
-				me.R4 = ["[     ]", "NEW DEST", "blu"];
+				me.R2 = ["[  ]°/[]°/[]", "LL XING/INCR/NO", "blu"];
+				me.R3 = ["[   ]", "NEXT WPT ", "blu"];
+				me.R4 = ["[   ]", "NEW DEST ", "blu"];
 				me.arrowsMatrix = [[1, 1, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0]];
 				me.arrowsColour = [["wht", "wht", "ack", "ack", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
-				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0]];
 			} elsif (me.type == 1) {
 				me.title = ["LAT REV", " FROM ", left(me.wpt.wp_name, 4)];
+				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0]];
+				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
 				if (size(me.wpt.wp_name) > 4) {
 					me.arrAirport = findAirportsByICAO(left(me.wpt.wp_name, 4));
 				} else {
 					me.arrAirport = findAirportsByICAO(me.wpt.wp_name);
 				}
-				me.subtitle = [dmsToString(sprintf(me.arrAirport[0].lat), "lat"), dmsToString(sprintf(me.arrAirport[0].lon), "lon")];
+				if (size(me.arrAirport) > 0) {
+					me.subtitle = [dmsToString(sprintf(me.arrAirport[0].lat), "lat"), dmsToString(sprintf(me.arrAirport[0].lon), "lon")];
+				}
 				me.L3 = [" ALTN", nil, "wht"];
-				me.L4 = [" ALTN", " ENABLE", "blu"];
+				if (fmgc.FMGCInternal.altAirportSet) {
+					me.L4 = [" ALTN", " ENABLE", "blu"];
+					me.arrowsMatrix[0][3] = 1;
+				} else {
+					me.arrowsMatrix[0][3] = 0;
+				}
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["ARRIVAL ", nil, "wht"];
-				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
-				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0]];
-				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "ack", "ack"]];
-				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
+				me.R3 = ["[   ]", "NEXT WPT ", "blu"];
 			} elsif (me.type == 3) {
 				me.title = ["LAT REV", " FROM ", me.wpt.wp_name];
+				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 1, 0]];
+				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "wht", "ack"]];
+				
 				if (me.wpt != nil) {
 					me.subtitle = [dmsToString(sprintf(me.wpt.lat), "lat"), dmsToString(sprintf(me.wpt.lon), "lon")];
 				}
 				me.L3 = [" HOLD", nil, "wht"];
-				me.L4 = [" ALTN", " ENABLE", "blu"];
+				if (fmgc.FMGCInternal.altAirportSet) {
+					me.L4 = [" ALTN", " ENABLE", "blu"];
+					me.arrowsMatrix[0][3] = 1;
+				} else {
+					me.arrowsMatrix[0][3] = 0;
+				}
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R1 = ["FIX INFO ", nil, "wht"];
-				me.R3 = ["[        ]", "NEXT WPT  ", "blu"];
-				me.R4 = ["[     ]", "NEW DEST", "blu"];
+				me.R3 = ["[   ]", "NEXT WPT ", "blu"];
+				me.R4 = ["[   ]", "NEW DEST ", "blu"];
 				me.R5 = ["AIRWAYS ", nil, "wht"];
-				me.arrowsMatrix = [[0, 0, 1, 1, 0, 1], [1, 0, 0, 0, 1, 0]];
-				me.arrowsColour = [["ack", "ack", "wht", "blu", "ack", "wht"], ["wht", "ack", "ack", "ack", "wht", "ack"]];
-				me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0]];
 			}
 		}
 	},
@@ -153,7 +164,7 @@ var dmsToString = func(dms, type) {
 	} else {
 		var sign = degrees >= 0 ? "E" : "W";
 	}
-	return abs(degrees) ~ "g" ~ minutes ~ " " ~ sign;
+	return abs(degrees) ~ "°" ~ minutes ~ sign;
 }
 
 

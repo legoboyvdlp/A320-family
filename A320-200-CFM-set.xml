@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- CFM56 engine -->
 
 <PropertyList include="A320-main.xml">
 
@@ -16,14 +17,14 @@
 				<texture-fuselage>SWR-fuselage.png</texture-fuselage>
 				<texture-engine>SWR-engine.png</texture-engine>
 			</livery>
-			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/A320/CFM</livery-dir>
+			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/CFM</livery-dir>
 		</model>
 		
 		<sound>
 			<path>Aircraft/A320-family/Sounds/cfm56-sound.xml</path>
 		</sound>
 		
-		<chase-distance-m type="double" archive="y">-60.0</chase-distance-m>
+		<chase-distance-m type="double" archive="y">-80</chase-distance-m>
 		<view n="0">
 			<name>Captain View</name>
 			<internal archive="y">true</internal>
@@ -222,10 +223,21 @@
 	
 	<options n="0">
 		<eng type="string">CFM</eng>
+		<eng-int type="int">0</eng-int>
 		<engine-name type="string">CFM56-5B4</engine-name>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">35</maxflap>
 		<model-number type="string">A320-214</model-number>
+		<model-options>
+			<sharklet type="bool">0</sharklet>
+		</model-options>
 	</options>
+	
+	<systems n="0">
+		<ignition n="0">
+			<starter-cutoff-n2 type="double">50</starter-cutoff-n2>
+			<starter-engage-n2 type="double">16</starter-engage-n2>
+		</ignition>
+	</systems>
 	
 </PropertyList>

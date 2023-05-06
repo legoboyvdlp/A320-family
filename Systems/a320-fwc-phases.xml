@@ -7,7 +7,6 @@
 	<channel name="FWC Phase Logic Timers" execrate="8">
 		
 		<actuator name="/ECAM/timer/ground-calc">
-            <description>Timer for the ECAM phase system</description>
             <input>/ECAM/logic/ground-calc-immediate</input>
             <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
             <rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
@@ -88,8 +87,9 @@
 		<switch name="/ECAM/logic/ground-calc-immediate">
 			<default value="0"/>
 			<test logic="OR" value="1">
+				/ECAM/flipflop/radar-altimeter-5-set eq 1
 				/ECAM/flipflop/radar-altimeter-5-output eq 1
-				/position/gear-agl-ft lt 5
+				/gear/gear[1]/compression-norm ne 0
 			</test>
 		</switch>
 		
@@ -141,39 +141,11 @@
 			</test>
 		</switch>
 		
-		<switch name="/ECAM/phases/phase-calculation/engine-1-off">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				<test logic="OR">
-					/ECAM/phases/timer/eng1idle-output eq 0
-					/controls/engines/engine[0]/cutoff-switch eq 1
-				</test>
-				<test logic="OR">
-					/ECAM/timer/ground-calc eq 1
-					/ECAM/phases/timer/eng1idle eq 0
-				</test>
-			</test>
-		</switch>
-	
-		<switch name="/ECAM/phases/phase-calculation/engine-2-off">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				<test logic="OR">
-					/ECAM/phases/timer/eng2idle-output eq 0
-					/controls/engines/engine[1]/cutoff-switch eq 1
-				</test>
-				<test logic="OR">
-					/ECAM/timer/ground-calc eq 1
-					/ECAM/phases/timer/eng2idle eq 0
-				</test>
-			</test>
-		</switch>
-		
 		<switch name="/ECAM/phases/phase-calculation/engines-1-2-not-running">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/ECAM/phases/phase-calculation/engine-1-off eq 1
-				/ECAM/phases/phase-calculation/engine-2-off eq 1
+				/ECAM/warnings/logic/eng/JE1NORUN eq 1
+				/ECAM/warnings/logic/eng/JE2NORUN eq 1
 			</test>
 		</switch>
 		

@@ -74,6 +74,11 @@ var FWC = {
 
 var warningNodes = {
 	Logic: {
+		JE1TLAI: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-tla-idle"),
+		JE2TLAI: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-tla-idle"),
+		adr123Fault: props.globals.initNode("/ECAM/warnings/navigation/ADR123-fault"),
+		eng1OilLoPr: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-oil-lo-pr"),
+		eng2OilLoPr: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-oil-lo-pr"),
 		altitudeAlert: props.globals.initNode("/ECAM/warnings/altitude-alert/c-chord"),
 		altitudeAlertSteady: props.globals.initNode("/ECAM/warnings/altitude-alert/altitude-alert-steady"),
 		altitudeAlertFlash: props.globals.initNode("/ECAM/warnings/altitude-alert/altitude-alert-flash"),
@@ -90,6 +95,8 @@ var warningNodes = {
 		bleed2LoTempPack: props.globals.initNode("/ECAM/warnings/logic/bleed-2-lo-temp-pack"),
 		bleed2WaiAvail: props.globals.initNode("/ECAM/warnings/logic/bleed-2-wai-avail"),
 		waiSysfault: props.globals.initNode("/ECAM/warnings/logic/wing-anti-ice-sys-fault"),
+		waiLopen: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-left-open"),
+		waiRopen: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-right-open"),
 		waiLclosed: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-left-closed"),
 		waiRclosed: props.globals.initNode("/ECAM/warnings/flipflop/wing-anti-ice-right-closed"),
 		procWaiShutdown: props.globals.initNode("/ECAM/warnings/logic/proc-wai-shutdown-output"),
@@ -117,7 +124,9 @@ var warningNodes = {
 		greenYellow: props.globals.initNode("/ECAM/warnings/hyd/green-yellow-failure"),
 		greenYellowFuel: props.globals.initNode("/ECAM/warnings/hyd/green-yellow-fuel-consumpt"),
 		leftElevFail: props.globals.initNode("/ECAM/warnings/fctl/leftElevFault"),
+		leftElevNotAvail: props.globals.initNode("ECAM/warnings/fctl/leftElevFault-cond"),
 		rightElevFail: props.globals.initNode("/ECAM/warnings/fctl/rightElevFault"),
+		rightElevNotAvail: props.globals.initNode("ECAM/warnings/fctl/rightElevFault-cond"),
 		flapNotZero: props.globals.initNode("/ECAM/warnings/fctl/flaps-not-zero"),
 		slatsConfig: props.globals.initNode("/ECAM/warnings/fctl/slats-config-output"),
 		flapsConfig: props.globals.initNode("/ECAM/warnings/fctl/flaps-config-output"),
@@ -138,6 +147,8 @@ var warningNodes = {
 		revSet: props.globals.initNode("/ECAM/warnings/logic/eng/reverse-set"),
 		eng1Fail: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-fail"),
 		eng2Fail: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-fail"),
+		eng1FailFlipflop: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-fail-output"),
+		eng2FailFlipflop: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-fail-output"),
 		phase5Trans: props.globals.initNode("/ECAM/warnings/logic/eng/phase-5-output"),
 		eng1Shutdown: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-shutdown"),
 		eng2Shutdown: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-shutdown"),
@@ -145,6 +156,8 @@ var warningNodes = {
 		gen1Off: props.globals.initNode("/ECAM/warnings/logic/elec/gen-1-off"),
 		gen2Off: props.globals.initNode("/ECAM/warnings/logic/elec/gen-2-off"),
 		spdBrkOut: props.globals.initNode("/ECAM/warnings/fctl/spd-brk-still-out"),
+		excessPress: props.globals.initNode("/ECAM/warnings/press/exess-residual-pressure"),
+		excessCabAlt: props.globals.initNode("/ECAM/warnings/logic/press/excess-cabin-alt"),
 	},
 	Timers: {
 		apuFaultOutput: props.globals.initNode("/ECAM/warnings/timer/apu-fault-output"),
@@ -208,5 +221,7 @@ var warningNodes = {
 		parkBrk: props.globals.initNode("/ECAM/warnings/config/park-brk/park-brk-output"),
 		eng1ThrLvrAbvIdle: props.globals.initNode("/ECAM/warnings/logic/eng/eng-1-thr-lvr-abv-idle"),
 		eng2ThrLvrAbvIdle: props.globals.initNode("/ECAM/warnings/logic/eng/eng-2-thr-lvr-abv-idle"),
+		cabPressExcessFlipflopTop: props.globals.initNode("/ECAM/warnings/logic/press/excess-cabin-alt-flipflop-top"),
+		cabPressExcessFlipflop: props.globals.initNode("/ECAM/warnings/logic/press/excess-cabin-alt-flipflop"),
 	},
 };

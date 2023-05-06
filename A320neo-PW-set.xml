@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- PW1100 engine -->
 
 <PropertyList include="A320-main.xml">
 
@@ -12,16 +13,18 @@
 		<model>
 			<path>Aircraft/A320-family/Models/A320neo-PW.xml</path>
 			<livery>
-				<file>Airbus</file>
+				<file>NKS</file>
+				<texture-fuselage>NKS-fuselage.png</texture-fuselage>
+				<texture-engine>NKS-engine.png</texture-engine>
 			</livery>
-			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/A320/PW-NEO</livery-dir>
+			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/PW-NEO</livery-dir>
 		</model>
 		
 		<sound>
 			<path>Aircraft/A320-family/Sounds/leapx-sound.xml</path>
 		</sound>
 		
-		<chase-distance-m type="double" archive="y">-60.0</chase-distance-m>
+		<chase-distance-m type="double" archive="y">-80</chase-distance-m>
 		<view n="0">
 			<name>Captain View</name>
 			<internal archive="y">true</internal>
@@ -219,11 +222,22 @@
 	</limits>
 	
 	<options n="0">
-		<eng type="string">CFM</eng> <!-- Apparently PW PurePower uses N1, not EPR.... sooo I use CFM ECAM, and no N1 mode switches -->
+		<eng type="string">CFM</eng> <!-- PW PurePower uses N1, not EPR... so I use CFM, and no N1 mode switches -->
+		<eng-int type="int">0</eng-int>
 		<engine-name type="string">PW1127G-JM</engine-name>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">35</maxflap>
 		<model-number type="string">A320-271N</model-number>
+		<model-options>
+			<sharklet type="bool">1</sharklet>
+		</model-options>
 	</options>
+	
+	<systems n="0">
+		<ignition n="0">
+			<starter-cutoff-n2 type="double">50</starter-cutoff-n2> <!-- Check -->
+			<starter-engage-n2 type="double">16</starter-engage-n2> <!-- Check -->
+		</ignition>
+	</systems>
 
 </PropertyList>

@@ -19,8 +19,7 @@ var ground_services = {
 		setprop("/services/deicing_truck/de-ice", 0);
 		
 		# Set them all to 0 if the aircraft is not stationary
-		if (getprop("velocities/groundspeed-kt") >= 2) {
-			setprop("/services/chocks/enable", 0);
+		if (pts.Velocities.groundspeedKt.getValue() >= 2) {
 			setprop("/services/fuel-truck/enable", 0);
 			setprop("/services/deicing_truck/enable", 0);
 			setprop("/services/catering/enable", 0);

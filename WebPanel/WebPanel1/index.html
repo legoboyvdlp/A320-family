@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+	<title>A320 MCDU</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="manifest" href="mcdu_manifest.json" />
+	<meta name="apple-mobile-web-app-status-bar" content="#db4938" />
+	<meta name="theme-color" content="#db4938" />
+	<style>
+		body {
+			font-size: 5rem;
+			margin: 0;
+			padding: 0;
+			background-color: black;
+			color: white;
+			font-family: sans-serif;
+		}
+
+		table {
+			margin: 0;
+			padding: 0;
+			word-wrap: normal;
+			overflow-wrap: normal;
+		}
+
+		tr {
+			margin: 0;
+			padding: 0;
+		}
+
+		td {
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			outline: 1px solid gray;
+			
+			-ms-user-select: none;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-webkit-touch-callout: none;
+			-khtml-user-select: none;
+			user-select: none;
+			overflow: hidden;
+			text-overflow: clip;
+		}
+
+		td:active {
+			background-color: white;
+			color: black;
+		}
+
+		.enter {
+			font-size: 60%;
+		}
+
+		.enter tr:first-child {
+			font-size: 70%;
+		}
+
+		.enter tr:last-child {
+			font-size: 50%;
+		}
+
+		.enter td:first-child,
+		.enter td:last-child {
+			padding: 0 0.55em;
+		}
+
+		.menu,
+		.arrows .airport {
+			font-size: 40%;
+			line-height: 1em;
+		}
+
+		.menu td {
+			height: 2.5em;
+		}
+
+		.arrows td {
+			width: 50%;
+			padding: 0;
+			font-size: 60%;
+		}
+
+		img {
+			display: block;
+		}
+	</style>
+</head>
+
+<body style="width: 100%" oncontextmenu="return false;">
+	<table class="enter" style="width: 100%">
+		<tr>
+			<td><br></td>
+			<td rowspan="8" style="vertical-align: top"><img data-element="lcdimage" src=""	style="width: 100%" /></td>
+			<td><br></td>
+		</tr>
+		<tr>
+			<td data-button="lskbutton:1">—</td>
+			<td data-button="rskbutton:1">—</td>
+		</tr>
+		<tr>
+			<td data-button="lskbutton:2">—</td>
+			<td data-button="rskbutton:2">—</td>
+		</tr>
+		<tr>
+			<td data-button="lskbutton:3">—</td>
+			<td data-button="rskbutton:3">—</td>
+		</tr>
+		<tr>
+			<td data-button="lskbutton:4">—</td>
+			<td data-button="rskbutton:4">—</td>
+		</tr>
+		<tr>
+			<td data-button="lskbutton:5">—</td>
+			<td data-button="rskbutton:5">—</td>
+		</tr>
+		<tr>
+			<td data-button="lskbutton:6">—</td>
+			<td data-button="rskbutton:6">—</td>
+		</tr>
+		<tr>
+			<td><br></td>
+			<td><br></td>
+		</tr>
+	</table>
+	<table class="menu" style="width: 100%">
+		<tr>
+			<td data-button="pagebutton:dirto" class="dirto">DIR</td>
+			<td data-button="pagebutton:prog" class="prog">PROG</td>
+			<td data-button="pagebutton:perf" class="perf">PERF</td>
+			<td data-button="pagebutton:init" class="init">INIT</td>
+			<td data-button="pagebutton:data" class="data">DATA</td>
+			<td></td>
+			<td>BRT</td>
+		</tr>
+		<tr>
+			<td data-button="pagebutton:f-pln" class="f-pln">F-PLN</td>
+			<td data-button="pagebutton:radnav" class="radnav">RAD<br>NAV</td>
+			<td data-button="pagebutton:fuel-pred" class="fuel-pred">FUEL<br>PRED</td>
+			<td data-button="" >SEC<br>F-PLN</td>
+			<td data-button="pagebutton:atc"  class="atc">ATC<br>COMM</td>
+			<td data-button="pagebutton:mcdu" class="mcdu">MCDU<br>MENU</td>
+			<td>DIM</td>
+		</tr>
+	</table>
+	<table class="input" style="float: right; width: 62.5%">
+		<tr>
+			<td data-button="button:A">A</td>
+			<td data-button="button:B">B</td>
+			<td data-button="button:C">C</td>
+			<td data-button="button:D">D</td>
+			<td data-button="button:E">E</td>
+		</tr>
+		<tr>
+			<td data-button="button:F">F</td>
+			<td data-button="button:G">G</td>
+			<td data-button="button:H">H</td>
+			<td data-button="button:I">I</td>
+			<td data-button="button:J">J</td>
+		</tr>
+		<tr>
+			<td data-button="button:K">K</td>
+			<td data-button="button:L">L</td>
+			<td data-button="button:M">M</td>
+			<td data-button="button:N">N</td>
+			<td data-button="button:O">O</td>
+		</tr>
+		<tr>
+			<td data-button="button:P">P</td>
+			<td data-button="button:Q">Q</td>
+			<td data-button="button:R">R</td>
+			<td data-button="button:S">S</td>
+			<td data-button="button:T">T</td>
+		</tr>
+		<tr>
+			<td data-button="button:U">U</td>
+			<td data-button="button:V">V</td>
+			<td data-button="button:W">W</td>
+			<td data-button="button:X">X</td>
+			<td data-button="button:Y">Y</td>
+		</tr>
+		<tr>
+			<td data-button="button:Z">Z</td>
+			<td data-button="button:SLASH">/</td>
+			<td style="font-size: 50%" data-button="button:SP">SP</td>
+			<td style="font-size: 33%" data-button="button:OVFY">OVFY<br>△</td>
+			<td style="font-size: 33%" data-button="button:CLR">CLR</td>
+		</tr>
+	</table>
+	<table class="arrows" style="width: 29.5%">
+		<tr>
+			<td data-button="pagebutton:airport" class="airport">AIR<br>PORT</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td data-button="arrowbutton:left" class="left">←</td>
+			<td data-button="arrowbutton:up" class="up">↑</td>
+		</tr>
+		<tr>
+			<td data-button="arrowbutton:right" class="right">→</td>
+			<td data-button="arrowbutton:down" class="down">↓</td>
+		</tr>
+	</table>
+	<table class="input" style="width: 30%">
+		<tr>
+			<td data-button="button:1">1</td>
+			<td data-button="button:2">2</td>
+			<td data-button="button:3">3</td>
+		</tr>
+		<tr>
+			<td data-button="button:4">4</td>
+			<td data-button="button:5">5</td>
+			<td data-button="button:6">6</td>
+		</tr>
+		<tr>
+			<td data-button="button:7">7</td>
+			<td data-button="button:8">8</td>
+			<td data-button="button:9">9</td>
+		</tr>
+		<tr>
+			<td data-button="button:DOT">.</td>
+			<td data-button="button:0">0</td>
+			<td
+				style="font-size: 3vw; width: 33.34%;" data-button="button:PLUSMINUS">
+				+/-
+			</td>
+		</tr>
+	</table>
+
+	<script src="../js/mcdu.js"></script>
+
+</body>
+
+</html>

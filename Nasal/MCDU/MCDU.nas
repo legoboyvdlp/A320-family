@@ -1,11 +1,12 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
 
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
 var pageNode = [props.globals.getNode("/MCDU[0]/page"), props.globals.getNode("/MCDU[1]/page")];
 var page = nil;
 var msg = nil;
+var airportPress = [0,0];
 
 var scratchpadNode = [nil, nil];
 var MCDU_init = func(i) {
@@ -15,7 +16,6 @@ var MCDU_init = func(i) {
 var MCDU_reset = func(i) {
 	setprop("/MCDU[" ~ i ~ "]/active", 0);
 	setprop("/MCDU[" ~ i ~ "]/atsu-active", 0);
-	setprop("it-autoflight/settings/togaspd", 157); #aka v2 clone
 	setprop("/MCDU[" ~ i ~ "]/last-fmgc-page", "STATUS");
 	setprop("/MCDU[" ~ i ~ "]/last-atsu-page", "ATSUDLINK");
 	setprop("/MCDU[" ~ i ~ "]/active-system","");
@@ -25,10 +25,6 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/keyboard-right", 0);
 	
 	#ACCONFIG
-	setprop("/FMGC/internal/navdatabase", "01JAN-28JAN");
-	setprop("/FMGC/internal/navdatabase2", "29JAN-26FEB");
-	setprop("/FMGC/internal/navdatabasecode", "AB20170101");
-	setprop("/FMGC/internal/navdatabasecode2", "AB20170102");
 	setprop("/FMGC/print/mcdu/page1/L1auto", 0);
 	setprop("/FMGC/print/mcdu/page1/L2auto", 0);
 	setprop("/FMGC/print/mcdu/page1/L3auto", 0);
@@ -45,15 +41,15 @@ var MCDU_reset = func(i) {
 	setprop("/FMGC/print/mcdu/page2/R4req", 0);
 	
 	#RADNAV
-	setprop("/FMGC/internal/ils1freq-set", 0);
-	setprop("/FMGC/internal/ils1crs-set", 0);
-	setprop("/FMGC/internal/ils1freq-calculated", 0);
-	setprop("/FMGC/internal/vor1freq-set", 0);
-	setprop("/FMGC/internal/vor1crs-set", 0);
-	setprop("/FMGC/internal/vor2freq-set", 0);
-	setprop("/FMGC/internal/vor2crs-set", 0);
-	setprop("/FMGC/internal/adf1freq-set", 0);
-	setprop("/FMGC/internal/adf2freq-set", 0);
+	fmgc.FMGCInternal.ILS.freqSet = 0;
+	fmgc.FMGCInternal.ILS.freqCalculated = 0;
+	fmgc.FMGCInternal.ILS.crsSet = 0;
+	fmgc.FMGCInternal.VOR1.freqSet = 0;
+	fmgc.FMGCInternal.VOR1.crsSet = 0;
+	fmgc.FMGCInternal.VOR2.freqSet = 0;
+	fmgc.FMGCInternal.VOR2.crsSet = 0;
+	fmgc.FMGCInternal.ADF1.freqSet = 0;
+	fmgc.FMGCInternal.ADF2.freqSet = 0;
 	
 	# INT-A
 	fmgc.FMGCInternal.altAirport = "";
@@ -72,7 +68,7 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.depApt = "";
 	fmgc.FMGCInternal.flightNum = "";
 	fmgc.FMGCInternal.flightNumSet = 0;
-	fmgc.FMGCInternal.gndTemp = -99;
+	fmgc.FMGCInternal.gndTemp = 15;
 	fmgc.FMGCInternal.gndTempSet = 0;
 	fmgc.FMGCInternal.toFromSet = 0;
 	fmgc.FMGCNodes.toFromSet.setValue(0);
@@ -157,12 +153,11 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.vrset = 0;
 	fmgc.FMGCInternal.v2 = 0;
 	fmgc.FMGCInternal.v2set = 0;
-	
 	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/MCDUC/thracc-set", 0);
-	setprop("/FMGC/internal/to-flap", 0);
-	setprop("/FMGC/internal/to-ths", "0.0");
-	setprop("/FMGC/internal/flap-ths-set", 0);
+	fmgc.FMGCInternal.toFlap = 0;
+	fmgc.FMGCInternal.toThs = 0.0;
+	fmgc.FMGCInternal.toFlapThsSet = 0;
 	setprop("/fdm/jsbsim/fadec/limit/flex-temp", 0);
 	setprop("/fdm/jsbsim/fadec/limit/flex-active-cmd", 0);
 	setprop("/FMGC/internal/eng-out-reduc", "1500");
@@ -256,10 +251,6 @@ var lskbutton = func(btn, i) {
 			radnavInput("L1",i);
 		} else if (page == "DATA") {
 			dataInput("L1",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("L1",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L1",i);
 		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type == 0) {
 				if (canvas_mcdu.myDeparture[i] != nil) {
@@ -302,6 +293,7 @@ var lskbutton = func(btn, i) {
 				if (atsu.ATISInstances[0].sent != 1) {
 					if (fmgc.FMGCInternal.depApt != "") {
 						atsu.ATISInstances[0].newStation(fmgc.FMGCInternal.depApt);
+						atsu.ATISInstances[0].setType(1);
 					} else {
 						atsu.ATISInstances[0].station = nil;
 					}
@@ -364,6 +356,8 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "HOLD") {
+			canvas_mcdu.myHold[i].pushbuttonLeft(1);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 0;
 			atsu.freeTexts[i].changed = 1;
@@ -412,10 +406,6 @@ var lskbutton = func(btn, i) {
 			perfDESInput("L2",i); 
 		} else if (page == "DATA") {
 			dataInput("L2",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("L2",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L2",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(2);
 		} else if (page == "DEPARTURE") {
@@ -450,6 +440,7 @@ var lskbutton = func(btn, i) {
 				if (atsu.ATISInstances[1].sent != 1) {
 					if (fmgc.FMGCInternal.arrApt != "") {
 						atsu.ATISInstances[1].newStation(fmgc.FMGCInternal.arrApt);
+						atsu.ATISInstances[1].setType(0);
 					} else {
 						atsu.ATISInstances[1].station = nil;
 					}
@@ -512,6 +503,10 @@ var lskbutton = func(btn, i) {
 					mcdu_scratchpad.scratchpads[i].empty();
 				}
 			}
+		} else if (page == "VERTREV") {
+			canvas_mcdu.myVertRev[i].pushButtonLeft(2);
+		} else if (page == "HOLD") {
+			canvas_mcdu.myHold[i].pushbuttonLeft(2);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 1;
 			atsu.freeTexts[i].changed = 1;
@@ -536,15 +531,11 @@ var lskbutton = func(btn, i) {
 		} else if (page == "PERFAPPR") {
 			perfAPPRInput("L3",i);
 		} else if (page == "STATUS") {
-			statusInput("L3",i);
+			fmgc.switchDatabase();
 		} else if (page == "RADNAV") {
 			radnavInput("L3",i);
 		} else if (page == "DATA") {
 			dataInput("L3",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("L3",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L3",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(3);
 		} else if (page == "DEPARTURE") {
@@ -579,6 +570,7 @@ var lskbutton = func(btn, i) {
 				if (atsu.ATISInstances[2].sent != 1) {
 					if (fmgc.FMGCInternal.altAirportSet) {
 						atsu.ATISInstances[2].newStation(fmgc.FMGCInternal.altAirport);
+						atsu.ATISInstances[1].setType(0);
 					} else {
 						atsu.ATISInstances[2].station = nil;
 					}
@@ -643,6 +635,8 @@ var lskbutton = func(btn, i) {
 			}
 		} else if (page == "VERTREV") {
 			canvas_mcdu.myVertRev[i].pushButtonLeft(3);
+		} else if (page == "HOLD") {
+			canvas_mcdu.myHold[i].pushbuttonLeft(3);
 		} else if (page == "MCDUTEXT") {
 			atsu.freeTexts[i].selection = 2;
 			atsu.freeTexts[i].changed = 1;
@@ -668,8 +662,6 @@ var lskbutton = func(btn, i) {
 			perfAPPRInput("L4",i);
 		} else if (page == "RADNAV") {
 			radnavInput("L4",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L4",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(4);
 		} else if (page == "DEPARTURE") {
@@ -788,10 +780,6 @@ var lskbutton = func(btn, i) {
 			perfGAInput("L5",i);
 		} else if (page == "RADNAV") {
 			radnavInput("L5",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("L5",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L5",i);
 		} else if (page == "DATA") {
 			dataInput("L5",i);
 		} else if (page == "DATA2") {
@@ -810,7 +798,6 @@ var lskbutton = func(btn, i) {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(5);
 		} else if (page == "CLOSESTAIRPORT") {
 			canvas_mcdu.myClosestAirport[i].manAirportCall(mcdu_scratchpad.scratchpads[i].scratchpad);
-			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (page == "ATCMENU") {
 			pageNode[i].setValue("NOTIFICATION");
 		} else if (page == "FLTLOG") {
@@ -847,6 +834,8 @@ var lskbutton = func(btn, i) {
 			pageNode[i].setValue("WINDCLB");
 		} else if (page == "ROUTESELECTION") {
 			initInputROUTESEL("L6",i);
+		} else if (page == "RADNAV") {
+			radnavInput("L6",i);
 		} else if (page == "PERFCLB") {
 			perfCLBInput("L6",i);
 		} else if (page == "PERFCRZ") {
@@ -857,8 +846,6 @@ var lskbutton = func(btn, i) {
 			perfAPPRInput("L6",i);
 		} else if (page == "PERFGA") {
 			perfGAInput("L6",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("L6",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(6);
 		} else if (page == "LATREV" or page == "VERTREV" or page == "DUPLICATENAMES") {
@@ -867,6 +854,8 @@ var lskbutton = func(btn, i) {
 			} else {
 				 if (canvas_mcdu.myDuplicate[i] != nil and canvas_mcdu.myDuplicate[i].flagPROG) {
 					pagebutton("prog",i);
+				 } else {
+					pageNode[i].setValue("F-PLNA");
 				 }
 			}
 		} else if (page == "ARRIVAL") {
@@ -936,10 +925,6 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myDESWIND[i].pushButtonRight(1);
 		} else if (page == "RADNAV") {
 			radnavInput("R1",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("R1",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("R1",i);
 		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type == 1) {
 				if (canvas_mcdu.myArrival[i] != nil) {
@@ -978,13 +963,19 @@ var rskbutton = func(btn, i) {
 		} else if (page == "AOCMENU") {
 			pageNode[i].setValue("FLTLOG");
 		} else if (page == "WEATHERREQ") {
-			var result = atsu.AOC.newStation(mcdu_scratchpad.scratchpads[i].scratchpad, i);
-			if (result == 1) {
-				mcdu_message(i, "NOT ALLOWED");
-			} elsif (result == 2) {
-				mcdu_message(i, "NOT IN DATA BASE");
+			if (mcdu_scratchpad.scratchpads[i].scratchpad != "CLR") {
+				var result = atsu.AOC.newStation(mcdu_scratchpad.scratchpads[i].scratchpad, i);
+				if (result == 1) {
+					mcdu_message(i, "NOT ALLOWED");
+				} elsif (result == 2) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} else {
+					mcdu_scratchpad.scratchpads[i].empty();
+				}
 			} else {
-				mcdu_scratchpad.scratchpads[i].empty();
+				atsu.AOC.sent = 0;
+				atsu.AOC.received = 0;
+				atsu.AOC.station = nil;
 			}
 		} else if (page == "WEATHERTYPE") {
 			atsu.AOC.selectedType = "TERM FCST";
@@ -1021,10 +1012,6 @@ var rskbutton = func(btn, i) {
 			perfAPPRInput("R2",i);
 		} else if (page == "RADNAV") {
 			radnavInput("R2",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("R2",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("R2",i);
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(2);
 		} else if (page == "ARRIVAL") {
@@ -1068,10 +1055,6 @@ var rskbutton = func(btn, i) {
 			perfTOInput("R3",i);
 		} else if (page == "PERFAPPR") {
 			perfAPPRInput("R3",i);
-		} else if (page == "PRINTFUNC") {
-			printInput("R3",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("R3",i);
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(3);
 		} else if (page == "ARRIVAL") {
@@ -1161,8 +1144,6 @@ var rskbutton = func(btn, i) {
 			perfAPPRInput("R4",i);
 		} else if (page == "RADNAV") {
 			radnavInput("R4",i);
-		} else if (page == "PRINTFUNC2") {
-			printInput2("R4",i);
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(4);
 		} else if (page == "ARRIVAL") {
@@ -1222,7 +1203,16 @@ var rskbutton = func(btn, i) {
 			}
 			pageNode[i].setValue("WINDDES");
 		} else if (page == "STATUS") {
-			statusInput("R5",i);
+			if (fmgc.WaypointDatabase.getCount() >= 1) {
+				if (fmgc.WaypointDatabase.confirm[i]) {
+					fmgc.WaypointDatabase.delete(i);
+					fmgc.WaypointDatabase.confirm[i] = 0;
+				} else {
+					fmgc.WaypointDatabase.confirm[i] = 1;
+				}
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "PERFTO") {
 			perfTOInput("R5",i);
 		} else if (page == "PERFAPPR") {
@@ -1299,10 +1289,12 @@ var rskbutton = func(btn, i) {
 			perfDESInput("R6",i);
 		} else if (page == "PERFAPPR") {
 			perfAPPRInput("R6",i);
-		} else if ((page == "DATA") or (page == "PRINTFUNC") or (page == "PRINTFUNC2")) {
+		} else if (page == "DATA") {
 			mcdu_message(i, "AOC DISABLED");
 		} else if (page == "INITA") {
 			initInputA("R6",i);
+		} else if (page == "RADNAV") {
+			radnavInput("R6",i);
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(6);
 		} else if (page == "VERTREV") {
@@ -1358,10 +1350,6 @@ var arrowbutton = func(btn, i) {
 			}
 		} else if (page == "INITB" or page == "FUELPRED") {
 			pageNode[i].setValue("INITA");
-		} else if (page == "PRINTFUNC") {
-			pageNode[i].setValue("PRINTFUNC2");
-		} else if (page == "PRINTFUNC2") {
-			pageNode[i].setValue("PRINTFUNC");
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollLeft();
 		} else if (page == "ARRIVAL") {
@@ -1402,10 +1390,6 @@ var arrowbutton = func(btn, i) {
 			}
 		} else if (page == "INITB" or page == "FUELPRED") {
 			pageNode[i].setValue("INITA");
-		} else if (page == "PRINTFUNC") {
-			pageNode[i].setValue("PRINTFUNC2");
-		} else if (page == "PRINTFUNC2") {
-			pageNode[i].setValue("PRINTFUNC");
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollRight();
 		} else if (page == "ARRIVAL") {
@@ -1523,25 +1507,32 @@ var pagebutton = func(btn, i) {
 		} else if (btn == "mcdu") {
 			mcdu_message(i, "SELECT DESIRED SYSTEM");
 			pageNode[i].setValue("MCDU");
-		} else if (btn == "f-pln" or btn == "airport") {
+		} else if (btn == "f-pln") {
 			if (canvas_mcdu.myFpln[i] == nil) {
 				canvas_mcdu.myFpln[i] = fplnPage.new(2, i);
 			}
-			if (btn == "airport") {
-				if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
-					canvas_mcdu.myFpln[i].scroll = 0;
-				} else {
-					if (fmgc.flightPlanController.temporaryFlag[i]) {
-						canvas_mcdu.myFpln[i].scroll = fmgc.flightPlanController.arrivalIndex[i];
+			canvas_mcdu.myFpln[i].scroll = 0;
+			pageNode[i].setValue("F-PLNA");
+		} else if (btn == "airport") {
+			if (airportPress[i] == 0 or fmgc.FMGCInternal.phase >= 1) {
+				if (fmgc.flightPlanController.temporaryFlag[i]) {
+					if (fmgc.flightPlanController.currentToWptIndex.getValue() == fmgc.flightPlanController.arrivalIndex[i]) {
+						canvas_mcdu.myFpln[i].scroll = (fmgc.flightPlanController.arrivalIndex[i] - fmgc.flightPlanController.currentToWptIndex.getValue());
 					} else {
-						canvas_mcdu.myFpln[i].scroll = fmgc.flightPlanController.arrivalIndex[2];
+						canvas_mcdu.myFpln[i].scroll = (fmgc.flightPlanController.arrivalIndex[i] - fmgc.flightPlanController.currentToWptIndex.getValue()) - 1;
+					}
+				} else {
+					if (fmgc.flightPlanController.currentToWptIndex.getValue() == fmgc.flightPlanController.arrivalIndex[2]) {
+						canvas_mcdu.myFpln[i].scroll = (fmgc.flightPlanController.arrivalIndex[2] - fmgc.flightPlanController.currentToWptIndex.getValue());
+					} else {
+						canvas_mcdu.myFpln[i].scroll = (fmgc.flightPlanController.arrivalIndex[2] - fmgc.flightPlanController.currentToWptIndex.getValue()) - 1;
 					}
 				}
-			} else {
+				airportPress[i] = 1;
+			} else if (fmgc.FMGCInternal.phase == 0 or fmgc.FMGCInternal.phase == 1) {
 				canvas_mcdu.myFpln[i].scroll = 0;
+				airportPress[i] = 0;
 			}
-			pageNode[i].setValue("F-PLNA");
-			
 		} else if (btn == "fuel-pred") {
 			pageNode[i].setValue("FUELPRED");
 		} else if (btn == "dirto") {
@@ -1598,10 +1589,25 @@ var button = func(btn, i, event = "") {
 			} else {  # up with buttonCLRDown[i]>4
 				buttonCLRDown[i] = 0;
 			}
+		} else if (btn == "LONGCLR") {
+			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (btn == "DOT") {
 			mcdu_scratchpad.scratchpads[i].addChar(".");
 		} else if (btn == "PLUSMINUS") {
-			mcdu_scratchpad.scratchpads[i].addChar("-");
+			var _toggle = right(scratchpad,1);
+			if (_toggle == "+" or _toggle == "-") {
+				_toggle = (_toggle == "-") ? "+" : "-";
+				mcdu_scratchpad.scratchpads[i].clear();
+				mcdu_scratchpad.scratchpads[i].addChar(_toggle);
+			} else {
+				mcdu_scratchpad.scratchpads[i].addChar("-");
+			}
+		} else if (btn == "OVFY") {
+			if (size(scratchpad) == 0) {
+				mcdu_scratchpad.scratchpads[i].addChar("@");
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else {
 			mcdu_scratchpad.scratchpads[i].addChar(btn);
 		}

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
@@ -49,7 +49,6 @@
 	<filter>
 		<name>Track heading diff</name>
 		<type>gain</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
 		<gain>1.0</gain>
 		<input>
 			<property>/orientation/track-deg</property>
@@ -63,7 +62,6 @@
 	<filter>
 		<name>Heading scale</name>
 		<type>gain</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
 		<gain>1.0</gain>
 		<input>
 			<condition>
@@ -78,7 +76,6 @@
 	<filter>
 		<name>Heading bug diff</name>
 		<type>gain</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
 		<gain>1.0</gain>
 		<input>
 			<property>/it-autoflight/input/hdg</property>
@@ -104,7 +101,6 @@
 	<filter>
 		<name>Track bug diff</name>
 		<type>gain</type>
-		<update-interval-secs type="double">0.05</update-interval-secs>
 		<gain>1.0</gain>
 		<input>
 			<property>/instrumentation/pfd/track-deg</property>
@@ -114,17 +110,25 @@
 			</period>
 		</input>
 		<reference>
-			<property>/instrumentation/pfd/heading-scale</property>
+			<property>/instrumentation/pfd/heading-deg</property>
 			<period>
 				<min>-180.0</min>
 				<max>180.0</max>
 			</period>
 		</reference>
-		<output>/instrumentation/pfd/track-hdg-diff</output>
+		<output>/instrumentation/pfd/track-hdg-diff-cmd</output>
 		<period>
 			<min>-180.0</min>
 			<max>180.0</max>
 		</period>
+	</filter>
+	
+	<filter>
+		<name>Track bug diff smoothed</name>
+		<type>exponential</type>
+		<input>/instrumentation/pfd/track-hdg-diff-cmd</input>
+		<output>/instrumentation/pfd/track-hdg-diff</output>
+		<filter-time>0.16</filter-time>
 	</filter>
 	
 	<filter>
@@ -354,7 +358,7 @@
 	<filter>
 		<name>Pitch PFD</name>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>
@@ -381,7 +385,7 @@
 	<filter>
 		<name>Ground Horizon</name>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<condition>
 				<and>
@@ -403,7 +407,7 @@
 						<entry><ind>150</ind><dep> 17.35</dep></entry>
 					</table>
 					<table>
-						<property>/orientation/pitch-deg</property>
+						<property>/instrumentation/pfd/pitch-deg-non-linear</property>
 						<entry><ind> 0.00</ind><dep>  0.00</dep></entry>
 						<entry><ind>17.35</ind><dep>-17.35</dep></entry>
 					</table>
@@ -431,7 +435,7 @@
 						<entry><ind>150</ind><dep> 17.35</dep></entry>
 					</table>
 					<table>
-						<property>/orientation/pitch-deg</property>
+						<property>/instrumentation/pfd/pitch-deg-non-linear</property>
 						<entry><ind>-17.35</ind><dep> 17.35</dep></entry>
 						<entry><ind>  0.00</ind><dep>  0.00</dep></entry>
 						<entry><ind> 17.35</ind><dep>-17.35</dep></entry>
@@ -447,8 +451,8 @@
 	<filter>
 		<name>Horizon Heading Pitch</name>
 		<type>gain</type>
-		<gain>1</gain>
-		<input>/orientation/pitch-deg</input>
+		<gain>1.0</gain>
+		<input>/instrumentation/pfd/pitch-deg-non-linear</input>
 		<output>/instrumentation/pfd/horizon-pitch</output>
 		<min>-17.35</min>
 		<max>17.35</max>
@@ -457,7 +461,7 @@
 	<filter>
 		<name>Vertical Speed Needle</name>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>
@@ -488,7 +492,7 @@
 	<filter>
 		<name>Vertical Speed Digit Translate</name>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>
@@ -538,16 +542,16 @@
 		<name>IESI Slip/Skid Indicator</name>
 		<debug>false</debug>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>
 					<property>/fdm/jsbsim/accelerations/Ny</property>
-					<entry><ind>-0.20</ind><dep>-105</dep></entry>
+					<entry><ind>-0.20</ind><dep>-85</dep></entry>
 					<entry><ind>-0.01</ind><dep>   0</dep></entry>
 					<entry><ind> 0.00</ind><dep>   0</dep></entry>
 					<entry><ind> 0.01</ind><dep>   0</dep></entry>
-					<entry><ind> 0.20</ind><dep> 105</dep></entry>
+					<entry><ind> 0.20</ind><dep> 85</dep></entry>
 				</table>
 			</expression>
 		</input>
@@ -558,7 +562,7 @@
 		<name>IESI Pitch</name>
 		<debug>false</debug>
 		<type>gain</type>
-		<gain>1</gain>
+		<gain>1.0</gain>
 		<input>
 			<expression>
 				<table>

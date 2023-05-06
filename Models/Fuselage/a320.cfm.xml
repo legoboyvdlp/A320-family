@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	<path>res/CFM56.ac</path>
@@ -12,7 +12,7 @@
 	
 	<!-- Particle Effects -->
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/contrail.xml</path>
 		<name>contrailLeft</name>
 		<condition>
 			<property>environment/contrail</property>
@@ -30,7 +30,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/contrail.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/contrail.xml</path>
 		<name>contrailRight</name>
 		<condition>
 			<property>environment/contrail</property>
@@ -48,7 +48,7 @@
 	</model>
 
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/Moisture.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/Moisture.xml</path>
 		<name>moistureLeft</name>
 		<condition>
 			<and>
@@ -79,7 +79,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/Moisture.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/Moisture.xml</path>
 		<name>moistureRight</name>
 		<condition>
 			<and>
@@ -110,7 +110,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray.xml</path>
 		<name>engine-spray-left</name>
 		<condition>
 			<and>
@@ -144,7 +144,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray.xml</path>
 		<name>engine-spray-right</name>
 		<condition>
 			<and>
@@ -178,7 +178,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray-reverse.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray-reverse.xml</path>
 		<name>engine-spray-reverse</name>
 		<condition>
 			<and>
@@ -208,7 +208,7 @@
 	</model>
 	
 	<model>
-		<path>Aircraft/A320-family/Models/Effects/engine-spray-reverse.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray-reverse.xml</path>
 		<name>engine-spray-reverse</name>
 		<condition>
 			<and>
@@ -239,7 +239,7 @@
 
 	<model>
 		<name>Engine fire left</name>
-		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/enginefire.xml</path>
 		<offsets>
 			<x-m>-3.96705</x-m>
 			<y-m>-5.63029</y-m>
@@ -252,7 +252,7 @@
 	
 	<model>
 		<name>Engine fire right</name>
-		<path>Aircraft/A320-family/Models/Effects/enginefire.xml</path>
+		<path>Aircraft/A320-family/Models/Effects/Particles/enginefire.xml</path>
 		<offsets>
 			<x-m>-3.96705</x-m>
 			<y-m> 5.63029</y-m>
@@ -385,6 +385,7 @@
 		<type>rotate</type>
 		<object-name>ReverserLDoor1</object-name>
 		<object-name>ReverserLDoor1.Inner</object-name>
+		<object-name>ReverserLDoor1.Placards</object-name>
 		<factor>-70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
@@ -402,6 +403,7 @@
 		<type>rotate</type>
 		<object-name>ReverserLDoor2</object-name>
 		<object-name>ReverserLDoor2.Inner</object-name>
+		<object-name>ReverserLDoor2.Placards</object-name>
 		<factor>-70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
@@ -419,6 +421,7 @@
 		<type>rotate</type>
 		<object-name>ReverserLDoor3</object-name>
 		<object-name>ReverserLDoor3.Inner</object-name>
+		<object-name>ReverserLDoor3.Placards</object-name>
 		<factor>70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
@@ -436,6 +439,7 @@
 		<type>rotate</type>
 		<object-name>ReverserLDoor4</object-name>
 		<object-name>ReverserLDoor4.Inner</object-name>
+		<object-name>ReverserLDoor4.Placards</object-name>
 		<factor>70</factor>
 		<property>engines/engine[0]/reverser-pos-norm</property>
 		<axis>
@@ -453,6 +457,7 @@
 		<type>rotate</type>
 		<object-name>ReverserRDoor1</object-name>
 		<object-name>ReverserRDoor1.Inner</object-name>
+		<object-name>ReverserRDoor1.Placards</object-name>
 		<factor>-70</factor>
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<axis>
@@ -470,6 +475,7 @@
 		<type>rotate</type>
 		<object-name>ReverserRDoor2</object-name>
 		<object-name>ReverserRDoor2.Inner</object-name>
+		<object-name>ReverserRDoor2.Placards</object-name>
 		<factor>-70</factor>
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<axis>
@@ -487,6 +493,7 @@
 		<type>rotate</type>
 		<object-name>ReverserRDoor3</object-name>
 		<object-name>ReverserRDoor3.Inner</object-name>
+		<object-name>ReverserRDoor3.Placards</object-name>
 		<factor>70</factor>
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<axis>
@@ -504,6 +511,7 @@
 		<type>rotate</type>
 		<object-name>ReverserRDoor4</object-name>
 		<object-name>ReverserRDoor4.Inner</object-name>
+		<object-name>ReverserRDoor4.Placards</object-name>
 		<factor>70</factor>
 		<property>engines/engine[1]/reverser-pos-norm</property>
 		<axis>
@@ -562,8 +570,9 @@
 	
 	<!-- Effect -->
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-engine-CFM</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-engine-CFM</inherits-from>
 		<object-name>EngineCFM56L</object-name>
+		<object-name>EngineCFM56L.001</object-name>  <!-- Object on the front cowling of left engine (inner side) -->
 		<object-name>EngineCFM56R</object-name>
 		<object-name>ReverserLDoor1</object-name>
 		<object-name>ReverserLDoor2</object-name>
@@ -576,20 +585,35 @@
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-wing</inherits-from>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>EngineCFM56.Placards</object-name>
+		<object-name>ReverserRDoor1.Placards</object-name>
+		<object-name>ReverserRDoor2.Placards</object-name>
+		<object-name>ReverserRDoor3.Placards</object-name>
+		<object-name>ReverserRDoor4.Placards</object-name>
+		<object-name>ReverserLDoor1.Placards</object-name>
+		<object-name>ReverserLDoor2.Placards</object-name>
+		<object-name>ReverserLDoor3.Placards</object-name>
+		<object-name>ReverserLDoor4.Placards</object-name>
+	</effect>
+	
+	<effect>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-matt-wing</inherits-from>
 		<object-name>EngineFairingL</object-name>
 		<object-name>EngineFairingR</object-name>
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-matt-engine-CFM</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-matt-engine-CFM</inherits-from>
 		<object-name>PylonCFM56L</object-name>
 		<object-name>PylonCFM56R</object-name>
 	</effect>
 	
 	<effect>
-		<inherits-from>Aircraft/A320-family/Models/Effects/reflection-chrome-engine-CFM</inherits-from>
+		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-chrome-engine-CFM</inherits-from>
 		<object-name>IntakeCFM56L</object-name>
 		<object-name>IntakeCFM56R</object-name>
+		<object-name>ExhaustCFM56L</object-name>
+		<object-name>ExhaustCFM56R</object-name>
 	</effect>
 </PropertyList>

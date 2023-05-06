@@ -1,9 +1,9 @@
 var scratchpadStore = nil;
+var scratchpadSplit = nil;
 
 var vertRev = {
 	title: [nil, nil, nil],
 	subtitle: [nil, nil],
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -55,11 +55,17 @@ var vertRev = {
 	getAlt: func() {
 		if (me.wp.alt_cstr != nil and me.wp.alt_cstr > 0) {
 			var tcol = (me.wp.alt_cstr_type == "computed" or me.wp.alt_cstr_type == "computed_mach") ? "grn" : "mag";  # TODO - check if only computed
+			var cstrAlt = "";
+			
 			if (me.wp.alt_cstr > fmgc.FMGCInternal.transAlt) {
-				return [sprintf("%5s", "FL" ~ math.round(num(me.wp.alt_cstr) / 100)) ~ " ", tcol];
+				cstrAlt = "FL" ~ math.round(num(me.wp.alt_cstr) / 100);
 			} else {
-				return [sprintf("%5.0f", me.wp.alt_cstr) ~ " ", tcol];
+				cstrAlt = me.wp.alt_cstr;
 			}
+			
+			cstrAlt = (me.wp.alt_cstr_type == "above") ? "+" ~ cstrAlt : cstrAlt;
+			cstrAlt = (me.wp.alt_cstr_type == "below") ? "-" ~ cstrAlt : cstrAlt;
+			return [cstrAlt ~ (size(cstrAlt) == 6 ? "" : " "), tcol];
 		} else {
 			return [nil,nil];
 		}
@@ -71,27 +77,23 @@ var vertRev = {
 			me.title = ["VERT REV", " AT ", "PPOS"];
 			me.L1 = ["", "  EFOB ---.-", "wht"];
 			me.R1 = ["", "EXTRA ---.- ", "wht"];
-			me.L2 = ["250/10000", " CLB SPD LIM", "mag"];
+			me.L2 = [fmgc.FMGCInternal.clbSpdLim ~ "/" ~ fmgc.FMGCInternal.clbSpdLimAlt, " CLB SPD LIM", "mag"];
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
 			me.L5 = [" WIND DATA", nil, "wht"];
 			me.L6 = [" RETURN", nil, "wht"];
 			me.R2 = ["RTA ", nil, "wht"];
 			me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 			me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
-			me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		} elsif (me.type == 2) { 
 			me.title = ["VERT REV", " AT ", me.id];
-			me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0]];
 			me.L1 = ["", "  EFOB ---.-", "wht"];
 			me.R1 = ["", "EXTRA ---.- ", "wht"];
-			me.L2 = ["250/10000", " CLB SPD LIM", "mag"];
+			me.L2 = [fmgc.FMGCInternal.clbSpdLim ~ "/" ~ fmgc.FMGCInternal.clbSpdLimAlt, " CLB SPD LIM", "mag"];
 			me.speed = me.getSpd();
 			if (me.speed[0] == nil) {
-				me.L3 = [" [    ]", " SPD CSTR", "blu"];
-				me.fontMatrix[0][2] = 1;
+				me.L3 = ["[   ]", " SPD CSTR", "blu"];
 			} else {
 				me.L3 = [me.speed[0], " SPD CSTR", me.speed[1]];
-				me.fontMatrix[0][2] = 0;
 			}
 			me.L4 = [" CONSTANT MACH", nil, "wht"];
 			me.L5 = [" WIND DATA", nil, "wht"];
@@ -99,11 +101,9 @@ var vertRev = {
 			me.R2 = ["RTA ", nil, "wht"];
 			me.alt = me.getAlt();
 			if (me.alt[0] == nil) {
-				me.R3 = ["[      ] ", "ALT CSTR  ", "blu"];
-				me.fontMatrix[1][2] = 1;
+				me.R3 = ["[     ]", "ALT CSTR ", "blu"];
 			} else {
-				me.R3 = [me.alt[0], "ALT CSTR  ", me.alt[1]];
-				me.fontMatrix[1][2] = 0;
+				me.R3 = [me.alt[0], "ALT CSTR ", me.alt[1]];
 			}
 			me.R6 = ["DES ", nil, "amb"];
 			# When the system does vertical planning, L6 should be RETURN and R6 not used if the MCDU knows the waypoint is during climb or descent.
@@ -124,14 +124,13 @@ var vertRev = {
 				}
 				me.L1 = ["", "  EFOB ---.-", "wht"];
 				me.R1 = ["", "EXTRA ---.- ", "wht"];
-				me.L2 = ["250/10000", " CLB SPD LIM", "mag"];
+				me.L2 = [fmgc.FMGCInternal.clbSpdLim ~ "/" ~ fmgc.FMGCInternal.clbSpdLimAlt, " CLB SPD LIM", "mag"];
 				me.L4 = [" CONSTANT MACH", nil, "wht"];
 				me.L5 = [" WIND DATA", nil, "wht"];
 				me.L6 = [" RETURN", nil, "wht"];
 				me.R2 = ["RTA ", nil, "wht"];
 				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
-				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 			} elsif (me.type == 1) {
 				if (size(me.id) > 4) {
 					me.arrAirport = findAirportsByICAO(left(me.id, 4));
@@ -140,7 +139,7 @@ var vertRev = {
 				}
 				me.L1 = ["", "  EFOB ---.-", "wht"];
 				me.R1 = ["", "EXTRA ---.- ", "wht"];
-				me.L2 = ["250/10000", " DES SPD LIM", "mag"];
+				me.L2 = [fmgc.FMGCInternal.desSpdLim ~ "/" ~ fmgc.FMGCInternal.desSpdLimAlt, " DES SPD LIM", "mag"];
 				me.L4 = [" CONSTANT MACH", nil, "wht"];
 				me.L5 = [" WIND DATA", nil, "wht"];
 				me.L6 = [" RETURN", nil, "wht"];
@@ -148,7 +147,6 @@ var vertRev = {
 				me.R3 = ["3000", "G/S INTCP", "grn"];
 				me.arrowsMatrix = [[0, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0]];
 				me.arrowsColour = [["ack", "ack", "ack", "wht", "wht", "wht"], ["ack", "wht", "ack", "ack", "wht", "wht"]];
-				me.fontMatrix = [[0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 			}
 		}
 		me.updateR5();
@@ -174,7 +172,65 @@ var vertRev = {
 	},
 	pushButtonLeft: func(index) {
 		scratchpadStore = mcdu_scratchpad.scratchpads[me.computer].scratchpad;
-		if (index == 3 and me.type == 2) {
+		if (index == 2) {
+			if (scratchpadStore == "CLR") {
+				if (me.type == 1) {
+					fmgc.FMGCInternal.desSpdLim = 250;
+					fmgc.FMGCInternal.desSpdLimAlt = 10000;
+					fmgc.FMGCInternal.desSpdLimSet = 0;
+				} else {
+					fmgc.FMGCInternal.clbSpdLim = 250;
+					fmgc.FMGCInternal.clbSpdLimAlt = 10000;
+					fmgc.FMGCInternal.clbSpdLimSet = 0;
+				}
+				mcdu_scratchpad.scratchpads[me.computer].empty();
+				me._setupPageWithData();
+				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+			} elsif (find("/", scratchpadStore) != -1) {
+				scratchpadSplit = split("/", scratchpadStore);
+				if (size(scratchpadSplit[0]) == 3 and num(scratchpadSplit[0]) != nil and size(scratchpadSplit[1]) >= 3 and size(scratchpadSplit[1]) <= 5 and num(scratchpadSplit[1]) != nil) {
+					if (scratchpadSplit[0] >= 100 and scratchpadSplit[0] <= 340 and scratchpadSplit[1] >= 100 and scratchpadSplit[1] <= 39000) {
+						if (me.type == 1) {
+							fmgc.FMGCInternal.desSpdLim = scratchpadSplit[0];
+							fmgc.FMGCInternal.desSpdLimSet = 1;
+							if (size(scratchpadSplit[1]) != 0) {
+								fmgc.FMGCInternal.desSpdLimAlt = scratchpadSplit[1];
+							}
+						} else {
+							fmgc.FMGCInternal.clbSpdLim = scratchpadSplit[0];
+							fmgc.FMGCInternal.clbSpdLimSet = 1;
+							if (size(scratchpadSplit[1]) != 0) {
+								fmgc.FMGCInternal.clbSpdLimAlt = scratchpadSplit[1];
+							}
+						}
+						mcdu_scratchpad.scratchpads[me.computer].empty();
+						me._setupPageWithData();
+						canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+					} else {
+						mcdu_message(me.computer, "ENTRY OUT OF RANGE");
+					}
+				} else {
+					mcdu_message(me.computer, "FORMAT ERROR");
+				}
+			} elsif (num(scratchpadStore) != nil and size(scratchpadStore) == 3) {
+				if (scratchpadStore >= 100 and scratchpadStore <= 340) {
+					if (me.type == 1) {
+						fmgc.FMGCInternal.desSpdLim = scratchpadStore;
+						fmgc.FMGCInternal.desSpdLimSet = 1;
+					} else {
+						fmgc.FMGCInternal.clbSpdLim = scratchpadStore;
+						fmgc.FMGCInternal.clbSpdLimSet = 1;
+					}
+					mcdu_scratchpad.scratchpads[me.computer].empty();
+					me._setupPageWithData();
+					canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
+				} else {
+					mcdu_message(me.computer, "ENTRY OUT OF RANGE");
+				}
+			} else {
+				mcdu_message(me.computer, "FORMAT ERROR");
+			}
+		} elsif (index == 3 and me.type == 2) {
 			if (scratchpadStore == "CLR") {
 				me.wp.setSpeed("delete");
 				mcdu_scratchpad.scratchpads[me.computer].empty();
@@ -242,17 +298,37 @@ var vertRev = {
 				mcdu_scratchpad.scratchpads[me.computer].empty();
 				me._setupPageWithData();
 				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
-			}  elsif (num(scratchpadStore) != nil and (size(scratchpadStore) == 4 or size(scratchpadStore) == 5) and scratchpadStore >= 0 and scratchpadStore <= 39000) {
-				me.wp.setAltitude(math.round(scratchpadStore, 10), "at");
-				mcdu_scratchpad.scratchpads[me.computer].empty();
-				me._setupPageWithData();
-				canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 			} else {
-				mcdu_message(me.computer, "FORMAT ERROR");
+				if (right(scratchpadStore, 1) == "+") {
+					validateAltCstr(left(scratchpadStore, size(scratchpadStore) - 1), "above", me);
+				} elsif (right(scratchpadStore, 1) == "-") {
+					validateAltCstr(left(scratchpadStore, size(scratchpadStore) - 1), "below", me);
+				} elsif (left(scratchpadStore, 1) == "+") {
+					validateAltCstr(right(scratchpadStore, size(scratchpadStore) - 1), "above", me);
+				} elsif (left(scratchpadStore, 1) == "-") {
+					validateAltCstr(right(scratchpadStore, size(scratchpadStore) - 1), "below", me);
+				} else {
+					validateAltCstr(scratchpadStore, "at", me);
+				}
 			}
 		}
 	},
 };
+
+var validateAltCstr = func(scratchpadStore, type, self) {
+	if (num(scratchpadStore) != nil and (size(scratchpadStore) >= 3 and size(scratchpadStore) <= 5)) {
+		if (scratchpadStore >= 100 and scratchpadStore <= 39000) {
+			self.wp.setAltitude(math.round(scratchpadStore, 10), type);
+			mcdu_scratchpad.scratchpads[self.computer].empty();
+			self._setupPageWithData();
+			canvas_mcdu.pageSwitch[self.computer].setBoolValue(0);
+		} else {
+			mcdu_message(self.computer, "ENTRY OUT OF RANGE");
+		}
+	} else {
+		mcdu_message(self.computer, "FORMAT ERROR");
+	}
+}
 
 var updateCrzLvlCallback = func () {
 	if (canvas_mcdu.myVertRev[0] != nil) { 

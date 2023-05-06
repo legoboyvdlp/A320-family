@@ -1,9 +1,11 @@
+# A3XX MCDU Direct To Page
+# Copyright (c) 2022 Jonathan Redpath (legoboyvdlp)
+
 var dirToFlag = 0;
 
 var dirTo = {
 	title: [nil],
 	subtitle: [nil, nil],
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -46,7 +48,6 @@ var dirTo = {
 		me.R5 = ["[   ]  ", "RADIAL OUT  ", "blu"];
 		me.arrowsMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		me.arrowsColour = [["ack", "blu", "blu", "blu", "blu", "ack"], ["ack", "blu", "blu", "ack", "ack", "ack"]];
-		me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 		me.updateFromFpln();
 		me.updateTmpy();
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
@@ -79,16 +80,14 @@ var dirTo = {
 			 canvas_mcdu.myFpln[me.computer] = fplnPage.new(2, me.computer);
 		}
 		
-		var x = 0;
+		var dirToLeftIndex = 0;
 		me.vector = [];
 		for (var i = 1 + (me.scroll); i < size(canvas_mcdu.myFpln[me.computer].planList) - 2; i = i + 1) {
-			if (canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "DISCONTINUITY" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "VECTORS" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "T-P" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_type == "hdgToAlt") { continue; } # can't ever have tmpy with dir to
-			if (canvas_mcdu.myFpln[me.computer].planList[i].index > fmgc.flightPlanController.arrivalIndex[2]) {
-				continue; 
-			}
+			if (canvas_mcdu.myFpln[me.computer].planList[i].wp == "PSEUDO" or canvas_mcdu.myFpln[me.computer].planList[i].wp == "STATIC" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "DISCONTINUITY" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "VECTORS" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_name == "T-P" or canvas_mcdu.myFpln[me.computer].planList[i].wp.wp_type == "hdgToAlt") { continue; }
+			if (canvas_mcdu.myFpln[me.computer].planList[i].index > fmgc.flightPlanController.arrivalIndex[2]) { continue; }
 			append(me.vector, canvas_mcdu.myFpln[me.computer].planList[i].wp);
-			x += 1;
-			if (x == 4) { break; }
+			dirToLeftIndex += 1;
+			if (dirToLeftIndex == 4) { break; }
 		}
 		
 		if (size(me.vector) > 0) {
@@ -148,7 +147,6 @@ var dirTo = {
 	fieldL1: func(text, override = 0, overrideIndex = -1) {
 		me.makeTmpy();
 		me.L1[0] = text;
-		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 		if (size(text) == 16) {
 			# lat lon
 			var lat = split("/", text)[0];
@@ -237,7 +235,6 @@ var dirTo = {
 	leftFieldBtn: func(index) {
 		me.makeTmpy();
 		me.L1[0] = me.vector[index - 2].wp_name;
-		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 		fmgc.flightPlanController.directTo(me.vector[index - 2], me.computer);
 		me.arrowsMatrix[0][1] = 0;
 		# FIGURE OUT HOW TO MAKE IT SO IT DOESN'T DELETE THE WAYPOINTS ON DIR TO BUT DOES IN FLIGHTPLAN
@@ -254,7 +251,6 @@ var dirTo = {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 0);
 			me.L1 = [" [       ]", " WAYPOINT", "blu"];
-			me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 		} else {
 			mcdu_message(me.computer, "NOT ALLOWED");
@@ -265,7 +261,6 @@ var dirTo = {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
 			me.L1 = [" [       ]", " WAYPOINT", "blu"];
-			me.fontMatrix = [[1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0]];
 			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA"); # todo - remember horizontal srcoll of f-plna?
 		} else {

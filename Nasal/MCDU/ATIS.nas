@@ -1,6 +1,5 @@
 var atisPage = {
 	title: nil,
-	fontMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsMatrix: [[0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0]],
 	arrowsColour: [["ack", "ack", "ack", "ack", "ack", "ack"],["ack", "ack", "ack", "ack", "ack", "ack"]],
 	L1: [nil, nil, "ack"], # content, title, colour
@@ -77,7 +76,6 @@ var atisPage = {
 		me.R6 = ["PRINT ", nil, "blu"];
 		me.arrowsMatrix = [[0, 0, 0, 0, 1, 1], [0, 0, 0, 0, 0, 1]];
 		me.arrowsColour = [["ack", "ack", "ack", "ack", "wht", "wht"], ["ack", "ack", "ack", "ack", "ack", "blu"]];
-		me.fontMatrix = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
 		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 	update: func() {
@@ -86,7 +84,14 @@ var atisPage = {
 		var pageMinusOne = (me.page - 1);
 		var numberExtraChar = pageMinusOne * 210;
 		me.L1 = [substr(message, numberExtraChar, 30), atsu.ATISInstances[me.index].station ~ "/" ~ (atsu.ATISInstances[me.index].type == 0 ? "ARR" : "DEP"), "wht"];
-		me.R1 = [" ",atsu.DictionaryString.fetchString1(atsu.ATISInstances[me.index].receivedCode).string2 ~ " " ~ atsu.ATISInstances[me.index].receivedTime ~ "Z", "wht"];
+		
+		var code = atsu.DictionaryString.fetchString1(atsu.ATISInstances[me.index].receivedCode);
+		if (code != "") {
+			me.R1 = [" ",code.string2 ~ " " ~ atsu.ATISInstances[me.index].receivedTime ~ "Z", "wht"];
+		} else {
+			me.R1 = [" ",atsu.ATISInstances[me.index].receivedCode ~ " " ~ atsu.ATISInstances[me.index].receivedTime ~ "Z", "wht"];
+		}
+		
 		if (size(message) > 30) {
 			me.L2[1] = substr(message, numberExtraChar + 30, 30);
 		}

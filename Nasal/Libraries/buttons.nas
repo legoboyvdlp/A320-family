@@ -1,7 +1,7 @@
 # A3XX Buttons
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 var OnLt = props.globals.getNode("/controls/switches/emerCallLtO");
 var CallLt = props.globals.getNode("/controls/switches/emerCallLtC");
@@ -22,14 +22,14 @@ var variousReset = func() {
 	setprop("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", 0);
 	setprop("/controls/switches/cabinCall", 0);
 	setprop("/controls/switches/mechCall", 0);
-	libraries.emerLtsSwitch.setValue(0.5);
+	pts.Controls.Switches.emerLtsSwitch.setValue(0.5);
+	pts.Controls.Gear.brakeParking.setBoolValue(0);
 	# cockpit voice recorder stuff
 	setprop("/controls/CVR/power", 0);
 	setprop("/controls/CVR/test", 0);
 	setprop("/controls/CVR/tone", 0);
 	setprop("/controls/CVR/gndctl", 0);
 	setprop("/controls/CVR/erase", 0);
-	setprop("/controls/switches/pneumatics/cabin-fans", 1);
 	setprop("/controls/switches/emerCallLtO", 0); # ON light, flashes white for 10s
 	setprop("/controls/switches/emerCallLtC", 0); # CALL light, flashes amber for 10s
 	setprop("/controls/switches/emerCall", 0);
@@ -50,18 +50,21 @@ var variousReset = func() {
 	setprop("/controls/lighting/taxi-light-switch", 0);
 	setprop("/controls/lighting/DU/du1", 1);
 	setprop("/controls/lighting/DU/du2", 1);
+	setprop("/controls/lighting/DU/du2-layer", 1);
 	setprop("/controls/lighting/DU/du3", 1);
 	setprop("/controls/lighting/DU/du4", 1);
 	setprop("/controls/lighting/DU/du5", 1);
+	setprop("/controls/lighting/DU/du5-layer", 1);
 	setprop("/controls/lighting/DU/du6", 1);
 	setprop("/controls/lighting/DU/mcdu1", 1);
 	setprop("/controls/lighting/DU/mcdu2", 1);
-	setprop("/modes/fcu/hdg-time", -45);
 	setprop("/controls/navigation/switching/att-hdg", 0);
 	setprop("/controls/navigation/switching/air-data", 0);
-	libraries.noSmokingSwitch.setValue(0.0);
-	libraries.seatbeltSwitch.setValue(0.0);
-	libraries.emerLtsSwitch.setValue(0.0);
+	setprop("/controls/switches/loudspeaker-l", 1);
+	setprop("/controls/switches/loudspeaker-r", 1);
+	pts.Controls.Switches.noSmokingSwitch.setValue(0);
+	pts.Controls.Switches.seatbeltSwitch.setValue(0);
+	pts.Controls.Switches.emerLtsSwitch.setValue(0);
 }
 
 var BUTTONS = {
@@ -134,7 +137,7 @@ var MechCallFunc = func() {
 
 var _CVRtestRunning = 0;
 var CVR_test = func() {
-	if (pts.Controls.Gear.parkingBrake.getValue()) {
+	if (pts.Controls.Gear.brakeParking.getValue()) {
 		if (!_CVRtestRunning) {
 			_CVRtestRunning = 1;
 			cvr_tone.setValue(1);
@@ -163,3 +166,24 @@ var toggleSTD = func() {
 		pts.Instrumentation.Altimeter.std.setBoolValue(1);
 	}
 }
+
+var toggleSTDIESI = func() {
+	if (pts.Instrumentation.Altimeter.stdIESI.getBoolValue()) {
+		pts.Instrumentation.Altimeter.settingInhgIESI.setValue(pts.Instrumentation.Altimeter.oldQnhIESI.getValue());
+		pts.Instrumentation.Altimeter.stdIESI.setBoolValue(0);
+	} else {
+		pts.Instrumentation.Altimeter.oldQnhIESI.setValue(pts.Instrumentation.Altimeter.settingInhgIESI.getValue());
+		pts.Instrumentation.Altimeter.settingInhgIESI.setValue(29.92);
+		pts.Instrumentation.Altimeter.stdIESI.setBoolValue(1);
+	}
+}
+
+# Commonality
+var apPanel = {
+	apDisc: func() {
+		fcu.FCUController.APDisc();
+	},
+	atDisc: func() {
+		fcu.FCUController.ATDisc();
+	},
+};

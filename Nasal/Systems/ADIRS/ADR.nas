@@ -144,13 +144,9 @@ var ADIRU = {
 		}
 	},
 	_excessMotion: 0,
+	alignFault: props.globals.getNode("/systems/navigation/align-fault"),
 	alignLoop: func() {
-		me._roll = pts.Orientation.roll.getValue();
-		me._pitch = pts.Orientation.pitch.getValue();
-		me._gs = pts.Velocities.groundspeedKt.getValue();
-		
-		# todo use IR values
-		if (me._gs > 5 or abs(me._pitch) > 5 or abs(me._roll) > 10) {
+		if (me.alignFault.getBoolValue()) {
 			me.stopAlignNoAlign();
 			me._excessMotion = 1;
 			me.update(); # update operative
@@ -264,9 +260,8 @@ var ADIRS = {
 	ADIRunits: [nil, nil, nil],
 	
 	# Electrical
-	mainSupply: [systems.ELEC.Bus.acEss, systems.ELEC.Bus.ac2, systems.ELEC.Bus.ac1],
-	backupSupply: [[systems.ELEC.Source.Bat2.volt, 0], [systems.ELEC.Source.Bat2.volt, 1], [systems.ELEC.Source.Bat1.volt, 1]], 
-	# ADIRS power directly from a separate bus connected to battery (no c.b. unlike main hot bus), as they are so critical
+	mainSupply: [systems.ELEC.Bus.acEssShed, systems.ELEC.Bus.ac2, systems.ELEC.Bus.ac1],
+	backupSupply: [[systems.ELEC.Bus.dcHot1, 0], [systems.ELEC.Bus.dcHot2, 1], [systems.ELEC.Bus.dcHot1, 1]],
 	
 	# PTS
 	Lights: {

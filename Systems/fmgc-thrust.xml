@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2021 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
 	<!-- Thrust Axis -->
 	<filter>
 		<name>A/THR Knots Input Gain</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<input>/it-autoflight/input/kts</input>
+		<input>
+			<expression>
+				<max>
+					<min>
+						<property>/it-autoflight/input/kts</property>
+						<property>/FMGC/internal/vmax</property>
+					</min>
+					<property>/FMGC/internal/vls</property>
+				</max>
+			</expression>
+		</input>
 		<output>/it-autoflight/internal/athr-kts-cmd</output>
 		<min>
 			<expression>
@@ -32,7 +41,6 @@
 	
 	<filter>
 		<name>A/THR Knots Input Filter</name>
-		<debug>false</debug>
 		<type>noise-spike</type>
 		<initialize-to>output</initialize-to>
 		<input>/it-autoflight/internal/athr-kts-cmd</input>
@@ -69,10 +77,19 @@
 	
 	<filter>
 		<name>A/THR Mach Input Gain</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<input>/it-autoflight/input/mach</input>
+		<input>
+			<expression>
+				<max>
+					<min>
+						<property>/it-autoflight/input/mach</property>
+						<property>/FMGC/internal/vmax-mach</property>
+					</min>
+					<property>/FMGC/internal/vls-mach</property>
+				</max>
+			</expression>
+		</input>
 		<output>/it-autoflight/internal/athr-mach-cmd</output>
 		<min>
 			<expression>
@@ -94,7 +111,6 @@
 	
 	<filter>
 		<name>A/THR Mach Input Filter</name>
-		<debug>false</debug>
 		<type>noise-spike</type>
 		<feedback-if-disabled>true</feedback-if-disabled>
 		<initialize-to>output</initialize-to>
@@ -132,7 +148,6 @@
 	
 	<pid-controller>
 		<name>IT-CONTROLLER: Knots</name>
-		<debug>false</debug>
 		<enable>
 			<condition>
 				<and>
@@ -155,6 +170,21 @@
 		<reference>/it-autoflight/internal/athr-kts</reference>
 		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 		<config>
+			<Kp> <!-- Approach Autothrust -->
+				<condition>
+					<and>
+						<less-than>
+							<property>/position/gear-agl-ft</property>
+							<value>3200</value>
+						</less-than>
+						<greater-than-equals>
+							<property>/controls/flight/flaps-input</property>
+							<value>1</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<value>0.06</value>
+			</Kp>
 			<Kp>0.055</Kp>
 			<Ti>9.0</Ti>
 			<Td>0.00001</Td>
@@ -165,7 +195,6 @@
 	
 	<pid-controller>
 		<name>IT-CONTROLLER: Mach</name>
-		<debug>false</debug>
 		<enable>
 			<condition>
 				<and>
@@ -194,6 +223,21 @@
 		</reference>
 		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 		<config>
+			<Kp> <!-- Approach Autothrust -->
+				<condition>
+					<and>
+						<less-than>
+							<property>/position/gear-agl-ft</property>
+							<value>3200</value>
+						</less-than>
+						<greater-than-equals>
+							<property>/controls/flight/flaps-input</property>
+							<value>1</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<value>0.06</value>
+			</Kp>
 			<Kp>0.055</Kp>
 			<Ti>9.0</Ti>
 			<Td>0.00001</Td>
@@ -204,7 +248,6 @@
 	
 	<filter>
 		<name>IT-CONTROLLER: Idle Limit</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>
@@ -227,7 +270,6 @@
 	
 	<filter>
 		<name>IT-CONTROLLER: Thrust Limit</name>
-		<debug>false</debug>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>

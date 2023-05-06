@@ -2,7 +2,7 @@
 # Joshua Davidson (Octal450)
 # Based on work by artix
 
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 # Override FGDATA/Nasal/canvas/map/navdisplay.mfd
 
@@ -212,7 +212,8 @@ canvas.NavDisplay.newMFD = func(canvas_group, parent=nil, nd_options=nil, update
 	# because things are much better configurable that way
 	# now look up all required SVG elements and initialize member fields using the same name  to have a convenient handle
 	foreach(var element; ["dmeL","dmeR","vorL","vorR","vorLId","vorRId",
-			"status.wxr","status.wpt","status.sta","status.arpt","terrHI","terrLO","TerrLabel","terrAhead","terrAltGroup"])
+			"status.wxr","status.wpt","status.sta","status.arpt","terrHI","terrLO","TerrLabel","terrAhead","terrAltGroup",
+			"vorLIdtuneMode","vorRIdtuneMode"])
 	me.symbols[element] = me.nd.getElementById(element);
 
 	foreach(var element; ["dmeLDist","dmeRDist"])
@@ -572,7 +573,31 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	var dme1_path = "/instrumentation/dme[2]";
 	var dme2_path = "/instrumentation/dme[3]";
 
+	
+	if(me.get_switch("toggle_lh_vor_adf") == 1) {
+		if (fmgc.FMGCInternal.VOR1.freqSet) {
+			me.symbols.vorLIdtuneMode.show();
+		} else {
+			me.symbols.vorLIdtuneMode.hide();
+		}
+	} else if(me.get_switch("toggle_lh_vor_adf") == -1) {
+		if (fmgc.FMGCInternal.ADF1.freqSet) {
+			me.symbols.vorLIdtuneMode.show();
+		} else {
+			me.symbols.vorLIdtuneMode.hide();
+		}
+	} else {
+		me.symbols.vorLIdtuneMode.hide();
+	}
+	
 	if(me.get_switch("toggle_rh_vor_adf") == 1) {
+		
+		if (fmgc.FMGCInternal.VOR2.freqSet) {
+			me.symbols.vorRIdtuneMode.show();
+		} else {
+			me.symbols.vorRIdtuneMode.hide();
+		}
+		
 		me.symbols.vorR.setText("VOR R");
 		me.symbols.vorR.setColor(0.195,0.96,0.097);
 		me.symbols.dmeR.setText("DME");
@@ -587,28 +612,34 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		else me.symbols.dmeRDist.setText(" ---");
 			me.symbols.dmeRDist.setColor(0.195,0.96,0.097);
 	} elsif(me.get_switch("toggle_rh_vor_adf") == -1) {
+	
+		if (fmgc.FMGCInternal.ADF2.freqSet) {
+			me.symbols.vorRIdtuneMode.show();
+		} else {
+			me.symbols.vorRIdtuneMode.hide();
+		}
+		
 		me.symbols.vorR.setText("ADF R");
 		me.symbols.vorR.setColor(0,0.6,0.85);
 		me.symbols.dmeR.setText("");
 		me.symbols.dmeR.setColor(0,0.6,0.85);
 		if((var navident=getprop("/instrumentation/adf[1]/ident")) != "")
 			me.symbols.vorRId.setText(navident);
-		else me.symbols.vorRId.setText(sprintf("%3d",getprop("/instrumentation/adf[1]/frequencies/selected-khz")));
+		else me.symbols.vorRId.setText(sprintf("%3d",pts.Instrumentation.Adf.Frequencies.selectedKhz[1].getValue()));
 			me.symbols.vorRId.setColor(0,0.6,0.85);
 		me.symbols.dmeRDist.setText("");
 		me.symbols.dmeRDist.setColor(0,0.6,0.85);
 	} else {
+		me.symbols.vorRIdtuneMode.hide();
 		me.symbols.vorR.setText("");
 		me.symbols.dmeR.setText("");
 		me.symbols.vorRId.setText("");
 		me.symbols.dmeRDist.setText("");
 	}
 
-	# Hide heading bug 10 secs after change
-	var vhdg_bug = getprop("/it-autoflight/input/hdg") or 0;
-	var hdg_bug_active = getprop("/it-autoflight/custom/show-hdg");
-	if (hdg_bug_active == nil)
-		hdg_bug_active = 1;
+	# Hide heading bug 45 secs after change
+	var vhdg_bug = fmgc.Input.hdg.getValue();
+	var hdg_bug_active = fmgc.Custom.showHdg.getBoolValue();
 
 	if((me.in_mode("toggle_display_mode", ["MAP"]) and me.get_switch("toggle_display_type") == "CRT")
 	   or (me.get_switch("toggle_track_heading") and me.get_switch("toggle_display_type") == "LCD"))

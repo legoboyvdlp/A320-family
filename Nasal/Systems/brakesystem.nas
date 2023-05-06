@@ -1,7 +1,7 @@
 # A3XX Autobrake and Braking
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 
 
 ##########################################################################
@@ -178,7 +178,7 @@ var BrakeSystem =
 				var V2_R = V1 - me.BrakeDecel * dt * RBrakeLevel;
 
 				LThermalEnergy += (Mass * pts.Gear.compression[1].getValue() * (math.pow(V1, 2) - math.pow(V2_L, 2)) / 2);
-				if (pts.Controls.Gear.chocks.getValue()) {
+				if (pts.Services.Chocks.enable.getValue()) {
 					if (!notification.parkingBrake) {
 						# cooling effect: reduce thermal energy by (LnCoolFactor) * dt
 						LThermalEnergy = LThermalEnergy * math.exp(LnCoolFactor * dt);					
@@ -211,7 +211,7 @@ var BrakeSystem =
 				};
 
 				RThermalEnergy += (Mass * pts.Gear.compression[2].getValue() * (math.pow(V1, 2) - math.pow(V2_R, 2)) / 2);
-				if (pts.Controls.Gear.chocks.getValue()) {
+				if (pts.Services.Chocks.enable.getValue()) {
 					if (!notification.parkingBrake) {
 						# cooling effect: reduce thermal energy by (RnCoolFactor) * dt
 						RThermalEnergy = RThermalEnergy * math.exp(RnCoolFactor * dt);
@@ -415,7 +415,7 @@ var Autobrake = {
 			}
 		}
 		
-		if (me._mode == 3 and !pts.Controls.Gear.gearDown.getBoolValue()) {
+		if (me._mode == 3 and pts.Controls.Gear.lever.getValue() == 0) {
 			me.arm_autobrake(0);
 		}
 		if (me._mode != 0 and me._wow0 and me._active and (pts.Controls.Gear.brake[0].getValue() > 0.05 or pts.Controls.Gear.brake[1].getValue() > 0.05)) {

@@ -1,5 +1,5 @@
 # Octal's View Controller
-# Copyright (c) 2021 Josh Davidson (Octal450)
+# Copyright (c) 2023 Josh Davidson (Octal450)
 # FovZoom based on work by onox
 
 var fgfsVersion = num(string.replace(getprop("/sim/version/flightgear"), ".", ""));
@@ -10,7 +10,6 @@ var canChangeZOffset = 0;
 var decStep = -5;
 var incStep = 5;
 var shakeFlag = 0;
-var viewName = "XX";
 var viewNumberRaw = 0;
 var views = [0, 9, 10, 11, 12, 13];
 var viewsOld = [0, 8, 9, 10, 11, 12];
@@ -38,6 +37,29 @@ var resetView = func() {
 		pts.Sim.CurrentView.xOffsetM.setValue(props.globals.getNode("/sim/view[" ~ viewNumberRaw ~ "]/config/x-offset-m").getValue());
 		pts.Sim.CurrentView.yOffsetM.setValue(props.globals.getNode("/sim/view[" ~ viewNumberRaw ~ "]/config/y-offset-m").getValue());
 		pts.Sim.CurrentView.zOffsetM.setValue(props.globals.getNode("/sim/view[" ~ viewNumberRaw ~ "]/config/z-offset-m").getValue());
+		
+		if (shakeFlag) {
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
+		}
+	} 
+}
+
+var aftOverheadView = func() {
+	if (pts.Sim.CurrentView.viewNumberRaw.getValue() == 0) {
+		if (pts.Sim.Rendering.Headshake.enabled.getBoolValue()) {
+			shakeFlag = 1;
+			pts.Sim.Rendering.Headshake.enabled.setBoolValue(0);
+		} else {
+			shakeFlag = 0;
+		}
+		
+		pts.Sim.CurrentView.fieldOfView.setValue(105.8);
+		pts.Sim.CurrentView.headingOffsetDeg.setValue(360);
+		pts.Sim.CurrentView.pitchOffsetDeg.setValue(63.7);
+		pts.Sim.CurrentView.rollOffsetDeg.setValue(0);
+		pts.Sim.CurrentView.xOffsetM.setValue(0); 
+		pts.Sim.CurrentView.yOffsetM.setValue(0.765); 
+		pts.Sim.CurrentView.zOffsetM.setValue(-15.563);
 		
 		if (shakeFlag) {
 			pts.Sim.Rendering.Headshake.enabled.setBoolValue(1);
@@ -146,8 +168,7 @@ var setView = func(n) {
 }
 
 var fovZoom = func(d) {
-	viewName = pts.Sim.CurrentView.name.getValue();
-	canChangeZOffset = pts.Sim.CurrentView.type.getValue() == "lookat" and viewName != "Tower View" and viewName != "Fly-By View" and viewName != "Chase View" and viewName != "Chase View Without Yaw" and viewName != "Walk View";
+	canChangeZOffset = pts.Sim.CurrentView.name.getValue() == "Helicopter View";
 	
 	if (pts.Sim.CurrentView.zOffsetM.getValue() <= -50) {
 		decStep = -10;
