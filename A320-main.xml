@@ -1362,7 +1362,7 @@
 				</fadec>
 				<igniter-select-1 type="int">0</igniter-select-1>
 				<igniter-select-2 type="int">0</igniter-select-2>
-				<seperate-tiller-axis type="bool">0</seperate-tiller-axis>
+				<separate-tiller-axis type="bool">0</separate-tiller-axis>
 			</options>
 		</acconfig>
 		<air-conditioning>

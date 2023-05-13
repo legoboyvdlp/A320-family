@@ -62,7 +62,7 @@ setprop("/systems/acconfig/options/welcome-skip", 0);
 setprop("/systems/acconfig/options/no-rendering-warn", 0);
 setprop("/systems/acconfig/options/save-state", 0);
 setprop("/systems/acconfig/options/hide-canvas-outside", 0);
-setprop("/systems/acconfig/options/seperate-tiller-axis", 0);
+setprop("/systems/acconfig/options/separate-tiller-axis", 0);
 setprop("/systems/acconfig/options/nd-rate", 1);
 setprop("/systems/acconfig/options/dcdu-rate", 1);
 setprop("/systems/acconfig/options/autopush/show-route", 1);

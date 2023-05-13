@@ -60,11 +60,6 @@
 			<halign>left</halign>
 			<label>Some aircraft settings may have been returned to their defaults.</label>
 		</text>
-		
-		<text>
-			<halign>left</halign>
-			<label>This screen will only appear after a fresh install, or update. Thank you for choosing A320-family!</label>
-		</text>
 	</group>
 	
 	<hrule/>
