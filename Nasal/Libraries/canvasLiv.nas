@@ -67,7 +67,7 @@ var livery_res_update = setlistener("/sim/model/livery/max-resolution", func {
 #
 var canvas_livery = {
 	init: func(dir, nameprop = "sim/model/livery/name", sortprop = nil) {
-		var m = { parents: [canvas_livery, gui.OverlaySelector.new("Select Livery", dir, nameprop,
+		var m = { parents: [canvas_livery, gui.OverlaySelector.new("Select Livery", [dir, getprop("/sim/fg-home") ~ "/Export/Liveries/" ~ getprop("/sim/aircraft-id")], nameprop,
 				sortprop, "sim/model/livery/file")] };
 		m.dialog = m.parents[1];
 		m.liveriesdir = dir;
@@ -118,23 +118,27 @@ var canvas_livery = {
 			me.targets[target].groups["base"] = me.targets[target].canvas.createGroup("base");
 			var livery = "";
 			var property = me.targets[target].property;
-			resStr = findTexByRes(me.liveriesdir, getprop(property), resolution);
-			if (resStr == nil) {
+			ret = findTexByRes(me.liveriesdir, getprop(property), resolution);
+			if (ret == nil) {
 				livery = me.targets[target].defaultLiv;
 			}
 			else
 			{
-				livery = me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)
+				resStr = ret[0];
+				path = ret[1];
+				livery = path ~ "/" ~ resStr ~ "/" ~ getprop(property)
 			}
 			me.targets[target].layers["base"] = me.targets[target].groups["base"].createChild("image").setFile(livery).setSize(resolution,resolution);
 			me.targets[target].layersHidden["base"] = 0;
 			me.targets[target].listener = setlistener(property, func(property) {
-				resStr = findTexByRes(me.liveriesdir, property.getValue(), resolution);
-				if (resStr == nil) {
-					return nil;
+				ret = findTexByRes(me.liveriesdir, property.getValue(), resolution);
+				if (ret == nil) {
+					livery = me.targets[target].defaultLiv;
 				}
+				resStr = ret[0];
+				path = ret[1];
 				me.targets[target].groups["base"].removeAllChildren();
-				me.targets[target].layers["base"] = me.targets[target].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ property.getValue()).setSize(resolution,resolution);
+				me.targets[target].layers["base"] = me.targets[target].groups["base"].createChild("image").setFile(path ~ "/" ~ resStr ~ "/" ~ property.getValue()).setSize(resolution,resolution);
 			});
 		}
 	},
@@ -182,24 +186,27 @@ var canvas_livery = {
 		me.targets[name].groups["base"] = me.targets[name].canvas.createGroup("base");
 		var livery = "";
 		ret = findTexByRes(me.liveriesdir, getprop(property), resolution);
-		resStr = ret[0];
-		path = ret[1];
-		if (resStr == nil) {
+		if (ret == nil) {
+			return nil;
+		}
+		if (ret == nil) {
 			livery = me.targets[name].defaultLiv;
 		}
 		else
 		{
+			resStr = ret[0];
+			path = ret[1];
 			livery = path ~ "/" ~ resStr ~ "/" ~ getprop(property)
 		}
 		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(livery).setSize(resolution,resolution);
 		me.targets[name].layersHidden["base"] = 0;
 		me.targets[name].listener = setlistener(property, func(property) {
 			ret = findTexByRes(me.liveriesdir, property.getValue(), resolution);
-			resStr = ret[0];
-			path = ret[1];
-			if (resStr == nil) {
+			if (ret == nil) {
 				return nil;
 			}
+			resStr = ret[0];
+			path = ret[1];
 			me.targets[name].groups["base"].removeAllChildren();
 			me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(path ~ "/" ~ resStr ~ "/" ~ property.getValue()).setSize(resolution,resolution);
 		});
@@ -286,23 +293,24 @@ var canvas_livery_update = {
 		me.targets[name].groups["base"] = me.targets[name].canvas.createGroup("base");
 		var livery = "";
 		ret = findTexByRes(me.liveriesdir, getprop(property), resolution);
-		resStr = ret[0];
-		path = ret[1];
-		if (resStr == nil) {
+		if (ret == nil)
+		{
 			livery = me.targets[name].defaultLiv;
 		}
 		else
 		{
+			resStr = ret[0];
+			path = ret[1];
 			livery = path ~ "/" ~ resStr ~ "/" ~ getprop(property)
 		}
 		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)).setSize(resolution,resolution);
 		me.targets[name].listener = setlistener(me.rplayer.getNode(property, 1).getPath(), func(property) {
 			ret = findTexByRes(me.liveriesdir, property.getValue(), resolution);
-			resStr = ret[0];
-			path = ret[1];
-			if (resStr == nil) {
+			if (ret == nil) {
 				return nil;
 			}
+			resStr = ret[0];
+			path = ret[1];
 			me.targets[name].groups["base"].removeAllChildren();
 			me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(path ~ "/" ~ resStr ~ "/" ~ property.getValue()).setSize(resolution,resolution);
 		});
