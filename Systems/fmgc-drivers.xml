@@ -861,6 +861,37 @@
 	</filter>
 	
 	<filter>
+		<name>FPA Sync</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>
+			<condition>
+				<not-equals>
+					<property>/it-autoflight/output/vert</property>
+					<value>5</value>
+				</not-equals>
+			</condition>
+		</enable>
+		<input>
+			<expression>
+				<div>
+					<floor>
+						<sum>
+							<product>
+								<property>/it-autoflight/internal/fpa</property>
+								<value>10</value>
+							</product>
+							<value>0.5</value>
+						</sum>
+					</floor>
+					<value>10</value>
+				</div>
+			</expression>
+		</input>
+		<output>/it-autoflight/input/fpa</output>
+	</filter>
+	
+	<filter>
 		<name>Accel Altitude</name>
 		<type>gain</type>
 		<gain>1.0</gain>
