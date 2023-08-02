@@ -54,7 +54,7 @@ setprop("/systems/acconfig/options/keyboard-mode", 0);
 setprop("/systems/acconfig/options/fgcamera-keys-enabled", 0);
 setprop("/systems/acconfig/options/weight-kgs", 1);
 setprop("/systems/acconfig/options/adirs-skip", 0);
-setprop("/systems/acconfig/options/toggle-tooltips", 1);
+setprop("/systems/acconfig/options/toggle-tooltips", 0);
 setprop("/systems/acconfig/options/allow-oil-consumption", 0);
 setprop("/systems/acconfig/options/atis-server", "faa");
 setprop("/systems/acconfig/options/wxr-server", "noaa");
