@@ -252,7 +252,9 @@
 			<checkbox>
 				<label>Enable FGCamera 0-9 keys</label>
 				<halign>left</halign>
-				<enable>/sim/fgcamera/enable</enable>
+				<enable>
+					<property>/sim/fgcamera/enable</property>
+				</enable>
 				<property>/options/system/fgcamera-keys-enabled</property>
 				<binding>
 					<command>property-toggle</command>
