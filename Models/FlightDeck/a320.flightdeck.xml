@@ -14936,6 +14936,7 @@
 		<property>controls/cockpit/rmp-l-on-pos</property>
 		<factor>-40</factor>
 		<offset-deg>20</offset-deg>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>radio_on.axis.cpt</object-name>
 		</axis>
@@ -19633,6 +19634,7 @@
 		<property>controls/cockpit/rmp-r-on-pos</property>
 		<factor>-40</factor>
 		<offset-deg>20</offset-deg>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>radio_on.axis.fo</object-name>
 		</axis>
