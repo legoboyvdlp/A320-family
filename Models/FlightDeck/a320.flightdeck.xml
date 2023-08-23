@@ -2528,9 +2528,9 @@
 		<object-name>rudder-trim</object-name>
 		<object-name>rudder-trim-letter</object-name>
 		<diffuse>
-			<red>1.00</red>
+			<red>1.0</red>
 			<green>0.355</green>
-			<blue>0.00</blue>
+			<blue>0</blue>
 			<factor-prop>controls/lighting/main-panel-norm-digital</factor-prop>
 		</diffuse>
 		<ambient>
@@ -2544,9 +2544,9 @@
 			<blue>0</blue>
 		</specular>
 		<emission>
-			<red>1.00</red>
+			<red>1.0</red>
 			<green>0.355</green>
-			<blue>0.00</blue>
+			<blue>0</blue>
 			<factor-prop>controls/lighting/main-panel-norm-digital</factor-prop>
 		</emission>
 	</animation>
@@ -2573,11 +2573,12 @@
 		<object-name>ET_clock_hh</object-name>
 		<object-name>ET_clock_sep</object-name>
 		<object-name>ET_clock_mm</object-name>
-		<emission>
+		<diffuse>
 			<red>1.0</red>
 			<green>1.0</green>
 			<blue>1.0</blue>
-		</emission>
+			<factor-prop>controls/lighting/main-panel-norm-digital</factor-prop>
+		</diffuse>
 		<ambient>
 			<red>0</red>
 			<green>0</green>
@@ -2592,6 +2593,7 @@
 			<red>1.0</red>
 			<green>1.0</green>
 			<blue>1.0</blue>
+			<factor-prop>controls/lighting/main-panel-norm-digital</factor-prop>
 		</emission>
 	</animation>
 
