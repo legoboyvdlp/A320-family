@@ -149,6 +149,8 @@ controls.gearToggle = func() {
 		} else {
 			pts.Controls.Gear.leverCockpit.setValue(3);
 		}
+	} else {
+		systems.GEAR.Switch.leverCockpit.setValue(3);
 	}
 }
 
