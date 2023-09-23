@@ -978,15 +978,9 @@
 	</filter>
 	
 	<filter>
-		<name>FD Pitch Takeoff</name>
+		<name>FD Pitch Takeoff Schedule</name>
 		<type>noise-spike</type>
 		<input>
-			<condition>
-				<equals>
-					<property>/it-autoflight/mode/vert</property>
-					<value>T/O CLB</value>
-				</equals>
-			</condition>
 			<expression>
 				<product>
 					<table>
@@ -997,43 +991,134 @@
 					<table>
 						<property>/position/gear-agl-ft</property>
 						<entry><ind> 5</ind><dep>1</dep></entry>
-						<entry><ind>30</ind><dep>0</dep></entry>
+						<entry><ind>25</ind><dep>0</dep></entry>
 					</table>
 				</product>
 			</expression>
 		</input>
-		<input>0</input>
-		<output>/it-autoflight/fd/pitch-bar-takeoff</output>
-		<max-rate-of-change>7.5</max-rate-of-change>
+		<output>/it-autoflight/fd/pitch-bar-mixer</output>
+		<max-rate-of-change>2</max-rate-of-change>
 	</filter>
 	
 	<filter>
-		<name>FD Pitch</name>
-		<type>noise-spike</type>
+		<name>FD Pitch Takeoff</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<equals>
+						<property>/gear/gear[0]/wow</property>
+						<value>0</value>
+					</equals>
+					<greater-than>
+						<property>/it-autoflight/fd/pitch-bar-mixer</property>
+						<value>0</value>
+					</greater-than>
+				</and>
+			</condition>
+			<property>/it-autoflight/fd/pitch-bar-takeoff</property>
+		</input>
 		<input>
 			<expression>
-				<sum>
+				<difference>
+					<table>
+						<property>/it-autoflight/internal/kts-rate</property>
+						<entry><ind>0</ind><dep>1</dep></entry>
+						<entry><ind>4</ind><dep>9</dep></entry>
+					</table>
+					<property>/orientation/pitch-deg</property>
+				</difference>
+			</expression>
+		</input>
+		<output>/it-autoflight/fd/pitch-bar-takeoff</output>
+	</filter>
+	
+	<filter>
+		<name>FD Pitch Command</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<rad2deg>
+					<asin>
+						<div>
+							<difference>
+								<property>/it-autoflight/internal/target-common-fpm</property>
+								<property>/it-autoflight/internal/vert-speed-fpm</property>
+							</difference>
+							<product>
+								<max>
+									<property>/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
+									<value>100</value>
+								</max>
+								<value>151.90288713910761</value> <!-- FPM to Knot * 1.5 -->
+							</product>
+						</div>
+					</asin>
+				</rad2deg>
+			</expression>
+		</input>
+		<output>/it-autoflight/fd/pitch-bar-cmd</output>
+	</filter>
+	
+	<filter>
+		<name>FPD Pitch Command</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input> <!-- Slews the FPV to the FPA target -->
+			<expression>
+				<difference>
+					<property>/orientation/pitch-deg</property>
 					<rad2deg>
 						<asin>
 							<div>
-								<difference>
-									<property>/it-autoflight/internal/target-common-fpm</property>
-									<property>/it-autoflight/internal/vert-speed-fpm</property>
-								</difference>
+								<property>/it-autoflight/internal/target-common-fpm</property>
 								<product>
 									<max>
 										<property>/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
 										<value>100</value>
 									</max>
-									<value>151.90288713910761</value> <!-- FPM to Knot * 1.5 -->
+									<value>101.26859142607174</value> <!-- FPM to Knot -->
 								</product>
 							</div>
 						</asin>
 					</rad2deg>
-					<property>/it-autoflight/fd/pitch-bar-takeoff</property>
+				</difference>
+			</expression>
+		</input>
+		<output>/it-autoflight/fd/fpd-pitch-cmd</output>
+	</filter>
+	
+	<filter>
+		<name>FD Pitch Final</name>
+		<type>noise-spike</type>
+		<input>
+			<condition>
+				<equals>
+					<property>/it-autoflight/mode/vert</property>
+					<value>T/O CLB</value>
+				</equals>
+			</condition>
+			<expression>
+				<sum>
+					<product>
+						<property>/it-autoflight/fd/pitch-bar-cmd</property>
+						<abs>
+							<sum>
+								<property>/it-autoflight/fd/pitch-bar-mixer</property>
+								<value>-1</value>
+							</sum>
+						</abs>
+					</product>
+					<product>
+						<property>/it-autoflight/fd/pitch-bar-takeoff</property>
+						<property>/it-autoflight/fd/pitch-bar-mixer</property>
+					</product>
 				</sum>
 			</expression>
 		</input>
+		<input>/it-autoflight/fd/pitch-bar-cmd</input>
 		<output>/it-autoflight/fd/pitch-bar</output>
 		<min>-15</min>
 		<max>15</max>
@@ -1057,27 +1142,32 @@
 				</difference>
 			</expression>
 		</input>
-		<input> <!-- Slews the FPV to the FPA target -->
+		<input>
+			<condition>
+				<equals>
+					<property>/it-autoflight/mode/vert</property>
+					<value>T/O CLB</value>
+				</equals>
+			</condition>
 			<expression>
-				<difference>
-					<property>/orientation/pitch-deg</property>
-					<rad2deg>
-						<asin>
-							<div>
-								<property>/it-autoflight/internal/target-common-fpm</property>
-								<product>
-									<max>
-										<property>/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
-										<value>100</value>
-									</max>
-									<value>101.26859142607174</value> <!-- FPM to Knot -->
-								</product>
-							</div>
-						</asin>
-					</rad2deg>
-				</difference>
+				<sum>
+					<product>
+						<property>/it-autoflight/fd/fpd-pitch-cmd</property>
+						<abs>
+							<sum>
+								<property>/it-autoflight/fd/pitch-bar-mixer</property>
+								<value>-1</value>
+							</sum>
+						</abs>
+					</product>
+					<product>
+						<property>/it-autoflight/fd/pitch-bar-takeoff</property>
+						<property>/it-autoflight/fd/pitch-bar-mixer</property>
+					</product>
+				</sum>
 			</expression>
 		</input>
+		<input>/it-autoflight/fd/fpd-pitch-cmd</input>
 		<output>/it-autoflight/fd/fpd-pitch</output>
 		<min>-15</min>
 		<max>15</max>
