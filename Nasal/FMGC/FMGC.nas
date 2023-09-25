@@ -157,6 +157,7 @@ var FMGCInternal = {
 	gndTemp: 15,
 	gndTempSet: 0,
 	depApt: "",
+	depAptElev: 0,
 	tropo: 36090,
 	tropoSet: 0,
 	toFromSet: 0,
