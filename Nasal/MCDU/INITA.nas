@@ -264,11 +264,8 @@ var initInputA = func(key, i) {
 							fmgc.FMGCInternal.toFromSet = 1;
 							fmgc.FMGCNodes.toFromSet.setValue(1);
 							mcdu_scratchpad.scratchpads[i].empty();
-
 							fmgc.FMGCInternal.depAptElev = math.round(airportinfo(fromto[0]).elevation * M2FT, 10);
-							print ("Fra Elevation " , fmgc.FMGCInternal.depAptElev);
-
-							
+							setprop("/FMGC/internal/accel-agl-ft", fmgc.FMGCInternal.depAptElev);
 							fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 							fmgc.FMGCInternal.altSelected = 0;
 							fmgc.updateARPT();

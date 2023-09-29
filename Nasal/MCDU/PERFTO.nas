@@ -150,7 +150,18 @@ var perfTOInput = func(key, i) {
 	} else if (key == "L5" and modifiable) {
 		if (scratchpad == "CLR") {
 			setprop("/fdm/jsbsim/fadec/clbreduc-ft", 1500);
-			setprop("/FMGC/internal/accel-agl-ft", 1500);
+			if (fmgc.FMGCInternal.depAptElev != nil) {
+				var newAccelAlt = fmgc.FMGCInternal.depAptElev;
+				if (getprop("/options/company-options/default-accel-agl")) {
+					newAccelAlt += getprop("/options/company-options/default-accel-agl");
+				} else {
+					newAccelAlt += 400; # minimum accel agl if no company option
+				}
+				setprop("/FMGC/internal/accel-agl-ft", newAccelAlt);
+				print("Default livery ", getprop("/options/company-options/default-accel-agl"))
+			} else {
+				setprop("/FMGC/internal/accel-agl-ft", 2500); # dep elev = 0, set default
+			}
 			setprop("MCDUC/thracc-set", 0);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {

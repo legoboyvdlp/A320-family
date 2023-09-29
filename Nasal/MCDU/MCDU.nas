@@ -153,6 +153,7 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.vrset = 0;
 	fmgc.FMGCInternal.v2 = 0;
 	fmgc.FMGCInternal.v2set = 0;
+	print("Default accel ", getprop("/options/default-accel-agl"));
 	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/MCDUC/thracc-set", 0);
 	fmgc.FMGCInternal.toFlap = 0;
