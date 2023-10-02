@@ -265,7 +265,16 @@ var initInputA = func(key, i) {
 							fmgc.FMGCNodes.toFromSet.setValue(1);
 							mcdu_scratchpad.scratchpads[i].empty();
 							fmgc.FMGCInternal.depAptElev = math.round(airportinfo(fromto[0]).elevation * M2FT, 10);
-							setprop("/FMGC/internal/accel-agl-ft", fmgc.FMGCInternal.depAptElev);
+							if (fmgc.FMGCInternal.depAptElev != nil) {
+								var newAccelAlt = fmgc.FMGCInternal.depAptElev;
+								if (getprop("/options/company-options/default-accel-agl")) {
+									newAccelAlt += getprop("/options/company-options/default-accel-agl");
+								} else {
+									newAccelAlt += 400 ; # minimum accel agl if no company option
+								}
+							}
+							# check FCU alt
+							setprop("/FMGC/internal/accel-agl-ft", newAccelAlt);
 							fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 							fmgc.FMGCInternal.altSelected = 0;
 							fmgc.updateARPT();

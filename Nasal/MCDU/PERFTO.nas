@@ -159,8 +159,6 @@ var perfTOInput = func(key, i) {
 				}
 				setprop("/FMGC/internal/accel-agl-ft", newAccelAlt);
 				print("Default livery ", getprop("/options/company-options/default-accel-agl"))
-			} else {
-				setprop("/FMGC/internal/accel-agl-ft", 2500); # dep elev = 0, set default
 			}
 			setprop("MCDUC/thracc-set", 0);
 			mcdu_scratchpad.scratchpads[i].empty();

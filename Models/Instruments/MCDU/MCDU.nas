@@ -90,7 +90,7 @@ var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 # TO PERF
 var clbReducFt = props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft", 1);
-var reducFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
+var accelAltFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
 var thrAccSet = props.globals.getNode("/MCDUC/thracc-set", 1);
 var flex = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-temp", 1);
 var flexSet = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active-cmd", 1);
@@ -4316,7 +4316,6 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L4"].setText(sprintf("%3.0f", fmgc.FMGCInternal.transAlt));
-			me["Simple_L5"].setText(" " ~ sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" TO DATA");
 			me["Simple_L1S"].setText(" V1");
 			me["Simple_L2S"].setText(" VR");
@@ -4400,6 +4399,14 @@ var canvas_MCDU_base = {
 				me["Simple_L5"].setFontSize(small);
 			}
 			
+			if(accelAltFt.getValue() == ""){
+				me["Simple_L5"].setColor(WHITE);
+				me["Simple_L5"].setText("-----/-----");
+			} else {
+				me["Simple_L5"].setColor(BLUE);
+				me["Simple_L5"].setText("" ~ sprintf("%4.0f", clbReducFt.getValue()) ~ sprintf("/%4.0f", accelAltFt.getValue()));
+			}
+
 			if (fmgc.FMGCInternal.toFlapThsSet) {
 				me["Simple_R3"].setFontSize(normal);
 				if (fmgc.FMGCInternal.toThs) {
@@ -5082,7 +5089,7 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
+			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", accelAltFt.getValue()));
 			me["Simple_L6"].setText(" PHASE");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" PREV");
