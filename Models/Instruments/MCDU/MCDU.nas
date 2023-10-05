@@ -4399,12 +4399,14 @@ var canvas_MCDU_base = {
 				me["Simple_L5"].setFontSize(small);
 			}
 			
-			if(accelAltFt.getValue() == ""){
-				me["Simple_L5"].setColor(WHITE);
-				me["Simple_L5"].setText("-----/-----");
-			} else {
+			if(fmgc.accelAltValid){
 				me["Simple_L5"].setColor(BLUE);
 				me["Simple_L5"].setText("" ~ sprintf("%4.0f", clbReducFt.getValue()) ~ sprintf("/%4.0f", accelAltFt.getValue()));
+			} else {
+				# MCDU will show dashes if thrustRed and accelAlt is not initialized
+				# as for now FMGC will use default value unless it is overwritten
+				me["Simple_L5"].setColor(WHITE);
+				me["Simple_L5"].setText("-----/-----");
 			}
 
 			if (fmgc.FMGCInternal.toFlapThsSet) {

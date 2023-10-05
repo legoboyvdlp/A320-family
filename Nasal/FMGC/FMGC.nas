@@ -15,6 +15,7 @@ var gs = 0;
 var state1 = 0;
 var state2 = 0;
 var accel_agl_ft = 0;
+var accelAltValid = 0; # barrier to say it is not initialized
 var fd1 = 0;
 var fd2 = 0;
 var spd = 0;

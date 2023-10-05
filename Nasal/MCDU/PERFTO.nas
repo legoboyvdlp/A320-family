@@ -158,6 +158,7 @@ var perfTOInput = func(key, i) {
 					newAccelAlt += 400; # minimum accel agl if no company option
 				}
 				setprop("/FMGC/internal/accel-agl-ft", newAccelAlt);
+				fmgc.accelAltValid = 1;
 				print("Default livery ", getprop("/options/company-options/default-accel-agl"))
 			}
 			setprop("MCDUC/thracc-set", 0);
@@ -179,12 +180,14 @@ var perfTOInput = func(key, i) {
 						setprop("/fdm/jsbsim/fadec/clbreduc-ft", int(thrred / 10) * 10);
 						setprop("/FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 						setprop("MCDUC/thracc-set", 1);
+						fmgc.accelAltValid = 1;
 						mcdu_scratchpad.scratchpads[i].empty();
 					} else {
 						mcdu_message(i, "NOT ALLOWED");	
 					}
 				} else if (thrreds == 0 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= 400 and acc <= 39000) {
 					setprop("/FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
+					fmgc.accelAltValid = 1;
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
@@ -335,4 +338,25 @@ var perfTOInput = func(key, i) {
 	} else {
 		mcdu_message(i, "NOT ALLOWED");
 	}
+}
+
+var setAccelAlt = func(newAccelAlt) {
+	var tmpAccelAlt = 800;
+	if (fmgc.FMGCInternal.depAptElev != nil) {
+		tmpAccelAlt = fmgc.FMGCInternal.depAptElev;
+		if (getprop("/options/company-options/default-accel-agl")) {
+			tmpAccelAlt += getprop("/options/company-options/default-accel-agl");
+		} else {
+			tmpAccelAlt += 400; # minimum accel agl if no company option
+		}
+	}
+	if (newAccelAlt >= tmpAccelAlt) {
+		if (newAccelAlt <= mcdu.clbReducFt) {
+			newAccelAlt = mcdu.clbReducFt;
+		}
+	} else {
+		newAccelAlt = tmpAccelAlt;
+	}
+	setprop("/FMGC/internal/accel-agl-ft", newAccelAlt);
+	fmgc.accelAltValid = 1;
 }
