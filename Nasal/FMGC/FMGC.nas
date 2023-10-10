@@ -129,6 +129,10 @@ var FMGCInternal = {
 	toFlap: 0,
 	toThs: 0,
 	toFlapThsSet: 0,
+	accelAlt: 0,
+	accelAltSet: 0,
+	thrRedAlt: 0,
+	thrRedAltSet: 0,
 	
 	# PERF APPR
 	destMag: 0,
@@ -158,7 +162,7 @@ var FMGCInternal = {
 	gndTemp: 15,
 	gndTempSet: 0,
 	depApt: "",
-	depAptElev: nil,
+	depAptElev: 0,
 	tropo: 36090,
 	tropoSet: 0,
 	toFromSet: 0,

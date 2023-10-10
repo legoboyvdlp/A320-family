@@ -265,16 +265,24 @@ var initInputA = func(key, i) {
 							fmgc.FMGCNodes.toFromSet.setValue(1);
 							mcdu_scratchpad.scratchpads[i].empty();
 							fmgc.FMGCInternal.depAptElev = math.round(airportinfo(fromto[0]).elevation * M2FT, 10);
-							if (fmgc.FMGCInternal.depAptElev != nil) {
-								var newAccelAlt = fmgc.FMGCInternal.depAptElev;
-								if (getprop("/options/company-options/default-accel-agl")) {
-									newAccelAlt += getprop("/options/company-options/default-accel-agl");
-								} else {
-									newAccelAlt += 400 ; # minimum accel agl if no company option
-								}
+
+							if (getprop("/options/company-options/default-accel-agl")) {
+								fmgc.FMGCInternal.AccelAlt = getprop("/options/company-options/default-accel-agl") + fmgc.FMGCInternal.depAptElev;
+							} else {
+								fmgc.FMGCInternal.AccelAlt = 400 + fmgc.FMGCInternal.depAptElev; # todo: minimum accel agl if no company option
 							}
-							# check FCU alt
-							setprop("/FMGC/internal/accel-agl-ft", newAccelAlt);
+
+							if (getprop("/options/company-options/default-thrRed-agl")) {
+								fmgc.FMGCInternal.thrRedAlt = getprop("/options/company-options/default-thrRed-agl") + fmgc.FMGCInternal.depAptElev;
+							} else {
+								fmgc.FMGCInternal.thrRedAlt = 400 + fmgc.FMGCInternal.depAptElev; # todo: minimum thrRed agl if no company option
+							}
+							setprop("/FMGC/internal/accel-agl-ft", fmgc.FMGCInternal.AccelAlt);
+							setprop("/fdm/jsbsim/fadec/clbreduc-ft", fmgc.FMGCInternal.thrRedAlt);
+							setprop("MCDUC/thracc-set", 0);
+							setprop("MCDUC/acc-set-manual", 0);
+							setprop("MCDUC/thrRed-set-manual", 0);
+
 							fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 							fmgc.FMGCInternal.altSelected = 0;
 							fmgc.updateARPT();

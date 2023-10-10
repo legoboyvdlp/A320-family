@@ -92,6 +92,8 @@ var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altit
 var clbReducFt = props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft", 1);
 var accelAltFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
 var thrAccSet = props.globals.getNode("/MCDUC/thracc-set", 1);
+var accSetManual = props.globals.getNode("/MCDUC/acc-set-manual", 1);
+var thrRedSetManual = props.globals.getNode("/MCDUC/thrRed-set-manual", 1);
 var flex = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-temp", 1);
 var flexSet = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active-cmd", 1);
 var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
@@ -4393,20 +4395,32 @@ var canvas_MCDU_base = {
 				me["Simple_L3"].hide();
 			}
 			
-			if (thrAccSet.getValue() == 1) {
-				me["Simple_L5"].setFontSize(normal);
+			if(fmgc.FMGCInternal.depApt == ""){
+				# todo: as for now FMGC will use default thrRed/accelAlt values unless it is overwritten
+				# these default values are not displayed in MCDU
+
+				if (accSetManual.getBoolValue() and thrRedSetManual.getBoolValue()){
+					me["Simple_L5"].setColor(BLUE);
+					me["Simple_L5"].setFontSize(normal); 
+					me["Simple_L5"].setText("" ~ sprintf("%4.0f", clbReducFt.getValue()) ~ sprintf("/%4.0f", accelAltFt.getValue()));					
+				} else {
+					me["Simple_L5"].setColor(WHITE);
+					me["Simple_L5"].setFontSize(small); 
+					me["Simple_L5"].setText("-----/-----");
+				}
 			} else {
-				me["Simple_L5"].setFontSize(small);
-			}
-			
-			if(fmgc.accelAltValid){
-				me["Simple_L5"].setColor(BLUE);
-				me["Simple_L5"].setText("" ~ sprintf("%4.0f", clbReducFt.getValue()) ~ sprintf("/%4.0f", accelAltFt.getValue()));
-			} else {
-				# MCDU will show dashes if thrustRed and accelAlt is not initialized
-				# as for now FMGC will use default value unless it is overwritten
-				me["Simple_L5"].setColor(WHITE);
-				me["Simple_L5"].setText("-----/-----");
+				# todo: split font size if just one value set manulally
+				# for now both set to normal if one is set 
+
+				if (accSetManual.getBoolValue() or thrRedSetManual.getBoolValue()){
+					me["Simple_L5"].setColor(BLUE);
+					me["Simple_L5"].setFontSize(normal); 
+					me["Simple_L5"].setText("" ~ sprintf("%4.0f", clbReducFt.getValue()) ~ sprintf("/%4.0f", accelAltFt.getValue()));
+				} else {
+					me["Simple_L5"].setColor(BLUE);
+					me["Simple_L5"].setFontSize(small); 
+					me["Simple_L5"].setText("" ~ sprintf("%4.0f", clbReducFt.getValue()) ~ sprintf("/%4.0f", accelAltFt.getValue()));				
+				}
 			}
 
 			if (fmgc.FMGCInternal.toFlapThsSet) {
@@ -6160,3 +6174,4 @@ setlistener("/MCDU[0]/page", func {
 setlistener("/MCDU[1]/page", func {
 	pageSwitch[1].setBoolValue(0);
 }, 0, 0);
+

@@ -19,6 +19,7 @@
 		<company-options>
 			<idle-factor>+0.0</idle-factor>
 			<perf-factor>+0.0</perf-factor>
+			<default-thrRed-agl type="int">1000</default-thrRed-agl>
 			<default-accel-agl type="int">1000</default-accel-agl>
 		</company-options>
 		<model-options>
