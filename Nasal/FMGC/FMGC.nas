@@ -37,7 +37,10 @@ var windsDidChange = 0;
 var tempOverspeed = nil;
 
 setprop("/position/gear-agl-ft", 0);
-setprop("/it-autoflight/settings/accel-ft", 1500); #eventually set to 1500 above runway
+# 1500 ft is a default value not shown anywhere. It may not exist.
+# In case it does not exist, a takeoff with no departure airport and no accel set would never go from TO PHASE to CLB PHASE
+# unless manually set.
+setprop("/it-autoflight/settings/accel-ft", 1500);
 setprop("/it-autoflight/internal/vert-speed-fpm", 0);
 setprop("/instrumentation/nav[0]/nav-id", "XXX");
 setprop("/instrumentation/nav[1]/nav-id", "XXX");

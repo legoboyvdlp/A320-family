@@ -7,8 +7,19 @@ var resetFlightplan = func(i) {
 	fmgc.FMGCInternal.depApt = "";
 	fmgc.FMGCInternal.arrApt = "";
 	fmgc.FMGCInternal.toFromSet = 0;
+	fmgc.FMGCInternal.depAptElev = 0;
 	fmgc.FMGCNodes.toFromSet.setValue(0);
 	fmgc.windController.resetDesWinds();
+
+	# clbreduc-ft and accel-agl-ft are set to arbitrary values they may not exist.
+	# In case they do not exist, a takeoff with no departure airport and no accel set would never go from TO PHASE to CLB PHASE
+	# unless manually changed.
+	setprop("/FMGC/internal/accel-agl-ft", 1500);
+	setprop("/fdm/jsbsim/fadec/clbreduc-ft", 1500);
+	setprop("MCDUC/thracc-set", 0);
+	setprop("MCDUC/acc-set-manual", 0);
+	setprop("MCDUC/thrRed-set-manual", 0);
+
 	setprop("/FMGC/internal/align-ref-lat", 0);
 	setprop("/FMGC/internal/align-ref-long", 0);
 	setprop("/FMGC/internal/align-ref-lat-edit", 0);

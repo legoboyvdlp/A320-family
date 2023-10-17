@@ -4294,15 +4294,15 @@ var canvas_MCDU_base = {
 				showRight(me,-1, 1, 1, 1, 1, 1);
 				showRightS(me,1, 1, 1, 1, 1, 1);
 				showRightArrow(me,-1, -1, -1, -1, -1, 1);
-				showCenter(me,1, 1, 1, -1, -1, -1);
+				showCenter(me,1, 1, 1, -1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
-				showCenterS(me,1, 1, 1, -1, -1, -1);
+				showCenterS(me,1, 1, 1, -1, 1, -1);
 				
 				me.fontSizeLeft(normal, normal, normal, normal, 0, normal);
 				me.fontSizeRight(normal, small, 0, 0, 0, normal);
-				me.fontSizeCenter(small, small, small, 0, 0, 0);
-				me.fontSizeCenterS(small, small, small, small, small, small);
+				me.fontSizeCenter(small, small, small, 0, small, 0);
+				me.fontSizeCenterS(small, small, small, small, 0, small);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -4310,7 +4310,7 @@ var canvas_MCDU_base = {
 				me.colorRight("grn", "blu", "blu", "blu", "blu", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "grn", "grn", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "grn", "wht", "blu", "wht");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 				me["Simple_Title"].setText("TAKE OFF");
 				
@@ -4353,6 +4353,7 @@ var canvas_MCDU_base = {
 			if (fmgc.FMGCInternal.phase == 1) {  # GREEN title and not modifiable on TO phase
 				me["Simple_Title"].setColor(GREEN);
 				me.colorLeft("grn", "grn", "grn", "blu", "grn", "wht");
+				me.colorCenter("grn", "grn", "grn", "blu", "grn", "wht");
 				me.colorRight("grn", "blu", "grn", "grn", "grn", "wht");
 			} else {				
 				me["Simple_Title"].setColor(WHITE);
@@ -4402,24 +4403,39 @@ var canvas_MCDU_base = {
 				if (accSetManual.getBoolValue() and thrRedSetManual.getBoolValue()){
 					me["Simple_L5"].setColor(BLUE);
 					me["Simple_L5"].setFontSize(normal); 
-					me["Simple_L5"].setText("" ~ sprintf("%4.0f", clbReducFt.getValue()) ~ sprintf("/%4.0f", accelAltFt.getValue()));					
+					me["Simple_L5"].setText(sprintf("%4.0f", clbReducFt.getValue()));					
+					me["Simple_C5"].setColor(BLUE);
+					me["Simple_C5"].setFontSize(normal); 
+					me["Simple_C5"].setText(sprintf("/%4.0f           ", accelAltFt.getValue()));
 				} else {
 					me["Simple_L5"].setColor(WHITE);
 					me["Simple_L5"].setFontSize(small); 
-					me["Simple_L5"].setText("-----/-----");
+					me["Simple_L5"].setText("-----");
+					me["Simple_C5"].setColor(WHITE);
+					me["Simple_C5"].setFontSize(small); 
+					me["Simple_C5"].setText(sprintf("/-----                ", accelAltFt.getValue()));
 				}
 			} else {
-				# todo: split font size if just one value set manulally
-				# for now both set to normal if one is set 
-
-				if (accSetManual.getBoolValue() or thrRedSetManual.getBoolValue()){
-					me["Simple_L5"].setColor(BLUE);
+				if (thrRedSetManual.getBoolValue()){
 					me["Simple_L5"].setFontSize(normal); 
-					me["Simple_L5"].setText("" ~ sprintf("%4.0f", clbReducFt.getValue()) ~ sprintf("/%4.0f", accelAltFt.getValue()));
+					me["Simple_L5"].setText(sprintf("%4.0f", clbReducFt.getValue()));
+					if (accSetManual.getBoolValue()) {
+						me["Simple_C5"].setFontSize(normal); 
+						me["Simple_C5"].setText(sprintf("/%4.0f           ", accelAltFt.getValue()));
+					} else {
+						me["Simple_C5"].setFontSize(small); 
+						me["Simple_C5"].setText(sprintf("/%4.0f               ", accelAltFt.getValue()));
+					}
 				} else {
-					me["Simple_L5"].setColor(BLUE);
 					me["Simple_L5"].setFontSize(small); 
-					me["Simple_L5"].setText("" ~ sprintf("%4.0f", clbReducFt.getValue()) ~ sprintf("/%4.0f", accelAltFt.getValue()));				
+					me["Simple_L5"].setText(sprintf("%4.0f", clbReducFt.getValue()));
+					if (accSetManual.getBoolValue()) {
+						me["Simple_C5"].setFontSize(normal); 
+						me["Simple_C5"].setText(sprintf("/%4.0f            ", accelAltFt.getValue()));
+					} else {
+						me["Simple_C5"].setFontSize(small); 
+						me["Simple_C5"].setText(sprintf("/%4.0f                 ", accelAltFt.getValue()));
+					}
 				}
 			}
 
