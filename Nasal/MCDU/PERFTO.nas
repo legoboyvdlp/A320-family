@@ -162,8 +162,8 @@ var perfTOInput = func(key, i) {
 					fmgc.FMGCInternal.thrRedAlt = 400 + fmgc.FMGCInternal.depAptElev; # todo: minimum thrRed agl if no company option
 				}
 			} else {
-				fmgc.FMGCInternal.AccelAlt = 1500; # todo: default accel if no depApt
-				fmgc.FMGCInternal.thrRedAlt = 1500; # todo: ThrRed accel if no depApt
+				fmgc.FMGCInternal.AccelAlt = 1500; # todo: default accel if no depApt / probably doesn't exist?
+				fmgc.FMGCInternal.thrRedAlt = 1500; # todo: default ThrRed if no depApt / probably doesn't exist?
 			}
 			setprop("/FMGC/internal/accel-agl-ft", fmgc.FMGCInternal.AccelAlt);
 			setprop("/fdm/jsbsim/fadec/clbreduc-ft", fmgc.FMGCInternal.thrRedAlt);
