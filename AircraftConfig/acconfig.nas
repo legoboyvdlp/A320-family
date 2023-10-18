@@ -111,16 +111,22 @@ var fgfsMin = split(".", getprop("/sim/minimum-fg-version"));
 var fgfsVer = split(".", getprop("/sim/version/flightgear"));
 
 var versionCheck = func() {
-	if (fgfsVer[0] < fgfsMin[0] or fgfsVer[1] < fgfsMin[1]) {
-		return 0;
-	} else if (fgfsVer[1] == fgfsMin[1]) {
-		if (fgfsVer[2] < fgfsMin[2]) {
-			return 0;
-		} else {
+	if (fgfsVer[0] > fgfsMin[0]) {
+		return 1;
+	} else if (fgfsVer[0] == fgfsMin[0]) {
+		if (fgfsVer[1] > fgfsMin[1]) {
 			return 1;
+		} else if (fgfsVer[1] == fgfsMin[1]) {
+			if (fgfsVer[2] >= fgfsMin[2]) {
+				return 1;
+			} else {
+				return 0;
+			}
+		} else {
+			return 0;
 		}
 	} else {
-		return 1;
+		return 0;
 	}
 }
 
@@ -163,12 +169,12 @@ setlistener("/sim/signals/fdm-initialized", func {
 	if (getprop("/systems/acconfig/out-of-date") != 1 and getprop("/systems/acconfig/options/revision") < current_revision and getprop("/systems/acconfig/mismatch-code") == "0x000") {
 		updated_dlg.open();
 		if (getprop("/systems/acconfig/options/no-rendering-warn") != 1) {
-			renderingSettings.check();
+			RENDERING.check();
 		}
 	} else if (getprop("/systems/acconfig/out-of-date") != 1 and getprop("/systems/acconfig/mismatch-code") == "0x000" and getprop("/systems/acconfig/options/welcome-skip") != 1) {
 		welcome_dlg.open();
 		if (getprop("/systems/acconfig/options/no-rendering-warn") != 1) {
-			renderingSettings.check();
+			RENDERING.check();
 		}
 	}
 	setprop("/systems/acconfig/options/revision", current_revision);
@@ -189,32 +195,63 @@ setlistener("/sim/signals/exit", func {
 	save.save(save.default, pts.Sim.fgHome.getValue() ~ "/Export/" ~ pts.Sim.aircraft.getValue() ~ "-save.xml");
 });
 
-var renderingSettings = {
+var RENDERING = {
+	als: props.globals.getNode("/sim/rendering/shaders/skydome"),
+	alsMode: props.globals.getNode("/sim/gui/dialogs/advanced/mode/als-mode", 1),
+	customSettings: props.globals.getNode("/sim/rendering/shaders/custom-settings"),
+	landmass: props.globals.getNode("/sim/rendering/shaders/landmass"),
+	landmassSet: 0,
+	lowSpecMode: props.globals.getNode("/sim/gui/dialogs/advanced/mode/low-spec-mode", 1),
+	model: props.globals.getNode("/sim/rendering/shaders/model"),
+	modelEffects: props.globals.getNode("/sim/gui/dialogs/advanced/model-effects", 1),
+	modelSet: 0,
+	rembrandt: props.globals.getNode("/sim/rendering/rembrandt/enabled", 1),
 	check: func() {
-		var rembrandt = getprop("/sim/rendering/rembrandt/enabled");
-		var ALS = getprop("/sim/rendering/shaders/skydome");
-
-		var landmass = getprop("/sim/rendering/shaders/landmass") >= 4;
-		var model = getprop("/sim/rendering/shaders/model") >= 2;
-		if (!rembrandt and (!ALS or !landmass or !model)) {
-			rendering_dlg.open();
+		#if (OPTIONS.noRenderingWarn.getBoolValue()) {
+		#	return;
+		#}
+		
+		me.landmassSet = me.landmass.getValue() >= 4;
+		me.modelSet = me.model.getValue() >= 3;
+		
+		if ((fgfsVer[0] == 2020 and fgfsVer[1] >= 4) or fgfsVer[0] > 2020) {
+			if (!me.rembrandt.getBoolValue() and (!me.als.getBoolValue() or !me.landmassSet or !me.modelSet)) {
+				fgcommand("dialog-show", props.Node.new({"dialog-name": "acconfig-rendering"}));
+			}
+		} else {
+			if (!me.rembrandt.getBoolValue() and (!me.als.getBoolValue() or !me.customSettings.getBoolValue() or !me.landmassSet or !me.modelSet)) {
+				fgcommand("dialog-show", props.Node.new({"dialog-name": "acconfig-rendering"}));
+			}
 		}
 	},
 	fixAll: func() {
+		# Don't override higher settings
+		if (me.landmass.getValue() < 4) {
+			me.landmass.setValue(4);
+			if ((fgfsVer[0] == 2020 and fgfsVer[1] >= 4) or fgfsVer[0] > 2020) {
+				me.modelEffects.setValue("Medium");
+			}
+		}
+		if (me.model.getValue() < 3) {
+			me.model.setValue(3);
+			if ((fgfsVer[0] == 2020 and fgfsVer[1] >= 4) or fgfsVer[0] > 2020) {
+				me.modelEffects.setValue("Enabled");
+			}
+		}
+		
 		me.fixCore();
-		var landmass = getprop("/sim/rendering/shaders/landmass") >= 4;
-		var model = getprop("/sim/rendering/shaders/model") >= 2;
-		if (!landmass) {
-			setprop("/sim/rendering/shaders/landmass", 4);
-		}
-		if (!model) {
-			setprop("/sim/rendering/shaders/model", 2);
-		}
 	},
 	fixCore: func() {
-		setprop("/sim/rendering/shaders/skydome", 1); # ALS on
-		setprop("/sim/rendering/shaders/custom-settings", 1);
-		gui.popupTip("/Rendering Settings updated!");
+		me.als.setBoolValue(1); # ALS on
+		if ((fgfsVer[0] == 2020 and fgfsVer[1] >= 4) or fgfsVer[0] > 2020) {
+			me.alsMode.setBoolValue(1);
+			me.lowSpecMode.setBoolValue(0);
+		} else {
+			me.customSettings.setBoolValue(1);
+		}
+		
+		print("System: Rendering Settings updated!");
+		gui.popupTip("System: Rendering settings updated!");
 	},
 };
 
