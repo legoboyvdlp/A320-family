@@ -4408,12 +4408,31 @@ var canvas_MCDU_base = {
 					me["Simple_C5"].setFontSize(normal); 
 					me["Simple_C5"].setText(sprintf("/%4.0f           ", accelAltFt.getValue()));
 				} else {
-					me["Simple_L5"].setColor(WHITE);
-					me["Simple_L5"].setFontSize(small); 
-					me["Simple_L5"].setText("-----");
-					me["Simple_C5"].setColor(WHITE);
-					me["Simple_C5"].setFontSize(small); 
-					me["Simple_C5"].setText(sprintf("/-----                ", accelAltFt.getValue()));
+					if (thrRedSetManual.getBoolValue()){
+						me["Simple_L5"].setFontSize(normal); 
+						me["Simple_L5"].setText(sprintf("%4.0f", clbReducFt.getValue()));
+						if (accSetManual.getBoolValue()) {
+							me["Simple_C5"].setFontSize(normal); 
+							me["Simple_C5"].setText(sprintf("/%4.0f           ", accelAltFt.getValue()));
+						} else {
+							me["Simple_C5"].setColor(WHITE);
+							me["Simple_C5"].setFontSize(small); 
+							me["Simple_C5"].setText(sprintf("/-----               ", accelAltFt.getValue()));
+						}
+					} else {
+						me["Simple_L5"].setColor(WHITE);
+						me["Simple_L5"].setFontSize(small); 
+						me["Simple_L5"].setText("-----");
+						if (accSetManual.getBoolValue()) {
+							me["Simple_C5"].setColor(BLUE);
+							me["Simple_C5"].setFontSize(normal); 
+							me["Simple_C5"].setText(sprintf("/%4.0f            ", accelAltFt.getValue()));
+						} else {
+							me["Simple_C5"].setColor(WHITE);
+							me["Simple_C5"].setFontSize(small); 
+							me["Simple_C5"].setText(sprintf("/-----                ", accelAltFt.getValue()));
+						}
+					}
 				}
 			} else {
 				if (thrRedSetManual.getBoolValue()){
