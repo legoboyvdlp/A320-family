@@ -146,6 +146,12 @@ var FMGCInternal = {
 	ldgConfig3: 0,
 	ldgConfigFull: 0,
 	
+	# PERF GA
+	gaAccelAlt: 0,
+	gaAccelAltSet: 0,
+	gaThrRedAlt: 0,
+	gaThrRedAltSet: 0,
+	
 	# INIT A
 	altAirport: "",
 	altAirportSet: 0,

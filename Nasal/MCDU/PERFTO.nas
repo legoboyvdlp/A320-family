@@ -153,13 +153,15 @@ var perfTOInput = func(key, i) {
 				if (getprop("/options/company-options/default-accel-agl")) {
 					fmgc.FMGCInternal.AccelAlt = getprop("/options/company-options/default-accel-agl") + fmgc.FMGCInternal.depAptElev;
 				} else {
-					fmgc.FMGCInternal.AccelAlt = 400 + fmgc.FMGCInternal.depAptElev; # todo: minimum accel agl if no company option
+					# to check: minimum value if no company option is 400 ft above dep aerodrome
+					fmgc.FMGCInternal.AccelAlt = 400 + fmgc.FMGCInternal.depAptElev;
 				}
 
 				if (getprop("/options/company-options/default-thrRed-agl")) {
 					fmgc.FMGCInternal.thrRedAlt = getprop("/options/company-options/default-thrRed-agl") + fmgc.FMGCInternal.depAptElev;
 				} else {
-					fmgc.FMGCInternal.thrRedAlt = 400 + fmgc.FMGCInternal.depAptElev; # todo: minimum thrRed agl if no company option
+					# to check: minimum value if no company option is 400 ft above dep aerodrome
+					fmgc.FMGCInternal.thrRedAlt = 400 + fmgc.FMGCInternal.depAptElev;
 				}
 			} else {
 				fmgc.FMGCInternal.AccelAlt = 1500; # todo: default accel if no depApt / probably doesn't exist?

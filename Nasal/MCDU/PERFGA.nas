@@ -9,6 +9,8 @@ var perfGAInput = func(key, i) {
 			setprop("/fdm/jsbsim/fadec/clbreduc-ft", 1500);
 			setprop("/FMGC/internal/accel-agl-ft", 1500);
 			setprop("MCDUC/thracc-set", 0);
+			setprop("MCDUC/ga-acc-set-manual", 0);
+			setprop("MCDUC/ga-thracc-set", 0);
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tfs = size(scratchpad);
@@ -17,8 +19,8 @@ var perfGAInput = func(key, i) {
 				var thrred = size(thracc[0]);
 				var acc = size(thracc[1]);
 				if (int(thrred) != nil and int(acc) != nil and (thrred >= 3 and thrred <= 5) and (acc >= 3 and acc <= 5)) {
-					setprop("/fdm/jsbsim/fadec/clbreduc-ft", thracc[0]);
-					setprop("/FMGC/internal/accel-agl-ft", thracc[1]);
+					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", thracc[0]);
+					setprop("/FMGC/internal/ga-accel-agl-ft", thracc[1]);
 					setprop("MCDUC/thracc-set", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {

@@ -90,7 +90,7 @@ var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 # TO PERF
 var clbReducFt = props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft", 1);
-var accelAltFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
+var accelAltFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1);
 var thrAccSet = props.globals.getNode("/MCDUC/thracc-set", 1);
 var accSetManual = props.globals.getNode("/MCDUC/acc-set-manual", 1);
 var thrRedSetManual = props.globals.getNode("/MCDUC/thrRed-set-manual", 1);
@@ -111,6 +111,10 @@ var final = props.globals.getNode("/FMGC/internal/final", 1);
 var radio = props.globals.getNode("/FMGC/internal/radio", 1);
 var baro = props.globals.getNode("/FMGC/internal/baro", 1);
 # GA PERF
+var ga_clbReducFt = props.globals.getNode("/fdm/jsbsim/fadec/ga-clbreduc-ft", 1); # differs from TO clbRedcFt
+var ga_accelAltFt = props.globals.getNode("/FMGC/internal/ga-accel-agl-ft", 1); # differs from TO accelAltFt
+var ga_accSetManual = props.globals.getNode("/MCDUC/ga-acc-set-manual", 1);
+var ga_thrRedSetManual = props.globals.getNode("/MCDUC/ga-thrRed-set-manual", 1);
 # AOC - SENSORS
 var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
 var doorL1_pos = props.globals.getNode("/sim/model/door-positions/doorl1/position-norm", 1); #FWD door
@@ -5129,7 +5133,7 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setColor(WHITE);
 			}
 			
-			if (thrAccSet.getValue() == 1) {
+			if (ga_thrRedSetManual.getValue() == 1) {
 				me["Simple_L5"].setFontSize(normal);
 			} else {
 				me["Simple_L5"].setFontSize(small);
@@ -5140,7 +5144,7 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", accelAltFt.getValue()));
+			me["Simple_L5"].setText(sprintf("%3.0f", ga_clbReducFt.getValue()) ~ sprintf("/%3.0f", ga_accelAltFt.getValue()));
 			me["Simple_L6"].setText(" PHASE");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" PREV");

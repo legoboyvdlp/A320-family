@@ -8,6 +8,7 @@ var resetFlightplan = func(i) {
 	fmgc.FMGCInternal.arrApt = "";
 	fmgc.FMGCInternal.toFromSet = 0;
 	fmgc.FMGCInternal.depAptElev = 0;
+	fmgc.FMGCInternal.destAptElev = 0;
 	fmgc.FMGCNodes.toFromSet.setValue(0);
 	fmgc.windController.resetDesWinds();
 
@@ -19,6 +20,11 @@ var resetFlightplan = func(i) {
 	setprop("MCDUC/thracc-set", 0);
 	setprop("MCDUC/acc-set-manual", 0);
 	setprop("MCDUC/thrRed-set-manual", 0);
+
+	setprop("/FMGC/internal/ga-accel-agl-ft", 1500);
+	setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", 1500);
+	setprop("MCDUC/ga-acc-set-manual", 0);
+	setprop("MCDUC/ga-thrRed-set-manual", 0);
 
 	setprop("/FMGC/internal/align-ref-lat", 0);
 	setprop("/FMGC/internal/align-ref-long", 0);
@@ -276,23 +282,37 @@ var initInputA = func(key, i) {
 							fmgc.FMGCNodes.toFromSet.setValue(1);
 							mcdu_scratchpad.scratchpads[i].empty();
 							fmgc.FMGCInternal.depAptElev = math.round(airportinfo(fromto[0]).elevation * M2FT, 10);
-
-							if (getprop("/options/company-options/default-accel-agl")) {
-								fmgc.FMGCInternal.AccelAlt = getprop("/options/company-options/default-accel-agl") + fmgc.FMGCInternal.depAptElev;
-							} else {
-								fmgc.FMGCInternal.AccelAlt = 400 + fmgc.FMGCInternal.depAptElev; # todo: minimum accel agl if no company option
-							}
+							fmgc.FMGCInternal.destAptElev = math.round(airportinfo(fromto[1]).elevation * M2FT, 10);
 
 							if (getprop("/options/company-options/default-thrRed-agl")) {
 								fmgc.FMGCInternal.thrRedAlt = getprop("/options/company-options/default-thrRed-agl") + fmgc.FMGCInternal.depAptElev;
+								fmgc.FMGCInternal.gaThrRedAlt = getprop("/options/company-options/default-ga-thrRed-agl") + fmgc.FMGCInternal.destAptElev;
 							} else {
 								fmgc.FMGCInternal.thrRedAlt = 400 + fmgc.FMGCInternal.depAptElev; # todo: minimum thrRed agl if no company option
+								fmgc.FMGCInternal.gaThrRedAlt = 1500 + fmgc.FMGCInternal.destAptElev; # as per FCOM 12-22_20-50-10-MCDU - Page Description - FMS2 Thales - PERF Page
 							}
-							setprop("/FMGC/internal/accel-agl-ft", fmgc.FMGCInternal.AccelAlt);
+
+							if (getprop("/options/company-options/default-accel-agl")) {
+								fmgc.FMGCInternal.accelAlt = getprop("/options/company-options/default-accel-agl") + fmgc.FMGCInternal.depAptElev;
+								fmgc.FMGCInternal.gaAccelAlt = getprop("/options/company-options/default-ga-accel-agl") + fmgc.FMGCInternal.destAptElev;
+								if (fmgc.FMGCInternal.gaAccelAlt < fmgc.FMGCInternal.gaThrRedAlt){
+									fmgc.FMGCInternal.gaThrRedAlt =  fmgc.FMGCInternal.gaAccelAlt;
+								}
+							} else {
+								fmgc.FMGCInternal.accelAlt = 400 + fmgc.FMGCInternal.depAptElev; # todo: minimum accel agl if no company option
+								fmgc.FMGCInternal.gaAccelAlt = 1500 + fmgc.FMGCInternal.destAptElev; # as per FCOM 12-22_20-50-10-MCDU - Page Description - FMS2 Thales - PERF Page
+							}
+
+							setprop("/FMGC/internal/accel-agl-ft", fmgc.FMGCInternal.accelAlt);
 							setprop("/fdm/jsbsim/fadec/clbreduc-ft", fmgc.FMGCInternal.thrRedAlt);
 							setprop("MCDUC/thracc-set", 0);
 							setprop("MCDUC/acc-set-manual", 0);
 							setprop("MCDUC/thrRed-set-manual", 0);
+
+							setprop("/FMGC/internal/ga-accel-agl-ft", fmgc.FMGCInternal.gaAccelAlt);
+							setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", fmgc.FMGCInternal.gaThrRedAlt);
+							setprop("MCDUC/ga-acc-set-manual", 0);
+							setprop("MCDUC/ga-thrRed-set-manual", 0);
 
 							fmgc.flightPlanController.updateAirports(fromto[0], fromto[1], 2);
 							fmgc.FMGCInternal.altSelected = 0;
