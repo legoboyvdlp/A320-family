@@ -5113,7 +5113,8 @@ var canvas_MCDU_base = {
 				
 				me.fontSizeLeft(normal, normal, normal, normal, 0, normal);
 				me.fontSizeRight(normal, small, 0, 0, 0, normal);
-				me.fontSizeCenter(small, small, small, 0, 0, 0);
+				me.fontSizeCenter(small, small, small, 0, small, 0);
+				me.fontSizeCenterS(small, small, small, 0, small, 0);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -5121,8 +5122,8 @@ var canvas_MCDU_base = {
 				me.colorRight("wht", "blu", "blu", "blu", "blu", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "grn", "grn", "wht", "wht", "wht");
-				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "grn", "wht", "blu", "wht");
+				me.colorCenterS("wht", "wht", "wht", "wht", "blu", "wht");
 				
 				pageSwitch[i].setBoolValue(1);
 			}
@@ -5144,7 +5145,18 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			me["Simple_L5"].setText(sprintf("%3.0f", ga_clbReducFt.getValue()) ~ sprintf("/%3.0f", ga_accelAltFt.getValue()));
+			if(fmgc.FMGCInternal.arrApt == nil){
+				me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
+				if (ga_accSetManual.getBoolValue()) {
+					me["Simple_C5"].setFontSize(normal); 
+					me["Simple_C5"].setText(sprintf("/%4.0f            ", ga_accelAltFt.getValue()));
+				} else {
+					me["Simple_C5"].setFontSize(small); 
+					me["Simple_C5"].setText(sprintf("/%4.0f                 ", ga_accelAltFt.getValue()));
+				}
+				me["Simple_C5"].show();
+			}
+
 			me["Simple_L6"].setText(" PHASE");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" PREV");

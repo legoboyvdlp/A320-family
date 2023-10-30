@@ -157,6 +157,7 @@ var FMGCInternal = {
 	altAirportSet: 0,
 	altSelected: 0,
 	arrApt: "",
+	destAptElev: 0,
 	coRoute: "",
 	coRouteSet: 0,
 	costIndex: 0,
