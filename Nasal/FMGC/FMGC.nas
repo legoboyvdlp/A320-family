@@ -15,7 +15,6 @@ var gs = 0;
 var state1 = 0;
 var state2 = 0;
 var accel_agl_ft = 0;
-var accelAltValid = 0; # barrier to say it is not initialized
 var fd1 = 0;
 var fd2 = 0;
 var spd = 0;
@@ -35,6 +34,18 @@ var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
 var tempOverspeed = nil;
+var pinOptionGaAccelAlt = 1500;
+if (getprop("/options/company-options/default-ga-accel-agl") != nil) {
+	pinOptionGaAccelAlt = getprop("/options/company-options/default-ga-accel-agl");
+}
+var pinOptionGaThrRedAlt = 400;
+if (getprop("/options/company-options/default-ga-thrRed-agl") != nil) {
+	pinOptionGaThrRedAlt = getprop("/options/company-options/default-ga-thrRed-agl");
+}
+# min Value for ThrRed and AccelAlt are the company pin option defaults
+var minAccelAlt = getprop("/options/company-options/default-accel-agl");
+var minThrRed = getprop("/options/company-options/default-thrRed-agl");
+
 
 setprop("/position/gear-agl-ft", 0);
 # 1500 ft is a default value not shown anywhere. It may not exist.

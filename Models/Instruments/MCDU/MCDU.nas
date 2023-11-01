@@ -4421,7 +4421,7 @@ var canvas_MCDU_base = {
 						} else {
 							me["Simple_C5"].setColor(WHITE);
 							me["Simple_C5"].setFontSize(small); 
-							me["Simple_C5"].setText(sprintf("/-----               ", accelAltFt.getValue()));
+							me["Simple_C5"].setText(sprintf("/-----               "));
 						}
 					} else {
 						me["Simple_L5"].setColor(WHITE);
@@ -4434,7 +4434,7 @@ var canvas_MCDU_base = {
 						} else {
 							me["Simple_C5"].setColor(WHITE);
 							me["Simple_C5"].setFontSize(small); 
-							me["Simple_C5"].setText(sprintf("/-----                ", accelAltFt.getValue()));
+							me["Simple_C5"].setText(sprintf("/-----                "));
 						}
 					}
 				}
@@ -5106,7 +5106,7 @@ var canvas_MCDU_base = {
 				showRight(me,-1, -1, -1, -1, 1, -1);
 				showRightS(me,-1, -1, -1, -1, 1, -1);
 				showRightArrow(me,-1, -1, -1, -1, -1, -1);
-				showCenter(me,1, 1, 1, -1, -1, -1);
+				showCenter(me,1, 1, 1, -1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				showCenterS(me,1, 1, 1, -1, -1, -1);
@@ -5133,19 +5133,26 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_Title"].setColor(WHITE);
 			}
-			
-			if (ga_thrRedSetManual.getValue() == 1) {
-				me["Simple_L5"].setFontSize(normal);
-			} else {
-				me["Simple_L5"].setFontSize(small);
-			}
+
 			if (engOutAccSet.getValue() == 1) {
 				me["Simple_R5"].setFontSize(normal);
 			} else {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			if(fmgc.FMGCInternal.arrApt == nil){
+			if(fmgc.FMGCInternal.arrApt == ""){
+				if (ga_thrRedSetManual.getBoolValue()) {
+					#me["Simple_L5"].setFontSize(normal); 
+					me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
+				} else {
+					me["Simple_L5"].setText("-----");
+#					if (ga_accSetManual.getBoolValue()) {
+						me["Simple_C5"].setText(sprintf("/%4.0f            ", ga_accelAltFt.getValue()));
+#					} else {
+#						me["Simple_C5"].setText(sprintf("/-----                "));
+#					}
+				}
+			} else {
 				me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
 				if (ga_accSetManual.getBoolValue()) {
 					me["Simple_C5"].setFontSize(normal); 
@@ -5154,7 +5161,6 @@ var canvas_MCDU_base = {
 					me["Simple_C5"].setFontSize(small); 
 					me["Simple_C5"].setText(sprintf("/%4.0f                 ", ga_accelAltFt.getValue()));
 				}
-				me["Simple_C5"].show();
 			}
 
 			me["Simple_L6"].setText(" PHASE");

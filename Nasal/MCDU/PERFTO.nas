@@ -176,11 +176,6 @@ var perfTOInput = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tfs = size(scratchpad);
-
-			# min Value for ThrRed and AccelAlt are the company defaults
-			var minAccelAlt = getprop("/options/company-options/default-accel-agl");
-			var minThrRed = getprop("/options/company-options/default-thrRed-agl");
-
 			if (find("/", scratchpad) != -1) {
 				var thracc = split("/", scratchpad);
 				var thrred = thracc[0];
@@ -189,21 +184,21 @@ var perfTOInput = func(key, i) {
 				var accs = size(acc);
 
 				#TODO - manual check - four digit alwway 0000 - default = runaway_elevation + 800 ft, min values runaway_elevation+400ft
-				if (int(thrred) != nil and (thrreds >= 3 and thrreds <= 5) and thrred >= minThrRed and thrred <= 39000 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= minAccelAlt and acc <= 39000) {
+				if (int(thrred) != nil and (thrreds >= 3 and thrreds <= 5) and thrred >= minThrRed and thrred <= 39000 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= fmgc.minAccelAlt and acc <= 39000) {
 						setprop("/fdm/jsbsim/fadec/clbreduc-ft", int(thrred / 10) * 10);
 						setprop("/FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 						setprop("MCDUC/thracc-set", 1);
 						setprop("MCDUC/acc-set-manual", 1);
 						setprop("MCDUC/thrRed-set-manual", 1);
 						mcdu_scratchpad.scratchpads[i].empty();
-				} else if (thrreds == 0 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= minAccelAlt and acc <= 39000) {
+				} else if (thrreds == 0 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= fmgc.minAccelAlt and acc <= 39000) {
 					setprop("/FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 					setprop("MCDUC/acc-set-manual", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "FORMAT ERROR");
 				}
-			} else if (num(scratchpad) != nil and (tfs >= 3 and tfs <= 5) and scratchpad >= minThrRed and scratchpad <= 39000) {
+			} else if (num(scratchpad) != nil and (tfs >= 3 and tfs <= 5) and scratchpad >= fmgc.minThrRed and scratchpad <= 39000) {
 				setprop("/fdm/jsbsim/fadec/clbreduc-ft", int(scratchpad / 10) * 10);
 				setprop("MCDUC/thrRed-set-manual", 1);
 				mcdu_scratchpad.scratchpads[i].empty();

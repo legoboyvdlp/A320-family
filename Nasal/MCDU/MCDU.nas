@@ -196,7 +196,7 @@ var MCDU_reset = func(i) {
 	setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", 1500);
 	setprop("/FMGC/internal/ga-accel-agl-ft", 1500);
 	setprop("MCDUC/ga-acc-set-manual", 0);
-	setprop("MCDUC/ga-thracc-set", 0);
+	setprop("MCDUC/ga-thrRed-set-manual", 0);
 }
 
 var setMode = func(will) {

@@ -6,12 +6,21 @@ var perfGAInput = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L5") {
 		if (scratchpad == "CLR") {
-			setprop("/fdm/jsbsim/fadec/clbreduc-ft", 1500);
-			setprop("/FMGC/internal/accel-agl-ft", 1500);
-			setprop("MCDUC/thracc-set", 0);
+			if (fmgc.FMGCInternal.arrApt != "") {
+				fmgc.FMGCInternal.gaThrRedAlt = fmgc.pinOptionGaThrRedAlt + fmgc.FMGCInternal.destAptElev;
+				fmgc.FMGCInternal.gaAccelAlt = fmgc.pinOptionGaAccelAlt + fmgc.FMGCInternal.destAptElev;
+			} else {
+				fmgc.FMGCInternal.gathrRedAlt = fmgc.pinOptionGaThrRedAlt;
+				fmgc.FMGCInternal.gaAccelAlt = fmgc.pinOptionGaAccelAlt;
+			}
+
+			setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", fmgc.FMGCInternal.gaThrRedAlt);
+			setprop("/FMGC/internal/ga-accel-agl-ft", fmgc.FMGCInternal.gaAccelAlt);
 			setprop("MCDUC/ga-acc-set-manual", 0);
-			setprop("MCDUC/ga-thracc-set", 0);
+			setprop("MCDUC/ga-thrRed-set-manual", 0);
+
 			mcdu_scratchpad.scratchpads[i].empty();
+
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs >= 7 and tfs <= 9 and find("/", scratchpad) != -1) {
@@ -21,7 +30,13 @@ var perfGAInput = func(key, i) {
 				if (int(thrred) != nil and int(acc) != nil and (thrred >= 3 and thrred <= 5) and (acc >= 3 and acc <= 5)) {
 					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", thracc[0]);
 					setprop("/FMGC/internal/ga-accel-agl-ft", thracc[1]);
-					setprop("MCDUC/thracc-set", 1);
+#					setprop("MCDUC/thracc-set", 1);
+					setprop("MCDUC/ga-acc-set-manual", 1);
+					setprop("MCDUC/ga-thrRed-set-manual", 1);
+					mcdu_scratchpad.scratchpads[i].empty();
+				} else if (int(thrred) == nil and int(acc) != nil and (acc >= 3 and acc <= 5) and acc >= fmgc.minAccelAlt and acc <= 39000) {
+					setprop("/FMGC/internal/ga-accel-agl-ft", int(acc / 10) * 10);
+					setprop("MCDUC/ga-acc-set-manual", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
