@@ -157,7 +157,7 @@ var Output = {
 
 var Text = {
 	lat: props.globals.initNode("/it-autoflight/mode/lat", "T/O", "STRING"),
-	thr: props.globals.initNode("/it-autoflight/mode/thr", "PITCH", "STRING"),
+	spd: props.globals.initNode("/it-autoflight/mode/spd", "PITCH", "STRING"),
 	vert: props.globals.initNode("/it-autoflight/mode/vert", "T/O CLB", "STRING"),
 	vertTemp: "T/O CLB",
 };
@@ -232,7 +232,7 @@ var ITAF = {
 		Internal.altCaptureActive = 0;
 		Input.kts.setValue(100);
 		Input.mach.setValue(0.5);
-		Text.thr.setValue("THRUST");
+		Text.spd.setValue("THRUST");
 		updateFma.arm();
 		me.updateLatText("");
 		me.updateVertText("");
@@ -684,27 +684,27 @@ var ITAF = {
 		if (Output.athr.getBoolValue() and Output.vertTemp != 7 and (Output.ap1.getBoolValue() or Output.ap2.getBoolValue()) and Position.gearAglFt.getValue() <= 30 and (Output.vertTemp == 2 or Output.vertTemp == 6)) {
 			# Manual says 40 feet - but video reference shows 30!
 			Output.thrMode.setValue(1);
-			Text.thr.setValue("RETARD");
+			Text.spd.setValue("RETARD");
 		} else if (Output.vertTemp == 4) {
 			if (Internal.alt.getValue() >= Position.indicatedAltitudeFt.getValue()) {
 				Output.thrMode.setValue(2);
-				Text.thr.setValue("PITCH");
+				Text.spd.setValue("PITCH");
 				if (Internal.flchActive and Text.vert.getValue() != "SPD CLB") {
 					me.updateVertText("SPD CLB");
 				}
 			} else {
 				Output.thrMode.setValue(1);
-				Text.thr.setValue("PITCH");
+				Text.spd.setValue("PITCH");
 				if (Internal.flchActive and Text.vert.getValue() != "SPD DES") {
 					me.updateVertText("SPD DES");
 				}
 			}
 		} else if (Output.vertTemp == 7) {
 			Output.thrMode.setValue(2);
-			Text.thr.setValue("PITCH");
+			Text.spd.setValue("PITCH");
 		} else {
 			Output.thrMode.setValue(0);
-			Text.thr.setValue("THRUST");
+			Text.spd.setValue("THRUST");
 		}
 	},
 	activateLnav: func() {
