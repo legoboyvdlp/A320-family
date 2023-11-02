@@ -46,8 +46,8 @@ if (getprop("/options/company-options/default-ga-thrRed-agl") != nil) {
 var minAccelAlt = getprop("/options/company-options/default-accel-agl");
 var minThrRed = getprop("/options/company-options/default-thrRed-agl");
 
-
 setprop("/position/gear-agl-ft", 0);
+
 # 1500 ft is a default value not shown anywhere. It may not exist.
 # In case it does not exist, a takeoff with no departure airport and no accel set would never go from TO PHASE to CLB PHASE
 # unless manually set.

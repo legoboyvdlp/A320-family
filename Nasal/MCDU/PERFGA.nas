@@ -23,10 +23,12 @@ var perfGAInput = func(key, i) {
 
 		} else {
 			var tfs = size(scratchpad);
-			if (tfs >= 7 and tfs <= 9 and find("/", scratchpad) != -1) {
+			print("Scr:" ~ scratchpad);
+			if (find("/", scratchpad) != -1) {
 				var thracc = split("/", scratchpad);
 				var thrred = size(thracc[0]);
 				var acc = size(thracc[1]);
+				print("red " ~ thracc[0] ~ "," ~ thrred ~ " acc " ~ thracc[1] ~ "," ~ acc ~ " tfs " ~ tfs);
 				if (int(thrred) != nil and int(acc) != nil and (thrred >= 3 and thrred <= 5) and (acc >= 3 and acc <= 5)) {
 					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", thracc[0]);
 					setprop("/FMGC/internal/ga-accel-agl-ft", thracc[1]);
@@ -34,13 +36,29 @@ var perfGAInput = func(key, i) {
 					setprop("MCDUC/ga-acc-set-manual", 1);
 					setprop("MCDUC/ga-thrRed-set-manual", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
-				} else if (int(thrred) == nil and int(acc) != nil and (acc >= 3 and acc <= 5) and acc >= fmgc.minAccelAlt and acc <= 39000) {
-					setprop("/FMGC/internal/ga-accel-agl-ft", int(acc / 10) * 10);
-					setprop("MCDUC/ga-acc-set-manual", 1);
-					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					mcdu_message(i, "NOT ALLOWED");
+					if (int(thrred) == 0 and int(acc) != nil 
+						and (acc >= 3 and acc <= 5) 
+						and thracc[1] >= 1500 and thracc[1] <= 39000) {
+						setprop("/FMGC/internal/ga-accel-agl-ft", int(thracc[1] / 10) * 10);
+						setprop("MCDUC/ga-acc-set-manual", 1);
+						mcdu_scratchpad.scratchpads[i].empty();
+					}
+					if (int(thrred) != nil and int(acc) == nil 
+						and thracc[0] >= 400 and thracc[0] <= 39000
+						and (thrred >= 3 and thrred <= 5)) {
+						setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", int(thracc[0] / 10) * 10);
+						setprop("MCDUC/ga-thrRed-set-manual", 1);
+						mcdu_scratchpad.scratchpads[i].empty();
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
 				}
+			} else if ((num(scratchpad) != nil) and (tfs >= 3 and tfs <= 5) 
+				and (scratchpad >= 400) and (scratchpad <= 39000)) {
+				setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", int(scratchpad / 10) * 10);
+				setprop("MCDUC/ga-thrRed-set-manual", 1);
+				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
