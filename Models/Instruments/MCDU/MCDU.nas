@@ -5111,7 +5111,7 @@ var canvas_MCDU_base = {
 				me["Simple_C4B"].hide();
 				showCenterS(me,1, 1, 1, -1, -1, -1);
 				
-				me.fontSizeLeft(normal, normal, normal, normal, 0, normal);
+				me.fontSizeLeft(normal, normal, normal, normal, small, normal);
 				me.fontSizeRight(normal, small, 0, 0, 0, normal);
 				me.fontSizeCenter(small, small, small, 0, small, 0);
 				me.fontSizeCenterS(small, small, small, 0, small, 0);
@@ -5140,28 +5140,23 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
+			print("ga-acc : " ~ ga_accSetManual.getBoolValue() ~ "," ~ ga_accelAltFt.getValue() ~ 
+				", ga-thrRed " ~ ga_thrRedSetManual.getBoolValue() ~ "," ~ ga_clbReducFt.getValue());
+
 			if(fmgc.FMGCInternal.arrApt == ""){
-				if (ga_thrRedSetManual.getBoolValue()) {
-					#me["Simple_L5"].setFontSize(normal); 
+				if(ga_accSetManual.getBoolValue())
+				{
 					me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
+					me["Simple_C5"].setText(sprintf("/%4.0f                 ", ga_accelAltFt.getValue()));
 				} else {
 					me["Simple_L5"].setText("-----");
-#					if (ga_accSetManual.getBoolValue()) {
-						me["Simple_C5"].setText(sprintf("/%4.0f            ", ga_accelAltFt.getValue()));
-#					} else {
-#						me["Simple_C5"].setText(sprintf("/-----                "));
-#					}
+					me["Simple_C5"].setText(sprintf("/-----                "));
 				}
 			} else {
 				me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
-				if (ga_accSetManual.getBoolValue()) {
-					me["Simple_C5"].setFontSize(normal); 
-					me["Simple_C5"].setText(sprintf("/%4.0f            ", ga_accelAltFt.getValue()));
-				} else {
-					me["Simple_C5"].setFontSize(small); 
-					me["Simple_C5"].setText(sprintf("/%4.0f                 ", ga_accelAltFt.getValue()));
-				}
+				me["Simple_C5"].setText(sprintf("/%4.0f                 ", ga_accelAltFt.getValue()));
 			}
+
 
 			me["Simple_L6"].setText(" PHASE");
 			me["Simple_L5S"].setText("THR RED/ACC");
