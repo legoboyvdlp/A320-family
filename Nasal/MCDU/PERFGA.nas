@@ -33,8 +33,8 @@ var perfGAInput = func(key, i) {
 				if (int(thrred) != nil and int(acc) != nil 
 				and (thrred >= 3 and thrred <= 5) and (acc >= 3 and acc <= 5)
 				and thracc[0] >= 400 and thracc[0] <= 39000 and thracc[1] >= 1500 and thracc[1] <= 39000) {
-					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", thracc[0]);
-					setprop("/FMGC/internal/ga-accel-agl-ft", thracc[1]);
+					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", int(thracc[0] / 10) * 10);
+					setprop("/FMGC/internal/ga-accel-agl-ft", int(thracc[1] / 10) * 10);
 					setprop("MCDUC/ga-acc-set-manual", 1);
 					setprop("MCDUC/ga-thrRed-set-manual", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
