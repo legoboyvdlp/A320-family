@@ -5140,9 +5140,6 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			print("ga-acc : " ~ ga_accSetManual.getBoolValue() ~ "," ~ ga_accelAltFt.getValue() ~ 
-				", ga-thrRed " ~ ga_thrRedSetManual.getBoolValue() ~ "," ~ ga_clbReducFt.getValue());
-
 			if(fmgc.FMGCInternal.arrApt == ""){
 				if(ga_accSetManual.getBoolValue())
 				{
