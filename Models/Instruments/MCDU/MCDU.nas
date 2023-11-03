@@ -5111,10 +5111,10 @@ var canvas_MCDU_base = {
 				me["Simple_C4B"].hide();
 				showCenterS(me,1, 1, 1, -1, -1, -1);
 				
-				me.fontSizeLeft(normal, normal, normal, normal, small, normal);
-				me.fontSizeRight(normal, small, 0, 0, 0, normal);
-				me.fontSizeCenter(small, small, small, 0, small, 0);
-				me.fontSizeCenterS(small, small, small, 0, small, 0);
+				#me.fontSizeLeft(normal, normal, normal, normal, small, normal);
+				#me.fontSizeRight(normal, small, 0, 0, 0, normal);
+				#me.fontSizeCenter(small, small, small, 0, small, 0);
+				#me.fontSizeCenterS(small, small, small, 0, small, 0);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -5151,13 +5151,15 @@ var canvas_MCDU_base = {
 
 				if(ga_accSetManual.getBoolValue()){
 						me["Simple_C5"].setFontSize(normal);
-						me["Simple_C5"].setText(sprintf("/%4.0f               ", ga_accelAltFt.getValue()));
+						me["Simple_C5"].setText(sprintf("/%4.0f           ", ga_accelAltFt.getValue()));
 				} else {
-					# should be in small font
+					me["Simple_C5"].setFontSize(small);
 					me["Simple_C5"].setText(sprintf("/-----              "));
 				}
 			} else {
+				me["Simple_L5"].setFontSize(small);
 				me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
+				me["Simple_C5"].setFontSize(small);
 				me["Simple_C5"].setText(sprintf("/%4.0f                 ", ga_accelAltFt.getValue()));
 			}
 
