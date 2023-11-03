@@ -27,38 +27,50 @@ var perfGAInput = func(key, i) {
 				var thracc = split("/", scratchpad);
 				var thrred = size(thracc[0]);
 				var acc = size(thracc[1]);
-				if (thracc[0] > thracc[1]) {
-					thracc[1] = thracc[0]; # accel is always greater or eqal thrust reduction
+				var tempThrRed = 0;
+				var tempAcc = 0;
+				if (thrred >= 3 and thrred <= 5) {tempThrRed = int(thracc[0]/ 10) * 10;}
+				if (acc >= 3 and acc <= 5) {tempAcc = int(thracc[1]/ 10) * 10;}
+
+				if (thrred and acc and tempAcc < tempThrRed) {
+					tempAcc = tempThrRed; # accel is always greater or eqal thrust reduction
 				}
-				if (int(thrred) != nil and int(acc) != nil 
-				and (thrred >= 3 and thrred <= 5) and (acc >= 3 and acc <= 5)
-				and thracc[0] >= 400 and thracc[0] <= 39000 and thracc[1] >= 1500 and thracc[1] <= 39000) {
-					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", int(thracc[0] / 10) * 10);
-					setprop("/FMGC/internal/ga-accel-agl-ft", int(thracc[1] / 10) * 10);
+
+				if (tempThrRed >= 400 and tempThrRed <= 39000 and tempAcc >= 1500 and tempAcc <= 39000) {
+					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", tempThrRed);
+					setprop("/FMGC/internal/ga-accel-agl-ft", tempAcc);
 					setprop("MCDUC/ga-acc-set-manual", 1);
 					setprop("MCDUC/ga-thrRed-set-manual", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
-				} else if (int(thrred) == 0 and int(acc) != nil and (acc >= 3 and acc <= 5) and thracc[1] >= 1500 and thracc[1] <= 39000) {
-					setprop("/FMGC/internal/ga-accel-agl-ft", int(thracc[1] / 10) * 10);
+				} else if (tempAcc >= 1500 and tempAcc <= 39000) {
+					setprop("/FMGC/internal/ga-accel-agl-ft", tempAcc);
 					setprop("MCDUC/ga-acc-set-manual", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
-				} else if (int(thrred) != nil and int(acc) == nil and thracc[0] >= 400 and thracc[0] <= 39000 and (thrred >= 3 and thrred <= 5)) {
-					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", int(thracc[0] / 10) * 10);
+				} else if (tempThrRed >= 400 and tempThrRed <= 39000) {
+					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", tempThrRed);
 					setprop("MCDUC/ga-thrRed-set-manual", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
 					mcdu_message(i, "NOT ALLOWED");
 				}
-			} else if ((num(scratchpad) != nil) and (tfs >= 3 and tfs <= 5) and (scratchpad >= 400) and (scratchpad <= 39000)) {
-				if (scratchpad > getprop("/FMGC/internal/ga-accel-agl-ft")){
-					setprop("/FMGC/internal/ga-accel-agl-ft", scratchpad); # set accel as high as thrRed
-				} else {
-					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", int(scratchpad / 10) * 10);
-				}
-				setprop("MCDUC/ga-thrRed-set-manual", 1);
-				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				mcdu_message(i, "NOT ALLOWED");
+				if (tfs >= 3 and tfs <= 5){
+					var tempImp = int(scratchpad / 10) * 10;
+					if (tempImp and (tempImp >= 400) and (tempImp <= 39000)) {
+						setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", tempImp);
+						setprop("MCDUC/ga-thrRed-set-manual", 1);
+
+						if (tempImp > getprop("/FMGC/internal/ga-accel-agl-ft")){ # set accel as high as thrRed
+							setprop("/FMGC/internal/ga-accel-agl-ft", tempImp);
+							setprop("MCDUC/ga-acc-set-manual", 1);
+						}
+						mcdu_scratchpad.scratchpads[i].empty();
+					} else {
+						mcdu_message(i, "NOT ALLOWED");
+					}
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
 			}
 		}
 	} else if (key == "L6") {

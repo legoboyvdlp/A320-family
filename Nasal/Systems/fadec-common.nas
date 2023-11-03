@@ -11,6 +11,7 @@ var FADEC = {
 	alphaFloor: props.globals.getNode("/fdm/jsbsim/fadec/alpha-floor"),
 	alphaFloorSwitch: props.globals.getNode("/fdm/jsbsim/fadec/alpha-floor-switch"),
 	clbReduc: props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft"),
+	gaClbReduc: props.globals.getNode("/fdm/jsbsim/fadec/ga-clbreduc-ft"),
 	detent: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent", 1), props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent", 1)],
 	detentTemp: [0, 0],
 	detentText: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent-text"), props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent-text")],
