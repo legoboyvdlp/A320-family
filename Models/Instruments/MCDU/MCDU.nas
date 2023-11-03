@@ -5142,18 +5142,19 @@ var canvas_MCDU_base = {
 			
 			if(fmgc.FMGCInternal.arrApt == ""){
 				if(ga_thrRedSetManual.getBoolValue()) {
-					# should be in normal font
+					me["Simple_L5"].setFontSize(normal);
 					me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
 				} else { 
+					me["Simple_L5"].setFontSize(small);
 					me["Simple_L5"].setText("-----");
 				}
 
 				if(ga_accSetManual.getBoolValue()){
-						# should be in normal font
-						me["Simple_C5"].setText(sprintf("/%4.0f                 ", ga_accelAltFt.getValue()));
+						me["Simple_C5"].setFontSize(normal);
+						me["Simple_C5"].setText(sprintf("/%4.0f               ", ga_accelAltFt.getValue()));
 				} else {
 					# should be in small font
-					me["Simple_C5"].setText(sprintf("/-----                "));
+					me["Simple_C5"].setText(sprintf("/-----              "));
 				}
 			} else {
 				me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
