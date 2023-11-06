@@ -1,7 +1,5 @@
 # Copyright (c) 2020 Matthew Maring (mattmaring)
 
-# and flinkekoralle 2023
-
 # uses universal values, will implement separately once FPLN is finished
 
 var perfGAInput = func(key, i) {
