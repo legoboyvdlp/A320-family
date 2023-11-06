@@ -4301,7 +4301,7 @@ var canvas_MCDU_base = {
 				showCenter(me,1, 1, 1, -1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
-				showCenterS(me,1, 1, 1, -1, 1, -1);
+				showCenterS(me,1, 1, 1, -1, -1, -1);
 				
 				me.fontSizeLeft(normal, normal, normal, normal, 0, normal);
 				me.fontSizeRight(normal, small, 0, 0, 0, normal);

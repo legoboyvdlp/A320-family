@@ -36,6 +36,8 @@ var perfGAInput = func(key, i) {
 					tempAcc = tempThrRed; # accel is always greater or eqal thrust reduction
 				}
 
+				# at the moment 400ft/1500ft and 39000ft are hard coded defaults.
+				# needs to be checked
 				if (tempThrRed >= 400 and tempThrRed <= 39000 and tempAcc >= 1500 and tempAcc <= 39000) {
 					setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", tempThrRed);
 					setprop("/FMGC/internal/ga-accel-agl-ft", tempAcc);

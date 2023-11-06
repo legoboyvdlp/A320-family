@@ -184,7 +184,7 @@ var perfTOInput = func(key, i) {
 				var accs = size(acc);
 
 				#TODO - manual check - four digit alwway 0000 - default = runaway_elevation + 800 ft, min values runaway_elevation+400ft
-				if (int(thrred) != nil and (thrreds >= 3 and thrreds <= 5) and thrred >= minThrRed and thrred <= 39000 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= fmgc.minAccelAlt and acc <= 39000) {
+				if (int(thrred) != nil and (thrreds >= 3 and thrreds <= 5) and thrred >= fmgc.minThrRed and thrred <= 39000 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= fmgc.minAccelAlt and acc <= 39000) {
 						setprop("/fdm/jsbsim/fadec/clbreduc-ft", int(thrred / 10) * 10);
 						setprop("/FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 						setprop("MCDUC/thracc-set", 1);
