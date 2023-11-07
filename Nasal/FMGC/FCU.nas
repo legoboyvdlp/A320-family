@@ -41,6 +41,12 @@ var FCU = {
 	},
 };
 
+# adding a test timer function
+var timer = maketimer(5, func(){
+   print("Hello, World!"); # print "Hello, World!" once every second (call timer.stop() to stop it)
+});
+timer.singleShot = 1; # timer will only be run once
+
 var FCUController = {
 	FCU1: nil,
 	FCU2: nil,
@@ -118,6 +124,14 @@ var FCUController = {
 		if (me.FCUworking) {
 			if (!fmgc.Output.fd1.getBoolValue()) {
 				fmgc.Input.fd1.setValue(1);
+
+            # timer is started by pressing fd1 and reset by pressing again
+            if (!timer.isRunning){
+               timer.start();
+            } else {
+               timer.restart(5);
+            }
+
 			} else {
 				fmgc.Input.fd1.setValue(0);
 			}
