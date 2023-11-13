@@ -204,7 +204,7 @@ var ITAF = {
 		Input.fd1.setBoolValue(1);
 		Input.fd2.setBoolValue(1);
 		Input.hdg.setValue(360);
-		Input.alt.setValue(10000);
+		Input.alt.setValue(20000);
 		Input.vs.setValue(0);
 		Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",0),3));
 		Input.fpa.setValue(0);
@@ -228,7 +228,7 @@ var ITAF = {
 		Internal.minVs.setValue(-500);
 		Internal.maxVs.setValue(500);
 		Internal.bankLimit.setValue(30);
-		Internal.alt.setValue(10000);
+		Internal.alt.setValue(100);
 		Internal.altCaptureActive = 0;
 		Input.kts.setValue(100);
 		Input.mach.setValue(0.5);
