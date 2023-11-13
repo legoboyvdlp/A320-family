@@ -403,13 +403,13 @@ var FCUController = {
 			me.altTemp = fmgc.Input.alt.getValue();
 			if (d == 1) {
 				if (altSetMode.getBoolValue()) {
-					me.altTemp = me.altTemp + 1000;
+					me.altTemp = math.ceil((me.altTemp + 100)/1000) * 1000;
 				} else {
 					me.altTemp = me.altTemp + 100;
 				}
 			} else if (d == -1) {
 				if (altSetMode.getBoolValue()) {
-					me.altTemp = me.altTemp - 1000;
+					me.altTemp = math.floor((me.altTemp - 100)/1000) * 1000;
 				} else {
 					me.altTemp = me.altTemp - 100;
 				}
@@ -418,9 +418,9 @@ var FCUController = {
 			} else if (d == -2) {
 				me.altTemp = me.altTemp - 100;
 			} else if (d == 10) {
-				me.altTemp = me.altTemp + 1000;
+				me.altTemp = math.ceil((me.altTemp + 100)/1000) * 1000;
 			} else if (d == -10) {
-				me.altTemp = me.altTemp - 1000;
+				me.altTemp = math.floor((me.altTemp - 100)/1000) * 1000;
 			}
 			if (me.altTemp < 100) {
 				fmgc.Input.alt.setValue(100);
