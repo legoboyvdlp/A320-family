@@ -206,8 +206,10 @@ var ITAF = {
 		Input.hdg.setValue(360);
 		Input.alt.setValue(10000);
 		Input.vs.setValue(0);
+		Input.vsAbs.setValue(0);
 		Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",0),3));
 		Input.fpa.setValue(0);
+		Input.fpaAbs.setValue(0);
 		Input.lat.setValue(9);
 		Input.vert.setValue(9);
 		Input.trk.setBoolValue(0);
@@ -858,14 +860,16 @@ var ITAF = {
 		Input.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 		Internal.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 	},
-	tempVS: 0,
 	syncVs: func() {
-		me.tempVS = math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000);
-		Input.vs.setValue(me.tempVS);
-		fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",me.tempVS),3));
+		Internal.vsTemp = math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000);
+		Input.vs.setValue(Internal.vsTemp);
+		Input.vsAbs.setValue(abs(Internal.vsTemp));
+		fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f", Internal.vsTemp), 3));
 	},
 	syncFpa: func() {
-		Input.fpa.setValue(math.clamp(math.round(Internal.fpa.getValue(), 0.1), -9.9, 9.9));
+		Internal.fpaTemp = Internal.fpa.getValue();
+		Input.fpa.setValue(math.clamp(math.round(Internal.fpaTemp, 0.1), -9.9, 9.9));
+		Input.fpaAbs.setValue(abs(math.clamp(math.round(Internal.fpaTemp, 0.1), -9.9, 9.9)));
 	},
 	# Custom Stuff Below
 	updateFma: func() {
