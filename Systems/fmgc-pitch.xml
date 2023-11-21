@@ -732,11 +732,18 @@
 					</not-equals>
 				</condition>
 				<expression>
-					<table>
-						<property>/velocities/airspeed-kt</property>
-						<entry><ind>140</ind><dep>0.0029</dep></entry>
-						<entry><ind>360</ind><dep>0.0009</dep></entry>
-					</table>
+					<product>
+						<table>
+							<property>/velocities/airspeed-kt</property>
+							<entry><ind>140</ind><dep>0.00290</dep></entry>
+							<entry><ind>410</ind><dep>0.00045</dep></entry>
+						</table>
+						<table>
+							<property>/position/altitude-ft</property>
+							<entry><ind>    0</ind><dep>1.0</dep></entry>
+							<entry><ind>45000</ind><dep>0.5</dep></entry>
+						</table>
+					</product>
 				</expression>
 			</Kp>
 			<Kp>
