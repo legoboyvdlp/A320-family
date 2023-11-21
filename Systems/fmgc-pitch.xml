@@ -257,7 +257,7 @@
 				<table>
 					<property>/velocities/airspeed-kt</property>
 					<entry><ind>140</ind><dep> 700</dep></entry>
-					<entry><ind>360</ind><dep>1400</dep></entry>
+					<entry><ind>410</ind><dep>1550</dep></entry>
 				</table>
 			</expression>
 		</gain>
