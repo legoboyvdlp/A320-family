@@ -396,7 +396,7 @@ var toggle_sharp = func() {
 	if (_listener == nil) {
 		return;
 	}
-	id = _N - 1;
+	var id = _N - 1;
 	if (_user_point_modes.arr[id]) {
 		_set_userpoint_mode(id, 0);
 	} else {

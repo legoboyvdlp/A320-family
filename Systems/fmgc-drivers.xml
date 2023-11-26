@@ -619,7 +619,6 @@
 		<name>VS Abs</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs>0.02</update-interval-secs>
 		<input>
 			<expression>
 				<abs>
@@ -634,7 +633,6 @@
 		<name>FPA Abs</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<update-interval-secs>0.02</update-interval-secs>
 		<input>
 			<expression>
 				<abs>
