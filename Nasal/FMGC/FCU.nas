@@ -304,6 +304,45 @@ var FCUController = {
 				}
 			} else {
 				# speed preselection on FCU as speed is managed
+				if (fmgc.Input.ktsMach.getBoolValue()) {
+					me.machTemp = fmgc.Input.mach.getValue();
+					if (d == 1) {
+						me.machTemp = math.round(me.machTemp + 0.001, 0.001); # Kill floating point error
+					} else if (d == -1) {
+						me.machTemp = math.round(me.machTemp - 0.001, 0.001); # Kill floating point error
+					} else if (d == 10) {
+						me.machTemp = math.round(me.machTemp + 0.01, 0.01); # Kill floating point error
+					} else if (d == -10) {
+						me.machTemp = math.round(me.machTemp - 0.01, 0.01); # Kill floating point error
+					}
+					if (me.machTemp < 0.10) {
+						fmgc.Input.mach.setValue(0.10);
+					} else if (me.machTemp > 0.99) {
+						fmgc.Input.mach.setValue(0.99);
+					} else {
+						fmgc.Input.mach.setValue(me.machTemp);
+					}
+					print("managed speed select mach");
+				} else {
+					me.iasTemp = fmgc.Input.kts.getValue();
+					if (d == 1) {
+						me.iasTemp = me.iasTemp + 1;
+					} else if (d == -1) {
+						me.iasTemp = me.iasTemp - 1;
+					} else if (d == 10) {
+						me.iasTemp = me.iasTemp + 10;
+					} else if (d == -10) {
+						me.iasTemp = me.iasTemp - 10;
+					}
+					if (me.iasTemp < 100) {
+						fmgc.Input.kts.setValue(100);
+					} else if (me.iasTemp > 399) {
+						fmgc.Input.kts.setValue(399);
+					} else {
+						fmgc.Input.kts.setValue(me.iasTemp);
+					}
+					print("managed speed select kts");
+				}
 			}
 		}
 	},
