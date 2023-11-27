@@ -12961,6 +12961,7 @@
 		<type>knob</type>
 		<object-name>trim_1</object-name>
 		<property>controls/flight/elevator-trim</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>1000</factor>
 		<axis>
 			<object-name>trim.axis</object-name>
@@ -12968,13 +12969,13 @@
 		<increase>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.slewPitchWheel(-1);</script>
+				<script>libraries.slewPitchWheel(1);</script>
 			</binding>
 		</increase>
 		<decrease>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.slewPitchWheel(1);</script>
+				<script>libraries.slewPitchWheel(-1);</script>
 			</binding>
 		</decrease>
 		<hovered>
