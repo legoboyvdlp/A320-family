@@ -14,8 +14,8 @@
 		<static_friction>1.4</static_friction> <!-- Arbitrarily high to help nose wheel steering - no effect on braking -->
 		<dynamic_friction>0.6</dynamic_friction>
 		<rolling_friction>0.02</rolling_friction>
-		<spring_coeff unit="LBS/FT">30935.5</spring_coeff>
-		<damping_coeff unit="LBS/FT/SEC">16978.5</damping_coeff>
+		<spring_coeff unit="LBS/FT">33495</spring_coeff>
+		<damping_coeff unit="LBS/FT/SEC">10365</damping_coeff>
 		<max_steer unit="DEG">75</max_steer>
 		<table name="CORNERING_COEFF" type="internal">
 			<tableData> <!-- jsbsim-pacejka.py 3.0 0.03 2.85 1.4 1.03 1.4 -->
@@ -70,8 +70,8 @@
 		<static_friction>0.4</static_friction>
 		<dynamic_friction>0.6</dynamic_friction>
 		<rolling_friction>0.02</rolling_friction>
-		<spring_coeff unit="LBS/FT">59785</spring_coeff>
-		<damping_coeff unit="LBS/FT/SEC">23957</damping_coeff>
+		<spring_coeff unit="LBS/FT">64532</spring_coeff>
+		<damping_coeff unit="LBS/FT/SEC">16579</damping_coeff>
 		<max_steer unit="DEG">0</max_steer>
 		<table name="CORNERING_COEFF" type="internal">
 			<tableData> <!-- jsbsim-pacejka.py 3.0 0.06 2.8 0.4 1.03 0.4 -->
@@ -126,8 +126,8 @@
 		<static_friction>0.4</static_friction>
 		<dynamic_friction>0.6</dynamic_friction>
 		<rolling_friction>0.02</rolling_friction>
-		<spring_coeff unit="LBS/FT">59785</spring_coeff>
-		<damping_coeff unit="LBS/FT/SEC">23957</damping_coeff>
+		<spring_coeff unit="LBS/FT">64532</spring_coeff>
+		<damping_coeff unit="LBS/FT/SEC">16579</damping_coeff>
 		<max_steer unit="DEG">0</max_steer>
 		<table name="CORNERING_COEFF" type="internal">
 			<tableData> <!-- jsbsim-pacejka.py 3.0 0.06 2.8 0.4 1.03 0.4 -->

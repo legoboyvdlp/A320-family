@@ -103,212 +103,13 @@
 			<layout>hbox</layout>
 
 			<hrule>
-				<stretch type="bool">true</stretch>
-			</hrule>
-			<text>
-				<label>Flight Modes</label>
-			</text>
-			<hrule>
-				<stretch type="bool">true</stretch>
-			</hrule>
-		</group>
-		
-		<group>
-			<layout>hbox</layout>
-			<text>
-				<border>1</border>
-				<label>99999</label>
-				<valign>center</valign>
-				<property>/modes/pfd/fma/ap-mode</property>
-				<live>1</live>
-			</text>
-			<vrule/>
-			<text>
-				<border>1</border>
-				<label>99999</label>
-				<visible>
-					<and>
-						<or>
-							<equals>
-								<property>/it-autoflight/output/fd1</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/fd2</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/ap1</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/ap2</property>
-								<value>1</value>
-							</equals>
-						</or>
-						<not-equals>
-							<property>modes/pfd/fma/pitch-mode</property>
-							<value>LAND</value>
-						</not-equals>
-						<not-equals>
-							<property>modes/pfd/fma/pitch-mode</property>
-							<value>FLARE</value>
-						</not-equals>
-						<not-equals>
-							<property>modes/pfd/fma/pitch-mode</property>
-							<value>ROLLOUT</value>
-						</not-equals>
-					</and>
-				</visible>
-				<valign>center</valign>
-				<property>/modes/pfd/fma/roll-mode</property>
-				<live>1</live>
-			</text>
-			<vrule/>
-			<text>
-				<border>1</border>
-				<label>99999999</label>
-				<visible>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/fd1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd2</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-					</or>
-				</visible>
-				<valign>center</valign>
-				<property>/modes/pfd/fma/pitch-mode</property>
-				<live>1</live>
-			</text>
-		</group>
-		
-		<group>
-			<layout>hbox</layout>
-			<text>
-				<label>  A/THR</label>
-				<visible>
-					<equals>
-						<property>/it-autoflight/output/athr</property>
-						<value>1</value>
-					</equals>
-				</visible>
-			</text>
-			<vrule/>
-			<text>
-				<border>1</border>
-				<label>999</label>
-				<visible>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/fd1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd2</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-					</or>
-				</visible>
-				<valign>center</valign>
-				<property>/modes/pfd/fma/roll-mode-armed</property>
-				<live>1</live>
-			</text>
-			<vrule/>
-			<text>
-				<border>1</border>
-				<label>999</label>
-				<visible>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/fd1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd2</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-					</or>
-				</visible>
-				<valign>center</valign>
-				<property>/modes/pfd/fma/pitch-mode2-armed</property>
-				<live>1</live>
-			</text>
-			<text>
-				<border>1</border>
-				<label>999</label>
-				<visible>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/fd1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/fd2</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap1</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/ap2</property>
-							<value>1</value>
-						</equals>
-					</or>
-				</visible>
-				<valign>center</valign>
-				<property>/modes/pfd/fma/pitch-mode-armed</property>
-				<live>1</live>
-			</text>
-			<vrule/>
-			<text>
-				<border>1</border>
-				<label>999999</label>
-				<valign>center</valign>
-				<property>/modes/pfd/fma/fd-mode</property>
-				<live>1</live>
-			</text>
-		</group>
-
-		<group>
-			<layout>hbox</layout>
-
-			<hrule>
-				<stretch type="bool">true</stretch>
+				<stretch>true</stretch>
 			</hrule>
 			<text>
 				<label>Thrust Mode</label>
 			</text>
 			<hrule>
-				<stretch type="bool">true</stretch>
+				<stretch>true</stretch>
 			</hrule>
 		</group>
 		
@@ -392,7 +193,7 @@
 				<col>3</col>
 				<pref-width>50</pref-width>
 				<property>/it-autoflight/input/kts</property>
-				<live type="bool">true</live>
+				<live>true</live>
 				<enable>
 					<and>
 						<equals>
@@ -506,7 +307,7 @@
 				<col>3</col>
 				<pref-width>50</pref-width>
 				<property>/it-autoflight/input/mach</property>
-				<live type="bool">true</live>
+				<live>true</live>
 				<enable>
 					<and>
 						<equals>
@@ -575,13 +376,13 @@
 			<layout>hbox</layout>
 
 			<hrule>
-				<stretch type="bool">true</stretch>
+				<stretch>true</stretch>
 			</hrule>
 			<text>
 				<label>Lateral Mode</label>
 			</text>
 			<hrule>
-				<stretch type="bool">true</stretch>
+				<stretch>true</stretch>
 			</hrule>
 		</group>
 		
@@ -665,7 +466,7 @@
 				<col>3</col>
 				<pref-width>40</pref-width>
 				<property>/it-autoflight/input/hdg</property>
-				<live type="bool">true</live>
+				<live>true</live>
 				<enable>
 					<equals>
 						<property>/it-autoflight/custom/show-hdg</property>
@@ -715,13 +516,13 @@
 			<layout>hbox</layout>
 
 			<hrule>
-				<stretch type="bool">true</stretch>
+				<stretch>true</stretch>
 			</hrule>
 			<text>
 				<label>Vertical Mode</label>
 			</text>
 			<hrule>
-				<stretch type="bool">true</stretch>
+				<stretch>true</stretch>
 			</hrule>
 		</group>
 		
@@ -834,7 +635,7 @@
 				<col>3</col>
 				<pref-width>55</pref-width>
 				<property>/it-autoflight/input/alt</property>
-				<live type="bool">true</live>
+				<live>true</live>
 			</input>
 			
 			<button>
@@ -911,7 +712,7 @@
 				<col>3</col>
 				<pref-width>55</pref-width>
 				<property>/it-autoflight/input/vs</property>
-				<live type="bool">true</live>
+				<live>true</live>
 				<enable>
 					<equals>
 						<property>/it-autoflight/output/vert</property>
@@ -1006,7 +807,7 @@
 				<col>3</col>
 				<pref-width>55</pref-width>
 				<property>/it-autoflight/input/fpa</property>
-				<live type="bool">true</live>
+				<live>true</live>
 				<enable>
 					<equals>
 						<property>/it-autoflight/output/vert</property>
@@ -1056,13 +857,13 @@
 			<layout>hbox</layout>
 
 			<hrule>
-				<stretch type="bool">true</stretch>
+				<stretch>true</stretch>
 			</hrule>
 			<text>
 				<label>Other Mode</label>
 			</text>
 			<hrule>
-				<stretch type="bool">true</stretch>
+				<stretch>true</stretch>
 			</hrule>
 		</group>
 		
