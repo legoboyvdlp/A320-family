@@ -571,7 +571,7 @@ var taxi_c = func {
 	systems.IGNITION.fastStart(1);
 	settimer(func {
 		taxi_d();
-	}, 10);
+	}, 5);
 }
 var taxi_d = func {
 	if (getprop("/systems/acconfig/autoconfig-running") == 0) {

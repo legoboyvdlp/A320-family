@@ -22,30 +22,34 @@
 	
 	<function name="N1SpoolUp">
 		<table>
-			<independentVar lookup="row">/engines/engine[1]/n1</independentVar>
+			<independentVar lookup="row">propulsion/engine[1]/n1</independentVar>
+			<independentVar lookup="column">/systems/acconfig/autoconfig-running</independentVar>
 			<tableData>
-				 24   1.1
-				 28   2.9
-				 46   9.7
-				 68  15.4
-				 80  19.6
-				 94  21.4
-				103  23.6
+				      0    1
+				 24   1.1  50
+				 28   2.9  50
+				 46   9.7  50
+				 68  15.4  50
+				 80  19.6  50
+				 94  21.4  50
+				103  23.6  50
 			</tableData>
 		</table>
 	</function>
 	
 	<function name="N1SpoolDown">
 		<table>
-			<independentVar lookup="row">/engines/engine[1]/n1</independentVar>
+			<independentVar lookup="row">propulsion/engine[1]/n1</independentVar>
+			<independentVar lookup="column">/systems/acconfig/autoconfig-running</independentVar>
 			<tableData>
-				 24   1.1
-				 28   2.9
-				 46   9.7
-				 68  15.4
-				 80  19.6
-				 94  21.4
-				103  23.6
+				      0    1
+				 24   1.1  50
+				 28   2.9  50
+				 46   9.7  50
+				 68  15.4  50
+				 80  19.6  50
+				 94  21.4  50
+				103  23.6  50
 			</tableData>
 		</table>
 	</function>
@@ -53,14 +57,16 @@
 	<function name="N2SpoolUp"> <!-- N1 to N2 factor 0.535840188014101 -->
 		<table>
 			<independentVar lookup="row">/engines/engine[1]/n1</independentVar>
+			<independentVar lookup="column">/systems/acconfig/autoconfig-running</independentVar>
 			<tableData>
-				 24   0.6
-				 28   1.6
-				 46   5.2
-				 68   8.3
-				 80  10.5
-				 94  11.5
-				103  12.6
+				      0    1
+				 24   0.6  27
+				 28   1.6  27
+				 46   5.2  27
+				 68   8.3  27
+				 80  10.5  27
+				 94  11.5  27
+				103  12.6  27
 			</tableData>
 		</table>
 	</function>
@@ -68,14 +74,16 @@
 	<function name="N2SpoolDown"> <!-- N1 to N2 factor 0.535840188014101 -->
 		<table>
 			<independentVar lookup="row">/engines/engine[1]/n1</independentVar>
+			<independentVar lookup="column">/systems/acconfig/autoconfig-running</independentVar>
 			<tableData>
-				 24   0.6
-				 28   1.6
-				 46   5.2
-				 68   8.3
-				 80  10.5
-				 94  11.5
-				103  12.6
+				      0    1
+				 24   0.6  27
+				 28   1.6  27
+				 46   5.2  27
+				 68   8.3  27
+				 80  10.5  27
+				 94  11.5  27
+				103  12.6  27
 			</tableData>
 		</table>
 	</function>
