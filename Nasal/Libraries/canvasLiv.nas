@@ -29,7 +29,6 @@ var findTexByRes = func(path, file, maxRes) {
 		while (res >= 1024) {
 			checkFile.set(p ~ "/" ~ res2str(res) ~ "/" ~ file);
 			if (checkFile.isFile()) {
-				print("FOUND TEXTURE SIZE " ~ res);
 				if (res > foundMax)
 				{
 					foundMax = res;
@@ -41,7 +40,6 @@ var findTexByRes = func(path, file, maxRes) {
 	}
 	if (foundMax != 0)
 	{
-		print("USING TEXTURE SIZE " ~ foundMax);
 		return [res2str(foundMax), foundMaxPath];
 	}
 	else
@@ -68,6 +66,7 @@ var livery_res_update = setlistener("/sim/model/livery/max-resolution", func {
 var canvas_livery = {
 	init: func(dir, nameprop = "sim/model/livery/name", sortprop = nil) {
 		var m = { parents: [canvas_livery, gui.OverlaySelector.new("Select Livery", [dir, getprop("/sim/fg-home") ~ "/Export/Liveries/" ~ getprop("/sim/aircraft-id")], nameprop,
+		#var m = { parents: [canvas_livery, gui.OverlaySelector.new("Select Livery", [dir, getprop("/sim/fg-home") ~ "/Export/Liveries/" ~ getprop("/sim/aircraft-id"), "Liveries/" ~ getprop("/sim/aircraft-id")], nameprop,
 				sortprop, "sim/model/livery/file")] };
 		m.dialog = m.parents[1];
 		m.liveriesdir = dir;
@@ -95,23 +94,13 @@ var canvas_livery = {
 				resolution = maxSupportedRes;
 				me.targets[target].resolution = maxSupportedRes;
 			}
-			var (major, minor, patch) = split(".", getprop("/sim/version/flightgear"));
-			if (num(major) == 2020 and num(minor) < 4) {
-				me.targets[target].canvas = canvas.new({
-					"target": target,
-					"size": [resolution, resolution],
-					"view": [resolution, resolution],
-					"mipmapping": 1,
-				});
-			} else {
-				me.targets[target].canvas = canvas.new({
-					"target": target,
-					"size": [resolution, resolution],
-					"view": [resolution, resolution],
-					"mipmapping": 1,
-					"anisotropy": 32.0
-				});
-			}
+			me.targets[target].canvas = canvas.new({
+				"target": target,
+				"size": [resolution, resolution],
+				"view": [resolution, resolution],
+				"mipmapping": 1,
+				"anisotropy": 32.0
+			});
 			foreach (var object; me.targets[target].objects) {
 				me.targets[target].canvas.addPlacement({"node": object});
 			}
@@ -155,7 +144,6 @@ var canvas_livery = {
 			property: property,
 		};
 		var resolution = getprop("/sim/model/livery/max-resolution");
-		print("INIT: RES: " ~ resolution);
 		me.targets[name].resolution = resolution;
 		# Make sure we never load too large textures
 		maxSupportedRes = getprop("/sim/rendering/max-texture-size");
@@ -247,13 +235,12 @@ var canvas_livery_update = {
 		m.resolution = getprop("/sim/model/livery/max-resolution");
 		m.targets = {};
 		m.module_id = module_id;
-		m.rplayer = rplayer;
 		return m;
 	},
 	setResolution: func(resolution) {
 		# TODO
 	},
-	createTarget: func(name, objects, property) {
+	createTarget: func(name, objects, property, defLiv) {
 		me.targets[name] = {
 			canvas: nil,
 			layers: {},
@@ -270,23 +257,13 @@ var canvas_livery_update = {
 			resolution = maxSupportedRes;
 			me.targets[name].resolution = maxSupportedRes;
 		}
-		var (major, minor, patch) = split(".", getprop("/sim/version/flightgear"));
-		if (num(major) == 2020 and num(minor) < 4) {
-			me.targets[name].canvas = canvas.new({
-				"name": name,
-				"size": [resolution, resolution],
-				"view": [resolution, resolution],
-				"mipmapping": 1,
-			});
-		} else {
-			me.targets[name].canvas = canvas.new({
-				"name": name,
-				"size": [resolution, resolution],
-				"view": [resolution, resolution],
-				"mipmapping": 1,
-				"anisotropy": 32.0
-			});
-		}
+		me.targets[name].canvas = canvas.new({
+			"name": name,
+			"size": [resolution, resolution],
+			"view": [resolution, resolution],
+			"mipmapping": 1,
+			"anisotropy": 32.0
+		});
 		foreach (var object; objects) {
 			me.targets[name].canvas.addPlacement({"module-id": me.module_id, "type": "scenery-object", "node": object});
 		}
@@ -304,7 +281,7 @@ var canvas_livery_update = {
 			livery = path ~ "/" ~ resStr ~ "/" ~ getprop(property)
 		}
 		me.targets[name].layers["base"] = me.targets[name].groups["base"].createChild("image").setFile(me.liveriesdir ~ "/" ~ resStr ~ "/" ~ getprop(property)).setSize(resolution,resolution);
-		me.targets[name].listener = setlistener(me.rplayer.getNode(property, 1).getPath(), func(property) {
+		me.targets[name].listener = setlistener("/ai/models/multiplayer[" ~ me.module_id ~ "]/" ~ property, func(property) {
 			ret = findTexByRes(me.liveriesdir, property.getValue(), resolution);
 			if (ret == nil) {
 				return nil;
