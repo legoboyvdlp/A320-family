@@ -10,6 +10,7 @@ var apDiscBtn = props.globals.getNode("/sim/sound/apdiscbtn");
 var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
 var SidestickPriorityPressedLast = 0;
 var priorityTimer = 0;
+var spdPreselectTime = 15; # Preselected Speed stays for 15 secs
 
 var FCU = {
 	elecSupply: "",
@@ -40,12 +41,6 @@ var FCU = {
 		me.condition = 100;
 	},
 };
-
-# adding a test timer function
-var timer = maketimer(5, func(){
-   print("Hello, World!"); # print "Hello, World!" once every second (call timer.stop() to stop it)
-});
-timer.singleShot = 1; # timer will only be run once
 
 var FCUController = {
 	FCU1: nil,
@@ -124,14 +119,6 @@ var FCUController = {
 		if (me.FCUworking) {
 			if (!fmgc.Output.fd1.getBoolValue()) {
 				fmgc.Input.fd1.setValue(1);
-
-            # timer is started by pressing fd1 and reset by pressing again
-            if (!timer.isRunning){
-               timer.start();
-            } else {
-               timer.restart(5);
-            }
-
 			} else {
 				fmgc.Input.fd1.setValue(0);
 			}
@@ -238,7 +225,6 @@ var FCUController = {
 	SPDPull: func() {
 		if (me.FCUworking) {
 			fmgc.Custom.Input.spdManaged.setBoolValue(0);
-			fmgc.ManagedSPD.stop();
 			me.ias = fmgc.Velocities.indicatedAirspeedKt.getValue();
 			me.mach = fmgc.Velocities.indicatedMach.getValue();
 			if (!fmgc.Input.ktsMach.getBoolValue()) {
@@ -262,6 +248,7 @@ var FCUController = {
 	},
 	machTemp: nil,
 	iasTemp: nil,
+   spdPreselect: nil,
 	SPDAdjust: func(d) {
 		if (me.FCUworking) {
 			if (!fmgc.Custom.Input.spdManaged.getBoolValue()) {
@@ -304,6 +291,21 @@ var FCUController = {
 				}
 			} else {
 				# speed preselection on FCU as speed is managed
+            me.spdPreselect = 1;
+
+            # timer is started by rotating speed selection knob
+            # and reset by rotating again
+            if (!spdSelectTimer.isRunning){
+               var spdSelectTimer = maketimer(spdPreselectTime, func(){
+                  me.spdPreselect = 0;
+                  print("Setting spdPreselect to 0"); 
+               });
+               spdSelectTimer.singleShot = 1; # timer will only be run once
+               spdSelectTimer.start();
+            } else {
+               spdSelectTimer.restart(spdPreselectTime);
+            }
+
 				if (fmgc.Input.ktsMach.getBoolValue()) {
 					me.machTemp = fmgc.Input.mach.getValue();
 					if (d == 1) {

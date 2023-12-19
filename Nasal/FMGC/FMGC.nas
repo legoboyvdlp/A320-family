@@ -990,6 +990,7 @@ var machToKt = func(val) { return val * FMGCNodes.machToKtsFactor.getValue(); }
 var ManagedSPD = maketimer(0.25, func {
 	if (FMGCInternal.crzSet and FMGCInternal.costIndexSet) {
 		if (Custom.Input.spdManaged.getBoolValue()) {
+         # Managed Speed
 			altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 			ktsmach = Input.ktsMach.getValue();
 			
@@ -1072,13 +1073,15 @@ var ManagedSPD = maketimer(0.25, func {
 				Input.ktsMach.setValue(1);
 			}
 			
-			# Set target speed
-			if (Input.kts.getValue() != FMGCInternal.mngSpd and !ktsmach) {
+			# Show target speed on FCU
+         # only if in preselection
+			if (Input.kts.getValue() != FMGCInternal.mngSpd and !ktsmach and !fcu.FCUController.spdPreselect) {
 				Input.kts.setValue(FMGCInternal.mngSpd);
 			} elsif (Input.mach.getValue() != FMGCInternal.mngSpd and ktsmach) {
 				Input.mach.setValue(FMGCInternal.mngSpd);
 			}
 		} else {
+         # Selected Speed
 			ManagedSPD.stop();
 		}
 	} else {
