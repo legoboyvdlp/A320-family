@@ -220,43 +220,45 @@ var FCUController = {
 		if (me.FCUworking) {
 			if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.costIndexSet) {
 				fmgc.Custom.Input.spdManaged.setBoolValue(1);
+            me.spdPreselect = 0;
+            spdSelectTimer.stop();
 				fmgc.ManagedSPD.start();
 			}
 		}
 	},
-	ias: nil,
-	mach: nil,
-	spdPreselect: nil,
+	ias: 0,
+	mach: 0,
+	spdPreselect: 0,
 	SPDPull: func() {
 		if (me.FCUworking) {
-			fmgc.Custom.Input.spdManaged.setBoolValue(0);
-			me.spdPreselect = 0;
-			spdSelectTimer.stop();
-			me.ias = fmgc.Velocities.indicatedAirspeedKt.getValue();
-			me.mach = fmgc.Velocities.indicatedMach.getValue();
-			if (!fmgc.Input.ktsMach.getBoolValue()) {
-				if (me.ias >= 100 and me.ias <= 399) {
-					fmgc.Input.kts.setValue(math.round(me.ias));
-					fcu.input.kts.setValue(math.round(me.ias));
-				} else if (me.ias < 100) {
-					fmgc.Input.kts.setValue(100);
-					fcu.input.kts.setValue(100);
-				} else if (me.ias > 399) {
-					fmgc.Input.kts.setValue(399);
-					fcu.input.kts.setValue(399);
-				}
-			} else if (fmgc.Input.ktsMach.getBoolValue()) {
-				if (me.mach >= 0.10 and me.mach <= 0.99) {
-					fmgc.Input.mach.setValue(math.round(me.mach, 0.001));
-					fcu.input.mach.setValue(math.round(me.mach, 0.001));
-				} else if (me.mach < 0.10) {
-					fmgc.Input.mach.setValue(0.10);
-					fcu.input.mach.setValue(0.10);
-				} else if (me.mach > 0.99) {
-					fmgc.Input.mach.setValue(0.99);
-					fcu.input.mach.setValue(0.99);
-				}
-			}
+         if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
+            fmgc.Custom.Input.spdManaged.setBoolValue(nil);
+            if (me.spdPreselect){
+               me.spdPreselect = 0;
+               spdSelectTimer.stop();
+               if (fmgc.Input.ktsMach.getBoolValue()){
+                  fmgc.Input.mach.setValue(fcu.input.mach.getValue());
+               } else {
+                  fmgc.Input.kts.setValue(fcu.input.kts.getValue());
+               }
+            } else {
+               if (fmgc.Input.ktsMach.getBoolValue()){
+			         me.mach = math.clamp(math.round(fmgc.Velocities.indicatedMach.getValue(), 0.01), 0.01, 0.99);
+                  fmgc.Input.mach.setValue(me.mach);
+                  fcu.input.mach.setValue(me.mach);
+               } else {
+			         me.ias = math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), 100, 399);
+                  fmgc.Input.kts.setValue(me.ias);
+                  fcu.input.kts.setValue(me.ias);
+               }
+            }
+         } else {
+            if (fmgc.Input.ktsMach.getBoolValue()){
+               me.mach = fcu.input.mach.getValue();
+            } else {
+               me.ias = fcu.input.kts.getValue();
+            }
+         }
 		}
 	},
 	machTemp: nil,
@@ -269,9 +271,9 @@ var FCUController = {
                # get from fmgc when window opens
                # get from window if window already open
                if(!me.spdPreselect) {
-                  me.machTemp = fmgc.Input.mach.getValue();
                   # speed preselection on FCU as speed is managed
                   me.spdPreselect = 1;
+                  me.machTemp = math.clamp(math.round(fmgc.Velocities.indicatedMach.getValue(), 0.01), 0.01, 0.99);
                } else {
                   me.machTemp = fcu.input.mach.getValue();
                }
@@ -320,7 +322,7 @@ var FCUController = {
                if(!me.spdPreselect) {
                   # speed preselection on FCU as speed is managed
                   me.spdPreselect = 1;
-                  me.iasTemp = fmgc.Input.kts.getValue();
+                  me.iasTemp = math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), 100, 399);
                } else {
                   me.iasTemp = fcu.input.kts.getValue();
                }
