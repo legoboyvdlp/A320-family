@@ -9,8 +9,8 @@ var athrWarningNode = props.globals.getNode("/it-autoflight/output/athr-warning"
 var apDiscBtn = props.globals.getNode("/sim/sound/apdiscbtn");
 var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
 var input = { 
-   kts: props.globals.initNode("/fcu/input/kts", 0, "INT"),
-   mach: props.globals.initNode("/fcu/input/mach", 0, "DOUBLE"),
+   kts: props.globals.initNode("/fcu/input/kts", 100, "INT"),
+   mach: props.globals.initNode("/fcu/input/mach", 0.5, "DOUBLE"),
    spdPreselect: props.globals.initNode("/fcu/input/spd-preselect", 0, "BOOL"),
 };
 var SidestickPriorityPressedLast = 0;
