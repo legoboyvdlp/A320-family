@@ -11,6 +11,7 @@ var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
 var input = { 
    kts: props.globals.initNode("/fcu/input/kts", 0, "INT"),
    mach: props.globals.initNode("/fcu/input/mach", 0, "DOUBLE"),
+   spdPreselect: props.globals.initNode("/fcu/input/spd-preselect", 0, "BOOL"),
 };
 var SidestickPriorityPressedLast = 0;
 var priorityTimer = 0;
@@ -220,7 +221,7 @@ var FCUController = {
 		if (me.FCUworking) {
 			if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.costIndexSet) {
 				fmgc.Custom.Input.spdManaged.setBoolValue(1);
-            me.spdPreselect = 0;
+            input.spdPreselect.setBoolValue(nil);
             spdSelectTimer.stop();
 				fmgc.ManagedSPD.start();
 			}
@@ -228,13 +229,12 @@ var FCUController = {
 	},
 	ias: 0,
 	mach: 0,
-	spdPreselect: 0,
 	SPDPull: func() {
 		if (me.FCUworking) {
          if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
             fmgc.Custom.Input.spdManaged.setBoolValue(nil);
-            if (me.spdPreselect){
-               me.spdPreselect = 0;
+            if (input.spdPreselect.getBoolValue()){
+               input.spdPreselect.setBoolValue(nil);
                spdSelectTimer.stop();
                if (fmgc.Input.ktsMach.getBoolValue()){
                   fmgc.Input.mach.setValue(fcu.input.mach.getValue());
@@ -270,9 +270,9 @@ var FCUController = {
                # get actual managed speed
                # get from fmgc when window opens
                # get from window if window already open
-               if(!me.spdPreselect) {
+               if(!input.spdPreselect.getBoolValue()) {
                   # speed preselection on FCU as speed is managed
-                  me.spdPreselect = 1;
+                  input.spdPreselect.setBoolValue(1);
                   me.machTemp = math.clamp(math.round(fmgc.Velocities.indicatedMach.getValue(), 0.01), 0.01, 0.99);
                } else {
                   me.machTemp = fcu.input.mach.getValue();
@@ -319,9 +319,9 @@ var FCUController = {
                # get actual managed speed
                # get from fmgc when window opens
                # get from window if window already open
-               if(!me.spdPreselect) {
+               if(!input.spdPreselect.getBoolValue()) {
                   # speed preselection on FCU as speed is managed
-                  me.spdPreselect = 1;
+                  input.spdPreselect.setBoolValue(1);
                   me.iasTemp = math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), 100, 399);
                } else {
                   me.iasTemp = fcu.input.kts.getValue();
@@ -641,7 +641,7 @@ var hdgInput = func {
 
 # Selecting speed in managed goes into speed preselection
 var spdSelectTimer =  maketimer(spdPreselectTime, func(){
-      FCUController.spdPreselect = 0;
+      fcu.input.spdPreselect.setBoolValue(nil);
       print("Setting spdPreselect to 0"); 
    });
 spdSelectTimer.singleShot = 1; # timer will only be run once

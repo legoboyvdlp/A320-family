@@ -1075,7 +1075,7 @@ var ManagedSPD = maketimer(0.25, func {
 			
 			# Show target speed on FCU
          # only if in preselection
-			if (Input.kts.getValue() != FMGCInternal.mngSpd and !ktsmach and !fcu.FCUController.spdPreselect) {
+			if (Input.kts.getValue() != FMGCInternal.mngSpd and !ktsmach and !fcu.input.spdPreselect.getBoolValue()) {
 				Input.kts.setValue(FMGCInternal.mngSpd);
 			} elsif (Input.mach.getValue() != FMGCInternal.mngSpd and ktsmach) {
 				Input.mach.setValue(FMGCInternal.mngSpd);

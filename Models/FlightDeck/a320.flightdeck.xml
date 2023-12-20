@@ -3143,13 +3143,19 @@
 	<animation>
 		<type>select</type>
 		<object-name>spd-text</object-name>
-      <!-- Remove conditions to display to FCU.nas -->
 		<condition>
-			<and>
-				<not><property>controls/switches/annun-test</property></not>
-				<not><property>it-autoflight/input/kts-mach</property></not>
-				<property>FMGC/FCU-working</property>
-			</and>
+         <and>
+            <not><property>controls/switches/annun-test</property></not>
+            <not><property>it-autoflight/input/kts-mach</property></not>
+            <property>FMGC/FCU-working</property>
+            <or>
+               <and>
+                  <property>it-autoflight/input/spd-managed</property>
+                  <property>fcu/input/spd-preselect</property>
+               </and>
+               <not><property>it-autoflight/input/spd-managed</property></not>
+            </or>
+         </and>
 		</condition>
 	</animation>
 
@@ -3160,8 +3166,14 @@
 			<and>
 				<not><property>controls/switches/annun-test</property></not>
 				<property>it-autoflight/input/kts-mach</property>
-				<not><property>it-autoflight/input/spd-managed</property></not>
 				<property>FMGC/FCU-working</property>
+            <or>
+               <and>
+                  <property>it-autoflight/input/spd-managed</property>
+                  <property>fcu/input/spd-preselect</property>
+               </and>
+               <not><property>it-autoflight/input/spd-managed</property></not>
+            </or>
 			</and>
 		</condition>
 	</animation>
@@ -3181,6 +3193,7 @@
 			<and>
 				<not><property>controls/switches/annun-test</property></not>
 				<property>it-autoflight/input/spd-managed</property>
+            <not><property>fcu/input/spd-preselect</property></not>
 			</and>
 		</condition>
 	</animation>
