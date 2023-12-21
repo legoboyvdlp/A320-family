@@ -998,15 +998,9 @@ var ManagedSPD = maketimer(0.25, func {
    # - AP/FD TCAS engaged
    # not yet all implemented
 
-	if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and 
-         FMGCInternal.crzSet and FMGCInternal.costIndexSet and FMGCInternal.v2 >= 100) {
+	if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and FMGCInternal.crzSet and FMGCInternal.costIndexSet and FMGCInternal.v2 >= 100) {
 		if (Custom.Input.spdManaged.getBoolValue()) {
          # Managed Speed
-
-         # FCU speed window can be closed.
-         # a managed target speed must be available
-         fcu.FCUController.spdWindowOpen.setBoolValue(nil);
-
 			altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 			ktsmach = Input.ktsMach.getValue();
 			
@@ -1089,9 +1083,7 @@ var ManagedSPD = maketimer(0.25, func {
 				Input.ktsMach.setValue(1);
 			}
 			
-			# Show target speed on FCU
-         # only if in preselection
-			if (Input.kts.getValue() != FMGCInternal.mngSpd and !ktsmach and !fcu.input.spdPreselect.getBoolValue()) {
+			if (Input.kts.getValue() != FMGCInternal.mngSpd and !ktsmach ) {
 				Input.kts.setValue(FMGCInternal.mngSpd);
 			} elsif (Input.mach.getValue() != FMGCInternal.mngSpd and ktsmach) {
 				Input.mach.setValue(FMGCInternal.mngSpd);
