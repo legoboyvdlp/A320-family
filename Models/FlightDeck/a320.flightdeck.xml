@@ -3194,6 +3194,12 @@
 				<not><property>controls/switches/annun-test</property></not>
 				<property>it-autoflight/input/spd-managed</property>
             <not><property>fcu/input/spd-preselect</property></not>
+            <condition>
+               <ge>
+				      <property>it-autoflight/input/kts</property>
+                  <value>100</value>
+               </ge>
+            </condition>
 			</and>
 		</condition>
 	</animation>

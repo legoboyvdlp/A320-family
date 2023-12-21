@@ -10,7 +10,7 @@ var apDiscBtn = props.globals.getNode("/sim/sound/apdiscbtn");
 var FCUworkingNode = props.globals.initNode("/FMGC/FCU-working", 0, "BOOL");
 var input = { 
    kts: props.globals.initNode("/fcu/input/kts", 100, "INT"),
-   mach: props.globals.initNode("/fcu/input/mach", 0.5, "DOUBLE"),
+   mach: props.globals.initNode("/fcu/input/mach", 0.01, "DOUBLE"),
    spdPreselect: props.globals.initNode("/fcu/input/spd-preselect", 0, "BOOL"),
 };
 var SidestickPriorityPressedLast = 0;
@@ -52,6 +52,13 @@ var FCUController = {
 	FCU2: nil,
 	activeFMGC: props.globals.getNode("/FMGC/active-fmgc-channel"),
 	FCUworking: 0,
+   kts: props.globals.initNode("/fcu/input/kts", 100, "INT"),
+   mach: props.globals.initNode("/fcu/input/mach", 0.01, "DOUBLE"),
+   spdPreselect: props.globals.initNode("/fcu/input/spd-preselect", 0, "BOOL"),
+   spdWindowOpen: props.globals.initNode("/fcu/output/spd-window-open", 0, "BOOL"),
+   spdWindowDot: props.globals.initNode("/fcu/output/spd-window-dot", 0, "BOOL"),
+   hdgWindowOpen: props.globals.initNode("/fcu/output/hdg-window-open", 0, "BOOL"),
+   hdgWindowDot: props.globals.initNode("/fcu/output/hdg-window-dot", 0, "BOOL"),
 	_init: 0,
 	init: func() {
 		me.FCU1 = FCU.new(systems.ELEC.Bus.dcEss);
@@ -222,7 +229,6 @@ var FCUController = {
 			if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.costIndexSet) {
 				fmgc.Custom.Input.spdManaged.setBoolValue(1);
             input.spdPreselect.setBoolValue(nil);
-            spdSelectTimer.stop();
 				fmgc.ManagedSPD.start();
 			}
 		}
@@ -259,6 +265,8 @@ var FCUController = {
                me.ias = fcu.input.kts.getValue();
             }
          }
+         # a selected speed must be available. SPD window can be opened
+         me.spdWindowOpen.setBoolValue(1);
 		}
 	},
 	machTemp: nil,
@@ -281,9 +289,9 @@ var FCUController = {
                # timer is started by rotating speed selection knob
                # and reset by rotating again
                if (!spdSelectTimer.isRunning){
-               spdSelectTimer.start();
+                  spdSelectTimer.start();
                } else {
-               spdSelectTimer.restart(spdPreselectTime);
+                  spdSelectTimer.restart(spdPreselectTime);
                }
 
                if (d == 1) {
@@ -642,7 +650,6 @@ var hdgInput = func {
 # Selecting speed in managed goes into speed preselection
 var spdSelectTimer =  maketimer(spdPreselectTime, func(){
       fcu.input.spdPreselect.setBoolValue(nil);
-      print("Setting spdPreselect to 0"); 
    });
 spdSelectTimer.singleShot = 1; # timer will only be run once
 

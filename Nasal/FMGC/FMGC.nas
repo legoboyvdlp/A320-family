@@ -988,9 +988,25 @@ var ktToMach = func(val) { return val * FMGCNodes.ktsToMachFactor.getValue(); }
 var machToKt = func(val) { return val * FMGCNodes.machToKtsFactor.getValue(); }
 			
 var ManagedSPD = maketimer(0.25, func {
-	if (FMGCInternal.crzSet and FMGCInternal.costIndexSet) {
+
+   # for managed speed:
+   # AP or FD or apporach phase, and one of:
+   # - on ground v2
+   # - SRS TO or SRS GA
+   # - SPD/MACH knob pressed an managed target avail
+   # - EXP CLB or EXP DES
+   # - AP/FD TCAS engaged
+   # not yet all implemented
+
+	if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and 
+         FMGCInternal.crzSet and FMGCInternal.costIndexSet and FMGCInternal.v2 >= 100) {
 		if (Custom.Input.spdManaged.getBoolValue()) {
          # Managed Speed
+
+         # FCU speed window can be closed.
+         # a managed target speed must be available
+         fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+
 			altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 			ktsmach = Input.ktsMach.getValue();
 			

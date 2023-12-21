@@ -14,16 +14,16 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +316 Nasal/FMGC/FCU.nas
-badd +100 Nasal/FMGC/FMGC-b.nas
-badd +3158 Models/FlightDeck/a320.flightdeck.xml
-badd +1080 Nasal/FMGC/FMGC.nas
+badd +644 Nasal/FMGC/FCU.nas
+badd +249 Nasal/FMGC/FMGC-b.nas
+badd +3196 Models/FlightDeck/a320.flightdeck.xml
+badd +1007 Nasal/FMGC/FMGC.nas
 badd +823 A320-main.xml
 argglobal
 %argdel
-edit Nasal/FMGC/FMGC.nas
+edit Nasal/FMGC/FMGC-b.nas
 argglobal
-balt Models/FlightDeck/a320.flightdeck.xml
+balt Nasal/FMGC/FMGC.nas
 setlocal fdm=marker
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -32,12 +32,12 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1080 - ((32 * winheight(0) + 28) / 57)
+let s:l = 250 - ((28 * winheight(0) + 28) / 57)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1080
-normal! 024|
+keepjumps 250
+normal! 07|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
