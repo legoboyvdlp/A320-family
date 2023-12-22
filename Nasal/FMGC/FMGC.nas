@@ -12,8 +12,6 @@ var arr = "";
 var n1_left = 0;
 var n1_right = 0;
 var gs = 0;
-var state1 = 0;
-var state2 = 0;
 var accel_agl_ft = 0;
 var fd1 = 0;
 var fd2 = 0;
@@ -303,6 +301,7 @@ var FMGCNodes = {
 	machToKtsFactor: props.globals.getNode("/FMGC/internal/mach-to-kts-factor"),
 	minspeed: props.globals.getNode("/FMGC/internal/minspeed"),
 	mngMachAlt: props.globals.getNode("/FMGC/internal/mng-alt-mach"),
+	mngSpdActive: props.globals.initNode("/FMGC/internal/mng-spd-active", 0, "BOOL"),
 	Power: {
 		FMGC1Powered: props.globals.getNode("systems/fmgc/power/power-1-on"),
 		FMGC2Powered: props.globals.getNode("systems/fmgc/power/power-2-on"),
@@ -999,8 +998,11 @@ var ManagedSPD = maketimer(0.25, func {
    # not yet all implemented
 
 	if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and FMGCInternal.crzSet and FMGCInternal.costIndexSet and FMGCInternal.v2 >= 100) {
-		if (Custom.Input.spdManaged.getBoolValue()) {
+      # speed controlled by FCU?
+      if (fcu.FCUController.spdSelected.getBoolValue()) {
          # Managed Speed
+         # speed controlled by FMGC
+
 			altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 			ktsmach = Input.ktsMach.getValue();
 			
@@ -1088,11 +1090,19 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif (Input.mach.getValue() != FMGCInternal.mngSpd and ktsmach) {
 				Input.mach.setValue(FMGCInternal.mngSpd);
 			}
+
+         # valid managed speed
+         FMGCNodes.mngSpdActive.setBoolValue(1);
+
 		} else {
+         print("got into selected speed");
          # Selected Speed
+         FMGCNodes.mngSpdActive.setBoolValue(nil);
 			ManagedSPD.stop();
 		}
 	} else {
+      print("deactivated by condition not met");
+      FMGCNodes.mngSpdActive.setBoolValue(nil);
 		ManagedSPD.stop();
 		fcu.FCUController.SPDPull();
 	}
