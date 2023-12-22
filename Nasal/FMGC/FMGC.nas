@@ -59,6 +59,7 @@ var FMGCAlignTime = [props.globals.initNode("/FMGC/internal/align1-time", 0, "DO
 var adirsSkip = props.globals.getNode("/systems/acconfig/options/adirs-skip");
 var blockCalculating = props.globals.initNode("/FMGC/internal/block-calculating", 0, "BOOL");
 var fuelCalculating = props.globals.initNode("/FMGC/internal/fuel-calculating", 0, "BOOL");
+var fmgcSpeedValid = props.globals.initNode("/FMGC/internal/fmgc-speed-valid", 0, "BOOL");
 
 var FMGCinit = func {
 	FMGCInternal.maxspeed = 338;
@@ -997,115 +998,119 @@ var ManagedSPD = maketimer(0.25, func {
    # - AP/FD TCAS engaged
    # not yet all implemented
 
-	if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and FMGCInternal.crzSet and FMGCInternal.costIndexSet and FMGCInternal.v2 >= 100) {
-      # speed controlled by FCU?
-      if (fcu.FCUController.spdSelected.getBoolValue()) {
-         # Managed Speed
-         # speed controlled by FMGC
+   if (fcu.FCUController.FCUworking) {
+      if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and FMGCInternal.crzSet and FMGCInternal.costIndexSet and FMGCInternal.v2 >= 100) {
+         # speed controlled by FCU?
+         if (fcu.FCUController.FCUworking and !fcu.FCUController.spdSelected.getBoolValue()) {
+            # Managed Speed
+            # speed controlled by FMGC
 
-			altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
-			ktsmach = Input.ktsMach.getValue();
-			
-			mng_alt_spd = math.round(FMGCNodes.mngSpdAlt.getValue(), 1);
-			mng_alt_mach = math.round(FMGCNodes.mngMachAlt.getValue(), 0.001);
-			
-			# Phase: 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
-			if (pts.Instrumentation.AirspeedIndicator.indicatedMach.getValue() > mng_alt_mach and (FMGCInternal.phase == 2 or FMGCInternal.phase == 3)) {
-				FMGCInternal.machSwitchover = 1;
-			} elsif (pts.Instrumentation.AirspeedIndicator.indicatedSpdKt.getValue() > mng_alt_spd and (FMGCInternal.phase == 4 or FMGCInternal.phase == 5)) {
-				FMGCInternal.machSwitchover = 0;
-			}
-			
-			var waypoint = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue());
-			var constraintSpeed = nil;
-		
-			if (waypoint != nil) {
-				constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
-			}
-			
-			if ((Modes.PFD.FMA.pitchMode == " " or Modes.PFD.FMA.pitchMode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
-				FMGCInternal.mngKtsMach = 0;
-				FMGCInternal.mngSpdCmd = FMGCInternal.v2;
-			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
-				# Speed is maximum of greendot / climb speed limit
-				FMGCInternal.mngKtsMach = 0;
-				
-				if (constraintSpeed != nil and constraintSpeed != 0) {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.clean, 999);
-				} else {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
-				}
-			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
-				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-				
-				if (constraintSpeed != nil and constraintSpeed != 0) {
-					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
-				} else {
-					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
-				}
-			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
-				if (FMGCInternal.decel) {
-					FMGCInternal.mngKtsMach = 0;
-					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
-				} else {
-					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-					if (constraintSpeed != nil and constraintSpeed != 0) {
-						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
-					} else {
-						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
-					}
-				}
-			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
-				# Speed is maximum of greendot / descent speed limit
-				FMGCInternal.mngKtsMach = 0;
-				
-				if (constraintSpeed != nil and constraintSpeed != 0) {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
-				} else {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
-				}
-			}
-			
-			# Clamp to maneouvering speed of current configuration and maxspeed
-			# Use minspeed node rather than variable, because we don't want to take GS MINI into account
-			if (FMGCInternal.phase >= 2) {
-				if (!FMGCInternal.mngKtsMach) {
-					FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, FMGCNodes.minspeed.getValue(), FMGCInternal.maxspeed);
-				} else {
-					FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, ktToMach(FMGCNodes.minspeed.getValue()), ktToMach(FMGCInternal.maxspeed));
-				}
-			} else {
-				FMGCInternal.mngSpd = FMGCInternal.mngSpdCmd;
-			}
-			
-			# Update value of ktsMach
-			if (ktsmach and !FMGCInternal.mngKtsMach) {
-				Input.ktsMach.setValue(0);
-			} elsif (!ktsmach and FMGCInternal.mngKtsMach) {
-				Input.ktsMach.setValue(1);
-			}
-			
-			if (Input.kts.getValue() != FMGCInternal.mngSpd and !ktsmach ) {
-				Input.kts.setValue(FMGCInternal.mngSpd);
-			} elsif (Input.mach.getValue() != FMGCInternal.mngSpd and ktsmach) {
-				Input.mach.setValue(FMGCInternal.mngSpd);
-			}
+            altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
+            ktsmach = Input.ktsMach.getValue();
+            
+            mng_alt_spd = math.round(FMGCNodes.mngSpdAlt.getValue(), 1);
+            mng_alt_mach = math.round(FMGCNodes.mngMachAlt.getValue(), 0.001);
+            
+            # Phase: 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
+            if (pts.Instrumentation.AirspeedIndicator.indicatedMach.getValue() > mng_alt_mach and (FMGCInternal.phase == 2 or FMGCInternal.phase == 3)) {
+               FMGCInternal.machSwitchover = 1;
+            } elsif (pts.Instrumentation.AirspeedIndicator.indicatedSpdKt.getValue() > mng_alt_spd and (FMGCInternal.phase == 4 or FMGCInternal.phase == 5)) {
+               FMGCInternal.machSwitchover = 0;
+            }
+            
+            var waypoint = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue());
+            var constraintSpeed = nil;
+         
+            if (waypoint != nil) {
+               constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
+            }
+            
+            if ((Modes.PFD.FMA.pitchMode == " " or Modes.PFD.FMA.pitchMode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
+               FMGCInternal.mngKtsMach = 0;
+               FMGCInternal.mngSpdCmd = FMGCInternal.v2;
+            } elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
+               # Speed is maximum of greendot / climb speed limit
+               FMGCInternal.mngKtsMach = 0;
+               
+               if (constraintSpeed != nil and constraintSpeed != 0) {
+                  FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+               } else {
+                  FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
+               }
+            } elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
+               FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
+               
+               if (constraintSpeed != nil and constraintSpeed != 0) {
+                  FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
+               } else {
+                  FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
+               }
+            } elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
+               if (FMGCInternal.decel) {
+                  FMGCInternal.mngKtsMach = 0;
+                  FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
+               } else {
+                  FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
+                  if (constraintSpeed != nil and constraintSpeed != 0) {
+                     FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
+                  } else {
+                     FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
+                  }
+               }
+            } elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
+               # Speed is maximum of greendot / descent speed limit
+               FMGCInternal.mngKtsMach = 0;
+               
+               if (constraintSpeed != nil and constraintSpeed != 0) {
+                  FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+               } else {
+                  FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+               }
+            }
+            
+            # Clamp to maneouvering speed of current configuration and maxspeed
+            # Use minspeed node rather than variable, because we don't want to take GS MINI into account
+            if (FMGCInternal.phase >= 2) {
+               if (!FMGCInternal.mngKtsMach) {
+                  FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, FMGCNodes.minspeed.getValue(), FMGCInternal.maxspeed);
+               } else {
+                  FMGCInternal.mngSpd = math.clamp(FMGCInternal.mngSpdCmd, ktToMach(FMGCNodes.minspeed.getValue()), ktToMach(FMGCInternal.maxspeed));
+               }
+            } else {
+               FMGCInternal.mngSpd = FMGCInternal.mngSpdCmd;
+            }
+            
+            # Update value of ktsMach
+            if (ktsmach and !FMGCInternal.mngKtsMach) {
+               Input.ktsMach.setValue(0);
+            } elsif (!ktsmach and FMGCInternal.mngKtsMach) {
+               Input.ktsMach.setValue(1);
+            }
+            
+            if (Input.kts.getValue() != FMGCInternal.mngSpd and !ktsmach ) {
+               Input.kts.setValue(FMGCInternal.mngSpd);
+            } elsif (Input.mach.getValue() != FMGCInternal.mngSpd and ktsmach) {
+               Input.mach.setValue(FMGCInternal.mngSpd);
+            }
 
-         # valid managed speed
-         FMGCNodes.mngSpdActive.setBoolValue(1);
+            # valid managed speed
+            FMGCNodes.mngSpdActive.setBoolValue(1);
 
-		} else {
-         print("got into selected speed");
-         # Selected Speed
+         } else {
+            # Selected Speed
+            FMGCNodes.mngSpdActive.setBoolValue(nil);
+            ManagedSPD.stop();
+         }
+      } else {
          FMGCNodes.mngSpdActive.setBoolValue(nil);
-			ManagedSPD.stop();
-		}
+         ManagedSPD.stop();
+         fcu.FCUController.SPDPull();
+      }
 	} else {
-      print("deactivated by condition not met");
+      # no FCU: speed cannot be controlled
       FMGCNodes.mngSpdActive.setBoolValue(nil);
-		ManagedSPD.stop();
-		fcu.FCUController.SPDPull();
-	}
+      ManagedSPD.stop();
+   }
 });
 
 # Nav Database

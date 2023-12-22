@@ -1007,7 +1007,6 @@ setlistener("/it-autoflight/input/fd2", func() {
 		ITAF.fd2Master(Input.fd2Temp);
 	}
 });
-
 	
 setlistener("/it-autoflight/input/kts-mach", func() {
 	if (Output.vert.getValue() == 7) { # Mach is not allowed in Mode 7, and don't sync

@@ -54,7 +54,8 @@ var FCUController = {
 	FCUworking: 0,
    kts: props.globals.initNode("/fcu/input/kts", 100, "INT"),
    mach: props.globals.initNode("/fcu/input/mach", 0.01, "DOUBLE"),
-   spdSelected: props.globals.initNode("/fcu/output/spd-selected", 0, "BOOL"),
+   # FCU Speed Modes are 0: undefined 1: selected 2: managed
+   fcuSpdMode: props.globals.initNode("/fcu/output/spd-mode", 0, "INT"),
    spdPreselect: props.globals.initNode("/fcu/input/spd-preselect", 0, "BOOL"),
    spdWindowOpen: props.globals.initNode("/fcu/output/spd-window-open", 0, "BOOL"),
    spdWindowDot: props.globals.initNode("/fcu/output/spd-window-dot", 0, "BOOL"),
@@ -228,9 +229,8 @@ var FCUController = {
 	SPDPush: func() {
 		if (me.FCUworking) {
 			if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.costIndexSet) {
-            me.spdSelected.setBoolValue(nil);
+            me.fcuSpdMode.setBoolValue(nil);
 				fmgc.Custom.Input.spdManaged.setBoolValue(1);
-				fmgc.FMGCNodes.mngSpdActive.setBoolValue(1);
             input.spdPreselect.setBoolValue(nil);
 				fmgc.ManagedSPD.start();
 			}
@@ -269,7 +269,7 @@ var FCUController = {
             }
          }
 
-         me.spdSelected.setBoolValue(1);
+         me.fcuSpdMode.setBoolValue(1);
 
          # a selected speed must be available. SPD window can be opened
          me.spdWindowOpen.setBoolValue(1);
