@@ -1,6 +1,8 @@
 # A3XX FMGC Autopilot
 # Based off IT-AUTOFLIGHT System Controller V4.0.X
 # Copyright (c) 2023 Josh Davidson (Octal450)
+# This file DOES NOT integrate with Property Tree Setup
+# That way, we can update it from generic IT-AUTOFLIGHT easily
 
 # Initialize all used variables and property nodes
 # Sim
@@ -254,9 +256,16 @@ var ITAF = {
 		Output.latTemp = Output.lat.getValue();
 		Output.vertTemp = Output.vert.getValue();
 		
-		# VOR/ILS Revision
+		# LNAV Reversion
+		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
+			if (flightPlanController.num[2].getValue() == 0 or !FPLN.active.getValue()) {
+				me.setLatMode(3);
+			}
+		}
+		
+		# VOR/ILS Reversion
 		if (Output.latTemp == 2 or Output.vertTemp == 2 or Output.vertTemp == 6) {
-			me.checkRadioRevision(Output.latTemp, Output.vertTemp);
+			me.checkRadioReversion(Output.latTemp, Output.vertTemp);
 		}
 		
 		Gear.wow1Temp = Gear.wow1.getBoolValue();
@@ -371,13 +380,6 @@ var ITAF = {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
 		FPLN.currentWPTemp = FPLN.currentWP.getValue();
-		
-		# If in LNAV mode and route is not longer active, switch to HDG HLD
-		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
-			if (flightPlanController.num[2].getValue() == 0 or !FPLN.activeTemp) {
-				me.setLatMode(3);
-			}
-		}
 		
 		# Waypoint Advance Logic
 		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1 and FPLN.currentWPTemp != -1) {
@@ -798,7 +800,7 @@ var ITAF = {
 			me.updateApprArm(0);
 		}
 	},
-	checkRadioRevision: func(l, v) { # Revert mode if signal lost
+	checkRadioReversion: func(l, v) { # Revert mode if signal lost
 		if (!Radio.inRange.getBoolValue()) {
 			if (l == 4 or v == 6) {
 				me.ap1Master(0);
