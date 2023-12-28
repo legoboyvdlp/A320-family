@@ -999,9 +999,9 @@ var ManagedSPD = maketimer(0.25, func {
    # not yet all implemented
 
    if (fcu.FCUController.FCUworking) {
-      if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and FMGCInternal.crzSet and FMGCInternal.costIndexSet and FMGCInternal.v2 >= 100) {
+      if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and FMGCInternal.crzSet and FMGCInternal.costIndexSet) {
          # speed controlled by FCU?
-         if (fcu.FCUController.FCUworking and !fcu.FCUController.spdSelected.getBoolValue()) {
+         if (FMGCInternal.v2 >= 100) {
             # Managed Speed
             # speed controlled by FMGC
 
@@ -1095,21 +1095,25 @@ var ManagedSPD = maketimer(0.25, func {
 
             # valid managed speed
             FMGCNodes.mngSpdActive.setBoolValue(1);
+            fmgc.Custom.Input.spdManaged.setBoolValue(1);
 
          } else {
-            # Selected Speed
+            # v2 not initialized 
+            # manage speed can remain selected if previously activated
+            # but it is not active
             FMGCNodes.mngSpdActive.setBoolValue(nil);
-            ManagedSPD.stop();
          }
       } else {
-         FMGCNodes.mngSpdActive.setBoolValue(nil);
+         # conditions for active managed speed not met
          ManagedSPD.stop();
-         fcu.FCUController.SPDPull();
+         FMGCNodes.mngSpdActive.setBoolValue(nil);
+         fmgc.Custom.Input.spdManaged.setBoolValue(nil);
       }
 	} else {
       # no FCU: speed cannot be controlled
-      FMGCNodes.mngSpdActive.setBoolValue(nil);
       ManagedSPD.stop();
+      FMGCNodes.mngSpdActive.setBoolValue(nil);
+      fmgc.Custom.Input.spdManaged.setBoolValue(nil);
    }
 });
 

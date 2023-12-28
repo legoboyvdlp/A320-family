@@ -13,6 +13,8 @@ var input = {
    mach: props.globals.initNode("/fcu/input/mach", 0.01, "DOUBLE"),
    spdPreselect: props.globals.initNode("/fcu/input/spd-preselect", 0, "BOOL"),
 };
+var fcuCh1valid = props.globals.initNode("/fcu/fcu-ch1-valid", 0, "BOOL");
+var fcuCh2valid = props.globals.initNode("/fcu/fcu-ch2-valid", 0, "BOOL");
 var SidestickPriorityPressedLast = 0;
 var priorityTimer = 0;
 var spdPreselectTime = 5; # Preselected Speed stays for 15 secs
@@ -55,12 +57,9 @@ var FCUController = {
    kts: props.globals.initNode("/fcu/input/kts", 100, "INT"),
    mach: props.globals.initNode("/fcu/input/mach", 0.01, "DOUBLE"),
    # FCU Speed Modes are 0: undefined 1: selected 2: managed
-   fcuSpdMode: props.globals.initNode("/fcu/output/spd-mode", 0, "INT"),
    spdPreselect: props.globals.initNode("/fcu/input/spd-preselect", 0, "BOOL"),
    spdWindowOpen: props.globals.initNode("/fcu/output/spd-window-open", 0, "BOOL"),
    spdWindowDot: props.globals.initNode("/fcu/output/spd-window-dot", 0, "BOOL"),
-   hdgWindowOpen: props.globals.initNode("/fcu/output/hdg-window-open", 0, "BOOL"),
-   hdgWindowDot: props.globals.initNode("/fcu/output/hdg-window-dot", 0, "BOOL"),
 	_init: 0,
 	init: func() {
 		me.FCU1 = FCU.new(systems.ELEC.Bus.dcEss);
@@ -74,6 +73,18 @@ var FCUController = {
 		me.FCU1.loop(notification);
 		me.FCU2.loop(notification);
 		
+      # set validity for every FCU channel for faults
+		if (me.FCU1.failed) {
+         fcuCh1valid.setBoolValue(nil);
+      } else {
+         fcuCh1valid.setBoolValue(1);
+      }
+		if (me.FCU2.failed) {
+         fcuCh2valid.setBoolValue(nil);
+      } else {
+         fcuCh2valid.setBoolValue(1);
+      }
+
 		if (!me.FCU1.failed or !me.FCU2.failed) {
 			me.FCUworking = 1;
 			FCUworkingNode.setValue(1);
@@ -228,12 +239,7 @@ var FCUController = {
 	},
 	SPDPush: func() {
 		if (me.FCUworking) {
-			if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.costIndexSet) {
-            me.fcuSpdMode.setBoolValue(nil);
-				fmgc.Custom.Input.spdManaged.setBoolValue(1);
-            input.spdPreselect.setBoolValue(nil);
-				fmgc.ManagedSPD.start();
-			}
+			fmgc.ManagedSPD.start();
 		}
 	},
 	ias: 0,
@@ -241,6 +247,8 @@ var FCUController = {
 	SPDPull: func() {
 		if (me.FCUworking) {
          if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
+            fmgc.ManagedSPD.stop();
+            fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);
             fmgc.Custom.Input.spdManaged.setBoolValue(nil);
             if (input.spdPreselect.getBoolValue()){
                input.spdPreselect.setBoolValue(nil);
@@ -268,8 +276,6 @@ var FCUController = {
                me.ias = fcu.input.kts.getValue();
             }
          }
-
-         me.fcuSpdMode.setBoolValue(1);
 
          # a selected speed must be available. SPD window can be opened
          me.spdWindowOpen.setBoolValue(1);
