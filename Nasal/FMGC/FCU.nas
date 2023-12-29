@@ -58,7 +58,7 @@ var FCUController = {
    mach: props.globals.initNode("/fcu/input/mach", 0.01, "DOUBLE"),
    # FCU Speed Modes are 0: undefined 1: selected 2: managed
    spdPreselect: props.globals.initNode("/fcu/input/spd-preselect", 0, "BOOL"),
-   spdWindowOpen: props.globals.initNode("/fcu/output/spd-window-open", 0, "BOOL"),
+   spdWindowOpen: props.globals.initNode("/fcu/output/spd-window-open", 1, "BOOL"),
    spdWindowDot: props.globals.initNode("/fcu/output/spd-window-dot", 0, "BOOL"),
 	_init: 0,
 	init: func() {
@@ -285,6 +285,10 @@ var FCUController = {
 	iasTemp: nil,
 	SPDAdjust: func(d) {
 		if (me.FCUworking) {
+         # window can be opened. it will close if preselect
+         # timer is over
+         me.spdWindowOpen.setBoolValue(1);
+
          if (fmgc.Input.ktsMach.getBoolValue()) {
             if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
                # get actual managed speed
@@ -662,6 +666,7 @@ var hdgInput = func {
 # Selecting speed in managed goes into speed preselection
 var spdSelectTimer =  maketimer(spdPreselectTime, func(){
       fcu.input.spdPreselect.setBoolValue(nil);
+      fcu.FCUController.spdWindowOpen.setBoolValue(nil);
    });
 spdSelectTimer.singleShot = 1; # timer will only be run once
 

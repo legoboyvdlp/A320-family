@@ -98,7 +98,6 @@ var flex = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-temp", 1);
 var flexSet = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active-cmd", 1);
 var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
 var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
-var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
 # CLB PERF
 var activate_once = props.globals.getNode("/FMGC/internal/activate-once", 1);
 var activate_twice = props.globals.getNode("/FMGC/internal/activate-twice", 1);
@@ -4548,7 +4547,7 @@ var canvas_MCDU_base = {
 				showRightS(me,0, 0, 0, 0, 1, 0);
 				showCenterS(me,0, 0, 0, 0, 1, 0);
 				
-				if (managedSpeed.getValue() == 1) {
+				if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 					showLeft(me,0, 0, 0, -1, 0, 0);
 					showLeftS(me,0, 0, 0, -1, 0, 0);
 				} else {
@@ -4599,7 +4598,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L1S"].setText("ACT MODE");
-			if (managedSpeed.getValue() == 1) {
+			if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 				me["Simple_L1"].setText("MANAGED");
 				me["Simple_L4"].setText(" [    ]");
 			} else {
@@ -4686,7 +4685,7 @@ var canvas_MCDU_base = {
 			
 			if (fmgc.FMGCInternal.phase == 3) {
 				me["Simple_Title"].setColor(GREEN);
-				if (managedSpeed.getValue() == 1) {
+				if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 					showLeft(me,0, 0, 0, -1, 0, 0);
 					showLeftS(me,0, 0, 0, -1, 0, 0);
 				} else {
@@ -4731,7 +4730,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L1S"].setText("ACT MODE");
-			if (managedSpeed.getValue() == 1) {
+			if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 				me["Simple_L1"].setText("MANAGED");
 				me["Simple_L4"].setText(" [    ]");
 			} else {
@@ -4821,7 +4820,7 @@ var canvas_MCDU_base = {
 				showRightS(me,0, 0, 1, 0, 0, 0);
 				showCenter(me,0, 1, 0, 1, 1, 0);
 				showCenterS(me,0, 0, 1, 0, 0, 0);
-				if (managedSpeed.getValue() == 1) {
+				if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 					showLeft(me,0, 0, 0, -1, 0, 0);
 					showLeftS(me,0, 0, 0, -1, 0, 0);
 				} else {
@@ -4871,7 +4870,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L1S"].setText("ACT MODE");
-			if (managedSpeed.getValue() == 1) {
+			if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 				me["Simple_L1"].setText("MANAGED");
 				me["Simple_L4"].setText(" [    ]");
 			} else {

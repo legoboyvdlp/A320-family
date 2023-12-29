@@ -3182,7 +3182,7 @@
 		<type>select</type>
 		<object-name>spd.fmgc</object-name>
 		<condition>
-			<property>it-autoflight/input/spd-managed</property>
+         <property>FMGC/internal/mng-spd-active</property>
 		</condition>
 	</animation>
 
@@ -3192,14 +3192,7 @@
 		<condition>
 			<and>
 				<not><property>controls/switches/annun-test</property></not>
-				<property>it-autoflight/input/spd-managed</property>
-            <not><property>fcu/input/spd-preselect</property></not>
-            <condition>
-               <ge>
-				      <property>it-autoflight/input/kts</property>
-                  <value>100</value>
-               </ge>
-            </condition>
+            <not><property>fcu/output/spd-window-open</property></not>
 			</and>
 		</condition>
 	</animation>

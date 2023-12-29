@@ -649,6 +649,7 @@ var masterFMGC = maketimer(0.2, func {
 	gear0 = pts.Gear.wow[0].getBoolValue();
 	altSel = Input.alt.getValue();
 	
+   # Phase: 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 	newphase = FMGCInternal.phase;
 
 	if (FMGCInternal.phase == 0) {
@@ -706,7 +707,13 @@ var masterFMGC = maketimer(0.2, func {
 
 	if (flightPlanController.decelPoint != nil) {
 		courseDistanceDecel = courseAndDistance(flightPlanController.decelPoint.lat, flightPlanController.decelPoint.lon);
-		if (flightPlanController.num[2].getValue() > 0 and fmgc.flightPlanController.active.getBoolValue() and flightPlanController.decelPoint != nil and (courseDistanceDecel[1] <= 5 and (math.abs(courseDistanceDecel[0] - pts.Orientation.heading.getValue()) >= 90 and xtrkError <= 5) or courseDistanceDecel[1] <= 0.1) and (Modes.PFD.FMA.rollMode == "NAV" or Modes.PFD.FMA.rollMode == "LOC" or Modes.PFD.FMA.rollMode == "LOC*") and pts.Position.gearAglFt.getValue() < 9500) {
+		if (flightPlanController.num[2].getValue() > 0 and fmgc.flightPlanController.active.getBoolValue() and 
+            flightPlanController.decelPoint != nil and 
+            (courseDistanceDecel[1] <= 5 and 
+            (math.abs(courseDistanceDecel[0] - pts.Orientation.heading.getValue()) >= 90 and 
+            xtrkError <= 5) or courseDistanceDecel[1] <= 0.1) and 
+            (Modes.PFD.FMA.rollMode == "NAV" or Modes.PFD.FMA.rollMode == "LOC" or Modes.PFD.FMA.rollMode == "LOC*") and 
+            pts.Position.gearAglFt.getValue() < 9500) {
 			FMGCInternal.decel = 1;
 			setprop("/instrumentation/nd/symbols/decel/show", 0); 
 		} elsif (FMGCInternal.decel and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
@@ -1001,7 +1008,7 @@ var ManagedSPD = maketimer(0.25, func {
    if (fcu.FCUController.FCUworking) {
       if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and FMGCInternal.crzSet and FMGCInternal.costIndexSet) {
          # speed controlled by FCU?
-         if (FMGCInternal.v2 >= 100) {
+         if (fmgc.FMGCInternal.v2set) {
             # Managed Speed
             # speed controlled by FMGC
 
@@ -1066,6 +1073,10 @@ var ManagedSPD = maketimer(0.25, func {
                } else {
                   FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
                }
+            } elsif (FMGCInternal.phase == 7){
+               # done phase. v2 is reset
+               fmgc.FMGCInternal.v2 = 0;
+               fmgc.FMGCInternal.v2set = 0;
             }
             
             # Clamp to maneouvering speed of current configuration and maxspeed
@@ -1096,21 +1107,22 @@ var ManagedSPD = maketimer(0.25, func {
             # valid managed speed
             FMGCNodes.mngSpdActive.setBoolValue(1);
             fmgc.Custom.Input.spdManaged.setBoolValue(1);
+            fcu.FCUController.spdWindowOpen.setBoolValue(nil);
 
          } else {
             # v2 not initialized 
-            # manage speed can remain selected if previously activated
-            # but it is not active
+            # managed speed can remain engaged if previously activated
+            # but it is not active controlled by fmgc
             FMGCNodes.mngSpdActive.setBoolValue(nil);
          }
       } else {
          # conditions for active managed speed not met
-         ManagedSPD.stop();
-         FMGCNodes.mngSpdActive.setBoolValue(nil);
-         fmgc.Custom.Input.spdManaged.setBoolValue(nil);
+         # same as pulling speed knob
+         fcu.FCUController.SPDPull();
       }
 	} else {
       # no FCU: speed cannot be controlled
+      # no commands to FCU
       ManagedSPD.stop();
       FMGCNodes.mngSpdActive.setBoolValue(nil);
       fmgc.Custom.Input.spdManaged.setBoolValue(nil);
