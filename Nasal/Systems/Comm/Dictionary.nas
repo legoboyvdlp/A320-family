@@ -1,7 +1,7 @@
 # A3XX Dictionary
 # Jonathan Redpath
 
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 var DictionaryItemObj = {
 	new: func(item, string) {
 		var DI = {parents: [DictionaryItemObj]};

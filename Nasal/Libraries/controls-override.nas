@@ -1,5 +1,5 @@
 # Airbus A320 Custom Controls
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 controls.autopilotDisconnect = func() {
 	libraries.apPanel.apDisc();

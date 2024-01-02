@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) and Matthew Maring (mattmaring) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) and Matthew Maring (mattmaring) -->
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
