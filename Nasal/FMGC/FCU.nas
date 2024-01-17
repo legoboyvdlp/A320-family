@@ -247,7 +247,10 @@ var FCUController = {
 	SPDPull: func() {
 		if (me.FCUworking) {
          if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
-            fmgc.ManagedSPD.stop();
+            # selected spd not possible on gnd
+            if (!(getprop("/gear/gear[1]/wow") and getprop("/gear/gear[1]/wow"))) {
+               fmgc.ManagedSPD.stop();
+            }
             fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);
             fmgc.Custom.Input.spdManaged.setBoolValue(nil);
             if (input.spdPreselect.getBoolValue()){
@@ -301,6 +304,7 @@ var FCUController = {
                } else {
                   me.machTemp = fcu.input.mach.getValue();
                }
+               me.spdWindowOpen.setBoolValue(1);
 
                # timer is started by rotating speed selection knob
                # and reset by rotating again
@@ -350,6 +354,7 @@ var FCUController = {
                } else {
                   me.iasTemp = fcu.input.kts.getValue();
                }
+               me.spdWindowOpen.setBoolValue(1);
 
                # timer is started by rotating speed selection knob
                # and reset by rotating again

@@ -344,8 +344,12 @@ var FMGCNodes = {
 # FBW Trim #
 ############
 
+# Reset PITCH TRIM after landing
 setlistener("/gear/gear[0]/wow", func {
-	trimReset();
+   # TODO set a new listener for pitch less than 2.5 deg for 5sec
+	timer5trimReset.singleShot = 1;
+	timer5trimReset.simulatedTime = 1;
+	timer5trimReset.start();
 }, 0, 0);
 
 var trimReset = func {
@@ -1005,6 +1009,7 @@ var ManagedSPD = maketimer(0.25, func {
    # - AP/FD TCAS engaged
    # not yet all implemented
 
+   # TODO check if crzSet and costIndexSet is part of condition
    if (fcu.FCUController.FCUworking) {
       if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and FMGCInternal.crzSet and FMGCInternal.costIndexSet) {
          # speed controlled by FCU?
@@ -1107,7 +1112,9 @@ var ManagedSPD = maketimer(0.25, func {
             # valid managed speed
             FMGCNodes.mngSpdActive.setBoolValue(1);
             fmgc.Custom.Input.spdManaged.setBoolValue(1);
-            fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+            if (!fcu.input.spdPreselect.getBoolValue()) {
+               fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+            }
 
          } else {
             # v2 not initialized 
@@ -1118,7 +1125,11 @@ var ManagedSPD = maketimer(0.25, func {
       } else {
          # conditions for active managed speed not met
          # speed mode can still be managed 
-         FMGCNodes.mngSpdActive.setBoolValue(nil);
+         if (FMGCInternal.phase > 6) {
+            FMGCNodes.mngSpdActive.setBoolValue(nil);
+         } else {
+            fcu.FCUController.SPDPull();
+         }
       }
 	} else {
       # no FCU: speed cannot be controlled
@@ -1281,4 +1292,8 @@ var timer5fuelPred = maketimer(1, func() {
 		FMGCInternal.fuelPredTime = -99;
 		timer5fuelPred.stop();
 	}
+});
+
+var timer5trimReset = maketimer(5, func() {
+	trimReset();
 });
