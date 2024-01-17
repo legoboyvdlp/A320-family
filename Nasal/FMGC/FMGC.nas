@@ -1117,8 +1117,8 @@ var ManagedSPD = maketimer(0.25, func {
          }
       } else {
          # conditions for active managed speed not met
-         # same as pulling speed knob
-         fcu.FCUController.SPDPull();
+         # speed mode can still be managed 
+         FMGCNodes.mngSpdActive.setBoolValue(nil);
       }
 	} else {
       # no FCU: speed cannot be controlled
