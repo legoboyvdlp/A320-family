@@ -111,9 +111,7 @@ var perfTOInput = func(key, i) {
 		}
 	} else if (key == "L3" and modifiable) {
 		if (scratchpad == "CLR") {
-			fmgc.FMGCInternal.v2 = 0;
-			fmgc.FMGCInternal.v2set = 0;
-			mcdu_scratchpad.scratchpads[i].empty();
+         mcdu_message(i, "NOT ALLOWED");
 		} else {
 			var tfs = size(scratchpad);
 			if (tfs == 3) {

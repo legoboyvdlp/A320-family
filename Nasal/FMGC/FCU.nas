@@ -247,10 +247,7 @@ var FCUController = {
 	SPDPull: func() {
 		if (me.FCUworking) {
          if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
-            # selected spd not possible on gnd
-            if (!(getprop("/gear/gear[1]/wow") and getprop("/gear/gear[1]/wow"))) {
-               fmgc.ManagedSPD.stop();
-            }
+            fmgc.ManagedSPD.stop();
             fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);
             fmgc.Custom.Input.spdManaged.setBoolValue(nil);
             if (input.spdPreselect.getBoolValue()){

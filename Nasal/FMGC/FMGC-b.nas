@@ -499,6 +499,11 @@ var ITAF = {
 		if (s == 1) {
 			Output.fd1.setBoolValue(1);
 			me.updateFma();
+         
+         # if on ground check if managed speed can be activated
+         if (FMGCInternal.phase == 0 or (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[1]/wow"))) {
+            fmgc.ManagedSPD.start();
+         }
 		} else {
 			Output.fd1.setBoolValue(0);
 			if (!Output.fd2.getBoolValue()) {
@@ -515,6 +520,11 @@ var ITAF = {
 		if (s == 1) {
 			Output.fd2.setBoolValue(1);
 			me.updateFma();
+
+         # if on ground check if managed speed can be activated
+         if (FMGCInternal.phase == 0 or (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[1]/wow"))) {
+            fmgc.ManagedSPD.start();
+         }
 		} else {
 			Output.fd2.setBoolValue(0);
 			if (!Output.fd1.getBoolValue()) {
