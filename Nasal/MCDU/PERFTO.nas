@@ -7,7 +7,7 @@
 
 var doneMessageCheck = 0;
 var perfToCheckTakeoffData = func(i) {
-	if (fmgc.FMGCInternal.v1set and fmgc.FMGCInternal.vrset and fmgc.FMGCNodes.v2set) {
+	if (fmgc.FMGCInternal.v1set and fmgc.FMGCInternal.vrset and fmgc.FMGCInternal.v2set) {
 		if (doneMessageCheck) {
 			mcdu_scratchpad.messageQueues[i].deleteWithText("CHECK TAKE OFF DATA");
 		}
@@ -19,7 +19,7 @@ var perfToCheckTakeoffData = func(i) {
 var doneMessageDisag = 0;
 var perfTOCheckVSpeedsConsistency = func(i) {
 	if (fmgc.FMGCInternal.v1set and fmgc.FMGCInternal.vrset and fmgc.FMGCInternal.v2set) {
-		if (!(fmgc.FMGCInternal.v1 <= fmgc.FMGCInternal.vr and fmgc.FMGCInternal.vr <= fmgc.FMGCNodes.v2)) {
+		if (!(fmgc.FMGCInternal.v1 <= fmgc.FMGCInternal.vr and fmgc.FMGCInternal.vr <= fmgc.FMGCInternal.v2)) {
 			if (doneMessageDisag) {
 				mcdu_scratchpad.messageQueues[i].deleteWithText("V1/VR/V2 DISAGREE");
 			}

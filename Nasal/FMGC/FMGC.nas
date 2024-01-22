@@ -303,6 +303,7 @@ var FMGCNodes = {
 	minspeed: props.globals.getNode("/FMGC/internal/minspeed"),
 	mngMachAlt: props.globals.getNode("/FMGC/internal/mng-alt-mach"),
 	mngSpdActive: props.globals.initNode("/FMGC/internal/mng-spd-active", 0, "BOOL"),
+	pitchMode: props.globals.initNode("/FMGC/internal/pitch-mode", " " , "STRING"),
 	Power: {
 		FMGC1Powered: props.globals.getNode("systems/fmgc/power/power-1-on"),
 		FMGC2Powered: props.globals.getNode("systems/fmgc/power/power-2-on"),
@@ -1084,6 +1085,8 @@ var ManagedSPD = maketimer(0.25, func {
                # done phase. v2 is reset
                fmgc.FMGCInternal.v2 = 0;
                fmgc.FMGCInternal.v2set = 0;
+               fmgc.FMGCNodes.v2set.setBoolValue(nil);
+               fmgc.FMGCNodes.v2.setValue(0);
             }
             
             # Clamp to maneouvering speed of current configuration and maxspeed

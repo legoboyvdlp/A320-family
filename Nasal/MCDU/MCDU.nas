@@ -149,10 +149,14 @@ var MCDU_reset = func(i) {
 	#PERF TO
 	fmgc.FMGCInternal.v1 = 0;
 	fmgc.FMGCInternal.v1set = 0;
+   fmgc.FMGCNodes.v1set.setBoolValue(nil);
+   fmgc.FMGCNodes.v1.setValue(0);
 	fmgc.FMGCInternal.vr = 0;
 	fmgc.FMGCInternal.vrset = 0;
 	fmgc.FMGCInternal.v2 = 0;
 	fmgc.FMGCInternal.v2set = 0;
+   fmgc.FMGCNodes.v2set.setBoolValue(nil);
+   fmgc.FMGCNodes.v2.setValue(0);
 	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
 	setprop("/fdm/jsbsim/fadec/clbreduc-ft", 1500);
 	setprop("MCDUC/thracc-set", 0);
