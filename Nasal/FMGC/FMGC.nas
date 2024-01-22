@@ -1163,15 +1163,23 @@ var switchDatabase = func {
 	navDataBase.standbyCode = tempStoreCode;
 	navDataBase.standbyDate = tempStoreDate;
 }
-
+##################################
+# setlisteners for managed speed #
+##################################
 # set managed speed on ground if v2 entered 
-setlistener("/FMGC/internal/v2-set", func(val) {
+setlistener("/FMGC/internal/v2-set", func() {
 	if (FMGCInternal.phase == 0 or (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[1]/wow"))) {
       fmgc.ManagedSPD.start();
 	}
 }, 0, 0);
 
-# Landing to phase 7
+setlistener("/FMGC/internal/pitch-mode", func() {
+	if (FMGCNodes.pitchMode.getValue() == "SRS" or FMGCNodes.pitchMode.getValue() == "EXP CLB" 
+         or FMGCNodes.pitchMode.getValue() == "EXP DES" or FMGCNodes.pitchMode.getValue() == "TCAS" ) {
+      fmgc.ManagedSPD.start();
+	}
+}, 0, 0);
+
 setlistener("/gear/gear[1]/wow", func(val) {
 	if (val.getValue() == 0 and timer30secLanding.isRunning) {
 		timer30secLanding.stop();
