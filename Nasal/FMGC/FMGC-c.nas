@@ -190,7 +190,7 @@ var loopFMA = maketimer(0.05, func() {
 		engstate2 = pts.Engines.Engine.state[1].getValue();
 		if (((state1 == "TOGA" or state2 == "TOGA") or (flx == 1 and (state1 == "MCT" or state2 == "MCT")) or (flx == 1 and ((state1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])))) and (engstate1 == 3 or engstate2 == 3)) {
 			# RWY Engagement would go here, but automatic ILS selection is not simulated yet.
-			if (FMGCInternal.v2set and Output.vert.getValue() != 7) {
+			if (FMGCNodes.v2set and Output.vert.getValue() != 7) {
 				ITAF.setVertMode(7);
 				ITAF.updateVertText("T/O CLB");
 			}
@@ -304,7 +304,7 @@ var updateFma = {
 		} else if (vertText == "T/O CLB") {
 			if (Modes.PFD.FMA.pitchMode != "SRS") {
 				setFmaText("pitchMode", "SRS", genericCallback, "pitchModeTime");
-				setFmaText("pitchMode2Armed", FMGCInternal.v2set ? "CLB" : " ", genericCallback, "pitchMode2ArmedTime");
+				setFmaText("pitchMode2Armed", FMGCNodes.v2set ? "CLB" : " ", genericCallback, "pitchMode2ArmedTime");
 			}
 		} else if (vertText == "G/A CLB") {
 			setFmaText("pitchMode", "SRS", genericCallback, "pitchModeTime");
@@ -312,7 +312,7 @@ var updateFma = {
 		} else if (vertText == "") {
 			if (Modes.PFD.FMA.pitchMode != " ") {
 				setFmaText("pitchMode", " ", genericCallback, "pitchModeTime");
-				setFmaText("pitchMode2Armed", FMGCInternal.v2set ? "CLB" : " ", genericCallback, "pitchMode2ArmedTime");
+				setFmaText("pitchMode2Armed", FMGCNodes.v2set ? "CLB" : " ", genericCallback, "pitchMode2ArmedTime");
 			}
 		}
 		altvert();

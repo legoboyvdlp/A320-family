@@ -322,6 +322,8 @@ var FMGCNodes = {
 	towVs1gConfFull: props.globals.getNode("/FMGC/internal/lw-vs1g-conf-full"),
 	v1: props.globals.initNode("/FMGC/internal/v1", 0, "DOUBLE"),
 	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
+	v2: props.globals.initNode("/FMGC/internal/v2", 0, "DOUBLE"),
+	v2set: props.globals.initNode("/FMGC/internal/v2-set", 0, "BOOL"),
 	phase: props.globals.initNode("/FMGC/internal/phase", 0, "INT"),
 	valphaMax: props.globals.getNode("/FMGC/internal/valpha-max"),
 	valphaProt: props.globals.getNode("/FMGC/internal/valpha-prot"),
@@ -1158,6 +1160,13 @@ var switchDatabase = func {
 	navDataBase.standbyCode = tempStoreCode;
 	navDataBase.standbyDate = tempStoreDate;
 }
+
+# set managed speed on ground if v2 entered 
+setlistener("/FMGC/internal/v2-set", func(val) {
+	if (FMGCInternal.phase == 0 or (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[1]/wow"))) {
+      fmgc.ManagedSPD.start();
+	}
+}, 0, 0);
 
 # Landing to phase 7
 setlistener("/gear/gear[1]/wow", func(val) {

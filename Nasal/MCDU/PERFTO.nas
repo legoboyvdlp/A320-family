@@ -7,7 +7,7 @@
 
 var doneMessageCheck = 0;
 var perfToCheckTakeoffData = func(i) {
-	if (fmgc.FMGCInternal.v1set and fmgc.FMGCInternal.vrset and fmgc.FMGCInternal.v2set) {
+	if (fmgc.FMGCInternal.v1set and fmgc.FMGCInternal.vrset and fmgc.FMGCNodes.v2set) {
 		if (doneMessageCheck) {
 			mcdu_scratchpad.messageQueues[i].deleteWithText("CHECK TAKE OFF DATA");
 		}
@@ -19,7 +19,7 @@ var perfToCheckTakeoffData = func(i) {
 var doneMessageDisag = 0;
 var perfTOCheckVSpeedsConsistency = func(i) {
 	if (fmgc.FMGCInternal.v1set and fmgc.FMGCInternal.vrset and fmgc.FMGCInternal.v2set) {
-		if (!(fmgc.FMGCInternal.v1 <= fmgc.FMGCInternal.vr and fmgc.FMGCInternal.vr <= fmgc.FMGCInternal.v2)) {
+		if (!(fmgc.FMGCInternal.v1 <= fmgc.FMGCInternal.vr and fmgc.FMGCInternal.vr <= fmgc.FMGCNodes.v2)) {
 			if (doneMessageDisag) {
 				mcdu_scratchpad.messageQueues[i].deleteWithText("V1/VR/V2 DISAGREE");
 			}
@@ -118,6 +118,11 @@ var perfTOInput = func(key, i) {
 				if (int(scratchpad) != nil and scratchpad >= 100 and scratchpad <= 350) {
 					fmgc.FMGCInternal.v2 = scratchpad;
 					fmgc.FMGCInternal.v2set = 1;
+
+					# for managed speed enabled 
+					fmgc.FMGCNodes.v2.setValue(scratchpad);
+					fmgc.FMGCNodes.v2set.setValue(1);
+
 					fmgc.setFmaText("pitchMode2Armed", fmgc.FMGCInternal.v2set ? "CLB" : " ", fmgc.genericCallback, "pitchMode2ArmedTime");
 					mcdu_scratchpad.scratchpads[i].empty();
 
