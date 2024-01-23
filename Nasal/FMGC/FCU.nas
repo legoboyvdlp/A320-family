@@ -245,7 +245,7 @@ var FCUController = {
 	ias: 0,
 	mach: 0,
 	SPDPull: func() {
-		if (me.FCUworking) {
+		if (me.FCUworking and fmgc.FMGCNodes.selSpdEnable.getBoolValue()) {
          if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
             fmgc.ManagedSPD.stop();
             fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);

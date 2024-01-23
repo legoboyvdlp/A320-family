@@ -308,6 +308,7 @@ var FMGCNodes = {
 		FMGC1Powered: props.globals.getNode("systems/fmgc/power/power-1-on"),
 		FMGC2Powered: props.globals.getNode("systems/fmgc/power/power-2-on"),
 	},
+	selSpdEnable: props.globals.initNode("/FMGC/internal/sel-spd-enable", 1, "BOOL"),
 	slat: props.globals.getNode("/FMGC/internal/slat"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
@@ -1170,7 +1171,9 @@ var switchDatabase = func {
 setlistener("/FMGC/internal/v2-set", func() {
 	if (FMGCInternal.phase == 0 or (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[1]/wow"))) {
       fmgc.ManagedSPD.start();
-	}
+	} else {
+      me.removelistener();       
+   }
 }, 0, 0);
 
 setlistener("/FMGC/internal/pitch-mode", func() {
@@ -1180,17 +1183,36 @@ setlistener("/FMGC/internal/pitch-mode", func() {
 	}
 }, 0, 0);
 
-setlistener("/gear/gear[1]/wow", func(val) {
-	if (val.getValue() == 0 and timer30secLanding.isRunning) {
-		timer30secLanding.stop();
-		FMGCInternal.landingTime = -99;
-	}
-	
-	if (val.getValue() and FMGCInternal.landingTime == -99) {
-		timer30secLanding.start();
-		FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
-	}
+setlistener("/gear/gear[1]/wow", func(val1) {
+   bothMainWowAfterLanding();
 }, 0, 0);
+
+setlistener("/gear/gear[2]/wow", func(val2) {
+   bothMainWowAfterLanding();
+}, 0, 0);
+
+var bothMainWowAfterLanding = func () {
+      if (!fmgc.Gear.wow1.getValue() and !fmgc.Gear.wow2.getValue()) { 
+         # in air
+
+         # enable selected speed
+	      fmgc.FMGCNodes.selSpdEnable.setBoolValue(nil);
+         timer5selSpdEnable.start();
+
+         if(timer30secLanding.isRunning) {
+            timer30secLanding.stop();
+            FMGCInternal.landingTime = -99;
+
+         }
+      }
+      
+      if ((Gear.wow1.getValue() or Gear.wow1.getValue()) and FMGCInternal.landingTime == -99) {
+         timer30secLanding.start();
+         FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
+
+	      fmgc.FMGCNodes.selSpdEnable.setBoolValue(nil);
+      }
+}
 
 # Align IRS 1
 setlistener("/systems/navigation/adr/operating-1", func() {
@@ -1316,4 +1338,7 @@ var timer5fuelPred = maketimer(1, func() {
 
 var timer5trimReset = maketimer(5, func() {
 	trimReset();
+});
+var timer5selSpdEnable = maketimer(5, func() {
+	fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
 });
