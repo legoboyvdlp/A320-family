@@ -1168,6 +1168,7 @@ var switchDatabase = func {
 	navDataBase.standbyCode = tempStoreCode;
 	navDataBase.standbyDate = tempStoreDate;
 }
+
 ##################################
 # setlisteners for managed speed #
 ##################################
@@ -1187,20 +1188,23 @@ setlistener("/FMGC/internal/pitch-mode", func() {
 	}
 }, 0, 0);
 
-setlistener("/gear/gear[1]/wow", func(val1) {
-   bothMainWowAfterLanding();
-}, 0, 0);
+###################################
+# setlisteners for selected speed #
+###################################
+setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
+      if (val.getBoolValue()) {
+         # on gnd
+         if (FMGCInternal.landingTime == -99) {
+            timer30secLanding.start();
+            FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
 
-setlistener("/gear/gear[2]/wow", func(val2) {
-   bothMainWowAfterLanding();
-}, 0, 0);
-
-var bothMainWowAfterLanding = func () {
-      if (!fmgc.Gear.wow1.getValue() and !fmgc.Gear.wow2.getValue()) { 
+            FMGCNodes.selSpdEnable.setBoolValue(1);
+            bothMainWowAfterLanding();
+         }
+      } else {
          # in air
-
-         # enable selected speed
-	      fmgc.FMGCNodes.selSpdEnable.setBoolValue(nil);
+         # enable selected speed after 5 sec
+	      FMGCNodes.selSpdEnable.setBoolValue(0);
          timer5selSpdEnable.start();
 
          if(timer30secLanding.isRunning) {
@@ -1209,14 +1213,15 @@ var bothMainWowAfterLanding = func () {
 
          }
       }
-      
-      if ((Gear.wow1.getValue() or Gear.wow1.getValue()) and FMGCInternal.landingTime == -99) {
-         timer30secLanding.start();
-         FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
+}, 0, 0);
 
-	      fmgc.FMGCNodes.selSpdEnable.setBoolValue(nil);
+setlistener("/ECAM/phases/phase-calculation/one-engine-running", func(val) {
+      if (val.getBoolValue()){
+         fmgc.FMGCNodes.selSpdEnable.setBoolValue(0);
+      } else {
+         fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
       }
-}
+}, 0, 0);
 
 # Align IRS 1
 setlistener("/systems/navigation/adr/operating-1", func() {

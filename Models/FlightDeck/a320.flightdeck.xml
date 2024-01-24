@@ -3161,13 +3161,7 @@
 				<not><property>controls/switches/annun-test</property></not>
 				<property>it-autoflight/input/kts-mach</property>
 				<property>FMGC/FCU-working</property>
-            <or>
-               <and>
-                  <property>FMGC/internal/managed-spd-active</property>
-                  <property>fcu/input/spd-preselect</property>
-               </and>
-               <not><property>FMGC/internal/managed-spd-active</property></not>
-            </or>
+            <property>fcu/output/spd-window-open</property>
 			</and>
 		</condition>
 	</animation>
