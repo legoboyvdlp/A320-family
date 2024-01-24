@@ -44,6 +44,8 @@ if (getprop("/options/company-options/default-ga-thrRed-agl") != nil) {
 var minAccelAlt = getprop("/options/company-options/default-accel-agl");
 var minThrRed = getprop("/options/company-options/default-thrRed-agl");
 
+var mngSpdActive = props.globals.initNode("/FMGC/internal/managed-spd-active", 0, "BOOL");
+
 setprop("/position/gear-agl-ft", 0);
 
 # 1500 ft is a default value not shown anywhere. It may not exist.
@@ -66,6 +68,7 @@ var FMGCinit = func {
 	FMGCNodes.vmax.setValue(338);
 	FMGCInternal.phase = 0; # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 	FMGCNodes.phase.setValue(0);
+	mngSpdActive.setBoolValue(nil);
 	FMGCInternal.mngSpd = 157;
 	FMGCInternal.mngSpdCmd = 157;
 	FMGCInternal.mngKtsMach = 0;
@@ -244,6 +247,7 @@ var FMGCInternal = {
 	machSwitchover: 0,
 	mngKtsMach: 0,
 	mngSpd: 0,
+	mngSpdActive: 0,
 	mngSpdCmd: 0,
 	
 	# This can't be init to -98, because we don't want it to run until WOW has gone to false and back to true

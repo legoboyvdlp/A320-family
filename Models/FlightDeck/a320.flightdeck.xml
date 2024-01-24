@@ -3163,10 +3163,10 @@
 				<property>FMGC/FCU-working</property>
             <or>
                <and>
-                  <property>it-autoflight/input/spd-managed</property>
+                  <property>FMGC/internal/managed-spd-active</property>
                   <property>fcu/input/spd-preselect</property>
                </and>
-               <not><property>it-autoflight/input/spd-managed</property></not>
+               <not><property>FMGC/internal/managed-spd-active</property></not>
             </or>
 			</and>
 		</condition>
@@ -6591,6 +6591,7 @@
 		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
+			<repeatable>false</repeatable>
 			<binding>
 				<condition>
 					<not><property>devices/status/keyboard/shift</property></not>
@@ -6635,6 +6636,7 @@
 		</action>
 		<action>
 			<button>1</button>
+			<repeatable>false</repeatable>
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>

@@ -279,6 +279,8 @@ var FCUController = {
 
          # a selected speed must be available. SPD window can be opened
          me.spdWindowOpen.setBoolValue(1);
+
+         fmgc.ManagedSPD.stop();
 		}
 	},
 	machTemp: nil,
