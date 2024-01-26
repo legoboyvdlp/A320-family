@@ -25,7 +25,7 @@ var A320RouteManagerDelegate = {
     new: func(fp) {
         var m = { parents: [A320RouteManagerDelegate] };
 		
-        logprint(LOG_INFO, 'creating A320 Route Manager FPDelegate');
+        #logprint(LOG_INFO, 'creating A320 Route Manager FPDelegate');
 		
         m.flightplan = fp;
         return m;
@@ -33,7 +33,7 @@ var A320RouteManagerDelegate = {
 
     departureChanged: func
     {
-        logprint(LOG_INFO, 'saw departure changed');
+        #logprint(LOG_INFO, 'saw departure changed');
         me.flightplan.clearWPType('sid');
         if (me.flightplan.departure == nil)
             return;
@@ -54,7 +54,7 @@ var A320RouteManagerDelegate = {
 
     # and we have a SID
         var sid = me.flightplan.sid;
-        logprint(LOG_INFO, 'routing via SID ' ~ sid.id);
+        #logprint(LOG_INFO, 'routing via SID ' ~ sid.id);
 		
 		var wps = sid.route(me.flightplan.departure_runway, me.flightplan.sid_trans);
 		var lastWP = wps[-1];
@@ -94,7 +94,7 @@ var A320RouteManagerDelegate = {
 
         var initialApproachFix = nil;
         if (me.flightplan.star != nil) {
-            logprint(LOG_INFO, 'routing via STAR ' ~ me.flightplan.star.id);
+            #logprint(LOG_INFO, 'routing via STAR ' ~ me.flightplan.star.id);
             var wps = me.flightplan.star.route(me.flightplan.destination_runway, me.flightplan.star_trans);
             if (wps != nil) {
                 me.flightplan.insertWaypoints(wps, -1);
@@ -110,13 +110,13 @@ var A320RouteManagerDelegate = {
                 # if an approach transition was specified, let's use it explicitly
                 wps = me.flightplan.approach.route(me.flightplan.destination_runway, me.flightplan.approach_trans);
                 if (wps == nil) {
-                    logprint(LOG_WARN, "couldn't route approach " ~ approachIdent ~ " based on specified transition:" ~ me.flightplan.approach_trans);
+                    #logprint(LOG_WARN, "couldn't route approach " ~ approachIdent ~ " based on specified transition:" ~ me.flightplan.approach_trans);
                 }
             } else if (initialApproachFix != nil) {
                 # no explicit approach transition, let's use the IAF to guess one
                 wps = me.flightplan.approach.route(me.flightplan.destination_runway, initialApproachFix);
                 if (wps == nil) {
-                    logprint(LOG_INFO, "couldn't route approach " ~ approachIdent ~ " based on IAF:" ~ initialApproachFix.wp_name);
+                    #logprint(LOG_INFO, "couldn't route approach " ~ approachIdent ~ " based on IAF:" ~ initialApproachFix.wp_name);
                 }
             }
 
@@ -128,7 +128,7 @@ var A320RouteManagerDelegate = {
             }
 
             if (wps == nil) {
-                logprint(LOG_WARN, 'routing via approach ' ~ approachIdent ~ ' failed entirely.');
+                #logprint(LOG_WARN, 'routing via approach ' ~ approachIdent ~ ' failed entirely.');
             } else {
                 me.flightplan.insertWaypoints(wps, -1);
             }
@@ -142,14 +142,14 @@ var A320RouteManagerDelegate = {
 
     cleared: func
     {
-        logprint(LOG_INFO, "saw active flightplan cleared, deactivating");
+        #logprint(LOG_INFO, "saw active flightplan cleared, deactivating");
         # see http://https://code.google.com/p/flightgear-bugs/issues/detail?id=885
         fgcommand("activate-flightplan", props.Node.new({"activate": 0}));
     },
 
     endOfFlightPlan: func
     {
-        logprint(LOG_INFO, "end of flight-plan, deactivating");
+        #logprint(LOG_INFO, "end of flight-plan, deactivating");
         fgcommand("activate-flightplan", props.Node.new({"activate": 0}));
     }
 };
@@ -171,7 +171,7 @@ var A320GPSDelegate = {
     new: func(fp) {
         var m = { parents: [A320GPSDelegate], flightplan:fp, landingCheck:nil };
 
-        logprint(LOG_INFO, 'creating A320 GPS FPDelegate');
+        #logprint(LOG_INFO, 'creating A320 GPS FPDelegate');
 
         # tell the GPS C++ code we will do sequencing ourselves, so it can disable
         # its legacy logic for this
@@ -194,7 +194,7 @@ var A320GPSDelegate = {
     _landingCheckTimeout: func
     {
         if (pts.Gear.wow[0].getValue() and pts.Velocities.groundspeedKt.getValue() < 25)  {
-          logprint(LOG_INFO, 'GPS saw speed < 25kts on destination runway, end of route.');
+          #logprint(LOG_INFO, 'GPS saw speed < 25kts on destination runway, end of route.');
           me.landingCheck.stop();
           # record touch-down time?
           me.flightplan.finish();
@@ -220,14 +220,14 @@ var A320GPSDelegate = {
         if (!me.flightplan.active)
             return;
 
-        logprint(LOG_INFO,'flightplan activated, default GPS to LEG mode');
+        #logprint(LOG_INFO,'flightplan activated, default GPS to LEG mode');
         setprop(GPSPath ~ "/command", "leg");
     },
 
     deactivated: func
     {
         if (me._modeProp.getValue() == 'leg') {
-            logprint(LOG_INFO, 'flightplan deactivated, default GPS to OBS mode');
+            #logprint(LOG_INFO, 'flightplan deactivated, default GPS to OBS mode');
             me._captureCurrentCourse();
             me._selectOBSMode();
         }
@@ -236,7 +236,7 @@ var A320GPSDelegate = {
     endOfFlightPlan: func
     {
         if (me._modeProp.getValue() == 'leg') {
-            logprint(LOG_INFO, 'end of flight-plan, switching GPS to OBS mode');
+            #logprint(LOG_INFO, 'end of flight-plan, switching GPS to OBS mode');
             me._captureCurrentCourse();
             me._selectOBSMode();
         }
@@ -248,7 +248,7 @@ var A320GPSDelegate = {
             return;
 
         if (me._modeProp.getValue() == 'leg') {
-            logprint(LOG_INFO, 'flight-plan cleared, switching GPS to OBS mode');
+            #logprint(LOG_INFO, 'flight-plan cleared, switching GPS to OBS mode');
             me._captureCurrentCourse();
             me._selectOBSMode();
         }
@@ -261,13 +261,13 @@ var A320GPSDelegate = {
 			
         if (me._modeProp.getValue() == 'leg') {
             if (me.flightplan.current + 1 >= me.flightplan.numWaypoints()) {
-				logprint(LOG_INFO, "default GPS sequencing, finishing flightplan");
+				#logprint(LOG_INFO, "default GPS sequencing, finishing flightplan");
 				me.flightplan.finish();
             } elsif (me.flightplan.nextWP().wp_type != 'discontinuity' and me.flightplan.nextWP().wp_type != 'vectors') {
-				logprint(LOG_INFO, "default GPS sequencing to next WP");
+				#logprint(LOG_INFO, "default GPS sequencing to next WP");
 				me.flightplan.current = me.flightplan.current + 1;
 			} else {
-				logprint(LOG_INFO, "default GPS sequencing to next WP (special)");
+				#logprint(LOG_INFO, "default GPS sequencing to next WP (special)");
 				if (fmgc.Output.lat.getValue() == 1) {
 					fmgc.Input.lat.setValue(3);
 				}
