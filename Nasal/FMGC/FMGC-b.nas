@@ -1,6 +1,8 @@
 # A3XX FMGC Autopilot
 # Based off IT-AUTOFLIGHT System Controller V4.0.X
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
+# This file DOES NOT integrate with Property Tree Setup
+# That way, we can update it from generic IT-AUTOFLIGHT easily
 
 # Initialize all used variables and property nodes
 # Sim
@@ -157,7 +159,7 @@ var Output = {
 
 var Text = {
 	lat: props.globals.initNode("/it-autoflight/mode/lat", "T/O", "STRING"),
-	thr: props.globals.initNode("/it-autoflight/mode/thr", "PITCH", "STRING"),
+	spd: props.globals.initNode("/it-autoflight/mode/spd", "PITCH", "STRING"),
 	vert: props.globals.initNode("/it-autoflight/mode/vert", "T/O CLB", "STRING"),
 	vertTemp: "T/O CLB",
 };
@@ -206,8 +208,10 @@ var ITAF = {
 		Input.hdg.setValue(360);
 		Input.alt.setValue(10000);
 		Input.vs.setValue(0);
+		Input.vsAbs.setValue(0);
 		Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",0),3));
 		Input.fpa.setValue(0);
+		Input.fpaAbs.setValue(0);
 		Input.lat.setValue(9);
 		Input.vert.setValue(9);
 		Input.trk.setBoolValue(0);
@@ -232,7 +236,7 @@ var ITAF = {
 		Internal.altCaptureActive = 0;
 		Input.kts.setValue(100);
 		Input.mach.setValue(0.5);
-		Text.thr.setValue("THRUST");
+		Text.spd.setValue("THRUST");
 		updateFma.arm();
 		me.updateLatText("");
 		me.updateVertText("");
@@ -252,9 +256,16 @@ var ITAF = {
 		Output.latTemp = Output.lat.getValue();
 		Output.vertTemp = Output.vert.getValue();
 		
-		# VOR/ILS Revision
+		# LNAV Reversion
+		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
+			if (flightPlanController.num[2].getValue() == 0 or !FPLN.active.getValue()) {
+				me.setLatMode(3);
+			}
+		}
+		
+		# VOR/ILS Reversion
 		if (Output.latTemp == 2 or Output.vertTemp == 2 or Output.vertTemp == 6) {
-			me.checkRadioRevision(Output.latTemp, Output.vertTemp);
+			me.checkRadioReversion(Output.latTemp, Output.vertTemp);
 		}
 		
 		Gear.wow1Temp = Gear.wow1.getBoolValue();
@@ -369,13 +380,6 @@ var ITAF = {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
 		FPLN.activeTemp = FPLN.active.getValue();
 		FPLN.currentWPTemp = FPLN.currentWP.getValue();
-		
-		# If in LNAV mode and route is not longer active, switch to HDG HLD
-		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
-			if (flightPlanController.num[2].getValue() == 0 or !FPLN.activeTemp) {
-				me.setLatMode(3);
-			}
-		}
 		
 		# Waypoint Advance Logic
 		if (flightPlanController.num[2].getValue() > 0 and FPLN.activeTemp == 1 and FPLN.currentWPTemp != -1) {
@@ -684,27 +688,27 @@ var ITAF = {
 		if (Output.athr.getBoolValue() and Output.vertTemp != 7 and (Output.ap1.getBoolValue() or Output.ap2.getBoolValue()) and Position.gearAglFt.getValue() <= 30 and (Output.vertTemp == 2 or Output.vertTemp == 6)) {
 			# Manual says 40 feet - but video reference shows 30!
 			Output.thrMode.setValue(1);
-			Text.thr.setValue("RETARD");
+			Text.spd.setValue("RETARD");
 		} else if (Output.vertTemp == 4) {
 			if (Internal.alt.getValue() >= Position.indicatedAltitudeFt.getValue()) {
 				Output.thrMode.setValue(2);
-				Text.thr.setValue("PITCH");
+				Text.spd.setValue("PITCH");
 				if (Internal.flchActive and Text.vert.getValue() != "SPD CLB") {
 					me.updateVertText("SPD CLB");
 				}
 			} else {
 				Output.thrMode.setValue(1);
-				Text.thr.setValue("PITCH");
+				Text.spd.setValue("PITCH");
 				if (Internal.flchActive and Text.vert.getValue() != "SPD DES") {
 					me.updateVertText("SPD DES");
 				}
 			}
 		} else if (Output.vertTemp == 7) {
 			Output.thrMode.setValue(2);
-			Text.thr.setValue("PITCH");
+			Text.spd.setValue("PITCH");
 		} else {
 			Output.thrMode.setValue(0);
-			Text.thr.setValue("THRUST");
+			Text.spd.setValue("THRUST");
 		}
 	},
 	activateLnav: func() {
@@ -796,15 +800,14 @@ var ITAF = {
 			me.updateApprArm(0);
 		}
 	},
-	checkRadioRevision: func(l, v) { # Revert mode if signal lost
+	checkRadioReversion: func(l, v) { # Revert mode if signal lost
 		if (!Radio.inRange.getBoolValue()) {
 			if (l == 4 or v == 6) {
 				me.ap1Master(0);
 				me.ap2Master(0);
-				me.setLatMode(3);
-				me.setVertMode(1);
+				me.setLatMode(3); # Also cancels G/S and land modes if active
 			} else {
-				me.setLatMode(3); # Also cancels G/S if active
+				me.setLatMode(3); # Also cancels G/S and land modes if active
 			}
 		}
 	},
@@ -858,14 +861,16 @@ var ITAF = {
 		Input.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 		Internal.alt.setValue(math.clamp(math.round(Internal.altPredicted.getValue(), 100), 0, 50000));
 	},
-	tempVS: 0,
 	syncVs: func() {
-		me.tempVS = math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000);
-		Input.vs.setValue(me.tempVS);
-		fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",me.tempVS),3));
+		Internal.vsTemp = math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000);
+		Input.vs.setValue(Internal.vsTemp);
+		Input.vsAbs.setValue(abs(Internal.vsTemp));
+		fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f", Internal.vsTemp), 3));
 	},
 	syncFpa: func() {
-		Input.fpa.setValue(math.clamp(math.round(Internal.fpa.getValue(), 0.1), -9.9, 9.9));
+		Internal.fpaTemp = Internal.fpa.getValue();
+		Input.fpa.setValue(math.clamp(math.round(Internal.fpaTemp, 0.1), -9.9, 9.9));
+		Input.fpaAbs.setValue(abs(math.clamp(math.round(Internal.fpaTemp, 0.1), -9.9, 9.9)));
 	},
 	# Custom Stuff Below
 	updateFma: func() {

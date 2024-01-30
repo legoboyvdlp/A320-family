@@ -1,5 +1,5 @@
 # A3XX PFD
-# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2024 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);

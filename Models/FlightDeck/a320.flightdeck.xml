@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -10,9 +10,9 @@
 		<type>translate</type>
 		<property>systems/shake/shaking</property>
 		<axis>
-			<x1-m>0.0</x1-m>
-			<y1-m>0.0</y1-m>
-			<z1-m>0.0</z1-m>
+			<x1-m>0</x1-m>
+			<y1-m>0</y1-m>
+			<z1-m>0</z1-m>
 			<x2-m>0.5</x2-m>
 			<y2-m>-0.5</y2-m>
 			<z2-m>0.8</z2-m>
@@ -2528,9 +2528,9 @@
 		<object-name>rudder-trim</object-name>
 		<object-name>rudder-trim-letter</object-name>
 		<diffuse>
-			<red>1.00</red>
+			<red>1.0</red>
 			<green>0.355</green>
-			<blue>0.00</blue>
+			<blue>0</blue>
 			<factor-prop>controls/lighting/main-panel-norm-digital</factor-prop>
 		</diffuse>
 		<ambient>
@@ -2544,9 +2544,9 @@
 			<blue>0</blue>
 		</specular>
 		<emission>
-			<red>1.00</red>
+			<red>1.0</red>
 			<green>0.355</green>
-			<blue>0.00</blue>
+			<blue>0</blue>
 			<factor-prop>controls/lighting/main-panel-norm-digital</factor-prop>
 		</emission>
 	</animation>
@@ -2573,11 +2573,12 @@
 		<object-name>ET_clock_hh</object-name>
 		<object-name>ET_clock_sep</object-name>
 		<object-name>ET_clock_mm</object-name>
-		<emission>
+		<diffuse>
 			<red>1.0</red>
 			<green>1.0</green>
 			<blue>1.0</blue>
-		</emission>
+			<factor-prop>controls/lighting/main-panel-norm-digital</factor-prop>
+		</diffuse>
 		<ambient>
 			<red>0</red>
 			<green>0</green>
@@ -2592,6 +2593,7 @@
 			<red>1.0</red>
 			<green>1.0</green>
 			<blue>1.0</blue>
+			<factor-prop>controls/lighting/main-panel-norm-digital</factor-prop>
 		</emission>
 	</animation>
 
@@ -3519,17 +3521,23 @@
 		<type>select</type>
 		<object-name>ovh_eng_cfm.plug</object-name>
 		<condition>
-			<equals>
+			<not-equals>
 				<property>options/eng</property>
-				<value>CFM</value>
-			</equals>
+				<value>IAE</value>
+			</not-equals>
 		</condition>
 	</animation>
 	
 	<animation>
 		<type>select</type>
-		<object-name>ovh_eng_iae.plug</object-name>
+		<object-name>Eng1N1Btn</object-name>
+		<object-name>Eng1N1Btn2O</object-name>
+		<object-name>Eng1N1Prot</object-name>
+		<object-name>Eng2N1Btn</object-name>
+		<object-name>Eng2N1Btn2O</object-name>
+		<object-name>Eng2N1Prot</object-name>
 		<object-name>glare_ovh_eng_iae.plug</object-name>
+		<object-name>ovh_eng_iae.plug</object-name>
 		<condition>
 			<equals>
 				<property>options/eng</property>
@@ -12959,6 +12967,7 @@
 		<type>knob</type>
 		<object-name>trim_1</object-name>
 		<property>controls/flight/elevator-trim</property>
+		<drag-direction>vertical</drag-direction>
 		<factor>1000</factor>
 		<axis>
 			<object-name>trim.axis</object-name>
@@ -12966,13 +12975,13 @@
 		<increase>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.slewPitchWheel(-1);</script>
+				<script>libraries.slewPitchWheel(1);</script>
 			</binding>
 		</increase>
 		<decrease>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.slewPitchWheel(1);</script>
+				<script>libraries.slewPitchWheel(-1);</script>
 			</binding>
 		</decrease>
 		<hovered>
@@ -14936,6 +14945,7 @@
 		<property>controls/cockpit/rmp-l-on-pos</property>
 		<factor>-40</factor>
 		<offset-deg>20</offset-deg>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>radio_on.axis.cpt</object-name>
 		</axis>
@@ -19633,6 +19643,7 @@
 		<property>controls/cockpit/rmp-r-on-pos</property>
 		<factor>-40</factor>
 		<offset-deg>20</offset-deg>
+		<drag-direction>vertical</drag-direction>
 		<axis>
 			<object-name>radio_on.axis.fo</object-name>
 		</axis>

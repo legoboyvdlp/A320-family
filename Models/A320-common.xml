@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	<name>A320-200</name>
@@ -490,6 +490,7 @@
 	<light>
 		<name>Landing Light Left Compositor</name>
 		<type>spot</type>
+		<priority>high</priority>
 		<position>
 			<x-m>-2.080</x-m>
 			<y-m>-2.22016</y-m>
@@ -531,6 +532,7 @@
 	<light>
 		<name>Landing Light Right Compositor</name>
 		<type>spot</type>
+		<priority>high</priority>
 		<position>
 			<x-m>-2.080</x-m>
 			<y-m> 2.22016</y-m>
@@ -572,6 +574,7 @@
 	<light>
 		<name>Taxi Light Compositor</name>
 		<type>spot</type>
+		<priority>high</priority>
 		<position>
 			<x-m>-13.461</x-m>
 			<y-m>0.20414</y-m>
@@ -613,6 +616,7 @@
 	<light>
 		<name>Left Turnoff Compositor</name>
 		<type>spot</type>
+		<priority>medium</priority>
 		<position>
 			<x-m>-13.5034</x-m>
 			<y-m>-0.20993</y-m>
@@ -654,6 +658,7 @@
 	<light>
 		<name>Right Turnoff Compositor</name>
 		<type>spot</type>
+		<priority>medium</priority>
 		<position>
 			<x-m>-13.5034</x-m>
 			<y-m> 0.20914</y-m>
@@ -695,6 +700,7 @@
 	<light>
 		<name>Nose Landing Light Compositor</name>
 		<type>spot</type>
+		<priority>high</priority>
 		<position>
 			<x-m>-13.5119</x-m>
 			<y-m>-0.185175</y-m>

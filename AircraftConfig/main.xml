@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -252,7 +252,9 @@
 			<checkbox>
 				<label>Enable FGCamera 0-9 keys</label>
 				<halign>left</halign>
-				<enable>/sim/fgcamera/enable</enable>
+				<enable>
+					<property>/sim/fgcamera/enable</property>
+				</enable>
 				<property>/options/system/fgcamera-keys-enabled</property>
 				<binding>
 					<command>property-toggle</command>
@@ -372,12 +374,12 @@
 			</checkbox>
 			
 			<checkbox>
-				<label>Use Seperate Tiller Axis</label>
+				<label>Use Separate Tiller Axis</label>
 				<halign>left</halign>
-				<property>/systems/acconfig/options/seperate-tiller-axis</property>
+				<property>/systems/acconfig/options/separate-tiller-axis</property>
 				<binding>
 					<command>property-toggle</command>
-					<property>/systems/acconfig/options/seperate-tiller-axis</property>
+					<property>/systems/acconfig/options/separate-tiller-axis</property>
 				</binding>
 				<binding>
 					<command>dialog-apply</command>

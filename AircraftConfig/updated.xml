@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -59,11 +59,6 @@
 		<text>
 			<halign>left</halign>
 			<label>Some aircraft settings may have been returned to their defaults.</label>
-		</text>
-		
-		<text>
-			<halign>left</halign>
-			<label>This screen will only appear after a fresh install, or update. Thank you for choosing A320-family!</label>
 		</text>
 	</group>
 	

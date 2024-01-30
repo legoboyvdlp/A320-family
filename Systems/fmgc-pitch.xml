@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- IT-AUTOFLIGHT -->
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
@@ -257,7 +257,7 @@
 				<table>
 					<property>/velocities/airspeed-kt</property>
 					<entry><ind>140</ind><dep> 700</dep></entry>
-					<entry><ind>360</ind><dep>1400</dep></entry>
+					<entry><ind>410</ind><dep>1550</dep></entry>
 				</table>
 			</expression>
 		</gain>
@@ -593,6 +593,15 @@
 		</input>
 		<input>
 			<condition>
+				<equals>
+					<property>/it-autoflight/output/vert</property>
+					<value>2</value>
+				</equals>
+			</condition>
+			<property>/it-autoflight/internal/nav-rate-of-climb-fpm</property>
+		</input>
+		<input>
+			<condition>
 				<or>
 					<equals>
 						<property>/it-autoflight/output/vert</property>
@@ -610,15 +619,6 @@
 			<condition>
 				<equals>
 					<property>/it-autoflight/output/vert</property>
-					<value>6</value>
-				</equals>
-			</condition>
-			<property>/it-autoflight/internal/target-fpm-land-fd</property>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/it-autoflight/output/vert</property>
 					<value>5</value>
 				</equals>
 			</condition>
@@ -628,10 +628,10 @@
 			<condition>
 				<equals>
 					<property>/it-autoflight/output/vert</property>
-					<value>2</value>
+					<value>6</value>
 				</equals>
 			</condition>
-			<property>/it-autoflight/internal/nav-rate-of-climb-fpm</property>
+			<property>/it-autoflight/internal/target-fpm-land-fd</property>
 		</input>
 		<input>
 			<condition>
@@ -732,11 +732,18 @@
 					</not-equals>
 				</condition>
 				<expression>
-					<table>
-						<property>/velocities/airspeed-kt</property>
-						<entry><ind>140</ind><dep>0.0029</dep></entry>
-						<entry><ind>360</ind><dep>0.0009</dep></entry>
-					</table>
+					<product>
+						<table>
+							<property>/velocities/airspeed-kt</property>
+							<entry><ind>140</ind><dep>0.00290</dep></entry>
+							<entry><ind>410</ind><dep>0.00045</dep></entry>
+						</table>
+						<table>
+							<property>/position/altitude-ft</property>
+							<entry><ind>    0</ind><dep>1.0</dep></entry>
+							<entry><ind>45000</ind><dep>0.5</dep></entry>
+						</table>
+					</product>
 				</expression>
 			</Kp>
 			<Kp>

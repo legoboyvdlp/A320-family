@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 FCS -->
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <system name="A320: FCS">
 	
@@ -1134,7 +1134,7 @@
 				/gear/gear[0]/wow ne 1
 			</test>
 			<test value="/controls/gear/steering">
-				/systems/acconfig/options/seperate-tiller-axis eq 1
+				/systems/acconfig/options/separate-tiller-axis eq 1
 			</test>
 			<test value="fbw/sidestick/roll-input">
 				/controls/flight/aileron-drives-tiller eq 1
@@ -1145,7 +1145,7 @@
 			<input>/controls/gear/steering-switched</input>
 			<table>
 				<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
-				<independentVar lookup="column">/systems/acconfig/options/seperate-tiller-axis</independentVar>
+				<independentVar lookup="column">/systems/acconfig/options/separate-tiller-axis</independentVar>
 				<tableData>
 					      0  1
 					 0.5  0  0
@@ -1273,7 +1273,7 @@
 				fbw/fmgc/enabled eq 1
 			</test>
 			<test value="hydraulics/tiller/tiller-cmd-deg">
-				/systems/acconfig/options/seperate-tiller-axis eq 1
+				/systems/acconfig/options/separate-tiller-axis eq 1
 			</test>
 			<clipto>
 				<min>-75</min>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 Aerodynamics -->
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <aerodynamics>
 	
@@ -61,7 +61,7 @@
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
 					<independentVar lookup="column">atmosphere/density-altitude</independentVar>
 					<tableData>
-						         0       43000
+						         0       45000
 						-9.8475 -0.5652 -0.5935
 						-2.0912  0.0625  0.0656
 						-0.0098  0.2386  0.2505

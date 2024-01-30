@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 FBW -->
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <system name="A320: FBW">
 	
@@ -11,7 +11,6 @@
 	<property value="0">fbw/pitch/e-i-a</property>
 	<property value="0">fbw/pitch/e-i-n</property>
 	<property value="0">fbw/pitch/pid</property>
-	<property value="0">fbw/yaw/tc-pd</property>
 	<property value="1">fbw/pitch/mixer/sidestick-gain-feedback</property>
 	<property value="0">fbw/spoiler-output</property>
 	<property value="3">fbw/rate-c1</property>
@@ -1242,13 +1241,12 @@
 			</test>
 		</switch>
 		
-		<pid name="fbw/roll/pid-v">
+		<pid name="fbw/roll/pid">
 			<input>fbw/roll/rate-error</input>
 			<kp>fbw/roll/p-gain</kp>
 			<ki>fbw/roll/i-gain</ki>
 			<kd>fbw/roll/d-gain</kd>
 			<trigger>fbw/roll/trigger</trigger>
-			<output>fbw/roll/pid</output>
 			<clipto>
 				<min>-1.0</min>
 				<max>1.0</max>
@@ -1572,7 +1570,7 @@
 			<input>-fbw/pitch/alpha/target</input>
 		</summer>
 		
-		<pid name="fbw/pitch/alpha/pd-v">
+		<pid name="fbw/pitch/alpha/pd">
 			<input>fbw/pitch/alpha/error</input>
 			<kp>fbw/pitch/alpha/p-gain</kp>
 			<ki>0.0</ki>
@@ -1874,13 +1872,12 @@
 			</test>
 		</switch>
 		
-		<pid name="fbw/pitch/pid-v">
+		<pid name="fbw/pitch/pid">
 			<input>fbw/pitch/rate-error</input>
 			<kp>fbw/pitch/p-gain</kp>
 			<ki>fbw/pitch/i-gain</ki>
 			<kd>fbw/pitch/d-gain</kd>
 			<trigger>fbw/pitch/trigger</trigger>
-			<output>fbw/pitch/pid</output>
 			<clipto>
 				<min>-1.0</min>
 				<max>1.0</max>
@@ -2251,19 +2248,23 @@
 			</clipto>
 		</pure_gain>
 		
-		<switch name="fbw/yaw/slip-skid">
+		<switch name="fbw/yaw/slip-skid-raw">
 			<default value="aero/beta-rad"/>
 			<test value="0">
 				position/wow eq 1
 			</test>
 		</switch>
 		
-		<pid name="fbw/yaw/tc-pd-v">
+		<lag_filter name="fbw/yaw/slip-skid">
+			<input>fbw/yaw/slip-skid-raw</input>
+			<c1>2.5</c1>
+		</lag_filter>
+		
+		<pid name="fbw/yaw/tc-pd">
 			<input>fbw/yaw/slip-skid</input>
 			<kp>fbw/yaw/tc-p-gain</kp>
 			<ki>0.0</ki>
 			<kd>fbw/yaw/tc-d-gain</kd>
-			<output>fbw/yaw/tc-pd</output>
 			<clipto>
 				<min>-0.4</min>
 				<max>0.4</max>

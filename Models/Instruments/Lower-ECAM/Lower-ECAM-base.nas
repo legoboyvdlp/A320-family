@@ -1,5 +1,5 @@
 # A3XX Lower ECAM Canvas
-# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2024 Josh Davidson (Octal450) and Jonathan Redpath
 
 var du3_lgt = props.globals.getNode("/controls/lighting/DU/du3");
 var du3_test = props.globals.initNode("/instrumentation/du/du3-test", 0, "BOOL");

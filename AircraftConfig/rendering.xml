@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -34,44 +34,29 @@
 		
 		<text>
 			<halign>left</halign>
-			<label>Your rendering settings will not allow all graphical features of the aircraft to be visible!</label>
+			<label>Aircraft Config has detected that rendering settings are not set properly!</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>This means certain lighting effects will not be usable, including cockpit floodlights. </label>
+			<label>This means lighting effects on the exterior and in the virtual cockpit will not be visible.</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>For the best experience:</label>
-		</text>
-		
-		<text>
-			<halign>left</halign>
-			<label>* Atmospheric Light Scattering should be enabled</label>
-		</text>
-		
-		<text>
-			<halign>left</halign>
-			<label>* Landmass shader should be at least 4 for external lights to illuminate the ground</label>
-		</text>
-		
-		<text>
-			<halign>left</halign>
-			<label>* Model shader should be at least 2 for lighting to illuminate the aircraft model</label>
+			<label>Atmospheric Light Scattering (ALS) must be on, and some shader settings turned up.</label>
 		</text>
 		
 		<hrule/>
 		
 		<text>
 			<halign>left</halign>
-			<label>Would you like Aircraft Config to automatically set these minimum basic settings?</label>
+			<label>Would you like Aircraft Config to automatically turn on ALS and fix shader settings?</label>
 		</text>
 		
 		<text>
 			<halign>left</halign>
-			<label>To save these settings, make sure to quit FlightGear with File -&gt; Exit after your flight is complete.</label>
+			<label>If the settings do not save after fixing, try quitting FlightGear through File -&gt; Exit after fixing.</label>
 		</text>
 	
 	</group>
@@ -115,7 +100,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.renderingSettings.fixAll();
+				acconfig.RENDERING.fixAll();
 				</script>
 			</binding>
 			<binding>
@@ -130,7 +115,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.renderingSettings.fixCore();
+				acconfig.RENDERING.fixCore();
 				</script>
 			</binding>
 			<binding> <!-- Close the non-ALS shader dialog if it is open for some bizarre reason -->

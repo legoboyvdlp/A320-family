@@ -1,5 +1,5 @@
 # A3XX FMGC/Autoflight
-# Copyright (c) 2023 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), and Matthew Maring (mattmaring)
+# Copyright (c) 2024 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), and Matthew Maring (mattmaring)
 
 ##################
 # Init Functions #
