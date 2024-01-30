@@ -180,7 +180,7 @@ var Custom = {
 	showHdg: props.globals.initNode("/it-autoflight/custom/show-hdg", 1, "BOOL"),
 	trkFpa: props.globals.initNode("/it-autoflight/custom/trk-fpa", 0, "BOOL"),
 	Input: {
-		spdManaged: props.globals.initNode("/it-autoflight/input/spd-managed", 1, "BOOL"),
+		spdManaged: props.globals.initNode("/it-autoflight/input/spd-managed", 0, "BOOL"),
 	},
 	Output: {
 		fmaPower: 0,

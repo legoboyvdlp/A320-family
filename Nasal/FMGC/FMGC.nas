@@ -1017,14 +1017,12 @@ var ManagedSPD = maketimer(0.25, func {
    # - AP/FD TCAS engaged
    # not yet all implemented
 
-   # TODO check if crzSet and costIndexSet is part of condition
    if (fcu.FCUController.FCUworking) {
-      if ((fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) and FMGCInternal.crzSet and FMGCInternal.costIndexSet) {
+      if (fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) {
          # speed controlled by FCU?
          if (fmgc.FMGCInternal.v2set) {
             # Managed Speed
             # speed controlled by FMGC
-
             altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
             ktsmach = Input.ktsMach.getValue();
             
@@ -1125,21 +1123,18 @@ var ManagedSPD = maketimer(0.25, func {
             if (!fcu.input.spdPreselect.getBoolValue()) {
                fcu.FCUController.spdWindowOpen.setBoolValue(nil);
             }
-
          } else {
             # v2 not initialized 
             # managed speed can remain engaged if previously activated
             # but it is not active controlled by fmgc
             FMGCNodes.mngSpdActive.setBoolValue(nil);
+            if (fmgc.Custom.Input.spdManaged.getBoolValue() and !fcu.input.spdPreselect.getBoolValue()){
+               fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+            }
          }
       } else {
          # conditions for active managed speed not met
-         # speed mode can still be managed 
-         if (FMGCInternal.phase > 6) {
-            FMGCNodes.mngSpdActive.setBoolValue(nil);
-         } else {
-            fcu.FCUController.SPDPull();
-         }
+         fcu.FCUController.SPDPull();
       }
 	} else {
       # no FCU: speed cannot be controlled
@@ -1174,18 +1169,64 @@ var switchDatabase = func {
 ##################################
 # set managed speed on ground if v2 entered 
 setlistener("/FMGC/internal/v2-set", func() {
-	if (FMGCInternal.phase == 0 or (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[1]/wow"))) {
+	if (FMGCInternal.phase == 0 or (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))) {
       fmgc.ManagedSPD.start();
 	} else {
       me.removelistener();       
    }
 }, 0, 0);
 
+# set managed speed if SRS, EXP CLB, EXP DES or TCAS
 setlistener("/FMGC/internal/pitch-mode", func() {
 	if (FMGCNodes.pitchMode.getValue() == "SRS" or FMGCNodes.pitchMode.getValue() == "EXP CLB" 
          or FMGCNodes.pitchMode.getValue() == "EXP DES" or FMGCNodes.pitchMode.getValue() == "TCAS" ) {
       fmgc.ManagedSPD.start();
 	}
+}, 0, 0);
+
+# enable managed speed if FMS has a valid position when on ground
+setlistener("/systems/navigation/aligned-1", func(val) {
+   if (val.getBoolValue() and (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
+      if (!fmgc.Custom.Input.spdManaged.getBoolValue()) {
+         fmgc.Custom.Input.spdManaged.setBoolValue(1);
+         fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+         fmgc.ManagedSPD.start();
+      }
+   }
+}, 0, 0);
+
+setlistener("/systems/navigation/aligned-2", func(val) {
+   if (val.getBoolValue() and (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
+      if (!fmgc.Custom.Input.spdManaged.getBoolValue()) {
+         fmgc.Custom.Input.spdManaged.setBoolValue(1);
+         fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+         fmgc.ManagedSPD.start();
+      }
+   }
+}, 0, 0);
+
+setlistener("/systems/navigation/aligned-3", func(val) {
+   if (val.getBoolValue() and (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
+      if (!fmgc.Custom.Input.spdManaged.getBoolValue()) {
+         fmgc.Custom.Input.spdManaged.setBoolValue(1);
+         fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+         fmgc.ManagedSPD.start();
+      }
+   }
+}, 0, 0);
+
+setlistener("/it-autoflight/output/fd1", func(val) {
+   if (val.getBoolValue() and getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow") and !fmgc.Output.fd2.getBoolValue()){
+      fmgc.Custom.Input.spdManaged.setBoolValue(1);
+      fmgc.ManagedSPD.start();
+   }
+}, 0, 0);
+
+setlistener("/it-autoflight/output/fd2", func(val) {
+   if (val.getBoolValue() and getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow") and !fmgc.Output.fd1.getBoolValue()){
+      fmgc.Custom.Input.spdManaged.setBoolValue(1);
+      fmgc.ManagedSPD.start();
+   }
 }, 0, 0);
 
 ###################################
