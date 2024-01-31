@@ -239,6 +239,7 @@ var FCUController = {
 	},
 	SPDPush: func() {
 		if (me.FCUworking) {
+         fmgc.Custom.Input.spdManaged.setBoolValue(1);
 			fmgc.ManagedSPD.start();
 		}
 	},

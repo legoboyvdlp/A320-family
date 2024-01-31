@@ -1128,13 +1128,39 @@ var ManagedSPD = maketimer(0.25, func {
             # managed speed can remain engaged if previously activated
             # but it is not active controlled by fmgc
             FMGCNodes.mngSpdActive.setBoolValue(nil);
-            if (fmgc.Custom.Input.spdManaged.getBoolValue() and !fcu.input.spdPreselect.getBoolValue()){
-               fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+            if (fmgc.Custom.Input.spdManaged.getBoolValue() and !fcu.input.spdPreselect.getBoolValue() and
+               (systems.ADIRS.Operating.aligned[0].getBoolValue() or  
+               systems.ADIRS.Operating.aligned[1].getBoolValue() or  
+               systems.ADIRS.Operating.aligned[2].getBoolValue())) 
+            {
+                  fcu.FCUController.spdWindowOpen.setBoolValue(nil);
             }
          }
       } else {
          # conditions for active managed speed not met
-         fcu.FCUController.SPDPull();
+         fmgc.ManagedSPD.stop();
+         fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);
+         fmgc.Custom.Input.spdManaged.setBoolValue(nil);
+         if (fcu.input.spdPreselect.getBoolValue()){
+            fcu.input.spdPreselect.setBoolValue(nil);
+            fcu.spdSelectTimer.stop();
+            if (fmgc.Input.ktsMach.getBoolValue()){
+               fmgc.Input.mach.setValue(fcu.input.mach.getValue());
+            } else {
+               fmgc.Input.kts.setValue(fcu.input.kts.getValue());
+            }
+         } else {
+            if (fmgc.Input.ktsMach.getBoolValue()){
+               fcu.FCUController.mach = math.clamp(math.round(fmgc.Velocities.indicatedMach.getValue(), 0.01), 0.01, 0.99);
+               fmgc.Input.mach.setValue(fcu.FCUController.mach);
+               fcu.input.mach.setValue(fcu.FCUController.mach);
+            } else {
+               fcu.FCUController.ias = math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), 100, 399);
+               fmgc.Input.kts.setValue(fcu.FCUController.ias);
+               fcu.input.kts.setValue(fcu.FCUController.ias);
+            }
+         }
+         fcu.FCUController.spdWindowOpen.setBoolValue(1);
       }
 	} else {
       # no FCU: speed cannot be controlled
@@ -1257,8 +1283,10 @@ setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
 }, 0, 0);
 
 setlistener("/ECAM/phases/phase-calculation/one-engine-running", func(val) {
-      if (val.getBoolValue()){
+      if (val.getBoolValue() and ecam.FWC.Logic.gnd.getBoolValue()){
          fmgc.FMGCNodes.selSpdEnable.setBoolValue(0);
+         fmgc.Custom.Input.spdManaged.setBoolValue(1);
+         fmgc.ManagedSPD.start();
       } else {
          fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
       }
@@ -1299,6 +1327,8 @@ setlistener("/systems/navigation/adr/operating-3", func() {
 		FMGCAlignTime[2].setValue(pts.Sim.Time.elapsedSec.getValue());
 	}
 }, 0, 0);
+
+###################################
 
 # Calculate Block Fuel
 setlistener("/FMGC/internal/block-calculating", func() {
