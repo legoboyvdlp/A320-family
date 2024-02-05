@@ -86,10 +86,13 @@ var Fd = {
 
 var Input = {
 	alt: props.globals.initNode("/it-autoflight/input/alt", 10000, "INT"),
-	ap1: props.globals.initNode("/it-autoflight/input/ap1", 0, "BOOL"),
-	ap2: props.globals.initNode("/it-autoflight/input/ap2", 0, "BOOL"),
-	athr: props.globals.initNode("/it-autoflight/input/athr", 0, "BOOL"),
 	altDiff: 0,
+	ap1: props.globals.initNode("/it-autoflight/input/ap1", 0, "BOOL"),
+	ap1Temp: 0,
+	ap2: props.globals.initNode("/it-autoflight/input/ap2", 0, "BOOL"),
+	ap2Temp: 0,
+	athr: props.globals.initNode("/it-autoflight/input/athr", 0, "BOOL"),
+	athrTemp: 0,
 	bankLimitSw: props.globals.initNode("/it-autoflight/input/bank-limit-sw", 0, "INT"),
 	bankLimitSwTemp: 0,
 	fd1: props.globals.initNode("/it-autoflight/input/fd1", 1, "BOOL"),
