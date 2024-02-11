@@ -35056,7 +35056,12 @@
 		<object-name>ExtPwrBtn1A</object-name>
 		<condition>
 			<or>
-				<property>controls/electrical/switches/ground-cart</property>
+				<and>
+					<property>controls/electrical/switches/ground-cart</property>
+					<not>
+						<property>controls/electrical/switches/ext-pwr</property>
+					</not>
+				</and>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
