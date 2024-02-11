@@ -4017,7 +4017,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>oxy-mask-cockpit-door-lbl</tooltip-id>
@@ -4053,7 +4053,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>oxy-mask-fo-door-lbl</tooltip-id>
@@ -4395,7 +4395,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>warn-lbl</tooltip-id>
@@ -4455,7 +4455,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>caut-lbl</tooltip-id>
@@ -4578,7 +4578,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc_msg-lbl</tooltip-id>
@@ -4767,7 +4767,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_cpt-lbl</tooltip-id>
@@ -4939,7 +4939,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_fo-lbl</tooltip-id>
@@ -5002,7 +5002,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_cpt_toggle-lbl</tooltip-id>
@@ -5037,7 +5037,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_fo_toggle-lbl</tooltip-id>
@@ -5095,7 +5095,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fd-1-lbl</tooltip-id>
@@ -5166,7 +5166,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ls-1-lbl</tooltip-id>
@@ -5237,7 +5237,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ls-2-lbl</tooltip-id>
@@ -5301,7 +5301,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fd-2-lbl</tooltip-id>
@@ -5376,7 +5376,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cstr-1-lbl</tooltip-id>
@@ -5450,7 +5450,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cstr-2-lbl</tooltip-id>
@@ -5524,7 +5524,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>wpt-1-lbl</tooltip-id>
@@ -5598,7 +5598,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>wpt-2-lbl</tooltip-id>
@@ -5672,7 +5672,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vor-1-lbl</tooltip-id>
@@ -5746,7 +5746,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vor-2-lbl</tooltip-id>
@@ -5820,7 +5820,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndb-1-lbl</tooltip-id>
@@ -5894,7 +5894,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndb-2-lbl</tooltip-id>
@@ -5968,7 +5968,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>arpt-1-lbl</tooltip-id>
@@ -6042,7 +6042,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>arpt-2-lbl</tooltip-id>
@@ -6114,7 +6114,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndmode-cpt-lbl</tooltip-id>
@@ -6160,7 +6160,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndmode-fo-lbl</tooltip-id>
@@ -6207,7 +6207,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndrange-cpt-lbl</tooltip-id>
@@ -6254,7 +6254,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ndrange-fo-lbl</tooltip-id>
@@ -6310,7 +6310,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>voradf-1-cpt-lbl</tooltip-id>
@@ -6366,7 +6366,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>voradf-1-fo-lbl</tooltip-id>
@@ -6422,7 +6422,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>voradf-2-cpt-lbl</tooltip-id>
@@ -6478,7 +6478,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>voradf-2-fo-lbl</tooltip-id>
@@ -6562,7 +6562,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>spd-mach-lbl</tooltip-id>
@@ -6712,7 +6712,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>spd-lbl</tooltip-id>
@@ -6862,7 +6862,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hdg-lbl</tooltip-id>
@@ -6914,7 +6914,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>loc-lbl</tooltip-id>
@@ -6998,7 +6998,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hdg-vs-lbl</tooltip-id>
@@ -7050,7 +7050,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ap1-lbl</tooltip-id>
@@ -7114,7 +7114,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ap2-lbl</tooltip-id>
@@ -7178,7 +7178,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>athr-lbl</tooltip-id>
@@ -7340,7 +7340,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>alt-lbl</tooltip-id>
@@ -7389,7 +7389,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>alt-sel-mode-lbl</tooltip-id>
@@ -7525,7 +7525,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hdg-lbl</tooltip-id>
@@ -7581,7 +7581,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>appr-lbl</tooltip-id>
@@ -7653,7 +7653,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>metric-altitude-lbl</tooltip-id>
@@ -7710,7 +7710,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>chrono-1-lbl</tooltip-id>
@@ -7767,7 +7767,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>chrono-2-lbl</tooltip-id>
@@ -7812,7 +7812,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fcu-panel_lt-lbl</tooltip-id>
@@ -7842,7 +7842,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fcu-digit_lt-lbl</tooltip-id>
@@ -7889,7 +7889,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>clock-chrono-reset-lbl</tooltip-id>
@@ -7949,7 +7949,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>clock-chrono-lbl</tooltip-id>
@@ -8011,7 +8011,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>clock-set-lbl</tooltip-id>
@@ -8308,7 +8308,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>utc-select-lbl</tooltip-id>
@@ -8352,7 +8352,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>et-ctl-lbl</tooltip-id>
@@ -8652,7 +8652,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>qnh_iesi-lbl</tooltip-id>
@@ -8701,7 +8701,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>iesi-reset-lbl</tooltip-id>
@@ -8758,7 +8758,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>iesi-plus-lbl</tooltip-id>
@@ -8815,7 +8815,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>iesi-minus-lbl</tooltip-id>
@@ -8948,7 +8948,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-brt-l-lbl</tooltip-id>
@@ -9003,7 +9003,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-dim-l-lbl</tooltip-id>
@@ -9058,7 +9058,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-brt-r-lbl</tooltip-id>
@@ -9113,7 +9113,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-dim-r-lbl</tooltip-id>
@@ -9199,7 +9199,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-r2-l-lbl</tooltip-id>
@@ -9252,7 +9252,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dcdu-r2-r-lbl</tooltip-id>
@@ -9349,7 +9349,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ddrmi-1-lbl</tooltip-id>
@@ -9383,7 +9383,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ddrmi-2-lbl</tooltip-id>
@@ -9793,7 +9793,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>terr_cpt-lbl</tooltip-id>
@@ -9855,7 +9855,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>terr_fo-lbl</tooltip-id>
@@ -9970,7 +9970,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>brk-fan-lbl</tooltip-id>
@@ -10141,7 +10141,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>autobrk-lo-lbl</tooltip-id>
@@ -10210,7 +10210,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>autobrk-med-lbl</tooltip-id>
@@ -10279,7 +10279,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>autobrk-max-lbl</tooltip-id>
@@ -10332,7 +10332,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nws-switch-lbl</tooltip-id>
@@ -10480,7 +10480,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gear-lbl</tooltip-id>
@@ -10632,7 +10632,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>traytable-cpt-lbl</tooltip-id>
@@ -10656,7 +10656,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>traytable-fo-lbl</tooltip-id>
@@ -10681,7 +10681,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>footrest-cpt-lbl</tooltip-id>
@@ -10716,7 +10716,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>footrest-fo-lbl</tooltip-id>
@@ -10762,7 +10762,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pfd_brt_cpt-lbl</tooltip-id>
@@ -10794,7 +10794,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pfd_brt_fo-lbl</tooltip-id>
@@ -10839,7 +10839,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pfd_xfr-cpt-lbl</tooltip-id>
@@ -10897,7 +10897,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pfd_xfr-fo-lbl</tooltip-id>
@@ -10944,7 +10944,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nd_brt_cpt_layer-lbl</tooltip-id>
@@ -10976,7 +10976,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nd_brt_cpt-lbl</tooltip-id>
@@ -11008,7 +11008,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nd_brt_fo_layer-lbl</tooltip-id>
@@ -11040,7 +11040,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nd_brt_fo-lbl</tooltip-id>
@@ -11073,7 +11073,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>speaker_volume_cpt-lbl</tooltip-id>
@@ -11105,7 +11105,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>speaker_volume_fo-lbl</tooltip-id>
@@ -11148,7 +11148,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>warmer_cpt_lbl</tooltip-id>
@@ -11190,7 +11190,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>warmer_fo_lbl</tooltip-id>
@@ -11248,7 +11248,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>console_lt_cpt_lbl</tooltip-id>
@@ -11305,7 +11305,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>console_lt_fo_lbl</tooltip-id>
@@ -11402,7 +11402,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-lbl</tooltip-id>
@@ -11474,7 +11474,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-lbl</tooltip-id>
@@ -11607,7 +11607,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>air_data_lbl</tooltip-id>
@@ -11640,7 +11640,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ewd_brt_lbl</tooltip-id>
@@ -11672,7 +11672,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ewd_brt_lbl</tooltip-id>
@@ -11724,7 +11724,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>toconfig-lbl</tooltip-id>
@@ -11773,7 +11773,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emercanc_lid-lbl</tooltip-id>
@@ -11968,7 +11968,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng-lbl</tooltip-id>
@@ -12033,7 +12033,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apu-lbl</tooltip-id>
@@ -12098,7 +12098,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bleed-lbl</tooltip-id>
@@ -12163,7 +12163,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cond-lbl</tooltip-id>
@@ -12228,7 +12228,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>press-lbl</tooltip-id>
@@ -12293,7 +12293,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>door-lbl</tooltip-id>
@@ -12358,7 +12358,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elec-lbl</tooltip-id>
@@ -12423,7 +12423,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>wheel-lbl</tooltip-id>
@@ -12488,7 +12488,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hyd-lbl</tooltip-id>
@@ -12553,7 +12553,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fctl-lbl</tooltip-id>
@@ -12618,7 +12618,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fuel-lbl</tooltip-id>
@@ -12669,7 +12669,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fuel-lbl</tooltip-id>
@@ -12737,7 +12737,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>clrl-lbl</tooltip-id>
@@ -12802,7 +12802,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>sts-lbl</tooltip-id>
@@ -12870,7 +12870,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rcl-lbl</tooltip-id>
@@ -12937,7 +12937,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>clrr-lbl</tooltip-id>
@@ -12987,7 +12987,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pitch-trim-lbl</tooltip-id>
@@ -13030,7 +13030,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng-thrt1-lbl</tooltip-id>
@@ -13086,7 +13086,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>disconnect-athr-lbl</tooltip-id>
@@ -13131,7 +13131,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>disconnect-athr-r-lbl</tooltip-id>
@@ -13171,7 +13171,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng-thrt2-lbl</tooltip-id>
@@ -13283,7 +13283,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rev-thrust-lbl</tooltip-id>
@@ -13338,7 +13338,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>l_cutoff_lbl</tooltip-id>
@@ -13416,7 +13416,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>r_cutoff_lbl</tooltip-id>
@@ -13480,7 +13480,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng_mode_switch_lbl</tooltip-id>
@@ -13556,7 +13556,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>flood-main-lbl</tooltip-id>
@@ -13588,7 +13588,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>integlt-lbl</tooltip-id>
@@ -13620,7 +13620,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>flood-ped-lbl</tooltip-id>
@@ -13656,7 +13656,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vu112_aids-lbl</tooltip-id>
@@ -13705,7 +13705,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vu112_dfdr-lbl</tooltip-id>
@@ -13767,7 +13767,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>wxr-radar-lbl</tooltip-id>
@@ -14540,7 +14540,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1freqkhz-lbl</tooltip-id>
@@ -14929,7 +14929,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1freqmhz-lbl</tooltip-id>
@@ -14965,7 +14965,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1on-lbl</tooltip-id>
@@ -15015,7 +15015,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1vhf1-lbl</tooltip-id>
@@ -15079,7 +15079,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1vhf2-lbl</tooltip-id>
@@ -15142,7 +15142,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1vhf3-lbl</tooltip-id>
@@ -15206,7 +15206,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1hf1-lbl</tooltip-id>
@@ -15269,7 +15269,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1hf2-lbl</tooltip-id>
@@ -15342,7 +15342,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp1am-lbl</tooltip-id>
@@ -15405,7 +15405,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmpxfrfo-lbl</tooltip-id>
@@ -15699,7 +15699,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav1guard-lbl</tooltip-id>
@@ -15749,7 +15749,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav1-lbl</tooltip-id>
@@ -15814,7 +15814,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vor1-lbl</tooltip-id>
@@ -15878,7 +15878,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ls1-lbl</tooltip-id>
@@ -15942,7 +15942,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>adf1-lbl</tooltip-id>
@@ -16009,7 +16009,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bfo1-lbl</tooltip-id>
@@ -16046,7 +16046,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>headset-lbl</tooltip-id>
@@ -16096,7 +16096,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ptt1-lbl</tooltip-id>
@@ -16141,7 +16141,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pa1-lbl</tooltip-id>
@@ -16230,7 +16230,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acptreset1-lbl</tooltip-id>
@@ -16330,7 +16330,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf1acp1-lbl</tooltip-id>
@@ -16430,7 +16430,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf2acp1-lbl</tooltip-id>
@@ -16530,7 +16530,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf3acp1-lbl</tooltip-id>
@@ -16630,7 +16630,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf1acp1-lbl</tooltip-id>
@@ -16730,7 +16730,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf2acp1-lbl</tooltip-id>
@@ -16830,7 +16830,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mechacp1-lbl</tooltip-id>
@@ -16930,7 +16930,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabattacp1-lbl</tooltip-id>
@@ -16990,7 +16990,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>attonvoice1-lbl</tooltip-id>
@@ -17212,7 +17212,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf1knob-lbl</tooltip-id>
@@ -17270,7 +17270,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf2knob-lbl</tooltip-id>
@@ -17328,7 +17328,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf3knob-lbl</tooltip-id>
@@ -17386,7 +17386,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf1knob-lbl</tooltip-id>
@@ -17444,7 +17444,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf2knob-lbl</tooltip-id>
@@ -17502,7 +17502,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acintknob-lbl</tooltip-id>
@@ -17560,7 +17560,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpcabknob-lbl</tooltip-id>
@@ -17618,7 +17618,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acppaknob-lbl</tooltip-id>
@@ -17676,7 +17676,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor1-lbl</tooltip-id>
@@ -17737,7 +17737,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor2-lbl</tooltip-id>
@@ -17795,7 +17795,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmarker-lbl</tooltip-id>
@@ -17853,7 +17853,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpils-lbl</tooltip-id>
@@ -17911,7 +17911,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmls-lbl</tooltip-id>
@@ -17972,7 +17972,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf1-lbl</tooltip-id>
@@ -18030,7 +18030,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf2-lbl</tooltip-id>
@@ -19237,7 +19237,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2freqkhz-lbl</tooltip-id>
@@ -19627,7 +19627,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2freqmhz-lbl</tooltip-id>
@@ -19663,7 +19663,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2on-lbl</tooltip-id>
@@ -19713,7 +19713,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2vhf1-lbl</tooltip-id>
@@ -19776,7 +19776,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2vhf2-lbl</tooltip-id>
@@ -19839,7 +19839,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2vhf3-lbl</tooltip-id>
@@ -19903,7 +19903,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2hf1-lbl</tooltip-id>
@@ -19966,7 +19966,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2hf2-lbl</tooltip-id>
@@ -20039,7 +20039,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmp2am-lbl</tooltip-id>
@@ -20102,7 +20102,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rmpxfrfo-lbl</tooltip-id>
@@ -20396,7 +20396,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav2guard-lbl</tooltip-id>
@@ -20446,7 +20446,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav2-lbl</tooltip-id>
@@ -20511,7 +20511,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vor2-lbl</tooltip-id>
@@ -20575,7 +20575,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ls2-lbl</tooltip-id>
@@ -20639,7 +20639,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>adf2-lbl</tooltip-id>
@@ -20706,7 +20706,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bfo2-lbl</tooltip-id>
@@ -20770,7 +20770,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ptt2-lbl</tooltip-id>
@@ -20815,7 +20815,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pa2-lbl</tooltip-id>
@@ -20891,7 +20891,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acptreset2-lbl</tooltip-id>
@@ -20991,7 +20991,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf1acp2-lbl</tooltip-id>
@@ -21091,7 +21091,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf2acp2-lbl</tooltip-id>
@@ -21191,7 +21191,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf3acp2-lbl</tooltip-id>
@@ -21291,7 +21291,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf1acp2-lbl</tooltip-id>
@@ -21391,7 +21391,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf2acp2-lbl</tooltip-id>
@@ -21491,7 +21491,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mechacp2-lbl</tooltip-id>
@@ -21591,7 +21591,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabattacp2-lbl</tooltip-id>
@@ -21651,7 +21651,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>attonvoice1-lbl</tooltip-id>
@@ -21874,7 +21874,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf1knob-lbl</tooltip-id>
@@ -21932,7 +21932,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf2knob-lbl</tooltip-id>
@@ -21990,7 +21990,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf3knob-lbl</tooltip-id>
@@ -22048,7 +22048,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf1knob-lbl</tooltip-id>
@@ -22106,7 +22106,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf2knob-lbl</tooltip-id>
@@ -22164,7 +22164,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acintknob-lbl</tooltip-id>
@@ -22222,7 +22222,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpcabknob-lbl</tooltip-id>
@@ -22280,7 +22280,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acppaknob-lbl</tooltip-id>
@@ -22338,7 +22338,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor1-lbl</tooltip-id>
@@ -22399,7 +22399,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor2-lbl</tooltip-id>
@@ -22457,7 +22457,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmarker-lbl</tooltip-id>
@@ -22515,7 +22515,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpils-lbl</tooltip-id>
@@ -22573,7 +22573,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmls-lbl</tooltip-id>
@@ -22634,7 +22634,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf1-lbl</tooltip-id>
@@ -22692,7 +22692,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf2-lbl</tooltip-id>
@@ -23166,7 +23166,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc0-lbl</tooltip-id>
@@ -23219,7 +23219,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc1-lbl</tooltip-id>
@@ -23272,7 +23272,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc2-lbl</tooltip-id>
@@ -23325,7 +23325,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc3-lbl</tooltip-id>
@@ -23378,7 +23378,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc4-lbl</tooltip-id>
@@ -23431,7 +23431,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc5-lbl</tooltip-id>
@@ -23484,7 +23484,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc6-lbl</tooltip-id>
@@ -23537,7 +23537,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atc7-lbl</tooltip-id>
@@ -23590,7 +23590,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>atcclr-lbl</tooltip-id>
@@ -23639,7 +23639,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>thrt-lbl</tooltip-id>
@@ -23676,7 +23676,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>sys-lbl</tooltip-id>
@@ -23711,7 +23711,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>abv-blw-lbl</tooltip-id>
@@ -23784,7 +23784,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 			<command>set-tooltip</command>
 			<tooltip-id>atc_stby_mode</tooltip-id>
@@ -23828,7 +23828,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>thrt-lbl</tooltip-id>
@@ -23934,7 +23934,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rud_trim_lbl</tooltip-id>
@@ -23992,7 +23992,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rud_trim_lbl</tooltip-id>
@@ -24046,7 +24046,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>park_brk_lbl</tooltip-id>
@@ -24096,7 +24096,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>doorc-switch-lock</tooltip-id>
@@ -24159,7 +24159,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cockpit_door-lbl</tooltip-id>
@@ -24215,7 +24215,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rud_trim_lbl</tooltip-id>
@@ -24287,7 +24287,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>flap_lbl</tooltip-id>
@@ -24354,7 +24354,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elt-sw-guard-lbl</tooltip-id>
@@ -24390,7 +24390,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elt-sw-lbl</tooltip-id>
@@ -24468,7 +24468,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elt-test-lbl</tooltip-id>
@@ -24514,7 +24514,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>oxy-tmr-rst-lbl</tooltip-id>
@@ -24579,7 +24579,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>svc-int-lbl</tooltip-id>
@@ -24644,7 +24644,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>avionics-lt-lbl</tooltip-id>
@@ -24704,7 +24704,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>blue-pump-ovrd-guard-lbl</tooltip-id>
@@ -24752,7 +24752,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>blue-pump-ovrd-lbl</tooltip-id>
@@ -24812,7 +24812,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fadecpwr1-lbl</tooltip-id>
@@ -24860,7 +24860,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fadec-gnd-pwr-1-lbl</tooltip-id>
@@ -24919,7 +24919,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fadecpwr2-lbl</tooltip-id>
@@ -24967,7 +24967,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fadec-gnd-pwr-2-lbl</tooltip-id>
@@ -25042,7 +25042,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ptt3-lbl</tooltip-id>
@@ -25087,7 +25087,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pa3-lbl</tooltip-id>
@@ -25163,7 +25163,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acptreset3-lbl</tooltip-id>
@@ -25263,7 +25263,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf1acp3-lbl</tooltip-id>
@@ -25363,7 +25363,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf2acp3-lbl</tooltip-id>
@@ -25463,7 +25463,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>vhf3acp3-lbl</tooltip-id>
@@ -25563,7 +25563,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf1acp3-lbl</tooltip-id>
@@ -25663,7 +25663,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>hf2acp3-lbl</tooltip-id>
@@ -25763,7 +25763,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mechacp3-lbl</tooltip-id>
@@ -25863,7 +25863,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabattacp3-lbl</tooltip-id>
@@ -25923,7 +25923,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>attonvoice3-lbl</tooltip-id>
@@ -26145,7 +26145,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf1knob-lbl</tooltip-id>
@@ -26203,7 +26203,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf2knob-lbl</tooltip-id>
@@ -26261,7 +26261,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvhf3knob-lbl</tooltip-id>
@@ -26319,7 +26319,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf1knob-lbl</tooltip-id>
@@ -26377,7 +26377,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acphf2knob-lbl</tooltip-id>
@@ -26435,7 +26435,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acintknob-lbl</tooltip-id>
@@ -26493,7 +26493,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpcabknob-lbl</tooltip-id>
@@ -26551,7 +26551,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acppaknob-lbl</tooltip-id>
@@ -26609,7 +26609,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor3-lbl</tooltip-id>
@@ -26670,7 +26670,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpvor3-lbl</tooltip-id>
@@ -26728,7 +26728,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmarker-lbl</tooltip-id>
@@ -26786,7 +26786,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpils-lbl</tooltip-id>
@@ -26844,7 +26844,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpmls-lbl</tooltip-id>
@@ -26905,7 +26905,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf3-lbl</tooltip-id>
@@ -26963,7 +26963,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>acpadf3-lbl</tooltip-id>
@@ -27428,7 +27428,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>readinglt-l-lbl</tooltip-id>
@@ -27460,7 +27460,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>readinglt-r-lbl</tooltip-id>
@@ -27497,7 +27497,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>audio-swtg-lbl</tooltip-id>
@@ -27524,7 +27524,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cpt-visor-lbl</tooltip-id>
@@ -27593,7 +27593,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fo-visor-lbl</tooltip-id>
@@ -27662,7 +27662,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>stby-compass-lbl</tooltip-id>
@@ -27750,7 +27750,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>left-rpt-lbl</tooltip-id>
@@ -27805,7 +27805,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>left-wiper-lbl</tooltip-id>
@@ -27846,7 +27846,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>right-wiper-lbl</tooltip-id>
@@ -27912,7 +27912,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>right-rpt-lbl</tooltip-id>
@@ -27967,7 +27967,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
@@ -28024,7 +28024,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
@@ -28081,7 +28081,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
@@ -28138,7 +28138,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
@@ -28195,7 +28195,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
@@ -28235,7 +28235,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
@@ -28275,7 +28275,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
@@ -28332,7 +28332,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>nav-sw-lbl</tooltip-id>
@@ -28386,7 +28386,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apu-master-lbl</tooltip-id>
@@ -28477,7 +28477,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apu-start-lbl</tooltip-id>
@@ -28573,7 +28573,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>seatbelt-sign-lbl</tooltip-id>
@@ -28630,7 +28630,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>no-smk-lbl</tooltip-id>
@@ -28687,7 +28687,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emer-exit-lbl</tooltip-id>
@@ -28731,7 +28731,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ohp-mark-brt-lbl</tooltip-id>
@@ -28777,7 +28777,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>stby-compass-lt-lbl</tooltip-id>
@@ -28834,7 +28834,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>dome-lt-lbl</tooltip-id>
@@ -28874,7 +28874,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>audio-swtg-lbl</tooltip-id>
@@ -28922,7 +28922,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>wngaice-lbl</tooltip-id>
@@ -29008,7 +29008,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>lengaice-lbl</tooltip-id>
@@ -29094,7 +29094,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rengaice-lbl</tooltip-id>
@@ -29181,7 +29181,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>prbht-lbl</tooltip-id>
@@ -29262,7 +29262,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>manvs-lbl</tooltip-id>
@@ -29309,7 +29309,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pressmode-lbl</tooltip-id>
@@ -29417,7 +29417,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ditch-lbl</tooltip-id>
@@ -29466,7 +29466,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ditch_guard-lbl</tooltip-id>
@@ -29531,7 +29531,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ir1-lbl</tooltip-id>
@@ -29604,7 +29604,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ir2-lbl</tooltip-id>
@@ -29677,7 +29677,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ir3-lbl</tooltip-id>
@@ -29758,7 +29758,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>adr1-lbl</tooltip-id>
@@ -29844,7 +29844,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>adr2-lbl</tooltip-id>
@@ -29930,7 +29930,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>adr3-lbl</tooltip-id>
@@ -30003,7 +30003,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ratguard-lbl</tooltip-id>
@@ -30040,7 +30040,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>evac-lbl</tooltip-id>
@@ -30091,7 +30091,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>evac-horn-lbl</tooltip-id>
@@ -30145,7 +30145,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ratguard-lbl</tooltip-id>
@@ -30180,7 +30180,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emergentest-guard-lbl</tooltip-id>
@@ -30215,7 +30215,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emergentest-lbl</tooltip-id>
@@ -30277,7 +30277,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gen-1-glc-lbl</tooltip-id>
@@ -30364,7 +30364,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emergendeploy-lbl</tooltip-id>
@@ -30418,7 +30418,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emergendeployguard-lbl</tooltip-id>
@@ -30454,7 +30454,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>maskmanguard-lbl</tooltip-id>
@@ -30501,7 +30501,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>maskman-lbl</tooltip-id>
@@ -30573,7 +30573,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>crewoxy-lbl</tooltip-id>
@@ -30646,7 +30646,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>evac-lbl</tooltip-id>
@@ -30822,7 +30822,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>groundcall-lbl</tooltip-id>
@@ -30881,7 +30881,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>allcall-lbl</tooltip-id>
@@ -30940,7 +30940,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fwdcall-lbl</tooltip-id>
@@ -30999,7 +30999,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>aftcall-lbl</tooltip-id>
@@ -31053,7 +31053,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emercall-lbl</tooltip-id>
@@ -31109,7 +31109,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>emercall-lbl</tooltip-id>
@@ -31181,7 +31181,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1-fire-lbl</tooltip-id>
@@ -31218,7 +31218,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1-fire-cover-lbl</tooltip-id>
@@ -31300,7 +31300,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apu-fire-btn-lbl</tooltip-id>
@@ -31337,7 +31337,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apu-fire-cover-lbl</tooltip-id>
@@ -31419,7 +31419,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng2-fire-btn-lbl</tooltip-id>
@@ -31456,7 +31456,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng2-fire-cover-lbl</tooltip-id>
@@ -32183,7 +32183,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>green-eng-lbl</tooltip-id>
@@ -32267,7 +32267,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rat-lbl</tooltip-id>
@@ -32315,7 +32315,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ratguard-lbl</tooltip-id>
@@ -32365,7 +32365,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>blue-elec-lbl</tooltip-id>
@@ -32399,7 +32399,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>blueelecguard-lbl</tooltip-id>
@@ -32478,7 +32478,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>PTU-lbl</tooltip-id>
@@ -32557,7 +32557,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>yellow-eng-lbl</tooltip-id>
@@ -32636,7 +32636,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>yellow-elec-lbl</tooltip-id>
@@ -32722,7 +32722,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>leftfuel1-lbl</tooltip-id>
@@ -32810,7 +32810,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>leftfuel2-lbl</tooltip-id>
@@ -32898,7 +32898,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>centerfuel1-lbl</tooltip-id>
@@ -32986,7 +32986,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fuelmode-lbl</tooltip-id>
@@ -33074,7 +33074,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>xfeed-lbl</tooltip-id>
@@ -33162,7 +33162,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>centerfuel2-lbl</tooltip-id>
@@ -33250,7 +33250,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rightfuel1-lbl</tooltip-id>
@@ -33338,7 +33338,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>rightfuel2-lbl</tooltip-id>
@@ -33420,7 +33420,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>packflow-lbl</tooltip-id>
@@ -33452,7 +33452,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cockpittemp-lbl</tooltip-id>
@@ -33484,7 +33484,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fwdcabin-lbl</tooltip-id>
@@ -33516,7 +33516,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>aftcabin-lbl</tooltip-id>
@@ -33553,7 +33553,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>xbleed-lbl</tooltip-id>
@@ -33606,7 +33606,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pack1-lbl</tooltip-id>
@@ -33697,7 +33697,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bleed1-lbl</tooltip-id>
@@ -33772,7 +33772,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ramairguard-lbl</tooltip-id>
@@ -33830,7 +33830,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ramair-lbl</tooltip-id>
@@ -33909,7 +33909,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apubleed-lbl</tooltip-id>
@@ -34009,7 +34009,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bleed2-lbl</tooltip-id>
@@ -34097,7 +34097,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>bleed2-lbl</tooltip-id>
@@ -34191,7 +34191,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>pack2-lbl</tooltip-id>
@@ -34277,7 +34277,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>galley-lbl</tooltip-id>
@@ -34329,7 +34329,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>commercial-lbl</tooltip-id>
@@ -34410,7 +34410,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>battery1-lbl</tooltip-id>
@@ -34492,7 +34492,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>battery2-lbl</tooltip-id>
@@ -34684,7 +34684,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gen1-lbl</tooltip-id>
@@ -34778,7 +34778,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gen1-lbl</tooltip-id>
@@ -34860,7 +34860,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apugen-lbl</tooltip-id>
@@ -34953,7 +34953,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>apugen-lbl</tooltip-id>
@@ -35026,7 +35026,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>extpwr-lbl</tooltip-id>
@@ -35114,7 +35114,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gen2-lbl</tooltip-id>
@@ -35311,7 +35311,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elac1-lbl</tooltip-id>
@@ -35400,7 +35400,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>sec1-lbl</tooltip-id>
@@ -35489,7 +35489,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fac1-lbl</tooltip-id>
@@ -35578,7 +35578,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>elac2-lbl</tooltip-id>
@@ -35667,7 +35667,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>sec2-lbl</tooltip-id>
@@ -35756,7 +35756,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>sec3-lbl</tooltip-id>
@@ -35845,7 +35845,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fac2-lbl</tooltip-id>
@@ -35969,7 +35969,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-terr-lbl</tooltip-id>
@@ -36032,7 +36032,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-sys-lbl</tooltip-id>
@@ -36094,7 +36094,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-gs-lbl</tooltip-id>
@@ -36155,7 +36155,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>gpws-flap-lbl</tooltip-id>
@@ -36216,7 +36216,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>flaps3-lbl</tooltip-id>
@@ -36350,7 +36350,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fwdguard-lbl</tooltip-id>
@@ -36395,7 +36395,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fwddisch-lbl</tooltip-id>
@@ -36460,7 +36460,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>fwddisch-lbl</tooltip-id>
@@ -36519,7 +36519,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>aftguard-lbl</tooltip-id>
@@ -36567,7 +36567,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>aftdisch-lbl</tooltip-id>
@@ -36651,7 +36651,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ventblow-lbl</tooltip-id>
@@ -36714,7 +36714,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>ventblow-lbl</tooltip-id>
@@ -36776,7 +36776,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabinfans-lbl</tooltip-id>
@@ -36840,7 +36840,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabinfans-lbl</tooltip-id>
@@ -36893,7 +36893,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>cabinfans-lbl</tooltip-id>
@@ -36944,7 +36944,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1guard-lbl</tooltip-id>
@@ -36978,7 +36978,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng2guard-lbl</tooltip-id>
@@ -37048,7 +37048,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1start-lbl</tooltip-id>
@@ -37118,7 +37118,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1start-lbl</tooltip-id>
@@ -37274,7 +37274,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdukb-lbl</tooltip-id>
@@ -37319,7 +37319,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdubrt1-lbl</tooltip-id>
@@ -37378,7 +37378,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdudim1-lbl</tooltip-id>
@@ -39824,7 +39824,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdukb-lbl</tooltip-id>
@@ -39869,7 +39869,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdubrt2-lbl</tooltip-id>
@@ -39928,7 +39928,7 @@
 		<hovered>
 			<binding>
 				<condition>
-					<property>/sim/mouse/tooltips-enabled</property>
+					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>mcdudim2-lbl</tooltip-id>

@@ -1751,6 +1751,7 @@
 		<system n="0">
 			<keyboard-mode type="bool">0</keyboard-mode>
 			<fgcamera-keys-enabled type="bool">0</fgcamera-keys-enabled>
+			<toggle-tooltips type="bool">true</toggle-tooltips>
 		</system>
 		<steep-ils type="bool">0</steep-ils>
 		<steep-ils-avail type="bool">0</steep-ils-avail>

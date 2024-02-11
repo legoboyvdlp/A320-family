@@ -54,6 +54,7 @@ setprop("/systems/acconfig/options/keyboard-mode", 0);
 setprop("/systems/acconfig/options/fgcamera-keys-enabled", 0);
 setprop("/systems/acconfig/options/weight-kgs", 1);
 setprop("/systems/acconfig/options/adirs-skip", 0);
+setprop("/systems/acconfig/options/toggle-tooltips", 0);
 setprop("/systems/acconfig/options/allow-oil-consumption", 0);
 setprop("/systems/acconfig/options/atis-server", "faa");
 setprop("/systems/acconfig/options/wxr-server", "noaa");
@@ -261,6 +262,7 @@ var readSettings = func {
 	setprop("/options/system/weight-kgs", getprop("/systems/acconfig/options/weight-kgs"));
 	setprop("/options/system/save-state", getprop("/systems/acconfig/options/save-state"));
 	setprop("/controls/adirs/skip", getprop("/systems/acconfig/options/adirs-skip"));
+	setprop("/options/system/toggle-tooltips", getprop("/systems/acconfig/options/toggle-tooltips"));
 	setprop("/systems/apu/oil/allow-oil-consumption", getprop("/systems/acconfig/options/allow-oil-consumption"));
 	setprop("/sim/model/autopush/route/show", getprop("/systems/acconfig/options/autopush/show-route"));
 	setprop("/sim/model/autopush/route/show-wingtip", getprop("/systems/acconfig/options/autopush/show-wingtip"));
@@ -277,6 +279,7 @@ var writeSettings = func {
 	setprop("/systems/acconfig/options/weight-kgs", getprop("/options/system/weight-kgs"));
 	setprop("/systems/acconfig/options/save-state", getprop("/options/system/save-state"));
 	setprop("/systems/acconfig/options/adirs-skip", getprop("/controls/adirs/skip"));
+	setprop("/systems/acconfig/options/toggle-tooltips", getprop("/options/system/toggle-tooltips"));
 	setprop("/systems/acconfig/options/allow-oil-consumption", getprop("/systems/apu/oil/allow-oil-consumption"));
 	setprop("/systems/acconfig/options/autopush/show-route", getprop("/sim/model/autopush/route/show"));
 	setprop("/systems/acconfig/options/autopush/show-wingtip", getprop("/sim/model/autopush/route/show-wingtip"));
