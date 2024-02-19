@@ -149,9 +149,30 @@ var perfTOInput = func(key, i) {
 		}
 	} else if (key == "L5" and modifiable) {
 		if (scratchpad == "CLR") {
-			setprop("/fdm/jsbsim/fadec/clbreduc-ft", 1500);
-			setprop("/FMGC/internal/accel-agl-ft", 1500);
+			if (fmgc.FMGCInternal.depApt != "") {
+				if (getprop("/options/company-options/default-accel-agl")) {
+					fmgc.FMGCInternal.AccelAlt = getprop("/options/company-options/default-accel-agl") + fmgc.FMGCInternal.depAptElev;
+				} else {
+					# to check: minimum value if no company option is 400 ft above dep aerodrome
+					fmgc.FMGCInternal.AccelAlt = 400 + fmgc.FMGCInternal.depAptElev;
+				}
+
+				if (getprop("/options/company-options/default-thrRed-agl")) {
+					fmgc.FMGCInternal.thrRedAlt = getprop("/options/company-options/default-thrRed-agl") + fmgc.FMGCInternal.depAptElev;
+				} else {
+					# to check: minimum value if no company option is 400 ft above dep aerodrome
+					fmgc.FMGCInternal.thrRedAlt = 400 + fmgc.FMGCInternal.depAptElev;
+				}
+			} else {
+				fmgc.FMGCInternal.AccelAlt = 1500; # todo: default accel if no depApt / probably doesn't exist?
+				fmgc.FMGCInternal.thrRedAlt = 1500; # todo: default ThrRed if no depApt / probably doesn't exist?
+			}
+			setprop("/FMGC/internal/accel-agl-ft", fmgc.FMGCInternal.AccelAlt);
+			setprop("/fdm/jsbsim/fadec/clbreduc-ft", fmgc.FMGCInternal.thrRedAlt);
 			setprop("MCDUC/thracc-set", 0);
+			setprop("MCDUC/acc-set-manual", 0);
+			setprop("MCDUC/thrRed-set-manual", 0);
+
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else {
 			var tfs = size(scratchpad);
@@ -163,28 +184,26 @@ var perfTOInput = func(key, i) {
 				var accs = size(acc);
 
 				#TODO - manual check - four digit alwway 0000 - default = runaway_elevation + 800 ft, min values runaway_elevation+400ft
-
-				if (int(thrred) != nil and (thrreds >= 3 and thrreds <= 5) and thrred >= 400 and thrred <= 39000 and int(acc) != nil and (accs == 3 or accs == 4 or accs == 5) and acc >= 400 and acc <= 39000) {
-
-					if (thrred<=acc) { # validation
+				if (int(thrred) != nil and (thrreds >= 3 and thrreds <= 5) and thrred >= fmgc.minThrRed and thrred <= 39000 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= fmgc.minAccelAlt and acc <= 39000) {
 						setprop("/fdm/jsbsim/fadec/clbreduc-ft", int(thrred / 10) * 10);
 						setprop("/FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
 						setprop("MCDUC/thracc-set", 1);
+						setprop("MCDUC/acc-set-manual", 1);
+						setprop("MCDUC/thrRed-set-manual", 1);
 						mcdu_scratchpad.scratchpads[i].empty();
-					} else {
-						mcdu_message(i, "NOT ALLOWED");	
-					}
-				} else if (thrreds == 0 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= 400 and acc <= 39000) {
+				} else if (thrreds == 0 and int(acc) != nil and (accs >= 3 and accs <= 5) and acc >= fmgc.minAccelAlt and acc <= 39000) {
 					setprop("/FMGC/internal/accel-agl-ft", int(acc / 10) * 10);
+					setprop("MCDUC/acc-set-manual", 1);
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					mcdu_message(i, "NOT ALLOWED");
+					mcdu_message(i, "FORMAT ERROR");
 				}
-			} else if (num(scratchpad) != nil and (tfs >= 3 and tfs <= 5) and scratchpad >= 400 and scratchpad <= 39000) {
+			} else if (num(scratchpad) != nil and (tfs >= 3 and tfs <= 5) and scratchpad >= fmgc.minThrRed and scratchpad <= 39000) {
 				setprop("/fdm/jsbsim/fadec/clbreduc-ft", int(scratchpad / 10) * 10);
+				setprop("MCDUC/thrRed-set-manual", 1);
 				mcdu_scratchpad.scratchpads[i].empty();
 			} else {
-				mcdu_message(i, "NOT ALLOWED");
+				mcdu_message(i, "FORMAT ERROR");
 			}
 		}
 	} else if (key == "R3" and modifiable) {

@@ -34,9 +34,24 @@ var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
 var tempOverspeed = nil;
+var pinOptionGaAccelAlt = 1500;
+if (getprop("/options/company-options/default-ga-accel-agl") != nil) {
+	pinOptionGaAccelAlt = getprop("/options/company-options/default-ga-accel-agl");
+}
+var pinOptionGaThrRedAlt = 400;
+if (getprop("/options/company-options/default-ga-thrRed-agl") != nil) {
+	pinOptionGaThrRedAlt = getprop("/options/company-options/default-ga-thrRed-agl");
+}
+# min Value for ThrRed and AccelAlt are the company pin option defaults
+var minAccelAlt = getprop("/options/company-options/default-accel-agl");
+var minThrRed = getprop("/options/company-options/default-thrRed-agl");
 
 setprop("/position/gear-agl-ft", 0);
-setprop("/it-autoflight/settings/accel-ft", 1500); #eventually set to 1500 above runway
+
+# 1500 ft is a default value not shown anywhere. It may not exist.
+# In case it does not exist, a takeoff with no departure airport and no accel set would never go from TO PHASE to CLB PHASE
+# unless manually set.
+setprop("/it-autoflight/settings/accel-ft", 1500);
 setprop("/it-autoflight/internal/vert-speed-fpm", 0);
 setprop("/instrumentation/nav[0]/nav-id", "XXX");
 setprop("/instrumentation/nav[1]/nav-id", "XXX");
@@ -128,6 +143,10 @@ var FMGCInternal = {
 	toFlap: 0,
 	toThs: 0,
 	toFlapThsSet: 0,
+	accelAlt: 0,
+	accelAltSet: 0,
+	thrRedAlt: 0,
+	thrRedAltSet: 0,
 	
 	# PERF APPR
 	destMag: 0,
@@ -138,11 +157,18 @@ var FMGCInternal = {
 	ldgConfig3: 0,
 	ldgConfigFull: 0,
 	
+	# PERF GA
+	gaAccelAlt: 0,
+	gaAccelAltSet: 0,
+	gaThrRedAlt: 0,
+	gaThrRedAltSet: 0,
+	
 	# INIT A
 	altAirport: "",
 	altAirportSet: 0,
 	altSelected: 0,
 	arrApt: "",
+	destAptElev: 0,
 	coRoute: "",
 	coRouteSet: 0,
 	costIndex: 0,
@@ -157,6 +183,7 @@ var FMGCInternal = {
 	gndTemp: 15,
 	gndTempSet: 0,
 	depApt: "",
+	depAptElev: 0,
 	tropo: 36090,
 	tropoSet: 0,
 	toFromSet: 0,
@@ -640,6 +667,9 @@ var masterFMGC = maketimer(0.2, func {
 			systems.PNEU.pressMode.setValue("TO");
 		}
 	} elsif (FMGCInternal.phase == 2) {
+		# change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
+		systems.FADEC.clbReduc = systems.FADEC.gaClbReduc;
+
 		if ((Modes.PFD.FMA.pitchMode == "ALT CRZ" or Modes.PFD.FMA.pitchMode == "ALT CRZ*")) {
 			newphase = 3;
 			systems.PNEU.pressMode.setValue("CR");
@@ -667,7 +697,7 @@ var masterFMGC = maketimer(0.2, func {
 			Input.toga.setValue(1);
 		}
 	} elsif (FMGCInternal.phase == 6) {
-		if (alt >= accel_agl_ft) { # todo when insert altn or new dest
+		if (alt >= getprop("/FMGC/internal/ga-accel-agl-ft")) { # todo when insert altn or new dest
 			newphase = 2;
 		}
 	}
