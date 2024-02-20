@@ -2270,7 +2270,7 @@ var input = {
 	targetMach: "/it-autoflight/input/mach",
 	targetKts: "/it-autoflight/input/kts",
 	targetHeading: "/it-autoflight/input/hdg",
-	managedSpd: "/it-autoflight/input/spd-managed",
+	managedSpd: "/FMGC/internal/mng-spd-active",
 	ktsMach: "/it-autoflight/input/kts-mach",
 	showHdg: "/it-autoflight/custom/show-hdg",
 	hdgDiff: "/instrumentation/pfd/hdg-diff",

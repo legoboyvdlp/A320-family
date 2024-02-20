@@ -56,10 +56,8 @@ var FCUController = {
 	FCUworking: 0,
    kts: props.globals.initNode("/fcu/input/kts", 100, "INT"),
    mach: props.globals.initNode("/fcu/input/mach", 0.01, "DOUBLE"),
-   # FCU Speed Modes are 0: undefined 1: selected 2: managed
    spdPreselect: props.globals.initNode("/fcu/input/spd-preselect", 0, "BOOL"),
    spdWindowOpen: props.globals.initNode("/fcu/output/spd-window-open", 1, "BOOL"),
-   spdWindowDot: props.globals.initNode("/fcu/output/spd-window-dot", 0, "BOOL"),
 	_init: 0,
 	init: func() {
 		me.FCU1 = FCU.new(systems.ELEC.Bus.dcEss);

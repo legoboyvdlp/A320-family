@@ -44,8 +44,6 @@ if (getprop("/options/company-options/default-ga-thrRed-agl") != nil) {
 var minAccelAlt = getprop("/options/company-options/default-accel-agl");
 var minThrRed = getprop("/options/company-options/default-thrRed-agl");
 
-var mngSpdActive = props.globals.initNode("/FMGC/internal/managed-spd-active", 0, "BOOL");
-
 setprop("/position/gear-agl-ft", 0);
 
 # 1500 ft is a default value not shown anywhere. It may not exist.
@@ -68,7 +66,7 @@ var FMGCinit = func {
 	FMGCNodes.vmax.setValue(338);
 	FMGCInternal.phase = 0; # 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 	FMGCNodes.phase.setValue(0);
-	mngSpdActive.setBoolValue(nil);
+	FMGCNodes.mngSpdActive.setBoolValue(nil);
 	FMGCInternal.mngSpd = 157;
 	FMGCInternal.mngSpdCmd = 157;
 	FMGCInternal.mngKtsMach = 0;
@@ -247,7 +245,6 @@ var FMGCInternal = {
 	machSwitchover: 0,
 	mngKtsMach: 0,
 	mngSpd: 0,
-	mngSpdActive: 0,
 	mngSpdCmd: 0,
 	
 	# This can't be init to -98, because we don't want it to run until WOW has gone to false and back to true
@@ -1041,6 +1038,17 @@ var ManagedSPD = maketimer(0.25, func {
          
             if (waypoint != nil) {
                constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
+
+               if ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).wp_role == "sid") {
+                  i = FPLN.currentWP.getValue();
+                  while (flightPlanController.flightplans[2].getWP(i).wp_role == "sid") {
+                     if (flightPlanController.flightplans[2].getWP(i).speed_cstr != nil and flightPlanController.flightplans[2].getWP(i).speed_cstr > 100) {
+                        constraintSpeed = flightPlanController.flightplans[2].getWP(i).speed_cstr;
+                        break;
+                     }
+                     i = i + 1;
+                  }
+               }
             }
             
             if ((Modes.PFD.FMA.pitchMode == " " or Modes.PFD.FMA.pitchMode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
@@ -1165,9 +1173,29 @@ var ManagedSPD = maketimer(0.25, func {
 	} else {
       # no FCU: speed cannot be controlled
       # no commands to FCU
-      ManagedSPD.stop();
-      FMGCNodes.mngSpdActive.setBoolValue(nil);
+      fmgc.ManagedSPD.stop();
+      fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);
       fmgc.Custom.Input.spdManaged.setBoolValue(nil);
+      if (fcu.input.spdPreselect.getBoolValue()){
+         fcu.input.spdPreselect.setBoolValue(nil);
+         fcu.spdSelectTimer.stop();
+         if (fmgc.Input.ktsMach.getBoolValue()){
+            fmgc.Input.mach.setValue(fcu.input.mach.getValue());
+         } else {
+            fmgc.Input.kts.setValue(fcu.input.kts.getValue());
+         }
+      } else {
+         if (fmgc.Input.ktsMach.getBoolValue()){
+            fcu.FCUController.mach = math.clamp(math.round(fmgc.Velocities.indicatedMach.getValue(), 0.01), 0.01, 0.99);
+            fmgc.Input.mach.setValue(fcu.FCUController.mach);
+            fcu.input.mach.setValue(fcu.FCUController.mach);
+         } else {
+            fcu.FCUController.ias = math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), 100, 399);
+            fmgc.Input.kts.setValue(fcu.FCUController.ias);
+            fcu.input.kts.setValue(fcu.FCUController.ias);
+         }
+      }
+      fcu.FCUController.spdWindowOpen.setBoolValue(1);
    }
 });
 
