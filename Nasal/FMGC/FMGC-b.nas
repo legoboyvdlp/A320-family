@@ -179,9 +179,6 @@ var Custom = {
 	ndTrkSel: [props.globals.getNode("/instrumentation/efis[0]/trk-selected", 1), props.globals.getNode("/instrumentation/efis[1]/trk-selected", 1)],
 	showHdg: props.globals.initNode("/it-autoflight/custom/show-hdg", 1, "BOOL"),
 	trkFpa: props.globals.initNode("/it-autoflight/custom/trk-fpa", 0, "BOOL"),
-	Input: {
-		spdManaged: props.globals.initNode("/it-autoflight/input/spd-managed", 0, "BOOL"),
-	},
 	Output: {
 		fmaPower: 0,
 		vsFCU: props.globals.initNode("/it-autoflight/output/vs-fcu-display", "", "STRING"),
@@ -216,7 +213,6 @@ var ITAF = {
 		Input.trk.setBoolValue(0);
 		Input.trueCourse.setBoolValue(0);
 		Input.toga.setBoolValue(0);
-		Custom.Input.spdManaged.setBoolValue(0);
 		Output.ap1.setBoolValue(0);
 		Output.ap2.setBoolValue(0);
 		Output.athr.setBoolValue(0);

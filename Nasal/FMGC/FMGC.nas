@@ -1127,28 +1127,26 @@ var ManagedSPD = maketimer(0.25, func {
 
             # valid managed speed
             FMGCNodes.mngSpdActive.setBoolValue(1);
-            fmgc.Custom.Input.spdManaged.setBoolValue(1);
             if (!fcu.input.spdPreselect.getBoolValue()) {
                fcu.FCUController.spdWindowOpen.setBoolValue(nil);
             }
          } else {
             # v2 not initialized 
-            # managed speed can remain engaged if previously activated
-            # but it is not active controlled by fmgc
             FMGCNodes.mngSpdActive.setBoolValue(nil);
-            if (fmgc.Custom.Input.spdManaged.getBoolValue() and !fcu.input.spdPreselect.getBoolValue() and
+            if (!fcu.input.spdPreselect.getBoolValue() and
                (systems.ADIRS.Operating.aligned[0].getBoolValue() or  
                systems.ADIRS.Operating.aligned[1].getBoolValue() or  
                systems.ADIRS.Operating.aligned[2].getBoolValue())) 
             {
                   fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+            } else {
+                  fcu.FCUController.spdWindowOpen.setBoolValue(1);
             }
          }
       } else {
          # conditions for active managed speed not met
          fmgc.ManagedSPD.stop();
          fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);
-         fmgc.Custom.Input.spdManaged.setBoolValue(nil);
          if (fcu.input.spdPreselect.getBoolValue()){
             fcu.input.spdPreselect.setBoolValue(nil);
             fcu.spdSelectTimer.stop();
@@ -1175,7 +1173,6 @@ var ManagedSPD = maketimer(0.25, func {
       # no commands to FCU
       fmgc.ManagedSPD.stop();
       fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);
-      fmgc.Custom.Input.spdManaged.setBoolValue(nil);
       if (fcu.input.spdPreselect.getBoolValue()){
          fcu.input.spdPreselect.setBoolValue(nil);
          fcu.spdSelectTimer.stop();
@@ -1240,45 +1237,31 @@ setlistener("/FMGC/internal/pitch-mode", func() {
 
 # enable managed speed if FMS has a valid position when on ground
 setlistener("/systems/navigation/aligned-1", func(val) {
-   if (val.getBoolValue() and (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
-      if (!fmgc.Custom.Input.spdManaged.getBoolValue()) {
-         fmgc.Custom.Input.spdManaged.setBoolValue(1);
-         fcu.FCUController.spdWindowOpen.setBoolValue(nil);
-         fmgc.ManagedSPD.start();
-      }
+   if ((getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
+      fmgc.ManagedSPD.start();
    }
 }, 0, 0);
 
 setlistener("/systems/navigation/aligned-2", func(val) {
-   if (val.getBoolValue() and (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
-      if (!fmgc.Custom.Input.spdManaged.getBoolValue()) {
-         fmgc.Custom.Input.spdManaged.setBoolValue(1);
-         fcu.FCUController.spdWindowOpen.setBoolValue(nil);
-         fmgc.ManagedSPD.start();
-      }
+   if ((getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
+      fmgc.ManagedSPD.start();
    }
 }, 0, 0);
 
 setlistener("/systems/navigation/aligned-3", func(val) {
-   if (val.getBoolValue() and (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
-      if (!fmgc.Custom.Input.spdManaged.getBoolValue()) {
-         fmgc.Custom.Input.spdManaged.setBoolValue(1);
-         fcu.FCUController.spdWindowOpen.setBoolValue(nil);
-         fmgc.ManagedSPD.start();
-      }
+   if ((getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
+      fmgc.ManagedSPD.start();
    }
 }, 0, 0);
 
 setlistener("/it-autoflight/output/fd1", func(val) {
    if (val.getBoolValue() and getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow") and !fmgc.Output.fd2.getBoolValue()){
-      fmgc.Custom.Input.spdManaged.setBoolValue(1);
       fmgc.ManagedSPD.start();
    }
 }, 0, 0);
 
 setlistener("/it-autoflight/output/fd2", func(val) {
    if (val.getBoolValue() and getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow") and !fmgc.Output.fd1.getBoolValue()){
-      fmgc.Custom.Input.spdManaged.setBoolValue(1);
       fmgc.ManagedSPD.start();
    }
 }, 0, 0);
@@ -1313,7 +1296,6 @@ setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
 setlistener("/ECAM/phases/phase-calculation/one-engine-running", func(val) {
       if (val.getBoolValue() and ecam.FWC.Logic.gnd.getBoolValue()){
          fmgc.FMGCNodes.selSpdEnable.setBoolValue(0);
-         fmgc.Custom.Input.spdManaged.setBoolValue(1);
          fmgc.ManagedSPD.start();
       } else {
          fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);

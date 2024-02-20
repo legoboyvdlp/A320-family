@@ -237,7 +237,6 @@ var FCUController = {
 	},
 	SPDPush: func() {
 		if (me.FCUworking) {
-         fmgc.Custom.Input.spdManaged.setBoolValue(1);
 			fmgc.ManagedSPD.start();
 		}
 	},
@@ -245,10 +244,8 @@ var FCUController = {
 	mach: 0,
 	SPDPull: func() {
 		if (me.FCUworking and fmgc.FMGCNodes.selSpdEnable.getBoolValue()) {
-         if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
-            fmgc.ManagedSPD.stop();
+         if (!fcu.FCUController.spdWindowOpen.getBoolValue()) {
             fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);
-            fmgc.Custom.Input.spdManaged.setBoolValue(nil);
             if (input.spdPreselect.getBoolValue()){
                input.spdPreselect.setBoolValue(nil);
                spdSelectTimer.stop();
@@ -271,13 +268,15 @@ var FCUController = {
          } else {
             if (fmgc.Input.ktsMach.getBoolValue()){
                me.mach = fcu.input.mach.getValue();
+               fmgc.Input.mach.setValue(me.mach);
             } else {
                me.ias = fcu.input.kts.getValue();
+               fmgc.Input.kts.setValue(me.ias);
             }
          }
 
          # a selected speed must be available. SPD window can be opened
-         me.spdWindowOpen.setBoolValue(1);
+         fcu.FCUController.spdWindowOpen.setBoolValue(1);
 
          fmgc.ManagedSPD.stop();
 		}
@@ -288,30 +287,11 @@ var FCUController = {
 		if (me.FCUworking) {
          # window can be opened. it will close if preselect
          # timer is over
-         me.spdWindowOpen.setBoolValue(1);
 
-         if (fmgc.Input.ktsMach.getBoolValue()) {
-            if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
-               # get actual managed speed
-               # get from fmgc when window opens
-               # get from window if window already open
-               if(!input.spdPreselect.getBoolValue()) {
-                  # speed preselection on FCU as speed is managed
-                  input.spdPreselect.setBoolValue(1);
-                  me.machTemp = math.clamp(math.round(fmgc.Velocities.indicatedMach.getValue(), 0.01), 0.01, 0.99);
-               } else {
-                  me.machTemp = fcu.input.mach.getValue();
-               }
-               me.spdWindowOpen.setBoolValue(1);
-
-               # timer is started by rotating speed selection knob
-               # and reset by rotating again
-               if (!spdSelectTimer.isRunning){
-                  spdSelectTimer.start();
-               } else {
-                  spdSelectTimer.restart(spdPreselectTime);
-               }
-
+         if (fcu.FCUController.spdWindowOpen.getBoolValue()){
+            # get actual selected speed
+            # speed is directly controlled if it is not managed
+            if (fmgc.Input.ktsMach.getBoolValue()) { 
                if (d == 1) {
                   me.machTemp = math.round(me.machTemp + 0.001, 0.001); # Kill floating point error
                } else if (d == -1) {
@@ -321,46 +301,13 @@ var FCUController = {
                } else if (d == -10) {
                   me.machTemp = math.round(me.machTemp - 0.01, 0.01); # Kill floating point error
                }
+               if (!fmgc.FMGCNodes.mngSpdActive.getBoolValue()) {
+                  # if selected spd, set the spd
+                  fmgc.Input.mach.setValue(math.clamp(me.machTemp, 0.10, 0.99));
+               }
                fcu.input.mach.setValue(math.clamp(me.machTemp, 0.10, 0.99));
-
             } else {
-               # get actual selected speed
-               # speed is directly controlled if it is not managed
-					me.machTemp = fcu.input.mach.getValue();
-
-               if (d == 1) {
-                  me.machTemp = math.round(me.machTemp + 0.001, 0.001); # Kill floating point error
-               } else if (d == -1) {
-                  me.machTemp = math.round(me.machTemp - 0.001, 0.001); # Kill floating point error
-               } else if (d == 10) {
-                  me.machTemp = math.round(me.machTemp + 0.01, 0.01); # Kill floating point error
-               } else if (d == -10) {
-                  me.machTemp = math.round(me.machTemp - 0.01, 0.01); # Kill floating point error
-               }
-               fmgc.Input.mach.setValue(math.clamp(me.machTemp, 0.10, 0.99));
-               fcu.input.mach.setValue(math.clamp(me.machTemp, 0.10, 0.99));
-            }
-         } else {
-            if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
-               # get actual managed speed
-               # get from fmgc when window opens
-               # get from window if window already open
-               if(!input.spdPreselect.getBoolValue()) {
-                  # speed preselection on FCU as speed is managed
-                  input.spdPreselect.setBoolValue(1);
-                  me.iasTemp = math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), 100, 399);
-               } else {
-                  me.iasTemp = fcu.input.kts.getValue();
-               }
-               me.spdWindowOpen.setBoolValue(1);
-
-               # timer is started by rotating speed selection knob
-               # and reset by rotating again
-               if (!spdSelectTimer.isRunning){
-               spdSelectTimer.start();
-               } else {
-               spdSelectTimer.restart(spdPreselectTime);
-               }
+               me.iasTemp = fcu.input.kts.getValue();
 
                if (d == 1) {
                   me.iasTemp = me.iasTemp + 1;
@@ -371,26 +318,56 @@ var FCUController = {
                } else if (d == -10) {
                   me.iasTemp = me.iasTemp - 10;
                }
+               if (!fmgc.FMGCNodes.mngSpdActive.getBoolValue()) {
+                  # if selected spd, set the spd
+                  fmgc.Input.kts.setValue(math.clamp(me.iasTemp, 100, 399));
+               }
                fcu.input.kts.setValue(math.clamp(me.iasTemp, 100, 399));
-            } else {
-               # get actual selected speed
-               # speed is directly controlled if it is not managed
-					me.iasTemp = fcu.input.kts.getValue();
+            }
+         } else {
+            me.spdWindowOpen.setBoolValue(1);
 
-					if (d == 1) {
-						me.iasTemp = me.iasTemp + 1;
-					} else if (d == -1) {
-						me.iasTemp = me.iasTemp - 1;
-					} else if (d == 10) {
-						me.iasTemp = me.iasTemp + 10;
-					} else if (d == -10) {
-						me.iasTemp = me.iasTemp - 10;
-					}
-               fmgc.Input.kts.setValue(math.clamp(me.iasTemp, 100, 399));
-               fcu.input.kts.setValue(math.clamp(me.iasTemp, 100, 399));
-				}
-			}
-		}
+            if (fmgc.Input.ktsMach.getBoolValue()) {
+               # get actual managed speed
+               # get from fmgc when window opens
+               # get from window if window already open
+               if(!input.spdPreselect.getBoolValue()) {
+                  # speed preselection on FCU as speed is managed
+                  input.spdPreselect.setBoolValue(1);
+                  me.machTemp = math.clamp(math.round(fmgc.Velocities.indicatedMach.getValue(), 0.01), 0.01, 0.99);
+               } else {
+                  me.machTemp = fcu.input.mach.getValue();
+               }
+
+               # timer is started by rotating speed selection knob
+               # and reset by rotating again
+               if (!spdSelectTimer.isRunning){
+                  spdSelectTimer.start();
+               } else {
+                  spdSelectTimer.restart(spdPreselectTime);
+               }
+            } else {
+               # get actual managed speed
+               # get from fmgc when window opens
+               # get from window if window already open
+               if(!input.spdPreselect.getBoolValue()) {
+                  # speed preselection on FCU as speed is managed
+                  input.spdPreselect.setBoolValue(1);
+                  me.iasTemp = math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), 100, 399);
+               } else {
+                  me.iasTemp = fcu.input.kts.getValue();
+               }
+
+               # timer is started by rotating speed selection knob
+               # and reset by rotating again
+               if (!spdSelectTimer.isRunning){
+               spdSelectTimer.start();
+               } else {
+               spdSelectTimer.restart(spdPreselectTime);
+               }
+            }
+         }
+      }
 	},
 	HDGPush: func() {
 		if (me.FCUworking) {
