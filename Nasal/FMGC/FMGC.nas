@@ -59,7 +59,6 @@ var FMGCAlignTime = [props.globals.initNode("/FMGC/internal/align1-time", 0, "DO
 var adirsSkip = props.globals.getNode("/systems/acconfig/options/adirs-skip");
 var blockCalculating = props.globals.initNode("/FMGC/internal/block-calculating", 0, "BOOL");
 var fuelCalculating = props.globals.initNode("/FMGC/internal/fuel-calculating", 0, "BOOL");
-var fmgcSpeedValid = props.globals.initNode("/FMGC/internal/fmgc-speed-valid", 0, "BOOL");
 
 var FMGCinit = func {
 	FMGCInternal.maxspeed = 338;
