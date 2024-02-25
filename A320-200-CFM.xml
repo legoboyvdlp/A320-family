@@ -6,8 +6,7 @@
 
 	<fileheader>
 		<author>Josh Davidson (Octal450)</author>
-		<version>Pre V1.0</version>
-		<description>A32X FDE</description>
+		<description>A320 FDE</description>
 	</fileheader>
 	
 	<metrics file="Systems/a320-metrics"/>
