@@ -759,7 +759,10 @@ var ITAF = {
 	checkFlch: func(a) {
 		if (Position.indicatedAltitudeFt.getValue() >= a and a != 0 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue()) {
 			me.setVertMode(4);
-		}
+		} elsif (!FMGCNodes.mngSpdActive.getBoolValue() and (!Gear.wow1.getBoolValue() or !Gear.wow2.getBoolValue())) {
+         # mode reversion, should trigger tripple click
+			me.setVertMode(4);
+      }
 	},
 	checkLoc: func(t) {
 		if (Radio.inRange.getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
