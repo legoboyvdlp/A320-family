@@ -283,7 +283,7 @@ var FMGCNodes = {
 	slat: props.globals.getNode("/FMGC/internal/slat"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
-	togaSpd: props.globals.getNode("/it-autoflight/settings/togaspd", 1),
+	toga-spd: props.globals.getNode("/it-autoflight/settings/toga-spd", 1),
 	tow: props.globals.getNode("/FMGC/internal/tow"),
 	towClean: props.globals.getNode("/FMGC/internal/tow-clean"),
 	towFlap2: props.globals.getNode("/FMGC/internal/flap-2-tow"),
@@ -855,9 +855,9 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	if (fmgc.FMGCInternal.v2set) {
-		FMGCNodes.togaSpd.setValue(FMGCInternal.v2);
+		FMGCNodes.toga-spd.setValue(FMGCInternal.v2 + 10);
 	} else { # This should never happen, but lets add a fallback just in case
-		FMGCNodes.togaSpd.setValue(FMGCNodes.vls.getValue() + 15);
+		FMGCNodes.toga-spd.setValue(FMGCNodes.vls.getValue() + 15);
 	}
 });
 

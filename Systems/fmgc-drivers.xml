@@ -336,10 +336,7 @@
 			<expression>
 				<product>
 					<difference>
-						<sum>
-							<property>/it-autoflight/settings/togaspd</property>
-							<value>10</value>
-						</sum>
+						<property>/it-autoflight/settings/toga-spd</property>
 						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
 					</difference>
 					<value>0.1</value>
