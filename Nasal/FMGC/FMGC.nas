@@ -676,9 +676,6 @@ var masterFMGC = maketimer(0.2, func {
 			systems.PNEU.pressMode.setValue("TO");
 		}
 	} elsif (FMGCInternal.phase == 2) {
-		# change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
-		systems.FADEC.clbReduc = systems.FADEC.gaClbReduc;
-
 		if ((Modes.PFD.FMA.pitchMode == "ALT CRZ" or Modes.PFD.FMA.pitchMode == "ALT CRZ*")) {
 			newphase = 3;
 			systems.PNEU.pressMode.setValue("CR");
@@ -706,6 +703,9 @@ var masterFMGC = maketimer(0.2, func {
 			Input.toga.setValue(1);
 		}
 	} elsif (FMGCInternal.phase == 6) {
+		# change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
+		systems.FADEC.clbReduc = systems.FADEC.gaClbReduc;
+
 		if (alt >= getprop("/FMGC/internal/ga-accel-agl-ft")) { # todo when insert altn or new dest
 			newphase = 2;
 		}
