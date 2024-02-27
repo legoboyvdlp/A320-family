@@ -244,7 +244,7 @@ var FCUController = {
 	mach: 0,
 	SPDPull: func() {
 		if (me.FCUworking and fmgc.FMGCNodes.selSpdEnable.getBoolValue() and 
-            (fmgc.Modes.PFD.FMA.pitchMode == "SRS" and fmgc.Input.alt.getValue() > pts.Instrumentation.Altimeter.indicatedFt.getValue())) {
+            !(fmgc.Modes.PFD.FMA.pitchMode == "SRS" and fmgc.Input.alt.getValue() < pts.Instrumentation.Altimeter.indicatedFt.getValue())) {
          if (!fcu.FCUController.spdWindowOpen.getBoolValue()) {
             fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);
             if (input.spdPreselect.getBoolValue()){
