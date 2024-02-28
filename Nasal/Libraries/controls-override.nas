@@ -1,5 +1,13 @@
 # Airbus A320 Custom Controls
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
+
+controls.autopilotDisconnect = func() {
+	libraries.apPanel.apDisc();
+}
+
+controls.reverserTogglePosition = func() {
+	systems.toggleRevThrust();
+}
 
 controls.stepSpoilers = func(step) {
 	pts.Controls.Flight.speedbrakeArm.setValue(0);

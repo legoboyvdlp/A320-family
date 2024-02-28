@@ -1,7 +1,7 @@
 # Aircraft Config Center
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 var spinning = maketimer(0.05, func {
 	var spinning = getprop("/systems/acconfig/spinning");
@@ -571,7 +571,7 @@ var taxi_c = func {
 	systems.IGNITION.fastStart(1);
 	settimer(func {
 		taxi_d();
-	}, 10);
+	}, 5);
 }
 var taxi_d = func {
 	if (getprop("/systems/acconfig/autoconfig-running") == 0) {

@@ -1,5 +1,5 @@
 # A3XX FMGC MCDU Message Generator and Control
-# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2024 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var TypeIMessage = {
 	new: func(msgText, isInhibit = 0) {

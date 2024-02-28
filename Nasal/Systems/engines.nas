@@ -1,5 +1,5 @@
 # A3XX Engine Control
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 var ENGINE = {
 	cutoffSwitch: [props.globals.getNode("/controls/engines/engine[0]/cutoff-switch"), props.globals.getNode("/controls/engines/engine[1]/cutoff-switch")],

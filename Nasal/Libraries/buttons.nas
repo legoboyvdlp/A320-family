@@ -1,7 +1,7 @@
 # A3XX Buttons
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 var OnLt = props.globals.getNode("/controls/switches/emerCallLtO");
 var CallLt = props.globals.getNode("/controls/switches/emerCallLtC");
