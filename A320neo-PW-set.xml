@@ -6,7 +6,7 @@
 <PropertyList include="A320-main.xml">
 
 	<sim>
-		<description>Airbus A320-271N (PurePower 1127G)</description>
+		<description>Airbus A320-271N (PW1127G)</description>
 		<flight-model>jsb</flight-model>
 		<aero>A320neo-PW</aero>
 		<primary-set>true</primary-set>

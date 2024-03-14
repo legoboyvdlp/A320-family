@@ -2,10 +2,10 @@
 A very advanced simulation of the Airbus A320 Family for FlightGear.
 
 Present pack includes the following Airbus A320 Family variants:
-- A320-214
-- A320-232
-- A320-251N
-- A320-271N
+- A320-214 (CFM56)
+- A320-232 (IAE V2500)
+- A320-251N (CFM Leap)
+- A320-271N (PW1100G)
 
 You can find a Checklist to download and print [here](https://raw.githubusercontent.com/legoboyvdlp/A320-family/dev/checklist.pdf)
 
