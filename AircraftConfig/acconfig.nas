@@ -52,7 +52,7 @@ setprop("/systems/acconfig/mismatch-code", "0x000");
 setprop("/systems/acconfig/mismatch-reason", "XX");
 setprop("/systems/acconfig/options/keyboard-mode", 0);
 setprop("/systems/acconfig/options/fgcamera-keys-enabled", 0);
-setprop("/systems/acconfig/options/weight-kgs", 1);
+setprop("/systems/acconfig/options/weight-kgs", 0);
 setprop("/systems/acconfig/options/adirs-skip", 0);
 setprop("/systems/acconfig/options/toggle-tooltips", 0);
 setprop("/systems/acconfig/options/allow-oil-consumption", 0);
@@ -605,7 +605,7 @@ var takeoff = func {
 				setprop("/controls/flight/flaps", 0.2);
 				setprop("/controls/atc/mode-knob", 4);
 				atc.transponderPanel.modeSwitch(5);
-				setprop("/controls/flight/elevator-trim", -0.07);
+				setprop("/controls/flight/elevator-trim", -0.1);
 				systems.Autobrake.arm_autobrake(3);
 				setprop("/ECAM/to-config-test", 1);
 				settimer(func {
