@@ -1995,6 +1995,21 @@
 			</test>
 		</switch>
 		
+		<switch name="fbw/pitch/out-of-trim">
+			<default value="fbw/pitch/out-of-trim"/>
+			<test logic="OR" value="0">
+				fbw/pitch/gain-switch gt 0
+			</test>
+			<test logic="OR" value="1">
+				fbw/pitch/pid-switched ge 0.025
+				fbw/pitch/pid-switched le -0.025
+			</test>
+			<test logic="AND" value="0">
+				fbw/pitch/pid-switched lt 0.01
+				fbw/pitch/pid-switched gt -0.01
+			</test>
+		</switch>
+		
 		<switch name="fbw/pitch/autotrim-switch">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -2002,7 +2017,8 @@
 				/position/gear-agl-ft ge fbw/pitch/autotrim-height
 				attitude/roll-rad lt 0.628319
 				attitude/roll-rad gt -0.628319
-				fbw/pitch/pid-switched ge 0.01
+				fbw/pitch/out-of-trim eq 1
+				fbw/pitch/pid-switched gt 0.001
 				fbw/pitch/load-factor ge 0.5
 				fbw/protections/overspeed ne 1
 				position/wow eq 0
@@ -2014,7 +2030,8 @@
 				/position/gear-agl-ft ge fbw/pitch/autotrim-height
 				attitude/roll-rad lt 0.628319
 				attitude/roll-rad gt -0.628319
-				fbw/pitch/pid-switched le -0.01
+				fbw/pitch/out-of-trim eq 1
+				fbw/pitch/pid-switched lt -0.001
 				fbw/pitch/load-factor ge 0.5
 				fbw/protections/overspeed ne 1
 				position/wow eq 0
@@ -2034,7 +2051,7 @@
 						<table>
 							<independentVar lookup="row">fbw/pitch/pid-switched</independentVar>
 							<tableData>
-								0.05  0.00001
+								0.01  0.00001
 								0.30  0.00015
 							</tableData>
 						</table>
@@ -2049,7 +2066,7 @@
 							<independentVar lookup="row">fbw/pitch/pid-switched</independentVar>
 							<tableData>
 								-0.30 -0.00015
-								-0.05 -0.00001
+								-0.01 -0.00001
 							</tableData>
 						</table>
 						<value>0.0</value>
