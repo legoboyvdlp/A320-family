@@ -93,8 +93,9 @@ var progCRZInput = func(key, i) {
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil) {
 			var crzs = size(scratchpad);
-			if (crzs >= 1 and crzs <= 3 and scratchpad > 0 and scratchpad <= 430 and fmgc.FMGCInternal.crzSet <= scratchpad * 100) {
-				fmgc.FMGCInternal.crzProg = scratchpad;
+			if (crzs >= 1 and crzs <= 3 and scratchpad > 0 and scratchpad <= 430 ) {
+				fmgc.FMGCInternal.crzFt = scratchpad * 100;
+            setprop("FMGC/internal/crz-alt-ft", fmgc.FMGCInternal.crzFt);
 				mcdu_scratchpad.scratchpads[i].empty();
 				if (fmgc.FMGCInternal.phase == 5) {
 					fmgc.FMGCInternal.phase = 3;

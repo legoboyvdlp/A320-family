@@ -123,6 +123,7 @@ var Internal = {
 	altPredicted: props.globals.initNode("/it-autoflight/internal/altitude-predicted", 0, "DOUBLE"),
 	bankLimit: props.globals.initNode("/it-autoflight/internal/bank-limit", 0, "DOUBLE"),
 	captVs: 0,
+   crzAlt:  props.globals.initNode("/FMGC/internal/crz-alt-ft", 0, "INT"),
 	driftAngle: props.globals.initNode("/it-autoflight/internal/drift-angle-deg", 0, "DOUBLE"),
 	driftAngleTemp: 0,
 	flchActive: 0,
@@ -1095,6 +1096,11 @@ setlistener(pts.Systems.Navigation.ADR.Output.underspeed, func(v) {
 		}, 0.15);
 	}
 }, 0, 0);
+
+#check if cruise altitude reached
+setlistener("/FMGC/internal/crz-alt-ft", func {
+	fmgc.altvert();
+});
 
 setlistener("/sim/signals/fdm-initialized", func {
 	ITAF.init();

@@ -358,7 +358,7 @@ var gsupdate = maketimer(0.5, func() {
 var altvert = func() {
 	vertText = Text.vert.getValue();
 	
-	if (abs(fmgc.FMGCInternal.crzFt - Internal.alt.getValue()) <= 20) {
+	if ((abs(fmgc.FMGCInternal.crzFt - Internal.alt.getValue()) <= 20) or (abs(getprop("/FMGC/internal/crz-alt-ft") - Internal.alt.getValue()) <= 20)) {
 		if (vertText == "ALT HLD") {
 			setFmaText("pitchMode", "ALT CRZ", genericCallback, "pitchModeTime");
 		} else if (vertText == "ALT CAP") {

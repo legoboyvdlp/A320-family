@@ -163,87 +163,55 @@ var initInputA = func(key, i) {
 		}
 	} else if (key == "L6") {
 		if (scratchpad == "CLR") {
-			fmgc.FMGCInternal.crzFt = 10000;
-			fmgc.FMGCInternal.crzFl = 100;
-			fmgc.altvert();
-			fmgc.updateRouteManagerAlt();
-			fmgc.FMGCInternal.crzSet = 0;
-			updateCrzLvlCallback();
-			fmgc.FMGCInternal.crzTemp = 15;
-			fmgc.FMGCInternal.crzTempSet = 0;
-			if (fmgc.FMGCInternal.blockConfirmed) {
-				fmgc.FMGCInternal.fuelCalculating = 0;
-				fmgc.fuelCalculating.setValue(0);
-				fmgc.FMGCInternal.fuelCalculating = 1;
-				fmgc.fuelCalculating.setValue(1);
-			}
 			mcdu_scratchpad.scratchpads[i].empty();	
+         mcdu_message(i, "NOT ALLOWED");
 		} else if (find("/", scratchpad) != -1) {
 			var crztemp = split("/", scratchpad);
-			if (find("FL", crztemp[0]) != -1) {
-				var crz = substr(crztemp[0], 2);
-				var crzs = size(substr(crztemp[0], 2));
-			} else {
-				var crz = crztemp[0];
-				var crzs = size(crztemp[0]);
-			}
-			var temp = int(crztemp[1]);
-			var temps = size(crztemp[1]);
-			if (crzs == 0 and temps >= 1 and temps <= 3 and temp != nil and fmgc.FMGCInternal.crzSet) {
-				if (temp >= -99 and temp <= 99) {
-					fmgc.FMGCInternal.crzTemp = temp;
-					fmgc.FMGCInternal.crzTempSet = 1;
-					if (fmgc.FMGCInternal.blockConfirmed) {
-						fmgc.FMGCInternal.fuelCalculating = 0;
-						fmgc.fuelCalculating.setValue(0);
-						fmgc.FMGCInternal.fuelCalculating = 1;
-						fmgc.fuelCalculating.setValue(1);
-					}
-					mcdu_scratchpad.scratchpads[i].empty();
-				} else {
-					mcdu_message(i, "NOT ALLOWED");
-				}
-			} else if (find(".", crz) == -1 and crzs >= 1 and crzs <= 3 and crz != nil and temps >= 1 and temps <= 3 and temp != nil) {
-				if (crz > 0 and crz <= 390 and temp >= -99 and temp <= 99) {
-					fmgc.FMGCInternal.crzFt = int(crz) * 100;
-					fmgc.FMGCInternal.crzFl = int(crz);
-					fmgc.altvert();
-					fmgc.updateRouteManagerAlt();
-					fmgc.FMGCInternal.crzSet = 1;
-					updateCrzLvlCallback();
-					fmgc.FMGCInternal.crzTemp = temp;
-					fmgc.FMGCInternal.crzTempSet = 1;
-					fmgc.FMGCInternal.crzProg = int(crz);
-					if (fmgc.FMGCInternal.blockConfirmed) {
-						fmgc.FMGCInternal.fuelCalculating = 0;
-						fmgc.fuelCalculating.setValue(0);
-						fmgc.FMGCInternal.fuelCalculating = 1;
-						fmgc.fuelCalculating.setValue(1);
-					}
-					mcdu_scratchpad.scratchpads[i].empty();
-				} else {
-					mcdu_message(i, "NOT ALLOWED");
-				}
-			} else {
-				mcdu_message(i, "NOT ALLOWED");
-			}
+         var crz = mcdu.MCDU_input_FLIGHT_LEVEL(i, crztemp[0]);
+			var temp = mcdu.MCDU_input_TEMP(i, crztemp[1]);
+			if (size(crztemp[0]) == 0 and temp) {
+            fmgc.FMGCInternal.crzTemp = temp;
+            fmgc.FMGCInternal.crzTempSet = 1;
+            if (fmgc.FMGCInternal.blockConfirmed) {
+               fmgc.FMGCInternal.fuelCalculating = 0;
+               fmgc.fuelCalculating.setValue(0);
+               fmgc.FMGCInternal.fuelCalculating = 1;
+               fmgc.fuelCalculating.setValue(1);
+            }
+            mcdu_scratchpad.scratchpads[i].empty();
+			} else if (crz and temp) {
+            fmgc.FMGCInternal.crzFt = int(crz);
+            fmgc.FMGCInternal.crzFl = int(crz/100);
+            setprop("FMGC/internal/crz-alt-ft", crz);
+            fmgc.altvert();
+            fmgc.updateRouteManagerAlt();
+            fmgc.FMGCInternal.crzSet = 1;
+            updateCrzLvlCallback();
+            fmgc.FMGCInternal.crzTemp = temp;
+            fmgc.FMGCInternal.crzTempSet = 1;
+            fmgc.FMGCInternal.crzProg = crz;
+            if (fmgc.FMGCInternal.blockConfirmed) {
+               fmgc.FMGCInternal.fuelCalculating = 0;
+               fmgc.fuelCalculating.setValue(0);
+               fmgc.FMGCInternal.fuelCalculating = 1;
+               fmgc.fuelCalculating.setValue(1);
+            }
+            mcdu_scratchpad.scratchpads[i].empty();
+         } 
 		} else {
-			if (find("FL", scratchpad) != -1) {
-				var crz = substr(scratchpad, 2);
-				var crzs = size(substr(scratchpad, 2));
-			} else {
-				var crz = scratchpad;
-				var crzs = size(scratchpad);
-			}
-			if (find(".", crz) == -1 and crzs >= 1 and crzs <= 3 and crz != nil) {
-				if (crz > 0 and crz <= 390) {
-					fmgc.FMGCInternal.crzFt = int(crz) * 100;
-					fmgc.FMGCInternal.crzFl = int(crz);
+         var crz = mcdu.MCDU_input_FLIGHT_LEVEL(i, scratchpad);
+			if (crz) {
+            var fcu_alt = fmgc.Input.alt.getValue();
+				if (crz  >= fcu_alt) {
+					fmgc.FMGCInternal.crzFt = int(crz);
+					fmgc.FMGCInternal.crzFl = int(crz)/100;
+               setprop("FMGC/internal/crz-alt-ft", fmgc.FMGCInternal.crzFt);
 					fmgc.altvert();
 					fmgc.updateRouteManagerAlt();
 					fmgc.FMGCInternal.crzSet = 1;
+            fmgc.FMGCInternal.crzTempSet = 0;
 					updateCrzLvlCallback();
-					fmgc.FMGCInternal.crzProg = int(crz);
+					fmgc.FMGCInternal.crzProg = int(crz/100);
 					if (fmgc.FMGCInternal.blockConfirmed) {
 						fmgc.FMGCInternal.fuelCalculating = 0;
 						fmgc.fuelCalculating.setValue(0);
@@ -252,11 +220,26 @@ var initInputA = func(key, i) {
 					}
 					mcdu_scratchpad.scratchpads[i].empty();
 				} else {
-					mcdu_message(i, "NOT ALLOWED");
+					fmgc.FMGCInternal.crzFt = int(fcu_alt);
+					fmgc.FMGCInternal.crzFl = int(fcu_alt)/100;
+               setprop("FMGC/internal/crz-alt-ft", fcu_alt);
+					fmgc.altvert();
+					fmgc.updateRouteManagerAlt();
+					fmgc.FMGCInternal.crzSet = 1;
+            fmgc.FMGCInternal.crzTempSet = 0;
+					updateCrzLvlCallback();
+					fmgc.FMGCInternal.crzProg = int(fcu_alt/100);
+					if (fmgc.FMGCInternal.blockConfirmed) {
+						fmgc.FMGCInternal.fuelCalculating = 0;
+						fmgc.fuelCalculating.setValue(0);
+						fmgc.FMGCInternal.fuelCalculating = 1;
+						fmgc.fuelCalculating.setValue(1);
+					}
+					mcdu_scratchpad.scratchpads[i].empty();
 				}
-			} else {
-				mcdu_message(i, "NOT ALLOWED");
-			}
+            fmgc.FMGCInternal.crzTemp = int(math.clamp(15 - ((crz/1000) * 2), -48, 99));
+            fmgc.FMGCInternal.crzTempSet = 1;
+			} 
 		}
 	} else if (key == "R1") {
 		if (fmgc.FMGCInternal.coRouteSet == 1) {

@@ -245,15 +245,15 @@ var lskbutton = func(btn, i) {
 		} else if (page == "WINDDES") {
 			canvas_mcdu.myDESWIND[i].pushButtonLeft(1);
 		} else if (page == "PROGPREF") {
-			progTOInput("L1",i); # same fn as TO
+			progCRZInput("L1",i);
 		} else if (page == "PROGTO") {
-			progTOInput("L1",i);
+			progCRZInput("L1",i);
 		} else if (page == "PROGCLB" or page == "PROGAPPR") {  # APPR restore to CLB
-			progCLBInput("L1",i);
+			progCRZInput("L1",i);
 		} else if (page == "PROGCRZ") {
 			progCRZInput("L1",i);
 		} else if (page == "PROGDES") {
-			progDESInput("L1",i);
+			progCRZInput("L1",i);
 		} else if (page == "PERFTO") {
 			perfTOInput("L1",i);
 		} else if (page == "PERFAPPR") {
@@ -1642,4 +1642,59 @@ var screenFlash = func(time, i) {
 	settimer(func {
 		pageNode[i].setValue(page);
 	}, time);
+}
+
+################################################
+# MCDU Data Format List as per                 #
+# FCOM 12-22_20-50-30 Controls and Indicators  #
+# from march 2024                              #
+################################################
+
+# Future Project to implement the Data Formats
+
+var MCDU_input_FLIGHT_LEVEL = func (mcduUnit, scratchpad) {
+   if (find("FL", scratchpad) == 0) {
+      var sp = substr(scratchpad, 2);
+      var sp_size = size(substr(scratchpad, 2));
+   } else {
+      var sp = scratchpad;
+      var sp_size = size(scratchpad);
+   }
+
+   # check if input is integer value
+   if (int(sp)) {
+      if (sp > 0 and sp <= 390){
+         return sp * 100;
+      } else  if (sp >= 1000  and sp <= 39000){
+         return math.round(sp, 100);
+      } else {
+         # not in range, return error
+         mcdu_scratchpad.scratchpads[mcduUnit].empty();
+         mcdu.mcdu_message(mcduUnit, "ENTRY OUT OF RANGE");
+         return nil;
+      }
+   }
+   # not a valid entry, return error
+   mcdu_scratchpad.scratchpads[mcduUnit].empty();
+   mcdu.mcdu_message(mcduUnit, "FORMAT ERROR");
+   return nil;
+}
+
+var MCDU_input_TEMP = func (mcduUnit, scratchpad) {
+   # check if input is integer value
+   if (int(scratchpad)) {
+      if (scratchpad > -100 and scratchpad < 100) {
+         return scratchpad;
+      } else {
+         # not in range, return error
+         mcdu_scratchpad.scratchpads[mcduUnit].empty();
+         mcdu.mcdu_message(mcduUnit, "ENTRY OUT OF RANGE");
+         return nil;
+      }
+   }
+
+   # not a valid entry, return error
+   mcdu_scratchpad.scratchpads[mcduUnit].empty();
+   mcdu.mcdu_message(mcduUnit, "FORMAT ERROR");
+   return nil;
 }

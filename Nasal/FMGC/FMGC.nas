@@ -681,33 +681,26 @@ var masterFMGC = maketimer(0.2, func {
 			systems.PNEU.pressMode.setValue("CR");
 		}
 	} elsif (FMGCInternal.phase == 3) {
-		if (FMGCInternal.crzFl >= 200) {
-			if ((flightPlanController.arrivalDist.getValue() <= 200 or altSel < 20000)) {
-				newphase = 4;
-				systems.PNEU.pressMode.setValue("DE");
-			}
-		} else {
-			if ((flightPlanController.arrivalDist.getValue() <= 200 or altSel < (FMGCInternal.crzFl * 100))) { # todo - not sure about crzFl condition, investigate what happens!
-				newphase = 4;
-				systems.PNEU.pressMode.setValue("DE");
-			}
-		}
+    if (flightPlanController.arrivalDist.getValue() <= 200 and getprop("/it-autoflight/internal/alt") < fmgc.Internal.crzAlt.getValue()) { # todo - not sure about crzFl condition, investigate what happens!
+      newphase = 4;
+      systems.PNEU.pressMode.setValue("DE");
+    }
 	} elsif (FMGCInternal.phase == 4) {
 		if (FMGCInternal.decel) {
 			newphase = 5;
 		}
-	} elsif (FMGCInternal.phase == 5) {
-		if (state1 == "TOGA" and state2 == "TOGA") {
+	} elsif (FMGCInternal.phase > 2 and FMGCInternal.phase < 6) {
+		if ((state1 == "TOGA" or state2 == "TOGA") and pts.Controls.Flight.flapsInput.getValue() > 0) {
 			newphase = 6;
+         # change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
+         systems.FADEC.clbReduc = systems.FADEC.gaClbReduc;
+
 			systems.PNEU.pressMode.setValue("TO");
 			Input.toga.setValue(1);
 		}
 	} elsif (FMGCInternal.phase == 6) {
-		# change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
-		systems.FADEC.clbReduc = systems.FADEC.gaClbReduc;
-
 		if (alt >= getprop("/FMGC/internal/ga-accel-agl-ft")) { # todo when insert altn or new dest
-			newphase = 2;
+			newphase = 4;
 		}
 	}
 	
@@ -1016,7 +1009,7 @@ var ManagedSPD = maketimer(0.25, func {
    if (fcu.FCUController.FCUworking) {
       if (fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) {
          # speed controlled by FCU?
-         if (fmgc.FMGCInternal.v2set) {
+         if (fmgc.FMGCInternal.v2set or FMGCInternal.phase > 1) {
             # Managed Speed
             # speed controlled by FMGC
             altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
@@ -1050,7 +1043,7 @@ var ManagedSPD = maketimer(0.25, func {
                }
             }
             
-            if ((Modes.PFD.FMA.pitchMode == " " or Modes.PFD.FMA.pitchMode == "SRS") and (FMGCInternal.phase == 0 or FMGCInternal.phase == 1)) {
+            if ((Modes.PFD.FMA.pitchMode == " " or Modes.PFD.FMA.pitchMode == "SRS") and (FMGCInternal.phase < 2)) {
                FMGCInternal.mngKtsMach = 0;
                FMGCInternal.mngSpdCmd = FMGCInternal.v2;
             } elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
@@ -1070,7 +1063,7 @@ var ManagedSPD = maketimer(0.25, func {
                } else {
                   FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
                }
-            } elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
+            } elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase < 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
                if (FMGCInternal.decel) {
                   FMGCInternal.mngKtsMach = 0;
                   FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
@@ -1082,7 +1075,7 @@ var ManagedSPD = maketimer(0.25, func {
                      FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
                   }
                }
-            } elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
+            } elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase < 6) and altitude <= FMGCInternal.desSpdLimAlt) {
                # Speed is maximum of greendot / descent speed limit
                FMGCInternal.mngKtsMach = 0;
                
@@ -1091,7 +1084,17 @@ var ManagedSPD = maketimer(0.25, func {
                } else {
                   FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
                }
-            } elsif (FMGCInternal.phase == 7){
+            } elsif (FMGCInternal.phase == 6) {
+               # Speed is maximum of greendot / climb speed limit
+               FMGCInternal.mngKtsMach = 0;
+               
+               FMGCNodes.togaSpd.setValue(math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.vapp, math.min(FMGCInternal.vls + 15, FMGCNodes.vmax.getValue() - 5)));
+               if (constraintSpeed != nil and constraintSpeed != 0) {
+                  FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+               } else {
+                  FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
+               }
+            } elsif (FMGCInternal.phase == 7) {
                # done phase. v2 is reset
                fmgc.FMGCInternal.v2 = 0;
                fmgc.FMGCInternal.v2set = 0;
