@@ -303,6 +303,7 @@ var FMGCNodes = {
 	minspeed: props.globals.getNode("/FMGC/internal/minspeed"),
 	mngMachAlt: props.globals.getNode("/FMGC/internal/mng-alt-mach"),
 	mngSpdActive: props.globals.initNode("/FMGC/internal/mng-spd-active", 0, "BOOL"),
+	phase: props.globals.initNode("/FMGC/internal/phase", 0, "INT"),
 	pitchMode: props.globals.initNode("/FMGC/internal/pitch-mode", " " , "STRING"),
 	Power: {
 		FMGC1Powered: props.globals.getNode("systems/fmgc/power/power-1-on"),
@@ -326,7 +327,6 @@ var FMGCNodes = {
 	v1set: props.globals.initNode("/FMGC/internal/v1-set", 0, "BOOL"),
 	v2: props.globals.initNode("/FMGC/internal/v2", 0, "DOUBLE"),
 	v2set: props.globals.initNode("/FMGC/internal/v2-set", 0, "BOOL"),
-	phase: props.globals.initNode("/FMGC/internal/phase", 0, "INT"),
 	valphaMax: props.globals.getNode("/FMGC/internal/valpha-max"),
 	valphaProt: props.globals.getNode("/FMGC/internal/valpha-prot"),
 	vapp: props.globals.initNode("/FMGC/internal/vapp", 0, "DOUBLE"),
@@ -660,6 +660,8 @@ var masterFMGC = maketimer(0.2, func {
    # Phase: 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 	newphase = FMGCInternal.phase;
 
+   var fmgc_flight_phase = fmgc.FMGCNodes.phase.getValue();
+
 	if (FMGCInternal.phase == 0) {
 		if (gear0 and ((n1_left >= 85 and n1_right >= 85 and Modes.PFD.FMA.pitchMode == "SRS") or gs >= 90)) {
 			newphase = 1;
@@ -681,14 +683,14 @@ var masterFMGC = maketimer(0.2, func {
 			systems.PNEU.pressMode.setValue("CR");
 		}
 	} elsif (FMGCInternal.phase == 3) {
-    if (flightPlanController.arrivalDist.getValue() <= 200 and getprop("/it-autoflight/internal/alt") < fmgc.Internal.crzAlt.getValue()) { # todo - not sure about crzFl condition, investigate what happens!
-      newphase = 4;
-      systems.PNEU.pressMode.setValue("DE");
-    }
+       if (flightPlanController.arrivalDist.getValue() <= 200 and getprop("/it-autoflight/internal/alt") <= fmgc.Internal.crzAlt.getValue()) { # todo - not sure about crzFl condition, investigate what happens!
+         newphase = 4;
+         systems.PNEU.pressMode.setValue("DE");
+       }
 	} elsif (FMGCInternal.phase == 4) {
-		if (FMGCInternal.decel) {
-			newphase = 5;
-		}
+      if (FMGCInternal.decel) {
+         newphase = 5;
+      }
 	} elsif (FMGCInternal.phase > 2 and FMGCInternal.phase < 6) {
 		if ((state1 == "TOGA" or state2 == "TOGA") and pts.Controls.Flight.flapsInput.getValue() > 0) {
 			newphase = 6;
@@ -1431,6 +1433,32 @@ var timer5fuelPred = maketimer(1, func() {
 var timer5trimReset = maketimer(5, func() {
 	trimReset();
 });
+
 var timer5selSpdEnable = maketimer(5, func() {
 	fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
 });
+
+var setCrzAlt = func (crz) {
+   var fcu_alt = fmgc.Input.alt.getValue();
+   if (crz  >= fcu_alt) {
+      fmgc.FMGCInternal.crzFt = crz;
+      fmgc.FMGCInternal.crzFl = int(crz)/100;
+      fmgc.FMGCInternal.crzProg = int(crz)/100;
+      setprop("FMGC/internal/crz-alt-ft", crz);
+   } else {
+      fmgc.FMGCInternal.crzFt = int(fcu_alt);
+      fmgc.FMGCInternal.crzFl = int(fcu_alt)/100;
+      fmgc.FMGCInternal.crzProg = int(fcu_alt/100);
+      setprop("FMGC/internal/crz-alt-ft", fcu_alt);
+   }
+   fmgc.altvert();
+   fmgc.updateRouteManagerAlt();
+   fmgc.FMGCInternal.crzSet = 1;
+   mcdu.updateCrzLvlCallback();
+   if (fmgc.FMGCInternal.blockConfirmed) {
+      fmgc.FMGCInternal.fuelCalculating = 0;
+      fmgc.fuelCalculating.setValue(0);
+      fmgc.FMGCInternal.fuelCalculating = 1;
+      fmgc.fuelCalculating.setValue(1);
+   }
+}

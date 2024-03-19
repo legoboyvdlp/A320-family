@@ -1098,9 +1098,13 @@ setlistener(pts.Systems.Navigation.ADR.Output.underspeed, func(v) {
 }, 0, 0);
 
 #check if cruise altitude reached
-setlistener("/FMGC/internal/crz-alt-ft", func {
+setlistener("/FMGC/internal/crz-alt-ft", func() {
 	fmgc.altvert();
-});
+}, 0, 0);
+
+setlistener("/it-autoflight/internal/alt", func() {
+	fmgc.altvert();
+}, 0, 0);
 
 setlistener("/sim/signals/fdm-initialized", func {
 	ITAF.init();

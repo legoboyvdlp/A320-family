@@ -169,7 +169,7 @@ var initInputA = func(key, i) {
 			var crztemp = split("/", scratchpad);
          var crz = mcdu.MCDU_input_FLIGHT_LEVEL(i, crztemp[0]);
 			var temp = mcdu.MCDU_input_TEMP(i, crztemp[1]);
-			if (size(crztemp[0]) == 0 and temp) {
+			if (size(crztemp[0]) == 0 and temp != nil) {
             fmgc.FMGCInternal.crzTemp = temp;
             fmgc.FMGCInternal.crzTempSet = 1;
             if (fmgc.FMGCInternal.blockConfirmed) {
@@ -179,66 +179,20 @@ var initInputA = func(key, i) {
                fmgc.fuelCalculating.setValue(1);
             }
             mcdu_scratchpad.scratchpads[i].empty();
-			} else if (crz and temp) {
-            fmgc.FMGCInternal.crzFt = int(crz);
-            fmgc.FMGCInternal.crzFl = int(crz/100);
-            setprop("FMGC/internal/crz-alt-ft", crz);
-            fmgc.altvert();
-            fmgc.updateRouteManagerAlt();
-            fmgc.FMGCInternal.crzSet = 1;
-            updateCrzLvlCallback();
+			} else if (crz and temp != nil) {
+            fmgc.setCrzAlt(crz);
             fmgc.FMGCInternal.crzTemp = temp;
             fmgc.FMGCInternal.crzTempSet = 1;
-            fmgc.FMGCInternal.crzProg = crz;
-            if (fmgc.FMGCInternal.blockConfirmed) {
-               fmgc.FMGCInternal.fuelCalculating = 0;
-               fmgc.fuelCalculating.setValue(0);
-               fmgc.FMGCInternal.fuelCalculating = 1;
-               fmgc.fuelCalculating.setValue(1);
-            }
             mcdu_scratchpad.scratchpads[i].empty();
          } 
 		} else {
-         var crz = mcdu.MCDU_input_FLIGHT_LEVEL(i, scratchpad);
-			if (crz) {
-            var fcu_alt = fmgc.Input.alt.getValue();
-				if (crz  >= fcu_alt) {
-					fmgc.FMGCInternal.crzFt = int(crz);
-					fmgc.FMGCInternal.crzFl = int(crz)/100;
-               setprop("FMGC/internal/crz-alt-ft", fmgc.FMGCInternal.crzFt);
-					fmgc.altvert();
-					fmgc.updateRouteManagerAlt();
-					fmgc.FMGCInternal.crzSet = 1;
+			if (var crz = mcdu.MCDU_input_FLIGHT_LEVEL(i, scratchpad)) {
+            fmgc.setCrzAlt(crz);
+            fmgc.FMGCInternal.crzSet = 1;
             fmgc.FMGCInternal.crzTempSet = 0;
-					updateCrzLvlCallback();
-					fmgc.FMGCInternal.crzProg = int(crz/100);
-					if (fmgc.FMGCInternal.blockConfirmed) {
-						fmgc.FMGCInternal.fuelCalculating = 0;
-						fmgc.fuelCalculating.setValue(0);
-						fmgc.FMGCInternal.fuelCalculating = 1;
-						fmgc.fuelCalculating.setValue(1);
-					}
-					mcdu_scratchpad.scratchpads[i].empty();
-				} else {
-					fmgc.FMGCInternal.crzFt = int(fcu_alt);
-					fmgc.FMGCInternal.crzFl = int(fcu_alt)/100;
-               setprop("FMGC/internal/crz-alt-ft", fcu_alt);
-					fmgc.altvert();
-					fmgc.updateRouteManagerAlt();
-					fmgc.FMGCInternal.crzSet = 1;
-            fmgc.FMGCInternal.crzTempSet = 0;
-					updateCrzLvlCallback();
-					fmgc.FMGCInternal.crzProg = int(fcu_alt/100);
-					if (fmgc.FMGCInternal.blockConfirmed) {
-						fmgc.FMGCInternal.fuelCalculating = 0;
-						fmgc.fuelCalculating.setValue(0);
-						fmgc.FMGCInternal.fuelCalculating = 1;
-						fmgc.fuelCalculating.setValue(1);
-					}
-					mcdu_scratchpad.scratchpads[i].empty();
-				}
             fmgc.FMGCInternal.crzTemp = int(math.clamp(15 - ((crz/1000) * 2), -48, 99));
             fmgc.FMGCInternal.crzTempSet = 1;
+            mcdu_scratchpad.scratchpads[i].empty();
 			} 
 		}
 	} else if (key == "R1") {
