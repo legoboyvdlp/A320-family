@@ -90,7 +90,7 @@ var Input = {
 	ap1: props.globals.initNode("/it-autoflight/input/ap1", 0, "BOOL"),
 	ap1Temp: 0,
 	ap2: props.globals.initNode("/it-autoflight/input/ap2", 0, "BOOL"),
-	ap2Temp: 0,
+	zap2Temp: 0,
 	athr: props.globals.initNode("/it-autoflight/input/athr", 0, "BOOL"),
 	athrTemp: 0,
 	bankLimitSw: props.globals.initNode("/it-autoflight/input/bank-limit-sw", 0, "INT"),
@@ -1069,6 +1069,10 @@ setlistener("/it-autoflight/input/lat", func() {
 setlistener("/it-autoflight/input/vert", func() {
 	if (!Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and (Output.ap1.getBoolValue() or Output.ap2.getBoolValue() or Output.fd1.getBoolValue() or Output.fd2.getBoolValue())) {
 		ITAF.setVertMode(Input.vert.getValue());
+      if (fmgc.Input.alt.getValue() > getprop("FMGC/internal/crz-alt-ft")) {
+         # setting crz alt to 0 will change crzAlt to the selected FCU input
+         fmgc.setCrzAlt(0);
+      }
 	} else {
 		ITAF.setVertMode(9);
 	}

@@ -662,12 +662,12 @@ var masterFMGC = maketimer(0.2, func {
 
    var fmgc_flight_phase = fmgc.FMGCNodes.phase.getValue();
 
-	if (FMGCInternal.phase == 0) {
+	if (fmgc_flight_phase == 0) {
 		if (gear0 and ((n1_left >= 85 and n1_right >= 85 and Modes.PFD.FMA.pitchMode == "SRS") or gs >= 90)) {
 			newphase = 1;
 			systems.PNEU.pressMode.setValue("TO");
 		}
-	} elsif (FMGCInternal.phase == 1) {
+	} elsif (fmgc_flight_phase == 1) {
 		if (gear0) {
 			if ((n1_left < 85 or n1_right < 85) and gs < 90 and Modes.PFD.FMA.pitchMode == " ") { # rejected takeoff
 				newphase = 0;
@@ -677,34 +677,39 @@ var masterFMGC = maketimer(0.2, func {
 			newphase = 2;
 			systems.PNEU.pressMode.setValue("TO");
 		}
-	} elsif (FMGCInternal.phase == 2) {
+	} elsif (fmgc_flight_phase == 2) {
 		if ((Modes.PFD.FMA.pitchMode == "ALT CRZ" or Modes.PFD.FMA.pitchMode == "ALT CRZ*")) {
 			newphase = 3;
 			systems.PNEU.pressMode.setValue("CR");
 		}
-	} elsif (FMGCInternal.phase == 3) {
-       if (flightPlanController.arrivalDist.getValue() <= 200 and getprop("/it-autoflight/internal/alt") <= fmgc.Internal.crzAlt.getValue()) { # todo - not sure about crzFl condition, investigate what happens!
+	} elsif (fmgc_flight_phase == 3) {
+      FMGCInternal.decel = 0;
+      if (flightPlanController.arrivalDist.getValue() <= 200 and getprop("/it-autoflight/internal/alt") < fmgc.Internal.crzAlt.getValue()) { # todo - not sure about crzFl condition, investigate what happens!
          newphase = 4;
          systems.PNEU.pressMode.setValue("DE");
-       }
-	} elsif (FMGCInternal.phase == 4) {
+      }
+	} elsif (fmgc_flight_phase == 4) {
       if (FMGCInternal.decel) {
          newphase = 5;
       }
-	} elsif (FMGCInternal.phase > 2 and FMGCInternal.phase < 6) {
+	} elsif (fmgc_flight_phase == 6) {
+		if (alt >= getprop("/FMGC/internal/ga-accel-agl-ft")) { # todo when insert altn or new dest
+			newphase = 5;
+		}
+	}
+	if (fmgc_flight_phase > 2 and fmgc_flight_phase < 6) {
 		if ((state1 == "TOGA" or state2 == "TOGA") and pts.Controls.Flight.flapsInput.getValue() > 0) {
 			newphase = 6;
          # change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
-         systems.FADEC.clbReduc = systems.FADEC.gaClbReduc;
+         systems.FADEC.clbReduc.setValue(systems.FADEC.gaClbReduc.getValue());
 
 			systems.PNEU.pressMode.setValue("TO");
 			Input.toga.setValue(1);
+		} elsif ((Modes.PFD.FMA.pitchMode == "ALT CRZ" or Modes.PFD.FMA.pitchMode == "ALT CRZ*")) {
+			newphase = 3;
+			systems.PNEU.pressMode.setValue("CR");
 		}
-	} elsif (FMGCInternal.phase == 6) {
-		if (alt >= getprop("/FMGC/internal/ga-accel-agl-ft")) { # todo when insert altn or new dest
-			newphase = 4;
-		}
-	}
+   }
 	
 	xtrkError = getprop("/instrumentation/gps/wp/wp[1]/course-error-nm");
 
@@ -717,9 +722,11 @@ var masterFMGC = maketimer(0.2, func {
             xtrkError <= 5) or courseDistanceDecel[1] <= 0.1) and 
             (Modes.PFD.FMA.rollMode == "NAV" or Modes.PFD.FMA.rollMode == "LOC" or Modes.PFD.FMA.rollMode == "LOC*") and 
             pts.Position.gearAglFt.getValue() < 9500) {
+         # go into appr phase.
+         fmgc.FMGCNodes.phase.setValue(5);
 			FMGCInternal.decel = 1;
 			setprop("/instrumentation/nd/symbols/decel/show", 0); 
-		} elsif (FMGCInternal.decel and (FMGCInternal.phase == 0 or FMGCInternal.phase == 6)) {
+		} elsif (FMGCInternal.decel and (fmgc_flight_phase == 0 or fmgc_flight_phase == 6)) {
 			FMGCInternal.decel = 0;
 		}
 	} else {
@@ -736,7 +743,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	FMGCNodes.vmax.setValue(FMGCInternal.maxspeed);
 	
-	if (newphase != FMGCInternal.phase) {  # phase changed
+	if (newphase != fmgc_flight_phase) {  # phase changed
 		FMGCInternal.phase = newphase;
 		FMGCNodes.phase.setValue(newphase);
 	}
@@ -1065,7 +1072,7 @@ var ManagedSPD = maketimer(0.25, func {
                } else {
                   FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
                }
-            } elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase < 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
+            } elsif ((FMGCInternal.phase == 4 ) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
                if (FMGCInternal.decel) {
                   FMGCInternal.mngKtsMach = 0;
                   FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
@@ -1077,7 +1084,7 @@ var ManagedSPD = maketimer(0.25, func {
                      FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
                   }
                }
-            } elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase < 6) and altitude <= FMGCInternal.desSpdLimAlt) {
+            } elsif ((FMGCInternal.phase == 4 ) and altitude <= FMGCInternal.desSpdLimAlt) {
                # Speed is maximum of greendot / descent speed limit
                FMGCInternal.mngKtsMach = 0;
                
@@ -1085,6 +1092,15 @@ var ManagedSPD = maketimer(0.25, func {
                   FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
                } else {
                   FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+               }
+            } elsif ((FMGCInternal.phase == 5 )) {
+               # Speed is vapp limited by gdot or mneuvering speeds
+               FMGCInternal.mngKtsMach = 0;
+               
+               if (constraintSpeed != nil and constraintSpeed != 0) {
+                  FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.minspeed, constraintSpeed), FMGCInternal.clean, 999);
+               } else {
+                  FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.minspeed, FMGCInternal.clean, 999);
                }
             } elsif (FMGCInternal.phase == 6) {
                # Speed is maximum of greendot / climb speed limit
@@ -1342,7 +1358,11 @@ setlistener("/systems/navigation/adr/operating-3", func() {
 	}
 }, 0, 0);
 
-###################################
+#######################################
+# setlisteners for fmgc flight phases #
+#######################################
+
+#######################################
 
 # Calculate Block Fuel
 setlistener("/FMGC/internal/block-calculating", func() {

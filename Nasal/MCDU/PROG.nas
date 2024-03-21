@@ -81,16 +81,8 @@ var progCRZInput = func(key, i) {
 	var scratchpad = mcdu_scratchpad.scratchpads[i].scratchpad;
 	if (key == "L1") {
 		if (scratchpad == "CLR") {
-			fmgc.FMGCInternal.crzProg = fmgc.FMGCInternal.crzFl;
-			if (fmgc.FMGCInternal.phase == 5) {
-				fmgc.FMGCInternal.phase = 3;
-				fmgc.FMGCNodes.phase.setValue(3);
-				systems.PNEU.pressMode.setValue("CR");
-				setprop("/FMGC/internal/activate-once", 0);
-				setprop("/FMGC/internal/activate-twice", 0);
-				fmgc.FMGCInternal.decel = 0;
-			}
 			mcdu_scratchpad.scratchpads[i].empty();
+         mcdu_message(i, "NOT ALLOWED");
 		} else {
          if (var crz = mcdu.MCDU_input_FLIGHT_LEVEL(i, scratchpad)) {
             fmgc.setCrzAlt(crz);

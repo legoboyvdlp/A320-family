@@ -31,6 +31,7 @@ var perfDESInput = func(key, i) {
 			if (getprop("/FMGC/internal/activate-once") == 1) {
 				if (getprop("/FMGC/internal/activate-twice") == 0) {
 					setprop("/FMGC/internal/activate-twice", 1);
+               fmgc.FMGCNodes.phase.setValue(5);
 					fmgc.FMGCInternal.phase = 5;
 					fmgc.FMGCInternal.decel = 1;
 					setprop("/instrumentation/nd/symbols/decel/show", 0); 
