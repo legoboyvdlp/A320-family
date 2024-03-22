@@ -641,7 +641,7 @@ var radios = maketimer(1, func() {
 	adf1();
 });
 
-var newphase = nil;
+var newphase = 0;
 var windAngleDelta = nil;
 
 var masterFMGC = maketimer(0.2, func {
@@ -658,7 +658,10 @@ var masterFMGC = maketimer(0.2, func {
 	altSel = Input.alt.getValue();
 	
    # Phase: 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
-	newphase = FMGCInternal.phase;
+
+# if newphase is overwritten here, it cannot be changed anywhere.
+# it is better left
+#	newphase = FMGCInternal.phase;
 
    var fmgc_flight_phase = fmgc.FMGCNodes.phase.getValue();
 
@@ -678,23 +681,18 @@ var masterFMGC = maketimer(0.2, func {
 			systems.PNEU.pressMode.setValue("TO");
 		}
 	} elsif (fmgc_flight_phase == 2) {
-		if ((Modes.PFD.FMA.pitchMode == "ALT CRZ" or Modes.PFD.FMA.pitchMode == "ALT CRZ*")) {
+		if (Modes.PFD.FMA.pitchMode == "ALT CRZ") {
 			newphase = 3;
-			systems.PNEU.pressMode.setValue("CR");
+         systems.PNEU.pressMode.setValue("CR");
 		}
 	} elsif (fmgc_flight_phase == 3) {
-      FMGCInternal.decel = 0;
       if (flightPlanController.arrivalDist.getValue() <= 200 and getprop("/it-autoflight/internal/alt") < fmgc.Internal.crzAlt.getValue()) { # todo - not sure about crzFl condition, investigate what happens!
          newphase = 4;
          systems.PNEU.pressMode.setValue("DE");
       }
-	} elsif (fmgc_flight_phase == 4) {
-      if (FMGCInternal.decel) {
-         newphase = 5;
-      }
 	} elsif (fmgc_flight_phase == 6) {
 		if (alt >= getprop("/FMGC/internal/ga-accel-agl-ft")) { # todo when insert altn or new dest
-			newphase = 5;
+			newphase = 5; # is wrong, but it commands g-dot speed
 		}
 	}
 	if (fmgc_flight_phase > 2 and fmgc_flight_phase < 6) {
@@ -705,9 +703,6 @@ var masterFMGC = maketimer(0.2, func {
 
 			systems.PNEU.pressMode.setValue("TO");
 			Input.toga.setValue(1);
-		} elsif ((Modes.PFD.FMA.pitchMode == "ALT CRZ" or Modes.PFD.FMA.pitchMode == "ALT CRZ*")) {
-			newphase = 3;
-			systems.PNEU.pressMode.setValue("CR");
 		}
    }
 	
@@ -723,14 +718,10 @@ var masterFMGC = maketimer(0.2, func {
             (Modes.PFD.FMA.rollMode == "NAV" or Modes.PFD.FMA.rollMode == "LOC" or Modes.PFD.FMA.rollMode == "LOC*") and 
             pts.Position.gearAglFt.getValue() < 9500) {
          # go into appr phase.
-         fmgc.FMGCNodes.phase.setValue(5);
-			FMGCInternal.decel = 1;
+         newphase = 5;
+			fmgc.decel = 1;
 			setprop("/instrumentation/nd/symbols/decel/show", 0); 
-		} elsif (FMGCInternal.decel and (fmgc_flight_phase == 0 or fmgc_flight_phase == 6)) {
-			FMGCInternal.decel = 0;
 		}
-	} else {
-		FMGCInternal.decel = 0;
 	}
 	
 	tempOverspeed = systems.ADIRS.overspeedVFE.getValue();
@@ -1060,9 +1051,9 @@ var ManagedSPD = maketimer(0.25, func {
                FMGCInternal.mngKtsMach = 0;
                
                if (constraintSpeed != nil and constraintSpeed != 0) {
-                  FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+                  FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.clean, 999);
                } else {
-                  FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
+                  FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
                }
             } elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
                FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
@@ -1073,25 +1064,20 @@ var ManagedSPD = maketimer(0.25, func {
                   FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
                }
             } elsif ((FMGCInternal.phase == 4 ) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
-               if (FMGCInternal.decel) {
-                  FMGCInternal.mngKtsMach = 0;
-                  FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
+               FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
+               if (constraintSpeed != nil and constraintSpeed != 0) {
+                  FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
                } else {
-                  FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-                  if (constraintSpeed != nil and constraintSpeed != 0) {
-                     FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
-                  } else {
-                     FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
-                  }
+                  FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
                }
             } elsif ((FMGCInternal.phase == 4 ) and altitude <= FMGCInternal.desSpdLimAlt) {
                # Speed is maximum of greendot / descent speed limit
                FMGCInternal.mngKtsMach = 0;
                
                if (constraintSpeed != nil and constraintSpeed != 0) {
-                  FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+                  FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
                } else {
-                  FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+                  FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
                }
             } elsif ((FMGCInternal.phase == 5 )) {
                # Speed is vapp limited by gdot or mneuvering speeds
@@ -1235,6 +1221,39 @@ var switchDatabase = func {
 	navDataBase.standbyDate = tempStoreDate;
 }
 
+################################
+# setlisteners for fmgc phases #
+################################
+
+setlistener("/FMGC/internal/activate-twice", func(val) {
+   if (val.getValue()) {
+      # change to APPR PHASE 
+      setprop("/FMGC/internal/activate-once", 0);
+      setprop("/FMGC/internal/activate-twice", 0);
+      fmgc.decel = 1;
+      newphase = 5;
+      print("phase 5 set by activation");
+      fmgc.FMGCNodes.phase.setValue(5);
+   }
+}, 0, 1);
+
+setlistener("/fdm/jsbsim/fadec/control-1/detent-text", func(text) {
+   var phase = fmgc.FMGCNodes.phase.getValue(); 
+   if (text.getValue() == "TOGA" and phase > 1 and phase < 6) { # todo: flaps need to be out of 0
+      # change to G/A PHASE 
+      FMGCInternal.decel = 0;
+      newphase = 6;
+      fmgc.FMGCNodes.phase.setValue(6);
+
+      # change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
+      systems.FADEC.clbReduc.setValue(systems.FADEC.gaClbReduc.getValue());
+
+      systems.PNEU.pressMode.setValue("TO");
+      Input.toga.setValue(1);
+   }
+}, 0, 1);
+
+
 ##################################
 # setlisteners for managed speed #
 ##################################
@@ -1248,12 +1267,25 @@ setlistener("/FMGC/internal/v2-set", func() {
 }, 0, 0);
 
 # set managed speed if SRS, EXP CLB, EXP DES or TCAS
-setlistener("/FMGC/internal/pitch-mode", func() {
-	if (FMGCNodes.pitchMode.getValue() == "SRS" or FMGCNodes.pitchMode.getValue() == "EXP CLB" 
-         or FMGCNodes.pitchMode.getValue() == "EXP DES" or FMGCNodes.pitchMode.getValue() == "TCAS" ) {
+# set new flight phase if crz alt reached
+# Important, that the listener only triggers if there is a change (type 0)
+setlistener("/FMGC/internal/pitch-mode", func(mode) {
+   var val = mode.getValue();
+	if (val == "SRS" or val == "EXP CLB" or val == "EXP DES" or val == "TCAS" ) {
       fmgc.ManagedSPD.start();
 	}
-}, 0, 0);
+
+   # change to CRZ PHASE
+	if (val == "ALT CRZ" or val == "ALT CRZ*") {
+      setprop("/FMGC/internal/activate-once", 0);
+      setprop("/FMGC/internal/activate-twice", 0);
+      FMGCInternal.decel = 0;
+      newphase = 3;
+      print("decel set to ", FMGCInternal.decel, " by pitch-mode change");
+      fmgc.FMGCNodes.phase.setValue(3);
+      systems.PNEU.pressMode.setValue("CR");
+	}
+}, 0, 1);
 
 # enable managed speed if FMS has a valid position when on ground
 setlistener("/systems/navigation/aligned-1", func(val) {

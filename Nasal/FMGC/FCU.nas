@@ -293,6 +293,8 @@ var FCUController = {
             # get actual selected speed
             # speed is directly controlled if it is not managed
             if (fmgc.Input.ktsMach.getBoolValue()) { 
+               me.machTemp = fcu.input.mach.getValue();
+
                if (d == 1) {
                   me.machTemp = math.round(me.machTemp + 0.001, 0.001); # Kill floating point error
                } else if (d == -1) {
