@@ -711,6 +711,7 @@
 					<cmd type="double">0</cmd>
 				</athr>
 				<clbreduc-ft type="double">1500</clbreduc-ft>
+				<ga-clbreduc-ft type="double">1500</ga-clbreduc-ft>
 				<control-1 n="0">
 					<detent-text type="string">IDLE</detent-text>
 					<n1-mode-sw type="bool">0</n1-mode-sw>

@@ -6,3 +6,4 @@ MyDevWIP
 *.swp
 *.swo
 .DS_Store
+*.vim
