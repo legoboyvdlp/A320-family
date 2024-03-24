@@ -663,7 +663,7 @@ var masterFMGC = maketimer(0.2, func {
 # it is better left
 #	newphase = FMGCInternal.phase;
 
-   var fmgc_flight_phase = fmgc.FMGCNodes.phase.getValue();
+   var fmgc_flight_phase = fmgc.FMGCInternal.phase;
 
 	if (fmgc_flight_phase == 0) {
 		if (gear0 and ((n1_left >= 85 and n1_right >= 85 and Modes.PFD.FMA.pitchMode == "SRS") or gs >= 90)) {
@@ -1082,11 +1082,12 @@ var ManagedSPD = maketimer(0.25, func {
             } elsif ((FMGCInternal.phase == 5 )) {
                # Speed is vapp limited by gdot or mneuvering speeds
                FMGCInternal.mngKtsMach = 0;
+               fmgc.decel = 1;
                
                if (constraintSpeed != nil and constraintSpeed != 0) {
-                  FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.minspeed, constraintSpeed), FMGCInternal.clean, 999);
+                  FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.vapp_appr, constraintSpeed), FMGCInternal.clean, 999);
                } else {
-                  FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.minspeed, FMGCInternal.clean, 999);
+                  FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.vapp_appr, FMGCInternal.clean, 999);
                }
             } elsif (FMGCInternal.phase == 6) {
                # Speed is maximum of greendot / climb speed limit
@@ -1233,7 +1234,6 @@ setlistener("/FMGC/internal/activate-twice", func(val) {
       fmgc.decel = 1;
       newphase = 5;
       print("phase 5 set by activation");
-      fmgc.FMGCNodes.phase.setValue(5);
    }
 }, 0, 1);
 
@@ -1285,7 +1285,11 @@ setlistener("/FMGC/internal/pitch-mode", func(mode) {
       fmgc.FMGCNodes.phase.setValue(3);
       systems.PNEU.pressMode.setValue("CR");
 	}
-}, 0, 1);
+}, 0, 0);
+
+setlistener("/it-autoflight/input/kts", func(val) {
+      print("Commanded Speed is : ", val.getValue());
+}, 0, 0);
 
 # enable managed speed if FMS has a valid position when on ground
 setlistener("/systems/navigation/aligned-1", func(val) {
