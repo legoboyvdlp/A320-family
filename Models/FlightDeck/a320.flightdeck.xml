@@ -1758,7 +1758,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%3.0f</format>
-		<property>it-autoflight/input/kts</property>
+		<property>fcu/input/kts</property>
 		<truncate>false</truncate>
 		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
@@ -1784,7 +1784,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%0.3f</format>
-		<property>it-autoflight/input/mach</property>
+		<property>fcu/input/mach</property>
 		<truncate>false</truncate>
 		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
@@ -3144,12 +3144,12 @@
 		<type>select</type>
 		<object-name>spd-text</object-name>
 		<condition>
-			<and>
-				<not><property>controls/switches/annun-test</property></not>
-				<not><property>it-autoflight/input/kts-mach</property></not>
-				<not><property>it-autoflight/input/spd-managed</property></not>
-				<property>FMGC/FCU-working</property>
-			</and>
+         <and>
+            <not><property>controls/switches/annun-test</property></not>
+            <not><property>it-autoflight/input/kts-mach</property></not>
+            <property>FMGC/FCU-working</property>
+            <property>fcu/output/spd-window-open</property>
+         </and>
 		</condition>
 	</animation>
 
@@ -3160,8 +3160,8 @@
 			<and>
 				<not><property>controls/switches/annun-test</property></not>
 				<property>it-autoflight/input/kts-mach</property>
-				<not><property>it-autoflight/input/spd-managed</property></not>
 				<property>FMGC/FCU-working</property>
+            <property>fcu/output/spd-window-open</property>
 			</and>
 		</condition>
 	</animation>
@@ -3170,7 +3170,7 @@
 		<type>select</type>
 		<object-name>spd.fmgc</object-name>
 		<condition>
-			<property>it-autoflight/input/spd-managed</property>
+         <property>FMGC/internal/mng-spd-active</property>
 		</condition>
 	</animation>
 
@@ -3180,7 +3180,7 @@
 		<condition>
 			<and>
 				<not><property>controls/switches/annun-test</property></not>
-				<property>it-autoflight/input/spd-managed</property>
+            <not><property>fcu/output/spd-window-open</property></not>
 			</and>
 		</condition>
 	</animation>
@@ -6590,7 +6590,8 @@
 		<object-name>spd-sel</object-name>
 		<action>
 			<button>0</button>
-			<repeatable>true</repeatable>
+			<repeatable>false</repeatable>
+			<repeatable>false</repeatable>
 			<binding>
 				<condition>
 					<not><property>devices/status/keyboard/shift</property></not>
@@ -6635,7 +6636,8 @@
 		</action>
 		<action>
 			<button>1</button>
-			<repeatable>true</repeatable>
+			<repeatable>false</repeatable>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
 				<script>fcu.FCUController.SPDPull();</script>

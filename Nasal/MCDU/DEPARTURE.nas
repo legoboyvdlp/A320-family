@@ -562,6 +562,10 @@ var departurePage = {
 					if (fmgc.FMGCInternal.v1set) {
 						fmgc.FMGCInternal.v1set = 0;
 						fmgc.FMGCInternal.v1 = 0;
+						fmgc.FMGCNodes.v1set.setBoolValue(nil);
+						fmgc.FMGCNodes.v1.setValue(0);
+						fmgc.FMGCNodes.v2set.setBoolValue(nil);
+						fmgc.FMGCNodes.v2.setValue(0);
 					}
 					if (fmgc.FMGCInternal.vrset) {
 						fmgc.FMGCInternal.vrset = 0;
@@ -570,6 +574,8 @@ var departurePage = {
 					if (fmgc.FMGCInternal.v2set) {
 						fmgc.FMGCInternal.v2set = 0;
 						fmgc.FMGCInternal.v2 = 0;
+						fmgc.FMGCNodes.v2set.setBoolValue(nil);
+						fmgc.FMGCNodes.v2.setValue(0);
 					}
 					me.updateRunways();
 					me.updatePage();
