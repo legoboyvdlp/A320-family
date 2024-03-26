@@ -1085,9 +1085,9 @@ var ManagedSPD = maketimer(0.25, func {
                fmgc.decel = 1;
                
                if (constraintSpeed != nil and constraintSpeed != 0) {
-                  FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.vapp_appr, constraintSpeed), FMGCInternal.clean, 999);
+                  FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.vapp_appr, constraintSpeed), FMGCInternal.vls, 999);
                } else {
-                  FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.vapp_appr, FMGCInternal.clean, 999);
+                  FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.vapp_appr, FMGCInternal.vls, 999);
                }
             } elsif (FMGCInternal.phase == 6) {
                # Speed is maximum of greendot / climb speed limit
