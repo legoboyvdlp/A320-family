@@ -43446,7 +43446,7 @@
 	
 	<animation>
 		<type>knob</type>
-        <object-name>map_lt_left</object-name>
+        <object-name>LReadingLtKnb</object-name>
         <property>controls/lighting/map-light-left-knb</property>
 		<factor>180</factor>
 		<offset-deg>-90</offset-deg>
@@ -43472,7 +43472,7 @@
 
 	<animation>
 		<type>knob</type>
-        <object-name>map_lt_right</object-name>
+        <object-name>RReadingLtKnb</object-name>
         <property>controls/lighting/map-light-right-knb</property>
 		<factor>180</factor>
 		<offset-deg>-90</offset-deg>
