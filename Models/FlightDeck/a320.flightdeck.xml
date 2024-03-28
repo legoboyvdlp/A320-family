@@ -8500,19 +8500,6 @@
     	</axis>
     </animation>
 	
-	<!-- Brake Lighting -->
-	<animation>
-		<name>Triple brake indicator lighting</name>
-		<type>material</type>
-		<object-name>brakes_body</object-name>
-		<emission>
-			<red>0.3</red>
-			<green>0.3</green>
-			<blue>0.3</blue>
-			<factor-prop>sim/model/lights/dome-light</factor-prop>
-		</emission>
-	</animation>
-	
 	<!-- IESI -->
 	<animation>
 		<type>rotate</type>
@@ -43382,7 +43369,6 @@
 		<object-name>ddrmi_vor_adf_flag_1</object-name>
 		<object-name>ddrmi_vor_adf_flag_2</object-name>
 		<object-name>ddrmi_hdg_flag</object-name>
-		<object-name>brakes_body</object-name>
 		<object-name>clock_body</object-name>
 		<object-name>et_knob</object-name>
 		<object-name>clock_knob</object-name>
