@@ -26,7 +26,14 @@ var IGNITION = {
 		ENGINE.cutoffSwitch[n].setBoolValue(0);
 		pts.Fdm.JSBsim.Propulsion.setRunning.setValue(n);
 	},
-	updateigniterSelect: func(n) {
+	fastStop: func(n) {
+		ENGINE.cutoffSwitch[n].setBoolValue(1);
+		settimer(func() { # Required delay
+			pts.Fdm.JSBsim.Propulsion.Engine.n1[n].setValue(0.1);
+			pts.Fdm.JSBsim.Propulsion.Engine.n2[n].setValue(0.1);
+		}, 0.1);
+	},
+	updateIgniterSelect: func(n) {
 		if (me.autoStart[n].getBoolValue()) {
 			me.igniterSelectTemp[n] = pts.Systems.Acconfig.Options.igniterSelect[n].getValue();
 			if (me.igniterSelectTemp[n] == 1) {
@@ -41,13 +48,13 @@ var IGNITION = {
 
 setlistener("/engines/engine[0]/state", func() {
 	if (pts.Engines.Engine.state[0].getValue() == 1) {
-		IGNITION.updateigniterSelect(0);
+		IGNITION.updateIgniterSelect(0);
 	}
 }, 0, 0);
 
 setlistener("/engines/engine[1]/state", func() {
 	if (pts.Engines.Engine.state[1].getValue() == 1) {
-		IGNITION.updateigniterSelect(1);
+		IGNITION.updateIgniterSelect(1);
 	}
 }, 0, 0);
 

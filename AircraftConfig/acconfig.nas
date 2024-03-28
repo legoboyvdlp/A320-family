@@ -316,8 +316,8 @@ var colddark = func {
 		# Initial shutdown, and reinitialization.
 		setprop("/services/chocks/enable", 1);
 		setprop("/controls/ignition/start-sw", 1);
-		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
-		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
+		systems.IGNITION.fastStop(0);
+		systems.IGNITION.fastStop(1);
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
@@ -376,8 +376,8 @@ var beforestart = func {
 		# First, we set everything to cold and dark.
 		setprop("/services/chocks/enable", 1);
 		setprop("/controls/ignition/start-sw", 1);
-		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
-		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
+		systems.IGNITION.fastStop(0);
+		systems.IGNITION.fastStop(1);
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
@@ -473,8 +473,8 @@ var taxi = func {
 		# First, we set everything to cold and dark.
 		setprop("/services/chocks/enable", 0);
 		setprop("/controls/ignition/start-sw", 1);
-		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
-		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
+		systems.IGNITION.fastStop(0);
+		systems.IGNITION.fastStop(1);
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);

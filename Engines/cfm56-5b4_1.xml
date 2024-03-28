@@ -11,6 +11,8 @@
 	<ignitionn2>28.5</ignitionn2>
 	<n1spinup>0.11</n1spinup>
 	<n2spinup>1.845</n2spinup>
+	<n1spindown>9.5</n1spindown>
+	<n2spindown>9.5</n2spindown>
 	<n1startrate>0.503</n1startrate>
 	<n2startrate>1.127</n2startrate>
 	<idlen1>18.9</idlen1>

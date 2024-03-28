@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2022 Jonathan Redpath (legoboyvdlp) and Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Jonathan Redpath (legoboyvdlp) and Josh Davidson (Octal450) -->
 
 <turbine_engine name="APS3200">
 	
@@ -13,8 +13,8 @@
 	<ignitionn2>26</ignitionn2> <!-- hack to make work -->
 	<n1spinup>3</n1spinup>
 	<n2spinup>8.666</n2spinup>  <!-- hack to make work -->
-	<n1spindown>20</n1spindown>
-	<n2spindown>20</n2spindown>
+	<n1spindown>9.5</n1spindown>
+	<n2spindown>9.5</n2spindown>
 	<n1startrate>1.8222</n1startrate>
 	<n2startrate>1.8222</n2startrate>
 	<idlen1>99.9</idlen1>
