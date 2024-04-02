@@ -660,7 +660,7 @@ var masterFMGC = maketimer(0.2, func {
    # Phase: 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 
 # if newphase is overwritten here, it cannot be changed anywhere.
-# it is better left
+# it is better left out
 #	newphase = FMGCInternal.phase;
 
    var fmgc_flight_phase = fmgc.FMGCInternal.phase;
@@ -719,7 +719,6 @@ var masterFMGC = maketimer(0.2, func {
             pts.Position.gearAglFt.getValue() < 9500) {
          # go into appr phase.
          newphase = 5;
-			fmgc.decel = 1;
 			setprop("/instrumentation/nd/symbols/decel/show", 0); 
 		}
 	}
@@ -899,9 +898,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 });
 
-############################
-#handle radios, runways, v1/vr/v2
-############################
+############################ #handle radios, runways, v1/vr/v2 ############################
 var updateAirportRadios = func {
 	departure_rwy = fmgc.flightPlanController.flightplans[2].departure_runway;
 	destination_rwy = fmgc.flightPlanController.flightplans[2].destination_runway;
@@ -1082,8 +1079,6 @@ var ManagedSPD = maketimer(0.25, func {
             } elsif ((FMGCInternal.phase == 5 )) {
                # Speed is vapp limited by gdot or mneuvering speeds
                FMGCInternal.mngKtsMach = 0;
-               fmgc.decel = 1;
-               
                if (constraintSpeed != nil and constraintSpeed != 0) {
                   FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.vapp_appr, constraintSpeed), FMGCInternal.vls, 999);
                } else {
@@ -1222,18 +1217,27 @@ var switchDatabase = func {
 	navDataBase.standbyDate = tempStoreDate;
 }
 
-################################
-# setlisteners for fmgc phases #
-################################
+##########################################################
+# setlisteners for fmgc phases                           #
+# some phases are triggered from same properties as for  #
+# managed speed                                          #
+##########################################################
 
 setlistener("/FMGC/internal/activate-twice", func(val) {
    if (val.getValue()) {
       # change to APPR PHASE 
       setprop("/FMGC/internal/activate-once", 0);
       setprop("/FMGC/internal/activate-twice", 0);
-      fmgc.decel = 1;
       newphase = 5;
-      print("phase 5 set by activation");
+   }
+}, 0, 1);
+
+setlistener("/FMGC/internal/pitch-mode", func(val) {
+   if (val.getValue() == "ALT CRZ") {
+      # change to CRZ PHASE 
+      setprop("/FMGC/internal/activate-once", 0);
+      setprop("/FMGC/internal/activate-twice", 0);
+      newphase = 3;
    }
 }, 0, 1);
 
@@ -1241,7 +1245,6 @@ setlistener("/fdm/jsbsim/fadec/control-1/detent-text", func(text) {
    var phase = fmgc.FMGCNodes.phase.getValue(); 
    if (text.getValue() == "TOGA" and phase > 1 and phase < 6) { # todo: flaps need to be out of 0
       # change to G/A PHASE 
-      FMGCInternal.decel = 0;
       newphase = 6;
       fmgc.FMGCNodes.phase.setValue(6);
 
@@ -1279,16 +1282,9 @@ setlistener("/FMGC/internal/pitch-mode", func(mode) {
 	if (val == "ALT CRZ" or val == "ALT CRZ*") {
       setprop("/FMGC/internal/activate-once", 0);
       setprop("/FMGC/internal/activate-twice", 0);
-      FMGCInternal.decel = 0;
       newphase = 3;
-      print("decel set to ", FMGCInternal.decel, " by pitch-mode change");
-      fmgc.FMGCNodes.phase.setValue(3);
       systems.PNEU.pressMode.setValue("CR");
 	}
-}, 0, 0);
-
-setlistener("/it-autoflight/input/kts", func(val) {
-      print("Commanded Speed is : ", val.getValue());
 }, 0, 0);
 
 # enable managed speed if FMS has a valid position when on ground

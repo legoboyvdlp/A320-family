@@ -52,7 +52,6 @@ var progCLBInput = func(key, i) {
 				systems.PNEU.pressMode.setValue("CR");
 				setprop("/FMGC/internal/activate-once", 0);
 				setprop("/FMGC/internal/activate-twice", 0);
-				fmgc.FMGCInternal.decel = 0;
 			}
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil) {
@@ -61,12 +60,11 @@ var progCLBInput = func(key, i) {
 				fmgc.FMGCInternal.crzProg = scratchpad;
 				mcdu_scratchpad.scratchpads[i].empty();
 				if (fmgc.FMGCInternal.phase == 5) {
-					fmgc.FMGCInternal.phase = 3;
+					fmgc.newphase = 3;
 					fmgc.FMGCNodes.phase.setValue(3);
 					systems.PNEU.pressMode.setValue("CR");
 					setprop("/FMGC/internal/activate-once", 0);
 					setprop("/FMGC/internal/activate-twice", 0);
-					fmgc.FMGCInternal.decel = 0;
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
@@ -100,12 +98,11 @@ var progDESInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			fmgc.FMGCInternal.crzProg = fmgc.FMGCInternal.crzFl;
 			if (fmgc.FMGCInternal.phase == 5 or fmgc.FMGCInternal.phase == 6) {
-				fmgc.FMGCInternal.phase = 3;
+				fmgc.newphase = 3;
 				fmgc.FMGCNodes.phase.setValue(3);
 				systems.PNEU.pressMode.setValue("CR");
 				setprop("/FMGC/internal/activate-once", 0);
 				setprop("/FMGC/internal/activate-twice", 0);
-				fmgc.FMGCInternal.decel = 0;
 			}
 			mcdu_scratchpad.scratchpads[i].empty();
 		} else if (int(scratchpad) != nil) {
@@ -119,7 +116,6 @@ var progDESInput = func(key, i) {
 					systems.PNEU.pressMode.setValue("CR");
 					setprop("/FMGC/internal/activate-once", 0);
 					setprop("/FMGC/internal/activate-twice", 0);
-					fmgc.FMGCInternal.decel = 0;
 				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
