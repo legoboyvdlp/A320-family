@@ -2,7 +2,7 @@
 # Copyright (c) 2024 Josh Davidson (Octal450)
 
 controls.autopilotDisconnect = func() {
-	libraries.apPanel.apDisc();
+	libraries.ApPanel.apDisc();
 }
 
 controls.reverserTogglePosition = func() {

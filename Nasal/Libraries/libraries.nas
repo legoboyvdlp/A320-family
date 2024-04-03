@@ -338,17 +338,6 @@ setlistener("/controls/flight/auto-coordination", func() {
 	screen.log.write("Tiller will now be controlled by aileron, rather than rudder", 1, 0, 0);
 }, 0, 0);
 
-# Legacy FCU
-var APPanel = {
-	APDisc: func() {
-		fcu.FCUController.APDisc();
-	},
-	ATDisc: func() {
-		fcu.FCUController.ATDisc();
-	},
-};
-
-
 # Emesary
 var LibrariesRecipient =
 {
