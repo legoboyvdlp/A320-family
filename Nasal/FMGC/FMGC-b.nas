@@ -440,11 +440,12 @@ var ITAF = {
 			Output.ap1.setBoolValue(0);
 			me.apOffFunction();
 		}
+		fmaAp();
+		
 		Output.ap1Temp = Output.ap1.getBoolValue();
 		if (Input.ap1.getBoolValue() != Output.ap1Temp) {
 			Input.ap1.setBoolValue(Output.ap1Temp);
 		}
-		fmaAp();
 	},
 	ap2Master: func(s) {
 		if (s == 1) {
@@ -462,15 +463,17 @@ var ITAF = {
 			Output.ap2.setBoolValue(0);
 			me.apOffFunction();
 		}
+		fmaAp();
+		
 		Output.ap2Temp = Output.ap2.getBoolValue();
 		if (Input.ap2.getBoolValue() != Output.ap2Temp) {
 			Input.ap2.setBoolValue(Output.ap2Temp);
 		}
-		fmaAp();
 	},
 	apOffFunction: func() {
 		if (!Output.ap1.getBoolValue() and !Output.ap2.getBoolValue()) { # Only do if both APs are off
 			me.updateFma();
+			
 			if (Sound.enableApOff) {
 				Sound.apOff.setBoolValue(1);
 				Sound.enableApOff = 0;
@@ -493,11 +496,12 @@ var ITAF = {
 				Custom.Sound.enableAthrOff = 0;
 			}
 		}
+		fmaAthr();
+		
 		Output.athrTemp = Output.athr.getBoolValue();
 		if (Input.athr.getBoolValue() != Output.athrTemp) {
 			Input.athr.setBoolValue(Output.athrTemp);
 		}
-		fmaAthr();
 	},
 	fd1Master: func(s) {
 		if (s == 1) {
@@ -509,11 +513,12 @@ var ITAF = {
 				me.updateFma();
 			}
 		}
+		fmaFd();
+		
 		Output.fd1Temp = Output.fd1.getBoolValue();
 		if (Input.fd1.getBoolValue() != Output.fd1Temp) {
 			Input.fd1.setBoolValue(Output.fd1Temp);
 		}
-		fmaFd();
 	},
 	fd2Master: func(s) {
 		if (s == 1) {
@@ -525,11 +530,12 @@ var ITAF = {
 				me.updateFma();
 			}
 		}
+		fmaFd();
+		
 		Output.fd2Temp = Output.fd2.getBoolValue();
 		if (Input.fd2.getBoolValue() != Output.fd2Temp) {
 			Input.fd2.setBoolValue(Output.fd2Temp);
 		}
-		fmaFd();
 	},
 	setLatMode: func(n) {
 		Output.vertTemp = Output.vert.getValue();
