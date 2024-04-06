@@ -665,6 +665,24 @@ var masterFMGC = maketimer(0.2, func {
 
    var fmgc_flight_phase = fmgc.FMGCInternal.phase;
 
+   if (n1_left >= 85) {
+      setprop("/FMGC/internal/n1-left-ge-85", 1);
+   } else {
+      setprop("/FMGC/internal/n1-left-ge-85", 0);
+   }
+
+   if (n1_right >= 85) {
+      setprop("/FMGC/internal/n1-right-ge-85", 1);
+   } else {
+      setprop("/FMGC/internal/n1-right-ge-85", 0);
+   }
+
+   if (gs > 90){
+      setprop("/FMGC/internal/gs-gt-90", 1);
+   } else {
+      setprop("/FMGC/internal/gs-gt-90", 0);
+   }
+
 	if (fmgc_flight_phase == 0) {
 		if (gear0 and ((n1_left >= 85 and n1_right >= 85 and Modes.PFD.FMA.pitchMode == "SRS") or gs >= 90)) {
 			newphase = 1;
@@ -679,11 +697,6 @@ var masterFMGC = maketimer(0.2, func {
 		} elsif (((Modes.PFD.FMA.pitchMode != "SRS" and Modes.PFD.FMA.pitchMode != " ") or alt >= accel_agl_ft)) {
 			newphase = 2;
 			systems.PNEU.pressMode.setValue("TO");
-		}
-	} elsif (fmgc_flight_phase == 2) {
-		if (Modes.PFD.FMA.pitchMode == "ALT CRZ") {
-			newphase = 3;
-         systems.PNEU.pressMode.setValue("CR");
 		}
 	} elsif (fmgc_flight_phase == 3) {
       if (flightPlanController.arrivalDist.getValue() <= 200 and getprop("/it-autoflight/internal/alt") < fmgc.Internal.crzAlt.getValue()) { # todo - not sure about crzFl condition, investigate what happens!
@@ -1232,15 +1245,6 @@ setlistener("/FMGC/internal/activate-twice", func(val) {
    }
 }, 0, 1);
 
-setlistener("/FMGC/internal/pitch-mode", func(val) {
-   if (val.getValue() == "ALT CRZ") {
-      # change to CRZ PHASE 
-      setprop("/FMGC/internal/activate-once", 0);
-      setprop("/FMGC/internal/activate-twice", 0);
-      newphase = 3;
-   }
-}, 0, 1);
-
 setlistener("/fdm/jsbsim/fadec/control-1/detent-text", func(text) {
    var phase = fmgc.FMGCNodes.phase.getValue(); 
    if (text.getValue() == "TOGA" and phase > 1 and phase < 6) { # todo: flaps need to be out of 0
@@ -1254,6 +1258,28 @@ setlistener("/fdm/jsbsim/fadec/control-1/detent-text", func(text) {
       systems.PNEU.pressMode.setValue("TO");
       Input.toga.setValue(1);
    }
+}, 0, 1);
+
+setlistener("/FMGC/internal/gs-gt-90", func(val) {
+   if (val.getBoolValue() and fmgc_flight_phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
+      newphase = 1;
+      systems.PNEU.pressMode.setValue("TO");
+	}
+}, 0, 1);
+
+setlistener("/FMGC/internal/n1-right-ge-85", func(val) {
+   if (val.getBoolValue() and n1_left_ge_85.getBoolValue() and fmgc_flight_phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
+      newphase = 1;
+      systems.PNEU.pressMode.setValue("TO");
+	}
+}, 0, 1);
+
+
+setlistener("/FMGC/internal/n1-left-ge-85", func(val) {
+   if (val.getBoolValue() and n1_right_ge_85.getBoolValue() and fmgc_flight_phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
+      newphase = 1;
+      systems.PNEU.pressMode.setValue("TO");
+	}
 }, 0, 1);
 
 
@@ -1278,8 +1304,16 @@ setlistener("/FMGC/internal/pitch-mode", func(mode) {
       fmgc.ManagedSPD.start();
 	}
 
+   # change to TAKEOFF PHASE
+	if (val == "SRS" and fmgc_flight_phase == 0) {
+		if (gear0 and (n1_left_ge_85.getBoolValue() and n1_right_ge_85.getBoolValue())) {
+			newphase = 1;
+			systems.PNEU.pressMode.setValue("TO");
+      }
+	}
+
    # change to CRZ PHASE
-	if (val == "ALT CRZ" or val == "ALT CRZ*") {
+	if (val == "ALT CRZ") {
       setprop("/FMGC/internal/activate-once", 0);
       setprop("/FMGC/internal/activate-twice", 0);
       newphase = 3;
