@@ -1261,14 +1261,14 @@ setlistener("/fdm/jsbsim/fadec/control-1/detent-text", func(text) {
 }, 0, 1);
 
 setlistener("/FMGC/internal/gs-gt-90", func(val) {
-   if (val.getBoolValue() and fmgc_flight_phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
+   if (val.getBoolValue() and fmgc.FMGCInternal.phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
       newphase = 1;
       systems.PNEU.pressMode.setValue("TO");
 	}
 }, 0, 1);
 
 setlistener("/FMGC/internal/n1-right-ge-85", func(val) {
-   if (val.getBoolValue() and n1_left_ge_85.getBoolValue() and fmgc_flight_phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
+   if (val.getBoolValue() and getprop("/FMGC/internal/n1-left-ge-85") == 1 and fmgc.FMGCInternal.phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
       newphase = 1;
       systems.PNEU.pressMode.setValue("TO");
 	}
@@ -1276,7 +1276,7 @@ setlistener("/FMGC/internal/n1-right-ge-85", func(val) {
 
 
 setlistener("/FMGC/internal/n1-left-ge-85", func(val) {
-   if (val.getBoolValue() and n1_right_ge_85.getBoolValue() and fmgc_flight_phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
+   if (val.getBoolValue() and getprop("/FMGC/internal/n1-right-ge-85") == 1 and fmgc.FMGCInternal.phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
       newphase = 1;
       systems.PNEU.pressMode.setValue("TO");
 	}
@@ -1305,7 +1305,7 @@ setlistener("/FMGC/internal/pitch-mode", func(mode) {
 	}
 
    # change to TAKEOFF PHASE
-	if (val == "SRS" and fmgc_flight_phase == 0) {
+	if (val == "SRS" and fmgc.FMGCInternal.phase == 0) {
 		if (gear0 and (n1_left_ge_85.getBoolValue() and n1_right_ge_85.getBoolValue())) {
 			newphase = 1;
 			systems.PNEU.pressMode.setValue("TO");
