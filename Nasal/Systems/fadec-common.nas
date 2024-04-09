@@ -201,6 +201,8 @@ setlistener("/fdm/jsbsim/fadec/control-2/detent", func() {
 }, 0, 0);
 setlistener("/fdm/jsbsim/fadec/limit/active-mode-int", func() {
 	FADEC.updateTxt();
+   # check if SRS TO or SRS GA
+
 }, 0, 0);
 setlistener("/fdm/jsbsim/fadec/alpha-floor-switch", func() {
 	if (FADEC.alphaFloorSwitch.getValue() == 2) {

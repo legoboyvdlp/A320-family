@@ -117,13 +117,15 @@ var Input = {
 
 var Internal = {
 	alt: props.globals.initNode("/it-autoflight/internal/alt", 10000, "INT"),
+   alt_lt_crzalt: props.globals.initNode("/FMGC/internal/alt-lt-crzalt", 0, "INT"),
 	altCaptureActive: 0,
 	altDiff: 0,
 	altTemp: 0,
 	altPredicted: props.globals.initNode("/it-autoflight/internal/altitude-predicted", 0, "DOUBLE"),
 	bankLimit: props.globals.initNode("/it-autoflight/internal/bank-limit", 0, "DOUBLE"),
 	captVs: 0,
-   crzAlt:  props.globals.initNode("/FMGC/internal/crz-alt-ft", 0, "INT"),
+   crzAlt: props.globals.initNode("/FMGC/internal/crz-alt-ft", 0, "INT"),
+   dist_to_dest_lt_200: props.globals.initNode("/FMGC/internal/distance-to-dest-lt-200", 0, "INT"),
 	driftAngle: props.globals.initNode("/it-autoflight/internal/drift-angle-deg", 0, "DOUBLE"),
 	driftAngleTemp: 0,
 	flchActive: 0,

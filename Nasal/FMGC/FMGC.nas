@@ -665,43 +665,37 @@ var masterFMGC = maketimer(0.2, func {
 
    var fmgc_flight_phase = fmgc.FMGCInternal.phase;
 
-   if (n1_left >= 85) {
-      setprop("/FMGC/internal/n1-left-ge-85", 1);
-   } else {
-      setprop("/FMGC/internal/n1-left-ge-85", 0);
-   }
-
-   if (n1_right >= 85) {
-      setprop("/FMGC/internal/n1-right-ge-85", 1);
-   } else {
-      setprop("/FMGC/internal/n1-right-ge-85", 0);
-   }
-
-   if (gs > 90){
-      setprop("/FMGC/internal/gs-gt-90", 1);
-   } else {
-      setprop("/FMGC/internal/gs-gt-90", 0);
-   }
-
+   # ask for actual phase to ask only for the needed triggers
+   # in that phase and to avoid out of order trigger
 	if (fmgc_flight_phase == 0) {
-		if (gear0 and ((n1_left >= 85 and n1_right >= 85 and Modes.PFD.FMA.pitchMode == "SRS") or gs >= 90)) {
-			newphase = 1;
-			systems.PNEU.pressMode.setValue("TO");
-		}
-	} elsif (fmgc_flight_phase == 1) {
-		if (gear0) {
-			if ((n1_left < 85 or n1_right < 85) and gs < 90 and Modes.PFD.FMA.pitchMode == " ") { # rejected takeoff
-				newphase = 0;
-				systems.PNEU.pressMode.setValue("GN");
-			}
-		} elsif (((Modes.PFD.FMA.pitchMode != "SRS" and Modes.PFD.FMA.pitchMode != " ") or alt >= accel_agl_ft)) {
-			newphase = 2;
-			systems.PNEU.pressMode.setValue("TO");
-		}
-	} elsif (fmgc_flight_phase == 3) {
-      if (flightPlanController.arrivalDist.getValue() <= 200 and getprop("/it-autoflight/internal/alt") < fmgc.Internal.crzAlt.getValue()) { # todo - not sure about crzFl condition, investigate what happens!
-         newphase = 4;
-         systems.PNEU.pressMode.setValue("DE");
+      if (n1_left >= 85) {
+         setprop("/FMGC/internal/n1-left-ge-85", 1);
+      } else {
+         setprop("/FMGC/internal/n1-left-ge-85", 0);
+      }
+
+      if (n1_right >= 85) {
+         setprop("/FMGC/internal/n1-right-ge-85", 1);
+      } else {
+         setprop("/FMGC/internal/n1-right-ge-85", 0);
+      }
+
+      if (gs > 90){
+         setprop("/FMGC/internal/gs-gt-90", 1);
+      } else {
+         setprop("/FMGC/internal/gs-gt-90", 0);
+      }
+   } elsif (fmgc_flight_phase == 3) {
+      if (flightPlanController.arrivalDist.getValue() <= 200){
+         setprop("/FMGC/internal/distance-to-dest-lt-200", 1);
+      } else {
+         setprop("/FMGC/internal/distance-to-dest-lt-200", 0);
+      }
+
+      if (getprop("/it-autoflight/internal/alt") < fmgc.Internal.crzAlt.getValue()){
+         setprop("/FMGC/internal/alt-lt-crzalt", 1);
+      } else {
+         setprop("/FMGC/internal/alt-lt-crzalt", 0);
       }
 	} elsif (fmgc_flight_phase == 6) {
 		if (alt >= getprop("/FMGC/internal/ga-accel-agl-ft")) { # todo when insert altn or new dest
@@ -1231,20 +1225,12 @@ var switchDatabase = func {
 }
 
 ##########################################################
-# setlisteners for fmgc phases                           #
+# listeners for fmgc phases                              #
 # some phases are triggered from same properties as for  #
 # managed speed                                          #
 ##########################################################
 
-setlistener("/FMGC/internal/activate-twice", func(val) {
-   if (val.getValue()) {
-      # change to APPR PHASE 
-      setprop("/FMGC/internal/activate-once", 0);
-      setprop("/FMGC/internal/activate-twice", 0);
-      newphase = 5;
-   }
-}, 0, 1);
-
+# TAKEOFF phase
 setlistener("/fdm/jsbsim/fadec/control-1/detent-text", func(text) {
    var phase = fmgc.FMGCNodes.phase.getValue(); 
    if (text.getValue() == "TOGA" and phase > 1 and phase < 6) { # todo: flaps need to be out of 0
@@ -1258,34 +1244,62 @@ setlistener("/fdm/jsbsim/fadec/control-1/detent-text", func(text) {
       systems.PNEU.pressMode.setValue("TO");
       Input.toga.setValue(1);
    }
-}, 0, 1);
+}, 1, 0);
 
+########################################
+# In case of rejected takeoff (with aircraft speed above 90 kt or with sufficient thrust),
+# the FMS remains in TAKEOFF phase and the flight crew cannot modify the FMS departure T.O DATA
+# or departure runway in the active flight plan
 setlistener("/FMGC/internal/gs-gt-90", func(val) {
    if (val.getBoolValue() and fmgc.FMGCInternal.phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
       newphase = 1;
       systems.PNEU.pressMode.setValue("TO");
 	}
-}, 0, 1);
+}, 1, 0);
 
 setlistener("/FMGC/internal/n1-right-ge-85", func(val) {
    if (val.getBoolValue() and getprop("/FMGC/internal/n1-left-ge-85") == 1 and fmgc.FMGCInternal.phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
       newphase = 1;
       systems.PNEU.pressMode.setValue("TO");
 	}
-}, 0, 1);
-
+}, 1, 0);
 
 setlistener("/FMGC/internal/n1-left-ge-85", func(val) {
    if (val.getBoolValue() and getprop("/FMGC/internal/n1-right-ge-85") == 1 and fmgc.FMGCInternal.phase == 0 and gear0 and getprop("FMGC/internal/pitch-mode") == "SRS") {
       newphase = 1;
       systems.PNEU.pressMode.setValue("TO");
 	}
-}, 0, 1);
+}, 1, 0);
+
+# DESCEND phase
+setlistener("/FMGC/internal/alt-lt-crzalt", func(val) {
+   if (val.getBoolValue() and getprop("/FMGC/internal/distance-to-dest-lt-200") == 1 ) {
+      newphase = 4;
+      systems.PNEU.pressMode.setValue("DE");
+	}
+}, 1, 0);
+
+setlistener("/FMGC/internal/distance-to-dest-lt-200", func(val) {
+   if (val.getBoolValue() and getprop("/FMGC/internal/alt-lt-crzalt") == 1 ) {
+      newphase = 4;
+      systems.PNEU.pressMode.setValue("DE");
+	}
+}, 1, 0);
+
+# APPROACH phase
+setlistener("/FMGC/internal/activate-twice", func(val) {
+   if (val.getValue()) {
+      # change to APPR PHASE 
+      setprop("/FMGC/internal/activate-once", 0);
+      setprop("/FMGC/internal/activate-twice", 0);
+      newphase = 5;
+   }
+}, 1, 0);
 
 
-##################################
-# setlisteners for managed speed #
-##################################
+###############################
+# listeners for managed speed #
+###############################
 # set managed speed on ground if v2 entered 
 setlistener("/FMGC/internal/v2-set", func() {
 	if (FMGCInternal.phase == 0 or (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))) {
@@ -1293,7 +1307,7 @@ setlistener("/FMGC/internal/v2-set", func() {
 	} else {
       me.removelistener();       
    }
-}, 0, 0);
+}, 1, 0);
 
 # set managed speed if SRS, EXP CLB, EXP DES or TCAS
 # set new flight phase if crz alt reached
@@ -1304,13 +1318,22 @@ setlistener("/FMGC/internal/pitch-mode", func(mode) {
       fmgc.ManagedSPD.start();
 	}
 
-   # change to TAKEOFF PHASE
-	if (val == "SRS" and fmgc.FMGCInternal.phase == 0) {
-		if (gear0 and (n1_left_ge_85.getBoolValue() and n1_right_ge_85.getBoolValue())) {
-			newphase = 1;
-			systems.PNEU.pressMode.setValue("TO");
+   # change to TAKEOFF PHASE and to CLIMB if SRS disengages and it was in TAKEOFF
+   # also distinguish between SRS TO and SRS GA
+	if (val == "SRS"){
+      if (fmgc.FMGCInternal.phase == 0) {
+         # SRS TO
+         if (gear0 and (getprop("/FMGC/internal/n1-left-ge-85") == 1 and getprop("/FMGC/internal/n1-right-ge-85") == 1)) {
+            newphase = 1;
+            systems.PNEU.pressMode.setValue("TO");
+         }
+      } else {
+         # SRS GA 
       }
-	}
+	} elsif (fmgc.FMGCInternal.phase == 1) {
+      newphase = 2;
+      systems.PNEU.pressMode.setValue("TO");
+   }
 
    # change to CRZ PHASE
 	if (val == "ALT CRZ") {
@@ -1319,38 +1342,38 @@ setlistener("/FMGC/internal/pitch-mode", func(mode) {
       newphase = 3;
       systems.PNEU.pressMode.setValue("CR");
 	}
-}, 0, 0);
+}, 1, 0);
 
 # enable managed speed if FMS has a valid position when on ground
 setlistener("/systems/navigation/aligned-1", func(val) {
    if ((getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
       fmgc.ManagedSPD.start();
    }
-}, 0, 0);
+}, 1, 0);
 
 setlistener("/systems/navigation/aligned-2", func(val) {
    if ((getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
       fmgc.ManagedSPD.start();
    }
-}, 0, 0);
+}, 1, 0);
 
 setlistener("/systems/navigation/aligned-3", func(val) {
    if ((getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow"))){
       fmgc.ManagedSPD.start();
    }
-}, 0, 0);
+}, 1, 0);
 
 setlistener("/it-autoflight/output/fd1", func(val) {
    if (val.getBoolValue() and getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow") and !fmgc.Output.fd2.getBoolValue()){
       fmgc.ManagedSPD.start();
    }
-}, 0, 0);
+}, 1, 0);
 
 setlistener("/it-autoflight/output/fd2", func(val) {
    if (val.getBoolValue() and getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow") and !fmgc.Output.fd1.getBoolValue()){
       fmgc.ManagedSPD.start();
    }
-}, 0, 0);
+}, 1, 0);
 
 ###################################
 # setlisteners for selected speed #
@@ -1358,13 +1381,11 @@ setlistener("/it-autoflight/output/fd2", func(val) {
 setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
       if (val.getBoolValue()) {
          # on gnd
-         if (FMGCInternal.landingTime == -99) {
-            timer30secLanding.start();
-            FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
+         timer30secLanding.start();
+         print("GND timer started");
+         FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
 
-            FMGCNodes.selSpdEnable.setBoolValue(1);
-            bothMainWowAfterLanding();
-         }
+         FMGCNodes.selSpdEnable.setBoolValue(1);
       } else {
          # in air
          # enable selected speed after 5 sec
@@ -1373,11 +1394,10 @@ setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
 
          if(timer30secLanding.isRunning) {
             timer30secLanding.stop();
-            FMGCInternal.landingTime = -99;
-
+            print("GND timer stopped");
          }
       }
-}, 0, 0);
+}, 1, 0);
 
 setlistener("/ECAM/phases/phase-calculation/one-engine-running", func(val) {
       if (val.getBoolValue() and ecam.FWC.Logic.gnd.getBoolValue()){
@@ -1425,10 +1445,6 @@ setlistener("/systems/navigation/adr/operating-3", func() {
 }, 0, 0);
 
 #######################################
-# setlisteners for fmgc flight phases #
-#######################################
-
-#######################################
 
 # Calculate Block Fuel
 setlistener("/FMGC/internal/block-calculating", func() {
@@ -1457,10 +1473,8 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 }, 0, 0);
 
 # Maketimers
-var timer30secLanding = maketimer(1, func() {
-	if (pts.Sim.Time.elapsedSec.getValue() > (FMGCInternal.landingTime + 30)) {
-		FMGCInternal.phase = 7;
-		FMGCNodes.phase.setValue(7);
+var timer30secLanding = maketimer(30, func() {
+		newphase = 7;
 		
 		if (FMGCInternal.costIndexSet) {
 			setprop("/FMGC/internal/last-cost-index", FMGCInternal.costIndex);
@@ -1469,7 +1483,7 @@ var timer30secLanding = maketimer(1, func() {
 		}
 		FMGCInternal.landingTime = -99;
 		timer30secLanding.stop();
-	}
+      print("GND timer stopped");
 });
 
 var timer48gpsAlign1 = maketimer(1, func() {
@@ -1546,5 +1560,24 @@ var setCrzAlt = func (crz) {
       fmgc.fuelCalculating.setValue(0);
       fmgc.FMGCInternal.fuelCalculating = 1;
       fmgc.fuelCalculating.setValue(1);
+   }
+}
+
+var check_srs_engagement = func {
+   var eng1_state = getprop("/engines/engine[0]/state");
+   var eng2_state = getprop("/engines/engine[1]/state");
+   # SRS TO
+   if ((eng1_state == 0 or eng2_state == 0) or # TOGA on either engine
+         ((eng1_state == 1 or eng2_state == 1) and getprop("/fdm/jsbsim/fadec/limit/flex-active-cmd") == 1) # FLX-MCT on either engine with temp set
+         and getprop("/ECAM/logic/ground-calc-immediate") == 1 and # on ground
+         getprop("/controls/flight/flaps-input") > 0 # flaps commanded out of 0
+         and getprop("/FMGC/internal/v2-set") == 1) {
+				ITAF.setVertMode(7);
+				ITAF.updateVertText("T/O CLB");
+   } elsif ((eng1_state == 0 or eng2_state == 0) and # TOGA on either engine
+         getprop("/controls/flight/flaps-input") > 0 # flaps commanded out of 0
+         and getprop("/FMGC/internal/v2-set") == 1) {
+				ITAF.setVertMode(7);
+				ITAF.updateVertText("T/O CLB");
    }
 }
