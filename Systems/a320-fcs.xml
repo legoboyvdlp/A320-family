@@ -1212,17 +1212,17 @@
 						0 -75 -45 -15  -4  0  0   4  15  45  75
 						1 -75 -45 -15  -4  0  0   4  15  45  75
 					</tableData>
-					<tableData breakPoint="20.0">
+					<tableData breakPoint="20">
 						  -75 -66 -40 -20 -1  1  20  40  66  75
 						0 -75 -45 -15  -4  0  0   4  15  45  75
 						1 -75 -45 -15  -4  0  0   4  15  45  75
 					</tableData>
-					<tableData breakPoint="40.0">
+					<tableData breakPoint="40">
 						  -75  0  75
 						0  -6  0  6
 						1  -6  0  6
 					</tableData>
-					<tableData breakPoint="130.0">
+					<tableData breakPoint="130">
 						  -75  0  75
 						0   0  0  0
 						1   0  0  0
