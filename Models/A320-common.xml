@@ -20,6 +20,7 @@
 	<animation>
 		<type>select</type>
 		<object-name>Sharklet</object-name>
+		<object-name>navglass.sharklet</object-name>
 		<condition>
 			<property>sim/multiplay/generic/int[12]</property>
 		</condition>
@@ -28,6 +29,7 @@
 	<animation>
 		<type>select</type>
 		<object-name>WingtipFence</object-name>
+		<object-name>navglass</object-name>
 		<condition>
 			<not><property>sim/multiplay/generic/int[12]</property></not>
 		</condition>
