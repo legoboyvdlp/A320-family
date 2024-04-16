@@ -100,7 +100,7 @@
 					<output-property>/fdm/jsbsim/ice/rengine</output-property>
 				</iceable>
 				<iceable>
-					<name>Windshield</name>
+					<name>Windsheild</name>
 					<ice-inches>0.0</ice-inches>
 					<salvage-control>/controls/ice-protection/windowprobeheat-output</salvage-control>
 					<sensitivity type="double">0.5</sensitivity>
