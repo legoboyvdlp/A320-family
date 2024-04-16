@@ -1106,10 +1106,14 @@ setlistener(pts.Systems.Navigation.ADR.Output.underspeed, func(v) {
 	}
 }, 0, 0);
 
-#check if cruise altitude reached
+# check if cruise altitude reached
+# type of listener is 1, in order to trigger new phase if
+# current FL is made as CRZ ALT
+# (in this case the same value would be inserted, and it should
+# change to cruise phase)
 setlistener("/FMGC/internal/crz-alt-ft", func() {
 	fmgc.altvert();
-}, 0, 0);
+}, 1, 0);
 
 setlistener("/it-autoflight/internal/alt", func() {
 	fmgc.altvert();

@@ -362,7 +362,7 @@ var altvert = func() {
 		if (vertText == "ALT HLD") {
 			setFmaText("pitchMode", "ALT CRZ", genericCallback, "pitchModeTime");
 		} else if (vertText == "ALT CAP") {
-			setFmaText("pitchMode", "ALT CRZ*", genericCallback, "pitchModeTime");
+			setFmaText("pitchMode", "ALT*", genericCallback, "pitchModeTime");
 		}
 	} else {
 		if (vertText == "ALT HLD") {
