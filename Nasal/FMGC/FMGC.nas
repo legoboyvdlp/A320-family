@@ -665,7 +665,7 @@ var masterFMGC = maketimer(0.2, func {
 
    var fmgc_flight_phase = fmgc.FMGCInternal.phase;
 
-   # ask for actual phase to ask only for the needed triggers
+   # ask for actual phase to avoid unneeded triggers
    # in that phase and to avoid out of order trigger
 	if (fmgc_flight_phase == 0) {
       if (n1_left >= 85) {
@@ -1474,7 +1474,9 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 
 # Maketimers
 var timer30secLanding = maketimer(30, func() {
-		newphase = 7;
+      if (fmgc.FMGCInternal.phase > 1) {
+         newphase = 7;
+      }
 		
 		if (FMGCInternal.costIndexSet) {
 			setprop("/FMGC/internal/last-cost-index", FMGCInternal.costIndex);
