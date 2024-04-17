@@ -1383,6 +1383,24 @@ setlistener("/it-autoflight/output/fd2", func(val) {
 ###################################
 # setlisteners for selected speed #
 ###################################
+var timer5selSpdEnable = maketimer(5, func() {
+	fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
+});
+
+var timer30secLanding = maketimer(30, func() {
+      if (fmgc.FMGCInternal.phase > 1) {
+         newphase = 7;
+      }
+		
+		if (FMGCInternal.costIndexSet) {
+			setprop("/FMGC/internal/last-cost-index", FMGCInternal.costIndex);
+		} else {
+			setprop("/FMGC/internal/last-cost-index", 0);
+		}
+		FMGCInternal.landingTime = -99;
+		timer30secLanding.stop();
+});
+
 setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
       if (val.getBoolValue()) {
          # on gnd: start timer for done phase
@@ -1476,20 +1494,6 @@ setlistener("/FMGC/internal/fuel-calculating", func() {
 }, 0, 0);
 
 # Maketimers
-var timer30secLanding = maketimer(30, func() {
-      if (fmgc.FMGCInternal.phase > 1) {
-         newphase = 7;
-      }
-		
-		if (FMGCInternal.costIndexSet) {
-			setprop("/FMGC/internal/last-cost-index", FMGCInternal.costIndex);
-		} else {
-			setprop("/FMGC/internal/last-cost-index", 0);
-		}
-		FMGCInternal.landingTime = -99;
-		timer30secLanding.stop();
-});
-
 var timer48gpsAlign1 = maketimer(1, func() {
 	if (pts.Sim.Time.elapsedSec.getValue() > (FMGCAlignTime[0].getValue() + 48) or adirsSkip.getValue()) {
 		FMGCAlignDone[0].setValue(1);
@@ -1536,10 +1540,6 @@ var timer5fuelPred = maketimer(1, func() {
 
 var timer5trimReset = maketimer(5, func() {
 	trimReset();
-});
-
-var timer5selSpdEnable = maketimer(5, func() {
-	fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
 });
 
 var setCrzAlt = func (crz) {

@@ -430,6 +430,19 @@ var showAllBoxes = func() {
 	}
 }
 
+# check if cruise altitude reached
+# type of listener is 1, in order to trigger new phase if
+# current FL is made as CRZ ALT
+# (in this case the same value would be inserted, and it should
+# change to cruise phase)
+setlistener("/FMGC/internal/crz-alt-ft", func() {
+	fmgc.altvert();
+}, 1, 0);
+
+setlistener("/it-autoflight/internal/alt", func() {
+	fmgc.altvert();
+}, 0, 0);
+
 setlistener("/sim/signals/fdm-initialized", func() {
 	fma_init();
 });
