@@ -709,7 +709,6 @@ var masterFMGC = maketimer(0.2, func {
          systems.FADEC.clbReduc.setValue(systems.FADEC.gaClbReduc.getValue());
 
 			systems.PNEU.pressMode.setValue("TO");
-			Input.toga.setValue(1);
 		}
    }
 	
@@ -1237,17 +1236,8 @@ var switchDatabase = func {
 
 # TAKEOFF phase
 setlistener("/fdm/jsbsim/fadec/control-1/detent-text", func(text) {
-   var phase = fmgc.FMGCNodes.phase.getValue(); 
-   if (text.getValue() == "TOGA" and phase > 1 and phase < 6) { # todo: flaps need to be out of 0
-      # change to G/A PHASE 
-      newphase = 6;
-      fmgc.FMGCNodes.phase.setValue(6);
-
-      # change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
-      systems.FADEC.clbReduc.setValue(systems.FADEC.gaClbReduc.getValue());
-
-      systems.PNEU.pressMode.setValue("TO");
-      Input.toga.setValue(1);
+   if (text.getValue() == "TOGA" or text.getValue() == "MCT") {
+      check_srs_engagement();
    }
 }, 1, 0);
 
@@ -1347,7 +1337,7 @@ setlistener("/FMGC/internal/pitch-mode", func(mode) {
       newphase = 3;
       systems.PNEU.pressMode.setValue("CR");
 	}
-}, 1, 0);
+}, 1, 1);
 
 # enable managed speed if FMS has a valid position when on ground
 setlistener("/systems/navigation/aligned-1", func(val) {
@@ -1567,21 +1557,36 @@ var setCrzAlt = func (crz) {
    }
 }
 
-var check_srs_engagement = func {
-   var eng1_state = getprop("/engines/engine[0]/state");
-   var eng2_state = getprop("/engines/engine[1]/state");
-   # SRS TO
-   if ((eng1_state == 0 or eng2_state == 0) or # TOGA on either engine
-         ((eng1_state == 1 or eng2_state == 1) and getprop("/fdm/jsbsim/fadec/limit/flex-active-cmd") == 1) # FLX-MCT on either engine with temp set
-         and getprop("/ECAM/logic/ground-calc-immediate") == 1 and # on ground
-         getprop("/controls/flight/flaps-input") > 0 # flaps commanded out of 0
+var check_srs_engagement = func (){
+   var eng1_state = getprop("/fdm/jsbsim/fadec/control-1/detent-text");
+   var eng2_state = getprop("/fdm/jsbsim/fadec/control-2/detent-text");
+   if (((eng1_state == "TOGA" or eng2_state == "TOGA") or (eng1_state == "MCT" or eng2_state == "MCT")) 
+         and getprop("/fdm/jsbsim/fadec/limit/flex-active-cmd") == 1 and getprop("/ECAM/logic/ground-calc-immediate") == 1 
+         and getprop("/controls/flight/flaps-input") > 0 
          and getprop("/FMGC/internal/v2-set") == 1) {
+            # SRS TO
+            # has to be checked first, as SRS GA should not be engaged
+            # if SRS TO is engaged
 				ITAF.setVertMode(7);
 				ITAF.updateVertText("T/O CLB");
-   } elsif ((eng1_state == 0 or eng2_state == 0) and # TOGA on either engine
-         getprop("/controls/flight/flaps-input") > 0 # flaps commanded out of 0
-         and getprop("/FMGC/internal/v2-set") == 1) {
+            setAthrArmed(1);
+            newphase = 2;
+            systems.PNEU.pressMode.setValue("TO");
+            print(" srs engaged with val: 1");
+            return 1;
+   } elsif ((eng1_state == "TOGA" or eng2_state == "TOGA") and 
+         getprop("/controls/flight/flaps-input") > 0 
+         and getprop("/ECAM/logic/ground-calc-immediate") == 0) { 
+            # SRS GA 
 				ITAF.setVertMode(7);
 				ITAF.updateVertText("T/O CLB");
+            setAthrArmed(1);
+            newphase = 6;
+            # change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
+            systems.FADEC.clbReduc.setValue(systems.FADEC.gaClbReduc.getValue());
+            print(" srs engaged with val: 2");
+            return 2;
+   } else {
+      return 0;
    }
 }
