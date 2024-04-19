@@ -259,6 +259,17 @@ var ITAF = {
 		Output.latTemp = Output.lat.getValue();
 		Output.vertTemp = Output.vert.getValue();
 		
+		# Trip system off
+		if (Output.ap1Temp or Output.ap2Temp) { # Trip AP off
+			if (abs(Controls.aileron.getValue()) >= 0.2 or abs(Controls.elevator.getValue()) >= 0.2 or abs(Controls.rudder.getValue()) >= 0.2 or abs(Controls.aileron2.getValue()) >= 0.2 or abs(Controls.elevator2.getValue()) >= 0.2 or abs(Controls.rudder2.getValue()) >= 0.2) {
+				fcu.apOff("hard", 0);
+			}
+		}
+		
+		if ((systems.FADEC.n1Mode[0].getValue() > 0 or systems.FADEC.n1Mode[1].getValue() > 0) and Output.athr.getBoolValue()) {
+			fcu.athrOff("hard");
+		}
+		
 		# LNAV Reversion
 		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
 			if (flightPlanController.num[2].getValue() == 0 or !FPLN.active.getValue()) {
@@ -366,17 +377,6 @@ var ITAF = {
 			} else {
 				Custom.showHdg.setBoolValue(0);
 			}
-		}
-		
-		# Misc
-		if (Output.ap1Temp == 1 or Output.ap2Temp == 1) { # Trip AP off
-			if (abs(Controls.aileron.getValue()) >= 0.2 or abs(Controls.elevator.getValue()) >= 0.2 or abs(Controls.rudder.getValue()) >= 0.2 or abs(Controls.aileron2.getValue()) >= 0.2 or abs(Controls.elevator2.getValue()) >= 0.2 or abs(Controls.rudder2.getValue()) >= 0.2) {
-				fcu.apOff("hard", 0);
-			}
-		}
-		
-		if ((systems.FADEC.n1Mode[0].getValue() > 0 or systems.FADEC.n1Mode[1].getValue() > 0) and Output.athr.getBoolValue()) {
-			fcu.athrOff("hard");
 		}
 	},
 	slowLoop: func() {
