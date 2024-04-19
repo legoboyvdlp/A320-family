@@ -179,7 +179,7 @@ var toggleSTDIESI = func() {
 }
 
 # Commonality
-var ApPanel = {
+var apPanel = {
 	apDisc: func() {
 		fcu.FCUController.APDisc();
 	},
