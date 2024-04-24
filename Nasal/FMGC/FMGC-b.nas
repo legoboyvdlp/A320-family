@@ -130,7 +130,7 @@ var Internal = {
 	driftAngleTemp: 0,
 	flchActive: 0,
 	fpa: props.globals.initNode("/it-autoflight/internal/fpa", 0, "DOUBLE"),
-   gp_gt_90: props.globals.initNode("/FMGC/internal/gs-gt-90", 0, "INT"),
+   gs_gt_90: props.globals.initNode("/FMGC/internal/gs-gt-90", 0, "INT"),
 	hdgErrorDeg: props.globals.initNode("/it-autoflight/internal/heading-error-deg", 0, "DOUBLE"),
 	hdgPredicted: props.globals.initNode("/it-autoflight/internal/heading-predicted", 0, "DOUBLE"),
 	hdgTrk: props.globals.initNode("/it-autoflight/internal/heading", 0, "DOUBLE"),
@@ -142,6 +142,7 @@ var Internal = {
    n1_right_ge_85: props.globals.initNode("/FMGC/internal/n1-right-ge-85", 0, "INT"),
 	navHeadingErrorDeg: props.globals.initNode("/it-autoflight/internal/nav-heading-error-deg", 0, "DOUBLE"),
 	navHeadingErrorDegTemp: 0,
+   on_ground_gt_30sec: props.globals.initNode("/FMGC/internal/on-ground-gt-30sec", 0, "INT"),
 	vs: props.globals.initNode("/it-autoflight/internal/vert-speed-fpm", 0, "DOUBLE"),
 	vsTemp: 0,
 };

@@ -56,7 +56,6 @@ var Modes = {
 };
 
 var setFmaText = func(node, value, callback, timerNode) {
-	if (Modes.PFD.FMA[node] == value) { return; }
 	Modes.PFD.FMA[node] = value;
    if (node == "pitchMode") { 
       fmgc.FMGCNodes.pitchMode.setValue(value);
@@ -358,6 +357,8 @@ var gsupdate = maketimer(0.5, func() {
 var altvert = func() {
 	vertText = Text.vert.getValue();
 	
+   # checking interim FMGCInternal.crzFt and /FMGC/internal/crz-alt-ft 
+   # will be only crz-alt-ft in future as it is a property
 	if ((abs(fmgc.FMGCInternal.crzFt - Internal.alt.getValue()) <= 20) or (abs(getprop("/FMGC/internal/crz-alt-ft") - Internal.alt.getValue()) <= 20)) {
 		if (vertText == "ALT HLD") {
 			setFmaText("pitchMode", "ALT CRZ", genericCallback, "pitchModeTime");
@@ -437,7 +438,8 @@ var showAllBoxes = func() {
 # change to cruise phase)
 setlistener("/FMGC/internal/crz-alt-ft", func() {
 	fmgc.altvert();
-}, 1, 0);
+   print("crz-alt-ft was written to");
+}, 1, 1);
 
 setlistener("/it-autoflight/internal/alt", func() {
 	fmgc.altvert();

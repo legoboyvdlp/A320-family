@@ -1388,6 +1388,7 @@ var timer30secLanding = maketimer(30, func() {
 			setprop("/FMGC/internal/last-cost-index", 0);
 		}
 		FMGCInternal.landingTime = -99;
+      setprop("/FMGC/internal/on-ground-gt-30sec", 1);
 		timer30secLanding.stop();
 });
 
@@ -1397,7 +1398,12 @@ setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
          timer30secLanding.start();
          FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
 
-         FMGCNodes.selSpdEnable.setBoolValue(1);
+         if (getprop("/ECAM/phases/phase-calculation/one-engine-running") == 1){
+            fmgc.FMGCNodes.selSpdEnable.setBoolValue(0);
+            fmgc.ManagedSPD.start();
+         } else {
+            fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
+         }
       } else {
          # in air
          # enable selected speed after 5 sec
@@ -1407,6 +1413,7 @@ setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
          if(timer30secLanding.isRunning) {
             timer30secLanding.stop();
          }
+         setprop("/FMGC/internal/on-ground-gt-30sec", 0);
       }
 }, 1, 0);
 
@@ -1561,7 +1568,8 @@ var check_srs_engagement = func (){
    var eng1_state = getprop("/fdm/jsbsim/fadec/control-1/detent-text");
    var eng2_state = getprop("/fdm/jsbsim/fadec/control-2/detent-text");
    if (((eng1_state == "TOGA" or eng2_state == "TOGA") or (eng1_state == "MCT" or eng2_state == "MCT")) 
-         and getprop("/fdm/jsbsim/fadec/limit/flex-active-cmd") == 1 and getprop("/ECAM/logic/ground-calc-immediate") == 1 
+         and getprop("/fdm/jsbsim/fadec/limit/flex-active-cmd") == 1 
+         and getprop("/FMGC/internal/on-ground-gt-30sec") == 1 
          and getprop("/controls/flight/flaps-input") > 0 
          and getprop("/FMGC/internal/v2-set") == 1) {
             # SRS TO
@@ -1572,11 +1580,12 @@ var check_srs_engagement = func (){
             setAthrArmed(1);
             newphase = 2;
             systems.PNEU.pressMode.setValue("TO");
+            ITAF.updateVertText("G/A CLB");
             print(" srs engaged with val: 1");
             return 1;
    } elsif ((eng1_state == "TOGA" or eng2_state == "TOGA") and 
          getprop("/controls/flight/flaps-input") > 0 
-         and getprop("/ECAM/logic/ground-calc-immediate") == 0) { 
+         and getprop("/FMGC/internal/on-ground-gt-30sec") == 0) { 
             # SRS GA 
 				ITAF.setVertMode(7);
 				ITAF.updateVertText("T/O CLB");
@@ -1584,6 +1593,7 @@ var check_srs_engagement = func (){
             newphase = 6;
             # change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
             systems.FADEC.clbReduc.setValue(systems.FADEC.gaClbReduc.getValue());
+            ITAF.updateVertText("G/A CLB");
             print(" srs engaged with val: 2");
             return 2;
    } else {
