@@ -1375,6 +1375,7 @@ setlistener("/it-autoflight/output/fd2", func(val) {
 ###################################
 var timer5selSpdEnable = maketimer(5, func() {
 	fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
+   print("sel enabled by timer");
 });
 
 var timer30secLanding = maketimer(30, func() {
@@ -1400,14 +1401,18 @@ setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
 
          if (getprop("/ECAM/phases/phase-calculation/one-engine-running") == 1){
             fmgc.FMGCNodes.selSpdEnable.setBoolValue(0);
+            print("sel spd disabled by one eng");
             fmgc.ManagedSPD.start();
          } else {
             fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
+            print("sel enabled by gnd calc");
          }
       } else {
          # in air
          # enable selected speed after 5 sec
 	      FMGCNodes.selSpdEnable.setBoolValue(0);
+         print("sel spd disabled by in air");
+         timer5selSpdEnable.singleShot = 1;
          timer5selSpdEnable.start();
 
          if(timer30secLanding.isRunning) {
@@ -1421,7 +1426,9 @@ setlistener("/ECAM/phases/phase-calculation/one-engine-running", func(val) {
       if (val.getBoolValue() and ecam.FWC.Logic.gnd.getBoolValue()){
          fmgc.FMGCNodes.selSpdEnable.setBoolValue(0);
          fmgc.ManagedSPD.start();
+         print("sel spd disabled by one eng");
       } else {
+         print("sel spd enabled by eng");
          fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
       }
 }, 0, 0);

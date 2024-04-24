@@ -438,7 +438,6 @@ var showAllBoxes = func() {
 # change to cruise phase)
 setlistener("/FMGC/internal/crz-alt-ft", func() {
 	fmgc.altvert();
-   print("crz-alt-ft was written to");
 }, 1, 1);
 
 setlistener("/it-autoflight/internal/alt", func() {
