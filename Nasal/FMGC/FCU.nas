@@ -243,8 +243,7 @@ var FCUController = {
 	ias: 0,
 	mach: 0,
 	SPDPull: func() {
-		if (me.FCUworking and fmgc.FMGCNodes.selSpdEnable.getBoolValue() and 
-            !(fmgc.Modes.PFD.FMA.pitchMode == "SRS" and fmgc.Input.alt.getValue() < pts.Instrumentation.Altimeter.indicatedFt.getValue())) {
+		if (me.FCUworking and fmgc.FMGCNodes.selSpdEnable.getBoolValue()) {
          if (!fcu.FCUController.spdWindowOpen.getBoolValue()) {
             fmgc.FMGCNodes.mngSpdActive.setBoolValue(nil);
             if (input.spdPreselect.getBoolValue()){
@@ -257,11 +256,11 @@ var FCUController = {
                }
             } else {
                if (fmgc.Input.ktsMach.getBoolValue()){
-			         me.mach = math.clamp(math.round(fmgc.Velocities.indicatedMach.getValue(), 0.01), 0.01, 0.99);
+                  me.mach = math.clamp(math.round(fmgc.Velocities.indicatedMach.getValue(), 0.01), 0.01, 0.99);
                   fmgc.Input.mach.setValue(me.mach);
                   fcu.input.mach.setValue(me.mach);
                } else {
-			         me.ias = math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), 100, 399);
+                  me.ias = math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), 100, 399);
                   fmgc.Input.kts.setValue(me.ias);
                   fcu.input.kts.setValue(me.ias);
                }
@@ -276,6 +275,15 @@ var FCUController = {
             }
          }
 
+         if (fmgc.Modes.PFD.FMA.pitchMode == "SRS") { 
+            if (fmgc.Input.alt.getValue() > pts.Instrumentation.Altimeter.indicatedFt.getValue()) {
+               # mode reversion
+               # SRS TO/GA to OPEN CLIMB
+               fmgc.ITAF.setVertMode(4);
+               fmgc.ITAF.updateVertText("OP CLB");
+            }
+         } 
+         
          # a selected speed must be available. SPD window can be opened
          fcu.FCUController.spdWindowOpen.setBoolValue(1);
 

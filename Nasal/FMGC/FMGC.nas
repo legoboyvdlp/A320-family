@@ -311,6 +311,7 @@ var FMGCNodes = {
 	},
 	selSpdEnable: props.globals.initNode("/FMGC/internal/sel-spd-enable", 1, "BOOL"),
 	slat: props.globals.getNode("/FMGC/internal/slat"),
+	SRSGA_Enable: props.globals.initNode("/FMGC/internal/srs-ga-enable", 0, "BOOL"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
 	togaSpd: props.globals.getNode("/it-autoflight/settings/toga-spd", 1),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
@@ -1373,9 +1374,16 @@ setlistener("/it-autoflight/output/fd2", func(val) {
 ###################################
 # setlisteners for selected speed #
 ###################################
-var timer5selSpdEnable = maketimer(5, func() {
+var timer5inAir = maketimer(5, func() {
 	fmgc.FMGCNodes.selSpdEnable.setBoolValue(1);
-   print("sel enabled by timer");
+	fmgc.FMGCNodes.SRSGA_Enable.setBoolValue(1);
+   print("SRSGA enabled by timer");
+   
+   # if TOGA was set before 5 secs in air
+   if (getprop("/fdm/jsbsim/fadec/control-1/detent-text") == "TOGA" or getprop("/fdm/jsbsim/fadec/control-2/detent-text") == "TOGA") {
+      print("check SRSGA");
+      fmgc.check_srs_engagement();
+   } 
 });
 
 var timer30secLanding = maketimer(30, func() {
@@ -1395,9 +1403,11 @@ var timer30secLanding = maketimer(30, func() {
 
 setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
       if (val.getBoolValue()) {
-         # on gnd: start timer for done phase
+         # on gnd
+         # start timer for done phase
          timer30secLanding.start();
          FMGCInternal.landingTime = pts.Sim.Time.elapsedSec.getValue();
+         fmgc.FMGCNodes.SRSGA_Enable.setBoolValue(0);
 
          if (getprop("/ECAM/phases/phase-calculation/one-engine-running") == 1){
             fmgc.FMGCNodes.selSpdEnable.setBoolValue(0);
@@ -1412,8 +1422,8 @@ setlistener("/ECAM/logic/ground-calc-immediate", func(val) {
          # enable selected speed after 5 sec
 	      FMGCNodes.selSpdEnable.setBoolValue(0);
          print("sel spd disabled by in air");
-         timer5selSpdEnable.singleShot = 1;
-         timer5selSpdEnable.start();
+         timer5inAir.singleShot = 1;
+         timer5inAir.start();
 
          if(timer30secLanding.isRunning) {
             timer30secLanding.stop();
@@ -1586,8 +1596,8 @@ var check_srs_engagement = func (){
 				ITAF.updateVertText("T/O CLB");
             setAthrArmed(1);
             newphase = 2;
+            fmgc.FMGCNodes.SRSGA_Enable.setBoolValue(0);
             systems.PNEU.pressMode.setValue("TO");
-            ITAF.updateVertText("G/A CLB");
             print(" srs engaged with val: 1");
             return 1;
    } elsif ((eng1_state == "TOGA" or eng2_state == "TOGA") and 
