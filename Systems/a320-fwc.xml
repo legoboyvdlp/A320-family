@@ -1589,7 +1589,7 @@
 		<switch name="/ECAM/warnings/logic/eng/engine-1-core-speed-abv-idle-input">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/engines/engine[0]/n2-actual ge 59.4
+				/engines/engine[0]/n2-actual ge 59
 			</test>
 		</switch>
 		
@@ -1612,7 +1612,7 @@
 				<test logic="AND">
 					/ECAM/warnings/logic/eng/engine-1-core-speed-abv-idle ne 1
 					<test logic="OR">
-						/engines/engine[0]/n2-actual lt 59.4
+						/engines/engine[0]/n2-actual lt 59
 						/ECAM/timer/ground-calc eq 1
 						/controls/engines/engine[0]/fire-btn eq 0
 						/ECAM/warnings/logic/eng/eng-1-fire-btn-timer-31 ne 1
@@ -1624,7 +1624,7 @@
 		<switch name="/ECAM/warnings/logic/eng/engine-2-core-speed-abv-idle-input">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/engines/engine[1]/n2-actual ge 59.4
+				/engines/engine[1]/n2-actual ge 59
 			</test>
 		</switch>
 		
@@ -1647,7 +1647,7 @@
 				<test logic="AND">
 					/ECAM/warnings/logic/eng/engine-2-core-speed-abv-idle ne 1
 					<test logic="OR">
-						/engines/engine[1]/n2-actual lt 59.4
+						/engines/engine[1]/n2-actual lt 59
 						/ECAM/timer/ground-calc eq 1
 						/controls/engines/engine[1]/fire-btn eq 0
 						/ECAM/warnings/logic/eng/eng-2-fire-btn-timer-31 ne 1
@@ -2841,7 +2841,7 @@
 		<switch name="/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[0]/n2-actual ge 59.4
+				/engines/engine[0]/n2-actual ge 59
 				<test logic="OR">
 					fadec/control-1/detent eq 2
 					fadec/control-1/detent eq 3
@@ -2858,7 +2858,7 @@
 		<switch name="/ECAM/warnings/logic/eng/thr-lever-1-mct">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[0]/n2-actual ge 59.4
+				/engines/engine[0]/n2-actual ge 59
 				<test logic="OR">
 					fadec/control-1/detent eq 2
 					fadec/control-1/detent eq 3
@@ -2876,7 +2876,7 @@
 		<switch name="/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[1]/n2-actual ge 59.4
+				/engines/engine[1]/n2-actual ge 59
 				<test logic="OR">
 					fadec/control-2/detent eq 2
 					fadec/control-2/detent eq 3
@@ -2893,7 +2893,7 @@
 		<switch name="/ECAM/warnings/logic/eng/thr-lever-2-mct">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[1]/n2-actual ge 59.4
+				/engines/engine[1]/n2-actual ge 59
 				<test logic="OR">
 					fadec/control-2/detent eq 2
 					fadec/control-2/detent eq 3
@@ -2957,8 +2957,8 @@
 		<switch name="/ECAM/warnings/logic/eng/dual-failure-2-sec-input">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/engines/engine[0]/n2-actual lt 59.4
-				/engines/engine[1]/n2-actual lt 59.4
+				/engines/engine[0]/n2-actual lt 59
+				/engines/engine[1]/n2-actual lt 59
 			</test>
 		</switch>
 		
@@ -2999,7 +2999,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-cond-set-input">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/engines/engine[0]/n2-actual ge 59.4
+				/engines/engine[0]/n2-actual ge 59
 			</test>
 		</switch>
 		
@@ -3020,7 +3020,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-fail-cond-set-input">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/engines/engine[1]/n2-actual ge 59.4
+				/engines/engine[1]/n2-actual ge 59
 			</test>
 		</switch>
 		
@@ -3061,7 +3061,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-1-fail-reset">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/engines/engine[0]/n2-actual ge 59.4
+				/engines/engine[0]/n2-actual ge 59
 				/ECAM/warnings/logic/eng/dual-failure eq 1
 			</test>
 		</switch>
@@ -3069,7 +3069,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-fail-reset">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				/engines/engine[1]/n2-actual ge 59.4
+				/engines/engine[1]/n2-actual ge 59
 				/ECAM/warnings/logic/eng/dual-failure eq 1
 			</test>
 		</switch>
