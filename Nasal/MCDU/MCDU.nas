@@ -149,12 +149,19 @@ var MCDU_reset = func(i) {
 	#PERF TO
 	fmgc.FMGCInternal.v1 = 0;
 	fmgc.FMGCInternal.v1set = 0;
+   fmgc.FMGCNodes.v1set.setBoolValue(nil);
+   fmgc.FMGCNodes.v1.setValue(0);
 	fmgc.FMGCInternal.vr = 0;
 	fmgc.FMGCInternal.vrset = 0;
 	fmgc.FMGCInternal.v2 = 0;
 	fmgc.FMGCInternal.v2set = 0;
+   fmgc.FMGCNodes.v2set.setBoolValue(nil);
+   fmgc.FMGCNodes.v2.setValue(0);
 	setprop("/FMGC/internal/accel-agl-ft", 1500); #eventually set to 1500 above runway
-	setprop("/MCDUC/thracc-set", 0);
+	setprop("/fdm/jsbsim/fadec/clbreduc-ft", 1500);
+	setprop("MCDUC/thracc-set", 0);
+	setprop("MCDUC/acc-set-manual", 0);
+	setprop("MCDUC/thrRed-set-manual", 0);
 	fmgc.FMGCInternal.toFlap = 0;
 	fmgc.FMGCInternal.toThs = 0.0;
 	fmgc.FMGCInternal.toFlapThsSet = 0;
@@ -190,6 +197,10 @@ var MCDU_reset = func(i) {
 	fmgc.FMGCInternal.ldgConfigFull = 1;
 	
 	# GA PERF
+	setprop("/fdm/jsbsim/fadec/ga-clbreduc-ft", 1500);
+	setprop("/FMGC/internal/ga-accel-agl-ft", 1500);
+	setprop("MCDUC/ga-acc-set-manual", 0);
+	setprop("MCDUC/ga-thrRed-set-manual", 0);
 }
 
 var setMode = func(will) {

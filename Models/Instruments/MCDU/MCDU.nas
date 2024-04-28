@@ -90,13 +90,14 @@ var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 # TO PERF
 var clbReducFt = props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft", 1);
-var reducFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
+var accelAltFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1);
 var thrAccSet = props.globals.getNode("/MCDUC/thracc-set", 1);
+var accSetManual = props.globals.getNode("/MCDUC/acc-set-manual", 1);
+var thrRedSetManual = props.globals.getNode("/MCDUC/thrRed-set-manual", 1);
 var flex = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-temp", 1);
 var flexSet = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active-cmd", 1);
 var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
 var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
-var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
 # CLB PERF
 var activate_once = props.globals.getNode("/FMGC/internal/activate-once", 1);
 var activate_twice = props.globals.getNode("/FMGC/internal/activate-twice", 1);
@@ -109,6 +110,10 @@ var final = props.globals.getNode("/FMGC/internal/final", 1);
 var radio = props.globals.getNode("/FMGC/internal/radio", 1);
 var baro = props.globals.getNode("/FMGC/internal/baro", 1);
 # GA PERF
+var ga_clbReducFt = props.globals.getNode("/fdm/jsbsim/fadec/ga-clbreduc-ft", 1); # differs from TO clbRedcFt
+var ga_accelAltFt = props.globals.getNode("/FMGC/internal/ga-accel-agl-ft", 1); # differs from TO accelAltFt
+var ga_accSetManual = props.globals.getNode("/MCDUC/ga-acc-set-manual", 1);
+var ga_thrRedSetManual = props.globals.getNode("/MCDUC/ga-thrRed-set-manual", 1);
 # AOC - SENSORS
 var gear0_wow = props.globals.getNode("/gear/gear[0]/wow", 1);
 var doorL1_pos = props.globals.getNode("/sim/model/door-positions/doorl1/position-norm", 1); #FWD door
@@ -4292,15 +4297,15 @@ var canvas_MCDU_base = {
 				showRight(me,-1, 1, 1, 1, 1, 1);
 				showRightS(me,1, 1, 1, 1, 1, 1);
 				showRightArrow(me,-1, -1, -1, -1, -1, 1);
-				showCenter(me,1, 1, 1, -1, -1, -1);
+				showCenter(me,1, 1, 1, -1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				showCenterS(me,1, 1, 1, -1, -1, -1);
 				
 				me.fontSizeLeft(normal, normal, normal, normal, 0, normal);
 				me.fontSizeRight(normal, small, 0, 0, 0, normal);
-				me.fontSizeCenter(small, small, small, 0, 0, 0);
-				me.fontSizeCenterS(small, small, small, small, small, small);
+				me.fontSizeCenter(small, small, small, 0, small, 0);
+				me.fontSizeCenterS(small, small, small, small, 0, small);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -4308,7 +4313,7 @@ var canvas_MCDU_base = {
 				me.colorRight("grn", "blu", "blu", "blu", "blu", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "grn", "grn", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "grn", "wht", "blu", "wht");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 				me["Simple_Title"].setText("TAKE OFF");
 				
@@ -4316,7 +4321,6 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L4"].setText(sprintf("%3.0f", fmgc.FMGCInternal.transAlt));
-			me["Simple_L5"].setText(" " ~ sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
 			me["Simple_L6"].setText(" TO DATA");
 			me["Simple_L1S"].setText(" V1");
 			me["Simple_L2S"].setText(" VR");
@@ -4352,6 +4356,7 @@ var canvas_MCDU_base = {
 			if (fmgc.FMGCInternal.phase == 1) {  # GREEN title and not modifiable on TO phase
 				me["Simple_Title"].setColor(GREEN);
 				me.colorLeft("grn", "grn", "grn", "blu", "grn", "wht");
+				me.colorCenter("grn", "grn", "grn", "blu", "grn", "wht");
 				me.colorRight("grn", "blu", "grn", "grn", "grn", "wht");
 			} else {				
 				me["Simple_Title"].setColor(WHITE);
@@ -4394,12 +4399,68 @@ var canvas_MCDU_base = {
 				me["Simple_L3"].hide();
 			}
 			
-			if (thrAccSet.getValue() == 1) {
-				me["Simple_L5"].setFontSize(normal);
+			if(fmgc.FMGCInternal.depApt == ""){
+				# todo: as for now FMGC will use default thrRed/accelAlt values unless it is overwritten
+				# these default values are not displayed in MCDU
+
+				if (accSetManual.getBoolValue() and thrRedSetManual.getBoolValue()){
+					me["Simple_L5"].setColor(BLUE);
+					me["Simple_L5"].setFontSize(normal); 
+					me["Simple_L5"].setText(sprintf("%4.0f", clbReducFt.getValue()));					
+					me["Simple_C5"].setColor(BLUE);
+					me["Simple_C5"].setFontSize(normal); 
+					me["Simple_C5"].setText(sprintf("/%4.0f           ", accelAltFt.getValue()));
+				} else {
+					if (thrRedSetManual.getBoolValue()){
+						me["Simple_L5"].setFontSize(normal); 
+						me["Simple_L5"].setText(sprintf("%4.0f", clbReducFt.getValue()));
+						if (accSetManual.getBoolValue()) {
+							me["Simple_C5"].setFontSize(normal); 
+							me["Simple_C5"].setText(sprintf("/%4.0f           ", accelAltFt.getValue()));
+						} else {
+							me["Simple_C5"].setColor(WHITE);
+							me["Simple_C5"].setFontSize(small); 
+							me["Simple_C5"].setText(sprintf("/-----               "));
+						}
+					} else {
+						me["Simple_L5"].setColor(WHITE);
+						me["Simple_L5"].setFontSize(small); 
+						me["Simple_L5"].setText("-----");
+						if (accSetManual.getBoolValue()) {
+							me["Simple_C5"].setColor(BLUE);
+							me["Simple_C5"].setFontSize(normal); 
+							me["Simple_C5"].setText(sprintf("/%4.0f            ", accelAltFt.getValue()));
+						} else {
+							me["Simple_C5"].setColor(WHITE);
+							me["Simple_C5"].setFontSize(small); 
+							me["Simple_C5"].setText(sprintf("/-----                "));
+						}
+					}
+				}
 			} else {
-				me["Simple_L5"].setFontSize(small);
+				if (thrRedSetManual.getBoolValue()){
+					me["Simple_L5"].setFontSize(normal); 
+					me["Simple_L5"].setText(sprintf("%4.0f", clbReducFt.getValue()));
+					if (accSetManual.getBoolValue()) {
+						me["Simple_C5"].setFontSize(normal); 
+						me["Simple_C5"].setText(sprintf("/%4.0f           ", accelAltFt.getValue()));
+					} else {
+						me["Simple_C5"].setFontSize(small); 
+						me["Simple_C5"].setText(sprintf("/%4.0f               ", accelAltFt.getValue()));
+					}
+				} else {
+					me["Simple_L5"].setFontSize(small); 
+					me["Simple_L5"].setText(sprintf("%4.0f", clbReducFt.getValue()));
+					if (accSetManual.getBoolValue()) {
+						me["Simple_C5"].setFontSize(normal); 
+						me["Simple_C5"].setText(sprintf("/%4.0f            ", accelAltFt.getValue()));
+					} else {
+						me["Simple_C5"].setFontSize(small); 
+						me["Simple_C5"].setText(sprintf("/%4.0f                 ", accelAltFt.getValue()));
+					}
+				}
 			}
-			
+
 			if (fmgc.FMGCInternal.toFlapThsSet) {
 				me["Simple_R3"].setFontSize(normal);
 				if (fmgc.FMGCInternal.toThs) {
@@ -4486,7 +4547,7 @@ var canvas_MCDU_base = {
 				showRightS(me,0, 0, 0, 0, 1, 0);
 				showCenterS(me,0, 0, 0, 0, 1, 0);
 				
-				if (managedSpeed.getValue() == 1) {
+				if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 					showLeft(me,0, 0, 0, -1, 0, 0);
 					showLeftS(me,0, 0, 0, -1, 0, 0);
 				} else {
@@ -4537,7 +4598,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L1S"].setText("ACT MODE");
-			if (managedSpeed.getValue() == 1) {
+			if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 				me["Simple_L1"].setText("MANAGED");
 				me["Simple_L4"].setText(" [    ]");
 			} else {
@@ -4624,7 +4685,7 @@ var canvas_MCDU_base = {
 			
 			if (fmgc.FMGCInternal.phase == 3) {
 				me["Simple_Title"].setColor(GREEN);
-				if (managedSpeed.getValue() == 1) {
+				if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 					showLeft(me,0, 0, 0, -1, 0, 0);
 					showLeftS(me,0, 0, 0, -1, 0, 0);
 				} else {
@@ -4669,7 +4730,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L1S"].setText("ACT MODE");
-			if (managedSpeed.getValue() == 1) {
+			if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 				me["Simple_L1"].setText("MANAGED");
 				me["Simple_L4"].setText(" [    ]");
 			} else {
@@ -4759,7 +4820,7 @@ var canvas_MCDU_base = {
 				showRightS(me,0, 0, 1, 0, 0, 0);
 				showCenter(me,0, 1, 0, 1, 1, 0);
 				showCenterS(me,0, 0, 1, 0, 0, 0);
-				if (managedSpeed.getValue() == 1) {
+				if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 					showLeft(me,0, 0, 0, -1, 0, 0);
 					showLeftS(me,0, 0, 0, -1, 0, 0);
 				} else {
@@ -4809,7 +4870,7 @@ var canvas_MCDU_base = {
 			}
 			
 			me["Simple_L1S"].setText("ACT MODE");
-			if (managedSpeed.getValue() == 1) {
+			if (fmgc.FMGCNodes.mngSpdActive.getValue() == 1) {
 				me["Simple_L1"].setText("MANAGED");
 				me["Simple_L4"].setText(" [    ]");
 			} else {
@@ -5044,14 +5105,15 @@ var canvas_MCDU_base = {
 				showRight(me,-1, -1, -1, -1, 1, -1);
 				showRightS(me,-1, -1, -1, -1, 1, -1);
 				showRightArrow(me,-1, -1, -1, -1, -1, -1);
-				showCenter(me,1, 1, 1, -1, -1, -1);
+				showCenter(me,1, 1, 1, -1, 1, -1);
 				me["Simple_C3B"].hide();
 				me["Simple_C4B"].hide();
 				showCenterS(me,1, 1, 1, -1, -1, -1);
 				
-				me.fontSizeLeft(normal, normal, normal, normal, 0, normal);
-				me.fontSizeRight(normal, small, 0, 0, 0, normal);
-				me.fontSizeCenter(small, small, small, 0, 0, 0);
+				#me.fontSizeLeft(normal, normal, normal, normal, small, normal);
+				#me.fontSizeRight(normal, small, 0, 0, 0, normal);
+				#me.fontSizeCenter(small, small, small, 0, small, 0);
+				#me.fontSizeCenterS(small, small, small, 0, small, 0);
 				
 				me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
 				me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
@@ -5059,8 +5121,8 @@ var canvas_MCDU_base = {
 				me.colorRight("wht", "blu", "blu", "blu", "blu", "wht");
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
-				me.colorCenter("grn", "grn", "grn", "wht", "wht", "wht");
-				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
+				me.colorCenter("grn", "grn", "grn", "wht", "blu", "wht");
+				me.colorCenterS("wht", "wht", "wht", "wht", "blu", "wht");
 				
 				pageSwitch[i].setBoolValue(1);
 			}
@@ -5070,19 +5132,36 @@ var canvas_MCDU_base = {
 			} else {
 				me["Simple_Title"].setColor(WHITE);
 			}
-			
-			if (thrAccSet.getValue() == 1) {
-				me["Simple_L5"].setFontSize(normal);
-			} else {
-				me["Simple_L5"].setFontSize(small);
-			}
+
 			if (engOutAccSet.getValue() == 1) {
 				me["Simple_R5"].setFontSize(normal);
 			} else {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			me["Simple_L5"].setText(sprintf("%3.0f", clbReducFt.getValue()) ~ sprintf("/%3.0f", reducFt.getValue()));
+			if(fmgc.FMGCInternal.arrApt == ""){
+				if(ga_thrRedSetManual.getBoolValue()) {
+					me["Simple_L5"].setFontSize(normal);
+					me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
+				} else { 
+					me["Simple_L5"].setFontSize(small);
+					me["Simple_L5"].setText("-----");
+				}
+
+				if(ga_accSetManual.getBoolValue()){
+						me["Simple_C5"].setFontSize(normal);
+						me["Simple_C5"].setText(sprintf("/%4.0f           ", ga_accelAltFt.getValue()));
+				} else {
+					me["Simple_C5"].setFontSize(small);
+					me["Simple_C5"].setText(sprintf("/-----              "));
+				}
+			} else {
+				me["Simple_L5"].setFontSize(small);
+				me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
+				me["Simple_C5"].setFontSize(small);
+				me["Simple_C5"].setText(sprintf("/%4.0f                 ", ga_accelAltFt.getValue()));
+			}
+
 			me["Simple_L6"].setText(" PHASE");
 			me["Simple_L5S"].setText("THR RED/ACC");
 			me["Simple_L6S"].setText(" PREV");
@@ -6151,3 +6230,4 @@ setlistener("/MCDU[0]/page", func {
 setlistener("/MCDU[1]/page", func {
 	pageSwitch[1].setBoolValue(0);
 }, 0, 0);
+

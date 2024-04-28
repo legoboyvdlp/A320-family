@@ -58,6 +58,9 @@ var Modes = {
 var setFmaText = func(node, value, callback, timerNode) {
 	if (Modes.PFD.FMA[node] == value) { return; }
 	Modes.PFD.FMA[node] = value;
+   if (node == "pitchMode") { 
+      fmgc.FMGCNodes.pitchMode.setValue(value);
+   }
 	call(callback, [node, timerNode]);
 };
 
