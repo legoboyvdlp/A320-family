@@ -143,6 +143,7 @@ var Internal = {
 	navHeadingErrorDeg: props.globals.initNode("/it-autoflight/internal/nav-heading-error-deg", 0, "DOUBLE"),
 	navHeadingErrorDegTemp: 0,
    on_ground_gt_30sec: props.globals.initNode("/FMGC/internal/on-ground-gt-30sec", 0, "INT"),
+   target_ias_pfd: props.globals.initNode("/FMGC/internal/target-ias-pfd", fmgc.Input.kts.getValue(), "INT"),
 	vs: props.globals.initNode("/it-autoflight/internal/vert-speed-fpm", 0, "DOUBLE"),
 	vsTemp: 0,
 };

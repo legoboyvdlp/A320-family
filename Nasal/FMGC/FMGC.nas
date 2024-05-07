@@ -701,17 +701,9 @@ var masterFMGC = maketimer(0.2, func {
 	} elsif (fmgc_flight_phase == 6) {
 		if (alt >= getprop("/FMGC/internal/ga-accel-agl-ft")) { # todo when insert altn or new dest
 			newphase = 5; # is wrong, but it commands g-dot speed
+         print("change to phase 5(approach) after ga phase");
 		}
 	}
-	if (fmgc_flight_phase > 2 and fmgc_flight_phase < 6) {
-		if ((state1 == "TOGA" or state2 == "TOGA") and pts.Controls.Flight.flapsInput.getValue() > 0) {
-			newphase = 6;
-         # change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
-         systems.FADEC.clbReduc.setValue(systems.FADEC.gaClbReduc.getValue());
-
-			systems.PNEU.pressMode.setValue("TO");
-		}
-   }
 	
 	xtrkError = getprop("/instrumentation/gps/wp/wp[1]/course-error-nm");
 
@@ -898,11 +890,6 @@ var masterFMGC = maketimer(0.2, func {
 		FMGCInternal.minspeed = FMGCNodes.minspeed.getValue();
 	}
 	
-	if (fmgc.FMGCInternal.v2set) {
-		FMGCNodes.togaSpd.setValue(FMGCInternal.v2 + 10);
-	} else { # This should never happen, but lets add a fallback just in case
-		FMGCNodes.togaSpd.setValue(FMGCNodes.vls.getValue() + 15);
-	}
 });
 
 ############################ #handle radios, runways, v1/vr/v2 ############################
@@ -1016,6 +1003,23 @@ var ManagedSPD = maketimer(0.25, func {
       if (fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) {
          # check if SRS mode active
          if (getprop("/FMGC/internal/pitch-mode") == "SRS"){
+            # distinguish between SRSTO and SRSGA
+            # todo: introduce different vertical modes
+            if (Text.vert.getValue() == "T/O CLB"){
+               # SRS TO 
+               FMGCNodes.mngSpdActive.setBoolValue(1);
+               if (!fcu.input.spdPreselect.getBoolValue()) {
+                  fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+               }
+            } elsif (Text.vert.getValue() == "G/A CLB") {
+               # valid managed speed
+               FMGCNodes.mngSpdActive.setBoolValue(1);
+               if (!fcu.input.spdPreselect.getBoolValue()) {
+                  fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+               }
+            } else {
+               print("Error: SRS but neither GA or TO");
+            }
          } else {
             if (fmgc.FMGCInternal.v2set or FMGCInternal.phase > 1) {
                # Managed Speed
@@ -1094,16 +1098,6 @@ var ManagedSPD = maketimer(0.25, func {
                      FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.vapp_appr, constraintSpeed), FMGCInternal.vls, 999);
                   } else {
                      FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.vapp_appr, FMGCInternal.vls, 999);
-                  }
-               } elsif (FMGCInternal.phase == 6) {
-                  # Speed is maximum of greendot / climb speed limit
-                  FMGCInternal.mngKtsMach = 0;
-                  
-                  FMGCNodes.togaSpd.setValue(math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.vapp, math.min(FMGCInternal.vls + 15, FMGCNodes.vmax.getValue() - 5)));
-                  if (constraintSpeed != nil and constraintSpeed != 0) {
-                     FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.clean, 999);
-                  } else {
-                     FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
                   }
                } elsif (FMGCInternal.phase == 7) {
                   # done phase. v2 is reset
@@ -1319,12 +1313,19 @@ setlistener("/FMGC/internal/pitch-mode", func(mode) {
 	if (val == "SRS"){
       if (fmgc.FMGCInternal.phase == 0) {
          # SRS TO
+         # the wow(gear0) state should be improved once LGCU is implemented
          if (gear0 and (getprop("/FMGC/internal/n1-left-ge-85") == 1 and getprop("/FMGC/internal/n1-right-ge-85") == 1)) {
+            # first change phase for the listeners to check whether you are in SRS TO or SRS GA
             newphase = 1;
+            FMGCNodes.togaSpd.setValue(FMGCInternal.v2 + 10);
             systems.PNEU.pressMode.setValue("TO");
+            setprop("/FMGC/internal/target-ias-pfd", FMGCInternal.v2);
+            setprop("/it-autoflight/input/kts", FMGCInternal.v2 + 10);
          }
       } else {
          # SRS GA 
+            FMGCNodes.togaSpd.setValue(math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.vapp, math.min(FMGCInternal.vls + 15, FMGCNodes.vmax.getValue() - 5)));
+            setprop("/it-autoflight/input/kts", FMGCNodes.togaSpd.getValue());
       }
 	} elsif (fmgc.FMGCInternal.phase == 1) {
       newphase = 2;
@@ -1339,6 +1340,23 @@ setlistener("/FMGC/internal/pitch-mode", func(mode) {
       systems.PNEU.pressMode.setValue("CR");
 	}
 }, 1, 1);
+
+# set target speed for PFD indication only.
+setlistener("/it-autoflight/input/kts", func(val) {
+	if (FMGCInternal.phase == 1) {
+      setprop("/FMGC/internal/target-ias-pfd", FMGCInternal.v2);
+      setprop("/it-autoflight/input/kts", FMGCInternal.v2 + 10);
+	} else {
+      if (getprop("/it-autoflight/input/kts-mach")) {
+         # calculation is taken once from fmgc-drivers
+         setprop("/FMGC/internal/target-ias-pfd", getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") 
+               / getprop("/instrumentation/airspeed-indicator/indicated-mach")
+               * getprop("/it-autoflight/input/mach"));
+      } else {
+         setprop("/FMGC/internal/target-ias-pfd", val.getValue());
+      }
+   }
+}, 1, 0);
 
 # enable managed speed if FMS has a valid position when on ground
 setlistener("/systems/navigation/aligned-1", func(val) {
@@ -1595,7 +1613,11 @@ var check_srs_engagement = func (){
 				ITAF.setVertMode(7);
 				ITAF.updateVertText("T/O CLB");
             setAthrArmed(1);
-            newphase = 2;
+            
+            # set managed speed
+            fmgc.ManagedSPD.start();
+
+            newphase = 1;
             fmgc.FMGCNodes.SRSGA_Enable.setBoolValue(0);
             systems.PNEU.pressMode.setValue("TO");
             print(" srs engaged with val: 1");
@@ -1605,12 +1627,15 @@ var check_srs_engagement = func (){
          and getprop("/FMGC/internal/on-ground-gt-30sec") == 0) { 
             # SRS GA 
 				ITAF.setVertMode(7);
-				ITAF.updateVertText("T/O CLB");
+            ITAF.updateVertText("G/A CLB");
             setAthrArmed(1);
+            
+            # set managed speed
+            fmgc.ManagedSPD.start();
+
             newphase = 6;
             # change FADEC thrReduction from T/O-thrRedAlt to G/A-thrRedAlt
             systems.FADEC.clbReduc.setValue(systems.FADEC.gaClbReduc.getValue());
-            ITAF.updateVertText("G/A CLB");
             print(" srs engaged with val: 2");
             return 2;
    } else {

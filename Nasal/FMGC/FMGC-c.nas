@@ -193,8 +193,7 @@ var loopFMA = maketimer(0.05, func() {
 		if (((state1 == "TOGA" or state2 == "TOGA") or (flx == 1 and (state1 == "MCT" or state2 == "MCT")) or (flx == 1 and ((state1 == "MAN THR" and systems.FADEC.manThrAboveMct[0]) or (state2 == "MAN THR" and systems.FADEC.manThrAboveMct[1])))) and (engstate1 == 3 or engstate2 == 3)) {
 			# RWY Engagement would go here, but automatic ILS selection is not simulated yet.
 			if (FMGCInternal.v2set and Output.vert.getValue() != 7) {
-				ITAF.setVertMode(7);
-				ITAF.updateVertText("T/O CLB");
+            fmgc.check_srs_engagement(); 
 			}
 		} else {
 			if (Input.lat.getValue() == 5) {

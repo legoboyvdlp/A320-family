@@ -143,6 +143,7 @@
 		<max>0.815</max>
 	</filter>
 	
+   <!--
 	<filter>
 		<name>FMGC Target Knots PFD</name>
 		<type>gain</type>
@@ -175,7 +176,8 @@
 		</input>
 		<output>/FMGC/internal/target-ias-pfd</output>
 	</filter>
-	
+   -->
+
 	<filter>
 		<name>Knots Sync</name>
 		<type>gain</type>
