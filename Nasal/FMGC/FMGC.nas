@@ -1005,20 +1005,18 @@ var ManagedSPD = maketimer(0.25, func {
          if (getprop("/FMGC/internal/pitch-mode") == "SRS"){
             # distinguish between SRSTO and SRSGA
             # todo: introduce different vertical modes
+
+            # valid managed speed
+            FMGCNodes.mngSpdActive.setBoolValue(1);
+            if (!fcu.input.spdPreselect.getBoolValue()) {
+               fcu.FCUController.spdWindowOpen.setBoolValue(nil);
+            }
             if (Text.vert.getValue() == "T/O CLB"){
                # SRS TO 
-               FMGCNodes.mngSpdActive.setBoolValue(1);
-               if (!fcu.input.spdPreselect.getBoolValue()) {
-                  fcu.FCUController.spdWindowOpen.setBoolValue(nil);
-               }
             } elsif (Text.vert.getValue() == "G/A CLB") {
-               # valid managed speed
-               FMGCNodes.mngSpdActive.setBoolValue(1);
-               if (!fcu.input.spdPreselect.getBoolValue()) {
-                  fcu.FCUController.spdWindowOpen.setBoolValue(nil);
-               }
+               # SRS GA 
             } else {
-               print("Error: SRS but neither GA or TO");
+               print("Error: SRS but neither GA nor TO");
             }
          } else {
             if (fmgc.FMGCInternal.v2set or FMGCInternal.phase > 1) {
@@ -1354,6 +1352,22 @@ setlistener("/it-autoflight/input/kts", func(val) {
                * getprop("/it-autoflight/input/mach"));
       } else {
          setprop("/FMGC/internal/target-ias-pfd", val.getValue());
+      }
+   }
+}, 1, 0);
+
+setlistener("/FMGC/internal/phase", func(phase) {
+	if (phase.getValue() == 1) {
+      setprop("/FMGC/internal/target-ias-pfd", FMGCInternal.v2);
+      setprop("/it-autoflight/input/kts", FMGCInternal.v2 + 10);
+	} else {
+      if (getprop("/it-autoflight/input/kts-mach")) {
+         # calculation is taken once from fmgc-drivers original code
+         setprop("/FMGC/internal/target-ias-pfd", getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") 
+               / getprop("/instrumentation/airspeed-indicator/indicated-mach")
+               * getprop("/it-autoflight/input/mach"));
+      } else {
+         setprop("/FMGC/internal/target-ias-pfd", getprop("/it-autoflight/input/kts"));
       }
    }
 }, 1, 0);
