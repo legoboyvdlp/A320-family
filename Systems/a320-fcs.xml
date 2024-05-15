@@ -659,22 +659,39 @@
 	
 	<channel name="SFCC"> <!-- 40 for IAE, 35 for CFM/PW is simulated here properly, do NOT change it into seperate unless you like buggy behavior! -->
 		
+		<fcs_function name="/controls/flight/flaps-fixed"> <!-- Rounds to 4 figures to fix a potential problem -->
+			<function>
+				<quotient>
+					<integer>
+						<sum>
+							<product>
+								<property>/controls/flight/flaps</property>
+								<value>10000</value>
+							</product>
+							<value>0.5</value> <!-- Make it round correctly -->
+						</sum>
+					</integer>
+					<value>10000</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
 		<switch name="/controls/flight/flaps-input">
 			<default value="0"/> <!-- 0 -->
 			<test logic="AND" value="1"> <!-- 1/1+F -->
-				/controls/flight/flaps ge 0.2
-				/controls/flight/flaps lt 0.4
+				/controls/flight/flaps-fixed ge 0.2
+				/controls/flight/flaps-fixed lt 0.4
 			</test>
 			<test logic="AND" value="2"> <!-- 2 -->
-				/controls/flight/flaps ge 0.4
-				/controls/flight/flaps lt 0.6
+				/controls/flight/flaps-fixed ge 0.4
+				/controls/flight/flaps-fixed lt 0.6
 			</test>
 			<test logic="AND" value="3"> <!-- 3 -->
-				/controls/flight/flaps ge 0.6
-				/controls/flight/flaps lt 0.8
+				/controls/flight/flaps-fixed ge 0.6
+				/controls/flight/flaps-fixed lt 0.8
 			</test>
 			<test logic="AND" value="4"> <!-- FULL -->
-				/controls/flight/flaps ge 0.8
+				/controls/flight/flaps-fixed ge 0.8
 			</test>
 			<output>/controls/flight/flaps-input-out</output>
 		</switch>
@@ -705,25 +722,25 @@
 		<switch name="/controls/flight/flaps-pos"> <!-- Split 1 and 1+F -->
 			<default value="0"/> <!-- 0 -->
 			<test logic="AND" value="1"> <!-- 1 -->
-				/controls/flight/flaps ge 0.2
-				/controls/flight/flaps lt 0.4
+				/controls/flight/flaps-fixed ge 0.2
+				/controls/flight/flaps-fixed lt 0.4
 				/controls/flight/flaps-1f-enable ne 1
 			</test>
 			<test logic="AND" value="2"> <!-- 1+F -->
-				/controls/flight/flaps ge 0.2
-				/controls/flight/flaps lt 0.4
+				/controls/flight/flaps-fixed ge 0.2
+				/controls/flight/flaps-fixed lt 0.4
 				/controls/flight/flaps-1f-enable eq 1
 			</test>
 			<test logic="AND" value="3"> <!-- 2 -->
-				/controls/flight/flaps ge 0.4
-				/controls/flight/flaps lt 0.6
+				/controls/flight/flaps-fixed ge 0.4
+				/controls/flight/flaps-fixed lt 0.6
 			</test>
 			<test logic="AND" value="4"> <!-- 3 -->
-				/controls/flight/flaps ge 0.6
-				/controls/flight/flaps lt 0.8
+				/controls/flight/flaps-fixed ge 0.6
+				/controls/flight/flaps-fixed lt 0.8
 			</test>
 			<test logic="AND" value="5"> <!-- FULL -->
-				/controls/flight/flaps ge 0.8
+				/controls/flight/flaps-fixed ge 0.8
 			</test>
 			<output>/controls/flight/flaps-input-out</output>
 		</switch>
