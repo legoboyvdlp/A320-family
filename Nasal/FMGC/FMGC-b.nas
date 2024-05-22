@@ -116,6 +116,7 @@ var Input = {
 };
 
 var Internal = {
+   above_to_accel_alt: props.globals.initNode("/FMGC/internal/above-to-accel-alt", 0, "BOOL"),
 	alt: props.globals.initNode("/it-autoflight/internal/alt", 10000, "INT"),
    alt_lt_crzalt: props.globals.initNode("/FMGC/internal/alt-lt-crzalt", 0, "INT"),
 	altCaptureActive: 0,

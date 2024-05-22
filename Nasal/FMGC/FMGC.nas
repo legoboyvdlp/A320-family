@@ -286,6 +286,7 @@ var postInit = func() {
 }
 
 var FMGCNodes = {
+	above_to_accel_alt: props.globals.initNode("/FMGC/internal/above-to-accel-alt", 0, "BOOL"),
 	costIndex: props.globals.initNode("/FMGC/internal/cost-index", 0, "DOUBLE"),
 	clean: props.globals.getNode("/FMGC/internal/clean"),
 	flap2: props.globals.getNode("/FMGC/internal/flap-2"),
@@ -1013,8 +1014,13 @@ var ManagedSPD = maketimer(0.25, func {
             }
             if (Text.vert.getValue() == "T/O CLB"){
                # SRS TO 
+               FMGCNodes.togaSpd.setValue(FMGCInternal.v2 + 10);
+               setprop("/FMGC/internal/target-ias-pfd", FMGCInternal.v2);
+               setprop("/it-autoflight/input/kts", FMGCInternal.v2 + 10);
             } elsif (Text.vert.getValue() == "G/A CLB") {
                # SRS GA 
+               FMGCNodes.togaSpd.setValue(math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.vapp, math.min(FMGCInternal.vls + 15, FMGCNodes.vmax.getValue() - 5)));
+               setprop("/it-autoflight/input/kts", FMGCNodes.togaSpd.getValue());
             } else {
                print("Error: SRS but neither GA nor TO");
             }
@@ -1053,10 +1059,7 @@ var ManagedSPD = maketimer(0.25, func {
                   }
                }
                
-               if ((Modes.PFD.FMA.pitchMode == " " or Modes.PFD.FMA.pitchMode == "SRS") and (FMGCInternal.phase < 2)) {
-                  FMGCInternal.mngKtsMach = 0;
-                  FMGCInternal.mngSpdCmd = FMGCInternal.v2;
-               } elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
+               if ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
                   # Speed is maximum of greendot / climb speed limit
                   FMGCInternal.mngKtsMach = 0;
                   
@@ -1259,6 +1262,14 @@ setlistener("/FMGC/internal/n1-left-ge-85", func(val) {
 	}
 }, 1, 0);
 
+# CLIMB phase
+setlistener("/FMGC/internal/above-to-accel-alt", func(val) {
+   if (val.getValue() and fmgc.FMGCInternal.phase == 1) {
+      # change to CLIMB PHASE 
+      newphase = 2;
+   }
+}, 1, 0);
+
 # DESCEND phase
 setlistener("/FMGC/internal/alt-lt-crzalt", func(val) {
    if (val.getBoolValue() and getprop("/FMGC/internal/distance-to-dest-lt-200") == 1 ) {
@@ -1315,17 +1326,13 @@ setlistener("/FMGC/internal/pitch-mode", func(mode) {
          if (gear0 and (getprop("/FMGC/internal/n1-left-ge-85") == 1 and getprop("/FMGC/internal/n1-right-ge-85") == 1)) {
             # first change phase for the listeners to check whether you are in SRS TO or SRS GA
             newphase = 1;
-            FMGCNodes.togaSpd.setValue(FMGCInternal.v2 + 10);
             systems.PNEU.pressMode.setValue("TO");
-            setprop("/FMGC/internal/target-ias-pfd", FMGCInternal.v2);
-            setprop("/it-autoflight/input/kts", FMGCInternal.v2 + 10);
          }
       } else {
          # SRS GA 
-            FMGCNodes.togaSpd.setValue(math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.vapp, math.min(FMGCInternal.vls + 15, FMGCNodes.vmax.getValue() - 5)));
-            setprop("/it-autoflight/input/kts", FMGCNodes.togaSpd.getValue());
       }
 	} elsif (fmgc.FMGCInternal.phase == 1) {
+      # leave takeoff phase if pitch mode changes from srs to something else
       newphase = 2;
       systems.PNEU.pressMode.setValue("TO");
    }
