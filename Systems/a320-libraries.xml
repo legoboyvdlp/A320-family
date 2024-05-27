@@ -28,15 +28,20 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="position/gear-agl-ft">
+		<fcs_function name="position/gear-agl-ft-raw">
 			<function>
 				<difference>
 					<property>/position/altitude-agl-ft</property>
 					<value>17.283</value>
 				</difference>
 			</function>
-			<output>/position/gear-agl-ft</output> <!-- So flight recorder can override it -->
 		</fcs_function>
+		
+		<lag_filter name="position/gear-agl-ft">
+			<input>position/gear-agl-ft-raw</input>
+			<c1>20</c1>
+			<output>/position/gear-agl-ft</output> <!-- So flight recorder can override it -->
+		</lag_filter>
 		
 		<pure_gain name="position/gear-agl-m">
 			<input>position/gear-agl-ft</input>
