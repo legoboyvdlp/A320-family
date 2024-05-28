@@ -189,6 +189,10 @@ setlistener("/sim/signals/fdm-initialized", func {
 	}
 	
 	spinning.stop();
+
+	if (getprop("/systems/acconfig/options/auto-ready-for-takeoff") == 1) {
+		acconfig.takeoff();
+	}
 });
 
 setlistener("/sim/signals/exit", func {
@@ -585,7 +589,9 @@ var taxi_d = func {
 	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);
 	ps_load_dlg.close();
-	ps_loaded_dlg.open();
+	if (getprop("/systems/acconfig/options/auto-ready-for-takeoff") == 0) {
+		ps_loaded_dlg.open();
+	}
 	spinning.stop();
 }
 
@@ -611,6 +617,13 @@ var takeoff = func {
 				settimer(func {
 					setprop("/ECAM/to-config-test", 0);
 				}, 1);
+				# TODO calculate actual values for this
+				fmgc.FMGCInternal.v1set = 1;
+				fmgc.FMGCInternal.v1 = 142;
+				fmgc.FMGCInternal.vrset = 1;
+				fmgc.FMGCInternal.vr = 145;
+				fmgc.FMGCInternal.v2set = 1;
+				fmgc.FMGCInternal.v2 = 153;
 			}
 		});
 	}
