@@ -240,7 +240,7 @@ var ITAF = {
 		Input.kts.setValue(100);
 		Input.mach.setValue(0.5);
 		Text.spd.setValue("THRUST");
-		updateFma.arm();
+		UpdateFma.arm();
 		me.updateLatText("");
 		me.updateVertText("");
 		Custom.showHdg.setBoolValue(1);
@@ -428,7 +428,7 @@ var ITAF = {
 		if (s == 1) {
 			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and FMGCNodes.Power.FMGC1Powered.getBoolValue() and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100 and Position.airborne5Secs.getBoolValue()) {
 				Output.ap1.setBoolValue(1);
-				me.updateFma();
+				me.UpdateFma();
 				Output.latTemp = Output.lat.getValue();
 				if (Output.ap2.getBoolValue() and !Output.apprArm.getBoolValue() and Output.latTemp != 2 and Output.latTemp != 4) {
 					me.ap2Master(0);
@@ -451,7 +451,7 @@ var ITAF = {
 		if (s == 1) {
 			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and FMGCNodes.Power.FMGC2Powered.getBoolValue() and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100 and Position.airborne5Secs.getBoolValue()) {
 				Output.ap2.setBoolValue(1);
-				me.updateFma();
+				me.UpdateFma();
 				Output.latTemp = Output.lat.getValue();
 				if (Output.ap1.getBoolValue() and !Output.apprArm.getBoolValue() and Output.latTemp != 2 and Output.latTemp != 4) {
 					me.ap1Master(0);
@@ -472,7 +472,7 @@ var ITAF = {
 	},
 	apOffFunction: func() {
 		if (!Output.ap1.getBoolValue() and !Output.ap2.getBoolValue()) { # Only do if both APs are off
-			me.updateFma();
+			me.UpdateFma();
 			
 			if (Sound.enableApOff) {
 				Sound.apOff.setBoolValue(1);
@@ -506,11 +506,11 @@ var ITAF = {
 	fd1Master: func(s) {
 		if (s == 1) {
 			Output.fd1.setBoolValue(1);
-			me.updateFma();
+			me.UpdateFma();
 		} else {
 			Output.fd1.setBoolValue(0);
 			if (!Output.fd2.getBoolValue()) {
-				me.updateFma();
+				me.UpdateFma();
 			}
 		}
 		fmaFd();
@@ -523,11 +523,11 @@ var ITAF = {
 	fd2Master: func(s) {
 		if (s == 1) {
 			Output.fd2.setBoolValue(1);
-			me.updateFma();
+			me.UpdateFma();
 		} else {
 			Output.fd2.setBoolValue(0);
 			if (!Output.fd1.getBoolValue()) {
-				me.updateFma();
+				me.UpdateFma();
 			}
 		}
 		fmaFd();
@@ -882,7 +882,7 @@ var ITAF = {
 		Input.fpaAbs.setValue(abs(math.clamp(math.round(Internal.fpaTemp, 0.1), -9.9, 9.9)));
 	},
 	# Custom Stuff Below
-	updateFma: func() {
+	UpdateFma: func() {
 		if (!Output.ap1.getBoolValue() and !Output.ap2.getBoolValue() and !Output.fd1.getBoolValue() and !Output.fd2.getBoolValue()) {
 			me.setLatMode(9);
 			me.setVertMode(9);
@@ -935,7 +935,7 @@ var ITAF = {
 		} else if (Input.hdgCalc < 1) { # It's rounded, so this is ok. Otherwise do < 0.5
 			Input.hdgCalc = Input.hdgCalc + 360;
 		}
-		updateFma.lat();
+		UpdateFma.lat();
 		Input.hdg.setValue(Input.hdgCalc);
 	},
 	trkFpaOff: func() {
@@ -952,28 +952,28 @@ var ITAF = {
 		} else if (Input.hdgCalc < 1) { # It's rounded, so this is ok. Otherwise do < 0.5
 			Input.hdgCalc = Input.hdgCalc + 360;
 		}
-		updateFma.lat();
+		UpdateFma.lat();
 		Input.hdg.setValue(Input.hdgCalc);
 	},
 	updateLatText: func(t) {
 		Text.lat.setValue(t);
-		updateFma.lat();
+		UpdateFma.lat();
 	},
 	updateVertText: func(t) {
 		Text.vert.setValue(t);
-		updateFma.vert();
+		UpdateFma.vert();
 	},
 	updateLnavArm: func(n) {
 		Output.lnavArm.setBoolValue(n);
-		updateFma.arm();
+		UpdateFma.arm();
 	},
 	updateLocArm: func(n) {
 		Output.locArm.setBoolValue(n);
-		updateFma.arm();
+		UpdateFma.arm();
 	},
 	updateApprArm: func(n) {
 		Output.apprArm.setBoolValue(n);
-		updateFma.arm();
+		UpdateFma.arm();
 	},
 };
 

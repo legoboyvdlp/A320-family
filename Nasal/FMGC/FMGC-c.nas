@@ -254,7 +254,7 @@ var loopFMA = maketimer(0.05, func() {
 });
 
 # Master FMA
-var updateFma = {
+var UpdateFma = {
 	lat: func() {
 		latText = Text.lat.getValue();
 		if (latText == "HDG") {
