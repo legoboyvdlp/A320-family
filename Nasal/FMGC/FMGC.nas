@@ -1014,13 +1014,8 @@ var ManagedSPD = maketimer(0.25, func {
             }
             if (Text.vert.getValue() == "T/O CLB"){
                # SRS TO 
-               FMGCNodes.togaSpd.setValue(FMGCInternal.v2 + 10);
-               setprop("/FMGC/internal/target-ias-pfd", FMGCInternal.v2);
-               setprop("/it-autoflight/input/kts", FMGCInternal.v2 + 10);
             } elsif (Text.vert.getValue() == "G/A CLB") {
                # SRS GA 
-               FMGCNodes.togaSpd.setValue(math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.vapp, math.min(FMGCInternal.vls + 15, FMGCNodes.vmax.getValue() - 5)));
-               setprop("/it-autoflight/input/kts", FMGCNodes.togaSpd.getValue());
             } else {
                print("Error: SRS but neither GA nor TO");
             }
@@ -1621,6 +1616,9 @@ var setCrzAlt = func (crz) {
 }
 
 var check_srs_engagement = func (){
+   # check whether SRS conditions are met
+   # as per FCOM 12.22_30-40 AP/FD Modes/SRS TO Mode
+   # and FCOM 12.22_30-40 AP/FD Modes/SRS GA Mode
    var eng1_state = getprop("/fdm/jsbsim/fadec/control-1/detent-text");
    var eng2_state = getprop("/fdm/jsbsim/fadec/control-2/detent-text");
    if (((eng1_state == "TOGA" or eng2_state == "TOGA") or (eng1_state == "MCT" or eng2_state == "MCT")) 
@@ -1630,12 +1628,15 @@ var check_srs_engagement = func (){
          and getprop("/FMGC/internal/v2-set") == 1) {
             # SRS TO
             # has to be checked first, as SRS GA should not be engaged
-            # if SRS TO is engaged
+            # if SRS TO is engaged (see FCOM 12.22_30-40 AP/FD Modes/SRS GA Mode)
 				ITAF.setVertMode(7);
 				ITAF.updateVertText("T/O CLB");
             setAthrArmed(1);
             
             # set managed speed
+            FMGCNodes.togaSpd.setValue(FMGCInternal.v2 + 10);
+            setprop("/FMGC/internal/target-ias-pfd", FMGCInternal.v2);
+            setprop("/it-autoflight/input/kts", FMGCInternal.v2 + 10);
             fmgc.ManagedSPD.start();
 
             newphase = 1;
@@ -1652,6 +1653,8 @@ var check_srs_engagement = func (){
             setAthrArmed(1);
             
             # set managed speed
+            FMGCNodes.togaSpd.setValue(math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.vapp, math.min(FMGCInternal.vls + 15, FMGCNodes.vmax.getValue() - 5)));
+            setprop("/it-autoflight/input/kts", FMGCNodes.togaSpd.getValue());
             fmgc.ManagedSPD.start();
 
             newphase = 6;
@@ -1659,6 +1662,13 @@ var check_srs_engagement = func (){
             systems.FADEC.clbReduc.setValue(systems.FADEC.gaClbReduc.getValue());
             print(" srs engaged with val: 2");
             return 2;
+   } elsif (((eng1_state == "ALT*" or eng2_state == "ALT CST*") 
+         or getprop("/FMGC/internal/above-to-accel-alt") == 1
+         or getprop("/ECAM/warnings/instrumentation/above-400ft-ra") == 1)
+         and (getprop("/engines/engine[0]/running") == 1 or getprop("/engines/engine[1]/running") == 1 )) { 
+            # SRS TO conditions for disengagement are met
+            print(" srs to conditions for disengagement met");
+            return 0;
    } else {
       return 0;
    }

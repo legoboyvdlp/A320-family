@@ -371,17 +371,6 @@
 		<input>
 			<expression>
 				<product>
-					<difference>
-						<max>
-							<min>
-								<property>/it-autoflight/input/kts</property>
-								<property>/FMGC/internal/vmax</property>
-							</min>
-							<property>/FMGC/internal/vls</property>
-						</max>
-						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
-					</difference>
-					<value>0.1</value>
 				</product>
 			</expression>
 		</input>

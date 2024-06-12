@@ -3471,6 +3471,14 @@
 			</test>
 		</switch>
 		
+		<switch name="/ECAM/warnings/instrumentation/above-400ft-ra">
+			<default value="0"/>
+			<test logic="OR" value="1">
+            /instrumentation/radar-altimeter[0]/radar-altitude-ft-corrected gt 400
+            /instrumentation/radar-altimeter[1]/radar-altitude-ft-corrected gt 400
+			</test>
+		</switch>
+		
 		<switch name="/ECAM/warnings/fctl/gear-not-down-not-cancellable">
 			<default value="0"/>
 			<test logic="AND" value="1">
