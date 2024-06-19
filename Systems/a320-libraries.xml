@@ -67,7 +67,15 @@
                /ECAM/logic/ground-calc-immediate eq 0
                /instrumentation/altimeter/indicated-altitude-ft gt /FMGC/internal/accel-agl-ft
             </test>
-        </switch>
+      </switch>
+
+      <switch name="/FMGC/internal/above-ga-accel-alt">
+            <default value="0"/>
+            <test logic="AND" value="1">
+               /ECAM/logic/ground-calc-immediate eq 0
+               /instrumentation/altimeter/indicated-altitude-ft gt /FMGC/internal/ga-accel-agl-ft
+            </test>
+      </switch>
 	</channel>
 
 </system>

@@ -699,11 +699,6 @@ var masterFMGC = maketimer(0.2, func {
       } else {
          setprop("/FMGC/internal/alt-lt-crzalt", 0);
       }
-	} elsif (fmgc_flight_phase == 6) {
-		if (alt >= getprop("/FMGC/internal/ga-accel-agl-ft")) { # todo when insert altn or new dest
-			newphase = 5; # is wrong, but it commands g-dot speed
-         print("change to phase 5(approach) after ga phase");
-		}
 	}
 	
 	xtrkError = getprop("/instrumentation/gps/wp/wp[1]/course-error-nm");
@@ -1095,6 +1090,16 @@ var ManagedSPD = maketimer(0.25, func {
                   } else {
                      FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.vapp_appr, FMGCInternal.vls, 999);
                   }
+               } elsif (FMGCInternal.phase == 6) { 
+                  # Speed is maximum of greendot / climb speed limit
+                  FMGCInternal.mngKtsMach = 0;
+                  if (constraintSpeed != nil and constraintSpeed != 0) {
+                     # todo: minimum is vapp recorded at 700 radio alt
+                     FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), constraintSpeed);
+                  } else {
+                     # todo: minimum is vapp recorded at 700 radio alt
+                     FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), FMGCInternal.clbSpdLim);
+                  }
                } elsif (FMGCInternal.phase == 7) {
                   # done phase. v2 is reset
                   fmgc.FMGCInternal.v2 = 0;
@@ -1354,6 +1359,21 @@ setlistener("/it-autoflight/input/kts", func(val) {
                * getprop("/it-autoflight/input/mach"));
       } else {
          setprop("/FMGC/internal/target-ias-pfd", val.getValue());
+      }
+   }
+}, 1, 0);
+
+# set managed target speed after passing ga-accel_agl_ft 
+setlistener("/FMGC/internal/above-ga-accel-alt", func(val) {
+	if (FMGCInternal.phase == 6 and val.getValue == 1) {
+      # Speed is maximum of greendot / climb speed limit
+      FMGCInternal.mngKtsMach = 0;
+      if (constraintSpeed != nil and constraintSpeed != 0) {
+         # todo: minimum is vapp recorded at 700 radio alt
+         FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), constraintSpeed);
+      } else {
+         # todo: minimum is vapp recorded at 700 radio alt
+         FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), FMGCInternal.clbSpdLim);
       }
    }
 }, 1, 0);
@@ -1663,13 +1683,29 @@ var check_srs_engagement = func (){
             print(" srs engaged with val: 2");
             return 2;
    } elsif (((eng1_state == "ALT*" or eng2_state == "ALT CST*") 
-         or getprop("/FMGC/internal/above-to-accel-alt") == 1
+            and getprop("/ECAM/warnings/instrumentation/above-400ft-ra") == 1)
+         or (getprop("/FMGC/internal/above-to-accel-alt") == 1 
+            and (getprop("/engines/engine[0]/running") == 1
+               and getprop("/engines/engine[1]/running") == 1 )
          or getprop("/ECAM/warnings/instrumentation/above-400ft-ra") == 1)
-         and (getprop("/engines/engine[0]/running") == 1 or getprop("/engines/engine[1]/running") == 1 )) { 
+         ) { 
             # SRS TO conditions for disengagement are met
             print(" srs to conditions for disengagement met");
             return 0;
+   } elsif (((eng1_state == "ALT*" or eng2_state == "ALT CST*") 
+            and getprop("/ECAM/warnings/instrumentation/above-400ft-ra") == 1)
+         or (getprop("/FMGC/internal/above-ga-accel-alt") == 1 
+            and (getprop("/engines/engine[0]/running") == 1
+               and getprop("/engines/engine[1]/running") == 1 )
+         or getprop("/ECAM/warnings/instrumentation/above-400ft-ra") == 1)
+         # selected speed condition is treated in FCU.nas for now
+         # condition should be implemented here once it is set by listener
+         ) { 
+            # SRS TO conditions for disengagement are met
+            print(" srs ga conditions for disengagement met");
+            return 0;
    } else {
+      print(" srs conditions not met with states 1 : ", eng1_state.getprop(), ", eng 2 ", eng2_state.getprop());
       return 0;
    }
 }
