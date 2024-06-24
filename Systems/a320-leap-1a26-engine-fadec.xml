@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 
-<!-- Airbus A320 CFM56-5B4 Engine -->
+<!-- Airbus A320 LEAP-1A26 Engine -->
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
-<system name="A320: CFM56 Engine">
+<system name="A320: LEAP Engine">
 	
-	<property value="45">fadec/limit/rated-temp</property>
+	<property value="30">fadec/limit/rated-temp</property>
 	<property value="30">fadec/limit/flex-rated-temp</property>
-	<property value="27000">fadec/limit/rated-thrust</property>
-	<property value="18.9">fadec/limit/min-n1</property>
+	<property value="27120">fadec/limit/rated-thrust</property>
+	<property value="20.1">fadec/limit/min-n1</property>
 	<property value="104">fadec/limit/max-n1</property>
 	<property value="0">fadec/inhibit-alpha-floor</property>
 	<property value="1">fadec/limit/active-epr</property> <!-- Unused in this engine -->
@@ -23,10 +23,10 @@
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">propulsion/tat-c</independentVar>
 					<tableData>
-						      -45   -15    15    45     75
-						    0  79.5  84.6  89.2   93.8   98.3
-						10000  90.1  94.8  99.1  100.6   99.3
-						45000  88.7  89.1  94.2   99.3  104.3
+						      -60   -30    0     30    60
+						    0  74.3  79.0  83.3  87.6  91.8
+						10000  84.2  88.5  92.6  94.0  92.7
+						45000  82.8  83.2  88.0  92.7  97.4
 					</tableData>
 				</table>
 			</function>
@@ -97,9 +97,9 @@
 							<quotient>
 								<difference>
 									<property>fadec/limit/rated-thrust-n1</property>
-									<value>18.9</value>
+									<value>20.1</value>
 								</difference>
-								<value>85.1</value>
+								<value>80.9</value>
 							</quotient>
 							<value>2</value>
 						</pow>
@@ -137,10 +137,10 @@
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">propulsion/tat-c</independentVar>
 					<tableData>
-						      -45   -15    15    45     75
-						    0  79.5  84.6  89.2   93.8  89.1
-						10000  90.1  94.8  99.1  100.6  96.2
-						45000  88.7  89.1  94.2   99.3  97.2
+						      -60   -30    0     30    60
+						    0  74.3  79.0  83.3  87.6  83.2
+						10000  84.2  88.5  92.6  94.0  89.9
+						45000  82.8  83.2  88.0  92.7  90.8
 					</tableData>
 				</table>
 			</function>
@@ -168,8 +168,8 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/toga</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 20.1  0
+						101.0  1
 					</tableData>
 				</table>
 			</function>
@@ -189,10 +189,10 @@
 						<independentVar lookup="row">/position/altitude-ft</independentVar>
 						<independentVar lookup="column">fadec/limit/flex-temp-input</independentVar>
 						<tableData>
-							      -45   -15    15    45     75
-							    0  79.5  84.6  89.2   93.8  89.1
-							10000  90.1  94.8  99.1  100.6  96.2
-							45000  88.7  89.1  94.2   99.3  97.2
+							      -60   -30    0     30    60
+							    0  74.3  79.0  83.3  87.6  83.2
+							10000  84.2  88.5  92.6  94.0  89.9
+							45000  82.8  83.2  88.0  92.7  90.8
 						</tableData>
 					</table>
 				</min>
@@ -205,10 +205,10 @@
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">propulsion/tat-c</independentVar>
 					<tableData>
-						      -65   -35   -5     25    55
-						    0  73.2  78.0  82.7  87.1  85.5
-						10000  83.5  88.0  92.3  95.5  94.9
-						45000  84.9  85.3  87.2  92.0  90.3
+						      -70   -40   -10    20    50
+						    0  68.4  72.9  77.2  81.4  79.9
+						10000  78.0  82.2  86.2  89.2  88.6
+						45000  79.3  79.7  81.4  85.9  84.3
 					</tableData>
 				</table>
 			</function>
@@ -243,8 +243,8 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/mct</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 20.1  0
+						101.0  1
 					</tableData>
 				</table>
 			</function>
@@ -256,10 +256,10 @@
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">propulsion/tat-c</independentVar>
 					<tableData>
-						      -65   -35   -5     25    55
-						    0  70.3  74.9  79.3  83.5  82.0
-						10000  80.1  84.3  88.4  91.4  90.1
-						45000  81.4  81.8  83.6  88.1  86.5
+						      -70   -40   -10    20    50
+						    0  65.7  70.0  74.1  78.0  76.6
+						10000  74.8  78.7  82.6  85.4  84.2
+						45000  76.0  76.4  78.1  82.3  80.8
 					</tableData>
 				</table>
 			</function>
@@ -287,8 +287,8 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/climb</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 20.1  0
+						101.0  1
 					</tableData>
 				</table>
 			</function>
@@ -307,13 +307,13 @@
 						<independentVar lookup="table">/position/altitude-ft</independentVar>
 						<tableData breakPoint="0">
 							      0     1
-							0.21  24.9  31.2
-							0.70  33.1  37.9
+							0.21  25.8  31.8
+							0.70  33.6  38.2
 						</tableData>
 						<tableData breakPoint="45000">
 							      0     1
-							0.55  42.8  49.2
-							0.90  48.8  51.1
+							0.55  42.8  48.9
+							0.90  48.5  50.7
 						</tableData>
 					</table>
 					<value>0</value>
@@ -343,8 +343,8 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/idle</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 20.1  0
+						101.0  1
 					</tableData>
 				</table>
 			</function>
@@ -356,9 +356,9 @@
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">propulsion/tat-c</independentVar>
 					<tableData>
-						      -65   -35   -5     25    55
-						    0  62.4  66.2  69.9  73.5  72.2
-						10000  70.6  74.2  77.6  80.2  79.7
+						      -70   -40   -10    20    50
+						    0  58.3  61.8  65.3  68.6  67.4
+						10000  65.9  69.3  72.5  74.9  74.4
 					</tableData>
 				</table>
 			</function>
@@ -386,8 +386,8 @@
 				<table>
 					<independentVar lookup="row">fadec/limit/mrev</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 20.1  0
+						101.0  1
 					</tableData>
 				</table>
 			</function>
@@ -705,8 +705,8 @@
 				<table>
 					<independentVar lookup="row">fadec/control-1/lever-n1</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 20.1  0
+						101.0  1
 					</tableData>
 				</table>
 			</function>
@@ -953,8 +953,8 @@
 				<table>
 					<independentVar lookup="row">fadec/control-2/lever-n1</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 20.1  0
+						101.0  1
 					</tableData>
 				</table>
 			</function>
@@ -1317,8 +1317,8 @@
 				<table>
 					<independentVar lookup="row">fadec/thr-locked-n1</independentVar>
 					<tableData>
-						 18.9  0
-						104.0  1
+						 20.1  0
+						101.0  1
 					</tableData>
 				</table>
 			</function>
@@ -1423,14 +1423,14 @@
 							 10.0    0    0
 							 45.0  390  345
 							 50.0  385  340
-							 59.4  330  290
-							105.0  650  550
+							 70.2  330  290
+							116.5  650  550
 						</tableData>
 						<tableData breakPoint="1">
 							       0    50000
 							 30.0  0    0
-							 59.4  330  290
-							105.0  650  550
+							 70.2  330  290
+							116.5  650  550
 						</tableData>
 					</table>
 				</sum>
@@ -1456,14 +1456,14 @@
 							 10.0    0    0
 							 45.0  390  345
 							 50.0  385  340
-							 59.4  330  290
-							105.0  650  550
+							 70.2  330  290
+							116.5  650  550
 						</tableData>
 						<tableData breakPoint="1">
 							       0    50000
 							 30.0  0    0
-							 59.4  330  290
-							105.0  650  550
+							 70.2  330  290
+							116.5  650  550
 						</tableData>
 					</table>
 				</sum>

@@ -89,7 +89,7 @@
 	<ground_reactions file="Systems/a320-ground-reactions"/>
 	
 	<propulsion>
-		<engine file="leap1a26_1">
+		<engine file="leap-1a26_1">
 			<feed>5</feed>
 			<thruster file="direct">
 				<location unit="M">
@@ -105,7 +105,7 @@
 			</thruster>
 		</engine>
 		
-		<engine file="leap1a26_2">
+		<engine file="leap-1a26_2">
 			<feed>6</feed>
 			<thruster file="direct">
 				<location unit="M">
@@ -241,7 +241,7 @@
 	<system file="glass-effect"/>
 	<system file="a320-fbw"/>
 	<system file="a320-fcs"/>
-	<system file="a320-cfm56-5b4-engine-fadec"/>
+	<system file="a320-leap-1a26-engine-fadec"/>
 	<system file="a320-fuel"/>
 	<system file="a320-fwc"/>
 	<system file="a320-fwc-phases"/>

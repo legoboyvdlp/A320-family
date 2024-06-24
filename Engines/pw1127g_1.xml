@@ -4,8 +4,8 @@
 
 <turbine_engine name="PW1127G-JM">
 	
-	<milthrust>27000</milthrust>
-	<tsfc>0.335</tsfc>
+	<milthrust>27120</milthrust>
+	<tsfc>0.328</tsfc>
 	<bleed>0</bleed> <!-- Set by pneumatic system -->
 	<ignitionn1>1.7</ignitionn1>
 	<ignitionn2>28.5</ignitionn2>
@@ -15,10 +15,10 @@
 	<n2spindown>9.5</n2spindown>
 	<n1startrate>0.503</n1startrate>
 	<n2startrate>1.127</n2startrate>
-	<idlen1>18.9</idlen1>
-	<idlen2>59.4</idlen2>
-	<maxn1>104</maxn1>
-	<maxn2>105</maxn2>
+	<idlen1>20.1</idlen1>
+	<idlen2>70.2</idlen2>
+	<maxn1>101</maxn1>
+	<maxn2>116.5</maxn2>
 	<augmented>0</augmented>
 	<injected>0</injected>
 	
@@ -56,36 +56,36 @@
 		</table>
 	</function>
 	
-	<function name="N2SpoolUp"> <!-- N1 to N2 factor 0.535840188014101 -->
+	<function name="N2SpoolUp"> <!-- N1 to N2 factor 0.572311495673671 -->
 		<table>
 			<independentVar lookup="row">/engines/engine[0]/n1</independentVar>
 			<independentVar lookup="column">/systems/acconfig/autoconfig-running</independentVar>
 			<tableData>
 				      0    1
 				 24   0.6  27
-				 28   1.6  27
-				 46   5.2  27
-				 68   8.3  27
-				 80  10.5  27
-				 94  11.5  27
-				103  12.6  27
+				 28   1.7  27
+				 46   5.6  27
+				 68   8.8  27
+				 80  11.2  27
+				 94  12.2  27
+				103  13.5  27
 			</tableData>
 		</table>
 	</function>
 	
-	<function name="N2SpoolDown"> <!-- N1 to N2 factor 0.535840188014101 -->
+	<function name="N2SpoolDown"> <!-- N1 to N2 factor 0.572311495673671 -->
 		<table>
 			<independentVar lookup="row">/engines/engine[0]/n1</independentVar>
 			<independentVar lookup="column">/systems/acconfig/autoconfig-running</independentVar>
 			<tableData>
 				      0    1
 				 24   0.6  27
-				 28   1.6  27
-				 46   5.2  27
-				 68   8.3  27
-				 80  10.5  27
-				 94  11.5  27
-				103  12.6  27
+				 28   1.7  27
+				 46   5.6  27
+				 68   8.8  27
+				 80  11.2  27
+				 94  12.2  27
+				103  13.5  27
 			</tableData>
 		</table>
 	</function>

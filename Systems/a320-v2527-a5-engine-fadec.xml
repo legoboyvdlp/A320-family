@@ -606,7 +606,7 @@
 			<function>
 				<ifthen>
 					<eq>
-						<property>position/wow</property>
+						<property>gear/unit[0]/WOW</property>
 						<value>0</value>
 					</eq>
 					<product>
