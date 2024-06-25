@@ -180,7 +180,7 @@
 			<default value="0"/>
 			<test logic="AND" value="3">
 				/systems/ignition/cutoff-jsb-1 eq 0
-				/engines/engine[0]/n2-actual ge 58
+				/engines/engine[0]/n2-actual ge /options/ign-run-n2
 			</test>
 			<test logic="AND" value="2">
 				/systems/ignition/cutoff-jsb-1 eq 0
@@ -307,7 +307,7 @@
 			<default value="0"/>
 			<test logic="AND" value="3">
 				/systems/ignition/cutoff-jsb-2 eq 0
-				/engines/engine[1]/n2-actual ge 58
+				/engines/engine[1]/n2-actual ge /options/ign-run-n2
 			</test>
 			<test logic="AND" value="2">
 				/systems/ignition/cutoff-jsb-2 eq 0

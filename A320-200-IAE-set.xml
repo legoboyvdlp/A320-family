@@ -225,12 +225,14 @@
 		<eng type="string">IAE</eng>
 		<eng-int type="int">1</eng-int>
 		<engine-name type="string">V2527-A5</engine-name>
+		<ign-run-n2 type="int">59</ign-run-n2>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">40</maxflap>
 		<model-number type="string">A320-232</model-number>
 		<model-options>
 			<sharklet type="bool">0</sharklet>
 		</model-options>
+		<neo type="bool">0</neo>
 	</options>
 	
 	<systems n="0">

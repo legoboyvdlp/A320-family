@@ -225,12 +225,14 @@
 		<eng type="string">CFM</eng>
 		<eng-int type="int">0</eng-int>
 		<engine-name type="string">LEAP-1A26</engine-name>
+		<ign-run-n2 type="int">68</ign-run-n2>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">35</maxflap>
 		<model-number type="string">A320-251N</model-number>
 		<model-options>
 			<sharklet type="bool">1</sharklet>
 		</model-options>
+		<neo type="bool">1</neo>
 	</options>
 	
 	<systems n="0">
