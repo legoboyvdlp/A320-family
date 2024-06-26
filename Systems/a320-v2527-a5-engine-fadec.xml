@@ -37,8 +37,8 @@
 				<table>
 					<independentVar lookup="row">velocities/mach</independentVar>
 					<tableData>
-						0.06  0.97326969953
-						0.10  1.00000000000
+						0.07  0.97326969953
+						0.09  1.00000000000
 					</tableData>
 				</table>
 			</function>
@@ -200,7 +200,7 @@
 						<table>
 							<independentVar lookup="row">fadec/limit/toga-epr-input</independentVar>
 							<tableData>
-								   24743.1  0.00
+								    3162.2  0.00
 								   53194.6  0.03
 								10000000.0  1.00
 							</tableData>
@@ -250,7 +250,7 @@
 					<table>
 						<independentVar lookup="row">fadec/limit/toga-epr-n1-ref</independentVar>
 						<tableData>
-							0.00     24743.1
+							0.00      3162.2
 							0.03     53194.6
 							1.00  10000000.0
 						</tableData>
@@ -368,7 +368,7 @@
 						<table>
 							<independentVar lookup="row">fadec/limit/mct-epr-input</independentVar>
 							<tableData>
-								   24743.1  0.00
+								    3162.2  0.00
 								   53194.6  0.03
 								10000000.0  1.00
 							</tableData>
@@ -418,7 +418,7 @@
 					<table>
 						<independentVar lookup="row">fadec/limit/mct-epr-n1-ref</independentVar>
 						<tableData>
-							0.00     24743.1
+							0.00      3162.2
 							0.03     53194.6
 							1.00  10000000.0
 						</tableData>
@@ -502,7 +502,7 @@
 						<table>
 							<independentVar lookup="row">fadec/limit/climb-epr-input</independentVar>
 							<tableData>
-								   24743.1  0.00
+								    3162.2  0.00
 								   53194.6  0.03
 								10000000.0  1.00
 							</tableData>
@@ -552,7 +552,7 @@
 					<table>
 						<independentVar lookup="row">fadec/limit/climb-epr-n1-ref</independentVar>
 						<tableData>
-							0.00     24743.1
+							0.00      3162.2
 							0.03     53194.6
 							1.00  10000000.0
 						</tableData>
@@ -694,7 +694,7 @@
 						<table>
 							<independentVar lookup="row">fadec/limit/mrev-epr-input</independentVar>
 							<tableData>
-								   24743.1  0.00
+								    3162.2  0.00
 								   53194.6  0.03
 								10000000.0  1.00
 							</tableData>
@@ -744,7 +744,7 @@
 					<table>
 						<independentVar lookup="row">fadec/limit/mrev-epr-n1-ref</independentVar>
 						<tableData>
-							0.00     24743.1
+							0.00      3162.2
 							0.03     53194.6
 							1.00  10000000.0
 						</tableData>
@@ -1129,7 +1129,7 @@
 						<table>
 							<independentVar lookup="row">fadec/control-1/lever-epr-ref</independentVar>
 							<tableData>
-								   24743.1  0.00
+								    3162.2  0.00
 								   53194.6  0.03
 								10000000.0  1.00
 							</tableData>
@@ -1405,7 +1405,7 @@
 						<table>
 							<independentVar lookup="row">fadec/control-2/lever-epr-ref</independentVar>
 							<tableData>
-								   24743.1  0.00
+								    3162.2  0.00
 								   53194.6  0.03
 								10000000.0  1.00
 							</tableData>
@@ -1979,7 +1979,7 @@
 						<table>
 							<independentVar lookup="row">fadec/epr-actual-1-ref</independentVar>
 							<tableData>
-								   24743.1  0.00
+								    3162.2  0.00
 								   53194.6  0.03
 								10000000.0  1.00
 							</tableData>
@@ -2008,7 +2008,7 @@
 						<table>
 							<independentVar lookup="row">fadec/epr-actual-2-ref</independentVar>
 							<tableData>
-								   24743.1  0.00
+								    3162.2  0.00
 								   53194.6  0.03
 								10000000.0  1.00
 							</tableData>

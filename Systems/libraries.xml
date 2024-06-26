@@ -16,8 +16,9 @@
 						<property>/position/altitude-ft</property>
 						<table>
 							<property>/fdm/jsbsim/velocities/mach</property>
+							<entry><ind>0.08</ind><dep>0.0</dep></entry>
 							<entry><ind>0.09</ind><dep>0.1</dep></entry>
-							<entry><ind>0.15</ind><dep>1.0</dep></entry>
+							<entry><ind>0.19</ind><dep>1.0</dep></entry>
 						</table>
 					</product>
 					<entry><ind>    0</ind><dep>0.674</dep></entry>
@@ -40,8 +41,9 @@
 							<property>/position/altitude-ft</property>
 							<table>
 								<property>/fdm/jsbsim/velocities/mach</property>
+								<entry><ind>0.08</ind><dep>0.0</dep></entry>
 								<entry><ind>0.09</ind><dep>0.1</dep></entry>
-								<entry><ind>0.15</ind><dep>1.0</dep></entry>
+								<entry><ind>0.19</ind><dep>1.0</dep></entry>
 							</table>
 						</product>
 						<entry><ind>    0</ind><dep>0.9852</dep></entry>
@@ -50,9 +52,8 @@
 					<table>
 						<property>/fdm/jsbsim/velocities/mach</property>
 						<entry><ind>0.09</ind><dep>0.000</dep></entry>
-						<entry><ind>0.15</ind><dep>0.016</dep></entry>
-						<entry><ind>0.22</ind><dep>0.022</dep></entry>
-						<entry><ind>1.00</ind><dep>0.010</dep></entry>
+						<entry><ind>0.15</ind><dep>0.017</dep></entry>
+						<entry><ind>0.22</ind><dep>0.023</dep></entry>
 					</table>
 				</difference>
 			</expression>
