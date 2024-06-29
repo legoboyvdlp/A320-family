@@ -1011,6 +1011,7 @@ var ManagedSPD = maketimer(0.25, func {
                # SRS TO 
             } elsif (Text.vert.getValue() == "G/A CLB") {
                # SRS GA 
+               setprop("/it-autoflight/input/kts", FMGCNodes.togaSpd.getValue());
             } else {
                print("Error: SRS but neither GA nor TO");
             }
@@ -1641,8 +1642,8 @@ var check_srs_engagement = func (){
    # and FCOM 12.22_30-40 AP/FD Modes/SRS GA Mode
    var eng1_state = getprop("/fdm/jsbsim/fadec/control-1/detent-text");
    var eng2_state = getprop("/fdm/jsbsim/fadec/control-2/detent-text");
-   if (((eng1_state == "TOGA" or eng2_state == "TOGA") or (eng1_state == "MCT" or eng2_state == "MCT")) 
-         and getprop("/fdm/jsbsim/fadec/limit/flex-active-cmd") == 1 
+   if (((eng1_state == "TOGA" or eng2_state == "TOGA") 
+         or ((eng1_state == "MCT" or eng2_state == "MCT") and getprop("/fdm/jsbsim/fadec/limit/flex-active-cmd") == 1))
          and getprop("/FMGC/internal/on-ground-gt-30sec") == 1 
          and getprop("/controls/flight/flaps-input") > 0 
          and getprop("/FMGC/internal/v2-set") == 1) {
@@ -1664,8 +1665,9 @@ var check_srs_engagement = func (){
             systems.PNEU.pressMode.setValue("TO");
             print(" srs engaged with val: 1");
             return 1;
-   } elsif ((eng1_state == "TOGA" or eng2_state == "TOGA") and 
-         getprop("/controls/flight/flaps-input") > 0 
+   } elsif ((eng1_state == "TOGA" or eng2_state == "TOGA") 
+         and getprop("/FMGC/internal/pitch-mode") != "SRS" # do not engage when SRS TO active
+         and getprop("/controls/flight/flaps-input") > 0 
          and getprop("/FMGC/internal/on-ground-gt-30sec") == 0) { 
             # SRS GA 
 				ITAF.setVertMode(7);
@@ -1673,8 +1675,18 @@ var check_srs_engagement = func (){
             setAthrArmed(1);
             
             # set managed speed
-            FMGCNodes.togaSpd.setValue(math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()), FMGCInternal.vapp, math.min(FMGCInternal.vls + 15, FMGCNodes.vmax.getValue() - 5)));
-            setprop("/it-autoflight/input/kts", FMGCNodes.togaSpd.getValue());
+            var upper_srs_limit = 0;
+            if (engout) {
+               upper_srs_limit = FMGCInternal.vls + 15;
+            } else {
+               upper_srs_limit = FMGCInternal.vls + 25;
+            }
+            FMGCNodes.togaSpd.setValue(math.clamp(math.round(fmgc.Velocities.indicatedAirspeedKt.getValue()),
+                     FMGCInternal.vapp,
+                     math.min(FMGCNodes.vmax.getValue() - 5, upper_srs_limit)));
+            print("SRS speed to be set is ", FMGCNodes.togaSpd.getValue());
+            print("actual speed is ", fmgc.Velocities.indicatedAirspeedKt.getValue());
+            print("engout is ", engout);
             fmgc.ManagedSPD.start();
 
             newphase = 6;
