@@ -151,7 +151,7 @@ var systemsInit = func() {
 	mcdu_scratchpad.mcduMsgtimer2.start();
 	effects.icingInit();
 	ecam.ECAM.init();
-	libraries.variousReset();
+	cockpit.variousReset();
 	rmp.init();
 	acp.init();
 	ecam.ECAM_controller.init();
@@ -205,6 +205,18 @@ var systemsLoop = func(notification) {
 		}
 	}
 }
+
+# Backwards compatibility, removed soon
+var ApPanel = {
+	apDisc: func() {
+		cockpit.ApPanel.apDisc();
+		gui.popupTip("libraries.ApPanel is deprecated. Please switch to cockpit.ApPanel.");
+	},
+	atDisc: func() {
+		cockpit.ApPanel.atDisc();
+		gui.popupTip("libraries.ApPanel is deprecated. Please switch to cockpit.ApPanel.");
+	},
+};
 
 # GPWS
 var GPWS = {

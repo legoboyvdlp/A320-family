@@ -4859,18 +4859,18 @@
 			<file>Aircraft/A320-family/Nasal/emesary/M_frame_notification.nas</file>
 		</notifications>
 		<pts>
-			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
+			<file>Aircraft/A320-family/Nasal/property-tree-setup.nas</file>
 		</pts>
 		<aircraft>
-			<file>Aircraft/A320-family/Nasal/Libraries/canvasLiv.nas</file>
+			<file>Aircraft/A320-family/Nasal/canvasLiv.nas</file>
 		</aircraft>
 		<libraries>
-			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/controls-override.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/sounds.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/view-controller.nas</file>
+			<file>Aircraft/A320-family/Nasal/libraries.nas</file>
+			<file>Aircraft/A320-family/Nasal/buttons.nas</file>
+			<file>Aircraft/A320-family/Nasal/controls-override.nas</file>
+			<file>Aircraft/A320-family/Nasal/shake.nas</file>
+			<file>Aircraft/A320-family/Nasal/sounds.nas</file>
+			<file>Aircraft/A320-family/Nasal/view-controller.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
@@ -4963,6 +4963,9 @@
 			<file>Aircraft/A320-family/Nasal/Displays/projection.nas</file>
 			<file>Aircraft/A320-family/Nasal/Displays/traffic.nas</file>
 		</traffic>
+		<cockpit>
+			<file>Aircraft/A320-family/Nasal/cockpit.nas</file>
+		</cockpit>
 		<!-- Canvas -->
 		<canvas_pfd>
 			<file>Aircraft/A320-family/Models/Instruments/PFD/PFD.nas</file>
