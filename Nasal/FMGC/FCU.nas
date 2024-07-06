@@ -343,7 +343,7 @@ var FCUController = {
 	LOCButton: func() {
 		if (me.FCUworking) {
 			me.vertTemp = fmgc.Output.vert.getValue();
-			if ((fmgc.Output.locArm.getBoolValue() or fmgc.Output.lat.getValue() == 2) and !fmgc.Output.apprArm.getBoolValue() and me.vertTemp != 2 and me.vertTemp != 6) {
+			if ((fmgc.Output.locArm.getBoolValue() or fmgc.Output.lat.getValue() == 2) and !fmgc.Output.gsArm.getBoolValue() and me.vertTemp != 2 and me.vertTemp != 6) {
 				if (fmgc.Output.lat.getValue() == 2) {
 					fmgc.Input.lat.setValue(0);
 				} else {
@@ -486,7 +486,7 @@ var FCUController = {
 	APPRButton: func() {
 		if (me.FCUworking) {
 			me.vertTemp = fmgc.Output.vert.getValue();
-			if ((fmgc.Output.locArm.getBoolValue() or fmgc.Output.lat.getValue() == 2) and (fmgc.Output.apprArm.getBoolValue() or me.vertTemp == 2 or me.vertTemp == 6)) {
+			if ((fmgc.Output.locArm.getBoolValue() or fmgc.Output.lat.getValue() == 2) and (fmgc.Output.gsArm.getBoolValue() or me.vertTemp == 2 or me.vertTemp == 6)) {
 				if (fmgc.Output.lat.getValue() == 2) {
 					fmgc.Input.lat.setValue(0);
 				} else {

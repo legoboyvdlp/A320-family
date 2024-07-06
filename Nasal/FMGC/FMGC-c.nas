@@ -325,7 +325,7 @@ var UpdateFma = {
 		} else {
 			setFmaText("rollModeArmed", " ", genericCallback, "rollModeArmedTime");
 		}
-		if (Output.apprArm.getBoolValue()) {
+		if (Output.gsArm.getBoolValue()) {
 			setFmaText("pitchModeArmed", "G/S", genericCallback, "pitchModeArmedTime");
 		} else {
 			setFmaText("pitchModeArmed", " ", genericCallback, "pitchModeArmedTime");
