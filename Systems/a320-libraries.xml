@@ -65,6 +65,11 @@
 				/engines/engine[1]/state ne 3
 			</test>
 		</switch>
+		
+		<switch name="libraries/dbmr">
+			<default value="0"/>
+			<output>/sim/menubar/default/menu[3]/enabled</output>
+		</switch>
 	
 	</channel>
 
