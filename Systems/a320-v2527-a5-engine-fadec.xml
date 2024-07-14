@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Airbus A320 V2527-A5 Engine -->
+<!-- Airbus A320 V2527-A5 Engine/FADEC -->
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <system name="A320: V2500 Engine">
@@ -8,41 +8,12 @@
 	<property value="46">fadec/limit/rated-temp</property>
 	<property value="30">fadec/limit/flex-rated-temp</property>
 	<property value="26600">fadec/limit/rated-thrust</property>
+	<property value="24800">fadec/limit/derated-thrust</property>
 	<property value="22.4">fadec/limit/min-n1</property>
 	<property value="100">fadec/limit/max-n1</property>
 	<property value="0">fadec/inhibit-alpha-floor</property>
 	
 	<channel name="Thrust Limits">
-		
-		<switch name="fadec/control-1/n1-mode">
-			<default value="0"/> <!-- EPR -->
-			<test value="1"> <!-- N1 Rated -->
-				fadec/control-1/n1-mode-sw eq 1
-			</test>
-			<!--test value="2"> N1 Unrated
-			</test-->
-		</switch>
-		
-		<switch name="fadec/control-2/n1-mode">
-			<default value="0"/> <!-- EPR -->
-			<test value="1"> <!-- N1 Rated -->
-				fadec/control-2/n1-mode-sw eq 1
-			</test>
-			<!--test value="2"> N1 Unrated
-			</test-->
-		</switch>
-		
-		<fcs_function name="fadec/limit/mach-factor-schedule"> <!-- For some reason it does this -->
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/mach</independentVar>
-					<tableData>
-						0.07  0.97326969953
-						0.09  1.00000000000
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
 		
 		<fcs_function name="fadec/limit/rated-thrust-n1">
 			<function>
@@ -56,6 +27,90 @@
 						45000  86.0  86.4  91.1  99.3  100.3
 					</tableData>
 				</table>
+			</function>
+		</fcs_function>
+		
+		<!-- This thing calculates the N1 needed for 24800lbs based on the rated thrust table, which is 26600lbs -->
+		<fcs_function name="fadec/limit/rated-thrust-n1-mach-derate"> <!-- Inverse N1 thrust calculation, gives N1 per wanted thrust -->
+			<function>
+				<sum>
+					<product>
+						<sqrt>
+							<quotient>
+								<difference>
+									<product>
+										<!-- Calculate uncorrected thrust -->
+										<sum>
+											<product>
+												<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
+												<property>fadec/limit/rated-thrust</property>
+											</product>
+											<product>
+												<product>
+													<difference>
+														<property>fadec/limit/rated-thrust</property>
+														<product>
+															<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
+															<property>fadec/limit/rated-thrust</property>
+														</product>
+													</difference>
+													<property>fadec/limit/milthrust-unmodified</property>
+												</product>
+												<pow>
+													<quotient>
+														<difference>
+															<property>fadec/limit/rated-thrust-n1</property>
+															<value>22.4</value>
+														</difference>
+														<value>77.6</value>
+													</quotient>
+													<value>2</value>
+												</pow>
+											</product>
+										</sum>
+										<!-- End calculate uncorrected thrust -->
+										<quotient>
+											<property>fadec/limit/derated-thrust</property>
+											<property>fadec/limit/rated-thrust</property>
+										</quotient>
+									</product>
+									<product>
+										<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
+										<property>fadec/limit/rated-thrust</property>
+									</product>
+								</difference>
+								<max> <!-- Prevent divide by 0 -->
+									<product>
+										<difference>
+											<property>fadec/limit/rated-thrust</property>
+											<product>
+												<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
+												<property>fadec/limit/rated-thrust</property>
+											</product>
+										</difference>
+										<property>fadec/limit/milthrust-unmodified</property>
+									</product>
+									<value>0.00001</value>
+								</max>
+							</quotient>
+						</sqrt>
+						<value>77.6</value>
+					</product>
+					<value>22.4</value>
+				</sum>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="fadec/limit/mach-factor-schedule">
+			<function>
+				<interpolate1d>
+					<property>velocities/mach</property>
+					<value>0.07</value><quotient> <!-- 24800lbs -->
+						<property>fadec/limit/rated-thrust-n1-mach-derate</property>
+						<property>fadec/limit/rated-thrust-n1</property>
+					</quotient>
+					<value>0.09</value><value>1.0</value> <!-- 26600 -->
+				</interpolate1d>
 			</function>
 		</fcs_function>
 		
@@ -157,6 +212,24 @@
 				</ifthen>
 			</function>
 		</fcs_function>
+		
+		<switch name="fadec/control-1/n1-mode">
+			<default value="0"/> <!-- EPR -->
+			<test value="1"> <!-- N1 Rated -->
+				fadec/control-1/n1-mode-sw eq 1
+			</test>
+			<!--test value="2"> N1 Unrated
+			</test-->
+		</switch>
+		
+		<switch name="fadec/control-2/n1-mode">
+			<default value="0"/> <!-- EPR -->
+			<test value="1"> <!-- N1 Rated -->
+				fadec/control-2/n1-mode-sw eq 1
+			</test>
+			<!--test value="2"> N1 Unrated
+			</test-->
+		</switch>
 		
 		<!-- 
 		Thrust limits on the IAE are kinda hard to do because of EPR - and we don't have a linear way to control throttle
