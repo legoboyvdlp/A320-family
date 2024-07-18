@@ -20,13 +20,15 @@
 				<offset>-2</offset>
 			</pitch>
 		</apu>
-	
+
 		<apu>
 			<name>apu_out</name>
 			<mode>looped</mode>
 			<path>Aircraft/A320-family/Sounds/SASA/x320_apu.wav</path>
 			<condition>
-				<not><property>/sim/sound/internal-custom</property></not>
+				<not>
+					<property>/sim/sound/internal-custom</property>
+				</not>
 			</condition>
 			<volume>
 				<property>/engines/engine[2]/n1</property>
@@ -38,7 +40,7 @@
 			</pitch>
 			<reference-dist>60</reference-dist>
 		</apu>
-		
+
 		<hyd-yellow>
 			<name>yellowHydPump</name>
 			<mode>looped</mode>
@@ -51,7 +53,7 @@
 				<factor>0.8</factor>
 			</volume>
 		</hyd-yellow>
-		
+
 		<hyd>
 			<name>PTU</name>
 			<mode>once</mode>
@@ -69,7 +71,7 @@
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
 		</hyd>
-		
+
 		<hyd>
 			<name>PTU-loop</name>
 			<mode>looped</mode>
@@ -87,7 +89,7 @@
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
 		</hyd>
-		
+
 		<announcement>
 			<name>cab_call</name>
 			<mode>once</mode>
@@ -105,7 +107,7 @@
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
 		</announcement>
-		
+
 		<announcement>
 			<name>MechCall</name>
 			<mode>once</mode>
@@ -123,7 +125,7 @@
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
 		</announcement>
-		
+
 		<announcement>
 			<name>EmerCall</name>
 			<mode>once</mode>
@@ -141,11 +143,11 @@
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
 		</announcement>
-		
+
 		<callout>
 			<name>V1</name>
 			<mode>once</mode>
-            <type>avionics</type>
+			<type>avionics</type>
 			<path>Aircraft/A320-family/Sounds/Cockpit/V1.wav</path>
 			<condition>
 				<and>
@@ -178,12 +180,12 @@
 			<reference-dist>20.0</reference-dist>
 			<max-dist>100.0</max-dist>
 		</callout>
-		
+
 		<!-- Custom GPWS -->
-	    <gpws>
+		<gpws>
 			<name>2500</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/2500.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -218,10 +220,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>2000</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/2000.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -256,10 +258,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>1000</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/1000.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -294,10 +296,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>500</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/500.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -332,10 +334,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>400</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/400.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -370,10 +372,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>300</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/300.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -408,10 +410,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>200</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/200.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -446,10 +448,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>100</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/100.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -484,10 +486,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>50</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/50.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -518,10 +520,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>40</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/40.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -552,10 +554,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>30</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/30.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -586,10 +588,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>20</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/20.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -620,10 +622,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>10</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/10.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -668,10 +670,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>5</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/5.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -714,10 +716,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>100above</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/100-above.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -744,10 +746,10 @@
 				</and>
 			</condition>
 		</gpws>
-	    <gpws>
+		<gpws>
 			<name>Minimum</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/minimum.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -774,11 +776,11 @@
 				</and>
 			</condition>
 		</gpws>
-		
+
 		<retard>
 			<name>retard</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/retard.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>looped</mode>
 			<condition>
 				<and>
@@ -845,21 +847,21 @@
 				</and>
 			</condition>
 		</retard>
-		
+
 		<retard>
 			<name>retard2</name>
 			<path>Aircraft/A320-family/Sounds/GPWS/retard.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>looped</mode>
 			<condition>
 				<property>/sim/sound/warnings/retard</property> <!-- must be EMER CANCEL -->
 			</condition>
 		</retard>
-		
+
 		<apoff>
 			<name>apoff-looped</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-loop.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>looped</mode>
 			<condition>
 				<and>
@@ -882,11 +884,11 @@
 				</and>
 			</condition>
 		</apoff>
-		
+
 		<apoff>
 			<name>apoff-single</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-once.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<and>
@@ -913,7 +915,7 @@
 		<priority-left>
 			<name>priority-left</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/priority-left.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<equals>
@@ -922,11 +924,11 @@
 				</equals>
 			</condition>
 		</priority-left>
-		
+
 		<priority-right>
 			<name>priority-right</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/priority-right.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<condition>
 				<equals>
@@ -939,7 +941,7 @@
 		<dual-input>
 			<name>dual-input</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/dual-input.wav</path>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>looped</mode>
 			<condition>
 				<and>
@@ -992,10 +994,10 @@
 				</and>
 			</condition>
 		</dual-input>
-		
+
 		<autolandwarning>
 			<name>autolandwarning-single</name>
-            <type>avionics</type>
+			<type>avionics</type>
 			<mode>once</mode>
 			<path>Aircraft/A320-family/Sounds/Cockpit/click.wav</path>
 			<condition>
@@ -1005,7 +1007,7 @@
 				</equals>
 			</condition>
 		</autolandwarning>
-		
+
 		<gear>
 			<name>gear0</name>
 			<mode>in-transit</mode>
@@ -1015,7 +1017,7 @@
 				<property>/sim/sound/gear-vol</property>
 			</volume>
 		</gear>
-		
+
 		<wind>
 			<path>Aircraft/A320-family/Sounds/SASA/wind_cockpit.wav</path>
 			<mode>looped</mode>
@@ -1030,7 +1032,7 @@
 				<property>/sim/sound/other/wind-p</property>
 			</pitch>
 		</wind>
-		
+
 		<wind>
 			<path>Aircraft/A320-family/Sounds/SASA/wind_cabin.wav</path>
 			<mode>looped</mode>
@@ -1045,7 +1047,7 @@
 				<property>/sim/sound/other/wind-p</property>
 			</pitch>
 		</wind>
-		
+
 		<ac>
 			<path>Aircraft/A320-family/Sounds/SASA/A320_aircond.wav</path>
 			<mode>looped</mode>
@@ -1059,7 +1061,7 @@
 				<factor>10</factor>
 			</volume>
 		</ac>
-		
+
 		<ac2>
 			<path>Aircraft/A320-family/Sounds/SASA/Pack-In.wav</path>
 			<mode>once</mode>
@@ -1072,20 +1074,22 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</ac2>
-		
+
 		<ac2>
 			<path>Aircraft/A320-family/Sounds/SASA/Pack-Out.wav</path>
 			<mode>once</mode>
 			<name>air conditioning out</name>
 			<condition>
-				<not><property>/sim/sound/other/air-con</property></not>
+				<not>
+					<property>/sim/sound/other/air-con</property>
+				</not>
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
 				<factor>17</factor>
 			</volume>
 		</ac2>
-		
+
 		<wow>
 			<mode>once</mode>
 			<name>wow0</name>
@@ -1094,7 +1098,7 @@
 				<property>gear/gear[0]/wow</property>
 			</condition>
 		</wow>
-		
+
 		<wow>
 			<mode>once</mode>
 			<name>wow1</name>
@@ -1103,7 +1107,7 @@
 				<property>gear/gear[1]/wow</property>
 			</condition>
 		</wow>
-		
+
 		<wow>
 			<mode>once</mode>
 			<name>wow2</name>
@@ -1112,7 +1116,7 @@
 				<property>gear/gear[2]/wow</property>
 			</condition>
 		</wow>
-		
+
 		<roll>
 			<name>roll1c</name>
 			<mode>looped</mode>
@@ -1125,7 +1129,7 @@
 				<property>/sim/sound/other/roll-p</property>
 			</pitch>
 		</roll>
-		
+
 		<roll>
 			<name>roll2c</name>
 			<mode>looped</mode>
@@ -1138,7 +1142,7 @@
 				<property>/sim/sound/other/roll-p</property>
 			</pitch>
 		</roll>
-		
+
 		<roll>
 			<name>roll3c</name>
 			<mode>looped</mode>
@@ -1151,8 +1155,8 @@
 				<property>/sim/sound/other/roll-p</property>
 			</pitch>
 		</roll>
-		
-		
+
+
 		<roll>
 			<name>roll1</name>
 			<mode>looped</mode>
@@ -1165,7 +1169,7 @@
 				<property>/sim/sound/other/roll-p</property>
 			</pitch>
 		</roll>
-		
+
 		<roll>
 			<name>roll2</name>
 			<mode>looped</mode>
@@ -1178,7 +1182,7 @@
 				<property>/sim/sound/other/roll-p</property>
 			</pitch>
 		</roll>
-		
+
 		<roll>
 			<name>roll3</name>
 			<mode>looped</mode>
@@ -1191,7 +1195,7 @@
 				<property>/sim/sound/other/roll-p</property>
 			</pitch>
 		</roll>
-		
+
 		<detenta>
 			<mode>once</mode>
 			<name>detendaa</name>
@@ -1206,7 +1210,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detenta>
-		
+
 		<detentb>
 			<mode>once</mode>
 			<name>detendba</name>
@@ -1221,7 +1225,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detentb>
-		
+
 		<detenta>
 			<mode>once</mode>
 			<name>detendab</name>
@@ -1236,7 +1240,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detenta>
-		
+
 		<detentb>
 			<mode>once</mode>
 			<name>detendbb</name>
@@ -1251,7 +1255,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detentb>
-		
+
 		<detenta>
 			<mode>once</mode>
 			<name>detendac</name>
@@ -1266,7 +1270,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detenta>
-		
+
 		<detentb>
 			<mode>once</mode>
 			<name>detendbc</name>
@@ -1281,7 +1285,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detentb>
-		
+
 		<detenta>
 			<mode>once</mode>
 			<name>detendad</name>
@@ -1296,7 +1300,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detenta>
-		
+
 		<detentb>
 			<mode>once</mode>
 			<name>detendbd</name>
@@ -1311,7 +1315,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detentb>
-		
+
 		<detenta>
 			<mode>once</mode>
 			<name>detendae</name>
@@ -1326,7 +1330,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detenta>
-		
+
 		<detentb>
 			<mode>once</mode>
 			<name>detendbe</name>
@@ -1341,7 +1345,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detentb>
-		
+
 		<detenta>
 			<mode>once</mode>
 			<name>detendaf</name>
@@ -1356,7 +1360,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detenta>
-		
+
 		<detentb>
 			<mode>once</mode>
 			<name>detendbf</name>
@@ -1371,7 +1375,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detentb>
-		
+
 		<detenta>
 			<mode>once</mode>
 			<name>detendag</name>
@@ -1386,7 +1390,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detenta>
-		
+
 		<detentb>
 			<mode>once</mode>
 			<name>detendbg</name>
@@ -1401,7 +1405,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detentb>
-		
+
 		<detenta>
 			<mode>once</mode>
 			<name>detendah</name>
@@ -1416,7 +1420,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detenta>
-		
+
 		<detentb>
 			<mode>once</mode>
 			<name>detendbh</name>
@@ -1431,7 +1435,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</detentb>
-		
+
 		<sb>
 			<mode>once</mode>
 			<name>sb</name>
@@ -1449,7 +1453,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</sb>
-		
+
 		<ns>
 			<mode>once</mode>
 			<name>ns</name>
@@ -1467,7 +1471,7 @@
 				<property>/sim/current-view/internal</property>
 			</volume>
 		</ns>
-		
+
 		<switch>
 			<name>Button</name>
 			<mode>once</mode>
@@ -1480,7 +1484,7 @@
 				<factor>1.5</factor>
 			</volume>
 		</switch>
-		
+
 		<switch>
 			<name>APDisc</name>
 			<mode>once</mode>
@@ -1493,7 +1497,7 @@
 				<factor>0.75</factor>
 			</volume>
 		</switch>
-		
+
 		<switch>
 			<name>ButtonOH</name>
 			<mode>once</mode>
@@ -1506,7 +1510,7 @@
 				<factor>1.5</factor>
 			</volume>
 		</switch>
-		
+
 		<switch>
 			<name>Button3</name>
 			<mode>once</mode>
@@ -1519,7 +1523,7 @@
 				<factor>1.5</factor>
 			</volume>
 		</switch>
-		
+
 		<switch>
 			<name>Knob</name>
 			<mode>once</mode>
@@ -1532,7 +1536,7 @@
 				<factor>1.0</factor>
 			</volume>
 		</switch>
-		
+
 		<switch>
 			<name>Switch</name>
 			<mode>once</mode>
@@ -1545,21 +1549,21 @@
 				<factor>1.5</factor>
 			</volume>
 		</switch>
-		
+
 		<switch>
-            <name>Pushbutton</name>
-            <mode>once</mode>
-            <type>avionics</type>
-            <path>Aircraft/A320-family/Sounds/Cockpit/pushbutton.wav</path>
-            <condition>
+			<name>Pushbutton</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/A320-family/Sounds/Cockpit/pushbutton.wav</path>
+			<condition>
 				<property>/sim/sound/pushbutton</property>
-            </condition>
-            <volume>
-                <property>sim/current-view/internal</property>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
 				<factor>0.25</factor>
-            </volume>
-        </switch>
-		
+			</volume>
+		</switch>
+
 		<switch>
 			<name>Flaps Lever</name>
 			<mode>once</mode>
@@ -1589,7 +1593,7 @@
 				<factor>0.75</factor>
 			</volume>
 		</switch>
-		
+
 		<switch>
 			<name>Flaps Motor</name>
 			<mode>in-transit</mode>
@@ -1600,7 +1604,7 @@
 				<factor>2</factor>
 			</volume>
 		</switch>
-		
+
 		<elt>
 			<name>ELT Signal</name>
 			<mode>looped</mode>
@@ -1616,7 +1620,7 @@
 				<property>/sim/sound/atc/volume</property>
 			</volume>
 		</elt>
-		
+
 		<cvrtone>
 			<name>CVRtone</name>
 			<mode>once</mode>
@@ -1634,7 +1638,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</cvrtone>
-		
+
 		<hftone>
 			<name>HF PTT tone</name>
 			<mode>looped</mode>
@@ -1652,7 +1656,7 @@
 				<factor>0.4</factor>
 			</volume>
 		</hftone>
-		
+
 		<hftone>
 			<name>HF PTT tone 2</name>
 			<mode>looped</mode>
@@ -1670,7 +1674,7 @@
 				<factor>0.4</factor>
 			</volume>
 		</hftone>
-		
+
 		<hfstatic>
 			<name>HF static</name>
 			<mode>looped</mode>
@@ -1681,7 +1685,9 @@
 					<property>/sim/current-view/internal</property>
 					<property>/systems/comm/hf/reception-1</property>
 					<property>/controls/audio/acp[0]/hf1-recive</property>
-					<not><property>/systems/comm/hf/tone1000hz-1</property></not>
+					<not>
+						<property>/systems/comm/hf/tone1000hz-1</property>
+					</not>
 				</and>
 			</condition>
 			<volume>
@@ -1689,7 +1695,7 @@
 				<factor>0.4</factor>
 			</volume>
 		</hfstatic>
-		
+
 		<hfstatic>
 			<name>HF static 2</name>
 			<mode>looped</mode>
@@ -1700,7 +1706,9 @@
 					<property>/sim/current-view/internal</property>
 					<property>/systems/comm/hf/reception-2</property>
 					<property>/controls/audio/acp[0]/hf2-recive</property>
-					<not><property>/systems/comm/hf/tone1000hz-2</property></not>
+					<not>
+						<property>/systems/comm/hf/tone1000hz-2</property>
+					</not>
 				</and>
 			</condition>
 			<volume>
@@ -1708,7 +1716,7 @@
 				<factor>0.4</factor>
 			</volume>
 		</hfstatic>
-		
+
 		<relay>
 			<name>RelayBatt1</name>
 			<mode>once</mode>
@@ -1719,7 +1727,7 @@
 				<factor>0.4</factor>
 			</volume>
 		</relay>
-		
+
 		<relay>
 			<name>RelayBatt2</name>
 			<mode>once</mode>
@@ -1730,7 +1738,7 @@
 				<factor>0.4</factor>
 			</volume>
 		</relay>
-		
+
 		<relay>
 			<name>RelayEXT</name>
 			<mode>once</mode>
@@ -1741,7 +1749,7 @@
 				<factor>0.8</factor>
 			</volume>
 		</relay>
-		
+
 		<relay>
 			<name>RelayAPU</name>
 			<mode>once</mode>
@@ -1752,7 +1760,7 @@
 				<factor>0.8</factor>
 			</volume>
 		</relay>
-	
+
 		<relay>
 			<name>Avionics</name>
 			<mode>looped</mode>
@@ -1776,7 +1784,7 @@
 				<factor>0.5</factor>
 			</volume>
 		</relay>
-		
+
 		<relay>
 			<name>CockpitDoorLocking</name>
 			<mode>once</mode>
@@ -1814,7 +1822,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
-		
+
 		<announcements>
 			<name>fa_welcome</name>
 			<mode>once</mode>
@@ -1830,7 +1838,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
-		
+
 		<announcements>
 			<name>cpt_welcome</name>
 			<mode>once</mode>
@@ -1846,7 +1854,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
-		
+
 		<announcements>
 			<name>cpt_doors</name>
 			<mode>once</mode>
@@ -1862,7 +1870,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
-		
+
 		<announcements>
 			<name>fa_safety</name>
 			<mode>once</mode>
@@ -1878,7 +1886,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
-		
+
 		<announcements>
 			<name>cpt_takeoff</name>
 			<mode>once</mode>
@@ -1894,7 +1902,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
-		
+
 		<announcements>
 			<name>fa_seatbelt10k</name>
 			<mode>once</mode>
@@ -1910,7 +1918,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
-		
+
 		<announcements>
 			<name>fa_descent</name>
 			<mode>once</mode>
@@ -1926,7 +1934,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
-		
+
 		<announcements>
 			<name>cpt_landing</name>
 			<mode>once</mode>
@@ -1942,7 +1950,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
-		
+
 		<announcements>
 			<name>fa_landed</name>
 			<mode>once</mode>
@@ -1958,7 +1966,7 @@
 				<factor>0.6</factor>
 			</volume>
 		</announcements>
-		
+
 		<announcements>
 			<name>depressurization</name>
 			<mode>once</mode>
@@ -1974,7 +1982,7 @@
 				<factor>2.0</factor>
 			</volume>
 		</announcements>
-		
+
 		<atc-msg>
 			<name>ATC MSG</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/ATC-msg-ring.wav</path>
@@ -1990,7 +1998,7 @@
 			<reference-dist>10</reference-dist>
 			<max-dist>100</max-dist>
 		</atc-msg>
-		
+
 		<chime>
 			<name>Click</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/click.wav</path>
@@ -2005,7 +2013,7 @@
 			<reference-dist>10</reference-dist>
 			<max-dist>100</max-dist>
 		</chime>
-		
+
 		<chime>
 			<name>Chime</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/chime.wav</path>
@@ -2039,7 +2047,7 @@
 			<reference-dist>10</reference-dist>
 			<max-dist>100</max-dist>
 		</crc>
-		
+
 		<cricket>
 			<name>Cricket</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/cricket.wav</path>
@@ -2056,7 +2064,7 @@
 			<reference-dist>10</reference-dist>
 			<max-dist>100</max-dist>
 		</cricket>
-		
+
 		<cchord>
 			<name>C-chord</name>
 			<path>Aircraft/A320-family/Sounds/Cockpit/c-chord.wav</path>
@@ -2072,7 +2080,7 @@
 			<reference-dist>10</reference-dist>
 			<max-dist>100</max-dist>
 		</cchord>
-		
+
 		<stall-voice>
 			<name>stall-voice</name>
 			<mode>once</mode>
@@ -2088,7 +2096,7 @@
 			<reference-dist>10</reference-dist>
 			<max-dist>100.0</max-dist>
 		</stall-voice>
-		
+
 		<rain>
 			<name>RainInside</name>
 			<mode>looped</mode>
@@ -2216,15 +2224,15 @@
 			<path>Aircraft/A320-family/Sounds/Effects/pushback.wav</path>
 			<condition>
 				<and>
-					<property>/sim/current-view/internal</property>	
+					<property>/sim/current-view/internal</property>
 					<property>/sim/model/autopush/enabled</property>
-	   		 	</and>
+				</and>
 			</condition>
 			<volume>0.05</volume>
 		</pushback>
 
 		<!-- Antiskid stops this... but its not setup to detect slipping yet -->
-        <!--gear-screech>
+		<!--gear-screech>
             <name>gear-screech</name>
             <mode>once</mode>
             <path>Aircraft/A320-family/Sounds/Effects/tires-screech-asphalt.wav</path>
@@ -2266,11 +2274,11 @@
             <max-dist>200.0</max-dist>
         </gear-screech-->
 
-        <gear-screech-looped>
-            <name>gear-screech looped</name>
-            <mode>looped</mode>
-            <path>Aircraft/A320-family/Sounds/Effects/tires-screech-asphalt.wav</path>
-            <condition>
+		<gear-screech-looped>
+			<name>gear-screech looped</name>
+			<mode>looped</mode>
+			<path>Aircraft/A320-family/Sounds/Effects/tires-screech-asphalt.wav</path>
+			<condition>
 				<and>
 					<or>
 						<greater-than>
@@ -2287,13 +2295,13 @@
 						<value>5</value>
 					</greater-than>
 				</and>
-            </condition>
+			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
 				<factor>2</factor>
 			</volume>
-            <reference-dist>10</reference-dist>
-            <max-dist>200.0</max-dist>
-        </gear-screech-looped>
-	  </fx>
+			<reference-dist>10</reference-dist>
+			<max-dist>200.0</max-dist>
+		</gear-screech-looped>
+	</fx>
 </PropertyList>

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- IT-GUI (Airbus) -->
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
-	
+
 	<style n="0">
 		<colors n="0">
 			<background n="0">
@@ -106,7 +106,7 @@
 			</vrule>
 		</colors>
 	</style>
-	
+
 	<style n="1">
 		<colors n="0">
 			<background n="0">

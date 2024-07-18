@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -9,29 +9,29 @@
 	<name>aircraft-config-fbw</name>
 	<layout>vbox</layout>
 
-    <group>
-        <layout>hbox</layout>
-        <text>
-            <halign>left</halign>
-            <label>FBW Settings</label>
-        </text>
-        <button>
-            <halign>right</halign>
-            <pref-width>20</pref-width>
-            <pref-height>20</pref-height>
-            <legend>X</legend>
-            <key>Esc</key>
-            <binding>
-                <command>dialog-close</command>
-            </binding>
-        </button>
-    </group>
-	
-    <hrule/>
-	
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>FBW Settings</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+
+	<hrule />
+
 	<group>
 		<layout>vbox</layout>
-		
+
 		<checkbox>
 			<label>Define Custom FBW Mode</label>
 			<halign>left</halign>
@@ -51,12 +51,12 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("/it-fbw/degrade-law", 0);
-				setprop("/it-fbw/law", 0);
-				setprop("/it-fbw/degrade-yaw-law", 0);
-				setprop("/it-fbw/yaw-law", 0);
-				fbw.FBW.apOff = 0;
-				gui.popupTip("Fly By Wire switched to NORMAL law!");
+					setprop("/it-fbw/degrade-law", 0);
+					setprop("/it-fbw/law", 0);
+					setprop("/it-fbw/degrade-yaw-law", 0);
+					setprop("/it-fbw/yaw-law", 0);
+					fbw.FBW.apOff = 0;
+					gui.popupTip("Fly By Wire switched to NORMAL law!");
 				</script>
 			</binding>
 		</button>
@@ -70,12 +70,12 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("/it-fbw/degrade-law", 1);
-				setprop("/it-fbw/law", 1);
-				setprop("/it-fbw/degrade-yaw-law", 1);
-				setprop("/it-fbw/yaw-law", 1);
-				fbw.FBW.apOff = 1;
-				gui.popupTip("Fly By Wire switched to ALTERNATE law!");
+					setprop("/it-fbw/degrade-law", 1);
+					setprop("/it-fbw/law", 1);
+					setprop("/it-fbw/degrade-yaw-law", 1);
+					setprop("/it-fbw/yaw-law", 1);
+					fbw.FBW.apOff = 1;
+					gui.popupTip("Fly By Wire switched to ALTERNATE law!");
 				</script>
 			</binding>
 		</button>
@@ -89,12 +89,12 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("/it-fbw/degrade-law", 2);
-				setprop("/it-fbw/law", 2);
-				setprop("/it-fbw/degrade-yaw-law", 2);
-				setprop("/it-fbw/yaw-law", 2);
-				fbw.FBW.apOff = 1;
-				gui.popupTip("Fly By Wire switched to DIRECT law!");
+					setprop("/it-fbw/degrade-law", 2);
+					setprop("/it-fbw/law", 2);
+					setprop("/it-fbw/degrade-yaw-law", 2);
+					setprop("/it-fbw/yaw-law", 2);
+					fbw.FBW.apOff = 1;
+					gui.popupTip("Fly By Wire switched to DIRECT law!");
 				</script>
 			</binding>
 		</button>
@@ -108,16 +108,16 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				setprop("/it-fbw/degrade-law", 3);
-				setprop("/it-fbw/law", 3);
-				setprop("/it-fbw/degrade-yaw-law", 2);
-				setprop("/it-fbw/yaw-law", 2);
-				fbw.FBW.apOff = 1;
-				gui.popupTip("Fly By Wire switched to MECHANICAL BACKUP law!");
+					setprop("/it-fbw/degrade-law", 3);
+					setprop("/it-fbw/law", 3);
+					setprop("/it-fbw/degrade-yaw-law", 2);
+					setprop("/it-fbw/yaw-law", 2);
+					fbw.FBW.apOff = 1;
+					gui.popupTip("Fly By Wire switched to MECHANICAL BACKUP law!");
 				</script>
 			</binding>
 		</button>
-		
+
 		<group>
 			<layout>hbox</layout>
 
@@ -131,13 +131,13 @@
 				<stretch type="bool">true</stretch>
 			</hrule>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
-			
+
 			<group>
 				<layout>vbox</layout>
-				
+
 				<text>
 					<label>L:</label>
 				</text>
@@ -151,10 +151,10 @@
 					<live>true</live>
 				</slider>
 			</group>
-				
+
 			<group>
 				<layout>vbox</layout>
-				
+
 				<text>
 					<label>R:</label>
 				</text>
@@ -169,7 +169,7 @@
 				</slider>
 			</group>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
 
@@ -183,13 +183,13 @@
 				<stretch type="bool">true</stretch>
 			</hrule>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
-			
+
 			<group>
 				<layout>vbox</layout>
-				
+
 				<text>
 					<label>L:</label>
 				</text>
@@ -203,10 +203,10 @@
 					<live>true</live>
 				</slider>
 			</group>
-				
+
 			<group>
 				<layout>vbox</layout>
-		
+
 				<text>
 					<label>Trim:</label>
 				</text>
@@ -220,10 +220,10 @@
 					<live>true</live>
 				</slider>
 			</group>
-			
+
 			<group>
 				<layout>vbox</layout>
-				
+
 				<text>
 					<label>R:</label>
 				</text>
@@ -238,7 +238,7 @@
 				</slider>
 			</group>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
 
@@ -252,13 +252,13 @@
 				<stretch type="bool">true</stretch>
 			</hrule>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
-			
+
 			<group>
 				<layout>vbox</layout>
-				
+
 				<slider>
 					<pref-width>150</pref-width>
 					<property>/fdm/jsbsim/hydraulics/rudder/final-deg</property>
@@ -270,5 +270,5 @@
 			</group>
 		</group>
 	</group>
-	
+
 </PropertyList>

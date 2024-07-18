@@ -5,7 +5,7 @@
 <PropertyList>
 
 	<path>landinglight.ac</path>
-	<nopreview/>
+	<nopreview />
 
 	<animation>
 		<type>noshadow</type>
@@ -13,8 +13,8 @@
 	</animation>
 
 	<effect>
-			<inherits-from>Aircraft/A320-family/Models/lights/ALS/landinglightL</inherits-from>
-			<object-name>landinglightals</object-name>
+		<inherits-from>Aircraft/A320-family/Models/lights/ALS/landinglightL</inherits-from>
+		<object-name>landinglightals</object-name>
 	</effect>
 
 	<animation>
@@ -59,7 +59,7 @@
 		<power>8</power>
 		<factor>6</factor>
 		<offset>0</offset>
-		<two-sides	type="bool">false</two-sides>
+		<two-sides type="bool">false</two-sides>
 		<min>0.1</min>
 		<max>1.5</max>
 	</animation>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -8,7 +8,7 @@
 
 	<name>aircraft-config-updated</name>
 	<layout>vbox</layout>
-	
+
 	<group>
 		<layout>hbox</layout>
 		<text>
@@ -26,26 +26,27 @@
 			</binding>
 		</button>
 	</group>
-	
-	<hrule/>
-	
+
+	<hrule />
+
 	<group>
 		<layout>vbox</layout>
-		
+
 		<text>
 			<halign>left</halign>
-			<label>Aircraft Config has detected that your aircraft was installed for the first time, or updated successfully!</label>
+			<label>Aircraft Config has detected that your aircraft was installed for the first time,
+				or updated successfully!</label>
 		</text>
-		
+
 		<group>
 			<layout>hbox</layout>
 			<halign>left</halign>
-			
+
 			<text>
 				<halign>left</halign>
 				<label>You have been upgraded to revision:</label>
 			</text>
-			
+
 			<text>
 				<halign>left</halign>
 				<border>1</border>
@@ -53,20 +54,20 @@
 				<property>/systems/acconfig/revision</property>
 				<live>1</live>
 			</text>
-			
+
 		</group>
-		
+
 		<text>
 			<halign>left</halign>
 			<label>Some aircraft settings may have been returned to their defaults.</label>
 		</text>
 	</group>
-	
-	<hrule/>
+
+	<hrule />
 
 	<group>
 		<layout>hbox</layout>
-		
+
 		<button>
 			<halign>center</halign>
 			<legend>Continue</legend>
@@ -74,9 +75,9 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				if (getprop("systems/acconfig/options/welcome-skip") != 1) {
+					if (getprop("systems/acconfig/options/welcome-skip") != 1) {
 					acconfig.welcome_dlg.open();
-				}
+					}
 				</script>
 			</binding>
 			<binding>
@@ -84,5 +85,5 @@
 			</binding>
 		</button>
 	</group>
-	
+
 </PropertyList>

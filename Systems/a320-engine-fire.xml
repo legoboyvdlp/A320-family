@@ -6,147 +6,147 @@
 
 	<channel name="Engine Fire" execrate="8">
 		<fcs_function name="rubbish/enginefire1">
-              <function>
+			<function>
 				<sum>
 					<property>/systems/fire/engine1/temperature</property>
 					<product>
-					   <table>
+						<table>
 							<independentVar lookup="row">/systems/failures/fire/engine-left-fire</independentVar>
 							<tableData>
-								0    -5
-							    1	 30
+								0 -5
+								1 30
 							</tableData>
 						</table>
 						<property>simulation/channel-dt</property>
 					</product>
 				</sum>
-            </function>
+			</function>
 			<clipto>
 				<min>0</min>
 				<max>300</max>
 			</clipto>
-            <output>/systems/fire/engine1/temperature</output>
-        </fcs_function>
-		
+			<output>/systems/fire/engine1/temperature</output>
+		</fcs_function>
+
 		<fcs_function name="rubbish/enginefire2">
-              <function>
+			<function>
 				<sum>
 					<property>/systems/fire/engine2/temperature</property>
 					<product>
-					   <table>
+						<table>
 							<independentVar lookup="row">/systems/failures/fire/engine-right-fire</independentVar>
 							<tableData>
-								0    -5
-							    1	 30
+								0 -5
+								1 30
 							</tableData>
 						</table>
 						<property>simulation/channel-dt</property>
 					</product>
 				</sum>
-            </function>
+			</function>
 			<clipto>
 				<min>0</min>
 				<max>300</max>
 			</clipto>
-            <output>/systems/fire/engine2/temperature</output>
-        </fcs_function>
-		
+			<output>/systems/fire/engine2/temperature</output>
+		</fcs_function>
+
 		<fcs_function name="rubbish/apufire">
-              <function>
+			<function>
 				<sum>
 					<property>/systems/fire/apu/temperature</property>
 					<product>
-					   <table>
+						<table>
 							<independentVar lookup="row">/systems/failures/fire/apu-fire</independentVar>
 							<tableData>
-								0    -5
-							    1	 45
+								0 -5
+								1 45
 							</tableData>
 						</table>
 						<property>simulation/channel-dt</property>
 					</product>
 				</sum>
-            </function>
+			</function>
 			<clipto>
 				<min>0</min>
 				<max>300</max>
 			</clipto>
-            <output>/systems/fire/apu/temperature</output>
-        </fcs_function>
+			<output>/systems/fire/apu/temperature</output>
+		</fcs_function>
 	</channel>
-	
+
 	<channel name="Cargo Fire" execrate="8">
 		<fcs_function name="rubbish/fwdfire">
-              <function>
+			<function>
 				<sum>
 					<property>/systems/fire/cargo/fwd/temperature</property>
 					<product>
-					   <table>
+						<table>
 							<independentVar lookup="row">/systems/failures/fire/cargo-fwd-fire</independentVar>
 							<tableData>
-								0    -5
-							    1	 30
+								0 -5
+								1 30
 							</tableData>
 						</table>
 						<property>simulation/channel-dt</property>
 					</product>
 				</sum>
-            </function>
+			</function>
 			<clipto>
 				<min>0</min>
 				<max>300</max>
 			</clipto>
-            <output>/systems/fire/cargo/fwd/temperature</output>
-        </fcs_function>
-		
+			<output>/systems/fire/cargo/fwd/temperature</output>
+		</fcs_function>
+
 		<fcs_function name="rubbish/aftfire">
-              <function>
+			<function>
 				<sum>
 					<property>/systems/fire/cargo/aft/temperature</property>
 					<product>
-					   <table>
+						<table>
 							<independentVar lookup="row">/systems/failures/fire/cargo-aft-fire</independentVar>
 							<tableData>
-								0    -5
-							    1	 45
+								0 -5
+								1 45
 							</tableData>
 						</table>
 						<property>simulation/channel-dt</property>
 					</product>
 				</sum>
-            </function>
+			</function>
 			<clipto>
 				<min>0</min>
 				<max>300</max>
 			</clipto>
-            <output>/systems/fire/cargo/aft/temperature</output>
-        </fcs_function>
-		
+			<output>/systems/fire/cargo/aft/temperature</output>
+		</fcs_function>
+
 		<fcs_function name="rubbish/lavatory">
-              <function>
+			<function>
 				<sum>
 					<property>/systems/fire/lavatory/temperature</property>
 					<product>
-					   <table>
+						<table>
 							<independentVar lookup="row">/systems/failures/fire/lavatory-fire</independentVar>
 							<tableData>
-								0    -5
-							    1	 45
+								0 -5
+								1 45
 							</tableData>
 						</table>
 						<property>simulation/channel-dt</property>
 					</product>
 				</sum>
-            </function>
+			</function>
 			<clipto>
 				<min>0</min>
 				<max>300</max>
 			</clipto>
-            <output>/systems/fire/lavatory/temperature</output>
-        </fcs_function>
-		
+			<output>/systems/fire/lavatory/temperature</output>
+		</fcs_function>
+
 		<switch name="/systems/fire/lavatory/warning">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/fire/lavatory/temperature ge 295
 			</test>

@@ -8,7 +8,7 @@
 	<path>Douglas.ac</path>
 
 	<!-- Lights-->
-	
+
 	<model>
 		<name>warning light left</name>
 		<path>Aircraft/A320-family/Models/Services/Pushback/warning-light.xml</path>
@@ -18,8 +18,8 @@
 			<z-m>2.23</z-m>
 		</offsets>
 	</model>
-	
-		<model>
+
+	<model>
 		<name>warning light center</name>
 		<path>Aircraft/A320-family/Models/Services/Pushback/warning-light.xml</path>
 		<offsets>
@@ -28,8 +28,8 @@
 			<z-m>2.343</z-m>
 		</offsets>
 	</model>
-	
-		<model>
+
+	<model>
 		<name>warning light right</name>
 		<path>Aircraft/A320-family/Models/Services/Pushback/warning-light.xml</path>
 		<offsets>
@@ -131,13 +131,13 @@
 			<z>0</z>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>spin</type>
 		<object-name>wheelrl</object-name>
 		<object-name>wheelrr</object-name>
 		<property>velocities/uBody-fps</property>
-    <factor>-4.973</factor>
+		<factor>-4.973</factor>
 		<center>
 			<x-m>2.2942</x-m>
 			<y-m>0</y-m>
@@ -174,51 +174,51 @@
 		</axis>
 	</animation>
 
-  <!-- change heading of the pushback when driving the arc -->
-  <animation>
-    <type>rotate</type>
-    <property>sim/model/pushback/position-norm</property>
-    <factor>-90</factor>
-    <offset-deg>0</offset-deg>
-    <center>
-      <x-m>0</x-m>
-      <y-m>0</y-m>
-      <z-m>0</z-m>
-    </center>
-    <axis>
-      <x>0</x>
-      <y>0</y>
-      <z>1</z>
-    </axis>
-  </animation>
+	<!-- change heading of the pushback when driving the arc -->
+	<animation>
+		<type>rotate</type>
+		<property>sim/model/pushback/position-norm</property>
+		<factor>-90</factor>
+		<offset-deg>0</offset-deg>
+		<center>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
 
-  <!-- compensate for gear compression -->
-  <animation>
-    <type>translate</type>
-    <property>gear/gear[0]/compression-ft</property>
-    <factor>0.3048</factor>
-    <axis>
-      <x>0</x>
-      <y>0</y>
-      <z>1</z>
-    </axis>
-  </animation>
-  
-    <!-- compensate for pitch of aircraft, keep pushback level -->
-   <animation>
-     <type>rotate</type>
-     <property>orientation/pitch-deg</property>
-     <factor>-1</factor>
-     <center>
-       <x-m>0</x-m>
-       <y-m>0</y-m>
-       <z-m>0</z-m>
-     </center>
-     <axis>
-       <x>0</x>
-       <y>1</y>
-       <z>0</z>
-     </axis>
-   </animation>
-   
-  </PropertyList>
+	<!-- compensate for gear compression -->
+	<animation>
+		<type>translate</type>
+		<property>gear/gear[0]/compression-ft</property>
+		<factor>0.3048</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+
+	<!-- compensate for pitch of aircraft, keep pushback level -->
+	<animation>
+		<type>rotate</type>
+		<property>orientation/pitch-deg</property>
+		<factor>-1</factor>
+		<center>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+</PropertyList>

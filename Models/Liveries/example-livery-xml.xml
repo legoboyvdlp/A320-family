@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <PropertyList>
 	<sim>
@@ -10,14 +10,15 @@
 			</livery>
 		</model>
 	</sim>
-	
+
 	<options>
 		<engine-name type="string">CFM56-5B4</engine-name>
 		<model-number type="string">A320-214</model-number>
 		<EIS2 type="bool">1</EIS2>
 		<company-options>
 			<idle-factor>+0.0</idle-factor>
-			<perf-factor>+1.0</perf-factor> <!-- please see https://www.cockpitseeker.com/wp-content/uploads/goodies/ac/a320/pdf/data/PerfoMonitoring.pdf -->
+			<perf-factor>+1.0</perf-factor> <!-- please see
+			https://www.cockpitseeker.com/wp-content/uploads/goodies/ac/a320/pdf/data/PerfoMonitoring.pdf -->
 		</company-options>
 		<model-options>
 			<registration type="string">AB-CDE</registration>

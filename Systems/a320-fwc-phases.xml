@@ -5,31 +5,31 @@
 <system name="A320: FWC Phase Computation">
 
 	<channel name="FWC Phase Logic Timers" execrate="8">
-		
+
 		<actuator name="/ECAM/timer/ground-calc">
-            <input>/ECAM/logic/ground-calc-immediate</input>
-            <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-            <rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
-        </actuator>
-		
+			<input>/ECAM/logic/ground-calc-immediate</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">1</rate_limit> <!-- 1 second -->
+		</actuator>
+
 		<actuator name="/ECAM/phases/phase-calculation/engine-1-or-2-running">
-            <input>/ECAM/phases/phase-calculation/one-engine-running</input>
-            <rate_limit sense="decr">120</rate_limit>
-            <rate_limit sense="incr">0.03333333333</rate_limit>
-        </actuator>
-		
+			<input>/ECAM/phases/phase-calculation/one-engine-running</input>
+			<rate_limit sense="decr">120</rate_limit>
+			<rate_limit sense="incr">0.03333333333</rate_limit>
+		</actuator>
+
 		<actuator name="/ECAM/phases/monostable/phase-1-300-timer">
 			<input>/ECAM/phases/monostable/phase-1-300</input>
 			<rate_limit sense="decr">0.00333333333</rate_limit>
 			<rate_limit sense="incr">120</rate_limit>
 		</actuator>
-		
+
 	</channel>
-	
+
 	<channel name="FWC Phase Logic and Switches" execrate="4">
-		
+
 		<switch name="/ECAM/flipflop/speed-gt-80-set">
-			<default value="0"/>
+			<default value="0" />
 			<test value="0">
 				/sim/time/elapsed-sec lt 10
 			</test>
@@ -48,9 +48,9 @@
 				</test>
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/flipflop/speed-gt-80-reset">
-			<default value="0"/>
+			<default value="0" />
 			<test value="0">
 				/sim/time/elapsed-sec lt 10
 			</test>
@@ -69,96 +69,96 @@
 				</test>
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/flipflop/radar-altimeter-5-set">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/position/gear-agl-ft lt 5
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/flipflop/radar-altimeter-5-reset">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/gear/gear[1]/compression-norm eq 0
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/logic/ground-calc-immediate">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/ECAM/flipflop/radar-altimeter-5-set eq 1
 				/ECAM/flipflop/radar-altimeter-5-output eq 1
 				/gear/gear[1]/compression-norm ne 0
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/monostable/phase-1-300-output">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/ECAM/phases/monostable/phase-1-300-timer ne 0
 				/ECAM/phases/monostable/phase-1-300 eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/phase-calculation/altitude-ge-1500">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/position/gear-agl-ft ge 1500
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/phase-calculation/altitude-flipflop-set">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/ECAM/phases/phase-calculation/altitude-ge-1500 eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/phase-calculation/altitude-flipflop-reset">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/position/gear-agl-ft lt 800
 			</test>
 		</switch>
 	</channel>
-	
+
 	<channel name="Phase Calcs" execrate="4">
-	
+
 		<switch name="/ECAM/phases/timer/eng1idle">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/engines/engine[0]/n2 ge 59.4
 				/controls/engines/engine[0]/cutoff-switch eq 0
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/timer/eng2idle">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/engines/engine[1]/n2 ge 59.4
 				/controls/engines/engine[1]/cutoff-switch eq 0
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/phase-calculation/engines-1-2-not-running">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/ECAM/warnings/logic/eng/JE1NORUN eq 1
 				/ECAM/warnings/logic/eng/JE2NORUN eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/phase-calculation/one-engine-running">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/engines/engine[0]/state eq 3
 				/engines/engine[1]/state eq 3
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/phase-calculation/takeoff-power-logic">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				<test logic="OR">
 					<test logic="AND">
@@ -182,28 +182,27 @@
 				</test>
 			</test>
 		</switch>
-		
+
 		<actuator name="/ECAM/phases/phase-calculation/takeoff-power-timer">
 			<input>/ECAM/phases/phase-calculation/takeoff-power-logic</input>
 			<rate_limit sense="incr">120</rate_limit>
 			<rate_limit sense="decr">0.01666666666</rate_limit>
 		</actuator>
-		
+
 		<switch name="/ECAM/phases/phase-calculation/takeoff-power">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/ECAM/phases/phase-calculation/takeoff-power-logic eq 1
-				<test logic="AND">
+			<default value="0" />
+			<test logic="OR" value="1"> /ECAM/phases/phase-calculation/takeoff-power-logic eq 1 <test
+					logic="AND">
 					/ECAM/phases/phase-calculation/takeoff-power-timer ne 0
-					/ECAM/phases/phase-calculation/altitude-ge-1500 eq 0
+				/ECAM/phases/phase-calculation/altitude-ge-1500 eq 0
 					fadec/control-1/detent ge 2
 					fadec/control-2/detent ge 2
 				</test>
 			</test>
 		</switch>
-	
+
 		<switch name="/ECAM/phases/monostable/phase-5">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/ECAM/phases/phase-calculation/takeoff-power eq 1
 				/ECAM/phases/phase-calculation/altitude-ge-1500 eq 0
@@ -211,9 +210,9 @@
 				/ECAM/phases/monostable/gnd-output ne 1
 			</test>
 		</switch>
-	
+
 		<switch name="/ECAM/phases/monostable/phase-7">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/ECAM/phases/phase-calculation/takeoff-power eq 0
 				/ECAM/phases/phase-calculation/altitude-ge-1500 eq 0
@@ -222,38 +221,38 @@
 				/ECAM/phases/monostable/gnd-output ne 1
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/monostable/phase-8">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/ECAM/warning-phase eq 8
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/monostable/phase-9">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/ECAM/warning-phase eq 9
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/flipflop/phase-10-set">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/ECAM/warning-phase eq 9
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/flipflop/phase-10-reset">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/ECAM/timer/ground-calc eq 1
 				/controls/engines/engine[0]/fire-btn eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/monostable/phase-1-300">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/ECAM/phases/phase-calculation/engines-1-2-not-running eq 1
 				/ECAM/logic/ground-calc-immediate eq 1
@@ -261,29 +260,26 @@
 				/ECAM/phases/flipflop/phase-10-output eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/flipflop/phase-2-set">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/ECAM/warning-phase eq 3
 				/ECAM/warning-phase eq 8
 			</test>
 		</switch>
-		
+
 		<switch name="/ECAM/phases/flipflop/phase-2-reset">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/ECAM/phases/monostable-80kt eq 0
-				/ECAM/warning-phase ne 9
-				/ECAM/timer/ground-calc eq 1
-				<test logic="OR">
+			<default value="0" />
+			<test logic="AND" value="1"> /ECAM/phases/monostable-80kt eq 0 /ECAM/warning-phase ne 9
+				/ECAM/timer/ground-calc eq 1 <test logic="OR">
 					/ECAM/phases/monostable/phase-9-output eq 0
-					/ECAM/phases/monostable/to-power-set-output eq 0
+				/ECAM/phases/monostable/to-power-set-output eq 0
 				</test>
 			</test>
 		</switch>
-		
-		
+
+
 	</channel>
 
 </system>

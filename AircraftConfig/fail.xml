@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -9,37 +9,37 @@
 	<name>aircraft-config-fail</name>
 	<layout>vbox</layout>
 
-    <group>
-        <layout>hbox</layout>
-        <text>
-            <halign>left</halign>
-            <label>System Failures</label>
-        </text>
-        <button>
-            <halign>right</halign>
-            <pref-width>20</pref-width>
-            <pref-height>20</pref-height>
-            <legend>X</legend>
-            <key>Esc</key>
-            <binding>
-                <command>dialog-close</command>
-            </binding>
-        </button>
-    </group>
-	
-    <hrule/>
-	
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>System Failures</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+
+	<hrule />
+
 	<text>
 		<halign>left</halign>
 		<label>Failed when Checked</label>
 	</text>
-	
+
 	<group>
 		<layout>hbox</layout>
-	
+
 		<group>
 			<layout>vbox</layout>
-			
+
 			<group>
 				<layout>hbox</layout>
 
@@ -53,7 +53,7 @@
 					<stretch type="bool">true</stretch>
 				</hrule>
 			</group>
-			
+
 			<checkbox>
 				<label>ELAC1</label>
 				<halign>left</halign>
@@ -63,7 +63,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>ELAC2</label>
 				<halign>left</halign>
@@ -73,7 +73,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>SEC1</label>
 				<halign>left</halign>
@@ -83,7 +83,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>SEC2</label>
 				<halign>left</halign>
@@ -93,7 +93,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>SEC3</label>
 				<halign>left</halign>
@@ -103,7 +103,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>FAC1</label>
 				<halign>left</halign>
@@ -113,7 +113,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>FAC2</label>
 				<halign>left</halign>
@@ -123,7 +123,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>RTLU1</label>
 				<halign>left</halign>
@@ -133,7 +133,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>RTLU2</label>
 				<halign>left</halign>
@@ -143,7 +143,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>THS</label>
 				<halign>left</halign>
@@ -153,7 +153,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Yaw Damper 1</label>
 				<halign>left</halign>
@@ -163,7 +163,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Yaw Damper 2</label>
 				<halign>left</halign>
@@ -173,7 +173,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<group>
 				<layout>hbox</layout>
 
@@ -187,7 +187,7 @@
 					<stretch type="bool">true</stretch>
 				</hrule>
 			</group>
-			
+
 			<checkbox>
 				<label>Bleed ENG 1</label>
 				<halign>left</halign>
@@ -197,7 +197,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Bleed ENG 2</label>
 				<halign>left</halign>
@@ -207,7 +207,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>HP Valve ENG 1</label>
 				<halign>left</halign>
@@ -217,7 +217,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>HP Valve ENG 2</label>
 				<halign>left</halign>
@@ -227,7 +227,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Hot Air Valve</label>
 				<halign>left</halign>
@@ -237,7 +237,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Ram Air Valve</label>
 				<halign>left</halign>
@@ -247,7 +247,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Pack 1</label>
 				<halign>left</halign>
@@ -257,7 +257,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Pack 2</label>
 				<halign>left</halign>
@@ -267,7 +267,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>X Bleed</label>
 				<halign>left</halign>
@@ -278,12 +278,12 @@
 				<live>true</live>
 			</checkbox>
 		</group>
-		
-		<vrule/>
-		
+
+		<vrule />
+
 		<group>
 			<layout>vbox</layout>
-			
+
 			<group>
 				<layout>hbox</layout>
 
@@ -297,7 +297,7 @@
 					<stretch type="bool">true</stretch>
 				</hrule>
 			</group>
-			
+
 			<checkbox>
 				<label>Blue HYD Leak</label>
 				<halign>left</halign>
@@ -307,7 +307,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Blue ELEC Pump</label>
 				<halign>left</halign>
@@ -317,7 +317,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Green HYD Leak</label>
 				<halign>left</halign>
@@ -327,7 +327,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Green ENG 1 Pump</label>
 				<halign>left</halign>
@@ -337,7 +337,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Yellow HYD Leak</label>
 				<halign>left</halign>
@@ -347,7 +347,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Yellow ENG 2 Pump</label>
 				<halign>left</halign>
@@ -357,7 +357,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Yellow ELEC Pump</label>
 				<halign>left</halign>
@@ -367,7 +367,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>PTU</label>
 				<halign>left</halign>
@@ -377,7 +377,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<group>
 				<layout>hbox</layout>
 
@@ -391,7 +391,7 @@
 					<stretch type="bool">true</stretch>
 				</hrule>
 			</group>
-			
+
 			<checkbox>
 				<label>AC ESS Bus</label>
 				<halign>left</halign>
@@ -401,7 +401,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>APU GEN</label>
 				<halign>left</halign>
@@ -411,7 +411,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>DC ESS BUS</label>
 				<halign>left</halign>
@@ -421,7 +421,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>EMER GEN</label>
 				<halign>left</halign>
@@ -431,7 +431,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>ENG 1 GEN</label>
 				<halign>left</halign>
@@ -441,7 +441,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>ENG 2 GEN</label>
 				<halign>left</halign>
@@ -451,14 +451,14 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-				
+
 		</group>
-		
-		<vrule/>
-		
+
+		<vrule />
+
 		<group>
 			<layout>vbox</layout>
-			
+
 			<group>
 				<layout>hbox</layout>
 
@@ -472,7 +472,7 @@
 					<stretch type="bool">true</stretch>
 				</hrule>
 			</group>
-			
+
 			<checkbox>
 				<label>Tank L Pump 1</label>
 				<halign>left</halign>
@@ -482,7 +482,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Tank L Pump 2</label>
 				<halign>left</halign>
@@ -492,7 +492,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Tank C Pump 1</label>
 				<halign>left</halign>
@@ -502,7 +502,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Tank C Pump 2</label>
 				<halign>left</halign>
@@ -512,7 +512,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Tank R Pump 1</label>
 				<halign>left</halign>
@@ -522,7 +522,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Tank R Pump 2</label>
 				<halign>left</halign>
@@ -532,7 +532,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<group>
 				<layout>hbox</layout>
 
@@ -546,7 +546,7 @@
 					<stretch type="bool">true</stretch>
 				</hrule>
 			</group>
-			
+
 			<checkbox>
 				<label>AFT CRG</label>
 				<halign>left</halign>
@@ -556,7 +556,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>FWD CRG</label>
 				<halign>left</halign>
@@ -566,7 +566,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>LAV</label>
 				<halign>left</halign>
@@ -576,7 +576,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<group>
 				<layout>hbox</layout>
 
@@ -590,7 +590,7 @@
 					<stretch type="bool">true</stretch>
 				</hrule>
 			</group>
-			
+
 			<checkbox>
 				<label>Left Engine</label>
 				<halign>left</halign>
@@ -600,7 +600,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>APU</label>
 				<halign>left</halign>
@@ -610,7 +610,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Right Engine</label>
 				<halign>left</halign>
@@ -620,9 +620,9 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-		
-			<hrule/>
-			
+
+			<hrule />
+
 			<button>
 				<legend>Reset All</legend>
 				<halign>center</halign>
@@ -631,11 +631,11 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.failReset();
+						acconfig.failReset();
 					</script>
 				</binding>
 			</button>
 		</group>
 	</group>
-	
+
 </PropertyList>

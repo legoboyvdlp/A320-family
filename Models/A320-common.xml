@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -9,13 +9,13 @@
 		<name>FuselageContainer</name>
 		<path>Aircraft/A320-family/Models/Fuselage/fuselage.xml</path>
 	</model>
-	
+
 	<model>
 		<name>Interior</name>
 		<path>Aircraft/A320-family/Models/A320-interior.xml</path>
 		<usage>interior</usage>
 	</model>
-	
+
 	<!-- Animations -->
 	<animation>
 		<type>select</type>
@@ -25,16 +25,18 @@
 			<property>sim/multiplay/generic/int[12]</property>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>WingtipFence</object-name>
 		<object-name>navglass</object-name>
 		<condition>
-			<not><property>sim/multiplay/generic/int[12]</property></not>
+			<not>
+				<property>sim/multiplay/generic/int[12]</property>
+			</not>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Antenna1</object-name>
@@ -42,7 +44,7 @@
 			<property>sim/multiplay/generic/int[14]</property>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Antenna2</object-name>
@@ -50,7 +52,7 @@
 			<property>sim/multiplay/generic/int[13]</property>
 		</condition>
 	</animation>
-	
+
 	<!-- Ancilliary Objects -->
 	<!-- Particle effects -->
 	<model>
@@ -61,8 +63,8 @@
 			<y-m>0</y-m>
 			<z-m>-3.9669424</z-m>
 		</offsets>
-	 </model>
-	 
+	</model>
+
 	<model>
 		<path>Aircraft/Generic/Effects/tyre-smoke-port.xml</path>
 		<name>tyre-smoke-p</name>
@@ -72,7 +74,7 @@
 			<z-m>-3.9669424</z-m>
 		</offsets>
 	</model>
-	 
+
 	<model>
 		<path>Aircraft/Generic/Effects/tyre-smoke-stbd.xml</path>
 		<name>tyre-smoke-s</name>
@@ -82,7 +84,7 @@
 			<z-m>-3.9669424</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/Generic/Effects/rain-nose.xml</path>
 		<name>rain-splash-n</name>
@@ -92,7 +94,7 @@
 			<z-m>-3.9669424</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/Generic/Effects/rain-port.xml</path>
 		<name>rain-splash-p</name>
@@ -102,7 +104,7 @@
 			<z-m>-3.9669424</z-m>
 		</offsets>
 	</model>
-	 
+
 	<model>
 		<path>Aircraft/Generic/Effects/rain-stbd.xml</path>
 		<name>rain-splash-s</name>
@@ -112,7 +114,7 @@
 			<z-m>-3.9669424</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/brake-smoke-left.xml</path>
 		<name>tire-smoke-l</name>
@@ -122,7 +124,7 @@
 			<z-m>-3.9669424</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/brake-smoke-right.xml</path>
 		<name>tire-smoke-r</name>
@@ -132,13 +134,13 @@
 			<z-m>-3.9669424</z-m>
 		</offsets>
 	</model>
-	
+
 	<!-- wing condensation effect -->
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/wing-condensation-L.xml</path>
 		<name>wing-condensation</name>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/wing-condensation-R.xml</path>
 		<name>wing-condensation</name>
@@ -154,11 +156,11 @@
 			<z-m>-4.24</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/Generic/marker.xml</path>
 	</model>
-	
+
 	<!-- Firetruck -->
 
 	<model>
@@ -170,7 +172,7 @@
 			<z-m>-4.4</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<name>Firetruck2</name>
 		<path>Models/Airport/Vehicle/hoskosh-ti-1500.ac</path>
@@ -180,7 +182,7 @@
 			<z-m>-4.4</z-m>
 		</offsets>
 	</model>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Firetruck1</object-name>
@@ -195,13 +197,13 @@
 			</and>
 		</condition>
 	</animation>
-	
-	<!-- Ground Services -->	
+
+	<!-- Ground Services -->
 	<model>
 		<name>ground_services</name>
 		<path>Aircraft/A320-family/Models/A320-groundservices.xml</path>
 	</model>
-	
+
 	<!-- APU fire -->
 	<model>
 		<name>APU fire</name>
@@ -215,7 +217,7 @@
 			<property>systems/failures/apu-fire</property>
 		</condition>
 	</model>
-	
+
 	<!-- Lights -->
 	<model>
 		<name>Left nav light ALS</name>
@@ -231,7 +233,9 @@
 		<type>select</type>
 		<object-name>Left nav light ALS</object-name>
 		<condition>
-			<not><property>sim/multiplay/generic/int[12]</property></not>
+			<not>
+				<property>sim/multiplay/generic/int[12]</property>
+			</not>
 		</condition>
 	</animation>
 
@@ -267,7 +271,9 @@
 		<type>select</type>
 		<object-name>Right nav light ALS</object-name>
 		<condition>
-			<not><property>sim/multiplay/generic/int[12]</property></not>
+			<not>
+				<property>sim/multiplay/generic/int[12]</property>
+			</not>
 		</condition>
 	</animation>
 
@@ -288,7 +294,7 @@
 			<property>sim/multiplay/generic/int[12]</property>
 		</condition>
 	</animation>
-	
+
 	<model>
 		<name>Tail nav light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/tailnav.xml</path>
@@ -298,7 +304,7 @@
 			<z-m>0.670205</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<name>Left strobe light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/left-strobe.xml</path>
@@ -313,7 +319,9 @@
 		<type>select</type>
 		<object-name>Left strobe light ALS</object-name>
 		<condition>
-			<not><property>sim/multiplay/generic/int[12]</property></not>
+			<not>
+				<property>sim/multiplay/generic/int[12]</property>
+			</not>
 		</condition>
 	</animation>
 
@@ -334,7 +342,7 @@
 			<property>sim/multiplay/generic/int[12]</property>
 		</condition>
 	</animation>
-	
+
 	<model>
 		<name>Right strobe light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/right-strobe.xml</path>
@@ -349,7 +357,9 @@
 		<type>select</type>
 		<object-name>Right strobe light ALS</object-name>
 		<condition>
-			<not><property>sim/multiplay/generic/int[12]</property></not>
+			<not>
+				<property>sim/multiplay/generic/int[12]</property>
+			</not>
 		</condition>
 	</animation>
 
@@ -370,7 +380,7 @@
 			<property>sim/multiplay/generic/int[12]</property>
 		</condition>
 	</animation>
-	
+
 	<model>
 		<name>Tail strobe light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/tail-strobe.xml</path>
@@ -380,7 +390,7 @@
 			<z-m>0.670205</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<name>Left Wing Light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/winglightL.xml</path>
@@ -400,7 +410,7 @@
 			<z-m>-0.202625</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<name>Top beacon light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/beacon.xml</path>
@@ -420,75 +430,75 @@
 			<z-m>-2.50394</z-m>
 		</offsets>
 	</model>
-	
+
 	<light>
-	  <name>Bottom Beacon Compositor</name>
-	  <type>point</type>
-	  <position>
-		<x-m>-3.97011</x-m>
-		<y-m>-0.001032</y-m>
-		<z-m>-2.52394</z-m>
-	  </position>
-	  <ambient>
-		<r>0.78</r>
-		<g>0.00</g>
-		<b>0.00</b>
-		<a>1</a>
-	  </ambient>
-	  <diffuse>
-		<r>0.78</r>
-		<g>0.00</g>
-		<b>0.00</b>
-		<a>1</a>
-	  </diffuse>
-	  <specular>
-		<r>0.98</r>
-		<g>0.00</g>
-		<b>0.00</b>
-		<a>1</a>
-	  </specular>
-	  <attenuation>
-		<c>1.0</c>
-		<l>0.7</l>
-		<q>1.80</q>
-	  </attenuation>
-	  <range-m>7</range-m>
+		<name>Bottom Beacon Compositor</name>
+		<type>point</type>
+		<position>
+			<x-m>-3.97011</x-m>
+			<y-m>-0.001032</y-m>
+			<z-m>-2.52394</z-m>
+		</position>
+		<ambient>
+			<r>0.78</r>
+			<g>0.00</g>
+			<b>0.00</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>0.78</r>
+			<g>0.00</g>
+			<b>0.00</b>
+			<a>1</a>
+		</diffuse>
+		<specular>
+			<r>0.98</r>
+			<g>0.00</g>
+			<b>0.00</b>
+			<a>1</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.7</l>
+			<q>1.80</q>
+		</attenuation>
+		<range-m>7</range-m>
 	</light>
-	
+
 	<light>
-	  <name>Top Beacon Compositor</name>
-	  <type>point</type>
-	  <position>
-		<x-m>-3.58595</x-m>
-		<y-m>-0.001033</y-m>
-		<z-m>1.94988</z-m>
-	  </position>
-	  <ambient>
-		<r>0.78</r>
-		<g>0.00</g>
-		<b>0.00</b>
-		<a>1</a>
-	  </ambient>
-	  <diffuse>
-		<r>0.78</r>
-		<g>0.00</g>
-		<b>0.00</b>
-		<a>1</a>
-	  </diffuse>
-	  <specular>
-		<r>0.98</r>
-		<g>0.00</g>
-		<b>0.00</b>
-		<a>1</a>
-	  </specular>
-	  <attenuation>
-		<c>1.0</c>
-		<l>0.90</l>
-		<q>3.00</q>
-	  </attenuation>
-	  <range-m>5</range-m>
+		<name>Top Beacon Compositor</name>
+		<type>point</type>
+		<position>
+			<x-m>-3.58595</x-m>
+			<y-m>-0.001033</y-m>
+			<z-m>1.94988</z-m>
+		</position>
+		<ambient>
+			<r>0.78</r>
+			<g>0.00</g>
+			<b>0.00</b>
+			<a>1</a>
+		</ambient>
+		<diffuse>
+			<r>0.78</r>
+			<g>0.00</g>
+			<b>0.00</b>
+			<a>1</a>
+		</diffuse>
+		<specular>
+			<r>0.98</r>
+			<g>0.00</g>
+			<b>0.00</b>
+			<a>1</a>
+		</specular>
+		<attenuation>
+			<c>1.0</c>
+			<l>0.90</l>
+			<q>3.00</q>
+		</attenuation>
+		<range-m>5</range-m>
 	</light>
-	
+
 	<light>
 		<name>Landing Light Left Compositor</name>
 		<type>spot</type>
@@ -530,7 +540,7 @@
 		<spot-cutoff>21.5</spot-cutoff>
 		<range-m>2500.0</range-m>
 	</light>
-	
+
 	<light>
 		<name>Landing Light Right Compositor</name>
 		<type>spot</type>
@@ -572,7 +582,7 @@
 		<spot-cutoff>21.5</spot-cutoff>
 		<range-m>2500.0</range-m>
 	</light>
-	
+
 	<light>
 		<name>Taxi Light Compositor</name>
 		<type>spot</type>
@@ -614,7 +624,7 @@
 		<spot-cutoff>25.0</spot-cutoff>
 		<range-m>2000.0</range-m>
 	</light>
-	
+
 	<light>
 		<name>Left Turnoff Compositor</name>
 		<type>spot</type>
@@ -647,7 +657,7 @@
 			<b>1.0</b>
 			<a>1.0</a>
 		</specular>
-	    <attenuation>
+		<attenuation>
 			<c>1.0</c>
 			<l>0.045</l>
 			<q>0.002</q>
@@ -656,7 +666,7 @@
 		<spot-cutoff>25.0</spot-cutoff>
 		<range-m>250.0</range-m>
 	</light>
-	
+
 	<light>
 		<name>Right Turnoff Compositor</name>
 		<type>spot</type>
@@ -689,7 +699,7 @@
 			<b>1.0</b>
 			<a>1.0</a>
 		</specular>
-	    <attenuation>
+		<attenuation>
 			<c>1.0</c>
 			<l>0.045</l>
 			<q>0.002</q>
@@ -698,7 +708,7 @@
 		<spot-cutoff>25.0</spot-cutoff>
 		<range-m>250.0</range-m>
 	</light>
-	
+
 	<light>
 		<name>Nose Landing Light Compositor</name>
 		<type>spot</type>
@@ -740,7 +750,7 @@
 		<spot-cutoff>25.0</spot-cutoff>
 		<range-m>2000.0</range-m>
 	</light>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Top Beacon Compositor</object-name>
@@ -749,7 +759,7 @@
 			<property>sim/model/lights/beacon/state</property>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Landing Light Left Compositor</object-name>
@@ -757,7 +767,7 @@
 			<property>controls/lighting/landing-lights[1]</property>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Landing Light Right Compositor</object-name>
@@ -765,7 +775,7 @@
 			<property>controls/lighting/landing-lights[2]</property>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Left Turnoff Compositor</object-name>
@@ -773,7 +783,7 @@
 			<property>controls/lighting/leftturnoff</property>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Right Turnoff Compositor</object-name>
@@ -781,7 +791,7 @@
 			<property>controls/lighting/rightturnoff</property>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Taxi Light Compositor</object-name>
@@ -806,7 +816,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Nose Landing Light Compositor</object-name>
@@ -823,7 +833,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<model>
 		<name>Port landing light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/landinglightL.xml</path>
@@ -853,7 +863,7 @@
 			<z-m>-2.30747</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<name>Second Nosegear landing light ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/taxilight.xml</path>
@@ -863,7 +873,7 @@
 			<z-m>-2.28819</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<name>Left Turnoff ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/turnoffL.xml</path>
@@ -873,7 +883,7 @@
 			<z-m>-2.83921</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<name>Right Turnoff ALS</name>
 		<path>Aircraft/A320-family/Models/Lights/turnoffR.xml</path>
@@ -883,7 +893,7 @@
 			<z-m>-2.83921</z-m>
 		</offsets>
 	</model>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Nosegear landing light ALS</object-name>
@@ -900,7 +910,7 @@
 			</and>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>Second Nosegear landing light ALS</object-name>

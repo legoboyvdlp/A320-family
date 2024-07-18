@@ -4,7 +4,7 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
-	
+
 	<!-- Pitch Axis -->
 	<filter>
 		<name>IT-CONTROLLER: Altitude Capture/Hold</name>
@@ -23,7 +23,7 @@
 		<min>/it-autoflight/internal/min-vs</min>
 		<max>/it-autoflight/internal/max-vs</max>
 	</filter>
-	
+
 	<filter>
 		<name>Vertical Speed VMO Protection</name>
 		<type>gain</type>
@@ -60,7 +60,7 @@
 		<min>-6000</min>
 		<max>6000</max>
 	</filter>
-	
+
 	<filter>
 		<name>Vertical Speed VLS Protection</name>
 		<type>gain</type>
@@ -97,7 +97,7 @@
 		<min>-6000</min>
 		<max>6000</max>
 	</filter>
-	
+
 	<logic>
 		<input>
 			<and>
@@ -131,7 +131,7 @@
 		</input>
 		<output>/it-autoflight/internal/overspeed-vs-prot</output>
 	</logic>
-	
+
 	<logic>
 		<input>
 			<and>
@@ -165,7 +165,7 @@
 		</input>
 		<output>/it-autoflight/internal/underspeed-vs-prot</output>
 	</logic>
-	
+
 	<filter>
 		<name>Vertical Speed FPM Filter</name>
 		<type>noise-spike</type>
@@ -209,8 +209,12 @@
 			<condition>
 				<and>
 					<property>/it-autoflight/output/ap-on</property>
-					<not><property>/it-autoflight/internal/overspeed-vs-prot</property></not>
-					<not><property>/it-autoflight/internal/underspeed-vs-prot</property></not>
+					<not>
+						<property>/it-autoflight/internal/overspeed-vs-prot</property>
+					</not>
+					<not>
+						<property>/it-autoflight/internal/underspeed-vs-prot</property>
+					</not>
 					<equals>
 						<property>/it-autoflight/output/vert</property>
 						<value>1</value>
@@ -229,7 +233,7 @@
 		</max-rate-of-change>
 		<max-rate-of-change>10000</max-rate-of-change>
 	</filter>
-	
+
 	<logic>
 		<input>
 			<and>
@@ -248,7 +252,7 @@
 		</input>
 		<output>/it-autoflight/internal/flch-active</output>
 	</logic>
-	
+
 	<filter>
 		<name>IT-CONTROLLER: Speed By Pitch Delta</name>
 		<type>gain</type>
@@ -256,8 +260,14 @@
 			<expression>
 				<table>
 					<property>/velocities/airspeed-kt</property>
-					<entry><ind>140</ind><dep> 700</dep></entry>
-					<entry><ind>410</ind><dep>1550</dep></entry>
+					<entry>
+						<ind>140</ind>
+						<dep> 700</dep>
+					</entry>
+					<entry>
+						<ind>410</ind>
+						<dep>1550</dep>
+					</entry>
 				</table>
 			</expression>
 		</gain>
@@ -291,7 +301,7 @@
 		<min>-2000</min>
 		<max>2000</max>
 	</filter>
-	
+
 	<filter>
 		<name>Speed By Pitch Filter</name>
 		<type>noise-spike</type>
@@ -305,7 +315,7 @@
 		</max-rate-of-change>
 		<max-rate-of-change>10000</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>Speed By Pitch Final</name>
 		<type>gain</type>
@@ -355,7 +365,7 @@
 		</max>
 		<max>100000</max>
 	</filter>
-	
+
 	<logic>
 		<input>
 			<and>
@@ -368,14 +378,16 @@
 		</input>
 		<output>/it-autoflight/internal/fpa-active</output>
 	</logic>
-	
+
 	<filter>
 		<name>IT-CONTROLLER: FPA</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
 			<condition>
-				<not><property>/it-autoflight/internal/fpa-active</property></not>
+				<not>
+					<property>/it-autoflight/internal/fpa-active</property>
+				</not>
 			</condition>
 			<property>/it-autoflight/internal/vert-speed-fpm</property>
 		</input>
@@ -419,7 +431,7 @@
 			</expression>
 		</max>
 	</filter>
-	
+
 	<filter>
 		<name>FPA FPM Filter</name>
 		<type>noise-spike</type>
@@ -440,7 +452,9 @@
 		<max-rate-of-change>
 			<condition>
 				<or>
-					<not><property>/it-autoflight/internal/fpa-active</property></not>
+					<not>
+						<property>/it-autoflight/internal/fpa-active</property>
+					</not>
 					<property>/it-autoflight/internal/overspeed-vs-prot</property>
 					<property>/it-autoflight/internal/underspeed-vs-prot</property>
 				</or>
@@ -449,7 +463,7 @@
 		</max-rate-of-change>
 		<max-rate-of-change>300</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>IT-CONTROLLER: Flare FD</name>
 		<type>gain</type>
@@ -471,8 +485,14 @@
 								<deg2rad>
 									<table>
 										<property>/position/gear-agl-ft</property>
-										<entry><ind>50</ind><dep>-3.0</dep></entry>
-										<entry><ind>45</ind><dep>-0.7</dep></entry>
+										<entry>
+											<ind>50</ind>
+											<dep>-3.0</dep>
+										</entry>
+										<entry>
+											<ind>45</ind>
+											<dep>-0.7</dep>
+										</entry>
 									</table>
 								</deg2rad>
 							</sin>
@@ -487,7 +507,7 @@
 		<min>-1200</min>
 		<max>0</max>
 	</filter>
-	
+
 	<filter>
 		<name>IT-CONTROLLER: Flare</name>
 		<type>gain</type>
@@ -509,11 +529,26 @@
 								<deg2rad>
 									<table>
 										<property>/position/gear-agl-ft</property>
-										<entry><ind>50</ind><dep>-3.0</dep></entry>
-										<entry><ind>40</ind><dep>-1.8</dep></entry>
-										<entry><ind>30</ind><dep>-1.5</dep></entry>
-										<entry><ind>20</ind><dep>-1.2</dep></entry>
-										<entry><ind> 5</ind><dep>-0.7</dep></entry>
+										<entry>
+											<ind>50</ind>
+											<dep>-3.0</dep>
+										</entry>
+										<entry>
+											<ind>40</ind>
+											<dep>-1.8</dep>
+										</entry>
+										<entry>
+											<ind>30</ind>
+											<dep>-1.5</dep>
+										</entry>
+										<entry>
+											<ind>20</ind>
+											<dep>-1.2</dep>
+										</entry>
+										<entry>
+											<ind> 5</ind>
+											<dep>-0.7</dep>
+										</entry>
 									</table>
 								</deg2rad>
 							</sin>
@@ -528,7 +563,7 @@
 		<min>-1200</min>
 		<max>0</max>
 	</filter>
-	
+
 	<filter>
 		<name>Vertical Speed FD Input</name>
 		<type>gain</type>
@@ -548,7 +583,7 @@
 		<input>/it-autoflight/input/vs</input>
 		<output>/it-autoflight/internal/target-fpm-vs-fd</output>
 	</filter>
-	
+
 	<filter>
 		<name>FPA FD Input</name>
 		<type>gain</type>
@@ -568,7 +603,7 @@
 		<input>/it-autoflight/internal/target-fpm-fpa</input>
 		<output>/it-autoflight/internal/target-fpm-fpa-fd</output>
 	</filter>
-	
+
 	<filter>
 		<name>Target FPM</name>
 		<type>gain</type>
@@ -644,7 +679,7 @@
 		</input>
 		<output>/it-autoflight/internal/target-common-fpm</output>
 	</filter>
-	
+
 	<logic>
 		<input>
 			<and>
@@ -665,13 +700,15 @@
 		</input>
 		<output>/it-autoflight/internal/vs-active</output>
 	</logic>
-	
+
 	<filter>
 		<name>Target FPM Filter</name>
 		<type>noise-spike</type>
 		<input>
 			<condition>
-				<not><property>/it-autoflight/internal/vs-active</property></not>
+				<not>
+					<property>/it-autoflight/internal/vs-active</property>
+				</not>
 			</condition>
 			<property>/it-autoflight/internal/vert-speed-fpm</property>
 		</input>
@@ -712,7 +749,7 @@
 		</max-rate-of-change>
 		<max-rate-of-change>10000</max-rate-of-change>
 	</filter>
-	
+
 	<pid-controller>
 		<name>IT-CONTROLLER: FPM Hold</name>
 		<enable>
@@ -735,13 +772,25 @@
 					<product>
 						<table>
 							<property>/velocities/airspeed-kt</property>
-							<entry><ind>140</ind><dep>0.00290</dep></entry>
-							<entry><ind>410</ind><dep>0.00045</dep></entry>
+							<entry>
+								<ind>140</ind>
+								<dep>0.00290</dep>
+							</entry>
+							<entry>
+								<ind>410</ind>
+								<dep>0.00045</dep>
+							</entry>
 						</table>
 						<table>
 							<property>/position/altitude-ft</property>
-							<entry><ind>    0</ind><dep>1.0</dep></entry>
-							<entry><ind>45000</ind><dep>0.5</dep></entry>
+							<entry>
+								<ind> 0</ind>
+								<dep>1.0</dep>
+							</entry>
+							<entry>
+								<ind>45000</ind>
+								<dep>0.5</dep>
+							</entry>
 						</table>
 					</product>
 				</expression>
@@ -807,7 +856,7 @@
 			</u_max>
 		</config>
 	</pid-controller>
-	
+
 	<filter>
 		<name>System Command: Pitch Target Inactive Sync</name>
 		<type>gain</type>
@@ -838,7 +887,7 @@
 		<min>-15</min>
 		<max>30</max>
 	</filter>
-	
+
 	<filter>
 		<name>System Command: Pitch Rate Target</name>
 		<type>gain</type>

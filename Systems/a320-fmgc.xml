@@ -4,55 +4,55 @@
 <!-- Copyright (c) 2022 Josh Davidson and Jonathan Redpath -->
 
 <system name="A320: FMGC">
-	
+
 	<property value="350">/FMGC/internal/vmo-kts</property>
-	
+
 	<channel name="FMGC Power" execrate="8">
-	
+
 		<switch name="/systems/fmgc/power/power-1">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/electrical/bus/dc-ess-shed ge 25
 			</test>
 		</switch>
-	
+
 		<switch name="/systems/fmgc/power/power-2">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/fmgc/power/power-1-timer">
 			<input>/systems/fmgc/power/power-1</input>
 			<rate_limit sense="decr">5</rate_limit>
 			<rate_limit sense="incr">100</rate_limit>
 		</actuator>
-		
+
 		<actuator name="/systems/fmgc/power/power-2-timer">
 			<input>/systems/fmgc/power/power-2</input>
 			<rate_limit sense="decr">5</rate_limit>
 			<rate_limit sense="incr">100</rate_limit>
 		</actuator>
-		
+
 		<switch name="/systems/fmgc/power/power-1-on">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/fmgc/power/power-1-timer ne 0
 			</test>
 		</switch>
-	
+
 		<switch name="/systems/fmgc/power/power-2-on">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/fmgc/power/power-2-timer ne 0
 			</test>
 		</switch>
-		
+
 	</channel>
-	
+
 	<channel name="Envelope Protection" execrate="8">
-		
+
 		<!-- Vmo/Mmo -->
 		<fcs_function name="/FMGC/internal/mmo-kts">
 			<function>
@@ -68,15 +68,15 @@
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<switch name="/FMGC/internal/vmo-mmo">
-			<default value="/FMGC/internal/vmo-kts"/>
+			<default value="/FMGC/internal/vmo-kts" />
 			<test logic="AND" value="/FMGC/internal/mmo-kts">
 				/FMGC/internal/mmo-kts lt /FMGC/internal/vmo-kts
 				position/wow eq 0
 			</test>
 		</switch>
-		
+
 		<fcs_function name="/FMGC/internal/vmo-mmo-minus-5">
 			<function>
 				<sum>
@@ -85,7 +85,7 @@
 				</sum>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/vmo-mmo-plus-6">
 			<function>
 				<sum>
@@ -94,7 +94,7 @@
 				</sum>
 			</function>
 		</fcs_function>
-		
+
 		<!-- Green Dot -->
 		<fcs_function name="/FMGC/internal/clean">
 			<function>
@@ -114,7 +114,7 @@
 				</sum>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/tow-clean">
 			<function>
 				<sum>
@@ -133,7 +133,7 @@
 				</sum>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/lw-clean">
 			<function>
 				<sum>
@@ -152,7 +152,7 @@
 				</sum>
 			</function>
 		</fcs_function>
-		
+
 		<!-- VS1g -->
 		<fcs_function name="/FMGC/internal/vs1g-kts">
 			<function>
@@ -160,363 +160,325 @@
 					<independentVar lookup="row">inertia/weight-kg</independentVar>
 					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
 					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
-					<tableData breakPoint="0"> <!-- 40 column is a guess, no data for flap without slat -->
-						       0       40
-						35000  114.99   99.55
-						40000  123.08  106.14
-						45000  130.66  111.83
-						50000  137.73  117.76
-						55000  144.41  123.46
-						60000  150.81  128.89
-						65000  156.76  133.34
-						70000  162.65  138.73
-						75000  168.43  143.60
-						80000  173.65  148.02
-					</tableData>
+					<tableData breakPoint="0"> <!-- 40 column is a guess, no data for flap without
+						slat --> 0 40 35000 114.99 99.55 40000 123.08 106.14 45000
+						130.66 111.83 50000 137.73 117.76 55000 144.41 123.46 60000 150.81 128.89
+						65000 156.76 133.34 70000 162.65 138.73 75000 168.43 143.60 80000 173.65
+						148.02 </tableData>
 					<tableData breakPoint="18">
-						       0       10      15      20      35      40
-						35000   95.11   90.08   85.16   83.55   81.61   79.67
-						40000  101.59   96.03   90.31   88.77   86.71   84.65
-						45000  107.89  101.93   95.64   94.32   91.69   89.06
-						50000  113.84  107.55  101.02   99.25   96.56   93.87
-						55000  119.46  112.76  106.07  104.23  101.37   98.51
-						60000  124.84  117.97  110.94  109.10  106.01  102.92
-						65000  130.17  122.96  115.63  113.75  110.25  106.75
-						70000  135.10  127.54  119.99  118.16  114.67  111.18
-						75000  139.91  132.18  124.23  122.28  118.68  115.08
-						80000  144.44  136.54  128.58  126.35  122.58  118.81
+						0 10 15 20 35 40
+						35000 95.11 90.08 85.16 83.55 81.61 79.67
+						40000 101.59 96.03 90.31 88.77 86.71 84.65
+						45000 107.89 101.93 95.64 94.32 91.69 89.06
+						50000 113.84 107.55 101.02 99.25 96.56 93.87
+						55000 119.46 112.76 106.07 104.23 101.37 98.51
+						60000 124.84 117.97 110.94 109.10 106.01 102.92
+						65000 130.17 122.96 115.63 113.75 110.25 106.75
+						70000 135.10 127.54 119.99 118.16 114.67 111.18
+						75000 139.91 132.18 124.23 122.28 118.68 115.08
+						80000 144.44 136.54 128.58 126.35 122.58 118.81
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<!-- Extra VS1g tables for predictions etc -->
 		<fcs_function name="/FMGC/internal/vs1g-conf-0">
 			<function>
 				<table>
 					<independentVar lookup="row">inertia/weight-kg</independentVar>
 					<tableData>
-						35000  114.99
-						40000  123.08
-						45000  130.66
-						50000  137.73
-						55000  144.41
-						60000  150.81
-						65000  156.76
-						70000  162.65
-						75000  168.43
-						80000  173.65
+						35000 114.99
+						40000 123.08
+						45000 130.66
+						50000 137.73
+						55000 144.41
+						60000 150.81
+						65000 156.76
+						70000 162.65
+						75000 168.43
+						80000 173.65
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/tow-vs1g-conf-0">
 			<function>
 				<table>
 					<independentVar lookup="row">/FMGC/internal/tow</independentVar>
 					<tableData>
-						35000  114.99
-						40000  123.08
-						45000  130.66
-						50000  137.73
-						55000  144.41
-						60000  150.81
-						65000  156.76
-						70000  162.65
-						75000  168.43
-						80000  173.65
+						35000 114.99
+						40000 123.08
+						45000 130.66
+						50000 137.73
+						55000 144.41
+						60000 150.81
+						65000 156.76
+						70000 162.65
+						75000 168.43
+						80000 173.65
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/lw-vs1g-conf-0">
 			<function>
 				<table>
 					<independentVar lookup="row">/FMGC/internal/lw</independentVar>
 					<tableData>
-						35000  114.99
-						40000  123.08
-						45000  130.66
-						50000  137.73
-						55000  144.41
-						60000  150.81
-						65000  156.76
-						70000  162.65
-						75000  168.43
-						80000  173.65
+						35000 114.99
+						40000 123.08
+						45000 130.66
+						50000 137.73
+						55000 144.41
+						60000 150.81
+						65000 156.76
+						70000 162.65
+						75000 168.43
+						80000 173.65
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/vs1g-conf-1">
 			<function>
 				<table>
 					<independentVar lookup="row">inertia/weight-kg</independentVar>
 					<tableData>
-						35000   95.11
-						40000  101.59
-						45000  107.89
-						50000  113.84
-						55000  119.46
-						60000  124.84
-						65000  130.17
-						70000  135.10
-						75000  139.91
-						80000  144.44
+						35000 95.11
+						40000 101.59
+						45000 107.89
+						50000 113.84
+						55000 119.46
+						60000 124.84
+						65000 130.17
+						70000 135.10
+						75000 139.91
+						80000 144.44
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/vs1g-conf-1f">
 			<function>
 				<table>
 					<independentVar lookup="row">inertia/weight-kg</independentVar>
 					<tableData>
-						35000   90.08
-						40000   96.03
-						45000  101.93
-						50000  107.55
-						55000  112.76
-						60000  117.97
-						65000  122.96
-						70000  127.54
-						75000  132.18
-						80000  136.54
+						35000 90.08
+						40000 96.03
+						45000 101.93
+						50000 107.55
+						55000 112.76
+						60000 117.97
+						65000 122.96
+						70000 127.54
+						75000 132.18
+						80000 136.54
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/tow-vs1g-conf-1f">
 			<function>
 				<table>
 					<independentVar lookup="row">/FMGC/internal/tow</independentVar>
 					<tableData>
-						35000   90.08
-						40000   96.03
-						45000  101.93
-						50000  107.55
-						55000  112.76
-						60000  117.97
-						65000  122.96
-						70000  127.54
-						75000  132.18
-						80000  136.54
+						35000 90.08
+						40000 96.03
+						45000 101.93
+						50000 107.55
+						55000 112.76
+						60000 117.97
+						65000 122.96
+						70000 127.54
+						75000 132.18
+						80000 136.54
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/lw-vs1g-conf-1f">
 			<function>
 				<table>
 					<independentVar lookup="row">/FMGC/internal/lw</independentVar>
 					<tableData>
-						35000   90.08
-						40000   96.03
-						45000  101.93
-						50000  107.55
-						55000  112.76
-						60000  117.97
-						65000  122.96
-						70000  127.54
-						75000  132.18
-						80000  136.54
+						35000 90.08
+						40000 96.03
+						45000 101.93
+						50000 107.55
+						55000 112.76
+						60000 117.97
+						65000 122.96
+						70000 127.54
+						75000 132.18
+						80000 136.54
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/vs1g-conf-2">
 			<function>
 				<table>
 					<independentVar lookup="row">inertia/weight-kg</independentVar>
 					<tableData>
-						35000   85.16
-						40000   90.31
-						45000   95.64
-						50000  101.02
-						55000  106.07
-						60000  110.94
-						65000  115.63
-						70000  119.99
-						75000  124.23
-						80000  128.58
+						35000 85.16
+						40000 90.31
+						45000 95.64
+						50000 101.02
+						55000 106.07
+						60000 110.94
+						65000 115.63
+						70000 119.99
+						75000 124.23
+						80000 128.58
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/tow-vs1g-conf-2">
 			<function>
 				<table>
 					<independentVar lookup="row">/FMGC/internal/tow</independentVar>
 					<tableData>
-						35000   85.16
-						40000   90.31
-						45000   95.64
-						50000  101.02
-						55000  106.07
-						60000  110.94
-						65000  115.63
-						70000  119.99
-						75000  124.23
-						80000  128.58
+						35000 85.16
+						40000 90.31
+						45000 95.64
+						50000 101.02
+						55000 106.07
+						60000 110.94
+						65000 115.63
+						70000 119.99
+						75000 124.23
+						80000 128.58
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/lw-vs1g-conf-2">
 			<function>
 				<table>
 					<independentVar lookup="row">/FMGC/internal/lw</independentVar>
 					<tableData>
-						35000   85.16
-						40000   90.31
-						45000   95.64
-						50000  101.02
-						55000  106.07
-						60000  110.94
-						65000  115.63
-						70000  119.99
-						75000  124.23
-						80000  128.58
+						35000 85.16
+						40000 90.31
+						45000 95.64
+						50000 101.02
+						55000 106.07
+						60000 110.94
+						65000 115.63
+						70000 119.99
+						75000 124.23
+						80000 128.58
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/vs1g-conf-3">
 			<function>
 				<table>
 					<independentVar lookup="row">inertia/weight-kg</independentVar>
 					<tableData>
-						35000   83.55
-						40000   88.77
-						45000   94.32
-						50000   99.25
-						55000  104.23
-						60000  109.10
-						65000  113.75
-						70000  118.16
-						75000  122.28
-						80000  126.35
+						35000 83.55
+						40000 88.77
+						45000 94.32
+						50000 99.25
+						55000 104.23
+						60000 109.10
+						65000 113.75
+						70000 118.16
+						75000 122.28
+						80000 126.35
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/tow-vs1g-conf-3">
 			<function>
 				<table>
 					<independentVar lookup="row">/FMGC/internal/tow</independentVar>
 					<tableData>
-						35000   83.55
-						40000   88.77
-						45000   94.32
-						50000   99.25
-						55000  104.23
-						60000  109.10
-						65000  113.75
-						70000  118.16
-						75000  122.28
-						80000  126.35
+						35000 83.55
+						40000 88.77
+						45000 94.32
+						50000 99.25
+						55000 104.23
+						60000 109.10
+						65000 113.75
+						70000 118.16
+						75000 122.28
+						80000 126.35
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/lw-vs1g-conf-3">
 			<function>
 				<table>
 					<independentVar lookup="row">/FMGC/internal/lw</independentVar>
 					<tableData>
-						35000   83.55
-						40000   88.77
-						45000   94.32
-						50000   99.25
-						55000  104.23
-						60000  109.10
-						65000  113.75
-						70000  118.16
-						75000  122.28
-						80000  126.35
+						35000 83.55
+						40000 88.77
+						45000 94.32
+						50000 99.25
+						55000 104.23
+						60000 109.10
+						65000 113.75
+						70000 118.16
+						75000 122.28
+						80000 126.35
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/vs1g-conf-full">
 			<function>
 				<table>
 					<independentVar lookup="row">inertia/weight-kg</independentVar>
 					<independentVar lookup="column">/options/maxflap</independentVar>
-					<tableData> <!-- CFM 35, IAE 40 -->
-						       35      40
-						35000   81.61   79.67
-						40000   86.71   84.65
-						45000   91.69   89.06
-						50000   96.56   93.87
-						55000  101.37   98.51
-						60000  106.01  102.92
-						65000  110.25  106.75
-						70000  114.67  111.18
-						75000  118.68  115.08
-						80000  122.58  118.81
-					</tableData>
+					<tableData> <!-- CFM 35, IAE 40 --> 35 40 35000 81.61 79.67 40000 86.71 84.65 45000 91.69 89.06 50000
+						96.56 93.87 55000 101.37 98.51 60000 106.01 102.92 65000 110.25 106.75 70000
+						114.67 111.18 75000 118.68 115.08 80000 122.58 118.81 </tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/tow-vs1g-conf-full">
 			<function>
 				<table>
 					<independentVar lookup="row">/FMGC/internal/tow</independentVar>
 					<independentVar lookup="column">/options/maxflap</independentVar>
-					<tableData> <!-- CFM 35, IAE 40 -->
-						       35      40
-						35000   81.61   79.67
-						40000   86.71   84.65
-						45000   91.69   89.06
-						50000   96.56   93.87
-						55000  101.37   98.51
-						60000  106.01  102.92
-						65000  110.25  106.75
-						70000  114.67  111.18
-						75000  118.68  115.08
-						80000  122.58  118.81
-					</tableData>
+					<tableData> <!-- CFM 35, IAE 40 --> 35 40 35000 81.61 79.67 40000 86.71 84.65 45000 91.69 89.06 50000
+						96.56 93.87 55000 101.37 98.51 60000 106.01 102.92 65000 110.25 106.75 70000
+						114.67 111.18 75000 118.68 115.08 80000 122.58 118.81 </tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/lw-vs1g-conf-full">
 			<function>
 				<table>
 					<independentVar lookup="row">/FMGC/internal/lw</independentVar>
 					<independentVar lookup="column">/options/maxflap</independentVar>
-					<tableData> <!-- CFM 35, IAE 40 -->
-						       35      40
-						35000   81.61   79.67
-						40000   86.71   84.65
-						45000   91.69   89.06
-						50000   96.56   93.87
-						55000  101.37   98.51
-						60000  106.01  102.92
-						65000  110.25  106.75
-						70000  114.67  111.18
-						75000  118.68  115.08
-						80000  122.58  118.81
-					</tableData>
+					<tableData> <!-- CFM 35, IAE 40 --> 35 40 35000 81.61 79.67 40000 86.71 84.65 45000 91.69 89.06 50000
+						96.56 93.87 55000 101.37 98.51 60000 106.01 102.92 65000 110.25 106.75 70000
+						114.67 111.18 75000 118.68 115.08 80000 122.58 118.81 </tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/vs1g-roll-factor">
 			<function>
 				<sqrt> <!-- Take the square root to get the factor -->
@@ -536,7 +498,7 @@
 				</sqrt>
 			</function>
 		</fcs_function>
-		
+
 		<pure_gain name="/FMGC/internal/vs1g">
 			<input>/FMGC/internal/vs1g-kts</input>
 			<gain>/FMGC/internal/vs1g-roll-factor</gain>
@@ -545,7 +507,7 @@
 				<max>/FMGC/internal/vmo-mmo</max>
 			</clipto>
 		</pure_gain>
-		
+
 		<!-- Vsw -->
 		<fcs_function name="/FMGC/internal/vsw">
 			<function>
@@ -564,10 +526,10 @@
 				</sum>
 			</function>
 		</fcs_function>
-		
+
 		<!-- Minimum speed (Target speed for managed speed after decel) -->
 		<switch name="/FMGC/internal/minspeed">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="/FMGC/internal/clean">
 				/controls/flight/flaps-pos eq 0
 			</test>
@@ -590,13 +552,13 @@
 				/FMGC/internal/vapp-set eq 1
 			</test>
 		</switch>
-		
+
 		<!-- V alpha prot/max -->
 		<lag_filter name="/FMGC/internal/alpha-input">
 			<input>aero/alpha-deg-fixed</input>
 			<c1>1.0</c1>
 		</lag_filter>
-		
+
 		<fcs_function name="/FMGC/internal/valpha-prot">
 			<function>
 				<product>
@@ -618,7 +580,7 @@
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/valpha-max">
 			<function>
 				<product>
@@ -640,10 +602,10 @@
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<!-- Vls -->
 		<switch name="/FMGC/internal/takeoff-latch">
-			<default value="/FMGC/internal/takeoff-latch"/>
+			<default value="/FMGC/internal/takeoff-latch" />
 			<test logic="AND" value="0">
 				position/wow eq 0
 				/instrumentation/altimeter/indicated-altitude-ft ge /it-autoflight/settings/accel-ft
@@ -657,29 +619,25 @@
 				fcs/flap-pos-deg lt 0.1
 			</test>
 		</switch>
-		
+
 		<switch name="/FMGC/internal/vls-factor-cmd">
-			<default value="1.25"/> <!-- 1.25 VS1g -->
-			<test value="1.13"> <!-- 1.13 VS1g -->
-				/FMGC/internal/takeoff-latch eq 1
-			</test>
-			<test value="1.23"> <!-- 1.23 VS1g -->
-				fcs/flap-pos-deg ge 0.1
-			</test>
+			<default value="1.25" /> <!-- 1.25 VS1g -->
+			<test value="1.13"> <!-- 1.13 VS1g --> /FMGC/internal/takeoff-latch eq 1 </test>
+			<test value="1.23"> <!-- 1.23 VS1g --> fcs/flap-pos-deg ge 0.1 </test>
 		</switch>
-		
+
 		<switch name="/FMGC/internal/vls-factor-rate">
-			<default value="10"/>
+			<default value="10" />
 			<test value="0.05">
 				position/wow eq 0
 			</test>
 		</switch>
-		
+
 		<actuator name="/FMGC/internal/vls-factor">
 			<input>/FMGC/internal/vls-factor-cmd</input>
 			<rate_limit>/FMGC/internal/vls-factor-rate</rate_limit>
 		</actuator>
-		
+
 		<fcs_function name="/FMGC/internal/vls">
 			<function>
 				<max>
@@ -690,8 +648,8 @@
 							<table>
 								<independentVar lookup="row">atmosphere/density-altitude</independentVar>
 								<tableData>
-									    0  0.00
-									45000  0.18
+									0 0.00
+									45000 0.18
 								</tableData>
 							</table>
 						</sum>
@@ -713,7 +671,7 @@
 				<max>100000</max>
 			</clipto>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/vls-mach">
 			<function>
 				<product>
@@ -728,7 +686,7 @@
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<!-- Vmax - Computed in FMGC.nas and ADR.nas -->
 		<fcs_function name="/FMGC/internal/vmax-mach">
 			<function>
@@ -744,28 +702,28 @@
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<!-- VMCA -->
 		<fcs_function name="/FMGC/internal/vmca-kt">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<tableData>
-						-2000  112.0
-						    0  110.0
-						 2000  108.0
-						 4000  107.5
-						 6000  105.5
-						 8000  103.0
-						 9200  101.2
-						10000  100.0
-						12000   96.5
-						14100   93.5
+						-2000 112.0
+						0 110.0
+						2000 108.0
+						4000 107.5
+						6000 105.5
+						8000 103.0
+						9200 101.2
+						10000 100.0
+						12000 96.5
+						14100 93.5
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<!-- VMCG -->
 		<fcs_function name="/FMGC/internal/vmcg-kt">
 			<function>
@@ -773,22 +731,22 @@
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
 					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
 					<tableData>
-						       10     15     20
-						-2000  111.5  109.5  109.0
-						    0  109.5  107.5  107.0
-						 2000  107.5  105.5  105.0
-						 4000  107.0  105.0  104.5
-						 6000  105.0  103.0  103.0
-						 8000  103.0  101.0  100.5
-						 9200  101.0   99.0   98.5
-						10000  100.0   98.0   97.5
-						12000   96.5   94.5   94.0
-						14100   93.0   91.0   91.0
+						10 15 20
+						-2000 111.5 109.5 109.0
+						0 109.5 107.5 107.0
+						2000 107.5 105.5 105.0
+						4000 107.0 105.0 104.5
+						6000 105.0 103.0 103.0
+						8000 103.0 101.0 100.5
+						9200 101.0 99.0 98.5
+						10000 100.0 98.0 97.5
+						12000 96.5 94.5 94.0
+						14100 93.0 91.0 91.0
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<!-- Slat -->
 		<fcs_function name="/FMGC/internal/vls-factor-conf-0">
 			<function>
@@ -797,14 +755,14 @@
 					<table>
 						<independentVar lookup="row">atmosphere/density-altitude</independentVar>
 						<tableData>
-							    0  0.00
-							45000  0.18
+							0 0.00
+							45000 0.18
 						</tableData>
 					</table>
 				</sum>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/FMGC/internal/vls-factor-conf-f">
 			<function>
 				<sum>
@@ -812,45 +770,45 @@
 					<table>
 						<independentVar lookup="row">atmosphere/density-altitude</independentVar>
 						<tableData>
-							    0  0.00
-							45000  0.18
+							0 0.00
+							45000 0.18
 						</tableData>
 					</table>
 				</sum>
 			</function>
 		</fcs_function>
-		
+
 		<pure_gain name="/FMGC/internal/slat">
 			<input>/FMGC/internal/vs1g-conf-0</input>
 			<gain>/FMGC/internal/vls-factor-conf-0</gain>
 		</pure_gain>
-		
+
 		<pure_gain name="/FMGC/internal/slat-tow">
 			<input>/FMGC/internal/tow-vs1g-conf-0</input>
 			<gain>/FMGC/internal/vls-factor-conf-0</gain>
 		</pure_gain>
-		
+
 		<!-- Flap 2 -->
 		<pure_gain name="/FMGC/internal/flap-2">
 			<input>/FMGC/internal/vs1g-conf-1f</input>
 			<gain>/FMGC/internal/vls-factor-conf-f</gain>
 		</pure_gain>
-		
+
 		<pure_gain name="/FMGC/internal/flap-2-tow">
 			<input>/FMGC/internal/tow-vs1g-conf-1f</input>
 			<gain>/FMGC/internal/vls-factor-conf-f</gain>
 		</pure_gain>
-		
+
 		<!-- Flap 3 -->
 		<pure_gain name="/FMGC/internal/flap-3">
 			<input>/FMGC/internal/vs1g-conf-2</input>
 			<gain>/FMGC/internal/vls-factor-conf-f</gain>
 		</pure_gain>
-	
+
 	</channel>
-	
+
 	<channel name="FMGC Misc" execrate="8">
-		
+
 		<summer name="/it-autoflight/internal/vmo-mmo-error">
 			<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
 			<input>-/FMGC/internal/vmo-mmo</input>
@@ -859,7 +817,7 @@
 				<max>5</max>
 			</clipto>
 		</summer>
-		
+
 		<fcs_function name="/FMGC/internal/vls-switched-plus-5">
 			<function>
 				<ifthen>
@@ -875,7 +833,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/it-autoflight/internal/vls-error">
 			<function>
 				<ifthen>
@@ -899,44 +857,42 @@
 				<max>5</max>
 			</clipto>
 		</fcs_function>
-		
+
 		<switch name="/FMGC/internal/to-state">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/gear/gear[0]/wow eq 1
-				/controls/flight/flaps-pos lt 5
-				<test logic="OR">
+			<default value="0" />
+			<test logic="AND" value="1"> /gear/gear[0]/wow eq 1 /controls/flight/flaps-pos lt 5 <test
+					logic="OR">
 					/fdm/jsbsim/fadec/control-1/detent ge 4
 					/fdm/jsbsim/fadec/control-2/detent ge 4
 				</test>
 			</test>
 		</switch>
-		
+
 	</channel>
-	
+
 	<channel name="FMGC" execrate="8">
-	
+
 		<switch name="/systems/fmgc/airborne">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/gear/gear[1]/wow eq 0
 				/gear/gear[2]/wow eq 0
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/fmgc/airborne-timer">
 			<input>/systems/fmgc/airborne</input>
 			<rate_limit sense="decr">100</rate_limit>
 			<rate_limit sense="incr">0.2</rate_limit>
 		</actuator>
-		
+
 		<switch name="/systems/fmgc/airborne-5-secs">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/fmgc/airborne-timer eq 1
 			</test>
 		</switch>
-		
+
 		<fcs_function name="/systems/fmgc/cas-compare/cas-1-to-3">
 			<function>
 				<abs>
@@ -947,7 +903,7 @@
 				</abs>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/fmgc/cas-compare/cas-2-to-3">
 			<function>
 				<abs>
@@ -958,7 +914,7 @@
 				</abs>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/fmgc/cas-compare/cas-2-to-1">
 			<function>
 				<abs>
@@ -969,7 +925,7 @@
 				</abs>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-all">
 			<function>
 				<ifthen>
@@ -992,8 +948,9 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
-		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-1"> <!-- 2 and 3 are the same but 1 is different -->
+
+		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-1"> <!-- 2 and 3 are the same but 1
+			is different -->
 			<function>
 				<ifthen>
 					<or>
@@ -1029,8 +986,9 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
-		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-2"> <!-- 1 and 3 are the same but 2 is different -->
+
+		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-2"> <!-- 1 and 3 are the same but 2
+			is different -->
 			<function>
 				<ifthen>
 					<or>
@@ -1066,8 +1024,9 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
-		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-3"> <!-- 1 and 2 are the same but 3 is different -->
+
+		<fcs_function name="/systems/fmgc/cas-compare/cas-reject-3"> <!-- 1 and 2 are the same but 3
+			is different -->
 			<function>
 				<ifthen>
 					<or>
@@ -1103,7 +1062,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/fmgc/active-airspeed-src-1">
 			<function>
 				<ifthen>
@@ -1116,7 +1075,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/fmgc/active-airspeed-1">
 			<function>
 				<ifthen>
@@ -1129,7 +1088,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/fmgc/active-airspeed-src-2">
 			<function>
 				<ifthen>
@@ -1142,7 +1101,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/fmgc/active-airspeed-2">
 			<function>
 				<ifthen>
@@ -1155,7 +1114,7 @@
 				</ifthen>
 			</function>
 		</fcs_function>
-	
+
 	</channel>
 
 </system>

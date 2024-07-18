@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
-	
+
 	<!-- Sound View Logic -->
 	<logic>
 		<input>
@@ -54,7 +54,7 @@
 		</input>
 		<output>/sim/sound/internal-custom</output>
 	</logic>
-	
+
 	<logic>
 		<input>
 			<not>
@@ -66,7 +66,7 @@
 		</input>
 		<output>/sim/sound/external-custom</output>
 	</logic>
-	
+
 	<!-- Misc -->
 	<filter>
 		<type>gain</type>
@@ -77,16 +77,25 @@
 					<property>/sim/sound/internal-custom</property>
 					<table>
 						<property>/sim/current-view/z-offset-m</property>
-						<entry><ind>-8.0</ind> <dep>0.1</dep></entry>
-						<entry><ind> 0.0</ind> <dep>1.0</dep></entry>
-						<entry><ind>22.0</ind> <dep>0.1</dep></entry>
+						<entry>
+							<ind>-8.0</ind>
+							<dep>0.1</dep>
+						</entry>
+						<entry>
+							<ind> 0.0</ind>
+							<dep>1.0</dep>
+						</entry>
+						<entry>
+							<ind>22.0</ind>
+							<dep>0.1</dep>
+						</entry>
 					</table>
 				</product>
-			</expression> 
+			</expression>
 		</input>
 		<output>/sim/sound/other/gear</output>
 	</filter>
-	
+
 	<filter>
 		<type>gain</type>
 		<gain>1</gain>
@@ -95,19 +104,37 @@
 				<product>
 					<property>/sim/current-view/internal</property>
 					<table>
-						<product><property>/velocities/airspeed-kt</property><value>1</value>  </product>
-						<entry><ind>  0</ind><dep>0.0001</dep></entry>
-						<entry><ind> 10</ind><dep>0.0010</dep></entry>
-						<entry><ind>100</ind><dep>0.0100</dep></entry>
-						<entry><ind>200</ind><dep>0.1000</dep></entry>
-						<entry><ind>250</ind><dep>0.5000</dep></entry>
+						<product>
+							<property>/velocities/airspeed-kt</property>
+							<value>1</value>
+						</product>
+						<entry>
+							<ind> 0</ind>
+							<dep>0.0001</dep>
+						</entry>
+						<entry>
+							<ind> 10</ind>
+							<dep>0.0010</dep>
+						</entry>
+						<entry>
+							<ind>100</ind>
+							<dep>0.0100</dep>
+						</entry>
+						<entry>
+							<ind>200</ind>
+							<dep>0.1000</dep>
+						</entry>
+						<entry>
+							<ind>250</ind>
+							<dep>0.5000</dep>
+						</entry>
 					</table>
 				</product>
-			</expression> 
+			</expression>
 		</input>
 		<output>/sim/sound/other/cockpit-wind-v</output>
 	</filter>
-	
+
 	<filter>
 		<type>gain</type>
 		<gain>1</gain>
@@ -121,18 +148,33 @@
 			<expression>
 				<table>
 					<property>/velocities/airspeed-kt</property>
-					<entry><ind>  0</ind><dep>0.0001</dep></entry>
-					<entry><ind> 10</ind><dep>0.0010</dep></entry>
-					<entry><ind>100</ind><dep>0.0100</dep></entry>
-					<entry><ind>200</ind><dep>0.1000</dep></entry>
-					<entry><ind>250</ind><dep>0.5000</dep></entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>0.0001</dep>
+					</entry>
+					<entry>
+						<ind> 10</ind>
+						<dep>0.0010</dep>
+					</entry>
+					<entry>
+						<ind>100</ind>
+						<dep>0.0100</dep>
+					</entry>
+					<entry>
+						<ind>200</ind>
+						<dep>0.1000</dep>
+					</entry>
+					<entry>
+						<ind>250</ind>
+						<dep>0.5000</dep>
+					</entry>
 				</table>
-			</expression> 
+			</expression>
 		</input>
 		<input>0</input>
 		<output>/sim/sound/other/wind-v</output>
 	</filter>
-	
+
 	<filter>
 		<type>gain</type>
 		<gain>1</gain>
@@ -142,15 +184,21 @@
 					<property>/sim/sound/internal-custom</property>
 					<table>
 						<property>/velocities/airspeed-kt</property>
-						<entry><ind>  0</ind><dep>0.5</dep></entry>
-						<entry><ind>250</ind><dep>1.0</dep></entry>
+						<entry>
+							<ind> 0</ind>
+							<dep>0.5</dep>
+						</entry>
+						<entry>
+							<ind>250</ind>
+							<dep>1.0</dep>
+						</entry>
 					</table>
 				</product>
-			</expression> 
+			</expression>
 		</input>
 		<output>/sim/sound/other/wind-p</output>
 	</filter>
-	
+
 	<filter>
 		<type>gain</type>
 		<gain>1</gain>
@@ -161,16 +209,25 @@
 			<expression>
 				<table>
 					<property>/velocities/groundspeed-kt</property>
-					<entry><ind> 10</ind><dep>0.0</dep></entry>
-					<entry><ind>110</ind><dep>0.5</dep></entry>
-					<entry><ind>140</ind><dep>1.0</dep></entry>
+					<entry>
+						<ind> 10</ind>
+						<dep>0.0</dep>
+					</entry>
+					<entry>
+						<ind>110</ind>
+						<dep>0.5</dep>
+					</entry>
+					<entry>
+						<ind>140</ind>
+						<dep>1.0</dep>
+					</entry>
 				</table>
-			</expression> 
+			</expression>
 		</input>
 		<input>0</input>
 		<output>/sim/sound/other/cockpit-roll-v</output>
 	</filter>
-	
+
 	<filter>
 		<type>gain</type>
 		<gain>1</gain>
@@ -184,16 +241,25 @@
 			<expression>
 				<table>
 					<property>/velocities/groundspeed-kt</property>
-					<entry><ind> 10</ind><dep>0.0</dep></entry>
-					<entry><ind>110</ind><dep>0.5</dep></entry>
-					<entry><ind>140</ind><dep>1.0</dep></entry>
+					<entry>
+						<ind> 10</ind>
+						<dep>0.0</dep>
+					</entry>
+					<entry>
+						<ind>110</ind>
+						<dep>0.5</dep>
+					</entry>
+					<entry>
+						<ind>140</ind>
+						<dep>1.0</dep>
+					</entry>
 				</table>
-			</expression> 
+			</expression>
 		</input>
 		<input>0</input>
 		<output>/sim/sound/other/roll-v</output>
 	</filter>
-	
+
 	<filter>
 		<type>gain</type>
 		<gain>1</gain>
@@ -204,15 +270,21 @@
 			<expression>
 				<table>
 					<property>/velocities/groundspeed-kt</property>
-					<entry><ind> 10</ind><dep>0.5</dep></entry>
-					<entry><ind>140</ind><dep>1.0</dep></entry>
+					<entry>
+						<ind> 10</ind>
+						<dep>0.5</dep>
+					</entry>
+					<entry>
+						<ind>140</ind>
+						<dep>1.0</dep>
+					</entry>
 				</table>
-			</expression> 
+			</expression>
 		</input>
 		<input>0</input>
 		<output>/sim/sound/other/roll-p</output>
 	</filter>
-	
+
 	<filter>
 		<type>noise-spike</type>
 		<max-rate-of-change>0.5</max-rate-of-change>
@@ -225,7 +297,7 @@
 		<input>0</input>
 		<output>/sim/sound/other/air-con</output>
 	</filter>
-	
+
 	<filter>
 		<type>gain</type>
 		<gain>1</gain>

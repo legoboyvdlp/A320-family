@@ -5,7 +5,7 @@
 <PropertyList>
 
 	<path>res/Upper-ECAM.ac</path>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>uecam.screen</object-name>
@@ -18,12 +18,14 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>uecam.screen</object-name>
 		<condition>
-			<not><property>modes/ecam-du-xfr</property></not>
+			<not>
+				<property>modes/ecam-du-xfr</property>
+			</not>
 		</condition>
 	</animation>
 
@@ -53,7 +55,9 @@
 			<outer-angle>90</outer-angle> <!-- 0-90, but greater than inner -->
 			<black-angle>90</black-angle> <!-- 0-90, but greater than outer -->
 			<dirt-factor>0.07</dirt-factor>
-			<contrast><use>instrumentation/du/du3-contrast</use></contrast>
+			<contrast>
+				<use>instrumentation/du/du3-contrast</use>
+			</contrast>
 		</parameters>
 		<object-name>uecam.screen</object-name>
 	</effect>

@@ -58,7 +58,8 @@ Distribute under the terms of GPLv2.
 
 	<animation>
 		<type>scale</type>
-		<!-- Object names must be here, because we need to scale each separately, not the the whole thing at once. -->
+		<!-- Object names must be here, because we need to scale each separately, not the the whole
+		thing at once. -->
 		<object-name>Waypoint</object-name>
 		<object-name>WingtipL</object-name>
 		<object-name>WingtipR</object-name>

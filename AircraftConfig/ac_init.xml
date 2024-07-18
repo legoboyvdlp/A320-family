@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -8,33 +8,33 @@
 
 	<name>aircraft-config-init</name>
 	<layout>vbox</layout>
-    <pref-width>260</pref-width>
+	<pref-width>260</pref-width>
 
-    <group>
-        <layout>hbox</layout>
-        <text>
-            <halign>left</halign>
-            <label>Please wait...</label>
-        </text>
-    </group>
-	
-    <hrule/>
-	
-		<group>
-			<layout>vbox</layout>
-			
-			<text>
-				<halign>left</halign>
-				<label>Initializing...</label>
-			</text>
-			<text>
-				<border>1</border>
-				<label>9</label>
-				<valign>center</valign>
-				<property>/systems/acconfig/spin</property>
-				<live>1</live>
-			</text>
-			
-		</group>
-	
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Please wait...</label>
+		</text>
+	</group>
+
+	<hrule />
+
+	<group>
+		<layout>vbox</layout>
+
+		<text>
+			<halign>left</halign>
+			<label>Initializing...</label>
+		</text>
+		<text>
+			<border>1</border>
+			<label>9</label>
+			<valign>center</valign>
+			<property>/systems/acconfig/spin</property>
+			<live>1</live>
+		</text>
+
+	</group>
+
 </PropertyList>

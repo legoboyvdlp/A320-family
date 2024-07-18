@@ -23,12 +23,12 @@
 				<ind>1</ind>
 				<dep>1.6</dep>
 			</entry>
-		</interpolation> 
+		</interpolation>
 		<axis>
 			<z>1</z>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>gourmet_railing</object-name>
@@ -39,7 +39,7 @@
 			<z>1</z>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>gourmet_scissor_outer</object-name>
@@ -50,7 +50,7 @@
 			<z>1</z>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>gourmet_scissor_outer</object-name>
@@ -65,7 +65,7 @@
 			<z2-m>-2.5358</z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>rotate</type>
 		<object-name>gourmet_scissor_inner</object-name>

@@ -5,28 +5,28 @@
 <system name="A320: Lights">
 
 	<channel name="Interior Lights" execrate="8">
-	
+
 		<switch name="/controls/lighting/reading-light-left">
 			<default value="0" />
 			<test value="/controls/lighting/reading-light-left-knb">
 				/systems/electrical/bus/dc-1 gt 25
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/reading-light-right">
 			<default value="0" />
 			<test value="/controls/lighting/reading-light-right-knb">
 				/systems/electrical/bus/dc-1 gt 25
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/map-light-left">
 			<default value="0" />
 			<test value="/controls/lighting/map-light-left-knb">
 				/systems/electrical/bus/dc-1 gt 25
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/map-light-right">
 			<default value="0" />
 			<test value="/controls/lighting/map-light-right-knb">
@@ -39,42 +39,42 @@
 				/systems/electrical/bus/dc-1 gt 25
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/console-floor-light-right">
 			<default value="0" />
 			<test value="/controls/lighting/console-floor-light-sw-right">
 				/systems/electrical/bus/dc-2 gt 25
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/panel-flood-light-left">
 			<default value="0" />
 			<test logic="OR" value="/controls/lighting/main-flood-knb">
 				/systems/electrical/bus/dc-ess gt 25
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/panel-flood-light-right">
 			<default value="0" />
 			<test logic="OR" value="/controls/lighting/main-flood-knb">
 				/systems/electrical/bus/dc-1 gt 25
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/pedestal-light">
 			<default value="0" />
 			<test value="/controls/lighting/ped-flood-knb">
 				/systems/electrical/bus/dc-1 gt 25
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/fcu-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/fcu-panel-knb">
 				/systems/electrical/bus/ac-1 gt 110
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/fcu-digit-norm-tied">
 			<default value="0" />
 			<test logic="OR" value="/controls/lighting/fcu-digit-knb">
@@ -82,21 +82,21 @@
 				/systems/electrical/bus/ac-ess-shed ge 110
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/main-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/main-panel-knb">
 				/systems/electrical/bus/ac-1 gt 110
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/overhead-panel-norm-tied">
 			<default value="0" />
 			<test value="/controls/lighting/overhead-panel-knb">
 				/systems/electrical/bus/ac-1 gt 110
 			</test>
 		</switch>
-		
+
 		<switch name="/sim/model/lights/dome-light">
 			<default value="0" />
 			<test logic="AND" value="0.5">
@@ -108,7 +108,7 @@
 				/systems/electrical/bus/dc-ess ge 25
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/stby-compass-tied">
 			<default value="0" />
 			<test value="/controls/lighting/stby-compass-switch">
@@ -116,49 +116,45 @@
 			</test>
 		</switch>
 	</channel>
-	
+
 	<channel name="Exterior Lights" execrate="8">
-		
+
 		<switch name="/sim/model/lights/nose-lights">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/lighting/taxi-light-switch eq 1
-				/gear/gear[0]/position-norm gt 0.8
-				<test logic="OR">
+			<default value="0" />
+			<test logic="AND" value="1"> /controls/lighting/taxi-light-switch eq 1
+				/gear/gear[0]/position-norm gt 0.8 <test logic="OR">
 					/systems/electrical/bus/ac-1 ge 110
 					/systems/electrical/bus/ac-2 ge 110
 				</test>
 			</test>
-			<test logic="AND" value="0.85">
-				/controls/lighting/taxi-light-switch eq 0.5
-				/gear/gear[0]/position-norm gt 0.8
-				<test logic="OR">
+			<test logic="AND" value="0.85"> /controls/lighting/taxi-light-switch eq 0.5
+				/gear/gear[0]/position-norm gt 0.8 <test logic="OR">
 					/systems/electrical/bus/ac-1 ge 110
 					/systems/electrical/bus/ac-2 ge 110
 				</test>
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/leftturnoff">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/controls/lighting/turnoff-light-switch eq 1
 				/gear/gear[0]/position-norm gt 0.8
 				/systems/electrical/bus/ac-1 ge 110
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/rightturnoff">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/controls/lighting/turnoff-light-switch eq 1
 				/gear/gear[0]/position-norm gt 0.8
 				/systems/electrical/bus/ac-2 ge 110
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/electrical/nav-lights-power">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/electrical/bus/dc-1 ge 25
 				/systems/electrical/bus/dc-2 ge 25
@@ -166,9 +162,9 @@
 				/systems/electrical/bus/ac-2 ge 110
 			</test>
 		</switch>
-		
+
 		<switch name="/sim/model/lights/logo-lights">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				<test logic="OR">
 					/controls/lighting/nav-lights-switch eq 1
@@ -184,20 +180,19 @@
 				</test>
 			</test>
 		</switch>
-		
+
 		<switch name="/sim/model/lights/nav-lights">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				<test logic="OR">
 					/controls/lighting/nav-lights-switch eq 1
 					/controls/lighting/nav-lights-switch eq 2
 				</test>
-				/systems/electrical/nav-lights-power eq 1
-			</test>
+				/systems/electrical/nav-lights-power eq 1 </test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/strobe">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/controls/switches/strobe eq 1
 				/systems/electrical/bus/ac-2 ge 110
@@ -209,96 +204,92 @@
 				/gear/gear[2]/wow eq 0
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/beacon">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/switches/beacon eq 1
-				<test logic="OR">
-					/systems/electrical/bus/ac-1 ge 110
+			<default value="0" />
+			<test logic="AND" value="1"> /controls/switches/beacon eq 1 <test logic="OR">
+				/systems/electrical/bus/ac-1 ge 110
 					/systems/electrical/bus/ac-2 ge 110
 				</test>
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/wing-lights">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/switches/wing-lights eq 1
-				<test logic="OR">
-					/systems/electrical/bus/ac-1 ge 110
+			<default value="0" />
+			<test logic="AND" value="1"> /controls/switches/wing-lights eq 1 <test logic="OR">
+				/systems/electrical/bus/ac-1 ge 110
 					/systems/electrical/bus/ac-2 ge 110
 				</test>
 			</test>
 		</switch>
-		
+
 	</channel>
-	
+
 	<channel name="External lights">
-		
+
 		<switch name="/controls/lighting/landing-lights[1]">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/controls/switches/landing-lights-l eq 1
 				/systems/electrical/bus/ac-1 ge 110
 				/controls/lighting/landing-light-pos-l eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/landing-lights[2]">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/controls/switches/landing-lights-r eq 1
 				/systems/electrical/bus/ac-2 ge 110
 				/controls/lighting/landing-light-pos-r eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/landing-light-pos-l-cmd">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/controls/switches/landing-lights-l ne 0
 			</test>
 		</switch>
-		
-		
+
+
 		<switch name="/controls/lighting/landing-light-pos-r-cmd">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/controls/switches/landing-lights-r ne 0
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/landing-light-pos-l-power">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="0.2">
 				/systems/electrical/bus/ac-1 ge 110
 			</test>
 		</switch>
-		
+
 		<switch name="/controls/lighting/landing-light-pos-r-power">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="0.2">
 				/systems/electrical/bus/ac-2 ge 110
 			</test>
 		</switch>
-		
+
 		<actuator name="/controls/lighting/landing-light-pos-l">
 			<input>/controls/lighting/landing-light-pos-l-cmd</input>
 			<rate_limit>/controls/lighting/landing-light-pos-l-power</rate_limit>
 		</actuator>
-		
+
 		<actuator name="/controls/lighting/landing-light-pos-r">
 			<input>/controls/lighting/landing-light-pos-r-cmd</input>
 			<rate_limit>/controls/lighting/landing-light-pos-r-power</rate_limit>
 		</actuator>
-		
+
 	</channel>
-	
+
 	<channel name="Signs">
-	
+
 		<switch name="/controls/lighting/no-smoking-sign">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				<test logic="OR">
 					/systems/electrical/bus/dc-ess ge 25
@@ -309,18 +300,16 @@
 					/controls/switches/no-smoking-sign eq 1
 				</test>
 			</test>
-			<test logic="AND" value="1">
-				/controls/switches/no-smoking-sign eq 0.5
-				/gear/gear[0]/position-norm ge 0.8
-				<test logic="OR">
+			<test logic="AND" value="1"> /controls/switches/no-smoking-sign eq 0.5
+				/gear/gear[0]/position-norm ge 0.8 <test logic="OR">
 					/systems/electrical/bus/dc-ess ge 25
 					/systems/electrical/bus/dc-service-bus ge 25
 				</test>
 			</test>
 		</switch>
-	
+
 		<switch name="/controls/lighting/seatbelt-sign">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				<test logic="OR">
 					/systems/electrical/bus/dc-ess ge 25
@@ -332,7 +321,7 @@
 				</test>
 			</test>
 		</switch>
-		
+
 	</channel>
 
 </system>

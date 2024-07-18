@@ -6,18 +6,20 @@
 
 	<name>route-manager</name>
 	<layout>vbox</layout>
-    <pref-width>260</pref-width>
+	<pref-width>260</pref-width>
 
-    <group>
-        <layout>hbox</layout>
-		
-        <text>
-            <halign>left</halign>
-            <label>System</label>
-        </text>
-		
-		<empty><stretch>1</stretch></empty>
-		
+	<group>
+		<layout>hbox</layout>
+
+		<text>
+			<halign>left</halign>
+			<label>System</label>
+		</text>
+
+		<empty>
+			<stretch>1</stretch>
+		</empty>
+
 		<button>
 			<halign>right</halign>
 			<pref-width>20</pref-width>
@@ -28,13 +30,13 @@
 				<command>dialog-close</command>
 			</binding>
 		</button>
-    </group>
-	
-    <hrule/>
-	
+	</group>
+
+	<hrule />
+
 	<group>
 		<layout>vbox</layout>
-		
+
 		<text>
 			<halign>left</halign>
 			<label>The Route Manager is not supported.</label>
@@ -43,7 +45,7 @@
 			<halign>left</halign>
 			<label>Use the MCDU to manage the flightplan.</label>
 		</text>
-		
+
 		<button>
 			<halign>center</halign>
 			<legend>Open MCDU</legend>
@@ -56,7 +58,7 @@
 				<command>dialog-close</command>
 			</binding>
 		</button>
-	
+
 	</group>
-	
+
 </PropertyList>

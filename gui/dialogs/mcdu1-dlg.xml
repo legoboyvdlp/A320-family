@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -8,7 +8,7 @@
 	<layout>table</layout>
 	<x>0</x>
 	<y>0</y>
-	
+
 	<group>
 		<row>0</row>
 		<col>0</col>
@@ -50,24 +50,24 @@
 			</binding>
 		</button>
 	</group>
-	
+
 	<hrule>
 		<row>1</row>
 		<col>0</col>
 	</hrule>
-	
+
 	<group>
 		<row>2</row>
 		<col>0</col>
 		<layout>hbox</layout>
-		
+
 		<group>
 			<layout>vbox</layout>
-			
+
 			<text>
 				<label></label>
 			</text>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -83,7 +83,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -99,7 +99,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -115,7 +115,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -131,7 +131,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -147,7 +147,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -163,12 +163,12 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<text>
 				<label></label>
 			</text>
 		</group>
-		
+
 		<canvas>
 			<name>mcdu</name>
 			<valign>fill</valign>
@@ -204,14 +204,14 @@
 				</unload>
 			</nasal>
 		</canvas>
-		
+
 		<group>
 			<layout>vbox</layout>
-			
+
 			<text>
 				<label></label>
 			</text>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -227,7 +227,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -243,7 +243,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -259,7 +259,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -275,7 +275,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -291,7 +291,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>-</legend>
 				<pref-height>21</pref-height>
@@ -307,18 +307,18 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<text>
 				<label></label>
 			</text>
 		</group>
 	</group>
-	
+
 	<group>
 		<row>3</row>
 		<col>0</col>
 		<layout>hbox</layout>
-		
+
 		<button>
 			<legend>DIR</legend>
 			<pref-height>25</pref-height>
@@ -334,7 +334,7 @@
 				</condition>
 			</binding>
 		</button>
-		
+
 		<button>
 			<legend>PROG</legend>
 			<pref-height>25</pref-height>
@@ -350,7 +350,7 @@
 				</condition>
 			</binding>
 		</button>
-		
+
 		<button>
 			<legend>PERF</legend>
 			<pref-height>25</pref-height>
@@ -366,7 +366,7 @@
 				</condition>
 			</binding>
 		</button>
-		
+
 		<button>
 			<legend>INIT</legend>
 			<pref-height>25</pref-height>
@@ -382,7 +382,7 @@
 				</condition>
 			</binding>
 		</button>
-		
+
 		<button>
 			<legend>DATA</legend>
 			<pref-height>25</pref-height>
@@ -398,25 +398,25 @@
 				</condition>
 			</binding>
 		</button>
-		
+
 		<button>
 			<legend></legend>
 			<pref-height>25</pref-height>
 			<pref-width>40</pref-width>
 		</button>
-		
+
 		<button>
 			<legend>BRT</legend>
 			<pref-height>25</pref-height>
 			<pref-width>33</pref-width>
 		</button>
 	</group>
-	
+
 	<group>
 		<row>4</row>
 		<col>0</col>
 		<layout>hbox</layout>
-		
+
 		<button>
 			<legend>FPLN</legend>
 			<pref-height>25</pref-height>
@@ -432,7 +432,7 @@
 				</condition>
 			</binding>
 		</button>
-		
+
 		<button>
 			<legend>RAD</legend>
 			<pref-height>25</pref-height>
@@ -448,7 +448,7 @@
 				</condition>
 			</binding>
 		</button>
-		
+
 		<button>
 			<legend>FUEL</legend>
 			<pref-height>25</pref-height>
@@ -464,13 +464,13 @@
 				</condition>
 			</binding>
 		</button>
-		
+
 		<button>
 			<legend>SEC</legend>
 			<pref-height>25</pref-height>
 			<pref-width>40</pref-width>
 		</button>
-		
+
 		<button>
 			<legend>ATC</legend>
 			<pref-height>25</pref-height>
@@ -486,7 +486,7 @@
 				</condition>
 			</binding>
 		</button>
-		
+
 		<button>
 			<legend>MENU</legend>
 			<pref-height>25</pref-height>
@@ -502,25 +502,25 @@
 				</condition>
 			</binding>
 		</button>
-		
+
 		<button>
 			<legend>DIM</legend>
 			<pref-height>25</pref-height>
 			<pref-width>33</pref-width>
 		</button>
 	</group>
-	
+
 	<group>
 		<row>5</row>
 		<col>0</col>
 		<layout>hbox</layout>
-		
+
 		<group>
 			<layout>vbox</layout>
-			
+
 			<group>
 				<layout>table</layout>
-				
+
 				<button>
 					<row>0</row>
 					<col>0</col>
@@ -538,7 +538,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>1</row>
 					<col>0</col>
@@ -556,7 +556,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>2</row>
 					<col>0</col>
@@ -574,7 +574,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>0</row>
 					<col>1</col>
@@ -582,7 +582,7 @@
 					<pref-height>25</pref-height>
 					<pref-width>40</pref-width>
 				</button>
-				
+
 				<button>
 					<row>1</row>
 					<col>1</col>
@@ -600,7 +600,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>2</row>
 					<col>1</col>
@@ -619,10 +619,10 @@
 					</binding>
 				</button>
 			</group>
-			
+
 			<group>
 				<layout>table</layout>
-				
+
 				<button>
 					<row>0</row>
 					<col>0</col>
@@ -640,7 +640,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>1</row>
 					<col>0</col>
@@ -658,7 +658,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>2</row>
 					<col>0</col>
@@ -676,7 +676,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>3</row>
 					<col>0</col>
@@ -694,7 +694,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>0</row>
 					<col>1</col>
@@ -712,7 +712,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>1</row>
 					<col>1</col>
@@ -730,7 +730,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>2</row>
 					<col>1</col>
@@ -748,7 +748,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>3</row>
 					<col>1</col>
@@ -766,7 +766,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>0</row>
 					<col>2</col>
@@ -784,7 +784,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>1</row>
 					<col>2</col>
@@ -802,7 +802,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>2</row>
 					<col>2</col>
@@ -820,7 +820,7 @@
 						</condition>
 					</binding>
 				</button>
-				
+
 				<button>
 					<row>3</row>
 					<col>2</col>
@@ -840,10 +840,10 @@
 				</button>
 			</group>
 		</group>
-		
+
 		<group>
 			<layout>table</layout>
-			
+
 			<button>
 				<row>0</row>
 				<col>0</col>
@@ -861,7 +861,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>1</row>
 				<col>0</col>
@@ -879,7 +879,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>2</row>
 				<col>0</col>
@@ -897,7 +897,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>3</row>
 				<col>0</col>
@@ -915,7 +915,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>4</row>
 				<col>0</col>
@@ -933,7 +933,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>5</row>
 				<col>0</col>
@@ -951,7 +951,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>0</row>
 				<col>1</col>
@@ -969,7 +969,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>1</row>
 				<col>1</col>
@@ -987,7 +987,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>2</row>
 				<col>1</col>
@@ -1005,7 +1005,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>3</row>
 				<col>1</col>
@@ -1023,7 +1023,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>4</row>
 				<col>1</col>
@@ -1041,7 +1041,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>5</row>
 				<col>1</col>
@@ -1059,7 +1059,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>0</row>
 				<col>2</col>
@@ -1077,7 +1077,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>1</row>
 				<col>2</col>
@@ -1095,7 +1095,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>2</row>
 				<col>2</col>
@@ -1113,7 +1113,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>3</row>
 				<col>2</col>
@@ -1131,7 +1131,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>4</row>
 				<col>2</col>
@@ -1149,7 +1149,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>5</row>
 				<col>2</col>
@@ -1167,7 +1167,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>0</row>
 				<col>3</col>
@@ -1185,7 +1185,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>1</row>
 				<col>3</col>
@@ -1203,7 +1203,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>2</row>
 				<col>3</col>
@@ -1221,7 +1221,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>3</row>
 				<col>3</col>
@@ -1239,7 +1239,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>4</row>
 				<col>3</col>
@@ -1257,7 +1257,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>5</row>
 				<col>3</col>
@@ -1275,7 +1275,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>0</row>
 				<col>4</col>
@@ -1293,7 +1293,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>1</row>
 				<col>4</col>
@@ -1311,7 +1311,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>2</row>
 				<col>4</col>
@@ -1329,7 +1329,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>3</row>
 				<col>4</col>
@@ -1347,7 +1347,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>4</row>
 				<col>4</col>
@@ -1365,7 +1365,7 @@
 					</condition>
 				</binding>
 			</button>
-			
+
 			<button>
 				<row>5</row>
 				<col>4</col>

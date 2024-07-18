@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -8,7 +8,7 @@
 
 	<name>aircraft-config-rendering</name>
 	<layout>vbox</layout>
-	
+
 	<group>
 		<layout>hbox</layout>
 		<text>
@@ -26,46 +26,50 @@
 			</binding>
 		</button>
 	</group>
-	
-	<hrule/>
-	
+
+	<hrule />
+
 	<group>
 		<layout>vbox</layout>
-		
+
 		<text>
 			<halign>left</halign>
 			<label>Aircraft Config has detected that rendering settings are not set properly!</label>
 		</text>
-		
+
 		<text>
 			<halign>left</halign>
-			<label>This means lighting effects on the exterior and in the virtual cockpit will not be visible.</label>
+			<label>This means lighting effects on the exterior and in the virtual cockpit will not
+				be visible.</label>
 		</text>
-		
+
 		<text>
 			<halign>left</halign>
-			<label>Atmospheric Light Scattering (ALS) must be on, and some shader settings turned up.</label>
+			<label>Atmospheric Light Scattering (ALS) must be on, and some shader settings turned
+				up.</label>
 		</text>
-		
-		<hrule/>
-		
+
+		<hrule />
+
 		<text>
 			<halign>left</halign>
-			<label>Would you like Aircraft Config to automatically turn on ALS and fix shader settings?</label>
+			<label>Would you like Aircraft Config to automatically turn on ALS and fix shader
+				settings?</label>
 		</text>
-		
+
 		<text>
 			<halign>left</halign>
-			<label>If the settings do not save after fixing, try quitting FlightGear through File -&gt; Exit after fixing.</label>
+			<label>If the settings do not save after fixing, try quitting FlightGear through File
+				-&gt; Exit after fixing.</label>
 		</text>
-	
+
 	</group>
-	
-	<hrule/>
-	
+
+	<hrule />
+
 	<group>
 		<layout>hbox</layout>
-	
+
 		<checkbox>
 			<label>Do not warn me about rendering settings again</label>
 			<halign>center</halign>
@@ -80,19 +84,19 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.writeSettings();
+					acconfig.writeSettings();
 				</script>
 			</binding>
 			<live>true</live>
 		</checkbox>
-		
+
 	</group>
-	
-	<hrule/>
-	
+
+	<hrule />
+
 	<group>
 		<layout>hbox</layout>
-		
+
 		<button>
 			<halign>center</halign>
 			<legend>Apply minimum settings</legend>
@@ -100,14 +104,14 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.RENDERING.fixAll();
+					acconfig.RENDERING.fixAll();
 				</script>
 			</binding>
 			<binding>
 				<command>dialog-close</command>
 			</binding>
 		</button>
-		
+
 		<button>
 			<halign>center</halign>
 			<legend>Advanced: View Shader Settings</legend>
@@ -115,7 +119,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.RENDERING.fixCore();
+					acconfig.RENDERING.fixCore();
 				</script>
 			</binding>
 			<binding> <!-- Close the non-ALS shader dialog if it is open for some bizarre reason -->
@@ -130,7 +134,7 @@
 				<command>dialog-close</command>
 			</binding>
 		</button>
-		
+
 		<button>
 			<halign>center</halign>
 			<legend>Ignore</legend>
@@ -139,7 +143,7 @@
 				<command>dialog-close</command>
 			</binding>
 		</button>
-	
+
 	</group>
-	
+
 </PropertyList>

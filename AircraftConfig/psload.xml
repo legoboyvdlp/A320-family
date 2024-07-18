@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -9,12 +9,12 @@
 	<name>aircraft-config-panelstateload</name>
 	<layout>vbox</layout>
 
-    <group>
-        <layout>hbox</layout>
-        <text>
-            <halign>left</halign>
-            <label>Please wait...</label>
-        </text>
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Please wait...</label>
+		</text>
 		<!-- its broken. needs acconfig 2.0 -->
 		<!--button>
 			<halign>right</halign>
@@ -25,30 +25,30 @@
 				<command>nasal</command>
 				<script>acconfig.abortPanelStates();</script>
 			</binding>
-		</button-->	
-    </group>
-	
-    <hrule/>
-	
-		<group>
-			<layout>vbox</layout>
-			
-			<text>
-				<halign>left</halign>
-				<label>Loading Panel State, this may take a few moments...</label>
-			</text>
-			<text>
-				<halign>left</halign>
-				<label>Please be patient, and don't touch anything during this process!</label>
-			</text>
-			<text>
-				<border>1</border>
-				<label>9</label>
-				<valign>center</valign>
-				<property>/systems/acconfig/spin</property>
-				<live>1</live>
-			</text>		
-			
-		</group>
-	
+		</button-->
+	</group>
+
+	<hrule />
+
+	<group>
+		<layout>vbox</layout>
+
+		<text>
+			<halign>left</halign>
+			<label>Loading Panel State, this may take a few moments...</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>Please be patient, and don't touch anything during this process!</label>
+		</text>
+		<text>
+			<border>1</border>
+			<label>9</label>
+			<valign>center</valign>
+			<property>/systems/acconfig/spin</property>
+			<live>1</live>
+		</text>
+
+	</group>
+
 </PropertyList>

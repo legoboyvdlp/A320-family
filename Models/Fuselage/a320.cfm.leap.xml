@@ -9,7 +9,7 @@
 		<contrail1>engines/engine[0]/contrail</contrail1>
 		<contrail2>engines/engine[1]/contrail</contrail2>
 	</params>
-	
+
 	<!-- Particle Effects -->
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/contrail.xml</path>
@@ -262,7 +262,7 @@
 			<property>systems/failures/fire/engine-right-fire</property>
 		</condition>
 	</model>
-	
+
 	<!-- Animations -->
 	<animation>
 		<name>Fan spinning animation (slow)</name>
@@ -405,7 +405,7 @@
 			<z>0</z>
 		</axis>
 	</animation>
-	
+
 	<!-- Effect -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-engine-LEAP</inherits-from>
@@ -413,9 +413,7 @@
 		<object-name>EngineLEAPR</object-name>
 		<object-name>ReverserLDoorLEAP</object-name>
 		<object-name>ReverserRDoorLEAP</object-name>
-	</effect>
-
-i	<effect>
+	</effect> i <effect>
 		<inherits-from>Effects/model-transparent</inherits-from>
 		<object-name>EngineLEAP.Placards</object-name>
 	</effect>

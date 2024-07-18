@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -6,14 +6,14 @@
 
 <PropertyList>
 	<replay-config type="int">0</replay-config>
-	
+
 	<config n="0">
 		<name>A3XX Flight Recorder</name>
-		
+
 		<!-- Include Generic Stuff -->
 		<signals include="Aircraft/Generic/flightrecorder/components/position.xml" />
 		<signals include="Aircraft/Generic/flightrecorder/components/controls.xml" />
-		<signals include="Aircraft/Generic/flightrecorder/components/surfaces.xml"/>
+		<signals include="Aircraft/Generic/flightrecorder/components/surfaces.xml" />
 		<signals include="Aircraft/Generic/flightrecorder/components/engine-jet.xml">
 			<count type="int">2</count>
 		</signals>
@@ -23,7 +23,7 @@
 		<signals include="Aircraft/Generic/flightrecorder/components/tanks.xml">
 			<count type="int">5</count>
 		</signals>
-		
+
 		<!-- Now Custom Stuff -->
 		<signals>
 			<signal>

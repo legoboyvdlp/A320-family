@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -27,12 +27,12 @@
 			</binding>
 		</button>
 	</group>
-	
-	<hrule/>
+
+	<hrule />
 
 	<group>
 		<layout>hbox</layout>
-		
+
 		<button>
 			<legend>A/THR</legend>
 			<pref-width>43</pref-width>
@@ -74,10 +74,10 @@
 			</binding>
 		</button>
 	</group>
-	
+
 	<group>
 		<layout>hbox</layout>
-		
+
 		<button>
 			<legend>A/THR DISC</legend>
 			<pref-width>119</pref-width>
@@ -98,7 +98,7 @@
 
 	<group>
 		<layout>vbox</layout>
-		
+
 		<group>
 			<layout>hbox</layout>
 
@@ -112,10 +112,10 @@
 				<stretch>true</stretch>
 			</hrule>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
-			
+
 			<button>
 				<legend>Push</legend>
 				<pref-width>65</pref-width>
@@ -124,7 +124,7 @@
 					<script>fcu.FCUController.SPDPush();</script>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>Pull</legend>
 				<pref-width>65</pref-width>
@@ -133,7 +133,7 @@
 					<script>fcu.FCUController.SPDPull();</script>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>Speed/Mach</legend>
 				<binding>
@@ -141,18 +141,18 @@
 					<script>fcu.FCUController.IASMach();</script>
 				</binding>
 			</button>
-			
+
 		</group>
 
 		<group>
 			<layout>table</layout>
-			
+
 			<text>
 				<row>0</row>
 				<col>0</col>
-				<label>SPD:  </label>
+				<label>SPD: </label>
 			</text>
-			
+
 			<button>
 				<row>0</row>
 				<col>1</col>
@@ -219,7 +219,7 @@
 					</and>
 				</enable>
 			</input>
-			
+
 			<button>
 				<row>0</row>
 				<col>4</col>
@@ -267,18 +267,18 @@
 					<script>fcu.FCUController.SPDAdjust(10);</script>
 				</binding>
 			</button>
-			
+
 		</group>
-		
+
 		<group>
 			<layout>table</layout>
-			
+
 			<text>
 				<row>0</row>
 				<col>0</col>
 				<label>Mach:</label>
 			</text>
-			
+
 			<button>
 				<row>0</row>
 				<col>1</col>
@@ -345,7 +345,7 @@
 					</and>
 				</enable>
 			</input>
-			
+
 			<button>
 				<row>0</row>
 				<col>4</col>
@@ -393,7 +393,7 @@
 					<script>fcu.FCUController.SPDAdjust(10);</script>
 				</binding>
 			</button>
-			
+
 		</group>
 
 		<group>
@@ -409,10 +409,10 @@
 				<stretch>true</stretch>
 			</hrule>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
-			
+
 			<button>
 				<legend>Push</legend>
 				<pref-width>75</pref-width>
@@ -421,7 +421,7 @@
 					<script>fcu.FCUController.HDGPush();</script>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>Pull</legend>
 				<pref-width>75</pref-width>
@@ -430,7 +430,7 @@
 					<script>fcu.FCUController.HDGPull();</script>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>LOC</legend>
 				<pref-width>75</pref-width>
@@ -440,16 +440,16 @@
 				</binding>
 			</button>
 		</group>
-		
+
 		<group>
 			<layout>table</layout>
-			
+
 			<text>
 				<row>0</row>
 				<col>0</col>
 				<label>HDG:</label>
 			</text>
-			
+
 			<button>
 				<row>0</row>
 				<col>1</col>
@@ -498,7 +498,7 @@
 					</equals>
 				</enable>
 			</input>
-			
+
 			<button>
 				<row>0</row>
 				<col>4</col>
@@ -549,10 +549,10 @@
 				<stretch>true</stretch>
 			</hrule>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
-			
+
 			<button>
 				<legend>ALT Push</legend>
 				<pref-width>75</pref-width>
@@ -565,7 +565,7 @@
 					<value>8</value>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>ALT Pull</legend>
 				<pref-width>75</pref-width>
@@ -575,7 +575,7 @@
 					<value>4</value>
 				</binding>
 			</button>
-			
+
 			<button>
 				<pref-width>75</pref-width>
 				<legend>EXPED</legend>
@@ -588,12 +588,12 @@
 					<value>0</value>
 				</binding>
 			</button>
-			
+
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
-			
+
 			<button>
 				<legend>V/S Push</legend>
 				<pref-width>75</pref-width>
@@ -602,7 +602,7 @@
 					<script>fcu.FCUController.VSPush();</script>
 				</binding>
 			</button>
-			
+
 			<button>
 				<legend>V/S Pull</legend>
 				<pref-width>75</pref-width>
@@ -611,7 +611,7 @@
 					<script>fcu.FCUController.VSPull();</script>
 				</binding>
 			</button>
-			
+
 			<button>
 				<pref-width>75</pref-width>
 				<legend>APPR</legend>
@@ -621,16 +621,16 @@
 				</binding>
 			</button>
 		</group>
-		
+
 		<group>
 			<layout>table</layout>
-			
+
 			<text>
 				<row>0</row>
 				<col>0</col>
 				<label>ALT: </label>
 			</text>
-			
+
 			<button>
 				<row>0</row>
 				<col>1</col>
@@ -661,7 +661,7 @@
 				<property>/it-autoflight/input/alt</property>
 				<live>true</live>
 			</input>
-			
+
 			<button>
 				<row>0</row>
 				<col>4</col>
@@ -689,13 +689,13 @@
 
 		<group>
 			<layout>table</layout>
-			
+
 			<text>
 				<row>0</row>
 				<col>0</col>
 				<label>V/S: </label>
 			</text>
-			
+
 			<button>
 				<row>0</row>
 				<col>1</col>
@@ -744,7 +744,7 @@
 					</equals>
 				</enable>
 			</input>
-			
+
 			<button>
 				<row>0</row>
 				<col>4</col>
@@ -781,16 +781,16 @@
 				</binding>
 			</button>
 		</group>
-		
+
 		<group>
 			<layout>table</layout>
-			
+
 			<text>
 				<row>0</row>
 				<col>0</col>
 				<label>FPA:</label>
 			</text>
-			
+
 			<button>
 				<row>0</row>
 				<col>1</col>
@@ -839,7 +839,7 @@
 					</equals>
 				</enable>
 			</input>
-			
+
 			<button>
 				<row>0</row>
 				<col>4</col>
@@ -876,7 +876,7 @@
 				</binding>
 			</button>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
 
@@ -890,10 +890,10 @@
 				<stretch>true</stretch>
 			</hrule>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
-		
+
 			<text>
 				<label>HDG VS</label>
 				<visible>
@@ -903,7 +903,7 @@
 					</equals>
 				</visible>
 			</text>
-			
+
 			<button>
 				<legend>HDG VS/TRK FPA</legend>
 				<pref-width>120</pref-width>
@@ -912,7 +912,7 @@
 					<script>fcu.FCUController.TRKFPA();</script>
 				</binding>
 			</button>
-			
+
 			<text>
 				<label>TRK FPA</label>
 				<visible>
@@ -923,7 +923,7 @@
 				</visible>
 			</text>
 		</group>
-		
+
 	</group>
 
 </PropertyList>

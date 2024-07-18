@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
-	
+
 	<filter>
 		<name>Ground level diff</name>
 		<type>gain</type>
@@ -17,7 +17,7 @@
 		</reference>
 		<output>/instrumentation/pfd/ground-level-diff</output>
 	</filter>
-	
+
 	<filter>
 		<name>Target alt diff (selected)</name>
 		<type>gain</type>
@@ -31,7 +31,7 @@
 		</reference>
 		<output>/instrumentation/pfd/sel-alt-diff</output>
 	</filter>
-	
+
 	<filter>
 		<name>Target alt diff (managed)</name>
 		<type>gain</type>
@@ -45,7 +45,7 @@
 		</reference>
 		<output>/instrumentation/pfd/mng-alt-diff</output>
 	</filter>
-	
+
 	<filter>
 		<name>Track heading diff</name>
 		<type>gain</type>
@@ -58,7 +58,7 @@
 		</reference>
 		<output>/instrumentation/pfd/track-diff</output>
 	</filter>
-	
+
 	<filter>
 		<name>Heading scale</name>
 		<type>gain</type>
@@ -72,7 +72,7 @@
 		<input>/instrumentation/pfd/heading-deg</input>
 		<output>/instrumentation/pfd/heading-scale</output>
 	</filter>
-	
+
 	<filter>
 		<name>Heading bug diff</name>
 		<type>gain</type>
@@ -97,7 +97,7 @@
 			<max>180.0</max>
 		</period>
 	</filter>
-	
+
 	<filter>
 		<name>Track bug diff</name>
 		<type>gain</type>
@@ -122,7 +122,7 @@
 			<max>180.0</max>
 		</period>
 	</filter>
-	
+
 	<filter>
 		<name>Track bug diff smoothed</name>
 		<type>exponential</type>
@@ -130,7 +130,7 @@
 		<output>/instrumentation/pfd/track-hdg-diff</output>
 		<filter-time>0.16</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Altitude bug diff</name>
 		<type>gain</type>
@@ -144,7 +144,7 @@
 		</reference>
 		<output>/instrumentation/pfd/alt-diff[0]</output>
 	</filter>
-	
+
 	<filter>
 		<name>Altitude bug diff</name>
 		<type>gain</type>
@@ -158,7 +158,7 @@
 		</reference>
 		<output>/instrumentation/pfd/alt-diff[1]</output>
 	</filter>
-	
+
 	<filter>
 		<name>Altitude bug diff</name>
 		<type>gain</type>
@@ -172,7 +172,7 @@
 		</reference>
 		<output>/instrumentation/pfd/alt-diff[2]</output>
 	</filter>
-	
+
 	<filter>
 		<name>Altitude bug diff</name>
 		<type>gain</type>
@@ -186,7 +186,7 @@
 		</reference>
 		<output>/instrumentation/pfd/alt-diff[3]</output>
 	</filter>
-	
+
 	<filter>
 		<name>Altitude bug diff</name>
 		<type>gain</type>
@@ -200,7 +200,7 @@
 		</reference>
 		<output>/instrumentation/pfd/alt-diff[4]</output>
 	</filter>
-	
+
 	<filter>
 		<name>Altitude bug diff</name>
 		<type>gain</type>
@@ -214,7 +214,7 @@
 		</reference>
 		<output>/instrumentation/pfd/alt-diff[5]</output>
 	</filter>
-	
+
 	<filter>
 		<name>Localizer course diff</name>
 		<type>gain</type>
@@ -240,7 +240,7 @@
 			<max>180.0</max>
 		</period>
 	</filter>
-	
+
 	<filter>
 		<name>Speed Predictor Input</name>
 		<type>gain</type>
@@ -257,7 +257,7 @@
 		<min>0</min>
 		<max>390</max>
 	</filter>
-	
+
 	<filter>
 		<name>Speed Predictor Input</name>
 		<type>gain</type>
@@ -274,7 +274,7 @@
 		<min>0</min>
 		<max>390</max>
 	</filter>
-	
+
 	<filter>
 		<name>Speed Predictor Input</name>
 		<type>gain</type>
@@ -291,7 +291,7 @@
 		<min>0</min>
 		<max>390</max>
 	</filter>
-	
+
 	<predict-simple>
 		<name>Speed Predictor (Smoothed)</name>
 		<debug>false</debug>
@@ -300,7 +300,7 @@
 		<seconds>10.0</seconds>
 		<filter-gain>0.01</filter-gain>
 	</predict-simple>
-	
+
 	<predict-simple>
 		<name>Speed Predictor (Smoothed)</name>
 		<debug>false</debug>
@@ -309,7 +309,7 @@
 		<seconds>10.0</seconds>
 		<filter-gain>0.01</filter-gain>
 	</predict-simple>
-	
+
 	<predict-simple>
 		<name>Speed Predictor (Smoothed)</name>
 		<debug>false</debug>
@@ -318,7 +318,7 @@
 		<seconds>10.0</seconds>
 		<filter-gain>0.01</filter-gain>
 	</predict-simple>
-	
+
 	<predict-simple>
 		<name>Speed Predictor (Smoothed)</name>
 		<debug>false</debug>
@@ -327,7 +327,7 @@
 		<seconds>10.0</seconds>
 		<filter-gain>0.01</filter-gain>
 	</predict-simple>
-	
+
 	<filter>
 		<name>Speed Predictor Exponential</name>
 		<debug>false</debug>
@@ -336,7 +336,7 @@
 		<output>/instrumentation/pfd/speed-lookahead-1</output>
 		<filter-time>0.32</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Speed Predictor Exponential</name>
 		<debug>false</debug>
@@ -345,7 +345,7 @@
 		<output>/instrumentation/pfd/speed-lookahead-2</output>
 		<filter-time>0.32</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Speed Predictor Exponential</name>
 		<debug>false</debug>
@@ -354,7 +354,7 @@
 		<output>/instrumentation/pfd/speed-lookahead-3</output>
 		<filter-time>0.32</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Pitch PFD</name>
 		<type>gain</type>
@@ -363,25 +363,64 @@
 			<expression>
 				<table>
 					<property>/orientation/pitch-deg</property>
-					<entry><ind>-90.0</ind><dep>-57.50</dep></entry>
-					<entry><ind>-80.0</ind><dep>-47.50</dep></entry>
-					<entry><ind>-50.0</ind><dep>-32.50</dep></entry>
-					<entry><ind>-30.0</ind><dep>-22.50</dep></entry>
-					<entry><ind>-20.0</ind><dep>-17.50</dep></entry>
-					<entry><ind>-15.0</ind><dep>-13.75</dep></entry>
-					<entry><ind>-10.0</ind><dep>-10.00</dep></entry>
-					<entry><ind>  0.0</ind><dep>  0.00</dep></entry>
-					<entry><ind> 27.5</ind><dep> 27.50</dep></entry>
-					<entry><ind> 30.0</ind><dep> 28.75</dep></entry>
-					<entry><ind> 50.0</ind><dep> 38.75</dep></entry>
-					<entry><ind> 80.0</ind><dep> 53.75</dep></entry>
-					<entry><ind> 90.0</ind><dep> 63.75</dep></entry>
+					<entry>
+						<ind>-90.0</ind>
+						<dep>-57.50</dep>
+					</entry>
+					<entry>
+						<ind>-80.0</ind>
+						<dep>-47.50</dep>
+					</entry>
+					<entry>
+						<ind>-50.0</ind>
+						<dep>-32.50</dep>
+					</entry>
+					<entry>
+						<ind>-30.0</ind>
+						<dep>-22.50</dep>
+					</entry>
+					<entry>
+						<ind>-20.0</ind>
+						<dep>-17.50</dep>
+					</entry>
+					<entry>
+						<ind>-15.0</ind>
+						<dep>-13.75</dep>
+					</entry>
+					<entry>
+						<ind>-10.0</ind>
+						<dep>-10.00</dep>
+					</entry>
+					<entry>
+						<ind> 0.0</ind>
+						<dep> 0.00</dep>
+					</entry>
+					<entry>
+						<ind> 27.5</ind>
+						<dep> 27.50</dep>
+					</entry>
+					<entry>
+						<ind> 30.0</ind>
+						<dep> 28.75</dep>
+					</entry>
+					<entry>
+						<ind> 50.0</ind>
+						<dep> 38.75</dep>
+					</entry>
+					<entry>
+						<ind> 80.0</ind>
+						<dep> 53.75</dep>
+					</entry>
+					<entry>
+						<ind> 90.0</ind>
+						<dep> 63.75</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/pfd/pitch-deg-non-linear</output>
 	</filter>
-	
+
 	<filter>
 		<name>Ground Horizon</name>
 		<type>gain</type>
@@ -402,14 +441,26 @@
 			<expression>
 				<dif>
 					<table>
-						<property>/position/gear-agl-ft</property> 
-						<entry><ind>  1</ind><dep>  0.00</dep></entry>
-						<entry><ind>150</ind><dep> 17.35</dep></entry>
+						<property>/position/gear-agl-ft</property>
+						<entry>
+							<ind> 1</ind>
+							<dep> 0.00</dep>
+						</entry>
+						<entry>
+							<ind>150</ind>
+							<dep> 17.35</dep>
+						</entry>
 					</table>
 					<table>
 						<property>/instrumentation/pfd/pitch-deg-non-linear</property>
-						<entry><ind> 0.00</ind><dep>  0.00</dep></entry>
-						<entry><ind>17.35</ind><dep>-17.35</dep></entry>
+						<entry>
+							<ind> 0.00</ind>
+							<dep> 0.00</dep>
+						</entry>
+						<entry>
+							<ind>17.35</ind>
+							<dep>-17.35</dep>
+						</entry>
 					</table>
 				</dif>
 			</expression>
@@ -430,15 +481,30 @@
 			<expression>
 				<dif>
 					<table>
-						<property>/position/gear-agl-ft</property> 
-						<entry><ind>  1</ind><dep>  0.00</dep></entry>
-						<entry><ind>150</ind><dep> 17.35</dep></entry>
+						<property>/position/gear-agl-ft</property>
+						<entry>
+							<ind> 1</ind>
+							<dep> 0.00</dep>
+						</entry>
+						<entry>
+							<ind>150</ind>
+							<dep> 17.35</dep>
+						</entry>
 					</table>
 					<table>
 						<property>/instrumentation/pfd/pitch-deg-non-linear</property>
-						<entry><ind>-17.35</ind><dep> 17.35</dep></entry>
-						<entry><ind>  0.00</ind><dep>  0.00</dep></entry>
-						<entry><ind> 17.35</ind><dep>-17.35</dep></entry>
+						<entry>
+							<ind>-17.35</ind>
+							<dep> 17.35</dep>
+						</entry>
+						<entry>
+							<ind> 0.00</ind>
+							<dep> 0.00</dep>
+						</entry>
+						<entry>
+							<ind> 17.35</ind>
+							<dep>-17.35</dep>
+						</entry>
 					</table>
 				</dif>
 			</expression>
@@ -447,7 +513,7 @@
 		<min>-17.35</min>
 		<max>17.35</max>
 	</filter>
-	
+
 	<filter>
 		<name>Horizon Heading Pitch</name>
 		<type>gain</type>
@@ -457,7 +523,7 @@
 		<min>-17.35</min>
 		<max>17.35</max>
 	</filter>
-	
+
 	<filter>
 		<name>Vertical Speed Needle</name>
 		<type>gain</type>
@@ -466,29 +532,80 @@
 			<expression>
 				<table>
 					<property>/it-autoflight/internal/vert-speed-fpm</property>
-					<entry><ind>-6000</ind><dep>-76.6</dep></entry>
-					<entry><ind>-4000</ind><dep>-74.8</dep></entry>
-					<entry><ind>-2000</ind><dep>-73.0</dep></entry>
-					<entry><ind>-1500</ind><dep>-70.2</dep></entry>
-					<entry><ind>-1000</ind><dep>-66.5</dep></entry>
-					<entry><ind> -750</ind><dep>-59.8</dep></entry>
-					<entry><ind> -500</ind><dep>-49.0</dep></entry>
-					<entry><ind> -250</ind><dep>-30.1</dep></entry>
-					<entry><ind>    0</ind><dep>  0.0</dep></entry>
-					<entry><ind>  250</ind><dep> 30.1</dep></entry>
-					<entry><ind>  500</ind><dep> 49.0</dep></entry>
-					<entry><ind>  750</ind><dep> 59.8</dep></entry>
-					<entry><ind> 1000</ind><dep> 66.5</dep></entry>
-					<entry><ind> 1500</ind><dep> 70.2</dep></entry>
-					<entry><ind> 2000</ind><dep> 73.0</dep></entry>
-					<entry><ind> 4000</ind><dep> 74.8</dep></entry>
-					<entry><ind> 6000</ind><dep> 76.6</dep></entry>
+					<entry>
+						<ind>-6000</ind>
+						<dep>-76.6</dep>
+					</entry>
+					<entry>
+						<ind>-4000</ind>
+						<dep>-74.8</dep>
+					</entry>
+					<entry>
+						<ind>-2000</ind>
+						<dep>-73.0</dep>
+					</entry>
+					<entry>
+						<ind>-1500</ind>
+						<dep>-70.2</dep>
+					</entry>
+					<entry>
+						<ind>-1000</ind>
+						<dep>-66.5</dep>
+					</entry>
+					<entry>
+						<ind> -750</ind>
+						<dep>-59.8</dep>
+					</entry>
+					<entry>
+						<ind> -500</ind>
+						<dep>-49.0</dep>
+					</entry>
+					<entry>
+						<ind> -250</ind>
+						<dep>-30.1</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep> 0.0</dep>
+					</entry>
+					<entry>
+						<ind> 250</ind>
+						<dep> 30.1</dep>
+					</entry>
+					<entry>
+						<ind> 500</ind>
+						<dep> 49.0</dep>
+					</entry>
+					<entry>
+						<ind> 750</ind>
+						<dep> 59.8</dep>
+					</entry>
+					<entry>
+						<ind> 1000</ind>
+						<dep> 66.5</dep>
+					</entry>
+					<entry>
+						<ind> 1500</ind>
+						<dep> 70.2</dep>
+					</entry>
+					<entry>
+						<ind> 2000</ind>
+						<dep> 73.0</dep>
+					</entry>
+					<entry>
+						<ind> 4000</ind>
+						<dep> 74.8</dep>
+					</entry>
+					<entry>
+						<ind> 6000</ind>
+						<dep> 76.6</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/pfd/vs-needle</output>
 	</filter>
-	
+
 	<filter>
 		<name>Vertical Speed Digit Translate</name>
 		<type>gain</type>
@@ -497,27 +614,72 @@
 			<expression>
 				<table>
 					<property>/it-autoflight/internal/vert-speed-fpm</property>
-					<entry><ind>-6000</ind><dep> 340</dep></entry>
-					<entry><ind>-4000</ind><dep> 302</dep></entry>
-					<entry><ind>-2000</ind><dep> 269</dep></entry>
-					<entry><ind>-1500</ind><dep> 230</dep></entry>
-					<entry><ind>-1000</ind><dep> 197</dep></entry>
-					<entry><ind> -500</ind><dep> 110</dep></entry>
-					<entry><ind> -200</ind><dep>  61</dep></entry>
-					<entry><ind>    0</ind><dep>   0</dep></entry>
-					<entry><ind>  200</ind><dep> -61</dep></entry>
-					<entry><ind>  500</ind><dep>-110</dep></entry>
-					<entry><ind> 1000</ind><dep>-197</dep></entry>
-					<entry><ind> 1500</ind><dep>-230</dep></entry>
-					<entry><ind> 2000</ind><dep>-269</dep></entry>
-					<entry><ind> 4000</ind><dep>-302</dep></entry>
-					<entry><ind> 6000</ind><dep>-340</dep></entry>
+					<entry>
+						<ind>-6000</ind>
+						<dep> 340</dep>
+					</entry>
+					<entry>
+						<ind>-4000</ind>
+						<dep> 302</dep>
+					</entry>
+					<entry>
+						<ind>-2000</ind>
+						<dep> 269</dep>
+					</entry>
+					<entry>
+						<ind>-1500</ind>
+						<dep> 230</dep>
+					</entry>
+					<entry>
+						<ind>-1000</ind>
+						<dep> 197</dep>
+					</entry>
+					<entry>
+						<ind> -500</ind>
+						<dep> 110</dep>
+					</entry>
+					<entry>
+						<ind> -200</ind>
+						<dep> 61</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind> 200</ind>
+						<dep> -61</dep>
+					</entry>
+					<entry>
+						<ind> 500</ind>
+						<dep>-110</dep>
+					</entry>
+					<entry>
+						<ind> 1000</ind>
+						<dep>-197</dep>
+					</entry>
+					<entry>
+						<ind> 1500</ind>
+						<dep>-230</dep>
+					</entry>
+					<entry>
+						<ind> 2000</ind>
+						<dep>-269</dep>
+					</entry>
+					<entry>
+						<ind> 4000</ind>
+						<dep>-302</dep>
+					</entry>
+					<entry>
+						<ind> 6000</ind>
+						<dep>-340</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/pfd/vs-digit-trans</output>
 	</filter>
-	
+
 	<filter>
 		<name>Slip/Skid Indicator</name>
 		<debug>false</debug>
@@ -537,7 +699,7 @@
 		<output>/instrumentation/pfd/slip-skid</output>
 		<filter-time>0.16</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>IESI Slip/Skid Indicator</name>
 		<debug>false</debug>
@@ -547,17 +709,32 @@
 			<expression>
 				<table>
 					<property>/fdm/jsbsim/accelerations/Ny</property>
-					<entry><ind>-0.20</ind><dep>-85</dep></entry>
-					<entry><ind>-0.01</ind><dep>   0</dep></entry>
-					<entry><ind> 0.00</ind><dep>   0</dep></entry>
-					<entry><ind> 0.01</ind><dep>   0</dep></entry>
-					<entry><ind> 0.20</ind><dep> 85</dep></entry>
+					<entry>
+						<ind>-0.20</ind>
+						<dep>-85</dep>
+					</entry>
+					<entry>
+						<ind>-0.01</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind> 0.00</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind> 0.01</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind> 0.20</ind>
+						<dep> 85</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/iesi/slip-skid</output>
 	</filter>
-	
+
 	<filter>
 		<name>IESI Pitch</name>
 		<debug>false</debug>
@@ -567,17 +744,32 @@
 			<expression>
 				<table>
 					<property>/orientation/pitch-deg</property>
-					<entry><ind>-80</ind><dep>-65</dep></entry>
-					<entry><ind>-50</ind><dep>-50</dep></entry>
-					<entry><ind> 0</ind><dep>   0</dep></entry>
-					<entry><ind> 50</ind><dep> 50</dep></entry>
-					<entry><ind> 80</ind><dep> 65</dep></entry>
+					<entry>
+						<ind>-80</ind>
+						<dep>-65</dep>
+					</entry>
+					<entry>
+						<ind>-50</ind>
+						<dep>-50</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind> 50</ind>
+						<dep> 50</dep>
+					</entry>
+					<entry>
+						<ind> 80</ind>
+						<dep> 65</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/iesi/pitch-deg</output>
 	</filter>
-	
+
 	<filter>
 		<name>Wind East</name>
 		<type>gain</type>
@@ -590,11 +782,19 @@
 						<value>0.592484</value> <!-- fps to kt -->
 					</product>
 					<product>
-						<cos><deg2rad><property>/orientation/pitch-deg</property></deg2rad></cos>
-						<sin><deg2rad><property>/orientation/heading-deg</property></deg2rad></sin>
+						<cos>
+							<deg2rad>
+								<property>/orientation/pitch-deg</property>
+							</deg2rad>
+						</cos>
+						<sin>
+							<deg2rad>
+								<property>/orientation/heading-deg</property>
+							</deg2rad>
+						</sin>
 						<!--<floor>-->
-							<property>/systems/navigation/adr/output/tas-3</property>
-							<!--<value>100</value>
+						<property>/systems/navigation/adr/output/tas-3</property>
+						<!--<value>100</value>
 						</floor>-->
 					</product>
 				</difference>
@@ -604,7 +804,7 @@
 		<min>-4096</min>
 		<max>4096</max>
 	</filter>
-	
+
 	<filter>
 		<name>Wind North</name>
 		<type>gain</type>
@@ -617,11 +817,19 @@
 						<value>0.592484</value> <!-- fps to kt -->
 					</product>
 					<product>
-						<cos><deg2rad><property>/orientation/pitch-deg</property></deg2rad></cos>
-						<cos><deg2rad><property>/orientation/heading-deg</property></deg2rad></cos>
+						<cos>
+							<deg2rad>
+								<property>/orientation/pitch-deg</property>
+							</deg2rad>
+						</cos>
+						<cos>
+							<deg2rad>
+								<property>/orientation/heading-deg</property>
+							</deg2rad>
+						</cos>
 						<!--<floor>-->
-							<property>/systems/navigation/adr/output/tas-3</property>
-							<!--<value>100</value>
+						<property>/systems/navigation/adr/output/tas-3</property>
+						<!--<value>100</value>
 						</floor>-->
 					</product>
 				</difference>
@@ -680,5 +888,5 @@
 		<min>0</min>
 		<max>256</max>
 	</filter>
-	
+
 </PropertyList>

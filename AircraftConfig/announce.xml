@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -8,7 +8,7 @@
 
 	<name>announcements</name>
 	<layout>vbox</layout>
-	
+
 	<group>
 		<layout>hbox</layout>
 		<text>
@@ -26,9 +26,9 @@
 			</binding>
 		</button>
 	</group>
-	
-	<hrule/>
-		
+
+	<hrule />
+
 	<group>
 		<layout>hbox</layout>
 
@@ -44,7 +44,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>F/A - Welcome</label>
 				<halign>left</halign>
@@ -54,7 +54,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Cpt - Welcome</label>
 				<halign>left</halign>
@@ -64,7 +64,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Cpt - Doors Check</label>
 				<halign>left</halign>
@@ -74,7 +74,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>F/A - Safety Brief </label>
 				<halign>left</halign>
@@ -84,7 +84,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Cpt - Prepare for Takeoff</label>
 				<halign>left</halign>
@@ -94,7 +94,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>F/A - Seatbelt Turned Off</label>
 				<halign>left</halign>
@@ -104,7 +104,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>F/A - Descent</label>
 				<halign>left</halign>
@@ -114,7 +114,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Cpt - Prepare for Landing</label>
 				<halign>left</halign>
@@ -124,7 +124,7 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>F/A - Landed</label>
 				<halign>left</halign>
@@ -134,9 +134,9 @@
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
-			</group>
-			
+
 		</group>
-	
+
+	</group>
+
 </PropertyList>

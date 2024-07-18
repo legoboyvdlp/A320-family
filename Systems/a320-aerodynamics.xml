@@ -4,53 +4,53 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <aerodynamics>
-	
+
 	<property value="0">ice/wingL</property>
 	<property value="0">ice/wingR</property>
-	
+
 	<function name="aero/function/kCLge">
 		<description>Lift factor due to ground effect</description>
 		<table>
 			<independentVar lookup="row">aero/h_b-mac-ft</independentVar>
 			<tableData>
-				0.00  1.203
-				0.10  1.127
-				0.15  1.090
-				0.20  1.073
-				0.30  1.046
-				0.40  1.055
-				0.50  1.019
-				0.60  1.013
-				0.70  1.008
-				0.80  1.006
-				0.90  1.003
-				1.00  1.002
-				1.10  1.000
+				0.00 1.203
+				0.10 1.127
+				0.15 1.090
+				0.20 1.073
+				0.30 1.046
+				0.40 1.055
+				0.50 1.019
+				0.60 1.013
+				0.70 1.008
+				0.80 1.006
+				0.90 1.003
+				1.00 1.002
+				1.10 1.000
 			</tableData>
 		</table>
 	</function>
-	
+
 	<function name="aero/function/kCDge">
 		<description>Drag factor due to ground effect</description>
 		<table>
 			<independentVar lookup="row">aero/h_b-mac-ft</independentVar>
 			<tableData>
-				0.00  0.480
-				0.10  0.515
-				0.15  0.629
-				0.20  0.709
-				0.30  0.815
-				0.40  0.882
-				0.50  0.928
-				0.60  0.962
-				0.70  0.988
-				0.80  1.000
+				0.00 0.480
+				0.10 0.515
+				0.15 0.629
+				0.20 0.709
+				0.30 0.815
+				0.40 0.882
+				0.50 0.928
+				0.60 0.962
+				0.70 0.988
+				0.80 1.000
 			</tableData>
 		</table>
 	</function>
-	
+
 	<axis name="LIFT">
-		
+
 		<function name="aero/coefficient/CLalpha">
 			<description>Lift due to alpha</description>
 			<product>
@@ -61,31 +61,31 @@
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
 					<independentVar lookup="column">atmosphere/density-altitude</independentVar>
 					<tableData>
-						         0       45000
+						0 45000
 						-9.8475 -0.5652 -0.5935
-						-2.0912  0.0625  0.0656
-						-0.0098  0.2386  0.2505
-						 2.2280  0.4260  0.4473
-						 4.2779  0.5779  0.6068
-						 6.4218  0.7540  0.7917
-						 8.4561  0.9163  0.9621
-						 9.2699  0.9842  0.8076
-						10.7094  1.0843  0.6617
-						11.6170  1.1538  0.5827
-						12.6496  1.2184  0.5949
-						13.7292  1.2911  0.6074
-						14.7930  1.3444  0.5648
-						15.6981  1.1882  0.5285
-						16.6352  1.1064  0.4910
-						17.5725  1.0311  0.4535
-						18.6045  1.0447  0.4121
-						19.6052  1.0479  0.3720
-						30.1264  0.6376 -0.0494
+						-2.0912 0.0625 0.0656
+						-0.0098 0.2386 0.2505
+						2.2280 0.4260 0.4473
+						4.2779 0.5779 0.6068
+						6.4218 0.7540 0.7917
+						8.4561 0.9163 0.9621
+						9.2699 0.9842 0.8076
+						10.7094 1.0843 0.6617
+						11.6170 1.1538 0.5827
+						12.6496 1.2184 0.5949
+						13.7292 1.2911 0.6074
+						14.7930 1.3444 0.5648
+						15.6981 1.1882 0.5285
+						16.6352 1.1064 0.4910
+						17.5725 1.0311 0.4535
+						18.6045 1.0447 0.4121
+						19.6052 1.0479 0.3720
+						30.1264 0.6376 -0.0494
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLq">
 			<description>Lift due to pitch rate</description>
 			<product>
@@ -96,7 +96,7 @@
 				<value>1.36</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLadot">
 			<description>Lift due to alpha rate</description>
 			<product>
@@ -107,7 +107,7 @@
 				<value>0.6384</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLflap">
 			<description>Lift due to flaps</description>
 			<product>
@@ -117,16 +117,16 @@
 				<table>
 					<independentVar lookup="row">fcs/flap-pos-deg</independentVar>
 					<tableData>
-						 0  0.0000
-						10  0.0923
-						15  0.1532
-						20  0.2079
-						40  0.4207
+						0 0.0000
+						10 0.0923
+						15 0.1532
+						20 0.2079
+						40 0.4207
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLslat">
 			<description>Lift due to slats</description>
 			<product>
@@ -136,85 +136,99 @@
 				<table>
 					<independentVar lookup="row">fcs/slat-pos-deg</independentVar>
 					<tableData>
-						 0  0.0000
-						18  0.1854
-						22  0.2773
-						27  0.3989
+						0 0.0000
+						18 0.1854
+						22 0.2773
+						27 0.3989
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLde_l">
 			<description>Lift due to left elevator</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/elevator-l/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/elevator-l/final-deg</property>
+				</toradians>
 				<value>0.0233096</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLde_r">
 			<description>Lift due to right elevator</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/elevator-r/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/elevator-r/final-deg</property>
+				</toradians>
 				<value>0.0233096</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLdstab">
 			<description>Lift due to stabilizer</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/stabilizer/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/stabilizer/final-deg</property>
+				</toradians>
 				<value>0.0118082</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLda_l">
 			<description>Lift due to left aileron</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/aileron-l/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/aileron-l/final-deg</property>
+				</toradians>
 				<value>0.36492</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLda_r">
 			<description>Lift due to right aileron</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/aileron-r/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/aileron-r/final-deg</property>
+				</toradians>
 				<value>0.36492</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLdsp_l">
 			<description>Lift due to left spoiler</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>fcs/spoiler-left-deg</property></toradians>
+				<toradians>
+					<property>fcs/spoiler-left-deg</property>
+				</toradians>
 				<value>-0.0523599</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLdsp_r">
 			<description>Lift due to right spoiler</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>fcs/spoiler-right-deg</property></toradians>
+				<toradians>
+					<property>fcs/spoiler-right-deg</property>
+				</toradians>
 				<value>-0.0523599</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLice_l">
 			<description>Lift due to left wing ice</description>
 			<product>
@@ -223,7 +237,7 @@
 				<table>
 					<independentVar>ice/wingL</independentVar>
 					<tableData>
-						0.0  0.00
+						0.0 0.00
 						0.5 -0.05
 						1.0 -0.15
 						2.0 -1.25
@@ -231,7 +245,7 @@
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CLice_r">
 			<description>Lift due to right wing ice</description>
 			<product>
@@ -240,7 +254,7 @@
 				<table>
 					<independentVar>ice/wingR</independentVar>
 					<tableData>
-						0.0  0.00
+						0.0 0.00
 						0.5 -0.05
 						1.0 -0.15
 						2.0 -1.25
@@ -248,11 +262,11 @@
 				</table>
 			</product>
 		</function>
-	
+
 	</axis>
-	
+
 	<axis name="DRAG">
-		
+
 		<function name="aero/coefficient/CD0">
 			<description>Minimum drag</description>
 			<product>
@@ -261,7 +275,7 @@
 				<value>0.016</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDalpha">
 			<description>Drag due to alpha</description>
 			<product>
@@ -270,22 +284,22 @@
 				<table>
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
 					<tableData>
-						-14.7960  0.0549
-						-12.2922  0.0512
-						 -9.4900  0.0379
-						 -6.9768  0.0224
-						 -3.2108  0.0049
-						  0.0000  0.0000
-						  3.2108  0.0049
-						  6.9768  0.0224
-						  9.4900  0.0379
-						 12.2922  0.0512
-						 14.7960  0.0549
+						-14.7960 0.0549
+						-12.2922 0.0512
+						-9.4900 0.0379
+						-6.9768 0.0224
+						-3.2108 0.0049
+						0.0000 0.0000
+						3.2108 0.0049
+						6.9768 0.0224
+						9.4900 0.0379
+						12.2922 0.0512
+						14.7960 0.0549
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDi">
 			<description>Induced drag</description>
 			<product>
@@ -296,7 +310,7 @@
 				<value>0.0384</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDmach">
 			<description>Drag due to mach</description>
 			<product>
@@ -305,14 +319,14 @@
 				<table>
 					<independentVar lookup="row">velocities/mach</independentVar>
 					<tableData>
-						0.82  0.000
-						1.10  0.016
-						1.80  0.012
+						0.82 0.000
+						1.10 0.016
+						1.80 0.012
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDbeta">
 			<description>Drag due to sideslip</description>
 			<product>
@@ -321,16 +335,16 @@
 				<table>
 					<independentVar lookup="row">aero/beta-rad</independentVar>
 					<tableData>
-						-1.57  1.23
-						-0.26  0.05
-						 0.00  0.00
-						 0.26  0.05
-						 1.57  1.23
+						-1.57 1.23
+						-0.26 0.05
+						0.00 0.00
+						0.26 0.05
+						1.57 1.23
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDgear">
 			<description>Drag due to gear</description>
 			<product>
@@ -340,7 +354,7 @@
 				<value>0.0171</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDflap">
 			<description>Drag due to flaps</description>
 			<product>
@@ -350,7 +364,7 @@
 				<value>0.00122</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDslat">
 			<description>Drag due to slats</description>
 			<product>
@@ -360,7 +374,7 @@
 				<value>0.00118</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDice_l">
 			<description>Drag due to left wing ice</description>
 			<product>
@@ -369,15 +383,15 @@
 				<table>
 					<independentVar>ice/wingL</independentVar>
 					<tableData>
-						0.0  0.000
-						0.5  0.002
-						1.0  0.005
-						2.0  0.050
+						0.0 0.000
+						0.5 0.002
+						1.0 0.005
+						2.0 0.050
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDice_r">
 			<description>Drag due to right wing ice</description>
 			<product>
@@ -386,85 +400,109 @@
 				<table>
 					<independentVar>ice/wingR</independentVar>
 					<tableData>
-						0.0  0.000
-						0.5  0.002
-						1.0  0.005
-						2.0  0.050
+						0.0 0.000
+						0.5 0.002
+						1.0 0.005
+						2.0 0.050
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDde_l">
 			<description>Drag due to left elevator</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/elevator-l/final-deg</property></toradians></abs>
+				<abs>
+					<toradians>
+						<property>hydraulics/elevator-l/final-deg</property>
+					</toradians>
+				</abs>
 				<value>0.002625</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDde_r">
 			<description>Drag due to right elevator</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/elevator-r/final-deg</property></toradians></abs>
+				<abs>
+					<toradians>
+						<property>hydraulics/elevator-r/final-deg</property>
+					</toradians>
+				</abs>
 				<value>0.002625</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDdstab">
 			<description>Drag due to stabilizer</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/stabilizer/final-deg</property></toradians></abs>
+				<abs>
+					<toradians>
+						<property>hydraulics/stabilizer/final-deg</property>
+					</toradians>
+				</abs>
 				<value>0.0039</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDda_l">
 			<description>Drag due to left aileron</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/aileron-l/final-deg</property></toradians></abs>
+				<abs>
+					<toradians>
+						<property>hydraulics/aileron-l/final-deg</property>
+					</toradians>
+				</abs>
 				<value>0.0029271086286386</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDda_r">
 			<description>Drag due to right aileron</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/aileron-r/final-deg</property></toradians></abs>
+				<abs>
+					<toradians>
+						<property>hydraulics/aileron-r/final-deg</property>
+					</toradians>
+				</abs>
 				<value>0.0029271086286386</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDdsp_l">
 			<description>Drag due to left spoiler</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>fcs/spoiler-left-deg</property></toradians>
+				<toradians>
+					<property>fcs/spoiler-left-deg</property>
+				</toradians>
 				<value>0.025369566928</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDdsp_r">
 			<description>Drag due to right spoiler</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>fcs/spoiler-right-deg</property></toradians>
+				<toradians>
+					<property>fcs/spoiler-right-deg</property>
+				</toradians>
 				<value>0.025369566928</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDlt_l">
 			<description>Drag due to left landing light</description>
 			<product>
@@ -474,7 +512,7 @@
 				<value>0.0016</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CDlt_r">
 			<description>Drag due to right landing light</description>
 			<product>
@@ -484,11 +522,11 @@
 				<value>0.0016</value>
 			</product>
 		</function>
-	
+
 	</axis>
-	
+
 	<axis name="SIDE">
-		
+
 		<function name="aero/coefficient/CYbeta">
 			<description>Side force due to beta</description>
 			<product>
@@ -498,7 +536,7 @@
 				<value>-0.6457</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CYp">
 			<description>Side force due to roll rate</description>
 			<product>
@@ -509,15 +547,15 @@
 				<table>
 					<independentVar lookup="row">aero/Re</independentVar>
 					<tableData>
-						29913298  0.3518
-						32904628  0.0352
-						44869948  0.0201
-						59461352  0.0094
+						29913298 0.3518
+						32904628 0.0352
+						44869948 0.0201
+						59461352 0.0094
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CYr">
 			<description>Side force due to yaw rate</description>
 			<product>
@@ -528,21 +566,23 @@
 				<value>0.6983</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/CYdr">
 			<description>Side force due to rudder</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/rudder/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/rudder/final-deg</property>
+				</toradians>
 				<value>-0.145</value>
 			</product>
 		</function>
-	
+
 	</axis>
-	
+
 	<axis name="ROLL">
-		
+
 		<function name="aero/coefficient/Clbeta">
 			<description>Roll moment due to beta</description>
 			<product>
@@ -555,15 +595,15 @@
 					<tableData>
 						-4.4412 -0.00150
 						-2.2116 -0.00167
-						 0.1900 -0.00176
-						 2.4828 -0.00189
-						 4.9473 -0.00189
-						 6.1394 -0.00194
+						0.1900 -0.00176
+						2.4828 -0.00189
+						4.9473 -0.00189
+						6.1394 -0.00194
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Clp">
 			<description>Roll moment due to roll rate</description>
 			<product>
@@ -575,7 +615,7 @@
 				<value>-0.53</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Clr">
 			<description>Roll moment due to yaw rate</description>
 			<product>
@@ -587,66 +627,76 @@
 				<value>0.1</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Clda_l">
 			<description>Roll moment due to left aileron</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<toradians><property>hydraulics/aileron-l/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/aileron-l/final-deg</property>
+				</toradians>
 				<value>0.043</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Clda_r">
 			<description>Roll moment due to right aileron</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<toradians><property>hydraulics/aileron-r/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/aileron-r/final-deg</property>
+				</toradians>
 				<value>-0.043</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Cldsp_l">
 			<description>Roll moment due to left spoiler</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<toradians><property>fcs/spoiler-left-deg</property></toradians>
+				<toradians>
+					<property>fcs/spoiler-left-deg</property>
+				</toradians>
 				<value>-0.027</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Cldsp_r">
 			<description>Roll moment due to right spoiler</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<toradians><property>fcs/spoiler-right-deg</property></toradians>
+				<toradians>
+					<property>fcs/spoiler-right-deg</property>
+				</toradians>
 				<value>0.027</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Cldr">
 			<description>Roll moment due to rudder</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<toradians><property>hydraulics/rudder/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/rudder/final-deg</property>
+				</toradians>
 				<value>0.008</value>
 			</product>
 		</function>
-	
+
 	</axis>
-	
+
 	<axis name="PITCH">
-		
+
 		<function name="aero/coefficient/Cmalpha">
 			<description>Pitch moment due to alpha</description>
 			<product>
@@ -656,30 +706,30 @@
 				<table>
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
 					<tableData>
-						-9.4468  0.1897
-						-6.3284  0.1313
-						-5.4416  0.1101
-						-4.3131  0.0870
-						-3.0234  0.0599
-						-2.0214  0.0359
-						-0.6629  0.0132
-						 0.4655 -0.0090
-						 1.6628 -0.0281
-						 2.9406 -0.0455
-						 4.0685 -0.0566
-						 5.2651 -0.0624
-						 6.3583 -0.0698
-						 7.3937 -0.0718
-						 8.5212 -0.0736
-						 9.8677 -0.0851
+						-9.4468 0.1897
+						-6.3284 0.1313
+						-5.4416 0.1101
+						-4.3131 0.0870
+						-3.0234 0.0599
+						-2.0214 0.0359
+						-0.6629 0.0132
+						0.4655 -0.0090
+						1.6628 -0.0281
+						2.9406 -0.0455
+						4.0685 -0.0566
+						5.2651 -0.0624
+						6.3583 -0.0698
+						7.3937 -0.0718
+						8.5212 -0.0736
+						9.8677 -0.0851
 						11.3179 -0.1017
 						20.1549 -0.1727
-						45.4566  0.0154
+						45.4566 0.0154
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Cmq">
 			<description>Pitch moment due to pitch rate</description>
 			<product>
@@ -691,7 +741,7 @@
 				<value>-28.9</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Cmadot">
 			<description>Pitch moment due to alpha rate</description>
 			<product>
@@ -703,40 +753,46 @@
 				<value>-11.2539</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Cmde_l">
 			<description>Pitch moment due to left elevator</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
-				<toradians><property>hydraulics/elevator-l/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/elevator-l/final-deg</property>
+				</toradians>
 				<value>-0.345</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Cmde_r">
 			<description>Pitch moment due to right elevator</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
-				<toradians><property>hydraulics/elevator-r/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/elevator-r/final-deg</property>
+				</toradians>
 				<value>-0.345</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Cmdstab">
 			<description>Pitch moment due to stabilizer</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
-				<toradians><property>hydraulics/stabilizer/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/stabilizer/final-deg</property>
+				</toradians>
 				<value>-2.366</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Cmdsp">
 			<description>Pitch moment due to symmetrical spoiler</description>
 			<product>
@@ -746,19 +802,21 @@
 				<table>
 					<independentVar lookup="row">aero/h_b-mac-ft</independentVar>
 					<tableData>
-						0  0.5
-						1  1.0
+						0 0.5
+						1 1.0
 					</tableData>
 				</table>
-				<toradians><property>fcs/spoiler-symmetrical-deg</property></toradians>
+				<toradians>
+					<property>fcs/spoiler-symmetrical-deg</property>
+				</toradians>
 				<value>0.0105</value>
 			</product>
 		</function>
-	
+
 	</axis>
-	
+
 	<axis name="YAW">
-		
+
 		<function name="aero/coefficient/Cnbeta">
 			<description>Yaw moment due to beta</description>
 			<product>
@@ -769,17 +827,17 @@
 				<table>
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
 					<tableData>
-						-4.7093  0.00198
-						-2.2164  0.00211
-						 0.2903  0.00194
-						 2.9836  0.00180
-						 5.5629  0.00207
+						-4.7093 0.00198
+						-2.2164 0.00211
+						0.2903 0.00194
+						2.9836 0.00180
+						5.5629 0.00207
 					</tableData>
 				</table>
 			</product>
 		</function>
-		
-		
+
+
 		<function name="aero/coefficient/Cnr">
 			<description>Yaw moment due to yaw rate</description>
 			<product>
@@ -791,18 +849,20 @@
 				<value>-0.25</value>
 			</product>
 		</function>
-		
+
 		<function name="aero/coefficient/Cndr">
 			<description>Yaw moment due to rudder</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<toradians><property>hydraulics/rudder/final-deg</property></toradians>
+				<toradians>
+					<property>hydraulics/rudder/final-deg</property>
+				</toradians>
 				<value>0.042</value>
 			</product>
 		</function>
-	
+
 	</axis>
 
 </aerodynamics>
