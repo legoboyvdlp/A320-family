@@ -40,7 +40,7 @@ Distribute under the terms of GPLv2.
 
 	</group>
 
-	<hrule/>
+	<hrule />
 
 	<group>
 
@@ -215,7 +215,7 @@ Distribute under the terms of GPLv2.
 
 		</group>
 
-		<hrule/>
+		<hrule />
 
 		<group>
 			<layout>table</layout>

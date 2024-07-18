@@ -5,7 +5,7 @@
 <PropertyList>
 
 	<path>res/IESI.ac</path>
-	
+
 	<animation>
 		<type>pick</type>
 		<object-name>iesi.screen</object-name>
@@ -18,7 +18,7 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>material</type>
 		<object-name>iesi.screen</object-name>
@@ -29,7 +29,7 @@
 			<factor-prop>controls/lighting/DU/iesi</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/displays/lcd</inherits-from>
 		<parameters>
@@ -37,7 +37,9 @@
 			<outer-angle>90</outer-angle> <!-- 0-90, but greater than inner -->
 			<black-angle>90</black-angle> <!-- 0-90, but greater than outer -->
 			<dirt-factor>0.09</dirt-factor>
-			<contrast><use>instrumentation/iesi/lcd-contrast</use></contrast>
+			<contrast>
+				<use>instrumentation/iesi/lcd-contrast</use>
+			</contrast>
 		</parameters>
 		<object-name>iesi.screen</object-name>
 	</effect>

@@ -8,7 +8,8 @@
     <channel name="APU" execrate="8">
         <!-- bleed 1.8 kg / sec @ 42 psig -->
         <!-- fuel 148 kg/hr -->
-        <!-- generator 24034 rpm, 10129 rpm fuel ctl, 32045 rpm starter, 51965 rpm cooling, 4137rpm oil pump -->
+        <!-- generator 24034 rpm, 10129 rpm fuel ctl, 32045 rpm starter, 51965 rpm cooling, 4137rpm
+        oil pump -->
 
         <fcs_function name="/systems/apu/bleed-load-kw">
             <function>
@@ -22,8 +23,8 @@
                 </ifthen>
             </function>
         </fcs_function>
-        
-        
+
+
         <fcs_function name="/systems/apu/electrical-load-kw">
             <function>
                 <ifthen>
@@ -36,7 +37,7 @@
                 </ifthen>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/systems/apu/apu-load-cmd">
             <function>
                 <quotient>
@@ -48,17 +49,17 @@
                 </quotient>
             </function>
         </fcs_function>
-        
+
         <actuator name="/systems/apu/apu-load">
             <input>/systems/apu/apu-load-cmd</input>
             <rate_limit>0.01</rate_limit> <!-- 60 seconds cooling period for bleed which is ~ 60% -->
         </actuator>
-        
+
         <washout_filter name="/systems/apu/dn-dt">
             <input>/engines/engine[2]/n1</input>
             <c1>1</c1>
         </washout_filter>
-        
+
         <fcs_function name="/systems/apu/egt-degC">
             <function>
                 <sum>
@@ -80,65 +81,65 @@
                         <table>
                             <independentVar lookup="row">/engines/engine[2]/n1</independentVar>
                             <tableData>
-                                5.0     20.0
-                                8.0     45.0
-                                10.0    120.0
-                                12.0    225.0
-                                18.0    430.0
-                                25.0    500.0
-                                27.0    560.0
-                                30.0    720.0
-                                35.0    785.0
-                                40.0    800.0
-                                45.0    795.0
-                                50.0    785.0
-                                60.0    755.0
-                                75.0    645.0
-                                90.0    520.0
-                                100.0   415.0
+                                5.0 20.0
+                                8.0 45.0
+                                10.0 120.0
+                                12.0 225.0
+                                18.0 430.0
+                                25.0 500.0
+                                27.0 560.0
+                                30.0 720.0
+                                35.0 785.0
+                                40.0 800.0
+                                45.0 795.0
+                                50.0 785.0
+                                60.0 755.0
+                                75.0 645.0
+                                90.0 520.0
+                                100.0 415.0
                             </tableData>
                         </table>
                         <table>
                             <independentVar lookup="row">/engines/engine[2]/n1</independentVar>
                             <tableData>
-                                2.0     200.0
-                                8.0     220.0
-                                12.0    225.0
-                                18.0    240.0
-                                30.0    250.0
-                                50.0    265.0
-                                60.0    295.0
-                                75.0    380.0
-                                90.0    410.0
-                                100.0   415.0
+                                2.0 200.0
+                                8.0 220.0
+                                12.0 225.0
+                                18.0 240.0
+                                30.0 250.0
+                                50.0 265.0
+                                60.0 295.0
+                                75.0 380.0
+                                90.0 410.0
+                                100.0 415.0
                             </tableData>
                         </table>
                     </ifthen>
                 </sum>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/systems/apu/oil/oil-pressure-psi">
             <function>
                 <table>
                     <independentVar lookup="row">/engines/engine[2]/n1</independentVar>
                     <independentVar lookup="column">/systems/apu/oil/level-l</independentVar>
                     <tableData>
-                              0   3.6   5.4
-                        8     0   0     0
-                        12    0   1     10
-                        18    0   5     22
-                        30    0   22    41
-                        50    0   25    45
-                        60    0   28    48
-                        75    0   33    52
-                        90    0   35    54
-                        100   0   36    55
+                        0 3.6 5.4
+                        8 0 0 0
+                        12 0 1 10
+                        18 0 5 22
+                        30 0 22 41
+                        50 0 25 45
+                        60 0 28 48
+                        75 0 33 52
+                        90 0 35 54
+                        100 0 36 55
                     </tableData>
                 </table>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/systems/apu/oil/oil-temperature-degC">
             <function>
                 <product>
@@ -152,10 +153,10 @@
                     <table>
                         <independentVar lookup="row">/systems/apu/oil/oil-pressure-psi</independentVar>
                         <tableData>
-                            0   0
-                            25  135
-                            35  105
-                            55  85
+                            0 0
+                            25 135
+                            35 105
+                            55 85
                         </tableData>
                     </table>
                     <quotient>
@@ -165,7 +166,7 @@
                 </product>
             </function>
         </fcs_function>
-        
+
         <fcs_function name="/systems/apu/oil/calc-oil-level">
             <function>
                 <sum>
@@ -183,28 +184,28 @@
             </function>
             <output>/systems/apu/oil/level-l</output>
         </fcs_function>
-        
+
         <switch name="/systems/apu/shutdown-power-loss-cmd">
-            <default value="0"/>
+            <default value="0" />
             <test logic="AND" value="1">
                 /systems/electrical/bus/dc-bat lt 25
             </test>
         </switch>
-        
+
         <actuator name="/systems/apu/shutdown-power-loss-timer">
-			<input>/systems/apu/shutdown-power-loss-cmd</input>
+            <input>/systems/apu/shutdown-power-loss-cmd</input>
             <rate_limit sense="incr">5</rate_limit>
             <rate_limit sense="decr">100</rate_limit>
         </actuator>
-        
+
         <switch name="/systems/apu/shutdown-power-loss">
-            <default value="0"/>
+            <default value="0" />
             <test logic="AND" value="1">
                 /systems/apu/shutdown-power-loss-timer eq 1
             </test>
         </switch>
-        
-		
+
+
     </channel>
 
 </system>

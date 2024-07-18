@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -9,13 +9,15 @@
 	<name>aircraft-config-welcome</name>
 	<layout>vbox</layout>
 
-    <group>
-        <layout>hbox</layout>
-        <text>
-            <halign>left</halign>
-            <label>Welcome!</label>
-        </text>
-		<empty><stretch>1</stretch></empty>
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Welcome!</label>
+		</text>
+		<empty>
+			<stretch>1</stretch>
+		</empty>
 		<button>
 			<row>0</row>
 			<col>0</col>
@@ -26,27 +28,27 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.help_dlg.open();
+					acconfig.help_dlg.open();
 				</script>
 			</binding>
 		</button>
-        <button>
-            <halign>right</halign>
-            <pref-width>20</pref-width>
-            <pref-height>20</pref-height>
-            <legend>X</legend>
-            <key>Esc</key>
-            <binding>
-                <command>dialog-close</command>
-            </binding>
-        </button>
-    </group>
-	
-    <hrule/>
-	
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+
+	<hrule />
+
 	<group>
 		<layout>vbox</layout>
-		
+
 		<text>
 			<halign>center</halign>
 			<label>Welcome to the A320-family!</label>
@@ -59,14 +61,14 @@
 			<halign>center</halign>
 			<label>Use Aircraft Config to select livery, manage panel states, and more!</label>
 		</text>
-		
+
 	</group>
-	
-	<hrule/>
-	
+
+	<hrule />
+
 	<group>
 		<layout>hbox</layout>
-	
+
 		<checkbox>
 			<label>Do not show this screen at FlightGear startup</label>
 			<halign>center</halign>
@@ -81,19 +83,19 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.writeSettings();
+					acconfig.writeSettings();
 				</script>
 			</binding>
 			<live>true</live>
 		</checkbox>
-		
+
 	</group>
-	
-	<hrule/>
+
+	<hrule />
 
 	<group>
 		<layout>hbox</layout>
-		
+
 		<button>
 			<halign>center</halign>
 			<legend>Aircraft Config</legend>
@@ -101,7 +103,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.main_dlg.open();
+					acconfig.main_dlg.open();
 				</script>
 			</binding>
 			<binding>
@@ -117,5 +119,5 @@
 			</binding>
 		</button>
 	</group>
-	
+
 </PropertyList>

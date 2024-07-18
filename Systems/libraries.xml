@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
-	
+
 	<!-- Not in JSBsim, cause then it takes too long to tune -->
 	<filter>
 		<name>EPR C1</name>
@@ -16,18 +16,30 @@
 						<property>/position/altitude-ft</property>
 						<table>
 							<property>/fdm/jsbsim/velocities/mach</property>
-							<entry><ind>0.09</ind><dep>0.1</dep></entry>
-							<entry><ind>0.15</ind><dep>1.0</dep></entry>
+							<entry>
+								<ind>0.09</ind>
+								<dep>0.1</dep>
+							</entry>
+							<entry>
+								<ind>0.15</ind>
+								<dep>1.0</dep>
+							</entry>
 						</table>
 					</product>
-					<entry><ind>    0</ind><dep>0.674</dep></entry>
-					<entry><ind>45000</ind><dep>1.502</dep></entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>0.674</dep>
+					</entry>
+					<entry>
+						<ind>45000</ind>
+						<dep>1.502</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/fdm/jsbsim/fadec/epr/c1</output>
 	</filter>
-	
+
 	<filter>
 		<name>EPR C2</name>
 		<type>gain</type>
@@ -40,25 +52,46 @@
 							<property>/position/altitude-ft</property>
 							<table>
 								<property>/fdm/jsbsim/velocities/mach</property>
-								<entry><ind>0.09</ind><dep>0.1</dep></entry>
-								<entry><ind>0.15</ind><dep>1.0</dep></entry>
+								<entry>
+									<ind>0.09</ind>
+									<dep>0.1</dep>
+								</entry>
+								<entry>
+									<ind>0.15</ind>
+									<dep>1.0</dep>
+								</entry>
 							</table>
 						</product>
-						<entry><ind>    0</ind><dep>0.9852</dep></entry>
-						<entry><ind>45000</ind><dep>0.6884</dep></entry>
+						<entry>
+							<ind> 0</ind>
+							<dep>0.9852</dep>
+						</entry>
+						<entry>
+							<ind>45000</ind>
+							<dep>0.6884</dep>
+						</entry>
 					</table>
 					<table>
 						<property>/fdm/jsbsim/velocities/mach</property>
-						<entry><ind>0.09</ind><dep>0.000</dep></entry>
-						<entry><ind>0.15</ind><dep>0.017</dep></entry>
-						<entry><ind>0.22</ind><dep>0.023</dep></entry>
+						<entry>
+							<ind>0.09</ind>
+							<dep>0.000</dep>
+						</entry>
+						<entry>
+							<ind>0.15</ind>
+							<dep>0.017</dep>
+						</entry>
+						<entry>
+							<ind>0.22</ind>
+							<dep>0.023</dep>
+						</entry>
 					</table>
 				</difference>
 			</expression>
 		</input>
 		<output>/fdm/jsbsim/fadec/epr/c2-raw</output>
 	</filter>
-	
+
 	<filter>
 		<name>EPR Scale 2 Sum/Difference Exponential</name>
 		<type>exponential</type>
@@ -67,7 +100,7 @@
 		<output>/fdm/jsbsim/fadec/epr/c2</output>
 		<filter-time>0.32</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Groundspeed Meters Per Second</name>
 		<type>gain</type>
@@ -77,7 +110,7 @@
 		<min>0</min>
 		<max>1000</max>
 	</filter>
-	
+
 	<predict-simple>
 		<name>Groundspeed Meters Per Second Ahead</name>
 		<debug>false</debug>
@@ -94,7 +127,7 @@
 		<input>/fdm/jsbsim/velocities/r-aero-rad_sec</input>
 		<output>/fdm/jsbsim/velocities/r-aero-deg_sec</output>
 	</filter>
-	
+
 	<predict-simple>
 		<name>Gear AGL Altitude</name>
 		<debug>false</debug>
@@ -103,7 +136,7 @@
 		<seconds>2.0</seconds>
 		<filter-gain>0.0</filter-gain>
 	</predict-simple>
-	
+
 	<!-- Because overwriting from JSBsim doesn't work -->
 	<filter>
 		<name>Engine 1 Cutoff</name>
@@ -112,7 +145,7 @@
 		<input>/systems/ignition/cutoff-jsb-1</input>
 		<output>/controls/engines/engine[0]/cutoff</output>
 	</filter>
-	
+
 	<filter>
 		<name>Engine 2 Cutoff</name>
 		<type>gain</type>
@@ -120,7 +153,7 @@
 		<input>/systems/ignition/cutoff-jsb-2</input>
 		<output>/controls/engines/engine[1]/cutoff</output>
 	</filter>
-	
+
 	<filter>
 		<name>Engine 1 Starter</name>
 		<type>gain</type>
@@ -128,7 +161,7 @@
 		<input>/systems/ignition/starter-jsb-1</input>
 		<output>/controls/engines/engine[0]/starter</output>
 	</filter>
-	
+
 	<filter>
 		<name>Engine 2 Starter</name>
 		<type>gain</type>
@@ -146,7 +179,9 @@
 			<expression>
 				<floor>
 					<div>
-						<abs><property>/instrumentation/altimeter[0]/indicated-altitude-ft</property></abs>
+						<abs>
+							<property>/instrumentation/altimeter[0]/indicated-altitude-ft</property>
+						</abs>
 						<value>100</value>
 					</div>
 				</floor>
@@ -154,7 +189,7 @@
 		</input>
 		<output>/instrumentation/altimeter[0]/indicated-altitude-ft-pfd</output>
 	</filter>
-	
+
 	<filter>
 		<name>Altitude PFD</name>
 		<type>gain</type>
@@ -164,7 +199,9 @@
 			<expression>
 				<floor>
 					<div>
-						<abs><property>/instrumentation/altimeter[1]/indicated-altitude-ft</property></abs>
+						<abs>
+							<property>/instrumentation/altimeter[1]/indicated-altitude-ft</property>
+						</abs>
 						<value>100</value>
 					</div>
 				</floor>
@@ -182,7 +219,9 @@
 			<expression>
 				<floor>
 					<div>
-						<abs><property>/instrumentation/altimeter[2]/indicated-altitude-ft</property></abs>
+						<abs>
+							<property>/instrumentation/altimeter[2]/indicated-altitude-ft</property>
+						</abs>
 						<value>100</value>
 					</div>
 				</floor>
@@ -200,7 +239,9 @@
 			<expression>
 				<floor>
 					<div>
-						<abs><property>/instrumentation/altimeter[3]/indicated-altitude-ft</property></abs>
+						<abs>
+							<property>/instrumentation/altimeter[3]/indicated-altitude-ft</property>
+						</abs>
 						<value>100</value>
 					</div>
 				</floor>
@@ -218,7 +259,9 @@
 			<expression>
 				<floor>
 					<div>
-						<abs><property>/instrumentation/altimeter[4]/indicated-altitude-ft</property></abs>
+						<abs>
+							<property>/instrumentation/altimeter[4]/indicated-altitude-ft</property>
+						</abs>
 						<value>100</value>
 					</div>
 				</floor>
@@ -236,7 +279,9 @@
 			<expression>
 				<floor>
 					<div>
-						<abs><property>/instrumentation/altimeter[5]/indicated-altitude-ft</property></abs>
+						<abs>
+							<property>/instrumentation/altimeter[5]/indicated-altitude-ft</property>
+						</abs>
 						<value>100</value>
 					</div>
 				</floor>
@@ -254,7 +299,9 @@
 			<expression>
 				<floor>
 					<div>
-						<abs><property>/instrumentation/altimeter[6]/indicated-altitude-ft</property></abs>
+						<abs>
+							<property>/instrumentation/altimeter[6]/indicated-altitude-ft</property>
+						</abs>
 						<value>100</value>
 					</div>
 				</floor>
@@ -294,19 +341,40 @@
 			<expression>
 				<table>
 					<property>/instrumentation/altimeter/indicated-altitude-ft</property>
-					<entry><ind>    0</ind><dep>   0</dep></entry>
-					<entry><ind> 1000</ind><dep> 500</dep></entry>
-					<entry><ind> 5000</ind><dep>1100</dep></entry>
-					<entry><ind>20000</ind><dep>5200</dep></entry>
-					<entry><ind>30000</ind><dep>6700</dep></entry>
-					<entry><ind>30000</ind><dep>7900</dep></entry>
-					<entry><ind>40500</ind><dep>8000</dep></entry>
+					<entry>
+						<ind> 0</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind> 1000</ind>
+						<dep> 500</dep>
+					</entry>
+					<entry>
+						<ind> 5000</ind>
+						<dep>1100</dep>
+					</entry>
+					<entry>
+						<ind>20000</ind>
+						<dep>5200</dep>
+					</entry>
+					<entry>
+						<ind>30000</ind>
+						<dep>6700</dep>
+					</entry>
+					<entry>
+						<ind>30000</ind>
+						<dep>7900</dep>
+					</entry>
+					<entry>
+						<ind>40500</ind>
+						<dep>8000</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/systems/pressurization/targetalt-cmd</output>
 	</filter>
-	
+
 	<filter>
 		<name>Target Pressurize Altitude</name>
 		<type>gain</type>
@@ -338,7 +406,7 @@
 		</input>
 		<output>/systems/pressurization/targetalt</output>
 	</filter>
-	
+
 	<filter>
 		<name>Cabin PSI target</name>
 		<type>gain</type>
@@ -348,23 +416,56 @@
 			<expression>
 				<table>
 					<property>/systems/pressurization/cabinalt-norm</property>
-					<entry><ind>-1000</ind><dep>16.50000</dep></entry>
-					<entry><ind>    0</ind><dep>14.70000</dep></entry>
-					<entry><ind>    0</ind><dep>14.70000</dep></entry>
-					<entry><ind> 1000</ind><dep>14.20000</dep></entry>
-					<entry><ind> 2000</ind><dep>13.60000</dep></entry>
-					<entry><ind> 3000</ind><dep>13.20000</dep></entry>
-					<entry><ind> 4000</ind><dep>12.70000</dep></entry>
-					<entry><ind> 5000</ind><dep>12.20000</dep></entry>
-					<entry><ind> 6000</ind><dep>11.70000</dep></entry>
-					<entry><ind> 7000</ind><dep>11.30000</dep></entry>
-					<entry><ind> 8000</ind><dep>10.90000</dep></entry>
+					<entry>
+						<ind>-1000</ind>
+						<dep>16.50000</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>14.70000</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>14.70000</dep>
+					</entry>
+					<entry>
+						<ind> 1000</ind>
+						<dep>14.20000</dep>
+					</entry>
+					<entry>
+						<ind> 2000</ind>
+						<dep>13.60000</dep>
+					</entry>
+					<entry>
+						<ind> 3000</ind>
+						<dep>13.20000</dep>
+					</entry>
+					<entry>
+						<ind> 4000</ind>
+						<dep>12.70000</dep>
+					</entry>
+					<entry>
+						<ind> 5000</ind>
+						<dep>12.20000</dep>
+					</entry>
+					<entry>
+						<ind> 6000</ind>
+						<dep>11.70000</dep>
+					</entry>
+					<entry>
+						<ind> 7000</ind>
+						<dep>11.30000</dep>
+					</entry>
+					<entry>
+						<ind> 8000</ind>
+						<dep>10.90000</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/systems/pressurization/cabinpsi-target</output>
 	</filter>
-	
+
 	<filter>
 		<name>VS-target</name>
 		<type>gain</type>
@@ -400,41 +501,146 @@
 			<expression>
 				<table>
 					<property>/instrumentation/altimeter/indicated-altitude-ft</property>
-					<entry><ind>-1000</ind><dep>16.50000</dep></entry>
-					<entry><ind>    0</ind><dep>14.70000</dep></entry>
-					<entry><ind> 1000</ind><dep>14.20000</dep></entry>
-					<entry><ind> 2000</ind><dep>13.60000</dep></entry>
-					<entry><ind> 3000</ind><dep>13.20000</dep></entry>
-					<entry><ind> 4000</ind><dep>12.70000</dep></entry>
-					<entry><ind> 5000</ind><dep>12.20000</dep></entry>
-					<entry><ind> 6000</ind><dep>11.70000</dep></entry>
-					<entry><ind> 7000</ind><dep>11.30000</dep></entry>
-					<entry><ind> 8000</ind><dep>10.90000</dep></entry>
-					<entry><ind> 9000</ind><dep>10.50000</dep></entry>
-					<entry><ind>10000</ind><dep>10.10000</dep></entry>
-					<entry><ind>11000</ind><dep> 9.70000</dep></entry>
-					<entry><ind>12000</ind><dep> 9.30000</dep></entry>
-					<entry><ind>13000</ind><dep> 9.00000</dep></entry>
-					<entry><ind>14000</ind><dep> 8.60000</dep></entry>
-					<entry><ind>15000</ind><dep> 8.30000</dep></entry>
-					<entry><ind>16000</ind><dep> 8.00000</dep></entry>
-					<entry><ind>17000</ind><dep> 7.60000</dep></entry>
-					<entry><ind>18000</ind><dep> 7.30000</dep></entry>
-					<entry><ind>19000</ind><dep> 7.00000</dep></entry>
-					<entry><ind>20000</ind><dep> 6.80000</dep></entry>
-					<entry><ind>22000</ind><dep> 6.20000</dep></entry>
-					<entry><ind>24000</ind><dep> 5.70000</dep></entry>
-					<entry><ind>26000</ind><dep> 5.20000</dep></entry>
-					<entry><ind>28000</ind><dep> 4.70000</dep></entry>
-					<entry><ind>30000</ind><dep> 4.40000</dep></entry>
-					<entry><ind>32000</ind><dep> 4.00000</dep></entry>
-					<entry><ind>34000</ind><dep> 3.60000</dep></entry>
-					<entry><ind>36000</ind><dep> 3.30000</dep></entry>
-					<entry><ind>38000</ind><dep> 3.00000</dep></entry>
-					<entry><ind>39000</ind><dep> 2.90000</dep></entry>
-					<entry><ind>40000</ind><dep> 2.70000</dep></entry>
-					<entry><ind>41000</ind><dep> 2.60000</dep></entry>
-					<entry><ind>42000</ind><dep> 2.50000</dep></entry>
+					<entry>
+						<ind>-1000</ind>
+						<dep>16.50000</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>14.70000</dep>
+					</entry>
+					<entry>
+						<ind> 1000</ind>
+						<dep>14.20000</dep>
+					</entry>
+					<entry>
+						<ind> 2000</ind>
+						<dep>13.60000</dep>
+					</entry>
+					<entry>
+						<ind> 3000</ind>
+						<dep>13.20000</dep>
+					</entry>
+					<entry>
+						<ind> 4000</ind>
+						<dep>12.70000</dep>
+					</entry>
+					<entry>
+						<ind> 5000</ind>
+						<dep>12.20000</dep>
+					</entry>
+					<entry>
+						<ind> 6000</ind>
+						<dep>11.70000</dep>
+					</entry>
+					<entry>
+						<ind> 7000</ind>
+						<dep>11.30000</dep>
+					</entry>
+					<entry>
+						<ind> 8000</ind>
+						<dep>10.90000</dep>
+					</entry>
+					<entry>
+						<ind> 9000</ind>
+						<dep>10.50000</dep>
+					</entry>
+					<entry>
+						<ind>10000</ind>
+						<dep>10.10000</dep>
+					</entry>
+					<entry>
+						<ind>11000</ind>
+						<dep> 9.70000</dep>
+					</entry>
+					<entry>
+						<ind>12000</ind>
+						<dep> 9.30000</dep>
+					</entry>
+					<entry>
+						<ind>13000</ind>
+						<dep> 9.00000</dep>
+					</entry>
+					<entry>
+						<ind>14000</ind>
+						<dep> 8.60000</dep>
+					</entry>
+					<entry>
+						<ind>15000</ind>
+						<dep> 8.30000</dep>
+					</entry>
+					<entry>
+						<ind>16000</ind>
+						<dep> 8.00000</dep>
+					</entry>
+					<entry>
+						<ind>17000</ind>
+						<dep> 7.60000</dep>
+					</entry>
+					<entry>
+						<ind>18000</ind>
+						<dep> 7.30000</dep>
+					</entry>
+					<entry>
+						<ind>19000</ind>
+						<dep> 7.00000</dep>
+					</entry>
+					<entry>
+						<ind>20000</ind>
+						<dep> 6.80000</dep>
+					</entry>
+					<entry>
+						<ind>22000</ind>
+						<dep> 6.20000</dep>
+					</entry>
+					<entry>
+						<ind>24000</ind>
+						<dep> 5.70000</dep>
+					</entry>
+					<entry>
+						<ind>26000</ind>
+						<dep> 5.20000</dep>
+					</entry>
+					<entry>
+						<ind>28000</ind>
+						<dep> 4.70000</dep>
+					</entry>
+					<entry>
+						<ind>30000</ind>
+						<dep> 4.40000</dep>
+					</entry>
+					<entry>
+						<ind>32000</ind>
+						<dep> 4.00000</dep>
+					</entry>
+					<entry>
+						<ind>34000</ind>
+						<dep> 3.60000</dep>
+					</entry>
+					<entry>
+						<ind>36000</ind>
+						<dep> 3.30000</dep>
+					</entry>
+					<entry>
+						<ind>38000</ind>
+						<dep> 3.00000</dep>
+					</entry>
+					<entry>
+						<ind>39000</ind>
+						<dep> 2.90000</dep>
+					</entry>
+					<entry>
+						<ind>40000</ind>
+						<dep> 2.70000</dep>
+					</entry>
+					<entry>
+						<ind>41000</ind>
+						<dep> 2.60000</dep>
+					</entry>
+					<entry>
+						<ind>42000</ind>
+						<dep> 2.50000</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -450,7 +656,7 @@
 		<output>/systems/pressurization/outflowpos-norm</output>
 		<max-rate-of-change>1</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>Outflow logic</name>
 		<type>gain</type>
@@ -474,9 +680,9 @@
 			</condition>
 			<property>/systems/pressurization/outflowpos-norm-cmd</property>
 		</input>
-		<output>/systems/pressurization/outflowpos-norm</output>   
+		<output>/systems/pressurization/outflowpos-norm</output>
 	</filter>
-	
+
 	<filter>
 		<name>Cabin VS</name>
 		<type>noise-spike</type>
@@ -486,7 +692,7 @@
 		<output>/systems/pressurization/vs-norm</output>
 		<max-rate-of-change>500</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>Cabin Differential</name>
 		<type>noise-spike</type>
@@ -496,7 +702,7 @@
 		<output>/systems/pressurization/deltap-norm</output>
 		<max-rate-of-change>1</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>Cabin Alt</name>
 		<type>noise-spike</type>
@@ -506,7 +712,7 @@
 		<output>/systems/pressurization/cabinalt-norm</output>
 		<max-rate-of-change>40500</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>VS-target-cmd</name>
 		<type>gain</type>
@@ -516,23 +722,56 @@
 			<expression>
 				<table>
 					<property>/it-autoflight/internal/vert-speed-fpm</property>
-					<entry><ind>-50000</ind><dep> -750</dep></entry>
-					<entry><ind> -2000</ind><dep> -750</dep></entry>
-					<entry><ind> -1000</ind><dep> -250</dep></entry>
-					<entry><ind>     0</ind><dep>    0</dep></entry>
-					<entry><ind>  1000</ind><dep>  810</dep></entry>
-					<entry><ind>  2000</ind><dep> 1640</dep></entry>
-					<entry><ind>  3000</ind><dep> 2100</dep></entry>
-					<entry><ind>  4000</ind><dep> 2440</dep></entry>
-					<entry><ind>  5000</ind><dep> 3000</dep></entry>
-					<entry><ind> 10000</ind><dep> 5000</dep></entry>
-					<entry><ind> 50000</ind><dep>50000</dep></entry>
+					<entry>
+						<ind>-50000</ind>
+						<dep> -750</dep>
+					</entry>
+					<entry>
+						<ind> -2000</ind>
+						<dep> -750</dep>
+					</entry>
+					<entry>
+						<ind> -1000</ind>
+						<dep> -250</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind> 1000</ind>
+						<dep> 810</dep>
+					</entry>
+					<entry>
+						<ind> 2000</ind>
+						<dep> 1640</dep>
+					</entry>
+					<entry>
+						<ind> 3000</ind>
+						<dep> 2100</dep>
+					</entry>
+					<entry>
+						<ind> 4000</ind>
+						<dep> 2440</dep>
+					</entry>
+					<entry>
+						<ind> 5000</ind>
+						<dep> 3000</dep>
+					</entry>
+					<entry>
+						<ind> 10000</ind>
+						<dep> 5000</dep>
+					</entry>
+					<entry>
+						<ind> 50000</ind>
+						<dep>50000</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/systems/pressurization/targetvs-cmd</output>
 	</filter>
-	
+
 	<filter>
 		<name>VS-target-cmd-man</name>
 		<type>gain</type>
@@ -542,15 +781,24 @@
 			<expression>
 				<table>
 					<property>/systems/pressurization/outflowpos-man</property>
-					<entry><ind>0.0</ind><dep>-1000</dep></entry>
-					<entry><ind>0.5</ind><dep>    0</dep></entry>
-					<entry><ind>1.0</ind><dep> 2500</dep></entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>-1000</dep>
+					</entry>
+					<entry>
+						<ind>0.5</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>1.0</ind>
+						<dep> 2500</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/systems/pressurization/manvs-cmd</output>
 	</filter>
-	
+
 	<filter>
 		<name>VS-target</name>
 		<type>gain</type>
@@ -574,9 +822,9 @@
 			</condition>
 			<property>/systems/pressurization/targetvs-cmd</property>
 		</input>
-		<output>/systems/pressurization/targetvs</output>   
+		<output>/systems/pressurization/targetvs</output>
 	</filter>
-	
+
 	<filter>
 		<name>optalt</name>
 		<type>gain</type>
@@ -586,29 +834,80 @@
 			<expression>
 				<table>
 					<property>fdm/jsbsim/inertia/weight-kg</property> <!-- from FCOM vol 3 page 613 -->
-					<entry><ind>160000</ind><dep>40500</dep></entry>
-					<entry><ind>165000</ind><dep>40000</dep></entry>
-					<entry><ind>170000</ind><dep>39500</dep></entry>
-					<entry><ind>175000</ind><dep>39000</dep></entry>
-					<entry><ind>180000</ind><dep>38000</dep></entry>
-					<entry><ind>185000</ind><dep>37800</dep></entry>
-					<entry><ind>190000</ind><dep>37500</dep></entry>
-					<entry><ind>195000</ind><dep>36800</dep></entry>
-					<entry><ind>200000</ind><dep>36400</dep></entry>
-					<entry><ind>205000</ind><dep>35800</dep></entry>
-					<entry><ind>210000</ind><dep>35200</dep></entry>
-					<entry><ind>215000</ind><dep>34800</dep></entry>
-					<entry><ind>220000</ind><dep>34100</dep></entry>
-					<entry><ind>225000</ind><dep>33500</dep></entry>
-					<entry><ind>230000</ind><dep>33100</dep></entry>
-					<entry><ind>235000</ind><dep>32700</dep></entry>
-					<entry><ind>240000</ind><dep>32400</dep></entry>
+					<entry>
+						<ind>160000</ind>
+						<dep>40500</dep>
+					</entry>
+					<entry>
+						<ind>165000</ind>
+						<dep>40000</dep>
+					</entry>
+					<entry>
+						<ind>170000</ind>
+						<dep>39500</dep>
+					</entry>
+					<entry>
+						<ind>175000</ind>
+						<dep>39000</dep>
+					</entry>
+					<entry>
+						<ind>180000</ind>
+						<dep>38000</dep>
+					</entry>
+					<entry>
+						<ind>185000</ind>
+						<dep>37800</dep>
+					</entry>
+					<entry>
+						<ind>190000</ind>
+						<dep>37500</dep>
+					</entry>
+					<entry>
+						<ind>195000</ind>
+						<dep>36800</dep>
+					</entry>
+					<entry>
+						<ind>200000</ind>
+						<dep>36400</dep>
+					</entry>
+					<entry>
+						<ind>205000</ind>
+						<dep>35800</dep>
+					</entry>
+					<entry>
+						<ind>210000</ind>
+						<dep>35200</dep>
+					</entry>
+					<entry>
+						<ind>215000</ind>
+						<dep>34800</dep>
+					</entry>
+					<entry>
+						<ind>220000</ind>
+						<dep>34100</dep>
+					</entry>
+					<entry>
+						<ind>225000</ind>
+						<dep>33500</dep>
+					</entry>
+					<entry>
+						<ind>230000</ind>
+						<dep>33100</dep>
+					</entry>
+					<entry>
+						<ind>235000</ind>
+						<dep>32700</dep>
+					</entry>
+					<entry>
+						<ind>240000</ind>
+						<dep>32400</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/FMGC/internal/optalt</output>
 	</filter>
-	
+
 	<filter>
 		<name>Ambient Temp (ICAO std)</name>
 		<type>gain</type>
@@ -618,47 +917,152 @@
 			<expression>
 				<table>
 					<property>/instrumentation/altimeter/indicated-altitude-ft</property>
-					<entry><ind>-1000</ind><dep> 21.5</dep></entry>
-					<entry><ind>    0</ind><dep> 15.0</dep></entry>
-					<entry><ind> 1000</ind><dep>  8.5</dep></entry>
-					<entry><ind> 2000</ind><dep>  2.0</dep></entry>
-					<entry><ind> 3000</ind><dep>-4.50</dep></entry>
-					<entry><ind> 4000</ind><dep>-11.0</dep></entry>
-					<entry><ind> 5000</ind><dep>-17.5</dep></entry>
-					<entry><ind> 6000</ind><dep>-24.0</dep></entry>
-					<entry><ind> 7000</ind><dep>-30.5</dep></entry>
-					<entry><ind> 8000</ind><dep>-37.0</dep></entry>
-					<entry><ind> 9000</ind><dep>-43.0</dep></entry>
-					<entry><ind>10000</ind><dep>-50.0</dep></entry>
-					<entry><ind>11000</ind><dep>-56.5</dep></entry>
-					<entry><ind>12000</ind><dep>-56.5</dep></entry>
-					<entry><ind>13000</ind><dep>-56.5</dep></entry>
-					<entry><ind>14000</ind><dep>-56.5</dep></entry>
-					<entry><ind>15000</ind><dep>-56.5</dep></entry>
-					<entry><ind>16000</ind><dep>-56.5</dep></entry>
-					<entry><ind>17000</ind><dep>-56.5</dep></entry>
-					<entry><ind>18000</ind><dep>-56.5</dep></entry>
-					<entry><ind>19000</ind><dep>-56.5</dep></entry>
-					<entry><ind>20000</ind><dep>-56.5</dep></entry>
-					<entry><ind>22000</ind><dep>-54.5</dep></entry>
-					<entry><ind>24000</ind><dep>-52.5</dep></entry>
-					<entry><ind>26000</ind><dep>-50.5</dep></entry>
-					<entry><ind>28000</ind><dep>-48.5</dep></entry>
-					<entry><ind>30000</ind><dep>-46.5</dep></entry>
-					<entry><ind>32000</ind><dep>-44.5</dep></entry>
-					<entry><ind>34000</ind><dep>-38.9</dep></entry>
-					<entry><ind>36000</ind><dep>-33.3</dep></entry>
-					<entry><ind>38000</ind><dep>-27.7</dep></entry>
-					<entry><ind>39000</ind><dep>-24.9</dep></entry>
-					<entry><ind>40000</ind><dep>-22.1</dep></entry>
-					<entry><ind>41000</ind><dep>-19.3</dep></entry>
-					<entry><ind>42000</ind><dep>-16.5</dep></entry>
+					<entry>
+						<ind>-1000</ind>
+						<dep> 21.5</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep> 15.0</dep>
+					</entry>
+					<entry>
+						<ind> 1000</ind>
+						<dep> 8.5</dep>
+					</entry>
+					<entry>
+						<ind> 2000</ind>
+						<dep> 2.0</dep>
+					</entry>
+					<entry>
+						<ind> 3000</ind>
+						<dep>-4.50</dep>
+					</entry>
+					<entry>
+						<ind> 4000</ind>
+						<dep>-11.0</dep>
+					</entry>
+					<entry>
+						<ind> 5000</ind>
+						<dep>-17.5</dep>
+					</entry>
+					<entry>
+						<ind> 6000</ind>
+						<dep>-24.0</dep>
+					</entry>
+					<entry>
+						<ind> 7000</ind>
+						<dep>-30.5</dep>
+					</entry>
+					<entry>
+						<ind> 8000</ind>
+						<dep>-37.0</dep>
+					</entry>
+					<entry>
+						<ind> 9000</ind>
+						<dep>-43.0</dep>
+					</entry>
+					<entry>
+						<ind>10000</ind>
+						<dep>-50.0</dep>
+					</entry>
+					<entry>
+						<ind>11000</ind>
+						<dep>-56.5</dep>
+					</entry>
+					<entry>
+						<ind>12000</ind>
+						<dep>-56.5</dep>
+					</entry>
+					<entry>
+						<ind>13000</ind>
+						<dep>-56.5</dep>
+					</entry>
+					<entry>
+						<ind>14000</ind>
+						<dep>-56.5</dep>
+					</entry>
+					<entry>
+						<ind>15000</ind>
+						<dep>-56.5</dep>
+					</entry>
+					<entry>
+						<ind>16000</ind>
+						<dep>-56.5</dep>
+					</entry>
+					<entry>
+						<ind>17000</ind>
+						<dep>-56.5</dep>
+					</entry>
+					<entry>
+						<ind>18000</ind>
+						<dep>-56.5</dep>
+					</entry>
+					<entry>
+						<ind>19000</ind>
+						<dep>-56.5</dep>
+					</entry>
+					<entry>
+						<ind>20000</ind>
+						<dep>-56.5</dep>
+					</entry>
+					<entry>
+						<ind>22000</ind>
+						<dep>-54.5</dep>
+					</entry>
+					<entry>
+						<ind>24000</ind>
+						<dep>-52.5</dep>
+					</entry>
+					<entry>
+						<ind>26000</ind>
+						<dep>-50.5</dep>
+					</entry>
+					<entry>
+						<ind>28000</ind>
+						<dep>-48.5</dep>
+					</entry>
+					<entry>
+						<ind>30000</ind>
+						<dep>-46.5</dep>
+					</entry>
+					<entry>
+						<ind>32000</ind>
+						<dep>-44.5</dep>
+					</entry>
+					<entry>
+						<ind>34000</ind>
+						<dep>-38.9</dep>
+					</entry>
+					<entry>
+						<ind>36000</ind>
+						<dep>-33.3</dep>
+					</entry>
+					<entry>
+						<ind>38000</ind>
+						<dep>-27.7</dep>
+					</entry>
+					<entry>
+						<ind>39000</ind>
+						<dep>-24.9</dep>
+					</entry>
+					<entry>
+						<ind>40000</ind>
+						<dep>-22.1</dep>
+					</entry>
+					<entry>
+						<ind>41000</ind>
+						<dep>-19.3</dep>
+					</entry>
+					<entry>
+						<ind>42000</ind>
+						<dep>-16.5</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/FMGC/internal/ISAtemp</output>
 	</filter>
-	
+
 	<filter>
 		<name>Difference to ISA Temp (Actual - ISA)</name>
 		<type>gain</type>
@@ -672,7 +1076,7 @@
 		</input>
 		<output>/FMGC/internal/difftoISA</output>
 	</filter>
-	
+
 	<filter>
 		<name>Force Auto Coordination Off</name>
 		<type>gain</type>
@@ -686,7 +1090,7 @@
 		<input>0</input>
 		<output>/controls/flight/auto-coordination</output>
 	</filter>
-	
+
 	<filter>
 		<name>Left Door</name>
 		<type>gain</type>
@@ -696,16 +1100,28 @@
 			<expression>
 				<table>
 					<property>/gear/gear[1]/position-norm</property>
-					<entry><ind>0.00</ind><dep>0</dep></entry>
-					<entry><ind>0.19</ind><dep>1</dep></entry>
-					<entry><ind>0.81</ind><dep>1</dep></entry>
-					<entry><ind>1.00</ind><dep>0</dep></entry>
+					<entry>
+						<ind>0.00</ind>
+						<dep>0</dep>
+					</entry>
+					<entry>
+						<ind>0.19</ind>
+						<dep>1</dep>
+					</entry>
+					<entry>
+						<ind>0.81</ind>
+						<dep>1</dep>
+					</entry>
+					<entry>
+						<ind>1.00</ind>
+						<dep>0</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/systems/hydraulic/gear/door-left</output>
 	</filter>
-	
+
 	<filter>
 		<name>Left Door Conversion to Degrees</name>
 		<type>gain</type>
@@ -715,14 +1131,20 @@
 			<expression>
 				<table>
 					<property>/systems/hydraulic/gear/door-left</property>
-					<entry><ind>0</ind><dep>   0</dep></entry>
-					<entry><ind>1</ind><dep>-100</dep></entry>
+					<entry>
+						<ind>0</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>1</ind>
+						<dep>-100</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/door-left</output>
 	</filter>
-	
+
 	<filter>
 		<name>Right Door</name>
 		<type>gain</type>
@@ -732,16 +1154,28 @@
 			<expression>
 				<table>
 					<property>/gear/gear[2]/position-norm</property>
-					<entry><ind>0.00</ind><dep>0</dep></entry>
-					<entry><ind>0.19</ind><dep>1</dep></entry>
-					<entry><ind>0.81</ind><dep>1</dep></entry>
-					<entry><ind>1.00</ind><dep>0</dep></entry>
+					<entry>
+						<ind>0.00</ind>
+						<dep>0</dep>
+					</entry>
+					<entry>
+						<ind>0.19</ind>
+						<dep>1</dep>
+					</entry>
+					<entry>
+						<ind>0.81</ind>
+						<dep>1</dep>
+					</entry>
+					<entry>
+						<ind>1.00</ind>
+						<dep>0</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/systems/hydraulic/gear/door-right</output>
 	</filter>
-	
+
 	<filter>
 		<name>Right Door Conversion to Degrees</name>
 		<type>gain</type>
@@ -751,14 +1185,20 @@
 			<expression>
 				<table>
 					<property>/systems/hydraulic/gear/door-right</property>
-					<entry><ind>0</ind><dep>  0</dep></entry>
-					<entry><ind>1</ind><dep>100</dep></entry>
+					<entry>
+						<ind>0</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>1</ind>
+						<dep>100</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/door-right</output>
 	</filter>
-	
+
 	<filter>
 		<name>Nose Door</name>
 		<type>gain</type>
@@ -768,16 +1208,28 @@
 			<expression>
 				<table>
 					<property>/gear/gear[0]/position-norm</property>
-					<entry><ind>0.00</ind><dep>0</dep></entry>
-					<entry><ind>0.19</ind><dep>1</dep></entry>
-					<entry><ind>0.81</ind><dep>1</dep></entry>
-					<entry><ind>1.00</ind><dep>0</dep></entry>
+					<entry>
+						<ind>0.00</ind>
+						<dep>0</dep>
+					</entry>
+					<entry>
+						<ind>0.19</ind>
+						<dep>1</dep>
+					</entry>
+					<entry>
+						<ind>0.81</ind>
+						<dep>1</dep>
+					</entry>
+					<entry>
+						<ind>1.00</ind>
+						<dep>0</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/systems/hydraulic/gear/door-nose</output>
 	</filter>
-	
+
 	<filter>
 		<name>NLG Left Door Conversion to Degrees</name>
 		<type>gain</type>
@@ -787,14 +1239,20 @@
 			<expression>
 				<table>
 					<property>/systems/hydraulic/gear/door-nose</property>
-					<entry><ind>0</ind><dep> 0</dep></entry>
-					<entry><ind>1</ind><dep>95</dep></entry>
+					<entry>
+						<ind>0</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>1</ind>
+						<dep>95</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/door-nose-left</output>
 	</filter>
-	
+
 	<filter>
 		<name>NLG Right Door Conversion to Degrees</name>
 		<type>gain</type>
@@ -804,14 +1262,20 @@
 			<expression>
 				<table>
 					<property>/systems/hydraulic/gear/door-nose</property>
-					<entry><ind>0</ind><dep>  0</dep></entry>
-					<entry><ind>1</ind><dep>-95</dep></entry>
+					<entry>
+						<ind>0</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>1</ind>
+						<dep>-95</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/door-nose-right</output>
 	</filter>
-	
+
 	<filter>
 		<name>Autobrake Decel Error</name>
 		<type>gain</type>
@@ -826,7 +1290,7 @@
 		</input>
 		<output>/controls/autobrake/decel-error</output>
 	</filter>
-	
+
 	<pi-simple-controller>
 		<name>IT-CONTROLLER: AUTOBRAKE DECEL</name>
 		<debug>false</debug>
@@ -855,7 +1319,7 @@
 			<max>1.0</max>
 		</config>
 	</pi-simple-controller>
-	
+
 	<filter>
 		<name>DDRMI: Heading</name>
 		<type>gain</type>
@@ -891,7 +1355,7 @@
 		<input>/orientation/heading-magnetic-deg</input>
 		<output>/instrumentation/ddrmi/heading</output>
 	</filter>
-	
+
 	<filter>
 		<name>DDRMI: VOR 1 Error</name>
 		<type>gain</type>
@@ -909,7 +1373,7 @@
 			<max>180</max>
 		</period>
 	</filter>
-	
+
 	<filter>
 		<name>DDRMI: Needle 1</name>
 		<debug>false</debug>
@@ -996,7 +1460,7 @@
 		</input>
 		<output>/instrumentation/ddrmi/needle-1</output>
 	</filter>
-	
+
 	<filter>
 		<name>DDRMI: VOR 2 Error</name>
 		<type>gain</type>
@@ -1014,7 +1478,7 @@
 			<max>180</max>
 		</period>
 	</filter>
-	
+
 	<filter>
 		<name>DDRMI: Needle 2</name>
 		<debug>false</debug>
@@ -1101,7 +1565,7 @@
 		</input>
 		<output>/instrumentation/ddrmi/needle-2</output>
 	</filter>
-	
+
 	<filter>
 		<name>DDRMI: FLAG HDG</name>
 		<debug>false</debug>
@@ -1139,7 +1603,7 @@
 		<output>/instrumentation/ddrmi/flag-hdg</output>
 		<filter-time>0.1</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>DDRMI: FLAG 1</name>
 		<debug>false</debug>
@@ -1199,7 +1663,7 @@
 		<output>/instrumentation/ddrmi/flag-1</output>
 		<filter-time>0.64</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>DDRMI: FLAG 2</name>
 		<debug>false</debug>
@@ -1259,7 +1723,7 @@
 		<output>/instrumentation/ddrmi/flag-2</output>
 		<filter-time>0.64</filter-time>
 	</filter>
-	
+
 	<!-- Minimums stuff -->
 	<filter>
 		<name>Minimums Selector</name>
@@ -1278,7 +1742,7 @@
 		<input>/position/gear-agl-ft</input>
 		<output>/instrumentation/pfd/minimums-ref-alt</output>
 	</filter>
-	
+
 	<filter>
 		<name>Minimums Selector</name>
 		<type>gain</type>
@@ -1324,7 +1788,7 @@
 		<input>99999</input>
 		<output>/instrumentation/pfd/minimums-no-gpws-alt</output>
 	</filter>
-	
+
 	<filter>
 		<name>Minimums Selector</name>
 		<type>gain</type>
@@ -1351,13 +1815,13 @@
 		<input>99999</input>
 		<output>/instrumentation/pfd/minimums</output>
 	</filter>
-	
+
 	<filter>
 		<name>Minimums Minus 50</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<update-interval-secs>0.1</update-interval-secs>
-		<input> 
+		<input>
 			<expression>
 				<difference>
 					<property>/instrumentation/pfd/minimums</property>
@@ -1367,7 +1831,7 @@
 		</input>
 		<output>/instrumentation/pfd/minimums-minus-50</output>
 	</filter>
-	
+
 	<filter>
 		<name>Minimums Plus 50</name>
 		<type>gain</type>
@@ -1383,7 +1847,7 @@
 		</input>
 		<output>/instrumentation/pfd/minimums-plus-50</output>
 	</filter>
-	
+
 	<filter>
 		<name>Minimums Plus 100</name>
 		<type>gain</type>
@@ -1399,7 +1863,7 @@
 		</input>
 		<output>/instrumentation/pfd/minimums-plus-100</output>
 	</filter>
-	
+
 	<logic>
 		<!-- True when flaps are NOT in landing config -->
 		<input>
@@ -1414,7 +1878,8 @@
 						<value>4</value>
 					</less-than>
 					<not-equals>
-						<property>/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override</property>
+						<property>
+							/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override</property>
 						<value>1</value>
 					</not-equals>
 				</and>
@@ -1422,7 +1887,7 @@
 		</input>
 		<output>/instrumentation/mk-viii/inputs/discretes/landing-flaps</output>
 	</logic>
-	
+
 	<filter>
 		<name>OIL PSI 1</name>
 		<type>gain</type>
@@ -1432,8 +1897,14 @@
 			<expression>
 				<table>
 					<property>/engines/engine[0]/n2-actual</property>
-					<entry><ind>11</ind><dep> 2</dep></entry>
-					<entry><ind>58</ind><dep>48</dep></entry>
+					<entry>
+						<ind>11</ind>
+						<dep> 2</dep>
+					</entry>
+					<entry>
+						<ind>58</ind>
+						<dep>48</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1449,14 +1920,20 @@
 			<expression>
 				<table>
 					<property>/engines/engine[1]/n2-actual</property>
-					<entry><ind>11</ind><dep> 2</dep></entry>
-					<entry><ind>58</ind><dep>48</dep></entry>
+					<entry>
+						<ind>11</ind>
+						<dep> 2</dep>
+					</entry>
+					<entry>
+						<ind>58</ind>
+						<dep>48</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/engines/engine[1]/oil-psi-actual</output>
 	</filter>
-	
+
 	<filter>
 		<name>DU1 LCD Contrast</name>
 		<type>gain</type>
@@ -1470,8 +1947,14 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.97</dep></entry>
-					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.97</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.98</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1479,14 +1962,20 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.95</dep></entry>
-					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.95</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/du/du1-contrast</output>
 	</filter>
-	
+
 	<filter>
 		<name>DU2 LCD Contrast</name>
 		<type>gain</type>
@@ -1500,8 +1989,14 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.97</dep></entry>
-					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.97</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.98</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1509,14 +2004,20 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.95</dep></entry>
-					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.95</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/du/du2-contrast</output>
 	</filter>
-	
+
 	<filter>
 		<name>DU3 LCD Contrast</name>
 		<type>gain</type>
@@ -1530,8 +2031,14 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.97</dep></entry>
-					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.97</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.98</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1539,14 +2046,20 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.95</dep></entry>
-					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.95</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/du/du3-contrast</output>
 	</filter>
-	
+
 	<filter>
 		<name>DU4 LCD Contrast</name>
 		<type>gain</type>
@@ -1560,8 +2073,14 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.97</dep></entry>
-					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.97</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.98</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1569,14 +2088,20 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.95</dep></entry>
-					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.95</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/du/du4-contrast</output>
 	</filter>
-	
+
 	<filter>
 		<name>DU5 LCD Contrast</name>
 		<type>gain</type>
@@ -1590,8 +2115,14 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.97</dep></entry>
-					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.97</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.98</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1599,14 +2130,20 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.95</dep></entry>
-					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.95</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/du/du5-contrast</output>
 	</filter>
-	
+
 	<filter>
 		<name>DU6 LCD Contrast</name>
 		<type>gain</type>
@@ -1620,8 +2157,14 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.97</dep></entry>
-					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.97</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.98</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1629,14 +2172,20 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.95</dep></entry>
-					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.95</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/du/du6-contrast</output>
 	</filter>
-	
+
 	<filter>
 		<name>IESI LCD Contrast</name>
 		<type>gain</type>
@@ -1650,8 +2199,14 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.97</dep></entry>
-					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.97</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.98</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1659,14 +2214,20 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.95</dep></entry>
-					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.95</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/iesi/lcd-contrast</output>
 	</filter>
-	
+
 	<filter>
 		<name>MCDU1 LCD Contrast</name>
 		<type>gain</type>
@@ -1680,8 +2241,14 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.97</dep></entry>
-					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.97</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.98</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1689,14 +2256,20 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.95</dep></entry>
-					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.95</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/mcdu/mcdu1-contrast</output>
 	</filter>
-	
+
 	<filter>
 		<name>MCDU2 LCD Contrast</name>
 		<type>gain</type>
@@ -1710,8 +2283,14 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.97</dep></entry>
-					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.97</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.98</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1719,14 +2298,20 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.95</dep></entry>
-					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.95</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/mcdu/mcdu2-contrast</output>
 	</filter>
-	
+
 	<filter>
 		<name>DCDU LCD Contrast</name>
 		<type>gain</type>
@@ -1740,8 +2325,14 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.97</dep></entry>
-					<entry><ind>0.0</ind><dep>0.98</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.97</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.98</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
@@ -1749,14 +2340,20 @@
 			<expression>
 				<table>
 					<property>/rendering/scene/diffuse/red</property>
-					<entry><ind>0.8</ind><dep>0.95</dep></entry>
-					<entry><ind>0.0</ind><dep>0.90</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>0.95</dep>
+					</entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>0.90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/instrumentation/dcdu/lcd-contrast</output>
 	</filter>
-	
+
 	<predict-simple>
 		<name>FBW Pitch IAS Predictor</name>
 		<debug>false</debug>

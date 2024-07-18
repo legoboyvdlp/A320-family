@@ -4,12 +4,12 @@
 
 <PropertyList>
 	<path>res/PW1100G.ac</path>
-	
+
 	<params>
 		<contrail1>engines/engine[0]/contrail</contrail1>
 		<contrail2>engines/engine[1]/contrail</contrail2>
 	</params>
-	
+
 	<!-- Particle Effects -->
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/contrail.xml</path>
@@ -28,7 +28,7 @@
 			<z-m>-2.22295</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/contrail.xml</path>
 		<name>contrailRight</name>
@@ -77,7 +77,7 @@
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/Moisture.xml</path>
 		<name>moistureRight</name>
@@ -108,7 +108,7 @@
 			<pitch-deg>0</pitch-deg>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray.xml</path>
 		<name>engine-spray-left</name>
@@ -142,7 +142,7 @@
 			<z-m>-5</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray.xml</path>
 		<name>engine-spray-right</name>
@@ -176,7 +176,7 @@
 			<z-m>-5</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray-reverse.xml</path>
 		<name>engine-spray-reverse</name>
@@ -206,7 +206,7 @@
 			<z-m>-5</z-m>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/A320-family/Models/Effects/Particles/engine-spray-reverse.xml</path>
 		<name>engine-spray-reverse</name>
@@ -249,7 +249,7 @@
 			<property>systems/failures/fire/engine-left-fire</property>
 		</condition>
 	</model>
-	
+
 	<model>
 		<name>Engine fire right</name>
 		<path>Aircraft/A320-family/Models/Effects/Particles/enginefire.xml</path>
@@ -262,7 +262,7 @@
 			<property>systems/failures/fire/engine-right-fire</property>
 		</condition>
 	</model>
-	
+
 	<!-- Animations -->
 	<animation>
 		<name>Fan spinning animation (slow)</name>
@@ -281,7 +281,7 @@
 			<z-m>-2.33034</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>Fan spinning animation (slow)</name>
 		<type>spin</type>
@@ -299,7 +299,7 @@
 			<z-m>-2.33034</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>Fan spinning animation (fast)</name>
 		<type>spin</type>
@@ -317,7 +317,7 @@
 			<z-m>-2.33034</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<name>Fan spinning animation (fast)</name>
 		<type>spin</type>
@@ -335,7 +335,7 @@
 			<z-m>-2.33034</z-m>
 		</center>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FanSpinningPWPPL</object-name>
@@ -346,7 +346,7 @@
 			</greater-than>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FanSpinningPWPPR</object-name>
@@ -357,7 +357,7 @@
 			</greater-than>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FanPWPPL</object-name>
@@ -368,7 +368,7 @@
 			</less-than-equals>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
 		<object-name>FanPWPPR</object-name>
@@ -379,7 +379,7 @@
 			</less-than-equals>
 		</condition>
 	</animation>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>ReverserLDoorPWPP.Inner</object-name>
@@ -407,7 +407,7 @@
 			<z>0</z>
 		</axis>
 	</animation>
-	
+
 	<!-- Effect -->
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-engine-PW</inherits-from>
@@ -423,17 +423,17 @@
 		<object-name>ReverserLDoorPWPP.Placards</object-name>
 		<object-name>ReverserRDoorPWPP.Placards</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-matt-engine-PW</inherits-from>
 		<object-name>EnginePWPPL.Inner</object-name>
-        <object-name>EnginePWPPR.Inner</object-name>
+		<object-name>EnginePWPPR.Inner</object-name>
 		<object-name>PylonPWPPL</object-name>
 		<object-name>PylonPWPPR</object-name>
 		<object-name>ReverserLDoorPWPP.Inner</object-name>
 		<object-name>ReverserRDoorPWPP.Inner</object-name>
 	</effect>
-	
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/Model/reflection-chrome-engine-PW</inherits-from>
 		<object-name>IntakePWPPL</object-name>

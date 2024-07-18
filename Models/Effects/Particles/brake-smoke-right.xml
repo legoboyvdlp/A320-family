@@ -17,10 +17,10 @@
         </offsets>
 
         <condition>
-				<equals>
-					<property>gear/gear[2]/Rbrake-smoke</property>
-					<value>1</value>
-				</equals>
+            <equals>
+                <property>gear/gear[2]/Rbrake-smoke</property>
+                <value>1</value>
+            </equals>
         </condition>
 
         <attach>world</attach>
@@ -50,8 +50,8 @@
 
         <counter>
             <particles-per-sec>
-				<property>gear/gear[2]/Rbrake-thermal-energy</property>
-				<factor>20</factor>
+                <property>gear/gear[2]/Rbrake-thermal-energy</property>
+                <factor>20</factor>
                 <spread>70</spread>
             </particles-per-sec>
         </counter>
@@ -63,15 +63,15 @@
                 <color>
                     <red>
                         <value>0.8</value>
-						<property>rendering/scene/diffuse/red</property>
+                        <property>rendering/scene/diffuse/red</property>
                     </red>
                     <green>
                         <value>0.8</value>
-						<property>rendering/scene/diffuse/red</property>
+                        <property>rendering/scene/diffuse/red</property>
                     </green>
                     <blue>
                         <value>0.8</value>
-						<property>rendering/scene/diffuse/red</property>
+                        <property>rendering/scene/diffuse/red</property>
                     </blue>
                     <alpha>
                         <value>0.5</value>
@@ -85,15 +85,15 @@
                 <color>
                     <red>
                         <value>0.7</value>
-						<property>rendering/scene/diffuse/red</property>
+                        <property>rendering/scene/diffuse/red</property>
                     </red>
                     <green>
                         <value>0.7</value>
-						<property>rendering/scene/diffuse/red</property>
+                        <property>rendering/scene/diffuse/red</property>
                     </green>
                     <blue>
                         <value>0.7</value>
-						<property>rendering/scene/diffuse/red</property>
+                        <property>rendering/scene/diffuse/red</property>
                     </blue>
                     <alpha>
                         <value>0.005</value>

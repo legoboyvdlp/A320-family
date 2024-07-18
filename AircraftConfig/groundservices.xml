@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -27,7 +27,7 @@
         </button>
     </group>
 
-    <hrule/>
+    <hrule />
 
     <group>
         <layout>vbox</layout>
@@ -124,10 +124,10 @@
                 <value>0</value>
             </binding>
             <enable>
-				<less-than>
-					<property>/velocities/groundspeed-kt</property>
-					<value>2</value>
-				</less-than>
+                <less-than>
+                    <property>/velocities/groundspeed-kt</property>
+                    <value>2</value>
+                </less-than>
             </enable>
             <binding>
                 <command>dialog-apply</command>
@@ -144,10 +144,10 @@
                 <property>/controls/pneumatics/switches/ground-air</property>
             </binding>
             <enable>
-				<less-than>
-					<property>/velocities/groundspeed-kt</property>
-					<value>2</value>
-				</less-than>
+                <less-than>
+                    <property>/velocities/groundspeed-kt</property>
+                    <value>2</value>
+                </less-than>
             </enable>
             <binding>
                 <command>dialog-apply</command>
@@ -172,28 +172,28 @@
             </hrule>
         </group>
 
-		<group>
+        <group>
             <layout>hbox</layout>
-			<checkbox>
-				<label>Front Left</label>
-				<halign>left</halign>
-				<property>/services/stairs/l1</property>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
-				<live>true</live>
-			</checkbox>
+            <checkbox>
+                <label>Front Left</label>
+                <halign>left</halign>
+                <property>/services/stairs/l1</property>
+                <binding>
+                    <command>dialog-apply</command>
+                </binding>
+                <live>true</live>
+            </checkbox>
 
-			<checkbox>
-				<label>Rear Left</label>
-				<halign>left</halign>
-				<property>/services/stairs/l4</property>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
-				<live>true</live>
-			</checkbox>
-		</group>
+            <checkbox>
+                <label>Rear Left</label>
+                <halign>left</halign>
+                <property>/services/stairs/l4</property>
+                <binding>
+                    <command>dialog-apply</command>
+                </binding>
+                <live>true</live>
+            </checkbox>
+        </group>
 
         <checkbox>
             <label>Stairway Cover</label>
@@ -266,10 +266,10 @@
             <halign>center</halign>
             <padding>5</padding>
             <enable>
-				<or>
-					<property>/services/catering/enable</property>
-					<property>/services/catering-rear/enable</property>
-				</or>
+                <or>
+                    <property>/services/catering/enable</property>
+                    <property>/services/catering-rear/enable</property>
+                </or>
             </enable>
             <binding>
                 <condition>
@@ -371,60 +371,60 @@
                 <stretch type="bool">true</stretch>
             </hrule>
         </group>
-		
-		<group>
-			<layout>hbox</layout>
-			<button>
-				<legend>Replace Oxygen Bottle</legend>
-				<halign>center</halign>
-				<padding>5</padding>
-				<enable>
-					<property>/gear/gear[1]/wow</property>
-				</enable>
-				<binding>
-					<command>property-assign</command>
-					<property>/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
-					<value>2183</value>
-				</binding>
-			</button>
-			
-			<text>
-				<x>10</x>
-				<y>200</y>
-				<label>8888 litres</label><!-- placeholder for width -->
-				<format>%4.0f litres</format>
-				<property>/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
-				<live>true</live>
-			</text>
-		</group>
-		
+
+        <group>
+            <layout>hbox</layout>
+            <button>
+                <legend>Replace Oxygen Bottle</legend>
+                <halign>center</halign>
+                <padding>5</padding>
+                <enable>
+                    <property>/gear/gear[1]/wow</property>
+                </enable>
+                <binding>
+                    <command>property-assign</command>
+                    <property>/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
+                    <value>2183</value>
+                </binding>
+            </button>
+
+            <text>
+                <x>10</x>
+                <y>200</y>
+                <label>8888 litres</label><!-- placeholder for width -->
+                <format>%4.0f litres</format>
+                <property>/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
+                <live>true</live>
+            </text>
+        </group>
+
         <button>
             <legend>Reset Pax Oxy Masks</legend>
             <halign>center</halign>
             <padding>5</padding>
-			<enable>
-				<property>/gear/gear[1]/wow</property>
-			</enable>
+            <enable>
+                <property>/gear/gear[1]/wow</property>
+            </enable>
             <binding>
                 <command>property-assign</command>
                 <property>/systems/oxygen/passenger-oxygen/masks-deploy</property>
                 <value>0</value>
             </binding>
         </button>
-		
+
         <button>
             <legend>Stow RAT</legend>
             <halign>center</halign>
             <padding>5</padding>
-			<enable>
-				<and>
-					<property>/gear/gear[1]/wow</property>
-					<less-than>
-						<property>/velocities/groundspeed-kt</property>
-						<value>100</value>
-					</less-than>
-				</and>
-			</enable>
+            <enable>
+                <and>
+                    <property>/gear/gear[1]/wow</property>
+                    <less-than>
+                        <property>/velocities/groundspeed-kt</property>
+                        <value>100</value>
+                    </less-than>
+                </and>
+            </enable>
             <binding>
                 <command>property-assign</command>
                 <property>/systems/electrical/some-electric-thingie/rat-deploy</property>

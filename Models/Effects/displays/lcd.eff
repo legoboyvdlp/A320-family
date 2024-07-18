@@ -14,7 +14,6 @@ Author: Nikolai V. Chr.
 		<use_filters>1</use_filters>
 
 
-
 		<texture n="0">
 			<type>white</type>
 		</texture>
@@ -33,7 +32,9 @@ Author: Nikolai V. Chr.
 			<color-mode-uniform>1</color-mode-uniform>
 		</material>
 		<material-id>0</material-id>
-		<use-als><use>/sim/rendering/shaders/skydome</use></use-als>
+		<use-als>
+			<use>/sim/rendering/shaders/skydome</use>
+		</use-als>
 		<rendering-hint>opaque</rendering-hint>
 		<transparent>false</transparent>
 		<render-bin>
@@ -42,127 +43,157 @@ Author: Nikolai V. Chr.
 		</render-bin>
 		<shade-model>smooth</shade-model>
 
-		<use_filtering><use>/sim/rendering/als-filters/use-filtering</use></use_filtering>
-    		<gamma><use>/sim/rendering/als-filters/gamma</use></gamma>
-    		<brightness><use>/sim/rendering/als-filters/brightness</use></brightness>
-    		<delta_T><use>/environment/surface/delta-T-structure</use></delta_T>
-		<fact_grey><use>/sim/rendering/als-filters/grey-factor</use></fact_grey>
-    	        <fact_black><use>/sim/rendering/als-filters/black-factor</use></fact_black>
-    		<use_night_vision><use>/sim/rendering/als-filters/use-night-vision</use></use_night_vision>
-    		<use_IR_vision><use>/sim/rendering/als-filters/use-IR-vision</use></use_IR_vision>
-		<display_xsize><use>/sim/startup/xsize</use></display_xsize>
-		<display_ysize><use>/sim/startup/ysize</use></display_ysize>
+		<use_filtering>
+			<use>/sim/rendering/als-filters/use-filtering</use>
+		</use_filtering>
+		<gamma>
+			<use>/sim/rendering/als-filters/gamma</use>
+		</gamma>
+		<brightness>
+			<use>/sim/rendering/als-filters/brightness</use>
+		</brightness>
+		<delta_T>
+			<use>/environment/surface/delta-T-structure</use>
+		</delta_T>
+		<fact_grey>
+			<use>/sim/rendering/als-filters/grey-factor</use>
+		</fact_grey>
+		<fact_black>
+			<use>/sim/rendering/als-filters/black-factor</use>
+		</fact_black>
+		<use_night_vision>
+			<use>/sim/rendering/als-filters/use-night-vision</use>
+		</use_night_vision>
+		<use_IR_vision>
+			<use>/sim/rendering/als-filters/use-IR-vision</use>
+		</use_IR_vision>
+		<display_xsize>
+			<use>/sim/startup/xsize</use>
+		</display_xsize>
+		<display_ysize>
+			<use>/sim/startup/ysize</use>
+		</display_ysize>
 	</parameters>
 	<technique n="4">
 		<predicate>
-		   <and>
-			   <property>/sim/rendering/shaders/quality-level</property>
-			   <property>/sim/rendering/shaders/model</property>
-			   <or>
-				   <less-equal>
-					   <value type="float">2.0</value>
-					   <glversion/>
-				   </less-equal>
-				   <and>
-					   <extension-supported>GL_ARB_shader_objects</extension-supported>
-					   <extension-supported>GL_ARB_shading_language_100</extension-supported>
-					   <extension-supported>GL_ARB_vertex_shader</extension-supported>
-					   <extension-supported>GL_ARB_fragment_shader</extension-supported>
-				   </and>
-			   </or>
-		   </and>
-	    </predicate>
+			<and>
+				<property>/sim/rendering/shaders/quality-level</property>
+				<property>/sim/rendering/shaders/model</property>
+				<or>
+					<less-equal>
+						<value type="float">2.0</value>
+						<glversion />
+					</less-equal>
+					<and>
+						<extension-supported>GL_ARB_shader_objects</extension-supported>
+						<extension-supported>GL_ARB_shading_language_100</extension-supported>
+						<extension-supported>GL_ARB_vertex_shader</extension-supported>
+						<extension-supported>GL_ARB_fragment_shader</extension-supported>
+					</and>
+				</or>
+			</and>
+		</predicate>
 		<pass>
 			<lighting>true</lighting>
 			<material>
-			   <active>
-				   <use>material/active</use>
-			   </active>
-			   <ambient>
-				   <use>material/ambient</use>
-			   </ambient>
-			   <diffuse>
-				   <use>material/diffuse</use>
-			   </diffuse>
-			   <specular>
-				   <use>material/specular</use>
-			   </specular>
-			   <emissive>
-				   <use>material/emissive</use>
-			   </emissive>
-			   <shininess>
-				   <use>material/shininess</use>
-			   </shininess>
-			   <color-mode>
-				   <use>material/color-mode</use>
-			   </color-mode>
+				<active>
+					<use>material/active</use>
+				</active>
+				<ambient>
+					<use>material/ambient</use>
+				</ambient>
+				<diffuse>
+					<use>material/diffuse</use>
+				</diffuse>
+				<specular>
+					<use>material/specular</use>
+				</specular>
+				<emissive>
+					<use>material/emissive</use>
+				</emissive>
+				<shininess>
+					<use>material/shininess</use>
+				</shininess>
+				<color-mode>
+					<use>material/color-mode</use>
+				</color-mode>
 			</material>
 			<blend>
-			   <active>
-				   <use>blend/active</use>
-			   </active>
-			   <source>
-				   <use>blend/source</use>
-			   </source>
-			   <destination>
-				   <use>blend/destination</use>
-			   </destination>
+				<active>
+					<use>blend/active</use>
+				</active>
+				<source>
+					<use>blend/source</use>
+				</source>
+				<destination>
+					<use>blend/destination</use>
+				</destination>
 			</blend>
 			<shade-model>
-			   <use>shade-model</use>
+				<use>shade-model</use>
 			</shade-model>
 			<cull-face>
-			   <use>cull-face</use>
+				<use>cull-face</use>
 			</cull-face>
 			<rendering-hint>
-			   <use>rendering-hint</use>
+				<use>rendering-hint</use>
 			</rendering-hint>
 			<blend>
-			   <use>transparent</use>
+				<use>transparent</use>
 			</blend>
 			<alpha-test>
-			   <use>transparent</use>
+				<use>transparent</use>
 			</alpha-test>
 			<render-bin>
-			   <bin-number>
-				   <use>render-bin/bin-number</use>
-			   </bin-number>
-			   <bin-name>
-				   <use>render-bin/bin-name</use>
-			   </bin-name>
-		   	</render-bin>
-		   	<!-- Albedo texture unit-->
+				<bin-number>
+					<use>render-bin/bin-number</use>
+				</bin-number>
+				<bin-name>
+					<use>render-bin/bin-name</use>
+				</bin-name>
+			</render-bin>
+			<!-- Albedo texture unit-->
 			<texture-unit>
 				<unit>0</unit>
 				<image>
-				   <use>texture[0]/image</use>
+					<use>texture[0]/image</use>
 				</image>
 				<type>
-				   <use>texture[0]/type</use>
+					<use>texture[0]/type</use>
 				</type>
 				<filter>
-				   <use>texture[0]/filter</use>
+					<use>texture[0]/filter</use>
 				</filter>
 				<wrap-s>
-				   <use>texture[0]/wrap-s</use>
+					<use>texture[0]/wrap-s</use>
 				</wrap-s>
 				<wrap-t>
-				   <use>texture[0]/wrap-t</use>
+					<use>texture[0]/wrap-t</use>
 				</wrap-t>
 				<internal-format>
-				   <use>texture[0]/internal-format</use>
+					<use>texture[0]/internal-format</use>
 				</internal-format>
-		   	</texture-unit>
-		   	<texture-unit>
-		        <unit>1</unit>
-		        <type><use>texture[1]/type</use></type>
-		        <image><use>texture[1]/image</use></image>
-		        <filter><use>texture[1]/filter</use></filter>
-		        <wrap-s><use>texture[1]/wrap-s</use></wrap-s>
-		        <wrap-t><use>texture[1]/wrap-t</use></wrap-t>
-		    </texture-unit>
-		   	<vertex-program-two-side>
-		   		<use>vertex-program-two-side</use>
+			</texture-unit>
+			<texture-unit>
+				<unit>1</unit>
+				<type>
+					<use>texture[1]/type</use>
+				</type>
+				<image>
+					<use>texture[1]/image</use>
+				</image>
+				<filter>
+					<use>texture[1]/filter</use>
+				</filter>
+				<wrap-s>
+					<use>texture[1]/wrap-s</use>
+				</wrap-s>
+				<wrap-t>
+					<use>texture[1]/wrap-t</use>
+				</wrap-t>
+			</texture-unit>
+			<vertex-program-two-side>
+				<use>vertex-program-two-side</use>
 			</vertex-program-two-side>
 			<program>
 				<vertex-shader n="0">Aircraft/A320-family/Models/Effects/displays/lcd.vert</vertex-shader>
@@ -171,112 +202,134 @@ Author: Nikolai V. Chr.
 				<fragment-shader n="2">Shaders/filters-ALS.frag</fragment-shader>
 			</program>
 			<uniform>
-			   <name>BaseTex</name>
-			   <type>sampler-2d</type>
-			   <value type="int">0</value>
+				<name>BaseTex</name>
+				<type>sampler-2d</type>
+				<value type="int">0</value>
 			</uniform>
 			<uniform>
-		        <name>dust_texture</name>
-		        <type>sampler-2d</type>
-		        <value type="int">1</value>
-		    </uniform>
-			<uniform>
-			   <name>innerAngle</name>
-			   <type>float</type>
-			   <value>
-				   <use>inner-angle</use>
-			   </value>
+				<name>dust_texture</name>
+				<type>sampler-2d</type>
+				<value type="int">1</value>
 			</uniform>
 			<uniform>
-			   <name>outerAngle</name>
-			   <type>float</type>
-			   <value>
-				   <use>outer-angle</use>
-			   </value>
+				<name>innerAngle</name>
+				<type>float</type>
+				<value>
+					<use>inner-angle</use>
+				</value>
 			</uniform>
 			<uniform>
-			   <name>blackAngle</name>
-			   <type>float</type>
-			   <value>
-				   <use>black-angle</use>
-			   </value>
+				<name>outerAngle</name>
+				<type>float</type>
+				<value>
+					<use>outer-angle</use>
+				</value>
 			</uniform>
 			<uniform>
-			   <name>use_als</name>
-			   <type>bool</type>
-			   <value>
-				   <use>use-als</use>
-			   </value>
+				<name>blackAngle</name>
+				<type>float</type>
+				<value>
+					<use>black-angle</use>
+				</value>
 			</uniform>
 			<uniform>
-			   <name>contrast</name>
-			   <type>float</type>
-			   <value>
-				   <use>contrast</use>
-			   </value>
+				<name>use_als</name>
+				<type>bool</type>
+				<value>
+					<use>use-als</use>
+				</value>
 			</uniform>
 			<uniform>
-			   <name>use_filters</name>
-			   <type>bool</type>
-			   <value>
-				   <use>use_filters</use>
-			   </value>
+				<name>contrast</name>
+				<type>float</type>
+				<value>
+					<use>contrast</use>
+				</value>
 			</uniform>
 			<uniform>
-		        <name>dirt_factor</name>
-		        <type>float</type>
-		        <value><use>dirt-factor</use></value>
-		    </uniform>
+				<name>use_filters</name>
+				<type>bool</type>
+				<value>
+					<use>use_filters</use>
+				</value>
+			</uniform>
 			<uniform>
-        			<name>gamma</name>
-        			<type>float</type>
-       			 <value><use>gamma</use></value>
-      			</uniform>
-      			<uniform>
-        			<name>brightness</name>
-        			<type>float</type>
-       			 <value><use>brightness</use></value>
-      			</uniform>
-      			<uniform>
-        			<name>use_filtering</name>
-        			<type>bool</type>
-        			<value><use>use_filtering</use></value>
-      			</uniform>
-      			<uniform>
-       				 <name>use_night_vision</name>
-        			  <type>bool</type>
-       			 	   <value><use>use_night_vision</use></value>
-      			  </uniform>
-      			  <uniform>
-       			 	<name>use_IR_vision</name>
-        			<type>bool</type>
-       			 	<value><use>use_IR_vision</use></value>
-      			   </uniform>
-     			   <uniform>
-        			<name>delta_T</name>
-        			<type>float</type>
-        			<value><use>delta_T</use></value>
-      			   </uniform>
-			   <uniform>
+				<name>dirt_factor</name>
+				<type>float</type>
+				<value>
+					<use>dirt-factor</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>gamma</name>
+				<type>float</type>
+				<value>
+					<use>gamma</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>brightness</name>
+				<type>float</type>
+				<value>
+					<use>brightness</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>use_filtering</name>
+				<type>bool</type>
+				<value>
+					<use>use_filtering</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>use_night_vision</name>
+				<type>bool</type>
+				<value>
+					<use>use_night_vision</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>use_IR_vision</name>
+				<type>bool</type>
+				<value>
+					<use>use_IR_vision</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>delta_T</name>
+				<type>float</type>
+				<value>
+					<use>delta_T</use>
+				</value>
+			</uniform>
+			<uniform>
 				<name>fact_grey</name>
 				<type>float</type>
-				<value><use>fact_grey</use></value>
-			   </uniform>
-			   <uniform>
+				<value>
+					<use>fact_grey</use>
+				</value>
+			</uniform>
+			<uniform>
 				<name>fact_black</name>
 				<type>float</type>
-				<value><use>fact_black</use></value>
-			   </uniform>
+				<value>
+					<use>fact_black</use>
+				</value>
+			</uniform>
 			<uniform>
-				  <name>display_xsize</name>
-				  <type>int</type>
-				  <value><use>display_xsize</use></value>
-		   </uniform>
-			   <uniform>
-				  <name>display_ysize</name>
-				  <type>int</type>
-				  <value><use>display_ysize</use></value>
-		   </uniform> 
+				<name>display_xsize</name>
+				<type>int</type>
+				<value>
+					<use>display_xsize</use>
+				</value>
+			</uniform>
+			<uniform>
+				<name>display_ysize</name>
+				<type>int</type>
+				<value>
+					<use>display_ysize</use>
+				</value>
+			</uniform>
 		</pass>
 	</technique>
 </PropertyList>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -6,11 +6,11 @@
 
 <PropertyList>
 
-    <name>load-flightplans</name>
-    <layout>vbox</layout>
-    
-    <nasal>
-        <open><![CDATA[
+	<name>load-flightplans</name>
+	<layout>vbox</layout>
+
+	<nasal>
+		<open><![CDATA[
             var loadfpl = func(path) {
                 fmgc.flightPlanController.loadFlightPlan(path.getValue());
             }
@@ -23,32 +23,32 @@
 
         ]]></open>
 
-        <close><![CDATA[
+		<close><![CDATA[
             file_selector.del();
         ]]></close>
-    </nasal>
-    
-    <group>
-        <layout>hbox</layout>
-        <text>
-            <halign>left</halign>
-            <label>Load Flightplans</label>
-        </text>
-        <button>
-            <halign>right</halign>
-            <pref-width>20</pref-width>
-            <pref-height>20</pref-height>
-            <legend>X</legend>
-            <key>Esc</key>
-            <binding>
-                <command>dialog-close</command>
-            </binding>
-        </button>
-    </group>
-        
-    <hrule/>
-        
-    <group>
+	</nasal>
+
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Load Flightplans</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+
+	<hrule />
+
+	<group>
 		<layout>vbox</layout>
 		<text>
 			<halign>left</halign>
@@ -72,11 +72,13 @@
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>If you have a NAVIGRAPH subcription, we reccomend to load them in the MCDU instead of here.</label>
+			<label>If you have a NAVIGRAPH subcription, we reccomend to load them in the MCDU
+				instead of here.</label>
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>Minimum FGFS version for use of this feature (due to bugs in prior versions) is 2020.1.3.</label>
+			<label>Minimum FGFS version for use of this feature (due to bugs in prior versions) is
+				2020.1.3.</label>
 		</text>
 		<group>
 			<layout>hbox</layout>
@@ -84,7 +86,7 @@
 				<halign>left</halign>
 				<label>Load a flightplan</label>
 			</text>
-			
+
 			<button>
 				<legend>Load flightplan</legend>
 				<equal>true</equal>
@@ -120,5 +122,5 @@
 			</button>
 		</group>
 	</group>
-    
+
 </PropertyList>

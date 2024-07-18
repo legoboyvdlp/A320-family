@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
 	<path>Catering_Loader_Truck_VolvoFM-stowed.ac</path>
-	
+
 	<animation>
 		<type>translate</type>
 		<property>aircraft/nose-compression</property>
@@ -24,19 +24,19 @@
 		<object-name>arm_top</object-name>
 		<object-name>Lights_side</object-name>
 	</animation>
-	
+
 	<animation>
 		<name>pistons_left</name>
 		<object-name>piston_01_left</object-name>
 		<object-name>piston_02_left</object-name>
 	</animation>
-	
+
 	<animation>
 		<name>pistons_right</name>
 		<object-name>piston_01_right</object-name>
 		<object-name>piston_02_right</object-name>
 	</animation>
-	
+
 	<animation>
 		<name>Lights_all</name>
 		<object-name>Lights_front</object-name>
@@ -44,70 +44,100 @@
 		<object-name>Lights_side</object-name>
 		<object-name>warning_light_glass</object-name>
 	</animation>
-	
+
 	<!-- Pistons animation -->
 	<animation>
 		<type>translate</type>
 		<object-name>pistons_left</object-name>
 		<!--<property>sim/signals/fdm-initialized</property>-->
 		<property>services/catering/position-norm</property>
-			<factor>1</factor>
-			<interpolation>
-				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
-				<entry><ind> 0.10 </ind><dep>-0.60 </dep></entry>
-				<entry><ind> 1.00 </ind><dep>-0.60 </dep></entry>
-			</interpolation>
+		<factor>1</factor>
+		<interpolation>
+			<entry>
+				<ind> 0.0 </ind>
+				<dep> 0.00 </dep>
+			</entry>
+			<entry>
+				<ind> 0.10 </ind>
+				<dep>-0.60 </dep>
+			</entry>
+			<entry>
+				<ind> 1.00 </ind>
+				<dep>-0.60 </dep>
+			</entry>
+		</interpolation>
 		<axis>
-			<x1-m>  0.000 </x1-m>
+			<x1-m> 0.000 </x1-m>
 			<y1-m> -1.000 </y1-m>
-			<z1-m>  0.000 </z1-m>
-			<x2-m>  0.000 </x2-m>
-			<y2-m>  1.000 </y2-m>
-			<z2-m>  0.000 </z2-m>
+			<z1-m> 0.000 </z1-m>
+			<x2-m> 0.000 </x2-m>
+			<y2-m> 1.000 </y2-m>
+			<z2-m> 0.000 </z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>pistons_right</object-name>
 		<!--<property>sim/signals/fdm-initialized</property>-->
 		<property>services/catering/position-norm</property>
-			<factor>1</factor>
-			<interpolation>
-				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
-				<entry><ind> 0.10 </ind><dep> 0.60 </dep></entry>
-				<entry><ind> 1.00 </ind><dep> 0.60 </dep></entry>
-			</interpolation>
+		<factor>1</factor>
+		<interpolation>
+			<entry>
+				<ind> 0.0 </ind>
+				<dep> 0.00 </dep>
+			</entry>
+			<entry>
+				<ind> 0.10 </ind>
+				<dep> 0.60 </dep>
+			</entry>
+			<entry>
+				<ind> 1.00 </ind>
+				<dep> 0.60 </dep>
+			</entry>
+		</interpolation>
 		<axis>
-			<x1-m>  0.000 </x1-m>
+			<x1-m> 0.000 </x1-m>
 			<y1-m> -1.000 </y1-m>
-			<z1-m>  0.000 </z1-m>
-			<x2-m>  0.000 </x2-m>
-			<y2-m>  1.000 </y2-m>
-			<z2-m>  0.000 </z2-m>
+			<z1-m> 0.000 </z1-m>
+			<x2-m> 0.000 </x2-m>
+			<y2-m> 1.000 </y2-m>
+			<z2-m> 0.000 </z2-m>
 		</axis>
 	</animation>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>piston_02_left</object-name>
 		<object-name>piston_02_right</object-name>
 		<!--<property>sim/signals/fdm-initialized</property>-->
 		<property>services/catering/position-norm</property>
-			<factor>1</factor>
-			<interpolation>
-				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
-				<entry><ind> 0.10 </ind><dep> 0.00 </dep></entry>
-				<entry><ind> 0.15 </ind><dep>-0.40 </dep></entry>
-				<entry><ind> 1.00 </ind><dep>-0.40 </dep></entry>
-			</interpolation>
+		<factor>1</factor>
+		<interpolation>
+			<entry>
+				<ind> 0.0 </ind>
+				<dep> 0.00 </dep>
+			</entry>
+			<entry>
+				<ind> 0.10 </ind>
+				<dep> 0.00 </dep>
+			</entry>
+			<entry>
+				<ind> 0.15 </ind>
+				<dep>-0.40 </dep>
+			</entry>
+			<entry>
+				<ind> 1.00 </ind>
+				<dep>-0.40 </dep>
+			</entry>
+		</interpolation>
 		<axis>
-			<x1-m>  0.000 </x1-m>
-			<y1-m>  0.000 </y1-m>
+			<x1-m> 0.000 </x1-m>
+			<y1-m> 0.000 </y1-m>
 			<z1-m> -1.000 </z1-m>
-			<x2-m>  0.000 </x2-m>
-			<y2-m>  0.000 </y2-m>
-			<z2-m>  1.000 </z2-m>
+			<x2-m> 0.000 </x2-m>
+			<y2-m> 0.000 </y2-m>
+			<z2-m> 1.000 </z2-m>
 		</axis>
 	</animation>
 
@@ -117,40 +147,55 @@
 		<object-name>cargo_box_all</object-name>
 		<!--<property>sim/signals/fdm-initialized</property>-->
 		<property>services/catering/position-norm</property>
-			<factor>1</factor>
-			<interpolation>
-				<entry><ind> 0.0 </ind><dep>  0.00 </dep></entry>
-				<entry><ind> 1.00 </ind><dep> 3.11 </dep></entry>
-			</interpolation>
+		<factor>1</factor>
+		<interpolation>
+			<entry>
+				<ind> 0.0 </ind>
+				<dep> 0.00 </dep>
+			</entry>
+			<entry>
+				<ind> 1.00 </ind>
+				<dep> 3.11 </dep>
+			</entry>
+		</interpolation>
 		<axis>
-			<x1-m>  0.000 </x1-m>
-			<y1-m>  0.000 </y1-m>
+			<x1-m> 0.000 </x1-m>
+			<y1-m> 0.000 </y1-m>
 			<z1-m> -1.000 </z1-m>
-			<x2-m>  0.000 </x2-m>
-			<y2-m>  0.000 </y2-m>
-			<z2-m>  1.000 </z2-m>
+			<x2-m> 0.000 </x2-m>
+			<y2-m> 0.000 </y2-m>
+			<z2-m> 1.000 </z2-m>
 		</axis>
 	</animation>
-	
+
 	<!-- Cargo Box platform move -->
 	<animation>
 		<type>translate</type>
 		<object-name>platform</object-name>
 		<!--<property>sim/signals/fdm-initialized</property>-->
 		<property>services/catering/position-norm</property>
-			<factor>1</factor>
-			<interpolation>
-				<entry><ind> 0.00 </ind><dep> 0.00 </dep></entry>
-				<entry><ind> 0.57 </ind><dep>-1.75 </dep></entry>
-				<entry><ind> 1.00 </ind><dep>-1.75 </dep></entry>
-			</interpolation>
+		<factor>1</factor>
+		<interpolation>
+			<entry>
+				<ind> 0.00 </ind>
+				<dep> 0.00 </dep>
+			</entry>
+			<entry>
+				<ind> 0.57 </ind>
+				<dep>-1.75 </dep>
+			</entry>
+			<entry>
+				<ind> 1.00 </ind>
+				<dep>-1.75 </dep>
+			</entry>
+		</interpolation>
 		<axis>
-			<x1-m>  0.000 </x1-m>
-			<y1-m>  0.000 </y1-m>
+			<x1-m> 0.000 </x1-m>
+			<y1-m> 0.000 </y1-m>
 			<z1-m> -1.000 </z1-m>
-			<x2-m>  0.000 </x2-m>
-			<y2-m>  0.000 </y2-m>
-			<z2-m>  1.000 </z2-m>
+			<x2-m> 0.000 </x2-m>
+			<y2-m> 0.000 </y2-m>
+			<z2-m> 1.000 </z2-m>
 		</axis>
 	</animation>
 
@@ -160,88 +205,100 @@
 		<object-name>arm_top</object-name>
 		<!--<property>sim/signals/fdm-initialized</property>-->
 		<property>services/catering/position-norm</property>
-			<factor>1</factor>
-			<interpolation>
-				<entry><ind> 0.00 </ind><dep>  0.00 </dep></entry>
-				<entry><ind> 1.00 </ind><dep> 25.34 </dep></entry>
-			</interpolation>
+		<factor>1</factor>
+		<interpolation>
+			<entry>
+				<ind> 0.00 </ind>
+				<dep> 0.00 </dep>
+			</entry>
+			<entry>
+				<ind> 1.00 </ind>
+				<dep> 25.34 </dep>
+			</entry>
+		</interpolation>
 		<axis>
 			<x1-m> -2.271 </x1-m>
 			<y1-m> -0.100 </y1-m>
-			<z1-m>  1.310 </z1-m>
+			<z1-m> 1.310 </z1-m>
 			<x2-m> -2.271 </x2-m>
-			<y2-m>  0.100 </y2-m>
-			<z2-m>  1.310 </z2-m>
+			<y2-m> 0.100 </y2-m>
+			<z2-m> 1.310 </z2-m>
 		</axis>
 	</animation>
-	
+
 	<!-- Lower arm rotate-->
 	<animation>
 		<type>rotate</type>
 		<object-name>arm_bottom</object-name>
 		<!--<property>sim/signals/fdm-initialized</property>-->
 		<property>services/catering/position-norm</property>
-			<factor>1</factor>
-			<interpolation>
-				<entry><ind> 0.00 </ind><dep>   0.00 </dep></entry>
-				<entry><ind> 1.00 </ind><dep> -25.34 </dep></entry>
-			</interpolation>
+		<factor>1</factor>
+		<interpolation>
+			<entry>
+				<ind> 0.00 </ind>
+				<dep> 0.00 </dep>
+			</entry>
+			<entry>
+				<ind> 1.00 </ind>
+				<dep> -25.34 </dep>
+			</entry>
+		</interpolation>
 		<axis>
 			<x1-m> -2.271 </x1-m>
 			<y1-m> -0.100 </y1-m>
-			<z1-m>  1.237 </z1-m>
+			<z1-m> 1.237 </z1-m>
 			<x2-m> -2.271 </x2-m>
-			<y2-m>  0.100 </y2-m>
-			<z2-m>  1.237 </z2-m>
+			<y2-m> 0.100 </y2-m>
+			<z2-m> 1.237 </z2-m>
 		</axis>
 	</animation>
-	
+
 	<!-- Lights night illumination -->
 	<animation>
-		<type>material</type> 
+		<type>material</type>
 		<object-name>Lights_all</object-name>
-			<condition>
-				<or>
-					<greater-than>
-						<property>sim/time/sun-angle-rad</property>
-						<value>1.45</value>
-					</greater-than>
-					<less-than>
-						<property>environment/visibility-m</property>
-						<value>4500.00</value>
-					</less-than>
-				</or>
-			</condition>
-		<emission>	
-			<red>0.7</red>	
-			<green>0.7</green>	
+		<condition>
+			<or>
+				<greater-than>
+					<property>sim/time/sun-angle-rad</property>
+					<value>1.45</value>
+				</greater-than>
+				<less-than>
+					<property>environment/visibility-m</property>
+					<value>4500.00</value>
+				</less-than>
+			</or>
+		</condition>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
 			<blue>0.5</blue>
 		</emission>
 	</animation>
-	
+
 	<!-- dont show the light model during day-->
 	<animation>
-		<type>select</type> 
+		<type>select</type>
 		<object-name>Lights_front</object-name>
 		<!--<object-name>warning</object-name>-->
 		<condition>
-				<or>
-					<greater-than>
-						<property>sim/time/sun-angle-rad</property>
-						<value>1.45</value>
-					</greater-than>
-					<less-than>
-						<property>environment/visibility-m</property>
-						<value>4500.00</value>
-					</less-than>
-				</or>
-			</condition>
+			<or>
+				<greater-than>
+					<property>sim/time/sun-angle-rad</property>
+					<value>1.45</value>
+				</greater-than>
+				<less-than>
+					<property>environment/visibility-m</property>
+					<value>4500.00</value>
+				</less-than>
+			</or>
+		</condition>
 	</animation>
-	
-<!-- warning light -->
+
+	<!-- warning light -->
 	<model>
-	<name>warning</name>
-	<path>warning-light.xml</path>
+		<name>warning</name>
+		<path>warning-light.xml</path>
 		<condition>
 			<greater-than>
 				<property>services/catering/position-norm</property>
@@ -255,28 +312,28 @@
 			<heading-deg>90</heading-deg>
 		</offsets>
 	</model>
-	
+
 	<animation>
-		<type>material</type> 
+		<type>material</type>
 		<object-name>warning_light_glass</object-name>
-			<condition>
+		<condition>
 			<greater-than>
 				<property>services/catering/position-norm</property>
 				<value>0.01</value>
 			</greater-than>
 		</condition>
-		<emission>	
-			<red>0.7</red>	
-			<green>0.7</green>	
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
 			<blue>0.5</blue>
 		</emission>
 	</animation>
-	
-<!-- LOD -->
+
+	<!-- LOD -->
 	<animation>
 		<type>range</type>
 		<min-m>0</min-m>
 		<max-m>2500</max-m>
 	</animation>
-	
+
 </PropertyList>

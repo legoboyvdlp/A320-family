@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -8,7 +8,7 @@
 
 	<name>aircraft-config-du-quality</name>
 	<layout>vbox</layout>
-	
+
 	<group>
 		<layout>hbox</layout>
 		<text>
@@ -24,8 +24,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.writeSettings();
-				canvas_nd.rateApply();
+					acconfig.writeSettings();
+					canvas_nd.rateApply();
 				</script>
 			</binding>
 			<binding>
@@ -33,27 +33,28 @@
 			</binding>
 		</button>
 	</group>
-		
-	<hrule/>
-	
+
+	<hrule />
+
 	<group>
 		<layout>vbox</layout>
-		
+
 		<text>
 			<halign>left</halign>
-			<label>Here you can adjust the quality of the Display Units. 1 = Best Quality, 5 = Best Performance</label>
+			<label>Here you can adjust the quality of the Display Units. 1 = Best Quality, 5 = Best
+				Performance</label>
 		</text>
-		
+
 		<group>
 			<layout>table</layout>
-			
+
 			<text>
 				<row>0</row>
 				<col>0</col>
 				<halign>left</halign>
 				<label>Both PFDs:</label>
 			</text>
-			
+
 			<slider>
 				<row>0</row>
 				<col>1</col>
@@ -67,7 +68,7 @@
 					<command>dialog-apply</command>
 				</binding>
 			</slider>
-			
+
 			<text>
 				<row>0</row>
 				<col>2</col>
@@ -77,14 +78,14 @@
 				<property>/systems/acconfig/options/pfd-rate</property>
 				<live>1</live>
 			</text>
-			
+
 			<text>
 				<row>1</row>
 				<col>0</col>
 				<halign>left</halign>
 				<label>Both NDs:</label>
 			</text>
-			
+
 			<slider>
 				<row>1</row>
 				<col>1</col>
@@ -98,7 +99,7 @@
 					<command>dialog-apply</command>
 				</binding>
 			</slider>
-			
+
 			<text>
 				<row>1</row>
 				<col>2</col>
@@ -108,14 +109,14 @@
 				<property>/systems/acconfig/options/nd-rate</property>
 				<live>1</live>
 			</text>
-			
+
 			<text>
 				<row>2</row>
 				<col>0</col>
 				<halign>left</halign>
 				<label>Upper ECAM:</label>
 			</text>
-			
+
 			<slider>
 				<row>2</row>
 				<col>1</col>
@@ -129,7 +130,7 @@
 					<command>dialog-apply</command>
 				</binding>
 			</slider>
-			
+
 			<text>
 				<row>2</row>
 				<col>2</col>
@@ -139,14 +140,14 @@
 				<property>/systems/acconfig/options/uecam-rate</property>
 				<live>1</live>
 			</text>
-			
+
 			<text>
 				<row>3</row>
 				<col>0</col>
 				<halign>left</halign>
 				<label>Lower ECAM:</label>
 			</text>
-			
+
 			<slider>
 				<row>3</row>
 				<col>1</col>
@@ -160,7 +161,7 @@
 					<command>dialog-apply</command>
 				</binding>
 			</slider>
-			
+
 			<text>
 				<row>3</row>
 				<col>2</col>
@@ -170,14 +171,14 @@
 				<property>/systems/acconfig/options/lecam-rate</property>
 				<live>1</live>
 			</text>
-			
+
 			<text>
 				<row>4</row>
 				<col>0</col>
 				<halign>left</halign>
 				<label>IESI:</label>
 			</text>
-			
+
 			<slider>
 				<row>4</row>
 				<col>1</col>
@@ -191,7 +192,7 @@
 					<command>dialog-apply</command>
 				</binding>
 			</slider>
-			
+
 			<text>
 				<row>4</row>
 				<col>2</col>
@@ -201,14 +202,14 @@
 				<property>/systems/acconfig/options/iesi-rate</property>
 				<live>1</live>
 			</text>
-			
+
 			<text>
 				<row>5</row>
 				<col>0</col>
 				<halign>left</halign>
 				<label>DCDU:</label>
 			</text>
-			
+
 			<slider>
 				<row>5</row>
 				<col>1</col>
@@ -222,7 +223,7 @@
 					<command>dialog-apply</command>
 				</binding>
 			</slider>
-			
+
 			<text>
 				<row>5</row>
 				<col>2</col>
@@ -232,16 +233,16 @@
 				<property>/systems/acconfig/options/dcdu-rate</property>
 				<live>1</live>
 			</text>
-			
+
 		</group>
-	
+
 	</group>
-	
-	<hrule/>
+
+	<hrule />
 
 	<group>
 		<layout>hbox</layout>
-		
+
 		<button>
 			<halign>center</halign>
 			<legend>Apply/Save</legend>
@@ -249,8 +250,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.writeSettings();
-				canvas_nd.rateApply();
+					acconfig.writeSettings();
+					canvas_nd.rateApply();
 				</script>
 			</binding>
 		</button>
@@ -261,8 +262,8 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.writeSettings();
-				canvas_nd.rateApply();
+					acconfig.writeSettings();
+					canvas_nd.rateApply();
 				</script>
 			</binding>
 			<binding>
@@ -270,5 +271,5 @@
 			</binding>
 		</button>
 	</group>
-	
+
 </PropertyList>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <PropertyList>
-	
+
 	<particlesystem>
 		<name>contrail</name>
 		<texture>smoke.png</texture>
@@ -13,13 +13,13 @@
 		</offsets>
 		<emissive type="bool">false</emissive>
 		<lighting type="bool">false</lighting>
-		
+
 		<attach>world</attach>
-		
+
 		<placer>
-			<type>point</type> 
+			<type>point</type>
 		</placer>
-		
+
 		<shooter>
 			<theta-min-deg>-1.5</theta-min-deg>
 			<theta-max-deg>1.5</theta-max-deg>
@@ -38,16 +38,16 @@
 				<z-max-deg-sec>0</z-max-deg-sec>
 			</rotation-speed>
 		</shooter>
-		
+
 		<counter>
 			<particles-per-sec>
-			<value>50</value>
-			<spread>0</spread>
+				<value>50</value>
+				<spread>0</spread>
 			</particles-per-sec>
 		</counter>
-		
+
 		<align>billboard</align>
-		
+
 		<particle>
 			<start>
 				<color>

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <PropertyList>
-   <particlesystem>
+	<particlesystem>
 		<name>wing-condensation</name>
 		<texture>smoke.png</texture>
 		<emissive>false</emissive>
@@ -11,19 +11,19 @@
 
 		<condition>
 			<and>
-			   <greater-than-equals>
+				<greater-than-equals>
 					<expression>
 						<sum>
 							<product>
-								<property>environment/relative-humidity</property>								
+								<property>environment/relative-humidity</property>
 								<value>0.075</value>
 							</product>
-							<property>fdm/jsbsim/aero/alpha-deg-fixed</property>									
-						 </sum>
-					</expression>			  
+							<property>fdm/jsbsim/aero/alpha-deg-fixed</property>
+						</sum>
+					</expression>
 					<value>13.5</value>
-			   </greater-than-equals>
-			   <greater-than>
+				</greater-than-equals>
+				<greater-than>
 					<property>velocities/groundspeed-kt</property>
 					<value>100</value>
 				</greater-than>
@@ -48,7 +48,7 @@
 					<value>8000</value>
 				</less-than>
 				<greater-than>
-					<property>fdm/jsbsim/aero/alpha-deg</property>	
+					<property>fdm/jsbsim/aero/alpha-deg</property>
 					<value>0</value>
 				</greater-than>
 			</and>
@@ -73,63 +73,63 @@
 			</vertex>
 		</placer>
 
-	 <shooter>
-		 <theta-min-deg>
-			<!-- <expression>
+		<shooter>
+			<theta-min-deg>
+				<!-- <expression>
 					<sum>
 					<value>70</value>
 					<property>systems/navigation/adr/output/aoa-1</property>
 				 </sum>
 			  </expression> -->
-			  <value>90</value>
-		 </theta-min-deg>
-		 <theta-max-deg>
-			<!-- <expression>
+				<value>90</value>
+			</theta-min-deg>
+			<theta-max-deg>
+				<!-- <expression>
 					<sum>
 					<value>110</value>
 					<property>systems/navigation/adr/output/aoa-1</property>
 				 </sum>
 			  </expression> -->
-			  <value>90</value>		   
-		 </theta-max-deg>
-		 <phi-min-deg>90</phi-min-deg>
-		 <phi-max-deg>90</phi-max-deg>
-		 <speed-mps>
-			<!-- <expression>
+				<value>90</value>
+			</theta-max-deg>
+			<phi-min-deg>90</phi-min-deg>
+			<phi-max-deg>90</phi-max-deg>
+			<speed-mps>
+				<!-- <expression>
 				<product>
 					<property>velocities/groundspeed-kt</property>
 					<value>-1</value>
 				</product>
-				</expression> -->			  
-			<value>0</value>
-			<spread>0</spread>
-		 </speed-mps>
-		 <rotation-speed>
-			 <x-max-deg-sec>180</x-max-deg-sec>
-			 <x-min-deg-sec>180</x-min-deg-sec>
-			 <y-max-deg-sec>180</y-max-deg-sec>
-			 <y-min-deg-sec>-180</y-min-deg-sec>
-			 <z-max-deg-sec>-180</z-max-deg-sec>
-			 <z-min-deg-sec>-180</z-min-deg-sec>
-		 </rotation-speed>
-	 </shooter>
+				</expression> -->
+				<value>0</value>
+				<spread>0</spread>
+			</speed-mps>
+			<rotation-speed>
+				<x-max-deg-sec>180</x-max-deg-sec>
+				<x-min-deg-sec>180</x-min-deg-sec>
+				<y-max-deg-sec>180</y-max-deg-sec>
+				<y-min-deg-sec>-180</y-min-deg-sec>
+				<z-max-deg-sec>-180</z-max-deg-sec>
+				<z-min-deg-sec>-180</z-min-deg-sec>
+			</rotation-speed>
+		</shooter>
 
-	 <counter>
-		 <particles-per-sec>
-			<expression>
-				<product>
-					<value>4</value>
-					<property>environment/relative-humidity</property>
-				</product>
-			</expression>
-			<spread>10</spread>
-		 </particles-per-sec>
-	 </counter>
+		<counter>
+			<particles-per-sec>
+				<expression>
+					<product>
+						<value>4</value>
+						<property>environment/relative-humidity</property>
+					</product>
+				</expression>
+				<spread>10</spread>
+			</particles-per-sec>
+		</counter>
 
-	 <align>billboard</align>
+		<align>billboard</align>
 
-	 <particle>
-		 <start>
+		<particle>
+			<start>
 				<color>
 					<red>
 						<expression>
@@ -170,8 +170,8 @@
 				<size>
 					<value>1.5</value>
 				</size>
-		 </start>
-		 <end>
+			</start>
+			<end>
 				<color>
 					<red>
 						<expression>
@@ -209,22 +209,22 @@
 						</expression>
 					</alpha>
 				</color>
-			<size>
-				<value>2</value>
-			</size>
-		 </end>
-		 <life-sec>
-			 <value>0.00001</value>
-		 </life-sec>
-		 <mass-kg>0.025</mass-kg>
-		 <radius-m>0.175</radius-m>
-	 </particle>
+				<size>
+					<value>2</value>
+				</size>
+			</end>
+			<life-sec>
+				<value>0.00001</value>
+			</life-sec>
+			<mass-kg>0.025</mass-kg>
+			<radius-m>0.175</radius-m>
+		</particle>
 
-	 <program>
-		 <fluid>air</fluid>
-		 <gravity>true</gravity>
-		 <wind>true</wind>
-	 </program>
+		<program>
+			<fluid>air</fluid>
+			<gravity>true</gravity>
+			<wind>true</wind>
+		</program>
 
 	</particlesystem>
 

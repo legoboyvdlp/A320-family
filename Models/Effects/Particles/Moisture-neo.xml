@@ -13,13 +13,13 @@
 			<z-m>0</z-m>
 			<pitch-deg>0</pitch-deg>
 		</offsets>
-		
+
 		<attach>local</attach>
-		
+
 		<placer>
 			<type>point</type>
 		</placer>
-		
+
 		<shooter>
 			<theta-min-deg>0</theta-min-deg>
 			<theta-max-deg>0</theta-max-deg>
@@ -38,16 +38,16 @@
 				<z-max-deg-sec>-180</z-max-deg-sec>
 			</rotation-speed>
 		</shooter>
-		
+
 		<counter>
 			<particles-per-sec>
 				<value>50</value>
 				<spread>0</spread>
 			</particles-per-sec>
 		</counter>
-		
+
 		<align>billboard</align>
-		
+
 		<particle>
 			<start>
 				<color>
@@ -134,19 +134,20 @@
 					<value>1.6</value>
 				</size>
 			</end>
-	
-			<life-sec><value>0.0001</value></life-sec>
+
+			<life-sec>
+				<value>0.0001</value>
+			</life-sec>
 			<mass-kg>0.4</mass-kg>
 			<radius-m>0.1</radius-m>
 		</particle>
-		
+
 		<program>
 			<fluid>air</fluid>
 			<gravity type="bool">false</gravity>
 			<wind type="bool">false</wind>
 		</program>
-		
+
 	</particlesystem>
 
 </PropertyList>
-

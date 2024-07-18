@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
-	
+
 	<filter>
 		<name>APU N Output</name>
 		<type>gain</type>
@@ -12,15 +12,24 @@
 			<expression>
 				<table>
 					<property>/engines/engine[2]/n1</property>
-					<entry><ind>  0</ind><dep>-127</dep></entry>
-					<entry><ind>100</ind><dep>  53</dep></entry>
-					<entry><ind>110</ind><dep>  70</dep></entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>-127</dep>
+					</entry>
+					<entry>
+						<ind>100</ind>
+						<dep> 53</dep>
+					</entry>
+					<entry>
+						<ind>110</ind>
+						<dep> 70</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/APU-N</output>
 	</filter>
-	
+
 	<filter>
 		<name>APU EGT Output</name>
 		<type>gain</type>
@@ -29,18 +38,36 @@
 			<expression>
 				<table>
 					<property>/systems/apu/egt-degC</property>
-					<entry><ind>  0</ind><dep>-115</dep></entry>
-					<entry><ind> 275</ind><dep>-115</dep></entry>
-					<entry><ind> 300</ind><dep>-108</dep></entry>
-					<entry><ind> 700</ind><dep> -19</dep></entry>
-					<entry><ind>1000</ind><dep>  67</dep></entry>
-					<entry><ind>1100</ind><dep>  86</dep></entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>-115</dep>
+					</entry>
+					<entry>
+						<ind> 275</ind>
+						<dep>-115</dep>
+					</entry>
+					<entry>
+						<ind> 300</ind>
+						<dep>-108</dep>
+					</entry>
+					<entry>
+						<ind> 700</ind>
+						<dep> -19</dep>
+					</entry>
+					<entry>
+						<ind>1000</ind>
+						<dep> 67</dep>
+					</entry>
+					<entry>
+						<ind>1100</ind>
+						<dep> 86</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/APU-EGT</output>
 	</filter>
-	
+
 	<filter>
 		<name>Oil QT Output 1</name>
 		<type>gain</type>
@@ -49,14 +76,20 @@
 			<expression>
 				<table>
 					<property>/engines/engine[0]/oil-qt-actual</property>
-					<entry><ind> 0</ind><dep>-90</dep></entry>
-					<entry><ind>25</ind><dep> 90</dep></entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>-90</dep>
+					</entry>
+					<entry>
+						<ind>25</ind>
+						<dep> 90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/Oil-QT[0]</output>
 	</filter>
-	
+
 	<filter>
 		<name>Oil QT Output 2</name>
 		<type>gain</type>
@@ -65,14 +98,20 @@
 			<expression>
 				<table>
 					<property>/engines/engine[1]/oil-qt-actual</property>
-					<entry><ind> 0</ind><dep>-90</dep></entry>
-					<entry><ind>25</ind><dep> 90</dep></entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>-90</dep>
+					</entry>
+					<entry>
+						<ind>25</ind>
+						<dep> 90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/Oil-QT[1]</output>
 	</filter>
-	
+
 	<filter>
 		<name>Oil PSI Output 1</name>
 		<type>gain</type>
@@ -81,15 +120,24 @@
 			<expression>
 				<table>
 					<property>/engines/engine[0]/oil-psi-actual</property>
-					<entry><ind>  0</ind><dep>-90</dep></entry>
-					<entry><ind> 50</ind><dep>  0</dep></entry>
-					<entry><ind>100</ind><dep> 90</dep></entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>-90</dep>
+					</entry>
+					<entry>
+						<ind> 50</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>100</ind>
+						<dep> 90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/Oil-PSI[0]</output>
 	</filter>
-	
+
 	<filter>
 		<name>Oil PSIOutput 2</name>
 		<type>gain</type>
@@ -98,15 +146,24 @@
 			<expression>
 				<table>
 					<property>/engines/engine[1]/oil-psi-actual</property>
-					<entry><ind>  0</ind><dep>-90</dep></entry>
-					<entry><ind> 50</ind><dep>  0</dep></entry>
-					<entry><ind>100</ind><dep> 90</dep></entry>
+					<entry>
+						<ind> 0</ind>
+						<dep>-90</dep>
+					</entry>
+					<entry>
+						<ind> 50</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>100</ind>
+						<dep> 90</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/Oil-PSI[1]</output>
 	</filter>
-	
+
 	<filter>
 		<name>Aileron L Indication</name>
 		<type>gain</type>
@@ -115,15 +172,24 @@
 			<expression>
 				<table>
 					<property>/fdm/jsbsim/hydraulics/aileron-l/final-deg</property>
-					<entry><ind>-25</ind><dep>-0.83</dep></entry>
-					<entry><ind>  0</ind><dep> 0.00</dep></entry>
-					<entry><ind> 25</ind><dep> 0.73</dep></entry>
+					<entry>
+						<ind>-25</ind>
+						<dep>-0.83</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep> 0.00</dep>
+					</entry>
+					<entry>
+						<ind> 25</ind>
+						<dep> 0.73</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/aileron-ind-left</output>
 	</filter>
-	
+
 	<filter>
 		<name>Aileron R Indication</name>
 		<type>gain</type>
@@ -132,15 +198,24 @@
 			<expression>
 				<table>
 					<property>/fdm/jsbsim/hydraulics/aileron-r/final-deg</property>
-					<entry><ind>-25</ind><dep> 0.73</dep></entry>
-					<entry><ind>  0</ind><dep> 0.00</dep></entry>
-					<entry><ind> 25</ind><dep>-0.83</dep></entry>
+					<entry>
+						<ind>-25</ind>
+						<dep> 0.73</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep> 0.00</dep>
+					</entry>
+					<entry>
+						<ind> 25</ind>
+						<dep>-0.83</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/aileron-ind-right</output>
 	</filter>
-	
+
 	<filter>
 		<name>Elevator L Indication</name>
 		<type>gain</type>
@@ -149,15 +224,24 @@
 			<expression>
 				<table>
 					<property>/fdm/jsbsim/hydraulics/elevator-l/final-deg</property>
-					<entry><ind>-30</ind><dep>-1.03</dep></entry>
-					<entry><ind>  0</ind><dep> 0.00</dep></entry>
-					<entry><ind> 15</ind><dep> 0.63</dep></entry>
+					<entry>
+						<ind>-30</ind>
+						<dep>-1.03</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep> 0.00</dep>
+					</entry>
+					<entry>
+						<ind> 15</ind>
+						<dep> 0.63</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/elevator-ind-left</output>
 	</filter>
-	
+
 	<filter>
 		<name>Elevator R Indication</name>
 		<type>gain</type>
@@ -166,15 +250,24 @@
 			<expression>
 				<table>
 					<property>/fdm/jsbsim/hydraulics/elevator-r/final-deg</property>
-					<entry><ind>-30</ind><dep>-1.03</dep></entry>
-					<entry><ind>  0</ind><dep> 0.00</dep></entry>
-					<entry><ind> 15</ind><dep> 0.63</dep></entry>
+					<entry>
+						<ind>-30</ind>
+						<dep>-1.03</dep>
+					</entry>
+					<entry>
+						<ind> 0</ind>
+						<dep> 0.00</dep>
+					</entry>
+					<entry>
+						<ind> 15</ind>
+						<dep> 0.63</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/elevator-ind-right</output>
 	</filter>
-	
+
 	<filter>
 		<name>Elevator Trim Deg</name>
 		<type>gain</type>
@@ -182,7 +275,7 @@
 		<input>/fdm/jsbsim/hydraulics/stabilizer/final-deg</input>
 		<output>/ECAM/Lower/elevator-trim-deg</output>
 	</filter>
-	
+
 	<filter>
 		<name>Pack 1 Flow Output</name>
 		<type>gain</type>
@@ -191,15 +284,24 @@
 			<expression>
 				<table>
 					<property>/systems/air-conditioning/packs/pack-flow-1</property>
-					<entry><ind>0.8</ind><dep>-80</dep></entry>
-					<entry><ind>1.0</ind><dep>  0</dep></entry>
-					<entry><ind>1.2</ind><dep> 80</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>-80</dep>
+					</entry>
+					<entry>
+						<ind>1.0</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>1.2</ind>
+						<dep> 80</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/pack-1-flow-output</output>
 	</filter>
-	
+
 	<filter>
 		<name>Pack 2 Flow Output</name>
 		<type>gain</type>
@@ -208,15 +310,24 @@
 			<expression>
 				<table>
 					<property>/systems/air-conditioning/packs/pack-flow-2</property>
-					<entry><ind>0.8</ind><dep>-80</dep></entry>
-					<entry><ind>1.0</ind><dep>  0</dep></entry>
-					<entry><ind>1.2</ind><dep> 80</dep></entry>
+					<entry>
+						<ind>0.8</ind>
+						<dep>-80</dep>
+					</entry>
+					<entry>
+						<ind>1.0</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>1.2</ind>
+						<dep> 80</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/pack-2-flow-output</output>
 	</filter>
-	
+
 	<filter>
 		<name>Trim Valve Cockpit</name>
 		<type>gain</type>
@@ -225,15 +336,24 @@
 			<expression>
 				<table>
 					<property>/systems/air-conditioning/valves/trim-cockpit</property>
-					<entry><ind>0.0</ind><dep>-50</dep></entry>
-					<entry><ind>0.5</ind><dep>  0</dep></entry>
-					<entry><ind>1.0</ind><dep> 50</dep></entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>-50</dep>
+					</entry>
+					<entry>
+						<ind>0.5</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>1.0</ind>
+						<dep> 50</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/trim-cockpit-output</output>
 	</filter>
-	
+
 	<filter>
 		<name>Trim Valve Aft</name>
 		<type>gain</type>
@@ -242,15 +362,24 @@
 			<expression>
 				<table>
 					<property>/systems/air-conditioning/valves/trim-aft</property>
-					<entry><ind>0.0</ind><dep>-50</dep></entry>
-					<entry><ind>0.5</ind><dep>  0</dep></entry>
-					<entry><ind>1.0</ind><dep> 50</dep></entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>-50</dep>
+					</entry>
+					<entry>
+						<ind>0.5</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>1.0</ind>
+						<dep> 50</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/ECAM/Lower/trim-aft-output</output>
 	</filter>
-	
+
 	<filter>
 		<name>Trim Valve Fwd</name>
 		<type>gain</type>
@@ -259,9 +388,18 @@
 			<expression>
 				<table>
 					<property>/systems/air-conditioning/valves/trim-fwd</property>
-					<entry><ind>0.0</ind><dep>-50</dep></entry>
-					<entry><ind>0.5</ind><dep>  0</dep></entry>
-					<entry><ind>1.0</ind><dep> 50</dep></entry>
+					<entry>
+						<ind>0.0</ind>
+						<dep>-50</dep>
+					</entry>
+					<entry>
+						<ind>0.5</ind>
+						<dep> 0</dep>
+					</entry>
+					<entry>
+						<ind>1.0</ind>
+						<dep> 50</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>

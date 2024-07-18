@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
-	
+
 	<filter>
 		<name>A/THR Knots Lag</name>
 		<type>exponential</type>
@@ -11,7 +11,7 @@
 		<output>/it-autoflight/internal/athr-kts-input-lag</output>
 		<filter-time>0.04</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>A/THR Mach Lag</name>
 		<type>exponential</type>
@@ -19,7 +19,7 @@
 		<output>/it-autoflight/internal/athr-mach-input-lag</output>
 		<filter-time>0.04</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>A/THR Knots Input Gain</name>
 		<type>gain</type>
@@ -53,7 +53,7 @@
 			</expression>
 		</max>
 	</filter>
-	
+
 	<filter>
 		<name>A/THR Knots Input Filter</name>
 		<type>noise-spike</type>
@@ -89,7 +89,7 @@
 		</max-rate-of-change>
 		<max-rate-of-change>200</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>A/THR Mach Input Gain</name>
 		<type>gain</type>
@@ -123,7 +123,7 @@
 			</expression>
 		</max>
 	</filter>
-	
+
 	<filter>
 		<name>A/THR Mach Input Filter</name>
 		<type>noise-spike</type>
@@ -160,7 +160,7 @@
 		</max-rate-of-change>
 		<max-rate-of-change>2</max-rate-of-change>
 	</filter>
-	
+
 	<pid-controller>
 		<name>IT-CONTROLLER: Knots</name>
 		<enable>
@@ -207,7 +207,7 @@
 			<u_max>/fdm/jsbsim/fadec/athr/max</u_max>
 		</config>
 	</pid-controller>
-	
+
 	<pid-controller>
 		<name>IT-CONTROLLER: Mach</name>
 		<enable>
@@ -260,7 +260,7 @@
 			<u_max>/fdm/jsbsim/fadec/athr/max</u_max>
 		</config>
 	</pid-controller>
-	
+
 	<filter>
 		<name>IT-CONTROLLER: Idle Limit</name>
 		<type>gain</type>
@@ -282,7 +282,7 @@
 		<input>0</input>
 		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 	</filter>
-	
+
 	<filter>
 		<name>IT-CONTROLLER: Thrust Limit</name>
 		<type>gain</type>
@@ -304,7 +304,7 @@
 		<input>1</input>
 		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 	</filter>
-	
+
 	<filter>
 		<name>System Command: Throttle Inactive Sync</name>
 		<type>gain</type>

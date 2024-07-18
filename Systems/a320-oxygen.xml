@@ -5,31 +5,29 @@
 <system name="A320: Oxygen">
 	<property value="2183">/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</property>
 	<property value="15">/systems/oxygen/cockpit-oxygen/distributor-manifold-L</property>
-	
+
 	<channel name="Cockpit Oxygen" execrate="8">
-		
+
 		<!-- Bottle: 2183L @ 1850 psi NTPD -->
-		
+
 		<!-- Regulator: 
 		HP - transducer to ECAM
 		LP - 65 to 94 psi
 		flow: 0 to 300 L / min
 		Cyl PSI: 100 to 2030 psi
 		-->
-		
+
 		<switch name="/systems/oxygen/cockpit-oxygen/supply-valve-cmd">
-			<default value="0"/>
-			<test logic="AND" value="1"> <!-- solenoid valve; when not energized, it shuts -->
-				/controls/oxygen/cockpit-oxygen-supply-pb eq 1
-				/systems/electrical/bus/dc-ess-shed ge 25
-			</test>
+			<default value="0" />
+			<test logic="AND" value="1"> <!-- solenoid valve; when not energized, it shuts --> /controls/oxygen/cockpit-oxygen-supply-pb eq 1
+				/systems/electrical/bus/dc-ess-shed ge 25 </test>
 		</switch>
-	
+
 		<actuator name="/systems/oxygen/cockpit-oxygen/supply-valve">
 			<input>/systems/oxygen/cockpit-oxygen/supply-valve-cmd</input>
 			<rate_limit>10</rate_limit>
 		</actuator>
-		
+
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/mask-1-flow-rate">
 			<function>
 				<product>
@@ -42,22 +40,22 @@
 						<independentVar lookup="row">/systems/pressurization/cabinalt</independentVar>
 						<independentVar lookup="column">/controls/oxygen/cockpit-mask-1-selector</independentVar>
 						<tableData>
-								    0    1
-							    0   0     29.5
-							 5000   0.0   31.0
-							 8000   0.17  36.4
-							10000   0.71  36.9
-							15000   5.60  37.9
-							20000   15.9  38.9
-							30000   30.4  39.9
-							35000   40.9  40.9
-							40000   41.9  41.9
+							0 1
+							0 0 29.5
+							5000 0.0 31.0
+							8000 0.17 36.4
+							10000 0.71 36.9
+							15000 5.60 37.9
+							20000 15.9 38.9
+							30000 30.4 39.9
+							35000 40.9 40.9
+							40000 41.9 41.9
 						</tableData>
 					</table>
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/mask-2-flow-rate">
 			<function>
 				<product>
@@ -70,22 +68,22 @@
 						<independentVar lookup="row">/systems/pressurization/cabinalt</independentVar>
 						<independentVar lookup="column">/controls/oxygen/cockpit-mask-2-selector</independentVar>
 						<tableData>
-								    0    1
-							    0   0     29.5
-							 5000   0.0   31.0
-							 8000   0.17  36.4
-							10000   0.71  36.9
-							15000   5.60  37.9
-							20000   15.9  38.9
-							30000   30.4  39.9
-							35000   40.9  40.9
-							40000   41.9  41.9
+							0 1
+							0 0 29.5
+							5000 0.0 31.0
+							8000 0.17 36.4
+							10000 0.71 36.9
+							15000 5.60 37.9
+							20000 15.9 38.9
+							30000 30.4 39.9
+							35000 40.9 40.9
+							40000 41.9 41.9
 						</tableData>
 					</table>
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/mask-3-flow-rate">
 			<function>
 				<product>
@@ -98,22 +96,22 @@
 						<independentVar lookup="row">/systems/pressurization/cabinalt</independentVar>
 						<independentVar lookup="column">/controls/oxygen/cockpit-mask-3-selector</independentVar>
 						<tableData>
-								    0    1
-							    0   0     29.5
-							 5000   0.0   31.0
-							 8000   0.17  36.4
-							10000   0.71  36.9
-							15000   5.60  37.9
-							20000   15.9  38.9
-							30000   30.4  39.9
-							35000   40.9  40.9
-							40000   41.9  41.9
+							0 1
+							0 0 29.5
+							5000 0.0 31.0
+							8000 0.17 36.4
+							10000 0.71 36.9
+							15000 5.60 37.9
+							20000 15.9 38.9
+							30000 30.4 39.9
+							35000 40.9 40.9
+							40000 41.9 41.9
 						</tableData>
 					</table>
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/mask-4-flow-rate">
 			<function>
 				<product>
@@ -126,22 +124,22 @@
 						<independentVar lookup="row">/systems/pressurization/cabinalt</independentVar>
 						<independentVar lookup="column">/controls/oxygen/cockpit-mask-4-selector</independentVar>
 						<tableData>
-								    0    1
-							    0   0     29.5
-							 5000   0.0   31.0
-							 8000   0.17  36.4
-							10000   0.71  36.9
-							15000   5.60  37.9
-							20000   15.9  38.9
-							30000   30.4  39.9
-							35000   40.9  40.9
-							40000   41.9  41.9
+							0 1
+							0 0 29.5
+							5000 0.0 31.0
+							8000 0.17 36.4
+							10000 0.71 36.9
+							15000 5.60 37.9
+							20000 15.9 38.9
+							30000 30.4 39.9
+							35000 40.9 40.9
+							40000 41.9 41.9
 						</tableData>
 					</table>
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="Cockpit Oxygen Bottle">
 			<function>
 				<sum>
@@ -161,7 +159,7 @@
 				<max>2183.0</max>
 			</clipto>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/bottle-psi">
 			<function>
 				<product>
@@ -173,38 +171,39 @@
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/bottle-flow-rate">
 			<function>
 				<table>
 					<independentVar lookup="row">/systems/oxygen/cockpit-oxygen/cockpit-bottle-L</independentVar>
 					<tableData>
-							0   0
-						  500   200
-						 1000   275
-						 2000   300
-						 2183   300
+						0 0
+						500 200
+						1000 275
+						2000 300
+						2183 300
 					</tableData>
 				</table>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/distributor-fill-rate">
 			<function>
 				<product>
 					<property>/systems/oxygen/cockpit-oxygen/supply-valve</property>
 					<table>
-						<independentVar lookup="row">/systems/oxygen/cockpit-oxygen/distributor-manifold-L</independentVar>
+						<independentVar lookup="row">
+							/systems/oxygen/cockpit-oxygen/distributor-manifold-L</independentVar>
 						<tableData>
-							0    300
+							0 300
 							14.5 170
-							15   0
+							15 0
 						</tableData>
 					</table>
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/hp-regulator-flow-rate-calc">
 			<function>
 				<product>
@@ -213,7 +212,7 @@
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/hp-regulator-flow-rate">
 			<function>
 				<sum>
@@ -229,7 +228,7 @@
 				<max>/systems/oxygen/cockpit-oxygen/hp-regulator-flow-rate-calc</max>
 			</clipto>
 		</fcs_function>
-		
+
 		<!-- Distributor -->
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/distributor-manifold-rate">
 			<function>
@@ -242,7 +241,7 @@
 				</sum>
 			</function>
 		</fcs_function>
-		
+
 		<fcs_function name="Cockpit Oxygen Distributor">
 			<function>
 				<sum>
@@ -262,7 +261,7 @@
 				<max>15.0</max>
 			</clipto>
 		</fcs_function>
-		
+
 		<fcs_function name="/systems/oxygen/cockpit-oxygen/distributor-psi">
 			<function>
 				<product>
@@ -276,44 +275,44 @@
 				</product>
 			</function>
 		</fcs_function>
-		
+
 		<switch name="/systems/oxygen/cockpit-oxygen/regul-lo-pr">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/oxygen/cockpit-oxygen/distributor-psi lt 50
 			</test>
 		</switch>
 	</channel>
-	
+
 	<channel name="Passenger Oxygen" execrate="8">
-	
+
 		<switch name="/systems/oxygen/passenger-oxygen/pressure-switch">
-			<defualt value="0"/>
+			<defualt value="0" />
 			<test logic="AND" value="1">
 				/systems/pressurization/cabinalt ge 14000
 				/systems/electrical/bus/dc-ess ge 25
 			</test>
 			<!-- HI ALT 16000 -->
 		</switch>
-		
+
 		<switch name="/systems/oxygen/passenger-oxygen/masks-deploy-cmd">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/oxygen/passenger-oxygen/pressure-switch eq 1
 				/controls/oxygen/passenger-mask-deploy-man eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/oxygen/passenger-oxygen/masks-deploy">
-			<default value="/systems/oxygen/passenger-oxygen/masks-deploy"/>
+			<default value="/systems/oxygen/passenger-oxygen/masks-deploy" />
 			<test logic="AND" value="1">
 				/systems/oxygen/passenger-oxygen/masks-deploy-cmd eq 1
 				/systems/electrical/bus/ac-ess-shed ge 110
 			</test>
 		</switch>
-		
+
 		<switch name="Sys On Light">
-			<default value="/systems/oxygen/passenger-oxygen/sys-on-light"/>
+			<default value="/systems/oxygen/passenger-oxygen/sys-on-light" />
 			<test logic="OR" value="0">
 				/controls/oxygen/passenger-mask-reset eq 1
 				/systems/electrical/bus/dc-ess-shed lt 25

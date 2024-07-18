@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -8,14 +8,16 @@
 
 	<name>aircraft-config</name>
 	<layout>vbox</layout>
-	
+
 	<group>
 		<layout>hbox</layout>
 		<text>
 			<halign>left</halign>
 			<label>Aircraft Configuration V1.5.1</label>
 		</text>
-		<empty><stretch>1</stretch></empty>
+		<empty>
+			<stretch>1</stretch>
+		</empty>
 		<button>
 			<row>0</row>
 			<col>0</col>
@@ -26,7 +28,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				acconfig.help_dlg.open();
+					acconfig.help_dlg.open();
 				</script>
 			</binding>
 		</button>
@@ -41,18 +43,18 @@
 			</binding>
 		</button>
 	</group>
-	
-	<hrule/>
-		
+
+	<hrule />
+
 	<group>
 		<layout>hbox</layout>
 
 		<group>
 			<layout>vbox</layout>
-			
+
 			<group>
 				<layout>vbox</layout>
-				
+
 				<button>
 					<halign>center</halign>
 					<legend>Welcome</legend>
@@ -60,7 +62,7 @@
 					<binding>
 						<command>nasal</command>
 						<script>
-						acconfig.welcome_dlg.open();
+							acconfig.welcome_dlg.open();
 						</script>
 					</binding>
 				</button>
@@ -71,7 +73,7 @@
 					<binding>
 						<command>nasal</command>
 						<script>
-						libraries.livery.dialog.toggle();
+							libraries.livery.dialog.toggle();
 						</script>
 					</binding>
 				</button>
@@ -100,15 +102,15 @@
 					<binding>
 						<command>nasal</command>
 						<script>
-						acconfig.du_quality.open();
+							acconfig.du_quality.open();
 						</script>
 					</binding>
 				</button>
 			</group>
-			
+
 			<group>
 				<layout>vbox</layout>
-				
+
 				<group>
 					<layout>hbox</layout>
 
@@ -122,17 +124,19 @@
 						<stretch type="bool">true</stretch>
 					</hrule>
 				</group>
-				
+
 				<group>
 					<layout>vbox</layout>
-					
+
 					<button>
 						<halign>center</halign>
 						<legend>Cold and Dark</legend>
 						<pref-width>140</pref-width>
 						<enable>
 							<and>
-								<not><property>/systems/acconfig/autoconfig-running</property></not>
+								<not>
+									<property>/systems/acconfig/autoconfig-running</property>
+								</not>
 								<property>/gear/gear[0]/wow</property>
 								<property>/gear/gear[1]/wow</property>
 								<property>/gear/gear[2]/wow</property>
@@ -152,7 +156,9 @@
 						<pref-width>140</pref-width>
 						<enable>
 							<and>
-								<not><property>/systems/acconfig/autoconfig-running</property></not>
+								<not>
+									<property>/systems/acconfig/autoconfig-running</property>
+								</not>
 								<property>/gear/gear[0]/wow</property>
 								<property>/gear/gear[1]/wow</property>
 								<property>/gear/gear[2]/wow</property>
@@ -172,7 +178,9 @@
 						<pref-width>140</pref-width>
 						<enable>
 							<and>
-								<not><property>/systems/acconfig/autoconfig-running</property></not>
+								<not>
+									<property>/systems/acconfig/autoconfig-running</property>
+								</not>
 								<property>/gear/gear[0]/wow</property>
 								<property>/gear/gear[1]/wow</property>
 								<property>/gear/gear[2]/wow</property>
@@ -192,7 +200,9 @@
 						<pref-width>140</pref-width>
 						<enable>
 							<and>
-								<not><property>/systems/acconfig/autoconfig-running</property></not>
+								<not>
+									<property>/systems/acconfig/autoconfig-running</property>
+								</not>
 								<property>/gear/gear[0]/wow</property>
 								<property>/gear/gear[1]/wow</property>
 								<property>/gear/gear[2]/wow</property>
@@ -209,9 +219,9 @@
 				</group>
 			</group>
 		</group>
-		
-		<vrule/>
-		
+
+		<vrule />
+
 		<group>
 			<layout>vbox</layout>
 
@@ -222,13 +232,13 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.groundservices_dlg.open();
+						acconfig.groundservices_dlg.open();
 					</script>
 				</binding>
 			</button>
 
-			<hrule/>
-			
+			<hrule />
+
 			<checkbox>
 				<label>Keyboard Mode (See Aircraft Help)</label>
 				<halign>left</halign>
@@ -243,12 +253,12 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.writeSettings();
+						acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Enable FGCamera 0-9 keys</label>
 				<halign>left</halign>
@@ -266,12 +276,12 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.writeSettings();
+						acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<!-- TODO Comment back in, when fully implemented -->
 			<checkbox>
 				<label>Weight in KG</label>
@@ -287,7 +297,7 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.writeSettings();
+						acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
@@ -307,12 +317,12 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.writeSettings();
+						acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Display tooltips on switches</label>
 				<halign>left</halign>
@@ -327,12 +337,12 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.writeSettings();
+						acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Allow APU Oil Consumption</label>
 				<halign>left</halign>
@@ -347,12 +357,12 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.writeSettings();
+						acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>First Officer is the Pilot Flying</label>
 				<halign>left</halign>
@@ -367,12 +377,12 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.writeSettings();
+						acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<label>Use Separate Tiller Axis</label>
 				<halign>left</halign>
@@ -387,7 +397,7 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.writeSettings();
+						acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
@@ -407,12 +417,12 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.writeSettings();
+						acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<checkbox>
 				<!-- TODO there might be a better way to formulate this. -->
 				<label>Save States Between Sessions</label>
@@ -428,15 +438,15 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.writeSettings();
+						acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
 			</checkbox>
-			
+
 			<group>
 				<layout>hbox</layout>
-			
+
 				<button>
 					<legend>FBW Settings</legend>
 					<halign>center</halign>
@@ -444,11 +454,11 @@
 					<binding>
 						<command>nasal</command>
 						<script>
-						acconfig.fbw_dlg.open();
+							acconfig.fbw_dlg.open();
 						</script>
 					</binding>
 				</button>
-				
+
 				<button>
 					<legend>System Failures</legend>
 					<halign>center</halign>
@@ -456,15 +466,15 @@
 					<binding>
 						<command>nasal</command>
 						<script>
-						acconfig.fail_dlg.open();
+							acconfig.fail_dlg.open();
 						</script>
 					</binding>
 				</button>
-				
+
 			</group>
-			
+
 		</group>
-		
+
 	</group>
-	
+
 </PropertyList>

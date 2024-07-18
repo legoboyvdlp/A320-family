@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
 
@@ -14,32 +14,32 @@
 		<open>
 			props.globals.initNode("/sim/http/mcduweb/local-ip", "", "STRING");
 		</open>
-	</nasal>	
+	</nasal>
 
-    <group>
-        <layout>hbox</layout>
-        <text>
-            <halign>left</halign>
-            <label>Remote MCDU for browser/tablet/smartphone</label>
-        </text>
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Remote MCDU for browser/tablet/smartphone</label>
+		</text>
 
-        <button>
-            <halign>right</halign>
-            <pref-width>20</pref-width>
-            <pref-height>20</pref-height>
-            <legend>X</legend>
-            <key>Esc</key>
-            <binding>
-                <command>dialog-close</command>
-            </binding>
-        </button>
-    </group>
-	
-    <hrule/>
-	
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+
+	<hrule />
+
 	<group>
 		<layout>vbox</layout>
-		
+
 		<text>
 			<halign>left</halign>
 			<label>Please check: HTTP service running is required.</label>
@@ -48,9 +48,9 @@
 					<property>/sim/http/running</property>
 					<value>0</value>
 				</equals>
-			</visible>			
+			</visible>
 		</text>
-		<text>		
+		<text>
 			<halign>left</halign>
 			<label>Start FlightGear with -httpd=8080</label>
 			<visible>
@@ -58,10 +58,10 @@
 					<property>/sim/http/running</property>
 					<value>0</value>
 				</equals>
-			</visible>			
+			</visible>
 		</text>
 
-    </group>
+	</group>
 
 	<group>
 		<layout>vbox</layout>
@@ -79,16 +79,18 @@
 				<script>
 					var n = getprop("/sim/http/running",0);
 					if( n != 1 ) {
-					  gui.popupTip("Internal webserver not running. Restart FlightGear with -httpd=8080", 5.0);
+					gui.popupTip("Internal webserver not running. Restart FlightGear with
+					-httpd=8080", 5.0);
 					} else {
-					  var _url = "http://localhost:" ~ getprop("/sim/http/options/listening-port") ~ "/aircraft-dir/WebPanel/mcdu.html";
-					  fgcommand("open-browser", props.Node.new({ "url": _url }));
-					}				
+					var _url = "http://localhost:" ~ getprop("/sim/http/options/listening-port") ~
+					"/aircraft-dir/WebPanel/mcdu.html";
+					fgcommand("open-browser", props.Node.new({ "url": _url }));
+					}
 				</script>
 			</binding>
 		</button>
-	</group>	
-	
+	</group>
+
 	<group>
 		<layout>vbox</layout>
 		<text>
@@ -106,13 +108,13 @@
 		<layout>hbox</layout>
 		<input>
 			<width>220</width>
-			<height>25</height>	
+			<height>25</height>
 			<padding>5</padding>
 			<label>Local IP</label>
 			<property>/sim/http/mcduweb/local-ip</property>
 			<binding>
 				<command>dialog-apply</command>
-			</binding>			
+			</binding>
 			<live type="bool">true</live>
 		</input>
 		<button>
@@ -125,8 +127,12 @@
 				<script>
 					var _url = "";
 					if (size(getprop("/sim/http/mcduweb/local-ip"))>6) {
-						if ( getprop("sim/http/running",0) == 1 ) _url = "http://" ~ getprop("/sim/http/mcduweb/local-ip") ~ ":" ~ getprop("/sim/http/options/listening-port") ~ "/aircraft-dir/WebPanel/mcdu.html";
-						root.createChild("image").set("src", "https://qr.eletto.dev/" ~ _url).setSize(300,300).setTranslation(10,10); 					
+					if ( getprop("sim/http/running",0) == 1 ) _url = "http://" ~
+					getprop("/sim/http/mcduweb/local-ip") ~ ":" ~
+					getprop("/sim/http/options/listening-port") ~
+					"/aircraft-dir/WebPanel/mcdu.html";
+					root.createChild("image").set("src", "https://qr.eletto.dev/" ~
+					_url).setSize(300,300).setTranslation(10,10);
 					}
 				</script>
 			</binding>

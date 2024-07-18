@@ -4,69 +4,61 @@
 <!-- Copyright (c) 2019 Jonathan Redpath -->
 
 <system name="A320: Fuel:">
-	
+
 	<channel name="Fuel Pumps and Valves" execrate="8">
 		<!-- Pumps -->
-		
+
 		<switch name="/systems/fuel/pumps/apu-operate"> <!-- DC HOT 1 ? -->
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/fuel/pumps/all-eng-pump-off eq 1
-				<test logic="OR">
-					/systems/electrical/bus/ac-ess-shed ge 110 <!-- TODO 2QC breaker -->
-					/systems/electrical/bus/ac-si-bus ge 110 <!-- TODO 1QC breaker -->
+			<default value="0" />
+			<test logic="AND" value="1"> /systems/fuel/pumps/all-eng-pump-off eq 1 <test logic="OR">
+				/systems/electrical/bus/ac-ess-shed ge 110 <!-- TODO 2QC breaker --> /systems/electrical/bus/ac-si-bus ge 110 <!--
+					TODO 1QC breaker -->
 				</test>
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/pumps/wing-pump-left-1-operate">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/fuel/switches/pump-left-1 eq 1
-				/systems/failures/fuel/left-tank-pump-1 ne 1
-				<test logic="OR">
+			<default value="0" />
+			<test logic="AND" value="1"> /controls/fuel/switches/pump-left-1 eq 1
+				/systems/failures/fuel/left-tank-pump-1 ne 1 <test logic="OR">
 					<test logic="AND">
 						/systems/electrical/sources/idg-1/pmg-volt ge 110
-						/controls/electrical/switches/gen-1-line-contactor eq 1
+				/controls/electrical/switches/gen-1-line-contactor eq 1
 					</test>
-					/systems/electrical/bus/ac-1 ge 110
-				</test>
+				/systems/electrical/bus/ac-1 ge 110 </test>
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/pumps/wing-pump-left-2-operate">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/failures/fuel/left-tank-pump-2 ne 1
 				/controls/fuel/switches/pump-left-2 eq 1
 				/systems/electrical/bus/ac-2 ge 110
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/pumps/wing-pump-right-1-operate">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/fuel/switches/pump-right-1 eq 1
-				/systems/failures/fuel/right-tank-pump-1 ne 1
-				<test logic="OR">
+			<default value="0" />
+			<test logic="AND" value="1"> /controls/fuel/switches/pump-right-1 eq 1
+				/systems/failures/fuel/right-tank-pump-1 ne 1 <test logic="OR">
 					<test logic="AND">
 						/systems/electrical/sources/idg-1/pmg-volt ge 110
-						/controls/electrical/switches/gen-1-line-contactor eq 1
+				/controls/electrical/switches/gen-1-line-contactor eq 1
 					</test>
-					/systems/electrical/bus/ac-1 ge 110
-				</test>
+				/systems/electrical/bus/ac-1 ge 110 </test>
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/pumps/wing-pump-right-2-operate">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/failures/fuel/right-tank-pump-2 ne 1
 				/controls/fuel/switches/pump-right-2 eq 1
 				/systems/electrical/bus/ac-2 ge 110
 			</test>
 		</switch>
-			
+
 		<fcs_function name="/systems/fuel/internal/left-inner-tank-underfull-level">
 			<function>
 				<difference>
@@ -75,7 +67,7 @@
 				</difference>
 			</function>
 		</fcs_function>
-			
+
 		<fcs_function name="/systems/fuel/internal/right-inner-tank-underfull-level">
 			<function>
 				<difference>
@@ -84,77 +76,67 @@
 				</difference>
 			</function>
 		</fcs_function>
-		
+
 		<switch name="/systems/fuel/left-inner-full">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/fuel/left-inner-full eq 1
 				/consumables/fuel/tank[1]/level-norm lt 0.999
-				/consumables/fuel/tank[1]/level-gal_us ge /systems/fuel/internal/left-inner-tank-underfull-level
+				/consumables/fuel/tank[1]/level-gal_us ge
+				/systems/fuel/internal/left-inner-tank-underfull-level
 			</test>
 			<test value="1">
 				/consumables/fuel/tank[1]/level-norm gt 0.999
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/right-inner-full">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/fuel/right-inner-full eq 1
 				/consumables/fuel/tank[3]/level-norm lt 0.999
-				/consumables/fuel/tank[3]/level-gal_us ge /systems/fuel/internal/right-inner-tank-underfull-level
+				/consumables/fuel/tank[3]/level-gal_us ge
+				/systems/fuel/internal/right-inner-tank-underfull-level
 			</test>
 			<test value="1">
 				/consumables/fuel/tank[3]/level-norm gt 0.999
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/pumps/center-pump-1-operate">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/systems/failures/fuel/center-tank-pump-1 ne 1
-				/controls/fuel/switches/pump-center-1 eq 1
-				<test logic="OR">
-					/controls/fuel/switches/center-mode eq 0
-					<test logic="AND">
-						/systems/fuel/pumps/center-control-low-level ne 1
-						<test logic="OR">
-							/systems/fuel/ctr-pump-cmd-on-eng-start eq 1
-							<test logic="AND">
+			<default value="0" />
+			<test logic="AND" value="1"> /systems/failures/fuel/center-tank-pump-1 ne 1
+				/controls/fuel/switches/pump-center-1 eq 1 <test logic="OR">
+				/controls/fuel/switches/center-mode eq 0 <test logic="AND">
+				/systems/fuel/pumps/center-control-low-level ne 1 <test logic="OR">
+				/systems/fuel/ctr-pump-cmd-on-eng-start eq 1 <test logic="AND">
 								fcs/slat-pos-deg lt 16
 								/systems/fuel/left-inner-full ne 1
 							</test>
 						</test>
 					</test>
 				</test>
-				/systems/electrical/bus/ac-1 ge 110
-			</test>
+				/systems/electrical/bus/ac-1 ge 110 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/pumps/center-pump-2-operate">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				/controls/fuel/switches/pump-center-2 eq 1
-				/systems/failures/fuel/center-tank-pump-2 ne 1
-				<test logic="OR">
-					/controls/fuel/switches/center-mode eq 0
-					<test logic="AND">
-						/systems/fuel/pumps/center-control-low-level ne 1
-						<test logic="OR">
-							/systems/fuel/ctr-pump-cmd-on-eng-start eq 1
-							<test logic="AND">
+			<default value="0" />
+			<test logic="AND" value="1"> /controls/fuel/switches/pump-center-2 eq 1
+				/systems/failures/fuel/center-tank-pump-2 ne 1 <test logic="OR">
+				/controls/fuel/switches/center-mode eq 0 <test logic="AND">
+				/systems/fuel/pumps/center-control-low-level ne 1 <test logic="OR">
+				/systems/fuel/ctr-pump-cmd-on-eng-start eq 1 <test logic="AND">
 								fcs/slat-pos-deg lt 16
 								/systems/fuel/left-inner-full ne 1
 							</test>
 						</test>
 					</test>
 				</test>
-				/systems/electrical/bus/ac-2 ge 110
-			</test>
+				/systems/electrical/bus/ac-2 ge 110 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/pumps/all-eng-pump-off">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/fuel/pumps/wing-pump-left-1-operate eq 0
 				/systems/fuel/pumps/wing-pump-left-2-operate eq 0
@@ -164,323 +146,310 @@
 				/systems/fuel/pumps/center-pump-2-operate eq 0
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/quantity/left-wing-inner-low">
-			<default value="0"/>
+			<default value="0" />
 			<test value="1">
 				propulsion/tank[1]/contents-lbs le 1650
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/quantity/center-low">
-			<default value="0"/>
+			<default value="0" />
 			<test value="1">
 				propulsion/tank[2]/contents-lbs le 220
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/quantity/right-wing-inner-low">
-			<default value="0"/>
+			<default value="0" />
 			<test value="1">
 				propulsion/tank[3]/contents-lbs le 1650
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/fuel/pumps/center-control-low-level">
-            <input>/systems/fuel/quantity/center-low</input>
-            <rate_limit sense="decr">120</rate_limit> <!-- Instant -->
-            <rate_limit sense="incr">0.00333</rate_limit> <!-- 300 seconds -->
-        </actuator>
-		
+			<input>/systems/fuel/quantity/center-low</input>
+			<rate_limit sense="decr">120</rate_limit> <!-- Instant -->
+			<rate_limit sense="incr">0.00333</rate_limit> <!-- 300 seconds -->
+		</actuator>
+
 		<!-- Valves -->
 		<switch name="/systems/fuel/valves/outer-inner-transfer-valve-1-cmd">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/fuel/valves/outer-inner-transfer-valve-1-cmd eq 1
 				/systems/fuel/refuel/refuelling eq 0
 			</test>
-			<test logic="AND" value="1">
-				/systems/fuel/valves/outer-inner-transfer-valve-1-power ne 0
-				<test logic="OR">
+			<test logic="AND" value="1"> /systems/fuel/valves/outer-inner-transfer-valve-1-power ne
+				0 <test logic="OR">
 					/systems/fuel/quantity/left-wing-inner-low eq 1
-					/systems/fuel/quantity/right-wing-inner-low eq 1
+				/systems/fuel/quantity/right-wing-inner-low eq 1
 				</test>
-				/systems/fuel/refuel/refuelling eq 0
-			</test>
+				/systems/fuel/refuel/refuelling eq 0 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/valves/outer-inner-transfer-valve-1-power">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="0.333">
 				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/fuel/valves/outer-inner-transfer-valve-1">
 			<input>/systems/fuel/valves/outer-inner-transfer-valve-1-cmd</input>
 			<rate_limit>/systems/fuel/valves/outer-inner-transfer-valve-1-power</rate_limit>
 		</actuator>
-		
+
 		<switch name="/systems/fuel/valves/outer-inner-transfer-valve-2-cmd">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/fuel/valves/outer-inner-transfer-valve-2-cmd eq 1
 				/systems/fuel/refuel/refuelling eq 0
 			</test>
-			<test logic="AND" value="1">
-				/systems/fuel/valves/outer-inner-transfer-valve-2-power ne 0
-				<test logic="OR">
+			<test logic="AND" value="1"> /systems/fuel/valves/outer-inner-transfer-valve-2-power ne
+				0 <test logic="OR">
 					/systems/fuel/quantity/left-wing-inner-low eq 1
-					/systems/fuel/quantity/right-wing-inner-low eq 1
+				/systems/fuel/quantity/right-wing-inner-low eq 1
 				</test>
-				/systems/fuel/refuel/refuelling eq 0
-			</test>
+				/systems/fuel/refuel/refuelling eq 0 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/valves/outer-inner-transfer-valve-2-power">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="0.333">
 				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/fuel/valves/outer-inner-transfer-valve-2">
 			<input>/systems/fuel/valves/outer-inner-transfer-valve-2-cmd</input>
 			<rate_limit>/systems/fuel/valves/outer-inner-transfer-valve-2-power</rate_limit>
 		</actuator>
-		
+
 		<!-- XFeed Valve -->
 		<switch name="/systems/fuel/valves/crossfeed-valve-cmd">
-			<default value="0"/>
+			<default value="0" />
 			<test value="1">
 				/controls/fuel/switches/crossfeed eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/valves/crossfeed-valve-power">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="0.5">
 				/systems/electrical/bus/dc-2 ge 25
 				/systems/electrical/bus/dc-ess-shed ge 25
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/fuel/valves/crossfeed-valve">
 			<input>/systems/fuel/valves/crossfeed-valve-cmd</input>
 			<rate_limit>/systems/fuel/valves/crossfeed-valve-power</rate_limit>
 		</actuator>
-		
+
 		<!-- Engine LP Valves -->
 		<switch name="/systems/fuel/valves/engine-1-lp-valve-cmd">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/controls/engines/engine[0]/fire-btn eq 0
 				/engines/engine[0]/state ge 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/valves/engine-1-lp-valve-power">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1.0">
 				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/fuel/valves/engine-1-lp-valve">
 			<input>/systems/fuel/valves/engine-1-lp-valve-cmd</input>
 			<rate_limit>/systems/fuel/valves/engine-1-lp-valve-power</rate_limit>
 		</actuator>
-		
+
 		<switch name="/systems/fuel/valves/engine-2-lp-valve-cmd">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/controls/engines/engine[1]/fire-btn eq 0
 				/engines/engine[1]/state ge 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/valves/engine-2-lp-valve-power">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1.0">
 				/systems/electrical/bus/dc-ess-shed ge 25
 				/systems/electrical/bus/dc-2 ge 25
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/fuel/valves/engine-2-lp-valve">
 			<input>/systems/fuel/valves/engine-2-lp-valve-cmd</input>
 			<rate_limit>/systems/fuel/valves/engine-2-lp-valve-power</rate_limit>
 		</actuator>
-		
+
 		<switch name="/systems/fuel/valves/apu-lp-valve-power">
-			<default value="0"/>
-			<test logic="OR" value="1.0">
-				/systems/electrical/bus/dc-bat ge 25 <!-- 4WF -->
+			<default value="0" />
+			<test logic="OR" value="1.0"> /systems/electrical/bus/dc-bat ge 25 <!-- 4WF -->
 				/systems/electrical/bus/dc-hot-1 ge 25 <!-- 3WF -->
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/fuel/valves/apu-lp-valve">
 			<input>/systems/fuel/valves/apu-lp-valve-cmd</input>
 			<rate_limit>/systems/fuel/valves/apu-lp-valve-power</rate_limit>
 		</actuator>
-		
+
 		<!-- Pump PSI -->
-		
+
 		<pure_gain name="/systems/fuel/pumps/apu-psi-cmd">
 			<input>/systems/fuel/pumps/apu-operate</input>
 			<gain>25.3</gain> <!-- 9600 lb/h (guess) -->
 		</pure_gain>
-		
+
 		<actuator name="/systems/fuel/pumps/apu-psi">
 			<input>/systems/fuel/pumps/apu-psi-cmd</input>
 			<rate_limit sense="incr">5</rate_limit>
 			<rate_limit sense="decr">10</rate_limit>
 		</actuator>
-		
+
 		<pure_gain name="/systems/fuel/pumps/wing-pump-left-1-psi-cmd">
 			<input>/systems/fuel/pumps/wing-pump-left-1-operate</input>
 			<gain>25.3</gain> <!-- 9600 lb/h (guess) -->
 		</pure_gain>
-		
+
 		<actuator name="/systems/fuel/pumps/wing-pump-left-1-psi">
 			<input>/systems/fuel/pumps/wing-pump-left-1-psi-cmd</input>
 			<rate_limit sense="incr">5</rate_limit>
 			<rate_limit sense="decr">10</rate_limit>
 		</actuator>
-		
+
 		<pure_gain name="/systems/fuel/pumps/wing-pump-left-2-psi-cmd">
 			<input>/systems/fuel/pumps/wing-pump-left-2-operate</input>
 			<gain>25.3</gain> <!-- 9600 lb/h (guess) -->
 		</pure_gain>
-		
+
 		<actuator name="/systems/fuel/pumps/wing-pump-left-2-psi">
 			<input>/systems/fuel/pumps/wing-pump-left-2-psi-cmd</input>
 			<rate_limit sense="incr">5</rate_limit>
 			<rate_limit sense="decr">10</rate_limit>
 		</actuator>
-		
+
 		<pure_gain name="/systems/fuel/pumps/center-pump-1-psi-cmd">
 			<input>/systems/fuel/pumps/center-pump-1-operate</input>
 			<gain>30</gain> <!-- 11000 lb/h -->
 		</pure_gain>
-		
+
 		<actuator name="/systems/fuel/pumps/center-pump-1-psi">
 			<input>/systems/fuel/pumps/center-pump-1-psi-cmd</input>
 			<rate_limit sense="incr">5</rate_limit>
 			<rate_limit sense="decr">10</rate_limit>
 		</actuator>
-		
+
 		<pure_gain name="/systems/fuel/pumps/center-pump-2-psi-cmd">
 			<input>/systems/fuel/pumps/center-pump-2-operate</input>
 			<gain>30</gain> <!-- 11000 lb/h -->
 		</pure_gain>
-		
+
 		<actuator name="/systems/fuel/pumps/center-pump-2-psi">
 			<input>/systems/fuel/pumps/center-pump-2-psi-cmd</input>
 			<rate_limit sense="incr">5</rate_limit>
 			<rate_limit sense="decr">10</rate_limit>
 		</actuator>
-		
+
 		<pure_gain name="/systems/fuel/pumps/wing-pump-right-1-psi-cmd">
 			<input>/systems/fuel/pumps/wing-pump-right-1-operate</input>
 			<gain>25.3</gain> <!-- 9600 lb/h (guess) -->
 		</pure_gain>
-		
+
 		<actuator name="/systems/fuel/pumps/wing-pump-right-1-psi">
 			<input>/systems/fuel/pumps/wing-pump-right-1-psi-cmd</input>
 			<rate_limit sense="incr">5</rate_limit>
 			<rate_limit sense="decr">10</rate_limit>
 		</actuator>
-		
+
 		<pure_gain name="/systems/fuel/pumps/wing-pump-right-2-psi-cmd">
 			<input>/systems/fuel/pumps/wing-pump-right-2-operate</input>
 			<gain>25.3</gain> <!-- 9600 lb/h (guess) -->
 		</pure_gain>
-		
+
 		<actuator name="/systems/fuel/pumps/wing-pump-right-2-psi">
 			<input>/systems/fuel/pumps/wing-pump-right-2-psi-cmd</input>
 			<rate_limit sense="incr">5</rate_limit>
 			<rate_limit sense="decr">10</rate_limit>
 		</actuator>
 	</channel>
-	
+
 	<channel name="Flow Rates" execrate="2">
-	
+
 		<summer name="/systems/fuel/fuel-used-1">
 			<input>/systems/fuel/offset-left</input>
 			<input>propulsion/engine[0]/fuel-used-lbs</input>
 		</summer>
-		
+
 		<summer name="/systems/fuel/fuel-used-2">
 			<input>/systems/fuel/offset-right</input>
 			<input>propulsion/engine[1]/fuel-used-lbs</input>
 		</summer>
-		
+
 		<switch name="/systems/fuel/feed-left-inner">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/fuel/pumps/wing-pump-left-1-operate eq 1
 				/systems/fuel/pumps/wing-pump-left-2-operate eq 1
 			</test>
-			<test logic="AND" value="0"> <!-- crossfeeding overrides gravity feed -->
-				/systems/fuel/valves/crossfeed-valve eq 1
-				<test logic="OR">
-					/systems/fuel/pumps/wing-pump-right-1-operate eq 1
-					/systems/fuel/pumps/wing-pump-right-2-operate eq 1
+			<test logic="AND" value="0"> <!-- crossfeeding overrides gravity feed --> /systems/fuel/valves/crossfeed-valve eq 1 <test logic="OR">
+				/systems/fuel/pumps/wing-pump-right-1-operate eq 1
+				/systems/fuel/pumps/wing-pump-right-2-operate eq 1
 				</test>
 			</test>
-			<test logic="AND" value="1"> <!-- Suction/Gravity feed if G is not to far below 1 -->
-				/accelerations/pilot-gdamped ge 0.5
-			</test>
+			<test logic="AND" value="1"> <!-- Suction/Gravity feed if G is not to far below 1 --> /accelerations/pilot-gdamped ge 0.5 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/feed-right-inner">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/fuel/pumps/wing-pump-right-1-operate eq 1
 				/systems/fuel/pumps/wing-pump-right-2-operate eq 1
 			</test>
-			<test logic="AND" value="0"> <!-- crossfeeding overrides gravity feed -->
-				/systems/fuel/valves/crossfeed-valve eq 1
-				<test logic="OR">
-					/systems/fuel/pumps/wing-pump-left-1-operate eq 1
-					/systems/fuel/pumps/wing-pump-left-2-operate eq 1
+			<test logic="AND" value="0"> <!-- crossfeeding overrides gravity feed --> /systems/fuel/valves/crossfeed-valve eq 1 <test logic="OR">
+				/systems/fuel/pumps/wing-pump-left-1-operate eq 1
+				/systems/fuel/pumps/wing-pump-left-2-operate eq 1
 				</test>
 			</test>
-			<test logic="AND" value="1"> <!-- Suction/Gravity feed if G is not to far below 1 -->
-				/accelerations/pilot-gdamped ge 0.5
-			</test>
+			<test logic="AND" value="1"> <!-- Suction/Gravity feed if G is not to far below 1 --> /accelerations/pilot-gdamped ge 0.5 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/feed-center-1">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/fuel/pumps/center-pump-1-operate eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/feed-center-2">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/fuel/pumps/center-pump-2-operate eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/apu-feed-pump">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/fuel/pumps/apu-operate eq 1
 				/systems/fuel/valves/apu-lp-valve eq 1
 			</test>
 		</switch>
-		
+
 		<!-- Refuel system -->
 		<switch name="/systems/fuel/internal/left-outer-wing-tank-refuel">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="16.615">
 				/systems/fuel/refuel/refuelling eq 1
 				/systems/fuel/refuel/left-valve eq 1
@@ -492,25 +461,23 @@
 				/systems/fuel/refuel/center-valve eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/left-inner-wing-tank-refuel">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="/systems/fuel/internal/left-outer-wing-tank-refuel">
 				/systems/fuel/refuel/refuelling eq 1
 				propulsion/tank[0]/pct-full ge 99.9
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/center-tank-refuel">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="33.230">
 				/systems/fuel/refuel/refuelling eq 1
 				/systems/fuel/refuel/right-valve eq 0
 				/systems/fuel/refuel/center-valve eq 1
 			</test>
-			<test logic="AND" value="16.615">
-				/systems/fuel/refuel/refuelling eq 1
-				<test logic="OR">
+			<test logic="AND" value="16.615"> /systems/fuel/refuel/refuelling eq 1 <test logic="OR">
 					<test logic="AND">
 						/systems/fuel/refuel/left-valve eq 1
 						/systems/fuel/refuel/right-valve eq 0
@@ -520,8 +487,7 @@
 						/systems/fuel/refuel/right-valve eq 1
 					</test>
 				</test>
-				/systems/fuel/refuel/center-valve eq 1
-			</test>
+				/systems/fuel/refuel/center-valve eq 1 </test>
 			<test logic="AND" value="11.076">
 				/systems/fuel/refuel/refuelling eq 1
 				/systems/fuel/refuel/left-valve eq 1
@@ -529,9 +495,9 @@
 				/systems/fuel/refuel/center-valve eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/right-outer-wing-tank-refuel">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="16.615">
 				/systems/fuel/refuel/refuelling eq 1
 				/systems/fuel/refuel/right-valve eq 1
@@ -543,194 +509,169 @@
 				/systems/fuel/refuel/center-valve eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/right-inner-wing-tank-refuel">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="/systems/fuel/internal/right-outer-wing-tank-refuel">
 				/systems/fuel/refuel/refuelling eq 1
 				propulsion/tank[4]/pct-full ge 99.9
 			</test>
 		</switch>
-		
+
 		<!-- Feed system -->
-		
+
 		<switch name="/systems/fuel/internal/apu-source"> <!-- this only when all pumps off -->
-			<default value="0"/> <!-- no fuel -->
-			<test logic="AND" value="2"> <!-- center preferentially, higher psi -->
-				/systems/fuel/apu-feed-pump eq 1
-				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us 
-			</test>
-			<test logic="AND" value="1"> <!-- left -->
-				/systems/fuel/apu-feed-pump eq 1
-				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us 
-			</test>
-			<test logic="AND" value="3"> <!-- right -->
-				/systems/fuel/apu-feed-pump eq 1
-				/systems/fuel/valves/crossfeed-valve eq 1
-				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us 
-			</test>
+			<default value="0" /> <!-- no fuel -->
+			<test logic="AND" value="2"> <!-- center preferentially, higher psi --> /systems/fuel/apu-feed-pump eq 1
+				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us </test>
+			<test logic="AND" value="1"> <!-- left --> /systems/fuel/apu-feed-pump eq 1
+				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us </test>
+			<test logic="AND" value="3"> <!-- right --> /systems/fuel/apu-feed-pump eq 1
+				/systems/fuel/valves/crossfeed-valve eq 1 /consumables/fuel/tank[3]/level-gal_us gt
+				/consumables/fuel/tank[3]/unusable-gal_us </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/left-wing-tank-eng-1">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="9">
 				<test logic="OR">
 					/systems/fuel/quantity/center-low eq 1
 					/systems/fuel/feed-center-1 eq 0
 				</test>
-				/systems/fuel/feed-left-inner eq 1
-				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us 
-				propulsion/tank[5]/contents-lbs lt 9
-			</test>
+				/systems/fuel/feed-left-inner eq 1 /consumables/fuel/tank[1]/level-gal_us gt
+				/consumables/fuel/tank[1]/unusable-gal_us propulsion/tank[5]/contents-lbs lt 9 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/center-tank-eng-1">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="9">
-				<test logic="OR">
-					/systems/fuel/feed-center-1 eq 1
-					<test logic="AND">
-						/systems/fuel/feed-center-2 eq 1
+				<test logic="OR"> /systems/fuel/feed-center-1 eq 1 <test logic="AND">
+				/systems/fuel/feed-center-2 eq 1
 						/systems/fuel/valves/crossfeed-valve eq 1
 					</test>
 				</test>
-				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us 
-				propulsion/tank[5]/contents-lbs lt 9
-			</test>
+				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us
+				propulsion/tank[5]/contents-lbs lt 9 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/right-wing-tank-eng-1">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="9">
 				<test logic="OR">
 					/systems/fuel/quantity/center-low eq 1
 					/systems/fuel/feed-center-2 eq 0
 				</test>
-				/systems/fuel/feed-right-inner eq 1
-				/systems/fuel/valves/crossfeed-valve eq 1
-				/consumables/fuel/tank[1]/level-gal_us le /consumables/fuel/tank[3]/unusable-gal_us 
-				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us 
-				propulsion/tank[5]/contents-lbs lt 9
-			</test>
+				/systems/fuel/feed-right-inner eq 1 /systems/fuel/valves/crossfeed-valve eq 1
+				/consumables/fuel/tank[1]/level-gal_us le /consumables/fuel/tank[3]/unusable-gal_us
+				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us
+				propulsion/tank[5]/contents-lbs lt 9 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/left-wing-tank-eng-2">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="9">
 				<test logic="OR">
 					/systems/fuel/quantity/center-low eq 1
 					/systems/fuel/feed-center-1 eq 0
 				</test>
-				/systems/fuel/feed-left-inner eq 1
-				/systems/fuel/valves/crossfeed-valve eq 1
-				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us 
-				/consumables/fuel/tank[3]/level-gal_us le /consumables/fuel/tank[3]/unusable-gal_us 
-				propulsion/tank[6]/contents-lbs lt 9
-			</test>
+				/systems/fuel/feed-left-inner eq 1 /systems/fuel/valves/crossfeed-valve eq 1
+				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us
+				/consumables/fuel/tank[3]/level-gal_us le /consumables/fuel/tank[3]/unusable-gal_us
+				propulsion/tank[6]/contents-lbs lt 9 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/center-tank-eng-2">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="9">
-				<test logic="OR">
-					/systems/fuel/feed-center-2 eq 1
-					<test logic="AND">
-						/systems/fuel/feed-center-1 eq 1
+				<test logic="OR"> /systems/fuel/feed-center-2 eq 1 <test logic="AND">
+				/systems/fuel/feed-center-1 eq 1
 						/systems/fuel/valves/crossfeed-valve eq 1
 					</test>
 				</test>
-				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us 
-				propulsion/tank[6]/contents-lbs lt 9
-			</test>
+				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us
+				propulsion/tank[6]/contents-lbs lt 9 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/right-wing-tank-eng-2">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="9">
 				<test logic="OR">
 					/systems/fuel/quantity/center-low eq 1
 					/systems/fuel/feed-center-2 eq 0
 				</test>
-				/systems/fuel/feed-right-inner eq 1
-				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us 
-				propulsion/tank[6]/contents-lbs lt 9
-			</test>
+				/systems/fuel/feed-right-inner eq 1 /consumables/fuel/tank[3]/level-gal_us gt
+				/consumables/fuel/tank[3]/unusable-gal_us propulsion/tank[6]/contents-lbs lt 9 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/left-wing-tank-apu">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="9">
 				<test logic="OR">
 					/systems/fuel/quantity/center-low eq 1
 					/systems/fuel/feed-center-1 eq 0
 				</test>
-				<test logic="OR">
+				<test
+					logic="OR">
 					/systems/fuel/pumps/wing-pump-left-1-operate eq 1
-					/systems/fuel/pumps/wing-pump-left-2-operate eq 1
+				/systems/fuel/pumps/wing-pump-left-2-operate eq 1
 					/systems/fuel/internal/apu-source eq 1
 				</test>
-				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us 
-				propulsion/tank[7]/contents-lbs lt 9
-			</test>
+				/consumables/fuel/tank[1]/level-gal_us gt /consumables/fuel/tank[1]/unusable-gal_us
+				propulsion/tank[7]/contents-lbs lt 9 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/center-tank-apu">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="9">
-				<test logic="OR">
-					/systems/fuel/feed-center-1 eq 1
-					<test logic="AND">
-						/systems/fuel/feed-center-2 eq 1
+				<test logic="OR"> /systems/fuel/feed-center-1 eq 1 <test logic="AND">
+				/systems/fuel/feed-center-2 eq 1
 						/systems/fuel/valves/crossfeed-valve eq 1
 					</test>
-					/systems/fuel/internal/apu-source eq 2
-				</test>
-				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us 
-				propulsion/tank[7]/contents-lbs lt 9
-			</test>
+				/systems/fuel/internal/apu-source eq 2 </test>
+				/consumables/fuel/tank[2]/level-gal_us gt /consumables/fuel/tank[2]/unusable-gal_us
+				propulsion/tank[7]/contents-lbs lt 9 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/right-wing-tank-apu">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="9">
 				<test logic="OR">
 					/systems/fuel/quantity/center-low eq 1
 					/systems/fuel/feed-center-1 eq 0
 				</test>
-				<test logic="OR">
+				<test
+					logic="OR">
 					/systems/fuel/pumps/wing-pump-right-1-operate eq 1
-					/systems/fuel/pumps/wing-pump-right-2-operate eq 1
+				/systems/fuel/pumps/wing-pump-right-2-operate eq 1
 					/systems/fuel/internal/apu-source eq 3
 				</test>
-				/systems/fuel/valves/crossfeed-valve eq 1
-				/consumables/fuel/tank[3]/level-gal_us gt /consumables/fuel/tank[3]/unusable-gal_us 
-				propulsion/tank[7]/contents-lbs lt 9
-			</test>
+				/systems/fuel/valves/crossfeed-valve eq 1 /consumables/fuel/tank[3]/level-gal_us gt
+				/consumables/fuel/tank[3]/unusable-gal_us propulsion/tank[7]/contents-lbs lt 9 </test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/left-wing-outer-to-inner-tank">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="/systems/fuel/internal/left-outer-wing-tank-refuel">
 				/systems/fuel/valves/outer-inner-transfer-valve-1 eq 1
 				/accelerations/pilot-gdamped ge 0.5
-				/consumables/fuel/tank[0]/level-gal_us gt /consumables/fuel/tank[0]/unusable-gal_us 
+				/consumables/fuel/tank[0]/level-gal_us gt /consumables/fuel/tank[0]/unusable-gal_us
 				/consumables/fuel/tank[1]/level-norm lt 0.9999
 				/systems/fuel/refuel/refuelling eq 1
 			</test>
 			<test logic="AND" value="9">
 				/systems/fuel/valves/outer-inner-transfer-valve-1 eq 1
 				/accelerations/pilot-gdamped ge 0.5
-				/consumables/fuel/tank[0]/level-gal_us gt /consumables/fuel/tank[0]/unusable-gal_us 
+				/consumables/fuel/tank[0]/level-gal_us gt /consumables/fuel/tank[0]/unusable-gal_us
 				/consumables/fuel/tank[1]/level-norm lt 0.9999
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/fuel/internal/right-wing-outer-to-inner-tank">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="/systems/fuel/internal/right-outer-wing-tank-refuel">
 				/systems/fuel/valves/outer-inner-transfer-valve-2 eq 1
 				/accelerations/pilot-gdamped ge 0.5
-				/consumables/fuel/tank[4]/level-gal_us gt /consumables/fuel/tank[0]/unusable-gal_us 
+				/consumables/fuel/tank[4]/level-gal_us gt /consumables/fuel/tank[0]/unusable-gal_us
 				/consumables/fuel/tank[3]/level-norm lt 0.9999
 				/systems/fuel/refuel/refuelling eq 1
 			</test>
@@ -742,14 +683,14 @@
 			</test>
 		</switch>
 	</channel>
-	
+
 	<channel name="Final Flow Rates">
 		<summer name="/systems/fuel/internal/left-outer-flow-rate">
 			<input>/systems/fuel/internal/left-outer-wing-tank-refuel</input>
 			<input>-/systems/fuel/internal/left-wing-outer-to-inner-tank</input>
 			<output>propulsion/tank[0]/external-flow-rate-pps</output>
 		</summer>
-		
+
 		<summer name="/systems/fuel/internal/left-inner-flow-rate">
 			<input>/systems/fuel/internal/left-wing-outer-to-inner-tank</input>
 			<input>/systems/fuel/internal/left-inner-wing-tank-refuel</input>
@@ -758,7 +699,7 @@
 			<input>-/systems/fuel/internal/left-wing-tank-apu</input>
 			<output>propulsion/tank[1]/external-flow-rate-pps</output>
 		</summer>
-		
+
 		<summer name="/systems/fuel/internal/center-flow-rate">
 			<input>/systems/fuel/internal/center-tank-refuel</input>
 			<input>-/systems/fuel/internal/center-tank-eng-1</input>
@@ -766,7 +707,7 @@
 			<input>-/systems/fuel/internal/center-tank-apu</input>
 			<output>propulsion/tank[2]/external-flow-rate-pps</output>
 		</summer>
-		
+
 		<summer name="/systems/fuel/internal/right-inner-flow-rate">
 			<input>/systems/fuel/internal/right-wing-outer-to-inner-tank</input>
 			<input>/systems/fuel/internal/right-inner-wing-tank-refuel</input>
@@ -775,27 +716,27 @@
 			<input>-/systems/fuel/internal/right-wing-tank-apu</input>
 			<output>propulsion/tank[3]/external-flow-rate-pps</output>
 		</summer>
-		
+
 		<summer name="/systems/fuel/internal/right-outer-flow-rate">
 			<input>/systems/fuel/internal/right-outer-wing-tank-refuel</input>
 			<input>-/systems/fuel/internal/right-wing-outer-to-inner-tank</input>
 			<output>propulsion/tank[4]/external-flow-rate-pps</output>
 		</summer>
-		
+
 		<summer name="/systems/fuel/internal/eng-1-flow-rate">
 			<input>/systems/fuel/internal/left-wing-tank-eng-1</input>
 			<input>/systems/fuel/internal/right-wing-tank-eng-1</input>
 			<input>/systems/fuel/internal/center-tank-eng-1</input>
 			<output>propulsion/tank[5]/external-flow-rate-pps</output>
 		</summer>
-		
+
 		<summer name="/systems/fuel/internal/eng-2-flow-rate">
 			<input>/systems/fuel/internal/left-wing-tank-eng-2</input>
 			<input>/systems/fuel/internal/right-wing-tank-eng-2</input>
 			<input>/systems/fuel/internal/center-tank-eng-2</input>
 			<output>propulsion/tank[6]/external-flow-rate-pps</output>
 		</summer>
-		
+
 		<summer name="/systems/fuel/internal/apu-flow-rate">
 			<input>/systems/fuel/internal/left-wing-tank-apu</input>
 			<input>/systems/fuel/internal/center-tank-apu</input>
@@ -803,30 +744,29 @@
 			<output>propulsion/tank[7]/external-flow-rate-pps</output>
 		</summer>
 	</channel>
-	
+
 	<channel name="Warnings" execrate="8">
-		
+
 		<summer name="/systems/fuel/quantity/left-wing-kg">
 			<input>/consumables/fuel/tank[0]/level-kg</input>
 			<input>/consumables/fuel/tank[1]/level-kg</input>
 		</summer>
-		
+
 		<summer name="/systems/fuel/quantity/right-wing-kg">
 			<input>/consumables/fuel/tank[3]/level-kg</input>
 			<input>/consumables/fuel/tank[4]/level-kg</input>
 		</summer>
-		
+
 		<switch name="/systems/fuel/mode-fault">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				<test logic="OR">
 					/systems/fuel/quantity/left-wing-kg lt 5000
 					/systems/fuel/quantity/right-wing-kg lt 5000
 				</test>
-				/consumables/fuel/tank[2]/level-kg ge 250
-			</test>
+				/consumables/fuel/tank[2]/level-kg ge 250 </test>
 		</switch>
-		
+
 	</channel>
 
 </system>

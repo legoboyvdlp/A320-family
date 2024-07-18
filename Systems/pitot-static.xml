@@ -5,12 +5,12 @@
     <name>pitot</name>
     <number>0</number>
   </pitot>
-  
+
   <pitot>
     <name>pitot</name>
     <number>1</number>
   </pitot>
-  
+
   <pitot>
     <name>pitot</name>
     <number>2</number>
@@ -20,7 +20,7 @@
     <name>static</name>
     <number>0</number>
     <tau>0.7</tau>
-	<type>1</type>
+    <type>1</type>
     <error-factor>0.43</error-factor>
   </static>
 
@@ -28,7 +28,7 @@
     <name>static</name>
     <number>1</number>
     <tau>0.7</tau>
-	<type>1</type>
+    <type>1</type>
     <error-factor>0.42</error-factor>
   </static>
 
@@ -36,7 +36,7 @@
     <name>static</name>
     <number>2</number>
     <tau>0.7</tau>
-	<type>1</type>
+    <type>1</type>
     <error-factor>0.45</error-factor>
   </static>
 

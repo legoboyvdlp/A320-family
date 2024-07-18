@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -10,7 +10,7 @@
 		<name>A320</name>
 		<path>Aircraft/A320-family/Models/A320-common.xml</path>
 	</model>
-	
+
 	<model>
 		<name>EnginesIAE</name>
 		<path>Aircraft/A320-family/Models/Fuselage/a320.v2500.xml</path>
@@ -23,7 +23,7 @@
 		<texture-prop>texture-placards</texture-prop>
 		<texture>placards.png</texture>
 	</animation>
-	
+
 	<!-- Nasal code -->
 	<nasal>
 		<load><![CDATA[

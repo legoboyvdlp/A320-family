@@ -5,19 +5,19 @@
 <PropertyList>
 
 	<path>res/ND.ac</path>
-	
-    <animation>
-        <type>pick</type>
-        <object-name>ND.screen</object-name>
-        <action>
+
+	<animation>
+		<type>pick</type>
+		<object-name>ND.screen</object-name>
+		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
 				<script>canvas_nd.showNd();</script>
 			</binding>
-        </action>
-    </animation>
+		</action>
+	</animation>
 
 	<animation>
 		<type>material</type>
@@ -29,7 +29,7 @@
 			<factor-prop>controls/lighting/DU/du2</factor-prop>
 		</emission>
 	</animation>
-   
+
 	<effect>
 		<inherits-from>Aircraft/A320-family/Models/Effects/displays/lcd</inherits-from>
 		<parameters>
@@ -37,7 +37,9 @@
 			<outer-angle>90</outer-angle> <!-- 0-90, but greater than inner -->
 			<black-angle>90</black-angle> <!-- 0-90, but greater than outer -->
 			<dirt-factor>0.07</dirt-factor>
-			<contrast><use>instrumentation/du/du2-contrast</use></contrast>
+			<contrast>
+				<use>instrumentation/du/du2-contrast</use>
+			</contrast>
 		</parameters>
 		<object-name>ND.screen</object-name>
 	</effect>

@@ -4,7 +4,8 @@
 
 <PropertyList>
 
-	<!-- https://wiki.flightgear.org/Howto:Add_aircraft_lights#Combined_ALS_procedural_lights_and_Compositor_lights -->
+	<!--
+	https://wiki.flightgear.org/Howto:Add_aircraft_lights#Combined_ALS_procedural_lights_and_Compositor_lights -->
 	<!-- Thanks to erik -->
 	<model>
 		<name>left-strobe</name>

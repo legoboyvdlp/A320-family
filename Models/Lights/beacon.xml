@@ -5,7 +5,7 @@
 <PropertyList>
 
 	<path>beacon.ac</path>
-	<nopreview/>
+	<nopreview />
 
 	<animation>
 		<type>noshadow</type>
@@ -37,12 +37,11 @@
 			</entry>
 		</interpolation>
 	</animation>
-	
 
-	
+
 	<effect>
-			<inherits-from>Aircraft/A320-family/Models/lights/ALS/beacon</inherits-from>
-			<object-name>beaconals</object-name>
+		<inherits-from>Aircraft/A320-family/Models/lights/ALS/beacon</inherits-from>
+		<object-name>beaconals</object-name>
 	</effect>
 
 

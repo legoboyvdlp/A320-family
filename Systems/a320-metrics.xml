@@ -4,25 +4,25 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <metrics>
-	
+
 	<wingarea unit="FT2">1319.79</wingarea>
 	<wingspan unit="FT">117.26</wingspan>
 	<chord unit="FT">20.76</chord>
 	<htailarea unit="FT2">334.24</htailarea>
 	<vtailarea unit="FT2">248.79</vtailarea>
-	
+
 	<location name="AERORP" unit="M">
 		<x>-2.2658</x>
 		<y>0</y>
 		<z>-0.934</z>
 	</location>
-	
+
 	<location name="EYEPOINT" unit="M">
 		<x>0</x>
 		<y>0</y>
 		<z>0</z>
 	</location>
-	
+
 	<location name="VRP" unit="M">
 		<x>0</x>
 		<y>0</y>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
@@ -22,7 +22,7 @@
 			<label>Something Happened!</label>
 		</text>
 	</group>
-	
+
 	<hrule>
 		<color>
 			<red>1.0</red>
@@ -31,19 +31,21 @@
 			<alpha>0.95</alpha>
 		</color>
 	</hrule>
-	
+
 	<group>
 		<layout>vbox</layout>
-		
+
 		<text>
 			<halign>left</halign>
-			<label>Something happened and an internal error has occurred. The aircraft has been disabled.</label>
+			<label>Something happened and an internal error has occurred. The aircraft has been
+				disabled.</label>
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>The error code and cause are listed below. Please include this information if reporting this error.</label>
+			<label>The error code and cause are listed below. Please include this information if
+				reporting this error.</label>
 		</text>
-		
+
 		<hrule>
 			<color>
 				<red>1.0</red>
@@ -52,15 +54,15 @@
 				<alpha>0.95</alpha>
 			</color>
 		</hrule>
-		
+
 		<group>
 			<layout>hbox</layout>
 			<halign>left</halign>
-			
+
 			<text>
 				<label>Error Code:</label>
 			</text>
-		
+
 			<text>
 				<border>1</border>
 				<label>99999</label>
@@ -68,15 +70,15 @@
 				<live>1</live>
 			</text>
 		</group>
-		
+
 		<group>
 			<layout>hbox</layout>
 			<halign>left</halign>
-			
+
 			<text>
 				<label>Reason:</label>
 			</text>
-		
+
 			<text>
 				<border>1</border>
 				<label>9999999999999999999999999999999999</label>
@@ -85,7 +87,7 @@
 			</text>
 		</group>
 	</group>
-	
+
 	<hrule>
 		<color>
 			<red>1.0</red>
@@ -113,5 +115,5 @@
 			</binding>
 		</button>
 	</group>
-	
+
 </PropertyList>

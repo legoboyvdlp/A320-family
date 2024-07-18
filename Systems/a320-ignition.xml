@@ -4,77 +4,69 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <system name="A320: Ignition">
-	
+
 	<channel name="Ignition" execrate="8">
-		
+
 		<switch name="/systems/ignition/ign-1/ign-a">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
-				<test logic="OR"> <!-- Priority Stat Inv -->
-					/systems/electrical/sources/si-1/output-volt ge 110
-					/systems/electrical/bus/ac-ess ge 110
-				</test>
-				/controls/ignition/start-sw eq 2
-			</test>
+				<test logic="OR"> <!-- Priority Stat Inv --> /systems/electrical/sources/si-1/output-volt ge 110
+				/systems/electrical/bus/ac-ess ge 110 </test> /controls/ignition/start-sw eq 2 </test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/ign-1/ign-b">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/electrical/bus/ac-1 ge 110
 				/controls/ignition/start-sw eq 2
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/ign-1/ign-avail">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/ignition/ign-1/ign-a eq 1
 				/systems/ignition/ign-1/ign-b eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/ign-2/ign-a">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
-				<test logic="OR"> <!-- Priority Stat Inv -->
-					/systems/electrical/sources/si-1/output-volt ge 110
-					/systems/electrical/bus/ac-ess ge 110
-				</test>
-				/controls/ignition/start-sw eq 2
-			</test>
+				<test logic="OR"> <!-- Priority Stat Inv --> /systems/electrical/sources/si-1/output-volt ge 110
+				/systems/electrical/bus/ac-ess ge 110 </test> /controls/ignition/start-sw eq 2 </test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/ign-2/ign-b">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/electrical/bus/ac-2 ge 110
 				/controls/ignition/start-sw eq 2
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/ign-2/ign-avail">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/ignition/ign-2/ign-a eq 1
 				/systems/ignition/ign-2/ign-b eq 1
 			</test>
 		</switch>
-	
+
 	</channel>
-	
+
 	<channel name="Engine Start/Stop"> <!-- Do NOT execrate! -->
-		
+
 		<!-- Engine 1 -->
 		<switch name="/systems/ignition/can-run-1">
-			<default value="0"/>
+			<default value="0" />
 			<test value="1">
 				propulsion/tank[5]/contents-lbs ge 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/cutoff-1">
-			<default value="1"/>
+			<default value="1" />
 			<test logic="AND" value="0">
 				/controls/engines/engine[0]/cutoff-switch eq 0
 				/systems/ignition/can-run-1 eq 1
@@ -82,102 +74,94 @@
 		</switch>
 
 		<switch name="/systems/ignition/can-start-1">
-			<default value="1"/>
+			<default value="1" />
 			<test logic="OR" value="0">
 				/systems/pneumatics/psi/engine-1-psi lt 20
 				/engines/engine[0]/n2-actual ge /systems/ignition/starter-cutoff-n2
 				/systems/ignition/ign-1/ign-avail ne 1
 			</test>
-			<test logic="AND" value="0"> <!-- So that starting is aborting if cutoff placed to off -->
-				/systems/ignition/cutoff-1 eq 1
-				/engines/engine[0]/state ge 2
-			</test>
+			<test logic="AND" value="0"> <!-- So that starting is aborting if cutoff placed to off --> /systems/ignition/cutoff-1 eq 1 /engines/engine[0]/state ge
+				2 </test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/auto-start-1">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/ignition/can-start-1 eq 1
 				/systems/ignition/cutoff-1 eq 0
 				/controls/engines/engine[0]/start-switch eq 0
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/start-switch-1">
-			<default value="/controls/engines/engine[0]/start-switch"/>
+			<default value="/controls/engines/engine[0]/start-switch" />
 			<test logic="OR" value="0">
 				/systems/ignition/can-start-1 eq 0
 				/systems/ignition/auto-start-1 eq 1
 			</test>
 			<output>/controls/engines/engine[0]/start-switch</output>
 		</switch>
-		
+
 		<switch name="/systems/ignition/start-valve-1-cmd">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/ignition/auto-start-1 eq 1
 				/systems/ignition/start-switch-1 eq 1
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/ignition/start-valve-1">
 			<input>/systems/ignition/start-valve-1-cmd</input>
 			<rate_limit sense="incr">1</rate_limit>
 			<rate_limit sense="decr">1000</rate_limit>
 		</actuator>
-		
+
 		<switch name="/systems/ignition/starter-1">
-			<default value="0"/>
+			<default value="0" />
 			<test value="1">
 				/systems/ignition/start-valve-1 eq 1
 			</test>
 			<output>/systems/pneumatics/valves/starter-valve-1</output>
 		</switch>
-		
+
 		<switch name="/systems/ignition/cutoff-delay-cmd-1">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/ignition/starter-1 eq 1
 				/engines/engine[0]/n2-actual ge /systems/ignition/starter-engage-n2
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/cutoff-delay-rate-1">
-			<default value="1000"/>
-			<test value="1"> <!-- There's a delay -->
-				/systems/ignition/start-switch-1 eq 1
-			</test>
-			<test value="0.45"> <!-- JSBsim sequencing fix + there's a delay -->
-				/systems/ignition/auto-start-1 eq 1
-			</test>
+			<default value="1000" />
+			<test value="1"> <!-- There's a delay --> /systems/ignition/start-switch-1 eq 1 </test>
+			<test value="0.45"> <!-- JSBsim sequencing fix + there's a delay --> /systems/ignition/auto-start-1 eq 1 </test>
 		</switch>
-		
+
 		<actuator name="/systems/ignition/cutoff-delay-1">
 			<input>/systems/ignition/cutoff-delay-cmd-1</input>
 			<rate_limit sense="incr">/systems/ignition/cutoff-delay-rate-1</rate_limit>
 			<rate_limit sense="decr">1000</rate_limit>
 		</actuator>
-		
+
 		<switch name="/systems/ignition/starter-jsb-1">
-			<default value="/systems/ignition/starter-1"/>
-			<test logic="AND" value="1"> <!-- Because JSBsim will kill the engine if we cut out early -->
-				/engines/engine[0]/n2-actual ge /systems/ignition/starter-cutoff-n2
-				/systems/ignition/cutoff-1 eq 0
-				/systems/ignition/can-run-1 eq 1
-			</test>
+			<default value="/systems/ignition/starter-1" />
+			<test logic="AND" value="1"> <!-- Because JSBsim will kill the engine if we cut out early --> /engines/engine[0]/n2-actual ge
+				/systems/ignition/starter-cutoff-n2 /systems/ignition/cutoff-1 eq 0
+				/systems/ignition/can-run-1 eq 1 </test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/cutoff-jsb-1">
-			<default value="/systems/ignition/cutoff-1"/>
+			<default value="/systems/ignition/cutoff-1" />
 			<test logic="AND" value="1">
 				/systems/ignition/auto-start-1 eq 1
 				/systems/ignition/cutoff-delay-1 lt 1
 				/systems/ignition/can-run-1 eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/state-1">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="3">
 				/systems/ignition/cutoff-jsb-1 eq 0
 				/engines/engine[0]/n2-actual ge /options/ign-run-n2
@@ -191,17 +175,17 @@
 			</test>
 			<output>/engines/engine[0]/state</output>
 		</switch>
-		
+
 		<!-- Engine 2 -->
 		<switch name="/systems/ignition/can-run-2">
-			<default value="0"/>
+			<default value="0" />
 			<test value="1">
 				propulsion/tank[6]/contents-lbs ge 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/cutoff-2">
-			<default value="1"/>
+			<default value="1" />
 			<test logic="AND" value="0">
 				/controls/engines/engine[1]/cutoff-switch eq 0
 				/systems/ignition/can-run-2 eq 1
@@ -209,102 +193,94 @@
 		</switch>
 
 		<switch name="/systems/ignition/can-start-2">
-			<default value="1"/>
+			<default value="1" />
 			<test logic="OR" value="0">
 				/systems/pneumatics/psi/engine-2-psi lt 20
 				/engines/engine[1]/n2-actual ge /systems/ignition/starter-cutoff-n2
 				/systems/ignition/ign-2/ign-avail ne 1
 			</test>
-			<test logic="AND" value="0"> <!-- So that starting is aborting if cutoff placed to off -->
-				/systems/ignition/cutoff-2 eq 1
-				/engines/engine[1]/state ge 2
-			</test>
+			<test logic="AND" value="0"> <!-- So that starting is aborting if cutoff placed to off --> /systems/ignition/cutoff-2 eq 1 /engines/engine[1]/state ge
+				2 </test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/auto-start-2">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/ignition/can-start-2 eq 1
 				/systems/ignition/cutoff-2 eq 0
 				/controls/engines/engine[1]/start-switch eq 0
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/start-switch-2">
-			<default value="/controls/engines/engine[1]/start-switch"/>
+			<default value="/controls/engines/engine[1]/start-switch" />
 			<test logic="OR" value="0">
 				/systems/ignition/can-start-2 eq 0
 				/systems/ignition/auto-start-2 eq 1
 			</test>
 			<output>/controls/engines/engine[1]/start-switch</output>
 		</switch>
-		
+
 		<switch name="/systems/ignition/start-valve-2-cmd">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="OR" value="1">
 				/systems/ignition/auto-start-2 eq 1
 				/systems/ignition/start-switch-2 eq 1
 			</test>
 		</switch>
-		
+
 		<actuator name="/systems/ignition/start-valve-2">
 			<input>/systems/ignition/start-valve-2-cmd</input>
 			<rate_limit sense="incr">1</rate_limit>
 			<rate_limit sense="decr">1000</rate_limit>
 		</actuator>
-		
+
 		<switch name="/systems/ignition/starter-2">
-			<default value="0"/>
+			<default value="0" />
 			<test value="1">
 				/systems/ignition/start-valve-2 eq 1
 			</test>
 			<output>/systems/pneumatics/valves/starter-valve-2</output>
 		</switch>
-		
+
 		<switch name="/systems/ignition/cutoff-delay-cmd-2">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="1">
 				/systems/ignition/starter-2 eq 1
 				/engines/engine[1]/n2-actual ge /systems/ignition/starter-engage-n2
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/cutoff-delay-rate-2">
-			<default value="1000"/>
-			<test value="1"> <!-- There's a delay -->
-				/systems/ignition/start-switch-2 eq 1
-			</test>
-			<test value="0.45"> <!-- JSBsim sequencing fix + there's a delay -->
-				/systems/ignition/auto-start-2 eq 1
-			</test>
+			<default value="1000" />
+			<test value="1"> <!-- There's a delay --> /systems/ignition/start-switch-2 eq 1 </test>
+			<test value="0.45"> <!-- JSBsim sequencing fix + there's a delay --> /systems/ignition/auto-start-2 eq 1 </test>
 		</switch>
-		
+
 		<actuator name="/systems/ignition/cutoff-delay-2">
 			<input>/systems/ignition/cutoff-delay-cmd-2</input>
 			<rate_limit sense="incr">/systems/ignition/cutoff-delay-rate-2</rate_limit>
 			<rate_limit sense="decr">1000</rate_limit>
 		</actuator>
-		
+
 		<switch name="/systems/ignition/starter-jsb-2">
-			<default value="/systems/ignition/starter-2"/>
-			<test logic="AND" value="1"> <!-- Because JSBsim will kill the engine if we cut out early -->
-				/engines/engine[1]/n2-actual ge /systems/ignition/starter-cutoff-n2
-				/systems/ignition/cutoff-2 eq 0
-				/systems/ignition/can-run-2 eq 1
-			</test>
+			<default value="/systems/ignition/starter-2" />
+			<test logic="AND" value="1"> <!-- Because JSBsim will kill the engine if we cut out early --> /engines/engine[1]/n2-actual ge
+				/systems/ignition/starter-cutoff-n2 /systems/ignition/cutoff-2 eq 0
+				/systems/ignition/can-run-2 eq 1 </test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/cutoff-jsb-2">
-			<default value="/systems/ignition/cutoff-2"/>
+			<default value="/systems/ignition/cutoff-2" />
 			<test logic="AND" value="1">
 				/systems/ignition/auto-start-2 eq 1
 				/systems/ignition/cutoff-delay-2 lt 1
 				/systems/ignition/can-run-2 eq 1
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/state-2">
-			<default value="0"/>
+			<default value="0" />
 			<test logic="AND" value="3">
 				/systems/ignition/cutoff-jsb-2 eq 0
 				/engines/engine[1]/n2-actual ge /options/ign-run-n2
@@ -318,13 +294,13 @@
 			</test>
 			<output>/engines/engine[1]/state</output>
 		</switch>
-	
+
 	</channel>
-	
+
 	<channel name="Ignition 2" execrate="8">
-		
+
 		<switch name="/systems/ignition/ign-1/igniter-a">
-			<default value="0"/>
+			<default value="0" />
 			<test value="0">
 				/systems/ignition/ign-1/ign-avail eq 0
 			</test>
@@ -333,24 +309,20 @@
 				/controls/ignition/start-sw eq 2
 				position/wow eq 0
 			</test>
-			<test logic="AND" value="1">
-				/systems/ignition/state-1 eq 2
-				<test logic="OR">
-					position/wow eq 0
+			<test logic="AND" value="1"> /systems/ignition/state-1 eq 2 <test logic="OR">
+				position/wow eq 0
 					/systems/ignition/auto-start-1 eq 0
 				</test>
 			</test>
-			<test logic="AND" value="1">
-				/systems/ignition/state-1 eq 2
-				<test logic="OR"> <!-- FADEC A Igniter A and FADEC B Igniter A -->
-					/systems/acconfig/options/igniter-select-1 eq 0
-					/systems/acconfig/options/igniter-select-1 eq 1
-				</test>
+			<test logic="AND" value="1"> /systems/ignition/state-1 eq 2 <test logic="OR"> <!-- FADEC
+					A Igniter A and FADEC B Igniter A -->
+				/systems/acconfig/options/igniter-select-1 eq 0
+				/systems/acconfig/options/igniter-select-1 eq 1 </test>
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/ign-1/igniter-b">
-			<default value="0"/>
+			<default value="0" />
 			<test value="0">
 				/systems/ignition/ign-1/ign-avail eq 0
 			</test>
@@ -359,24 +331,20 @@
 				/controls/ignition/start-sw eq 2
 				position/wow eq 0
 			</test>
-			<test logic="AND" value="1">
-				/systems/ignition/state-1 eq 2
-				<test logic="OR">
-					position/wow eq 0
+			<test logic="AND" value="1"> /systems/ignition/state-1 eq 2 <test logic="OR">
+				position/wow eq 0
 					/systems/ignition/auto-start-1 eq 0
 				</test>
 			</test>
-			<test logic="AND" value="1">
-				/systems/ignition/state-1 eq 2
-				<test logic="OR"> <!-- FADEC A Igniter B and FADEC B Igniter B -->
-					/systems/acconfig/options/igniter-select-1 eq 2
-					/systems/acconfig/options/igniter-select-1 eq 3
-				</test>
+			<test logic="AND" value="1"> /systems/ignition/state-1 eq 2 <test logic="OR"> <!-- FADEC
+					A Igniter B and FADEC B Igniter B -->
+				/systems/acconfig/options/igniter-select-1 eq 2
+				/systems/acconfig/options/igniter-select-1 eq 3 </test>
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/ign-2/igniter-a">
-			<default value="0"/>
+			<default value="0" />
 			<test value="0">
 				/systems/ignition/ign-2/ign-avail eq 0
 			</test>
@@ -385,24 +353,20 @@
 				/controls/ignition/start-sw eq 2
 				position/wow eq 0
 			</test>
-			<test logic="AND" value="1">
-				/systems/ignition/state-2 eq 2
-				<test logic="OR">
-					position/wow eq 0
+			<test logic="AND" value="1"> /systems/ignition/state-2 eq 2 <test logic="OR">
+				position/wow eq 0
 					/systems/ignition/auto-start-2 eq 0
 				</test>
 			</test>
-			<test logic="AND" value="1">
-				/systems/ignition/state-2 eq 2
-				<test logic="OR"> <!-- FADEC A Igniter A and FADEC B Igniter A -->
-					/systems/acconfig/options/igniter-select-2 eq 0
-					/systems/acconfig/options/igniter-select-2 eq 1
-				</test>
+			<test logic="AND" value="1"> /systems/ignition/state-2 eq 2 <test logic="OR"> <!-- FADEC
+					A Igniter A and FADEC B Igniter A -->
+				/systems/acconfig/options/igniter-select-2 eq 0
+				/systems/acconfig/options/igniter-select-2 eq 1 </test>
 			</test>
 		</switch>
-		
+
 		<switch name="/systems/ignition/ign-2/igniter-b">
-			<default value="0"/>
+			<default value="0" />
 			<test value="0">
 				/systems/ignition/ign-2/ign-avail eq 0
 			</test>
@@ -411,22 +375,18 @@
 				/controls/ignition/start-sw eq 2
 				position/wow eq 0
 			</test>
-			<test logic="AND" value="1">
-				/systems/ignition/state-2 eq 2
-				<test logic="OR">
-					position/wow eq 0
+			<test logic="AND" value="1"> /systems/ignition/state-2 eq 2 <test logic="OR">
+				position/wow eq 0
 					/systems/ignition/auto-start-2 eq 0
 				</test>
 			</test>
-			<test logic="AND" value="1">
-				/systems/ignition/state-2 eq 2
-				<test logic="OR"> <!-- FADEC A Igniter B and FADEC B Igniter B -->
-					/systems/acconfig/options/igniter-select-2 eq 2
-					/systems/acconfig/options/igniter-select-2 eq 3
-				</test>
+			<test logic="AND" value="1"> /systems/ignition/state-2 eq 2 <test logic="OR"> <!-- FADEC
+					A Igniter B and FADEC B Igniter B -->
+				/systems/acconfig/options/igniter-select-2 eq 2
+				/systems/acconfig/options/igniter-select-2 eq 3 </test>
 			</test>
 		</switch>
-	
+
 	</channel>
 
 </system>

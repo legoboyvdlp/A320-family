@@ -12,18 +12,18 @@ const MCDU = (function () {
 		toggleUsedUniverse
 	}
 
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
 
-	function init()	{
+	function init() {
 		body.dataset.lastTouch = 0;
 		body.addEventListener('touchstart', preventZoomAction, { passive: false });
 
 		registerButtons();
 		registerKeyboardInput();
 		setInterval(refreshScreen, refreshInterval);
-		refreshScreen();    
+		refreshScreen();
 	}
 
 	function refreshScreen() {
@@ -76,7 +76,7 @@ const MCDU = (function () {
 			buttonElement.addEventListener('touchstart', preventZoomAction, true);
 		});
 		let btn = document.querySelector("[data-button=\"button:CLR\"]");
-		if (btn) btn.addEventListener("contextmenu",function(e){
+		if (btn) btn.addEventListener("contextmenu", function (e) {
 			e.preventDefault();
 			sendButtonpress('button', 'LONGCLR');
 		});
@@ -98,7 +98,7 @@ const MCDU = (function () {
 			if (key.match(/^[A-Z0-9]$/)) {
 				return sendButtonpress('button', key);
 			}
-			const translatedKey = keyTranslation[key]||false;
+			const translatedKey = keyTranslation[key] || false;
 			if (translatedKey) return sendButtonpress('button', translatedKey);
 		});
 	}
@@ -108,7 +108,7 @@ const MCDU = (function () {
 		const actionKey = buttonActions[0];
 		const actionValue = buttonActions[1];
 
-		if(!actionKey) {
+		if (!actionKey) {
 			return;
 		}
 

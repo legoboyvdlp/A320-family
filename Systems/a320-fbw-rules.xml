@@ -18,8 +18,14 @@
 				<expression>
 					<table>
 						<property>/fdm/jsbsim/velocities/vc-kts</property>
-						<entry><ind>140</ind><dep>-1.0</dep></entry>
-						<entry><ind>350</ind><dep>-0.5</dep></entry>
+						<entry>
+							<ind>140</ind>
+							<dep>-1.0</dep>
+						</entry>
+						<entry>
+							<ind>350</ind>
+							<dep>-0.5</dep>
+						</entry>
 					</table>
 				</expression>
 			</Kp>
@@ -45,8 +51,14 @@
 				<expression>
 					<table>
 						<property>/fdm/jsbsim/velocities/vc-kts</property>
-						<entry><ind>140</ind><dep>-1.2</dep></entry>
-						<entry><ind>350</ind><dep>-0.7</dep></entry>
+						<entry>
+							<ind>140</ind>
+							<dep>-1.2</dep>
+						</entry>
+						<entry>
+							<ind>350</ind>
+							<dep>-0.7</dep>
+						</entry>
 					</table>
 				</expression>
 			</Ki>

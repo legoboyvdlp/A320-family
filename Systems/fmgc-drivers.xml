@@ -4,7 +4,7 @@
 <!-- Copyright (c) 2020 Joshua Davidson (Octal450) -->
 
 <PropertyList>
-	
+
 	<!-- Logic -->
 	<logic>
 		<input>
@@ -29,7 +29,7 @@
 		</input>
 		<output>/it-autoflight/output/apfd-on</output>
 	</logic>
-	
+
 	<logic>
 		<input>
 			<or>
@@ -45,7 +45,7 @@
 		</input>
 		<output>/it-autoflight/output/ap-on</output>
 	</logic>
-	
+
 	<!-- Predictors -->
 	<predict-simple>
 		<name>IAS 5 Second Predictor</name>
@@ -54,7 +54,7 @@
 		<seconds>5</seconds>
 		<filter-gain>0</filter-gain>
 	</predict-simple>
-	
+
 	<predict-simple>
 		<name>MACH 5 Second Predictor</name>
 		<input>/instrumentation/airspeed-indicator/indicated-mach</input>
@@ -62,7 +62,7 @@
 		<seconds>5</seconds>
 		<filter-gain>0</filter-gain>
 	</predict-simple>
-	
+
 	<predict-simple>
 		<name>IAS 15 Second Predictor</name>
 		<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
@@ -70,7 +70,7 @@
 		<seconds>15</seconds>
 		<filter-gain>0</filter-gain>
 	</predict-simple>
-	
+
 	<predict-simple>
 		<name>MACH 15 Second Predictor</name>
 		<input>/instrumentation/airspeed-indicator/indicated-mach</input>
@@ -78,7 +78,7 @@
 		<seconds>15</seconds>
 		<filter-gain>0</filter-gain>
 	</predict-simple>
-	
+
 	<!-- Autopilot Helpers/Calculators -->
 	<filter>
 		<name>Auto Bank Limit</name>
@@ -88,15 +88,24 @@
 			<expression>
 				<table>
 					<property>/velocities/mach</property>
-					<entry><ind>0.55</ind><dep>25</dep></entry>
-					<entry><ind>0.80</ind><dep>20</dep></entry>
-					<entry><ind>0.90</ind><dep>10</dep></entry>
+					<entry>
+						<ind>0.55</ind>
+						<dep>25</dep>
+					</entry>
+					<entry>
+						<ind>0.80</ind>
+						<dep>20</dep>
+					</entry>
+					<entry>
+						<ind>0.90</ind>
+						<dep>10</dep>
+					</entry>
 				</table>
 			</expression>
 		</input>
 		<output>/it-autoflight/internal/bank-limit</output>
 	</filter>
-	
+
 	<filter>
 		<name>FMGC Managed Knots</name>
 		<type>gain</type>
@@ -107,8 +116,14 @@
 					<value>266</value>
 					<table>
 						<property>/FMGC/internal/cost-index</property>
-						<entry><ind>  0</ind><dep>1.00</dep></entry>
-						<entry><ind>120</ind><dep>1.19</dep></entry>
+						<entry>
+							<ind> 0</ind>
+							<dep>1.00</dep>
+						</entry>
+						<entry>
+							<ind>120</ind>
+							<dep>1.19</dep>
+						</entry>
 					</table>
 				</product>
 			</expression>
@@ -117,23 +132,35 @@
 		<min>250</min>
 		<max>345</max>
 	</filter>
-	
+
 	<filter>
 		<name>FMGC Managed Mach</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<input> 
+		<input>
 			<expression>
 				<product>
 					<table>
 						<property>/instrumentation/altimeter/indicated-altitude-ft</property>
-						<entry><ind>20000</ind><dep>0.625</dep></entry>
-						<entry><ind>42000</ind><dep>0.805</dep></entry>
+						<entry>
+							<ind>20000</ind>
+							<dep>0.625</dep>
+						</entry>
+						<entry>
+							<ind>42000</ind>
+							<dep>0.805</dep>
+						</entry>
 					</table>
 					<table>
 						<property>/FMGC/internal/cost-index</property>
-						<entry><ind>  0</ind><dep>0.97</dep></entry>
-						<entry><ind>120</ind><dep>1.05</dep></entry>
+						<entry>
+							<ind> 0</ind>
+							<dep>0.97</dep>
+						</entry>
+						<entry>
+							<ind>120</ind>
+							<dep>1.05</dep>
+						</entry>
 					</table>
 				</product>
 			</expression>
@@ -142,7 +169,7 @@
 		<min>0.500</min>
 		<max>0.815</max>
 	</filter>
-	
+
 	<filter>
 		<name>FMGC Target Knots PFD</name>
 		<type>gain</type>
@@ -175,7 +202,7 @@
 		</input>
 		<output>/FMGC/internal/target-ias-pfd</output>
 	</filter>
-	
+
 	<filter>
 		<name>Knots Sync</name>
 		<type>gain</type>
@@ -200,7 +227,7 @@
 		</input>
 		<output>/it-autoflight/input/kts</output>
 	</filter>
-	
+
 	<filter>
 		<name>Mach Sync</name>
 		<type>gain</type>
@@ -231,7 +258,7 @@
 		</input>
 		<output>/it-autoflight/input/mach</output>
 	</filter>
-	
+
 	<filter>
 		<name>Knots Lag</name>
 		<type>exponential</type>
@@ -239,7 +266,7 @@
 		<output>/it-autoflight/internal/kts-input-lag</output>
 		<filter-time>0.04</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Knots Average</name>
 		<type>moving-average</type>
@@ -247,7 +274,7 @@
 		<output>/it-autoflight/internal/kts-input-avg</output>
 		<samples>60</samples>
 	</filter>
-	
+
 	<filter>
 		<name>Knots Rate</name>
 		<type>derivative</type>
@@ -255,7 +282,7 @@
 		<output>/it-autoflight/internal/kts-rate-raw</output>
 		<filter-time>1.0</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Knots Rate Lag</name>
 		<type>exponential</type>
@@ -272,7 +299,7 @@
 		<output>/it-autoflight/internal/kts-rate</output>
 		<filter-time>0.04</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Mach Lag</name>
 		<type>exponential</type>
@@ -280,7 +307,7 @@
 		<output>/it-autoflight/internal/mach-input-lag</output>
 		<filter-time>0.04</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Mach Average</name>
 		<type>moving-average</type>
@@ -288,7 +315,7 @@
 		<output>/it-autoflight/internal/mach-input-avg</output>
 		<samples>60</samples>
 	</filter>
-	
+
 	<filter>
 		<name>Mach Rate</name>
 		<type>derivative</type>
@@ -296,7 +323,7 @@
 		<output>/it-autoflight/internal/mach-rate-raw</output>
 		<filter-time>1.0</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Mach Rate Gain</name>
 		<type>gain</type>
@@ -304,7 +331,7 @@
 		<input>/it-autoflight/internal/mach-rate-raw</input>
 		<output>/it-autoflight/internal/mach-rate-gain</output>
 	</filter>
-	
+
 	<filter>
 		<name>Mach Rate Lag</name>
 		<type>exponential</type>
@@ -321,7 +348,7 @@
 		<output>/it-autoflight/internal/mach-rate</output>
 		<filter-time>0.04</filter-time>
 	</filter>
-	
+
 	<filter>
 		<name>Flch Knots Rate Command</name>
 		<type>gain</type>
@@ -396,7 +423,7 @@
 		<min>-1.2</min>
 		<max>1.2</max>
 	</filter>
-	
+
 	<filter>
 		<name>Flch Knots Rate Filter</name>
 		<type>noise-spike</type>
@@ -432,7 +459,7 @@
 		</max-rate-of-change>
 		<max-rate-of-change>100</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>Heading Deg</name>
 		<type>gain</type>
@@ -448,7 +475,7 @@
 		<output>/it-autoflight/internal/heading-deg</output>
 		<output>/instrumentation/pfd/heading-deg</output>
 	</filter>
-	
+
 	<filter>
 		<name>Track Deg</name>
 		<type>gain</type>
@@ -468,7 +495,9 @@
 		<input>
 			<condition>
 				<and>
-					<not><property>/instrumentation/efis/mfd/true-north</property></not>
+					<not>
+						<property>/instrumentation/efis/mfd/true-north</property>
+					</not>
 					<greater-than-equals>
 						<property>/velocities/groundspeed-kt</property>
 						<value>1</value>
@@ -482,7 +511,7 @@
 		<output>/it-autoflight/internal/track-deg</output>
 		<output>/instrumentation/pfd/track-deg</output>
 	</filter>
-	
+
 	<filter>
 		<name>Heading/Track Deg</name>
 		<type>gain</type>
@@ -499,7 +528,7 @@
 		<input>/it-autoflight/internal/heading-deg</input>
 		<output>/it-autoflight/internal/heading</output>
 	</filter>
-	
+
 	<filter>
 		<name>Drift Angle</name>
 		<type>gain</type>
@@ -521,7 +550,7 @@
 			<max>180</max>
 		</period>
 	</filter>
-	
+
 	<filter>
 		<name>LNAV Course Correction</name>
 		<type>gain</type>
@@ -529,8 +558,14 @@
 			<expression>
 				<table>
 					<property>/fdm/jsbsim/velocities/vc-kts</property>
-					<entry><ind>140</ind><dep>40</dep></entry>
-					<entry><ind>360</ind><dep>20</dep></entry>
+					<entry>
+						<ind>140</ind>
+						<dep>40</dep>
+					</entry>
+					<entry>
+						<ind>360</ind>
+						<dep>20</dep>
+					</entry>
 				</table>
 			</expression>
 		</gain>
@@ -539,7 +574,7 @@
 		<min>-45</min>
 		<max>45</max>
 	</filter>
-	
+
 	<filter>
 		<name>Heading Error Deg</name>
 		<type>gain</type>
@@ -586,7 +621,7 @@
 			<max>180</max>
 		</period>
 	</filter>
-	
+
 	<filter>
 		<name>Vertical Speed Sync</name>
 		<type>gain</type>
@@ -611,7 +646,7 @@
 		</input>
 		<output>/it-autoflight/input/vs</output>
 	</filter>
-	
+
 	<filter>
 		<name>VS Abs</name>
 		<type>gain</type>
@@ -625,7 +660,7 @@
 		</input>
 		<output>/it-autoflight/input/vs-abs</output>
 	</filter>
-	
+
 	<filter>
 		<name>FPA Abs</name>
 		<type>gain</type>
@@ -639,7 +674,7 @@
 		</input>
 		<output>/it-autoflight/input/fpa-abs</output>
 	</filter>
-	
+
 	<filter>
 		<name>Nav Error Deg</name>
 		<type>gain</type>
@@ -657,7 +692,7 @@
 			<max>180</max>
 		</period>
 	</filter>
-	
+
 	<filter>
 		<name>Nav Course Error Deg</name>
 		<type>gain</type>
@@ -675,7 +710,7 @@
 			<max>180</max>
 		</period>
 	</filter>
-	
+
 	<filter>
 		<name>Internal Vertical Speed</name>
 		<type>gain</type>
@@ -683,7 +718,7 @@
 		<input>/instrumentation/gps/indicated-vertical-speed</input>
 		<output>/it-autoflight/internal/vert-speed-fpm</output>
 	</filter>
-	
+
 	<filter>
 		<name>Nav G/S FPM Calc</name>
 		<type>gain</type>
@@ -736,7 +771,7 @@
 		</min>
 		<max>0</max>
 	</filter>
-	
+
 	<filter>
 		<name>Heading Predictor Stage 1</name>
 		<type>gain</type>
@@ -754,8 +789,14 @@
 						<property>/orientation/roll-deg</property>
 						<table>
 							<property>/velocities/airspeed-kt</property>
-							<entry><ind>140</ind><dep>1.8</dep></entry>
-							<entry><ind>360</ind><dep>2.8</dep></entry>
+							<entry>
+								<ind>140</ind>
+								<dep>1.8</dep>
+							</entry>
+							<entry>
+								<ind>360</ind>
+								<dep>2.8</dep>
+							</entry>
 						</table>
 					</div>
 					<property>/it-autoflight/internal/heading-deg</property>
@@ -775,8 +816,14 @@
 						<property>/orientation/roll-deg</property>
 						<table>
 							<property>/velocities/airspeed-kt</property>
-							<entry><ind>140</ind><dep>1.8</dep></entry>
-							<entry><ind>360</ind><dep>2.8</dep></entry>
+							<entry>
+								<ind>140</ind>
+								<dep>1.8</dep>
+							</entry>
+							<entry>
+								<ind>360</ind>
+								<dep>2.8</dep>
+							</entry>
 						</table>
 					</div>
 					<property>/it-autoflight/internal/track-deg</property>
@@ -785,7 +832,7 @@
 		</input>
 		<output>/it-autoflight/internal/heading-predicted-cmd</output>
 	</filter>
-	
+
 	<filter>
 		<name>Heading Predictor Stage 2</name>
 		<type>gain</type>
@@ -821,7 +868,7 @@
 		<input>/it-autoflight/internal/heading-predicted-cmd</input>
 		<output>/it-autoflight/internal/heading-predicted</output>
 	</filter>
-	
+
 	<filter>
 		<name>Altitude Predictor</name>
 		<type>gain</type>
@@ -839,7 +886,7 @@
 		</input>
 		<output>/it-autoflight/internal/altitude-predicted</output>
 	</filter>
-	
+
 	<filter>
 		<name>Internal FPA Computer</name>
 		<type>gain</type>
@@ -854,7 +901,7 @@
 		</input>
 		<output>/it-autoflight/internal/fpa</output>
 	</filter>
-	
+
 	<filter>
 		<name>FPA Sync</name>
 		<type>gain</type>
@@ -885,7 +932,7 @@
 		</input>
 		<output>/it-autoflight/input/fpa</output>
 	</filter>
-	
+
 	<filter>
 		<name>Accel Altitude</name>
 		<type>gain</type>
@@ -930,7 +977,7 @@
 		</input>
 		<output>/it-autoflight/settings/accel-ft</output>
 	</filter>
-	
+
 	<!-- Flight Director -->
 	<filter>
 		<name>FD Target Roll Filter</name>
@@ -954,7 +1001,7 @@
 		</max-rate-of-change>
 		<max-rate-of-change>15</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>FD Roll</name>
 		<type>noise-spike</type>
@@ -971,7 +1018,7 @@
 		<max>30</max>
 		<max-rate-of-change>20</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>FD Pitch Takeoff Schedule</name>
 		<type>noise-spike</type>
@@ -980,13 +1027,25 @@
 				<product>
 					<table>
 						<property>/orientation/pitch-deg</property>
-						<entry><ind> 1</ind><dep>1</dep></entry>
-						<entry><ind>10</ind><dep>0</dep></entry>
+						<entry>
+							<ind> 1</ind>
+							<dep>1</dep>
+						</entry>
+						<entry>
+							<ind>10</ind>
+							<dep>0</dep>
+						</entry>
 					</table>
 					<table>
 						<property>/position/gear-agl-ft</property>
-						<entry><ind> 5</ind><dep>1</dep></entry>
-						<entry><ind>25</ind><dep>0</dep></entry>
+						<entry>
+							<ind> 5</ind>
+							<dep>1</dep>
+						</entry>
+						<entry>
+							<ind>25</ind>
+							<dep>0</dep>
+						</entry>
 					</table>
 				</product>
 			</expression>
@@ -994,7 +1053,7 @@
 		<output>/it-autoflight/fd/pitch-bar-mixer</output>
 		<max-rate-of-change>2</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>FD Pitch Takeoff</name>
 		<type>gain</type>
@@ -1019,8 +1078,14 @@
 				<difference>
 					<table>
 						<property>/it-autoflight/internal/kts-rate</property>
-						<entry><ind>0</ind><dep>1</dep></entry>
-						<entry><ind>4</ind><dep>9</dep></entry>
+						<entry>
+							<ind>0</ind>
+							<dep>1</dep>
+						</entry>
+						<entry>
+							<ind>4</ind>
+							<dep>9</dep>
+						</entry>
 					</table>
 					<property>/orientation/pitch-deg</property>
 				</difference>
@@ -1028,7 +1093,7 @@
 		</input>
 		<output>/it-autoflight/fd/pitch-bar-takeoff</output>
 	</filter>
-	
+
 	<filter>
 		<name>FD Pitch Command</name>
 		<type>gain</type>
@@ -1056,7 +1121,7 @@
 		</input>
 		<output>/it-autoflight/fd/pitch-bar-cmd</output>
 	</filter>
-	
+
 	<filter>
 		<name>FPD Pitch Command</name>
 		<type>gain</type>
@@ -1071,7 +1136,8 @@
 								<property>/it-autoflight/internal/target-common-fpm</property>
 								<product>
 									<max>
-										<property>/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
+										<property>
+											/instrumentation/airspeed-indicator[0]/true-speed-kt</property>
 										<value>100</value>
 									</max>
 									<value>101.26859142607174</value> <!-- FPM to Knot -->
@@ -1084,7 +1150,7 @@
 		</input>
 		<output>/it-autoflight/fd/fpd-pitch-cmd</output>
 	</filter>
-	
+
 	<filter>
 		<name>FD Pitch Final</name>
 		<type>noise-spike</type>
@@ -1119,7 +1185,7 @@
 		<max>15</max>
 		<max-rate-of-change>10</max-rate-of-change>
 	</filter>
-	
+
 	<filter>
 		<name>FPD Pitch</name>
 		<type>noise-spike</type>

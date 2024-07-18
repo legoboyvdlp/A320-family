@@ -12,19 +12,18 @@ const MCDU = (function () {
 		toggleUsedUniverse
 	}
 
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
 
-	function init()
-	{
+	function init() {
 		body.dataset.lastTouch = 0;
 		body.addEventListener('touchstart', preventZoomAction, { passive: false });
 
 		registerButtons();
 		registerKeyboardInput();
 		setInterval(refreshScreen, refreshInterval);
-		refreshScreen();    
+		refreshScreen();
 	}
 
 	function refreshScreen() {
@@ -103,7 +102,7 @@ const MCDU = (function () {
 		const actionKey = buttonActions[0];
 		const actionValue = buttonActions[1];
 
-		if(!actionKey) {
+		if (!actionKey) {
 			return;
 		}
 

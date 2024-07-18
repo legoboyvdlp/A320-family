@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PropertyList>
 
-    <!-- this is really annoying - we compute all the properties in JSBSim, but they end up being tied -->
+    <!-- this is really annoying - we compute all the properties in JSBSim, but they end up being
+    tied -->
     <!-- and can't be fed to the effects system directly, so we copy them via property rule -->
 
     <filter>
@@ -10,54 +11,54 @@
         <input>/controls/lighting/fcu-panel-norm-tied</input>
         <output>/controls/lighting/fcu-panel-norm</output>
     </filter>
-	
+
     <filter>
         <type>gain</type>
         <gain>1.0</gain>
         <input>/controls/lighting/fcu-digit-norm-tied</input>
         <output>/controls/lighting/fcu-digit-norm</output>
     </filter>
-	
+
     <filter>
         <type>gain</type>
         <gain>1.0</gain>
         <input>/controls/lighting/main-panel-norm-tied</input>
         <output>/controls/lighting/main-panel-norm</output>
     </filter>
-	
+
     <filter>
         <type>gain</type>
         <gain>1.0</gain>
         <input>
-			<property>/controls/lighting/main-panel-norm-tied</property>
-			<min>0.15</min>
-			<max>1.0</max>
-		</input>
+            <property>/controls/lighting/main-panel-norm-tied</property>
+            <min>0.15</min>
+            <max>1.0</max>
+        </input>
         <output>/controls/lighting/main-panel-norm-digital</output>
     </filter>
-	
+
     <filter>
         <type>gain</type>
         <gain>1.0</gain>
         <input>/controls/lighting/overhead-panel-norm-tied</input>
         <output>/controls/lighting/overhead-panel-norm</output>
     </filter>
-	
+
     <filter>
         <type>gain</type>
         <gain>1.0</gain>
         <input>/controls/lighting/stby-compass-tied</input>
         <output>/controls/lighting/stby-compass</output>
     </filter>
-	
+
     <filter>
         <type>gain</type>
         <gain>1.0</gain>
         <input>
-			<property>/controls/lighting/overhead-panel-norm-tied</property>
-			<min>0.15</min>
-			<max>1.0</max>
-		</input>
+            <property>/controls/lighting/overhead-panel-norm-tied</property>
+            <min>0.15</min>
+            <max>1.0</max>
+        </input>
         <output>/controls/lighting/overhead-panel-norm-digital</output>
     </filter>
 </PropertyList>
