@@ -6,15 +6,15 @@
 
 	<name>route-manager</name>
 	<layout>vbox</layout>
-    <pref-width>260</pref-width>
+	<pref-width>260</pref-width>
 
-    <group>
-        <layout>hbox</layout>
+	<group>
+		<layout>hbox</layout>
 		
-        <text>
-            <halign>left</halign>
-            <label>System</label>
-        </text>
+		<text>
+			<halign>left</halign>
+			<label>System</label>
+		</text>
 		
 		<empty><stretch>1</stretch></empty>
 		
@@ -28,9 +28,9 @@
 				<command>dialog-close</command>
 			</binding>
 		</button>
-    </group>
+	</group>
 	
-    <hrule/>
+	<hrule/>
 	
 	<group>
 		<layout>vbox</layout>
