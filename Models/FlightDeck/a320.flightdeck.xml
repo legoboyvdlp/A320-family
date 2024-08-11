@@ -6936,11 +6936,11 @@
 							<value>2</value>
 						</equals>
 						<equals>
-							<property>it-autoflight/output/loc-armed</property>
+							<property>it-autoflight/output/loc-arm</property>
 							<value>1</value>
 						</equals>
 					</or>
-					<not><property>it-autoflight/output/appr-armed</property></not>
+					<not><property>it-autoflight/output/gs-arm</property></not>
 					<not-equals>
 						<property>it-autoflight/output/vert</property>
 						<value>2</value>
@@ -7596,7 +7596,7 @@
 		<condition>
 			<or>
 				<property>controls/switches/annun-test</property>
-				<property>it-autoflight/output/appr-armed</property>
+				<property>it-autoflight/output/gs-arm</property>
 				<equals>
 					<property>it-autoflight/output/vert</property>
 					<value>2</value>
