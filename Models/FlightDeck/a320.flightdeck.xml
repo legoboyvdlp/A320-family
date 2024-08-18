@@ -36940,7 +36940,7 @@
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1guard-lbl</tooltip-id>
-				<label>Engine 1 man start guard</label>
+				<label>Engine 1 manual engine start guard</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -36974,7 +36974,7 @@
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng2guard-lbl</tooltip-id>
-				<label>Engine 2 man start guard</label>
+				<label>Engine 2 manual engine start guard</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -37113,8 +37113,8 @@
 					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
-				<tooltip-id>eng1start-lbl</tooltip-id>
-				<label>Engine 1 manual engine start pushbutton</label>
+				<tooltip-id>eng2start-lbl</tooltip-id>
+				<label>Engine 2 manual engine start pushbutton</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -37166,6 +37166,267 @@
 		<condition>
 			<or>
 				<property>controls/engines/engine[1]/start-switch</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- Manual Start -->
+	<animation>
+		<type>knob</type>
+		<object-name>Eng1N1Prot</object-name>
+		<property>controls/OH/protectors/eng1-n1mode-pos</property>
+		<drag-direction>vertical</drag-direction>
+		<factor>145</factor>
+		<axis>
+			<object-name>Eng1N1Prot.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/OH/protectors/eng1-n1mode</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
+				<command>set-tooltip</command>
+				<tooltip-id>eng1guard-lbl</tooltip-id>
+				<label>Engine 1 N1 mode guard</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>Eng2N1Prot</object-name>
+		<property>controls/OH/protectors/eng2-n1mode-pos</property>
+		<drag-direction>vertical</drag-direction>
+		<factor>145</factor>
+		<axis>
+			<object-name>Eng2N1Prot.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/OH/protectors/eng2-n1mode</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
+				<command>set-tooltip</command>
+				<tooltip-id>eng2guard-lbl</tooltip-id>
+				<label>Engine 2 N1 mode guard</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>Eng1N1Btn</object-name>
+		<object-name>Eng1N1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>controls/OH/protectors/eng1-n1mode</property>
+							<value>1</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<command>property-toggle</command>
+				<property>fdm/jsbsim/fadec/control-1/n1-mode-sw</property>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng1-n1mode</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng1-n1mode</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/cockpit/eng1n1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/eng1-n1mode</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/cockpit/eng1n1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
+				<command>set-tooltip</command>
+				<tooltip-id>eng1start-lbl</tooltip-id>
+				<label>Engine 1 N1 mode pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>Eng2N1Btn</object-name>
+		<object-name>Eng2N1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>controls/OH/protectors/eng2-n1mode</property>
+							<value>1</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<command>property-toggle</command>
+				<property>fdm/jsbsim/fadec/control-2/n1-mode-sw</property>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng2-n1mode</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng2-n1mode</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/cockpit/eng2n1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/eng2-n1mode</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/cockpit/eng2n1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
+				<command>set-tooltip</command>
+				<tooltip-id>eng2start-lbl</tooltip-id>
+				<label>Engine 2 N1 mode pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Eng1N1Btn</object-name>
+		<object-name>Eng1N1Btn2O</object-name>
+		<property>controls/cockpit/eng1n1-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Eng2N1Btn</object-name>
+		<object-name>Eng2N1Btn2O</object-name>
+		<property>controls/cockpit/eng2n1-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>Eng1N1Btn2O</object-name>
+		<condition>
+			<or>
+				<property>fdm/jsbsim/fadec/control-1/n1-mode-sw</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Eng2N1Btn2O</object-name>
+		<condition>
+			<or>
+				<property>fdm/jsbsim/fadec/control-2/n1-mode-sw</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
