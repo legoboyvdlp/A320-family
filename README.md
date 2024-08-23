@@ -1,4 +1,7 @@
-# A320-family
+# A320-family - Development on hold
+
+Main development is on hold awaiting refactoring. However, this is the newest version and still receives fixes and minor improvements.
+
 A very advanced simulation of the Airbus A320 Family for FlightGear.
 
 Present pack includes the following Airbus A320 Family variants:
