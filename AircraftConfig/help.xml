@@ -131,6 +131,10 @@
 				<halign>left</halign>
 				<label>CTRL + V - Select Pilot Flying view (See Aircraft Configuration dialog)</label>
 			</text>
+			<text>
+				<halign>left</halign>
+				<label>CTRL + E - Connect/disconnect external power</label>
+			</text>
 			
 		</group>
 	

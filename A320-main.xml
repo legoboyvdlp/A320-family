@@ -2148,6 +2148,30 @@
 					</script>
 				</binding>
 			</key>
+			<key n="5">
+				<name>CTRL-e</name>
+				<desc>Toggle external power</desc>
+				<binding>
+					<command>property-toggle</command>
+					<property>/controls/electrical/switches/ground-cart</property>
+				</binding>
+				<binding>
+					<condition>
+						<property>/controls/electrical/switches/ground-cart</property>
+					</condition>
+					<command>nasal</command>
+					<script>gui.popupTip("External power connected", 3);</script>
+				</binding>
+				<binding>
+					<condition>
+						<not>
+							<property>/controls/electrical/switches/ground-cart</property>
+						</not>
+					</condition>
+					<command>nasal</command>
+					<script>gui.popupTip("External power disconnected", 3);</script>
+				</binding>
+			</key>
 			<key n="6">
 				<name>CTRL-f</name>
 				<desc>MCT/FLX power</desc>

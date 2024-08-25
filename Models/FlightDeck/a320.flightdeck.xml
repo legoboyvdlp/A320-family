@@ -35017,7 +35017,7 @@
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>extpwr-lbl</tooltip-id>
-				<label>Connect external power</label>
+				<label>Toggle external power</label>
 			</binding>
 		</hovered>
 	</animation>
