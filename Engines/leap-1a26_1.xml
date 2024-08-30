@@ -5,7 +5,7 @@
 <turbine_engine name="LEAP-1A26">
 	
 	<milthrust>27120</milthrust>
-	<tsfc>0.328</tsfc>
+	<tsfc>0.51</tsfc>
 	<bleed>0</bleed> <!-- Set by pneumatic system -->
 	<ignitionn1>1.7</ignitionn1>
 	<ignitionn2>28.5</ignitionn2>
