@@ -256,6 +256,8 @@ var ITAF = {
 		slowLoopTimer.start();
 	},
 	loop: func() {
+		Gear.wow1Temp = Gear.wow1.getBoolValue();
+		Gear.wow2Temp = Gear.wow2.getBoolValue();
 		Output.latTemp = Output.lat.getValue();
 		Output.vertTemp = Output.vert.getValue();
 		
@@ -282,8 +284,6 @@ var ITAF = {
 			me.checkRadioReversion(Output.latTemp, Output.vertTemp);
 		}
 		
-		Gear.wow1Temp = Gear.wow1.getBoolValue();
-		Gear.wow2Temp = Gear.wow2.getBoolValue();
 		Output.ap1Temp = Output.ap1.getBoolValue();
 		Output.ap2Temp = Output.ap2.getBoolValue();
 		Output.latTemp = Output.lat.getValue();
