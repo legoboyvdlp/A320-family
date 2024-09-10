@@ -3757,7 +3757,7 @@ var messages_config_memo = func {
 
 var messages_memo = func {
 	phaseVarMemo2 = pts.ECAM.fwcWarningPhase.getValue();
-	if (getprop("/services/fuel-truck/enable") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
+	if (getprop("/services/fuel-truck/connect") == 1 and toMemoLine1.active != 1 and ldgMemoLine1.active != 1) {
 		refuelg.active = 1;
 	} else {
 		refuelg.active = 0;
