@@ -23,7 +23,7 @@
 					<property>/engines/engine[0]/n1-actual</property>
 					<entry><ind>  0.0</ind><dep>  0.0</dep></entry>
 					<entry><ind> 20.1</ind><dep> 70.2</dep></entry>
-					<entry><ind>101.0</ind><dep>116.5</dep></entry>
+					<entry><ind>101.0</ind><dep>100.0</dep></entry> <!-- Wrong but required -->
 				</table>
 			</expression>
 		</input>
@@ -48,7 +48,7 @@
 					<property>/engines/engine[1]/n1-actual</property>
 					<entry><ind>  0.0</ind><dep>  0.0</dep></entry>
 					<entry><ind> 20.1</ind><dep> 70.2</dep></entry>
-					<entry><ind>101.0</ind><dep>116.5</dep></entry>
+					<entry><ind>101.0</ind><dep>100.0</dep></entry> <!-- Wrong but required -->
 				</table>
 			</expression>
 		</input>
