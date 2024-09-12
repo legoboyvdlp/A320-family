@@ -5,7 +5,6 @@
 <PropertyList>
 	
 	<!-- Fake N2 because numbers pulled from SASA with permission - make sure it matches engine values -->
-	
 	<filter>
 		<type>gain</type>
 		<gain>1</gain>
@@ -13,24 +12,12 @@
 			<condition>
 				<less-than>
 					<property>/engines/engine[0]/n2-actual</property>
-					<value>60.9</value>
+					<value>60.899</value>
 				</less-than>
 			</condition>
-			<expression>
-				<table>
-					<property>/engines/engine[0]/n2-actual</property>
-					<entry><ind>  0.0</ind><dep>  0.0</dep></entry>
-					<entry><ind> 60.9</ind><dep> 60.9</dep></entry>
-				</table>
-			</expression> 
+			<property>/engines/engine[0]/n2-actual</property>
 		</input>
 		<input>
-			<condition>
-				<greater-than-equals>
-					<property>/engines/engine[0]/n2-actual</property>
-					<value>60.9</value>
-				</greater-than-equals>
-			</condition>
 			<expression>
 				<table>
 					<property>/engines/engine[0]/n1-actual</property>
@@ -50,24 +37,12 @@
 			<condition>
 				<less-than>
 					<property>/engines/engine[1]/n2-actual</property>
-					<value>60.9</value>
+					<value>60.899</value>
 				</less-than>
 			</condition>
-			<expression>
-				<table>
-					<property>/engines/engine[1]/n2-actual</property>
-					<entry><ind>  0.0</ind><dep>  0.0</dep></entry>
-					<entry><ind> 60.9</ind><dep> 60.9</dep></entry>
-				</table>
-			</expression> 
+			<property>/engines/engine[1]/n2-actual</property>
 		</input>
 		<input>
-			<condition>
-				<greater-than-equals>
-					<property>/engines/engine[1]/n2-actual</property>
-					<value>60.9</value>
-				</greater-than-equals>
-			</condition>
 			<expression>
 				<table>
 					<property>/engines/engine[1]/n1-actual</property>
