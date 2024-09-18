@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <!-- Airbus A320 FBW System -->
-<!-- I didn't see an easy way to do this controller in JSBsim, so I keep it here -->
+<!-- I didn't see an easy way to do this controller in JSBSim, so I keep it here -->
 
 <PropertyList>
 

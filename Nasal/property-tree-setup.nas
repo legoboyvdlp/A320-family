@@ -104,7 +104,7 @@ var Environment = {
 };
 
 var Fdm = {
-	JSBsim: {
+	JSBSim: {
 		Aero: {
 			alpha: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg"),
 			alphaNorm: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg-fixed"),

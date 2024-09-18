@@ -147,7 +147,7 @@
 			<test value="1"> <!-- There's a delay -->
 				/systems/ignition/start-switch-1 eq 1
 			</test>
-			<test value="0.45"> <!-- JSBsim sequencing fix + there's a delay -->
+			<test value="0.45"> <!-- JSBSim sequencing fix + there's a delay -->
 				/systems/ignition/auto-start-1 eq 1
 			</test>
 		</switch>
@@ -160,7 +160,7 @@
 		
 		<switch name="/systems/ignition/starter-jsb-1">
 			<default value="/systems/ignition/starter-1"/>
-			<test logic="AND" value="1"> <!-- Because JSBsim will kill the engine if we cut out early -->
+			<test logic="AND" value="1"> <!-- Because JSBSim will kill the engine if we cut out early -->
 				/engines/engine[0]/n2-actual ge /systems/ignition/starter-cutoff-n2
 				/systems/ignition/cutoff-1 eq 0
 				/systems/ignition/can-run-1 eq 1
@@ -274,7 +274,7 @@
 			<test value="1"> <!-- There's a delay -->
 				/systems/ignition/start-switch-2 eq 1
 			</test>
-			<test value="0.45"> <!-- JSBsim sequencing fix + there's a delay -->
+			<test value="0.45"> <!-- JSBSim sequencing fix + there's a delay -->
 				/systems/ignition/auto-start-2 eq 1
 			</test>
 		</switch>
@@ -287,7 +287,7 @@
 		
 		<switch name="/systems/ignition/starter-jsb-2">
 			<default value="/systems/ignition/starter-2"/>
-			<test logic="AND" value="1"> <!-- Because JSBsim will kill the engine if we cut out early -->
+			<test logic="AND" value="1"> <!-- Because JSBSim will kill the engine if we cut out early -->
 				/engines/engine[1]/n2-actual ge /systems/ignition/starter-cutoff-n2
 				/systems/ignition/cutoff-2 eq 0
 				/systems/ignition/can-run-2 eq 1

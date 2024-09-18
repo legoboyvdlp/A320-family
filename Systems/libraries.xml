@@ -4,7 +4,7 @@
 
 <PropertyList>
 	
-	<!-- Not in JSBsim, cause then it takes too long to tune -->
+	<!-- Not in JSBSim, cause then it takes too long to tune -->
 	<filter>
 		<name>EPR C1</name>
 		<type>gain</type>
@@ -104,7 +104,7 @@
 		<filter-gain>0.0</filter-gain>
 	</predict-simple>
 	
-	<!-- Because overwriting from JSBsim doesn't work -->
+	<!-- Because overwriting from JSBSim doesn't work -->
 	<filter>
 		<name>Engine 1 Cutoff</name>
 		<type>gain</type>

@@ -520,7 +520,7 @@ var updateFuel = func {
 		FMGCInternal.blockSet = 1;
 	}
 	fmgc.FMGCInternal.fob = num(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000);
-	fmgc.FMGCInternal.fuelPredGw = num(pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000);
+	fmgc.FMGCInternal.fuelPredGw = num(pts.Fdm.JSBSim.Inertia.weightLbs.getValue() / 1000);
 	fmgc.FMGCInternal.cg = fmgc.FMGCInternal.zfwcg;
 	
 	# Calcualte extra fuel
@@ -750,7 +750,7 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	}
 	
-	# Pull speeds from JSBsim
+	# Pull speeds from JSBSim
 	FMGCInternal.vsw = FMGCNodes.vsw.getValue();
 	FMGCInternal.vls = FMGCNodes.vls.getValue();
 	FMGCInternal.vs1g_conf_0 = FMGCNodes.vs1gConf0.getValue();
@@ -770,7 +770,7 @@ var masterFMGC = maketimer(0.2, func {
 	# calculate speeds
 	############################
 	flap = pts.Controls.Flight.flapsPos.getValue();
-	weight_lbs = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000;
+	weight_lbs = pts.Fdm.JSBSim.Inertia.weightLbs.getValue() / 1000;
 	altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 	
 	if (FMGCInternal.destWindSet and flightPlanController.flightplans[2].destination_runway != nil) {

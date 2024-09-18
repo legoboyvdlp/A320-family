@@ -107,10 +107,10 @@ controls.flapsDown = func(step) {
 
 var leverCockpit = 3;
 controls.gearDown = func(d) { # Requires a mod-up
-	pts.Fdm.JSBsim.Position.wowTemp = pts.Fdm.JSBsim.Position.wow.getBoolValue();
+	pts.Fdm.JSBSim.Position.wowTemp = pts.Fdm.JSBSim.Position.wow.getBoolValue();
 	leverCockpit = pts.Controls.Gear.leverCockpit.getValue();
 	if (d < 0) {
-		if (pts.Fdm.JSBsim.Position.wowTemp) {
+		if (pts.Fdm.JSBSim.Position.wowTemp) {
 			if (leverCockpit == 3) {
 				pts.Controls.Gear.leverCockpit.setValue(2);
 			} else if (leverCockpit == 0) {
@@ -120,7 +120,7 @@ controls.gearDown = func(d) { # Requires a mod-up
 			pts.Controls.Gear.leverCockpit.setValue(0);
 		}
 	} else if (d > 0) {
-		if (pts.Fdm.JSBsim.Position.wowTemp) {
+		if (pts.Fdm.JSBSim.Position.wowTemp) {
 			if (leverCockpit == 3) {
 				pts.Controls.Gear.leverCockpit.setValue(2);
 			} else if (leverCockpit == 0) {
@@ -151,7 +151,7 @@ controls.gearDownSmart = func(d) { # Used by cockpit, requires a mod-up
 }
 
 controls.gearToggle = func() {
-	if (!pts.Fdm.JSBsim.Position.wow.getBoolValue()) {
+	if (!pts.Fdm.JSBSim.Position.wow.getBoolValue()) {
 		if (pts.Controls.Gear.leverCockpit.getValue() >= 2) {
 			pts.Controls.Gear.leverCockpit.setValue(0);
 		} else {
@@ -185,7 +185,7 @@ setlistener("/controls/flight/elevator-trim", func() {
 # For the cockpit rotation and anywhere else you want to use it
 var cmdDegCalc = 0;
 var slewPitchWheel = func(d) {
-	cmdDegCalc = math.round(pts.Fdm.JSBsim.Hydraulics.Stabilizer.cmdDeg.getValue(), 0.1);
+	cmdDegCalc = math.round(pts.Fdm.JSBSim.Hydraulics.Stabilizer.cmdDeg.getValue(), 0.1);
 	if (d > 0) { # DN
 		if (cmdDegCalc < 4) {
 			cmdDegCalc = (cmdDegCalc + 0.1) / 13.5; # Add and normalize, NOT 4! 13.5 = 1 on either polarity

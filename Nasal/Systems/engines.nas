@@ -24,13 +24,13 @@ var IGNITION = {
 	},
 	fastStart: func(n) {
 		ENGINE.cutoffSwitch[n].setBoolValue(0);
-		pts.Fdm.JSBsim.Propulsion.setRunning.setValue(n);
+		pts.Fdm.JSBSim.Propulsion.setRunning.setValue(n);
 	},
 	fastStop: func(n) {
 		ENGINE.cutoffSwitch[n].setBoolValue(1);
 		settimer(func() { # Required delay
-			pts.Fdm.JSBsim.Propulsion.Engine.n1[n].setValue(0.1);
-			pts.Fdm.JSBsim.Propulsion.Engine.n2[n].setValue(0.1);
+			pts.Fdm.JSBSim.Propulsion.Engine.n1[n].setValue(0.1);
+			pts.Fdm.JSBSim.Propulsion.Engine.n2[n].setValue(0.1);
 		}, 0.1);
 	},
 	updateIgniterSelect: func(n) {

@@ -188,7 +188,7 @@ var initInputB = func(key, i) {
 			var zfw_max = 134.5; #61,000 kg, make based on performance
 
 			if (size(scratchpad) == 0) {
-				var zfw = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() - pts.Consumables.Fuel.totalFuelLbs.getValue();
+				var zfw = pts.Fdm.JSBSim.Inertia.weightLbs.getValue() - pts.Consumables.Fuel.totalFuelLbs.getValue();
 				fmgc.FMGCInternal.zfw = sprintf("%3.1f", math.round(zfw / 1000, 0.1));
 				fmgc.FMGCInternal.zfwSet = 1;
 				if (!fmgc.FMGCInternal.blockConfirmed and fmgc.FMGCInternal.blockSet) {
