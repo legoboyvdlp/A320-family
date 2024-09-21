@@ -30,7 +30,7 @@
 			<internal archive="y">true</internal>
 			<config>
 				<x-offset-m archive="y">-0.45</x-offset-m>
-				<y-offset-m archive="y">0.572</y-offset-m>
+				<y-offset-m archive="y">1.403</y-offset-m>
 				<z-offset-m archive="y">-16.193</z-offset-m>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
@@ -45,7 +45,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.45</x-offset-m>
-				<y-offset-m archive="y">0.572</y-offset-m>
+				<y-offset-m archive="y">1.403</y-offset-m>
 				<z-offset-m archive="y">-16.193</z-offset-m>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
@@ -60,7 +60,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0</x-offset-m>
-				<y-offset-m archive="y">0.545</y-offset-m>
+				<y-offset-m archive="y">1.366</y-offset-m>
 				<z-offset-m archive="y">-16.183</z-offset-m>
 				<default-field-of-view-deg type="double">115</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
@@ -75,7 +75,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.0</x-offset-m>
-				<y-offset-m archive="y">0.545</y-offset-m>
+				<y-offset-m archive="y">1.366</y-offset-m>
 				<z-offset-m archive="y">-16.593</z-offset-m>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
@@ -90,7 +90,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.0</x-offset-m>
-				<y-offset-m archive="y">0.545</y-offset-m>
+				<y-offset-m archive="y">1.366</y-offset-m>
 				<z-offset-m archive="y">-16.243</z-offset-m>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
@@ -105,7 +105,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.0</x-offset-m>
-				<y-offset-m archive="y">0.572</y-offset-m>
+				<y-offset-m archive="y">1.403</y-offset-m>
 				<z-offset-m archive="y">-16.193</z-offset-m>
 				<default-field-of-view-deg type="double">52</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
@@ -120,7 +120,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">-2.18</x-offset-m>
-				<y-offset-m archive="y">0.488</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">-6.79</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">117.488</heading-offset-deg>
@@ -135,7 +135,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">2.18</x-offset-m>
-				<y-offset-m archive="y">0.488</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">-6.79</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">242.512</heading-offset-deg>
@@ -150,7 +150,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">-2.20</x-offset-m>
-				<y-offset-m archive="y">0.448</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">-1.69</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">111</heading-offset-deg>
@@ -165,7 +165,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">2.20</x-offset-m>
-				<y-offset-m archive="y">0.448</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">-1.69</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">249</heading-offset-deg>
@@ -180,7 +180,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">-2.13</x-offset-m>
-				<y-offset-m archive="y">0.450</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">3.2</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">70</heading-offset-deg>
@@ -196,7 +196,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">2.13</x-offset-m>
-				<y-offset-m archive="y">0.450</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">3.2</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">290</heading-offset-deg>

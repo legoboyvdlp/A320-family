@@ -3,8 +3,13 @@
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
+	
 	<name>A320-200</name>
-
+	
+	<offsets>
+		<z-m>0.83109</z-m>
+	</offsets>
+	
 	<model>
 		<name>FuselageContainer</name>
 		<path>Aircraft/A320-family/Models/Fuselage/fuselage.xml</path>
