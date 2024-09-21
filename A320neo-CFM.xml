@@ -99,7 +99,7 @@
 				</location>
 				<orient unit="DEG">
 					<roll>0.0</roll>
-					<pitch>2.2</pitch>
+					<pitch>2</pitch>
 					<yaw>1</yaw>
 				</orient>
 			</thruster>
@@ -115,7 +115,7 @@
 				</location>
 				<orient unit="DEG">
 					<roll>0.0</roll>
-					<pitch>2.2</pitch>
+					<pitch>2</pitch>
 					<yaw>-1</yaw>
 				</orient>
 			</thruster>
