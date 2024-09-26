@@ -481,18 +481,6 @@
 			</clipto>
 		</pure_gain>
 		
-		<aerosurface_scale name="hydraulics/stabilizer/cmd-deg">
-			<input>/controls/flight/elevator-trim</input>
-			<domain>
-				<min>-1.0</min>
-				<max>0.296296</max>
-			</domain>
-			<range>
-				<min>-13.5</min>
-				<max>4.0</max>
-			</range>
-		</aerosurface_scale>
-		
 		<actuator name="hydraulics/stabilizer/final-actuator">
 			<input>hydraulics/stabilizer/cmd-deg</input>
 			<rate_limit>hydraulics/stabilizer/rate</rate_limit>
