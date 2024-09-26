@@ -461,7 +461,7 @@
 	<channel name="Stabilizer">
 		
 		<switch name="hydraulics/stabilizer/rate">
-			<default value="0"/> <!-- only mechanical input to hyd actuator. So it does need hydraulic power -->
+			<default value="0"/> <!-- Only mechanical input to hyd actuator. So it does need hydraulic power -->
 			<test value="0">
 				/systems/failures/fctl/ths-jam eq 1
 			</test>
@@ -471,6 +471,15 @@
 				/systems/acconfig/autoconfig-running eq 1
 			</test>
 		</switch>
+		
+		<pure_gain name="hydraulics/stabilizer/cmd-deg">
+			<input>/controls/flight/elevator-trim</input>
+			<gain>13.5</gain>
+			<clipto>
+				<min>-13.5</min>
+				<max>4.0</max>
+			</clipto>
+		</pure_gain>
 		
 		<aerosurface_scale name="hydraulics/stabilizer/cmd-deg">
 			<input>/controls/flight/elevator-trim</input>
