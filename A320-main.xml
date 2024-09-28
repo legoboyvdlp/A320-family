@@ -8,22 +8,22 @@
 			<fire-services type="bool">0</fire-services>
 		</animation>
 		
-		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Displays), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/mattmaring (Systems, Displays), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
+		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Instruments), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/mattmaring (Systems, Instruments), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
 		
 		<authors>
 			<author>
 				<name>Josh Davidson</name>
-				<description>Flight Dynamics, Systems, Displays</description>
+				<description>Flight Dynamics, Systems, Instruments</description>
 				<nick>Octal450</nick>
 			</author>
 			<author>
 				<name>Jonathan Redpath</name>
-				<description>Systems, Displays, FMGC</description>
+				<description>Systems, Instruments, FMGC</description>
 				<nick>legoboyvdlp</nick>
 			</author>
 			<author>
 				<name>Nia</name>
-				<description>Systems, Displays</description>
+				<description>Systems, Instruments</description>
 			</author>
 			<author>
 				<name>Matthew Maring</name>
@@ -42,7 +42,7 @@
 			</author>
 			<author>
 				<name>Andrea Vezzali</name>
-				<description>Systems, Displays</description>
+				<description>Systems, Instruments</description>
 				<nick>vezza</nick>
 			</author>
 		</authors>
