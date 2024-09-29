@@ -8,7 +8,7 @@
 	<sim> 
 		<description>Airbus A320-251N (LEAP-1A26)</description>
 		<flight-model>jsb</flight-model>
-		<aero>A320neo-CFM</aero>
+		<aero>FDE/A320neo-CFM</aero>
 		<variant-of>A320neo-PW</variant-of>
 		<model>
 			<path>Aircraft/A320-family/Models/A320neo-CFM.xml</path>

@@ -8,7 +8,7 @@
 	<sim>
 		<description>Airbus A320-271N (PW1127G)</description>
 		<flight-model>jsb</flight-model>
-		<aero>A320neo-PW</aero>
+		<aero>FDE/A320neo-PW</aero>
 		<primary-set>true</primary-set>
 		<model>
 			<path>Aircraft/A320-family/Models/A320neo-PW.xml</path>

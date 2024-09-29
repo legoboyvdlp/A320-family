@@ -8,7 +8,7 @@
 	<sim>
 		<description>Airbus A320-214 (CFM56-5B4)</description>
 		<flight-model>jsb</flight-model>
-		<aero>A320-200-CFM</aero>
+		<aero>FDE/A320-200-CFM</aero>
 		<variant-of>A320-200-IAE</variant-of>
 		<model>
 			<path>Aircraft/A320-family/Models/A320-200-CFM.xml</path>
