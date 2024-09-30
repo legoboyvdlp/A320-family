@@ -2,19 +2,19 @@
 
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
-<fdm_config name="A320" version="2.0" release="BETA">
+<fdm_config name="A320neo-CFM" version="2.0" release="BETA">
 
 	<fileheader>
 		<author>Josh Davidson (Octal450)</author>
-		<description>A320 FDE</description>
+		<description>A320-200 FDE with LEAP-1A26 Engines</description>
 	</fileheader>
 	
-	<metrics file="Systems/a320-metrics"/>
+	<metrics file="FDE/Config/a320-metrics"/>
 	
 	<mass_balance>
-		<ixx unit="SLUG*FT2">414659</ixx>
-		<iyy unit="SLUG*FT2">895647</iyy>
-		<izz unit="SLUG*FT2">678957</izz>
+		<ixx unit="SLUG*FT2">731935</ixx>
+		<iyy unit="SLUG*FT2">1894657</iyy>
+		<izz unit="SLUG*FT2">1435756</izz>
 		<ixy unit="SLUG*FT2">0</ixy>
 		<ixz unit="SLUG*FT2">0</ixz>
 		<iyz unit="SLUG*FT2">0</iyz>
@@ -86,7 +86,7 @@
 		</pointmass>
 	</mass_balance>
 	
-	<ground_reactions file="Systems/a320-ground-reactions"/>
+	<ground_reactions file="FDE/Config/a320-ground-reactions"/>
 	
 	<propulsion>
 		<engine file="leap-1a26_1">
@@ -261,7 +261,7 @@
 	<system file="a320-cockpit"/>
 	
 	<flight_control name="none"/>
-	<aerodynamics file="Systems/a320-aerodynamics.xml"/>
-	<external_reactions file="Systems/a320-external-reactions"/>
+	<aerodynamics file="FDE/Config/a320-aerodynamics.xml"/>
+	<external_reactions file="FDE/Config/a320-external-reactions"/>
 
 </fdm_config>

@@ -42,6 +42,7 @@ var failResetOld = func {
 
 failResetOld();
 
+print("System: Initializing " ~ getprop("/sim/aircraft"));
 setprop("/systems/acconfig/autoconfig-running", 0);
 setprop("/systems/acconfig/spinning", 0);
 setprop("/systems/acconfig/spin", "-");
@@ -89,7 +90,7 @@ init_dlg.open();
 http.load("/https://raw.githubusercontent.com/legoboyvdlp/A320-family/dev/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
 var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
-print("A320-family Revision: " ~ current_revision);
+print("System: Version " ~ current_revision);
 setprop("/systems/acconfig/revision", current_revision);
 
 var SYSTEM = { # Prepare for migration to ACCONFIG V2
