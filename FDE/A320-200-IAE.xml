@@ -12,9 +12,9 @@
 	<metrics file="FDE/Config/a320-metrics"/>
 	
 	<mass_balance>
-		<ixx unit="SLUG*FT2">731935</ixx>
-		<iyy unit="SLUG*FT2">1894657</iyy>
-		<izz unit="SLUG*FT2">1435756</izz>
+		<ixx unit="SLUG*FT2">709691</ixx>
+		<iyy unit="SLUG*FT2">1837076</iyy>
+		<izz unit="SLUG*FT2">1392122</izz>
 		<ixy unit="SLUG*FT2">0</ixy>
 		<ixz unit="SLUG*FT2">0</ixz>
 		<iyz unit="SLUG*FT2">0</iyz>
