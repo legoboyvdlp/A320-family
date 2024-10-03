@@ -81,10 +81,10 @@
 		<fcs_function name="fbw/alpha-stall-deg"> <!-- Not used, for reference only -->
 			<function>
 				<table>
-					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="row">velocities/mach</independentVar>
 					<tableData>
-						    0  15.5
-						43000   8.3
+						0.2  15.5
+						0.9   8.3
 					</tableData>
 				</table>
 			</function>
@@ -93,18 +93,18 @@
 		<fcs_function name="fbw/alpha-prot-deg">
 			<function>
 				<table>
-					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="row">velocities/mach</independentVar>
 					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
 					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
 					<tableData breakPoint="0">
-						       0    10    15    20    35
-						21000  8.6  11.5  11.0  11.0  10.5
-						43000  7.4   7.4   7.4   7.4   7.4
+						      0    10    15    20    35
+						0.55  8.6  11.5  11.0  11.0  10.5
+						0.90  7.4   7.4   7.4   7.4   7.4
 					</tableData>
 					<tableData breakPoint="18">
-						       0     10    15    20    35
-						21000  11.0  11.5  11.0  11.0  10.5
-						43000   7.4   7.4   7.4   7.4   7.4
+						      0     10    15    20    35
+						0.55  11.0  11.5  11.0  11.0  10.5
+						0.90   7.4   7.4   7.4   7.4   7.4
 					</tableData>
 				</table>
 			</function>
@@ -113,10 +113,10 @@
 		<fcs_function name="fbw/protections/alpha-prot-b">
 			<function>
 				<table>
-					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="row">velocities/mach</independentVar>
 					<tableData>
-						21000  0.10
-						43000  0.05
+						0.55  0.10
+						0.90  0.05
 					</tableData>
 				</table>
 			</function>
@@ -145,10 +145,10 @@
 				<difference>
 					<property>fbw/alpha-prot-deg</property>
 					<table>
-						<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+						<independentVar lookup="row">velocities/mach</independentVar>
 						<tableData>
-							21000  2
-							43000  1
+							0.55  2
+							0.90  1
 						</tableData>
 					</table>
 				</difference>
@@ -158,20 +158,20 @@
 		<fcs_function name="fbw/alpha-max-deg">
 			<function>
 				<table>
-					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="row">velocities/mach</independentVar>
 					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
 					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
 					<tableData breakPoint="0">
-						       0     10    15
-						    0  11.7  15.0  14.5
-						21000  11.4  11.4  11.4
-						43000   7.8   7.8   7.8
+						      0     10    15
+						0.20  11.7  15.0  14.5
+						0.55  11.4  11.4  11.4
+						0.90   7.8   7.8   7.8
 					</tableData>
 					<tableData breakPoint="18">
-						       0     10    15
-						    0  15.0  15.0  14.5
-						21000  11.4  11.4  11.4
-						43000   7.8   7.8   7.8
+						      0     10    15
+						0.20  15.0  15.0  14.5
+						0.55  11.4  11.4  11.4
+						0.90   7.8   7.8   7.8
 					</tableData>
 				</table>
 			</function>

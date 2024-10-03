@@ -59,9 +59,9 @@
 				<property>aero/function/kCLge</property>
 				<table>
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
-					<independentVar lookup="column">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="column">velocities/mach</independentVar>
 					<tableData>
-						         0       45000
+						         0.2     0.9
 						-9.8475 -0.5652 -0.5935
 						-2.0912  0.0625  0.0656
 						-0.0098  0.2386  0.2505
