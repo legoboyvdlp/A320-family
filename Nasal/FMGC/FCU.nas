@@ -281,6 +281,11 @@ var FCUController = {
                # SRS TO/GA to OPEN CLIMB
                fmgc.ITAF.setVertMode(4);
                fmgc.ITAF.updateVertText("OP CLB");
+            } else {
+               # mode reversion
+               # SRS TO/GA to V/S 
+               # as FCU alt is lower than actual alt
+               fmgc.ITAF.setVertMode(1);
             }
          } 
          
