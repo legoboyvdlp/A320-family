@@ -996,7 +996,7 @@ var ManagedSPD = maketimer(0.25, func {
 				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 				
 				if (constraintSpeed != nil and constraintSpeed != 0) {
-					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
+					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 				} else {
 					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
 				}
@@ -1007,7 +1007,7 @@ var ManagedSPD = maketimer(0.25, func {
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 					if (constraintSpeed != nil and constraintSpeed != 0) {
-						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
+						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 					} else {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
 					}
