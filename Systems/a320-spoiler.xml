@@ -12,7 +12,7 @@
 		<fcs_function name="/controls/flight/speedbrake-fixed"> <!-- Rounds to 4 figures to fix a potential problem -->
 			<function>
 				<quotient>
-					<integer>
+					<floor>
 						<sum>
 							<product>
 								<property>/controls/flight/speedbrake</property>
@@ -20,7 +20,7 @@
 							</product>
 							<value>0.5</value> <!-- Make it round correctly -->
 						</sum>
-					</integer>
+					</floor>
 					<value>10000</value>
 				</quotient>
 			</function>
