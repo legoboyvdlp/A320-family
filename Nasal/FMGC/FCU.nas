@@ -288,6 +288,8 @@ var FCUController = {
 						fmgc.Input.kts.setValue(me.iasTemp);
 					}
 				}
+			} else {
+				# speed preselection on FCU as speed is managed
 			}
 		}
 	},
