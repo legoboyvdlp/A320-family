@@ -804,7 +804,7 @@ var masterFMGC = maketimer(0.2, func {
     # calculate speeds
     ############################
     flap = pts.Controls.Flight.flapsPos.getValue();
-    weight_lbs = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000;
+    #weight_lbs = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000;
     altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
     
     if (FMGCInternal.destWindSet and flightPlanController.flightplans[2].destination_runway != nil) {
