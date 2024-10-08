@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Airbus A320 CFM56-5B4 Engine -->
+<!-- Airbus A320 CFM56-5B4 Engine/FADEC -->
 <!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <system name="A320: CFM56 Engine">
@@ -17,7 +17,7 @@
 	
 	<channel name="Thrust Limits">
 		
-		<fcs_function name="fadec/limit/rated-thrust-n1"> <!-- Vs 98.7, 104.8 (-15 bias + 1), 103.2 -->
+		<fcs_function name="fadec/limit/rated-thrust-n1">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
@@ -54,18 +54,18 @@
 		
 		<!-- Following functions fix a FGTurbine inaccuracy... rated thrust N1% should be rated thrust lbs -->
 		<!-- These calculations change it so that the rated power at sea level is at the correct N1% value. It still changes with altitude and mach as it should -->
-		<fcs_function name="fadec/limit/fgturbine-thrust-lbs">
+		<fcs_function name="fadec/limit/fgturbine-thrust">
 			<function>
 				<sum>
 					<product>
-						<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, its same for all -->
+						<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
 						<property>fadec/limit/rated-thrust</property>
 					</product>
 					<product>
 						<difference>
 							<property>fadec/limit/rated-thrust</property>
 							<product>
-								<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, its same for all -->
+								<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
 								<property>fadec/limit/rated-thrust</property>
 							</product>
 						</difference>
@@ -75,11 +75,11 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/rated-thrust-lbs">
+		<fcs_function name="fadec/limit/rated-thrust-actual">
 			<function>
 				<sum>
 					<product>
-						<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, its same for all -->
+						<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
 						<property>fadec/limit/rated-thrust</property>
 					</product>
 					<product>
@@ -87,32 +87,28 @@
 							<difference>
 								<property>fadec/limit/rated-thrust</property>
 								<product>
-									<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, its same for all -->
+									<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
 									<property>fadec/limit/rated-thrust</property>
 								</product>
 							</difference>
 							<property>fadec/limit/milthrust-unmodified</property>
 						</product>
-						<quotient>
-							<difference>
-								<property>fadec/limit/rated-thrust-n1</property>
-								<value>18.9</value>
-							</difference>
-							<value>85.1</value>
-						</quotient>
-						<quotient>
-							<difference>
-								<property>fadec/limit/rated-thrust-n1</property>
-								<value>18.9</value>
-							</difference>
-							<value>85.1</value>
-						</quotient>
+						<pow>
+							<quotient>
+								<difference>
+									<property>fadec/limit/rated-thrust-n1</property>
+									<value>18.9</value>
+								</difference>
+								<value>85.1</value>
+							</quotient>
+							<value>2</value>
+						</pow>
 					</product>
 				</sum>
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/rated-thrust-factor"> <!-- Normalize -->
+		<fcs_function name="fadec/limit/rated-thrust-factor">
 			<function>
 				<ifthen>
 					<eq>
@@ -122,12 +118,12 @@
 					<value>0</value>
 					<ifthen>
 						<nq> <!-- Prevent divide by 0 -->
-							<property>fadec/limit/rated-thrust-lbs</property>
+							<property>fadec/limit/rated-thrust-actual</property>
 							<value>0</value>
 						</nq>
 						<quotient>
-							<property>fadec/limit/fgturbine-thrust-lbs</property>
-							<property>fadec/limit/rated-thrust-lbs</property>
+							<property>fadec/limit/fgturbine-thrust</property>
+							<property>fadec/limit/rated-thrust-actual</property>
 						</quotient>
 						<value>1</value>
 					</ifthen>
@@ -135,7 +131,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/toga-ref"> <!-- Vs 98.7, 104.8 (-15 bias + 1), 103.2 -->
+		<fcs_function name="fadec/limit/toga-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
@@ -203,7 +199,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mct-ref"> <!-- Ref TOGA, Vs 99.7, 25C Corner, Limit 102.6 -->
+		<fcs_function name="fadec/limit/mct-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
@@ -254,7 +250,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/climb-ref"> <!-- Ref MCT, Vs 99.5 -->
+		<fcs_function name="fadec/limit/climb-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
@@ -302,7 +298,7 @@
 			<function>
 				<ifthen>
 					<eq>
-						<property>position/wow</property>
+						<property>gear/unit[0]/WOW</property>
 						<value>0</value>
 					</eq>
 					<table>
@@ -354,7 +350,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mrev-ref"> <!-- Ref MCT, Vs 87 -->
+		<fcs_function name="fadec/limit/mrev-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>

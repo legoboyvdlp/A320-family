@@ -5,12 +5,14 @@
 <turbine_engine name="V2527-A5">
 	
 	<milthrust>26600</milthrust> <!-- @ 0.2 Mach, 24800 at 0 Mach, handled in fadec file -->
-	<tsfc>0.335</tsfc>
+	<tsfc>0.541</tsfc>
 	<bleed>0</bleed> <!-- Set by pneumatic system -->
 	<ignitionn1>5.3</ignitionn1>
 	<ignitionn2>28.5</ignitionn2>
 	<n1spinup>0.343</n1spinup>
 	<n2spinup>1.845</n2spinup>
+	<n1spindown>9.5</n1spindown>
+	<n2spindown>9.5</n2spindown>
 	<n1startrate>0.365</n1startrate>
 	<n2startrate>0.767</n2startrate>
 	<idlen1>22.4</idlen1>

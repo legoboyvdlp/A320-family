@@ -12,6 +12,8 @@ var arr = "";
 var n1_left = 0;
 var n1_right = 0;
 var gs = 0;
+var state1 = 0;
+var state2 = 0;
 var accel_agl_ft = 0;
 var fd1 = 0;
 var fd2 = 0;
@@ -419,171 +421,171 @@ updateRouteManagerAlt = func() {
 #
 
 var updateFuel = func {
-    # Calculate (final) holding fuel
-    if (FMGCInternal.finalFuelSet) {
-        final_fuel = 1000 * FMGCInternal.finalFuel;
-        zfw = 1000 * FMGCInternal.zfw;
-        final_time = final_fuel / (2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903)); # x2 for 2 engines
-        final_time = math.clamp(final_time, 0, 480);
-        
-        if (num(final_time) >= 60) {
-            final_min = int(math.mod(final_time, 60));
-            final_hour = int((final_time - final_min) / 60);
-            FMGCInternal.finalTime = sprintf("%02d", final_hour) ~ sprintf("%02d", final_min);
-        } else {
-            FMGCInternal.finalTime = sprintf("%04d", final_time);
-        }   
-    } else {
-        if (!FMGCInternal.finalTimeSet) {
-            FMGCInternal.finalTime = "0030";
-        }
-        final_time = int(FMGCInternal.finalTime);
-        if (final_time >= 100) {
-            final_time = final_time - 100 + 60; # can't be set above 90 (0130)
-        }
-        zfw = 1000 * FMGCInternal.zfw;
-        final_fuel = final_time * 2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903); # x2 for 2 engines
-        final_fuel = math.clamp(final_fuel, 0, 80000);
-        
-        FMGCInternal.finalFuel = final_fuel / 1000;
-    }
-    
-    # Calculate alternate fuel
-    if (!FMGCInternal.altFuelSet and FMGCInternal.altAirportSet) {
-        #calc
-    } elsif (FMGCInternal.altFuelSet and FMGCInternal.altAirportSet) {
-        #dummy calc for now
-        alt_fuel = 1000 * num(FMGCInternal.altFuel);
-        zfw = 1000 * FMGCInternal.zfw;
-        alt_time = alt_fuel / (2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903)); # x2 for 2 engines
-        alt_time = math.clamp(alt_time, 0, 480);
-        
-        if (num(alt_time) >= 60) {
-            alt_min = int(math.mod(alt_time, 60));
-            alt_hour = int((alt_time - alt_min) / 60);
-            FMGCInternal.altTime = sprintf("%02d", alt_hour) ~ sprintf("%02d", alt_min);
-        } else {
-            FMGCInternal.altTime = sprintf("%04d", alt_time);
-        }
-    } elsif (!FMGCInternal.altFuelSet) {
-        FMGCInternal.altFuel = 0.0;
-        FMGCInternal.altTime = "0000";
-    }
-    
-    # Calculate min dest fob (final + alternate)
-    if (!FMGCInternal.minDestFobSet) {
-        FMGCInternal.minDestFob = num(FMGCInternal.altFuel + FMGCInternal.finalFuel);
-    }
-    
-    if (FMGCInternal.zfwSet) {
-        FMGCInternal.lw = num(FMGCInternal.zfw + FMGCInternal.altFuel + FMGCInternal.finalFuel);
-        FMGCNodes.lw.setValue(FMGCInternal.lw * LB2KG * 1000);
-    }
-    
-    # Calculate trip fuel
-    if (FMGCInternal.toFromSet and FMGCInternal.crzSet and FMGCInternal.crzTempSet and FMGCInternal.zfwSet) {
-        crz = FMGCInternal.crzFl;
-        temp = FMGCInternal.crzTemp;
-        dist = flightPlanController.arrivalDist.getValue();
-        
-        trpWind = FMGCInternal.tripWind;
-        wind_value = FMGCInternal.tripWindValue;
-        if (find("HD", trpWind) != -1 or find("-", trpWind) != -1 or find("H", trpWind) != -1) {
-            wind_value = wind_value * -1;
-        }
-        dist = dist - (dist * wind_value * 0.002);
+	# Calculate (final) holding fuel
+	if (FMGCInternal.finalFuelSet) {
+		final_fuel = 1000 * FMGCInternal.finalFuel;
+		zfw = 1000 * FMGCInternal.zfw;
+		final_time = final_fuel / (2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903)); # x2 for 2 engines
+		final_time = math.clamp(final_time, 0, 480);
+		
+		if (num(final_time) >= 60) {
+			final_min = int(math.mod(final_time, 60));
+			final_hour = int((final_time - final_min) / 60);
+			FMGCInternal.finalTime = sprintf("%02d", final_hour) ~ sprintf("%02d", final_min);
+		} else {
+			FMGCInternal.finalTime = sprintf("%04d", final_time);
+		}	
+	} else {
+		if (!FMGCInternal.finalTimeSet) {
+			FMGCInternal.finalTime = "0030";
+		}
+		final_time = int(FMGCInternal.finalTime);
+		if (final_time >= 100) {
+			final_time = final_time - 100 + 60; # can't be set above 90 (0130)
+		}
+		zfw = 1000 * FMGCInternal.zfw;
+		final_fuel = final_time * 2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903); # x2 for 2 engines
+		final_fuel = math.clamp(final_fuel, 0, 80000);
+		
+		FMGCInternal.finalFuel = final_fuel / 1000;
+	}
+	
+	# Calculate alternate fuel
+	if (!FMGCInternal.altFuelSet and FMGCInternal.altAirportSet) {
+		#calc
+	} elsif (FMGCInternal.altFuelSet and FMGCInternal.altAirportSet) {
+		#dummy calc for now
+		alt_fuel = 1000 * num(FMGCInternal.altFuel);
+		zfw = 1000 * FMGCInternal.zfw;
+		alt_time = alt_fuel / (2.0 * ((zfw*zfw*-2e-10) + (zfw*0.0003) + 2.8903)); # x2 for 2 engines
+		alt_time = math.clamp(alt_time, 0, 480);
+		
+		if (num(alt_time) >= 60) {
+			alt_min = int(math.mod(alt_time, 60));
+			alt_hour = int((alt_time - alt_min) / 60);
+			FMGCInternal.altTime = sprintf("%02d", alt_hour) ~ sprintf("%02d", alt_min);
+		} else {
+			FMGCInternal.altTime = sprintf("%04d", alt_time);
+		}
+	} elsif (!FMGCInternal.altFuelSet) {
+		FMGCInternal.altFuel = 0.0;
+		FMGCInternal.altTime = "0000";
+	}
+	
+	# Calculate min dest fob (final + alternate)
+	if (!FMGCInternal.minDestFobSet) {
+		FMGCInternal.minDestFob = num(FMGCInternal.altFuel + FMGCInternal.finalFuel);
+	}
+	
+	if (FMGCInternal.zfwSet) {
+		FMGCInternal.lw = num(FMGCInternal.zfw + FMGCInternal.altFuel + FMGCInternal.finalFuel);
+		FMGCNodes.lw.setValue(FMGCInternal.lw * LB2KG * 1000);
+	}
+	
+	# Calculate trip fuel
+	if (FMGCInternal.toFromSet and FMGCInternal.crzSet and FMGCInternal.crzTempSet and FMGCInternal.zfwSet) {
+		crz = FMGCInternal.crzFl;
+		temp = FMGCInternal.crzTemp;
+		dist = flightPlanController.arrivalDist.getValue();
+		
+		trpWind = FMGCInternal.tripWind;
+		wind_value = FMGCInternal.tripWindValue;
+		if (find("HD", trpWind) != -1 or find("-", trpWind) != -1 or find("H", trpWind) != -1) {
+			wind_value = wind_value * -1;
+		}
+		dist = dist - (dist * wind_value * 0.002);
 
-        #trip_fuel = 4.003e+02 + (dist * -5.399e+01) + (dist * dist * -7.322e-02) + (dist * dist * dist * 1.091e-05) + (dist * dist * dist * dist * 2.962e-10) + (dist * dist * dist * dist * dist * -1.178e-13) + (dist * dist * dist * dist * dist * dist * 6.322e-18) + (crz * 5.387e+01) + (dist * crz * 1.583e+00) + (dist * dist * crz * 7.695e-04) + (dist * dist * dist * crz * -1.057e-07) + (dist * dist * dist * dist * crz * 1.138e-12) + (dist * dist * dist * dist * dist * crz * 1.736e-16) + (crz * crz * -1.171e+00) + (dist * crz * crz * -1.219e-02) + (dist * dist * crz * crz * -2.879e-06) + (dist * dist * dist * crz * crz * 3.115e-10) + (dist * dist * dist * dist * crz * crz * -4.093e-15) + (crz * crz * crz * 9.160e-03) + (dist * crz * crz * crz * 4.311e-05) + (dist * dist * crz * crz * crz * 4.532e-09) + (dist * dist * dist * crz * crz * crz * -2.879e-13) + (crz * crz * crz * crz * -3.338e-05) + (dist * crz * crz * crz * crz * -7.340e-08) + (dist * dist * crz * crz * crz * crz * -2.494e-12) + (crz * crz * crz * crz * crz * 5.849e-08) + (dist * crz * crz * crz * crz * crz * 4.898e-11) + (crz * crz * crz * crz * crz * crz * -3.999e-11);
-        trip_fuel = 4.018e+02 + (dist*3.575e+01) + (dist*dist*-4.260e-02) + (dist*dist*dist*-1.446e-05) + (dist*dist*dist*dist*4.101e-09) + (dist*dist*dist*dist*dist*-6.753e-13) + (dist*dist*dist*dist*dist*dist*5.074e-17) + (crz*-2.573e+01) + (dist*crz*-1.583e-01) + (dist*dist*crz*8.147e-04) + (dist*dist*dist*crz*4.485e-08) + (dist*dist*dist*dist*crz*-7.656e-12) + (dist*dist*dist*dist*dist*crz*4.503e-16) + (crz*crz*4.427e-01) + (dist*crz*crz*-1.137e-03) + (dist*dist*crz*crz*-4.409e-06) + (dist*dist*dist*crz*crz*-3.345e-11) + (dist*dist*dist*dist*crz*crz*4.985e-15) + (crz*crz*crz*-2.471e-03) + (dist*crz*crz*crz*1.223e-05) + (dist*dist*crz*crz*crz*9.660e-09) + (dist*dist*dist*crz*crz*crz*-2.127e-14) + (crz*crz*crz*crz*5.714e-06) + (dist*crz*crz*crz*crz*-3.546e-08) + (dist*dist*crz*crz*crz*crz*-7.536e-12) + (crz*crz*crz*crz*crz*-4.061e-09) + (dist*crz*crz*crz*crz*crz*3.355e-11) + (crz*crz*crz*crz*crz*crz*-1.451e-12);
-        trip_fuel = math.clamp(trip_fuel, 400, 80000);
-        
-        # cruize temp correction
-        trip_fuel = trip_fuel + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist.getValue());
-        
-        trip_time = 9.095e-02 + (dist*-3.968e-02) + (dist*dist*4.302e-04) + (dist*dist*dist*2.005e-07) + (dist*dist*dist*dist*-6.876e-11) + (dist*dist*dist*dist*dist*1.432e-14) + (dist*dist*dist*dist*dist*dist*-1.177e-18) + (crz*7.348e-01) + (dist*crz*3.310e-03) + (dist*dist*crz*-8.700e-06) + (dist*dist*dist*crz*-4.214e-10) + (dist*dist*dist*dist*crz*5.652e-14) + (dist*dist*dist*dist*dist*crz*-6.379e-18) + (crz*crz*-1.449e-02) + (dist*crz*crz*-7.508e-06) + (dist*dist*crz*crz*4.529e-08) + (dist*dist*dist*crz*crz*3.699e-13) + (dist*dist*dist*dist*crz*crz*8.466e-18) + (crz*crz*crz*1.108e-04) + (dist*crz*crz*crz*-4.126e-08) + (dist*dist*crz*crz*crz*-9.645e-11) + (dist*dist*dist*crz*crz*crz*-1.544e-16) + (crz*crz*crz*crz*-4.123e-07) + (dist*crz*crz*crz*crz*1.831e-10) + (dist*dist*crz*crz*crz*crz*7.438e-14) + (crz*crz*crz*crz*crz*7.546e-10) + (dist*crz*crz*crz*crz*crz*-1.921e-13) + (crz*crz*crz*crz*crz*crz*-5.453e-13);
-        trip_time = math.clamp(trip_time, 10, 480);
-        
-        # if (low air conditioning) {
-        #   trip_fuel = trip_fuel * 0.995;
-        #}
-        # if (total anti-ice) {
-        #   trip_fuel = trip_fuel * 1.045;
-        #} elsif (engine anti-ice) {
-        #   trip_fuel = trip_fuel * 1.02;
-        #}
-        
-        zfw = FMGCInternal.zfw;
-        landing_weight_correction = 9.951e+00 + (dist*-2.064e+00) + (dist*dist*2.030e-03) + (dist*dist*dist*8.179e-08) + (dist*dist*dist*dist*-3.941e-11) + (dist*dist*dist*dist*dist*2.443e-15) + (crz*2.771e+00) + (dist*crz*3.067e-02) + (dist*dist*crz*-1.861e-05) + (dist*dist*dist*crz*2.516e-10) + (dist*dist*dist*dist*crz*5.452e-14) + (crz*crz*-4.483e-02) + (dist*crz*crz*-1.645e-04) + (dist*dist*crz*crz*5.212e-08) + (dist*dist*dist*crz*crz*-8.721e-13) + (crz*crz*crz*2.609e-04) + (dist*crz*crz*crz*3.898e-07) + (dist*dist*crz*crz*crz*-4.617e-11) + (crz*crz*crz*crz*-6.488e-07) + (dist*crz*crz*crz*crz*-3.390e-10) + (crz*crz*crz*crz*crz*5.835e-10);
-        trip_fuel = trip_fuel + (landing_weight_correction * (FMGCInternal.lw * 1000 - 121254.24421) / 2204.622622);
-        trip_fuel = math.clamp(trip_fuel, 400, 80000);
+		#trip_fuel = 4.003e+02 + (dist * -5.399e+01) + (dist * dist * -7.322e-02) + (dist * dist * dist * 1.091e-05) + (dist * dist * dist * dist * 2.962e-10) + (dist * dist * dist * dist * dist * -1.178e-13) + (dist * dist * dist * dist * dist * dist * 6.322e-18) + (crz * 5.387e+01) + (dist * crz * 1.583e+00) + (dist * dist * crz * 7.695e-04) + (dist * dist * dist * crz * -1.057e-07) + (dist * dist * dist * dist * crz * 1.138e-12) + (dist * dist * dist * dist * dist * crz * 1.736e-16) + (crz * crz * -1.171e+00) + (dist * crz * crz * -1.219e-02) + (dist * dist * crz * crz * -2.879e-06) + (dist * dist * dist * crz * crz * 3.115e-10) + (dist * dist * dist * dist * crz * crz * -4.093e-15) + (crz * crz * crz * 9.160e-03) + (dist * crz * crz * crz * 4.311e-05) + (dist * dist * crz * crz * crz * 4.532e-09) + (dist * dist * dist * crz * crz * crz * -2.879e-13) + (crz * crz * crz * crz * -3.338e-05) + (dist * crz * crz * crz * crz * -7.340e-08) + (dist * dist * crz * crz * crz * crz * -2.494e-12) + (crz * crz * crz * crz * crz * 5.849e-08) + (dist * crz * crz * crz * crz * crz * 4.898e-11) + (crz * crz * crz * crz * crz * crz * -3.999e-11);
+		trip_fuel = 4.018e+02 + (dist*3.575e+01) + (dist*dist*-4.260e-02) + (dist*dist*dist*-1.446e-05) + (dist*dist*dist*dist*4.101e-09) + (dist*dist*dist*dist*dist*-6.753e-13) + (dist*dist*dist*dist*dist*dist*5.074e-17) + (crz*-2.573e+01) + (dist*crz*-1.583e-01) + (dist*dist*crz*8.147e-04) + (dist*dist*dist*crz*4.485e-08) + (dist*dist*dist*dist*crz*-7.656e-12) + (dist*dist*dist*dist*dist*crz*4.503e-16) + (crz*crz*4.427e-01) + (dist*crz*crz*-1.137e-03) + (dist*dist*crz*crz*-4.409e-06) + (dist*dist*dist*crz*crz*-3.345e-11) + (dist*dist*dist*dist*crz*crz*4.985e-15) + (crz*crz*crz*-2.471e-03) + (dist*crz*crz*crz*1.223e-05) + (dist*dist*crz*crz*crz*9.660e-09) + (dist*dist*dist*crz*crz*crz*-2.127e-14) + (crz*crz*crz*crz*5.714e-06) + (dist*crz*crz*crz*crz*-3.546e-08) + (dist*dist*crz*crz*crz*crz*-7.536e-12) + (crz*crz*crz*crz*crz*-4.061e-09) + (dist*crz*crz*crz*crz*crz*3.355e-11) + (crz*crz*crz*crz*crz*crz*-1.451e-12);
+		trip_fuel = math.clamp(trip_fuel, 400, 80000);
+		
+		# cruize temp correction
+		trip_fuel = trip_fuel + (0.033 * (temp - 15 + (2 * crz / 10)) * flightPlanController.arrivalDist.getValue());
+		
+		trip_time = 9.095e-02 + (dist*-3.968e-02) + (dist*dist*4.302e-04) + (dist*dist*dist*2.005e-07) + (dist*dist*dist*dist*-6.876e-11) + (dist*dist*dist*dist*dist*1.432e-14) + (dist*dist*dist*dist*dist*dist*-1.177e-18) + (crz*7.348e-01) + (dist*crz*3.310e-03) + (dist*dist*crz*-8.700e-06) + (dist*dist*dist*crz*-4.214e-10) + (dist*dist*dist*dist*crz*5.652e-14) + (dist*dist*dist*dist*dist*crz*-6.379e-18) + (crz*crz*-1.449e-02) + (dist*crz*crz*-7.508e-06) + (dist*dist*crz*crz*4.529e-08) + (dist*dist*dist*crz*crz*3.699e-13) + (dist*dist*dist*dist*crz*crz*8.466e-18) + (crz*crz*crz*1.108e-04) + (dist*crz*crz*crz*-4.126e-08) + (dist*dist*crz*crz*crz*-9.645e-11) + (dist*dist*dist*crz*crz*crz*-1.544e-16) + (crz*crz*crz*crz*-4.123e-07) + (dist*crz*crz*crz*crz*1.831e-10) + (dist*dist*crz*crz*crz*crz*7.438e-14) + (crz*crz*crz*crz*crz*7.546e-10) + (dist*crz*crz*crz*crz*crz*-1.921e-13) + (crz*crz*crz*crz*crz*crz*-5.453e-13);
+		trip_time = math.clamp(trip_time, 10, 480);
+		
+		# if (low air conditioning) {
+		#	trip_fuel = trip_fuel * 0.995;
+		#}
+		# if (total anti-ice) {
+		#	trip_fuel = trip_fuel * 1.045;
+		#} elsif (engine anti-ice) {
+		#	trip_fuel = trip_fuel * 1.02;
+		#}
+		
+		zfw = FMGCInternal.zfw;
+		landing_weight_correction = 9.951e+00 + (dist*-2.064e+00) + (dist*dist*2.030e-03) + (dist*dist*dist*8.179e-08) + (dist*dist*dist*dist*-3.941e-11) + (dist*dist*dist*dist*dist*2.443e-15) + (crz*2.771e+00) + (dist*crz*3.067e-02) + (dist*dist*crz*-1.861e-05) + (dist*dist*dist*crz*2.516e-10) + (dist*dist*dist*dist*crz*5.452e-14) + (crz*crz*-4.483e-02) + (dist*crz*crz*-1.645e-04) + (dist*dist*crz*crz*5.212e-08) + (dist*dist*dist*crz*crz*-8.721e-13) + (crz*crz*crz*2.609e-04) + (dist*crz*crz*crz*3.898e-07) + (dist*dist*crz*crz*crz*-4.617e-11) + (crz*crz*crz*crz*-6.488e-07) + (dist*crz*crz*crz*crz*-3.390e-10) + (crz*crz*crz*crz*crz*5.835e-10);
+		trip_fuel = trip_fuel + (landing_weight_correction * (FMGCInternal.lw * 1000 - 121254.24421) / 2204.622622);
+		trip_fuel = math.clamp(trip_fuel, 400, 80000);
 
-        FMGCInternal.tripFuel = trip_fuel / 1000;
-        if (num(trip_time) >= 60) {
-            trip_min = int(math.mod(trip_time, 60));
-            trip_hour = int((trip_time - trip_min) / 60);
-            FMGCInternal.tripTime = sprintf("%02d", trip_hour) ~ sprintf("%02d", trip_min);
-        } else {
-            FMGCInternal.tripTime = sprintf("%04d", trip_time);
-        }
-    } else {
-        FMGCInternal.tripFuel = 0.0;
-        FMGCInternal.tripTime = "0000";
-    }
-    
-    # Calculate reserve fuel
-    if (FMGCInternal.rteRsvSet) {
-        if (num(FMGCInternal.tripFuel) <= 0.0) {
-            FMGCInternal.rtePercent = 0.0;
-        } else {
-            if (num(FMGCInternal.rteRsv / FMGCInternal.tripFuel * 100.0) <= 15.0) {
-                FMGCInternal.rtePercent = num(FMGCInternal.rteRsv / FMGCInternal.tripFuel * 100.0);
-            } else {
-                FMGCInternal.rtePercent = 15.0; # need reasearch on this value
-            }
-        }
-    } elsif (FMGCInternal.rtePercentSet) {
-        FMGCInternal.rteRsv = num(FMGCInternal.tripFuel * FMGCInternal.rtePercent / 100.0);
-    } else {
-        if (num(FMGCInternal.tripFuel) <= 0.0) {
-            FMGCInternal.rtePercent = 5.0;
-        } else {
-            FMGCInternal.rteRsv = num(FMGCInternal.tripFuel * FMGCInternal.rtePercent / 100.0);
-        }
-    }
-    
-    # Misc fuel claclulations
-    if (fmgc.FMGCInternal.blockCalculating) {
-        FMGCInternal.block = num(FMGCInternal.altFuel + FMGCInternal.finalFuel + FMGCInternal.tripFuel + FMGCInternal.rteRsv + FMGCInternal.taxiFuel);
-        FMGCInternal.blockSet = 1;
-    }
-    fmgc.FMGCInternal.fob = num(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000);
-    fmgc.FMGCInternal.fuelPredGw = num(pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000);
-    fmgc.FMGCInternal.cg = fmgc.FMGCInternal.zfwcg;
-    
-    # Calcualte extra fuel
-    if (num(pts.Engines.Engine.n1Actual[0].getValue()) > 0 or num(pts.Engines.Engine.n1Actual[1].getValue()) > 0) {
-        extra_fuel = 1000 * num(FMGCInternal.fob - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
-    } else {
-        extra_fuel = 1000 * num(FMGCInternal.block - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
-    }
-    FMGCInternal.extraFuel = extra_fuel / 1000;
-    lw = 1000 * FMGCInternal.lw;
-    extra_time = extra_fuel / (2.0 * ((lw*lw*-2e-10) + (lw*0.0003) + 2.8903)); # x2 for 2 engines
-    extra_time = math.clamp(extra_time, 0, 480);
-    
-    if (num(extra_time) >= 60) {
-        extra_min = int(math.mod(extra_time, 60));
-        extra_hour = int((extra_time - extra_min) / 60);
-        FMGCInternal.extraTime = sprintf("%02d", extra_hour) ~ sprintf("%02d", extra_min);
-    } else {
-        FMGCInternal.extraTime = sprintf("%04d", extra_time);
-    }
-    if (FMGCInternal.extraFuel > -0.1 and FMGCInternal.extraFuel < 0.1) {
-        FMGCInternal.extraFuel = 0.0;
-    }
-    
-    FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
-    FMGCNodes.tow.setValue(FMGCInternal.tow * LB2KG * 1000);
+		FMGCInternal.tripFuel = trip_fuel / 1000;
+		if (num(trip_time) >= 60) {
+			trip_min = int(math.mod(trip_time, 60));
+			trip_hour = int((trip_time - trip_min) / 60);
+			FMGCInternal.tripTime = sprintf("%02d", trip_hour) ~ sprintf("%02d", trip_min);
+		} else {
+			FMGCInternal.tripTime = sprintf("%04d", trip_time);
+		}
+	} else {
+		FMGCInternal.tripFuel = 0.0;
+		FMGCInternal.tripTime = "0000";
+	}
+	
+	# Calculate reserve fuel
+	if (FMGCInternal.rteRsvSet) {
+		if (num(FMGCInternal.tripFuel) <= 0.0) {
+			FMGCInternal.rtePercent = 0.0;
+		} else {
+			if (num(FMGCInternal.rteRsv / FMGCInternal.tripFuel * 100.0) <= 15.0) {
+				FMGCInternal.rtePercent = num(FMGCInternal.rteRsv / FMGCInternal.tripFuel * 100.0);
+			} else {
+				FMGCInternal.rtePercent = 15.0; # need reasearch on this value
+			}
+		}
+	} elsif (FMGCInternal.rtePercentSet) {
+		FMGCInternal.rteRsv = num(FMGCInternal.tripFuel * FMGCInternal.rtePercent / 100.0);
+	} else {
+		if (num(FMGCInternal.tripFuel) <= 0.0) {
+			FMGCInternal.rtePercent = 5.0;
+		} else {
+			FMGCInternal.rteRsv = num(FMGCInternal.tripFuel * FMGCInternal.rtePercent / 100.0);
+		}
+	}
+	
+	# Misc fuel claclulations
+	if (fmgc.FMGCInternal.blockCalculating) {
+		FMGCInternal.block = num(FMGCInternal.altFuel + FMGCInternal.finalFuel + FMGCInternal.tripFuel + FMGCInternal.rteRsv + FMGCInternal.taxiFuel);
+		FMGCInternal.blockSet = 1;
+	}
+	fmgc.FMGCInternal.fob = num(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000);
+	fmgc.FMGCInternal.fuelPredGw = num(pts.Fdm.JSBSim.Inertia.weightLbs.getValue() / 1000);
+	fmgc.FMGCInternal.cg = fmgc.FMGCInternal.zfwcg;
+	
+	# Calcualte extra fuel
+	if (num(pts.Engines.Engine.n1Actual[0].getValue()) > 0 or num(pts.Engines.Engine.n1Actual[1].getValue()) > 0) {
+		extra_fuel = 1000 * num(FMGCInternal.fob - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
+	} else {
+		extra_fuel = 1000 * num(FMGCInternal.block - FMGCInternal.tripFuel - FMGCInternal.minDestFob - FMGCInternal.taxiFuel - FMGCInternal.rteRsv);
+	}
+	FMGCInternal.extraFuel = extra_fuel / 1000;
+	lw = 1000 * FMGCInternal.lw;
+	extra_time = extra_fuel / (2.0 * ((lw*lw*-2e-10) + (lw*0.0003) + 2.8903)); # x2 for 2 engines
+	extra_time = math.clamp(extra_time, 0, 480);
+	
+	if (num(extra_time) >= 60) {
+		extra_min = int(math.mod(extra_time, 60));
+		extra_hour = int((extra_time - extra_min) / 60);
+		FMGCInternal.extraTime = sprintf("%02d", extra_hour) ~ sprintf("%02d", extra_min);
+	} else {
+		FMGCInternal.extraTime = sprintf("%04d", extra_time);
+	}
+	if (FMGCInternal.extraFuel > -0.1 and FMGCInternal.extraFuel < 0.1) {
+		FMGCInternal.extraFuel = 0.0;
+	}
+	
+	FMGCInternal.tow = num(FMGCInternal.zfw + FMGCInternal.block - FMGCInternal.taxiFuel);
+	FMGCNodes.tow.setValue(FMGCInternal.tow * LB2KG * 1000);
 }
 
 ############################

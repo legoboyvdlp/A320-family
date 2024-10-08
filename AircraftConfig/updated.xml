@@ -34,7 +34,7 @@
 		
 		<text>
 			<halign>left</halign>
-			<label>The Aircraft Config has detected that your aircraft was installed for the first time, or updated successfully!</label>
+			<label>Aircraft Config has detected that your aircraft was installed for the first time, or updated successfully!</label>
 		</text>
 		
 		<group>

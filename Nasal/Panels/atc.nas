@@ -82,7 +82,7 @@ var Transponder = {
 				me.setMode(4); # on
 			}
 		} else if (me.mode >= 3) {
-			if (pts.Fdm.JSBsim.Position.wow.getBoolValue()) {
+			if (pts.Fdm.JSBSim.Position.wow.getBoolValue()) {
 				if (me.knobNode.getValue() != 3) {
 					me.setMode(3); # gnd
 				}

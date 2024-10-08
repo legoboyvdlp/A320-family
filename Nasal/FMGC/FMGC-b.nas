@@ -154,17 +154,17 @@ var Output = {
 	ap1Temp: 0,
 	ap2: props.globals.initNode("/it-autoflight/output/ap2", 0, "BOOL"),
 	ap2Temp: 0,
-	apprArm: props.globals.initNode("/it-autoflight/output/appr-armed", 0, "BOOL"),
 	athr: props.globals.initNode("/it-autoflight/output/athr", 0, "BOOL"),
 	athrTemp: 0,
 	fd1: props.globals.initNode("/it-autoflight/output/fd1", 1, "BOOL"),
 	fd1Temp: 0,
 	fd2: props.globals.initNode("/it-autoflight/output/fd2", 1, "BOOL"),
 	fd2Temp: 0,
+	gsArm: props.globals.initNode("/it-autoflight/output/gs-arm", 0, "BOOL"),
 	lat: props.globals.initNode("/it-autoflight/output/lat", 5, "INT"),
 	latTemp: 5,
-	lnavArm: props.globals.initNode("/it-autoflight/output/lnav-armed", 0, "BOOL"),
-	locArm: props.globals.initNode("/it-autoflight/output/loc-armed", 0, "BOOL"),
+	lnavArm: props.globals.initNode("/it-autoflight/output/lnav-arm", 0, "BOOL"),
+	locArm: props.globals.initNode("/it-autoflight/output/loc-arm", 0, "BOOL"),
 	thrMode: props.globals.initNode("/it-autoflight/output/thr-mode", 2, "INT"),
 	vert: props.globals.initNode("/it-autoflight/output/vert", 7, "INT"),
 	vertTemp: 7,
@@ -232,9 +232,9 @@ var ITAF = {
 		Output.athr.setBoolValue(0);
 		Output.fd1.setBoolValue(1);
 		Output.fd2.setBoolValue(1);
-		me.updateLnavArm(0);
-		me.updateLocArm(0);
-		me.updateApprArm(0);
+		Output.lnavArm.setBoolValue(0);
+		Output.locArm.setBoolValue(0);
+		Output.gsArm.setBoolValue(0);
 		Output.thrMode.setValue(0);
 		Output.lat.setValue(9);
 		Output.vert.setValue(9);
@@ -246,7 +246,7 @@ var ITAF = {
 		Input.kts.setValue(100);
 		Input.mach.setValue(0.5);
 		Text.spd.setValue("THRUST");
-		updateFma.arm();
+		UpdateFma.arm();
 		me.updateLatText("");
 		me.updateVertText("");
 		Custom.showHdg.setBoolValue(1);
@@ -262,8 +262,21 @@ var ITAF = {
 		slowLoopTimer.start();
 	},
 	loop: func() {
+		Gear.wow1Temp = Gear.wow1.getBoolValue();
+		Gear.wow2Temp = Gear.wow2.getBoolValue();
 		Output.latTemp = Output.lat.getValue();
 		Output.vertTemp = Output.vert.getValue();
+		
+		# Trip system off
+		if (Output.ap1Temp or Output.ap2Temp) { # Trip AP off
+			if (abs(Controls.aileron.getValue()) >= 0.2 or abs(Controls.elevator.getValue()) >= 0.2 or abs(Controls.rudder.getValue()) >= 0.2 or abs(Controls.aileron2.getValue()) >= 0.2 or abs(Controls.elevator2.getValue()) >= 0.2 or abs(Controls.rudder2.getValue()) >= 0.2) {
+				fcu.apOff("hard", 0);
+			}
+		}
+		
+		if ((systems.FADEC.n1Mode[0].getValue() > 0 or systems.FADEC.n1Mode[1].getValue() > 0) and Output.athr.getBoolValue()) {
+			fcu.athrOff("hard");
+		}
 		
 		# LNAV Reversion
 		if (Output.lat.getValue() == 1) { # Only evaulate the rest of the condition if we are in LNAV mode
@@ -277,8 +290,6 @@ var ITAF = {
 			me.checkRadioReversion(Output.latTemp, Output.vertTemp);
 		}
 		
-		Gear.wow1Temp = Gear.wow1.getBoolValue();
-		Gear.wow2Temp = Gear.wow2.getBoolValue();
 		Output.ap1Temp = Output.ap1.getBoolValue();
 		Output.ap2Temp = Output.ap2.getBoolValue();
 		Output.latTemp = Output.lat.getValue();
@@ -299,8 +310,8 @@ var ITAF = {
 		}
 		
 		# G/S Capture
-		if (Output.apprArm.getBoolValue()) {
-			me.checkAppr(1);
+		if (Output.gsArm.getBoolValue()) {
+			me.checkGs(1);
 		}
 		
 		# Autoland Logic
@@ -373,17 +384,6 @@ var ITAF = {
 				Custom.showHdg.setBoolValue(0);
 			}
 		}
-		
-		# Misc
-		if (Output.ap1Temp == 1 or Output.ap2Temp == 1) { # Trip AP off
-			if (abs(Controls.aileron.getValue()) >= 0.2 or abs(Controls.elevator.getValue()) >= 0.2 or abs(Controls.rudder.getValue()) >= 0.2 or abs(Controls.aileron2.getValue()) >= 0.2 or abs(Controls.elevator2.getValue()) >= 0.2 or abs(Controls.rudder2.getValue()) >= 0.2) {
-				fcu.apOff("hard", 0);
-			}
-		}
-		
-		if ((systems.FADEC.n1Mode[0].getValue() > 0 or systems.FADEC.n1Mode[1].getValue() > 0) and Output.athr.getBoolValue()) {
-			fcu.athrOff("hard");
-		}
 	},
 	slowLoop: func() {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
@@ -434,9 +434,9 @@ var ITAF = {
 		if (s == 1) {
 			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and FMGCNodes.Power.FMGC1Powered.getBoolValue() and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100 and Position.airborne5Secs.getBoolValue()) {
 				Output.ap1.setBoolValue(1);
-				me.updateFma();
+				me.UpdateFma();
 				Output.latTemp = Output.lat.getValue();
-				if (Output.ap2.getBoolValue() and !Output.apprArm.getBoolValue() and Output.latTemp != 2 and Output.latTemp != 4) {
+				if (Output.ap2.getBoolValue() and !Output.gsArm.getBoolValue() and Output.latTemp != 2 and Output.latTemp != 4) {
 					me.ap2Master(0);
 				}
 				Sound.enableApOff = 1;
@@ -446,19 +446,20 @@ var ITAF = {
 			Output.ap1.setBoolValue(0);
 			me.apOffFunction();
 		}
+		fmaAp();
+		
 		Output.ap1Temp = Output.ap1.getBoolValue();
 		if (Input.ap1.getBoolValue() != Output.ap1Temp) {
 			Input.ap1.setBoolValue(Output.ap1Temp);
 		}
-		fmaAp();
 	},
 	ap2Master: func(s) {
 		if (s == 1) {
 			if (Output.vert.getValue() != 6 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and FMGCNodes.Power.FMGC2Powered.getBoolValue() and fbw.FBW.apOff == 0 and Position.gearAglFt.getValue() >= 100 and Position.airborne5Secs.getBoolValue()) {
 				Output.ap2.setBoolValue(1);
-				me.updateFma();
+				me.UpdateFma();
 				Output.latTemp = Output.lat.getValue();
-				if (Output.ap1.getBoolValue() and !Output.apprArm.getBoolValue() and Output.latTemp != 2 and Output.latTemp != 4) {
+				if (Output.ap1.getBoolValue() and !Output.gsArm.getBoolValue() and Output.latTemp != 2 and Output.latTemp != 4) {
 					me.ap1Master(0);
 				}
 				Sound.enableApOff = 1;
@@ -468,15 +469,17 @@ var ITAF = {
 			Output.ap2.setBoolValue(0);
 			me.apOffFunction();
 		}
+		fmaAp();
+		
 		Output.ap2Temp = Output.ap2.getBoolValue();
 		if (Input.ap2.getBoolValue() != Output.ap2Temp) {
 			Input.ap2.setBoolValue(Output.ap2Temp);
 		}
-		fmaAp();
 	},
 	apOffFunction: func() {
 		if (!Output.ap1.getBoolValue() and !Output.ap2.getBoolValue()) { # Only do if both APs are off
-			me.updateFma();
+			me.UpdateFma();
+			
 			if (Sound.enableApOff) {
 				Sound.apOff.setBoolValue(1);
 				Sound.enableApOff = 0;
@@ -499,11 +502,12 @@ var ITAF = {
 				Custom.Sound.enableAthrOff = 0;
 			}
 		}
+		fmaAthr();
+		
 		Output.athrTemp = Output.athr.getBoolValue();
 		if (Input.athr.getBoolValue() != Output.athrTemp) {
 			Input.athr.setBoolValue(Output.athrTemp);
 		}
-		fmaAthr();
 	},
 	fd1Master: func(s) {
 		if (s == 1) {
@@ -517,14 +521,15 @@ var ITAF = {
 		} else {
 			Output.fd1.setBoolValue(0);
 			if (!Output.fd2.getBoolValue()) {
-				me.updateFma();
+				me.UpdateFma();
 			}
 		}
+		fmaFd();
+		
 		Output.fd1Temp = Output.fd1.getBoolValue();
 		if (Input.fd1.getBoolValue() != Output.fd1Temp) {
 			Input.fd1.setBoolValue(Output.fd1Temp);
 		}
-		fmaFd();
 	},
 	fd2Master: func(s) {
 		if (s == 1) {
@@ -538,21 +543,22 @@ var ITAF = {
 		} else {
 			Output.fd2.setBoolValue(0);
 			if (!Output.fd1.getBoolValue()) {
-				me.updateFma();
+				me.UpdateFma();
 			}
 		}
+		fmaFd();
+		
 		Output.fd2Temp = Output.fd2.getBoolValue();
 		if (Input.fd2.getBoolValue() != Output.fd2Temp) {
 			Input.fd2.setBoolValue(Output.fd2Temp);
 		}
-		fmaFd();
 	},
 	setLatMode: func(n) {
 		Output.vertTemp = Output.vert.getValue();
 		if (n == 0) { # HDG SEL
 			me.updateLnavArm(0);
 			me.updateLocArm(0);
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.lat.setValue(0);
 			Custom.showHdg.setBoolValue(1);
 			me.updateLatText("HDG");
@@ -561,7 +567,7 @@ var ITAF = {
 			}
 		} else if (n == 1) { # LNAV
 			me.updateLocArm(0);
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			me.checkLnav(0);
 		} else if (n == 2) { # VOR/LOC
 			me.updateLnavArm(0);
@@ -569,7 +575,7 @@ var ITAF = {
 		} else if (n == 3) { # HDG HLD
 			me.updateLnavArm(0);
 			me.updateLocArm(0);
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			me.syncHdg();
 			Output.lat.setValue(0);
 			Custom.showHdg.setBoolValue(1);
@@ -580,21 +586,21 @@ var ITAF = {
 		} else if (n == 4) { # ALIGN
 			me.updateLnavArm(0);
 			me.updateLocArm(0);
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.lat.setValue(4);
 			Custom.showHdg.setBoolValue(0);
 			me.updateLatText("ALGN");
 		} else if (n == 5) { # RWY
 			me.updateLnavArm(0);
 			me.updateLocArm(0);
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.lat.setValue(5);
 			Custom.showHdg.setBoolValue(0);
 			me.updateLatText("T/O");
 		} else if (n == 9) { # NONE
 			me.updateLnavArm(0);
 			me.updateLocArm(0);
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.lat.setValue(9);
 			Custom.showHdg.setBoolValue(1);
 			me.updateLatText("");
@@ -620,7 +626,7 @@ var ITAF = {
 		if (n == 0) { # ALT HLD
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.vert.setValue(0);
 			me.resetClimbRateLim();
 			me.updateVertText("ALT HLD");
@@ -630,18 +636,18 @@ var ITAF = {
 			if (abs(Input.altDiff) >= 25) {
 				Internal.flchActive = 0;
 				Internal.altCaptureActive = 0;
-				me.updateApprArm(0);
+				me.updateGsArm(0);
 				Output.vert.setValue(1);
 				me.updateVertText("V/S");
 				me.syncVs();
 				me.updateThrustMode();
 			} else {
-				me.updateApprArm(0);
+				me.updateGsArm(0);
 			}
 		} else if (n == 2) { # G/S
 			me.updateLnavArm(0);
 			me.checkLoc(0);
-			me.checkAppr(0);
+			me.checkGs(0);
 		} else if (n == 3) { # ALT CAP
 			Internal.flchActive = 0;
 			Output.vert.setValue(0);
@@ -650,7 +656,7 @@ var ITAF = {
 			me.updateVertText("ALT CAP");
 			me.updateThrustMode();
 		} else if (n == 4) { # FLCH
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.vert.setValue(1);
 			Internal.alt.setValue(Input.alt.getValue());
 			Internal.altDiff = Internal.alt.getValue() - Position.indicatedAltitudeFt.getValue();
@@ -672,31 +678,31 @@ var ITAF = {
 			if (abs(Input.altDiff) >= 25) {
 				Internal.flchActive = 0;
 				Internal.altCaptureActive = 0;
-				me.updateApprArm(0);
+				me.updateGsArm(0);
 				Output.vert.setValue(5);
 				me.updateVertText("FPA");
 				me.syncFpa();
 				me.updateThrustMode();
 			} else {
-				me.updateApprArm(0);
+				me.updateGsArm(0);
 			}
 		} else if (n == 6) { # FLARE/ROLLOUT
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.vert.setValue(6);
 			me.updateVertText("FLARE");
 			me.updateThrustMode();
 		} else if (n == 7) { # T/O CLB or G/A CLB, text is set by TOGA selector
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.vert.setValue(7);
 			me.updateThrustMode();
 		} else if (n == 9) { # NONE
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.vert.setValue(9);
 			me.updateVertText("");
 			me.updateThrustMode();
@@ -734,7 +740,7 @@ var ITAF = {
 		if (Output.lat.getValue() != 1) {
 			me.updateLnavArm(0);
 			me.updateLocArm(0);
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.lat.setValue(1);
 			Custom.showHdg.setBoolValue(0);
 			me.updateLatText("LNAV");
@@ -756,7 +762,7 @@ var ITAF = {
 		if (Output.vert.getValue() != 2) {
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 			Output.vert.setValue(2);
 			me.updateVertText("G/S");
 			me.updateThrustMode();
@@ -807,19 +813,19 @@ var ITAF = {
 			me.updateLocArm(0);
 		}
 	},
-	checkAppr: func(t) {
+	checkGs: func(t) {
 		if (Radio.inRange.getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
 			Radio.gsDeflTemp = Radio.gsDefl.getValue();
 			if (abs(Radio.gsDeflTemp) <= 0.2 and Radio.gsDeflTemp != 0 and Output.lat.getValue() == 2) { # Only capture if LOC is active
 				me.activateGs();
 			} else if (t != 1) { # Do not do this if loop calls it
 				if (Output.vert.getValue() != 2) {
-					me.updateApprArm(1);
+					me.updateGsArm(1);
 				}
 			}
 		} else {
 			Radio.signalQuality.setValue(0); # Prevent bad behavior due to FG not updating it when not in range
-			me.updateApprArm(0);
+			me.updateGsArm(0);
 		}
 	},
 	checkRadioReversion: func(l, v) { # Revert mode if signal lost
@@ -895,7 +901,7 @@ var ITAF = {
 		Input.fpaAbs.setValue(abs(math.clamp(math.round(Internal.fpaTemp, 0.1), -9.9, 9.9)));
 	},
 	# Custom Stuff Below
-	updateFma: func() {
+	UpdateFma: func() {
 		if (!Output.ap1.getBoolValue() and !Output.ap2.getBoolValue() and !Output.fd1.getBoolValue() and !Output.fd2.getBoolValue()) {
 			me.setLatMode(9);
 			me.setVertMode(9);
@@ -925,7 +931,7 @@ var ITAF = {
 		me.updateLocArm(0);
 	},
 	disarmAppr: func() {
-		me.updateApprArm(0);
+		me.updateGsArm(0);
 	},
 	toggleTrkFpa: func() {
 		if (Custom.trkFpa.getBoolValue()) {
@@ -948,7 +954,7 @@ var ITAF = {
 		} else if (Input.hdgCalc < 1) { # It's rounded, so this is ok. Otherwise do < 0.5
 			Input.hdgCalc = Input.hdgCalc + 360;
 		}
-		updateFma.lat();
+		UpdateFma.lat();
 		Input.hdg.setValue(Input.hdgCalc);
 	},
 	trkFpaOff: func() {
@@ -965,28 +971,28 @@ var ITAF = {
 		} else if (Input.hdgCalc < 1) { # It's rounded, so this is ok. Otherwise do < 0.5
 			Input.hdgCalc = Input.hdgCalc + 360;
 		}
-		updateFma.lat();
+		UpdateFma.lat();
 		Input.hdg.setValue(Input.hdgCalc);
 	},
 	updateLatText: func(t) {
 		Text.lat.setValue(t);
-		updateFma.lat();
+		UpdateFma.lat();
 	},
 	updateVertText: func(t) {
 		Text.vert.setValue(t);
-		updateFma.vert();
+		UpdateFma.vert();
 	},
 	updateLnavArm: func(n) {
 		Output.lnavArm.setBoolValue(n);
-		updateFma.arm();
+		UpdateFma.arm();
 	},
 	updateLocArm: func(n) {
 		Output.locArm.setBoolValue(n);
-		updateFma.arm();
+		UpdateFma.arm();
 	},
-	updateApprArm: func(n) {
-		Output.apprArm.setBoolValue(n);
-		updateFma.arm();
+	updateGsArm: func(n) {
+		Output.gsArm.setBoolValue(n);
+		UpdateFma.arm();
 	},
 };
 

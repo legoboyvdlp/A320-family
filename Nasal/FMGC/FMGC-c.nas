@@ -255,7 +255,7 @@ var loopFMA = maketimer(0.05, func() {
 });
 
 # Master FMA
-var updateFma = {
+var UpdateFma = {
 	lat: func() {
 		latText = Text.lat.getValue();
 		if (latText == "HDG") {
@@ -326,7 +326,7 @@ var updateFma = {
 		} else {
 			setFmaText("rollModeArmed", " ", genericCallback, "rollModeArmedTime");
 		}
-		if (Output.apprArm.getBoolValue()) {
+		if (Output.gsArm.getBoolValue()) {
 			setFmaText("pitchModeArmed", "G/S", genericCallback, "pitchModeArmedTime");
 		} else {
 			setFmaText("pitchModeArmed", " ", genericCallback, "pitchModeArmedTime");

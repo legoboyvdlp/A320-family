@@ -10,6 +10,14 @@
 	
 	<channel name="Electrical Sources" execrate="8">
 		
+		<!-- IDG Ratio Select -->
+		<switch name="/systems/electrical/sources/idg-ratio"> <!-- Because NEO has high N2 -->
+			<default value="90.298"/> <!-- 1% N2 RPM value * 0.604 -->
+			<test value="80.609">
+				/options/neo eq 1
+			</test>
+		</switch>
+		
 		<!-- Battery 1 -->
 		<fcs_function name="/systems/electrical/sources/bat-1/volt">
 			<function>
@@ -495,7 +503,7 @@
 		<!-- IDG 1 -->
 		<pure_gain name="/systems/electrical/sources/idg-1/drive-rpm-input">
 			<input>/engines/engine[0]/n2-actual</input>
-			<gain>90.298</gain> <!-- 1% N2 RPM value * 0.604 -->
+			<gain>/systems/electrical/sources/idg-ratio</gain>
 		</pure_gain>
 		
 		<switch name="/systems/electrical/sources/idg-1/working">
@@ -519,7 +527,7 @@
 				</quotient>
 			</function>
 			<clipto>
-				<min>1.315</min>
+				<min>1.261</min>
 				<max>2.667</max>
 			</clipto>
 		</fcs_function>
@@ -580,7 +588,7 @@
 		<!-- IDG 2 -->
 		<pure_gain name="/systems/electrical/sources/idg-2/drive-rpm-input">
 			<input>/engines/engine[1]/n2-actual</input>
-			<gain>90.298</gain> <!-- 1% N2 RPM value * 0.604 -->
+			<gain>/systems/electrical/sources/idg-ratio</gain>
 		</pure_gain>
 		
 		<switch name="/systems/electrical/sources/idg-2/working">
@@ -604,7 +612,7 @@
 				</quotient>
 			</function>
 			<clipto>
-				<min>1.315</min>
+				<min>1.261</min>
 				<max>2.667</max>
 			</clipto>
 		</fcs_function>

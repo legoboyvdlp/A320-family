@@ -47,12 +47,13 @@
 		<object-name>MLGFittingR.Placards</object-name>
 		<object-name>Fuselage.Placards</object-name>
 		<object-name>Wings.Placards</object-name>
-		<object-name>navglass</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Effects/glass</inherits-from>
 		<object-name>Windsheild</object-name>
+		<object-name>navglass</object-name>
+		<object-name>navglass.sharklet</object-name>
 	</effect>
 	
 	<effect>

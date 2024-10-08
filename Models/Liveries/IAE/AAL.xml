@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+	<sim>
+		<model>
+			<livery>
+				<name>American Airlines (N654AW)</name>
+				<texture-fuselage>AAL-fuselage.png</texture-fuselage>
+				<texture-engine>AAL-engine.png</texture-engine>
+				<texture-placards>Fuselage/res/placards.png</texture-placards>
+			</livery>
+		</model>
+	</sim>
+	
+	<options>
+		<engine-name type="string">V2527-A5</engine-name>
+		<model-number type="string">A320-232</model-number>
+		<EIS2 type="bool">1</EIS2>
+		<company-options>
+			<idle-factor>+0.0</idle-factor>
+			<perf-factor>+1.0</perf-factor>
+		</company-options>
+		<model-options>
+			<registration type="string">N654AW</registration>
+			<three-letter type="string">AAL</three-letter>
+			<two-letter type="string">AA</two-letter>
+			<sharklet type="bool">0</sharklet>
+			<wifi-aft type="bool">0</wifi-aft>
+			<wifi-fwd type="bool">1</wifi-fwd>
+		</model-options>
+	</options>
+</PropertyList>

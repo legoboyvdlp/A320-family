@@ -511,6 +511,16 @@
 			<c1>20</c1>
 		</lag_filter>
 		
+		<lag_filter name="/controls/OH/protectors/eng1-n1mode-pos">
+			<input>/controls/OH/protectors/eng1-n1mode</input>
+			<c1>20</c1>
+		</lag_filter>
+		
+		<lag_filter name="/controls/OH/protectors/eng2-n1mode-pos">
+			<input>/controls/OH/protectors/eng2-n1mode</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<lag_filter name="/controls/pneumatics/switches/pack-flow-pos">
 			<input>/controls/pneumatics/switches/pack-flow</input>
 			<c1>20</c1>

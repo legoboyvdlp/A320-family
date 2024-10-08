@@ -174,7 +174,7 @@ var engFireDetectorUnit = {
 			eng2FireWarn.setBoolValue(1);
 		} elsif (system == 2) {
 			apuFireWarn.setBoolValue(1);
-			if (pts.Fdm.JSBsim.Position.wow.getValue() == 1) {
+			if (pts.Fdm.JSBSim.Position.wow.getValue() == 1) {
 				systems.APUController.APU.emergencyStop();
 				settimer(func() { # 3 sec delay - source TTM ATA 26 FIRE PROTECTION p102
 					extinguisherBottles.vector[4].discharge();

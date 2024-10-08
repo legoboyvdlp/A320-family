@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
+
+<PropertyList>
+
+	<name>route-manager</name>
+	<layout>vbox</layout>
+	<pref-width>260</pref-width>
+
+	<group>
+		<layout>hbox</layout>
+		
+		<text>
+			<halign>left</halign>
+			<label>System</label>
+		</text>
+		
+		<empty><stretch>1</stretch></empty>
+		
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+	
+	<group>
+		<layout>vbox</layout>
+		
+		<text>
+			<halign>left</halign>
+			<label>The Route Manager is not supported.</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>Use the MCDU to manage the flightplan.</label>
+		</text>
+		
+		<button>
+			<halign>center</halign>
+			<legend>Open MCDU</legend>
+			<pref-width>200</pref-width>
+			<binding>
+				<command>dialog-show</command>
+				<dialog-name>mcdu1</dialog-name>
+			</binding>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	
+	</group>
+	
+</PropertyList>

@@ -8,11 +8,11 @@
 # Conversion factor pounds to kilogram
 var LBS2KGS = 0.4535924;
 
-if (pts.Sim.aero.getValue() == "A320-200-CFM") {
+if (pts.Sim.aero.getValue() == "FDE/A320-200-CFM") {
 	max_fuel = 42.8;
-} elsif (pts.Sim.aero.getValue() == "A320-200-IAE" or pts.Sim.aero.getValue() == "A320-100-CFM") {
+} elsif (pts.Sim.aero.getValue() == "FDE/A320-200-IAE" or pts.Sim.aero.getValue() == "FDE/A320-100-CFM") {
 	max_fuel = 42.2;
-} elsif (pts.Sim.aero.getValue() == "A320neo-CFM" or pts.Sim.aero.getValue() == "A320neo-PW") {
+} elsif (pts.Sim.aero.getValue() == "FDE/A320neo-CFM" or pts.Sim.aero.getValue() == "FDE/A320neo-PW") {
 	max_fuel = 42.0;
 }
 

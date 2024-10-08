@@ -13,11 +13,11 @@ var fuelSvc = {
 	},
 	
 	newRequest: func() {
-		if (pts.Sim.aero.getValue() == "A320-200-CFM") {
+		if (pts.Sim.aero.getValue() == "FDE/A320-200-CFM") {
 			me.Nodes.requestTotalLbs.setValue(math.max(math.min(pts.Consumables.Fuel.totalFuelLbs.getValue() + me.Nodes.requestLbs.getValue(), 42872), 0));
-		} elsif (pts.Sim.aero.getValue() == "A320-200-IAE" or pts.Sim.aero.getValue() == "A320-100-CFM") {
+		} elsif (pts.Sim.aero.getValue() == "FDE/A320-200-IAE" or pts.Sim.aero.getValue() == "FDE/A320-100-CFM") {
 			me.Nodes.requestTotalLbs.setValue(math.max(math.min(pts.Consumables.Fuel.totalFuelLbs.getValue() + me.Nodes.requestLbs.getValue(), 42214), 0));
-		} elsif (pts.Sim.aero.getValue() == "A320neo-CFM" or pts.Sim.aero.getValue() == "A320neo-PW") {
+		} elsif (pts.Sim.aero.getValue() == "FDE/A320neo-CFM" or pts.Sim.aero.getValue() == "FDE/A320neo-PW") {
 			me.Nodes.requestTotalLbs.setValue(math.max(math.min(pts.Consumables.Fuel.totalFuelLbs.getValue() + me.Nodes.requestLbs.getValue(), 41977), 0));
 		}
 	},
@@ -38,11 +38,11 @@ var fuelSvc = {
 		systems.FUEL.Valves.refuelLeft.setBoolValue(1);
 		systems.FUEL.Valves.refuelRight.setBoolValue(1);
 		
-		if (pts.Sim.aero.getValue() == "A320-200-CFM" and me.Nodes.requestTotalLbs.getValue() > 28229.9) {
+		if (pts.Sim.aero.getValue() == "FDE/A320-200-CFM" and me.Nodes.requestTotalLbs.getValue() > 28229.9) {
 			me._needCenter = 1;
-		} elsif ((pts.Sim.aero.getValue() == "A320-200-IAE" or pts.Sim.aero.getValue() == "A320-100-CFM") and me.Nodes.requestTotalLbs.getValue() > 27591.8) {
+		} elsif ((pts.Sim.aero.getValue() == "FDE/A320-200-IAE" or pts.Sim.aero.getValue() == "FDE/A320-100-CFM") and me.Nodes.requestTotalLbs.getValue() > 27591.8) {
 			me._needCenter = 1;
-		} elsif ((pts.Sim.aero.getValue() == "A320neo-CFM" or pts.Sim.aero.getValue() == "A320neo-PW") and me.Nodes.requestTotalLbs.getValue() > 27357.8) {
+		} elsif ((pts.Sim.aero.getValue() == "FDE/A320neo-CFM" or pts.Sim.aero.getValue() == "FDE/A320neo-PW") and me.Nodes.requestTotalLbs.getValue() > 27357.8) {
 			me._needCenter = 1;
 		} else {
 			me._needCenter = 0;

@@ -107,7 +107,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	clock_int_et.reset();
 	cpt_timer.reset();
 	fo_timer.reset();
-	rudderTrim.rudderTrimDisplay.setValue(sprintf("%2.1f", pts.Fdm.JSBsim.Hydraulics.Rudder.trimDeg.getValue()));
+	rudderTrim.rudderTrimDisplay.setValue(sprintf("%2.1f", pts.Fdm.JSBSim.Hydraulics.Rudder.trimDeg.getValue()));
 	loop.start();
 });
 
@@ -694,7 +694,7 @@ var updateRudderTrim = func() {
 		rudderTrim.rudderTrimDisplay.setValue(sprintf("%2.1f", "88.8"));
 		rudderTrim.rudderTrimDisplayLetter.setValue(sprintf("%1.0f", "8"));
 	} else {
-		rudder_val = pts.Fdm.JSBsim.Hydraulics.Rudder.trimDeg.getValue();
+		rudder_val = pts.Fdm.JSBSim.Hydraulics.Rudder.trimDeg.getValue();
 		if (rudder_val > -0.05 and rudder_val < 0.05) {
 			rudderTrim.rudderTrimDisplay.setValue(sprintf("%2.1f", abs(rudder_val)));
 			rudderTrim.rudderTrimDisplayLetter.setValue("");
