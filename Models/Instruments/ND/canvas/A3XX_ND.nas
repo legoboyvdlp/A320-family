@@ -2,7 +2,7 @@
 # Joshua Davidson (Octal450)
 # Based on work by artix
 
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 var get_local_path = func(file){
 	var aircraft_dir = split("/", getprop("/sim/aircraft-dir"))[-1];

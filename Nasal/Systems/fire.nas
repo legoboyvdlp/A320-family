@@ -1,7 +1,7 @@
 # A3XX Fire System
 # Jonathan Redpath
 
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 var elapsedTime = props.globals.getNode("/sim/time/elapsed-sec");
 var apuTestBtn = props.globals.getNode("/controls/fire/apu-test-btn", 1);
@@ -174,7 +174,7 @@ var engFireDetectorUnit = {
 			eng2FireWarn.setBoolValue(1);
 		} elsif (system == 2) {
 			apuFireWarn.setBoolValue(1);
-			if (pts.Fdm.JSBsim.Position.wow.getValue() == 1) {
+			if (pts.Fdm.JSBSim.Position.wow.getValue() == 1) {
 				systems.APUController.APU.emergencyStop();
 				settimer(func() { # 3 sec delay - source TTM ATA 26 FIRE PROTECTION p102
 					extinguisherBottles.vector[4].discharge();

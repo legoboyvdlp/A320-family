@@ -1,7 +1,7 @@
 # A3XX Fuel System
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 var FUEL = {
 	offset1: 0,
@@ -69,10 +69,10 @@ var FUEL = {
 		me.resetFailures();
 	},
 	setOffsetLeft: func() {
-		me.Quantity.offsetLeft.setValue(me.Quantity.offsetLeft.getValue() - pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[0].getValue());
+		me.Quantity.offsetLeft.setValue(me.Quantity.offsetLeft.getValue() - pts.Fdm.JSBSim.Propulsion.Engine.fuelUsed[0].getValue());
 	},
 	setOffsetRight: func() {
-		me.Quantity.offsetRight.setValue(me.Quantity.offsetRight.getValue() - pts.Fdm.JSBsim.Propulsion.Engine.fuelUsed[1].getValue());
+		me.Quantity.offsetRight.setValue(me.Quantity.offsetRight.getValue() - pts.Fdm.JSBSim.Propulsion.Engine.fuelUsed[1].getValue());
 	}
 };
 

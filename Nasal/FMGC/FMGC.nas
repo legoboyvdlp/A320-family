@@ -1,5 +1,5 @@
 # A3XX FMGC/Autoflight
-# Copyright (c) 2023 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), and Matthew Maring (mattmaring)
+# Copyright (c) 2024 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), and Matthew Maring (mattmaring)
 
 ##################
 # Init Functions #
@@ -311,8 +311,8 @@ var FMGCNodes = {
 	selSpdEnable: props.globals.initNode("/FMGC/internal/sel-spd-enable", 1, "BOOL"),
 	slat: props.globals.getNode("/FMGC/internal/slat"),
 	toFromSet: props.globals.initNode("/FMGC/internal/tofrom-set", 0, "BOOL"),
+	togaSpd: props.globals.getNode("/it-autoflight/settings/toga-spd", 1),
 	toState: props.globals.initNode("/FMGC/internal/to-state", 0, "BOOL"),
-	togaSpd: props.globals.getNode("/it-autoflight/settings/togaspd", 1),
 	tow: props.globals.getNode("/FMGC/internal/tow"),
 	towClean: props.globals.getNode("/FMGC/internal/tow-clean"),
 	towFlap2: props.globals.getNode("/FMGC/internal/flap-2-tow"),
@@ -555,7 +555,7 @@ var updateFuel = func {
 		FMGCInternal.blockSet = 1;
 	}
 	fmgc.FMGCInternal.fob = num(pts.Consumables.Fuel.totalFuelLbs.getValue() / 1000);
-	fmgc.FMGCInternal.fuelPredGw = num(pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000);
+	fmgc.FMGCInternal.fuelPredGw = num(pts.Fdm.JSBSim.Inertia.weightLbs.getValue() / 1000);
 	fmgc.FMGCInternal.cg = fmgc.FMGCInternal.zfwcg;
 	
 	# Calcualte extra fuel
@@ -795,7 +795,7 @@ var masterFMGC = maketimer(0.2, func {
 		}
 	}
 	
-	# Pull speeds from JSBsim
+	# Pull speeds from JSBSim
 	FMGCInternal.vsw = FMGCNodes.vsw.getValue();
 	FMGCInternal.vls = FMGCNodes.vls.getValue();
 	FMGCInternal.vs1g_conf_0 = FMGCNodes.vs1gConf0.getValue();
@@ -815,7 +815,7 @@ var masterFMGC = maketimer(0.2, func {
 	# calculate speeds
 	############################
 	flap = pts.Controls.Flight.flapsPos.getValue();
-	weight_lbs = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() / 1000;
+	weight_lbs = pts.Fdm.JSBSim.Inertia.weightLbs.getValue() / 1000;
 	altitude = pts.Instrumentation.Altimeter.indicatedFt.getValue();
 	
 	if (FMGCInternal.destWindSet and flightPlanController.flightplans[2].destination_runway != nil) {
@@ -900,7 +900,7 @@ var masterFMGC = maketimer(0.2, func {
 	}
 	
 	if (fmgc.FMGCInternal.v2set) {
-		FMGCNodes.togaSpd.setValue(FMGCInternal.v2);
+		FMGCNodes.togaSpd.setValue(FMGCInternal.v2 + 10);
 	} else { # This should never happen, but lets add a fallback just in case
 		FMGCNodes.togaSpd.setValue(FMGCNodes.vls.getValue() + 15);
 	}

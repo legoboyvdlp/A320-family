@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 Libraries -->
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <system name="A320: Libraries">
 	
@@ -28,15 +28,20 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="position/gear-agl-ft">
+		<fcs_function name="position/gear-agl-ft-raw">
 			<function>
 				<difference>
 					<property>/position/altitude-agl-ft</property>
 					<value>17.283</value>
 				</difference>
 			</function>
-			<output>/position/gear-agl-ft</output> <!-- So flight recorder can override it -->
 		</fcs_function>
+		
+		<lag_filter name="position/gear-agl-ft">
+			<input>position/gear-agl-ft-raw</input>
+			<c1>20</c1>
+			<output>/position/gear-agl-ft</output> <!-- So flight recorder can override it -->
+		</lag_filter>
 		
 		<pure_gain name="position/gear-agl-m">
 			<input>position/gear-agl-ft</input>
@@ -59,6 +64,11 @@
 				/engines/engine[0]/state ne 3
 				/engines/engine[1]/state ne 3
 			</test>
+		</switch>
+		
+		<switch name="libraries/dbmr">
+			<default value="0"/>
+			<output>/sim/menubar/default/menu[3]/enabled</output>
 		</switch>
 	
 	</channel>

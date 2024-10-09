@@ -1,5 +1,5 @@
 # A3XX PFD
-# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2024 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var acconfig = props.globals.getNode("/systems/acconfig/autoconfig-running", 1);
 var acconfig_weight_kgs = props.globals.getNode("/systems/acconfig/options/weight-kgs", 1);
@@ -1159,7 +1159,7 @@ var canvas_pfd = {
 		}
 		
 		# ILS
-		if (((me.number == 0 and notification.pfdILS1 == 0) or (me.number == 1 and notification.pfdILS2 == 0)) and (notification.apprArmed or notification.locArmed or notification.autopilotVert == 2)) {
+		if (((me.number == 0 and notification.pfdILS1 == 0) or (me.number == 1 and notification.pfdILS2 == 0)) and (notification.gsArmed or notification.locArmed or notification.autopilotVert == 2)) {
 			if (me.number == 0 and ils_going1 == 0) {
 				ils_going1 = 1;
 				ilsTimer1.start();
@@ -2237,7 +2237,7 @@ var input = {
 	hasLocalizer: "/instrumentation/nav[0]/nav-loc",
 	hasGlideslope: "/instrumentation/nav[0]/has-gs",
 	locArmed: "/it-autoflight/output/loc-armed",
-	apprArmed: "/it-autoflight/output/appr-armed",
+	gsArmed: "/it-autoflight/output/appr-armed",
 	autopilotVert: "/it-autoflight/output/vert",
 	autopilotFPA: "/it-autoflight/input/fpa",
 	autopilotVS: "/it-autoflight/input/vs",

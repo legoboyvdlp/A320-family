@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0"?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) and Matthew Maring (mattmaring) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) and Matthew Maring (mattmaring) -->
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
@@ -8,22 +8,22 @@
 			<fire-services type="bool">0</fire-services>
 		</animation>
 		
-		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Displays), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/mattmaring (Systems, Displays), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
+		<author>Josh Davidson/Octal450 (Flight Dynamics, Systems, Instruments), Jonathan Redpath/legoboyvdlp, merspieler, Matthew Maring/mattmaring (Systems, Instruments), Thorsten Herrmann/TH-555, Semir Gebran/CaptB (3D, Textures)</author>
 		
 		<authors>
 			<author>
 				<name>Josh Davidson</name>
-				<description>Flight Dynamics, Systems, Displays</description>
+				<description>Flight Dynamics, Systems, Instruments</description>
 				<nick>Octal450</nick>
 			</author>
 			<author>
 				<name>Jonathan Redpath</name>
-				<description>Systems, Displays, FMGC</description>
+				<description>Systems, Instruments, FMGC</description>
 				<nick>legoboyvdlp</nick>
 			</author>
 			<author>
-				<name>merspieler</name>
-				<description>Systems, Displays</description>
+				<name>Nia</name>
+				<description>Systems, Instruments</description>
 			</author>
 			<author>
 				<name>Matthew Maring</name>
@@ -42,7 +42,7 @@
 			</author>
 			<author>
 				<name>Andrea Vezzali</name>
-				<description>Systems, Displays</description>
+				<description>Systems, Instruments</description>
 				<nick>vezza</nick>
 			</author>
 		</authors>
@@ -100,7 +100,7 @@
 					<output-property>/fdm/jsbsim/ice/rengine</output-property>
 				</iceable>
 				<iceable>
-					<name>Windshield</name>
+					<name>Windsheild</name>
 					<ice-inches>0.0</ice-inches>
 					<salvage-control>/controls/ice-protection/windowprobeheat-output</salvage-control>
 					<sensitivity type="double">0.5</sensitivity>
@@ -1363,6 +1363,7 @@
 				<igniter-select-1 type="int">0</igniter-select-1>
 				<igniter-select-2 type="int">0</igniter-select-2>
 				<separate-tiller-axis type="bool">0</separate-tiller-axis>
+				<auto-ready-for-takeoff type="bool">0</auto-ready-for-takeoff>
 			</options>
 		</acconfig>
 		<air-conditioning>
@@ -2424,8 +2425,7 @@
 						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
-					<camera-id>1</camera-id>
-					<camera-type>aircraft</camera-type>
+					<camera-id>0</camera-id>
 				</binding>
 				<binding>
 					<condition>
@@ -2470,8 +2470,7 @@
 						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
-					<camera-id>2</camera-id>
-					<camera-type>aircraft</camera-type>
+					<camera-id>1</camera-id>
 				</binding>
 				<binding>
 					<condition>
@@ -2517,8 +2516,7 @@
 						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
-					<camera-id>3</camera-id>
-					<camera-type>aircraft</camera-type>
+					<camera-id>2</camera-id>
 				</binding>
 				<binding>
 					<condition>
@@ -2564,8 +2562,7 @@
 						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
-					<camera-id>4</camera-id>
-					<camera-type>aircraft</camera-type>
+					<camera-id>3</camera-id>
 				</binding>
 				<binding>
 					<condition>
@@ -2611,8 +2608,7 @@
 						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
-					<camera-id>5</camera-id>
-					<camera-type>aircraft</camera-type>
+					<camera-id>4</camera-id>
 				</binding>
 				<binding>
 					<condition>
@@ -2660,8 +2656,7 @@
 						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
-					<camera-id>6</camera-id>
-					<camera-type>aircraft</camera-type>
+					<camera-id>5</camera-id>
 				</binding>
 				<binding>
 					<condition>
@@ -2717,8 +2712,7 @@
 						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
-					<camera-id>7</camera-id>
-					<camera-type>aircraft</camera-type>
+					<camera-id>6</camera-id>
 				</binding>
 				<binding>
 					<condition>
@@ -2753,8 +2747,7 @@
 						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
-					<camera-id>8</camera-id>
-					<camera-type>aircraft</camera-type>
+					<camera-id>7</camera-id>
 				</binding>
 				<!--binding>
 					<condition>
@@ -2800,8 +2793,7 @@
 						<property>/options/system/fgcamera-keys-enabled</property>
 					</condition>
 					<command>fgcamera-select</command>
-					<camera-id>9</camera-id>
-					<camera-type>aircraft</camera-type>
+					<camera-id>8</camera-id>
 				</binding>
 				<!--binding>
 					<condition>
@@ -4859,18 +4851,18 @@
 			<file>Aircraft/A320-family/Nasal/emesary/M_frame_notification.nas</file>
 		</notifications>
 		<pts>
-			<file>Aircraft/A320-family/Nasal/Libraries/property-tree-setup.nas</file>
+			<file>Aircraft/A320-family/Nasal/property-tree-setup.nas</file>
 		</pts>
 		<aircraft>
-			<file>Aircraft/A320-family/Nasal/Libraries/canvasLiv.nas</file>
+			<file>Aircraft/A320-family/Nasal/canvasLiv.nas</file>
 		</aircraft>
 		<libraries>
-			<file>Aircraft/A320-family/Nasal/Libraries/libraries.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/buttons.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/controls-override.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/shake.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/sounds.nas</file>
-			<file>Aircraft/A320-family/Nasal/Libraries/view-controller.nas</file>
+			<file>Aircraft/A320-family/Nasal/libraries.nas</file>
+			<file>Aircraft/A320-family/Nasal/buttons.nas</file>
+			<file>Aircraft/A320-family/Nasal/controls-override.nas</file>
+			<file>Aircraft/A320-family/Nasal/shake.nas</file>
+			<file>Aircraft/A320-family/Nasal/sounds.nas</file>
+			<file>Aircraft/A320-family/Nasal/view-controller.nas</file>
 		</libraries>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
@@ -4963,6 +4955,9 @@
 			<file>Aircraft/A320-family/Nasal/Displays/projection.nas</file>
 			<file>Aircraft/A320-family/Nasal/Displays/traffic.nas</file>
 		</traffic>
+		<cockpit>
+			<file>Aircraft/A320-family/Nasal/cockpit.nas</file>
+		</cockpit>
 		<!-- Canvas -->
 		<canvas_pfd>
 			<file>Aircraft/A320-family/Models/Instruments/PFD/PFD.nas</file>

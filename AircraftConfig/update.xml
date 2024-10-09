@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -37,7 +37,7 @@
 		
 		<text>
 			<halign>left</halign>
-			<label>Attention: Your A320-family is out of date! This means you are missing out on bugfixes, and new features!</label>
+			<label>Attention: The aircraft is out of date! This means you are missing out on bugfixes, and new features!</label>
 		</text>
 		
 		<group>
@@ -86,7 +86,7 @@
 		</text>
 		<text>
 			<halign>left</halign>
-			<label>You will need to restart FlightGear, and install the latest .zip file.</label>
+			<label>You will need to restart FlightGear and install the latest .zip file.</label>
 		</text>
 		
 		<hrule>
@@ -100,7 +100,7 @@
 		
 		<text>
 			<halign>left</halign>
-			<label>GIT users: Please press Remind Me Later, and run a "git pull" command. (or pull using GIT GUI)</label>
+			<label>GIT users: Please press Remind Me Later and run a "git pull" command. (or pull using GIT GUI)</label>
 		</text>
 		<text>
 			<halign>left</halign>

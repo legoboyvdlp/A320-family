@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	<name>Fuselage</name>
@@ -47,12 +47,13 @@
 		<object-name>MLGFittingR.Placards</object-name>
 		<object-name>Fuselage.Placards</object-name>
 		<object-name>Wings.Placards</object-name>
-		<object-name>navglass</object-name>
 	</effect>
 	
 	<effect>
 		<inherits-from>Effects/glass</inherits-from>
 		<object-name>Windsheild</object-name>
+		<object-name>navglass</object-name>
+		<object-name>navglass.sharklet</object-name>
 	</effect>
 	
 	<effect>

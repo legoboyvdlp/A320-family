@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 Spoilers -->
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <system name="A320: Spoilers">
 	
@@ -9,10 +9,27 @@
 	
 	<channel name="Spoiler Logic">
 		
+		<fcs_function name="/controls/flight/speedbrake-fixed"> <!-- Rounds to 4 figures to fix a potential problem -->
+			<function>
+				<quotient>
+					<floor>
+						<sum>
+							<product>
+								<property>/controls/flight/speedbrake</property>
+								<value>10000</value>
+							</product>
+							<value>0.5</value> <!-- Make it round correctly -->
+						</sum>
+					</floor>
+					<value>10000</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
 		<switch name="spoilers/auto-speedbrake-arm"> <!-- Important for spoiler axis -->
 			<default value="/controls/flight/speedbrake-arm"/>
 			<test value="0">
-				/controls/flight/speedbrake gt 0
+				/controls/flight/speedbrake-fixed ge 0.1
 			</test>
 			<output>/controls/flight/speedbrake-arm</output>
 		</switch>
@@ -20,7 +37,7 @@
 		<fcs_function name="spoilers/lever-input">
 			<function>
 				<table>
-					<independentVar lookup="row">/controls/flight/speedbrake</independentVar>
+					<independentVar lookup="row">/controls/flight/speedbrake-fixed</independentVar>
 					<tableData>
 						0.10  0.0
 						0.45  0.5

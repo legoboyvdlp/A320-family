@@ -1,7 +1,7 @@
 # A3XX Autobrake and Braking
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 
 ##########################################################################
@@ -100,7 +100,7 @@ var BrakeSystem =
 		me.R3error = math.round(rand()*(5));
 		me.R4error = math.round(rand()*(5));
 
-		var tatdegc = pts.Fdm.JSBsim.Propulsion.tatC.getValue() or 0;
+		var tatdegc = pts.Fdm.JSBSim.Propulsion.tatC.getValue() or 0;
 
 		me.lBrakeTemp[0].setValue(tatdegc+me.L1error);
 		me.lBrakeTemp[1].setValue(tatdegc+me.L2error);
@@ -126,7 +126,7 @@ var BrakeSystem =
 		dt = me.CurrentTime - me.LastSimTime;
 		LBrakeLevel = notification.leftBrakeFCS;
 		RBrakeLevel = notification.rightBrakeFCS;
-		tatdegc = pts.Fdm.JSBsim.Propulsion.tatC.getValue() or 0;
+		tatdegc = pts.Fdm.JSBSim.Propulsion.tatC.getValue() or 0;
 
 		if (pts.Sim.replayState.getValue() == 0 and dt < 1.0) {
 			#cooling effect: adjust cooling factor by a value proportional to the environment temp (m.CoolingFactor + environment temp-degc * 0.00001)
@@ -170,7 +170,7 @@ var BrakeSystem =
 
 			if (notification.gear1Wow) {
 				var V1 = pts.Velocities.groundspeedKt.getValue();
-				var Mass = pts.Fdm.JSBsim.Inertia.weightLbs.getValue() * me.ScalingDivisor;
+				var Mass = pts.Fdm.JSBSim.Inertia.weightLbs.getValue() * me.ScalingDivisor;
 
 				# absorb some kinetic energy:
 				# dE= 1/2 * m * V1^2 - 1/2 * m * V2^2) 

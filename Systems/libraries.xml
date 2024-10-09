@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
-	<!-- Not in JSBsim, cause then it takes too long to tune -->
+	<!-- Not in JSBSim, cause then it takes too long to tune -->
 	<filter>
 		<name>EPR C1</name>
 		<type>gain</type>
@@ -21,7 +21,7 @@
 						</table>
 					</product>
 					<entry><ind>    0</ind><dep>0.674</dep></entry>
-					<entry><ind>43000</ind><dep>1.120</dep></entry>
+					<entry><ind>45000</ind><dep>1.502</dep></entry>
 				</table>
 			</expression>
 		</input>
@@ -45,20 +45,13 @@
 							</table>
 						</product>
 						<entry><ind>    0</ind><dep>0.9852</dep></entry>
-						<entry><ind>43000</ind><dep>0.8584</dep></entry>
+						<entry><ind>45000</ind><dep>0.6884</dep></entry>
 					</table>
 					<table>
 						<property>/fdm/jsbsim/velocities/mach</property>
 						<entry><ind>0.09</ind><dep>0.000</dep></entry>
-						<entry><ind>0.15</ind><dep>0.016</dep></entry>
-						<entry><ind>0.22</ind><dep>0.022</dep></entry>
-						<entry><ind>1.00</ind><dep>0.010</dep></entry>
-					</table>
-					<table>
-						<property>/fdm/jsbsim/aero/alpha-deg-fixed</property>
-						<entry><ind> 0.0</ind><dep>0.00</dep></entry>
-						<entry><ind> 7.5</ind><dep>0.01</dep></entry>
-						<entry><ind>17.0</ind><dep>0.03</dep></entry>
+						<entry><ind>0.15</ind><dep>0.017</dep></entry>
+						<entry><ind>0.22</ind><dep>0.023</dep></entry>
 					</table>
 				</difference>
 			</expression>
@@ -111,7 +104,7 @@
 		<filter-gain>0.0</filter-gain>
 	</predict-simple>
 	
-	<!-- Because overwriting from JSBsim doesn't work -->
+	<!-- Because overwriting from JSBSim doesn't work -->
 	<filter>
 		<name>Engine 1 Cutoff</name>
 		<type>gain</type>

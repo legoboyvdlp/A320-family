@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 Aerodynamics -->
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <aerodynamics>
 	
@@ -59,9 +59,9 @@
 				<property>aero/function/kCLge</property>
 				<table>
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
-					<independentVar lookup="column">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="column">velocities/mach</independentVar>
 					<tableData>
-						         0       43000
+						         0.2     0.9
 						-9.8475 -0.5652 -0.5935
 						-2.0912  0.0625  0.0656
 						-0.0098  0.2386  0.2505
@@ -550,16 +550,15 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
 				<property>aero/beta-deg</property>
-				<value>0.44</value>
 				<table>
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
 					<tableData>
-						-4.4412 -0.0034
-						-2.2116 -0.0038
-						 0.1900 -0.0040
-						 2.4828 -0.0043
-						 4.9473 -0.0043
-						 6.1394 -0.0044
+						-4.4412 -0.00150
+						-2.2116 -0.00167
+						 0.1900 -0.00176
+						 2.4828 -0.00189
+						 4.9473 -0.00189
+						 6.1394 -0.00194
 					</tableData>
 				</table>
 			</product>
@@ -657,7 +656,7 @@
 				<table>
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
 					<tableData>
-						-9.4468  0.1997
+						-9.4468  0.1897
 						-6.3284  0.1313
 						-5.4416  0.1101
 						-4.3131  0.0870
@@ -674,7 +673,8 @@
 						 8.5212 -0.0736
 						 9.8677 -0.0851
 						11.3179 -0.1017
-						20.1549 -0.2027
+						20.1549 -0.1727
+						45.4566  0.0154
 					</tableData>
 				</table>
 			</product>
@@ -700,7 +700,7 @@
 				<property>metrics/cbarw-ft</property>
 				<property>aero/ci2vel</property>
 				<property>aero/alphadot-rad_sec</property>
-				<value>-0.94671</value>
+				<value>-11.2539</value>
 			</product>
 		</function>
 		
@@ -733,7 +733,7 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
 				<toradians><property>hydraulics/stabilizer/final-deg</property></toradians>
-				<value>-2.575</value>
+				<value>-2.366</value>
 			</product>
 		</function>
 		
@@ -766,15 +766,14 @@
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
 				<property>aero/beta-deg</property>
-				<value>0.44</value>
 				<table>
 					<independentVar lookup="row">aero/alpha-deg</independentVar>
 					<tableData>
-						-4.7093  0.0045
-						-2.2164  0.0048
-						 0.2903  0.0044
-						 2.9836  0.0041
-						 5.5629  0.0047
+						-4.7093  0.00198
+						-2.2164  0.00211
+						 0.2903  0.00194
+						 2.9836  0.00180
+						 5.5629  0.00207
 					</tableData>
 				</table>
 			</product>

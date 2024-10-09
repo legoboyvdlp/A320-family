@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 <!-- CFM56 engine -->
 
 <PropertyList include="A320-main.xml">
@@ -8,7 +8,7 @@
 	<sim>
 		<description>Airbus A320-214 (CFM56-5B4)</description>
 		<flight-model>jsb</flight-model>
-		<aero>A320-200-CFM</aero>
+		<aero>FDE/A320-200-CFM</aero>
 		<variant-of>A320-200-IAE</variant-of>
 		<model>
 			<path>Aircraft/A320-family/Models/A320-200-CFM.xml</path>
@@ -30,11 +30,11 @@
 			<internal archive="y">true</internal>
 			<config>
 				<x-offset-m archive="y">-0.45</x-offset-m>
-				<y-offset-m archive="y">0.545</y-offset-m>
+				<y-offset-m archive="y">1.403</y-offset-m>
 				<z-offset-m archive="y">-16.193</z-offset-m>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
-				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
+				<pitch-offset-deg archive="y">-16</pitch-offset-deg>
 				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
@@ -45,11 +45,11 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.45</x-offset-m>
-				<y-offset-m archive="y">0.545</y-offset-m>
+				<y-offset-m archive="y">1.403</y-offset-m>
 				<z-offset-m archive="y">-16.193</z-offset-m>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
-				<pitch-offset-deg archive="y">-14.6</pitch-offset-deg>
+				<pitch-offset-deg archive="y">-16</pitch-offset-deg>
 				<roll-offset-deg archive="y">0</roll-offset-deg>
 			</config>
 		</view>
@@ -60,8 +60,8 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0</x-offset-m>
-				<y-offset-m archive="y">0.545</y-offset-m>
-				<z-offset-m archive="y">-16.163</z-offset-m>
+				<y-offset-m archive="y">1.366</y-offset-m>
+				<z-offset-m archive="y">-16.183</z-offset-m>
 				<default-field-of-view-deg type="double">115</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
 				<pitch-offset-deg archive="y">65.5</pitch-offset-deg>
@@ -75,7 +75,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.0</x-offset-m>
-				<y-offset-m archive="y">0.545</y-offset-m>
+				<y-offset-m archive="y">1.366</y-offset-m>
 				<z-offset-m archive="y">-16.593</z-offset-m>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
@@ -90,7 +90,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.0</x-offset-m>
-				<y-offset-m archive="y">0.545</y-offset-m>
+				<y-offset-m archive="y">1.366</y-offset-m>
 				<z-offset-m archive="y">-16.243</z-offset-m>
 				<default-field-of-view-deg type="double">63</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
@@ -105,7 +105,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">0.0</x-offset-m>
-				<y-offset-m archive="y">0.545</y-offset-m>
+				<y-offset-m archive="y">1.403</y-offset-m>
 				<z-offset-m archive="y">-16.193</z-offset-m>
 				<default-field-of-view-deg type="double">52</default-field-of-view-deg>
 				<heading-offset-deg archive="y">0</heading-offset-deg>
@@ -120,7 +120,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">-2.18</x-offset-m>
-				<y-offset-m archive="y">0.488</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">-6.79</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">117.488</heading-offset-deg>
@@ -135,7 +135,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">2.18</x-offset-m>
-				<y-offset-m archive="y">0.488</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">-6.79</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">242.512</heading-offset-deg>
@@ -150,7 +150,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">-2.20</x-offset-m>
-				<y-offset-m archive="y">0.448</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">-1.69</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">111</heading-offset-deg>
@@ -165,7 +165,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">2.20</x-offset-m>
-				<y-offset-m archive="y">0.448</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">-1.69</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">249</heading-offset-deg>
@@ -180,7 +180,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">-2.13</x-offset-m>
-				<y-offset-m archive="y">0.450</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">3.2</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">70</heading-offset-deg>
@@ -196,7 +196,7 @@
 			<config>
 				<from-model type="bool">true</from-model>
 				<x-offset-m archive="y">2.13</x-offset-m>
-				<y-offset-m archive="y">0.450</y-offset-m>
+				<y-offset-m archive="y">1.319</y-offset-m>
 				<z-offset-m archive="y">3.2</z-offset-m>
 				<default-field-of-view-deg type="double">85</default-field-of-view-deg>
 				<heading-offset-deg archive="y">290</heading-offset-deg>
@@ -225,12 +225,14 @@
 		<eng type="string">CFM</eng>
 		<eng-int type="int">0</eng-int>
 		<engine-name type="string">CFM56-5B4</engine-name>
+		<ign-run-n2 type="int">58</ign-run-n2>
 		<maxblock type="double">52.3</maxblock>
 		<maxflap type="int">35</maxflap>
 		<model-number type="string">A320-214</model-number>
 		<model-options>
 			<sharklet type="bool">0</sharklet>
 		</model-options>
+		<neo type="bool">0</neo>
 	</options>
 	
 	<systems n="0">

@@ -1,19 +1,16 @@
-# A320-family
+# A320-family - Development on hold
+
+Main development is on hold awaiting refactoring. However, this is the newest version and still receives fixes and minor improvements.
+
 A very advanced simulation of the Airbus A320 Family for FlightGear.
 
-- Flight Dynamics: Josh Davidson (Octal450)</label>
-- Systems: Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), merspieler, Matthew Maring (mattmaring)</label>
-- Displays: Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp), merspieler, Matthew Maring (mattmaring)</label>
-- 3D/Textures: Thorsten Herrmann (TH-555), Semir Gebran (CaptB)</label>
-
 Present pack includes the following Airbus A320 Family variants:
-- A320-214
-- A320-232
-- A320-251N
-- A320-271N
+- A320-214 (CFM56)
+- A320-232 (IAE V2500)
+- A320-251N (CFM Leap)
+- A320-271N (PW1100G)
 
-
-You can find a Checklist to download and print [here](https://raw.githubusercontent.com/legoboyvdlp/A320-family/dev/checklist.pdf)
+You can find a Checklist to download and print [here](https://raw.githubusercontent.com/legoboyvdlp/A320-family/dev/Docs/checklist.pdf)
 
 ## Navdata
 It is highly reccomended to purchase a NAVIGRAPH subscription and download their level d FMSDATA / waypoint / navaid data! If you do not wish to do that, there is older data linked below. But it won't have most of the newer procedures, and is only for a limited number of airports, as naturally it is not possible to distribute commercial data. If runway numbering changed, it is quite possible that it will not work due to FlightGear limitations in the routing code.
@@ -132,6 +129,7 @@ NOTE: These are external tools so make sure to check their terms of use
 * [Take off performance calculator (excel)](https://forums.flightsimlabs.com/index.php?/files/file/763-a320-takeoff-and-landing-performance-calculator/)
 * [Take off performance calculator (.exe -- different to above) ](http://www.avsimrus.com/f/for-pilots-19/popular-calculator-to-calculate-takeoff-parameters-in-from-airbus-type-36340.html)
 * [Air Berlin Normal Checklist](https://forums.flightsimlabs.com/index.php?/files/file/778-airberlin-normal-procedures-checklist/)
+* [Navdata hosted by jojo2357](https://github.com/jojo2357/flightgear-star-sid-manager)
 * [Navdata hosted by pinto](https://github.com/l0k1/fg-navaiddata)
 * [A320 Normal Procedures](https://www.theairlinepilots.com/forumarchive/a320/a320-normal-procedures.pdf)
 * [A319/A320 Concise Checklist](https://forums.x-plane.org/index.php?/files/file/50904-toliss-a319-concise-checklist-pdf/) (you will need a free xplane.org account)

@@ -142,8 +142,8 @@
 			<property>sim/multiplay/generic/bool[0]</property>
 		</condition>
 		<offsets>
-			<x-m>2.35</x-m>
-			<z-m>1.25</z-m>
+			<x-m>2.30</x-m>
+			<z-m>1.20</z-m>
 		</offsets>
 	</model>
 	
@@ -154,9 +154,9 @@
 			<property>sim/multiplay/generic/bool[0]</property>
 		</condition>
 		<offsets>
-			<x-m>-6.0</x-m>
+			<x-m>-5.95</x-m>
 			<y-m>1.05</y-m>
-			<z-m>1.25</z-m>
+			<z-m>1.45</z-m>
 		</offsets>
 	</model>
 	
@@ -167,9 +167,9 @@
 			<property>sim/multiplay/generic/bool[0]</property>
 		</condition>
 		<offsets>
-			<x-m>-6.0</x-m>
+			<x-m>-5.95</x-m>
 			<y-m>-1.05</y-m>
-			<z-m>1.25</z-m>
+			<z-m>1.45</z-m>
 		</offsets>
 	</model>
 	

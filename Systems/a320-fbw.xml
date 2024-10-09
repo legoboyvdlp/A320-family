@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 FBW -->
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <system name="A320: FBW">
 	
@@ -81,10 +81,10 @@
 		<fcs_function name="fbw/alpha-stall-deg"> <!-- Not used, for reference only -->
 			<function>
 				<table>
-					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="row">velocities/mach</independentVar>
 					<tableData>
-						    0  15.5
-						43000   8.3
+						0.2  15.5
+						0.9   8.3
 					</tableData>
 				</table>
 			</function>
@@ -93,18 +93,18 @@
 		<fcs_function name="fbw/alpha-prot-deg">
 			<function>
 				<table>
-					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="row">velocities/mach</independentVar>
 					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
 					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
 					<tableData breakPoint="0">
-						       0    10    15    20    35
-						21000  8.6  11.5  11.0  11.0  10.5
-						43000  7.4   7.4   7.4   7.4   7.4
+						      0    10    15    20    35
+						0.55  8.6  11.5  11.0  11.0  10.5
+						0.90  7.4   7.4   7.4   7.4   7.4
 					</tableData>
 					<tableData breakPoint="18">
-						       0     10    15    20    35
-						21000  11.0  11.5  11.0  11.0  10.5
-						43000   7.4   7.4   7.4   7.4   7.4
+						      0     10    15    20    35
+						0.55  11.0  11.5  11.0  11.0  10.5
+						0.90   7.4   7.4   7.4   7.4   7.4
 					</tableData>
 				</table>
 			</function>
@@ -113,10 +113,10 @@
 		<fcs_function name="fbw/protections/alpha-prot-b">
 			<function>
 				<table>
-					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="row">velocities/mach</independentVar>
 					<tableData>
-						21000  0.10
-						43000  0.05
+						0.55  0.10
+						0.90  0.05
 					</tableData>
 				</table>
 			</function>
@@ -145,10 +145,10 @@
 				<difference>
 					<property>fbw/alpha-prot-deg</property>
 					<table>
-						<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+						<independentVar lookup="row">velocities/mach</independentVar>
 						<tableData>
-							21000  2
-							43000  1
+							0.55  2
+							0.90  1
 						</tableData>
 					</table>
 				</difference>
@@ -158,20 +158,20 @@
 		<fcs_function name="fbw/alpha-max-deg">
 			<function>
 				<table>
-					<independentVar lookup="row">atmosphere/density-altitude</independentVar>
+					<independentVar lookup="row">velocities/mach</independentVar>
 					<independentVar lookup="column">fcs/flap-pos-deg</independentVar>
 					<independentVar lookup="table">fcs/slat-pos-deg</independentVar>
 					<tableData breakPoint="0">
-						       0     10    15
-						    0  11.7  15.0  14.5
-						21000  11.4  11.4  11.4
-						43000   7.8   7.8   7.8
+						      0     10    15
+						0.20  11.7  15.0  14.5
+						0.55  11.4  11.4  11.4
+						0.90   7.8   7.8   7.8
 					</tableData>
 					<tableData breakPoint="18">
-						       0     10    15
-						    0  15.0  15.0  14.5
-						21000  11.4  11.4  11.4
-						43000   7.8   7.8   7.8
+						      0     10    15
+						0.20  15.0  15.0  14.5
+						0.55  11.4  11.4  11.4
+						0.90   7.8   7.8   7.8
 					</tableData>
 				</table>
 			</function>
@@ -1995,6 +1995,21 @@
 			</test>
 		</switch>
 		
+		<switch name="fbw/pitch/out-of-trim">
+			<default value="fbw/pitch/out-of-trim"/>
+			<test logic="OR" value="0">
+				fbw/pitch/gain-switch gt 0
+			</test>
+			<test logic="OR" value="1">
+				fbw/pitch/pid-switched ge 0.025
+				fbw/pitch/pid-switched le -0.025
+			</test>
+			<test logic="AND" value="0">
+				fbw/pitch/pid-switched lt 0.01
+				fbw/pitch/pid-switched gt -0.01
+			</test>
+		</switch>
+		
 		<switch name="fbw/pitch/autotrim-switch">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -2002,7 +2017,8 @@
 				/position/gear-agl-ft ge fbw/pitch/autotrim-height
 				attitude/roll-rad lt 0.628319
 				attitude/roll-rad gt -0.628319
-				fbw/pitch/pid-switched ge 0.01
+				fbw/pitch/out-of-trim eq 1
+				fbw/pitch/pid-switched gt 0.001
 				fbw/pitch/load-factor ge 0.5
 				fbw/protections/overspeed ne 1
 				position/wow eq 0
@@ -2014,7 +2030,8 @@
 				/position/gear-agl-ft ge fbw/pitch/autotrim-height
 				attitude/roll-rad lt 0.628319
 				attitude/roll-rad gt -0.628319
-				fbw/pitch/pid-switched le -0.01
+				fbw/pitch/out-of-trim eq 1
+				fbw/pitch/pid-switched lt -0.001
 				fbw/pitch/load-factor ge 0.5
 				fbw/protections/overspeed ne 1
 				position/wow eq 0
@@ -2034,7 +2051,7 @@
 						<table>
 							<independentVar lookup="row">fbw/pitch/pid-switched</independentVar>
 							<tableData>
-								0.05  0.00001
+								0.01  0.00001
 								0.30  0.00015
 							</tableData>
 						</table>
@@ -2049,7 +2066,7 @@
 							<independentVar lookup="row">fbw/pitch/pid-switched</independentVar>
 							<tableData>
 								-0.30 -0.00015
-								-0.05 -0.00001
+								-0.01 -0.00001
 							</tableData>
 						</table>
 						<value>0.0</value>

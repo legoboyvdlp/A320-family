@@ -1,5 +1,5 @@
 # A320 Property Tree Setup
-# Copyright (c) 2023 Josh Davidson (Octal450) and Jonathan Redpath
+# Copyright (c) 2024 Josh Davidson (Octal450) and Jonathan Redpath
 # Nodes organized like property tree, except when lots of identical (example: Gear wow), where vectors are used to make it easier
 # Anything that says Temp is set by another file to avoid multiple getValue calls
 # Usage Example: pts.Class.SubClass.node.getValue()
@@ -104,7 +104,7 @@ var Environment = {
 };
 
 var Fdm = {
-	JSBsim: {
+	JSBSim: {
 		Aero: {
 			alpha: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg"),
 			alphaNorm: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg-fixed"),
@@ -140,7 +140,8 @@ var Fdm = {
 		Propulsion: {
 			Engine: {
 				fuelUsed: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/fuel-used-lbs"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/fuel-used-lbs")],
-				reverserAngle: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/reverser-angle-rad"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/reverser-angle-rad")],
+				n1: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/n1"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/n1"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[2]/n1")],
+				n2: [props.globals.getNode("/fdm/jsbsim/propulsion/engine[0]/n2"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[1]/n2"), props.globals.getNode("/fdm/jsbsim/propulsion/engine[2]/n2")],
 			},
 			setRunning: props.globals.getNode("/fdm/jsbsim/propulsion/set-running"),
 			tatC: props.globals.getNode("/fdm/jsbsim/propulsion/tat-c"),

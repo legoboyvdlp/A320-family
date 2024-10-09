@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
+	
 	<name>A320-200</name>
-
+	
+	<offsets>
+		<z-m>0.83109</z-m>
+	</offsets>
+	
 	<model>
 		<name>FuselageContainer</name>
 		<path>Aircraft/A320-family/Models/Fuselage/fuselage.xml</path>
@@ -20,6 +25,7 @@
 	<animation>
 		<type>select</type>
 		<object-name>Sharklet</object-name>
+		<object-name>navglass.sharklet</object-name>
 		<condition>
 			<property>sim/multiplay/generic/int[12]</property>
 		</condition>
@@ -28,6 +34,7 @@
 	<animation>
 		<type>select</type>
 		<object-name>WingtipFence</object-name>
+		<object-name>navglass</object-name>
 		<condition>
 			<not><property>sim/multiplay/generic/int[12]</property></not>
 		</condition>

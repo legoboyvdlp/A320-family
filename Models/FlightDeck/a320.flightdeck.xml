@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -10,9 +10,9 @@
 		<type>translate</type>
 		<property>systems/shake/shaking</property>
 		<axis>
-			<x1-m>0.0</x1-m>
-			<y1-m>0.0</y1-m>
-			<z1-m>0.0</z1-m>
+			<x1-m>0</x1-m>
+			<y1-m>0</y1-m>
+			<z1-m>0</z1-m>
 			<x2-m>0.5</x2-m>
 			<y2-m>-0.5</y2-m>
 			<z2-m>0.8</z2-m>
@@ -3521,17 +3521,23 @@
 		<type>select</type>
 		<object-name>ovh_eng_cfm.plug</object-name>
 		<condition>
-			<equals>
+			<not-equals>
 				<property>options/eng</property>
-				<value>CFM</value>
-			</equals>
+				<value>IAE</value>
+			</not-equals>
 		</condition>
 	</animation>
 	
 	<animation>
 		<type>select</type>
-		<object-name>ovh_eng_iae.plug</object-name>
+		<object-name>Eng1N1Btn</object-name>
+		<object-name>Eng1N1Btn2O</object-name>
+		<object-name>Eng1N1Prot</object-name>
+		<object-name>Eng2N1Btn</object-name>
+		<object-name>Eng2N1Btn2O</object-name>
+		<object-name>Eng2N1Prot</object-name>
 		<object-name>glare_ovh_eng_iae.plug</object-name>
+		<object-name>ovh_eng_iae.plug</object-name>
 		<condition>
 			<equals>
 				<property>options/eng</property>
@@ -6932,11 +6938,11 @@
 							<value>2</value>
 						</equals>
 						<equals>
-							<property>it-autoflight/output/loc-armed</property>
+							<property>it-autoflight/output/loc-arm</property>
 							<value>1</value>
 						</equals>
 					</or>
-					<not><property>it-autoflight/output/appr-armed</property></not>
+					<not><property>it-autoflight/output/gs-arm</property></not>
 					<not-equals>
 						<property>it-autoflight/output/vert</property>
 						<value>2</value>
@@ -7592,7 +7598,7 @@
 		<condition>
 			<or>
 				<property>controls/switches/annun-test</property>
-				<property>it-autoflight/output/appr-armed</property>
+				<property>it-autoflight/output/gs-arm</property>
 				<equals>
 					<property>it-autoflight/output/vert</property>
 					<value>2</value>
@@ -8495,19 +8501,6 @@
 			<object-name>brakes_accum_psi.axis</object-name>
     	</axis>
     </animation>
-	
-	<!-- Brake Lighting -->
-	<animation>
-		<name>Triple brake indicator lighting</name>
-		<type>material</type>
-		<object-name>brakes_body</object-name>
-		<emission>
-			<red>0.3</red>
-			<green>0.3</green>
-			<blue>0.3</blue>
-			<factor-prop>sim/model/lights/dome-light</factor-prop>
-		</emission>
-	</animation>
 	
 	<!-- IESI -->
 	<animation>
@@ -35052,7 +35045,12 @@
 		<object-name>ExtPwrBtn1A</object-name>
 		<condition>
 			<or>
-				<property>controls/electrical/switches/ground-cart</property>
+				<and>
+					<property>controls/electrical/switches/ground-cart</property>
+					<not>
+						<property>controls/electrical/switches/ext-pwr</property>
+					</not>
+				</and>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -36944,7 +36942,7 @@
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng1guard-lbl</tooltip-id>
-				<label>Engine 1 man start guard</label>
+				<label>Engine 1 manual engine start guard</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -36978,7 +36976,7 @@
 				</condition>
 				<command>set-tooltip</command>
 				<tooltip-id>eng2guard-lbl</tooltip-id>
-				<label>Engine 2 man start guard</label>
+				<label>Engine 2 manual engine start guard</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -37117,8 +37115,8 @@
 					<property>/options/system/toggle-tooltips</property>
 				</condition>
 				<command>set-tooltip</command>
-				<tooltip-id>eng1start-lbl</tooltip-id>
-				<label>Engine 1 manual engine start pushbutton</label>
+				<tooltip-id>eng2start-lbl</tooltip-id>
+				<label>Engine 2 manual engine start pushbutton</label>
 			</binding>
 		</hovered>
 	</animation>
@@ -37170,6 +37168,267 @@
 		<condition>
 			<or>
 				<property>controls/engines/engine[1]/start-switch</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- Manual Start -->
+	<animation>
+		<type>knob</type>
+		<object-name>Eng1N1Prot</object-name>
+		<property>controls/OH/protectors/eng1-n1mode-pos</property>
+		<drag-direction>vertical</drag-direction>
+		<factor>145</factor>
+		<axis>
+			<object-name>Eng1N1Prot.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/OH/protectors/eng1-n1mode</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
+				<command>set-tooltip</command>
+				<tooltip-id>eng1guard-lbl</tooltip-id>
+				<label>Engine 1 N1 mode guard</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>knob</type>
+		<object-name>Eng2N1Prot</object-name>
+		<property>controls/OH/protectors/eng2-n1mode-pos</property>
+		<drag-direction>vertical</drag-direction>
+		<factor>145</factor>
+		<axis>
+			<object-name>Eng2N1Prot.axis</object-name>
+		</axis>
+		<action>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/OH/protectors/eng2-n1mode</property>
+				<value>0</value>
+				<value>1</value>
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("sim/sound/btn1", 1);</script>
+			</binding>
+		</action>
+		<hovered>
+			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
+				<command>set-tooltip</command>
+				<tooltip-id>eng2guard-lbl</tooltip-id>
+				<label>Engine 2 N1 mode guard</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>Eng1N1Btn</object-name>
+		<object-name>Eng1N1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>controls/OH/protectors/eng1-n1mode</property>
+							<value>1</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<command>property-toggle</command>
+				<property>fdm/jsbsim/fadec/control-1/n1-mode-sw</property>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng1-n1mode</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng1-n1mode</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/cockpit/eng1n1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/eng1-n1mode</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/cockpit/eng1n1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
+				<command>set-tooltip</command>
+				<tooltip-id>eng1start-lbl</tooltip-id>
+				<label>Engine 1 N1 mode pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>Eng2N1Btn</object-name>
+		<object-name>Eng2N1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>controls/OH/protectors/eng2-n1mode</property>
+							<value>1</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+				<command>property-toggle</command>
+				<property>fdm/jsbsim/fadec/control-2/n1-mode-sw</property>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng2-n1mode</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>nasal</command>
+				<script>libraries.pushbutton();</script>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/eng2-n1mode</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>property-assign</command>
+				<property>controls/cockpit/eng2n1-translate</property>
+				<value>0.00075</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<condition>
+						<equals>
+							<property>controls/OH/protectors/eng2-n1mode</property>
+							<value>1</value>
+						</equals>
+					</condition>
+					<command>property-assign</command>
+					<property>controls/cockpit/eng2n1-translate</property>
+					<value>0.0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<hovered>
+			<binding>
+				<condition>
+					<property>/options/system/toggle-tooltips</property>
+				</condition>
+				<command>set-tooltip</command>
+				<tooltip-id>eng2start-lbl</tooltip-id>
+				<label>Engine 2 N1 mode pushbutton</label>
+			</binding>
+		</hovered>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Eng1N1Btn</object-name>
+		<object-name>Eng1N1Btn2O</object-name>
+		<property>controls/cockpit/eng1n1-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>translate</type>
+		<object-name>Eng2N1Btn</object-name>
+		<object-name>Eng2N1Btn2O</object-name>
+		<property>controls/cockpit/eng2n1-translate</property>
+		<axis>
+			<x1-m>-0.013161</x1-m>
+			<y1-m>0.187244</y1-m>
+			<z1-m>0.947975</z1-m>
+			<x2-m>-0.013724</x2-m>
+			<y2-m>0.187437</y2-m>
+			<z2-m>0.949416</z2-m>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>Eng1N1Btn2O</object-name>
+		<condition>
+			<or>
+				<property>fdm/jsbsim/fadec/control-1/n1-mode-sw</property>
+				<property>controls/switches/annun-test</property>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>Eng2N1Btn2O</object-name>
+		<condition>
+			<or>
+				<property>fdm/jsbsim/fadec/control-2/n1-mode-sw</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -43373,7 +43632,6 @@
 		<object-name>ddrmi_vor_adf_flag_1</object-name>
 		<object-name>ddrmi_vor_adf_flag_2</object-name>
 		<object-name>ddrmi_hdg_flag</object-name>
-		<object-name>brakes_body</object-name>
 		<object-name>clock_body</object-name>
 		<object-name>et_knob</object-name>
 		<object-name>clock_knob</object-name>
@@ -43431,61 +43689,6 @@
 		<object-name>dcduScreenL</object-name>
 		<object-name>dcduScreenR</object-name>
 	</effect>
-	
-	
-	
-	
-	<animation>
-		<type>knob</type>
-        <object-name>map_lt_left</object-name>
-        <property>controls/lighting/map-light-left-knb</property>
-		<factor>180</factor>
-		<offset-deg>-90</offset-deg>
-        <axis>
-			<x1-m>-0.392313</x1-m>
-			<y1-m>-0.645853</y1-m>
-			<z1-m>0.41149</z1-m>
-			<x2-m>-0.387715</x2-m>
-			<y2-m>-0.644105</y2-m>
-			<z2-m>0.401322</z2-m>
-		</axis>
-        <action>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/lighting/map-light-left-knb</property>
-                <factor>0.05</factor>
-                <min>0</min>
-                <max>1</max>                
-                <wrap>false</wrap>
-            </binding>
-        </action>
-	</animation>
-
-	<animation>
-		<type>knob</type>
-        <object-name>map_lt_right</object-name>
-        <property>controls/lighting/map-light-right-knb</property>
-		<factor>180</factor>
-		<offset-deg>-90</offset-deg>
-        <axis>
-			<x1-m>-0.392313</x1-m>
-			<y1-m>0.645853</y1-m>
-			<z1-m>0.41149</z1-m>
-			<x2-m>-0.387715</x2-m>
-			<y2-m>0.644105</y2-m>
-			<z2-m>0.401322</z2-m>
-		</axis>
-        <action>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/lighting/map-light-right-knb</property>
-                <factor>0.05</factor>
-                <min>0</min>
-                <max>1</max>                
-                <wrap>false</wrap>
-            </binding>
-        </action>
-	</animation>
 	
 	<!-- Compositor Lighting -->
 	<light>

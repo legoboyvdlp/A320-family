@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
@@ -15,6 +15,9 @@
 	<model>
 		<name>EnginesCFM</name>
 		<path>Aircraft/A320-family/Models/Fuselage/a320.cfm.xml</path>
+		<offsets>
+			<z-m>0.83109</z-m>
+		</offsets>
 	</model>
 
 	<animation>

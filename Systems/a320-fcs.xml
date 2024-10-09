@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 FCS -->
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <system name="A320: FCS">
 	
@@ -461,7 +461,7 @@
 	<channel name="Stabilizer">
 		
 		<switch name="hydraulics/stabilizer/rate">
-			<default value="0"/> <!-- only mechanical input to hyd actuator. So it does need hydraulic power -->
+			<default value="0"/> <!-- Only mechanical input to hyd actuator. So it does need hydraulic power -->
 			<test value="0">
 				/systems/failures/fctl/ths-jam eq 1
 			</test>
@@ -472,17 +472,14 @@
 			</test>
 		</switch>
 		
-		<aerosurface_scale name="hydraulics/stabilizer/cmd-deg">
+		<pure_gain name="hydraulics/stabilizer/cmd-deg">
 			<input>/controls/flight/elevator-trim</input>
-			<domain>
-				<min>-1.0</min>
-				<max>0.296296</max>
-			</domain>
-			<range>
+			<gain>13.5</gain>
+			<clipto>
 				<min>-13.5</min>
 				<max>4.0</max>
-			</range>
-		</aerosurface_scale>
+			</clipto>
+		</pure_gain>
 		
 		<actuator name="hydraulics/stabilizer/final-actuator">
 			<input>hydraulics/stabilizer/cmd-deg</input>
@@ -659,22 +656,39 @@
 	
 	<channel name="SFCC"> <!-- 40 for IAE, 35 for CFM/PW is simulated here properly, do NOT change it into seperate unless you like buggy behavior! -->
 		
+		<fcs_function name="/controls/flight/flaps-fixed"> <!-- Rounds to 4 figures to fix a potential problem -->
+			<function>
+				<quotient>
+					<floor>
+						<sum>
+							<product>
+								<property>/controls/flight/flaps</property>
+								<value>10000</value>
+							</product>
+							<value>0.5</value> <!-- Make it round correctly -->
+						</sum>
+					</floor>
+					<value>10000</value>
+				</quotient>
+			</function>
+		</fcs_function>
+		
 		<switch name="/controls/flight/flaps-input">
 			<default value="0"/> <!-- 0 -->
 			<test logic="AND" value="1"> <!-- 1/1+F -->
-				/controls/flight/flaps ge 0.2
-				/controls/flight/flaps lt 0.4
+				/controls/flight/flaps-fixed ge 0.2
+				/controls/flight/flaps-fixed lt 0.4
 			</test>
 			<test logic="AND" value="2"> <!-- 2 -->
-				/controls/flight/flaps ge 0.4
-				/controls/flight/flaps lt 0.6
+				/controls/flight/flaps-fixed ge 0.4
+				/controls/flight/flaps-fixed lt 0.6
 			</test>
 			<test logic="AND" value="3"> <!-- 3 -->
-				/controls/flight/flaps ge 0.6
-				/controls/flight/flaps lt 0.8
+				/controls/flight/flaps-fixed ge 0.6
+				/controls/flight/flaps-fixed lt 0.8
 			</test>
 			<test logic="AND" value="4"> <!-- FULL -->
-				/controls/flight/flaps ge 0.8
+				/controls/flight/flaps-fixed ge 0.8
 			</test>
 			<output>/controls/flight/flaps-input-out</output>
 		</switch>
@@ -705,25 +719,25 @@
 		<switch name="/controls/flight/flaps-pos"> <!-- Split 1 and 1+F -->
 			<default value="0"/> <!-- 0 -->
 			<test logic="AND" value="1"> <!-- 1 -->
-				/controls/flight/flaps ge 0.2
-				/controls/flight/flaps lt 0.4
+				/controls/flight/flaps-fixed ge 0.2
+				/controls/flight/flaps-fixed lt 0.4
 				/controls/flight/flaps-1f-enable ne 1
 			</test>
 			<test logic="AND" value="2"> <!-- 1+F -->
-				/controls/flight/flaps ge 0.2
-				/controls/flight/flaps lt 0.4
+				/controls/flight/flaps-fixed ge 0.2
+				/controls/flight/flaps-fixed lt 0.4
 				/controls/flight/flaps-1f-enable eq 1
 			</test>
 			<test logic="AND" value="3"> <!-- 2 -->
-				/controls/flight/flaps ge 0.4
-				/controls/flight/flaps lt 0.6
+				/controls/flight/flaps-fixed ge 0.4
+				/controls/flight/flaps-fixed lt 0.6
 			</test>
 			<test logic="AND" value="4"> <!-- 3 -->
-				/controls/flight/flaps ge 0.6
-				/controls/flight/flaps lt 0.8
+				/controls/flight/flaps-fixed ge 0.6
+				/controls/flight/flaps-fixed lt 0.8
 			</test>
 			<test logic="AND" value="5"> <!-- FULL -->
-				/controls/flight/flaps ge 0.8
+				/controls/flight/flaps-fixed ge 0.8
 			</test>
 			<output>/controls/flight/flaps-input-out</output>
 		</switch>
@@ -1212,17 +1226,17 @@
 						0 -75 -45 -15  -4  0  0   4  15  45  75
 						1 -75 -45 -15  -4  0  0   4  15  45  75
 					</tableData>
-					<tableData breakPoint="20.0">
+					<tableData breakPoint="20">
 						  -75 -66 -40 -20 -1  1  20  40  66  75
 						0 -75 -45 -15  -4  0  0   4  15  45  75
 						1 -75 -45 -15  -4  0  0   4  15  45  75
 					</tableData>
-					<tableData breakPoint="40.0">
+					<tableData breakPoint="40">
 						  -75  0  75
 						0  -6  0  6
 						1  -6  0  6
 					</tableData>
-					<tableData breakPoint="130.0">
+					<tableData breakPoint="130">
 						  -75  0  75
 						0   0  0  0
 						1   0  0  0

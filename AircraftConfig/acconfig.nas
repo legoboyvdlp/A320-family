@@ -1,7 +1,7 @@
 # Aircraft Config Center
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 var spinning = maketimer(0.05, func {
 	var spinning = getprop("/systems/acconfig/spinning");
@@ -42,6 +42,7 @@ var failResetOld = func {
 
 failResetOld();
 
+print("System: Initializing " ~ getprop("/sim/aircraft"));
 setprop("/systems/acconfig/autoconfig-running", 0);
 setprop("/systems/acconfig/spinning", 0);
 setprop("/systems/acconfig/spin", "-");
@@ -52,7 +53,7 @@ setprop("/systems/acconfig/mismatch-code", "0x000");
 setprop("/systems/acconfig/mismatch-reason", "XX");
 setprop("/systems/acconfig/options/keyboard-mode", 0);
 setprop("/systems/acconfig/options/fgcamera-keys-enabled", 0);
-setprop("/systems/acconfig/options/weight-kgs", 1);
+setprop("/systems/acconfig/options/weight-kgs", 0);
 setprop("/systems/acconfig/options/adirs-skip", 0);
 setprop("/systems/acconfig/options/toggle-tooltips", 0);
 setprop("/systems/acconfig/options/allow-oil-consumption", 0);
@@ -89,7 +90,7 @@ init_dlg.open();
 http.load("/https://raw.githubusercontent.com/legoboyvdlp/A320-family/dev/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
 var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
-print("A320-family Revision: " ~ current_revision);
+print("System: Version " ~ current_revision);
 setprop("/systems/acconfig/revision", current_revision);
 
 var SYSTEM = { # Prepare for migration to ACCONFIG V2
@@ -189,6 +190,10 @@ setlistener("/sim/signals/fdm-initialized", func {
 	}
 	
 	spinning.stop();
+
+	if (getprop("/systems/acconfig/options/auto-ready-for-takeoff") == 1) {
+		acconfig.takeoff();
+	}
 });
 
 setlistener("/sim/signals/exit", func {
@@ -316,8 +321,8 @@ var colddark = func {
 		# Initial shutdown, and reinitialization.
 		setprop("/services/chocks/enable", 1);
 		setprop("/controls/ignition/start-sw", 1);
-		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
-		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
+		systems.IGNITION.fastStop(0);
+		systems.IGNITION.fastStop(1);
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
@@ -337,7 +342,7 @@ var colddark = func {
 		setprop("/controls/lighting/overhead-panel-knb", 0);
 		atc.transponderPanel.modeSwitch(1);
 		libraries.systemsInit();
-		libraries.variousReset();
+		cockpit.variousReset();
 		failResetOld();
 		if (getprop("/engines/engine[1]/n2-actual") < 2) {
 			colddark_b();
@@ -376,15 +381,15 @@ var beforestart = func {
 		# First, we set everything to cold and dark.
 		setprop("/services/chocks/enable", 1);
 		setprop("/controls/ignition/start-sw", 1);
-		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
-		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
+		systems.IGNITION.fastStop(0);
+		systems.IGNITION.fastStop(1);
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
 		setprop("/controls/gear/lever", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
-		libraries.variousReset();
+		cockpit.variousReset();
 		setprop("/controls/oxygen/cockpit-oxygen-supply-pb", 1);
 		failResetOld();
 		
@@ -473,15 +478,15 @@ var taxi = func {
 		# First, we set everything to cold and dark.
 		setprop("/services/chocks/enable", 0);
 		setprop("/controls/ignition/start-sw", 1);
-		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
-		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
+		systems.IGNITION.fastStop(0);
+		systems.IGNITION.fastStop(1);
 		setprop("/controls/flight/flaps", 0);
 		pts.Controls.Flight.speedbrakeArm.setValue(0);
 		setprop("/controls/flight/speedbrake", 0);
 		setprop("/controls/gear/lever", 1);
 		setprop("/controls/flight/elevator-trim", 0);
 		libraries.systemsInit();
-		libraries.variousReset();
+		cockpit.variousReset();
 		setprop("/controls/oxygen/cockpit-oxygen-supply-pb", 1);
 		failResetOld();
 		
@@ -571,7 +576,7 @@ var taxi_c = func {
 	systems.IGNITION.fastStart(1);
 	settimer(func {
 		taxi_d();
-	}, 10);
+	}, 5);
 }
 var taxi_d = func {
 	if (getprop("/systems/acconfig/autoconfig-running") == 0) {
@@ -585,7 +590,9 @@ var taxi_d = func {
 	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);
 	ps_load_dlg.close();
-	ps_loaded_dlg.open();
+	if (getprop("/systems/acconfig/options/auto-ready-for-takeoff") == 0) {
+		ps_loaded_dlg.open();
+	}
 	spinning.stop();
 }
 
@@ -605,12 +612,19 @@ var takeoff = func {
 				setprop("/controls/flight/flaps", 0.2);
 				setprop("/controls/atc/mode-knob", 4);
 				atc.transponderPanel.modeSwitch(5);
-				setprop("/controls/flight/elevator-trim", -0.07);
+				setprop("/controls/flight/elevator-trim", -0.1);
 				systems.Autobrake.arm_autobrake(3);
 				setprop("/ECAM/to-config-test", 1);
 				settimer(func {
 					setprop("/ECAM/to-config-test", 0);
 				}, 1);
+				# TODO calculate actual values for this
+				fmgc.FMGCInternal.v1set = 1;
+				fmgc.FMGCInternal.v1 = 142;
+				fmgc.FMGCInternal.vrset = 1;
+				fmgc.FMGCInternal.vr = 145;
+				fmgc.FMGCInternal.v2set = 1;
+				fmgc.FMGCInternal.v2 = 153;
 			}
 		});
 	}

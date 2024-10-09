@@ -1,10 +1,25 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
 <PropertyList>
 	
-	<!-- Thrust Axis -->
+	<filter>
+		<name>A/THR Knots Lag</name>
+		<type>exponential</type>
+		<input>/it-autoflight/internal/current-speed-input</input>
+		<output>/it-autoflight/internal/athr-kts-input-lag</output>
+		<filter-time>0.04</filter-time>
+	</filter>
+	
+	<filter>
+		<name>A/THR Mach Lag</name>
+		<type>exponential</type>
+		<input>/it-autoflight/internal/current-mach-input</input>
+		<output>/it-autoflight/internal/athr-mach-input-lag</output>
+		<filter-time>0.04</filter-time>
+	</filter>
+	
 	<filter>
 		<name>A/THR Knots Input Gain</name>
 		<type>gain</type>
@@ -24,7 +39,7 @@
 		<min>
 			<expression>
 				<difference>
-					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+					<property>/it-autoflight/internal/current-speed-input</property>
 					<value>25</value>
 				</difference>
 			</expression>
@@ -32,7 +47,7 @@
 		<max>
 			<expression>
 				<sum>
-					<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+					<property>/it-autoflight/internal/current-speed-input</property>
 					<value>25</value>
 				</sum>
 			</expression>
@@ -94,7 +109,7 @@
 		<min>
 			<expression>
 				<difference>
-					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+					<property>/it-autoflight/internal/current-mach-input</property>
 					<value>0.045</value>
 				</difference>
 			</expression>
@@ -102,7 +117,7 @@
 		<max>
 			<expression>
 				<sum>
-					<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+					<property>/it-autoflight/internal/current-mach-input</property>
 					<value>0.045</value>
 				</sum>
 			</expression>
@@ -166,7 +181,7 @@
 				</and>
 			</condition>
 		</enable>
-		<input>/it-autoflight/internal/current-speed-input</input>
+		<input>/it-autoflight/internal/athr-kts-input-lag</input>
 		<reference>/it-autoflight/internal/athr-kts</reference>
 		<output>/fdm/jsbsim/fadec/athr/cmd</output>
 		<config>
@@ -214,7 +229,7 @@
 			</condition>
 		</enable>
 		<input>
-			<property>/it-autoflight/internal/current-mach-input</property>
+			<property>/it-autoflight/internal/athr-mach-input-lag</property>
 			<scale>1000</scale>
 		</input>
 		<reference>

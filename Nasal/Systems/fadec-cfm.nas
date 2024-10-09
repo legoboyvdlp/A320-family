@@ -1,17 +1,13 @@
 # A3XX CFM FADEC
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 var powerAvailTemp = nil;
 var master1 = nil;
 var master2 = nil;
-var state1 = nil;
-var state2 = nil;
 var modeSel = nil;
 var powered1 = nil;
 var powered2 = nil;
 var powerup = nil;
-var N11 = nil;
-var N12 = nil;
 var N21 = nil;
 var N22 = nil;
 
@@ -118,11 +114,11 @@ var FADEC_S = {
 			me.Eng2.eng2Off.setValue(0);
 		}
 		
-		state1 = pts.Engines.Engine.state[0].getValue();
-		state2 = pts.Engines.Engine.state[1].getValue();
+		N21 = pts.Engines.Engine.n2Actual[0].getValue();
+		N22 = pts.Engines.Engine.n2Actual[1].getValue();
 		modeSel = systems.IGNITION.startSw.getValue();
 		
-		if (state1 == 3) {
+		if (N21 >= 3.5) {
 			me.Power.powered1.setValue(1);
 		} else if (powerAvailTemp and modeSel == 2) {
 			me.Power.powered1.setValue(1);
@@ -132,7 +128,7 @@ var FADEC_S = {
 			me.Power.powered1.setValue(0);
 		}
 		
-		if (state2 == 3) {
+		if (N22 >= 3.5) {
 			me.Power.powered2.setValue(1);
 		} else if (powerAvailTemp and modeSel == 2) {
 			me.Power.powered2.setValue(1);

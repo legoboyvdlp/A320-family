@@ -1,21 +1,20 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2023 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2024 Josh Davidson (Octal450) -->
 
-<fdm_config name="A320" version="2.0" release="BETA">
+<fdm_config name="A320-200-IAE" version="2.0" release="BETA">
 
 	<fileheader>
 		<author>Josh Davidson (Octal450)</author>
-		<version>Pre V1.0</version>
-		<description>A32X FDE</description>
+		<description>A320-200 FDE with V2527-A5 Engines</description>
 	</fileheader>
 	
-	<metrics file="Systems/a320-metrics"/>
+	<metrics file="FDE/Config/a320-metrics"/>
 	
 	<mass_balance>
-		<ixx unit="SLUG*FT2">414659</ixx>
-		<iyy unit="SLUG*FT2">895647</iyy>
-		<izz unit="SLUG*FT2">678957</izz>
+		<ixx unit="SLUG*FT2">709691</ixx>
+		<iyy unit="SLUG*FT2">1837076</iyy>
+		<izz unit="SLUG*FT2">1392122</izz>
 		<ixy unit="SLUG*FT2">0</ixy>
 		<ixz unit="SLUG*FT2">0</ixz>
 		<iyz unit="SLUG*FT2">0</iyz>
@@ -87,10 +86,10 @@
 		</pointmass>
 	</mass_balance>
 	
-	<ground_reactions file="Systems/a320-ground-reactions"/>
+	<ground_reactions file="FDE/Config/a320-ground-reactions"/>
 	
 	<propulsion>
-		<engine file="leap1a26_1">
+		<engine file="v2527-a5_1">
 			<feed>5</feed>
 			<thruster file="direct">
 				<location unit="M">
@@ -100,13 +99,13 @@
 				</location>
 				<orient unit="DEG">
 					<roll>0.0</roll>
-					<pitch>2.2</pitch>
+					<pitch>2</pitch>
 					<yaw>1</yaw>
 				</orient>
 			</thruster>
 		</engine>
 		
-		<engine file="leap1a26_2">
+		<engine file="v2527-a5_2">
 			<feed>6</feed>
 			<thruster file="direct">
 				<location unit="M">
@@ -116,12 +115,12 @@
 				</location>
 				<orient unit="DEG">
 					<roll>0.0</roll>
-					<pitch>2.2</pitch>
+					<pitch>2</pitch>
 					<yaw>-1</yaw>
 				</orient>
 			</thruster>
 		</engine>
-		 
+		
 		<engine file="APS3200">
 			<feed>7</feed>
 			<thruster file="direct">
@@ -157,7 +156,7 @@
 				<y>-4.1029</y>
 				<z>-0.75</z>
 			</location>
-			<capacity unit="LBS">12155.9</capacity>
+			<capacity unit="LBS">12272.9</capacity>
 			<contents unit="LBS">4477</contents>
 			<unusable-volume unit="LTR">28</unusable-volume>
 			<priority>1</priority>
@@ -170,7 +169,7 @@
 				<y>0</y>
 				<z>-0.75</z>
 			</location>
-			<capacity unit="LBS">14620</capacity>
+			<capacity unit="LBS">14623</capacity>
 			<contents unit="LBS">42</contents>
 			<unusable-volume unit="LTR">23.2</unusable-volume>
 			<priority>1</priority>
@@ -183,7 +182,7 @@
 				<y>4.1029</y>
 				<z>-0.75</z>
 			</location>
-			<capacity unit="LBS">12155.9</capacity>
+			<capacity unit="LBS">12272.9</capacity>
 			<contents unit="LBS">4477</contents>
 			<unusable-volume unit="LTR">28</unusable-volume>
 			<priority>1</priority>
@@ -242,14 +241,14 @@
 	<system file="glass-effect"/>
 	<system file="a320-fbw"/>
 	<system file="a320-fcs"/>
-	<system file="a320-cfm56-5b4-engine-fadec"/>
+	<system file="a320-v2527-a5-engine-fadec"/>
 	<system file="a320-fuel"/>
 	<system file="a320-fwc"/>
 	<system file="a320-fwc-phases"/>
 	<system file="a320-spoiler"/>
 	<system file="a320-electrical"/>
 	<system file="a320-hydraulic"/>
-    <system file="a320-pneumatic"/>
+	<system file="a320-pneumatic"/>
     <system file="a320-aircond"/> <!-- after pneu -->
 	<system file="a320-ignition"/>
 	<system file="a320-lights"/>
@@ -262,7 +261,7 @@
 	<system file="a320-cockpit"/>
 	
 	<flight_control name="none"/>
-	<aerodynamics file="Systems/a320-aerodynamics.xml"/>
-	<external_reactions file="Systems/a320-external-reactions"/>
+	<aerodynamics file="FDE/Config/a320-aerodynamics.xml"/>
+	<external_reactions file="FDE/Config/a320-external-reactions"/>
 
 </fdm_config>

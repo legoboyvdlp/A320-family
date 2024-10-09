@@ -1,8 +1,8 @@
 # A320 Main Libraries
-# Copyright (c) 2023 Josh Davidson (Octal450)
+# Copyright (c) 2024 Josh Davidson (Octal450)
 
 print("------------------------------------------------");
-print("Copyright (c) 2016-2023 Josh Davidson (Octal450)");
+print("Copyright (c) 2016-2024 Josh Davidson (Octal450)");
 print("------------------------------------------------");
 
 setprop("/autopilot/route-manager/disable-route-manager", 1);
@@ -12,6 +12,7 @@ setprop("/autopilot/route-manager/disable-fms", 1);
 setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
 setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
+setprop("/sim/menubar/default/menu[3]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[9]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[10]/enabled", 0);
 setprop("/sim/menubar/default/menu[5]/item[11]/enabled", 0);
@@ -32,25 +33,25 @@ aircraft.rain.init();
 
 var aero = getprop("/sim/aero");
 var defaultFuseLiv = "";
-if (aero == "A320-200-CFM") {
+if (aero == "FDE/A320-200-CFM") {
 	var livery = aircraft.canvas_livery.init("Models/Liveries/CFM");
 	elements = ["EngineCFM56L","EngineCFM56R","ReverserLDoor1","ReverserLDoor2","ReverserLDoor3","ReverserLDoor4","ReverserRDoor1","ReverserRDoor2","ReverserRDoor3","ReverserRDoor4","PylonCFM56L","PylonCFM56R","IntakeCFM56L","IntakeCFM56R"];
 	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/CFM/2k/SWR-engine.png");
 	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/CFM/engine-dirt.png");
 	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/CFM/4k/SWR-fuselage.png";
-} else if (aero == "A320-200-IAE") {
+} else if (aero == "FDE/A320-200-IAE") {
 	var livery = aircraft.canvas_livery.init("Models/Liveries/IAE");
 	elements = ["EngineIAEV2500L","EngineIAEV2500R","ReverserLDoor","ReverserRDoor","PylonIAEV2500L","PylonIAEV2500R","IntakeIAEV2500L","IntakeIAEV2500R"];
 	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/IAE/2k/QTR-engine.png");
 	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/IAE/engine-dirt.png");
 	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/IAE/4k/QTR-fuselage.png";
-} else if (aero == "A320neo-CFM") {
+} else if (aero == "FDE/A320neo-CFM") {
 	var livery = aircraft.canvas_livery.init("Models/Liveries/CFM-NEO");
 	elements = ["EngineLEAPL", "EngineLEAPL.007", "EngineLEAPL.Inner", "EngineLEAPR", "EngineLEAPR.Inner", "Exhaust2LEAPL", "Exhaust2LEAPR", "Exhaust3LEAPL", "Exhaust3LEAPR", "IntakeLEAPL", "IntakeLEAPR", "PylonLEAPL", "PylonLEAPR", "ReverserLDoorLEAP", "ReverserRDoorLEAP"];
 	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/CFM-NEO/2k/SAS-engine.png");
 #	livery.addLayer("engines", "dirt", "Aircraft/A320-family/Models/Liveries/CFM-NEO/engine-dirt.png");
 	defaultFuseLiv = "Aircraft/A320-family/Models/Liveries/CFM-NEO/4k/SAS-fuselage.png";
-} else if (aero == "A320neo-PW") {
+} else if (aero == "FDE/A320neo-PW") {
 	var livery = aircraft.canvas_livery.init("Models/Liveries/PW-NEO");
 	elements = ["EnginePWPPL", "EnginePWPPL.Inner", "EnginePWPPR", "EnginePWPPR.Inner", "Exhaust3PWPPL", "Exhaust3PWPPR", "Exxhaust2PWPPL", "Exxhaust2PWPPR", "IntakePWPPL", "IntakePWPPR", "PylonPWPPL", "PylonPWPPR", "ReverserRDoorPWPP", "ReverserLDoorPWPP"];
 	livery.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries/PW-NEO/2k/NKS-engine.png");
@@ -150,7 +151,7 @@ var systemsInit = func() {
 	mcdu_scratchpad.mcduMsgtimer2.start();
 	effects.icingInit();
 	ecam.ECAM.init();
-	libraries.variousReset();
+	cockpit.variousReset();
 	rmp.init();
 	acp.init();
 	ecam.ECAM_controller.init();
@@ -190,7 +191,7 @@ var systemsLoop = func(notification) {
 	
 	pts.Services.Chocks.enableTemp = pts.Services.Chocks.enable.getBoolValue();
 	pts.Velocities.groundspeedKtTemp = pts.Velocities.groundspeedKt.getValue();
-	if ((pts.Velocities.groundspeedKtTemp >= 2 or !pts.Fdm.JSBsim.Position.wow.getBoolValue()) and pts.Services.Chocks.enableTemp) {
+	if ((pts.Velocities.groundspeedKtTemp >= 2 or !pts.Fdm.JSBSim.Position.wow.getBoolValue()) and pts.Services.Chocks.enableTemp) {
 		pts.Services.Chocks.enable.setBoolValue(0);
 	}
 	
@@ -204,6 +205,18 @@ var systemsLoop = func(notification) {
 		}
 	}
 }
+
+# Backwards compatibility, removed soon
+var ApPanel = {
+	apDisc: func() {
+		cockpit.ApPanel.apDisc();
+		gui.popupTip("libraries.ApPanel is deprecated. Please switch to cockpit.ApPanel.");
+	},
+	atDisc: func() {
+		cockpit.ApPanel.atDisc();
+		gui.popupTip("libraries.ApPanel is deprecated. Please switch to cockpit.ApPanel.");
+	},
+};
 
 # GPWS
 var GPWS = {
@@ -337,17 +350,6 @@ setlistener("/controls/flight/auto-coordination", func() {
 	screen.log.write("Auto Coordination has been disabled as it is not compatible with the fly-by-wire of this aircraft", 1, 0, 0);
 	screen.log.write("Tiller will now be controlled by aileron, rather than rudder", 1, 0, 0);
 }, 0, 0);
-
-# Legacy FCU
-var APPanel = {
-	APDisc: func() {
-		fcu.FCUController.APDisc();
-	},
-	ATDisc: func() {
-		fcu.FCUController.ATDisc();
-	},
-};
-
 
 # Emesary
 var LibrariesRecipient =
