@@ -282,10 +282,9 @@ var FCUController = {
                fmgc.ITAF.setVertMode(4);
                fmgc.ITAF.updateVertText("OP CLB");
             } else {
-               # mode reversion
-               # SRS TO/GA to V/S 
-               # as FCU alt is lower than actual alt
-               fmgc.ITAF.setVertMode(1);
+              # selected speed is not enabled if in SRS and FCU alt is below actual altitude
+              # not documented in FCOM but comfirmed in level-d sim test
+              # do nothing
             }
          } 
          

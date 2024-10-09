@@ -1236,7 +1236,7 @@ var switchDatabase = func {
 # TAKEOFF phase
 setlistener("/fdm/jsbsim/fadec/control-1/detent-text", func(text) {
    if (text.getValue() == "TOGA" or text.getValue() == "MCT") {
-      check_srs_engagement();
+      fmgc.check_srs_engagement();
    }
 }, 1, 0);
 
