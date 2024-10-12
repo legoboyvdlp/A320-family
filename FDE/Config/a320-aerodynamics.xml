@@ -254,7 +254,7 @@
 	<axis name="DRAG">
 		
 		<function name="aero/coefficient/CD0">
-			<description>Minimum drag</description>
+			<description>Drag at zero lift</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
@@ -287,7 +287,7 @@
 		</function>
 		
 		<function name="aero/coefficient/CDi">
-			<description>Induced drag</description>
+			<description>Drag due to lift</description>
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
