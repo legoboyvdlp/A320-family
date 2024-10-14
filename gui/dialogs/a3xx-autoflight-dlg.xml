@@ -160,16 +160,10 @@
 				<pref-height>25</pref-height>
 				<legend>&lt;&lt;</legend>
 				<enable>
-					<and>
 						<equals>
 							<property>/it-autoflight/input/kts-mach</property>
 							<value>0</value>
 						</equals>
-						<equals>
-							<property>/it-autoflight/input/spd-managed</property>
-							<value>0</value>
-						</equals>
-					</and>
 				</enable>
 				<binding>
 					<command>nasal</command>
@@ -183,16 +177,10 @@
 				<pref-height>25</pref-height>
 				<legend>&lt;</legend>
 				<enable>
-					<and>
 						<equals>
 							<property>/it-autoflight/input/kts-mach</property>
 							<value>0</value>
 						</equals>
-						<equals>
-							<property>/it-autoflight/input/spd-managed</property>
-							<value>0</value>
-						</equals>
-					</and>
 				</enable>
 				<binding>
 					<command>nasal</command>
@@ -213,7 +201,7 @@
 							<value>0</value>
 						</equals>
 						<equals>
-							<property>/it-autoflight/input/spd-managed</property>
+							<property>FMGC/internal/mng-spd-active</property>
 							<value>0</value>
 						</equals>
 					</and>
@@ -227,16 +215,10 @@
 				<pref-height>25</pref-height>
 				<legend>&gt;</legend>
 				<enable>
-					<and>
 						<equals>
 							<property>/it-autoflight/input/kts-mach</property>
 							<value>0</value>
 						</equals>
-						<equals>
-							<property>/it-autoflight/input/spd-managed</property>
-							<value>0</value>
-						</equals>
-					</and>
 				</enable>
 				<binding>
 					<command>nasal</command>
@@ -251,16 +233,10 @@
 				<pref-height>25</pref-height>
 				<legend>&gt;&gt;</legend>
 				<enable>
-					<and>
 						<equals>
 							<property>/it-autoflight/input/kts-mach</property>
 							<value>0</value>
 						</equals>
-						<equals>
-							<property>/it-autoflight/input/spd-managed</property>
-							<value>0</value>
-						</equals>
-					</and>
 				</enable>
 				<binding>
 					<command>nasal</command>
@@ -292,7 +268,7 @@
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>/it-autoflight/input/spd-managed</property>
+							<property>FMGC/internal/mng-spd-active</property>
 							<value>0</value>
 						</equals>
 					</and>
@@ -315,7 +291,7 @@
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>/it-autoflight/input/spd-managed</property>
+							<property>FMGC/internal/mng-spd-active</property>
 							<value>0</value>
 						</equals>
 					</and>
@@ -339,7 +315,7 @@
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>/it-autoflight/input/spd-managed</property>
+							<property>FMGC/internal/mng-spd-active</property>
 							<value>0</value>
 						</equals>
 					</and>
@@ -359,7 +335,7 @@
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>/it-autoflight/input/spd-managed</property>
+							<property>FMGC/internal/mng-spd-active</property>
 							<value>0</value>
 						</equals>
 					</and>
@@ -383,7 +359,7 @@
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>/it-autoflight/input/spd-managed</property>
+							<property>FMGC/internal/mng-spd-active</property>
 							<value>0</value>
 						</equals>
 					</and>

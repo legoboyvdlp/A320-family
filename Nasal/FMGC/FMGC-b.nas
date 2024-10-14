@@ -130,6 +130,7 @@ var Internal = {
 	hdgErrorDeg: props.globals.initNode("/it-autoflight/internal/heading-error-deg", 0, "DOUBLE"),
 	hdgPredicted: props.globals.initNode("/it-autoflight/internal/heading-predicted", 0, "DOUBLE"),
 	hdgTrk: props.globals.initNode("/it-autoflight/internal/heading", 0, "DOUBLE"),
+	kts: props.globals.initNode("/it-autoflight/internal/kts", 100, "INT"),
 	lnavAdvanceNm: props.globals.initNode("/it-autoflight/internal/lnav-advance-nm", 0, "DOUBLE"),
 	minVs: props.globals.initNode("/it-autoflight/internal/min-vs", -500, "INT"),
 	maxVs: props.globals.initNode("/it-autoflight/internal/max-vs", 500, "INT"),
@@ -183,9 +184,6 @@ var Custom = {
 	ndTrkSel: [props.globals.getNode("/instrumentation/efis[0]/trk-selected", 1), props.globals.getNode("/instrumentation/efis[1]/trk-selected", 1)],
 	showHdg: props.globals.initNode("/it-autoflight/custom/show-hdg", 1, "BOOL"),
 	trkFpa: props.globals.initNode("/it-autoflight/custom/trk-fpa", 0, "BOOL"),
-	Input: {
-		spdManaged: props.globals.getNode("/it-autoflight/input/spd-managed", 1),
-	},
 	Output: {
 		fmaPower: 0,
 		vsFCU: props.globals.initNode("/it-autoflight/output/vs-fcu-display", "", "STRING"),
@@ -209,7 +207,7 @@ var ITAF = {
 		Input.fd1.setBoolValue(1);
 		Input.fd2.setBoolValue(1);
 		Input.hdg.setValue(360);
-		Input.alt.setValue(10000);
+		Input.alt.setValue(100);
 		Input.vs.setValue(0);
 		Input.vsAbs.setValue(0);
 		Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f",0),3));
@@ -220,7 +218,6 @@ var ITAF = {
 		Input.trk.setBoolValue(0);
 		Input.trueCourse.setBoolValue(0);
 		Input.toga.setBoolValue(0);
-		Custom.Input.spdManaged.setBoolValue(0);
 		Output.ap1.setBoolValue(0);
 		Output.ap2.setBoolValue(0);
 		Output.athr.setBoolValue(0);
@@ -506,7 +503,12 @@ var ITAF = {
 	fd1Master: func(s) {
 		if (s == 1) {
 			Output.fd1.setBoolValue(1);
-			me.UpdateFma();
+			me.updateFma();
+         
+         # if on ground check if managed speed can be activated
+         if (FMGCInternal.phase == 0 or (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[1]/wow"))) {
+            fmgc.ManagedSPD.start();
+         }
 		} else {
 			Output.fd1.setBoolValue(0);
 			if (!Output.fd2.getBoolValue()) {
@@ -523,7 +525,12 @@ var ITAF = {
 	fd2Master: func(s) {
 		if (s == 1) {
 			Output.fd2.setBoolValue(1);
-			me.UpdateFma();
+			me.updateFma();
+
+         # if on ground check if managed speed can be activated
+         if (FMGCInternal.phase == 0 or (getprop("/gear/gear[1]/wow") and getprop("/gear/gear[1]/wow"))) {
+            fmgc.ManagedSPD.start();
+         }
 		} else {
 			Output.fd2.setBoolValue(0);
 			if (!Output.fd1.getBoolValue()) {
@@ -763,7 +770,10 @@ var ITAF = {
 	checkFlch: func(a) {
 		if (Position.indicatedAltitudeFt.getValue() >= a and a != 0 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue()) {
 			me.setVertMode(4);
-		}
+		} elsif (!FMGCNodes.mngSpdActive.getBoolValue() and (fmgc.Input.alt.getValue() > pts.Instrumentation.Altimeter.indicatedFt.getValue()) and (!Gear.wow1.getBoolValue() or !Gear.wow2.getBoolValue())) {
+         # mode reversion, should trigger tripple click
+			me.setVertMode(4);
+      }
 	},
 	checkLoc: func(t) {
 		if (Radio.inRange.getBoolValue()) { #  # Only evaulate the rest of the condition unless we are in range
@@ -1017,7 +1027,6 @@ setlistener("/it-autoflight/input/fd2", func() {
 		ITAF.fd2Master(Input.fd2Temp);
 	}
 });
-
 	
 setlistener("/it-autoflight/input/kts-mach", func() {
 	if (Output.vert.getValue() == 7) { # Mach is not allowed in Mode 7, and don't sync
