@@ -26,6 +26,7 @@ var flaps = 0;
 var ktsmach = 0;
 var mng_alt_spd = 0;
 var mng_alt_mach = 0;
+var constraintSpeed = nil;
 var altsel = 0;
 var crzFl = 0;
 var xtrkError = 0;
@@ -1035,7 +1036,6 @@ var ManagedSPD = maketimer(0.25, func {
                }
                
                var waypoint = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue());
-               var constraintSpeed = nil;
             
                if (waypoint != nil) {
                   constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
@@ -1368,7 +1368,7 @@ setlistener("/it-autoflight/input/kts", func(val) {
 
 # set managed target speed after passing ga-accel_agl_ft 
 setlistener("/FMGC/internal/above-ga-accel-alt", func(val) {
-    if (FMGCInternal.phase == 6 and val.getValue == 1) {
+    if (FMGCInternal.phase == 6 and val.getValue() == 1) {
       # Speed is maximum of greendot / climb speed limit
       FMGCInternal.mngKtsMach = 0;
       if (constraintSpeed != nil and constraintSpeed != 0) {
@@ -1378,7 +1378,12 @@ setlistener("/FMGC/internal/above-ga-accel-alt", func(val) {
          # todo: minimum is vapp recorded at 700 radio alt
          FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), FMGCInternal.clbSpdLim);
       }
+      # mode reversion
+      # SRS TO/GA to OPEN CLIMB
+      fmgc.ITAF.setVertMode(4);
+      fmgc.ITAF.updateVertText("OP CLB");
    }
+   print ('above-ga-altitude changed with value = ', val.getValue());
 }, 1, 0);
 
 setlistener("/FMGC/internal/phase", func(phase) {
@@ -1703,10 +1708,9 @@ var check_srs_engagement = func (){
         print(" srs engaged with val: 2");
         return 2;
     } elsif (getprop("/FMGC/internal/pitch-mode") == "SRS" and (
-         ((eng1_state == "ALT*" or eng2_state == "ALT CST*") 
+         ((eng1_state == "ALT*" or eng1_state == "ALT*" 
+          or eng1_state == "ALT CST*" or eng2_state == "ALT CST*") 
             and getprop("/ECAM/warnings/instrumentation/above-400ft-ra") == 1)
-         or (getprop("/engines/engine[0]/running") == 1
-               and getprop("/engines/engine[1]/running") == 1)
          )) { 
         if (getprop("/FMGC/internal/above-ga-accel-alt") == 1) {
             # SRS TO conditions for disengagement are met
