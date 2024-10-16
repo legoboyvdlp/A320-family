@@ -25,7 +25,7 @@
 				</table>
 			</expression>
 		</input>
-		<output>/fdm/jsbsim/fadec/epr/c1</output>
+		<output>/systems/fadec/epr/c1</output>
 	</filter>
 	
 	<filter>
@@ -56,15 +56,15 @@
 				</difference>
 			</expression>
 		</input>
-		<output>/fdm/jsbsim/fadec/epr/c2-raw</output>
+		<output>/systems/fadec/epr/c2-raw</output>
 	</filter>
 	
 	<filter>
 		<name>EPR Scale 2 Sum/Difference Exponential</name>
 		<type>exponential</type>
 		<gain>1.0</gain>
-		<input>/fdm/jsbsim/fadec/epr/c2-raw</input>
-		<output>/fdm/jsbsim/fadec/epr/c2</output>
+		<input>/systems/fadec/epr/c2-raw</input>
+		<output>/systems/fadec/epr/c2</output>
 		<filter-time>0.32</filter-time>
 	</filter>
 	
@@ -1761,7 +1761,7 @@
 		<name>FBW Pitch IAS Predictor</name>
 		<debug>false</debug>
 		<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
-		<output>/fdm/jsbsim/fbw/pitch/ias-predict</output>
+		<output>/systems/fbw/pitch/ias-predict</output>
 		<seconds>1.0</seconds>
 		<filter-gain>0</filter-gain>
 	</predict-simple>

@@ -1996,7 +1996,7 @@
 					<test logic="AND">
 						<test logic="OR">
 							<test logic="AND">
-								hydraulics/aileron-l/pressure-switch-or eq 1
+								/systems/fcs/aileron-l/pressure-switch-or eq 1
 								<test logic="OR">
 									/systems/fctl/elac1 eq 0
 									/systems/hydraulic/blue-psi lt 1500
@@ -2004,7 +2004,7 @@
 								/ECAM/warnings/logic/BLUE-EMER-ELEC ne 1
 							</test>
 							<test logic="AND">
-								hydraulics/aileron-r/pressure-switch-or eq 1
+								/systems/fcs/aileron-r/pressure-switch-or eq 1
 								<test logic="OR">
 									/systems/fctl/elac1 eq 0
 									/systems/hydraulic/green-psi lt 1500
@@ -2050,7 +2050,7 @@
 					<test logic="AND">
 						<test logic="OR">
 							<test logic="AND">
-								hydraulics/aileron-l/pressure-switch-or eq 1
+								/systems/fcs/aileron-l/pressure-switch-or eq 1
 								<test logic="OR">
 									/systems/fctl/elac2 eq 0
 									/systems/hydraulic/green-psi lt 1500
@@ -2058,7 +2058,7 @@
 								/ECAM/warnings/logic/BLUE-EMER-ELEC ne 1
 							</test>
 							<test logic="AND">
-								hydraulics/aileron-r/pressure-switch-or eq 1
+								/systems/fcs/aileron-r/pressure-switch-or eq 1
 								<test logic="OR">
 									/systems/fctl/elac2 eq 0
 									/systems/hydraulic/blue-psi lt 1500
@@ -2073,15 +2073,15 @@
 							<test logic="AND">
 								/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
 								<test logic="OR">
-									hydraulics/spoiler-l3/final-deg gt 0.01
-									hydraulics/spoiler-r3/final-deg gt 0.01
+									/systems/fcs/spoiler-l3/final-deg gt 0.01
+									/systems/fcs/spoiler-r3/final-deg gt 0.01
 								</test>
 							</test>
 							<test logic="AND">
 								/ECAM/warnings/hyd/blue-abnorm-lo-pr eq 1
 								<test logic="OR">
 									<test logic="AND">
-										hydraulics/aileron-l/pressure-switch-or eq 1
+										/systems/fcs/aileron-l/pressure-switch-or eq 1
 										<test logic="OR">
 											/systems/fctl/elac2 eq 0
 											/systems/hydraulic/green-psi lt 1500
@@ -2089,7 +2089,7 @@
 										/ECAM/warnings/logic/BLUE-EMER-ELEC ne 1
 									</test>
 									<test logic="AND">
-										hydraulics/aileron-r/pressure-switch-or eq 1
+										/systems/fcs/aileron-r/pressure-switch-or eq 1
 										<test logic="OR">
 											/systems/fctl/elac1 eq 0
 											/systems/hydraulic/green-psi lt 1500
@@ -2605,14 +2605,14 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				fadec/control-1/lever/angle ge 6
+				/systems/fadec/control-1/lever/angle ge 6
 			</test>
 		</switch>
 		
 		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-abv-6-2">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				fadec/control-1/lever/angle ge 6
+				/systems/fadec/control-1/lever/angle ge 6
 				/ECAM/phases/phase-calculation/takeoff-power eq 0
 			</test>
 		</switch>
@@ -2632,7 +2632,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-1-tla-idle">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				fadec/control-1/lever/angle lt 2.6
+				/systems/fadec/control-1/lever/angle lt 2.6
 			</test>
 		</switch>
 		
@@ -2658,14 +2658,14 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				fadec/control-2/lever/angle ge 6
+				/systems/fadec/control-2/lever/angle ge 6
 			</test>
 		</switch>
 		
 		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-abv-6-2">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				fadec/control-2/lever/angle ge 6
+				/systems/fadec/control-2/lever/angle ge 6
 				/ECAM/phases/phase-calculation/takeoff-power eq 0
 			</test>
 		</switch>
@@ -2685,7 +2685,7 @@
 		<switch name="/ECAM/warnings/logic/eng/eng-2-tla-idle">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				fadec/control-2/lever/angle lt 2.6
+				/systems/fadec/control-2/lever/angle lt 2.6
 			</test>
 		</switch>
 		
@@ -2843,8 +2843,8 @@
 			<test logic="AND" value="1">
 				/engines/engine[0]/n2-actual ge 59
 				<test logic="OR">
-					fadec/control-1/detent eq 2
-					fadec/control-1/detent eq 3
+					/systems/fadec/control-1/detent eq 2
+					/systems/fadec/control-1/detent eq 3
 				</test>
 			</test>
 		</switch>
@@ -2860,9 +2860,9 @@
 			<test logic="AND" value="1">
 				/engines/engine[0]/n2-actual ge 59
 				<test logic="OR">
-					fadec/control-1/detent eq 2
-					fadec/control-1/detent eq 3
-					fadec/control-1/detent eq 4
+					/systems/fadec/control-1/detent eq 2
+					/systems/fadec/control-1/detent eq 3
+					/systems/fadec/control-1/detent eq 4
 				</test>
 			</test>
 		</switch>
@@ -2878,8 +2878,8 @@
 			<test logic="AND" value="1">
 				/engines/engine[1]/n2-actual ge 59
 				<test logic="OR">
-					fadec/control-2/detent eq 2
-					fadec/control-2/detent eq 3
+					/systems/fadec/control-2/detent eq 2
+					/systems/fadec/control-2/detent eq 3
 				</test>
 			</test>
 		</switch>
@@ -2895,9 +2895,9 @@
 			<test logic="AND" value="1">
 				/engines/engine[1]/n2-actual ge 59
 				<test logic="OR">
-					fadec/control-2/detent eq 2
-					fadec/control-2/detent eq 3
-					fadec/control-2/detent eq 4
+					/systems/fadec/control-2/detent eq 2
+					/systems/fadec/control-2/detent eq 3
+					/systems/fadec/control-2/detent eq 4
 				</test>
 			</test>
 		</switch>
@@ -2914,25 +2914,25 @@
 				/ECAM/warnings/logic/eng/new-retard-logic ne 1
 				<test logic="OR">
 					<test logic="AND">
-						fadec/limit/flex-active eq 0
+						/systems/fadec/limit/flex-active eq 0
 						<test logic="OR">
 							/ECAM/warnings/logic/eng/thr-lever-2-mct-output eq 1
 							/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
 						</test>
 					</test>
 					<test logic="AND">
-						fadec/limit/flex-active eq 1
+						/systems/fadec/limit/flex-active eq 1
 						/ECAM/warnings/logic/eng/thr-lever-2-mcl-mct-output eq 1
 					</test>
 					<test logic="AND">
-						fadec/limit/flex-active eq 0
+						/systems/fadec/limit/flex-active eq 0
 						<test logic="OR">
 							/ECAM/warnings/logic/eng/thr-lever-1-mct-output eq 1
 							/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
 						</test>
 					</test>
 					<test logic="AND">
-						fadec/limit/flex-active eq 1
+						/systems/fadec/limit/flex-active eq 1
 						/ECAM/warnings/logic/eng/thr-lever-1-mcl-mct-output eq 1
 					</test>
 				</test>
@@ -3342,11 +3342,11 @@
 				/ECAM/warning-phase ne 1
 				/ECAM/warning-phase ne 10
 				<test logic="OR">
-					hydraulics/elevator-l/pressure-switch-or eq 0
+					/systems/fcs/elevator-l/pressure-switch-or eq 0
 					/systems/failures/elevator-left eq 1
 				</test>
 				<test logic="OR">
-					hydraulics/elevator-r/pressure-switch-or eq 0
+					/systems/fcs/elevator-r/pressure-switch-or eq 0
 					/systems/failures/elevator-right eq 1
 				</test>
 			</test>
@@ -3680,8 +3680,8 @@
 		<switch name="/ECAM/warnings/fctl/pitch-trim-config-range">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				hydraulics/stabilizer/final-deg gt 2.9
-				hydraulics/stabilizer/final-deg lt -2.9
+				/systems/fcs/stabilizer/final-deg gt 2.9
+				/systems/fcs/stabilizer/final-deg lt -2.9
 			</test>
 		</switch>
 		
@@ -3707,8 +3707,8 @@
 		<switch name="/ECAM/warnings/fctl/rudder-trim-config-range">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				hydraulics/rudder/trim-deg gt 3.6
-				hydraulics/rudder/trim-deg lt -3.6
+				/systems/fcs/rudder/trim-deg gt 3.6
+				/systems/fcs/rudder/trim-deg lt -3.6
 			</test>
 		</switch>
 		
@@ -3764,7 +3764,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/ECAM/warnings/fctl/spd-brk-still-out-50-seconds eq 1
-				fadec/both-at-idle eq 1
+				/systems/fadec/both-at-idle eq 1
 			</test>
 		</switch>
 		
@@ -4012,12 +4012,12 @@
 						/ECAM/warnings/logic/SFLAPEXT eq 1
 						/systems/electrical/bus/dc-ess lt 25
 					</test>
-					hydraulics/spoiler-l2/final-deg gt 0.01
-					hydraulics/spoiler-r2/final-deg gt 0.01
-					hydraulics/spoiler-l3/final-deg gt 0.01
-					hydraulics/spoiler-r3/final-deg gt 0.01
-					hydraulics/spoiler-l4/final-deg gt 0.01
-					hydraulics/spoiler-r4/final-deg gt 0.01
+					/systems/fcs/spoiler-l2/final-deg gt 0.01
+					/systems/fcs/spoiler-r2/final-deg gt 0.01
+					/systems/fcs/spoiler-l3/final-deg gt 0.01
+					/systems/fcs/spoiler-r3/final-deg gt 0.01
+					/systems/fcs/spoiler-l4/final-deg gt 0.01
+					/systems/fcs/spoiler-r4/final-deg gt 0.01
 					<test logic="OR">
 						/systems/fctl/elac1 eq 0
 						/systems/fctl/elac2 eq 0
@@ -4037,14 +4037,14 @@
 						/ECAM/warnings/logic/SFLAPEXT eq 1
 						/systems/electrical/bus/dc-ess lt 25
 					</test>
-					hydraulics/spoiler-l1/final-deg gt 0.01
-					hydraulics/spoiler-r1/final-deg gt 0.01
-					hydraulics/spoiler-l2/final-deg gt 0.01
-					hydraulics/spoiler-r2/final-deg gt 0.01
-					hydraulics/spoiler-l4/final-deg gt 0.01
-					hydraulics/spoiler-r4/final-deg gt 0.01
-					hydraulics/spoiler-l5/final-deg gt 0.01
-					hydraulics/spoiler-r5/final-deg gt 0.01
+					/systems/fcs/spoiler-l1/final-deg gt 0.01
+					/systems/fcs/spoiler-r1/final-deg gt 0.01
+					/systems/fcs/spoiler-l2/final-deg gt 0.01
+					/systems/fcs/spoiler-r2/final-deg gt 0.01
+					/systems/fcs/spoiler-l4/final-deg gt 0.01
+					/systems/fcs/spoiler-r4/final-deg gt 0.01
+					/systems/fcs/spoiler-l5/final-deg gt 0.01
+					/systems/fcs/spoiler-r5/final-deg gt 0.01
 					<test logic="AND">
 						<test logic="OR">
 							/systems/fctl/elac1 eq 0

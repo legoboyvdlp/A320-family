@@ -551,12 +551,12 @@
 				<float n="1" alias="/gear/gear[0]/steering-norm"/>
 				<float n="2" alias="/engines/engine[0]/reverser-pos-norm"/>
 				<float n="3" alias="/engines/engine[1]/reverser-pos-norm"/>
-				<float n="4" alias="/fdm/jsbsim/hydraulics/elevator-l/final-deg"/>
-				<float n="5" alias="/fdm/jsbsim/hydraulics/elevator-r/final-deg"/>
-				<float n="6" alias="/fdm/jsbsim/hydraulics/aileron-l/final-deg"/>
-				<float n="7" alias="/fdm/jsbsim/hydraulics/aileron-r/final-deg"/>
-				<float n="8" alias="/fdm/jsbsim/hydraulics/rudder/final-deg"/>
-				<float n="9" alias="/fdm/jsbsim/hydraulics/stabilizer/final-deg"/>
+				<float n="4" alias="/systems/fcs/elevator-l/final-deg"/>
+				<float n="5" alias="/systems/fcs/elevator-r/final-deg"/>
+				<float n="6" alias="/systems/fcs/aileron-l/final-deg"/>
+				<float n="7" alias="/systems/fcs/aileron-r/final-deg"/>
+				<float n="8" alias="/systems/fcs/rudder/final-deg"/>
+				<float n="9" alias="/systems/fcs/stabilizer/final-deg"/>
 				<float n="11" alias="/fdm/jsbsim/fcs/slat-pos-norm"/>
 				<float n="12" alias="/fdm/jsbsim/fcs/flap-pos-norm"/>
 				<int n="2" alias="/controls/lighting/landing-lights[0]"/>
@@ -705,59 +705,6 @@
 					<y alias="/sim/model/autopush/force-y"/>
 				</tractor>
 			</external_reactions>
-			<fadec n="0">
-				<alpha-floor type="bool">0</alpha-floor>
-				<athr n="0">
-					<cmd type="double">0</cmd>
-				</athr>
-				<clbreduc-ft type="double">1500</clbreduc-ft>
-				<control-1 n="0">
-					<detent-text type="string">IDLE</detent-text>
-					<n1-mode-sw type="bool">0</n1-mode-sw>
-				</control-1>
-				<control-2 n="0">
-					<detent-text type="string">IDLE</detent-text>
-					<n1-mode-sw type="bool">0</n1-mode-sw>
-				</control-2>
-				<eng-out type="bool">0</eng-out>
-				<epr n="0">
-					<c1 type="double">1</c1>
-					<c2 type="double">1</c2>
-				</epr>
-				<limit n="0">
-					<active-mode type="string">TOGA</active-mode>
-					<active-mode-int type="int">0</active-mode-int>
-					<flex-active type="bool">0</flex-active>
-					<flex-active-cmd type="bool">0</flex-active-cmd>
-					<flex-temp type="int">30</flex-temp>
-				</limit>
-				<lvrclb type="bool">0</lvrclb>
-				<toga-lk type="bool">0</toga-lk>
-				<thr-locked type="bool">0</thr-locked>
-				<thr-locked-alert type="bool">0</thr-locked-alert>
-				<thr-lock-cmd n="0" type="double">0</thr-lock-cmd>
-				<thr-lock-cmd n="1" type="double">0</thr-lock-cmd>
-				<thr-locked-flash type="bool">0</thr-locked-flash>
-				<thr-locked-time type="double">0</thr-locked-time>
-			</fadec>
-			<fbw n="0">
-				<fmgc n="0">
-					<pitch-cmd type="double">0</pitch-cmd>
-					<roll-cmd type="double">0</roll-cmd>
-					<yaw-cmd type="double">0</yaw-cmd>
-				</fmgc>
-				<pitch n="0">
-					<ias-predict type="double">0</ias-predict>
-					<load-factor-pi type="double">0</load-factor-pi>
-				</pitch>
-				<sidestick n="0">
-					<active type="bool" n="0">1</active>
-					<active type="bool" n="1">1</active>
-				</sidestick>
-				<yaw n="0">
-					<max-deg-switch type="double">25</max-deg-switch>
-				</yaw>
-			</fbw>
 			<zero type="int">0</zero>
 		</jsbsim>
 	</fdm>
@@ -1570,6 +1517,61 @@
 				<lavatory-fire type="bool">0</lavatory-fire>
 			</fire>
 		</failures>
+		
+		<fadec n="0">
+			<alpha-floor type="bool">0</alpha-floor>
+			<athr n="0">
+				<cmd type="double">0</cmd>
+			</athr>
+			<clbreduc-ft type="double">1500</clbreduc-ft>
+			<control-1 n="0">
+				<detent-text type="string">IDLE</detent-text>
+				<n1-mode-sw type="bool">0</n1-mode-sw>
+			</control-1>
+			<control-2 n="0">
+				<detent-text type="string">IDLE</detent-text>
+				<n1-mode-sw type="bool">0</n1-mode-sw>
+			</control-2>
+			<eng-out type="bool">0</eng-out>
+			<epr n="0">
+				<c1 type="double">1</c1>
+				<c2 type="double">1</c2>
+			</epr>
+			<limit n="0">
+				<active-mode type="string">TOGA</active-mode>
+				<active-mode-int type="int">0</active-mode-int>
+				<flex-active type="bool">0</flex-active>
+				<flex-active-cmd type="bool">0</flex-active-cmd>
+				<flex-temp type="int">30</flex-temp>
+			</limit>
+			<lvrclb type="bool">0</lvrclb>
+			<toga-lk type="bool">0</toga-lk>
+			<thr-locked type="bool">0</thr-locked>
+			<thr-locked-alert type="bool">0</thr-locked-alert>
+			<thr-lock-cmd n="0" type="double">0</thr-lock-cmd>
+			<thr-lock-cmd n="1" type="double">0</thr-lock-cmd>
+			<thr-locked-flash type="bool">0</thr-locked-flash>
+			<thr-locked-time type="double">0</thr-locked-time>
+		</fadec>
+		
+		<fbw n="0">
+			<fmgc n="0">
+				<pitch-cmd type="double">0</pitch-cmd>
+				<roll-cmd type="double">0</roll-cmd>
+				<yaw-cmd type="double">0</yaw-cmd>
+			</fmgc>
+			<pitch n="0">
+				<ias-predict type="double">0</ias-predict>
+				<load-factor-pi type="double">0</load-factor-pi>
+			</pitch>
+			<sidestick n="0">
+				<active type="bool" n="0">1</active>
+				<active type="bool" n="1">1</active>
+			</sidestick>
+			<yaw n="0">
+				<max-deg-switch type="double">25</max-deg-switch>
+			</yaw>
+		</fbw>
 		
 		<fctl n="0">
 			<elac1 type="bool">0</elac1>

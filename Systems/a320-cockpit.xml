@@ -28,7 +28,7 @@
 		</lag_filter>
 		
 		<lag_filter name="/controls/cockpit/rudder-pedal">
-			<input>fbw/sidestick/yaw-input-cmd</input>
+			<input>/systems/fbw/sidestick/yaw-input-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		
@@ -43,7 +43,7 @@
 		</lag_filter>
 		
 		<lag_filter name="/controls/cockpit/tiller-handle">
-			<input>fbw/tiller-handle-cmd</input>
+			<input>/systems/fbw/tiller-handle-cmd</input>
 			<c1>20</c1>
 		</lag_filter>
 		
@@ -85,7 +85,7 @@
 		<fcs_function name="/controls/cockpit/throttle-lever[0]">
 			<function>
 				<quotient>
-					<property>fadec/control-1/lever/angle</property>
+					<property>/systems/fadec/control-1/lever/angle</property>
 					<value>45</value>
 				</quotient>
 			</function>
@@ -94,7 +94,7 @@
 		<fcs_function name="/controls/cockpit/throttle-lever[1]">
 			<function>
 				<quotient>
-					<property>fadec/control-2/lever/angle</property>
+					<property>/systems/fadec/control-2/lever/angle</property>
 					<value>45</value>
 				</quotient>
 			</function>

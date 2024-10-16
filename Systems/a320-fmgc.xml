@@ -556,7 +556,7 @@
 					</product>
 					<product>
 						<difference>
-							<property>fbw/pitch/load-factor</property>
+							<property>/systems/fbw/pitch/load-factor</property>
 							<value>1</value>
 						</difference>
 						<value>10</value>
@@ -609,7 +609,7 @@
 						<max>
 							<quotient>
 								<property>/FMGC/internal/alpha-input</property>
-								<property>fbw/alpha-prot-deg</property>
+								<property>/systems/fbw/alpha-prot-deg</property>
 							</quotient>
 							<value>0</value>
 						</max>
@@ -631,7 +631,7 @@
 						<max>
 							<quotient>
 								<property>/FMGC/internal/alpha-input</property>
-								<property>fbw/alpha-max-deg</property>
+								<property>/systems/fbw/alpha-max-deg</property>
 							</quotient>
 							<value>0</value>
 						</max>
@@ -906,8 +906,8 @@
 				/gear/gear[0]/wow eq 1
 				/controls/flight/flaps-pos lt 5
 				<test logic="OR">
-					/fdm/jsbsim/fadec/control-1/detent ge 4
-					/fdm/jsbsim/fadec/control-2/detent ge 4
+					/systems/fadec/control-1/detent ge 4
+					/systems/fadec/control-2/detent ge 4
 				</test>
 			</test>
 		</switch>

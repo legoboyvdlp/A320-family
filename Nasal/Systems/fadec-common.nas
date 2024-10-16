@@ -8,40 +8,40 @@ if (pts.Options.eng.getValue() == "IAE") {
 }
 
 var FADEC = {
-	alphaFloor: props.globals.getNode("/fdm/jsbsim/fadec/alpha-floor"),
-	alphaFloorSwitch: props.globals.getNode("/fdm/jsbsim/fadec/alpha-floor-switch"),
-	clbReduc: props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft"),
-	detent: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent", 1), props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent", 1)],
+	alphaFloor: props.globals.getNode("/systems/fadec/alpha-floor"),
+	alphaFloorSwitch: props.globals.getNode("/systems/fadec/alpha-floor-switch"),
+	clbReduc: props.globals.getNode("/systems/fadec/clbreduc-ft"),
+	detent: [props.globals.getNode("/systems/fadec/control-1/detent", 1), props.globals.getNode("/systems/fadec/control-2/detent", 1)],
 	detentTemp: [0, 0],
-	detentText: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent-text"), props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent-text")],
+	detentText: [props.globals.getNode("/systems/fadec/control-1/detent-text"), props.globals.getNode("/systems/fadec/control-2/detent-text")],
 	detentTextTemp: [0, 0],
-	engOut: props.globals.getNode("/fdm/jsbsim/fadec/eng-out"),
+	engOut: props.globals.getNode("/systems/fadec/eng-out"),
 	engOutTemp: 0,
 	Limit: {
-		activeEpr: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-epr"),
-		activeMode: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-mode"),
-		activeModeInt: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-mode-int"), # 0 TOGA, 1 MCT, 2 CL, 3 FLX, 4 MREV
+		activeEpr: props.globals.getNode("/systems/fadec/limit/active-epr"),
+		activeMode: props.globals.getNode("/systems/fadec/limit/active-mode"),
+		activeModeInt: props.globals.getNode("/systems/fadec/limit/active-mode-int"), # 0 TOGA, 1 MCT, 2 CL, 3 FLX, 4 MREV
 		activeModeIntTemp: 0,
-		activeN1: props.globals.getNode("/fdm/jsbsim/fadec/limit/active-n1"),
-		flexActive: props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active"),
-		flexActiveCmd: props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active-cmd"),
+		activeN1: props.globals.getNode("/systems/fadec/limit/active-n1"),
+		flexActive: props.globals.getNode("/systems/fadec/limit/flex-active"),
+		flexActiveCmd: props.globals.getNode("/systems/fadec/limit/flex-active-cmd"),
 		flexAllowed: 0,
-		flexTemp: props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-temp"),
+		flexTemp: props.globals.getNode("/systems/fadec/limit/flex-temp"),
 	},
-	lvrClb: props.globals.getNode("/fdm/jsbsim/fadec/lvrclb"),
+	lvrClb: props.globals.getNode("/systems/fadec/lvrclb"),
 	lvrClbStatus: 0,
 	lvrClbType: "LVR CLB",
 	Lock: {
-		thrLockAlert: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked-alert"),
-		thrLockCmd: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked"),
-		thrLockFlash: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked-flash"),
-		thrLockTime: props.globals.getNode("/fdm/jsbsim/fadec/thr-locked-time"),
+		thrLockAlert: props.globals.getNode("/systems/fadec/thr-locked-alert"),
+		thrLockCmd: props.globals.getNode("/systems/fadec/thr-locked"),
+		thrLockFlash: props.globals.getNode("/systems/fadec/thr-locked-flash"),
+		thrLockTime: props.globals.getNode("/systems/fadec/thr-locked-time"),
 	},
 	manThrAboveMct: [0, 0],
-	maxDetent: props.globals.getNode("/fdm/jsbsim/fadec/max-detent"),
-	n1Mode: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/n1-mode"), props.globals.getNode("/fdm/jsbsim/fadec/control-2/n1-mode")],
-	n1ModeSw: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/n1-mode-sw"), props.globals.getNode("/fdm/jsbsim/fadec/control-2/n1-mode-sw")],
-	togaLk: props.globals.getNode("/fdm/jsbsim/fadec/toga-lk"),
+	maxDetent: props.globals.getNode("/systems/fadec/max-detent"),
+	n1Mode: [props.globals.getNode("/systems/fadec/control-1/n1-mode"), props.globals.getNode("/systems/fadec/control-2/n1-mode")],
+	n1ModeSw: [props.globals.getNode("/systems/fadec/control-1/n1-mode-sw"), props.globals.getNode("/systems/fadec/control-2/n1-mode-sw")],
+	togaLk: props.globals.getNode("/systems/fadec/toga-lk"),
 	init: func() {
 		me.engOut.setBoolValue(0);
 		me.Limit.activeMode.setValue("TOGA");
@@ -192,16 +192,16 @@ var FADEC = {
 
 var thrustFlashT = maketimer(0.5, FADEC, FADEC.thrustFlash);
 
-setlistener("/fdm/jsbsim/fadec/control-1/detent", func() {
+setlistener("/systems/fadec/control-1/detent", func() {
 	FADEC.updateDetent(0);
 }, 0, 0);
-setlistener("/fdm/jsbsim/fadec/control-2/detent", func() {
+setlistener("/systems/fadec/control-2/detent", func() {
 	FADEC.updateDetent(1);
 }, 0, 0);
-setlistener("/fdm/jsbsim/fadec/limit/active-mode-int", func() {
+setlistener("/systems/fadec/limit/active-mode-int", func() {
 	FADEC.updateTxt();
 }, 0, 0);
-setlistener("/fdm/jsbsim/fadec/alpha-floor-switch", func() {
+setlistener("/systems/fadec/alpha-floor-switch", func() {
 	if (FADEC.alphaFloorSwitch.getValue() == 2) {
 		fmgc.ITAF.athrMaster(1);
 	}

@@ -89,11 +89,11 @@ var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
 # PERF
 var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft", 1);
 # TO PERF
-var clbReducFt = props.globals.getNode("/fdm/jsbsim/fadec/clbreduc-ft", 1);
+var clbReducFt = props.globals.getNode("/systems/fadec/clbreduc-ft", 1);
 var reducFt = props.globals.getNode("/FMGC/internal/accel-agl-ft", 1); # It's not AGL anymore
 var thrAccSet = props.globals.getNode("/MCDUC/thracc-set", 1);
-var flex = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-temp", 1);
-var flexSet = props.globals.getNode("/fdm/jsbsim/fadec/limit/flex-active-cmd", 1);
+var flex = props.globals.getNode("/systems/fadec/limit/flex-temp", 1);
+var flexSet = props.globals.getNode("/systems/fadec/limit/flex-active-cmd", 1);
 var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
 var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
 var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);

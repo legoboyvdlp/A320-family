@@ -4122,7 +4122,7 @@
 		<condition>
 			<or>
 				<property>controls/switches/annun-test</property>
-				<not><property>/fdm/jsbsim/fbw/sidestick/active[0]</property></not>
+				<not><property>/systems/fbw/sidestick/active[0]</property></not>
 			</or>
 		</condition>
 	</animation>
@@ -4133,7 +4133,7 @@
 		<condition>
 			<or>
 				<property>controls/switches/annun-test</property>
-				<not><property>/fdm/jsbsim/fbw/sidestick/active[1]</property></not>
+				<not><property>/systems/fbw/sidestick/active[1]</property></not>
 			</or>
 		</condition>
 	</animation>
@@ -4145,7 +4145,7 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<and>
-					<not><property>/fdm/jsbsim/fbw/sidestick/active[1]</property></not>
+					<not><property>/systems/fbw/sidestick/active[1]</property></not>
 					<or>
 						<greater-than-equals>
 							<expression>
@@ -4168,11 +4168,11 @@
 				<and>
 					<and>
 						<equals>
-							<property>/fdm/jsbsim/fbw/sidestick/active[0]</property>
+							<property>/systems/fbw/sidestick/active[0]</property>
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>/fdm/jsbsim/fbw/sidestick/active[1]</property>
+							<property>/systems/fbw/sidestick/active[1]</property>
 							<value>1</value>
 						</equals>
 					</and>
@@ -4224,7 +4224,7 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<and>
-					<not><property>/fdm/jsbsim/fbw/sidestick/active[0]</property></not>
+					<not><property>/systems/fbw/sidestick/active[0]</property></not>
 					<or>
 						<greater-than-equals>
 							<expression>
@@ -4247,11 +4247,11 @@
 				<and>
 					<and>
 						<equals>
-							<property>/fdm/jsbsim/fbw/sidestick/active[0]</property>
+							<property>/systems/fbw/sidestick/active[0]</property>
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>/fdm/jsbsim/fbw/sidestick/active[1]</property>
+							<property>/systems/fbw/sidestick/active[1]</property>
 							<value>1</value>
 						</equals>
 					</and>
@@ -10336,7 +10336,7 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<equals>
-					<property>fdm/jsbsim/gear/unit[1]/status</property>
+					<property>systems/gear/unit[1]/status</property>
 					<value>1</value>
 				</equals>
 			</or>
@@ -10350,7 +10350,7 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<equals>
-					<property>fdm/jsbsim/gear/unit[1]/status</property>
+					<property>systems/gear/unit[1]/status</property>
 					<value>2</value>
 				</equals>
 			</or>
@@ -10364,7 +10364,7 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<equals>
-					<property>fdm/jsbsim/gear/unit[0]/status</property>
+					<property>systems/gear/unit[0]/status</property>
 					<value>1</value>
 				</equals>
 			</or>
@@ -10378,7 +10378,7 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<equals>
-					<property>fdm/jsbsim/gear/unit[0]/status</property>
+					<property>systems/gear/unit[0]/status</property>
 					<value>2</value>
 				</equals>
 			</or>
@@ -10392,7 +10392,7 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<equals>
-					<property>fdm/jsbsim/gear/unit[2]/status</property>
+					<property>systems/gear/unit[2]/status</property>
 					<value>1</value>
 				</equals>
 			</or>
@@ -10406,7 +10406,7 @@
 			<or>
 				<property>controls/switches/annun-test</property>
 				<equals>
-					<property>fdm/jsbsim/gear/unit[2]/status</property>
+					<property>systems/gear/unit[2]/status</property>
 					<value>2</value>
 				</equals>
 			</or>
@@ -12986,7 +12986,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>trim_2_lts</object-name>
-		<property>fdm/jsbsim/hydraulics/stabilizer/cmd-deg</property>
+		<property>systems/fcs/stabilizer/cmd-deg</property>
 		<factor>15.55</factor>
 		<offset-deg>1.4</offset-deg>
 		<axis>
@@ -37261,7 +37261,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>fdm/jsbsim/fadec/control-1/n1-mode-sw</property>
+				<property>systems/fadec/control-1/n1-mode-sw</property>
 			</binding>
 			<binding>
 				<condition>
@@ -37331,7 +37331,7 @@
 					</and>
 				</condition>
 				<command>property-toggle</command>
-				<property>fdm/jsbsim/fadec/control-2/n1-mode-sw</property>
+				<property>systems/fadec/control-2/n1-mode-sw</property>
 			</binding>
 			<binding>
 				<condition>
@@ -37415,7 +37415,7 @@
 		<object-name>Eng1N1Btn2O</object-name>
 		<condition>
 			<or>
-				<property>fdm/jsbsim/fadec/control-1/n1-mode-sw</property>
+				<property>systems/fadec/control-1/n1-mode-sw</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -37426,7 +37426,7 @@
 		<object-name>Eng2N1Btn2O</object-name>
 		<condition>
 			<or>
-				<property>fdm/jsbsim/fadec/control-2/n1-mode-sw</property>
+				<property>systems/fadec/control-2/n1-mode-sw</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>

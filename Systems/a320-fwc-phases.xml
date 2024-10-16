@@ -162,22 +162,22 @@
 			<test logic="OR" value="1">
 				<test logic="OR">
 					<test logic="AND">
-						fadec/control-1/detent ge 4
-						fadec/limit/flex-active eq 1
+						/systems/fadec/control-1/detent ge 4
+						/systems/fadec/limit/flex-active eq 1
 					</test>
 					<test logic="AND">
-						fadec/control-1/detent eq 6
-						fadec/limit/flex-active eq 0
+						/systems/fadec/control-1/detent eq 6
+						/systems/fadec/limit/flex-active eq 0
 					</test>
 				</test>
 				<test logic="OR">
 					<test logic="AND">
-						fadec/control-2/detent ge 4
-						fadec/limit/flex-active eq 1
+						/systems/fadec/control-2/detent ge 4
+						/systems/fadec/limit/flex-active eq 1
 					</test>
 					<test logic="AND">
-						fadec/control-2/detent eq 6
-						fadec/limit/flex-active eq 0
+						/systems/fadec/control-2/detent eq 6
+						/systems/fadec/limit/flex-active eq 0
 					</test>
 				</test>
 			</test>
@@ -196,8 +196,8 @@
 				<test logic="AND">
 					/ECAM/phases/phase-calculation/takeoff-power-timer ne 0
 					/ECAM/phases/phase-calculation/altitude-ge-1500 eq 0
-					fadec/control-1/detent ge 2
-					fadec/control-2/detent ge 2
+					/systems/fadec/control-1/detent ge 2
+					/systems/fadec/control-2/detent ge 2
 				</test>
 			</test>
 		</switch>

@@ -30,7 +30,7 @@ var ECAM_line5rc = props.globals.getNode("/ECAM/rightmsg/linec5", 1);
 var ECAM_line6rc = props.globals.getNode("/ECAM/rightmsg/linec6", 1);
 var ECAM_line7rc = props.globals.getNode("/ECAM/rightmsg/linec7", 1);
 var ECAM_line8rc = props.globals.getNode("/ECAM/rightmsg/linec8", 1);
-var enginesBothAtIdle = props.globals.getNode("/fdm/jsbsim/fadec/both-at-idle");
+var enginesBothAtIdle = props.globals.getNode("/systems/fadec/both-at-idle");
 var enginesBothAtIdleTime = props.globals.initNode("/ECAM/Upper/idle-time", 0.0, "DOUBLE");
 var enginesBothAtIdleTimeSaved = props.globals.initNode("/ECAM/Upper/idle-time-saved", 0.0, "DOUBLE");
 
@@ -1177,17 +1177,17 @@ var input = {
 	slatyOffsetTrans: "/ECAM/Upper/SlatYtrans",
 	
 	# fadec
-	alphaFloor: "/fdm/jsbsim/fadec/alpha-floor",
-	eprLimit: "/fdm/jsbsim/fadec/limit/active-epr",
-	thrustLimit: "/fdm/jsbsim/fadec/limit/active-mode",
-	thrustLimitInt: "/fdm/jsbsim/fadec/limit/active-mode-int",
-	n1Limit: "/fdm/jsbsim/fadec/limit/active-n1",
-	flexTemp: "/fdm/jsbsim/fadec/limit/flex-temp",
+	alphaFloor: "/systems/fadec/alpha-floor",
+	eprLimit: "/systems/fadec/limit/active-epr",
+	thrustLimit: "/systems/fadec/limit/active-mode",
+	thrustLimitInt: "/systems/fadec/limit/active-mode-int",
+	n1Limit: "/systems/fadec/limit/active-n1",
+	flexTemp: "/systems/fadec/limit/flex-temp",
 	fadecPower1: "/systems/fadec/powered1",
 	fadecPower2: "/systems/fadec/powered2",
 	fadecPowerStart: "/systems/fadec/powerup",
-	N1_mode_1: "/fdm/jsbsim/fadec/control-1/n1-mode-sw",
-	N1_mode_2: "/fdm/jsbsim/fadec/control-2/n1-mode-sw",
+	N1_mode_1: "/systems/fadec/control-1/n1-mode-sw",
+	N1_mode_2: "/systems/fadec/control-2/n1-mode-sw",
 	eng1_epr: "/systems/fadec/eng1/epr",
 	eng2_epr: "/systems/fadec/eng2/epr",
 	eng1_n1: "/systems/fadec/eng1/n1",

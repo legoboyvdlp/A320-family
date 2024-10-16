@@ -156,7 +156,7 @@
 		<gain>-0.06</gain>
 		<input>/orientation/roll-deg</input>
 		<reference>/it-autoflight/internal/target-roll</reference>
-		<output>/fdm/jsbsim/fbw/fmgc/roll-cmd</output> <!-- Inputs to the FBW Roll -->
+		<output>/systems/fbw/fmgc/roll-cmd</output> <!-- Inputs to the FBW Roll -->
 		<min>-0.33</min>
 		<max>0.33</max>
 	</filter>
@@ -214,7 +214,7 @@
 			<property>/it-autoflight/internal/rudder-cmd</property>
 		</input>
 		<input>0</input>
-		<output>/fdm/jsbsim/fbw/fmgc/yaw-cmd</output> <!-- Inputs to the FBW Yaw -->
+		<output>/systems/fbw/fmgc/yaw-cmd</output> <!-- Inputs to the FBW Yaw -->
 		<max-rate-of-change>1.2</max-rate-of-change>
 	</filter>
 

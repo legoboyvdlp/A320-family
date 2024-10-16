@@ -819,19 +819,19 @@
 						</and>
 					</or>
 					<not-equals>
-						<property>/fdm/jsbsim/fadec/control-1/detent</property>
+						<property>/systems/fadec/control-1/detent</property>
 						<value>0</value>
 					</not-equals>
 					<not-equals>
-						<property>/fdm/jsbsim/fadec/control-2/detent</property>
+						<property>/systems/fadec/control-2/detent</property>
 						<value>0</value>
 					</not-equals>
 					<less-than>
-						<property>/fdm/jsbsim/fadec/control-1/detent</property>
+						<property>/systems/fadec/control-1/detent</property>
 						<value>5</value>
 					</less-than>
 					<less-than>
-						<property>/fdm/jsbsim/fadec/control-2/detent</property>
+						<property>/systems/fadec/control-2/detent</property>
 						<value>5</value>
 					</less-than>
 					<not>
@@ -945,11 +945,11 @@
 				<and>
 					<and>
 						<equals>
-							<property>/fdm/jsbsim/fbw/sidestick/active[0]</property>
+							<property>/systems/fbw/sidestick/active[0]</property>
 							<value>1</value>
 						</equals>
 						<equals>
-							<property>/fdm/jsbsim/fbw/sidestick/active[1]</property>
+							<property>/systems/fbw/sidestick/active[1]</property>
 							<value>1</value>
 						</equals>
 					</and>
@@ -1198,7 +1198,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
+					<property>/systems/fadec/control-1/detent-text</property>
 					<value>IDLE</value>
 				</equals>
 			</condition>
@@ -1213,7 +1213,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
+					<property>/systems/fadec/control-2/detent-text</property>
 					<value>IDLE</value>
 				</equals>
 			</condition>
@@ -1228,7 +1228,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
+					<property>/systems/fadec/control-1/detent-text</property>
 					<value>MAN</value>
 				</equals>
 			</condition>
@@ -1243,7 +1243,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
+					<property>/systems/fadec/control-2/detent-text</property>
 					<value>MAN</value>
 				</equals>
 			</condition>
@@ -1258,7 +1258,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
+					<property>/systems/fadec/control-1/detent-text</property>
 					<value>CL</value>
 				</equals>
 			</condition>
@@ -1273,7 +1273,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
+					<property>/systems/fadec/control-2/detent-text</property>
 					<value>CL</value>
 				</equals>
 			</condition>
@@ -1288,7 +1288,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
+					<property>/systems/fadec/control-1/detent-text</property>
 					<value>MAN THR</value>
 				</equals>
 			</condition>
@@ -1303,7 +1303,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
+					<property>/systems/fadec/control-2/detent-text</property>
 					<value>MAN THR</value>
 				</equals>
 			</condition>
@@ -1318,7 +1318,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
+					<property>/systems/fadec/control-1/detent-text</property>
 					<value>MCT</value>
 				</equals>
 			</condition>
@@ -1333,7 +1333,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
+					<property>/systems/fadec/control-2/detent-text</property>
 					<value>MCT</value>
 				</equals>
 			</condition>
@@ -1348,7 +1348,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-1/detent-text</property>
+					<property>/systems/fadec/control-1/detent-text</property>
 					<value>TOGA</value>
 				</equals>
 			</condition>
@@ -1363,7 +1363,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/fdm/jsbsim/fadec/control-2/detent-text</property>
+					<property>/systems/fadec/control-2/detent-text</property>
 					<value>TOGA</value>
 				</equals>
 			</condition>

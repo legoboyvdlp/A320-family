@@ -160,7 +160,7 @@
 
 	<animation>
 		<type>rotate</type>
-		<property>fdm/jsbsim/fcs/pushback-steer-deg</property>
+		<property>systems/fcs/tiller/pushback-steer-deg</property>
 		<factor>-1</factor>
 		<center>
 			<x-m>1.53665</x-m>

@@ -12,7 +12,7 @@ var state1Node = props.globals.getNode("/engines/engine[0]/state", 1);
 var state2Node = props.globals.getNode("/engines/engine[1]/state", 1);
 var wing_pb    = props.globals.getNode("/controls/ice-protection/wing", 1);
 var apu_bleedSw   = props.globals.getNode("/controls/pneumatics/switches/apu", 1);
-var gear       = props.globals.getNode("/fdm/jsbsim/gear/gear-all-norm", 1);
+var gear       = props.globals.getNode("/systems/gear/all-norm", 1);
 var stallVoice = props.globals.initNode("/sim/sound/warnings/stall-voice", 0, "BOOL");
 var engOpt     = props.globals.getNode("/options/eng", 1);
 
@@ -2326,7 +2326,7 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(fctlSpdBrkStillOut);
 	}
 	
-	if (fctlPitchTrimDisag.clearFlag == 0 and takeoffConfig and fmgc.FMGCInternal.toFlapThsSet and abs(-getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") - fmgc.FMGCInternal.toThs) >= 1.3) {
+	if (fctlPitchTrimDisag.clearFlag == 0 and takeoffConfig and fmgc.FMGCInternal.toFlapThsSet and abs(-getprop("/systems/fcs/stabilizer/final-deg") - fmgc.FMGCInternal.toThs) >= 1.3) {
 		fctlPitchTrimDisag.active = 1;
 		fctlPitchTrimDisag2.active = 1;
 	} else {
@@ -2443,8 +2443,8 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(athr_offw_1);
 	}
 	
-	if ((athr_lock.clearFlag == 0) and phaseVar2 >= 5 and phaseVar2 <= 7 and getprop("/fdm/jsbsim/fadec/thr-locked-alert") == 1) {
-		if (getprop("/fdm/jsbsim/fadec/thr-locked-flash") == 0) {
+	if ((athr_lock.clearFlag == 0) and phaseVar2 >= 5 and phaseVar2 <= 7 and getprop("/systems/fadec/thr-locked-alert") == 1) {
+		if (getprop("/systems/fadec/thr-locked-flash") == 0) {
 			athr_lock.msg = " ";
 		} else {
 			athr_lock.msg = msgSave;
@@ -2457,7 +2457,7 @@ var messages_priority_2 = func {
 	}
 	
 	
-	if ((athr_lim.clearFlag == 0) and getprop("it-autoflight/output/athr") == 1 and ((getprop("/fdm/jsbsim/fadec/eng-out") != 1 and (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN")) or (getprop("/fdm/jsbsim/fadec/eng-out") == 1 and (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN" or (systems.FADEC.detentText[0].getValue() == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (systems.FADEC.detentText[1].getValue() == "MAN THR" and !systems.FADEC.manThrAboveMct[1])))) and (phaseVar2 >= 5 and phaseVar2 <= 7)) {
+	if ((athr_lim.clearFlag == 0) and getprop("it-autoflight/output/athr") == 1 and ((getprop("/systems/fadec/eng-out") != 1 and (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN")) or (getprop("/systems/fadec/eng-out") == 1 and (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN" or (systems.FADEC.detentText[0].getValue() == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (systems.FADEC.detentText[1].getValue() == "MAN THR" and !systems.FADEC.manThrAboveMct[1])))) and (phaseVar2 >= 5 and phaseVar2 <= 7)) {
 		athr_lim.active = 1;
 		athr_lim_1.active = 1;
 	} else {
@@ -3591,7 +3591,7 @@ var messages_priority_0 = func {
 
 var messages_config_memo = func {
 	phaseVarMemo = pts.ECAM.fwcWarningPhase.getValue();
-	if (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4 or pts.Controls.Flight.speedbrake.getValue() != 0 or getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") > 1.75 or getprop("/fdm/jsbsim/hydraulics/stabilizer/final-deg") < -3.65 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") < -3.55 or getprop("/fdm/jsbsim/hydraulics/rudder/trim-cmd-deg") > 3.55) {
+	if (pts.Controls.Flight.flapsInput.getValue() == 0 or pts.Controls.Flight.flapsInput.getValue() == 4 or pts.Controls.Flight.speedbrake.getValue() != 0 or getprop("/systems/fcs/stabilizer/final-deg") > 1.75 or getprop("/systems/fcs/stabilizer/final-deg") < -3.65 or getprop("/systems/fcs/rudder/trim-cmd-deg") < -3.55 or getprop("/systems/fcs/rudder/trim-cmd-deg") > 3.55) {
 		setprop("/ECAM/to-config-normal", 0);
 	} else {
 		setprop("/ECAM/to-config-normal", 1);
@@ -3675,7 +3675,7 @@ var messages_config_memo = func {
 		ECAM_controller.warningReset(toMemoLine5);
 	}
 	
-	if (getprop("/fdm/jsbsim/gear/gear-all-norm") == 1) {
+	if (getprop("/systems/gear/all-norm") == 1) {
 		ldgMemoLine1.msg = "LDG LDG GEAR DN";
 		ldgMemoLine1.colour = "g";
 	} else {

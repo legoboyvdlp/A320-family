@@ -109,26 +109,11 @@ var Fdm = {
 			alpha: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg"),
 			alphaNorm: props.globals.getNode("/fdm/jsbsim/aero/alpha-deg-fixed"),
 		},
-		Fadec: {
-			detent: [props.globals.getNode("/fdm/jsbsim/fadec/control-1/detent"),props.globals.getNode("/fdm/jsbsim/fadec/control-2/detent")],
-		},
 		Fcs: {
 			brake: [props.globals.getNode("/fdm/jsbsim/fcs/left-brake-cmd-norm"),props.globals.getNode("/fdm/jsbsim/fcs/right-brake-cmd-norm")],
 			flapDeg: props.globals.getNode("/fdm/jsbsim/fcs/flap-pos-deg"),
 			slatDeg: props.globals.getNode("/fdm/jsbsim/fcs/slat-pos-deg"),
 			slatLocked: props.globals.getNode("/fdm/jsbsim/fcs/sfcc/slat-locked"),
-		},
-		Fbw: {
-			aileron: props.globals.getNode("/fdm/jsbsim/fbw/aileron-sidestick"),
-			elevator: props.globals.getNode("/fdm/jsbsim/fbw/elevator-sidestick"),
-		},
-		Hydraulics: {
-			Rudder: {
-				trimDeg: props.globals.getNode("/fdm/jsbsim/hydraulics/rudder/trim-deg"),
-			},
-			Stabilizer: {
-				cmdDeg: props.globals.getNode("/fdm/jsbsim/hydraulics/stabilizer/cmd-deg"),
-			},
 		},
 		Inertia: {
 			weightLbs: props.globals.getNode("/fdm/jsbsim/inertia/weight-lbs"),
@@ -363,6 +348,21 @@ var Systems = {
 		Options: {
 			igniterSelect: [props.globals.getNode("/systems/acconfig/options/igniter-select-1"), props.globals.getNode("/systems/acconfig/options/igniter-select-2")],
 		}
+	},
+	Fadec: {
+		detent: [props.globals.getNode("/systems/fadec/control-1/detent"),props.globals.getNode("/systems/fadec/control-2/detent")],
+	},
+	Fbw: {
+		aileron: props.globals.getNode("/systems/fbw/aileron-sidestick"),
+		elevator: props.globals.getNode("/systems/fbw/elevator-sidestick"),
+	},
+	Fcs: {
+		Rudder: {
+			trimDeg: props.globals.getNode("/systems/fcs/rudder/trim-deg"),
+		},
+		Stabilizer: {
+			cmdDeg: props.globals.getNode("/systems/fcs/stabilizer/cmd-deg"),
+		},
 	},
 	Navigation: {
 		ADR: {

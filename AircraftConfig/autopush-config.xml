@@ -1,6 +1,6 @@
 <PropertyList>
-	<steer-cmd-norm	alias="/fdm/jsbsim/hydraulics/tiller/autopush-cmd"/>
-	<yaw alias="/fdm/jsbsim/fcs/steer-deg"/>
+	<steer-cmd-norm	alias="/systems/fcs/tiller/autopush-cmd"/>
+	<yaw alias="/systems/fcs/tiller/actuator"/>
 	<yaw-mult type="float">1.0</yaw-mult>
 	<pitch-deg type="float">0.0</pitch-deg>
 	<min-turn-radius-m type="float">15</min-turn-radius-m>

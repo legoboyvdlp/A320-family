@@ -2242,11 +2242,11 @@ var input = {
 	autopilotFPA: "/it-autoflight/input/fpa",
 	autopilotVS: "/it-autoflight/input/vs",
 	
-	aileronPFD: "/fdm/jsbsim/fbw/roll/a-i-pfd",
-	elevatorPFD: "/fdm/jsbsim/fbw/pitch/e-i-pfd",
+	aileronPFD: "/systems/fbw/roll/a-i-pfd",
+	elevatorPFD: "/systems/fbw/pitch/e-i-pfd",
 	flapsInput: "/controls/flight/flaps-input",
 	
-	thrustLvrClb: "/fdm/jsbsim/fadec/lvrclb",
+	thrustLvrClb: "/systems/fadec/lvrclb",
 	
 	fmgcPhase: "/FMGC/internal/phase",
 	fmgcTakeoffState: "/FMGC/internal/to-state",
@@ -2275,14 +2275,14 @@ var input = {
 	showHdg: "/it-autoflight/custom/show-hdg",
 	hdgDiff: "/instrumentation/pfd/hdg-diff",
 	
-	thrust1: "/fdm/jsbsim/fadec/control-1/detent-text",
-	thrust2: "/fdm/jsbsim/fadec/control-2/detent-text",
-	engOut: "/fdm/jsbsim/fadec/eng-out",
-	alphaFloor: "/fdm/jsbsim/fadec/alpha-floor",
-	togaLk: "/fdm/jsbsim/fadec/toga-lk",
-	thrustLimit: "/fdm/jsbsim/fadec/limit/active-mode",
-	detent1: "/fdm/jsbsim/fadec/control-1/detent",
-	detent2: "/fdm/jsbsim/fadec/control-2/detent",
+	thrust1: "/systems/fadec/control-1/detent-text",
+	thrust2: "/systems/fadec/control-2/detent-text",
+	engOut: "/systems/fadec/eng-out",
+	alphaFloor: "/systems/fadec/alpha-floor",
+	togaLk: "/systems/fadec/toga-lk",
+	thrustLimit: "/systems/fadec/limit/active-mode",
+	detent1: "/systems/fadec/control-1/detent",
+	detent2: "/systems/fadec/control-2/detent",
 	
 	decision: "/instrumentation/mk-viii/inputs/arinc429/decision-height",
 	radio: "/FMGC/internal/radio",

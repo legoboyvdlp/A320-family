@@ -619,12 +619,12 @@ var takeoff = func {
 					setprop("/ECAM/to-config-test", 0);
 				}, 1);
 				# TODO calculate actual values for this
-				fmgc.FMGCInternal.v1set = 1;
-				fmgc.FMGCInternal.v1 = 142;
-				fmgc.FMGCInternal.vrset = 1;
-				fmgc.FMGCInternal.vr = 145;
-				fmgc.FMGCInternal.v2set = 1;
-				fmgc.FMGCInternal.v2 = 153;
+				#fmgc.FMGCInternal.v1set = 1;
+				#fmgc.FMGCInternal.v1 = 142;
+				#fmgc.FMGCInternal.vrset = 1;
+				#fmgc.FMGCInternal.vr = 145;
+				#fmgc.FMGCInternal.v2set = 1;
+				#fmgc.FMGCInternal.v2 = 153;
 			}
 		});
 	}

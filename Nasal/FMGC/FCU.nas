@@ -156,8 +156,8 @@ var FCUController = {
 				}
 			} else if (side != 0) {
 				if (press == 1) {
-					setprop("/fdm/jsbsim/fbw/sidestick/active[" ~ (2 - side) ~ "]", 0);
-					setprop("/fdm/jsbsim/fbw/sidestick/active[" ~ (side - 1) ~ "]", 1);
+					setprop("/systems/fbw/sidestick/active[" ~ (2 - side) ~ "]", 0);
+					setprop("/systems/fbw/sidestick/active[" ~ (side - 1) ~ "]", 1);
 					SidestickPriorityPressedLast = side;
 					if (side == 1) {
 						setprop("/sim/sound/priority-left", 1);
@@ -176,8 +176,8 @@ var FCUController = {
 					# to avoide the first pressed side getting activated again
 					# when released.
 					if (SidestickPriorityPressedLast == side and priorityTimer + 40 >= pts.Sim.Time.elapsedSec.getValue()) {
-						setprop("/fdm/jsbsim/fbw/sidestick/active[0]", 1);
-						setprop("/fdm/jsbsim/fbw/sidestick/active[1]", 1);
+						setprop("/systems/fbw/sidestick/active[0]", 1);
+						setprop("/systems/fbw/sidestick/active[1]", 1);
 					}
 				}
 			}

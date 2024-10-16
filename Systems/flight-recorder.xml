@@ -72,67 +72,67 @@
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/aileron-l/final-deg</property>
+				<property>/systems/fcs/aileron-l/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/aileron-r/final-deg</property>
+				<property>/systems/fcs/aileron-r/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/elevator-l/final-deg</property>
+				<property>/systems/fcs/elevator-l/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/elevator-r/final-deg</property>
+				<property>/systems/fcs/elevator-r/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/stabilizer/final-deg</property>
+				<property>/systems/fcs/stabilizer/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/rudder/final-deg</property>
+				<property>/systems/fcs/rudder/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/spoiler-l1/final-deg</property>
+				<property>/systems/fcs/spoiler-l1/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/spoiler-l2/final-deg</property>
+				<property>/systems/fcs/spoiler-l2/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/spoiler-l3/final-deg</property>
+				<property>/systems/fcs/spoiler-l3/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/spoiler-l4/final-deg</property>
+				<property>/systems/fcs/spoiler-l4/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/spoiler-l5/final-deg</property>
+				<property>/systems/fcs/spoiler-l5/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/spoiler-r1/final-deg</property>
+				<property>/systems/fcs/spoiler-r1/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/spoiler-r2/final-deg</property>
+				<property>/systems/fcs/spoiler-r2/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/spoiler-r3/final-deg</property>
+				<property>/systems/fcs/spoiler-r3/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/spoiler-r4/final-deg</property>
+				<property>/systems/fcs/spoiler-r4/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>
-				<property>/fdm/jsbsim/hydraulics/spoiler-r5/final-deg</property>
+				<property>/systems/fcs/spoiler-r5/final-deg</property>
 			</signal>
 			<signal>
 				<type>float</type>

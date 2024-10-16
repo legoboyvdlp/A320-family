@@ -150,7 +150,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/elevator-l/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/elevator-l/final-deg</property></toradians>
 				<value>0.0233096</value>
 			</product>
 		</function>
@@ -160,7 +160,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/elevator-r/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/elevator-r/final-deg</property></toradians>
 				<value>0.0233096</value>
 			</product>
 		</function>
@@ -170,7 +170,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/stabilizer/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/stabilizer/final-deg</property></toradians>
 				<value>0.0118082</value>
 			</product>
 		</function>
@@ -180,7 +180,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/aileron-l/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/aileron-l/final-deg</property></toradians>
 				<value>0.36492</value>
 			</product>
 		</function>
@@ -190,7 +190,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/aileron-r/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/aileron-r/final-deg</property></toradians>
 				<value>0.36492</value>
 			</product>
 		</function>
@@ -336,7 +336,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<property>gear/gear-all-norm</property>
+				<property>/systems/gear/all-norm</property>
 				<value>0.0171</value>
 			</product>
 		</function>
@@ -400,7 +400,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/elevator-l/final-deg</property></toradians></abs>
+				<abs><toradians><property>/systems/fcs/elevator-l/final-deg</property></toradians></abs>
 				<value>0.002625</value>
 			</product>
 		</function>
@@ -410,7 +410,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/elevator-r/final-deg</property></toradians></abs>
+				<abs><toradians><property>/systems/fcs/elevator-r/final-deg</property></toradians></abs>
 				<value>0.002625</value>
 			</product>
 		</function>
@@ -420,7 +420,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/stabilizer/final-deg</property></toradians></abs>
+				<abs><toradians><property>/systems/fcs/stabilizer/final-deg</property></toradians></abs>
 				<value>0.0039</value>
 			</product>
 		</function>
@@ -430,7 +430,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/aileron-l/final-deg</property></toradians></abs>
+				<abs><toradians><property>/systems/fcs/aileron-l/final-deg</property></toradians></abs>
 				<value>0.0029271086286386</value>
 			</product>
 		</function>
@@ -440,7 +440,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/aileron-r/final-deg</property></toradians></abs>
+				<abs><toradians><property>/systems/fcs/aileron-r/final-deg</property></toradians></abs>
 				<value>0.0029271086286386</value>
 			</product>
 		</function>
@@ -534,7 +534,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/rudder/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/rudder/final-deg</property></toradians>
 				<value>-0.145</value>
 			</product>
 		</function>
@@ -594,7 +594,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<toradians><property>hydraulics/aileron-l/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/aileron-l/final-deg</property></toradians>
 				<value>0.043</value>
 			</product>
 		</function>
@@ -605,7 +605,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<toradians><property>hydraulics/aileron-r/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/aileron-r/final-deg</property></toradians>
 				<value>-0.043</value>
 			</product>
 		</function>
@@ -638,7 +638,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<toradians><property>hydraulics/rudder/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/rudder/final-deg</property></toradians>
 				<value>0.008</value>
 			</product>
 		</function>
@@ -710,7 +710,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
-				<toradians><property>hydraulics/elevator-l/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/elevator-l/final-deg</property></toradians>
 				<value>-0.345</value>
 			</product>
 		</function>
@@ -721,7 +721,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
-				<toradians><property>hydraulics/elevator-r/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/elevator-r/final-deg</property></toradians>
 				<value>-0.345</value>
 			</product>
 		</function>
@@ -732,7 +732,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
-				<toradians><property>hydraulics/stabilizer/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/stabilizer/final-deg</property></toradians>
 				<value>-2.366</value>
 			</product>
 		</function>
@@ -798,7 +798,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<toradians><property>hydraulics/rudder/final-deg</property></toradians>
+				<toradians><property>/systems/fcs/rudder/final-deg</property></toradians>
 				<value>0.042</value>
 			</product>
 		</function>

@@ -10,9 +10,9 @@
 	<pi-simple-controller>
 		<name>System Command: Load Factor</name>
 		<debug>false</debug>
-		<input>/fdm/jsbsim/fbw/pitch/load-factor-error</input>
+		<input>/systems/fbw/pitch/load-factor-error</input>
 		<reference>0</reference>
-		<output>/fdm/jsbsim/fbw/pitch/load-factor-pi</output>
+		<output>/systems/fbw/pitch/load-factor-pi</output>
 		<config>
 			<Kp>
 				<expression>
@@ -54,21 +54,21 @@
 			<min>
 				<condition>
 					<less-than>
-						<property>/fdm/jsbsim/fbw/pitch/e-i-sum</property>
+						<property>/systems/fbw/pitch/e-i-sum</property>
 						<value>0</value>
 					</less-than>
 				</condition>
-				<property>/fdm/jsbsim/fbw/pitch/e-i-sum</property>
+				<property>/systems/fbw/pitch/e-i-sum</property>
 			</min>
 			<min>0.0</min>
 			<max>
 				<condition>
 					<greater-than>
-						<property>/fdm/jsbsim/fbw/pitch/e-i-sum</property>
+						<property>/systems/fbw/pitch/e-i-sum</property>
 						<value>0</value>
 					</greater-than>
 				</condition>
-				<property>/fdm/jsbsim/fbw/pitch/e-i-sum</property>
+				<property>/systems/fbw/pitch/e-i-sum</property>
 			</max>
 			<max>0.0</max>
 		</config>

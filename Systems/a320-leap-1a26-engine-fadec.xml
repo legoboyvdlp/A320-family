@@ -5,19 +5,19 @@
 
 <system name="A320: LEAP Engine">
 	
-	<property value="30">fadec/limit/rated-temp</property>
-	<property value="30">fadec/limit/flex-rated-temp</property>
-	<property value="27120">fadec/limit/rated-thrust</property>
-	<property value="20.1">fadec/limit/min-n1</property>
-	<property value="104">fadec/limit/max-n1</property>
-	<property value="0">fadec/inhibit-alpha-floor</property>
-	<property value="1">fadec/limit/active-epr</property> <!-- Unused in this engine -->
-	<property value="0">fadec/control-1/n1-mode</property> <!-- Unused in this engine -->
-	<property value="0">fadec/control-2/n1-mode</property> <!-- Unused in this engine -->
+	<property value="30">/systems/fadec/limit/rated-temp</property>
+	<property value="30">/systems/fadec/limit/flex-rated-temp</property>
+	<property value="27120">/systems/fadec/limit/rated-thrust</property>
+	<property value="20.1">/systems/fadec/limit/min-n1</property>
+	<property value="104">/systems/fadec/limit/max-n1</property>
+	<property value="0">/systems/fadec/inhibit-alpha-floor</property>
+	<property value="1">/systems/fadec/limit/active-epr</property> <!-- Unused in this engine -->
+	<property value="0">/systems/fadec/control-1/n1-mode</property> <!-- Unused in this engine -->
+	<property value="0">/systems/fadec/control-2/n1-mode</property> <!-- Unused in this engine -->
 	
 	<channel name="Thrust Limits">
 		
-		<fcs_function name="fadec/limit/rated-thrust-n1">
+		<fcs_function name="/systems/fadec/limit/rated-thrust-n1">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
@@ -32,7 +32,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/milthrust-unmodified"> <!-- Copy of MilThrust table in engines file -->
+		<fcs_function name="/systems/fadec/limit/milthrust-unmodified"> <!-- Copy of MilThrust table in engines file -->
 			<function>
 				<table>
 					<independentVar lookup="row">velocities/mach</independentVar>
@@ -54,49 +54,49 @@
 		
 		<!-- Following functions fix a FGTurbine inaccuracy... rated thrust N1% should be rated thrust lbs -->
 		<!-- These calculations change it so that the rated power at sea level is at the correct N1% value. It still changes with altitude and mach as it should -->
-		<fcs_function name="fadec/limit/fgturbine-thrust">
+		<fcs_function name="/systems/fadec/limit/fgturbine-thrust">
 			<function>
 				<sum>
 					<product>
 						<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
-						<property>fadec/limit/rated-thrust</property>
+						<property>/systems/fadec/limit/rated-thrust</property>
 					</product>
 					<product>
 						<difference>
-							<property>fadec/limit/rated-thrust</property>
+							<property>/systems/fadec/limit/rated-thrust</property>
 							<product>
 								<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
-								<property>fadec/limit/rated-thrust</property>
+								<property>/systems/fadec/limit/rated-thrust</property>
 							</product>
 						</difference>
-						<property>fadec/limit/milthrust-unmodified</property>
+						<property>/systems/fadec/limit/milthrust-unmodified</property>
 					</product>
 				</sum>
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/rated-thrust-actual">
+		<fcs_function name="/systems/fadec/limit/rated-thrust-actual">
 			<function>
 				<sum>
 					<product>
 						<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
-						<property>fadec/limit/rated-thrust</property>
+						<property>/systems/fadec/limit/rated-thrust</property>
 					</product>
 					<product>
 						<product>
 							<difference>
-								<property>fadec/limit/rated-thrust</property>
+								<property>/systems/fadec/limit/rated-thrust</property>
 								<product>
 									<property>propulsion/engine[0]/IdleThrust</property> <!-- It doesn't matter which engine, same for all -->
-									<property>fadec/limit/rated-thrust</property>
+									<property>/systems/fadec/limit/rated-thrust</property>
 								</product>
 							</difference>
-							<property>fadec/limit/milthrust-unmodified</property>
+							<property>/systems/fadec/limit/milthrust-unmodified</property>
 						</product>
 						<pow>
 							<quotient>
 								<difference>
-									<property>fadec/limit/rated-thrust-n1</property>
+									<property>/systems/fadec/limit/rated-thrust-n1</property>
 									<value>20.1</value>
 								</difference>
 								<value>80.9</value>
@@ -108,7 +108,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/rated-thrust-factor">
+		<fcs_function name="/systems/fadec/limit/rated-thrust-factor">
 			<function>
 				<ifthen>
 					<eq>
@@ -118,12 +118,12 @@
 					<value>0</value>
 					<ifthen>
 						<nq> <!-- Prevent divide by 0 -->
-							<property>fadec/limit/rated-thrust-actual</property>
+							<property>/systems/fadec/limit/rated-thrust-actual</property>
 							<value>0</value>
 						</nq>
 						<quotient>
-							<property>fadec/limit/fgturbine-thrust</property>
-							<property>fadec/limit/rated-thrust-actual</property>
+							<property>/systems/fadec/limit/fgturbine-thrust</property>
+							<property>/systems/fadec/limit/rated-thrust-actual</property>
 						</quotient>
 						<value>1</value>
 					</ifthen>
@@ -131,7 +131,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/toga-ref">
+		<fcs_function name="/systems/fadec/limit/toga-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
@@ -146,13 +146,13 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/toga">
+		<fcs_function name="/systems/fadec/limit/toga">
 			<function>
 				<quotient>
 					<floor>
 						<sum>
 							<product>
-								<property>fadec/limit/toga-ref</property>
+								<property>/systems/fadec/limit/toga-ref</property>
 								<value>10</value>
 							</product>
 							<value>0.5</value> <!-- Make it round correctly -->
@@ -163,10 +163,10 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/toga-norm">
+		<fcs_function name="/systems/fadec/limit/toga-norm">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/limit/toga</independentVar>
+					<independentVar lookup="row">/systems/fadec/limit/toga</independentVar>
 					<tableData>
 						 20.1  0
 						101.0  1
@@ -175,19 +175,19 @@
 			</function>
 		</fcs_function>
 		
-		<summer name="fadec/limit/flex-temp-input"> <!-- (Rated - Flex) + TAT -->
-			<input>fadec/limit/flex-rated-temp</input> <!-- Fix the calculations -->
-			<input>-fadec/limit/flex-temp</input>
+		<summer name="/systems/fadec/limit/flex-temp-input"> <!-- (Rated - Flex) + TAT -->
+			<input>/systems/fadec/limit/flex-rated-temp</input> <!-- Fix the calculations -->
+			<input>-/systems/fadec/limit/flex-temp</input>
 			<input>propulsion/tat-c</input>
 		</summer>
 		
-		<fcs_function name="fadec/limit/flex-ref">
+		<fcs_function name="/systems/fadec/limit/flex-ref">
 			<function>
 				<min> <!-- FLEX can not increase thrust past TOGA -->
-					<property>fadec/limit/toga-ref</property>
+					<property>/systems/fadec/limit/toga-ref</property>
 					<table>
 						<independentVar lookup="row">/position/altitude-ft</independentVar>
-						<independentVar lookup="column">fadec/limit/flex-temp-input</independentVar>
+						<independentVar lookup="column">/systems/fadec/limit/flex-temp-input</independentVar>
 						<tableData>
 							      -60   -30    0     30    60
 							    0  74.3  79.0  83.3  87.6  83.2
@@ -199,7 +199,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mct-ref">
+		<fcs_function name="/systems/fadec/limit/mct-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
@@ -214,20 +214,20 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="fadec/limit/mct-flex-ref">
-			<default value="fadec/limit/mct-ref"/>
-			<test value="fadec/limit/flex-ref">
-				fadec/limit/flex-active eq 1
+		<switch name="/systems/fadec/limit/mct-flex-ref">
+			<default value="/systems/fadec/limit/mct-ref"/>
+			<test value="/systems/fadec/limit/flex-ref">
+				/systems/fadec/limit/flex-active eq 1
 			</test>
 		</switch>
 		
-		<fcs_function name="fadec/limit/mct">
+		<fcs_function name="/systems/fadec/limit/mct">
 			<function>
 				<quotient>
 					<floor>
 						<sum>
 							<product>
-								<property>fadec/limit/mct-flex-ref</property>
+								<property>/systems/fadec/limit/mct-flex-ref</property>
 								<value>10</value>
 							</product>
 							<value>0.5</value> <!-- Make it round correctly -->
@@ -238,10 +238,10 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mct-norm">
+		<fcs_function name="/systems/fadec/limit/mct-norm">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/limit/mct</independentVar>
+					<independentVar lookup="row">/systems/fadec/limit/mct</independentVar>
 					<tableData>
 						 20.1  0
 						101.0  1
@@ -250,7 +250,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/climb-ref">
+		<fcs_function name="/systems/fadec/limit/climb-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
@@ -265,13 +265,13 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/climb">
+		<fcs_function name="/systems/fadec/limit/climb">
 			<function>
 				<quotient>
 					<floor>
 						<sum>
 							<product>
-								<property>fadec/limit/climb-ref</property>
+								<property>/systems/fadec/limit/climb-ref</property>
 								<value>10</value>
 							</product>
 							<value>0.5</value> <!-- Make it round correctly -->
@@ -282,10 +282,10 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/climb-norm">
+		<fcs_function name="/systems/fadec/limit/climb-norm">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/limit/climb</independentVar>
+					<independentVar lookup="row">/systems/fadec/limit/climb</independentVar>
 					<tableData>
 						 20.1  0
 						101.0  1
@@ -294,7 +294,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/idle-ref">
+		<fcs_function name="/systems/fadec/limit/idle-ref">
 			<function>
 				<ifthen>
 					<eq>
@@ -321,13 +321,13 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/idle">
+		<fcs_function name="/systems/fadec/limit/idle">
 			<function>
 				<quotient>
 					<floor>
 						<sum>
 							<product>
-								<property>fadec/limit/idle-ref</property>
+								<property>/systems/fadec/limit/idle-ref</property>
 								<value>10</value>
 							</product>
 							<value>0.5</value> <!-- Make it round correctly -->
@@ -338,10 +338,10 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/idle-norm">
+		<fcs_function name="/systems/fadec/limit/idle-norm">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/limit/idle</independentVar>
+					<independentVar lookup="row">/systems/fadec/limit/idle</independentVar>
 					<tableData>
 						 20.1  0
 						101.0  1
@@ -350,7 +350,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mrev-ref">
+		<fcs_function name="/systems/fadec/limit/mrev-ref">
 			<function>
 				<table>
 					<independentVar lookup="row">/position/altitude-ft</independentVar>
@@ -364,13 +364,13 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mrev">
+		<fcs_function name="/systems/fadec/limit/mrev">
 			<function>
 				<quotient>
 					<floor>
 						<sum>
 							<product>
-								<property>fadec/limit/mrev-ref</property>
+								<property>/systems/fadec/limit/mrev-ref</property>
 								<value>10</value>
 							</product>
 							<value>0.5</value> <!-- Make it round correctly -->
@@ -381,10 +381,10 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/limit/mrev-norm">
+		<fcs_function name="/systems/fadec/limit/mrev-norm">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/limit/mrev</independentVar>
+					<independentVar lookup="row">/systems/fadec/limit/mrev</independentVar>
 					<tableData>
 						 20.1  0
 						101.0  1
@@ -398,7 +398,7 @@
 	<channel name="Reversers">
 		
 		<!-- Engine 1 -->
-		<switch name="fadec/reverse-1/position-cmd">
+		<switch name="/systems/fadec/reverse-1/position-cmd">
 			<default value="0"/>
 			<test value="1">
 				/controls/engines/engine[0]/reverse-engage eq 1
@@ -406,7 +406,7 @@
 			<output>/controls/engines/engine[0]/reverse-cmd</output>
 		</switch>
 		
-		<switch name="fadec/reverse-1/position-rate">
+		<switch name="/systems/fadec/reverse-1/position-rate">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/systems/hydraulic/green-psi ge 1500
@@ -414,22 +414,22 @@
 			</test>
 		</switch>
 		
-		<actuator name="fadec/reverse-1/position-norm">
-			<input>fadec/reverse-1/position-cmd</input>
-			<rate_limit>fadec/reverse-1/position-rate</rate_limit>
+		<actuator name="/systems/fadec/reverse-1/position-norm">
+			<input>/systems/fadec/reverse-1/position-cmd</input>
+			<rate_limit>/systems/fadec/reverse-1/position-rate</rate_limit>
 			<output>/engines/engine[0]/reverser-pos-norm</output>
 		</actuator>
 		
 		<pure_gain name="propulsion/engine[0]/reverser-angle-rad">
-			<input>fadec/reverse-1/position-norm</input>
+			<input>/systems/fadec/reverse-1/position-norm</input>
 			<gain>3.14</gain>
 		</pure_gain>
 		
-		<fcs_function name="fadec/reverse-1/throttle-rev-cmd">
+		<fcs_function name="/systems/fadec/reverse-1/throttle-rev-cmd">
 			<function>
 				<ifthen>
 					<eq>
-						<property>fadec/reverse-1/position-norm</property>
+						<property>/systems/fadec/reverse-1/position-norm</property>
 						<value>1</value>
 					</eq>
 					<table>
@@ -444,7 +444,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/reverse-1/throttle-rev">
+		<fcs_function name="/systems/fadec/reverse-1/throttle-rev">
 			<function>
 				<ifthen>
 					<eq>
@@ -454,9 +454,9 @@
 					<sum>
 						<value>0.05</value>
 						<product>
-							<property>fadec/reverse-1/throttle-rev-cmd</property>
+							<property>/systems/fadec/reverse-1/throttle-rev-cmd</property>
 							<difference>
-								<property>fadec/limit/mrev-norm</property>
+								<property>/systems/fadec/limit/mrev-norm</property>
 								<value>0.05</value>
 							</difference>
 						</product>
@@ -466,7 +466,7 @@
 			</function>
 			<clipto>
 				<min>0.05</min>
-				<max>fadec/limit/mrev-norm</max>
+				<max>/systems/fadec/limit/mrev-norm</max>
 			</clipto>
 		</fcs_function>
 		
@@ -485,16 +485,16 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="fadec/reverse-1/active">
+		<switch name="/systems/fadec/reverse-1/active">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				fadec/reverse-1/position-cmd eq 1
-				fadec/reverse-1/position-norm ne 0
+				/systems/fadec/reverse-1/position-cmd eq 1
+				/systems/fadec/reverse-1/position-norm ne 0
 			</test>
 		</switch>
 		
 		<!-- Engine 2 -->
-		<switch name="fadec/reverse-2/position-cmd">
+		<switch name="/systems/fadec/reverse-2/position-cmd">
 			<default value="0"/>
 			<test value="1">
 				/controls/engines/engine[1]/reverse-engage eq 1
@@ -502,7 +502,7 @@
 			<output>/controls/engines/engine[1]/reverse-cmd</output>
 		</switch>
 		
-		<switch name="fadec/reverse-2/position-rate">
+		<switch name="/systems/fadec/reverse-2/position-rate">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/systems/hydraulic/yellow-psi ge 1500
@@ -510,22 +510,22 @@
 			</test>
 		</switch>
 		
-		<actuator name="fadec/reverse-2/position-norm">
-			<input>fadec/reverse-2/position-cmd</input>
-			<rate_limit>fadec/reverse-2/position-rate</rate_limit>
+		<actuator name="/systems/fadec/reverse-2/position-norm">
+			<input>/systems/fadec/reverse-2/position-cmd</input>
+			<rate_limit>/systems/fadec/reverse-2/position-rate</rate_limit>
 			<output>/engines/engine[1]/reverser-pos-norm</output>
 		</actuator>
 		
 		<pure_gain name="propulsion/engine[1]/reverser-angle-rad">
-			<input>fadec/reverse-2/position-norm</input>
+			<input>/systems/fadec/reverse-2/position-norm</input>
 			<gain>3.14</gain>
 		</pure_gain>
 		
-		<fcs_function name="fadec/reverse-2/throttle-rev-cmd">
+		<fcs_function name="/systems/fadec/reverse-2/throttle-rev-cmd">
 			<function>
 				<ifthen>
 					<eq>
-						<property>fadec/reverse-2/position-norm</property>
+						<property>/systems/fadec/reverse-2/position-norm</property>
 						<value>1</value>
 					</eq>
 					<table>
@@ -540,7 +540,7 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/reverse-2/throttle-rev">
+		<fcs_function name="/systems/fadec/reverse-2/throttle-rev">
 			<function>
 				<ifthen>
 					<eq>
@@ -550,9 +550,9 @@
 					<sum>
 						<value>0.05</value>
 						<product>
-							<property>fadec/reverse-2/throttle-rev-cmd</property>
+							<property>/systems/fadec/reverse-2/throttle-rev-cmd</property>
 							<difference>
-								<property>fadec/limit/mrev-norm</property>
+								<property>/systems/fadec/limit/mrev-norm</property>
 								<value>0.05</value>
 							</difference>
 						</product>
@@ -562,7 +562,7 @@
 			</function>
 			<clipto>
 				<min>0.05</min>
-				<max>fadec/limit/mrev-norm</max>
+				<max>/systems/fadec/limit/mrev-norm</max>
 			</clipto>
 		</fcs_function>
 		
@@ -581,11 +581,11 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="fadec/reverse-2/active">
+		<switch name="/systems/fadec/reverse-2/active">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				fadec/reverse-2/position-cmd eq 1
-				fadec/reverse-2/position-norm ne 0
+				/systems/fadec/reverse-2/position-cmd eq 1
+				/systems/fadec/reverse-2/position-norm ne 0
 			</test>
 		</switch>
 	
@@ -594,31 +594,31 @@
 	<channel name="Engine Control"> <!-- Very complicated, please don't touch if you don't understand it -->
 		
 		<!-- Engine 1 -->
-		<switch name="fadec/control-1/throttle-pos">
+		<switch name="/systems/fadec/control-1/throttle-pos">
 			<default value="/controls/engines/engine[0]/throttle"/>
 			<test value="0">
-				fadec/reverse-1/active eq 1
+				/systems/fadec/reverse-1/active eq 1
 			</test>
 		</switch>
 		
-		<lag_filter name="fadec/control-1/throttle-lag">
-			<input>fadec/control-1/throttle-pos</input>
+		<lag_filter name="/systems/fadec/control-1/throttle-lag">
+			<input>/systems/fadec/control-1/throttle-pos</input>
 			<c1>20</c1>
 		</lag_filter>
 		
-		<fcs_function name="fadec/control-1/idle-climb-n1">
+		<fcs_function name="/systems/fadec/control-1/idle-climb-n1">
 			<function>
 				<sum>
-					<property>fadec/limit/min-n1</property>
+					<property>/systems/fadec/limit/min-n1</property>
 					<product>
 						<difference>
-							<property>fadec/control-1/throttle-lag</property>
+							<property>/systems/fadec/control-1/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/idle-t</property>
 						</difference>
 						<quotient>
 							<difference>
-								<property>fadec/limit/climb</property>
-								<property>fadec/limit/min-n1</property>
+								<property>/systems/fadec/limit/climb</property>
+								<property>/systems/fadec/limit/min-n1</property>
 							</difference>
 							<difference>
 								<property>/systems/acconfig/options/fadec/climb-b</property>
@@ -629,24 +629,24 @@
 				</sum>
 			</function>
 			<clipto>
-				<min>fadec/limit/min-n1</min>
-				<max>fadec/limit/climb</max>
+				<min>/systems/fadec/limit/min-n1</min>
+				<max>/systems/fadec/limit/climb</max>
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="fadec/control-1/climb-mct-n1">
+		<fcs_function name="/systems/fadec/control-1/climb-mct-n1">
 			<function>
 				<sum>
-					<property>fadec/limit/climb</property>
+					<property>/systems/fadec/limit/climb</property>
 					<product>
 						<difference>
-							<property>fadec/control-1/throttle-lag</property>
+							<property>/systems/fadec/control-1/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/climb-t</property>
 						</difference>
 						<quotient>
 							<difference>
-								<property>fadec/limit/mct</property>
-								<property>fadec/limit/climb</property>
+								<property>/systems/fadec/limit/mct</property>
+								<property>/systems/fadec/limit/climb</property>
 							</difference>
 							<difference>
 								<property>/systems/acconfig/options/fadec/mct-b</property>
@@ -657,24 +657,24 @@
 				</sum>
 			</function>
 			<clipto>
-				<min>fadec/limit/climb</min>
-				<max>fadec/limit/mct</max>
+				<min>/systems/fadec/limit/climb</min>
+				<max>/systems/fadec/limit/mct</max>
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="fadec/control-1/mct-toga-n1">
+		<fcs_function name="/systems/fadec/control-1/mct-toga-n1">
 			<function>
 				<sum>
-					<property>fadec/limit/mct</property>
+					<property>/systems/fadec/limit/mct</property>
 					<product>
 						<difference>
-							<property>fadec/control-1/throttle-lag</property>
+							<property>/systems/fadec/control-1/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/mct-t</property>
 						</difference>
 						<quotient>
 							<difference>
-								<property>fadec/limit/toga</property>
-								<property>fadec/limit/mct</property>
+								<property>/systems/fadec/limit/toga</property>
+								<property>/systems/fadec/limit/mct</property>
 							</difference>
 							<difference>
 								<property>/systems/acconfig/options/fadec/toga-b</property>
@@ -685,25 +685,25 @@
 				</sum>
 			</function>
 			<clipto>
-				<min>fadec/limit/mct</min>
-				<max>fadec/limit/toga</max>
+				<min>/systems/fadec/limit/mct</min>
+				<max>/systems/fadec/limit/toga</max>
 			</clipto>
 		</fcs_function>
 		
-		<switch name="fadec/control-1/lever-n1">
-			<default value="fadec/control-1/idle-climb-n1"/>
-			<test value="fadec/control-1/mct-toga-n1">
-				fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/mct-t
+		<switch name="/systems/fadec/control-1/lever-n1">
+			<default value="/systems/fadec/control-1/idle-climb-n1"/>
+			<test value="/systems/fadec/control-1/mct-toga-n1">
+				/systems/fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/mct-t
 			</test>
-			<test value="fadec/control-1/climb-mct-n1">
-				fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/climb-t
+			<test value="/systems/fadec/control-1/climb-mct-n1">
+				/systems/fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/climb-t
 			</test>
 		</switch>
 		
-		<fcs_function name="fadec/control-1/lever-norm">
+		<fcs_function name="/systems/fadec/control-1/lever-norm">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/control-1/lever-n1</independentVar>
+					<independentVar lookup="row">/systems/fadec/control-1/lever-n1</independentVar>
 					<tableData>
 						 20.1  0
 						101.0  1
@@ -712,36 +712,36 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="fadec/control-1/detent">
+		<switch name="/systems/fadec/control-1/detent">
 			<default value="0"/> <!-- IDLE -->
 			<test value="6"> <!-- TOGA -->
-				fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/toga-b
+				/systems/fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/toga-b
 			</test>
 			<test value="5"> <!-- MAN THR -->
-				fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/mct-t
+				/systems/fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/mct-t
 			</test>
 			<test value="4"> <!-- MCT/FLX -->
-				fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/mct-b
+				/systems/fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/mct-b
 			</test>
 			<test value="3"> <!-- MAN THR -->
-				fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/climb-t
+				/systems/fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/climb-t
 			</test>
 			<test value="2"> <!-- CL -->
-				fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/climb-b
+				/systems/fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/climb-b
 			</test>
 			<test value="1"> <!-- MAN -->
-				fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/idle-t
+				/systems/fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/idle-t
 			</test>
-			<output>fbw/detent-1-feedback</output>
+			<output>/systems/fbw/detent-1-feedback</output>
 		</switch>
 		
-		<fcs_function name="fadec/control-1/lever/idle-climb">
+		<fcs_function name="/systems/fadec/control-1/lever/idle-climb">
 			<function>
 				<sum>
 					<value>2</value>
 					<product>
 						<difference>
-							<property>fadec/control-1/throttle-lag</property>
+							<property>/systems/fadec/control-1/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/idle-t</property>
 						</difference>
 						<quotient>
@@ -763,13 +763,13 @@
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="fadec/control-1/lever/climb-mct">
+		<fcs_function name="/systems/fadec/control-1/lever/climb-mct">
 			<function>
 				<sum>
 					<value>27</value>
 					<product>
 						<difference>
-							<property>fadec/control-1/throttle-lag</property>
+							<property>/systems/fadec/control-1/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/climb-t</property>
 						</difference>
 						<quotient>
@@ -791,13 +791,13 @@
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="fadec/control-1/lever/mct-toga">
+		<fcs_function name="/systems/fadec/control-1/lever/mct-toga">
 			<function>
 				<sum>
 					<value>37</value>
 					<product>
 						<difference>
-							<property>fadec/control-1/throttle-lag</property>
+							<property>/systems/fadec/control-1/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/mct-t</property>
 						</difference>
 						<quotient>
@@ -819,54 +819,54 @@
 			</clipto>
 		</fcs_function>
 		
-		<switch name="fadec/control-1/lever/angle">
+		<switch name="/systems/fadec/control-1/lever/angle">
 			<default value="0"/> <!-- IDLE -->
 			<test value="45"> <!-- TOGA -->
-				fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/toga-b
+				/systems/fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/toga-b
 			</test>
-			<test value="fadec/control-1/lever/mct-toga"> <!-- MAN THR -->
-				fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/mct-t
+			<test value="/systems/fadec/control-1/lever/mct-toga"> <!-- MAN THR -->
+				/systems/fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/mct-t
 			</test>
 			<test value="35"> <!-- MCT/FLX -->
-				fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/mct-b
+				/systems/fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/mct-b
 			</test>
-			<test value="fadec/control-1/lever/climb-mct"> <!-- MAN THR -->
-				fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/climb-t
+			<test value="/systems/fadec/control-1/lever/climb-mct"> <!-- MAN THR -->
+				/systems/fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/climb-t
 			</test>
 			<test value="25"> <!-- CL -->
-				fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/climb-b
+				/systems/fadec/control-1/throttle-lag ge /systems/acconfig/options/fadec/climb-b
 			</test>
-			<test value="fadec/control-1/lever/idle-climb"> <!-- MAN -->
-				fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/idle-t
+			<test value="/systems/fadec/control-1/lever/idle-climb"> <!-- MAN -->
+				/systems/fadec/control-1/throttle-lag gt /systems/acconfig/options/fadec/idle-t
 			</test>
 		</switch>
 		
 		<!-- Engine 2 -->
-		<switch name="fadec/control-2/throttle-pos">
+		<switch name="/systems/fadec/control-2/throttle-pos">
 			<default value="/controls/engines/engine[1]/throttle"/>
 			<test value="0">
-				fadec/reverse-2/active eq 1
+				/systems/fadec/reverse-2/active eq 1
 			</test>
 		</switch>
 		
-		<lag_filter name="fadec/control-2/throttle-lag">
-			<input>fadec/control-2/throttle-pos</input>
+		<lag_filter name="/systems/fadec/control-2/throttle-lag">
+			<input>/systems/fadec/control-2/throttle-pos</input>
 			<c1>20</c1>
 		</lag_filter>
 		
-		<fcs_function name="fadec/control-2/idle-climb-n1">
+		<fcs_function name="/systems/fadec/control-2/idle-climb-n1">
 			<function>
 				<sum>
-					<property>fadec/limit/min-n1</property>
+					<property>/systems/fadec/limit/min-n1</property>
 					<product>
 						<difference>
-							<property>fadec/control-2/throttle-lag</property>
+							<property>/systems/fadec/control-2/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/idle-t</property>
 						</difference>
 						<quotient>
 							<difference>
-								<property>fadec/limit/climb</property>
-								<property>fadec/limit/min-n1</property>
+								<property>/systems/fadec/limit/climb</property>
+								<property>/systems/fadec/limit/min-n1</property>
 							</difference>
 							<difference>
 								<property>/systems/acconfig/options/fadec/climb-b</property>
@@ -877,24 +877,24 @@
 				</sum>
 			</function>
 			<clipto>
-				<min>fadec/limit/min-n1</min>
-				<max>fadec/limit/climb</max>
+				<min>/systems/fadec/limit/min-n1</min>
+				<max>/systems/fadec/limit/climb</max>
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="fadec/control-2/climb-mct-n1">
+		<fcs_function name="/systems/fadec/control-2/climb-mct-n1">
 			<function>
 				<sum>
-					<property>fadec/limit/climb</property>
+					<property>/systems/fadec/limit/climb</property>
 					<product>
 						<difference>
-							<property>fadec/control-2/throttle-lag</property>
+							<property>/systems/fadec/control-2/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/climb-t</property>
 						</difference>
 						<quotient>
 							<difference>
-								<property>fadec/limit/mct</property>
-								<property>fadec/limit/climb</property>
+								<property>/systems/fadec/limit/mct</property>
+								<property>/systems/fadec/limit/climb</property>
 							</difference>
 							<difference>
 								<property>/systems/acconfig/options/fadec/mct-b</property>
@@ -905,24 +905,24 @@
 				</sum>
 			</function>
 			<clipto>
-				<min>fadec/limit/climb</min>
-				<max>fadec/limit/mct</max>
+				<min>/systems/fadec/limit/climb</min>
+				<max>/systems/fadec/limit/mct</max>
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="fadec/control-2/mct-toga-n1">
+		<fcs_function name="/systems/fadec/control-2/mct-toga-n1">
 			<function>
 				<sum>
-					<property>fadec/limit/mct</property>
+					<property>/systems/fadec/limit/mct</property>
 					<product>
 						<difference>
-							<property>fadec/control-2/throttle-lag</property>
+							<property>/systems/fadec/control-2/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/mct-t</property>
 						</difference>
 						<quotient>
 							<difference>
-								<property>fadec/limit/toga</property>
-								<property>fadec/limit/mct</property>
+								<property>/systems/fadec/limit/toga</property>
+								<property>/systems/fadec/limit/mct</property>
 							</difference>
 							<difference>
 								<property>/systems/acconfig/options/fadec/toga-b</property>
@@ -933,25 +933,25 @@
 				</sum>
 			</function>
 			<clipto>
-				<min>fadec/limit/mct</min>
-				<max>fadec/limit/toga</max>
+				<min>/systems/fadec/limit/mct</min>
+				<max>/systems/fadec/limit/toga</max>
 			</clipto>
 		</fcs_function>
 		
-		<switch name="fadec/control-2/lever-n1">
-			<default value="fadec/control-2/idle-climb-n1"/>
-			<test value="fadec/control-2/mct-toga-n1">
-				fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/mct-t
+		<switch name="/systems/fadec/control-2/lever-n1">
+			<default value="/systems/fadec/control-2/idle-climb-n1"/>
+			<test value="/systems/fadec/control-2/mct-toga-n1">
+				/systems/fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/mct-t
 			</test>
-			<test value="fadec/control-2/climb-mct-n1">
-				fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/climb-t
+			<test value="/systems/fadec/control-2/climb-mct-n1">
+				/systems/fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/climb-t
 			</test>
 		</switch>
 		
-		<fcs_function name="fadec/control-2/lever-norm">
+		<fcs_function name="/systems/fadec/control-2/lever-norm">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/control-2/lever-n1</independentVar>
+					<independentVar lookup="row">/systems/fadec/control-2/lever-n1</independentVar>
 					<tableData>
 						 20.1  0
 						101.0  1
@@ -960,36 +960,36 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="fadec/control-2/detent">
+		<switch name="/systems/fadec/control-2/detent">
 			<default value="0"/> <!-- IDLE -->
 			<test value="6"> <!-- TOGA -->
-				fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/toga-b
+				/systems/fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/toga-b
 			</test>
 			<test value="5"> <!-- MAN THR -->
-				fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/mct-t
+				/systems/fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/mct-t
 			</test>
 			<test value="4"> <!-- MCT/FLX -->
-				fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/mct-b
+				/systems/fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/mct-b
 			</test>
 			<test value="3"> <!-- MAN THR -->
-				fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/climb-t
+				/systems/fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/climb-t
 			</test>
 			<test value="2"> <!-- CL -->
-				fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/climb-b
+				/systems/fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/climb-b
 			</test>
 			<test value="1"> <!-- MAN -->
-				fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/idle-t
+				/systems/fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/idle-t
 			</test>
-			<output>fbw/detent-2-feedback</output>
+			<output>/systems/fbw/detent-2-feedback</output>
 		</switch>
 		
-		<fcs_function name="fadec/control-2/lever/idle-climb">
+		<fcs_function name="/systems/fadec/control-2/lever/idle-climb">
 			<function>
 				<sum>
 					<value>2</value>
 					<product>
 						<difference>
-							<property>fadec/control-2/throttle-lag</property>
+							<property>/systems/fadec/control-2/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/idle-t</property>
 						</difference>
 						<quotient>
@@ -1011,13 +1011,13 @@
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="fadec/control-2/lever/climb-mct">
+		<fcs_function name="/systems/fadec/control-2/lever/climb-mct">
 			<function>
 				<sum>
 					<value>27</value>
 					<product>
 						<difference>
-							<property>fadec/control-2/throttle-lag</property>
+							<property>/systems/fadec/control-2/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/climb-t</property>
 						</difference>
 						<quotient>
@@ -1039,13 +1039,13 @@
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="fadec/control-2/lever/mct-toga">
+		<fcs_function name="/systems/fadec/control-2/lever/mct-toga">
 			<function>
 				<sum>
 					<value>37</value>
 					<product>
 						<difference>
-							<property>fadec/control-2/throttle-lag</property>
+							<property>/systems/fadec/control-2/throttle-lag</property>
 							<property>/systems/acconfig/options/fadec/mct-t</property>
 						</difference>
 						<quotient>
@@ -1067,30 +1067,30 @@
 			</clipto>
 		</fcs_function>
 		
-		<switch name="fadec/control-2/lever/angle">
+		<switch name="/systems/fadec/control-2/lever/angle">
 			<default value="0"/> <!-- IDLE -->
 			<test value="45"> <!-- TOGA -->
-				fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/toga-b
+				/systems/fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/toga-b
 			</test>
-			<test value="fadec/control-2/lever/mct-toga"> <!-- MAN THR -->
-				fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/mct-t
+			<test value="/systems/fadec/control-2/lever/mct-toga"> <!-- MAN THR -->
+				/systems/fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/mct-t
 			</test>
 			<test value="35"> <!-- MCT/FLX -->
-				fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/mct-b
+				/systems/fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/mct-b
 			</test>
-			<test value="fadec/control-2/lever/climb-mct"> <!-- MAN THR -->
-				fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/climb-t
+			<test value="/systems/fadec/control-2/lever/climb-mct"> <!-- MAN THR -->
+				/systems/fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/climb-t
 			</test>
 			<test value="25"> <!-- CL -->
-				fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/climb-b
+				/systems/fadec/control-2/throttle-lag ge /systems/acconfig/options/fadec/climb-b
 			</test>
-			<test value="fadec/control-2/lever/idle-climb"> <!-- MAN -->
-				fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/idle-t
+			<test value="/systems/fadec/control-2/lever/idle-climb"> <!-- MAN -->
+				/systems/fadec/control-2/throttle-lag gt /systems/acconfig/options/fadec/idle-t
 			</test>
 		</switch>
 		
 		<!-- Alpha Floor and Toga Lk -->
-		<switch name="fadec/alpha-floor-engage">
+		<switch name="/systems/fadec/alpha-floor-engage">
 			<default value="9.5"/>
 			<test logic="OR" value="15">
 				/controls/flight/flaps-pos eq 1
@@ -1105,56 +1105,56 @@
 			</test>
 		</switch>
 		
-		<switch name="fadec/alpha-floor-switch">
-			<default value="fadec/alpha-floor-switch"/>
+		<switch name="/systems/fadec/alpha-floor-switch">
+			<default value="/systems/fadec/alpha-floor-switch"/>
 			<test logic="OR" value="0"> <!-- Reset -->
 				position/wow eq 1
 				/it-fbw/law ne 0
-				fadec/inhibit-alpha-floor eq 1
+				/systems/fadec/inhibit-alpha-floor eq 1
 				/FMGC/FCU-working eq 0
 				position/gear-agl-ft lt 100
 			</test>
 			<test logic="AND" value="0"> <!-- Reset -->
-				fadec/eng-out eq 1
+				/systems/fadec/eng-out eq 1
 				/controls/flight/flaps-pos ne 0
 			</test>
 			<test logic="AND" value="0"> <!-- Reset only in Toga Lk -->
-				fadec/alpha-floor-switch eq 1
+				/systems/fadec/alpha-floor-switch eq 1
 				/it-autoflight/output/athr eq 0
 			</test>
 			<test logic="OR" value="2"> <!-- Alpha Floor -->
-				fbw/protections/alpha-input gt fadec/alpha-floor-engage
+				/systems/fbw/protections/alpha-input gt /systems/fadec/alpha-floor-engage
 				<test logic="AND"> <!-- Alpha Protection -->
-					fbw/protections/alpha eq 1
-					fbw/pitch/e-i-n lt -0.5
+					/systems/fbw/protections/alpha eq 1
+					/systems/fbw/pitch/e-i-n lt -0.5
 				</test>
 				<test logic="AND"> <!-- Pitch Protection -->
-					fbw/pitch/e-i-min ge -0.1
-					fbw/pitch/e-i-n lt -0.5
+					/systems/fbw/pitch/e-i-min ge -0.1
+					/systems/fbw/pitch/e-i-n lt -0.5
 				</test>
 			</test>
 			<test logic="AND" value="1"> <!-- Toga Lk -->
-				fadec/alpha-floor-switch eq 2
-				fbw/protections/alpha-input lt fbw/alpha-prot-deg
+				/systems/fadec/alpha-floor-switch eq 2
+				/systems/fbw/protections/alpha-input lt /systems/fbw/alpha-prot-deg
 			</test>
 		</switch>
 		
-		<switch name="fadec/alpha-floor">
+		<switch name="/systems/fadec/alpha-floor">
 			<default value="0"/>
 			<test value="1">
-				fadec/alpha-floor-switch eq 2
+				/systems/fadec/alpha-floor-switch eq 2
 			</test>
 		</switch>
 		
-		<switch name="fadec/toga-lk">
+		<switch name="/systems/fadec/toga-lk">
 			<default value="0"/>
 			<test value="1">
-				fadec/alpha-floor-switch eq 1
+				/systems/fadec/alpha-floor-switch eq 1
 			</test>
 		</switch>
 		
 		<!-- Common Control Logic -->
-		<fcs_function name="fadec/both-at-idle">
+		<fcs_function name="/systems/fadec/both-at-idle">
 			<function>
 				<ifthen>
 					<le>
@@ -1165,7 +1165,7 @@
 							</max>
 							<value>0.2</value>
 						</difference>
-						<property>fadec/limit/idle</property>
+						<property>/systems/fadec/limit/idle</property>
 					</le>
 					<value>1</value>
 					<value>0</value>
@@ -1173,16 +1173,16 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/max-detent">
+		<fcs_function name="/systems/fadec/max-detent">
 			<function>
 				<max>
-					<property>fadec/control-1/detent</property>
-					<property>fadec/control-2/detent</property>
+					<property>/systems/fadec/control-1/detent</property>
+					<property>/systems/fadec/control-2/detent</property>
 				</max>
 			</function>
 		</fcs_function>
 		
-		<switch name="fadec/limit/eng-off-wow-switch">
+		<switch name="/systems/fadec/limit/eng-off-wow-switch">
 			<default value="1"/>
 			<test logic="AND" value="0">
 				/engines/engine[0]/state ne 3
@@ -1193,117 +1193,117 @@
 			</test>
 		</switch>
 		
-		<switch name="fadec/limit/active-mode-int">
+		<switch name="/systems/fadec/limit/active-mode-int">
 			<default value="0"/> <!-- TOGA -->
 			<test logic="OR" value="4"> <!-- MREV -->
 				/controls/engines/engine[0]/reverse-cmd eq 1
 				/controls/engines/engine[1]/reverse-cmd eq 1
 			</test>
 			<test value="0"> <!-- TOGA -->
-				fadec/alpha-floor-switch gt 0
+				/systems/fadec/alpha-floor-switch gt 0
 			</test>
 			<test logic="AND" value="2"> <!-- CLB -->
-				fadec/max-detent le 2
-				fadec/limit/eng-off-wow-switch eq 0
+				/systems/fadec/max-detent le 2
+				/systems/fadec/limit/eng-off-wow-switch eq 0
 			</test>
 			<test logic="AND" value="3"> <!-- FLX -->
-				fadec/max-detent eq 4
-				fadec/limit/flex-active eq 1
+				/systems/fadec/max-detent eq 4
+				/systems/fadec/limit/flex-active eq 1
 				position/wow eq 0
 			</test>
 			<test logic="AND" value="3"> <!-- FLX -->
-				fadec/max-detent le 4
-				fadec/limit/flex-active eq 1
+				/systems/fadec/max-detent le 4
+				/systems/fadec/limit/flex-active eq 1
 				position/wow eq 1
 			</test>
 			<test logic="AND" value="1"> <!-- MCT -->
-				fadec/max-detent le 4
-				fadec/limit/flex-active ne 1
-				fadec/limit/eng-off-wow-switch eq 0
+				/systems/fadec/max-detent le 4
+				/systems/fadec/limit/flex-active ne 1
+				/systems/fadec/limit/eng-off-wow-switch eq 0
 			</test>
 		</switch>
 		
-		<switch name="fadec/limit/active-n1">
+		<switch name="/systems/fadec/limit/active-n1">
 			<default value="0"/>
-			<test value="fadec/limit/mrev">
-				fadec/limit/active-mode-int eq 4
+			<test value="/systems/fadec/limit/mrev">
+				/systems/fadec/limit/active-mode-int eq 4
 			</test>
-			<test value="fadec/limit/toga">
-				fadec/limit/active-mode-int eq 0
+			<test value="/systems/fadec/limit/toga">
+				/systems/fadec/limit/active-mode-int eq 0
 			</test>
-			<test logic="OR" value="fadec/limit/mct">
-				fadec/limit/active-mode-int eq 1
-				fadec/limit/active-mode-int eq 3
+			<test logic="OR" value="/systems/fadec/limit/mct">
+				/systems/fadec/limit/active-mode-int eq 1
+				/systems/fadec/limit/active-mode-int eq 3
 			</test>
-			<test value="fadec/limit/climb">
-				fadec/limit/active-mode-int eq 2
+			<test value="/systems/fadec/limit/climb">
+				/systems/fadec/limit/active-mode-int eq 2
 			</test>
 		</switch>
 		
 		<!-- A/THR Logic -->
-		<switch name="fadec/athr/max-clamp">
-			<default value="fadec/limit/climb-norm"/>
-			<test value="fadec/limit/mct-norm">
-				fadec/eng-out eq 1
+		<switch name="/systems/fadec/athr/max-clamp">
+			<default value="/systems/fadec/limit/climb-norm"/>
+			<test value="/systems/fadec/limit/mct-norm">
+				/systems/fadec/eng-out eq 1
 			</test>
 			<clipto>
-				<min>fadec/limit/idle-norm</min> <!-- Never force it below the idle limit -->
+				<min>/systems/fadec/limit/idle-norm</min> <!-- Never force it below the idle limit -->
 				<max>1.0</max>
 			</clipto>
 		</switch>
 		
-		<fcs_function name="fadec/athr/max">
+		<fcs_function name="/systems/fadec/athr/max">
 			<function>
 				<max>
-					<property>fadec/control-1/lever-norm</property>
-					<property>fadec/control-2/lever-norm</property>
+					<property>/systems/fadec/control-1/lever-norm</property>
+					<property>/systems/fadec/control-2/lever-norm</property>
 				</max>
 			</function>
 			<clipto>
-				<min>fadec/limit/idle-norm</min> <!-- Never force it below the idle limit -->
-				<max>fadec/athr/max-clamp</max>
+				<min>/systems/fadec/limit/idle-norm</min> <!-- Never force it below the idle limit -->
+				<max>/systems/fadec/athr/max-clamp</max>
 			</clipto>
 		</fcs_function>
 		
-		<switch name="fadec/athr/active">
+		<switch name="/systems/fadec/athr/active">
 			<default value="0"/>
 			<test value="0">
-				fadec/alpha-floor-switch gt 0
+				/systems/fadec/alpha-floor-switch gt 0
 			</test>
 			<test logic="AND" value="1">
 				/it-autoflight/output/athr eq 1
-				fadec/eng-out eq 1
-				fadec/max-detent le 4
-				fadec/max-detent ge 1
+				/systems/fadec/eng-out eq 1
+				/systems/fadec/max-detent le 4
+				/systems/fadec/max-detent ge 1
 			</test>
 			<test logic="AND" value="1">
 				/it-autoflight/output/athr eq 1
-				fadec/max-detent eq 2
+				/systems/fadec/max-detent eq 2
 			</test>
 			<test logic="AND" value="1">
 				/it-autoflight/output/athr eq 1
-				fadec/max-detent eq 1
+				/systems/fadec/max-detent eq 1
 			</test>
 		</switch>
 		
-		<pure_gain name="fadec/athr/output">
-			<input>fadec/athr/cmd</input>
+		<pure_gain name="/systems/fadec/athr/output">
+			<input>/systems/fadec/athr/cmd</input>
 			<gain>1.0</gain>
 			<clipto>
-				<min>fadec/limit/idle-norm</min>
-				<max>fadec/athr/max</max>
+				<min>/systems/fadec/limit/idle-norm</min>
+				<max>/systems/fadec/athr/max</max>
 			</clipto>
 		</pure_gain>
 		
 		<!-- Throttle Finals -->
-		<fcs_function name="fadec/thr-locked-n1">
+		<fcs_function name="/systems/fadec/thr-locked-n1">
 			<function>
 				<ifthen>
 					<eq>
-						<property>fadec/thr-locked</property>
+						<property>/systems/fadec/thr-locked</property>
 						<value>1</value>
 					</eq>
-					<property>fadec/thr-locked-n1</property>
+					<property>/systems/fadec/thr-locked-n1</property>
 					<max>
 						<property>/engines/engine[0]/n1-actual</property>
 						<property>/engines/engine[1]/n1-actual</property>
@@ -1312,10 +1312,10 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fadec/thr-locked-norm">
+		<fcs_function name="/systems/fadec/thr-locked-norm">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/thr-locked-n1</independentVar>
+					<independentVar lookup="row">/systems/fadec/thr-locked-n1</independentVar>
 					<tableData>
 						 20.1  0
 						101.0  1
@@ -1324,70 +1324,70 @@
 			</function>
 		</fcs_function>
 		
-		<pure_gain name="fadec/control-1/throttle-clamped">
-			<input>fadec/control-1/lever-norm</input>
+		<pure_gain name="/systems/fadec/control-1/throttle-clamped">
+			<input>/systems/fadec/control-1/lever-norm</input>
 			<gain>1.0</gain>
 			<clipto>
-				<min>fadec/limit/idle-norm</min>
+				<min>/systems/fadec/limit/idle-norm</min>
 				<max>1.0</max>
 			</clipto>
 		</pure_gain>
 		
-		<switch name="fadec/control-1/throttle-output">
-			<default value="fadec/control-1/lever-norm"/>
-			<test value="fadec/reverse-1/throttle-rev">
-				fadec/reverse-1/active eq 1
+		<switch name="/systems/fadec/control-1/throttle-output">
+			<default value="/systems/fadec/control-1/lever-norm"/>
+			<test value="/systems/fadec/reverse-1/throttle-rev">
+				/systems/fadec/reverse-1/active eq 1
 			</test>
-			<test value="fadec/limit/toga-norm">
-				fadec/alpha-floor-switch gt 0
+			<test value="/systems/fadec/limit/toga-norm">
+				/systems/fadec/alpha-floor-switch gt 0
 			</test>
-			<test value="fadec/thr-locked-norm">
-				fadec/thr-locked eq 1
+			<test value="/systems/fadec/thr-locked-norm">
+				/systems/fadec/thr-locked eq 1
 			</test>
-			<test value="fadec/athr/output">
-				fadec/athr/active eq 1
+			<test value="/systems/fadec/athr/output">
+				/systems/fadec/athr/active eq 1
 			</test>
-			<test value="fadec/control-1/throttle-clamped"> <!-- Last -->
+			<test value="/systems/fadec/control-1/throttle-clamped"> <!-- Last -->
 				/gear/gear[0]/wow eq 0
 			</test>
 		</switch>
 		
-		<lag_filter name="fadec/control-1/throttle-fdm">
-			<input>fadec/control-1/throttle-output</input>
+		<lag_filter name="/systems/fadec/control-1/throttle-fdm">
+			<input>/systems/fadec/control-1/throttle-output</input>
 			<c1>0.75</c1>
 			<output>fcs/throttle-pos-norm[0]</output>
 		</lag_filter>
 		
-		<pure_gain name="fadec/control-2/throttle-clamped">
-			<input>fadec/control-2/lever-norm</input>
+		<pure_gain name="/systems/fadec/control-2/throttle-clamped">
+			<input>/systems/fadec/control-2/lever-norm</input>
 			<gain>1.0</gain>
 			<clipto>
-				<min>fadec/limit/idle-norm</min>
+				<min>/systems/fadec/limit/idle-norm</min>
 				<max>1.0</max>
 			</clipto>
 		</pure_gain>
 		
-		<switch name="fadec/control-2/throttle-output">
-			<default value="fadec/control-2/lever-norm"/>
-			<test value="fadec/reverse-2/throttle-rev">
-				fadec/reverse-2/active eq 1
+		<switch name="/systems/fadec/control-2/throttle-output">
+			<default value="/systems/fadec/control-2/lever-norm"/>
+			<test value="/systems/fadec/reverse-2/throttle-rev">
+				/systems/fadec/reverse-2/active eq 1
 			</test>
-			<test value="fadec/limit/toga-norm">
-				fadec/alpha-floor-switch gt 0
+			<test value="/systems/fadec/limit/toga-norm">
+				/systems/fadec/alpha-floor-switch gt 0
 			</test>
-			<test value="fadec/thr-locked-norm">
-				fadec/thr-locked eq 1
+			<test value="/systems/fadec/thr-locked-norm">
+				/systems/fadec/thr-locked eq 1
 			</test>
-			<test value="fadec/athr/output">
-				fadec/athr/active eq 1
+			<test value="/systems/fadec/athr/output">
+				/systems/fadec/athr/active eq 1
 			</test>
-			<test value="fadec/control-2/throttle-clamped"> <!-- Last -->
+			<test value="/systems/fadec/control-2/throttle-clamped"> <!-- Last -->
 				/gear/gear[0]/wow eq 0
 			</test>
 		</switch>
 		
-		<lag_filter name="fadec/control-2/throttle-fdm">
-			<input>fadec/control-2/throttle-output</input>
+		<lag_filter name="/systems/fadec/control-2/throttle-fdm">
+			<input>/systems/fadec/control-2/throttle-output</input>
 			<c1>0.75</c1>
 			<output>fcs/throttle-pos-norm[1]</output>
 		</lag_filter>
@@ -1396,21 +1396,21 @@
 	
 	<channel name="Engine Parameters" execrate="2">
 		
-		<lag_filter name="fadec/n1-actual-1">
+		<lag_filter name="/systems/fadec/n1-actual-1">
 			<input>/engines/engine[0]/n1</input>
 			<c1>2.25</c1>
 			<output>/engines/engine[0]/n1-actual</output>
 			<output>/engines/engine[3]/n1</output>
 		</lag_filter>
 		
-		<lag_filter name="fadec/n1-actual-2">
+		<lag_filter name="/systems/fadec/n1-actual-2">
 			<input>/engines/engine[1]/n1</input>
 			<c1>2.25</c1>
 			<output>/engines/engine[1]/n1-actual</output>
 			<output>/engines/engine[4]/n1</output>
 		</lag_filter>
 		
-		<fcs_function name="fadec/egt-cmd-1">
+		<fcs_function name="/systems/fadec/egt-cmd-1">
 			<function>
 				<sum>
 					<property>propulsion/tat-c</property>
@@ -1437,13 +1437,13 @@
 			</function>
 		</fcs_function>
 		
-		<lag_filter name="fadec/egt-actual-1">
-			<input>fadec/egt-cmd-1</input>
+		<lag_filter name="/systems/fadec/egt-actual-1">
+			<input>/systems/fadec/egt-cmd-1</input>
 			<c1>0.35</c1>
 			<output>/engines/engine[0]/egt-actual</output>
 		</lag_filter>
 		
-		<fcs_function name="fadec/egt-cmd-2">
+		<fcs_function name="/systems/fadec/egt-cmd-2">
 			<function>
 				<sum>
 					<property>propulsion/tat-c</property>
@@ -1470,33 +1470,33 @@
 			</function>
 		</fcs_function>
 		
-		<lag_filter name="fadec/egt-actual-2">
-			<input>fadec/egt-cmd-2</input>
+		<lag_filter name="/systems/fadec/egt-actual-2">
+			<input>/systems/fadec/egt-cmd-2</input>
 			<c1>0.35</c1>
 			<output>/engines/engine[1]/egt-actual</output>
 		</lag_filter>
 		
-		<lag_filter name="fadec/n2-actual-1">
+		<lag_filter name="/systems/fadec/n2-actual-1">
 			<input>/engines/engine[0]/n2</input>
 			<c1>2.25</c1>
 			<output>/engines/engine[0]/n2-actual</output>
 			<output>/engines/engine[3]/n2</output>
 		</lag_filter>
 		
-		<lag_filter name="fadec/n2-actual-2">
+		<lag_filter name="/systems/fadec/n2-actual-2">
 			<input>/engines/engine[1]/n2</input>
 			<c1>2.25</c1>
 			<output>/engines/engine[1]/n2-actual</output>
 			<output>/engines/engine[4]/n2</output>
 		</lag_filter>
 		
-		<lag_filter name="fadec/ff-actual-1">
+		<lag_filter name="/systems/fadec/ff-actual-1">
 			<input>/engines/engine[0]/fuel-flow_pph</input>
 			<c1>3.0</c1>
 			<output>/engines/engine[0]/ff-actual</output>
 		</lag_filter>
 		
-		<lag_filter name="fadec/ff-actual-2">
+		<lag_filter name="/systems/fadec/ff-actual-2">
 			<input>/engines/engine[1]/fuel-flow_pph</input>
 			<c1>3.0</c1>
 			<output>/engines/engine[1]/ff-actual</output>
@@ -1537,7 +1537,7 @@
 		<fcs_function name="/instrumentation/upper-ecam/n1-thr[0]">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/control-1/lever-n1</independentVar>
+					<independentVar lookup="row">/systems/fadec/control-1/lever-n1</independentVar>
 					<tableData>
 						 20 -131
 						 50  -64
@@ -1551,7 +1551,7 @@
 		<fcs_function name="/instrumentation/upper-ecam/n1-thr[1]">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/control-2/lever-n1</independentVar>
+					<independentVar lookup="row">/systems/fadec/control-2/lever-n1</independentVar>
 					<tableData>
 						 20 -131
 						 50  -64
@@ -1565,7 +1565,7 @@
 		<fcs_function name="/instrumentation/upper-ecam/n1-limit">
 			<function>
 				<table>
-					<independentVar lookup="row">fadec/limit/toga</independentVar>
+					<independentVar lookup="row">/systems/fadec/limit/toga</independentVar>
 					<tableData>
 						 20 -131
 						 50  -64

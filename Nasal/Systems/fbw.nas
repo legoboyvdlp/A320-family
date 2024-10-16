@@ -87,11 +87,11 @@ var FBW = {
 		fac2: props.globals.getNode("/systems/fctl/lights/fac2-fault"),
 	},
 	Protections: {
-		alpha: props.globals.getNode("/fdm/jsbsim/fbw/protections/alpha"),
-		overspeed: props.globals.getNode("/fdm/jsbsim/fbw/protections/overspeed"),
+		alpha: props.globals.getNode("/systems/fbw/protections/alpha"),
+		overspeed: props.globals.getNode("/systems/fbw/protections/overspeed"),
 	},
 	Sidestick: {
-		active: [props.globals.getNode("/fdm/jsbsim/fbw/sidestick/active[0]"), props.globals.getNode("/fdm/jsbsim/fbw/sidestick/active[1]")],
+		active: [props.globals.getNode("/systems/fbw/sidestick/active[0]"), props.globals.getNode("/systems/fbw/sidestick/active[1]")],
 	},
 	Switches: {
 		elac1Sw: props.globals.getNode("/controls/fctl/switches/elac1"),

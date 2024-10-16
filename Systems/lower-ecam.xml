@@ -114,7 +114,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/hydraulics/aileron-l/final-deg</property>
+					<property>/systems/fcs/aileron-l/final-deg</property>
 					<entry><ind>-25</ind><dep>-0.83</dep></entry>
 					<entry><ind>  0</ind><dep> 0.00</dep></entry>
 					<entry><ind> 25</ind><dep> 0.73</dep></entry>
@@ -131,7 +131,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/hydraulics/aileron-r/final-deg</property>
+					<property>/systems/fcs/aileron-r/final-deg</property>
 					<entry><ind>-25</ind><dep> 0.73</dep></entry>
 					<entry><ind>  0</ind><dep> 0.00</dep></entry>
 					<entry><ind> 25</ind><dep>-0.83</dep></entry>
@@ -148,7 +148,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/hydraulics/elevator-l/final-deg</property>
+					<property>/systems/fcs/elevator-l/final-deg</property>
 					<entry><ind>-30</ind><dep>-1.03</dep></entry>
 					<entry><ind>  0</ind><dep> 0.00</dep></entry>
 					<entry><ind> 15</ind><dep> 0.63</dep></entry>
@@ -165,7 +165,7 @@
 		<input>
 			<expression>
 				<table>
-					<property>/fdm/jsbsim/hydraulics/elevator-r/final-deg</property>
+					<property>/systems/fcs/elevator-r/final-deg</property>
 					<entry><ind>-30</ind><dep>-1.03</dep></entry>
 					<entry><ind>  0</ind><dep> 0.00</dep></entry>
 					<entry><ind> 15</ind><dep> 0.63</dep></entry>
@@ -179,7 +179,7 @@
 		<name>Elevator Trim Deg</name>
 		<type>gain</type>
 		<gain>-1.0</gain>
-		<input>/fdm/jsbsim/hydraulics/stabilizer/final-deg</input>
+		<input>/systems/fcs/stabilizer/final-deg</input>
 		<output>/ECAM/Lower/elevator-trim-deg</output>
 	</filter>
 	

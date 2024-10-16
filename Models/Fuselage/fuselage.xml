@@ -1939,7 +1939,7 @@
 		<name>Left spoiler 1</name>
 		<type>rotate</type>
 		<object-name>SpoilerL1</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l1/final-deg</property>
+		<property>systems/fcs/spoiler-l1/final-deg</property>
 		<factor>1</factor>
 		<axis>
 			<x1-m>-1.2047</x1-m>
@@ -1954,7 +1954,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpoilerActuatorL1</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l1/final-deg</property>
+		<property>systems/fcs/spoiler-l1/final-deg</property>
 		<factor>-0.675</factor>
 		<axis>
 			<x1-m>-1.23482</x1-m>
@@ -1969,7 +1969,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpoilerActuatorRodL1</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l1/final-deg</property>
+		<property>systems/fcs/spoiler-l1/final-deg</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
 			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
@@ -1992,7 +1992,7 @@
 		<name>Left spoiler 2</name>
 		<type>rotate</type>
 		<object-name>SpoilerL2</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l2/final-deg</property>
+		<property>systems/fcs/spoiler-l2/final-deg</property>
 		<factor>1</factor>
 		<axis>
 			<x1-m>-0.98886</x1-m>
@@ -2007,7 +2007,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpoilerActuatorL2</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l2/final-deg</property>
+		<property>systems/fcs/spoiler-l2/final-deg</property>
 		<factor>-0.80</factor>
 		<axis>
 			<x1-m>-0.68752</x1-m>
@@ -2022,7 +2022,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpoilerActuatorRodL2</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l2/final-deg</property>
+		<property>systems/fcs/spoiler-l2/final-deg</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
 			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
@@ -2045,7 +2045,7 @@
 		<name>Left spoiler 3</name>
 		<type>rotate</type>
 		<object-name>SpoilerL3</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l3/final-deg</property>
+		<property>systems/fcs/spoiler-l3/final-deg</property>
 		<factor>1</factor>
 		<axis>
 			<x1-m>-0.3862</x1-m>
@@ -2060,7 +2060,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpoilerActuatorL3</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l3/final-deg</property>
+		<property>systems/fcs/spoiler-l3/final-deg</property>
 		<factor>-0.80</factor>
 		<axis>
 			<x1-m>-0.105045</x1-m>
@@ -2075,7 +2075,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpoilerActuatorRodL3</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l3/final-deg</property>
+		<property>systems/fcs/spoiler-l3/final-deg</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
 			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
@@ -2098,7 +2098,7 @@
 		<name>Left spoiler 4</name>
 		<type>rotate</type>
 		<object-name>SpoilerL4</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l4/final-deg</property>
+		<property>systems/fcs/spoiler-l4/final-deg</property>
 		<factor>1</factor>
 		<axis>
 			<x1-m>0.175515</x1-m>
@@ -2113,7 +2113,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpoilerActuatorL4</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l4/final-deg</property>
+		<property>systems/fcs/spoiler-l4/final-deg</property>
 		<factor>-0.80</factor>
 		<axis>
 			<x1-m>0.444885</x1-m>
@@ -2128,7 +2128,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpoilerActuatorRodL4</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l4/final-deg</property>
+		<property>systems/fcs/spoiler-l4/final-deg</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
 			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
@@ -2151,7 +2151,7 @@
 		<name>Left spoiler 5</name>
 		<type>rotate</type>
 		<object-name>SpoilerL5</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l5/final-deg</property>
+		<property>systems/fcs/spoiler-l5/final-deg</property>
 		<factor>1</factor>
 		<axis>
 			<x1-m>0.71227</x1-m>
@@ -2166,7 +2166,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpoilerActuatorL5</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l5/final-deg</property>
+		<property>systems/fcs/spoiler-l5/final-deg</property>
 		<factor>-0.80</factor>
 		<axis>
 			<x1-m>0.96858</x1-m>
@@ -2181,7 +2181,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpoilerActuatorRodL5</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-l5/final-deg</property>
+		<property>systems/fcs/spoiler-l5/final-deg</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
 			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
@@ -2204,7 +2204,7 @@
 		<name>Right spoiler 1</name>
 		<type>rotate</type>
 		<object-name>SpoilerR1</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r1/final-deg</property>
+		<property>systems/fcs/spoiler-r1/final-deg</property>
 		<factor>1</factor>
 		<axis>
 			<x1-m>-1.20923</x1-m>
@@ -2219,7 +2219,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpoilerActuatorR1</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r1/final-deg</property>
+		<property>systems/fcs/spoiler-r1/final-deg</property>
 		<factor>0.675</factor>
 		<axis>
 			<x1-m>-1.23482</x1-m>
@@ -2234,7 +2234,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpoilerActuatorRodR1</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r1/final-deg</property>
+		<property>systems/fcs/spoiler-r1/final-deg</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
 			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
@@ -2257,7 +2257,7 @@
 		<name>Right spoiler 2</name>
 		<type>rotate</type>
 		<object-name>SpoilerR2</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r2/final-deg</property>
+		<property>systems/fcs/spoiler-r2/final-deg</property>
 		<factor>1</factor>
 		<axis>
 			<x1-m>-0.435798</x1-m>
@@ -2272,7 +2272,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpoilerActuatorR2</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r2/final-deg</property>
+		<property>systems/fcs/spoiler-r2/final-deg</property>
 		<factor>0.80</factor>
 		<axis>
 			<x1-m>-0.68752</x1-m>
@@ -2287,7 +2287,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpoilerActuatorRodR2</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r2/final-deg</property>
+		<property>systems/fcs/spoiler-r2/final-deg</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
 			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
@@ -2310,7 +2310,7 @@
 		<name>Right spoiler 3</name>
 		<type>rotate</type>
 		<object-name>SpoilerR3</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r3/final-deg</property>
+		<property>systems/fcs/spoiler-r3/final-deg</property>
 		<factor>1</factor>
 		<axis>
 			<x1-m>0.126834</x1-m>
@@ -2325,7 +2325,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpoilerActuatorR3</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r3/final-deg</property>
+		<property>systems/fcs/spoiler-r3/final-deg</property>
 		<factor>0.80</factor>
 		<axis>
 			<x1-m>-0.105045</x1-m>
@@ -2340,7 +2340,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpoilerActuatorRodR3</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r3/final-deg</property>
+		<property>systems/fcs/spoiler-r3/final-deg</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
 			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
@@ -2363,7 +2363,7 @@
 		<name>Right spoiler 4</name>
 		<type>rotate</type>
 		<object-name>SpoilerR4</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r4/final-deg</property>
+		<property>systems/fcs/spoiler-r4/final-deg</property>
 		<factor>1</factor>
 		<axis>
 			<x1-m>0.665994</x1-m>
@@ -2378,7 +2378,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpoilerActuatorR4</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r4/final-deg</property>
+		<property>systems/fcs/spoiler-r4/final-deg</property>
 		<factor>0.80</factor>
 		<axis>
 			<x1-m>0.444885</x1-m>
@@ -2393,7 +2393,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpoilerActuatorRodR4</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r4/final-deg</property>
+		<property>systems/fcs/spoiler-r4/final-deg</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
 			<entry><ind>10.0</ind><dep>-0.008</dep></entry>
@@ -2416,7 +2416,7 @@
 		<name>Right spoiler 5</name>
 		<type>rotate</type>
 		<object-name>SpoilerR5</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r5/final-deg</property>
+		<property>systems/fcs/spoiler-r5/final-deg</property>
 		<factor>1</factor>
 		<axis>
 			<x1-m>1.18224</x1-m>
@@ -2431,7 +2431,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpoilerActuatorR5</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r5/final-deg</property>
+		<property>systems/fcs/spoiler-r5/final-deg</property>
 		<factor>0.80</factor>
 		<axis>
 			<x1-m>0.96858</x1-m>
@@ -2446,7 +2446,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpoilerActuatorRodR5</object-name>
-		<property>fdm/jsbsim/hydraulics/spoiler-r5/final-deg</property>
+		<property>systems/fcs/spoiler-r5/final-deg</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep> -0.020</dep></entry>
 			<entry><ind>10.0</ind><dep>-0.008</dep></entry>

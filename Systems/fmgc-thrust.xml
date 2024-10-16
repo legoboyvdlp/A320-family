@@ -64,7 +64,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/fdm/jsbsim/fadec/athr/active</property>
+						<property>/systems/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -135,7 +135,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/fdm/jsbsim/fadec/athr/active</property>
+						<property>/systems/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -167,7 +167,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/fdm/jsbsim/fadec/athr/active</property>
+						<property>/systems/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -183,7 +183,7 @@
 		</enable>
 		<input>/it-autoflight/internal/athr-kts-input-lag</input>
 		<reference>/it-autoflight/internal/athr-kts</reference>
-		<output>/fdm/jsbsim/fadec/athr/cmd</output>
+		<output>/systems/fadec/athr/cmd</output>
 		<config>
 			<Kp> <!-- Approach Autothrust -->
 				<condition>
@@ -203,8 +203,8 @@
 			<Kp>0.055</Kp>
 			<Ti>9.0</Ti>
 			<Td>0.00001</Td>
-			<u_min>/fdm/jsbsim/fadec/limit/idle-norm</u_min>
-			<u_max>/fdm/jsbsim/fadec/athr/max</u_max>
+			<u_min>/systems/fadec/limit/idle-norm</u_min>
+			<u_max>/systems/fadec/athr/max</u_max>
 		</config>
 	</pid-controller>
 	
@@ -214,7 +214,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/fdm/jsbsim/fadec/athr/active</property>
+						<property>/systems/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -236,7 +236,7 @@
 			<property>/it-autoflight/internal/athr-mach</property>
 			<scale>1000</scale>
 		</reference>
-		<output>/fdm/jsbsim/fadec/athr/cmd</output>
+		<output>/systems/fadec/athr/cmd</output>
 		<config>
 			<Kp> <!-- Approach Autothrust -->
 				<condition>
@@ -256,8 +256,8 @@
 			<Kp>0.055</Kp>
 			<Ti>9.0</Ti>
 			<Td>0.00001</Td>
-			<u_min>/fdm/jsbsim/fadec/limit/idle-norm</u_min>
-			<u_max>/fdm/jsbsim/fadec/athr/max</u_max>
+			<u_min>/systems/fadec/limit/idle-norm</u_min>
+			<u_max>/systems/fadec/athr/max</u_max>
 		</config>
 	</pid-controller>
 	
@@ -269,7 +269,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/fdm/jsbsim/fadec/athr/active</property>
+						<property>/systems/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -280,7 +280,7 @@
 			</condition>
 		</enable>
 		<input>0</input>
-		<output>/fdm/jsbsim/fadec/athr/cmd</output>
+		<output>/systems/fadec/athr/cmd</output>
 	</filter>
 	
 	<filter>
@@ -291,7 +291,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/fdm/jsbsim/fadec/athr/active</property>
+						<property>/systems/fadec/athr/active</property>
 						<value>1</value>
 					</equals>
 					<equals>
@@ -302,7 +302,7 @@
 			</condition>
 		</enable>
 		<input>1</input>
-		<output>/fdm/jsbsim/fadec/athr/cmd</output>
+		<output>/systems/fadec/athr/cmd</output>
 	</filter>
 	
 	<filter>
@@ -312,13 +312,13 @@
 		<enable>
 			<condition>
 				<not-equals>
-					<property>/fdm/jsbsim/fadec/athr/active</property>
+					<property>/systems/fadec/athr/active</property>
 					<value>1</value>
 				</not-equals>
 			</condition>
 		</enable>
-		<input>/fdm/jsbsim/fadec/athr/max</input> <!-- Highest throttle -->
-		<output>/fdm/jsbsim/fadec/athr/cmd</output>
+		<input>/systems/fadec/athr/max</input> <!-- Highest throttle -->
+		<output>/systems/fadec/athr/cmd</output>
 	</filter>
 
 </PropertyList>

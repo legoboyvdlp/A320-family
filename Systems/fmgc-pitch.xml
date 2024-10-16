@@ -845,7 +845,7 @@
 		<gain>0.12</gain>
 		<input>/orientation/pitch-deg</input>
 		<reference>/it-autoflight/internal/target-pitch-deg</reference>
-		<output>/fdm/jsbsim/fbw/fmgc/pitch-cmd</output> <!-- Inputs to the FBW Pitch -->
+		<output>/systems/fbw/fmgc/pitch-cmd</output> <!-- Inputs to the FBW Pitch -->
 		<min>-0.3</min>
 		<max>0.3</max>
 	</filter>

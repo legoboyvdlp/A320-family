@@ -124,7 +124,7 @@
 					1.2  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
 				</tableData>
 			</table>
-			<property>fadec/limit/rated-thrust-factor</property>
+			<property>/systems/fadec/limit/rated-thrust-factor</property>
 			<table> <!-- Thrust loss due to reverser angle -->
 				<independentVar lookup="row">/engines/engine[1]/reverser-pos-norm</independentVar>
 				<tableData>

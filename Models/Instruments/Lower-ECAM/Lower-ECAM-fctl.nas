@@ -615,8 +615,8 @@ var input = {
 	fctlElevL: "/ECAM/Lower/elevator-ind-left",
 	fctlElevR: "/ECAM/Lower/elevator-ind-right",
 	fctlElevTrim: "/ECAM/Lower/elevator-trim-deg",
-	fctlRudder: "/fdm/jsbsim/hydraulics/rudder/final-deg",
-	fctlRudderTrim: "/fdm/jsbsim/hydraulics/rudder/trim-deg",
+	fctlRudder: "/systems/fcs/rudder/final-deg",
+	fctlRudderTrim: "/systems/fcs/rudder/trim-deg",
 	fctlTHSJam: "/systems/failures/fctl/ths-jam",
 };
 
