@@ -353,8 +353,8 @@ var Systems = {
 		detent: [props.globals.getNode("/systems/fadec/control-1/detent"),props.globals.getNode("/systems/fadec/control-2/detent")],
 	},
 	Fbw: {
-		aileron: props.globals.getNode("/systems/fbw/aileron-sidestick"),
-		elevator: props.globals.getNode("/systems/fbw/elevator-sidestick"),
+		aileron: props.globals.getNode("/systems/fbw/sidestick/roll-final"),
+		elevator: props.globals.getNode("/systems/fbw/sidestick/pitch-final"),
 	},
 	Fcs: {
 		Rudder: {

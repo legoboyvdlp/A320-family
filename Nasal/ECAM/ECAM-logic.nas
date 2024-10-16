@@ -2456,8 +2456,8 @@ var messages_priority_2 = func {
 		ECAM_controller.warningReset(athr_lock_1);
 	}
 	
-	
-	if ((athr_lim.clearFlag == 0) and getprop("it-autoflight/output/athr") == 1 and ((getprop("/systems/fadec/eng-out") != 1 and (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN")) or (getprop("/systems/fadec/eng-out") == 1 and (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN" or (systems.FADEC.detentText[0].getValue() == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (systems.FADEC.detentText[1].getValue() == "MAN THR" and !systems.FADEC.manThrAboveMct[1])))) and (phaseVar2 >= 5 and phaseVar2 <= 7)) {
+	gear_agl_cur = pts.Position.gearAglFt.getValue();
+	if ((athr_lim.clearFlag == 0) and getprop("it-autoflight/output/athr") == 1 and ((getprop("/systems/fadec/eng-out") != 1 and (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN")) or (getprop("/systems/fadec/eng-out") == 1 and (systems.FADEC.detentText[0].getValue() == "MAN" or systems.FADEC.detentText[1].getValue() == "MAN" or (systems.FADEC.detentText[0].getValue() == "MAN THR" and !systems.FADEC.manThrAboveMct[0]) or (systems.FADEC.detentText[1].getValue() == "MAN THR" and !systems.FADEC.manThrAboveMct[1])))) and phaseVar2 >= 5 and phaseVar2 <= 7 and gear_agl_cur > 50) {
 		athr_lim.active = 1;
 		athr_lim_1.active = 1;
 	} else {
@@ -3717,7 +3717,6 @@ var messages_config_memo = func {
 		}
 	}
 	
-	gear_agl_cur = pts.Position.gearAglFt.getValue();
 	if (gear_agl_cur < 2000) {
 		setprop("/ECAM/ldg-memo-set", 1);
 	} else {

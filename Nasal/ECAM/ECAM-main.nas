@@ -248,7 +248,7 @@ var A320ECAM = ECAMRecipient.new("A320 ECAM");
 emesary.GlobalTransmitter.Register(A320ECAM);
 
 var input = {
-	"aileronFBW": "/systems/fbw/aileron-sidestick",
+	"aileronFBW": "/systems/fbw/sidestick/roll-final",
 	"agl": "/position/gear-agl-ft",
 	"athr": "/it-autoflight/output/athr",
 	"athrWarn": "/it-autoflight/output/athr-warning",
@@ -257,7 +257,7 @@ var input = {
 	"ap2": "/it-autoflight/output/ap2",
 	"apWarn": "/it-autoflight/output/ap-warning",
 	"apOffTime": "/ECAM/warnings/ap-off-time",
-	"elevatorFBW": "/systems/fbw/elevator-sidestick",
+	"elevatorFBW": "/systems/fbw/sidestick/pitch-final",
 	"gearLever": "/controls/gear/lever",
 	"masterCaution": "/ECAM/warnings/master-caution-light",
 	"masterWarn": "/ECAM/warnings/master-warning-light",

@@ -1932,15 +1932,6 @@
 			</function>
 		</fcs_function>
 		
-		<pure_gain name="/systems/fadec/control-1/throttle-clamped">
-			<input>/systems/fadec/control-1/lever-norm</input>
-			<gain>1.0</gain>
-			<clipto>
-				<min>/systems/fadec/limit/idle-norm</min>
-				<max>1.0</max>
-			</clipto>
-		</pure_gain>
-		
 		<switch name="/systems/fadec/control-1/throttle-output">
 			<default value="/systems/fadec/control-1/lever-norm"/>
 			<test value="/systems/fadec/reverse-1/throttle-rev">
@@ -1955,13 +1946,14 @@
 			<test value="/systems/fadec/athr/output">
 				/systems/fadec/athr/active eq 1
 			</test>
-			<test logic="OR" value="/systems/fadec/control-1/koz"> <!-- Second to last -->
+			<test logic="OR" value="/systems/fadec/control-1/koz"> <!-- Last -->
 				position/wow eq 1
 				velocities/mach le 0.1
 			</test>
-			<test value="/systems/fadec/control-1/throttle-clamped"> <!-- Last -->
-				/gear/gear[0]/wow eq 0
-			</test>
+			<clipto>
+				<min>/systems/fadec/limit/idle-norm</min>
+				<max>1.0</max>
+			</clipto>
 		</switch>
 		
 		<lag_filter name="/systems/fadec/control-1/throttle-fdm">
@@ -1973,10 +1965,6 @@
 		<pure_gain name="/systems/fadec/control-2/throttle-clamped">
 			<input>/systems/fadec/control-2/lever-norm</input>
 			<gain>1.0</gain>
-			<clipto>
-				<min>/systems/fadec/limit/idle-norm</min>
-				<max>1.0</max>
-			</clipto>
 		</pure_gain>
 		
 		<switch name="/systems/fadec/control-2/throttle-output">
@@ -1993,13 +1981,14 @@
 			<test value="/systems/fadec/athr/output">
 				/systems/fadec/athr/active eq 1
 			</test>
-			<test logic="OR" value="/systems/fadec/control-2/koz"> <!-- Second to last -->
+			<test logic="OR" value="/systems/fadec/control-2/koz"> <!-- Last -->
 				position/wow eq 1
 				velocities/mach le 0.1
 			</test>
-			<test value="/systems/fadec/control-2/throttle-clamped"> <!-- Last -->
-				/gear/gear[0]/wow eq 0
-			</test>
+			<clipto>
+				<min>/systems/fadec/limit/idle-norm</min>
+				<max>1.0</max>
+			</clipto>
 		</switch>
 		
 		<lag_filter name="/systems/fadec/control-2/throttle-fdm">

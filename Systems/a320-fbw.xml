@@ -322,6 +322,11 @@
 			</function>
 		</fcs_function>
 		
+		<lag_filter name="/systems/fbw/sidestick/roll-final">
+			<input>/systems/fbw/sidestick/roll-input</input>
+			<c1>20</c1>
+		</lag_filter>
+		
 		<fcs_function name="/systems/fbw/sidestick/pitch-input-cmd">
 			<function>
 				<sum>
@@ -354,6 +359,11 @@
 				</table>
 			</function>
 		</fcs_function>
+		
+		<lag_filter name="/systems/fbw/sidestick/pitch-final">
+			<input>/systems/fbw/sidestick/pitch-input</input>
+			<c1>20</c1>
+		</lag_filter>
 		
 		<fcs_function name="/systems/fbw/sidestick/yaw-input-cmd">
 			<function>
@@ -797,10 +807,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/fctl/fac1-healthy eq 1
-				<test logic="OR">
+				<!-- This is broken and I can't figure out why, disabling for now -->
+				<!--test logic="OR">
 					/systems/fctl/fac1-healthy-latch eq 0
 					/gear/gear[0]/wow eq 1
-				</test>
+				</test-->
 			</test>
 		</switch>
 		
@@ -868,10 +879,11 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/fctl/fac2-healthy eq 1
-				<test logic="OR">
+				<!-- This is broken and I can't figure out why, disabling for now -->
+				<!--test logic="OR">
 					/systems/fctl/fac2-healthy-latch eq 0
 					/gear/gear[0]/wow eq 1
-				</test>
+				</test-->
 			</test>
 		</switch>
 		
