@@ -919,8 +919,6 @@
 				<fire-light type="bool">0</fire-light>
 				<starter type="bool">0</starter>
 				<start-switch type="bool">0</start-switch>
-				<reverse-cmd type="bool">0</reverse-cmd>
-				<reverse-engage type="double">0</reverse-engage>
 				<igniter-a type="bool">0</igniter-a>
 				<igniter-b type="bool">0</igniter-b>
 			</engine>
@@ -932,8 +930,6 @@
 				<fire-light type="bool">0</fire-light>
 				<starter type="bool">0</starter>
 				<start-switch type="bool">0</start-switch>
-				<reverse-cmd type="bool">0</reverse-cmd>
-				<reverse-engage type="double">0</reverse-engage>
 				<igniter-a type="bool">0</igniter-a>
 				<igniter-b type="bool">0</igniter-b>
 			</engine>
@@ -1545,6 +1541,14 @@
 				<flex-temp type="int">30</flex-temp>
 			</limit>
 			<lvrclb type="bool">0</lvrclb>
+			<reverse-1 n="0">
+				<engage type="bool">0</engage>
+				<position-cmd-out type="bool">0</position-cmd-out>
+			</reverse-1>
+			<reverse-2 n="0">
+				<engage type="bool">0</engage>
+				<position-cmd-out type="bool">0</position-cmd-out>
+			</reverse-2>
 			<toga-lk type="bool">0</toga-lk>
 			<thr-locked type="bool">0</thr-locked>
 			<thr-locked-alert type="bool">0</thr-locked-alert>
@@ -1607,6 +1611,7 @@
 				<temperature type="double">0</temperature>
 			</lavatory>
 		</fire>
+		
 		<fuel n="0">
 			<only-use-ctr-tank type="bool">0</only-use-ctr-tank>
 			<ctr-pump-cmd-on-eng-start type="bool">0</ctr-pump-cmd-on-eng-start>

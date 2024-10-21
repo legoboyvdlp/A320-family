@@ -1378,7 +1378,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/controls/engines/engine[0]/reverse-cmd</property>
+					<property>/systems/fadec/reverse-1/position-cmd-out</property>
 					<value>0</value>
 				</equals>
 			</condition>
@@ -1393,7 +1393,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/controls/engines/engine[1]/reverse-cmd</property>
+					<property>/systems/fadec/reverse-2/position-cmd-out</property>
 					<value>0</value>
 				</equals>
 			</condition>
@@ -1408,7 +1408,7 @@
 			<path>Cockpit/detenta.wav</path>
 			<condition>
 				<equals>
-					<property>/controls/engines/engine[0]/reverse-cmd</property>
+					<property>/systems/fadec/reverse-1/position-cmd-out</property>
 					<value>1</value>
 				</equals>
 			</condition>
@@ -1423,7 +1423,7 @@
 			<path>Cockpit/detentb.wav</path>
 			<condition>
 				<equals>
-					<property>/controls/engines/engine[1]/reverse-cmd</property>
+					<property>/systems/fadec/reverse-2/position-cmd-out</property>
 					<value>1</value>
 				</equals>
 			</condition>

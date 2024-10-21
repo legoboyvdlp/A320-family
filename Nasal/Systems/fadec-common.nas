@@ -41,9 +41,12 @@ var FADEC = {
 	maxDetent: props.globals.getNode("/systems/fadec/max-detent"),
 	n1Mode: [props.globals.getNode("/systems/fadec/control-1/n1-mode"), props.globals.getNode("/systems/fadec/control-2/n1-mode")],
 	n1ModeSw: [props.globals.getNode("/systems/fadec/control-1/n1-mode-sw"), props.globals.getNode("/systems/fadec/control-2/n1-mode-sw")],
+	reverseEngage: [props.globals.getNode("/systems/fadec/reverse-1/engage"), props.globals.getNode("/systems/fadec/reverse-2/engage")],
 	togaLk: props.globals.getNode("/systems/fadec/toga-lk"),
 	init: func() {
 		me.engOut.setBoolValue(0);
+		me.reverseEngage[0].setBoolValue(0);
+		me.reverseEngage[1].setBoolValue(0);
 		me.Limit.activeMode.setValue("TOGA");
 		me.Limit.activeModeInt.setValue(0);
 		me.Limit.flexActive.setBoolValue(0);

@@ -134,7 +134,7 @@ var systemsInit = func() {
 	systems.HYD.init();
 	systems.FUEL.init();
 	systems.ADIRS.init();
-	systems.ENGINE.init();
+	systems.ENGINES.init();
 	systems.IGNITION.init();
 	systems.FADEC.init();
 	systems.APUController.init();

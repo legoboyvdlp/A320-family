@@ -35,7 +35,7 @@ var Controls = {
 			cutoff: [props.globals.getNode("/controls/engines/engine[0]/cutoff"), props.globals.getNode("/controls/engines/engine[1]/cutoff")],
 			cutoffSw: [props.globals.getNode("/controls/engines/engine[0]/cutoff-switch"), props.globals.getNode("/controls/engines/engine[1]/cutoff-switch")],
 			firePb: [props.globals.getNode("/controls/engines/engine[0]/fire-btn"), props.globals.getNode("/controls/engines/engine[1]/fire-btn")],
-			reverseCmd: [props.globals.getNode("/controls/engines/engine[0]/reverse-cmd"), props.globals.getNode("/controls/engines/engine[1]/reverse-cmd")],
+			reverseCmd: [props.globals.getNode("/systems/fadec/reverse-1/position-cmd-out"), props.globals.getNode("/systems/fadec/reverse-2/position-cmd-out")],
 			starter: [props.globals.getNode("/controls/engines/engine[0]/starter"), props.globals.getNode("/controls/engines/engine[1]/starter")],
 			throttle: [props.globals.getNode("/controls/engines/engine[0]/throttle"), props.globals.getNode("/controls/engines/engine[1]/throttle")],
 		},

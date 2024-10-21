@@ -101,12 +101,12 @@
 		</fcs_function>
 		
 		<lag_filter name="/controls/cockpit/reverse-lever[0]">
-			<input>/controls/engines/engine[0]/reverse-lever</input>
+			<input>/systems/fadec/reverse-1/throttle-lever</input>
 			<c1>20</c1>
 		</lag_filter>
 		
 		<lag_filter name="/controls/cockpit/reverse-lever[1]">
-			<input>/controls/engines/engine[1]/reverse-lever</input>
+			<input>/systems/fadec/reverse-2/throttle-lever</input>
 			<c1>20</c1>
 		</lag_filter>
 		

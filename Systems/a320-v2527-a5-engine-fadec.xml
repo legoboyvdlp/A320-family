@@ -867,9 +867,9 @@
 		<switch name="/systems/fadec/reverse-1/position-cmd">
 			<default value="0"/>
 			<test value="1">
-				/controls/engines/engine[0]/reverse-engage eq 1
+				/systems/fadec/reverse-1/engage eq 1
 			</test>
-			<output>/controls/engines/engine[0]/reverse-cmd</output>
+			<output>/systems/fadec/reverse-1/position-cmd-out</output>
 		</switch>
 		
 		<switch name="/systems/fadec/reverse-1/position-rate">
@@ -914,7 +914,7 @@
 			<function>
 				<ifthen>
 					<eq>
-						<property>/controls/engines/engine[0]/reverse-engage</property>
+						<property>/systems/fadec/reverse-1/engage</property>
 						<value>1</value>
 					</eq>
 					<sum>
@@ -936,10 +936,10 @@
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="/controls/engines/engine[0]/reverse-lever">
+		<fcs_function name="/systems/fadec/reverse-1/throttle-lever">
 			<function>
 				<product>
-					<property>/controls/engines/engine[0]/reverse-engage</property>
+					<property>/systems/fadec/reverse-1/engage</property>
 					<table>
 						<independentVar lookup="row">/controls/engines/engine[0]/throttle</independentVar>
 						<tableData>
@@ -963,9 +963,9 @@
 		<switch name="/systems/fadec/reverse-2/position-cmd">
 			<default value="0"/>
 			<test value="1">
-				/controls/engines/engine[1]/reverse-engage eq 1
+				/systems/fadec/reverse-2/engage eq 1
 			</test>
-			<output>/controls/engines/engine[1]/reverse-cmd</output>
+			<output>/systems/fadec/reverse-2/position-cmd-out</output>
 		</switch>
 		
 		<switch name="/systems/fadec/reverse-2/position-rate">
@@ -1010,7 +1010,7 @@
 			<function>
 				<ifthen>
 					<eq>
-						<property>/controls/engines/engine[1]/reverse-engage</property>
+						<property>/systems/fadec/reverse-2/engage</property>
 						<value>1</value>
 					</eq>
 					<sum>
@@ -1032,10 +1032,10 @@
 			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="/controls/engines/engine[1]/reverse-lever">
+		<fcs_function name="/systems/fadec/reverse-2/throttle-lever">
 			<function>
 				<product>
-					<property>/controls/engines/engine[1]/reverse-engage</property>
+					<property>/systems/fadec/reverse-2/engage</property>
 					<table>
 						<independentVar lookup="row">/controls/engines/engine[1]/throttle</independentVar>
 						<tableData>
@@ -1718,8 +1718,8 @@
 		<switch name="/systems/fadec/limit/active-mode-int">
 			<default value="0"/> <!-- TOGA -->
 			<test logic="OR" value="4"> <!-- MREV -->
-				/controls/engines/engine[0]/reverse-cmd eq 1
-				/controls/engines/engine[1]/reverse-cmd eq 1
+				/systems/fadec/reverse-1/position-cmd-out eq 1
+				/systems/fadec/reverse-2/position-cmd-out eq 1
 			</test>
 			<test value="0"> <!-- TOGA -->
 				/systems/fadec/alpha-floor-switch gt 0
