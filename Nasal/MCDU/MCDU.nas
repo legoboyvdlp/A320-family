@@ -262,6 +262,16 @@ var lskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (page == "AIRWAYS") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "L1") {
+				canvas_mcdu.myAirways[i].L1 = [mcdu_scratchpad.scratchpads[i].scratchpad, "  VIA", "wht"];
+				canvas_mcdu.myAirways[i].index = "R1";
+				canvas_mcdu.myAirways[i].R1 = ["[    ]", nil, "blu"];
+				mcdu_scratchpad.scratchpads[i].empty();
+				canvas_mcdu.myAirways[i].updateTmpy();
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(1);
 		} else if (page == "DIRTO") {
@@ -406,6 +416,16 @@ var lskbutton = func(btn, i) {
 			perfDESInput("L2",i); 
 		} else if (page == "DATA") {
 			dataInput("L2",i);
+		} else if (page == "AIRWAYS") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "L2") {
+				canvas_mcdu.myAirways[i].L2 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
+				canvas_mcdu.myAirways[i].index = "R2";
+				canvas_mcdu.myAirways[i].R2 = ["[    ]", nil, "blu"];
+				mcdu_scratchpad.scratchpads[i].empty();
+				canvas_mcdu.myAirways[i].updateTmpy();
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(2);
 		} else if (page == "DEPARTURE") {
@@ -555,6 +575,16 @@ var lskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (page == "AIRWAYS") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "L3") {
+				canvas_mcdu.myAirways[i].L3 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
+				canvas_mcdu.myAirways[i].index = "R3";
+				canvas_mcdu.myAirways[i].R3 = ["[    ]", nil, "blu"];
+				mcdu_scratchpad.scratchpads[i].empty();
+				canvas_mcdu.myAirways[i].updateTmpy();
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "DUPLICATENAMES") {
 			canvas_mcdu.myDuplicate[i].pushButtonLeft(3);
 		} else if (page == "COMMMENU") {
@@ -662,6 +692,16 @@ var lskbutton = func(btn, i) {
 			perfAPPRInput("L4",i);
 		} else if (page == "RADNAV") {
 			radnavInput("L4",i);
+		} else if (page == "AIRWAYS") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "L4") {
+				canvas_mcdu.myAirways[i].L4 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
+				canvas_mcdu.myAirways[i].index = "R4";
+				canvas_mcdu.myAirways[i].R4 = ["[    ]", nil, "blu"];
+				mcdu_scratchpad.scratchpads[i].empty();
+				canvas_mcdu.myAirways[i].updateTmpy();
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(4);
 		} else if (page == "DEPARTURE") {
@@ -784,6 +824,16 @@ var lskbutton = func(btn, i) {
 			dataInput("L5",i);
 		} else if (page == "DATA2") {
 			data2Input("L5",i);
+		} else if (page == "AIRWAYS") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "L5") {
+				canvas_mcdu.myAirways[i].L5 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
+				canvas_mcdu.myAirways[i].index = "R5";
+				canvas_mcdu.myAirways[i].R5 = ["[    ]", nil, "blu"];
+				mcdu_scratchpad.scratchpads[i].empty();
+				canvas_mcdu.myAirways[i].updateTmpy();
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonLeft(5);
 		} else if (page == "DEPARTURE") {
@@ -937,6 +987,20 @@ var rskbutton = func(btn, i) {
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
+		} else if (page == "AIRWAYS") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "R1") {
+				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == 0) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} else {
+					canvas_mcdu.myAirways[i].R1 = [mcdu_scratchpad.scratchpads[i].scratchpad, "TO  ", "wht"];
+					canvas_mcdu.myAirways[i].index = "L2";
+					canvas_mcdu.myAirways[i].L2 = ["[    ]", nil, "blu"];
+					mcdu_scratchpad.scratchpads[i].empty();
+					canvas_mcdu.myAirways[i].updateTmpy();
+				}
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(1);
 		} else if (page == "DATA2") {
@@ -1016,6 +1080,20 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(2);
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(2);
+		} else if (page == "AIRWAYS") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "R2") {
+				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == 0) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} else {
+					canvas_mcdu.myAirways[i].R2 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
+					canvas_mcdu.myAirways[i].index = "L3";
+					canvas_mcdu.myAirways[i].L3 = ["[    ]", nil, "blu"];
+					mcdu_scratchpad.scratchpads[i].empty();
+					canvas_mcdu.myAirways[i].updateTmpy();
+				}
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(2);
 		} else if (page == "NOTIFICATION") {
@@ -1062,6 +1140,20 @@ var rskbutton = func(btn, i) {
 		} else if (page == "LATREV") {
 			if (canvas_mcdu.myLatRev[i].type != 2) {
 				canvas_mcdu.myLatRev[i].nextWpt();
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
+		} else if (page == "AIRWAYS") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "R3") {
+				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == 0) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} else {
+					canvas_mcdu.myAirways[i].R3 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
+					canvas_mcdu.myAirways[i].index = "L4";
+					canvas_mcdu.myAirways[i].L4 = ["[    ]", nil, "blu"];
+					mcdu_scratchpad.scratchpads[i].empty();
+					canvas_mcdu.myAirways[i].updateTmpy();
+				}
 			} else {
 				mcdu_message(i, "NOT ALLOWED");
 			}
@@ -1148,6 +1240,20 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(4);
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(4);
+		} else if (page == "AIRWAYS") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "R4") {
+				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == 0) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} else {
+					canvas_mcdu.myAirways[i].R4 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
+					canvas_mcdu.myAirways[i].index = "L5";
+					canvas_mcdu.myAirways[i].L5 = ["[    ]", nil, "blu"];
+					mcdu_scratchpad.scratchpads[i].empty();
+					canvas_mcdu.myAirways[i].updateTmpy();
+				}
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(4);
 		} else if (page == "ATIS") {
@@ -1227,6 +1333,19 @@ var rskbutton = func(btn, i) {
 			canvas_mcdu.myDeparture[i].depPushbuttonRight(5);
 		} else if (page == "ARRIVAL") {
 			canvas_mcdu.myArrival[i].arrPushbuttonRight(5);
+		} else if (page == "AIRWAYS") {
+			if (size(mcdu_scratchpad.scratchpads[i].scratchpad) > 0 and canvas_mcdu.myAirways[i].index == "R5") {
+				if (canvas_mcdu.myAirways[i].updateAirways(mcdu_scratchpad.scratchpads[i].scratchpad) == 0) {
+					mcdu_message(i, "NOT IN DATA BASE");
+				} else {
+					canvas_mcdu.myAirways[i].R5 = [mcdu_scratchpad.scratchpads[i].scratchpad, nil, "wht"];
+					canvas_mcdu.myAirways[i].index = nil;
+					mcdu_scratchpad.scratchpads[i].empty();
+					canvas_mcdu.myAirways[i].updateTmpy();
+				}
+			} else {
+				mcdu_message(i, "NOT ALLOWED");
+			}
 		} else if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].pushButtonRight(5);
 		} else if (page == "LATREV") {

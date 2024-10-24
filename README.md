@@ -15,7 +15,7 @@ You can find a Checklist to download and print [here](https://raw.githubusercont
 ## Navdata
 It is highly reccomended to purchase a NAVIGRAPH subscription and download their level d FMSDATA / waypoint / navaid data! If you do not wish to do that, there is older data linked below. But it won't have most of the newer procedures, and is only for a limited number of airports, as naturally it is not possible to distribute commercial data. If runway numbering changed, it is quite possible that it will not work due to FlightGear limitations in the routing code.
 
-To install navdata, create a folder FMSDATA, and add it to your additional scenery folders, at the top of the list. Inside that folder, place all the XXXX.procedures.xml files, in the format FMSDATA/X/X/X/XXXX.procedures.xml. For instance, FMSDATA/Airports/E/G/K/EGKK.procedures.xml. 
+To install navdata, create a folder FMSDATA, and add it to your additional scenery folders, at the top of the list. Inside that folder, place all the XXXX.procedures.xml files, in the format FMSDATA/X/X/X/XXXX.procedures.xml. For instance, FMSDATA/Airports/E/G/K/EGKK.procedures.xml. For further details, please refer to [this](https://wiki.flightgear.org/Route_manager#SIDs_and_STARs).
 
 ## Remote MCDU
 If you want to run the MCDU on a your smarthphone or tablet for better realism and easier input, run FlightGear with enabled HTTP server (i.e. command line --httpd=<Port; e.g. 8080>) then go to main menu -> Instruments -> Remote MCDU.
