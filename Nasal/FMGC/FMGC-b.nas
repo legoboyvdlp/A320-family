@@ -761,7 +761,7 @@ var ITAF = {
 		}
 	},
 	checkFlch: func(a) {
-		if (Position.indicatedAltitudeFt.getValue() >= a and a != 0 and !Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue()) {
+		if (!Gear.wow1.getBoolValue() and !Gear.wow2.getBoolValue() and Position.indicatedAltitudeFt.getValue() >= a and a != 0) {
 			me.setVertMode(4);
 		}
 	},
