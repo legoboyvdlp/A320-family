@@ -5130,8 +5130,15 @@ var canvas_MCDU_base = {
 			
 			if (fmgc.FMGCInternal.phase == 6) {
 				me["Simple_Title"].setColor(GREEN);
+          if (activate_once.getValue() == 0 and activate_twice.getValue() == 0) {
+          print("got here");
+				} else {
+            me["Simple_L6S"].setText(" CONFIRM");
+        }
 			} else {
 				me["Simple_Title"].setColor(WHITE);
+        me["Simple_L6"].setText(" PHASE");
+        me["Simple_L6S"].setText(" PREV");
 			}
 
 			if (engOutAccSet.getValue() == 1) {
@@ -5150,8 +5157,8 @@ var canvas_MCDU_base = {
 				}
 
 				if(ga_accSetManual.getBoolValue()){
-						me["Simple_C5"].setFontSize(normal);
-						me["Simple_C5"].setText(sprintf("/%4.0f           ", ga_accelAltFt.getValue()));
+          me["Simple_C5"].setFontSize(normal);
+          me["Simple_C5"].setText(sprintf("/%4.0f           ", ga_accelAltFt.getValue()));
 				} else {
 					me["Simple_C5"].setFontSize(small);
 					me["Simple_C5"].setText(sprintf("/-----              "));
@@ -5163,9 +5170,7 @@ var canvas_MCDU_base = {
 				me["Simple_C5"].setText(sprintf("/%4.0f                 ", ga_accelAltFt.getValue()));
 			}
 
-			me["Simple_L6"].setText(" PHASE");
 			me["Simple_L5S"].setText("THR RED/ACC");
-			me["Simple_L6S"].setText(" PREV");
 			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R5S"].setText("ENG OUT ACC");
 			
