@@ -357,3 +357,99 @@ var showRightArrow = func (obj, a, b, c, d, e, f) {
 		}
 	}
 };
+
+var page_PERFGA = func (me, pageSwitch) {
+    if (!pageSwitch.getBoolValue()) {
+      me.defaultHideWithCenter();
+      me["arrowsDepArr"].hide();
+      me["PERFAPPR"].hide();
+      me["PERFGA"].show();
+      me["Simple_Title"].show();
+      me["Simple_Title"].setText("GO AROUND");
+      me.defaultPageNumbers();
+      
+      showLeft(me,-1, -1, -1, -1, 1, 1);
+      me["Simple_L0S"].hide();
+      showLeftS(me,-1, -1, -1, -1, 1, 1);
+      showLeftArrow(me,-1, -1, -1, -1, -1, 1);
+      showRight(me,-1, -1, -1, -1, 1, -1);
+      showRightS(me,-1, -1, -1, -1, 1, -1);
+      showRightArrow(me,-1, -1, -1, -1, -1, -1);
+      showCenter(me,1, 1, 1, -1, 1, -1);
+      me["Simple_C3B"].hide();
+      me["Simple_C4B"].hide();
+      showCenterS(me,1, 1, 1, -1, -1, -1);
+      
+      me.colorLeft("blu", "blu", "blu", "blu", "blu", "wht");
+      me.colorLeftS("wht", "wht", "wht", "wht", "wht", "wht");
+      me.colorLeftArrow("wht", "wht", "wht", "wht", "wht", "wht");
+      me.colorRight("wht", "blu", "blu", "blu", "blu", "wht");
+      me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
+      me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
+      me.colorCenter("grn", "grn", "grn", "wht", "blu", "wht");
+      me.colorCenterS("wht", "wht", "wht", "wht", "blu", "wht");
+      
+      pageSwitch.setBoolValue(1);
+    }
+    
+    if (fmgc.FMGCInternal.phase == 6) {
+      me["Simple_Title"].setColor(GREEN);
+        if (activate_once.getValue() == 0 and activate_twice.getValue() == 0) {
+        print("got here");
+      } else {
+          me["Simple_L6S"].setText(" CONFIRM");
+      }
+    } else {
+      me["Simple_Title"].setColor(WHITE);
+      me["Simple_L6"].setText(" PHASE");
+      me["Simple_L6S"].setText(" PREV");
+    }
+
+    if (engOutAccSet.getValue() == 1) {
+      me["Simple_R5"].setFontSize(normal);
+    } else {
+      me["Simple_R5"].setFontSize(small);
+    }
+    
+    if(fmgc.FMGCInternal.arrApt == ""){
+      if(ga_thrRedSetManual.getBoolValue()) {
+        me["Simple_L5"].setFontSize(normal);
+        me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
+      } else { 
+        me["Simple_L5"].setFontSize(small);
+        me["Simple_L5"].setText("-----");
+      }
+
+      if(ga_accSetManual.getBoolValue()){
+        me["Simple_C5"].setFontSize(normal);
+        me["Simple_C5"].setText(sprintf("/%4.0f           ", ga_accelAltFt.getValue()));
+      } else {
+        me["Simple_C5"].setFontSize(small);
+        me["Simple_C5"].setText(sprintf("/-----              "));
+      }
+    } else {
+      me["Simple_L5"].setFontSize(small);
+      me["Simple_L5"].setText(sprintf("%4.0f", ga_clbReducFt.getValue()));
+      me["Simple_C5"].setFontSize(small);
+      me["Simple_C5"].setText(sprintf("/%4.0f                 ", ga_accelAltFt.getValue()));
+    }
+
+    me["Simple_L5S"].setText("THR RED/ACC");
+    me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
+    me["Simple_R5S"].setText("ENG OUT ACC");
+    
+    if ((fmgc.FMGCInternal.zfwSet and fmgc.FMGCInternal.blockSet) or fmgc.FMGCInternal.phase == 6) {
+      me["Simple_C1"].setText(sprintf("%3.0f", fmgc.FMGCInternal.flap2_appr));
+      me["Simple_C2"].setText(sprintf("%3.0f", fmgc.FMGCInternal.slat_appr));
+      me["Simple_C3"].setText(sprintf("%3.0f", fmgc.FMGCInternal.clean_appr));
+    } else {
+      me["Simple_C1"].setText(" ---");
+      me["Simple_C2"].setText(" ---");
+      me["Simple_C3"].setText(" ---");
+    }
+    
+    me["Simple_C1S"].setText("FLP RETR");
+    me["Simple_C2S"].setText("SLT RETR");
+    me["Simple_C3S"].setText("  CLEAN");
+};
+
