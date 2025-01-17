@@ -394,15 +394,38 @@ var page_PERFGA = func (me, pageSwitch) {
     
     if (fmgc.FMGCInternal.phase == 6) {
       me["Simple_Title"].setColor(GREEN);
-        if (activate_once.getValue() == 0 and activate_twice.getValue() == 0) {
-        print("got here");
+      if (activate_once.getValue() == 0 and activate_twice.getValue() == 0) {
+        me["Simple_L6S"].setText(" ACTIVATE");
+        me["Simple_L6"].setText(" APPR PHASE");
+        me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
+        me.colorLeftS("ack", "ack", "ack", "ack", "ack", "blu");
+        me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "blu");
+      } else if (activate_once.getValue() == 1 and activate_twice.getValue() == 0) {
+        me["Simple_L6S"].setText(" CONFIRM");
+        me["Simple_L6"].setText(" APPR PHASE");
+        me.colorLeft("ack", "ack", "ack", "ack", "ack", "amb");
+        me.colorLeftS("ack", "ack", "ack", "ack", "ack", "amb");
+        me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "amb");
+      } else if (fmgc.FMGCInternal.phase == 5) {
+        me["Simple_L6S"].setText("");
+        me["Simple_L6"].setText("");
+        me.colorLeft("ack", "ack", "ack", "ack", "ack", "blu");
+        me.colorLeftS("ack", "ack", "ack", "ack", "ack", "blu");
+        me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "blu");
+        showLeftArrow(me,0, 0, 0, 0, 0, -1);
       } else {
-          me["Simple_L6S"].setText(" CONFIRM");
+        setprop("/FMGC/internal/activate-once", 0);
+        setprop("/FMGC/internal/activate-twice", 0);
       }
     } else {
       me["Simple_Title"].setColor(WHITE);
-      me["Simple_L6"].setText(" PHASE");
+      
+      me.colorLeft("ack", "ack", "ack", "ack", "ack", "wht");
+      me.colorLeftS("ack", "ack", "ack", "ack", "ack", "wht");
+      me.colorLeftArrow("ack", "ack", "ack", "ack", "ack", "wht");
+      
       me["Simple_L6S"].setText(" PREV");
+      me["Simple_L6"].setText(" PHASE");	
     }
 
     if (engOutAccSet.getValue() == 1) {

@@ -76,7 +76,22 @@ var perfGAInput = func(key, i) {
 			}
 		}
 	} else if (key == "L6") {
-		setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
+		if (fmgc.FMGCInternal.phase == 6) {
+			if (getprop("/FMGC/internal/activate-once") == 1) {
+				if (getprop("/FMGC/internal/activate-twice") == 0) {
+					setprop("/FMGC/internal/activate-twice", 1);
+					fmgc.newphase = 5;
+					setprop("/instrumentation/nd/symbols/decel/show", 0); 
+					setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
+				} else {
+					mcdu_message(i, "NOT ALLOWED");
+				}
+			} else {
+				setprop("/FMGC/internal/activate-once", 1);
+			}
+		} else {
+      setprop("MCDU[" ~ i ~ "]/page", "PERFAPPR");
+		}
 	} else if (key == "R5") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/eng-out-reduc", "1500");
