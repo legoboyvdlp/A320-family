@@ -1016,7 +1016,6 @@ var ManagedSPD = maketimer(0.25, func {
             } elsif (Text.vert.getValue() == "G/A CLB") {
                # SRS GA 
               setprop("/it-autoflight/input/kts", FMGCNodes.togaSpd.getValue());
-              print("Set target-ias-speed: ", FMGCNodes.togaSpd.getValue(), " it-auto-kts: ", FMGCNodes.togaSpd.getValue());
             } else {
                print("Error: SRS but neither GA nor TO");
             }
@@ -1101,17 +1100,9 @@ var ManagedSPD = maketimer(0.25, func {
                   if (constraintSpeed != nil and constraintSpeed != 0) {
                     # todo: minimum is vapp recorded at 700 radio alt
                     FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), constraintSpeed);
-                    print("SRS speed set is ", FMGCNodes.togaSpd.getValue());
-                    print("constraintSpeed is : ", constraintSpeed);
-                    print("minclean : ", FMGCInternal.clean);
-                    print("vls : ", props.globals.getValue("/FMGC/internal/vls"));
                   } else {
                     # todo: minimum is vapp recorded at 700 radio alt
                     FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), FMGCInternal.clbSpdLim);
-                    print("SRS speed set is ", FMGCNodes.togaSpd.getValue());
-                    print("clbSpdLim : ", FMGCInternal.clbSpdLim);
-                    print("minclean : ", FMGCInternal.clean);
-                    print("vls : ", props.globals.getValue("/FMGC/internal/vls"));
                   }
                } elsif (FMGCInternal.phase == 7) {
                   # done phase. v2 is reset
@@ -1141,7 +1132,7 @@ var ManagedSPD = maketimer(0.25, func {
                }
                
                if (Input.kts.getValue() != FMGCInternal.mngSpd and !ktsmach ) {
-                  Input.kts.setValue(FMGCInternal.mngSpd);
+                  setprop("/it-autoflight/input/kts", FMGCInternal.mngSpd);
                } elsif (Input.mach.getValue() != FMGCInternal.mngSpd and ktsmach) {
                   Input.mach.setValue(FMGCInternal.mngSpd);
                }
