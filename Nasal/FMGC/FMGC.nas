@@ -1001,7 +1001,8 @@ var ManagedSPD = maketimer(0.25, func {
       # conditions for active managed speed: 
       if (fd1 or fd2 or ap1 or ap2 or FMGCInternal.phase == 5) {
          # check if SRS mode active
-         if (getprop("/FMGC/internal/pitch-mode") == "SRS"){
+         if (getprop("/FMGC/internal/pitch-mode") == "SRS"
+            and getprop("/FMGC/internal/above-ga-accel-alt") == 0){
             # distinguish between SRSTO and SRSGA
             # todo: introduce different vertical modes
 
@@ -1014,7 +1015,8 @@ var ManagedSPD = maketimer(0.25, func {
                # SRS TO 
             } elsif (Text.vert.getValue() == "G/A CLB") {
                # SRS GA 
-               setprop("/it-autoflight/input/kts", FMGCNodes.togaSpd.getValue());
+              setprop("/it-autoflight/input/kts", FMGCNodes.togaSpd.getValue());
+              print("Set target-ias-speed: ", FMGCNodes.togaSpd.getValue(), " it-auto-kts: ", FMGCNodes.togaSpd.getValue());
             } else {
                print("Error: SRS but neither GA nor TO");
             }
@@ -1097,11 +1099,19 @@ var ManagedSPD = maketimer(0.25, func {
                   # Speed is maximum of greendot / climb speed limit
                   FMGCInternal.mngKtsMach = 0;
                   if (constraintSpeed != nil and constraintSpeed != 0) {
-                     # todo: minimum is vapp recorded at 700 radio alt
-                     FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), constraintSpeed);
+                    # todo: minimum is vapp recorded at 700 radio alt
+                    FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), constraintSpeed);
+                    print("SRS speed set is ", FMGCNodes.togaSpd.getValue());
+                    print("constraintSpeed is : ", constraintSpeed);
+                    print("minclean : ", FMGCInternal.clean);
+                    print("vls : ", props.globals.getValue("/FMGC/internal/vls"));
                   } else {
-                     # todo: minimum is vapp recorded at 700 radio alt
-                     FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), FMGCInternal.clbSpdLim);
+                    # todo: minimum is vapp recorded at 700 radio alt
+                    FMGCInternal.mngSpdCmd = math.clamp(FMGCInternal.clean, props.globals.getValue("/FMGC/internal/vls"), FMGCInternal.clbSpdLim);
+                    print("SRS speed set is ", FMGCNodes.togaSpd.getValue());
+                    print("clbSpdLim : ", FMGCInternal.clbSpdLim);
+                    print("minclean : ", FMGCInternal.clean);
+                    print("vls : ", props.globals.getValue("/FMGC/internal/vls"));
                   }
                } elsif (FMGCInternal.phase == 7) {
                   # done phase. v2 is reset
@@ -1240,6 +1250,12 @@ setlistener("/fdm/jsbsim/fadec/control-1/detent-text", func(text) {
    }
 }, 1, 0);
 
+setlistener("/fdm/jsbsim/fadec/control-2/detent-text", func(text) {
+   if (text.getValue() == "TOGA" or text.getValue() == "MCT") {
+      fmgc.check_srs_engagement();
+   }
+}, 1, 0);
+
 ########################################
 # In case of rejected takeoff (with aircraft speed above 90 kt or with sufficient thrust),
 # the FMS remains in TAKEOFF phase and the flight crew cannot modify the FMS departure T.O DATA
@@ -1296,6 +1312,14 @@ setlistener("/FMGC/internal/activate-twice", func(val) {
       setprop("/FMGC/internal/activate-twice", 0);
       newphase = 5;
    }
+}, 1, 0);
+
+# GOAROUND phase
+setlistener("/FMGC/internal/above-ga-accel-alt", func(val) {
+  if (val.getValue() and fmgc.FMGCInternal.phase == 1) {
+    # change VERT MODE 
+    # to do
+  }
 }, 1, 0);
 
 
@@ -1443,7 +1467,6 @@ var timer5inAir = maketimer(5, func() {
    
    # if TOGA was set before 5 secs in air
    if (getprop("/fdm/jsbsim/fadec/control-1/detent-text") == "TOGA" or getprop("/fdm/jsbsim/fadec/control-2/detent-text") == "TOGA") {
-      print("check SRSGA");
       fmgc.check_srs_engagement();
    } 
 });
@@ -1708,7 +1731,7 @@ var check_srs_engagement = func (){
         print(" srs engaged with val: 2");
         return 2;
     } elsif (getprop("/FMGC/internal/pitch-mode") == "SRS" and (
-         ((eng1_state == "ALT*" or eng1_state == "ALT*" 
+         ((eng1_state == "ALT*" or eng2_state == "ALT*" 
           or eng1_state == "ALT CST*" or eng2_state == "ALT CST*") 
             and getprop("/ECAM/warnings/instrumentation/above-400ft-ra") == 1)
          )) { 
@@ -1724,7 +1747,7 @@ var check_srs_engagement = func (){
             return 0;
         }
     } else {
-        print(" srs conditions not met with states 1 : ", eng1_state, ", eng 2 ", eng2_state);
+        print(" srs conditions not met with states eng1 : ", eng1_state, ", eng2 ", eng2_state);
         return 0;
     }
 }
