@@ -335,15 +335,9 @@ var canvas_pfd = {
 			}),
 			props.UpdateManager.FromHashList(["fd1","fd2","ap1","ap2"], 1, func(val) {
 				if (val.fd1 or val.fd2 or val.ap1 or val.ap2) {
-					obj["FMA_pitcharm"].show();
-					obj["FMA_pitcharm2"].show();
-					obj["FMA_rollarm"].show();
 					obj["FMA_pitch"].show();
 					obj["FMA_roll"].show();
 				} else {
-					obj["FMA_pitcharm"].hide();
-					obj["FMA_pitcharm2"].hide();
-					obj["FMA_rollarm"].hide();
 					obj["FMA_pitch"].hide();
 					obj["FMA_roll"].hide();
 				}
@@ -1086,7 +1080,7 @@ var canvas_pfd = {
 	},
 	getKeys: func() {
 		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
-		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
+		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_roll_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
 		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_tens","ALT_digit_UP","ALT_tapes","ALT_hundreds",
@@ -1884,8 +1878,6 @@ var canvas_pfd = {
 			me["FMA_roll"].hide();
 			me["FMA_pitch_box"].hide();
 			me["FMA_roll_box"].hide();
-			me["FMA_pitcharm_box"].hide();
-			me["FMA_rollarm_box"].hide();
 			me["FMA_Middle1"].hide();
 			me["FMA_Middle2"].hide();
 			me["FMA_combined"].show();
@@ -1934,26 +1926,10 @@ var canvas_pfd = {
 				vsTimer2.stop();
 			}
 			
-			if (fmgc.Modes.PFD.FMA.pitchModeArmed == " " and fmgc.Modes.PFD.FMA.pitchMode2Armed == " ") {
-				me["FMA_pitcharm_box"].hide();
-			} else {
-				if ((fmgc.Modes.PFD.FMA.pitchModeArmedBox or fmgc.Modes.PFD.FMA.pitchMode2ArmedBox) and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
-					me["FMA_pitcharm_box"].show();
-				} else {
-					me["FMA_pitcharm_box"].hide();
-				}
-			}
-			
 			if (fmgc.Modes.PFD.FMA.rollModeBox == 1 and fmgc.Modes.PFD.FMA.rollMode != " "  and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
 				me["FMA_roll_box"].show();
 			} else {
 				me["FMA_roll_box"].hide();
-			}
-			
-			if (fmgc.Modes.PFD.FMA.rollModeArmedBox == 1 and fmgc.Modes.PFD.FMA.rollModeArmed != " " and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
-				me["FMA_rollarm_box"].show();
-			} else {
-				me["FMA_rollarm_box"].hide();
 			}
 		}
 		

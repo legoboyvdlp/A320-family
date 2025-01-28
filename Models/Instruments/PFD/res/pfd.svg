@@ -2195,28 +2195,12 @@
      inkscape:label="#rect4290" />
   <rect
      inkscape:label="#rect4290"
-     y="52.623405"
-     x="225.69263"
-     height="36.781818"
-     width="198.27213"
-     id="FMA_pitcharm_box"
-     style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2.39996576;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
-  <rect
-     inkscape:label="#rect4290"
      y="7.4717641"
      x="441.85077"
      height="36.725567"
      width="218.77071"
      id="FMA_roll_box"
      style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2.39996576;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" />
-  <rect
-     style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2.39996576;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-     id="FMA_rollarm_box"
-     width="218.77071"
-     height="36.725567"
-     x="441.85077"
-     y="52.616997"
-     inkscape:label="#rect4290" />
   <g
      transform="translate(0,4.4)"
      inkscape:label="#g4578"
