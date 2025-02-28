@@ -1,5 +1,5 @@
 # A3XX CPDLC - Jonathan Redpath
-# Copyright (c) 2024 Josh Davidson (Octal450)
+# Copyright (c) 2025 Josh Davidson (Octal450)
 var A320CPDLCMessageHandler = cpdlc.CPDLCMessageHandler.new();
 
 var CPDLCmessage = {

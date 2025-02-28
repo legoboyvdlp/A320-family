@@ -1,7 +1,7 @@
 # INSTALL
 ## Prerequisites
 Have at least following versions installed:
-* FlightGear 2020.3.14 or newer
+* FlightGear 2024.1.1 or newer
 
 ## Install using ZIP Snapshot
 [Download](https://github.com/legoboyvdlp/A320-family/archive/dev.zip) the zip file.  

@@ -2,7 +2,7 @@
 # Joshua Davidson (Octal450)
 # Based on work by artix
 
-# Copyright (c) 2024 Josh Davidson (Octal450)
+# Copyright (c) 2025 Josh Davidson (Octal450)
 
 var SymbolPainter = {
 	aircraft_dir: nil,

@@ -1,6 +1,6 @@
 # A3XX IESI
 
-# Copyright (c) 2024 Josh Davidson (Octal450)
+# Copyright (c) 2025 Josh Davidson (Octal450)
 
 # props.nas nodes
 var iesi_init = props.globals.initNode("/instrumentation/iesi/iesi-init", 0, "BOOL");

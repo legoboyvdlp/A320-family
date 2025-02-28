@@ -1,5 +1,5 @@
 # Octal's View Controller
-# Copyright (c) 2024 Josh Davidson (Octal450)
+# Copyright (c) 2025 Josh Davidson (Octal450)
 # FovZoom based on work by onox
 
 var distance = 0;
