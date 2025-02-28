@@ -58,22 +58,6 @@
 			<halign>left</halign>
 			
 			<text>
-				<label>Error Code:</label>
-			</text>
-		
-			<text>
-				<border>1</border>
-				<label>99999</label>
-				<property>/systems/acconfig/mismatch-code</property>
-				<live>1</live>
-			</text>
-		</group>
-		
-		<group>
-			<layout>hbox</layout>
-			<halign>left</halign>
-			
-			<text>
 				<label>Reason:</label>
 			</text>
 		

@@ -1057,12 +1057,6 @@ var canvas_pfd = {
 			}),
 		];
 		
-		obj.update_items_mismatch = [
-			props.UpdateManager.FromHashValue("acconfigMismatch", nil, func(val) {
-				obj["Error_Code"].setText(val);
-			}),
-		];
-		
 		obj.AI_horizon_trans = obj["AI_horizon"].createTransform();
 		obj.AI_horizon_rot = obj["AI_horizon"].createTransform();
 		
@@ -2042,10 +2036,6 @@ var canvas_pfd = {
 		}
 	},
 	updateMismatch: func(notification) {
-		foreach(var update_item; me.update_items_mismatch)
-		{
-			update_item.update(notification);
-		}
 	},
 	off: 0,
 	on: 0,
@@ -2101,7 +2091,7 @@ var canvas_pfd = {
 		}
 	},
 	updatePower: func(notification) {
-		if (notification.acconfigMismatch == "0x000") {
+		if (notification.acconfigMismatch == "XX") {
 			me.mismatch.setVisible(0);
 			
 			if (me.number == 1) {
@@ -2201,7 +2191,7 @@ var A320PFD2 = PFDRecipient.new("A320 PFD", 1);
 emesary.GlobalTransmitter.Register(A320PFD2);
 
 var input = {
-	acconfigMismatch: "/systems/acconfig/mismatch-code",
+	acconfigMismatch: "/systems/acconfig/mismatch-reason",
 	cptDuXfr: "/modes/cpt-du-xfr",
 	foDuXfr: "/modes/fo-du-xfr",
 	du1Lgt: "/controls/lighting/DU/du1",

@@ -175,7 +175,7 @@ setlistener("/sim/signals/fdm-initialized", func() {
 });
 
 var systemsLoop = func(notification) {
-	if (!systemsInitialized and getprop("/systems/acconfig/mismatch-code") != "0x000") { return; }
+	if (!systemsInitialized and getprop("/systems/acconfig/mismatch-reason") != "XX") { return; }
 	systems.PNEU.loop(notification);
 	systems.ADIRS.loop(notification);
 	systems.BrakeSys.update(notification);
@@ -428,5 +428,3 @@ setlistener("/instrumentation/altimeter/setting-hpa", func(val) {
 	setprop("/instrumentation/altimeter[4]/setting-hpa", newhpa);
 	setprop("/instrumentation/altimeter[5]/setting-hpa", newhpa);
 }, 0, 0);
-
-setprop("/systems/acconfig/libraries-loaded", 1);

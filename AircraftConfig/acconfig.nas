@@ -49,7 +49,6 @@ setprop("/systems/acconfig/spin", "-");
 setprop("/systems/acconfig/options/revision", 0);
 setprop("/systems/acconfig/new-revision", 0);
 setprop("/systems/acconfig/out-of-date", 0);
-setprop("/systems/acconfig/mismatch-code", "0x000");
 setprop("/systems/acconfig/mismatch-reason", "XX");
 setprop("/systems/acconfig/options/keyboard-mode", 0);
 setprop("/systems/acconfig/options/fgcamera-keys-enabled", 0);
@@ -133,28 +132,18 @@ var versionCheck = func() {
 
 var mismatch_chk = func {
 	if (!versionCheck()) {
-		setprop("/systems/acconfig/mismatch-code", "0x121");
 		setprop("/systems/acconfig/mismatch-reason", "FGFS version is too old! Please update FlightGear to at least " ~ getprop("/sim/minimum-fg-version") ~ ".");
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
-		print("Mismatch: 0x121");
+		print("Error: Version");
 		welcome_dlg.close();
 	} else if (getprop("/gear/gear[0]/wow") == 0 or getprop("/position/altitude-ft") >= 15000) {
-		setprop("/systems/acconfig/mismatch-code", "0x223");
 		setprop("/systems/acconfig/mismatch-reason", "Preposterous configuration detected for initialization. Check your position or scenery.");
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
-		print("Mismatch: 0x223");
-		welcome_dlg.close();
-	} else if (getprop("/systems/acconfig/libraries-loaded") != 1) {
-		setprop("/systems/acconfig/mismatch-code", "0x247");
-		setprop("/systems/acconfig/mismatch-reason", "System files are missing or damaged. Please download a new copy of the aircraft.");
-		if (getprop("/systems/acconfig/out-of-date") != 1) {
-			error_mismatch.open();
-		}
-		print("Mismatch: 0x247");
+		print("Error: Position");
 		welcome_dlg.close();
 	}
 }
@@ -167,12 +156,12 @@ setlistener("/sim/signals/fdm-initialized", func {
 	} 
 	mismatch_chk();
 	readSettings();
-	if (getprop("/systems/acconfig/out-of-date") != 1 and getprop("/systems/acconfig/options/revision") < current_revision and getprop("/systems/acconfig/mismatch-code") == "0x000") {
+	if (getprop("/systems/acconfig/out-of-date") != 1 and getprop("/systems/acconfig/options/revision") < current_revision and getprop("/systems/acconfig/mismatch-reason") == "XX") {
 		updated_dlg.open();
 		if (getprop("/systems/acconfig/options/no-rendering-warn") != 1) {
 			RENDERING.check();
 		}
-	} else if (getprop("/systems/acconfig/out-of-date") != 1 and getprop("/systems/acconfig/mismatch-code") == "0x000" and getprop("/systems/acconfig/options/welcome-skip") != 1) {
+	} else if (getprop("/systems/acconfig/out-of-date") != 1 and getprop("/systems/acconfig/mismatch-reason") == "XX" and getprop("/systems/acconfig/options/welcome-skip") != 1) {
 		welcome_dlg.open();
 		if (getprop("/systems/acconfig/options/no-rendering-warn") != 1) {
 			RENDERING.check();
@@ -207,57 +196,37 @@ setlistener("/sim/signals/exit", func {
 var RENDERING = {
 	als: props.globals.getNode("/sim/rendering/shaders/skydome"),
 	alsMode: props.globals.getNode("/sim/gui/dialogs/advanced/mode/als-mode", 1),
-	customSettings: props.globals.getNode("/sim/rendering/shaders/custom-settings"),
 	landmass: props.globals.getNode("/sim/rendering/shaders/landmass"),
 	landmassSet: 0,
 	lowSpecMode: props.globals.getNode("/sim/gui/dialogs/advanced/mode/low-spec-mode", 1),
 	model: props.globals.getNode("/sim/rendering/shaders/model"),
 	modelEffects: props.globals.getNode("/sim/gui/dialogs/advanced/model-effects", 1),
 	modelSet: 0,
-	rembrandt: props.globals.getNode("/sim/rendering/rembrandt/enabled", 1),
 	check: func() {
-		#if (OPTIONS.noRenderingWarn.getBoolValue()) {
-		#	return;
-		#}
-		
 		me.landmassSet = me.landmass.getValue() >= 4;
 		me.modelSet = me.model.getValue() >= 3;
 		
-		if ((fgfsVer[0] == 2020 and fgfsVer[1] >= 4) or fgfsVer[0] > 2020) {
-			if (!me.rembrandt.getBoolValue() and (!me.als.getBoolValue() or !me.landmassSet or !me.modelSet)) {
-				fgcommand("dialog-show", props.Node.new({"dialog-name": "acconfig-rendering"}));
-			}
-		} else {
-			if (!me.rembrandt.getBoolValue() and (!me.als.getBoolValue() or !me.customSettings.getBoolValue() or !me.landmassSet or !me.modelSet)) {
-				fgcommand("dialog-show", props.Node.new({"dialog-name": "acconfig-rendering"}));
-			}
+		if (!me.als.getBoolValue() or !me.landmassSet or !me.modelSet) {
+			fgcommand("dialog-show", props.Node.new({"dialog-name": "acconfig-rendering"}));
 		}
 	},
 	fixAll: func() {
 		# Don't override higher settings
 		if (me.landmass.getValue() < 4) {
 			me.landmass.setValue(4);
-			if ((fgfsVer[0] == 2020 and fgfsVer[1] >= 4) or fgfsVer[0] > 2020) {
-				me.modelEffects.setValue("Medium");
-			}
+			me.modelEffects.setValue("Medium");
 		}
 		if (me.model.getValue() < 3) {
 			me.model.setValue(3);
-			if ((fgfsVer[0] == 2020 and fgfsVer[1] >= 4) or fgfsVer[0] > 2020) {
-				me.modelEffects.setValue("Enabled");
-			}
+			me.modelEffects.setValue("Enabled");
 		}
 		
 		me.fixCore();
 	},
 	fixCore: func() {
 		me.als.setBoolValue(1); # ALS on
-		if ((fgfsVer[0] == 2020 and fgfsVer[1] >= 4) or fgfsVer[0] > 2020) {
-			me.alsMode.setBoolValue(1);
-			me.lowSpecMode.setBoolValue(0);
-		} else {
-			me.customSettings.setBoolValue(1);
-		}
+		me.alsMode.setBoolValue(1);
+		me.lowSpecMode.setBoolValue(0);
 		
 		print("System: Rendering Settings updated!");
 		gui.popupTip("System: Rendering settings updated!");
@@ -315,7 +284,7 @@ var abortPanelStates = func {
 
 # Cold and Dark
 var colddark = func {
-	if (getprop("/systems/acconfig/mismatch-code") == "0x000") {
+	if (getprop("/systems/acconfig/mismatch-reason") == "XX") {
 		spinning.start();
 		ps_loaded_dlg.close();
 		ps_load_dlg.open();
@@ -375,7 +344,7 @@ var colddark_b = func {
 
 # Ready to Start Eng
 var beforestart = func {
-	if (getprop("/systems/acconfig/mismatch-code") == "0x000") {
+	if (getprop("/systems/acconfig/mismatch-reason") == "XX") {
 		spinning.start();
 		ps_loaded_dlg.close();
 		ps_load_dlg.open();
@@ -472,7 +441,7 @@ var beforestart_b = func {
 
 # Ready to Taxi
 var taxi = func {
-	if (getprop("/systems/acconfig/mismatch-code") == "0x000") {
+	if (getprop("/systems/acconfig/mismatch-reason") == "XX") {
 		spinning.start();
 		ps_loaded_dlg.close();
 		ps_load_dlg.open();
@@ -602,7 +571,7 @@ var taxi_d = func {
 
 # Ready to Takeoff
 var takeoff = func {
-	if (getprop("/systems/acconfig/mismatch-code") == "0x000") {
+	if (getprop("/systems/acconfig/mismatch-reason") == "XX") {
 		# The same as taxi, except we set some things afterwards.
 		taxi();
 		var eng_one_chk_c = setlistener("/engines/engine[0]/state", func {
