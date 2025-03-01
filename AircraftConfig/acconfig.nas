@@ -1,7 +1,11 @@
 # Aircraft Config Center
-# Joshua Davidson (Octal450)
-
 # Copyright (c) 2025 Josh Davidson (Octal450)
+
+# THIS IS OLD AND SHOULD BE REPLACED WITH ACCONFIG V2!!!
+
+var CONFIG = {
+	noUpdateCheck: 0, # Disable ACCONFIG update checks
+};
 
 var spinning = maketimer(0.05, func {
 	var spinning = getprop("/systems/acconfig/spinning");
@@ -86,7 +90,9 @@ var du_quality = gui.Dialog.new("/sim/gui/dialogs/acconfig/du-quality/dialog", "
 var rendering_dlg = gui.Dialog.new("/sim/gui/dialogs/rendering/dialog", "Aircraft/A320-family/AircraftConfig/rendering.xml");
 spinning.start();
 init_dlg.open();
-http.load("/https://raw.githubusercontent.com/legoboyvdlp/A320-family/dev/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
+if (!CONFIG.noUpdateCheck) {
+	http.load("https://raw.githubusercontent.com/legoboyvdlp/A320-family/dev/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
+}
 var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
 print("System: Version " ~ current_revision);
@@ -100,7 +106,7 @@ var foViewNode = props.globals.initNode("/systems/acconfig/options/fo-view", 0, 
 setprop("/systems/acconfig/options/simbrief-username", "");
 
 setlistener("/systems/acconfig/new-revision", func {
-	if (getprop("/systems/acconfig/new-revision") > current_revision) {
+	if (getprop("/systems/acconfig/new-revision") > current_revision and !CONFIG.noUpdateCheck) {
 		setprop("/systems/acconfig/out-of-date", 1);
 	} else {
 		setprop("/systems/acconfig/out-of-date", 0);
