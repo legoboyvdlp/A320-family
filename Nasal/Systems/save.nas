@@ -48,8 +48,6 @@ var default = [
 	# electrics
 	"/systems/electrical/sources/bat-1/percent-calc",
 	"/systems/electrical/sources/bat-2/percent-calc",
-	# FMGC
-	"/FMGC/internal/last-cost-index",
 ];
 
 var save = func (saved_props, file) {
