@@ -401,22 +401,6 @@
 			</expression>
 		</input>
 		<output>/it-autoflight/internal/target-fpm-fpa-raw</output>
-		<min>
-			<expression>
-				<difference>
-					<property>/it-autoflight/internal/vert-speed-fpm</property>
-					<value>2500</value>
-				</difference>
-			</expression>
-		</min>
-		<max>
-			<expression>
-				<sum>
-					<property>/it-autoflight/internal/vert-speed-fpm</property>
-					<value>2500</value>
-				</sum>
-			</expression>
-		</max>
 	</filter>
 	
 	<filter>
