@@ -28,6 +28,9 @@ Specifically, make sure you remove -dev from the folder name!
 ## Hardware configuration
 Here are bindings for commonly used buttons
 
+### Dedicated tiller axis
+If you have the `Use Separate Tiller Axis` enabled, map the axis you wanna use as tiller to this property: `/controls/gear/steering`
+
 ### FO Sidestick
 Bind the axis to:
 * elevator: `/controls/flight/elevator[1]`
