@@ -99,8 +99,8 @@
 						<entry><ind>  0</ind><dep>0.0001</dep></entry>
 						<entry><ind> 10</ind><dep>0.0010</dep></entry>
 						<entry><ind>100</ind><dep>0.0100</dep></entry>
-						<entry><ind>200</ind><dep>0.1000</dep></entry>
-						<entry><ind>250</ind><dep>0.5000</dep></entry>
+						<entry><ind>200</ind><dep>0.0800</dep></entry>
+						<entry><ind>250</ind><dep>0.3000</dep></entry>
 					</table>
 				</product>
 			</expression> 

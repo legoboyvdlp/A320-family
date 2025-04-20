@@ -451,7 +451,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<toradians><property>fcs/spoiler-left-deg</property></toradians>
-				<value>0.0253695</value>
+				<value>0.0261782</value>
 			</product>
 		</function>
 		
@@ -461,7 +461,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<toradians><property>fcs/spoiler-right-deg</property></toradians>
-				<value>0.0253695</value>
+				<value>0.0261782</value>
 			</product>
 		</function>
 		
