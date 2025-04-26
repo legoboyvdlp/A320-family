@@ -1354,6 +1354,7 @@
 		<actuator name="/systems/fcs/tiller/actuator">
 			<input>/systems/fcs/tiller/cmd-deg</input>
 			<rate_limit>/systems/fcs/tiller/rate</rate_limit>
+			<lag>24.5</lag>
 			<output>fcs/steer-pos-deg[0]</output>
 		</actuator>
 		
