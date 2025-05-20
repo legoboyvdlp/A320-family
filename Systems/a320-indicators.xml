@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2025 Nia -->
+
+<system name="A320: Lights">
+
+	<channel name="Signs">
+	
+		<switch name="/controls/indicators/engine-1-fire-tied">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fire/engine1/warning-active eq 1
+				/controls/switches/annun-test eq 1
+			</test>
+		</switch>
+		
+	</channel>
+
+</system>

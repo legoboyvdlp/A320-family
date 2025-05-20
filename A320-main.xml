@@ -267,6 +267,9 @@
 			<property-rule n="111">
 				<path>Aircraft/A320-family/Systems/ecam-proprules.xml</path>
 			</property-rule>
+			<property-rule n="112">
+				<path>Aircraft/A320-family/Systems/a320-indicators-proprules.xml</path>
+			</property-rule>
 			<path>Aircraft/A320-family/Systems/pitot-static.xml</path>
 		</systems>
 		

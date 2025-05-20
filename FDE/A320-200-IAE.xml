@@ -29,6 +29,7 @@
     <system file="a320-aircond"/> <!-- after pneu -->
 	<system file="a320-ignition"/>
 	<system file="a320-lights"/>
+	<system file="a320-indicators"/>
 	<system file="a320-engine-fire"/>
 	<system file="a320-adr"/>
 	<system file="a320-apu"/>

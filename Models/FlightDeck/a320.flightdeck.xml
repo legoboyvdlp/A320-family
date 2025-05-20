@@ -13481,10 +13481,7 @@
 		<type>select</type>
 		<object-name>engine_fire_1</object-name>
 		<condition>
-			<or>
-				<property>systems/fire/engine1/warning-active</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/engine-1-fire</property>
 		</condition>
 	</animation>
 

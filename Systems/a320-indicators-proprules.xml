@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PropertyList>
+
+    <!-- this is really annoying - we compute all the properties in JSBSim, but they end up being tied -->
+    <!-- and can't be fed to the effects system directly, so we copy them via property rule -->
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/engine-1-fire-tied</input>
+        <output>/controls/indicators/engine-1-fire</output>
+    </filter>
+
+</PropertyList>
