@@ -7,8 +7,352 @@
     <filter>
         <type>gain</type>
         <gain>1.0</gain>
+        <input>/controls/indicators/door-fault-tied</input>
+        <output>/controls/indicators/door-fault</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/door-open-tied</input>
+        <output>/controls/indicators/door-open</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-apu-tied</input>
+        <output>/controls/indicators/ecam-apu</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-bleed-tied</input>
+        <output>/controls/indicators/ecam-bleed</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-clr-tied</input>
+        <output>/controls/indicators/ecam-clr</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-cond-tied</input>
+        <output>/controls/indicators/ecam-cond</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-door-tied</input>
+        <output>/controls/indicators/ecam-door</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-elec-tied</input>
+        <output>/controls/indicators/ecam-elec</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-eng-tied</input>
+        <output>/controls/indicators/ecam-eng</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-fctl-tied</input>
+        <output>/controls/indicators/ecam-fctl</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-fuel-tied</input>
+        <output>/controls/indicators/ecam-fuel</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-hyd-tied</input>
+        <output>/controls/indicators/ecam-hyd</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-press-tied</input>
+        <output>/controls/indicators/ecam-press</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-sts-tied</input>
+        <output>/controls/indicators/ecam-sts</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/ecam-wheel-tied</input>
+        <output>/controls/indicators/ecam-wheel</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-capt-arpt-tied</input>
+        <output>/controls/indicators/efis-capt-arpt</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-capt-cstr-tied</input>
+        <output>/controls/indicators/efis-capt-cstr</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-capt-fd-tied</input>
+        <output>/controls/indicators/efis-capt-fd</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-capt-ls-tied</input>
+        <output>/controls/indicators/efis-capt-ls</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-capt-ndb-tied</input>
+        <output>/controls/indicators/efis-capt-ndb</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-capt-wpt-tied</input>
+        <output>/controls/indicators/efis-capt-wpt</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-capt-vord-tied</input>
+        <output>/controls/indicators/efis-capt-vord</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-fo-arpt-tied</input>
+        <output>/controls/indicators/efis-fo-arpt</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-fo-cstr-tied</input>
+        <output>/controls/indicators/efis-fo-cstr</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-fo-fd-tied</input>
+        <output>/controls/indicators/efis-fo-fd</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-fo-ls-tied</input>
+        <output>/controls/indicators/efis-fo-ls</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-fo-ndb-tied</input>
+        <output>/controls/indicators/efis-fo-ndb</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-fo-wpt-tied</input>
+        <output>/controls/indicators/efis-fo-wpt</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/efis-fo-vord-tied</input>
+        <output>/controls/indicators/efis-fo-vord</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/engine-1-fault-tied</input>
+        <output>/controls/indicators/engine-1-fault</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/engine-2-fault-tied</input>
+        <output>/controls/indicators/engine-2-fault</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
         <input>/controls/indicators/engine-1-fire-tied</input>
         <output>/controls/indicators/engine-1-fire</output>
     </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/engine-2-fire-tied</input>
+        <output>/controls/indicators/engine-2-fire</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-alt-tied</input>
+        <output>/controls/indicators/fcu-alt</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-ap1-tied</input>
+        <output>/controls/indicators/fcu-ap1</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-ap2-tied</input>
+        <output>/controls/indicators/fcu-ap2</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-appr-tied</input>
+        <output>/controls/indicators/fcu-appr</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-athr-tied</input>
+        <output>/controls/indicators/fcu-athr</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-exped-tied</input>
+        <output>/controls/indicators/fcu-exped</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-hdg-vs-tied</input>
+        <output>/controls/indicators/fcu-hdg-vs</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-lat-tied</input>
+        <output>/controls/indicators/fcu-lat</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-lat-dash-tied</input>
+        <output>/controls/indicators/fcu-lat-dash</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-loc-tied</input>
+        <output>/controls/indicators/fcu-loc</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-lvlch-tied</input>
+        <output>/controls/indicators/fcu-lvlch</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-mach-tied</input>
+        <output>/controls/indicators/fcu-mach</output>
+    </filter>
+ 
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-spd-tied</input>
+        <output>/controls/indicators/fcu-spd</output>
+    </filter>
+ 
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-spd-dash-tied</input>
+        <output>/controls/indicators/fcu-spd-dash</output>
+    </filter>
+ 
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-spd-mgt-tied</input>
+        <output>/controls/indicators/fcu-spd-mgt</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-trk-fpa-tied</input>
+        <output>/controls/indicators/fcu-trk-fpa</output>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <input>/controls/indicators/fcu-vs-dash-tied</input>
+        <output>/controls/indicators/fcu-vs-dash</output>
+    </filter>
+
 
 </PropertyList>

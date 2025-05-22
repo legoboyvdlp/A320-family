@@ -141,14 +141,8 @@
 		<type>select</type>
 		<object-name>alt-text</object-name>
 		<object-name>alt-text-test</object-name>
-		<object-name>ap1_led</object-name>
-		<object-name>ap2_led</object-name>
-		<object-name>appr_led</object-name>
-		<object-name>arpt_led</object-name>
-		<object-name>arpt_led.001</object-name>
 		<object-name>atc-code</object-name>
 		<object-name>atc-test</object-name>
-		<object-name>a-thr_led</object-name>
 		<object-name>audio_adf1_glare.fo</object-name>
 		<object-name>audio_adf2_glare.fo</object-name>
 		<object-name>audio_att_led.fo</object-name>
@@ -213,22 +207,12 @@
 		<object-name>audio_vhf3_led.ovh</object-name>
 		<object-name>audio_vor1_glare.ovh</object-name>
 		<object-name>audio_vor2_glare.ovh</object-name>
-		<object-name>cstr_led</object-name>
-		<object-name>cstr_led.001</object-name>
-		<object-name>exped_led</object-name>
 		<object-name>fcu_screen</object-name>
-		<object-name>fd1_led</object-name>
-		<object-name>fd2_led</object-name>
 		<object-name>fpa-text</object-name>
 		<object-name>hdg-text</object-name>
 		<object-name>hdg-text-test</object-name>
 		<object-name>lat.dash</object-name>
-		<object-name>ils_led</object-name>
-		<object-name>ils2_led</object-name>
-		<object-name>loc_led</object-name>
 		<object-name>mach-text</object-name>
-		<object-name>ndb_led</object-name>
-		<object-name>ndb_led.001</object-name>
 		<object-name>qnh-hpa-left</object-name>
 		<object-name>qnh-hpa-right</object-name>
 		<object-name>qnh-inhg-left</object-name>
@@ -262,14 +246,10 @@
 		<object-name>spd.dash</object-name>
 		<object-name>spd-text</object-name>
 		<object-name>spd-text-test</object-name>
-		<object-name>vord_led</object-name>
-		<object-name>vord_led.001</object-name>
 		<object-name>vs.dash</object-name>
 		<object-name>vs-text</object-name>
 		<object-name>vs-text-last-2-digits</object-name>
 		<object-name>vs-text-test</object-name>
-		<object-name>wpt_led</object-name>
-		<object-name>wpt_led.001</object-name>
 		<object-name>prio_capt.arrow</object-name>
 		<object-name>prio_capt.capt</object-name>
 		<object-name>prio_fo.arrow</object-name>
@@ -358,8 +338,6 @@
 		<object-name>audio_vhf3_led.cpt</object-name>
 		<object-name>audio_vor1_glare.cpt</object-name>
 		<object-name>audio_vor2_glare.cpt</object-name>
-		<object-name>engine_fire_1</object-name>
-		<object-name>engine_fire_2</object-name>
 		<object-name>gear_lever_down_arrow</object-name>
 		<object-name>lgear_down</object-name>
 		<object-name>lgear_unlk</object-name>
@@ -456,10 +434,6 @@
 		<type>select</type>
 		<object-name>brk_fan_on</object-name>
 		<object-name>brk_hot_on</object-name>
-		<object-name>CockpitDoorFault</object-name>
-		<object-name>CockpitDoorOpen</object-name>
-		<object-name>engine_fault_1</object-name>
-		<object-name>engine_fault_2</object-name>
 		<object-name>prio_fo.arrow</object-name>
 		<object-name>prio_fo_fo</object-name>
 		
@@ -727,22 +701,6 @@
 	<!-- Direct DC power from DC2 206PP to ECP LEDs and rudder trim indicator -->
 	<animation>
 		<type>select</type>
-		<object-name>ecam_apu_led</object-name>
-		<object-name>ecam_bleed_led</object-name>
-		<object-name>ecam_cond_led</object-name>
-		<object-name>ecam_clr_l_led</object-name>
-		<object-name>ecam_clr_r_led</object-name>
-		<object-name>ecam_c_b_led</object-name>
-		<object-name>ecam_door_led</object-name>
-		<object-name>ecam_elec_led</object-name>
-		<object-name>ecam_el_dc_led</object-name>
-		<object-name>ecam_eng_led</object-name>
-		<object-name>ecam_fctl_led</object-name>
-		<object-name>ecam_fuel_led</object-name>
-		<object-name>ecam_hyd_led</object-name>
-		<object-name>ecam_press_led</object-name>
-		<object-name>ecam_sts_led</object-name>
-		<object-name>ecam_wheel_led</object-name>
 		<object-name>rudder-trim-letter</object-name>
 		<object-name>rudder-trim</object-name>
 		<condition>
@@ -778,11 +736,6 @@
 		<object-name>audio_call_vhf2_led.ovh</object-name>
 		<object-name>audio_call_vhf3_led.ovh</object-name>
 		<object-name>audio_mech_sgn.ovh</object-name>
-		<object-name>ecam_c_b_led</object-name>
-		<object-name>ecam_el_dc_led</object-name>
-		<object-name>engine_fault_1</object-name>
-		<object-name>engine_fault_2</object-name>
-		<object-name>exped_led</object-name>
 		<object-name>radio_opt_led.cpt</object-name>
 		<object-name>radio_opt_led.fo</object-name>
 		
@@ -2474,7 +2427,6 @@
 		<object-name>alt-text-test</object-name>
 		<object-name>vs-text-test</object-name>
 		<object-name>vs.ind.001</object-name>
-		<object-name>vs.ind.002</object-name>
 		<object-name>ver.fmgc</object-name>
 		<object-name>lvlch.ind</object-name>
 		<object-name>alt.ind</object-name>
@@ -3121,10 +3073,7 @@
 		<type>select</type>
 		<object-name>spd.ind</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<not><property>it-autoflight/input/kts-mach</property></not>
-			</or>
+			<property>/controls/indicators/fcu-spd</property>
 		</condition>
 	</animation>
 
@@ -3132,11 +3081,7 @@
 		<type>select</type>
 		<object-name>mach.ind</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<not><property>FMGC/FCU-working</property></not>
-				<property>it-autoflight/input/kts-mach</property>
-			</or>
+			<property>/controls/indicators/fcu-mach</property>
 		</condition>
 	</animation>
 
@@ -3170,7 +3115,7 @@
 		<type>select</type>
 		<object-name>spd.fmgc</object-name>
 		<condition>
-			<property>it-autoflight/input/spd-managed</property>
+			<property>/controls/indicators/fcu-spd-mgt</property>
 		</condition>
 	</animation>
 
@@ -3178,10 +3123,7 @@
 		<type>select</type>
 		<object-name>spd.dash</object-name>
 		<condition>
-			<and>
-				<not><property>controls/switches/annun-test</property></not>
-				<property>it-autoflight/input/spd-managed</property>
-			</and>
+			<property>/controls/indicators/fcu-spd-dash</property>
 		</condition>
 	</animation>
 
@@ -3190,11 +3132,7 @@
 		<object-name>hdg.ind</object-name>
 		<object-name>hdg2.ind</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<not><property>FMGC/FCU-working</property></not>
-				<not><property>it-autoflight/custom/trk-fpa</property></not>
-			</or>
+			<property>/controls/indicators/fcu-hdg-vs</property>
 		</condition>
 	</animation>
 
@@ -3203,11 +3141,7 @@
 		<object-name>trk.ind</object-name>
 		<object-name>trk2.ind</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<not><property>FMGC/FCU-working</property></not>
-				<property>it-autoflight/custom/trk-fpa</property>
-			</or>
+			<property>/controls/indicators/fcu-trk-fpa</property>
 		</condition>
 	</animation>
 
@@ -3227,13 +3161,7 @@
 		<type>select</type>
 		<object-name>lat.fmgc</object-name>
 		<condition>
-			<or>
-				<property>it-autoflight/output/lnav-armed</property>
-				<equals>
-					<property>it-autoflight/output/lat</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/fcu-lat</property>
 		</condition>
 	</animation>
 
@@ -3241,14 +3169,23 @@
 		<type>select</type>
 		<object-name>lat.dash</object-name>
 		<condition>
-			<and>
-				<not><property>controls/switches/annun-test</property></not>
-				<not><property>it-autoflight/custom/show-hdg</property></not>
-				<not-equals>
-					<property>it-autoflight/output/lat</property>
-					<value>0</value>
-				</not-equals>
-			</and>
+			<property>/controls/indicators/fcu-lat-dash</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>alt.ind</object-name>
+		<condition>
+			<property>/controls/indicators/fcu-alt</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>lvlch.ind</object-name>
+		<condition>
+			<property>/controls/indicators/fcu-lvlch</property>
 		</condition>
 	</animation>
 
@@ -3285,10 +3222,7 @@
 		<object-name>vs.ind</object-name>
 		<object-name>vs.ind.001</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<not><property>it-autoflight/custom/trk-fpa</property></not>
-			</or>
+			<property>/controls/indicators/fcu-hdg-vs</property>
 		</condition>
 	</animation>
 
@@ -3297,11 +3231,7 @@
 		<object-name>fpa.ind</object-name>
 		<object-name>fpa.ind.001</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<not><property>FMGC/FCU-working</property></not>
-				<property>it-autoflight/custom/trk-fpa</property>
-			</or>
+			<property>/controls/indicators/fcu-trk-fpa</property>
 		</condition>
 	</animation>
 
@@ -3340,18 +3270,7 @@
 		<type>select</type>
 		<object-name>vs.dash</object-name>
 		<condition>
-			<and>
-				<not><property>controls/switches/annun-test</property></not>
-				<property>FMGC/FCU-working</property>
-				<not-equals>
-					<property>it-autoflight/output/vert</property>
-					<value>1</value>
-				</not-equals>
-				<not-equals>
-					<property>it-autoflight/output/vert</property>
-					<value>5</value>
-				</not-equals>
-			</and>
+			<property>/controls/indicators/fcu-vs-dash</property>
 		</condition>
 	</animation>
 	
@@ -5108,10 +5027,7 @@
 		<type>select</type>
 		<object-name>fd1_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>it-autoflight/output/fd1</property>
-			</or>
+			<property>/controls/indicators/efis-capt-fd</property>
 		</condition>
 	</animation>
 	
@@ -5179,10 +5095,7 @@
 		<type>select</type>
 		<object-name>ils_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>modes/pfd/ILS1</property>
-			</or>
+			<property>/controls/indicators/efis-capt-ls</property>
 		</condition>
 	</animation>
 	
@@ -5250,10 +5163,7 @@
 		<type>select</type>
 		<object-name>ils2_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>modes/pfd/ILS2</property>
-			</or>
+			<property>/controls/indicators/efis-fo-ls</property>
 		</condition>
 	</animation>
 	
@@ -5314,10 +5224,7 @@
 		<type>select</type>
 		<object-name>fd2_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>it-autoflight/output/fd2</property>
-			</or>
+			<property>/controls/indicators/efis-fo-fd</property>
 		</condition>
 	</animation>
 	
@@ -5389,10 +5296,7 @@
 		<type>select</type>
 		<object-name>cstr_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>instrumentation/efis/inputs/CSTR</property>
-			</or>
+			<property>controls/indicators/efis-capt-cstr</property>
 		</condition>
 	</animation>
 	
@@ -5463,10 +5367,7 @@
 		<type>select</type>
 		<object-name>cstr_led.001</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>instrumentation/efis[1]/inputs/CSTR</property>
-			</or>
+			<property>controls/indicators/efis-fo-cstr</property>
 		</condition>
 	</animation>
 	
@@ -5537,10 +5438,7 @@
 		<type>select</type>
 		<object-name>wpt_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>instrumentation/efis/inputs/wpt</property>
-			</or>
+			<property>controls/indicators/efis-capt-wpt</property>
 		</condition>
 	</animation>
 	
@@ -5611,10 +5509,7 @@
 		<type>select</type>
 		<object-name>wpt_led.001</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>instrumentation/efis[1]/inputs/wpt</property>
-			</or>
+			<property>controls/indicators/efis-fo-wpt</property>
 		</condition>
 	</animation>
 	
@@ -5685,10 +5580,7 @@
 		<type>select</type>
 		<object-name>vord_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>instrumentation/efis/inputs/VORD</property>
-			</or>
+			<property>/controls/indicators/efis-capt-vord</property>
 		</condition>
 	</animation>
 	
@@ -5759,10 +5651,7 @@
 		<type>select</type>
 		<object-name>vord_led.001</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>instrumentation/efis[1]/inputs/VORD</property>
-			</or>
+			<property>/controls/indicators/efis-fo-vord</property>
 		</condition>
 	</animation>
 	
@@ -5833,10 +5722,7 @@
 		<type>select</type>
 		<object-name>ndb_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>instrumentation/efis/inputs/NDB</property>
-			</or>
+			<property>/controls/indicators/efis-capt-ndb</property>
 		</condition>
 	</animation>
 	
@@ -5907,10 +5793,7 @@
 		<type>select</type>
 		<object-name>ndb_led.001</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>instrumentation/efis[1]/inputs/NDB</property>
-			</or>
+			<property>/controls/indicators/efis-fo-ndb</property>
 		</condition>
 	</animation>
 	
@@ -5981,10 +5864,7 @@
 		<type>select</type>
 		<object-name>arpt_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>instrumentation/efis/inputs/arpt</property>
-			</or>
+			<property>controls/indicators/efis-capt-arpt</property>
 		</condition>
 	</animation>
 	
@@ -6055,10 +5935,7 @@
 		<type>select</type>
 		<object-name>arpt_led.001</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>instrumentation/efis[1]/inputs/arpt</property>
-			</or>
+			<property>controls/indicators/efis-fo-arpt</property>
 		</condition>
 	</animation>
 	
@@ -6927,30 +6804,7 @@
 		<type>select</type>
 		<object-name>loc_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<and>
-					<or>
-						<equals>
-							<property>it-autoflight/output/lat</property>
-							<value>2</value>
-						</equals>
-						<equals>
-							<property>it-autoflight/output/loc-arm</property>
-							<value>1</value>
-						</equals>
-					</or>
-					<not><property>it-autoflight/output/gs-arm</property></not>
-					<not-equals>
-						<property>it-autoflight/output/vert</property>
-						<value>2</value>
-					</not-equals>
-					<not-equals>
-						<property>it-autoflight/output/vert</property>
-						<value>6</value>
-					</not-equals>
-				</and>
-			</or>
+			<property>/controls/indicators/fcu-loc</property>
 		</condition>
 	</animation>
 
@@ -7063,10 +6917,7 @@
 		<type>select</type>
 		<object-name>ap1_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>it-autoflight/output/ap1</property>
-			</or>
+			<property>/controls/indicators/fcu-ap1</property>
 		</condition>
 	</animation>
 
@@ -7127,10 +6978,7 @@
 		<type>select</type>
 		<object-name>ap2_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>it-autoflight/output/ap2</property>
-			</or>
+			<property>/controls/indicators/fcu-ap2</property>
 		</condition>
 	</animation>
 
@@ -7191,10 +7039,7 @@
 		<type>select</type>
 		<object-name>a-thr_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>it-autoflight/output/athr</property>
-			</or>
+			<property>/controls/indicators/fcu-athr</property>
 		</condition>
 	</animation>
 
@@ -7594,18 +7439,7 @@
 		<type>select</type>
 		<object-name>appr_led</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>it-autoflight/output/gs-arm</property>
-				<equals>
-					<property>it-autoflight/output/vert</property>
-					<value>2</value>
-				</equals>
-				<equals>
-					<property>it-autoflight/output/vert</property>
-					<value>6</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/fcu-appr</property>
 		</condition>
 	</animation>
 
@@ -7622,6 +7456,14 @@
 			<y2-m>0.39799</y2-m>
 			<z2-m>0.478435</z2-m>
 		</axis>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>exped_led</object-name>
+		<condition>
+			<property>/controls/indicators/fcu-exped</property>
+		</condition>
 	</animation>
 	
 	<animation>
@@ -11774,10 +11616,7 @@
 		<type>select</type>
 		<object-name>ecam_eng_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/eng</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-eng</property>
 		</condition>
 	</animation>
 
@@ -11785,10 +11624,7 @@
 		<type>select</type>
 		<object-name>ecam_apu_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/apu</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-apu</property>
 		</condition>
 	</animation>
 
@@ -11796,10 +11632,7 @@
 		<type>select</type>
 		<object-name>ecam_door_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/door</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-door</property>
 		</condition>
 	</animation>
 
@@ -11807,10 +11640,7 @@
 		<type>select</type>
 		<object-name>ecam_elec_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/elec</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-elec</property>
 		</condition>
 	</animation>
 
@@ -11818,10 +11648,7 @@
 		<type>select</type>
 		<object-name>ecam_fuel_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/fuel</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-fuel</property>
 		</condition>
 	</animation>
 
@@ -11829,10 +11656,7 @@
 		<type>select</type>
 		<object-name>ecam_hyd_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/hyd</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-hyd</property>
 		</condition>
 	</animation>
 
@@ -11840,10 +11664,7 @@
 		<type>select</type>
 		<object-name>ecam_fctl_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/fctl</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-fctl</property>
 		</condition>
 	</animation>
 
@@ -11851,10 +11672,7 @@
 		<type>select</type>
 		<object-name>ecam_press_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/press</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-press</property>
 		</condition>
 	</animation>
 
@@ -11862,10 +11680,7 @@
 		<type>select</type>
 		<object-name>ecam_wheel_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/wheel</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-wheel</property>
 		</condition>
 	</animation>
 
@@ -11873,10 +11688,7 @@
 		<type>select</type>
 		<object-name>ecam_bleed_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/bleed</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-bleed</property>
 		</condition>
 	</animation>
 
@@ -11884,10 +11696,7 @@
 		<type>select</type>
 		<object-name>ecam_cond_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/cond</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-cond</property>
 		</condition>
 	</animation>
 
@@ -11896,10 +11705,7 @@
 		<object-name>ecam_clr_l_led</object-name>
 		<object-name>ecam_clr_r_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/clr</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-clr</property>
 		</condition>
 	</animation>
 
@@ -11907,10 +11713,7 @@
 		<type>select</type>
 		<object-name>ecam_sts_led</object-name>
 		<condition>
-			<or>
-				<property>ECAM/Lower/light/sts</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/ecam-sts</property>
 		</condition>
 	</animation>
 	
@@ -13479,6 +13282,42 @@
 	<!-- Engine lights -->
 	<animation>
 		<type>select</type>
+		<object-name>engine_fault_1</object-name>
+		<condition>
+			<property>controls/indicators/engine-1-fault</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>material</type>
+		<object-name>engine_fault_1</object-name>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+		</emission>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>engine_fault_2</object-name>
+		<condition>
+			<property>controls/indicators/engine-2-fault</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>material</type>
+		<object-name>engine_fault_2</object-name>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<type>select</type>
 		<object-name>engine_fire_1</object-name>
 		<condition>
 			<property>controls/indicators/engine-1-fire</property>
@@ -13499,10 +13338,7 @@
 		<type>select</type>
 		<object-name>engine_fire_2</object-name>
 		<condition>
-			<or>
-				<property>systems/fire/engine2/warning-active</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>controls/indicators/engine-2-fire</property>
 		</condition>
 	</animation>
 
@@ -24317,13 +24153,7 @@
 		<type>select</type>
 		<object-name>CockpitDoorOpen</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>		
-				<not-equals>
-					<property>sim/model/door-positions/doorc/lock-status</property>
-					<value>1</value>
-				</not-equals>
-			</or>
+			<property>controls/indicators/door-open</property>
 		</condition>
 	</animation>
 
@@ -24331,13 +24161,7 @@
 		<type>select</type>
 		<object-name>CockpitDoorFault</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>		
-				<equals>
-					<property>sim/model/door-positions/doorc/lock-status</property>
-					<value>-9</value>
-				</equals>
-			</or>
+			<property>controls/indicators/door-fault</property>
 		</condition>
 	</animation>
 
