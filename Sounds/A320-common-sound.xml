@@ -858,7 +858,7 @@
 		
 		<apoff>
 			<name>apoff-looped</name>
-			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-loop.wav</path>
+			<path>Aircraft/A320-family/Sounds/Cockpit/cavalry-charge-loop.wav</path>
             <type>avionics</type>
 			<mode>looped</mode>
 			<condition>
@@ -885,7 +885,7 @@
 		
 		<apoff>
 			<name>apoff-single</name>
-			<path>Aircraft/A320-family/Sounds/Cockpit/calvary-charge-once.wav</path>
+			<path>Aircraft/A320-family/Sounds/Cockpit/cavalry-charge-once.wav</path>
             <type>avionics</type>
 			<mode>once</mode>
 			<condition>
