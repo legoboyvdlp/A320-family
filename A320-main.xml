@@ -261,9 +261,6 @@
 			<property-rule n="101">
 				<path>Aircraft/A320-family/Systems/sound-common.xml</path>
 			</property-rule>
-			<property-rule n="110">
-				<path>Aircraft/A320-family/Systems/a320-lights-proprules.xml</path>
-			</property-rule>
 			<property-rule n="111">
 				<path>Aircraft/A320-family/Systems/ecam-proprules.xml</path>
 			</property-rule>

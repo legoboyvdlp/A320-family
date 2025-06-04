@@ -68,14 +68,14 @@
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/fcu-panel-norm-tied">
+		<switch name="/controls/lighting/fcu-panel-norm">
 			<default value="0" />
 			<test value="/controls/lighting/fcu-panel-knb">
 				/systems/electrical/bus/ac-1 gt 110
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/fcu-digit-norm-tied">
+		<switch name="/controls/lighting/fcu-digit-norm">
 			<default value="0" />
 			<test logic="OR" value="/controls/lighting/fcu-digit-knb">
 				/systems/electrical/bus/ac-si-bus ge 110
@@ -83,14 +83,14 @@
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/main-panel-norm-tied">
+		<switch name="/controls/lighting/main-panel-norm">
 			<default value="0" />
 			<test value="/controls/lighting/main-panel-knb">
 				/systems/electrical/bus/ac-1 gt 110
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/overhead-panel-norm-tied">
+		<switch name="/controls/lighting/overhead-panel-norm">
 			<default value="0" />
 			<test value="/controls/lighting/overhead-panel-knb">
 				/systems/electrical/bus/ac-1 gt 110
@@ -109,7 +109,7 @@
 			</test>
 		</switch>
 		
-		<switch name="/controls/lighting/stby-compass-tied">
+		<switch name="/controls/lighting/stby-compass">
 			<default value="0" />
 			<test value="/controls/lighting/stby-compass-switch">
 				/systems/electrical/bus/dc-ess ge 25
