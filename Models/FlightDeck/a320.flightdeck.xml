@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0"?>
 
 <!-- Copyright (c) 2025 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2025 Nia -->
 
 <PropertyList>
 
@@ -250,10 +251,6 @@
 		<object-name>vs-text</object-name>
 		<object-name>vs-text-last-2-digits</object-name>
 		<object-name>vs-text-test</object-name>
-		<object-name>prio_capt.arrow</object-name>
-		<object-name>prio_capt.capt</object-name>
-		<object-name>prio_fo.arrow</object-name>
-		<object-name>prio_fo_fo</object-name>
 		
 		<!-- Overhead panel -->
 		
@@ -285,14 +282,6 @@
 		<object-name>OVH_button_labels.092</object-name>
 		<object-name>OVH_button_labels.093</object-name>
 		
-		<object-name>mcdu_ann_dash.cpt</object-name>
-		<object-name>mcdu_ann_fail.cpt</object-name>
-		<object-name>mcdu_ann_fm.cpt</object-name>
-		<object-name>mcdu_ann_fm1.cpt</object-name>
-		<object-name>mcdu_ann_fm2.cpt</object-name>
-		<object-name>mcdu_ann_ind.cpt</object-name>
-		<object-name>mcdu_ann_msg.cpt</object-name>
-		<object-name>mcdu_ann_rdy.cpt</object-name>
 		<condition>
 			<greater-than-equals>
 				<property>systems/electrical/bus/ac-ess-shed</property>
@@ -339,12 +328,6 @@
 		<object-name>audio_vor1_glare.cpt</object-name>
 		<object-name>audio_vor2_glare.cpt</object-name>
 		<object-name>gear_lever_down_arrow</object-name>
-		<object-name>lgear_down</object-name>
-		<object-name>lgear_unlk</object-name>
-		<object-name>ngear_down</object-name>
-		<object-name>ngear_unlk</object-name>
-		<object-name>rgear_down</object-name>
-		<object-name>rgear_unlk</object-name>
 		
 		<!-- Overhead panel -->
 		
@@ -432,11 +415,6 @@
 	<!-- 36LP AC 2 202XP 5VAC transformer -->
 	<animation>
 		<type>select</type>
-		<object-name>brk_fan_on</object-name>
-		<object-name>brk_hot_on</object-name>
-		<object-name>prio_fo.arrow</object-name>
-		<object-name>prio_fo_fo</object-name>
-		
 		<!-- Overhead panel -->
 		
 		<object-name>ACESSFeedBtn1F</object-name>
@@ -477,16 +455,6 @@
 		<object-name>OVH_button_labels.061</object-name>
 		<object-name>OVH_button_labels.063</object-name>
 		<object-name>OVH_button_labels.091</object-name>
-		
-		
-		<object-name>mcdu_ann_dash.fo</object-name>
-		<object-name>mcdu_ann_fail.fo</object-name>
-		<object-name>mcdu_ann_fm.fo</object-name>
-		<object-name>mcdu_ann_fm1.fo</object-name>
-		<object-name>mcdu_ann_fm2.fo</object-name>
-		<object-name>mcdu_ann_ind.fo</object-name>
-		<object-name>mcdu_ann_msg.fo</object-name>
-		<object-name>mcdu_ann_rdy.fo</object-name>
 		<condition>
 			<greater-than>
 				<property>/systems/electrical/bus/ac-2</property>
@@ -498,20 +466,10 @@
 	<!-- 37LP AC 1 103XP 5VAC transformer -->
 	<animation>
 		<type>select</type>
-		<object-name>abs_low_on</object-name>
-		<object-name>abs_med_on</object-name>
-		<object-name>abs_max_on</object-name>
-		<object-name>dec_low_on</object-name>
-		<object-name>dec_med_on</object-name>
-		<object-name>dec_max_on</object-name>
 		<object-name>gpws_gs_sw_gpws_on.cpt</object-name>
 		<object-name>gpws_gs_sw_gs_on.cpt</object-name>
 		<object-name>gpws_gs_sw_gpws_on.fo</object-name>
 		<object-name>gpws_gs_sw_gs_on.fo</object-name>
-		<object-name>prio_capt.arrow</object-name>
-		<object-name>prio_capt.arrow.001</object-name>
-		<object-name>prio_capt.capt</object-name>
-		<object-name>prio_capt.capt.001</object-name>
 		<object-name>radio_sel_led.cpt</object-name>
 		<object-name>radio_sel_led.fo</object-name>
 		<object-name>terr_on_nd_on_l</object-name>
@@ -571,77 +529,6 @@
 		</condition>
 	</animation>
 	
-	<!-- Special for master warning -->
-	<animation>
-		<type>select</type>
-		<object-name>master_caution_on</object-name>
-		<object-name>master_warning_on</object-name>
-		<condition>
-			<or>
-				<greater-than-equals>
-					<property>systems/electrical/bus/ac-si-bus</property>
-					<value>110</value>
-				</greater-than-equals>
-				<greater-than-equals>
-					<property>systems/electrical/bus/ac-ess-shed</property>
-					<value>110</value>
-				</greater-than-equals>
-				<greater-than>
-					<property>/systems/electrical/bus/ac-2</property>
-					<value>110</value>
-				</greater-than>
-			</or>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>select</type>
-		<object-name>autoland_light_on</object-name>
-		<condition>
-			<and>
-				<not><property>options/enable-hud</property></not>
-				<or>
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-si-bus</property>
-						<value>110</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-ess-shed</property>
-						<value>110</value>
-					</greater-than-equals>
-					<greater-than>
-						<property>/systems/electrical/bus/ac-2</property>
-						<value>110</value>
-					</greater-than>
-				</or>
-			</and>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>select</type>
-		<object-name>autoland_light_on.plug</object-name>
-		<condition>
-			<and>
-				<property>options/enable-hud</property>
-				<or>
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-si-bus</property>
-						<value>110</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-ess-shed</property>
-						<value>110</value>
-					</greater-than-equals>
-					<greater-than>
-						<property>/systems/electrical/bus/ac-2</property>
-						<value>110</value>
-					</greater-than>
-				</or>
-			</and>
-		</condition>
-	</animation>
-	
 	<!-- Special for EXT pwr AVAIL light -->
 	<animation>
 		<type>select</type>
@@ -676,24 +563,6 @@
 						</greater-than-equals>
 					</not>
 				</and>
-			</or>
-		</condition>
-	</animation>
-	
-	<!-- ATC MSG: dual power with 36LP and 37LP -->
-	<animation>
-		<type>select</type>
-		<object-name>atc_msg_on</object-name>
-		<condition>
-			<or>
-				<greater-than>
-					<property>/systems/electrical/bus/ac-2</property>
-					<value>110</value>
-				</greater-than>
-				<greater-than>
-					<property>/systems/electrical/bus/ac-1</property>
-					<value>110</value>
-				</greater-than>
 			</or>
 		</condition>
 	</animation>
@@ -760,23 +629,6 @@
 		<object-name>OVH_button_labels.061</object-name>
 		<object-name>OVH_button_labels.063</object-name>
 		<object-name>OVH_button_labels.092</object-name>
-		
-		<object-name>mcdu_ann_dash.cpt</object-name>
-		<object-name>mcdu_ann_fail.cpt</object-name>
-		<object-name>mcdu_ann_fm.cpt</object-name>
-		<object-name>mcdu_ann_fm1.cpt</object-name>
-		<object-name>mcdu_ann_fm2.cpt</object-name>
-		<object-name>mcdu_ann_ind.cpt</object-name>
-		<object-name>mcdu_ann_msg.cpt</object-name>
-		<object-name>mcdu_ann_rdy.cpt</object-name>
-		<object-name>mcdu_ann_dash.fo</object-name>
-		<object-name>mcdu_ann_fail.fo</object-name>
-		<object-name>mcdu_ann_fm.fo</object-name>
-		<object-name>mcdu_ann_fm1.fo</object-name>
-		<object-name>mcdu_ann_fm2.fo</object-name>
-		<object-name>mcdu_ann_ind.fo</object-name>
-		<object-name>mcdu_ann_msg.fo</object-name>
-		<object-name>mcdu_ann_rdy.fo</object-name>
 		<condition>
 			<property>controls/switches/annun-test</property>
 		</condition>
@@ -4039,10 +3891,7 @@
 		<type>select</type>
 		<object-name>prio_capt.arrow</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<not><property>/systems/fbw/sidestick/active[0]</property></not>
-			</or>
+			<property>/controls/indicators/sidestick-prio-capt-arrow</property>
 		</condition>
 	</animation>
 	
@@ -4050,10 +3899,7 @@
 		<type>select</type>
 		<object-name>prio_fo.arrow</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<not><property>/systems/fbw/sidestick/active[1]</property></not>
-			</or>
+			<property>/controls/indicators/sidestick-prio-fo-arrow</property>
 		</condition>
 	</animation>
 	
@@ -4061,78 +3907,7 @@
 		<type>select</type>
 		<object-name>prio_capt.capt</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<and>
-					<not><property>/systems/fbw/sidestick/active[1]</property></not>
-					<or>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/aileron[1]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/elevator[1]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-					</or>
-				</and>
-				<and>
-					<and>
-						<equals>
-							<property>/systems/fbw/sidestick/active[0]</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/systems/fbw/sidestick/active[1]</property>
-							<value>1</value>
-						</equals>
-					</and>
-					<or>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/aileron[0]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/elevator[0]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-					</or>
-					<or>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/aileron[1]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/elevator[1]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-					</or>
-				</and>
-			</or>
+			<property>/controls/indicators/sidestick-prio-capt-capt</property>
 		</condition>
 	</animation>
 	
@@ -4140,78 +3915,7 @@
 		<type>select</type>
 		<object-name>prio_fo_fo</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<and>
-					<not><property>/systems/fbw/sidestick/active[0]</property></not>
-					<or>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/aileron[0]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/elevator[0]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-					</or>
-				</and>
-				<and>
-					<and>
-						<equals>
-							<property>/systems/fbw/sidestick/active[0]</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>/systems/fbw/sidestick/active[1]</property>
-							<value>1</value>
-						</equals>
-					</and>
-					<or>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/aileron[0]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/elevator[0]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-					</or>
-					<or>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/aileron[1]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<expression>
-								<abs>
-									<property>controls/flight/elevator[1]</property>
-								</abs>
-							</expression>
-							<value>0.1</value>
-						</greater-than-equals>
-					</or>
-				</and>
-			</or>
+			<property>"/controls/indicators/sidestick-prio-fo-fo</property>
 		</condition>
 	</animation>
 
@@ -4220,13 +3924,7 @@
 		<type>select</type>
 		<object-name>master_warning_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>ECAM/warnings/master-warning-flash</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/master-warn</property>
 		</condition>
 	</animation>
 
@@ -4234,13 +3932,7 @@
 		<type>select</type>
 		<object-name>master_caution_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>ECAM/warnings/master-caution-light</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/master-caut</property>
 		</condition>
 	</animation>
 
@@ -4422,10 +4114,7 @@
 				<property>options/enable-hud</property>
 				<or>
 					<property>controls/switches/annun-test</property>
-					<equals>
-						<property>instrumentation/pfd/lights/autoland-on</property>
-						<value>1</value>
-					</equals>
+					<property>/controls/indicators/autoland</property>
 				</or>
 			</and>
 		</condition>
@@ -4439,10 +4128,7 @@
 				<not><property>options/enable-hud</property></not>
 				<or>
 					<property>controls/switches/annun-test</property>
-					<equals>
-						<property>instrumentation/pfd/lights/autoland-on</property>
-						<value>1</value>
-					</equals>
+					<property>/controls/indicators/autoland</property>
 				</or>
 			</and>
 		</condition>
@@ -4453,10 +4139,7 @@
 		<type>select</type>
 		<object-name>atc_msg_on</object-name>
 		<condition>		
-			<or>
-				<property>/network/cpdlc/new-message-light</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/atc-msg</property>
 		</condition>
 	</animation>
 	
@@ -9533,19 +9216,7 @@
 		<type>select</type>
 		<object-name>terr_on_nd_on_l</object-name>
 		<condition>
-			<and>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
-				</greater-than-equals>
-				<or>
-					<property>controls/switches/annun-test</property>
-					<equals>
-						<property>controls/switches/terr_on_nd_l</property>
-						<value>1</value>
-					</equals>
-				</or>
-			</and>
+			<property>/controls/indicators/terr-on-nd-capt</property>
 		</condition>
 	</animation>
 
@@ -9553,19 +9224,7 @@
 		<type>select</type>
 		<object-name>terr_on_nd_on_r</object-name>
 		<condition>
-			<and>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
-				</greater-than-equals>
-				<or>
-					<property>controls/switches/annun-test</property>
-					<equals>
-						<property>controls/switches/terr_on_nd_r</property>
-						<value>1</value>
-					</equals>
-				</or>
-			</and>
+			<property>/controls/indicators/terr-on-nd-fo</property>
 		</condition>
 	</animation>
 	
@@ -9728,13 +9387,7 @@
 		<type>select</type>
 		<object-name>brk_fan_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>controls/gear/brake-fans</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/brake-fan-on</property>
 		</condition>
 	</animation>
 
@@ -9742,25 +9395,7 @@
 		<type>select</type>
 		<object-name>brk_hot_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<greater-than-equals>
-					<property>gear/gear[1]/L1brake-temp-degc</property>
-					<value>300</value>
-				</greater-than-equals>
-				<greater-than-equals>
-					<property>gear/gear[1]/L2brake-temp-degc</property>
-					<value>300</value>
-				</greater-than-equals>
-				<greater-than-equals>
-					<property>gear/gear[2]/R3brake-temp-degc</property>
-					<value>300</value>
-				</greater-than-equals>
-				<greater-than-equals>
-					<property>gear/gear[2]/R4brake-temp-degc</property>
-					<value>300</value>
-				</greater-than-equals>
-			</or>
+			<property>/controls/indicators/brake-hot</property>
 		</condition>
 	</animation>
 
@@ -9828,19 +9463,7 @@
 		<type>select</type>
 		<object-name>dec_low_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<and>
-					<equals>
-						<property>controls/autobrake/mode</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/autobrake/active</property>
-						<value>1</value>
-					</equals>
-				</and>
-			</or>
+			<property>/controls/indicators/autobrake-low-decel</property>
 		</condition>
 	</animation>
 
@@ -9848,19 +9471,7 @@
 		<type>select</type>
 		<object-name>dec_med_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<and>
-					<equals>
-						<property>controls/autobrake/mode</property>
-						<value>2</value>
-					</equals>
-					<equals>
-						<property>controls/autobrake/active</property>
-						<value>1</value>
-					</equals>
-				</and>
-			</or>
+			<property>/controls/indicators/autobrake-med-decel</property>
 		</condition>
 	</animation>
 
@@ -9868,19 +9479,7 @@
 		<type>select</type>
 		<object-name>dec_max_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<and>
-					<equals>
-						<property>controls/autobrake/mode</property>
-						<value>3</value>
-					</equals>
-					<equals>
-						<property>controls/autobrake/active</property>
-						<value>1</value>
-					</equals>
-				</and>
-			</or>
+			<property>/controls/indicators/autobrake-max-decel</property>
 		</condition>
 	</animation>
 
@@ -9888,13 +9487,7 @@
 		<type>select</type>
 		<object-name>abs_low_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>controls/autobrake/mode</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/autobrake-low-on</property>
 		</condition>
 	</animation>
 
@@ -9902,13 +9495,7 @@
 		<type>select</type>
 		<object-name>abs_med_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>controls/autobrake/mode</property>
-					<value>2</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/autobrake-med-on</property>
 		</condition>
 	</animation>
 
@@ -9916,13 +9503,7 @@
 		<type>select</type>
 		<object-name>abs_max_on</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>controls/autobrake/mode</property>
-					<value>3</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/autobrake-max-on</property>
 		</condition>
 	</animation>
 
@@ -10175,13 +9756,7 @@
 		<type>select</type>
 		<object-name>lgear_unlk</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>systems/gear/unit[1]/status</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/gear-left-unlocked</property>
 		</condition>
 	</animation>
 
@@ -10189,13 +9764,7 @@
 		<type>select</type>
 		<object-name>lgear_down</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>systems/gear/unit[1]/status</property>
-					<value>2</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/gear-left-down</property>
 		</condition>
 	</animation>
 
@@ -10203,13 +9772,7 @@
 		<type>select</type>
 		<object-name>ngear_unlk</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>systems/gear/unit[0]/status</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/gear-nose-unlocked</property>
 		</condition>
 	</animation>
 
@@ -10217,13 +9780,7 @@
 		<type>select</type>
 		<object-name>ngear_down</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>systems/gear/unit[0]/status</property>
-					<value>2</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/gear-nose-down</property>
 		</condition>
 	</animation>
 
@@ -10231,13 +9788,7 @@
 		<type>select</type>
 		<object-name>rgear_unlk</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>systems/gear/unit[2]/status</property>
-					<value>1</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/gear-right-unlocked</property>
 		</condition>
 	</animation>
 
@@ -10245,13 +9796,7 @@
 		<type>select</type>
 		<object-name>rgear_down</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<equals>
-					<property>systems/gear/unit[2]/status</property>
-					<value>2</value>
-				</equals>
-			</or>
+			<property>/controls/indicators/gear-right-down</property>
 		</condition>
 	</animation>
 	
@@ -37552,6 +37097,135 @@
 		</action>
 	</animation>
 
+	<!-- MCDU Indicators -->
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_msg.cpt</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-capt-ann-msg</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_dash.cpt</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-capt-ann-dash</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_fail.cpt</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-capt-ann-fail</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_fm.cpt</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-capt-ann-fm</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_fm1.cpt</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-capt-ann-fm1</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_fm2.cpt</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-capt-ann-fm2</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_ind.cpt</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-capt-ann-ind</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_rdy.cpt</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-capt-ann-rdy</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_msg.fo</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-fo-ann-msg</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_dash.fo</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-fo-ann-dash</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_fail.fo</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-fo-ann-fail</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_fm.fo</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-fo-ann-fm</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_fm1.fo</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-fo-ann-fm1</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_fm2.fo</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-fo-ann-fm2</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_ind.fo</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-fo-ann-ind</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>mcdu_ann_rdy.fo</object-name>
+		<condition>
+			<property>/controls/indicators/mcdu-fo-ann-rdy</property>
+		</condition>
+	</animation>
+
 	<!-- MCDU Animations -->
 	<animation>
 		<type>pick</type>
@@ -43622,9 +43296,7 @@
 		<object-name>foot_warmer_cpt_sw</object-name>
 		<object-name>foot_warmer_fo_sw</object-name>
 		<object-name>master_caution</object-name>
-		<object-name>master_caution_on</object-name>
 		<object-name>master_warning</object-name>
-		<object-name>master_warning_on</object-name>
 		<object-name>iesi_screen</object-name>
 		<object-name>brk_fan</object-name>
 		<object-name>brk_fan_on</object-name>
