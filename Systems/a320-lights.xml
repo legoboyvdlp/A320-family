@@ -90,6 +90,17 @@
 			</test>
 		</switch>
 		
+		<switch name="/controls/lighting/main-panel-norm-digital">
+			<default value="0" />
+			<test value="/controls/lighting/main-panel-knb">
+				/systems/electrical/bus/ac-1 gt 110
+			</test>
+			<clipto>
+				<min>0.15</min>
+				<max>1</max>
+			</clipto>
+		</switch>
+		
 		<switch name="/controls/lighting/overhead-panel-norm">
 			<default value="0" />
 			<test value="/controls/lighting/overhead-panel-knb">
@@ -97,6 +108,17 @@
 			</test>
 		</switch>
 		
+		<switch name="/controls/lighting/overhead-panel-norm-digital">
+			<default value="0" />
+			<clipto>
+				<min>0.15</min>
+				<max>1</max>
+			</clipto>
+			<test value="/controls/lighting/overhead-panel-knb">
+				/systems/electrical/bus/ac-1 gt 110
+			</test>
+		</switch>
+
 		<switch name="/sim/model/lights/dome-light">
 			<default value="0" />
 			<test logic="AND" value="0.5">

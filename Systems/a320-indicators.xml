@@ -987,7 +987,7 @@
 						<test logic="OR" value="1">
 							/controls/flight/aileron[0] ge 0.1
 							/controls/flight/aileron[0] le -0.1
-							/controls/flight/elevator[0] ge 0..1
+							/controls/flight/elevator[0] ge 0.1
 							/controls/flight/elevator[0] le -0.1
 						</test>
 						<test logic="OR" value="1">
@@ -1022,12 +1022,12 @@
 			<test logic="AND" value="1">
 				<test logic="OR" value="1">
 					<test logic="AND" value="1">
-						/systems/fbw/sidestick/active[1] ne 1
+						/systems/fbw/sidestick/active[0] ne 1
 						<test logic="OR" value="1">
-							/controls/flight/aileron[1] ge 0.1
-							/controls/flight/aileron[1] le -0.1
-							/controls/flight/elevator[1] ge 0.1
-							/controls/flight/elevator[1] le -0.1
+							/controls/flight/aileron[0] ge 0.1
+							/controls/flight/aileron[0] le -0.1
+							/controls/flight/elevator[0] ge 0.1
+							/controls/flight/elevator[0] le -0.1
 						</test>
 					</test>
 					<test logic="AND" value="1">
@@ -1038,7 +1038,7 @@
 						<test logic="OR" value="1">
 							/controls/flight/aileron[0] ge 0.1
 							/controls/flight/aileron[0] le -0.1
-							/controls/flight/elevator[0] ge 0..1
+							/controls/flight/elevator[0] ge 0.1
 							/controls/flight/elevator[0] le -0.1
 						</test>
 						<test logic="OR" value="1">
