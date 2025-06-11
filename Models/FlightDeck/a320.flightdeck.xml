@@ -3915,7 +3915,7 @@
 		<type>select</type>
 		<object-name>prio_fo_fo</object-name>
 		<condition>
-			<property>"/controls/indicators/sidestick-prio-fo-fo</property>
+			<property>/controls/indicators/sidestick-prio-fo-fo</property>
 		</condition>
 	</animation>
 
