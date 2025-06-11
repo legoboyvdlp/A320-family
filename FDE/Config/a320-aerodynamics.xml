@@ -123,7 +123,7 @@
 		<function name="aero/coefficient/CLadot">
 			<description>Lift due to alpha rate</description>
 			<product>
-				<property>aero/qbar-psf</property>
+				<property>aero/qbarUW-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>aero/alphadot-rad_sec</property>
 				<property>aero/ci2vel</property>
@@ -718,19 +718,12 @@
 		<function name="aero/coefficient/Cmadot">
 			<description>Pitch moment due to alpha rate</description>
 			<product>
-				<property>aero/qbar-psf</property>
+				<property>aero/qbarUW-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
 				<property>aero/ci2vel</property>
 				<property>aero/alphadot-rad_sec</property>
 				<value>-11.2539</value>
-				<table> <!-- Fixes a JSBSim issue -->
-					<independentVar lookup="row">velocities/vc-kts</independentVar>
-					<tableData>
-						0  0
-						5  1
-					</tableData>
-				</table>
 			</product>
 		</function>
 		
