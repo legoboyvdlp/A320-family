@@ -977,6 +977,7 @@
 			<test value="0">
 				/controls/gear/lever-cockpit le 1
 			</test>
+			<output>/controls/gear/gear-down</output> <!-- For TOO LOW GEAR callout -->
 		</switch>
 	
 	</channel>
