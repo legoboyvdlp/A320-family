@@ -276,8 +276,6 @@
 		<object-name>RamAirBtn2O</object-name>
 		<object-name>RFuelTank1Btn1F</object-name>
 		<object-name>RFuelTank1Btn2O</object-name>
-		<object-name>WingAntiIceBtn1F</object-name>
-		<object-name>WingAntiIceBtn2O</object-name>
 		
 		<object-name>OVH_button_labels.092</object-name>
 		<object-name>OVH_button_labels.093</object-name>
@@ -337,21 +335,13 @@
 		<object-name>APUFireAgtBtn2D</object-name>
 		<object-name>APUGenBtn1F</object-name>
 		<object-name>APUGenBtn2O</object-name>
-		<object-name>APUMasterBtn1F</object-name>
-		<object-name>APUMasterBtn2O</object-name>
-		<object-name>APUStartBtn1A</object-name>
-		<object-name>APUStartBtn2O</object-name>
 		<object-name>BatteryBtn11F</object-name>
 		<object-name>BatteryBtn21F</object-name>
 		<object-name>BusTieBtn2O</object-name>
-		<object-name>CabinPressModeBtn1F</object-name>
-		<object-name>CabinPressModeBtn2M</object-name>
-		<object-name>DitchBtn2O</object-name>
 		<object-name>ELAC1Btn1F</object-name>
 		<object-name>ELAC1Btn2O</object-name>
 		<object-name>EmerCallBtn1C</object-name>
 		<object-name>EmerCallBtn2O</object-name>
-		<object-name>EmerExtLtBtn2O</object-name>
 		<object-name>Eng1FireAgt1Btn1S</object-name>
 		<object-name>Eng1FireAgt1Btn2D</object-name>
 		<object-name>Eng2FireAgt1Btn1S</object-name>
@@ -425,15 +415,12 @@
 		<object-name>CFuelTank1Btn2O</object-name>
 		<object-name>ELAC2Btn1F</object-name>
 		<object-name>ELAC2Btn2O</object-name>
-		<object-name>Eng2AntiIceBtn1F</object-name>
-		<object-name>Eng2AntiIceBtn2O</object-name>
 		<object-name>Eng2BleedBtn1F</object-name>
 		<object-name>Eng2BleedBtn2O</object-name>
 		<object-name>FAC2Btn1F</object-name>
 		<object-name>FAC2Btn2O</object-name>
 		<object-name>LFuelTank2Btn1F</object-name>
 		<object-name>LFuelTank2Btn2O</object-name>
-		<object-name>PrbWinHeatBtn2O</object-name>
 		<object-name>PTU21F</object-name>
 		<object-name>PTU22O</object-name>
 		<object-name>RFuelTank2Btn1F</object-name>
@@ -489,8 +476,6 @@
 		<object-name>CFuelTank2Btn1F</object-name>
 		<object-name>CFuelTank2Btn2O</object-name>
 		<object-name>EmerGenInd1F</object-name>
-		<object-name>Eng1AntiIceBtn1F</object-name>
-		<object-name>Eng1AntiIceBtn2O</object-name>
 		<object-name>Eng1BleedBtn1F</object-name>
 		<object-name>Eng1BleedBtn2O</object-name>
 		<object-name>ExtPwrBtn2O</object-name>
@@ -27992,10 +27977,7 @@
 		<type>select</type>
 		<object-name>APUMasterBtn1F</object-name>
 		<condition>
-			<or>
-				<property>systems/apu/fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/apu-master-fault</property>
 		</condition>
 	</animation>
 
@@ -28003,10 +27985,7 @@
 		<type>select</type>
 		<object-name>APUMasterBtn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/apu/master</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/apu-master-fault</property>
 		</condition>
 	</animation>
 
@@ -28083,10 +28062,7 @@
 		<type>select</type>
 		<object-name>APUStartBtn1A</object-name>
 		<condition>
-			<or>
-				<property>systems/apu/available</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/apu-start-avail</property>
 		</condition>
 	</animation>
 
@@ -28094,10 +28070,7 @@
 		<type>select</type>
 		<object-name>APUStartBtn2O</object-name>
 		<condition>
-			<or>
-				<property>systems/apu/start</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/apu-start-on</property>
 		</condition>
 	</animation>
 	
@@ -28277,10 +28250,7 @@
 		<type>select</type>
 		<object-name>EmerExtLtBtn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/switches/emer-lights</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/emer-exit-off</property>
 		</condition>
 	</animation>
 	
@@ -28528,10 +28498,7 @@
 		<type>select</type>
 		<object-name>WingAntiIceBtn1F</object-name>
 		<condition>
-			<or>
-				<property>controls/ice-protection/wingfault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/wing-anti-ice-fault</property>
 		</condition>
 	</animation>
 
@@ -28539,10 +28506,7 @@
 		<type>select</type>
 		<object-name>WingAntiIceBtn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/ice-protection/wing</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/wing-anti-ice-on</property>
 		</condition>
 	</animation>
 
@@ -28614,10 +28578,7 @@
 		<type>select</type>
 		<object-name>Eng1AntiIceBtn1F</object-name>
 		<condition>
-			<or>
-				<property>controls/ice-protection/lengfault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/engine-1-anti-ice-fault</property>
 		</condition>
 	</animation>
 
@@ -28625,10 +28586,7 @@
 		<type>select</type>
 		<object-name>Eng1AntiIceBtn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/ice-protection/leng</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/engine-1-anti-ice-on</property>
 		</condition>
 	</animation>
 
@@ -28700,10 +28658,7 @@
 		<type>select</type>
 		<object-name>Eng2AntiIceBtn1F</object-name>
 		<condition>
-			<or>
-				<property>controls/ice-protection/rengfault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/engine-2-anti-ice-fault</property>
 		</condition>
 	</animation>
 
@@ -28711,10 +28666,7 @@
 		<type>select</type>
 		<object-name>Eng2AntiIceBtn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/ice-protection/reng</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/engine-2-anti-ice-on</property>
 		</condition>
 	</animation>
 
@@ -28786,10 +28738,7 @@
 		<type>select</type>
 		<object-name>PrbWinHeatBtn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/ice-protection/windowprobeheat</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/window-heat-on</property>
 		</condition>
 	</animation>
 
@@ -28915,10 +28864,7 @@
 		<type>select</type>
 		<object-name>CabinPressModeBtn1F</object-name>
 		<condition>
-			<or>
-				<property>systems/failures/pneumatics/pack-2-valve</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/cabin-press-fault</property>
 		</condition>
 	</animation>
 
@@ -28926,10 +28872,7 @@
 		<type>select</type>
 		<object-name>CabinPressModeBtn2M</object-name>
 		<condition>
-			<or>
-				<not><property>systems/pressurization/auto</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/cabin-press-man</property>
 		</condition>
 	</animation>
 
@@ -29056,10 +28999,7 @@
 		<type>select</type>
 		<object-name>DitchBtn2O</object-name>
 		<condition>
-			<or>
-				<property>systems/pressurization/ditchingpb</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ditch-on</property>
 		</condition>
 	</animation>
 	
