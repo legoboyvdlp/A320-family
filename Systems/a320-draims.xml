@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<!-- Copyright (c) 2025 Nia -->
+
+<system name="A320: Lights">
+
+	<channel name="DRAIMS">
+
+		<switch name="/controls/draims/rmp[0]/on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/draims/rmp[0]/brightness-knob ge 0.05
+				<test logic="OR" value="1">
+					/systems/electrical/bus/dc-ess ge 28
+					/systems/electrical/bus/dc-bat ge 28
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/draims/rmp[1]/on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/draims/rmp[1]/brightness-knob ge 0.05
+				<test logic="OR" value="1">
+					/systems/electrical/bus/dc-ess ge 28
+					/systems/electrical/bus/dc-2 ge 28
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/draims/rmp[2]/on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/draims/rmp[2]/brightness-knob ge 0.05
+				<test logic="OR" value="1">
+					/systems/electrical/bus/dc-2 ge 28
+					/systems/electrical/bus/dc-bat ge 28
+				</test>
+			</test>
+		</switch>
+
+	</channel>
+
+</system>

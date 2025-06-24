@@ -882,6 +882,18 @@
 		<doors>
 			<doorc-switch type="int">0</doorc-switch>
 		</doors>
+		<draims>
+			<enabled type="bool">0</enabled>
+			<rmp n="0">
+				<brightness-knob type="double">0</brightness-knob>
+			</rmp>
+			<rmp n="1">
+				<brightness-knob type="double">0</brightness-knob>
+			</rmp>
+			<rmp n="2">
+				<brightness-knob type="double">0</brightness-knob>
+			</rmp>
+		</draims>
 		<electric>
 			<avionics-switch type="bool">true</avionics-switch>
 		</electric>
@@ -5069,6 +5081,9 @@
 		<Simbrief>
 			<file>Aircraft/A320-family/Nasal/FMGC/SimbriefParser.nas</file>
 		</Simbrief>
+		<draims>
+			<file>Aircraft/A320-family/Nasal/DRAIMS.nas</file>
+		</draims>
 	</nasal>
 
 	<maintainance>
