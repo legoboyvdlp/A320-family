@@ -29,6 +29,8 @@ var variousReset = func() {
 	setprop("/controls/switches/wiperRspd", 0); # -1 = INTM 0 = OFF 1 = LO 2 = HI
 	setprop("/controls/lighting/strobe", 0);
 	setprop("/controls/lighting/beacon", 0);
+	setprop("/controls/flight/aileron-trim", 0);
+	setprop("/controls/flight/rudder-trim", 0);
 	setprop("/controls/switches/beacon", 0);
 	setprop("/controls/switches/wing-lights", 0);
 	setprop("/controls/switches/landing-lights-l", 0);
