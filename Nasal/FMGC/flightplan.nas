@@ -72,10 +72,13 @@ var flightPlanController = {
 		me.lvlOffPoint = nil;
 		setprop("/autopilot/route-manager/vnav/ec/latitude-deg", 0); # necessary to prevent canvas glitching out because properties don't exist
 		setprop("/autopilot/route-manager/vnav/ed/latitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", 0);
 		setprop("/autopilot/route-manager/vnav/ec/longitude-deg", 0); 
-		setprop("/autopilot/route-manager/vnav/ed/longitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/ed/longitude-deg", 0);
+		setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg", 0);  
 		setprop("/autopilot/route-manager/vnav/ec/show", 0); 
 		setprop("/autopilot/route-manager/vnav/ed/show", 0); 
+		setprop("/autopilot/route-manager/vnav/spdchng/show", 0); 
 		
 		me.flightplans[2].activate();
 	},
@@ -808,7 +811,7 @@ var flightPlanController = {
 		# first loop is to find the first (at) or (at or below) altitude constraint
 		altCstr = 0;
 		distanceToCstr = 0;
-		for (var i = me.currentToWptIndex.getValue(); i <= me.flightplans[2].getPlanSize(); i += 1) {
+		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			cstrType = me.flightplans[2].getWP(i).alt_cstr_type;
 			if (i == me.currentToWptIndex.getValue()) {
 				distanceToCstr += me.distToWpt.getValue();
@@ -907,7 +910,7 @@ var flightPlanController = {
 				abvAltCstr = lastAltCstrSave;
 			}
 			# print("lastAltCstrSave: " ~ lastAltCstrSave ~ " distancetocstr: " ~ distToCstr ~ " lastIdealVsSave: " ~ lastIdealVsSave);
-			return [lastAltCstrSave, distToCstr, abvAltCstr, 1, lastIdealVsSave];
+			return [lastAltCstrSave, distToCstr, abvAltCstr, 1, lastIdealVsSave,0];
 		}
 		# print("NO! lastAltCstrWpt index: " ~ me.getWptIndex(lastAltCstrWpt) ~ "Current wpt index " ~ int(me.currentToWptIndex.getValue()));
 		# loop back to front to find what is the last altitude const that the aircraft can descend to at a constant vs
@@ -1239,7 +1242,7 @@ var flightPlanController = {
 		}
 		
 		me.calculateTopOfDescent();
-		# me.calculateSpdChangePoint();
+		me.calculateSpdChangePoint();
 		var deltaAltitude = fmgc.Internal.alt.getValue() - pts.Instrumentation.Altimeter.indicatedFt.getValue();
 		if (abs(deltaAltitude) >= 100) {
 			isMng = Internal.altManaged.getBoolValue();
