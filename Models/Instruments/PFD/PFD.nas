@@ -459,6 +459,7 @@ var canvas_pfd = {
 					obj["ALT_digit_DN"].setText(sprintf("%5d", val.altitudeAutopilot));
 				}
 			}),
+			# If managedAlt is true, then ALT related colors are magenta, otherwise blue.
 			props.UpdateManager.FromHashValue("managedAlt", 1, func(val) {
 				if (val) {
 					obj["ALT_digit_UP"].setColor(0.6901,0.3333,0.7450);
@@ -476,6 +477,7 @@ var canvas_pfd = {
 					obj["FMA_pitcharm2"].setColor(0.0901,0.6039,0.7176);
 				}
 			}),
+			# Control the movement of the vertical deviation dot
 			props.UpdateManager.FromHashList(["fmgcPhase","vdevDot"], 1, func(val) {
 				if (val.fmgcPhase == 4) {
 					obj["vdev_dot"].show();
