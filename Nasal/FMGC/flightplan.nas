@@ -995,6 +995,8 @@ var flightPlanController = {
 		# print("Extrapolated GEO alt cstr: " ~ extrapolatedAltCstr ~ "distance to cstr: " ~ distanceToCstr ~ " vs: " ~ vs ~ " gs: " ~ gs ~ " lastAltCstr: " ~ lastAltCstr ~ " fmgc alt: " ~ int(fmgc.Internal.alt.getValue()) ~ "totalDistanceToCstr" ~ totalDistanceToCstr);
 		return [extrapolatedAltCstr,vs];
 	},
+	# Calculate the TOD point, if not geometric descent path then it's a 3 deg descent path, if it is then it's the ideal vs
+	# calculated from the getAltConst method.
 	calculateTopOfDescent: func() {
 		if (me.currentToWptIndex.getValue() <= 0) {
 			# print("currentwptindex != 0");
@@ -1072,19 +1074,10 @@ var flightPlanController = {
 			setprop("/autopilot/route-manager/vnav/ed/latitude-deg", me.lvlOffPoint.lat); 
 			setprop("/autopilot/route-manager/vnav/ed/longitude-deg", me.lvlOffPoint.lon);
 			setprop("/autopilot/route-manager/vnav/ed/show", 1);
-			
-			# if (isMng) {
-			# 	setprop("/autopilot/route-manager/vnav/edm/latitude-deg", me.lvlOffPoint.lat); 
-			# 	setprop("/autopilot/route-manager/vnav/edm/longitude-deg", me.lvlOffPoint.lon);
-			# 	setprop("/autopilot/route-manager/vnav/edm/show", 1);
-			# } else {
-			# 	setprop("/autopilot/route-manager/vnav/ed/latitude-deg", me.lvlOffPoint.lat); 
-			# 	setprop("/autopilot/route-manager/vnav/ed/longitude-deg", me.lvlOffPoint.lon);
-			# 	setprop("/autopilot/route-manager/vnav/ed/show", 1);
-			# }
-			 
 		}
 	},
+	# Calculate the point where the aircraft would decelerate, if it's not geometric path then it's the same point as the ED,
+	# if it is then it's the waypoint before.
 	calculateSpdChangePoint: func() {
 		if (Custom.Input.spdManaged.getBoolValue()) {
 			result = me.getAltConst();

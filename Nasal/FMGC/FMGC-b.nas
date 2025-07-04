@@ -349,7 +349,6 @@ var ITAF = {
 		}
 
 		Internal.altTemp = Internal.alt.getValue();
-		# print(Internal.altTemp);
 		Internal.altDiff = Internal.altTemp - Position.indicatedAltitudeFtTemp;
 		
 		if (Output.vertTemp != 0 and Output.vertTemp != 2 and Output.vertTemp != 6 and Output.vertTemp != 9) {
@@ -360,20 +359,16 @@ var ITAF = {
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
 					if (vertTemp == 8 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
-						# print("Trigger 1");
 						armDes();
 					} else {
-						# print("vertTemp is " ~ vertTemp ~ " and altManaged is " ~ Internal.altManaged.getBoolValue());
 					}
 					
 				} else if (Internal.altTemp < Position.indicatedAltitudeFtTemp and Internal.vsTemp <= 25) { # Don't capture if we are going the wrong way
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
 					if (vertTemp == 8 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
-						# print("Trigger 2");
 						armDes();
 					} else {
-						# print("vertTemp is " ~ vertTemp ~ " and altManaged is " ~ Internal.altManaged.getBoolValue());
 					}
 					
 				}
@@ -409,6 +404,7 @@ var ITAF = {
 			Internal.vdevDot.setValue(me.calculateVdev());
 		}
 	},
+	#Calculate VDEV from the descent profile to be used for the yoyo dot and PROG page
 	calculateVdev: func() {
 		cstr_info = fmgc.flightPlanController.getAltConst();
 		altCstr = cstr_info[0];
@@ -421,11 +417,9 @@ var ITAF = {
 			vs = idealVs;
 			gs = pts.Velocities.groundspeedKt.getValue();
 			profileAlt = abs(vs * 60 * distToCstr / gs) + altCstr; # Calculate altitude that is on descent profile
-			# print("profileAlt: " ~ profileAlt ~ " vs" ~ vs);
 		}
 		
 		vdev = fmgc.Position.indicatedAltitudeFt.getValue() - profileAlt;
-		# print("vdev: " ~ vdev);
 		if (vdev > 9999) {
 			vdev = 9999;
 		} else if (vdev < -9999) {
@@ -957,27 +951,25 @@ var ITAF = {
 		Input.vsAbs.setValue(abs(Internal.vsTemp));
 		fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f", Internal.vsTemp), 3));
 	},
+	# Set vertical speed for the DES mode
 	setVs: func(vs) {
 		Internal.vsTemp = vs;
 		Input.vs.setValue(vs);
 		Input.vsAbs.setValue(abs(vs));
 	},
+	# Get the vertical speed based on the altitude constraint, whether it is a geometric descent path and distance to waypoint for DES mode
 	getVs: func() {
 		cstr_info = fmgc.flightPlanController.getAltConst();
 		# print(cstr_info);
 		altCstr = cstr_info[0];
 		distToCstr = cstr_info[1];
 		is_geo = cstr_info[3];
-		# altCstr = 0;
-		# distToCstr = 0;
 		if (Position.indicatedAltitudeFt.getValue()>= 9800 and Position.indicatedAltitudeFt.getValue() <= 11000 and Velocities.indicatedAirspeedKt.getValue() - 250 >= 10) {
 			return 0; # Make the aircraft slow to 250 at 10,000 feet
 		}
 		deltaAltitude = (altCstr - Position.indicatedAltitudeFt.getValue());
 		gs = pts.Velocities.groundspeedKt.getValue();
-		# distToNextWP = fmgc.flightPlanController.distToWpt.getValue();
 		vs = (deltaAltitude * gs) / (60 * distToCstr); # Calculate vertical speed to next waypoint
-		# print("calculated vs: " ~ vs ~ " fpm, distToCstr: " ~ distToCstr ~ " nm, gs: " ~ gs ~ " kt, deltaAltitude: " ~ deltaAltitude);
 		
 		if ((vs > (-1*gs*5)) and (is_geo == 0)) {
 			return -1000; # Don't allow more than -1000 fpm
@@ -1095,6 +1087,7 @@ var armDes = func {
 	}
 };
 
+# Function on loop to set the target altitude, whether it is managed or selected, set the vertical speed, and set the FMA.
 var managedDes = func {
 	next_managed_alt = fmgc.flightPlanController.getAltConst()[2]; # Use a dynamic value if needed
 	next_selected_alt = Input.alt.getValue();
