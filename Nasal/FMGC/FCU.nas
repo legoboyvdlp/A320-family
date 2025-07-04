@@ -375,7 +375,6 @@ var FCUController = {
 		if (me.FCUworking) {
 			# setprop("/it-autoflight/input/vert", 8); # He don't work yet m8
 			fmgc.Input.vert.setValue(8);
-			print("set fcu altpush")
 		}
 	},
 	ALTPull: func() {

@@ -483,7 +483,6 @@ var canvas_pfd = {
 					obj["vdev_dot"].show();
 					vdevDotDev = val.vdevDot * 0.5;
 					if (vdevDotDev > 260) {
-						# vdevDotDev = 280;
 						obj["vdev_dot"].hide();
 						obj["vdev_low"].hide();
 						obj["vdev_high"].show();
