@@ -627,7 +627,6 @@
 		<object-name>spd-text-test</object-name>
 		<object-name>qnh-test</object-name>
 		<object-name>vs-text-test</object-name>
-		<object-name>ver.fmgc</object-name>
 		<condition>
 			<or>
 				<not><property>FMGC/FCU-working</property></not>
@@ -3015,6 +3014,14 @@
 		<object-name>alt.ind</object-name>
 		<condition>
 			<property>/controls/indicators/fcu-alt</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ver.fmgc</object-name>
+		<condition>
+			<property>/controls/indicators/fcu-alt-mgt</property>
 		</condition>
 	</animation>
 

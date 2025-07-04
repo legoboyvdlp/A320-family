@@ -667,6 +667,17 @@
 			</test>
 		</switch>
 
+		<switch name="/controls/indicators/fcu-alt-mgt">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/it-autoflight/input/alt-managed eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/fcu-ap1">
 			<default value="0"/>
 			<test logic="AND" value="1">
