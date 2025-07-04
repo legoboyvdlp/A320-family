@@ -459,6 +459,49 @@ var canvas_pfd = {
 					obj["ALT_digit_DN"].setText(sprintf("%5d", val.altitudeAutopilot));
 				}
 			}),
+			props.UpdateManager.FromHashValue("managedAlt", 1, func(val) {
+				if (val) {
+					obj["ALT_digit_UP"].setColor(0.6901,0.3333,0.7450);
+					obj["ALT_digit_DN"].setColor(0.6901,0.3333,0.7450);
+					obj["ALT_target"].setColor(0.6901,0.3333,0.7450);
+					if (fmgc.Modes.PFD.FMA.pitchMode2Armed == "ALT") {
+					obj["FMA_pitcharm2"].setColor(0.6901,0.3333,0.7450);
+					} else {
+						obj["FMA_pitcharm2"].setColor(0.0901,0.6039,0.7176);
+					}
+				} else {
+					obj["ALT_digit_UP"].setColor(0.0901,0.6039,0.7176);
+					obj["ALT_digit_DN"].setColor(0.0901,0.6039,0.7176);
+					obj["ALT_target"].setColor(0.0901,0.6039,0.7176);
+					obj["FMA_pitcharm2"].setColor(0.0901,0.6039,0.7176);
+				}
+			}),
+			props.UpdateManager.FromHashList(["fmgcPhase","vdevDot"], 1, func(val) {
+				if (val.fmgcPhase == 4) {
+					obj["vdev_dot"].show();
+					vdevDotDev = val.vdevDot * 0.5;
+					if (vdevDotDev > 260) {
+						# vdevDotDev = 280;
+						obj["vdev_dot"].hide();
+						obj["vdev_low"].hide();
+						obj["vdev_high"].show();
+					} elsif (vdevDotDev < -260) {
+						obj["vdev_dot"].hide();
+						obj["vdev_high"].hide();
+						obj["vdev_low"].show();
+					} else {
+						obj["vdev_low"].hide();
+						obj["vdev_high"].hide();
+						obj["vdev_dot"].show();
+						obj["vdev_dot"].setTranslation(0, vdevDotDev);
+						print("translation: " ~ (vdevDotDev));
+					}
+				} else {
+					obj["vdev_dot"].hide();
+					obj["vdev_low"].hide();
+					obj["vdev_high"].hide();
+				}
+			}),
 			props.UpdateManager.FromHashValue("managedSpd", 1, func(val) {
 				if (val) {
 					obj["ASI_target"].setColor(0.6901,0.3333,0.7450);
@@ -1085,7 +1128,7 @@ var canvas_pfd = {
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_tens","ALT_digit_UP","ALT_tapes","ALT_hundreds",
 		"ALT_thousands","ALT_thousands_zero","ALT_tenthousands","ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box",
-		"LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError",
+		"LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","vdev_dot","vdev_low","vdev_high","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError",
 		"ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground",
 		"ground_ref","FPV","FPD","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue"];
 	},
@@ -2197,6 +2240,8 @@ var input = {
 	du1Lgt: "/controls/lighting/DU/du1",
 	du6Lgt: "/controls/lighting/DU/du6",
 	attSwitch: "/controls/navigation/switching/att-hdg",
+	managedAlt: "/it-autoflight/internal/mng-alt",
+	vdevDot: "/it-autoflight/internal/vdev-dot",
 	
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",

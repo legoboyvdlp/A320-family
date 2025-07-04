@@ -106,10 +106,16 @@
 				</greater-than>
 				<or>
 					<and>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>1</value>
-						</equals>
+						<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 						<greater-than>
 							<property>/it-autoflight/internal/overspeed-vs</property>
 							<property>/it-autoflight/input/vs</property>
@@ -140,10 +146,16 @@
 				</less-than>
 				<or>
 					<and>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>1</value>
-						</equals>
+						<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 						<less-than>
 							<property>/it-autoflight/internal/underspeed-vs</property>
 							<property>/it-autoflight/input/vs</property>
@@ -173,10 +185,16 @@
 				<not>
 					<and>
 						<property>/it-autoflight/output/ap-on</property>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>1</value>
-						</equals>
+						<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 						<equals>
 							<property>/gear/gear[1]/wow</property>
 							<value>0</value>
@@ -210,10 +228,16 @@
 					<property>/it-autoflight/output/ap-on</property>
 					<not><property>/it-autoflight/internal/overspeed-vs-prot</property></not>
 					<not><property>/it-autoflight/internal/underspeed-vs-prot</property></not>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
-					</equals>
+					<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 					<equals>
 						<property>/gear/gear[1]/wow</property>
 						<value>0</value>
@@ -556,10 +580,16 @@
 		</input>
 		<input>
 			<condition>
-				<equals>
-					<property>/it-autoflight/output/vert</property>
-					<value>1</value>
-				</equals>
+				<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 			</condition>
 			<property>/it-autoflight/internal/target-fpm-vs-fd</property>
 		</input>
@@ -649,10 +679,16 @@
 		</input>
 		<input>
 			<condition>
-				<equals>
-					<property>/it-autoflight/output/vert</property>
-					<value>1</value>
-				</equals>
+				<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 			</condition>
 			<property>/it-autoflight/internal/target-fpm-vs</property>
 		</input>
