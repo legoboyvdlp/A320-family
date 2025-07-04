@@ -34,6 +34,7 @@ var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
 var tempOverspeed = nil;
+var lastConstraintSpeed = 10000000000000000000000;
 
 setprop("/position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-ft", 1500); #eventually set to 1500 above runway
@@ -1008,18 +1009,20 @@ var ManagedSPD = maketimer(0.25, func {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 					if (constraintSpeed != nil and constraintSpeed != 0) {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
+						lastConstraintSpeed = constraintSpeed;
 					} else {
-						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
+						# print("mng alt mach: " ~ mng_alt_mach ~ " mng alt spd: " ~ mng_alt_spd ~ " last constraint speed: " ~ lastConstraintSpeed);
+						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(ktsToMach(lastConstraintSpeed),mng_alt_mach) : math.min(mng_alt_spd, lastConstraintSpeed);
 					}
 				}
-			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
+			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= (FMGCInternal.desSpdLimAlt + 20)) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
-				
 				if (constraintSpeed != nil and constraintSpeed != 0) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+					lastConstraintSpeed = constraintSpeed;
 				} else {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, lastConstraintSpeed), FMGCInternal.clean, 999);
 				}
 			}
 			

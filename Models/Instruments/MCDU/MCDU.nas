@@ -4222,7 +4222,7 @@ var canvas_MCDU_base = {
 				me["Simple_R5"].hide();
 			}
 			if (page == "PROGDES" or page == "PROGAPPR") {			
-				var vdev = 750; #CHECKME i dunno the meaning, but I found this value in the source
+				var vdev = fmgc.ITAF.calculateVdev(); #vdev calculated
 				var vdev_sign = (vdev>=0) ? "+" : "-";			
 				me["Simple_C2"].setText(sprintf("%17s%4d   ",vdev_sign,abs(vdev)));
 				me["Simple_R2"].setText(sprintf("%30s","VDEV=       FT "));

@@ -281,7 +281,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<value>0.016</value>
+				<value>0.019</value>
 			</product>
 		</function>
 		
@@ -328,7 +328,7 @@
 				<table>
 					<independentVar lookup="row">velocities/mach</independentVar>
 					<tableData>
-						0.82  0.000
+						0.82  0.002
 						1.10  0.016
 						1.80  0.012
 					</tableData>

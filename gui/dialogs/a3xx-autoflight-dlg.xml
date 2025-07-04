@@ -704,8 +704,16 @@
 				<legend>&lt;&lt;</legend>
 				<enable>
 					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
+						<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 					</equals>
 				</enable>
 				<binding>
@@ -721,8 +729,16 @@
 				<legend>&lt;</legend>
 				<enable>
 					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
+						<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 					</equals>
 				</enable>
 				<binding>
@@ -739,8 +755,16 @@
 				<live>true</live>
 				<enable>
 					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
+						<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 					</equals>
 				</enable>
 			</input>
@@ -753,8 +777,16 @@
 				<legend>&gt;</legend>
 				<enable>
 					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
+						<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 					</equals>
 				</enable>
 				<binding>
@@ -771,8 +803,16 @@
 				<legend>&gt;&gt;</legend>
 				<enable>
 					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
+						<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 					</equals>
 				</enable>
 				<binding>

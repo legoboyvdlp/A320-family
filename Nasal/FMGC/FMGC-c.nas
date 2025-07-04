@@ -276,7 +276,13 @@ var UpdateFma = {
 		vertText = Text.vert.getValue();
 		if (vertText == "ALT HLD" or vertText == "ALT CAP") {
 			# altvert() call deals with this case
-			setFmaText("pitchMode2Armed", " ", genericCallback, "pitchMode2ArmedTime");
+			# print("hit alt cap");
+			if (Internal.altManaged.getBoolValue() == 0) {
+				setFmaText("pitchMode2Armed", " ", genericCallback, "pitchMode2ArmedTime");
+			} else {
+				# print("des armed");
+				setFmaText("pitchMode2Armed", "DES", genericCallback, "pitchMode2ArmedTime");
+			}
 		} else if (vertText == "V/S") {
 			setFmaText("pitchMode", "V/S", genericCallback, "pitchModeTime");
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
@@ -291,6 +297,13 @@ var UpdateFma = {
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
 		} else if (vertText == "SPD DES") {
 			setFmaText("pitchMode", "OP DES", genericCallback, "pitchModeTime");
+			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
+		} else if (vertText == "CLB") {
+			setFmaText("pitchMode", "CLB", genericCallback, "pitchModeTime");
+			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
+		} else if (vertText == "DES") {
+			# print("to set Fma text to DES");
+			setFmaText("pitchMode", "DES", genericCallback, "pitchModeTime");
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
 		} else if (vertText == "FPA") {
 			setFmaText("pitchMode", "FPA", genericCallback, "pitchModeTime");
@@ -363,9 +376,17 @@ var altvert = func() {
 		}
 	} else {
 		if (vertText == "ALT HLD") {
-			setFmaText("pitchMode", "ALT", genericCallback, "pitchModeTime");
+			if (Internal.altManaged.getBoolValue() == 0) {
+				setFmaText("pitchMode", "ALT", genericCallback, "pitchModeTime");
+			} else {
+				setFmaText("pitchMode", "ALT CSTR", genericCallback, "pitchModeTime");
+			}
 		} else if (vertText == "ALT CAP") {
-			setFmaText("pitchMode", "ALT*", genericCallback, "pitchModeTime");
+			if (Internal.altManaged.getBoolValue() == 0) {
+				setFmaText("pitchMode", "ALT*", genericCallback, "pitchModeTime");
+			} else {
+				setFmaText("pitchMode", "ALT CSTR*", genericCallback, "pitchModeTime");
+			}
 		}
 	}
 }

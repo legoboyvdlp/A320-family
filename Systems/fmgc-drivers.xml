@@ -459,6 +459,10 @@
 					<property>/it-autoflight/output/vert</property>
 					<value>1</value>
 				</not-equals>
+				<not-equals>
+					<property>/it-autoflight/output/vert</property>
+					<value>8</value>
+				</not-equals>
 			</condition>
 		</enable>
 		<input>
