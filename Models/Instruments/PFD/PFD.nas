@@ -519,10 +519,8 @@ var canvas_pfd = {
 			}),
 			props.UpdateManager.FromHashList(["passTOD","altitude"], 1, func(val) {
 				if (val.passTOD and (abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude) < 500)) {
-					print("fma showed decelerate" ~ val.passTOD);
 					obj["FMA_ctr_msg-10"].show();
 				} else {
-					print("calculated alt diff" ~ int(fmgc.FMGCInternal.crzFl*100) ~ "and" ~ val.altitude ~ "and " ~ abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude));
 					obj["FMA_ctr_msg-10"].hide();
 				}
 			}),
