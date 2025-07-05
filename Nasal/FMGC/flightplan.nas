@@ -1032,7 +1032,9 @@ var flightPlanController = {
 			}
 			if (distToTOD < 0) {
 				fmgc.Internal.passTOD.setBoolValue(1);
-				print("passed TOD point")
+				print("passed TOD point" ~ distToTOD);
+			} else {
+				fmgc.Internal.passTOD.setBoolValue(0);
 			}
 			me.TODPoint = nil;
 		}
@@ -1117,10 +1119,13 @@ var flightPlanController = {
 			return;
 		}
 		result = me.getAltConst();
-		altdiff = fmgc.Position.indicatedAltitudeFt.getValue() - result[0];
+		initialAlt = fmgc.Position.indicatedAltitudeFt.getValue();
+		altCstr = result[0];
+		distanceToCstr = result[1];
 		gs = pts.Velocities.groundspeedKt.getValue();
 		vs = abs(fmgc.Internal.vs.getValue());
-		distanceToIntercept = (altdiff * (1 - 318*gs/(vs*60))/(vs*60/gs - 318));
+		distanceToIntercept = (gs*(altCstr - initialAlt) + (318*gs*distanceToCstr))/((318*gs) - (vs*60));
+		print("distance to intercept: " ~ distanceToIntercept);
 		DescentPathInterceptPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToIntercept);
 		setprop("/autopilot/route-manager/vnav/ip/latitude-deg", DescentPathInterceptPoint.lat); 
 		setprop("/autopilot/route-manager/vnav/ip/longitude-deg",DescentPathInterceptPoint.lon);
@@ -1263,7 +1268,7 @@ var flightPlanController = {
 		
 		me.calculateTopOfDescent();
 		me.calculateSpdChangePoint();
-		# me.calculateDescentPathInterceptPoint();
+		me.calculateDescentPathInterceptPoint();
 		var deltaAltitude = fmgc.Internal.alt.getValue() - pts.Instrumentation.Altimeter.indicatedFt.getValue();
 		if (abs(deltaAltitude) >= 100) {
 			isMng = Internal.altManaged.getBoolValue();

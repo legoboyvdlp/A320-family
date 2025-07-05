@@ -253,6 +253,14 @@ canvas.NDStyles["Airbus"] = {
 						} else {
 							grp.setColor(me.getStyle("default_color"));
 						}
+					} elsif (name == "ip") {
+						if (fmgc.Output.vert.getValue() == 8) {
+							grp.setColor(me.getStyle("armed_color"));
+							print("set IP in armed color");
+						} else {
+							grp.setColor(me.getStyle("default_color"));
+							print("set IP in default color");
+						}
 					}
 				},
 				init_after_callback: func{

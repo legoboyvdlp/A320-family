@@ -1001,7 +1001,7 @@ var ManagedSPD = maketimer(0.25, func {
 				} else {
 					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
 				}
-			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
+			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 1000)) {
 				# Speed is maximum of greendot / descent speed limit
 				if (FMGCInternal.decel) {
 					FMGCInternal.mngKtsMach = 0;
@@ -1022,7 +1022,7 @@ var ManagedSPD = maketimer(0.25, func {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(ktsToMach(lastConstraintSpeed),mng_alt_mach) : math.min(mng_alt_spd, lastConstraintSpeed);
 					}
 				}
-			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= (FMGCInternal.desSpdLimAlt + 20)) {
+			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= (FMGCInternal.desSpdLimAlt + 1000)) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
 				if (constraintSpeed != nil and constraintSpeed != 0) {
