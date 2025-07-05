@@ -517,6 +517,8 @@ var canvas_pfd = {
 					obj["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
 				}
 			}),
+			# If the aircraft passes the top of descent but is still at the cruising altitude and moredrag is not already announced
+			# then announce DECELERATE on the FMA
 			props.UpdateManager.FromHashList(["passTOD","altitude","moreDrag"], 1, func(val) {
 				if (val.passTOD and (abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude) < 500) and !val.moreDrag) {
 					obj["FMA_ctr_msg-10"].show();
@@ -524,6 +526,7 @@ var canvas_pfd = {
 					obj["FMA_ctr_msg-10"].hide();
 				}
 			}),
+			# If FMGC is in descent phase and moreDrag is true (set in fmgc.ITAF.getVs()) then announce MORE DRAG on the FMA
 			props.UpdateManager.FromHashList(["moreDrag","fmgcPhase"], 1, func(val) {
 				if ((val.moreDrag) and val.fmgcPhase == 4) {
 					obj["FMA_ctr_msg-11"].show();
@@ -772,8 +775,9 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashValue("ASItrgt", 0.1, func(val) {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
 			}),
-			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase"],0.5, func(val) {
-				if (val.fmgcPhase == 4) {
+			#If the aircraft is in descent phase and managed speed is on then ECOn range is set +- 20 knots from managed speed target
+			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd"],0.5, func(val) {
+				if (val.fmgcPhase == 4 and (val.ManagedSpd)) {
 					obj["ECON_range_high"].show();
 					obj["ECON_range_low"].show();
 					obj["ECON_range_high"].setTranslation(0, (val.ASItrgt+20) * -6.6);

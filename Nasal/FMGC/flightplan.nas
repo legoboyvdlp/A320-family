@@ -893,6 +893,7 @@ var flightPlanController = {
 		# print("distanceToCstr end here: " ~ resultDistanceToCstr);
 		return [altCstr, resultDistanceToCstr, altCstr, 0, 0, abs(me.getDecelerationDistance(spdCstr))];
 	},
+	# Get the distance that it takes to slow down to the constraint speed on 3 deg profile
 	getDecelerationDistance: func(speedCstr) {
 		speed = Velocities.indicatedAirspeedKt.getValue();
 		# print("speed: " ~ speed ~ " speedCstr: " ~ speedCstr);
@@ -901,6 +902,8 @@ var flightPlanController = {
 		}
 		return ((speed - speedCstr)*0.15);
 	},
+
+	# Get altitude constraint when in geometric desent path (after passing the initial constraint wpt and still in the STAR)
 	getGEOAltConst: func() {
 		# check if the geo descent profile is already calculated
 		if (lastAltCstrWpt != nil and me.getWptIndex(lastAltCstrWpt) >= me.currentToWptIndex.getValue()) {
@@ -991,11 +994,13 @@ var flightPlanController = {
 		
 		return [altCstr, distanceToCstr,abvAltCstr,1,idealVs,0];
 	},
+	# Get the altitude that the aircraft would be at if it flies a 3 deg descent profile from the last altitude constraint wpt
 	getExtrapolatedThreeDegAltCstr: func(lastAltCstr, distanceToCstr) {
 		gs = pts.Velocities.groundspeedKt.getValue();
 		extrapolatedAltCstr = (distanceToCstr)*318 + lastAltCstr;
 		return extrapolatedAltCstr;
 	},
+	# Get the altitude that the aircraft would be at if it flies at the current vs and gs from the last altitude constraint wpt
 	getExtrapolatedGEOAltCstr: func(lastAltCstr, distanceToCstr,CstrWpt) {
 		gs = pts.Velocities.groundspeedKt.getValue();
 		totalDistanceToCstr = 0;
@@ -1055,6 +1060,7 @@ var flightPlanController = {
 		}
 
 	},
+	
 	calculateLvlOffPoint: func(deltaAltitude, isMng) {
 		me._verticalSpeedVal = fmgc.Internal.vs.getValue();
 		if (me._verticalSpeedVal != 0) {
