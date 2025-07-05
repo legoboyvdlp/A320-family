@@ -249,6 +249,7 @@ canvas.NDStyles["Airbus"] = {
 						}
 					} elsif(name == "td" or name == "sd" or name == "sc"){
 						if (me.model.getValue("vnav-armed") and name != "td") {
+							print("armed color set")
 							grp.setColor(me.getStyle("armed_color"));
 						} else {
 							grp.setColor(me.getStyle("default_color"));
@@ -256,10 +257,8 @@ canvas.NDStyles["Airbus"] = {
 					} elsif (name == "ip") {
 						if (fmgc.Output.vert.getValue() == 8) {
 							grp.setColor(me.getStyle("armed_color"));
-							print("set IP in armed color");
 						} else {
 							grp.setColor(me.getStyle("default_color"));
-							print("set IP in default color");
 						}
 					}
 				},
