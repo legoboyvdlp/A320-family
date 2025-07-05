@@ -117,7 +117,7 @@ var Input = {
 };
 
 var Internal = {
-	vdevDot: props.globals.initNode("/it-autoflight/internal/vdev-dot", 0, "DOUBLE"),
+	
 	altManaged: props.globals.initNode("/it-autoflight/internal/mng-alt", 0, "BOOL"),
 	alt: props.globals.initNode("/it-autoflight/internal/alt", 10000, "INT"),
 	managedModeOn: props.globals.initNode("/it-autoflight/internal/managed-mode-on", 0, "BOOL"),
@@ -131,6 +131,7 @@ var Internal = {
 	captVs: 0,
 	driftAngle: props.globals.initNode("/it-autoflight/internal/drift-angle-deg", 0, "DOUBLE"),
 	driftAngleTemp: 0,
+	enginesBothAtIdle: props.globals.initNode("/systems/fadec/both-at-idle"),
 	flchActive: 0,
 	fpa: props.globals.initNode("/it-autoflight/internal/fpa", 0, "DOUBLE"),
 	hdgErrorDeg: props.globals.initNode("/it-autoflight/internal/heading-error-deg", 0, "DOUBLE"),
@@ -141,8 +142,10 @@ var Internal = {
 	maxVs: props.globals.initNode("/it-autoflight/internal/max-vs", 500, "INT"),
 	navHeadingErrorDeg: props.globals.initNode("/it-autoflight/internal/nav-heading-error-deg", 0, "DOUBLE"),
 	navHeadingErrorDegTemp: 0,
+	vdevDot: props.globals.initNode("/it-autoflight/internal/vdev-dot", 0, "DOUBLE"),
 	vs: props.globals.initNode("/it-autoflight/internal/vert-speed-fpm", 0, "DOUBLE"),
 	vsTemp: 0,
+
 };
 
 var Output = {
@@ -162,6 +165,7 @@ var Output = {
 	lnavArm: props.globals.initNode("/it-autoflight/output/lnav-arm", 0, "BOOL"),
 	locArm: props.globals.initNode("/it-autoflight/output/loc-arm", 0, "BOOL"),
 	thrMode: props.globals.initNode("/it-autoflight/output/thr-mode", 2, "INT"),
+	showThrMode: props.globals.initNode("/it-autoflight/output/show-thr-mode", 2, "INT"),
 	vert: props.globals.initNode("/it-autoflight/output/vert", 7, "INT"),
 	vertTemp: 7,
 };
@@ -236,6 +240,7 @@ var ITAF = {
 		Output.locArm.setBoolValue(0);
 		Output.gsArm.setBoolValue(0);
 		Output.thrMode.setValue(0);
+		Output.showThrMode.setValue(0);
 		Output.lat.setValue(9);
 		Output.vert.setValue(9);
 		Internal.minVs.setValue(-500);
@@ -767,16 +772,19 @@ var ITAF = {
 		if (Output.athr.getBoolValue() and Output.vertTemp != 7 and (Output.ap1.getBoolValue() or Output.ap2.getBoolValue()) and Position.gearAglFt.getValue() <= 30 and (Output.vertTemp == 2 or Output.vertTemp == 6)) {
 			# Manual says 40 feet - but video reference shows 30!
 			Output.thrMode.setValue(1);
+			Output.showThrMode.setValue(1);
 			Text.spd.setValue("RETARD");
 		} else if (Output.vertTemp == 4) {
 			if (Internal.alt.getValue() >= Position.indicatedAltitudeFt.getValue()) {
 				Output.thrMode.setValue(2);
+				Output.showThrMode.setValue(2);
 				Text.spd.setValue("PITCH");
 				if (Internal.flchActive and Text.vert.getValue() != "SPD CLB" and Internal.managedModeOn.getValue() == 0) {
 					me.updateVertText("SPD CLB");
 				}
 			} else {
 				Output.thrMode.setValue(1);
+				Output.showThrMode.setValue(1);
 				Text.spd.setValue("PITCH");
 				if (Internal.flchActive and Text.vert.getValue() != "SPD DES" and Internal.managedModeOn.getValue() == 0) {
 					me.updateVertText("SPD DES");
@@ -784,9 +792,11 @@ var ITAF = {
 			}
 		} else if (Output.vertTemp == 7) {
 			Output.thrMode.setValue(2);
+			Output.showThrMode.setValue(2);
 			Text.spd.setValue("PITCH");
-		} else {
+		} else if (Output.vertTemp != 8) {
 			Output.thrMode.setValue(0);
+			Output.showThrMode.setValue(0);
 			Text.spd.setValue("THRUST");
 		}
 	},
@@ -1146,6 +1156,11 @@ var managedDes = func {
 	Internal.alt.setValue(alt);
 	if ((abs(alt - Position.indicatedAltitudeFt.getValue()) >= 25) and (managedDeson == "True")) {
 		ITAF.updateVertText("DES");
+		if (Internal.enginesBothAtIdle.getValue()) {
+			Output.showThrMode.setValue(1);
+		} else {
+			Output.showThrMode.setValue(0);
+		}
 		vs = ITAF.getVs();
 		Internal.flchActive = 0;
 		Internal.altCaptureActive = 0;
