@@ -1086,6 +1086,8 @@ var ITAF = {
 	},
 };
 
+#To be called when engages into CLB mode, uses the same mechanisism as OP CLB,
+# only changing the target altitude and the mode shown on the FMA
 var managedClb = func {
 	next_managed_alt = fmgc.flightPlanController.getClbAltConst()[0];
 	next_selected_alt = Input.alt.getValue();
@@ -1102,22 +1104,22 @@ var managedClb = func {
 	Internal.flchActive = 1;
 	ITAF.updateVertText("CLB");
 };
+# To be called when in altitude acquire mode, 
+# when the aircraft passes that waypoint, the CLB mode should resume
 var armClb = func {
 	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 800) {
-		print("passed and should go");
 		ITAF.updateVertText("CLB");
 		ITAF.setVertMode(8); # CLB mode
 	} else {
-		print("continue to arm clb");
 		settimer(armClb, 2);
 	}
 };
 
+# To be called when in altitude acquire mode,
+# when the aircraft passes that waypoint the DES mode should resume
 var armDes = func {
-	# print("armDes called");
 	if (abs(Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[2]) > 800) {
 		ITAF.updateVertText("DES");
-		# print("set vert mode to DES in armdes");
 		ITAF.setVertMode(8); # DES mode
 	} else {
 		settimer(armDes, 2);
@@ -1149,7 +1151,6 @@ var managedDes = func {
 		
 		settimer(managedDes, 2);
 	}
-	# print("FALSE, Altitude Diff: " ~ abs(alt - Position.indicatedAltitudeFt.getValue()));
 };
 setlistener(Gear.wow1, func(val) {
 	if (!val.getBoolValue() and FPLN.currentWP.getValue() == 0) {
