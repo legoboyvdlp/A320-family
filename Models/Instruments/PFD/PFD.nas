@@ -517,15 +517,15 @@ var canvas_pfd = {
 					obj["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
 				}
 			}),
-			props.UpdateManager.FromHashList(["passTOD","altitude"], 1, func(val) {
-				if (val.passTOD and (abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude) < 500)) {
+			props.UpdateManager.FromHashList(["passTOD","altitude","moreDrag"], 1, func(val) {
+				if (val.passTOD and (abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude) < 500) and !val.moreDrag) {
 					obj["FMA_ctr_msg-10"].show();
 				} else {
 					obj["FMA_ctr_msg-10"].hide();
 				}
 			}),
-			props.UpdateManager.FromHashValue("moreDrag", 1, func(val) {
-				if (val) {
+			props.UpdateManager.FromHashList(["moreDrag","fmgcPhase"], 1, func(val) {
+				if ((val.moreDrag) and val.fmgcPhase == 4) {
 					obj["FMA_ctr_msg-11"].show();
 				} else {
 					obj["FMA_ctr_msg-11"].hide();

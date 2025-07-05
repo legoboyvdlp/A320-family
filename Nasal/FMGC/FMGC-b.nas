@@ -980,12 +980,12 @@ var ITAF = {
 			
 			vs = -4000;
 		}
-		if (vs < -3000 or Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) {
+		if (vs < -3000 and Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) {
 			Internal.moreDrag.setBoolValue(1);
 		} else {
 			Internal.moreDrag.setBoolValue(0);
 		}
-		if (Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) {
+		if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and vs < -1500) {
 			vs = -1500;
 		}
 		return vs;
