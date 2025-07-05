@@ -671,7 +671,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				<test logic="OR" value="1">
-					/it-autoflight/input/alt-managed eq 1
+					/it-autoflight/internal/mng-alt eq 1
 					/controls/switches/annun-test eq 1
 				</test>
 				/systems/electrical/bus/ac-ess-shed ge 110
