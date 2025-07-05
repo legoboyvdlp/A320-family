@@ -16,28 +16,7 @@
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
-     id="defs2987">
-    <marker
-       style="overflow:visible"
-       id="ArrowWide"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="Wide arrow"
-       markerWidth="1"
-       markerHeight="1"
-       viewBox="0 0 1 1"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <path
-         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:butt"
-         d="M 3,-3 0,0 3,3"
-         transform="rotate(180,0.125,0)"
-         sodipodi:nodetypes="ccc"
-         id="path4" />
-    </marker>
-  </defs>
+     id="defs2987" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -45,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="10.54"
-     inkscape:cx="16.081594"
-     inkscape:cy="40.370019"
+     inkscape:zoom="11.313708"
+     inkscape:cx="46.978407"
+     inkscape:cy="16.926369"
      inkscape:current-layer="ip_symbol"
      showgrid="true"
      inkscape:grid-bbox="true"
@@ -78,13 +57,36 @@
      transform="translate(0,16)">
     <g
        id="ip_symbol"
-       transform="matrix(1.4141414,0,0,-1.4141414,-2.1598135,60.287083)"
+       transform="matrix(1.4034931,0,0,-1.4145981,-2.1376902,60.300812)"
        style="stroke:#118eff;stroke-opacity:1">
       <path
-         style="opacity:1;fill:none;fill-opacity:1;stroke:#118eff;stroke-width:1.07548;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide)"
-         d="M 1.8888479,31.502884 13.175395,41.661791 12.54322,18.788611 23.458381,32.210065 45.951944,32.021029"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#118eff;stroke-width:1.07116;stroke-dasharray:none;stroke-opacity:1"
+         d="M 2.5169689,31.441213 13.707679,41.605019 13.080872,18.720808 23.90335,32.148735 46.205914,31.959608"
          id="path1"
          sodipodi:nodetypes="ccccc" />
+      <path
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#118eff;stroke-width:2.64364;stroke-dasharray:none;stroke-opacity:1"
+         d="M 2.3624313,31.441213 13.553142,41.605019 12.926335,18.720808 23.748812,32.148735 46.051377,31.959608"
+         id="path3"
+         sodipodi:nodetypes="ccccc" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#118eff;stroke-width:0.524506;stroke-dasharray:none;stroke-opacity:1"
+         d="m 45.032035,32.239036 1.658668,-0.01985 -3.651678,4.151602"
+         id="path6"
+         sodipodi:nodetypes="ccc" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#118eff;stroke-width:0.524506;stroke-dasharray:none;stroke-opacity:1"
+         d="m 45.036091,31.733315 1.658644,-0.02179 -3.7545,-4.05864"
+         id="path6-2"
+         sodipodi:nodetypes="ccc" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#118eff;stroke-width:2.64364;stroke-dasharray:none;stroke-opacity:1"
+         d="m 40.857851,37.318653 4.250771,-4.988181"
+         id="path7" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#118eff;stroke-width:2.64364;stroke-dasharray:none;stroke-opacity:1"
+         d="m 40.692898,26.377102 4.250771,4.988181"
+         id="path7-9" />
     </g>
   </g>
 </svg>

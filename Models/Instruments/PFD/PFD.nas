@@ -518,7 +518,7 @@ var canvas_pfd = {
 				}
 			}),
 			props.UpdateManager.FromHashList(["passTOD","altitude"], 1, func(val) {
-				if (val.passTOD and (abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude) < 1000)) {
+				if (val.passTOD and (abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude) < 500)) {
 					print("fma showed decelerate" ~ val.passTOD);
 					obj["FMA_ctr_msg-10"].show();
 				} else {
