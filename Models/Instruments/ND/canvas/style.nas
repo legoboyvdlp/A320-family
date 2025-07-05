@@ -213,14 +213,15 @@ canvas.NDStyles["Airbus"] = {
 				# If ec and ed are altitude constraints, their node should have the 
 				# boolean "alt-cstr" property set to 1.
 				vnav_node: "/autopilot/route-manager/vnav/", 
-				types: ["ec","ed","sc","sd","td","spdchng"],
+				types: ["ec","ed","sc","sd","td","spdchng","ip"],
 				svg_path: {
 					ec: get_local_path("res/airbus_ec.svg"),
 					ed: get_local_path("res/airbus_ed.svg"),
 					sc: get_local_path("res/airbus_sc.svg"),
 					sd: get_local_path("res/airbus_sd.svg"),
 					td: get_local_path("res/airbus_td.svg"),
-					spdchng: get_local_path("res/airbus_spdchng.svg")
+					spdchng: get_local_path("res/airbus_spdchng.svg"),
+					ip: get_local_path("res/airbus_ip.svg")
 				},
 				listen: [
 					"fplan_active",

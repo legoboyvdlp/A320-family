@@ -1014,7 +1014,6 @@ var ManagedSPD = maketimer(0.25, func {
 						if ((output[1] == 0.1 and output[3] == 0) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[3] == 1)) {
 							FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 						} else {
-							print("mng alt mach: " ~ mng_alt_mach ~ " mng alt spd: " ~ mng_alt_spd);
 							FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
 						}
 						lastConstraintSpeed = constraintSpeed;

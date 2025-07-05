@@ -120,6 +120,8 @@ var Internal = {
 	vdevDot: props.globals.initNode("/it-autoflight/internal/vdev-dot", 0, "DOUBLE"),
 	altManaged: props.globals.initNode("/it-autoflight/internal/mng-alt", 0, "BOOL"),
 	alt: props.globals.initNode("/it-autoflight/internal/alt", 10000, "INT"),
+	passTOD: props.globals.initNode("/it-autoflight/internal/pass-tod", 0, "BOOL"),
+	moreDrag: props.globals.initNode("/it-autoflight/internal/more-drag", 0, "BOOL"),
 	altCaptureActive: 0,
 	altDiff: 0,
 	altTemp: 0,
@@ -957,9 +959,13 @@ var ITAF = {
 		Input.vsAbs.setValue(abs(vs));
 	},
 	# Get the vertical speed based on the altitude constraint, whether it is a geometric descent path and distance to waypoint for DES mode
+	# Before intercepting the descent path, it will fly at -1000 fpm.
+	# If above the descent path, it will descend -500 fpm faster.
+	# Max VS is -4000 fpm
+	# If aircraft is above the ECON speed range then it will descend at -1500 fpm to slow down.
+	# If aircraft requires a descent rate of more than -3000 fpm or is at ECON range max then moreDrag message is shown on FMA.
 	getVs: func() {
 		cstr_info = fmgc.flightPlanController.getAltConst();
-		# print(cstr_info);
 		altCstr = cstr_info[0];
 		distToCstr = cstr_info[1];
 		is_geo = cstr_info[3];
@@ -969,15 +975,21 @@ var ITAF = {
 		deltaAltitude = (altCstr - Position.indicatedAltitudeFt.getValue());
 		gs = pts.Velocities.groundspeedKt.getValue();
 		vs = (deltaAltitude * gs) / (60 * distToCstr); # Calculate vertical speed to next waypoint
-		
+
 		if ((vs > (-1*gs*5)) and (is_geo == 0)) {
-			return -1000; # Don't allow more than -1000 fpm
+			return -1000; 
 		}
 		if (me.calculateVdev() > 500) { # If we are above the descent profile, then we need to descend faster
 			vs -= 500;
 		}
 		if (vs < -4000) {
+			
 			vs = -4000;
+		}
+		if (vs < -3000 or Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) {
+			Internal.moreDrag.setBoolValue(1);
+		} else {
+			Internal.moreDrag.setBoolValue(0);
 		}
 		if (Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) {
 			vs = -1500;
