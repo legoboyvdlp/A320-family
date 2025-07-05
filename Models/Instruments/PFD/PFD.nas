@@ -495,7 +495,6 @@ var canvas_pfd = {
 						obj["vdev_high"].hide();
 						obj["vdev_dot"].show();
 						obj["vdev_dot"].setTranslation(0, vdevDotDev);
-						print("translation: " ~ (vdevDotDev));
 					}
 				} else {
 					obj["vdev_dot"].hide();
@@ -516,6 +515,22 @@ var canvas_pfd = {
 					obj["ASI_decimal_UP"].setColor(0.0901,0.6039,0.7176);
 					obj["ASI_digit_DN"].setColor(0.0901,0.6039,0.7176);
 					obj["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
+				}
+			}),
+			props.UpdateManager.FromHashList(["passTOD","altitude"], 1, func(val) {
+				if (val.passTOD and (abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude) < 1000)) {
+					print("fma showed decelerate" ~ val.passTOD);
+					obj["FMA_ctr_msg-10"].show();
+				} else {
+					print("calculated alt diff" ~ int(fmgc.FMGCInternal.crzFl*100) ~ "and" ~ val.altitude ~ "and " ~ abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude));
+					obj["FMA_ctr_msg-10"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("moreDrag", 1, func(val) {
+				if (val) {
+					obj["FMA_ctr_msg-11"].show();
+				} else {
+					obj["FMA_ctr_msg-11"].hide();
 				}
 			}),
 			props.UpdateManager.FromHashValue("dmeDistance", 0.025, func(val) {
@@ -1134,7 +1149,7 @@ var canvas_pfd = {
 		return obj;
 	},
 	getKeys: func() {
-		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
+		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_ctr_msg-10","FMA_ctr_msg-11","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
 		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
 		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP","ECON_range_high","ECON_range_low",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
@@ -2254,9 +2269,12 @@ var input = {
 	attSwitch: "/controls/navigation/switching/att-hdg",
 	managedAlt: "/it-autoflight/internal/mng-alt",
 	vdevDot: "/it-autoflight/internal/vdev-dot",
+	passTOD: "/it-autoflight/internal/pass-tod",
+	moreDrag: "/it-autoflight/internal/more-drag",
 	
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",
+	altitude: "/instrumentation/altimeter/indicated-altitude-ft",
 	pitchPFD: "/instrumentation/pfd/pitch-deg-non-linear",
 	horizonGround: "/instrumentation/pfd/horizon-ground",
 	horizonPitch: "/instrumentation/pfd/horizon-pitch",

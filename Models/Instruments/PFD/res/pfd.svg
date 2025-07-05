@@ -40,9 +40,9 @@
      inkscape:window-maximized="1"
      inkscape:window-y="-9"
      inkscape:window-x="-9"
-     inkscape:cy="656.28346"
-     inkscape:cx="118.70555"
-     inkscape:zoom="5.6568544"
+     inkscape:cy="237.5"
+     inkscape:cx="607.5"
+     inkscape:zoom="1"
      showgrid="false"
      id="namedview371"
      inkscape:window-height="991"
@@ -2089,6 +2089,32 @@
        x="505.48523"
        y="115.0584"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:center;text-anchor:middle;fill:#ff0000;fill-opacity:1;stroke-width:0.657577">MAN PITCH TRIM ONLY</tspan></text>
+  <text
+     inkscape:label="#text983"
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.657577"
+     x="507.87143"
+     y="117.95411"
+     id="FMA_ctr_msg-10"
+     transform="scale(0.87678236,1.1405339)"><tspan
+       sodipodi:role="line"
+       id="tspan4614-4"
+       x="507.87143"
+       y="117.95411"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.657577">DECELERATE</tspan></text>
+  <text
+     inkscape:label="#text983"
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.657577"
+     x="508.2131"
+     y="117.8877"
+     id="FMA_ctr_msg-11"
+     transform="scale(0.87678236,1.1405339)"><tspan
+       sodipodi:role="line"
+       id="tspan4614-4-4"
+       x="508.2131"
+       y="117.8877"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.657577">MORE DRAG</tspan></text>
   <path
      style="fill:none;fill-opacity:1;stroke:#515256;stroke-width:3.19995403;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
      d="m 432.8701,90.374503 0,-88.7230442"

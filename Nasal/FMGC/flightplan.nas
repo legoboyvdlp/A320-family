@@ -73,13 +73,15 @@ var flightPlanController = {
 		setprop("/autopilot/route-manager/vnav/ec/latitude-deg", 0); # necessary to prevent canvas glitching out because properties don't exist
 		setprop("/autopilot/route-manager/vnav/ed/latitude-deg", 0); 
 		setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", 0);
+		setprop("/autopilot/route-manager/vnav/ip/latitude-deg", 0);
 		setprop("/autopilot/route-manager/vnav/ec/longitude-deg", 0); 
 		setprop("/autopilot/route-manager/vnav/ed/longitude-deg", 0);
-		setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg", 0);  
+		setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg", 0);
+		setprop("/autopilot/route-manager/vnav/ip/longitude-deg", 0);  
 		setprop("/autopilot/route-manager/vnav/ec/show", 0); 
 		setprop("/autopilot/route-manager/vnav/ed/show", 0); 
 		setprop("/autopilot/route-manager/vnav/spdchng/show", 0); 
-		
+		setprop("/autopilot/route-manager/vnav/ip/show", 0); 
 		me.flightplans[2].activate();
 	},
 	
@@ -805,7 +807,7 @@ var flightPlanController = {
 		return -1;
 	},
 	getFirstAltConst: func() {
-		if (me.flightplans[2].getWP(0) == nil) {
+		if (FMGCNodes.phase == 0) {
 			return [0, 0, 0, 0, 0];
 		}
 		# first loop is to find the first (at) or (at or below) altitude constraint
@@ -1011,17 +1013,15 @@ var flightPlanController = {
 		is_geo = output[3];
 		idealVs = output[4];
 		deltaAltitude = alt_cstr - pts.Instrumentation.Altimeter.indicatedFt.getValue();
-		# distLvl = abs((deltaAltitude * pts.Velocities.groundspeedKt.getValue()) / (1500 * 60));
 		if (is_geo == 0) {
 			distLvl = abs(deltaAltitude / 318); # 318 is for 3 deg descent prof, so we get feet per NM
 		} else {
 			distLvl = abs((deltaAltitude * pts.Velocities.groundspeedKt.getValue()) / (idealVs * 60));
 		}
 		distToTOD = distanceToCstr - distLvl;
-		# print("Distance to constraint: " ~ distanceToCstr ~ " distance lvl: " ~ distLvl ~ " dist to TOD: " ~ distToTOD);
 		if (me.active.getBoolValue() and fmgc.Output.lat.getValue() == 1 and distToTOD >= 0 and deltaAltitude < 0) { # NAV
 			me.TODPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distToTOD);
-			# print("TOD distance: " ~ (me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distToTOD));
+			
 		} elsif (fmgc.Output.lat.getValue() == 0 and distToTOD >= 0) { # HDG TRK
 			me._TODcoord = geo.aircraft_position();
 			me._TODcoord.apply_course_distance(getprop("/orientation/track-magnetic-deg"), distToTOD * NM2M);
@@ -1029,6 +1029,10 @@ var flightPlanController = {
 		} else {
 			if (getprop("/autopilot/route-manager/vnav/sd/show") == 1) {
 				setprop("/autopilot/route-manager/vnav/sd/show", 0); 
+			}
+			if (distToTOD < 0) {
+				fmgc.Internal.passTOD.setBoolValue(1);
+				print("passed TOD point")
 			}
 			me.TODPoint = nil;
 		}
@@ -1107,7 +1111,21 @@ var flightPlanController = {
 		}
 		
 	},
-	
+	calculateDescentPathInterceptPoint: func() {
+		if (me.currentToWptIndex.getValue() <= 0) {
+			# print("currentwptindex != 0");
+			return;
+		}
+		result = me.getAltConst();
+		altdiff = fmgc.Position.indicatedAltitudeFt.getValue() - result[0];
+		gs = pts.Velocities.groundspeedKt.getValue();
+		vs = abs(fmgc.Internal.vs.getValue());
+		distanceToIntercept = (altdiff * (1 - 318*gs/(vs*60))/(vs*60/gs - 318));
+		DescentPathInterceptPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToIntercept);
+		setprop("/autopilot/route-manager/vnav/ip/latitude-deg", DescentPathInterceptPoint.lat); 
+		setprop("/autopilot/route-manager/vnav/ip/longitude-deg",DescentPathInterceptPoint.lon);
+		setprop("/autopilot/route-manager/vnav/ip/show", 1);
+	},
 	# insertPlaceBearingDistance - insert PBD waypoint at specified index,
 	# at some specified bearing, distance from a specified location
 	# args: wp, index, plan
@@ -1245,6 +1263,7 @@ var flightPlanController = {
 		
 		me.calculateTopOfDescent();
 		me.calculateSpdChangePoint();
+		# me.calculateDescentPathInterceptPoint();
 		var deltaAltitude = fmgc.Internal.alt.getValue() - pts.Instrumentation.Altimeter.indicatedFt.getValue();
 		if (abs(deltaAltitude) >= 100) {
 			isMng = Internal.altManaged.getBoolValue();

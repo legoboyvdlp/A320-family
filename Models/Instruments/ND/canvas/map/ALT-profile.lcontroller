@@ -11,7 +11,7 @@ SymbolLayer.add(name, {
 	df_options: { # default configuration options
 		fplan_active: "/autopilot/route-manager/active",
 		vnav_node: "/autopilot/route-manager/vnav/",
-		types: ["tc", "td", "ec", "ed","sc", "sd","spdchng"],
+		types: ["tc", "td", "ec", "ed","sc", "sd","spdchng","ip"],
 	}
 });
 var new = func(layer) {
