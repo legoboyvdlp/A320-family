@@ -852,7 +852,7 @@ var flightPlanController = {
 					# print("cstrWptIndex: " ~ cstrWptIndex ~ "altitude csontraint: " ~ altCstr);
 					break;
 				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
-					spdDistance = me.getDecelerationDistance(spdCstr);
+					spdDistance = abs(me.getDecelerationDistance(spdCstr));
 					altCstr = me.getExtrapolatedThreeDegAltCstr(altCstr, (distanceToCstr - distanceToCstr2 + spdDistance));
 					cstrWptIndex = int(i);
 					geoWpt = me.flightplans[2].getWP(i);
@@ -869,14 +869,14 @@ var flightPlanController = {
 		lastCstrFlown = altCstr; # for extrapolated and vdev info
 		lastAltCstrWpt = geoWpt; # for extrapolated and vdev info
 		# minus the deceleration
-		resultDistanceToCstr -= me.getDecelerationDistance(spdCstr);
-		if (resultDistanceToCstr < 1) {
-			resultDistanceToCstr = 1;
+		resultDistanceToCstr -= abs(me.getDecelerationDistance(spdCstr));
+		if (resultDistanceToCstr < 0.1) {
+			resultDistanceToCstr = 0.1;
 		}
 		# print("resultdistanceToCstr: " ~ resultDistanceToCstr);
 		# print("altcstr end here: " ~ altCstr);
 		# print("distanceToCstr end here: " ~ resultDistanceToCstr);
-		return [altCstr, resultDistanceToCstr, altCstr, 0, 0, me.getDecelerationDistance(spdCstr)];
+		return [altCstr, resultDistanceToCstr, altCstr, 0, 0, abs(me.getDecelerationDistance(spdCstr))];
 	},
 	getDecelerationDistance: func(speedCstr) {
 		speed = Velocities.indicatedAirspeedKt.getValue();
@@ -884,7 +884,7 @@ var flightPlanController = {
 		if (speedCstr == nil or speedCstr == 0 or speedCstr >= speed) {
 			return 0;
 		}
-		return abs((speed - speedCstr)*0.15);
+		return ((speed - speedCstr)*0.15);
 	},
 	getGEOAltConst: func() {
 		# check if the geo descent profile is already calculated
@@ -1057,7 +1057,6 @@ var flightPlanController = {
 		} else {
 			setprop("/autopilot/route-manager/vnav/ec/show", 0); 
 			setprop("/autopilot/route-manager/vnav/ed/show", 0); 
-			setprop("/autopilot/route-manager/vnav/spdchng/show", 0); 
 			me.lvlOffPoint = nil;
 		}
 		
@@ -1066,7 +1065,6 @@ var flightPlanController = {
 			setprop("/autopilot/route-manager/vnav/ec/longitude-deg", me.lvlOffPoint.lon);
 			setprop("/autopilot/route-manager/vnav/ec/show", 1); 
 			setprop("/autopilot/route-manager/vnav/ed/show", 0); 
-			setprop("/autopilot/route-manager/vnav/spdchng/show", 0);
 		} elsif (deltaAltitude <= -100 and me.lvlOffPoint != nil) {
 			if (isMng) {
 				setprop("/autopilot/route-manager/vnav/ed/alt-cstr", 1);
@@ -1089,19 +1087,23 @@ var flightPlanController = {
 			# print("is geo: " ~ is_GEO ~ " spdChangeDistance: " ~ spdChangeDistance);
 			if (!is_GEO and spdChangeDistance != 0) {
 				distanceToCstr = result[1];
-				print("distance to cstr is " ~ distanceToCstr ~ "calculated spdChangeDistance is " ~ (me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToCstr));
+				# print("distance to cstr is " ~ distanceToCstr ~ "calculated spdChangeDistance is " ~ (me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToCstr));
 				spdChangePoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToCstr);
+				setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
+				setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
+				setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
 			} elsif (is_GEO) {
 				for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 					if (me.flightplans[2].getWP(i).speed_cstr != nil and me.flightplans[2].getWP(i).speed_cstr != 0 and Velocities.indicatedAirspeedKt.getValue() > me.flightplans[2].getWP(i).speed_cstr) {
-						spdChangePoint = me.flightplans[2].pathGeod(i - 1, 2); # 2 is for error correction
+						spdChangePoint = me.flightplans[2].pathGeod(i - 1, 0); # 1 is for error correction
+						setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
+						setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
+						setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
 						break;
 					}
 				}
 			}
-			setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
-			setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
-			setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
+			
 		}
 		
 	},

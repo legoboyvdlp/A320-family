@@ -739,7 +739,6 @@ var ITAF = {
 			Output.vert.setValue(7);
 			me.updateThrustMode();
 		} else if (n == 8) { # CLB/DES
-			print("clb/des called here");
 			if (fmgc.flightPlanController.getAltConst()[0] > Position.indicatedAltitudeFt.getValue()) {
 				me.updateGsArm(0);
 				Output.vert.setValue(1);
@@ -969,8 +968,8 @@ var ITAF = {
 		altCstr = cstr_info[0];
 		distToCstr = cstr_info[1];
 		is_geo = cstr_info[3];
-		if (Position.indicatedAltitudeFt.getValue()>= 9800 and Position.indicatedAltitudeFt.getValue() <= 11000 and Velocities.indicatedAirspeedKt.getValue() - 250 >= 10) {
-			return 0; # Make the aircraft slow to 250 at 10,000 feet
+		if (Position.indicatedAltitudeFt.getValue() >= 9800 and Position.indicatedAltitudeFt.getValue() <= 11000 and Velocities.indicatedAirspeedKt.getValue() - 250 >= 10) {
+			return -1000; # Make the aircraft slow to 250 at 10,000 feet
 		}
 		deltaAltitude = (altCstr - Position.indicatedAltitudeFt.getValue());
 		gs = pts.Velocities.groundspeedKt.getValue();
@@ -978,6 +977,15 @@ var ITAF = {
 		
 		if ((vs > (-1*gs*5)) and (is_geo == 0)) {
 			return -1000; # Don't allow more than -1000 fpm
+		}
+		if (me.calculateVdev() > 500) { # If we are above the descent profile, then we need to descend faster
+			vs -= 500;
+		}
+		if (vs < -4000) {
+			vs = -4000;
+		}
+		if (Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) {
+			vs = -1500;
 		}
 		return vs;
 	},
@@ -1106,7 +1114,6 @@ var managedDes = func {
 	}
 	Internal.alt.setValue(alt);
 	if ((abs(alt - Position.indicatedAltitudeFt.getValue()) >= 25) and (managedDeson == "True")) {
-		print("managedDes called should pass now");
 		ITAF.updateVertText("DES");
 		vs = ITAF.getVs();
 		Internal.flchActive = 0;
