@@ -528,7 +528,7 @@ var canvas_pfd = {
 			}),
 			# If FMGC is in descent phase and moreDrag is true (set in fmgc.ITAF.getVs()) then announce MORE DRAG on the FMA
 			props.UpdateManager.FromHashList(["moreDrag","fmgcPhase"], 1, func(val) {
-				if ((val.moreDrag) and val.fmgcPhase == 4) {
+				if ((val.moreDrag) and( val.fmgcPhase == 4)) {
 					obj["FMA_ctr_msg-11"].show();
 				} else {
 					obj["FMA_ctr_msg-11"].hide();
