@@ -825,6 +825,7 @@ var flightPlanController = {
 		}
 		# first loop is to find the first (at) or (at or below) altitude constraint
 		altCstr = 0;
+		spdCstr = nil;
 		distanceToCstr = 0;
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			cstrType = me.flightplans[2].getWP(i).alt_cstr_type;
@@ -840,7 +841,9 @@ var flightPlanController = {
 				# print("first alt cstr: " ~ altCstr);
 				geoWpt = me.flightplans[2].getWP(i);
 				cstrWptIndex = i;
-				spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+				if (me.flightplans[2].getWP(i).speed_cstr!= 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
+					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+				}
 				# print("cstrWptIndex: " ~ cstrWptIndex);
 				# print("before distanceToCstr: " ~ distanceToCstr);
 				break;
@@ -862,7 +865,10 @@ var flightPlanController = {
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
 					cstrWptIndex = int(i);
 					geoWpt = me.flightplans[2].getWP(i);
-					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+					if (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
+						spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+					}
+					
 					# print("after distanceToCstr: " ~ distanceToCstr);
 					# print("cstrWptIndex: " ~ cstrWptIndex ~ "altitude csontraint: " ~ altCstr);
 					break;
@@ -884,23 +890,31 @@ var flightPlanController = {
 		lastCstrFlown = altCstr; # for extrapolated and vdev info
 		lastAltCstrWpt = geoWpt; # for extrapolated and vdev info
 		# minus the deceleration
-		resultDistanceToCstr -= abs(me.getDecelerationDistance(spdCstr));
+		resultDistanceToCstr -= abs(me.getDecelerationDistance(spdCstr,altCstr));
 		if (resultDistanceToCstr < 0.1) {
 			resultDistanceToCstr = 0.1;
 		}
-		# print("resultdistanceToCstr: " ~ resultDistanceToCstr);
-		# print("altcstr end here: " ~ altCstr);
-		# print("distanceToCstr end here: " ~ resultDistanceToCstr);
-		return [altCstr, resultDistanceToCstr, altCstr, 0, 0, abs(me.getDecelerationDistance(spdCstr))];
+		return [altCstr, resultDistanceToCstr, altCstr, 0, 0, abs(me.getDecelerationDistance(spdCstr,altCstr))];
 	},
 	# Get the distance that it takes to slow down to the constraint speed on 3 deg profile
-	getDecelerationDistance: func(speedCstr) {
-		speed = Velocities.indicatedAirspeedKt.getValue();
-		# print("speed: " ~ speed ~ " speedCstr: " ~ speedCstr);
+	getDecelerationDistance: func(speedCstr,altCstr) {
+		speed = me.getExtrapolatedSpd(altCstr);
 		if (speedCstr == nil or speedCstr == 0 or speedCstr >= speed) {
 			return 0;
 		}
 		return ((speed - speedCstr)*0.15);
+	},
+	getExtrapolatedSpd: func(altCstr) {
+		CI = fmgc.FMGCNodes.costIndex.getValue();
+		if (altCstr >= 20000) {
+			extrapolatedSpd = 0.60625 + (0.000416875 * CI) + (0.00000795 * (altCstr - 20000)) + (0.00000000545 * (altCstr - 20000) * CI);
+			print("extrapolated speed is " ~ extrapolatedSpd);
+			return extrapolatedSpd;
+		} else {
+			extrapolatedSpd = (1.00 + (0.00158 * CI))*266;
+			print("extrapolated speed is " ~ extrapolatedSpd);
+			return extrapolatedSpd;
+		}
 	},
 
 	# Get altitude constraint when in geometric desent path (after passing the initial constraint wpt and still in the STAR)

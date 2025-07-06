@@ -249,7 +249,6 @@ canvas.NDStyles["Airbus"] = {
 						}
 					} elsif(name == "td" or name == "sd" or name == "sc"){
 						if (me.model.getValue("vnav-armed") and name != "td") {
-							print("armed color set");
 							grp.setColor(me.getStyle("armed_color"));
 						} else {
 							grp.setColor(me.getStyle("default_color"));
