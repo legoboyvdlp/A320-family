@@ -991,7 +991,8 @@ var ManagedSPD = maketimer(0.25, func {
 				if (constraintSpeed != nil and constraintSpeed != 0) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 				} else {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.clbSpdLim, FMGCInternal.clean, 999);
+					nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst()[0];
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, nextSpdConst), FMGCInternal.clean, 999);
 				}
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
 				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
@@ -999,7 +1000,8 @@ var ManagedSPD = maketimer(0.25, func {
 				if (constraintSpeed != nil and constraintSpeed != 0) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 				} else {
-					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
+					nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst()[0];
+					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(nextSpdConst)) : math.min(mng_alt_spd, nextSpdConst);
 				}
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 1000)) {
 				# Speed is maximum of greendot / descent speed limit
