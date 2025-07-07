@@ -790,7 +790,7 @@ var flightPlanController = {
 		}
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and me.flightplans[2].getWP(i).wp_role == "sid") {
-				print("clb alt const is " ~ int(me.flightplans[2].getWP(i).alt_cstr));
+				# print("clb alt const is " ~ int(me.flightplans[2].getWP(i).alt_cstr));
 				return [me.flightplans[2].getWP(i).alt_cstr,i];
 			}
 		}
@@ -1025,6 +1025,15 @@ var flightPlanController = {
 		extrapolatedAltCstr = ((distanceToCstr * vs * 60)/gs) + lastAltCstr;
 		return [extrapolatedAltCstr,vs];
 	},
+	getNextClbSpdConst: func() {
+		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+			spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+			if (spdCstr != 0 and spdCstr != nil and me.flightplans[2].getWP(i).wp_role == "sid") {
+				return [spdCstr,i];
+			}
+		}
+		return [1000000000000000000,0];
+	},
 	# Calculate the TOD point, if not geometric descent path then it's a 3 deg descent path, if it is then it's the ideal vs
 	# calculated from the getDesAltConst method.
 	calculateTopOfDescent: func(isMng) {
@@ -1143,9 +1152,10 @@ var flightPlanController = {
 					}
 				}
 			} else {
-				nextClbAltConstWptIndex = me.getClbAltConst()[1];
+				nextClbAltConstWptIndex = me.getNextClbSpdConst()[1];
 				if (me.flightplans[2].getWP(nextClbAltConstWptIndex).speed_cstr != 0 and me.flightplans[2].getWP(nextClbAltConstWptIndex).speed_cstr != nil) {
-					spdChangePoint = me.flightplans[2].pathGeod(nextClbAltConstWptIndex - 1, 0); 
+					print("YES speed cstr");
+					spdChangePoint = me.flightplans[2].pathGeod(nextClbAltConstWptIndex, 0); 
 					setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
 					setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
 					setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
