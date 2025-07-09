@@ -875,6 +875,7 @@ var ITAF = {
 			Radio.gsDeflTemp = Radio.gsDefl.getValue();
 			if (abs(Radio.gsDeflTemp) <= 0.2 and Radio.gsDeflTemp != 0 and Output.lat.getValue() == 2) { # Only capture if LOC is active
 				me.activateGs();
+				managedDeson = "False";
 			} else if (t != 1) { # Do not do this if loop calls it
 				if (Output.vert.getValue() != 2) {
 					me.updateGsArm(1);
