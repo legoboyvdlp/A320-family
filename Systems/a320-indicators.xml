@@ -556,7 +556,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				<test logic="OR" value="1">
-					/controls/switches/emer-lights ne 1
+					/controls/switches/emer-lights eq 0
 					/controls/switches/annun-test eq 1
 				</test>
 				<test logic="OR" value="1">

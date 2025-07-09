@@ -27992,7 +27992,7 @@
 		<type>select</type>
 		<object-name>APUMasterBtn2O</object-name>
 		<condition>
-			<property>/controls/indicators/apu-master-fault</property>
+			<property>/controls/indicators/apu-master-on</property>
 		</condition>
 	</animation>
 
