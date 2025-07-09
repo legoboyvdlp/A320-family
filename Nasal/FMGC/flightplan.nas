@@ -873,7 +873,7 @@ var flightPlanController = {
 					# print("cstrWptIndex: " ~ cstrWptIndex ~ "altitude csontraint: " ~ altCstr);
 					break;
 				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
-					spdDistance = abs(me.getDecelerationDistance(spdCstr));
+					spdDistance = abs(me.getDecelerationDistance(spdCstr,altCstr));
 					altCstr = me.getExtrapolatedThreeDegAltCstr(altCstr, (distanceToCstr - distanceToCstr2 + spdDistance));
 					cstrWptIndex = int(i);
 					geoWpt = me.flightplans[2].getWP(i);

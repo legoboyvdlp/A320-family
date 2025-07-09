@@ -466,7 +466,7 @@ var canvas_pfd = {
 					obj["ALT_digit_DN"].setColor(0.6901,0.3333,0.7450);
 					obj["ALT_target"].setColor(0.6901,0.3333,0.7450);
 					if (fmgc.Modes.PFD.FMA.pitchMode2Armed == "ALT") {
-					obj["FMA_pitcharm2"].setColor(0.6901,0.3333,0.7450);
+						obj["FMA_pitcharm2"].setColor(0.6901,0.3333,0.7450);
 					} else {
 						obj["FMA_pitcharm2"].setColor(0.0901,0.6039,0.7176);
 					}
@@ -776,12 +776,31 @@ var canvas_pfd = {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
 			}),
 			#If the aircraft is in descent phase and managed speed is on then ECOn range is set +- 20 knots from managed speed target
-			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd"],0.5, func(val) {
+			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","onSpeedConst"],0.5, func(val) {
 				if (val.fmgcPhase == 4 and (val.managedSpd)) {
-					obj["ECON_range_high"].show();
-					obj["ECON_range_low"].show();
-					obj["ECON_range_high"].setTranslation(0, (val.ASItrgt+20) * -6.6);
-					obj["ECON_range_low"].setTranslation(0, (val.ASItrgt-20) * -6.6);
+					
+					
+					if (val.onSpeedConst) {
+						ECON_high_addition = 5;
+						ECON_low_subtraction = 10;
+					} else {
+						ECON_high_addition = 20;
+						ECON_low_subtraction = 20;
+					}
+					ECON_high_tranlation = (val.ASItrgt+ECON_high_addition) * -6.6;
+					ECON_low_translation = (val.ASItrgt-ECON_low_subtraction) * -6.6;
+					if (ECON_high_tranlation <= 260 and ECON_high_tranlation >= -260) {
+						obj["ECON_range_high"].show();
+						obj["ECON_range_high"].setTranslation(0, ECON_high_tranlation);
+					} else {
+						obj["ECON_range_high"].hide();
+					}
+					if (ECON_low_translation <= 260 and ECON_low_translation >= -260) {
+						obj["ECON_range_low"].show();
+						obj["ECON_range_low"].setTranslation(0, ECON_low_translation);
+					} else {
+						obj["ECON_range_low"].hide();
+					}
 				} else {
 					obj["ECON_range_high"].hide();
 					obj["ECON_range_low"].hide();
@@ -1159,7 +1178,7 @@ var canvas_pfd = {
 		"ALT_thousands","ALT_thousands_zero","ALT_tenthousands","ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box",
 		"LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","vdev_dot","vdev_low","vdev_high","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError",
 		"ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground",
-		"ground_ref","FPV","FPD","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue"];
+		"ground_ref","FPV","FPD","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue","onSpeedConst"];
 	},
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
@@ -2273,6 +2292,7 @@ var input = {
 	vdevDot: "/it-autoflight/internal/vdev-dot",
 	passTOD: "/it-autoflight/internal/pass-tod",
 	moreDrag: "/it-autoflight/internal/more-drag",
+	onSpeedConst: "/it-autoflight/internal/on-speed-const",
 	
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",

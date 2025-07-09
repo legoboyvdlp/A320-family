@@ -987,7 +987,7 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
 				# Speed is maximum of greendot / climb speed limit
 				FMGCInternal.mngKtsMach = 0;
-				
+				Internal.onSpeedConst.setBoolValue(0);
 				if (constraintSpeed != nil and constraintSpeed != 0) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 				} else {
@@ -1015,10 +1015,12 @@ var ManagedSPD = maketimer(0.25, func {
 						# print("alt const: " ~ output);
 						if ((output[1] == 0.1 and output[3] == 0) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[3] == 1)) {
 							FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
+							Internal.onSpeedConst.setBoolValue(1);
 						} else {
 							FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
 						}
 						lastConstraintSpeed = constraintSpeed;
+						
 					} else {
 						# print("mng alt mach: " ~ mng_alt_mach ~ " mng alt spd: " ~ mng_alt_spd ~ " last constraint speed: " ~ lastConstraintSpeed);
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(ktsToMach(lastConstraintSpeed),mng_alt_mach) : math.min(mng_alt_spd, lastConstraintSpeed);
@@ -1027,6 +1029,7 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= (FMGCInternal.desSpdLimAlt + 1000)) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
+				Internal.onSpeedConst.setBoolValue(1);
 				if (constraintSpeed != nil and constraintSpeed != 0) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 					lastConstraintSpeed = constraintSpeed;
