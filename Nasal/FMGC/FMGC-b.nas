@@ -121,6 +121,7 @@ var Internal = {
 	altManaged: props.globals.initNode("/it-autoflight/internal/mng-alt", 0, "BOOL"),
 	alt: props.globals.initNode("/it-autoflight/internal/alt", 10000, "INT"),
 	managedModeOn: props.globals.initNode("/it-autoflight/internal/managed-mode-on", 0, "BOOL"),
+	onSpeedConst: props.globals.initNode("/it-autoflight/internal/on-speed-const", 0, "BOOL"),
 	passTOD: props.globals.initNode("/it-autoflight/internal/pass-tod", 0, "BOOL"),
 	moreDrag: props.globals.initNode("/it-autoflight/internal/more-drag", 0, "BOOL"),
 	altCaptureActive: 0,
@@ -973,7 +974,7 @@ var ITAF = {
 		altCstr = cstr_info[0];
 		distToCstr = cstr_info[1];
 		is_geo = cstr_info[3];
-		if (Position.indicatedAltitudeFt.getValue() >= 9800 and Position.indicatedAltitudeFt.getValue() <= 11000 and Velocities.indicatedAirspeedKt.getValue() - 250 >= 10) {
+		if (Position.indicatedAltitudeFt.getValue() <= 11000 and Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) {
 			return -1000; # Make the aircraft slow to 250 at 10,000 feet
 		}
 		deltaAltitude = (altCstr - Position.indicatedAltitudeFt.getValue());
@@ -991,13 +992,15 @@ var ITAF = {
 			vs = -4000;
 		}
 		if (vs < -3000) {
-			print("yes drag");
+			# print("yes drag");
 			Internal.moreDrag.setBoolValue(1);
 		} else {
-			print("no more drag");
+			# print("no more drag");
 			Internal.moreDrag.setBoolValue(0);
 		}
 		if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and vs < -1500) {
+			vs = -1500;
+		} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 5) and (Input.kts.getValue() == lastConstraintSpeed) and vs < -1500) {
 			vs = -1500;
 		}
 		return vs;
