@@ -7,6 +7,7 @@
 # Initialize all used variables and property nodes
 # Sim
 var managedDeson = "False";
+var armDeson = "False";
 var Controls = {
 	aileron: props.globals.getNode("/controls/flight/aileron", 1),
 	aileron2: props.globals.getNode("/controls/flight/aileron[1]", 1),
@@ -373,6 +374,7 @@ var ITAF = {
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
 					if (fmgc.FMGCInternal.phase >= 4 and fmgc.FMGCInternal.phase <= 6 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
+						armdesOn = "True";
 						armDes();
 					} elsif (Internal.altManaged.getBoolValue()) {
 						armClb();
@@ -382,6 +384,7 @@ var ITAF = {
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
 					if (vertTemp == 8 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
+						armdesOn = "True";
 						armDes();
 					} elsif (Internal.altManaged.getBoolValue()) {
 						armClb();
@@ -784,9 +787,11 @@ var ITAF = {
 					me.updateVertText("SPD CLB");
 				}
 			} else {
-				Output.thrMode.setValue(1);
-				Output.showThrMode.setValue(1);
-				Text.spd.setValue("PITCH");
+				if (Internal.managedModeOn.getValue() == 0) {
+					Output.thrMode.setValue(1);
+					Output.showThrMode.setValue(1);
+					Text.spd.setValue("PITCH");
+				}
 				if (Internal.flchActive and Text.vert.getValue() != "SPD DES" and Internal.managedModeOn.getValue() == 0) {
 					me.updateVertText("SPD DES");
 				}
@@ -825,6 +830,8 @@ var ITAF = {
 	},
 	activateGs: func() {
 		if (Output.vert.getValue() != 2) {
+			managedDeson = "False";
+			armDeson = "False";
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			me.updateGsArm(0);
@@ -880,7 +887,6 @@ var ITAF = {
 			Radio.gsDeflTemp = Radio.gsDefl.getValue();
 			if (abs(Radio.gsDeflTemp) <= 0.2 and Radio.gsDeflTemp != 0 and Output.lat.getValue() == 2) { # Only capture if LOC is active
 				me.activateGs();
-				managedDeson = "False";
 			} else if (t != 1) { # Do not do this if loop calls it
 				if (Output.vert.getValue() != 2) {
 					me.updateGsArm(1);
@@ -1139,11 +1145,14 @@ var armClb = func {
 # To be called when in altitude acquire mode,
 # when the aircraft passes that waypoint the DES mode should resume
 var armDes = func {
-	if (abs(Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[2]) > 800) {
-		ITAF.updateVertText("DES");
-		ITAF.setVertMode(8); # DES mode
-	} else {
-		settimer(armDes, 2);
+	if (armDeson = "True") {
+		if (abs(Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[2]) > 800) {
+			ITAF.updateVertText("DES");
+			ITAF.setVertMode(8); # DES mode
+			armDeson = "False";
+		} else {
+			settimer(armDes, 2);
+		}
 	}
 };
 
