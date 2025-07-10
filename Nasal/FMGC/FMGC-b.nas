@@ -672,7 +672,7 @@ var ITAF = {
 		if (n == 0) { # ALT HLD
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			me.updateGsArm(0);
+			# me.updateGsArm(0);
 			Output.vert.setValue(0);
 			me.resetClimbRateLim();
 			me.updateVertText("ALT HLD");
@@ -977,7 +977,7 @@ var ITAF = {
 		gs = pts.Velocities.groundspeedKt.getValue();
 		vs = (deltaAltitude * gs) / (60 * distToCstr); # Calculate vertical speed to next waypoint
 
-		if ((vs > (-1*gs*5)) and (is_geo == 0)) {
+		if (((vs > (-1*gs*5)) or me.calculateVdev() < -500) and (is_geo == 0)) {
 			return -1000; 
 		}
 		if (me.calculateVdev() > 500) { # If we are above the descent profile, then we need to descend faster
@@ -1165,7 +1165,7 @@ var managedDes = func {
 		vs = ITAF.getVs();
 		Internal.flchActive = 0;
 		Internal.altCaptureActive = 0;
-		ITAF.updateGsArm(0);
+		# ITAF.updateGsArm(0);
 		ITAF.setVs(vs);
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();

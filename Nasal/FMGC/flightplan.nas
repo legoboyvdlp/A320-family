@@ -853,6 +853,7 @@ var flightPlanController = {
 		# if they would be violated by the 3 deg profile, if they are then that would be the new alt const
 		# also set the abvaltconst to be displayed on the pfd just in case
 		distanceToCstr2 = 0;
+		abvAltCstr = nil;
 		for (var i = me.currentToWptIndex.getValue(); i <= cstrWptIndex; i += 1) {
 			if (i == me.currentToWptIndex.getValue()) {
 				distanceToCstr2 += me.distToWpt.getValue();
@@ -861,7 +862,9 @@ var flightPlanController = {
 			}
 			extrapolatedAltCstr = me.getExtrapolatedThreeDegAltCstr(altCstr, (distanceToCstr - distanceToCstr2));
 			if (me.flightplans[2].getWP(i).alt_cstr_type == "above") {
-				if (me.flightplans[2].getWP(i).alt_cstr > extrapolatedAltCstr) {
+				if (me.flightplans[2].getWP(i).alt_cstr != 0 and me.flightplans[2].getWP(i).alt_cstr != nil and abvAltCstr == nil) {
+					abvAltCstr = me.flightplans[2].getWP(i).alt_cstr;
+				} if (me.flightplans[2].getWP(i).alt_cstr > extrapolatedAltCstr) {
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
 					cstrWptIndex = int(i);
 					geoWpt = me.flightplans[2].getWP(i);
@@ -874,7 +877,7 @@ var flightPlanController = {
 					break;
 				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
 					spdDistance = abs(me.getDecelerationDistance(spdCstr,altCstr));
-					altCstr = me.getExtrapolatedThreeDegAltCstr(altCstr, (distanceToCstr - distanceToCstr2 + spdDistance));
+					# altCstr = me.getExtrapolatedThreeDegAltCstr(altCstr, (distanceToCstr - distanceToCstr2 + spdDistance));
 					cstrWptIndex = int(i);
 					geoWpt = me.flightplans[2].getWP(i);
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
@@ -894,7 +897,10 @@ var flightPlanController = {
 		if (resultDistanceToCstr < 0.1) {
 			resultDistanceToCstr = 0.1;
 		}
-		return [altCstr, resultDistanceToCstr, altCstr, 0, 0, abs(me.getDecelerationDistance(spdCstr,altCstr))];
+		if (!abvAltCstr) {
+			abvAltCstr = altCstr;
+		}
+		return [altCstr, resultDistanceToCstr, abvAltCstr, 0, 0, abs(me.getDecelerationDistance(spdCstr,altCstr))];
 	},
 	# Get the distance that it takes to slow down to the constraint speed on 3 deg profile
 	getDecelerationDistance: func(speedCstr,altCstr) {
@@ -1164,12 +1170,16 @@ var flightPlanController = {
 		}
 		
 	},
-	# Calculate the point that at the current vertical speed would intercept the 3 deg descent profile
+	# Calculate the point that at the current vertical speed would intercept the 3 deg descent profile. If it's on GEO descent path then don't display
 	calculateDescentPathInterceptPoint: func() {
 		if (me.currentToWptIndex.getValue() < 0 or fmgc.FMGCInternal.phase <= 2) {
 			return;
 		}
 		result = me.getDesAltConst();
+		if (result[3] == 1) {
+			setprop("/autopilot/route-manager/vnav/ip/show", 0);
+			return;
+		}
 		initialAlt = fmgc.Position.indicatedAltitudeFt.getValue();
 		altCstr = result[0];
 		distanceToCstr = result[1];
