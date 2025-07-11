@@ -760,6 +760,7 @@
 			<altitude-dial-mode type="bool">0</altitude-dial-mode>
 		</config>
 		<input n="0">
+			<alt-managed type="bool">0</alt-managed>
 			<kts type="int">100</kts>
 		</input>
 		<settings n="0">
