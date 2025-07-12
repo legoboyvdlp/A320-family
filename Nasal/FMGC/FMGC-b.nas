@@ -376,7 +376,7 @@ var ITAF = {
 					if (fmgc.FMGCInternal.phase >= 4 and fmgc.FMGCInternal.phase <= 6 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
 						armdesOn = "True";
 						armDes();
-					} elsif (Internal.altManaged.getBoolValue()) {
+					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
 					}
 					
@@ -386,7 +386,7 @@ var ITAF = {
 					if (vertTemp == 8 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
 						armdesOn = "True";
 						armDes();
-					} elsif (Internal.altManaged.getBoolValue()) {
+					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
 					}
 					
@@ -699,6 +699,8 @@ var ITAF = {
 				me.updateGsArm(0);
 			}
 		} else if (n == 2) { # G/S
+			managedDeson = "False";
+			armdesOn = "False";
 			me.updateLnavArm(0);
 			me.checkLoc(0);
 			me.checkGs(0);
@@ -1158,33 +1160,36 @@ var armDes = func {
 
 # Function on loop to set the target altitude, whether it is managed or selected, set the vertical speed, and set the FMA.
 var managedDes = func {
-	next_managed_alt = fmgc.flightPlanController.getDesAltConst()[2]; # Use a dynamic value if needed
-	next_selected_alt = Input.alt.getValue();
-	if (next_managed_alt > next_selected_alt) {
-		alt = next_managed_alt;
-		Internal.altManaged.setValue(1);
-	} else {
-		alt = next_selected_alt;
-		Internal.altManaged.setValue(0);
-
-	}
-	Internal.alt.setValue(alt);
-	if ((abs(alt - Position.indicatedAltitudeFt.getValue()) >= 25) and (managedDeson == "True")) {
-		ITAF.updateVertText("DES");
-		if (Internal.enginesBothAtIdle.getValue()) {
-			Output.showThrMode.setValue(1);
+	if (managedDeson == "True") {
+		print("managedDes true");
+		next_managed_alt = fmgc.flightPlanController.getDesAltConst()[2]; # Use a dynamic value if needed
+		next_selected_alt = Input.alt.getValue();
+		if (next_managed_alt > next_selected_alt) {
+			alt = next_managed_alt;
+			Internal.altManaged.setValue(1);
 		} else {
-			Output.showThrMode.setValue(0);
+			alt = next_selected_alt;
+			Internal.altManaged.setValue(0);
+
 		}
-		vs = ITAF.getVs();
-		Internal.flchActive = 0;
-		Internal.altCaptureActive = 0;
-		# ITAF.updateGsArm(0);
-		ITAF.setVs(vs);
-		Output.vert.setValue(8);
-		ITAF.updateThrustMode();
-		
-		settimer(managedDes, 2);
+		Internal.alt.setValue(alt);
+		if (abs(alt - Position.indicatedAltitudeFt.getValue()) >= 25) {
+			ITAF.updateVertText("DES");
+			if (Internal.enginesBothAtIdle.getValue()) {
+				Output.showThrMode.setValue(1);
+			} else {
+				Output.showThrMode.setValue(0);
+			}
+			vs = ITAF.getVs();
+			Internal.flchActive = 0;
+			Internal.altCaptureActive = 0;
+			# ITAF.updateGsArm(0);
+			ITAF.setVs(vs);
+			Output.vert.setValue(8);
+			ITAF.updateThrustMode();
+			
+			settimer(managedDes, 2);
+		}
 	}
 };
 setlistener(Gear.wow1, func(val) {
