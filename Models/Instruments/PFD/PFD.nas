@@ -778,8 +778,6 @@ var canvas_pfd = {
 			#If the aircraft is in descent phase and managed speed is on then ECOn range is set +- 20 knots from managed speed target
 			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","onSpeedConst"],0.5, func(val) {
 				if (val.fmgcPhase == 4 and (val.managedSpd)) {
-					
-					
 					if (val.onSpeedConst) {
 						ECON_high_addition = 5;
 						ECON_low_subtraction = 10;
