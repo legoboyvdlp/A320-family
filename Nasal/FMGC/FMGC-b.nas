@@ -711,6 +711,7 @@ var ITAF = {
 			Output.vert.setValue(1);
 			Internal.alt.setValue(Input.alt.getValue());
 			Internal.altDiff = Internal.alt.getValue() - Position.indicatedAltitudeFt.getValue();
+			Internal.altManaged.setValue(0);
 			if (abs(Internal.altDiff) >= 250) { # SPD CLB or SPD DES
 				Internal.altCaptureActive = 0;
 				Output.vert.setValue(4);
@@ -979,7 +980,7 @@ var ITAF = {
 		altCstr = cstr_info[0];
 		distToCstr = cstr_info[1];
 		is_geo = cstr_info[3];
-		if (Position.indicatedAltitudeFt.getValue() <= 11000 and Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) {
+		if (Position.indicatedAltitudeFt.getValue() <= (10000 + fmgc.flightPlanController.getTenThousandSlowDownAlt()) and Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) {
 			return -1000; # Make the aircraft slow to 250 at 10,000 feet
 		}
 		deltaAltitude = (altCstr - Position.indicatedAltitudeFt.getValue());

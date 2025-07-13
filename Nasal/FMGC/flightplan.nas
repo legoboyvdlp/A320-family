@@ -784,6 +784,11 @@ var flightPlanController = {
 
 
 	},
+	getTenThousandSlowDownAlt: func() {
+		spd = fmgc.Velocities.indicatedAirspeedKt.getValue();
+		print("calculated altitude add is " ~ ((100*spd/3)-(25000/3)));
+		return ((100*spd/3)-(25000/3));
+	},
 	getClbAltConst: func() {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
@@ -914,11 +919,11 @@ var flightPlanController = {
 		CI = fmgc.FMGCNodes.costIndex.getValue();
 		if (altCstr >= 20000) {
 			extrapolatedSpd = 0.60625 + (0.000416875 * CI) + (0.00000795 * (altCstr - 20000)) + (0.00000000545 * (altCstr - 20000) * CI);
-			print("extrapolated speed is " ~ extrapolatedSpd);
+			# print("extrapolated speed is " ~ extrapolatedSpd);
 			return extrapolatedSpd;
 		} else {
 			extrapolatedSpd = (1.00 + (0.00158 * CI))*266;
-			print("extrapolated speed is " ~ extrapolatedSpd);
+			# print("extrapolated speed is " ~ extrapolatedSpd);
 			return extrapolatedSpd;
 		}
 	},
