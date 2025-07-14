@@ -786,8 +786,11 @@ var flightPlanController = {
 	},
 	getTenThousandSlowDownAlt: func() {
 		spd = fmgc.Velocities.indicatedAirspeedKt.getValue();
-		print("calculated altitude add is " ~ ((100*spd/3)-(25000/3)));
-		return ((100*spd/3)-(25000/3));
+		result = ((100*spd/3)-(25000/3));
+		if (result < 0) {
+			result = 0;
+		}
+		return result;
 	},
 	getClbAltConst: func() {
 		if (me.currentToWptIndex.getValue() < 0) {
