@@ -671,7 +671,6 @@ var ITAF = {
 		Input.altDiff = Input.alt.getValue() - Position.indicatedAltitudeFt.getValue();
 		managedDeson = "False";
 		Internal.managedModeOn.setBoolValue(0);
-		Internal.altManaged.setValue(0);
 		if (n == 0) { # ALT HLD
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
