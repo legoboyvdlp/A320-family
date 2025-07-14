@@ -997,11 +997,9 @@ var ITAF = {
 			
 			vs = -4000;
 		}
-		if (vs < -3000) {
-			# print("yes drag");
+		if (vs < -3000 and (Internal.enginesBothAtIdle.getValue())) {
 			Internal.moreDrag.setBoolValue(1);
 		} else {
-			# print("no more drag");
 			Internal.moreDrag.setBoolValue(0);
 		}
 		if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and vs < -1500) {
