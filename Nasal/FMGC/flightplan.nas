@@ -802,12 +802,9 @@ var flightPlanController = {
 		return [1000000000000000,0];
 	},
 	getDesAltConst: func() {
-		# return me.getFirstAltConst();
 		if (geoWpt != nil and int(me.getWptIndex(geoWpt)) < me.currentToWptIndex.getValue() and (me.flightplans[2].getWP(me.currentToWptIndex.getValue()).wp_role == "star" or me.flightplans[2].getWP(me.currentToWptIndex.getValue()).wp_role == "approach")) {
-			# print("geowptindex: " ~ int(me.getWptIndex(geoWpt)) ~ "Current wpt index " ~ int(me.currentToWptIndex.getValue()));
 			return me.getGEOAltConst();
 		} else {
-			# print("geowpt index: " ~ int(me.getWptIndex(geoWpt)) ~ "Current wpt index " ~ int(me.currentToWptIndex.getValue()));
 			return me.getFirstAltConst();
 		}
 	},
@@ -832,6 +829,7 @@ var flightPlanController = {
 		altCstr = 0;
 		spdCstr = nil;
 		distanceToCstr = 0;
+		cstrWptIndex = 0;
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			cstrType = me.flightplans[2].getWP(i).alt_cstr_type;
 			if (i == me.currentToWptIndex.getValue()) {
