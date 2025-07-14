@@ -979,7 +979,7 @@ var ITAF = {
 	# If above the descent path, it will descend -500 fpm faster.
 	# Max VS is -4000 fpm
 	# If aircraft is above the ECON speed range then it will descend at -1500 fpm to slow down.
-	# If aircraft requires a descent rate of more than -3000 fpm then moreDrag message is shown on FMA.
+	# If aircraft requires a descent rate of more than -3000 fpm and thrust is at idle then moreDrag message is shown on FMA.
 	getVs: func() {
 		cstr_info = fmgc.flightPlanController.getDesAltConst();
 		altCstr = cstr_info[0];
