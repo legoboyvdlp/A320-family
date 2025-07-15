@@ -785,7 +785,7 @@ var flightPlanController = {
 
 	},
 	getTenThousandSlowDownAlt: func() {
-		spd = fmgc.Velocities.indicatedAirspeedKt.getValue();
+		spd = me.getExtrapolatedSpd(10000);
 		result = ((100*spd/3)-(25000/3));
 		if (result < 0) {
 			result = 0;
@@ -919,11 +919,24 @@ var flightPlanController = {
 	getExtrapolatedSpd: func(altCstr) {
 		CI = fmgc.FMGCNodes.costIndex.getValue();
 		if (altCstr >= 20000) {
-			extrapolatedSpd = 0.60625 + (0.000416875 * CI) + (0.00000795 * (altCstr - 20000)) + (0.00000000545 * (altCstr - 20000) * CI);
+			extrapolatedMach = 0.60625 + (0.000416875 * CI) + (0.00000795 * (altCstr - 20000)) + (0.00000000545 * (altCstr - 20000) * CI);
 			# print("extrapolated speed is " ~ extrapolatedSpd);
+			extrapolatedSpd = fmgc.machToKts(extrapolatedMach);
+			if (extrapolatedSpd < 250) {
+				extrapolatedSpd = 250;
+			} elsif (extrapolatedSpd > 345) {
+				extrapolatedSpd = 345;
+			}
 			return extrapolatedSpd;
+		} elsif (altCstr < 10000) {
+			return 250;
 		} else {
 			extrapolatedSpd = (1.00 + (0.00158 * CI))*266;
+			if (extrapolatedSpd < 250) {
+				extrapolatedSpd = 250;
+			} elsif (extrapolatedSpd > 345) {
+				extrapolatedSpd = 345;
+			}
 			# print("extrapolated speed is " ~ extrapolatedSpd);
 			return extrapolatedSpd;
 		}
