@@ -8,6 +8,7 @@
 # Sim
 var managedDeson = "False";
 var armDesOn = "False";
+var vsAdjustment = 0;
 var Controls = {
 	aileron: props.globals.getNode("/controls/flight/aileron", 1),
 	aileron2: props.globals.getNode("/controls/flight/aileron[1]", 1),
@@ -273,7 +274,7 @@ var ITAF = {
 		Gear.wow2Temp = Gear.wow2.getBoolValue();
 		Output.latTemp = Output.lat.getValue();
 		Output.vertTemp = Output.vert.getValue();
-		
+		# print(canvas_pfd.canvas_pfd.ASItrendIsShown);
 		# Trip system off
 		if (Output.ap1Temp or Output.ap2Temp) { # Trip AP off
 			if (abs(Controls.aileron.getValue()) >= 0.2 or abs(Controls.elevator.getValue()) >= 0.2 or abs(Controls.rudder.getValue()) >= 0.2 or abs(Controls.aileron2.getValue()) >= 0.2 or abs(Controls.elevator2.getValue()) >= 0.2 or abs(Controls.rudder2.getValue()) >= 0.2) {
@@ -980,7 +981,7 @@ var ITAF = {
 		altCstr = cstr_info[0];
 		distToCstr = cstr_info[1];
 		is_geo = cstr_info[3];
-		if (Position.indicatedAltitudeFt.getValue() <= (10000 + fmgc.flightPlanController.getTenThousandSlowDownAlt()) and Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) {
+		if (Position.indicatedAltitudeFt.getValue() >= 10000 and Position.indicatedAltitudeFt.getValue() <= (10000 + fmgc.flightPlanController.getTenThousandSlowDownAlt()) and Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) {
 			return -1000; # Make the aircraft slow to 250 at 10,000 feet
 		}
 		deltaAltitude = (altCstr - Position.indicatedAltitudeFt.getValue());
@@ -994,7 +995,6 @@ var ITAF = {
 			vs -= 500;
 		}
 		if (vs < -4000) {
-			
 			vs = -4000;
 		}
 		if (vs < -3000 and (Internal.enginesBothAtIdle.getValue())) {
@@ -1002,10 +1002,30 @@ var ITAF = {
 		} else {
 			Internal.moreDrag.setBoolValue(0);
 		}
-		if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and vs < -1500) {
+		ASItrendIsShown = canvas_pfd.canvas_pfd.ASItrendIsShown;
+		if (Position.indicatedAltitudeFt.getValue() >= 10000) {
+			if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and (vs < -1500) and (ASItrendIsShown != -1)) {
+				vsAdjustment += 100;
+				vs += vsAdjustment;
+			} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1500) and (ASItrendIsShown != -1)) {
+				vs = -1500;
+			} elsif (vsAdjustment > 0) {
+				vsAdjustment -= 100;
+				vs += vsAdjustment;
+			}
+		} else {
 			vs = -1500;
-		} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 5) and (Input.kts.getValue() == lastConstraintSpeed) and vs < -1500) {
-			vs = -1500;
+			# if ((Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) and (vs < -1500) and (ASItrendIsShown != -1)) {
+			# 	vsAdjustment += 200;
+			# 	vs += vsAdjustment;
+			# } elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 5) and (Input.kts.getValue() == lastConstraintSpeed) and (ASItrendIsShown != -1)) {
+			# 	vsAdjustment += 200;
+			# 	vs += vsAdjustment;
+			# } elsif (vsAdjustment > 0) {
+			# 	vsAdjustment -= 200;
+			# 	vs += vsAdjustment;
+			# }
+
 		}
 		return vs;
 	},

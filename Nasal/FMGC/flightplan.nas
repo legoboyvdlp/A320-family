@@ -781,17 +781,17 @@ var flightPlanController = {
 		}
 
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
-
-
 	},
+	# Get the altitude additive to ten thousand to slow down
 	getTenThousandSlowDownAlt: func() {
-		spd = me.getExtrapolatedSpd(10000);
+		spd = me.getExtrapolatedSpd(10000) + 20;
 		result = ((100*spd/3)-(25000/3));
 		if (result < 0) {
 			result = 0;
 		}
 		return result;
 	},
+	# Get the next altitude constraint that is either at, or at or below
 	getClbAltConst: func() {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
@@ -804,6 +804,7 @@ var flightPlanController = {
 		}
 		return [1000000000000000,0];
 	},
+	# Get the next altitude constraint that matters during DES mode
 	getDesAltConst: func() {
 		if (geoWpt != nil and int(me.getWptIndex(geoWpt)) < me.currentToWptIndex.getValue() and (me.flightplans[2].getWP(me.currentToWptIndex.getValue()).wp_role == "star" or me.flightplans[2].getWP(me.currentToWptIndex.getValue()).wp_role == "approach")) {
 			return me.getGEOAltConst();
@@ -811,6 +812,7 @@ var flightPlanController = {
 			return me.getFirstAltConst();
 		}
 	},
+	# Get wpt index by name
 	getWptIndex: func(wp) {
 		if (wp == nil) {
 			return -1;
@@ -824,6 +826,7 @@ var flightPlanController = {
 		}
 		return -1;
 	},
+	# Get the first altitude const that the aircraft would descend 3 deg to
 	getFirstAltConst: func() {
 		if (me.currentToWptIndex.getValue() < 0 or fmgc.FMGCInternal.phase <= 2) {
 			return [0, 0, 0, 0, 0];
@@ -844,7 +847,6 @@ var flightPlanController = {
 				continue;
 			} elsif (me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0) {
 				altCstr = me.flightplans[2].getWP(i).alt_cstr;
-				# print("first alt cstr: " ~ altCstr);
 				geoWpt = me.flightplans[2].getWP(i);
 				cstrWptIndex = i;
 				if (me.flightplans[2].getWP(i).speed_cstr!= 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
@@ -878,12 +880,9 @@ var flightPlanController = {
 						spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 					}
 					
-					# print("after distanceToCstr: " ~ distanceToCstr);
-					# print("cstrWptIndex: " ~ cstrWptIndex ~ "altitude csontraint: " ~ altCstr);
 					break;
 				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
 					spdDistance = abs(me.getDecelerationDistance(spdCstr,altCstr));
-					# altCstr = me.getExtrapolatedThreeDegAltCstr(altCstr, (distanceToCstr - distanceToCstr2 + spdDistance));
 					cstrWptIndex = int(i);
 					geoWpt = me.flightplans[2].getWP(i);
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
@@ -916,6 +915,7 @@ var flightPlanController = {
 		}
 		return ((speed - speedCstr)*0.15);
 	},
+	# Get the speed the aircraft would be at (in managed speed) at the alt cstr altitude
 	getExtrapolatedSpd: func(altCstr) {
 		CI = fmgc.FMGCNodes.costIndex.getValue();
 		if (altCstr >= 20000) {
@@ -937,7 +937,6 @@ var flightPlanController = {
 			} elsif (extrapolatedSpd > 345) {
 				extrapolatedSpd = 345;
 			}
-			# print("extrapolated speed is " ~ extrapolatedSpd);
 			return extrapolatedSpd;
 		}
 	},
@@ -946,7 +945,6 @@ var flightPlanController = {
 	getGEOAltConst: func() {
 		# check if the geo descent profile is already calculated
 		if (lastAltCstrWpt != nil and me.getWptIndex(lastAltCstrWpt) >= me.currentToWptIndex.getValue()) {
-			# print("lastAltCstrWpt index: " ~ me.getWptIndex(lastAltCstrWpt) ~ "Current wpt index " ~ int(me.currentToWptIndex.getValue()));
 			# loop to find the distance to cstr and the abvaltcst (for at or above alt cstr)
 			distToCstr = 0;
 			for (var i = me.currentToWptIndex.getValue(); i <= me.getWptIndex(lastAltCstrWpt); i += 1) {
@@ -966,10 +964,8 @@ var flightPlanController = {
 			if (abvAltCstr == 0) {
 				abvAltCstr = lastAltCstrSave;
 			}
-			# print("lastAltCstrSave: " ~ lastAltCstrSave ~ " distancetocstr: " ~ distToCstr ~ " lastIdealVsSave: " ~ lastIdealVsSave);
 			return [lastAltCstrSave, distToCstr, abvAltCstr, 1, lastIdealVsSave,0];
 		}
-		# print("NO! lastAltCstrWpt index: " ~ me.getWptIndex(lastAltCstrWpt) ~ "Current wpt index " ~ int(me.currentToWptIndex.getValue()));
 		# loop back to front to find what is the last altitude const that the aircraft can descend to at a constant vs
 		altCstr = 0;
 		distanceToCstr = 0;
@@ -979,16 +975,13 @@ var flightPlanController = {
 			if (i != (int(me.flightplans[2].getPlanSize())-1)) {
 				distanceToCstr += me.flightplans[2].getWP(i+1).leg_distance;	
 			}
-			# print("current distance to cstr: " ~ distanceToCstr);
 			if (altCstr == 0) {
 				altCstr = me.flightplans[2].getWP(i).alt_cstr;
 				distanceToCstr = 0;
 			}
 			if (me.flightplans[2].getWP(i).alt_cstr_type == nil) {
 				if (i == me.currentToWptIndex.getValue()) {
-					# print("Leg distance: " ~ me.distToWpt.getValue());
 					distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
-					# print("current distance to cstr closest: " ~ distanceToCstr);
 					result = me.getExtrapolatedGEOAltCstr(altCstr, distanceToCstr, lastAltCstrWpt);
 					idealVs = result[1];
 				}
@@ -1000,7 +993,6 @@ var flightPlanController = {
 			cstrType = me.flightplans[2].getWP(i).alt_cstr_type;
 			if (cstrType == "above") {
 				abvAltCstr = me.flightplans[2].getWP(i).alt_cstr;
-				# print("Constraint type: above");
 				if (extrapolatedAltCstr < me.flightplans[2].getWP(i).alt_cstr) {
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
 					distanceToCstr = 0;
@@ -1050,6 +1042,7 @@ var flightPlanController = {
 		extrapolatedAltCstr = ((distanceToCstr * vs * 60)/gs) + lastAltCstr;
 		return [extrapolatedAltCstr,vs];
 	},
+	# Get the next spd const that the aircraft would maintain until that point
 	getNextClbSpdConst: func() {
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			spdCstr = me.flightplans[2].getWP(i).speed_cstr;
