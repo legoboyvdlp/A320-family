@@ -1007,23 +1007,26 @@ var ITAF = {
 			Internal.moreDrag.setBoolValue(0);
 		}
 		if (Position.indicatedAltitudeFt.getValue() >= 10000) {
-			if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and (vs < -1500)) {
+			if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and (vs < -1500) and ((vs + vsAdjustment) < -1500)) {
 				vsAdjustment += 200;
 				vs += vsAdjustment;
-			} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1500)) {
-				vs = -1500;
+			} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1500) and ((vs + vsAdjustment) < -1500)) {
+				vsAdjustment += 400;
+				vs += vsAdjustment;
 			} elsif (vsAdjustment > 0) {
 				vsAdjustment -= 200;
 				vs += vsAdjustment;
 			}
 		} else {
-			if ((Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) and (vs < -1500)) {
-				vs = -1500;
-			} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1500)) {
-				vs = -1500;
-			# } elsif (vsAdjustment > 0) {
-			# 	vsAdjustment -= 200;
-			# 	vs += vsAdjustment;
+			if ((Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) and (vs < -1500) and ((vs + vsAdjustment) < -1500)) {
+				vsAdjustment += 400;
+				vs += vsAdjustment;
+			} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1500) and ((vs + vsAdjustment) < -1500)) {
+				vsAdjustment += 400;
+				vs += vsAdjustment;
+			} elsif (vsAdjustment > 0) {
+				vsAdjustment -= 400;
+				vs += vsAdjustment;
 			}
 
 		}
