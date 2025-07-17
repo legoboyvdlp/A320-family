@@ -899,6 +899,9 @@ var flightPlanController = {
 		lastAltCstrWpt = geoWpt; # for extrapolated and vdev info
 		# minus the deceleration
 		resultDistanceToCstr -= abs(me.getDecelerationDistance(spdCstr,altCstr));
+		if (altCstr < 10000 and fmgc.Position.indicatedAltitudeFt.getValue() > 10000) {
+			resultDistanceToCstr -= (Velocities.indicatedAirspeedKt.getValue() - 250) * 0.1
+		}
 		if (resultDistanceToCstr < 0.1) {
 			resultDistanceToCstr = 0.1;
 		}
