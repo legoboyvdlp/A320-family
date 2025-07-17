@@ -2018,6 +2018,7 @@ var canvas_pfd = {
 				} else {
 					me["FMA_pitch_box"].setColor(1,1,1);
 					me["FMA_pitch_box"].show();
+					me["FMA_pitch"].show();
 				}
 			} else {
 				me["FMA_pitch_box"].hide();
@@ -2038,6 +2039,7 @@ var canvas_pfd = {
 			}
 			
 			if (fmgc.Modes.PFD.FMA.rollModeBox == 1 and fmgc.Modes.PFD.FMA.rollMode != " "  and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
+				me["FMA_roll"].show();
 				me["FMA_roll_box"].show();
 			} else {
 				me["FMA_roll_box"].hide();

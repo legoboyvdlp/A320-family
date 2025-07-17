@@ -701,7 +701,6 @@ var ITAF = {
 		} else if (n == 2) { # G/S
 			managedDeson = "False";
 			armDesOn = "False";
-			print("arm des on is now false" ~ armDesOn ~ "from n == 2");
 			me.updateLnavArm(0);
 			me.checkLoc(0);
 			me.checkGs(0);
@@ -836,9 +835,9 @@ var ITAF = {
 		if (Output.vert.getValue() != 2) {
 			managedDeson = "False";
 			armDesOn = "False";
-			print("arm des on is now false" ~ armDesOn ~ "from activate gs");
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
+			Internal.altManaged.setValue(0);
 			me.updateGsArm(0);
 			Output.vert.setValue(2);
 			me.updateVertText("G/S");
@@ -1007,29 +1006,25 @@ var ITAF = {
 		} else {
 			Internal.moreDrag.setBoolValue(0);
 		}
-		ASItrendIsShown = canvas_pfd.canvas_pfd.ASItrendIsShown;
 		if (Position.indicatedAltitudeFt.getValue() >= 10000) {
-			if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and (vs < -1500) and (ASItrendIsShown != -1)) {
-				vsAdjustment += 100;
+			if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and (vs < -1500)) {
+				vsAdjustment += 200;
 				vs += vsAdjustment;
-			} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1500) and (ASItrendIsShown != -1)) {
+			} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1500)) {
 				vs = -1500;
 			} elsif (vsAdjustment > 0) {
-				vsAdjustment -= 100;
+				vsAdjustment -= 200;
 				vs += vsAdjustment;
 			}
 		} else {
-			vs = -1500;
-			# if ((Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) and (vs < -1500) and (ASItrendIsShown != -1)) {
-			# 	vsAdjustment += 200;
-			# 	vs += vsAdjustment;
-			# } elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 5) and (Input.kts.getValue() == lastConstraintSpeed) and (ASItrendIsShown != -1)) {
-			# 	vsAdjustment += 200;
-			# 	vs += vsAdjustment;
+			if ((Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) and (vs < -1500)) {
+				vs = -1500;
+			} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1500)) {
+				vs = -1500;
 			# } elsif (vsAdjustment > 0) {
 			# 	vsAdjustment -= 200;
 			# 	vs += vsAdjustment;
-			# }
+			}
 
 		}
 		return vs;
@@ -1182,8 +1177,7 @@ var armDes = func {
 # Function on loop to set the target altitude, whether it is managed or selected, set the vertical speed, and set the FMA.
 var managedDes = func {
 	if (managedDeson == "True") {
-		print("managedDes true");
-		next_managed_alt = fmgc.flightPlanController.getDesAltConst()[2]; # Use a dynamic value if needed
+		next_managed_alt = fmgc.flightPlanController.getDesAltConst()[2];
 		next_selected_alt = Input.alt.getValue();
 		if (next_managed_alt > next_selected_alt) {
 			alt = next_managed_alt;
@@ -1191,7 +1185,6 @@ var managedDes = func {
 		} else {
 			alt = next_selected_alt;
 			Internal.altManaged.setValue(0);
-
 		}
 		Internal.alt.setValue(alt);
 		if (abs(alt - Position.indicatedAltitudeFt.getValue()) >= 25) {
