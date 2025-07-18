@@ -14,6 +14,7 @@ var lastCstrFlown = 0;
 var lastAltCstrWpt = nil;
 var lastAltCstrSave = 0;
 var lastIdealVsSave = 0;
+var lastDecelerationDistance = 0;
 var DEBUG_DISCONT = 0;
 var geoWpt = nil;
 
@@ -852,8 +853,6 @@ var flightPlanController = {
 				if (me.flightplans[2].getWP(i).speed_cstr!= 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 				}
-				# print("cstrWptIndex: " ~ cstrWptIndex);
-				# print("before distanceToCstr: " ~ distanceToCstr);
 				break;
 			}
 		}
@@ -916,7 +915,7 @@ var flightPlanController = {
 		if (speedCstr == nil or speedCstr == 0 or speedCstr >= speed) {
 			return 0;
 		}
-		return ((speed - speedCstr)*0.15);
+		return ((speed - speedCstr)*0.1);
 	},
 	# Get the speed the aircraft would be at (in managed speed) at the alt cstr altitude
 	getExtrapolatedSpd: func(altCstr) {
@@ -967,14 +966,21 @@ var flightPlanController = {
 			if (abvAltCstr == 0) {
 				abvAltCstr = lastAltCstrSave;
 			}
-			return [lastAltCstrSave, distToCstr, abvAltCstr, 1, lastIdealVsSave,0];
+			distToCstr -= lastDecelerationDistance;
+			if (lastAltCstrSave < 10000 and fmgc.Position.indicatedAltitudeFt.getValue() > 10000) {
+				distToCstr -= (Velocities.indicatedAirspeedKt.getValue() - 250) * 0.1
+			}
+			if (distToCstr < 0.1) {
+				distToCstr = 0.1;
+			}
+			return [lastAltCstrSave, distToCstr, abvAltCstr, 1, lastIdealVsSave,lastDecelerationDistance];
 		}
 		# loop back to front to find what is the last altitude const that the aircraft can descend to at a constant vs
 		altCstr = 0;
 		distanceToCstr = 0;
 		abvAltCstr = 0;
+		spdCstr = 0;
 		for (var i = int(me.flightplans[2].getPlanSize())-1; i >= me.currentToWptIndex.getValue(); i -= 1) {
-			# i -= 1;
 			if (i != (int(me.flightplans[2].getPlanSize())-1)) {
 				distanceToCstr += me.flightplans[2].getWP(i+1).leg_distance;	
 			}
@@ -996,13 +1002,25 @@ var flightPlanController = {
 			cstrType = me.flightplans[2].getWP(i).alt_cstr_type;
 			if (cstrType == "above") {
 				abvAltCstr = me.flightplans[2].getWP(i).alt_cstr;
-				if (extrapolatedAltCstr < me.flightplans[2].getWP(i).alt_cstr) {
+				if (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
+					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+					altCstr = me.flightplans[2].getWP(i).alt_cstr;
+					distanceToCstr = 0;
+					lastAltCstrWpt = me.flightplans[2].getWP(i);
+				} elsif (extrapolatedAltCstr < me.flightplans[2].getWP(i).alt_cstr) {
+					spdCstr = 0;
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
 					distanceToCstr = 0;
 					lastAltCstrWpt = me.flightplans[2].getWP(i);
 				}
 			} else if (cstrType == "below") {
-				if (extrapolatedAltCstr > me.flightplans[2].getWP(i).alt_cstr) {
+				if (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
+					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+					altCstr = me.flightplans[2].getWP(i).alt_cstr;
+					distanceToCstr = 0;
+					lastAltCstrWpt = me.flightplans[2].getWP(i);
+				} elsif (extrapolatedAltCstr > me.flightplans[2].getWP(i).alt_cstr) {
+					spdCstr = 0;
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
 					distanceToCstr = 0;
 					lastAltCstrWpt = me.flightplans[2].getWP(i);
@@ -1011,6 +1029,11 @@ var flightPlanController = {
 				altCstr = me.flightplans[2].getWP(i).alt_cstr;
 				distanceToCstr = 0;
 				lastAltCstrWpt = me.flightplans[2].getWP(i);
+				if (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
+					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+				} else {
+					spdCstr = 0;
+				}
 			}
 			if (i == me.currentToWptIndex.getValue()) {
 				distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
@@ -1021,12 +1044,20 @@ var flightPlanController = {
 		if (abvAltCstr == 0) {
 			abvAltCstr = altCstr;
 		}
+		distanceToCstr -= abs(me.getDecelerationDistance(spdCstr,altCstr));
+		print("altcstr is " ~ altCstr ~ "distance to cstr is " ~ distanceToCstr ~ "deceleration distance is " ~ abs(me.getDecelerationDistance(spdCstr,altCstr)));
+		if (altCstr < 10000 and fmgc.Position.indicatedAltitudeFt.getValue() > 10000) {
+			distanceToCstr -= (Velocities.indicatedAirspeedKt.getValue() - 250) * 0.1
+		}
+		if (distanceToCstr < 0.1) {
+			distanceToCstr = 0.1;
+		}
 		#for extrapolated and vdev info
 		lastCstrFlown = altCstr;
 		lastAltCstrSave = altCstr;
 		lastIdealVsSave = idealVs;
-		
-		return [altCstr, distanceToCstr,abvAltCstr,1,idealVs,0];
+		lastDecelerationDistance = abs(me.getDecelerationDistance(spdCstr,altCstr));
+		return [altCstr, distanceToCstr,abvAltCstr,1,idealVs,lastDecelerationDistance];
 	},
 	# Get the altitude that the aircraft would be at if it flies a 3 deg descent profile from the last altitude constraint wpt
 	getExtrapolatedThreeDegAltCstr: func(lastAltCstr, distanceToCstr) {
@@ -1155,27 +1186,26 @@ var flightPlanController = {
 				result = me.getDesAltConst();
 				is_GEO = result[3];
 				spdChangeDistance = result[5];
-				if (!is_GEO and spdChangeDistance != 0) {
+				if (spdChangeDistance != 0) {
 					distanceToCstr = result[1];
 					spdChangePoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToCstr);
 					setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
 					setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
 					setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
-				} elsif (is_GEO) {
-					for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
-						if (me.flightplans[2].getWP(i).speed_cstr != nil and me.flightplans[2].getWP(i).speed_cstr != 0 and Velocities.indicatedAirspeedKt.getValue() > me.flightplans[2].getWP(i).speed_cstr) {
-							spdChangePoint = me.flightplans[2].pathGeod(i - 1, 0); 
-							setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
-							setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
-							setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
-							break;
-						}
-					}
+				# } elsif (is_GEO) {
+				# 	for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+				# 		if (me.flightplans[2].getWP(i).speed_cstr != nil and me.flightplans[2].getWP(i).speed_cstr != 0 and Velocities.indicatedAirspeedKt.getValue() > me.flightplans[2].getWP(i).speed_cstr) {
+				# 			spdChangePoint = me.flightplans[2].pathGeod(i - 1, 0); 
+				# 			setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
+				# 			setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
+				# 			setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
+				# 			break;
+				# 		}
+				# 	}
 				}
 			} else {
 				nextClbAltConstWptIndex = me.getNextClbSpdConst()[1];
 				if (me.flightplans[2].getWP(nextClbAltConstWptIndex).speed_cstr != 0 and me.flightplans[2].getWP(nextClbAltConstWptIndex).speed_cstr != nil) {
-					print("YES speed cstr");
 					spdChangePoint = me.flightplans[2].pathGeod(nextClbAltConstWptIndex, 0); 
 					setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
 					setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
@@ -1199,7 +1229,10 @@ var flightPlanController = {
 		altCstr = result[0];
 		distanceToCstr = result[1];
 		gs = pts.Velocities.groundspeedKt.getValue();
-		vs = abs(fmgc.Internal.vs.getValue());
+		vs = -1*fmgc.Internal.vs.getValue();
+		if (vs < 0) {
+			vs = 0;
+		}
 		distanceToIntercept = (gs*(altCstr - initialAlt) + (318*gs*distanceToCstr))/((318*gs) - (vs*60));
 		DescentPathInterceptPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToIntercept);
 		setprop("/autopilot/route-manager/vnav/ip/latitude-deg", DescentPathInterceptPoint.lat); 
