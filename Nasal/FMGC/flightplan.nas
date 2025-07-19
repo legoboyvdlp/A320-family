@@ -1182,7 +1182,7 @@ var flightPlanController = {
 	# if it is then it's the waypoint before.
 	calculateSpdChangePoint: func() {
 		if (Custom.Input.spdManaged.getBoolValue()) {
-			if (fmgc.FMGCInternal.phase >= 4 and fmgc.FMGCInternal.phase != 7) {
+			if (fmgc.FMGCInternal.phase >= 3 and fmgc.FMGCInternal.phase != 7) {
 				result = me.getDesAltConst();
 				is_GEO = result[3];
 				spdChangeDistance = result[5];
@@ -1242,7 +1242,7 @@ var flightPlanController = {
 
 	# Calculate the point of the SC symbol to be placed on the ND
 	calculateClbPoint: func(isMng) {
-		if (me.currentToWptIndex.getValue() < 0 or fmgc.FMGCInternal.phase > 3) {
+		if (me.currentToWptIndex.getValue() < 0 or (fmgc.FMGCInternal.phase > 3 and fmgc.FMGCInternal.phase != 7)) {
 			return;
 		}
 		wptIndex = me.getClbAltConst()[1];

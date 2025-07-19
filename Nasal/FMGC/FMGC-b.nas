@@ -369,7 +369,7 @@ var ITAF = {
 				if (Internal.altTemp >= Position.indicatedAltitudeFtTemp and Internal.vsTemp >= -25) { # Don't capture if we are going the wrong way
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
-					if (fmgc.FMGCInternal.phase >= 4 and fmgc.FMGCInternal.phase <= 6 and Internal.altManaged.getBoolValue() and armDesOn == "False") { # If we are in V/S and managed alt, switch to ALT CAP
+					if (vertTemp == 8 and Internal.altManaged.getBoolValue() and armDesOn == "False") { # If we are in V/S and managed alt, switch to ALT CAP
 						armDesOn = "True";
 						armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
@@ -670,9 +670,11 @@ var ITAF = {
 	},
 	setVertMode: func(n) {
 		Input.altDiff = Input.alt.getValue() - Position.indicatedAltitudeFt.getValue();
-		managedDeson = "False";
-		Internal.managedModeOn.setBoolValue(0);
+		# managedDeson = "False";
+		# Internal.managedModeOn.setBoolValue(0);
 		if (n == 0) { # ALT HLD
+			Internal.managedModeOn.setBoolValue(0);
+			managedDeson = "False";
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			# me.updateGsArm(0);
@@ -682,6 +684,8 @@ var ITAF = {
 			me.syncAlt();
 			me.updateThrustMode();
 		} else if (n == 1) { # V/S
+			Internal.managedModeOn.setBoolValue(0);
+			managedDeson = "False";
 			if (abs(Input.altDiff) >= 25) {
 				Internal.flchActive = 0;
 				Internal.altCaptureActive = 0;
@@ -694,12 +698,13 @@ var ITAF = {
 				me.updateGsArm(0);
 			}
 		} else if (n == 2) { # G/S
-			managedDeson = "False";
-			armDesOn = "False";
+			# armDesOn = "False";
 			me.updateLnavArm(0);
 			me.checkLoc(0);
 			me.checkGs(0);
 		} else if (n == 3) { # ALT CAP
+			Internal.managedModeOn.setBoolValue(0);
+			managedDeson = "False";
 			Internal.flchActive = 0;
 			Output.vert.setValue(0);
 			me.setClimbRateLim();
@@ -707,6 +712,8 @@ var ITAF = {
 			me.updateVertText("ALT CAP");
 			me.updateThrustMode();
 		} else if (n == 4) { # FLCH
+			Internal.managedModeOn.setBoolValue(0);
+			managedDeson = "False";
 			me.updateGsArm(0);
 			Output.vert.setValue(1);
 			Internal.alt.setValue(Input.alt.getValue());
@@ -727,6 +734,8 @@ var ITAF = {
 				me.updateThrustMode();
 			}
 		} else if (n == 5) { # FPA
+			Internal.managedModeOn.setBoolValue(0);
+			managedDeson = "False";
 			if (abs(Input.altDiff) >= 25) {
 				Internal.flchActive = 0;
 				Internal.altCaptureActive = 0;
@@ -739,6 +748,8 @@ var ITAF = {
 				me.updateGsArm(0);
 			}
 		} else if (n == 6) { # FLARE/ROLLOUT
+			Internal.managedModeOn.setBoolValue(0);
+			managedDeson = "False";
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			me.updateGsArm(0);
@@ -746,12 +757,16 @@ var ITAF = {
 			me.updateVertText("FLARE");
 			me.updateThrustMode();
 		} else if (n == 7) { # T/O CLB or G/A CLB, text is set by TOGA selector
+			Internal.managedModeOn.setBoolValue(0);
+			managedDeson = "False";
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			me.updateGsArm(0);
 			Output.vert.setValue(7);
 			me.updateThrustMode();
 		} else if (n == 8) { # CLB/DES
+			Internal.managedModeOn.setBoolValue(0);
+			managedDeson = "False";
 			if (fmgc.FMGCInternal.phase <= 3 or fmgc.FMGCInternal.phase == 7) {
 				Internal.managedModeOn.setBoolValue(1);
 				managedClb();
@@ -761,6 +776,7 @@ var ITAF = {
 				managedDes();
 			}
 		} else if (n == 9) { # NONE
+			managedDeson = "False";
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			me.updateGsArm(0);
@@ -833,6 +849,7 @@ var ITAF = {
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			Internal.altManaged.setValue(0);
+			Internal.managedModeOn.setBoolValue(0);
 			me.updateGsArm(0);
 			Output.vert.setValue(2);
 			me.updateVertText("G/S");
@@ -1165,7 +1182,6 @@ var armDes = func {
 			ITAF.updateVertText("DES");
 			ITAF.setVertMode(8); # DES mode
 			armDesOn = "False";
-			print("des activated from armdes");
 		} else {
 			settimer(armDes, 1);
 		}
