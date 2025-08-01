@@ -1013,7 +1013,7 @@ var ManagedSPD = maketimer(0.25, func {
 					if (constraintSpeed != nil and constraintSpeed != 0) {
 						output = fmgc.flightPlanController.getDesAltConst();
 						# print("distance " ~ output[1] ~ " altitude " ~ output[0] ~ " constraintSpeed " ~ constraintSpeed ~ "diff " ~ (abs(Position.indicatedAltitudeFt.getValue()-output[0])) ~ " decel " ~ output[6]);
-						if ((output[1] == 0.1) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[6] == 1)) {
+						if ((output[1] == 0.1) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[5] < 0)) {
 							FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 							Internal.onSpeedConst.setBoolValue(1);
 							# print("TRIGGGG");
@@ -1034,7 +1034,7 @@ var ManagedSPD = maketimer(0.25, func {
 				if (constraintSpeed != nil and constraintSpeed != 0) {
 					output = fmgc.flightPlanController.getDesAltConst();
 					# if ((output[1] == 0.1 and output[3] == 0) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[3] == 1)) {
-					if ((output[1] == 0.1) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[6] == 1)) {
+					if ((output[1] == 0.1) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[5] < 0)) {
 						FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 						lastConstraintSpeed = constraintSpeed;
 					} else {

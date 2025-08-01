@@ -419,7 +419,7 @@ var ITAF = {
 				Custom.showHdg.setBoolValue(0);
 			}
 		}
-		if (FMGCInternal.phase == 4) {
+		if (FMGCInternal.phase == 4 or FMGCInternal.phase == 5) {
 			Internal.vdevDot.setValue(me.calculateVdev());
 		}
 	},
@@ -428,9 +428,9 @@ var ITAF = {
 		cstr_info = fmgc.flightPlanController.getDesAltConst();
 		altCstr = cstr_info[0];
 		realDistToCstr = cstr_info[1];
-		is_GEO = cstr_info[3];
-		idealVs = cstr_info[4];
-		lastCstrFlown = cstr_info[7];
+		is_GEO = cstr_info[2];
+		idealVs = cstr_info[3];
+		lastCstrFlown = cstr_info[6];
 		if (is_GEO == 0) {
 			profileAlt = (realDistToCstr * 318) + altCstr; #Calculate profile alt based on 3 deg descent profile
 		} else {
@@ -1005,7 +1005,7 @@ var ITAF = {
 		cstr_info = fmgc.flightPlanController.getDesAltConst();
 		altCstr = cstr_info[0];
 		distToCstr = cstr_info[1];
-		is_geo = cstr_info[3];
+		is_geo = cstr_info[2];
 		if (Position.indicatedAltitudeFt.getValue() >= 10000 and Position.indicatedAltitudeFt.getValue() <= (10000 + fmgc.flightPlanController.getTenThousandSlowDownAlt()) and Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) {
 			return -1000; # Make the aircraft slow to 250 at 10,000 feet
 		}
@@ -1201,7 +1201,7 @@ var armClb = func {
 # when the aircraft passes that waypoint the DES mode should resume
 var armDes = func {
 	if (armDesOn == "True") {
-		if (abs(Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[2]) > 800) {
+		if (abs(Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[0]) > 800) {
 			ITAF.updateVertText("DES");
 			ITAF.setVertMode(8); # DES mode
 			armDesOn = "False";
@@ -1215,7 +1215,7 @@ var armDes = func {
 # Function on loop to set the target altitude, whether it is managed or selected, set the vertical speed, and set the FMA.
 var managedDes = func {
 	if (managedDeson == "True") {
-		next_managed_alt = fmgc.flightPlanController.getDesAltConst()[2];
+		next_managed_alt = fmgc.flightPlanController.getDesAltConst()[0];
 		next_selected_alt = Input.alt.getValue();
 		if (next_managed_alt > next_selected_alt) {
 			alt = next_managed_alt;
