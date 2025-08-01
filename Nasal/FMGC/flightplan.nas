@@ -838,8 +838,6 @@ var flightPlanController = {
 		distanceToCstr = 0;
 		cstrWptIndex = 0;
 		spdDistance = 0;
-		descendAfterSpdChange = 0;
-		decelerate = 0;
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			cstrType = me.flightplans[2].getWP(i).alt_cstr_type;
 			if (i == me.currentToWptIndex.getValue()) {
@@ -927,18 +925,10 @@ var flightPlanController = {
 		if (resultDistanceToCstr < 0.1) {
 			resultDistanceToCstr = 0.1;
 		}
-		print("distance to cstr is " ~ resultDistanceToCstr ~ " and alt cstr is " ~ altCstr ~ "and decelerate is " ~ decelerate);
 		#in order: altcstr, distance to cstr, is GEO, idealvs, spddistance, decelerate,lastCstrFlown
 		return [altCstr, resultDistanceToCstr, 0, 0, spdDistance, distanceToDecelerate, lastCstrFlown];
 	},
 	# Get the distance that it takes to slow down to the constraint speed on 3 deg profile
-	getDescendingDecelerationAltitude: func(speedCstr,extrapolatedAltCstr) {
-		speed = me.getExtrapolatedSpd(extrapolatedAltCstr) + 20;
-		if (speedCstr == nil or speedCstr == 0 or speedCstr >= speed) {
-			return 0;
-		}
-		return ((100*speed/3)-(100*speedCstr/3)) + extrapolatedAltCstr;
-	}, 
 	getDecelerationDistance: func(speedCstr,altCstr) {
 		speed = me.getExtrapolatedSpd(altCstr);
 		if (speedCstr == nil or speedCstr == 0 or speedCstr >= speed) {
@@ -991,8 +981,6 @@ var flightPlanController = {
 		distanceToCstr = 0;
 		cstrWptIndex = 0;
 		spdDistance = 0;
-		descendAfterSpdChange = 0;
-		decelerate = 0;
 		distanceToCstr2 = 0;
 		realDistanceToCstr = 0;
 		print("lastcstrwptindexflown + 1 is " ~ (lastCstrWptIndexFlown + 1) ~ " and currenttowptindex is " ~ me.currentToWptIndex.getValue());
@@ -1076,7 +1064,6 @@ var flightPlanController = {
 		if (altCstr < 10000 and fmgc.Position.indicatedAltitudeFt.getValue() > 10000) {
 			resultDistanceToCstr -= (Velocities.indicatedAirspeedKt.getValue() - 250) * 0.1
 		}
-		decelerate = 0;
 		realDistanceToCstr += resultDistanceToCstr - me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance + me.distToWpt.getValue(); # for extrapolated and vdev info
 		if (realDistanceToCstr < 0.1) {
 			realDistanceToCstr = 0.1; # for extrapolated and vdev info
@@ -1097,11 +1084,6 @@ var flightPlanController = {
 		} else {
 			idealVs = lastIdealVsSave;
 		}
-		# if (distanceToDecelerate <= 0) {
-		# 	decelerate = 1;
-		# } else {
-		# 	decelerate = 0;
-		# }
 		# print("distance to cstr is " ~ resultDistanceToCstr);
 		lastIdealVsSave = idealVs; # for extrapolated and vdev info
 		
@@ -1237,7 +1219,7 @@ var flightPlanController = {
 				is_GEO = result[2];
 				spdChangeDistance = result[4];
 				distanceToDecelerate = result[5];
-				if (distanceToDecelerate > 0) {
+				if (distanceToDecelerate != 0) {
 					spdChangePoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToDecelerate);
 					setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
 					setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
