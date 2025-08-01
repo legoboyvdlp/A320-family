@@ -1019,6 +1019,7 @@ var ManagedSPD = maketimer(0.25, func {
 							# print("TRIGGGG");
 							lastConstraintSpeed = constraintSpeed;
 						} else {
+							print("lastcstrspeed is " ~ lastConstraintSpeed);
 							FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(ktsToMach(lastConstraintSpeed),mng_alt_mach) : math.min(mng_alt_spd, lastConstraintSpeed);
 						}
 						
