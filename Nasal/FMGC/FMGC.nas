@@ -1012,9 +1012,11 @@ var ManagedSPD = maketimer(0.25, func {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 					if (constraintSpeed != nil and constraintSpeed != 0) {
 						output = fmgc.flightPlanController.getDesAltConst();
+						# print("distance " ~ output[1] ~ " altitude " ~ output[0] ~ " constraintSpeed " ~ constraintSpeed ~ "diff " ~ (abs(Position.indicatedAltitudeFt.getValue()-output[0])) ~ " decel " ~ output[6]);
 						if ((output[1] == 0.1) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[6] == 1)) {
 							FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 							Internal.onSpeedConst.setBoolValue(1);
+							# print("TRIGGGG");
 							lastConstraintSpeed = constraintSpeed;
 						} else {
 							FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(ktsToMach(lastConstraintSpeed),mng_alt_mach) : math.min(mng_alt_spd, lastConstraintSpeed);

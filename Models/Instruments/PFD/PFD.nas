@@ -479,7 +479,7 @@ var canvas_pfd = {
 			}),
 			# Control the movement of the vertical deviation dot
 			props.UpdateManager.FromHashList(["fmgcPhase","vdevDot"], 1, func(val) {
-				if (val.fmgcPhase == 4) {
+				if (val.fmgcPhase == 4 or val.fmgcPhase == 5) {
 					obj["vdev_dot"].show();
 					vdevDotDev = val.vdevDot * 0.5;
 					if (vdevDotDev > 260) {
