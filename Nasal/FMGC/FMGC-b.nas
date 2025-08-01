@@ -422,15 +422,19 @@ var ITAF = {
 	calculateVdev: func() {
 		cstr_info = fmgc.flightPlanController.getDesAltConst();
 		altCstr = cstr_info[0];
-		distToCstr = cstr_info[1];
+		realDistToCstr = cstr_info[1];
 		is_GEO = cstr_info[3];
 		idealVs = cstr_info[4];
+		lastCstrFlown = cstr_info[7];
 		if (is_GEO == 0) {
-			profileAlt = (distToCstr * 318) + altCstr; #Calculate profile alt based on 3 deg descent profile
+			profileAlt = (realDistToCstr * 318) + altCstr; #Calculate profile alt based on 3 deg descent profile
 		} else {
 			vs = idealVs;
 			gs = pts.Velocities.groundspeedKt.getValue();
-			profileAlt = abs(vs * 60 * distToCstr / gs) + altCstr; # Calculate altitude that is on descent profile
+			profileAlt = abs(vs * 60 * realDistToCstr / gs) + altCstr; # Calculate altitude that is on descent profile
+			if (profileAlt > lastCstrFlown) {
+				profileAlt = lastCstrFlown; # If the profile altitude is above the last flown constraint, use the last flown constraint
+			}
 		}
 		
 		vdev = fmgc.Position.indicatedAltitudeFt.getValue() - profileAlt;
