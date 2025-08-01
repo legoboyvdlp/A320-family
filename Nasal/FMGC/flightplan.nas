@@ -926,11 +926,11 @@ var flightPlanController = {
 			resultDistanceToCstr -= (Velocities.indicatedAirspeedKt.getValue() - 250) * 0.1
 		}
 		print("distance to decel is " ~ distanceToDecelerate);
-		if (distanceToDecelerate <= 0) {
-			decelerate = 1;
-		} else {
-			decelerate = 0;
-		}
+		# if (distanceToDecelerate <= 0) {
+		# 	decelerate = 1;
+		# } else {
+		# 	decelerate = 0;
+		# }
 		if (resultDistanceToCstr < 0.1) {
 			resultDistanceToCstr = 0.1;
 		}
@@ -938,8 +938,8 @@ var flightPlanController = {
 			abvAltCstr = altCstr;
 		}
 		print("distance to cstr is " ~ resultDistanceToCstr ~ " and alt cstr is " ~ altCstr ~ "and decelerate is " ~ decelerate);
-		#in order: altcstr, distance to cstr, abvaltcstr, is GEO, idealvs, spddistance, decelerate,lastCstrFlown
-		return [altCstr, resultDistanceToCstr, abvAltCstr, 0, 0, spdDistance, decelerate, lastCstrFlown];
+		#in order: altcstr, distance to cstr, is GEO, idealvs, spddistance, decelerate,lastCstrFlown
+		return [altCstr, resultDistanceToCstr, 0, 0, spdDistance, distanceToDecelerate, lastCstrFlown];
 	},
 	# Get the distance that it takes to slow down to the constraint speed on 3 deg profile
 	getDescendingDecelerationAltitude: func(speedCstr,extrapolatedAltCstr) {
@@ -1122,7 +1122,7 @@ var flightPlanController = {
 		lastIdealVsSave = idealVs; # for extrapolated and vdev info
 		
 		lastRealDistanceToCstr = realDistanceToCstr; # for extrapolated and vdev info
-		return [altCstr, realDistanceToCstr, abvAltCstr, 1, idealVs, spdDistance, decelerate, lastCstrFlown];
+		return [altCstr, realDistanceToCstr, 1, idealVs, spdDistance, decelerate, lastCstrFlown];
 	},
 	# Get the altitude that the aircraft would be at if it flies a 3 deg descent profile from the last altitude constraint wpt
 	getExtrapolatedThreeDegAltCstr: func(lastAltCstr, distanceToCstr) {
@@ -1161,8 +1161,8 @@ var flightPlanController = {
 		output = me.getDesAltConst();
 		alt_cstr = output[0];
 		distanceToCstr = output[1];
-		is_geo = output[3];
-		idealVs = output[4];
+		is_geo = output[2];
+		idealVs = output[3];
 		deltaAltitude = alt_cstr - pts.Instrumentation.Altimeter.indicatedFt.getValue();
 		if (is_geo == 0) {
 			distLvl = abs(deltaAltitude / 318); # 318 is for 3 deg descent prof, so we get feet per NM
@@ -1250,9 +1250,15 @@ var flightPlanController = {
 		if (Custom.Input.spdManaged.getBoolValue()) {
 			if (fmgc.FMGCInternal.phase >= 3 and fmgc.FMGCInternal.phase != 7) {
 				result = me.getDesAltConst();
-				is_GEO = result[3];
-				spdChangeDistance = result[5];
-				if (spdChangeDistance != 0) {
+				is_GEO = result[2];
+				spdChangeDistance = result[4];
+				distanceToDecelerate = result[5];
+				if (distanceToDecelerate > 0) {
+					spdChangePoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToDecelerate);
+					setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
+					setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
+					setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
+				} elsif (spdChangeDistance != 0) {
 					distanceToCstr = result[1];
 					spdChangePoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToCstr);
 					setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
@@ -1277,7 +1283,7 @@ var flightPlanController = {
 			return;
 		}
 		result = me.getDesAltConst();
-		if (result[3] == 1) {
+		if (result[2] == 1) {
 			setprop("/autopilot/route-manager/vnav/ip/show", 0);
 			return;
 		}
