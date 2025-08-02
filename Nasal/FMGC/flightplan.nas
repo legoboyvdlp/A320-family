@@ -856,6 +856,12 @@ var flightPlanController = {
 					spdDistance = abs(me.getDecelerationDistance(spdCstr,altCstr));
 				}
 				break;
+			} elsif (me.flightplans[2].getWP(i).wp_type == "runway") {
+				altCstr = geodinfo(me.flightplans[2].getWP(i).lat, me.flightplans[2].getWP(i).lon)[0] * 3.28084;
+				print("runway elevation is " ~ altCstr);
+				cstrWptIndex = i;
+				geoWpt = me.flightplans[2].getWP(i);
+				break;
 			}
 		}
 		# second loop is to check all the above alt const before the one found by the first loop to see
@@ -1004,6 +1010,11 @@ var flightPlanController = {
 					spdDistance = abs(me.getDecelerationDistance(spdCstr,altCstr));
 				}
 				break;
+			} elsif (me.flightplans[2].getWP(i).wp_type == "runway") {
+				altCstr = geodinfo(me.flightplans[2].getWP(i).lat, me.flightplans[2].getWP(i).lon)[0] * 3.28084;
+				print("runway elevation is " ~ altCstr);
+				cstrWptIndex = i;
+				break;
 			}
 		}
 
@@ -1017,7 +1028,6 @@ var flightPlanController = {
 			if (cstrType == "above") {
 				if (extrapolatedAltCstr < me.flightplans[2].getWP(i).alt_cstr) {
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
-					cstrWpt = me.flightplans[2].getWP(i);
 					cstrWptIndex = int(i);
 					if (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
 						spdCstr = me.flightplans[2].getWP(i).speed_cstr;
@@ -1036,7 +1046,6 @@ var flightPlanController = {
 				print("below extrapolated alt cstr is " ~ extrapolatedAltCstr ~ " and alt cstr is " ~ me.flightplans[2].getWP(i).alt_cstr);
 				if (extrapolatedAltCstr > me.flightplans[2].getWP(i).alt_cstr) {
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
-					cstrWpt = me.flightplans[2].getWP(i);
 					cstrWptIndex = int(i);
 					if (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil) {
 						spdCstr = me.flightplans[2].getWP(i).speed_cstr;
@@ -1214,7 +1223,7 @@ var flightPlanController = {
 	# if it is then it's the waypoint before.
 	calculateSpdChangePoint: func() {
 		if (Custom.Input.spdManaged.getBoolValue()) {
-			if (fmgc.FMGCInternal.phase >= 3 and fmgc.FMGCInternal.phase != 7) {
+			if (fmgc.FMGCInternal.phase >= 3 and fmgc.FMGCInternal.phase != 6) {
 				result = me.getDesAltConst();
 				is_GEO = result[2];
 				spdChangeDistance = result[4];
@@ -1273,7 +1282,7 @@ var flightPlanController = {
 
 	# Calculate the point of the SC symbol to be placed on the ND
 	calculateClbPoint: func(isMng) {
-		if (me.currentToWptIndex.getValue() < 0 or (fmgc.FMGCInternal.phase > 3 and fmgc.FMGCInternal.phase != 7)) {
+		if (me.currentToWptIndex.getValue() < 0 or (fmgc.FMGCInternal.phase > 3 and fmgc.FMGCInternal.phase != 6)) {
 			return;
 		}
 		wptIndex = me.getClbAltConst()[1];
