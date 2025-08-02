@@ -1098,7 +1098,7 @@ var flightPlanController = {
 		} else {
 			idealVs = lastIdealVsSave;
 		}
-		distanceToDecelerate +=  me.distToWpt.getValue(); - me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance
+		distanceToDecelerate +=  me.distToWpt.getValue(); - me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance;
 		print("real distancetodecel is " ~ distanceToDecelerate);
 		# print("distance to cstr is " ~ resultDistanceToCstr);
 		lastIdealVsSave = idealVs; # for extrapolated and vdev info
