@@ -771,7 +771,7 @@ var ITAF = {
 		} else if (n == 8) { # CLB/DES
 			Internal.managedModeOn.setBoolValue(0);
 			managedDeson = "False";
-			if (fmgc.FMGCInternal.phase <= 3 or fmgc.FMGCInternal.phase == 7) {
+			if (fmgc.FMGCInternal.phase <= 3 or fmgc.FMGCInternal.phase == 6) {
 				Internal.managedModeOn.setBoolValue(1);
 				managedClb();
 			} else {
