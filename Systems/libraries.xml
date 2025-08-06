@@ -20,8 +20,8 @@
 							<entry><ind>0.15</ind><dep>1.0</dep></entry>
 						</table>
 					</product>
-					<entry><ind>    0</ind><dep>0.674</dep></entry>
-					<entry><ind>45000</ind><dep>1.502</dep></entry>
+					<entry><ind>    0</ind><dep>0.6183</dep></entry>
+					<entry><ind>45000</ind><dep>1.1781</dep></entry>
 				</table>
 			</expression>
 		</input>
@@ -44,8 +44,8 @@
 								<entry><ind>0.15</ind><dep>1.0</dep></entry>
 							</table>
 						</product>
-						<entry><ind>    0</ind><dep>0.9852</dep></entry>
-						<entry><ind>45000</ind><dep>0.6884</dep></entry>
+						<entry><ind>    0</ind><dep>0.9861</dep></entry>
+						<entry><ind>45000</ind><dep>0.7107</dep></entry>
 					</table>
 					<table>
 						<property>/fdm/jsbsim/velocities/mach</property>
