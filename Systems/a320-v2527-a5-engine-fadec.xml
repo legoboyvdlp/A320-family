@@ -680,6 +680,7 @@
 					<table>
 						<independentVar lookup="row">/position/altitude-ft</independentVar>
 						<independentVar lookup="column">propulsion/tat-c</independentVar>
+						<independentVar lookup="table">velocities/mach</independentVar>
 						<tableData breakPoint="0.4">
 							      -65   -35   -5     25    55
 							 5000  70.4  74.6  78.7  81.3  79.4
