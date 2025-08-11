@@ -1023,7 +1023,7 @@ var ITAF = {
 			Internal.moreDrag.setBoolValue(0);
 		}
 		if (Position.indicatedAltitudeFt.getValue() >= 20000) {
-			if ((Velocities.indicatedMach.getValue() - Input.mach.getValue() > ktsToMach(20)) and (vs < -1000) and ((vs + vsAdjustment + 200) < -1000)) {
+			if ((machToKts(Velocities.indicatedMach.getValue() - Input.mach.getValue()) > 20) and (vs < -1000) and ((vs + vsAdjustment + 200) < -1000)) {
 				vsAdjustment += 200;
 				vs += vsAdjustment;
 			} elsif ((Velocities.indicatedMach.getValue() - Input.mach.getValue() >= ktsToMach(5)) and (Input.mach.getValue() == ktsToMach(lastConstraintSpeed)) and (vs < -1000) and ((vs + vsAdjustment + 400) < -1000)) {
