@@ -1056,13 +1056,13 @@ var flightPlanController = {
 					break;
 				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
-					distanceToDecelerate = distanceToCstr2 - me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)*2;
+					distanceToDecelerate = distanceToCstr2 - me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)*4;
 					print("distance to decel is " ~ distanceToDecelerate);
 					# break;
 				}
 			} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
 				spdCstr = me.flightplans[2].getWP(i).speed_cstr;
-				distanceToDecelerate = distanceToCstr2 - me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)*2;
+				distanceToDecelerate = distanceToCstr2 - me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)*4;
 				print("distance to decel is " ~ distanceToDecelerate);
 				# break;
 			}
@@ -1098,7 +1098,7 @@ var flightPlanController = {
 		} else {
 			idealVs = lastIdealVsSave;
 		}
-		distanceToDecelerate +=  me.distToWpt.getValue(); - me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance;
+		distanceToDecelerate +=  me.distToWpt.getValue() - me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance;
 		print("real distancetodecel is " ~ distanceToDecelerate);
 		# print("distance to cstr is " ~ resultDistanceToCstr);
 		lastIdealVsSave = idealVs; # for extrapolated and vdev info
