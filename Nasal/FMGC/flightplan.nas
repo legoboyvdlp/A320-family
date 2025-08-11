@@ -1155,6 +1155,7 @@ var flightPlanController = {
 			distLvl = abs((deltaAltitude * pts.Velocities.groundspeedKt.getValue()) / (idealVs * 60));
 		}
 		distToTOD = distanceToCstr - distLvl;
+		print("in TOD calculations, alt_cstr is " ~ alt_cstr ~ "and distance to cstr is " ~ distanceToCstr ~ "distLvl is " ~ distLvl ~ "distToTOD is " ~ distToTOD);
 		if (me.active.getBoolValue() and fmgc.Output.lat.getValue() == 1 and distToTOD >= 0 and deltaAltitude < 0) { # NAV
 			me.TODPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distToTOD);
 			
