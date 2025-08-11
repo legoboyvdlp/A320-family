@@ -989,11 +989,13 @@ var flightPlanController = {
 		spdDistance = 0;
 		distanceToCstr2 = 0;
 		realDistanceToCstr = 0;
+		realDistanceToDecelerate = 0;
 		print("lastcstrwptindexflown + 1 is " ~ (lastCstrWptIndexFlown + 1) ~ " and currenttowptindex is " ~ me.currentToWptIndex.getValue());
 		for (var i = (lastCstrWptIndexFlown+1); i < me.currentToWptIndex.getValue(); i += 1) {
 			distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
 			distanceToCstr2 += me.flightplans[2].getWP(i).leg_distance;
 			realDistanceToCstr -= me.flightplans[2].getWP(i).leg_distance;
+			realDistanceToDecelerate -= me.flightplans[2].getWP(i).leg_distance;
 		}
 		print("first distancetocstr is " ~ distanceToCstr ~ " and distance to cstr2 is " ~ distanceToCstr2);
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
@@ -1061,9 +1063,10 @@ var flightPlanController = {
 					# break;
 				}
 			} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
+				print("free spd point");
 				spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 				distanceToDecelerate = distanceToCstr2 - me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)*4;
-				print("distance to decel is " ~ distanceToDecelerate);
+				print("distance to decel is " ~ distanceToDecelerate ~ "distance to cstr2 is " ~ distanceToCstr2);
 				# break;
 			}
 		}
@@ -1098,13 +1101,13 @@ var flightPlanController = {
 		} else {
 			idealVs = lastIdealVsSave;
 		}
-		distanceToDecelerate +=  me.distToWpt.getValue() - me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance;
-		print("real distancetodecel is " ~ distanceToDecelerate);
+		realDistanceToDecelerate += distanceToDecelerate +  me.distToWpt.getValue() - me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance;
+		print("real distancetodecel is " ~ realDistanceToDecelerate);
 		# print("distance to cstr is " ~ resultDistanceToCstr);
 		lastIdealVsSave = idealVs; # for extrapolated and vdev info
 		
 		lastRealDistanceToCstr = realDistanceToCstr; # for extrapolated and vdev info
-		return [altCstr, realDistanceToCstr, 1, idealVs, spdDistance, distanceToDecelerate, lastCstrFlown];
+		return [altCstr, realDistanceToCstr, 1, idealVs, spdDistance, realDistanceToDecelerate, lastCstrFlown];
 	},
 	# Get the altitude that the aircraft would be at if it flies a 3 deg descent profile from the last altitude constraint wpt
 	getExtrapolatedThreeDegAltCstr: func(lastAltCstr, distanceToCstr) {
