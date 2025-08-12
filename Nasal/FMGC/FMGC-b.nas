@@ -1027,11 +1027,11 @@ var ITAF = {
 		} else {
 			Internal.moreDrag.setBoolValue(0);
 		}
-		if (Position.indicatedAltitudeFt.getValue() >= 20000) {
+		if (FMGCInternal.machSwitchover) {
 			if ((machToKts(Velocities.indicatedMach.getValue() - Input.mach.getValue()) > 20) and (vs < -1000) and ((vs + vsAdjustment + 200) < -1000)) {
 				vsAdjustment += 200;
 				vs += vsAdjustment;
-			} elsif ((Velocities.indicatedMach.getValue() - Input.mach.getValue() >= ktsToMach(5)) and (Input.mach.getValue() == ktsToMach(lastConstraintSpeed)) and (vs < -1000) and ((vs + vsAdjustment + 400) < -1000)) {
+			} elsif ((machToKts(Velocities.indicatedMach.getValue() - Input.mach.getValue()) > 5) and (Input.mach.getValue() == ktsToMach(lastConstraintSpeed)) and (vs < -1000) and ((vs + vsAdjustment + 400) < -1000)) {
 				vsAdjustment += 400;
 				vs += vsAdjustment;
 			} elsif (vsAdjustment > 0) {

@@ -1010,22 +1010,30 @@ var ManagedSPD = maketimer(0.25, func {
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
+					output = fmgc.flightPlanController.getDesAltConst();
 					if (constraintSpeed != nil and constraintSpeed != 0) {
-						output = fmgc.flightPlanController.getDesAltConst();
-						# print("distance " ~ output[1] ~ " altitude " ~ output[0] ~ " constraintSpeed " ~ constraintSpeed ~ "diff " ~ (abs(Position.indicatedAltitudeFt.getValue()-output[0])) ~ " decel " ~ output[6]);
-						if ((output[1] == 0.1) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[5] < 0)) {
-							FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
-							Internal.onSpeedConst.setBoolValue(1);
-							# print("TRIGGGG");
-							lastConstraintSpeed = constraintSpeed;
-						} else {
-							print("lastcstrspeed is " ~ lastConstraintSpeed);
-							FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(ktsToMach(lastConstraintSpeed),mng_alt_mach) : math.min(mng_alt_spd, lastConstraintSpeed);
-						}
-						
+						spdCstr = constraintSpeed
 					} else {
+						for (var i = fmgc.flightPlanController.currentToWptIndex.getValue(); i <= 1000; i += 1) {
+							spdCstr = fmgc.flightPlanController.flightplans[2].getWP(i).speed_cstr;
+							if (spdCstr != 0 and spdCstr != nil) {
+								break
+							}
+						}
+					}
+					# print("distance " ~ output[1] ~ " altitude " ~ output[0] ~ " constraintSpeed " ~ constraintSpeed ~ "diff " ~ (abs(Position.indicatedAltitudeFt.getValue()-output[0])) ~ " decel " ~ output[6]);
+					if ((output[1] == 0.1) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[5] < 0)) {
+						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(spdCstr)) : math.min(mng_alt_spd, spdCstr);
+						Internal.onSpeedConst.setBoolValue(1);
+						# print("TRIGGGG");
+						lastConstraintSpeed = spdCstr;
+					} else {
+						print("lastcstrspeed is " ~ lastConstraintSpeed);
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(ktsToMach(lastConstraintSpeed),mng_alt_mach) : math.min(mng_alt_spd, lastConstraintSpeed);
 					}
+
+
+					
 				}
 			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= (FMGCInternal.desSpdLimAlt + fmgc.flightPlanController.getTenThousandSlowDownAlt())) {
 				# Speed is maximum of greendot / descent speed limit
