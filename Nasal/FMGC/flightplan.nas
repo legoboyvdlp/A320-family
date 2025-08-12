@@ -876,7 +876,9 @@ var flightPlanController = {
 				distanceToCstr2 += me.flightplans[2].getWP(i).leg_distance;
 			}
 			extrapolatedAltCstr = me.getExtrapolatedThreeDegAltCstr(altCstr, (distanceToCstr - spdDistance - distanceToCstr2));
+			print("first extrapolated alt cstr, extrapolated alt const" ~ extrapolatedAltCstr ~ "distance " ~ (distanceToCstr - spdDistance - distanceToCstr2));
 			if (me.flightplans[2].getWP(i).alt_cstr_type == "above") {
+				print("above and extrapolated alt const is " ~ extrapolatedAltCstr);
 				if (me.flightplans[2].getWP(i).alt_cstr != 0 and me.flightplans[2].getWP(i).alt_cstr != nil) {
 				} if (me.flightplans[2].getWP(i).alt_cstr > extrapolatedAltCstr) {
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
@@ -891,10 +893,11 @@ var flightPlanController = {
 					break;
 				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
-					distanceToDecelerate = distanceToCstr2 - me.getDecelerationDistance(spdCstr, extrapolatedAltCstr) * 2;
+					distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)+2) * 4;
 					print("distance to decel is " ~ distanceToDecelerate);
 				}
 			} elsif (me.flightplans[2].getWP(i).alt_cstr_type == "below") {
+				print("below and extrapolated alt const is " ~ extrapolatedAltCstr);
 				if (me.flightplans[2].getWP(i).alt_cstr < extrapolatedAltCstr) {
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
 					cstrWptIndex = int(i);
@@ -908,7 +911,7 @@ var flightPlanController = {
 					break;
 				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
-					distanceToDecelerate = distanceToCstr2 - me.getDecelerationDistance(spdCstr, extrapolatedAltCstr) * 2;
+					distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr) + 2) * 4;
 					print("distance to decel is " ~ distanceToDecelerate);
 				}
 			}
@@ -924,7 +927,7 @@ var flightPlanController = {
 		lastCstrWptIndexCalculated = cstrWptIndex;
 		resultDistanceToCstr -= spdDistance;
 		
-		if (altCstr < 10000 and fmgc.Position.indicatedAltitudeFt.getValue() > 10000) {
+		if (altCstr < 10000 and fmgc.Position.indicatedAltitudeFt.getValue() > 10000 and Velocities.indicatedAirspeedKt.getValue() > 250) {
 			resultDistanceToCstr -= (Velocities.indicatedAirspeedKt.getValue() - 250) * 0.1
 		}
 		print("distance to decel is " ~ distanceToDecelerate);
@@ -945,7 +948,7 @@ var flightPlanController = {
 	# Get the speed the aircraft would be at (in managed speed) at the alt cstr altitude
 	getExtrapolatedSpd: func(altCstr) {
 		CI = fmgc.FMGCNodes.costIndex.getValue();
-		if (altCstr >= 20000) {
+		if (FMGCInternal.machSwitchover) {
 			extrapolatedMach = 0.60625 + (0.000416875 * CI) + (0.00000795 * (altCstr - 20000)) + (0.00000000545 * (altCstr - 20000) * CI);
 			extrapolatedSpd = fmgc.machToKts(extrapolatedMach);
 			print("extrapolated speed is " ~ extrapolatedSpd);
@@ -1040,7 +1043,7 @@ var flightPlanController = {
 					break;
 				} elsif (me.flightplans[2].getWP(i).alt_cstr != 0 and me.flightplans[2].getWP(i).alt_cstr != nil and distanceToDecelerate == 0) {
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
-					distanceToDecelerate = distanceToCstr2 - me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)*2;
+					distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)+2)*4;
 					print("distance to decel is " ~ distanceToDecelerate);
 					# break;
 				}
@@ -1058,14 +1061,14 @@ var flightPlanController = {
 					break;
 				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
-					distanceToDecelerate = distanceToCstr2 - me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)*4;
+					distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)+2)*4;
 					print("distance to decel is " ~ distanceToDecelerate);
 					# break;
 				}
 			} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
 				print("free spd point");
 				spdCstr = me.flightplans[2].getWP(i).speed_cstr;
-				distanceToDecelerate = distanceToCstr2 - me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)*4;
+				distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)+2)*4;
 				print("distance to decel is " ~ distanceToDecelerate ~ "distance to cstr2 is " ~ distanceToCstr2);
 				# break;
 			}
@@ -1078,7 +1081,7 @@ var flightPlanController = {
 		
 		# minus the deceleration
 		resultDistanceToCstr -= spdDistance;
-		if (altCstr < 10000 and fmgc.Position.indicatedAltitudeFt.getValue() > 10000) {
+		if (altCstr < 10000 and fmgc.Position.indicatedAltitudeFt.getValue() > 10000 and Velocities.indicatedAirspeedKt.getValue() > 250) {
 			resultDistanceToCstr -= (Velocities.indicatedAirspeedKt.getValue() - 250) * 0.1
 		}
 		realDistanceToCstr += resultDistanceToCstr - me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance + me.distToWpt.getValue(); # for extrapolated and vdev info
