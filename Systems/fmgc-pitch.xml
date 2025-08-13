@@ -266,6 +266,10 @@
 						<property>/it-autoflight/output/vert</property>
 						<value>7</value>
 					</equals>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>8</value>
+					</equals>
 				</or>
 			</and>
 		</input>
@@ -612,6 +616,10 @@
 					<equals>
 						<property>/it-autoflight/output/vert</property>
 						<value>7</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>8</value>
 					</equals>
 				</or>
 			</condition>

@@ -8,6 +8,7 @@
 # Sim
 var managedDeson = "False";
 var armDesOn = "False";
+var idleDescent = 0;
 var vsAdjustment = 0;
 var Controls = {
 	aileron: props.globals.getNode("/controls/flight/aileron", 1),
@@ -148,7 +149,7 @@ var Internal = {
 	vdevDot: props.globals.initNode("/it-autoflight/internal/vdev-dot", 0, "DOUBLE"),
 	vs: props.globals.initNode("/it-autoflight/internal/vert-speed-fpm", 0, "DOUBLE"),
 	vsTemp: 0,
-
+	targetFpmFlch: props.globals.getNode("/it-autoflight/internal/target-fpm-flch", 0, "DOUBLE"),
 };
 
 var Output = {
@@ -170,6 +171,7 @@ var Output = {
 	thrMode: props.globals.initNode("/it-autoflight/output/thr-mode", 2, "INT"),
 	showThrMode: props.globals.initNode("/it-autoflight/output/show-thr-mode", 2, "INT"),
 	vert: props.globals.initNode("/it-autoflight/output/vert", 7, "INT"),
+	
 	vertTemp: 7,
 };
 
@@ -818,7 +820,13 @@ var ITAF = {
 			Output.thrMode.setValue(2);
 			Output.showThrMode.setValue(2);
 			Text.spd.setValue("PITCH");
-		} else if (Output.vertTemp != 8) {
+		} else if (Output.vertTemp == 8 and idleDescent == 1) {
+			print("yesssss");
+
+			Output.thrMode.setValue(1);
+			Output.showThrMode.setValue(1);
+			Text.spd.setValue("PITCH");
+		} else {
 			Output.thrMode.setValue(0);
 			Output.showThrMode.setValue(0);
 			Text.spd.setValue("THRUST");
@@ -1006,57 +1014,68 @@ var ITAF = {
 		}
 		deltaAltitude = (altCstr - Position.indicatedAltitudeFt.getValue());
 		gs = pts.Velocities.groundspeedKt.getValue();
+		# if (is_geo == 1) {
 		vs = (deltaAltitude * gs) / (60 * distToCstr); # Calculate vertical speed to next waypoint
+		idleDescent = 0;
+		# }
+		# if (!vs) {
+		# 	return 0;
+		# }
 
 		if (((vs > (-1*gs*5)) or me.calculateVdev() < -500) and (is_geo == 0)) {
+			idleDescent = 0;
 			return -1000; 
+		} else if (is_geo == 0) {
+			idleDescent = 1;
+			vs = Internal.targetFpmFlch.getValue();
+			print("goinging");
 		}
-		if (me.calculateVdev() > 500) { # If we are above the descent profile, then we need to descend faster
-			vs -= 500;
-		}
+		# if (me.calculateVdev() > 500) { # If we are above the descent profile, then we need to descend faster
+		# 	vs -= 500;
+		# }
 		if (vs < -4000) {
 			vs = -4000;
 		}
-		if (vs < -3000 and (Internal.enginesBothAtIdle.getValue())) {
+		if (me.calculateVdev() > 800 and (Internal.enginesBothAtIdle.getValue())) {
 			Internal.moreDrag.setBoolValue(1);
 		} else {
 			Internal.moreDrag.setBoolValue(0);
 		}
-		if (FMGCInternal.machSwitchover) {
-			if ((machToKts(Velocities.indicatedMach.getValue() - Input.mach.getValue()) > 20) and (vs < -1000) and ((vs + vsAdjustment + 200) < -1000)) {
-				vsAdjustment += 200;
-				vs += vsAdjustment;
-			} elsif ((machToKts(Velocities.indicatedMach.getValue() - Input.mach.getValue()) > 5) and (Input.mach.getValue() == ktsToMach(lastConstraintSpeed)) and (vs < -1000) and ((vs + vsAdjustment + 400) < -1000)) {
-				vsAdjustment += 400;
-				vs += vsAdjustment;
-			} elsif (vsAdjustment > 0) {
-				vsAdjustment -= 200;
-				vs += vsAdjustment;
-			}
-		} elsif (Position.indicatedAltitudeFt.getValue() >= 10000) {
-			if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and (vs < -1000) and ((vs + vsAdjustment + 200) < -1000)) {
-				vsAdjustment += 200;
-				vs += vsAdjustment;
-			} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1000) and ((vs + vsAdjustment+400) < -1000)) {
-				vsAdjustment += 400;
-				vs += vsAdjustment;
-			} elsif (vsAdjustment > 0) {
-				vsAdjustment -= 200;
-				vs += vsAdjustment;
-			}
-		} else {
-			if ((Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) and (vs < -1000) and ((vs + vsAdjustment + 400) < -1000)) {
-				vsAdjustment += 400;
-				vs += vsAdjustment;
-			} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1000) and ((vs + vsAdjustment+400) < -1000)) {
-				vsAdjustment += 400;
-				vs += vsAdjustment;
-			} elsif ((vsAdjustment - 400) >= 0) {
-				vsAdjustment -= 400;
-				vs += vsAdjustment;
-			}
+		# if (FMGCInternal.machSwitchover) {
+		# 	if ((machToKts(Velocities.indicatedMach.getValue() - Input.mach.getValue()) > 20) and (vs < -1000) and ((vs + vsAdjustment + 200) < -1000)) {
+		# 		vsAdjustment += 200;
+		# 		vs += vsAdjustment;
+		# 	} elsif ((machToKts(Velocities.indicatedMach.getValue() - Input.mach.getValue()) > 5) and (Input.mach.getValue() == ktsToMach(lastConstraintSpeed)) and (vs < -1000) and ((vs + vsAdjustment + 400) < -1000)) {
+		# 		vsAdjustment += 400;
+		# 		vs += vsAdjustment;
+		# 	} elsif (vsAdjustment > 0) {
+		# 		vsAdjustment -= 200;
+		# 		vs += vsAdjustment;
+		# 	}
+		# } elsif (Position.indicatedAltitudeFt.getValue() >= 10000) {
+		# 	if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and (vs < -1000) and ((vs + vsAdjustment + 200) < -1000)) {
+		# 		vsAdjustment += 200;
+		# 		vs += vsAdjustment;
+		# 	} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1000) and ((vs + vsAdjustment+400) < -1000)) {
+		# 		vsAdjustment += 400;
+		# 		vs += vsAdjustment;
+		# 	} elsif (vsAdjustment > 0) {
+		# 		vsAdjustment -= 200;
+		# 		vs += vsAdjustment;
+		# 	}
+		# } else {
+		# 	if ((Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) and (vs < -1000) and ((vs + vsAdjustment + 400) < -1000)) {
+		# 		vsAdjustment += 400;
+		# 		vs += vsAdjustment;
+		# 	} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1000) and ((vs + vsAdjustment+400) < -1000)) {
+		# 		vsAdjustment += 400;
+		# 		vs += vsAdjustment;
+		# 	} elsif ((vsAdjustment - 400) >= 0) {
+		# 		vsAdjustment -= 400;
+		# 		vs += vsAdjustment;
+		# 	}
 
-		}
+		# }
 		if (vs > 0) {
 			vs = 0; # Don't allow positive vertical speed
 		}
@@ -1222,11 +1241,11 @@ var managedDes = func {
 		Internal.alt.setValue(alt);
 		if (abs(alt - Position.indicatedAltitudeFt.getValue()) >= 25) {
 			ITAF.updateVertText("DES");
-			if (Internal.enginesBothAtIdle.getValue()) {
-				Output.showThrMode.setValue(1);
-			} else {
-				Output.showThrMode.setValue(0);
-			}
+			# if (Internal.enginesBothAtIdle.getValue()) {
+			# 	Output.showThrMode.setValue(1);
+			# } else {
+			# 	Output.showThrMode.setValue(0);
+			# }
 			vs = ITAF.getVs();
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
