@@ -1019,13 +1019,8 @@ var ITAF = {
 		}
 		deltaAltitude = (altCstr - Position.indicatedAltitudeFt.getValue());
 		gs = pts.Velocities.groundspeedKt.getValue();
-		# if (is_geo == 1) {
 		vs = (deltaAltitude * gs) / (60 * distToCstr); # Calculate vertical speed to next waypoint
 		idleDescent = 0;
-		# }
-		# if (!vs) {
-		# 	return 0;
-		# }
 
 		if (((vs > (-1*gs*5)) or me.calculateVdev() < -500) and (is_geo == 0)) {
 			idleDescent = 0;
@@ -1033,11 +1028,8 @@ var ITAF = {
 		} else if (is_geo == 0) {
 			idleDescent = 1;
 			vs = Internal.targetFpmFlch.getValue();
-			print("goinging");
 		}
-		# if (me.calculateVdev() > 500) { # If we are above the descent profile, then we need to descend faster
-		# 	vs -= 500;
-		# }
+
 		if (vs < -4000) {
 			vs = -4000;
 		}
@@ -1046,41 +1038,7 @@ var ITAF = {
 		} else {
 			Internal.moreDrag.setBoolValue(0);
 		}
-		# if (FMGCInternal.machSwitchover) {
-		# 	if ((machToKts(Velocities.indicatedMach.getValue() - Input.mach.getValue()) > 20) and (vs < -1000) and ((vs + vsAdjustment + 200) < -1000)) {
-		# 		vsAdjustment += 200;
-		# 		vs += vsAdjustment;
-		# 	} elsif ((machToKts(Velocities.indicatedMach.getValue() - Input.mach.getValue()) > 5) and (Input.mach.getValue() == ktsToMach(lastConstraintSpeed)) and (vs < -1000) and ((vs + vsAdjustment + 400) < -1000)) {
-		# 		vsAdjustment += 400;
-		# 		vs += vsAdjustment;
-		# 	} elsif (vsAdjustment > 0) {
-		# 		vsAdjustment -= 200;
-		# 		vs += vsAdjustment;
-		# 	}
-		# } elsif (Position.indicatedAltitudeFt.getValue() >= 10000) {
-		# 	if ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() > 20) and (vs < -1000) and ((vs + vsAdjustment + 200) < -1000)) {
-		# 		vsAdjustment += 200;
-		# 		vs += vsAdjustment;
-		# 	} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1000) and ((vs + vsAdjustment+400) < -1000)) {
-		# 		vsAdjustment += 400;
-		# 		vs += vsAdjustment;
-		# 	} elsif (vsAdjustment > 0) {
-		# 		vsAdjustment -= 200;
-		# 		vs += vsAdjustment;
-		# 	}
-		# } else {
-		# 	if ((Velocities.indicatedAirspeedKt.getValue() - 250 >= 5) and (vs < -1000) and ((vs + vsAdjustment + 400) < -1000)) {
-		# 		vsAdjustment += 400;
-		# 		vs += vsAdjustment;
-		# 	} elsif ((Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 5) and (Input.kts.getValue() == lastConstraintSpeed) and (vs < -1000) and ((vs + vsAdjustment+400) < -1000)) {
-		# 		vsAdjustment += 400;
-		# 		vs += vsAdjustment;
-		# 	} elsif ((vsAdjustment - 400) >= 0) {
-		# 		vsAdjustment -= 400;
-		# 		vs += vsAdjustment;
-		# 	}
-
-		# }
+		
 		if (vs > 0) {
 			vs = 0; # Don't allow positive vertical speed
 		}
@@ -1246,11 +1204,6 @@ var managedDes = func {
 		Internal.alt.setValue(alt);
 		if (abs(alt - Position.indicatedAltitudeFt.getValue()) >= 25) {
 			ITAF.updateVertText("DES");
-			# if (Internal.enginesBothAtIdle.getValue()) {
-			# 	Output.showThrMode.setValue(1);
-			# } else {
-			# 	Output.showThrMode.setValue(0);
-			# }
 			vs = ITAF.getVs();
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
