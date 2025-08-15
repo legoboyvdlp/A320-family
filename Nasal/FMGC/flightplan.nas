@@ -891,7 +891,7 @@ var flightPlanController = {
 						spdDistance = 0;
 					}
 					break;
-				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
+				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0 and me.flightplans[2].getWP(i).speed_cstr != lastConstraintSpeed) {
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 					distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)) * 3;
 					print("distance to decel is " ~ distanceToDecelerate);
@@ -909,7 +909,7 @@ var flightPlanController = {
 						spdDistance = 0;
 					}
 					break;
-				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
+				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0 and me.flightplans[2].getWP(i).speed_cstr != lastConstraintSpeed) {
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 					distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)) * 3;
 					print("distance to decel is " ~ distanceToDecelerate);
@@ -1041,7 +1041,7 @@ var flightPlanController = {
 						spdDistance = 0;
 					}
 					break;
-				} elsif (me.flightplans[2].getWP(i).alt_cstr != 0 and me.flightplans[2].getWP(i).alt_cstr != nil and distanceToDecelerate == 0) {
+				} elsif (me.flightplans[2].getWP(i).alt_cstr != 0 and me.flightplans[2].getWP(i).alt_cstr != nil and distanceToDecelerate == 0 and me.flightplans[2].getWP(i).speed_cstr != lastConstraintSpeed) {
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 					distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr))*2;
 					print("distance to decel is " ~ distanceToDecelerate);
@@ -1059,13 +1059,13 @@ var flightPlanController = {
 						spdDistance = 0;
 					}
 					break;
-				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
+				} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0 and me.flightplans[2].getWP(i).speed_cstr != lastConstraintSpeed) {
 					spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 					distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr))*3;
 					print("distance to decel is " ~ distanceToDecelerate);
 					# break;
 				}
-			} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0) {
+			} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0 and me.flightplans[2].getWP(i).speed_cstr != lastConstraintSpeed) {
 				print("free spd point");
 				spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 				distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr))*3;
@@ -1239,10 +1239,11 @@ var flightPlanController = {
 		if (Custom.Input.spdManaged.getBoolValue()) {
 			if (fmgc.FMGCInternal.phase >= 3 and fmgc.FMGCInternal.phase != 6) {
 				result = me.getDesAltConst();
+				distanceToCstr = result[1];
 				is_GEO = result[2];
 				spdChangeDistance = result[4];
 				distanceToDecelerate = result[5];
-				if (distanceToDecelerate != 0) {
+				if (distanceToDecelerate != result) {
 					spdChangePoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToDecelerate);
 					setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
 					setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);

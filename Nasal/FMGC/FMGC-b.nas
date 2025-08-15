@@ -19,6 +19,10 @@ var Controls = {
 	rudder2: props.globals.getNode("/controls/flight/rudder[1]", 1),
 };
 
+# var Drag = {
+# 	CD0: props.globals.getNode("/fdm//aero/coefficient/CD0", 1),
+# }
+
 var FPLN = {
 	active: props.globals.getNode("/autopilot/route-manager/active", 1),
 	activeTemp: 0,
