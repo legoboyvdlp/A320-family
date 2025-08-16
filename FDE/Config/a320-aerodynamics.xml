@@ -364,7 +364,7 @@
 							<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
 							<property>/FMGC/internal/clean</property>
 						</difference>
-						<value>21</value>
+						<value>20.5</value>
 					</product>
 				</max>
 			</min>
