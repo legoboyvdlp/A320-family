@@ -926,7 +926,7 @@ var flightPlanController = {
 		lastCstrWptIndexFlown = cstrWptIndex;
 		lastCstrWptIndexCalculated = cstrWptIndex;
 		resultDistanceToCstr -= spdDistance;
-		
+		resultDistanceToCstr -= fmgc.FPLN.turnDist;
 		if (altCstr < 10000 and fmgc.Position.indicatedAltitudeFt.getValue() > 10000 and Velocities.indicatedAirspeedKt.getValue() > 250) {
 			resultDistanceToCstr -= (Velocities.indicatedAirspeedKt.getValue() - 250) * 0.1
 		}
@@ -1081,6 +1081,7 @@ var flightPlanController = {
 		
 		# minus the deceleration
 		resultDistanceToCstr -= spdDistance;
+		resultDistanceToCstr -= fmgc.FPLN.turnDist;
 		if (altCstr < 10000 and fmgc.Position.indicatedAltitudeFt.getValue() > 10000 and Velocities.indicatedAirspeedKt.getValue() > 250) {
 			resultDistanceToCstr -= (Velocities.indicatedAirspeedKt.getValue() - 250) * 0.1
 		}
