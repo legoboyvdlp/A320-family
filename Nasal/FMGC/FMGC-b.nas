@@ -19,9 +19,6 @@ var Controls = {
 	rudder2: props.globals.getNode("/controls/flight/rudder[1]", 1),
 };
 
-# var Drag = {
-# 	CD0: props.globals.getNode("/fdm//aero/coefficient/CD0", 1),
-# }
 
 var FPLN = {
 	active: props.globals.getNode("/autopilot/route-manager/active", 1),
@@ -433,7 +430,8 @@ var ITAF = {
 		idealVs = cstr_info[3];
 		lastCstrFlown = cstr_info[6];
 		if (is_GEO == 0) {
-			profileAlt = (realDistToCstr * 318) + altCstr; #Calculate profile alt based on 3 deg descent profile
+			# profileAlt = (realDistToCstr * 318) + altCstr; #Calculate profile alt based on 3 deg descent profile
+			profileAlt = fmgc.descent.calculate_descent_altitude(altCstr, realDistToCstr);
 		} else {
 			vs = idealVs;
 			gs = pts.Velocities.groundspeedKt.getValue();
@@ -1021,7 +1019,7 @@ var ITAF = {
 		vs = (deltaAltitude * gs) / (60 * distToCstr); # Calculate vertical speed to next waypoint
 		idleDescent = 0;
 
-		if (((vs > (-1*gs*5)) or me.calculateVdev() < -500) and (is_geo == 0)) {
+		if ((me.calculateVdev() < -500) and (is_geo == 0)) {
 			idleDescent = 0;
 			return -1000; 
 		} else if (is_geo == 0) {

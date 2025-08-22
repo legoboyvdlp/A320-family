@@ -281,7 +281,7 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<value>0.016</value>
+				<value>0.019</value>
 			</product>
 		</function>
 		
@@ -353,7 +353,7 @@
 				</table>
 			</product>
 		</function>
-		<function name="aero/coefficient/CDspd">
+		<!-- <function name="aero/coefficient/CDspd">
 			<description>Drag due to speed</description>
 			<min>
 				<value>4000</value>
@@ -368,7 +368,7 @@
 					</product>
 				</max>
 			</min>
-		</function>
+		</function> -->
 		<function name="aero/coefficient/CDgear">
 			<description>Drag due to gear</description>
 			<product>

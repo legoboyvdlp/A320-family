@@ -1014,10 +1014,12 @@ var ManagedSPD = maketimer(0.25, func {
 					if (constraintSpeed != nil and constraintSpeed != 0) {
 						spdCstr = constraintSpeed
 					} else {
-						for (var i = fmgc.flightPlanController.currentToWptIndex.getValue(); i <= 1000; i += 1) {
-							spdCstr = fmgc.flightPlanController.flightplans[2].getWP(i).speed_cstr;
-							if (spdCstr != 0 and spdCstr != nil) {
-								break
+						for (var i = fmgc.flightPlanController.currentToWptIndex.getValue(); i < fmgc.flightPlanController.flightplans[2].getPlanSize(); i += 1) {
+							if (fmgc.flightPlanController.flightplans[2].getWP(i).speed_cstr != 0 and fmgc.flightPlanController.flightplans[2].getWP(i).speed_cstr != nil) {
+								spdCstr = fmgc.flightPlanController.flightplans[2].getWP(i).speed_cstr;
+								if (spdCstr != 0 and spdCstr != nil) {
+									break
+								}
 							}
 						}
 					}
