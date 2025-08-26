@@ -915,6 +915,12 @@ var flightPlanController = {
 					distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr)) * 3;
 					print("distance to decel is " ~ distanceToDecelerate);
 				}
+			} elsif (me.flightplans[2].getWP(i).speed_cstr != 0 and me.flightplans[2].getWP(i).speed_cstr != nil and distanceToDecelerate == 0 and me.flightplans[2].getWP(i).speed_cstr != lastConstraintSpeed) {
+				print("free spd point");
+				spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+				distanceToDecelerate = distanceToCstr2 - (me.getDecelerationDistance(spdCstr, extrapolatedAltCstr))*3;
+				print("distance to decel is " ~ distanceToDecelerate ~ "distance to cstr2 is " ~ distanceToCstr2);
+				# break;
 			}
 		}
 		if (distanceToCstr > distanceToCstr2) {
