@@ -154,7 +154,6 @@ var systemsInit = func() {
 	cockpit.variousReset();
 	rmp.init();
 	acp.init();
-	draims.init();
 	ecam.ECAM_controller.init();
 	atc.init();
 	fcu.FCUController.init();

@@ -885,13 +885,13 @@
 		<draims>
 			<enabled type="bool">0</enabled>
 			<rmp n="0">
-				<brightness-knob type="double">0</brightness-knob>
+				<brightness-knob type="double">1</brightness-knob>
 			</rmp>
 			<rmp n="1">
-				<brightness-knob type="double">0</brightness-knob>
+				<brightness-knob type="double">1</brightness-knob>
 			</rmp>
 			<rmp n="2">
-				<brightness-knob type="double">0</brightness-knob>
+				<brightness-knob type="double">1</brightness-knob>
 			</rmp>
 		</draims>
 		<electric>
