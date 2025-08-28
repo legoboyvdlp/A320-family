@@ -78,6 +78,56 @@ var updateAll = func() {
 	}
 }
 
+# Validate the frequency for valid VHF ranges
+# Allows checking for partly entered numbers
+# Expects the already entered frequency without decimal point
+var validateVHF = func(freq) {
+	if (freq < 1000) {
+		var major = freq;
+		var minor = 0;
+	} else {
+		if (freq < 10000) {
+			var major = math.round(freq/10);
+			var minor = freq * 100 - major * 1000;
+		} else if (freq < 100000) {
+			var major = math.round(freq/100);
+			var minor = freq * 10 - major * 1000;
+		} else if (freq < 1000000) {
+			var major = math.round(freq/1000);
+			var minor = freq - major * 1000;
+		} else {
+			# More than 6 digits always invalid
+			return 0;
+		}
+	}
+	if (major == 0 or (major > 2 and major <= 10) or (major > 13 and major <= 117) or major >= 137) {
+		return 0;
+	}
+	var check = math.mod(minor, 25);
+	if (math.mod(check, 5) != 0 or check == 20) {
+		return 0;
+	}
+	return 1;
+}
+
+# Completes the frequency to its full length
+# Expects the already entered frequency without decimal point
+var completeVHF = func(freq) {
+	if (freq < 100) {
+		return freq * 10000;
+	}
+	if (freq < 1000) {
+		return freq * 1000;
+	}
+	if (freq < 10000) {
+		return freq * 100;
+	}
+	if (freq < 100000) {
+		return freq * 10;
+	}
+	return freq;
+}
+
 var updateVHF = func(i) {
 	foreach(var key; SVGKeys) {
 		RMP[i][key].hide();
@@ -89,11 +139,12 @@ var updateVHF = func(i) {
 			RMP[i]["Active" ~ j].setText(sprintf("%3.3f", getprop("/instrumentation/comm[" ~ (j - 1) ~ "]/frequencies/selected-mhz")));
 		}
 		RMP[i]["Active" ~ j].show();
-		# TODO arrows and dialing
+		# TODO arrows
 		RMP[i]["Standby" ~ j].setText(sprintf("%3.3f", getprop("/instrumentation/comm[" ~ (j - 1) ~ "]/frequencies/standby-mhz")));
 		if (focusNode[i].getValue() == j) {
 			RMP[i]["Standby" ~ j].setColor(BLUE);
 			RMP[i]["Label" ~ j].setText("STBY");
+			RMP[i]["Label" ~ j].setColor(WHITE);
 			RMP[i]["Label" ~ j].show();
 			RMP[i]["Select" ~ j].show();
 		} else {
@@ -101,19 +152,33 @@ var updateVHF = func(i) {
 		}
 		if (enteringNode[j - 1].getValue()) {
 			RMP[i]["Standby" ~ j].setFontSize(35, 1.0);
-			# TODO not entirely correct but will do till I figure out how to do different sized numbers in the same string
-			# TODO check entry for invalid frequencies
+			# Check for invalid entries
+			var entered = int(enteredNode[j - 1].getValue());
+			var completionChar = "_";
+			if (!validateVHF(entered)) {
+				RMP[i]["Standby" ~ j].setColor(AMBER);
+				RMP[i]["Label" ~ j].setText("INVALID");
+				RMP[i]["Label" ~ j].setColor(AMBER);
+				RMP[i]["Label" ~ j].show();
+				RMP[i]["Select" ~ j].show();
+			} else if (entered > 100) { # Completion possible starting at 3 digits entered
+				var completionChar = "o";
+			}
 			var entered = enteredNode[j - 1].getValue();
 			while (size(entered) < 3) {
-				entered = entered ~ "_";
+				entered = entered ~ completionChar;
 			}
 			if(size(entered) < 4) {
 				entered = entered ~ ".";
+			} else if (size(entered) == 4) {
+				entered = sprintf("%3.1f", int(entered) / 10);
+			} else if (size(entered) == 5){
+				entered = sprintf("%3.2f", int(entered) / 100);
 			} else {
-				# TODO add decimal point to number
+				entered = sprintf("%3.3f", int(entered) / 1000);
 			}
 			while (size(entered) < 7) {
-				entered = entered ~ "_";
+				entered = entered ~ completionChar;
 			}
 			RMP[i]["Standby" ~ j].setText(entered);
 		} else {
@@ -198,6 +263,15 @@ var lskbutton = func(btn, i) {
 	if (page == "vhf") {
 		if (btn >= 1 and btn <= 3) {
 			rmpID = btn - 1;
+			if (enteringNode[rmpID].getValue()) {
+				if (validateVHF(enteredNode[rmpID].getValue()) and enteredNode[rmpID].getValue() >= 100) { # 100 check cause we need at least 3 digits to complete
+					setprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/standby-mhz", completeVHF(enteredNode[rmpID].getValue()) / 1000);
+					enteringNode[rmpID].setValue(0);
+					enteredNode[rmpID].setValue("");
+				} else {
+					return; # Abort if we wanna switch to an invalid frequency
+				}
+			}
 			var oldSelected = getprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/selected-mhz");
 			var oldStandby = getprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/standby-mhz");
 			# TODO activation of DATA mode
@@ -211,7 +285,7 @@ var lskbutton = func(btn, i) {
 			updateAll();
 		} else if (btn == 4) {
 			changeFocus("ATC", i);
-			updateVHF(i);
+			updateAll(i);
 		}
 	} else if (page == "hf") {
 	} else if (page == "tel") {
@@ -227,11 +301,21 @@ var rskbutton = func(btn, i) {
 		return;
 	}
 	var page = pageNode[i].getValue();
-	}
 	if (page == "vhf") {
 		if (btn >= 1 and btn <= 3) {
-			changeFocus(btn, i);
-			updateVHF(i);
+			var rmpID = btn - 1;
+			if (btn == focusNode[i].getValue() and enteringNode[rmpID].getValue()) {
+				if (validateVHF(enteredNode[rmpID].getValue()) and enteredNode[rmpID].getValue() >= 100) { # 100 check cause we need at least 3 digits to complete
+					setprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/standby-mhz", completeVHF(enteredNode[rmpID].getValue()) / 1000);
+					enteringNode[rmpID].setValue(0);
+					enteredNode[rmpID].setValue("");
+				} else {
+					return; # Abort if we wanna complete to an invalid frequency
+				}
+			} else {
+				changeFocus(btn, i);
+			}
+			updateAll();
 		}
 	} else if (page == "hf") {
 	} else if (page == "tel") {
@@ -280,23 +364,31 @@ var numberbutton = func(btn, i) {
 	}
 	var focus = focusNode[i].getValue();
 	if (focus == "ATC") {
-		enteringNode[3].setValue(1);
-		enteredNode[3].setValue(enteredNode[3].getValue() ~ btn);
-		if (size(enteredNode[3].getValue()) == 4) {
-			enteringNode[3].setValue(0);
-			setprop("/systems/atc/transponder-code", enteredNode[3].getValue());
-			enteredNode[3].setValue("");
+		if (btn < 8) {
+			enteringNode[3].setValue(1);
+			enteredNode[3].setValue(enteredNode[3].getValue() ~ btn);
+			if (size(enteredNode[3].getValue()) == 4) {
+				enteringNode[3].setValue(0);
+				setprop("/systems/atc/transponder-code", enteredNode[3].getValue());
+				enteredNode[3].setValue("");
+			}
+			updateAll();
 		}
-		updateAll();
 	} else if (pageNode[i].getValue() == "vhf") {
-		# TODO special case where one enters a 2 or 3 and the initial 1 gets auto completed
-		var focus = focusNode[i].getValue() - 1;
+		focus = focus - 1;
+		if (enteredNode[focus].getValue() == "" and (btn == 2 or btn == 3)) {
+			enteredNode[focus].setValue("1");
+		}
 		enteringNode[focus].setValue(1);
-		enteredNode[focus].setValue(enteredNode[focus].getValue() ~ btn);
+		if (size(enteredNode[focus].getValue()) < 6) {
+			enteredNode[focus].setValue(enteredNode[focus].getValue() ~ btn);
+		}
 		if (size(enteredNode[focus].getValue()) == 6) {
-			enteringNode[focus].setValue(0);
-			setprop("/instrumentation/comm[" ~ focus ~ "]/frequencies/standby-mhz", enteredNode[focus].getValue() / 1000);
-			enteredNode[focus].setValue("");
+			if (validateVHF(enteredNode[focus].getValue())) {
+				enteringNode[focus].setValue(0);
+				setprop("/instrumentation/comm[" ~ focus ~ "]/frequencies/standby-mhz", enteredNode[focus].getValue() / 1000);
+				enteredNode[focus].setValue("");
+			}
 		}
 		updateAll();
 	}
@@ -309,8 +401,8 @@ var changeFocus = func(item, i) {
 			focus = 3;
 		}
 		if (focus != "") {
-			enteringNode[focus].setValue(0);
-			enteredNode[focus].setValue("");
+			enteringNode[focus - 1].setValue(0);
+			enteredNode[focus - 1].setValue("");
 		}
 		focusNode[i].setValue(item);
 		return 1;
