@@ -394,6 +394,46 @@ var numberbutton = func(btn, i) {
 	}
 }
 
+var menuButton = func(btn, i) {
+	# No need if RMP is off/no power
+	if (getprop("/controls/draims/rmp[" ~ i ~ "]/on") == 0) {
+		return;
+	}
+	# TODO
+}
+
+var clearButton = func(i) {
+	# No need if RMP is off/no power
+	if (getprop("/controls/draims/rmp[" ~ i ~ "]/on") == 0) {
+		return;
+	}
+	var focus = focusNode[i].getValue();
+	var page = pageNode[i].getValue();
+	if (focus == "ATC" or page == "vhf" ) {
+		if (focus == "ATC") {
+			focus = 3;
+		} else {
+			focus = focus - 1;
+		}
+		var s = size(enteredNode[focus].getValue());
+		if (s > 0) {
+			enteredNode[focus].setValue(left(enteredNode[focus].getValue(), s - 1));
+			if (s == 1) {
+				enteringNode[focus].setValue(0);
+			}
+		}
+	}
+	updateAll();
+}
+
+var decimalButton = func(i) {
+	# No need if RMP is off/no power
+	if (getprop("/controls/draims/rmp[" ~ i ~ "]/on") == 0) {
+		return;
+	}
+	# TODO
+}
+
 var changeFocus = func(item, i) {
 	var focus = focusNode[i].getValue();
 	if (item != focus) {

@@ -71,6 +71,7 @@ setprop("/systems/acconfig/options/nd-rate", 1);
 setprop("/systems/acconfig/options/dcdu-rate", 1);
 setprop("/systems/acconfig/options/autopush/show-route", 1);
 setprop("/systems/acconfig/options/autopush/show-wingtip", 1);
+setprop("/systems/acconfig/options/controls/draims/enabled", 0);
 var main_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/main/dialog", "Aircraft/A320-family/AircraftConfig/main.xml");
 var welcome_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/welcome/dialog", "Aircraft/A320-family/AircraftConfig/welcome.xml");
 var ps_load_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/psload/dialog", "Aircraft/A320-family/AircraftConfig/psload.xml");

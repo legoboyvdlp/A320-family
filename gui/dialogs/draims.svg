@@ -59,15 +59,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="0.75714298"
-     inkscape:cx="44.245276"
-     inkscape:cy="349.33956"
+     inkscape:zoom="9.631454"
+     inkscape:cx="268.65103"
+     inkscape:cy="446.40197"
      inkscape:window-width="1366"
      inkscape:window-height="743"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer5" />
+     inkscape:current-layer="INTTransmit" />
   <g
      inkscape:groupmode="layer"
      id="layer11"
@@ -723,14 +723,14 @@
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.2651px;font-family:Monospace;-inkscape-font-specification:Monospace;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.33122;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          x="107.938"
-         y="343.78326"
+         y="346.1059"
          id="INTTransmitLabel"
          transform="scale(0.97261987,1.0281509)"
          inkscape:label="INTTransmitLabel"><tspan
            sodipodi:role="line"
            id="tspan11-8"
            x="107.938"
-           y="343.78326"
+           y="346.1059"
            style="stroke-width:3.33122">INT</tspan></text>
       <path
          id="INTTransmitLight"

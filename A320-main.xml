@@ -457,9 +457,9 @@
 							<command>nasal</command>
 							<script><![CDATA[
 								if (getprop("/controls/draims/enabled")) {
-									Dialogs.draims1Dialog.openDialog();
+									Dialogs.draims2Dialog.openDialog();
 								} else {
-									Dialogs.rmp1Dialog.openDialog();
+									Dialogs.rmp2Dialog.openDialog();
 								}
 							]]></script>
 						</binding>
@@ -470,9 +470,9 @@
 							<command>nasal</command>
 							<script><![CDATA[
 								if (getprop("/controls/draims/enabled")) {
-									Dialogs.draims1Dialog.openDialog();
+									Dialogs.draims3Dialog.openDialog();
 								} else {
-									Dialogs.rmp1Dialog.openDialog();
+									Dialogs.rmp3Dialog.openDialog();
 								}
 							]]></script>
 						</binding>

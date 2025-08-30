@@ -9,7 +9,7 @@ var SVGKeys = ["INTClickspot", "RADClickspot", "LSK1", "LSK2", "LSK3", "LSK4", "
 var draimsClass = {
 	new: func(instance) {
 		var m = {parents:[draimsClass]};
-		m._title = "RMP " ~ instance;
+		m._title = "RMP " ~ (instance + 1);
 		m._gfd = nil;
 		m._canvas = nil;
 		m._timer = maketimer(0.3, m, draimsClass._timerf);
@@ -37,17 +37,47 @@ var draimsClass = {
 			me._elements[key] = me._svg.getElementById(key);
 		}
 
-	#	me._Power_on_hb.addEventListener("click", func() {
-	#		me._Power_on.show();
-	#		me._Power_off.hide();
-	#		me._prop_power.setValue(1);
-	#	});
+		# Shortcuts
+		me._elements["RShortcut"].addEventListener("click", func() {draims.shortCutButton("r", me._instance);});
+		me._elements["LShortcut"].addEventListener("click", func() {draims.shortCutButton("l", me._instance);});
+
+		# Pages
+		me._elements["Page_Menu"].addEventListener("click", func() {draims.menuButton("menu", me._instance);});
+		me._elements["Page_NAV"].addEventListener("click", func() {draims.menuButton("nav", me._instance);});
+		me._elements["Page_VHF"].addEventListener("click", func() {draims.menuButton("vhf", me._instance);});
+		me._elements["Page_HF"].addEventListener("click", func() {draims.menuButton("hf", me._instance);});
+		me._elements["Page_TEL"].addEventListener("click", func() {draims.menuButton("tel", me._instance);});
+		me._elements["Page_ATC"].addEventListener("click", func() {draims.menuButton("atc", me._instance);});
+
+		# Numpad
+		me._elements["1Key"].addEventListener("click", func() {draims.numberbutton(1, me._instance);});
+		me._elements["2Key"].addEventListener("click", func() {draims.numberbutton(2, me._instance);});
+		me._elements["3Key"].addEventListener("click", func() {draims.numberbutton(3, me._instance);});
+		me._elements["4Key"].addEventListener("click", func() {draims.numberbutton(4, me._instance);});
+		me._elements["5Key"].addEventListener("click", func() {draims.numberbutton(5, me._instance);});
+		me._elements["6Key"].addEventListener("click", func() {draims.numberbutton(6, me._instance);});
+		me._elements["7Key"].addEventListener("click", func() {draims.numberbutton(7, me._instance);});
+		me._elements["8Key"].addEventListener("click", func() {draims.numberbutton(8, me._instance);});
+		me._elements["9Key"].addEventListener("click", func() {draims.numberbutton(9, me._instance);});
+		me._elements["0Key"].addEventListener("click", func() {draims.numberbutton(0, me._instance);});
+		me._elements["decimalKey"].addEventListener("click", func() {draims.decimalButton(me._instance);});
+		me._elements["CLRKey"].addEventListener("click", func() {draims.clearButton(me._instance);});
+
+		# LSKs
+		me._elements["LSK1"].addEventListener("click", func() {draims.lskbutton(1, me._instance);});
+		me._elements["LSK2"].addEventListener("click", func() {draims.lskbutton(2, me._instance);});
+		me._elements["LSK3"].addEventListener("click", func() {draims.lskbutton(3, me._instance);});
+		me._elements["LSK4"].addEventListener("click", func() {draims.lskbutton(4, me._instance);});
+		me._elements["RSK1"].addEventListener("click", func() {draims.rskbutton(1, me._instance);});
+		me._elements["RSK2"].addEventListener("click", func() {draims.rskbutton(2, me._instance);});
+		me._elements["RSK3"].addEventListener("click", func() {draims.rskbutton(3, me._instance);});
+		me._elements["RSK4"].addEventListener("click", func() {draims.rskbutton(4, me._instance);});
 
 		me._timerf();
 		me._timer.start();
 	},
 	_timerf: func() {
-		var intrad = getprop("/controls/audio/acp[" ~ (me._instance - 1) ~ "]/int-rad");
+		var intrad = getprop("/controls/audio/acp[" ~ me._instance ~ "]/int-rad");
 
 		if (intrad == 2) {
 			me._elements["INT"].show();
@@ -68,6 +98,6 @@ var draimsClass = {
 	},
 };
 
-var draims1Dialog = draimsClass.new(1);
-var draims2Dialog = draimsClass.new(2);
-var draims3Dialog = draimsClass.new(3);
+var draims1Dialog = draimsClass.new(0);
+var draims2Dialog = draimsClass.new(1);
+var draims3Dialog = draimsClass.new(2);
