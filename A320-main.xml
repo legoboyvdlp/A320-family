@@ -443,7 +443,11 @@
 						<binding>
 							<command>nasal</command>
 							<script><![CDATA[
-								Dialogs.rmp1Dialog.openDialog();
+								if (getprop("/controls/draims/enabled")) {
+									Dialogs.draims1Dialog.openDialog();
+								} else {
+									Dialogs.rmp1Dialog.openDialog();
+								}
 							]]></script>
 						</binding>
 					</item>
@@ -452,7 +456,11 @@
 						<binding>
 							<command>nasal</command>
 							<script><![CDATA[
-								Dialogs.rmp2Dialog.openDialog();
+								if (getprop("/controls/draims/enabled")) {
+									Dialogs.draims1Dialog.openDialog();
+								} else {
+									Dialogs.rmp1Dialog.openDialog();
+								}
 							]]></script>
 						</binding>
 					</item>
@@ -461,7 +469,11 @@
 						<binding>
 							<command>nasal</command>
 							<script><![CDATA[
-								Dialogs.rmp3Dialog.openDialog();
+								if (getprop("/controls/draims/enabled")) {
+									Dialogs.draims1Dialog.openDialog();
+								} else {
+									Dialogs.rmp1Dialog.openDialog();
+								}
 							]]></script>
 						</binding>
 					</item>
@@ -5074,6 +5086,7 @@
 		<Dialogs>
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
 			<file>Aircraft/A320-family/gui/dialogs/rmp.nas</file>
+			<file>Aircraft/A320-family/gui/dialogs/draims.nas</file>
 		</Dialogs>
 		<save>
 			<file>Aircraft/A320-family/Nasal/Systems/save.nas</file>
