@@ -13,14 +13,6 @@
 	</filter>
 	
 	<filter>
-		<name>A/THR Mach Lag</name>
-		<type>exponential</type>
-		<input>/it-autoflight/internal/current-mach-input</input>
-		<output>/it-autoflight/internal/athr-mach-input-lag</output>
-		<filter-time>0.04</filter-time>
-	</filter>
-	
-	<filter>
 		<name>A/THR Knots Input Gain</name>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -39,7 +31,7 @@
 		<min>
 			<expression>
 				<difference>
-					<property>/it-autoflight/internal/current-speed-input</property>
+					<property>/it-autoflight/internal/athr-kts-input-lag</property>
 					<value>25</value>
 				</difference>
 			</expression>
@@ -47,7 +39,7 @@
 		<max>
 			<expression>
 				<sum>
-					<property>/it-autoflight/internal/current-speed-input</property>
+					<property>/it-autoflight/internal/athr-kts-input-lag</property>
 					<value>25</value>
 				</sum>
 			</expression>
@@ -91,6 +83,14 @@
 	</filter>
 	
 	<filter>
+		<name>A/THR Mach Lag</name>
+		<type>exponential</type>
+		<input>/it-autoflight/internal/current-mach-input</input>
+		<output>/it-autoflight/internal/athr-mach-input-lag</output>
+		<filter-time>0.04</filter-time>
+	</filter>
+	
+	<filter>
 		<name>A/THR Mach Input Gain</name>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -109,7 +109,7 @@
 		<min>
 			<expression>
 				<difference>
-					<property>/it-autoflight/internal/current-mach-input</property>
+					<property>/it-autoflight/internal/athr-mach-input-lag</property>
 					<value>0.045</value>
 				</difference>
 			</expression>
@@ -117,7 +117,7 @@
 		<max>
 			<expression>
 				<sum>
-					<property>/it-autoflight/internal/current-mach-input</property>
+					<property>/it-autoflight/internal/athr-mach-input-lag</property>
 					<value>0.045</value>
 				</sum>
 			</expression>
