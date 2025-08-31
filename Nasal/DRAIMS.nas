@@ -29,6 +29,7 @@ var init = func() {
 		});
 		var group = RMPCanvas[i].createGroup();
 		canvas.parsesvg(group, "Aircraft/A320-family/Models/Instruments/DRAIMS/res/rmp.svg");
+		group.setSize(1024,624);
 		RMP[i] = {};
 		foreach(var key; SVGKeys) {
 			RMP[i][key] = group.getElementById(key);
@@ -452,6 +453,16 @@ var changeFocus = func(item, i) {
 
 var arrowButton = func(dir, i) {
 	# TODO implement
+}
+
+for (var i = 0; i <= 2; i += 1) {
+	for (var j = 1; j <= 3; j += 1) {
+		setlistener("/controls/audio/acp[" ~ i ~ "]/vhf" ~ j ~ "-recive", updateAll, 0, 0);
+	}
+	for (var j = 1; j <= 2; j += 1) {
+		setlistener("/controls/audio/acp[" ~ i ~ "]/hf" ~ j ~ "-recive", updateAll, 0, 0);
+		setlistener("/controls/audio/acp[" ~ i ~ "]/tel" ~ j ~ "-recive", updateAll, 0, 0);
+	}
 }
 
 init();

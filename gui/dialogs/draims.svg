@@ -59,15 +59,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="9.631454"
-     inkscape:cx="268.65103"
-     inkscape:cy="446.40197"
+     inkscape:zoom="4.2278555"
+     inkscape:cx="83.257339"
+     inkscape:cy="17.857753"
      inkscape:window-width="1366"
-     inkscape:window-height="743"
+     inkscape:window-height="768"
      inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-y="156"
      inkscape:window-maximized="1"
-     inkscape:current-layer="INTTransmit" />
+     inkscape:current-layer="layer8" />
   <g
      inkscape:groupmode="layer"
      id="layer11"
@@ -110,8 +110,8 @@
        transform="translate(-19.355677,-11.326891)" />
     <rect
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.19221;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect17"
-       width="293.89447"
+       id="Display"
+       width="293.89401"
        height="187.58138"
        x="89.201752"
        y="50.256763"
@@ -1258,7 +1258,7 @@
       </g>
       <text
          xml:space="preserve"
-         style="font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         style="font-size:12.5422px;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          x="317.31174"
          y="25.270273"
          id="text2"><tspan
@@ -1280,7 +1280,7 @@
          y="51.412857" />
       <text
          xml:space="preserve"
-         style="font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         style="font-size:12.5422px;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          x="320.98001"
          y="25.270273"
          id="text2-6"
@@ -1303,16 +1303,16 @@
          y="51.412857" />
       <text
          xml:space="preserve"
-         style="font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-         x="320.98001"
-         y="25.270273"
-         id="text2-6-6"
-         transform="matrix(0,-0.98685879,1.1069601,0,33.329153,391.67031)"><tspan
+         style="font-size:12.5422px;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.313556;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         x="-79.627716"
+         y="57.960754"
+         id="text2-6-5-3"
+         transform="matrix(0,-0.94419461,1.0591037,0,0,0)"><tspan
            sodipodi:role="line"
-           id="tspan2-8-8"
-           x="320.98001"
-           y="25.270273"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace">VHF</tspan></text>
+           id="tspan2-8-0-5"
+           x="-79.627716"
+           y="57.960754"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace;stroke-width:0.313556">VHF</tspan></text>
     </g>
     <g
        id="Page_HF"
@@ -1349,7 +1349,7 @@
          y="51.412857" />
       <text
          xml:space="preserve"
-         style="font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         style="font-size:12.5422px;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          x="320.98001"
          y="25.270273"
          id="text2-6-7"
@@ -1372,7 +1372,7 @@
          y="51.412857" />
       <text
          xml:space="preserve"
-         style="font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         style="font-size:12.5422px;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          x="320.98001"
          y="25.270273"
          id="text2-6-59"
