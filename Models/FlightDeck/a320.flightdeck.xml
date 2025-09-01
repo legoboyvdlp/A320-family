@@ -256,24 +256,17 @@
 		
 		<object-name>AftCargoIsoBtn1F</object-name>
 		<object-name>AftCargoIsoBtn2O</object-name>
-		<object-name>APUBleedBtn1F</object-name>
-		<object-name>APUBleedBtn2O</object-name>
 		<object-name>BlueElecPump1F</object-name>
 		<object-name>BlueElecPump2O</object-name>
 		<object-name>CargoHotAirBtn1F</object-name>
 		<object-name>CargoHotAirBtn2O</object-name>
 		<object-name>CommercialBtn2O</object-name>
-		<object-name>CrewOxyBtn2O</object-name>
 		<object-name>GalleyPwrBtn1F</object-name>
 		<object-name>GalleyPwrBtn2O</object-name>
-		<object-name>Gen1LineBtn1S</object-name>
-		<object-name>Gen1LineBtn2O</object-name>
 		<object-name>FuelXFeedBtn1O</object-name>
 		<object-name>FuelXFeedBtn2O</object-name>
 		<object-name>LFuelTank1Btn1F</object-name>
 		<object-name>LFuelTank1Btn2O</object-name>
-		<object-name>PassOxyInd1S.001</object-name>
-		<object-name>RamAirBtn2O</object-name>
 		<object-name>RFuelTank1Btn1F</object-name>
 		<object-name>RFuelTank1Btn2O</object-name>
 		
@@ -329,8 +322,6 @@
 		
 		<!-- Overhead panel -->
 		
-		<object-name>ACPack1Btn1F</object-name>
-		<object-name>ACPack1Btn2O</object-name>
 		<object-name>APUFireAgtBtn1S</object-name>
 		<object-name>APUFireAgtBtn2D</object-name>
 		<object-name>APUGenBtn1F</object-name>
@@ -340,8 +331,6 @@
 		<object-name>BusTieBtn2O</object-name>
 		<object-name>ELAC1Btn1F</object-name>
 		<object-name>ELAC1Btn2O</object-name>
-		<object-name>EmerCallBtn1C</object-name>
-		<object-name>EmerCallBtn2O</object-name>
 		<object-name>Eng1FireAgt1Btn1S</object-name>
 		<object-name>Eng1FireAgt1Btn2D</object-name>
 		<object-name>Eng2FireAgt1Btn1S</object-name>
@@ -352,8 +341,6 @@
 		<object-name>Eng2FireAgt2Btn2D</object-name>
 		<object-name>Eng1ManStartBtn2O</object-name>
 		<object-name>Eng2ManStartBtn2O</object-name>
-		<object-name>EvacCommandBtn1E</object-name>
-		<object-name>EvacCommandBtn2O</object-name>
 		<object-name>FAC1Btn1F</object-name>
 		<object-name>FAC1Btn2O</object-name>
 		<object-name>Gen1Btn2O</object-name>
@@ -409,14 +396,10 @@
 		
 		<object-name>ACESSFeedBtn1F</object-name>
 		<object-name>ACESSFeedBtn2A</object-name>
-		<object-name>ACPack2Btn1F</object-name>
-		<object-name>ACPack2Btn2O</object-name>
 		<object-name>CFuelTank1Btn1F</object-name>
 		<object-name>CFuelTank1Btn2O</object-name>
 		<object-name>ELAC2Btn1F</object-name>
 		<object-name>ELAC2Btn2O</object-name>
-		<object-name>Eng2BleedBtn1F</object-name>
-		<object-name>Eng2BleedBtn2O</object-name>
 		<object-name>FAC2Btn1F</object-name>
 		<object-name>FAC2Btn2O</object-name>
 		<object-name>LFuelTank2Btn1F</object-name>
@@ -475,21 +458,11 @@
 		<object-name>CabinFansBtn2O</object-name>
 		<object-name>CFuelTank2Btn1F</object-name>
 		<object-name>CFuelTank2Btn2O</object-name>
-		<object-name>EmerGenInd1F</object-name>
-		<object-name>Eng1BleedBtn1F</object-name>
-		<object-name>Eng1BleedBtn2O</object-name>
 		<object-name>ExtPwrBtn2O</object-name>
 		<object-name>FuelModeBtn1F</object-name>
 		<object-name>FuelModeBtn2O</object-name>
 		<object-name>FwdCargoSmokeBtn1S</object-name>
 		<object-name>FwdCargoSmokeBtn2D</object-name>
-		<object-name>GPWSBtn1F</object-name>
-		<object-name>GPWSBtn2O</object-name>
-		<object-name>GPWSFlpBtn1O</object-name>
-		<object-name>GPWSFlp3Btn2O</object-name>
-		<object-name>GPWSGSBtn1O</object-name>
-		<object-name>GPWSTerrBtn1F</object-name>
-		<object-name>GPWSTerrBtn2O</object-name>
 		<object-name>GreenEngPump21F</object-name>
 		<object-name>GreenEngPump22O</object-name>
 		<object-name>HotAirBtn1F</object-name>
@@ -500,7 +473,6 @@
 		<object-name>IR2Btn2O</object-name>
 		<object-name>IR3Btn1F</object-name>
 		<object-name>IR3Btn2O</object-name>
-		<object-name>RcdrGndCtlBtn2O</object-name>
 		
 		<object-name>OVH_button_labels.051</object-name>
 		<object-name>OVH_button_labels.055</object-name>
@@ -600,9 +572,6 @@
 		<object-name>CargoHotAirBtn1F</object-name>
 		<object-name>CargoHotAirBtn2O</object-name>
 		<object-name>CommercialBtn2O</object-name>
-		<object-name>EvacCommandBtn1E</object-name>
-		<object-name>EvacCommandBtn2O</object-name>
-		<object-name>Gen1LineBtn1S</object-name>
 		<object-name>ToiletBtn1O</object-name>
 		<object-name>VentBlowBtn2O</object-name>
 		<object-name>VentExtractBtn1F</object-name>
@@ -29588,6 +29557,22 @@
 			<z2-m>0.914005</z2-m>
 		</axis>
 	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>EvacCommandBtn1E</object-name>
+		<condition>
+			<property>/controls/indicators/evac-evac</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>EvacCommandBtn2O</object-name>
+		<condition>
+			<property>/controls/indicators/evac-on</property>
+		</condition>
+	</animation>
 	
 	<animation>
 		<type>pick</type>
@@ -29828,18 +29813,17 @@
 
 	<animation>
 		<type>select</type>
+		<object-name>Gen1LineBtn1S</object-name>
+		<condition>
+			<property>/controls/indicators/gen1-line-smoke</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
 		<object-name>Gen1LineBtn2O</object-name>
 		<condition>
-			<and>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-ess</property>
-					<value>25</value>
-				</greater-than-equals>
-				<or>
-					<property>controls/electrical/switches/gen-1-line-contactor</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-			</and>
+			<property>/controls/indicators/gen1-line-off</property>
 		</condition>
 	</animation>
 
@@ -29847,12 +29831,7 @@
 		<type>select</type>
 		<object-name>EmerGenInd1F</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>systems/electrical/light/rat-emer-gen-fault</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-			</and>
+			<property>/controls/indicators/emer-gen-fault</property>
 		</condition>
 	</animation>
 
@@ -30053,10 +30032,7 @@
 		<type>select</type>
 		<object-name>PassOxyInd1S.001</object-name>
 		<condition>
-			<or>
-				<property>/systems/oxygen/passenger-oxygen/sys-on-light</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/pax-oxy</property>
 		</condition>
 	</animation>
 
@@ -30125,10 +30101,7 @@
 		<type>select</type>
 		<object-name>CrewOxyBtn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/oxygen/cockpit-oxygen-supply-pb</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/crew-oxy</property>
 		</condition>
 	</animation>
 	
@@ -30198,10 +30171,7 @@
 		<type>select</type>
 		<object-name>RcdrGndCtlBtn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/CVR/gndctl</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/rcdr-ground-control</property>
 		</condition>	
 	</animation>
 	
@@ -30662,10 +30632,7 @@
 		<type>select</type>
 		<object-name>EmerCallBtn1C</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>controls/switches/emerCallLtC</property>
-			</or>
+			<property>/controls/indicators/emer-call-call</property>
 		</condition>
 	</animation>
 	
@@ -30673,10 +30640,7 @@
 		<type>select</type>
 		<object-name>EmerCallBtn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/switches/annun-test</property>
-				<property>controls/switches/emerCallLtO</property>
-			</or>
+			<property>/controls/indicators/emer-call-on</property>
 		</condition>
 	</animation>
 
@@ -33159,10 +33123,7 @@
 		<type>select</type>
 		<object-name>ACPack1Btn1F</object-name>
 		<condition>
-			<or>
-				<property>/systems/air-conditioning/warnings/pack-1-fault-light</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/pack1-fault</property>
 		</condition>
 	</animation>
 
@@ -33170,10 +33131,7 @@
 		<type>select</type>
 		<object-name>ACPack1Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/pneumatics/switches/pack-1</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/pack1-off</property>
 		</condition>
 	</animation>
 
@@ -33250,13 +33208,7 @@
 		<type>select</type>
 		<object-name>Eng1BleedBtn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/pneumatics/warnings/bleed1-fault</property>
-					<property>controls/pneumatics/switches/bleed-1</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/engine-1-bleed-fault</property>
 		</condition>
 	</animation>
 
@@ -33264,10 +33216,7 @@
 		<type>select</type>
 		<object-name>Eng1BleedBtn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/pneumatics/switches/bleed-1</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/engine-1-bleed-off</property>
 		</condition>
 	</animation>
 
@@ -33382,10 +33331,7 @@
 		<type>select</type>
 		<object-name>RamAirBtn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/pneumatics/switches/ram-air</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ram-air-on</property>
 		</condition>
 	</animation>
 
@@ -33462,19 +33408,7 @@
 		<type>select</type>
 		<object-name>APUBleedBtn1F</object-name>
 		<condition>
-			<or>
-				<!--<and>
-					<equals>
-						<property>systems/pneumatics/bleedapu-fault</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>controls/pneumatics/switches/apu</property>
-						<value>1</value>
-					</equals>
-				</and> leak not simulated yet -->
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/apu-bleed-fault</property>
 		</condition>
 	</animation>
 
@@ -33482,10 +33416,7 @@
 		<type>select</type>
 		<object-name>APUBleedBtn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/pneumatics/switches/apu</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/apu-bleed-on</property>
 		</condition>
 	</animation>
 
@@ -33562,13 +33493,7 @@
 		<type>select</type>
 		<object-name>Eng2BleedBtn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/pneumatics/warnings/bleed2-fault</property>
-					<property>controls/pneumatics/switches/bleed-2</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/engine-2-bleed-fault</property>
 		</condition>
 	</animation>
 
@@ -33576,10 +33501,7 @@
 		<type>select</type>
 		<object-name>Eng2BleedBtn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/pneumatics/switches/bleed-2</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/engine-2-bleed-off</property>
 		</condition>
 	</animation>
 
@@ -33650,13 +33572,7 @@
 		<type>select</type>
 		<object-name>HotAirBtn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/pneumatics/hotair-fault</property>
-					<property>controls/pneumatics/switches/hot-air</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/hot-air-fault</property>
 		</condition>
 	</animation>
 
@@ -33664,10 +33580,7 @@
 		<type>select</type>
 		<object-name>HotAirBtn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/pneumatics/switches/hot-air</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/hot-air-off</property>
 		</condition>
 	</animation>
 
@@ -33744,10 +33657,7 @@
 		<type>select</type>
 		<object-name>ACPack2Btn1F</object-name>
 		<condition>
-			<or>
-				<property>/systems/air-conditioning/warnings/pack-2-fault-light</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/pack2-fault</property>
 		</condition>
 	</animation>
 
@@ -33755,10 +33665,7 @@
 		<type>select</type>
 		<object-name>ACPack2Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/pneumatics/switches/pack-2</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/pack2-off</property>
 		</condition>
 	</animation>
 
@@ -35773,13 +35680,7 @@
 		<type>select</type>
 		<object-name>GPWSTerrBtn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<not><property>instrumentation/mk-viii/serviceable</property></not>
-					<not><property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property></not>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/gpws-terr-fault</property>
 		</condition>
 	</animation>
 
@@ -35787,10 +35688,7 @@
 		<type>select</type>
 		<object-name>GPWSTerrBtn2O</object-name>
 		<condition>
-			<or>
-				<property>instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/gpws-terr-off</property>
 		</condition>
 	</animation>
 
@@ -35798,13 +35696,7 @@
 		<type>select</type>
 		<object-name>GPWSBtn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<not><property>instrumentation/mk-viii/serviceable</property></not>
-					<not><property>instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property></not>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/gpws-sys-fault</property>
 		</condition>
 	</animation>
 
@@ -35812,10 +35704,7 @@
 		<type>select</type>
 		<object-name>GPWSBtn2O</object-name>
 		<condition>
-			<or>
-				<property>instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/gpws-sys-off</property>
 		</condition>
 	</animation>
 
@@ -35823,10 +35712,7 @@
 		<type>select</type>
 		<object-name>GPWSGSBtn1O</object-name>
 		<condition>
-			<or>
-				<property>instrumentation/mk-viii/inputs/discretes/glideslope-inhibit</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/gpws-gs-off</property>
 		</condition>
 	</animation>
 
@@ -35834,10 +35720,7 @@
 		<type>select</type>
 		<object-name>GPWSFlpBtn1O</object-name>
 		<condition>
-			<or>
-				<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/gpws-flaps-off</property>
 		</condition>
 	</animation>
 
@@ -35845,10 +35728,7 @@
 		<type>select</type>
 		<object-name>GPWSFlp3Btn2O</object-name>
 		<condition>
-			<or>
-				<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/gpws-flaps-3</property>
 		</condition>
 	</animation>
 

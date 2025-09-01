@@ -6,6 +6,28 @@
 
 	<channel name="Signs">
 
+		<switch name="/controls/indicators/apu-bleed-on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/pneumatics/switches/apu eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/apu-bleed-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/apu-master-fault">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -216,6 +238,17 @@
 					/systems/electrical/bus/ac-si-bus ge 110
 					/systems/electrical/bus/ac-ess-shed ge 110
 				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/crew-oxy">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/oxygen/cockpit-oxygen-supply-pb ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
 			</test>
 		</switch>
 
@@ -552,11 +585,53 @@
 			</test>
 		</switch>
 
+		<switch name="/controls/indicators/emer-call-call">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/switches/emerCallLtC eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/emer-call-on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/switches/emerCallLtO eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/emer-exit-off">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				<test logic="OR" value="1">
 					/controls/switches/emer-lights eq 0
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/emer-gen-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
 					/controls/switches/annun-test eq 1
 				</test>
 				<test logic="OR" value="1">
@@ -609,6 +684,56 @@
 				/systems/electrical/bus/ac-2 ge 110
 			</test>
 		</switch>
+
+		<switch name="/controls/indicators/engine-1-bleed-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/pneumatics/switches/bleed-1 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/engine-1-bleed-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/pneumatics/warnings/bleed1-fault eq 1
+						/controls/pneumatics/switches/bleed-1 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/engine-2-bleed-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/pneumatics/switches/bleed-2 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/engine-2-bleed-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/pneumatics/warnings/bleed2-fault eq 1
+						/controls/pneumatics/switches/bleed-2 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
 	
 		<switch name="/controls/indicators/engine-1-fault">
 			<default value="0"/>
@@ -651,6 +776,34 @@
 			<test logic="AND" value="1">
 				<test logic="OR" value="1">
 					/systems/fire/engine2/warning-active eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/evac-on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/evac-evac">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
 					/controls/switches/annun-test eq 1
 				</test>
 				<test logic="OR" value="1">
@@ -945,6 +1098,113 @@
 			</test>
 		</switch>
 
+		<switch name="/controls/indicators/gen1-line-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/electrical/switches/gen-1-line-contactor eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gen1-line-smoke">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gpws-flaps-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/mk-viii/inputs/discretes/momentary-flap-all-override eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gpws-flaps-3">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gpws-gs-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/mk-viii/inputs/discretes/glideslope-inhibit eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gpws-sys-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/mk-viii/inputs/discretes/gpws-inhibit eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gpws-sys-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/instrumentation/mk-viii/serviceable ne 1
+						/instrumentation/mk-viii/inputs/discretes/gpws-inhibit ne 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gpws-terr-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gpws-terr-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/instrumentation/mk-viii/serviceable ne 1
+						/instrumentation/mk-viii/inputs/discretes/ta-tcf-inhibit ne 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/master-caut">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -957,6 +1217,28 @@
 					/systems/electrical/bus/ac-ess-shed ge 110
 					/systems/electrical/bus/ac-2 ge 110
 				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/hot-air-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/pneumatics/switches/hot-air ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/hot-air-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
 			</test>
 		</switch>
 
@@ -1116,6 +1398,89 @@
 				<!-- TODO has no other condition yet -->
 				/controls/switches/annun-test eq 1
 				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/pack1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/pneumatics/switches/pack-1 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/pack1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/air-conditioning/warnings/pack-1-fault-light eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/pack2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/pneumatics/switches/pack-2 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/pack2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/air-conditioning/warnings/pack-2-fault-light eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/pax-oxy">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/oxygen/passenger-oxygen/sys-on-light eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/ram-air-on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/pneumatics/switches/ram-air eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/rcdr-ground-control">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/CVR/gndctl eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
 			</test>
 		</switch>
 
