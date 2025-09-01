@@ -16756,7 +16756,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/vhf1-recive</property>
+				<property>controls/audio/acp[0]/vhf1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -16800,7 +16800,7 @@
 		<object-name>audio_vhf1_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/vhf1-recive</property>
+				<property>controls/audio/acp[0]/vhf1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -16814,7 +16814,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/vhf2-recive</property>
+				<property>controls/audio/acp[0]/vhf2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -16858,7 +16858,7 @@
 		<object-name>audio_vhf2_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/vhf2-recive</property>
+				<property>controls/audio/acp[0]/vhf2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -16872,7 +16872,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/vhf3-recive</property>
+				<property>controls/audio/acp[0]/vhf3-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -16916,7 +16916,7 @@
 		<object-name>audio_vhf3_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/vhf3-recive</property>
+				<property>controls/audio/acp[0]/vhf3-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -16930,7 +16930,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/hf1-recive</property>
+				<property>controls/audio/acp[0]/hf1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -16974,7 +16974,7 @@
 		<object-name>audio_hf1_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/hf1-recive</property>
+				<property>controls/audio/acp[0]/hf1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -16988,7 +16988,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/hf2-recive</property>
+				<property>controls/audio/acp[0]/hf2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17032,7 +17032,7 @@
 		<object-name>audio_hf2_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/hf2-recive</property>
+				<property>controls/audio/acp[0]/hf2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17046,7 +17046,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/int-recive</property>
+				<property>controls/audio/acp[0]/int-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17090,7 +17090,7 @@
 		<object-name>audio_int_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/int-recive</property>
+				<property>controls/audio/acp[0]/int-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17104,7 +17104,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/cab-recive</property>
+				<property>controls/audio/acp[0]/cab-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17148,7 +17148,7 @@
 		<object-name>audio_cab_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/cab-recive</property>
+				<property>controls/audio/acp[0]/cab-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17162,7 +17162,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/pa-recive</property>
+				<property>controls/audio/acp[0]/pa-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17206,7 +17206,7 @@
 		<object-name>audio_pa_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/pa-recive</property>
+				<property>controls/audio/acp[0]/pa-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17220,7 +17220,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/vor1-recive</property>
+				<property>controls/audio/acp[0]/vor1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17264,7 +17264,7 @@
 		<object-name>audio_vor1_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/vor1-recive</property>
+				<property>controls/audio/acp[0]/vor1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17279,7 +17279,7 @@
 
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/vor2-recive</property>
+				<property>controls/audio/acp[0]/vor2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17325,7 +17325,7 @@
 		<object-name>audio_vor2_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/vor2-recive</property>
+				<property>controls/audio/acp[0]/vor2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17339,7 +17339,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/mkr-recive</property>
+				<property>controls/audio/acp[0]/mkr-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17383,7 +17383,7 @@
 		<object-name>audio_mkr_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/mkr-recive</property>
+				<property>controls/audio/acp[0]/mkr-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17397,7 +17397,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/ils-recive</property>
+				<property>controls/audio/acp[0]/ils-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17441,7 +17441,7 @@
 		<object-name>audio_ils_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/ils-recive</property>
+				<property>controls/audio/acp[0]/ils-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17455,7 +17455,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/mls-recive</property>
+				<property>controls/audio/acp[0]/mls-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17499,7 +17499,7 @@
 		<object-name>audio_mls_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/mls-recive</property>
+				<property>controls/audio/acp[0]/mls-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17514,7 +17514,7 @@
 
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/adf1-recive</property>
+				<property>controls/audio/acp[0]/adf1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17560,7 +17560,7 @@
 		<object-name>audio_adf1_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/adf1-recive</property>
+				<property>controls/audio/acp[0]/adf1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17574,7 +17574,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[0]/adf2-recive</property>
+				<property>controls/audio/acp[0]/adf2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -17618,7 +17618,7 @@
 		<object-name>audio_adf2_glare.cpt</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[0]/adf2-recive</property>
+				<property>controls/audio/acp[0]/adf2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -17629,7 +17629,7 @@
 		<type>translate</type>
 		<object-name>audio_vhf1.cpt</object-name>
 		<object-name>audio_vhf1_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/vhf1-recive</property>
+		<property>controls/audio/acp[0]/vhf1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17657,7 +17657,7 @@
 		<type>translate</type>
 		<object-name>audio_vhf2.cpt</object-name>
 		<object-name>audio_vhf2_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/vhf2-recive</property>
+		<property>controls/audio/acp[0]/vhf2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17685,7 +17685,7 @@
 		<type>translate</type>
 		<object-name>audio_vhf3.cpt</object-name>
 		<object-name>audio_vhf3_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/vhf3-recive</property>
+		<property>controls/audio/acp[0]/vhf3-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17713,7 +17713,7 @@
 		<type>translate</type>
 		<object-name>audio_hf1.cpt</object-name>
 		<object-name>audio_hf1_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/hf1-recive</property>
+		<property>controls/audio/acp[0]/hf1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17741,7 +17741,7 @@
 		<type>translate</type>
 		<object-name>audio_hf2.cpt</object-name>
 		<object-name>audio_hf2_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/hf2-recive</property>
+		<property>controls/audio/acp[0]/hf2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17769,7 +17769,7 @@
 		<type>translate</type>
 		<object-name>audio_int.cpt</object-name>
 		<object-name>audio_int_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/int-recive</property>
+		<property>controls/audio/acp[0]/int-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17797,7 +17797,7 @@
 		<type>translate</type>
 		<object-name>audio_cab.cpt</object-name>
 		<object-name>audio_cab_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/cab-recive</property>
+		<property>controls/audio/acp[0]/cab-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17825,7 +17825,7 @@
 		<type>translate</type>
 		<object-name>audio_pa_rot.cpt</object-name>
 		<object-name>audio_pa_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/pa-recive</property>
+		<property>controls/audio/acp[0]/pa-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17853,7 +17853,7 @@
 		<type>translate</type>
 		<object-name>audio_vor1.cpt</object-name>
 		<object-name>audio_vor1_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/vor1-recive</property>
+		<property>controls/audio/acp[0]/vor1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17881,7 +17881,7 @@
 		<type>translate</type>
 		<object-name>audio_vor2.cpt</object-name>
 		<object-name>audio_vor2_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/vor2-recive</property>
+		<property>controls/audio/acp[0]/vor2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17909,7 +17909,7 @@
 		<type>translate</type>
 		<object-name>audio_mkr.cpt</object-name>
 		<object-name>audio_mkr_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/mkr-recive</property>
+		<property>controls/audio/acp[0]/mkr-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17937,7 +17937,7 @@
 		<type>translate</type>
 		<object-name>audio_ils.cpt</object-name>
 		<object-name>audio_ils_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/ils-recive</property>
+		<property>controls/audio/acp[0]/ils-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17965,7 +17965,7 @@
 		<type>translate</type>
 		<object-name>audio_mls.cpt</object-name>
 		<object-name>audio_mls_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/mls-recive</property>
+		<property>controls/audio/acp[0]/mls-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -17993,7 +17993,7 @@
 		<type>translate</type>
 		<object-name>audio_adf1.cpt</object-name>
 		<object-name>audio_adf1_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/adf1-recive</property>
+		<property>controls/audio/acp[0]/adf1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -18021,7 +18021,7 @@
 		<type>translate</type>
 		<object-name>audio_adf2.cpt</object-name>
 		<object-name>audio_adf2_glare.cpt</object-name>
-		<property>controls/audio/acp[0]/adf2-recive</property>
+		<property>controls/audio/acp[0]/adf2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -21418,7 +21418,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/vhf1-recive</property>
+				<property>controls/audio/acp[1]/vhf1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -21462,7 +21462,7 @@
 		<object-name>audio_vhf1_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/vhf1-recive</property>
+				<property>controls/audio/acp[1]/vhf1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -21476,7 +21476,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/vhf2-recive</property>
+				<property>controls/audio/acp[1]/vhf2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -21520,7 +21520,7 @@
 		<object-name>audio_vhf2_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/vhf2-recive</property>
+				<property>controls/audio/acp[1]/vhf2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -21534,7 +21534,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/vhf3-recive</property>
+				<property>controls/audio/acp[1]/vhf3-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -21578,7 +21578,7 @@
 		<object-name>audio_vhf3_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/vhf3-recive</property>
+				<property>controls/audio/acp[1]/vhf3-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -21592,7 +21592,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/hf1-recive</property>
+				<property>controls/audio/acp[1]/hf1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -21636,7 +21636,7 @@
 		<object-name>audio_hf1_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/hf1-recive</property>
+				<property>controls/audio/acp[1]/hf1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -21650,7 +21650,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/hf2-recive</property>
+				<property>controls/audio/acp[1]/hf2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -21694,7 +21694,7 @@
 		<object-name>audio_hf2_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/hf2-recive</property>
+				<property>controls/audio/acp[1]/hf2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -21708,7 +21708,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/int-recive</property>
+				<property>controls/audio/acp[1]/int-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -21752,7 +21752,7 @@
 		<object-name>audio_int_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/int-recive</property>
+				<property>controls/audio/acp[1]/int-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -21766,7 +21766,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/cab-recive</property>
+				<property>controls/audio/acp[1]/cab-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -21810,7 +21810,7 @@
 		<object-name>audio_cab_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/cab-recive</property>
+				<property>controls/audio/acp[1]/cab-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -21824,7 +21824,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/pa-recive</property>
+				<property>controls/audio/acp[1]/pa-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -21868,7 +21868,7 @@
 		<object-name>audio_pa_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/pa-recive</property>
+				<property>controls/audio/acp[1]/pa-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -21882,7 +21882,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/vor1-recive</property>
+				<property>controls/audio/acp[1]/vor1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -21926,7 +21926,7 @@
 		<object-name>audio_vor1_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/vor1-recive</property>
+				<property>controls/audio/acp[1]/vor1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -21941,7 +21941,7 @@
 
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/vor2-recive</property>
+				<property>controls/audio/acp[1]/vor2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -21987,7 +21987,7 @@
 		<object-name>audio_vor2_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/vor2-recive</property>
+				<property>controls/audio/acp[1]/vor2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -22001,7 +22001,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/mkr-recive</property>
+				<property>controls/audio/acp[1]/mkr-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -22045,7 +22045,7 @@
 		<object-name>audio_mkr_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/mkr-recive</property>
+				<property>controls/audio/acp[1]/mkr-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -22059,7 +22059,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/ils-recive</property>
+				<property>controls/audio/acp[1]/ils-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -22103,7 +22103,7 @@
 		<object-name>audio_ils_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/ils-recive</property>
+				<property>controls/audio/acp[1]/ils-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -22117,7 +22117,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/mls-recive</property>
+				<property>controls/audio/acp[1]/mls-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -22161,7 +22161,7 @@
 		<object-name>audio_mls_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/mls-recive</property>
+				<property>controls/audio/acp[1]/mls-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -22176,7 +22176,7 @@
 
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/adf1-recive</property>
+				<property>controls/audio/acp[1]/adf1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -22222,7 +22222,7 @@
 		<object-name>audio_adf1_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/adf1-recive</property>
+				<property>controls/audio/acp[1]/adf1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -22236,7 +22236,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[1]/adf2-recive</property>
+				<property>controls/audio/acp[1]/adf2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -22280,7 +22280,7 @@
 		<object-name>audio_adf2_glare.fo</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[1]/adf2-recive</property>
+				<property>controls/audio/acp[1]/adf2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -22291,7 +22291,7 @@
 		<type>translate</type>
 		<object-name>audio_vhf1.fo</object-name>
 		<object-name>audio_vhf1_glare.fo</object-name>
-		<property>controls/audio/acp[1]/vhf1-recive</property>
+		<property>controls/audio/acp[1]/vhf1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22319,7 +22319,7 @@
 		<type>translate</type>
 		<object-name>audio_vhf2.fo</object-name>
 		<object-name>audio_vhf2_glare.fo</object-name>
-		<property>controls/audio/acp[1]/vhf2-recive</property>
+		<property>controls/audio/acp[1]/vhf2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22347,7 +22347,7 @@
 		<type>translate</type>
 		<object-name>audio_vhf3.fo</object-name>
 		<object-name>audio_vhf3_glare.fo</object-name>
-		<property>controls/audio/acp[1]/vhf3-recive</property>
+		<property>controls/audio/acp[1]/vhf3-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22375,7 +22375,7 @@
 		<type>translate</type>
 		<object-name>audio_hf1.fo</object-name>
 		<object-name>audio_hf1_glare.fo</object-name>
-		<property>controls/audio/acp[1]/hf1-recive</property>
+		<property>controls/audio/acp[1]/hf1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22403,7 +22403,7 @@
 		<type>translate</type>
 		<object-name>audio_hf2.fo</object-name>
 		<object-name>audio_hf2_glare.fo</object-name>
-		<property>controls/audio/acp[1]/hf2-recive</property>
+		<property>controls/audio/acp[1]/hf2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22431,7 +22431,7 @@
 		<type>translate</type>
 		<object-name>audio_int.fo</object-name>
 		<object-name>audio_int_glare.fo</object-name>
-		<property>controls/audio/acp[1]/int-recive</property>
+		<property>controls/audio/acp[1]/int-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22459,7 +22459,7 @@
 		<type>translate</type>
 		<object-name>audio_cab.fo</object-name>
 		<object-name>audio_cab_glare.fo</object-name>
-		<property>controls/audio/acp[1]/cab-recive</property>
+		<property>controls/audio/acp[1]/cab-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22487,7 +22487,7 @@
 		<type>translate</type>
 		<object-name>audio_pa_rot.fo</object-name>
 		<object-name>audio_pa_glare.fo</object-name>
-		<property>controls/audio/acp[1]/pa-recive</property>
+		<property>controls/audio/acp[1]/pa-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22515,7 +22515,7 @@
 		<type>translate</type>
 		<object-name>audio_vor1.fo</object-name>
 		<object-name>audio_vor1_glare.fo</object-name>
-		<property>controls/audio/acp[1]/vor1-recive</property>
+		<property>controls/audio/acp[1]/vor1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22543,7 +22543,7 @@
 		<type>translate</type>
 		<object-name>audio_vor2.fo</object-name>
 		<object-name>audio_vor2_glare.fo</object-name>
-		<property>controls/audio/acp[1]/vor2-recive</property>
+		<property>controls/audio/acp[1]/vor2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22571,7 +22571,7 @@
 		<type>translate</type>
 		<object-name>audio_mkr.fo</object-name>
 		<object-name>audio_mkr_glare.fo</object-name>
-		<property>controls/audio/acp[1]/mkr-recive</property>
+		<property>controls/audio/acp[1]/mkr-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22599,7 +22599,7 @@
 		<type>translate</type>
 		<object-name>audio_ils.fo</object-name>
 		<object-name>audio_ils_glare.fo</object-name>
-		<property>controls/audio/acp[1]/ils-recive</property>
+		<property>controls/audio/acp[1]/ils-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22627,7 +22627,7 @@
 		<type>translate</type>
 		<object-name>audio_mls.fo</object-name>
 		<object-name>audio_mls_glare.fo</object-name>
-		<property>controls/audio/acp[1]/mls-recive</property>
+		<property>controls/audio/acp[1]/mls-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22655,7 +22655,7 @@
 		<type>translate</type>
 		<object-name>audio_adf1.fo</object-name>
 		<object-name>audio_adf1_glare.fo</object-name>
-		<property>controls/audio/acp[1]/adf1-recive</property>
+		<property>controls/audio/acp[1]/adf1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -22683,7 +22683,7 @@
 		<type>translate</type>
 		<object-name>audio_adf2.fo</object-name>
 		<object-name>audio_adf2_glare.fo</object-name>
-		<property>controls/audio/acp[1]/adf2-recive</property>
+		<property>controls/audio/acp[1]/adf2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>-0.20717</x1-m>
@@ -25677,7 +25677,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/vhf1-recive</property>
+				<property>controls/audio/acp[2]/vhf1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -25721,7 +25721,7 @@
 		<object-name>audio_vhf1_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/vhf1-recive</property>
+				<property>controls/audio/acp[2]/vhf1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -25735,7 +25735,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/vhf2-recive</property>
+				<property>controls/audio/acp[2]/vhf2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -25779,7 +25779,7 @@
 		<object-name>audio_vhf2_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/vhf2-recive</property>
+				<property>controls/audio/acp[2]/vhf2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -25793,7 +25793,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/vhf3-recive</property>
+				<property>controls/audio/acp[2]/vhf3-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -25837,7 +25837,7 @@
 		<object-name>audio_vhf3_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/vhf3-recive</property>
+				<property>controls/audio/acp[2]/vhf3-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -25851,7 +25851,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/hf1-recive</property>
+				<property>controls/audio/acp[2]/hf1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -25895,7 +25895,7 @@
 		<object-name>audio_hf1_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/hf1-recive</property>
+				<property>controls/audio/acp[2]/hf1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -25909,7 +25909,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/hf2-recive</property>
+				<property>controls/audio/acp[2]/hf2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -25953,7 +25953,7 @@
 		<object-name>audio_hf2_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/hf2-recive</property>
+				<property>controls/audio/acp[2]/hf2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -25967,7 +25967,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/int-recive</property>
+				<property>controls/audio/acp[2]/int-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -26011,7 +26011,7 @@
 		<object-name>audio_int_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/int-recive</property>
+				<property>controls/audio/acp[2]/int-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26025,7 +26025,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/cab-recive</property>
+				<property>controls/audio/acp[2]/cab-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -26069,7 +26069,7 @@
 		<object-name>audio_cab_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/cab-recive</property>
+				<property>controls/audio/acp[2]/cab-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26083,7 +26083,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/pa-recive</property>
+				<property>controls/audio/acp[2]/pa-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -26127,7 +26127,7 @@
 		<object-name>audio_pa_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/pa-recive</property>
+				<property>controls/audio/acp[2]/pa-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26141,7 +26141,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/vor1-recive</property>
+				<property>controls/audio/acp[2]/vor1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -26185,7 +26185,7 @@
 		<object-name>audio_vor1_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/vor1-recive</property>
+				<property>controls/audio/acp[2]/vor1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26200,7 +26200,7 @@
 
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/vor2-recive</property>
+				<property>controls/audio/acp[2]/vor2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -26246,7 +26246,7 @@
 		<object-name>audio_vor2_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/vor2-recive</property>
+				<property>controls/audio/acp[2]/vor2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26260,7 +26260,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/mkr-recive</property>
+				<property>controls/audio/acp[2]/mkr-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -26304,7 +26304,7 @@
 		<object-name>audio_mkr_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/mkr-recive</property>
+				<property>controls/audio/acp[2]/mkr-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26318,7 +26318,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/ils-recive</property>
+				<property>controls/audio/acp[2]/ils-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -26362,7 +26362,7 @@
 		<object-name>audio_ils_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/ils-recive</property>
+				<property>controls/audio/acp[2]/ils-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26376,7 +26376,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/mls-recive</property>
+				<property>controls/audio/acp[2]/mls-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -26420,7 +26420,7 @@
 		<object-name>audio_mls_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/mls-recive</property>
+				<property>controls/audio/acp[2]/mls-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26435,7 +26435,7 @@
 
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/adf1-recive</property>
+				<property>controls/audio/acp[2]/adf1-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -26481,7 +26481,7 @@
 		<object-name>audio_adf1_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/adf1-recive</property>
+				<property>controls/audio/acp[2]/adf1-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26495,7 +26495,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/audio/acp[2]/adf2-recive</property>
+				<property>controls/audio/acp[2]/adf2-receive</property>
 			</binding>
 		</action>
 		<action>
@@ -26539,7 +26539,7 @@
 		<object-name>audio_adf2_glare.ovh</object-name>
 		<condition>
 			<or>
-				<property>controls/audio/acp[2]/adf2-recive</property>
+				<property>controls/audio/acp[2]/adf2-receive</property>
 				<property>controls/switches/annun-test</property>
 			</or>
 		</condition>
@@ -26550,7 +26550,7 @@
 		<type>translate</type>
 		<object-name>audio_vhf1.ovh</object-name>
 		<object-name>audio_vhf1_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/vhf1-recive</property>
+		<property>controls/audio/acp[2]/vhf1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26578,7 +26578,7 @@
 		<type>translate</type>
 		<object-name>audio_vhf2.ovh</object-name>
 		<object-name>audio_vhf2_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/vhf2-recive</property>
+		<property>controls/audio/acp[2]/vhf2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26606,7 +26606,7 @@
 		<type>translate</type>
 		<object-name>audio_vhf3.ovh</object-name>
 		<object-name>audio_vhf3_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/vhf3-recive</property>
+		<property>controls/audio/acp[2]/vhf3-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26634,7 +26634,7 @@
 		<type>translate</type>
 		<object-name>audio_hf1.ovh</object-name>
 		<object-name>audio_hf1_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/hf1-recive</property>
+		<property>controls/audio/acp[2]/hf1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26662,7 +26662,7 @@
 		<type>translate</type>
 		<object-name>audio_hf2.ovh</object-name>
 		<object-name>audio_hf2_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/hf2-recive</property>
+		<property>controls/audio/acp[2]/hf2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26690,7 +26690,7 @@
 		<type>translate</type>
 		<object-name>audio_int.ovh</object-name>
 		<object-name>audio_int_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/int-recive</property>
+		<property>controls/audio/acp[2]/int-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26718,7 +26718,7 @@
 		<type>translate</type>
 		<object-name>audio_cab.ovh</object-name>
 		<object-name>audio_cab_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/cab-recive</property>
+		<property>controls/audio/acp[2]/cab-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26746,7 +26746,7 @@
 		<type>translate</type>
 		<object-name>audio_pa_rot.ovh</object-name>
 		<object-name>audio_pa_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/pa-recive</property>
+		<property>controls/audio/acp[2]/pa-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26774,7 +26774,7 @@
 		<type>translate</type>
 		<object-name>audio_vor1.ovh</object-name>
 		<object-name>audio_vor1_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/vor1-recive</property>
+		<property>controls/audio/acp[2]/vor1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26802,7 +26802,7 @@
 		<type>translate</type>
 		<object-name>audio_vor2.ovh</object-name>
 		<object-name>audio_vor2_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/vor2-recive</property>
+		<property>controls/audio/acp[2]/vor2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26830,7 +26830,7 @@
 		<type>translate</type>
 		<object-name>audio_mkr.ovh</object-name>
 		<object-name>audio_mkr_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/mkr-recive</property>
+		<property>controls/audio/acp[2]/mkr-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26858,7 +26858,7 @@
 		<type>translate</type>
 		<object-name>audio_ils.ovh</object-name>
 		<object-name>audio_ils_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/ils-recive</property>
+		<property>controls/audio/acp[2]/ils-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26886,7 +26886,7 @@
 		<type>translate</type>
 		<object-name>audio_mls.ovh</object-name>
 		<object-name>audio_mls_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/mls-recive</property>
+		<property>controls/audio/acp[2]/mls-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26914,7 +26914,7 @@
 		<type>translate</type>
 		<object-name>audio_adf1.ovh</object-name>
 		<object-name>audio_adf1_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/adf1-recive</property>
+		<property>controls/audio/acp[2]/adf1-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>
@@ -26942,7 +26942,7 @@
 		<type>translate</type>
 		<object-name>audio_adf2.ovh</object-name>
 		<object-name>audio_adf2_glare.ovh</object-name>
-		<property>controls/audio/acp[2]/adf2-recive</property>
+		<property>controls/audio/acp[2]/adf2-receive</property>
 		<factor>-0.0025</factor>
 		<axis>
 			<x1-m>0.369388</x1-m>

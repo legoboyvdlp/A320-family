@@ -1644,7 +1644,7 @@
 				<and>
 					<property>/sim/current-view/internal</property>
 					<property>/systems/comm/hf/tone1000hz-1</property>
-					<property>/controls/audio/acp[0]/hf1-recive</property>
+					<property>/controls/audio/acp[0]/hf1-receive</property>
 				</and>
 			</condition>
 			<volume>
@@ -1662,7 +1662,7 @@
 				<and>
 					<property>/sim/current-view/internal</property>
 					<property>/systems/comm/hf/tone1000hz-2</property>
-					<property>/controls/audio/acp[0]/hf2-recive</property>
+					<property>/controls/audio/acp[0]/hf2-receive</property>
 				</and>
 			</condition>
 			<volume>
@@ -1680,7 +1680,7 @@
 				<and>
 					<property>/sim/current-view/internal</property>
 					<property>/systems/comm/hf/reception-1</property>
-					<property>/controls/audio/acp[0]/hf1-recive</property>
+					<property>/controls/audio/acp[0]/hf1-receive</property>
 					<not><property>/systems/comm/hf/tone1000hz-1</property></not>
 				</and>
 			</condition>
@@ -1699,7 +1699,7 @@
 				<and>
 					<property>/sim/current-view/internal</property>
 					<property>/systems/comm/hf/reception-2</property>
-					<property>/controls/audio/acp[0]/hf2-recive</property>
+					<property>/controls/audio/acp[0]/hf2-receive</property>
 					<not><property>/systems/comm/hf/tone1000hz-2</property></not>
 				</and>
 			</condition>

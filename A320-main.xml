@@ -444,7 +444,7 @@
 							<command>nasal</command>
 							<script><![CDATA[
 								if (getprop("/controls/draims/enabled")) {
-									Dialogs.draims1Dialog.openDialog();
+									Dialogs.draimsDialog[0].openDialog();
 								} else {
 									Dialogs.rmp1Dialog.openDialog();
 								}
@@ -457,7 +457,7 @@
 							<command>nasal</command>
 							<script><![CDATA[
 								if (getprop("/controls/draims/enabled")) {
-									Dialogs.draims2Dialog.openDialog();
+									Dialogs.draimsDialog[1].openDialog();
 								} else {
 									Dialogs.rmp2Dialog.openDialog();
 								}
@@ -470,7 +470,7 @@
 							<command>nasal</command>
 							<script><![CDATA[
 								if (getprop("/controls/draims/enabled")) {
-									Dialogs.draims3Dialog.openDialog();
+									Dialogs.draimsDialog[2].openDialog();
 								} else {
 									Dialogs.rmp3Dialog.openDialog();
 								}
@@ -5095,7 +5095,7 @@
 			<file>Aircraft/A320-family/Nasal/FMGC/SimbriefParser.nas</file>
 		</Simbrief>
 		<draims>
-			<file>Aircraft/A320-family/Nasal/DRAIMS.nas</file>
+			<file>Aircraft/A320-family/Nasal/Panels/draims.nas</file>
 		</draims>
 	</nasal>
 

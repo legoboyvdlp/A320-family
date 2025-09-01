@@ -4,6 +4,8 @@
 
 # Distribute under the terms of GPLv2.
 
+var draimsDialog = [nil, nil, nil];
+
 var SVGKeys = ["INTClickspot", "RADClickspot", "LSK1", "LSK2", "LSK3", "LSK4", "RSK4", "RSK3", "RSK1", "RSK2", "Brightness", "LShortcut", "RShortcut", "VHF1Transmit", "VHF1TransmitLabel", "VHF1TransmitLight", "VHF2Transmit", "VHF2TransmitLabel", "VHF2TransmitLight", "VHF3Transmit", "VHF3TransmitLabel", "VHF3TransmitLight", "HF1Transmit", "HF1TransmitLabel", "HF1TransmitLight", "HF2Transmit", "HF2TransmitLabel", "HF2TransmitLight", "TEL1Transmit", "TEL1TransmitLabel", "TEL1TransmitLight", "TEL2Transmit", "TEL2TransmitLabel", "TEL2TransmitLight", "INTTransmit", "INTTransmitLabel", "INTTransmitLight", "CABTransmit", "CABTransmitLabel", "CABTransmitLight", "PATransmit", "PATransmitLabel", "PATransmitLight", "1Key", "2Key", "3Key", "4Key", "5Key", "6Key", "7Key", "8Key", "9Key", "decimalKey", "0Key", "CLRKey", "VHF1Vol", "VHF1Knob", "VHF2Vol", "VHF2Knob", "VHF3Vol", "VHF3Knob", "HF1Vol", "HF1Knob", "HF2Vol", "HF2Knob", "TEL1Vol", "TEL1Knob", "TEL2Vol", "TEL2Knob", "INTVol", "INTKnob", "CABVol", "CABKnob", "PAVol", "PAKnob", "NAVVol", "NAVKnob", "Page_Blank", "Page_Menu", "Page_NAV", "Page_VHF", "Page_HF", "Page_TEL", "Page_ATC", "UpArrow", "DownArrow", "INTRAD", "RAD", "INT"];
 
 var colors = {};
@@ -20,13 +22,13 @@ var toggle = func (prop) {
 	}
 }
 
-var draimsClass = {
+var draimsDialogClass = {
 	new: func(instance) {
-		var m = {parents:[draimsClass]};
+		var m = {parents:[draimsDialogClass]};
 		m._title = "RMP " ~ (instance + 1);
 		m._gfd = nil;
 		m._canvas = nil;
-		m._timer = maketimer(0.1, m, draimsClass._timerf);
+		m._timer = maketimer(0.1, m, draimsDialogClass._timerf);
 		m._instance = instance;
 		return m;
 	},
@@ -90,17 +92,17 @@ var draimsClass = {
 		me._elements["RSK4"].addEventListener("click", func() {draims.rskbutton(4, me._instance);});
 
 		# Volume Knobs
-		me._elements["VHF1Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/vhf1-recive");});
-		me._elements["VHF2Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/vhf2-recive");});
-		me._elements["VHF3Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/vhf3-recive");});
-		me._elements["HF1Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/hf1-recive");});
-		me._elements["HF2Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/hf2-recive");});
-		me._elements["TEL1Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/tel1-recive");});
-		me._elements["TEL2Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/tel2-recive");});
-		me._elements["INTVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/int-recive");});
-		me._elements["CABVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/cab-recive");});
-		me._elements["NAVVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/nav-recive");});
-		me._elements["PAVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/pa-recive");});
+		me._elements["VHF1Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/vhf1-receive");});
+		me._elements["VHF2Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/vhf2-receive");});
+		me._elements["VHF3Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/vhf3-receive");});
+		me._elements["HF1Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/hf1-receive");});
+		me._elements["HF2Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/hf2-receive");});
+		me._elements["TEL1Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/tel1-receive");});
+		me._elements["TEL2Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/tel2-receive");});
+		me._elements["INTVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/int-receive");});
+		me._elements["CABVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/cab-receive");});
+		me._elements["NAVVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/nav-receive");});
+		me._elements["PAVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/pa-receive");});
 
 		me._timerf();
 		me._timer.start();
@@ -124,40 +126,40 @@ var draimsClass = {
 
 		var on = getprop("/controls/draims/rmp[" ~ me._instance ~ "]/on");
 		for (var i = 1; i <= 3; i += 1) {
-			if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf" ~ i ~ "-recive")) {
+			if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf" ~ i ~ "-receive")) {
 				me._elements["VHF" ~ i ~ "Knob"].setColorFill(colors["volOn"]);
 			} else {
 				me._elements["VHF" ~ i ~ "Knob"].setColorFill(colors["volOff"]);
 			}
 		}
 		for (var i = 1; i <= 2; i += 1) {
-			if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/hf" ~ i ~ "-recive")) {
+			if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/hf" ~ i ~ "-receive")) {
 				me._elements["HF" ~ i ~ "Knob"].setColorFill(colors["volOn"]);
 			} else {
 				me._elements["HF" ~ i ~ "Knob"].setColorFill(colors["volOff"]);
 			}
-			if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/tel" ~ i ~ "-recive")) {
+			if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/tel" ~ i ~ "-receive")) {
 				me._elements["TEL" ~ i ~ "Knob"].setColorFill(colors["volOn"]);
 			} else {
 				me._elements["TEL" ~ i ~ "Knob"].setColorFill(colors["volOff"]);
 			}
 		}
-		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/nav-recive")) {
+		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/nav-receive")) {
 			me._elements["NAVKnob"].setColorFill(colors["volOn"]);
 		} else {
 			me._elements["NAVKnob"].setColorFill(colors["volOff"]);
 		}
-		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/int-recive")) {
+		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/int-receive")) {
 			me._elements["INTKnob"].setColorFill(colors["volOn"]);
 		} else {
 			me._elements["INTKnob"].setColorFill(colors["volOff"]);
 		}
-		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/cab-recive")) {
+		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/cab-receive")) {
 			me._elements["CABKnob"].setColorFill(colors["volOn"]);
 		} else {
 			me._elements["CABKnob"].setColorFill(colors["volOff"]);
 		}
-		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/pa-recive")) {
+		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/pa-receive")) {
 			me._elements["PAKnob"].setColorFill(colors["volOn"]);
 		} else {
 			me._elements["PAKnob"].setColorFill(colors["volOff"]);
@@ -168,6 +170,6 @@ var draimsClass = {
 	},
 };
 
-var draims1Dialog = draimsClass.new(0);
-var draims2Dialog = draimsClass.new(1);
-var draims3Dialog = draimsClass.new(2);
+for (var i = 0; i <= 2; i += 1) {
+	draimsDialog[i] = draimsDialogClass.new(i);
+}

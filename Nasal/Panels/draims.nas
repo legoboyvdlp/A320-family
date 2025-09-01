@@ -186,13 +186,13 @@ var updateVHF = func(i) {
 			RMP[i]["Standby" ~ j].setFontSize(45, 1.0);
 		}
 		RMP[i]["Standby" ~ j].show();
-		if (getprop("/controls/audio/acp[" ~ i ~ "]/vhf" ~ j ~ "-recive")) {
+		if (getprop("/controls/audio/acp[" ~ i ~ "]/vhf" ~ j ~ "-receive")) {
 			RMP[i]["Volume" ~ j].show();
 		}
 		RMP[i]["Channel" ~ j].setColor(WHITE);
 		if (getprop("/systems/audio/acp[" ~ i ~ "]/call_chan") == "vhf" ~ j) {
 			RMP[i]["Transmit" ~ j].show();
-			if (!getprop("/controls/audio/acp[" ~ i ~ "]/vhf" ~ j ~ "-recive")) {
+			if (!getprop("/controls/audio/acp[" ~ i ~ "]/vhf" ~ j ~ "-receive")) {
 				RMP[i]["Volume" ~ j].show();
 				RMP[i]["Mute" ~ j].show();
 			}
@@ -457,11 +457,11 @@ var arrowButton = func(dir, i) {
 
 for (var i = 0; i <= 2; i += 1) {
 	for (var j = 1; j <= 3; j += 1) {
-		setlistener("/controls/audio/acp[" ~ i ~ "]/vhf" ~ j ~ "-recive", updateAll, 0, 0);
+		setlistener("/controls/audio/acp[" ~ i ~ "]/vhf" ~ j ~ "-receive", updateAll, 0, 0);
 	}
 	for (var j = 1; j <= 2; j += 1) {
-		setlistener("/controls/audio/acp[" ~ i ~ "]/hf" ~ j ~ "-recive", updateAll, 0, 0);
-		setlistener("/controls/audio/acp[" ~ i ~ "]/tel" ~ j ~ "-recive", updateAll, 0, 0);
+		setlistener("/controls/audio/acp[" ~ i ~ "]/hf" ~ j ~ "-receive", updateAll, 0, 0);
+		setlistener("/controls/audio/acp[" ~ i ~ "]/tel" ~ j ~ "-receive", updateAll, 0, 0);
 	}
 }
 
