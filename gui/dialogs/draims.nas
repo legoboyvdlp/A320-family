@@ -53,7 +53,7 @@ var draimsDialogClass = {
 			me._elements[key] = me._svg.getElementById(key);
 		}
 
-		me._root.createChild("image").setFile(draims.RMPCanvas[me._instance].getPath()).setSize(294, 188).setTranslation(89, 50);
+		me._root.createChild("image").setFile(draims.draimsPanel[me._instance].canvas.getPath()).setSize(294, 188).setTranslation(89, 50);
 
 		# Shortcuts
 		me._elements["RShortcut"].addEventListener("click", func() {draims.shortCutButton("r", me._instance);});
