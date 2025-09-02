@@ -6,7 +6,7 @@
 <PropertyList include="A320-main.xml">
 
 	<sim>
-		<description>Airbus A320-232 (IAE V2527-A5)</description>
+		<description>Airbus A320-232 (V2527-A5)</description>
 		<flight-model>jsb</flight-model>
 		<aero>FDE/A320-200-IAE</aero>
 		<primary-set>true</primary-set>
