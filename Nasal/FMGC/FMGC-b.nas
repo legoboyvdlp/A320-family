@@ -1180,7 +1180,7 @@ var armClb = func {
 # when the aircraft passes that waypoint the DES mode should resume
 var armDes = func {
 	if (armDesOn == "True") {
-		if (abs(Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[0]) > 800) {
+		if (abs(Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[0]) >= 500) {
 			ITAF.updateVertText("DES");
 			ITAF.setVertMode(8); # DES mode
 			armDesOn = "False";
