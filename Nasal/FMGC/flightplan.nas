@@ -874,7 +874,7 @@ var flightPlanController = {
 			if (i == me.currentToWptIndex.getValue()) {
 				distanceToCstr2 += me.distToWpt.getValue();
 			} else {
-				distanceToCstr2 += me.flightplans[2].getWP(i).leg_distance;
+				distanceToCstr2 += math.clamp(me.flightplans[2].getWP(i).leg_distance - 1,0,1000000000000000000000000000);
 			}
 			extrapolatedAltCstr = me.getExtrapolatedThreeDegAltCstr(altCstr, (distanceToCstr - spdDistance - distanceToCstr2));
 			print("first extrapolated alt cstr, extrapolated alt const" ~ extrapolatedAltCstr ~ "distance " ~ (distanceToCstr - spdDistance - distanceToCstr2));
@@ -1002,15 +1002,15 @@ var flightPlanController = {
 		realDistanceToDecelerate = 0;
 		print("lastcstrwptindexflown + 1 is " ~ (lastCstrWptIndexFlown + 1) ~ " and currenttowptindex is " ~ me.currentToWptIndex.getValue());
 		for (var i = (lastCstrWptIndexFlown+1); i < me.currentToWptIndex.getValue(); i += 1) {
-			distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
-			distanceToCstr2 += me.flightplans[2].getWP(i).leg_distance;
-			realDistanceToCstr -= me.flightplans[2].getWP(i).leg_distance;
-			realDistanceToDecelerate -= me.flightplans[2].getWP(i).leg_distance;
+			distanceToCstr += math.clamp(me.flightplans[2].getWP(i).leg_distance - 1,0,1000000000000000000000000000);
+			distanceToCstr2 += math.clamp(me.flightplans[2].getWP(i).leg_distance - 1,0,1000000000000000000000000000);
+			realDistanceToCstr -= math.clamp(me.flightplans[2].getWP(i).leg_distance - 1,0,1000000000000000000000000000);
+			realDistanceToDecelerate -= math.clamp(me.flightplans[2].getWP(i).leg_distance - 1,0,1000000000000000000000000000);
 		}
 		print("first distancetocstr is " ~ distanceToCstr ~ " and distance to cstr2 is " ~ distanceToCstr2);
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			cstrType = me.flightplans[2].getWP(i).alt_cstr_type;
-			distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
+			distanceToCstr += math.clamp(me.flightplans[2].getWP(i).leg_distance - 1,0,1000000000000000000000000000);
 			if (cstrType == "above" or cstrType == "below") {
 				continue;
 			} elsif (me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0) {
