@@ -6,7 +6,7 @@
 
 	<channel name="DRAIMS">
 
-		<switch name="/controls/draims/rmp[0]/on">
+		<switch name="/systems/draims/rmp[0]/on">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/draims/rmp[0]/brightness-knob ge 0.05
@@ -17,7 +17,7 @@
 			</test>
 		</switch>
 
-		<switch name="/controls/draims/rmp[1]/on">
+		<switch name="/systems/draims/rmp[1]/on">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/draims/rmp[1]/brightness-knob ge 0.05
@@ -28,7 +28,7 @@
 			</test>
 		</switch>
 
-		<switch name="/controls/draims/rmp[2]/on">
+		<switch name="/systems/draims/rmp[2]/on">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/controls/draims/rmp[2]/brightness-knob ge 0.05

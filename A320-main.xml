@@ -2283,9 +2283,9 @@
 					<command>nasal</command>
 					<script>
 						space(1, modifiers.getValue());
-						if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
+						if (getprop("systems/audio/acp[0]/transmitChannel") == "hf1") {
 							systems.HFS[0].pttToggle();
-						} elsif (getprop("systems/audio/acp[0]/call_chan") == "hf2") {
+						} elsif (getprop("systems/audio/acp[0]/transmitChannel") == "hf2") {
 							systems.HFS[1].pttToggle();
 						}
 					</script>
@@ -2299,9 +2299,9 @@
 						<command>nasal</command>
 						<script>
 							space(0, modifiers.getValue());
-							if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
+							if (getprop("systems/audio/acp[0]/transmitChannel") == "hf1") {
 								systems.HFS[0].pttToggle();
-							} elsif (getprop("systems/audio/acp[0]/call_chan") == "hf2") {
+							} elsif (getprop("systems/audio/acp[0]/transmitChannel") == "hf2") {
 								systems.HFS[1].pttToggle();
 							}
 						</script>

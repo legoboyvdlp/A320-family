@@ -15836,12 +15836,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value>vhf1</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>vhf1</value>
 						</not-equals>
 						<greater-than-equals>
@@ -15873,12 +15873,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>vhf1</value>
 						</equals>
 						<greater-than-equals>
@@ -15936,12 +15936,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value>vhf2</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>vhf2</value>
 						</not-equals>
 						<greater-than-equals>
@@ -15973,12 +15973,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>vhf2</value>
 						</equals>
 						<greater-than-equals>
@@ -16036,12 +16036,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value>vhf3</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>vhf3</value>
 						</not-equals>
 						<greater-than-equals>
@@ -16073,12 +16073,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>vhf3</value>
 						</equals>
 						<greater-than-equals>
@@ -16136,12 +16136,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value>hf1</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>hf1</value>
 						</not-equals>
 						<greater-than-equals>
@@ -16173,12 +16173,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>hf1</value>
 						</equals>
 						<greater-than-equals>
@@ -16236,12 +16236,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value>hf2</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>hf2</value>
 						</not-equals>
 						<greater-than-equals>
@@ -16273,12 +16273,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>hf2</value>
 						</equals>
 						<greater-than-equals>
@@ -16336,12 +16336,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value>mech</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>mech</value>
 						</not-equals>
 						<greater-than-equals>
@@ -16373,12 +16373,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>mech</value>
 						</equals>
 						<greater-than-equals>
@@ -16436,12 +16436,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value>att</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>att</value>
 						</not-equals>
 						<greater-than-equals>
@@ -16473,12 +16473,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[0]/call_chan</property>
+				<property>systems/audio/acp[0]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[0]/call_chan</property>
+							<property>systems/audio/acp[0]/transmitChannel</property>
 							<value>att</value>
 						</equals>
 						<greater-than-equals>
@@ -16600,7 +16600,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[0]/call_chan</property>
+						<property>systems/audio/acp[0]/transmitChannel</property>
 						<value type="string">vhf1</value>
 					</equals>
 				</and>
@@ -16620,7 +16620,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[0]/call_chan</property>
+						<property>systems/audio/acp[0]/transmitChannel</property>
 						<value type="string">vhf2</value>
 					</equals>
 				</and>
@@ -16640,7 +16640,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[0]/call_chan</property>
+						<property>systems/audio/acp[0]/transmitChannel</property>
 						<value type="string">vhf3</value>
 					</equals>
 				</and>
@@ -16660,7 +16660,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[0]/call_chan</property>
+						<property>systems/audio/acp[0]/transmitChannel</property>
 						<value type="string">hf1</value>
 					</equals>
 				</and>
@@ -16680,7 +16680,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[0]/call_chan</property>
+						<property>systems/audio/acp[0]/transmitChannel</property>
 						<value type="string">hf2</value>
 					</equals>
 				</and>
@@ -16700,7 +16700,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[0]/call_chan</property>
+						<property>systems/audio/acp[0]/transmitChannel</property>
 						<value type="string">mech</value>
 					</equals>
 				</and>
@@ -16720,7 +16720,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[0]/call_chan</property>
+						<property>systems/audio/acp[0]/transmitChannel</property>
 						<value type="string">att</value>
 					</equals>
 				</and>
@@ -20497,12 +20497,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value>vhf1</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>vhf1</value>
 						</not-equals>
 						<greater-than-equals>
@@ -20534,12 +20534,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>vhf1</value>
 						</equals>
 						<greater-than-equals>
@@ -20597,12 +20597,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value>vhf2</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>vhf2</value>
 						</not-equals>
 						<greater-than-equals>
@@ -20634,12 +20634,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>vhf2</value>
 						</equals>
 						<greater-than-equals>
@@ -20697,12 +20697,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value>vhf3</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>vhf3</value>
 						</not-equals>
 						<greater-than-equals>
@@ -20734,12 +20734,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>vhf3</value>
 						</equals>
 						<greater-than-equals>
@@ -20797,12 +20797,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value>hf1</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>hf1</value>
 						</not-equals>
 						<greater-than-equals>
@@ -20834,12 +20834,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>hf1</value>
 						</equals>
 						<greater-than-equals>
@@ -20897,12 +20897,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value>hf2</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>hf2</value>
 						</not-equals>
 						<greater-than-equals>
@@ -20934,12 +20934,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>hf2</value>
 						</equals>
 						<greater-than-equals>
@@ -20997,12 +20997,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value>mech</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>mech</value>
 						</not-equals>
 						<greater-than-equals>
@@ -21034,12 +21034,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>mech</value>
 						</equals>
 						<greater-than-equals>
@@ -21097,12 +21097,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value>att</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>att</value>
 						</not-equals>
 						<greater-than-equals>
@@ -21134,12 +21134,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[1]/call_chan</property>
+				<property>systems/audio/acp[1]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[1]/call_chan</property>
+							<property>systems/audio/acp[1]/transmitChannel</property>
 							<value>att</value>
 						</equals>
 						<greater-than-equals>
@@ -21261,7 +21261,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[1]/call_chan</property>
+						<property>systems/audio/acp[1]/transmitChannel</property>
 						<value type="string">vhf1</value>
 					</equals>
 				</and>
@@ -21281,7 +21281,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[1]/call_chan</property>
+						<property>systems/audio/acp[1]/transmitChannel</property>
 						<value type="string">vhf2</value>
 					</equals>
 				</and>
@@ -21301,7 +21301,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[1]/call_chan</property>
+						<property>systems/audio/acp[1]/transmitChannel</property>
 						<value type="string">vhf3</value>
 					</equals>
 				</and>
@@ -21322,7 +21322,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[1]/call_chan</property>
+						<property>systems/audio/acp[1]/transmitChannel</property>
 						<value type="string">hf1</value>
 					</equals>
 				</and>
@@ -21342,7 +21342,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[1]/call_chan</property>
+						<property>systems/audio/acp[1]/transmitChannel</property>
 						<value type="string">hf2</value>
 					</equals>
 				</and>
@@ -21362,7 +21362,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[1]/call_chan</property>
+						<property>systems/audio/acp[1]/transmitChannel</property>
 						<value type="string">mech</value>
 					</equals>
 				</and>
@@ -21382,7 +21382,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[1]/call_chan</property>
+						<property>systems/audio/acp[1]/transmitChannel</property>
 						<value type="string">att</value>
 					</equals>
 				</and>
@@ -24757,12 +24757,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value>vhf1</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>vhf1</value>
 						</not-equals>
 						<greater-than-equals>
@@ -24794,12 +24794,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>vhf1</value>
 						</equals>
 						<greater-than-equals>
@@ -24857,12 +24857,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value>vhf2</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>vhf2</value>
 						</not-equals>
 						<greater-than-equals>
@@ -24894,12 +24894,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>vhf2</value>
 						</equals>
 						<greater-than-equals>
@@ -24957,12 +24957,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value>vhf3</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>vhf3</value>
 						</not-equals>
 						<greater-than-equals>
@@ -24994,12 +24994,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>vhf3</value>
 						</equals>
 						<greater-than-equals>
@@ -25057,12 +25057,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value>hf1</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>hf1</value>
 						</not-equals>
 						<greater-than-equals>
@@ -25094,12 +25094,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>hf1</value>
 						</equals>
 						<greater-than-equals>
@@ -25157,12 +25157,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value>hf2</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>hf2</value>
 						</not-equals>
 						<greater-than-equals>
@@ -25194,12 +25194,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>hf2</value>
 						</equals>
 						<greater-than-equals>
@@ -25257,12 +25257,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value>mech</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>mech</value>
 						</not-equals>
 						<greater-than-equals>
@@ -25294,12 +25294,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>mech</value>
 						</equals>
 						<greater-than-equals>
@@ -25357,12 +25357,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value>att</value>
 				<condition>
 					<and>
 						<not-equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>att</value>
 						</not-equals>
 						<greater-than-equals>
@@ -25394,12 +25394,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>systems/audio/acp[2]/call_chan</property>
+				<property>systems/audio/acp[2]/transmitChannel</property>
 				<value></value>
 				<condition>
 					<and>
 						<equals>
-							<property>systems/audio/acp[2]/call_chan</property>
+							<property>systems/audio/acp[2]/transmitChannel</property>
 							<value>att</value>
 						</equals>
 						<greater-than-equals>
@@ -25521,7 +25521,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[2]/call_chan</property>
+						<property>systems/audio/acp[2]/transmitChannel</property>
 						<value type="string">vhf1</value>
 					</equals>
 				</and>
@@ -25541,7 +25541,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[2]/call_chan</property>
+						<property>systems/audio/acp[2]/transmitChannel</property>
 						<value type="string">vhf2</value>
 					</equals>
 				</and>
@@ -25561,7 +25561,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[2]/call_chan</property>
+						<property>systems/audio/acp[2]/transmitChannel</property>
 						<value type="string">vhf3</value>
 					</equals>
 				</and>
@@ -25581,7 +25581,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[2]/call_chan</property>
+						<property>systems/audio/acp[2]/transmitChannel</property>
 						<value type="string">hf1</value>
 					</equals>
 				</and>
@@ -25601,7 +25601,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[2]/call_chan</property>
+						<property>systems/audio/acp[2]/transmitChannel</property>
 						<value type="string">hf2</value>
 					</equals>
 				</and>
@@ -25621,7 +25621,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[2]/call_chan</property>
+						<property>systems/audio/acp[2]/transmitChannel</property>
 						<value type="string">mech</value>
 					</equals>
 				</and>
@@ -25641,7 +25641,7 @@
 						<value>25</value>
 					</greater-than-equals>
 					<equals>
-						<property>systems/audio/acp[2]/call_chan</property>
+						<property>systems/audio/acp[2]/transmitChannel</property>
 						<value type="string">att</value>
 					</equals>
 				</and>

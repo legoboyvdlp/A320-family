@@ -40,14 +40,14 @@
      inkscape:window-height="1055"
      id="namedview371"
      showgrid="true"
-     inkscape:zoom="1"
-     inkscape:cx="454.5"
-     inkscape:cy="342"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="909.69287"
+     inkscape:cy="398.80822"
      inkscape:window-x="1920"
      inkscape:window-y="25"
      inkscape:window-maximized="1"
      inkscape:current-layer="Simple"
-     showguides="true"
+     showguides="false"
      inkscape:snap-global="false"
      units="px"
      inkscape:document-rotation="0"
@@ -292,7 +292,7 @@
        inkscape:label="Divider3" />
     <path
        style="fill:none;stroke:#ffffff;stroke-width:5.6;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-       d="M 601.84017,496.50575 V 382.39994"
+       d="M 546.403,496.50575 V 382.39994"
        id="path1-2-0-2"
        inkscape:label="Divider3" />
     <path
@@ -366,39 +366,39 @@
          y="344.4534">TEXT</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:26.6666px;line-height:1.25;font-family:sans-serif;text-align:end;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
-       x="804.04962"
+       style="font-size:26.6666px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
+       x="560.17316"
        y="412.82672"
        id="Message1"
        inkscape:label="Message1"><tspan
          sodipodi:role="line"
          id="tspan1-3"
-         style="text-align:end;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
-         x="770.35828"
+         style="text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
+         x="627.55579"
          y="412.82672">TEXT</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:26.6666px;line-height:1.25;font-family:sans-serif;text-align:end;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
-       x="804.79602"
+       style="font-size:26.6666px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
+       x="560.91956"
        y="438.64008"
        id="Message2"
        inkscape:label="Message2"><tspan
          sodipodi:role="line"
          id="tspan1-3-6"
-         style="text-align:end;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
-         x="771.10468"
+         style="text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
+         x="628.30219"
          y="438.64008">TEXT</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:26.6666px;line-height:1.25;font-family:sans-serif;text-align:end;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
-       x="804.84937"
+       style="font-size:26.6666px;line-height:1.25;font-family:sans-serif;text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
+       x="560.9729"
        y="463.78671"
        id="Message3"
        inkscape:label="Message3"><tspan
          sodipodi:role="line"
          id="tspan1-3-1"
-         style="text-align:end;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
-         x="771.15802"
+         style="text-align:start;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
+         x="628.35553"
          y="463.78671">TEXT</tspan></text>
     <text
        xml:space="preserve"
@@ -440,5 +440,104 @@
        style="fill:none;stroke:#ffffff;stroke-width:1.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
        d="m 263.22266,433.18701 v -16.37523 h 91.95468 v 15.17704"
        id="path2" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 601.3,55.1 V 15.4 h 4.99896 l -9.30399,-8.8 -9.1,8.775 H 592.4 V 55.1 Z"
+       id="ArrowUp1"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 592.49896,64.8 v 38.7 H 587.5 l 9.30398,8.8 9.10001,-8.77499 h -4.50504 V 64.8 Z"
+       id="ArrowDown1"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 601,180.2 0,-38.6 h 4.99896 l -9.30399,-8.8 -9.1,8.775 H 592.1 l 0,38.625 z"
+       id="ArrowUp2"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 592.19896,191.3 v 38.4 H 587.2 l 9.30398,8.8 9.10001,-8.77499 h -4.50504 l 0,-38.42501 z"
+       id="ArrowDown2"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 601.4,307.8 V 269 h 4.99896 l -9.30399,-8.8 -9.1,8.775 H 592.5 V 307.8 Z"
+       id="ArrowUp3"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 592.59896,319.7 0,37.4 H 587.6 l 9.30398,8.8 9.10001,-8.77499 h -4.50504 l 0,-37.42501 z"
+       id="ArrowDown3"
+       sodipodi:nodetypes="cccccccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="449.71991"
+       y="93.903778"
+       id="AM1"><tspan
+         sodipodi:role="line"
+         id="tspan2"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="449.71991"
+         y="93.903778">AM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="450.64365"
+       y="224.41753"
+       id="AM2"><tspan
+         sodipodi:role="line"
+         id="tspan2-7"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="450.64365"
+         y="224.41753">AM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="578.87531"
+       y="294.25647"
+       id="AMMode"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-5"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="578.87531"
+         y="294.25647">HF1 AM MODE</tspan></text>
+    <rect
+       style="fill:#00c0d6;fill-opacity:1;stroke-width:5.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;paint-order:fill markers stroke"
+       id="AMModeOnBox"
+       width="52.04306"
+       height="31.678385"
+       x="688.43915"
+       y="318.7637" />
+    <rect
+       style="fill:#00c0d6;fill-opacity:1;stroke-width:5.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;paint-order:fill markers stroke"
+       id="AMModeOffBox"
+       width="63.582851"
+       height="31.678385"
+       x="746.89655"
+       y="318.86029" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="689.46539"
+       y="345.75168"
+       id="AMModeOn"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="689.46539"
+         y="345.75168">ON</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="747.45959"
+       y="345.68137"
+       id="AMModeOff"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-7"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="747.45959"
+         y="345.68137">OFF</tspan></text>
   </g>
 </svg>

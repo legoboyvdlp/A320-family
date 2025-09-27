@@ -104,6 +104,29 @@ var draimsDialogClass = {
 		me._elements["NAVVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/nav-receive");});
 		me._elements["PAVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/pa-receive");});
 
+		# Transmit Buttons
+		me._elements["VHF1Transmit"].addEventListener("click", func() {acp.transmitButton("vhf1", me._instance);});
+		me._elements["VHF2Transmit"].addEventListener("click", func() {acp.transmitButton("vhf2", me._instance);});
+		me._elements["VHF3Transmit"].addEventListener("click", func() {acp.transmitButton("vhf3", me._instance);});
+		me._elements["HF1Transmit"].addEventListener("click", func() {acp.transmitButton("hf1", me._instance);});
+		me._elements["HF2Transmit"].addEventListener("click", func() {acp.transmitButton("hf2", me._instance);});
+		me._elements["TEL1Transmit"].addEventListener("click", func() {acp.transmitButton("tel1", me._instance);});
+		me._elements["TEL2Transmit"].addEventListener("click", func() {acp.transmitButton("tel2", me._instance);});
+		me._elements["INTTransmit"].addEventListener("click", func() {acp.transmitButton("int", me._instance);});
+		me._elements["CABTransmit"].addEventListener("click", func() {acp.transmitButton("cab", me._instance);});
+
+		# Arrow Buttons
+		me._elements["UpArrow"].addEventListener("click", func() {draims.arrowButton("u", me._instance);});
+		me._elements["DownArrow"].addEventListener("click", func() {draims.arrowButton("d", me._instance);});
+
+		# Menu Buttons
+		me._elements["Page_VHF"].addEventListener("click", func() {draims.menuButton("vhf", me._instance);});
+		me._elements["Page_HF"].addEventListener("click", func() {draims.menuButton("hf", me._instance);});
+		me._elements["Page_TEL"].addEventListener("click", func() {draims.menuButton("tel", me._instance);});
+		me._elements["Page_ATC"].addEventListener("click", func() {draims.menuButton("atc", me._instance);});
+		me._elements["Page_Menu"].addEventListener("click", func() {draims.menuButton("menu", me._instance);});
+		me._elements["Page_NAV"].addEventListener("click", func() {draims.menuButton("nav", me._instance);});
+
 		me._timerf();
 		me._timer.start();
 	},
@@ -124,45 +147,73 @@ var draimsDialogClass = {
 			me._elements["RAD"].show();
 		}
 
-		var on = getprop("/controls/draims/rmp[" ~ me._instance ~ "]/on");
+		var on = draims.draimsPanel[me._instance].on.getValue();
 		for (var i = 1; i <= 3; i += 1) {
-			if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf" ~ i ~ "-receive")) {
+			if (on and acp.ACP[me._instance].receive.vhf[i - 1].getValue()) {
 				me._elements["VHF" ~ i ~ "Knob"].setColorFill(colors["volOn"]);
 			} else {
 				me._elements["VHF" ~ i ~ "Knob"].setColorFill(colors["volOff"]);
 			}
+
+			if (on and acp.ACP[me._instance].transmitChannel.getValue() == "vhf" ~ i) {
+				me._elements["VHF" ~ i ~ "TransmitLight"].setColor(colors["transmitOn"]);
+			} else {
+				me._elements["VHF" ~ i ~ "TransmitLight"].setColor(colors["transmitOff"]);
+			}
 		}
 		for (var i = 1; i <= 2; i += 1) {
-			if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/hf" ~ i ~ "-receive")) {
+			if (on and acp.ACP[me._instance].receive.hf[i - 1].getValue()) {
 				me._elements["HF" ~ i ~ "Knob"].setColorFill(colors["volOn"]);
 			} else {
 				me._elements["HF" ~ i ~ "Knob"].setColorFill(colors["volOff"]);
 			}
-			if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/tel" ~ i ~ "-receive")) {
+			if (on and acp.ACP[me._instance].receive.tel[i - 1].getValue()) {
 				me._elements["TEL" ~ i ~ "Knob"].setColorFill(colors["volOn"]);
 			} else {
 				me._elements["TEL" ~ i ~ "Knob"].setColorFill(colors["volOff"]);
 			}
+
+			if (on and acp.ACP[me._instance].transmitChannel.getValue() == "hf" ~ i) {
+				me._elements["HF" ~ i ~ "TransmitLight"].setColor(colors["transmitOn"]);
+			} else {
+				me._elements["HF" ~ i ~ "TransmitLight"].setColor(colors["transmitOff"]);
+			}
+			if (on and acp.ACP[me._instance].transmitChannel.getValue() == "tel" ~ i) {
+				me._elements["TEL" ~ i ~ "TransmitLight"].setColor(colors["transmitOn"]);
+			} else {
+				me._elements["TEL" ~ i ~ "TransmitLight"].setColor(colors["transmitOff"]);
+			}
 		}
-		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/nav-receive")) {
+		if (on and acp.ACP[me._instance].receive.nav.getValue()) {
 			me._elements["NAVKnob"].setColorFill(colors["volOn"]);
 		} else {
 			me._elements["NAVKnob"].setColorFill(colors["volOff"]);
 		}
-		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/int-receive")) {
+		if (on and acp.ACP[me._instance].receive.int.getValue()) {
 			me._elements["INTKnob"].setColorFill(colors["volOn"]);
 		} else {
 			me._elements["INTKnob"].setColorFill(colors["volOff"]);
 		}
-		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/cab-receive")) {
+		if (on and acp.ACP[me._instance].receive.cab.getValue()) {
 			me._elements["CABKnob"].setColorFill(colors["volOn"]);
 		} else {
 			me._elements["CABKnob"].setColorFill(colors["volOff"]);
 		}
-		if (on and getprop("/controls/audio/acp[" ~ me._instance ~ "]/pa-receive")) {
+		if (on and acp.ACP[me._instance].receive.pa.getValue()) {
 			me._elements["PAKnob"].setColorFill(colors["volOn"]);
 		} else {
 			me._elements["PAKnob"].setColorFill(colors["volOff"]);
+		}
+
+		if (on and acp.ACP[me._instance].transmitChannel.getValue() == "int") {
+			me._elements["INTTransmitLight"].setColor(colors["transmitOn"]);
+		} else {
+			me._elements["INTTransmitLight"].setColor(colors["transmitOff"]);
+		}
+		if (on and acp.ACP[me._instance].transmitChannel.getValue() == "cab") {
+			me._elements["CABTransmitLight"].setColor(colors["transmitOn"]);
+		} else {
+			me._elements["CABTransmitLight"].setColor(colors["transmitOff"]);
 		}
 	},
 	_onClose: func() {

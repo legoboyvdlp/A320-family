@@ -60,14 +60,14 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="4.2278555"
-     inkscape:cx="83.257339"
-     inkscape:cy="17.857753"
-     inkscape:window-width="1366"
-     inkscape:window-height="768"
-     inkscape:window-x="0"
-     inkscape:window-y="156"
+     inkscape:cx="162.13894"
+     inkscape:cy="413.92143"
+     inkscape:window-width="1920"
+     inkscape:window-height="1055"
+     inkscape:window-x="1920"
+     inkscape:window-y="25"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer8" />
+     inkscape:current-layer="layer5" />
   <g
      inkscape:groupmode="layer"
      id="layer11"
@@ -594,20 +594,20 @@
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.2651px;font-family:Monospace;-inkscape-font-specification:Monospace;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.33122;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-         x="109.68884"
+         x="109.20247"
          y="345.92651"
          id="HF1TransmitLabel"
-         transform="scale(0.97261986,1.0281509)"
+         transform="scale(0.97261987,1.0281509)"
          inkscape:label="HF1TransmitLabel"><tspan
            sodipodi:role="line"
            id="tspan11-0"
-           x="109.68884"
+           x="109.20247"
            y="345.92651"
            style="stroke-width:3.33122">HF1</tspan></text>
       <path
          id="HF1TransmitLight"
          style="fill:none;fill-opacity:1;stroke:#5cf809;stroke-width:2.125;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-         d="m 111.13337,331.34375 h 17.58362 z m 0.007,3.36099 h 17.58332 z m -0.003,3.33042 h 17.60438 z"
+         d="m 109.24116,331.34375 h 17.58362 z m 0.007,3.36099 h 17.58332 z m -0.003,3.33042 h 17.60438 z"
          sodipodi:nodetypes="ccccccccc"
          inkscape:label="HF1TransmitLight" />
     </g>
@@ -1303,7 +1303,7 @@
          y="51.412857" />
       <text
          xml:space="preserve"
-         style="font-size:12.5422px;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.313556;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         style="font-size:13.1089px;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.313556;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          x="-79.627716"
          y="57.960754"
          id="text2-6-5-3"
@@ -1312,7 +1312,7 @@
            id="tspan2-8-0-5"
            x="-79.627716"
            y="57.960754"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace;stroke-width:0.313556">VHF</tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.1089px;font-family:Monospace;-inkscape-font-specification:Monospace;stroke-width:0.313556">VHF</tspan></text>
     </g>
     <g
        id="Page_HF"
@@ -1326,7 +1326,7 @@
          y="51.412857" />
       <text
          xml:space="preserve"
-         style="font-size:12.5422px;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.313556;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         style="font-size:13.1089px;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f3ecb2;fill-opacity:1;stroke:none;stroke-width:0.313556;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:29.6;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          x="-75.422958"
          y="57.881336"
          id="text2-6-5"
@@ -1335,7 +1335,7 @@
            id="tspan2-8-0"
            x="-75.422958"
            y="57.881336"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace;stroke-width:0.313556">HF</tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.1089px;font-family:Monospace;-inkscape-font-specification:Monospace;stroke-width:0.313556">HF</tspan></text>
     </g>
     <g
        id="Page_TEL"
