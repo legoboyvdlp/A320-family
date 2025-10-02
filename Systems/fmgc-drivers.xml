@@ -273,6 +273,14 @@
 	</filter>
 	
 	<filter>
+		<name>Knots ASI Lag</name>
+		<type>exponential</type>
+		<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
+		<output>/it-autoflight/internal/kts-asi-lag</output>
+		<filter-time>0.04</filter-time>
+	</filter>
+	
+	<filter>
 		<name>Mach Lag</name>
 		<type>exponential</type>
 		<input>/velocities/mach</input>
@@ -322,6 +330,14 @@
 	</filter>
 	
 	<filter>
+		<name>Mach ASI Lag</name>
+		<type>exponential</type>
+		<input>/instrumentation/airspeed-indicator/indicated-mach</input>
+		<output>/it-autoflight/internal/mach-asi-lag</output>
+		<filter-time>0.04</filter-time>
+	</filter>
+	
+	<filter>
 		<name>Flch Knots Rate Command</name>
 		<type>gain</type>
 		<gain>1.0</gain>
@@ -336,7 +352,7 @@
 				<product>
 					<difference>
 						<property>/it-autoflight/settings/toga-spd</property>
-						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+						<property>/it-autoflight/internal/kts-asi-lag</property>
 					</difference>
 					<value>0.1</value>
 				</product>
@@ -359,7 +375,7 @@
 							</min>
 							<property>/FMGC/internal/vls-mach</property>
 						</max>
-						<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+						<property>/it-autoflight/internal/mach-asi-lag</property>
 					</difference>
 					<value>100</value>
 				</product>
@@ -376,7 +392,7 @@
 							</min>
 							<property>/FMGC/internal/vls</property>
 						</max>
-						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+						<property>/it-autoflight/internal/kts-asi-lag</property>
 					</difference>
 					<value>0.1</value>
 				</product>
