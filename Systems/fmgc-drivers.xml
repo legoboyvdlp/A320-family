@@ -250,7 +250,7 @@
 	<filter>
 		<name>Knots Rate</name>
 		<type>derivative</type>
-		<input>/it-autoflight/internal/kts-input-avg</input>
+		<input>/it-autoflight/internal/kts-input-lag</input>
 		<output>/it-autoflight/internal/kts-rate-raw</output>
 		<filter-time>1.0</filter-time>
 	</filter>
@@ -299,7 +299,7 @@
 	<filter>
 		<name>Mach Rate</name>
 		<type>derivative</type>
-		<input>/it-autoflight/internal/mach-input-avg</input>
+		<input>/it-autoflight/internal/mach-input-lag</input>
 		<output>/it-autoflight/internal/mach-rate-raw</output>
 		<filter-time>1.0</filter-time>
 	</filter>
