@@ -232,6 +232,22 @@
 	</filter>
 	
 	<filter>
+		<name>Knots ASI Lag</name>
+		<type>exponential</type>
+		<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
+		<output>/it-autoflight/internal/kts-asi-lag</output>
+		<filter-time>0.04</filter-time>
+	</filter>
+	
+	<filter>
+		<name>Mach ASI Lag</name>
+		<type>exponential</type>
+		<input>/instrumentation/airspeed-indicator/indicated-mach</input>
+		<output>/it-autoflight/internal/mach-asi-lag</output>
+		<filter-time>0.04</filter-time>
+	</filter>
+	
+	<filter>
 		<name>Knots Average</name>
 		<type>moving-average</type>
 		<input>/velocities/airspeed-kt</input>
@@ -256,31 +272,6 @@
 	</filter>
 	
 	<filter>
-		<name>Knots Rate Lag</name>
-		<type>exponential</type>
-		<input>
-			<condition>
-				<less-than>
-					<property>/velocities/airspeed-kt</property>
-					<value>1</value>
-				</less-than>
-			</condition>
-			<value>0</value>
-		</input>
-		<input>/it-autoflight/internal/kts-rate-raw</input>
-		<output>/it-autoflight/internal/kts-rate</output>
-		<filter-time>0.04</filter-time>
-	</filter>
-	
-	<filter>
-		<name>Knots ASI Lag</name>
-		<type>exponential</type>
-		<input>/instrumentation/airspeed-indicator/indicated-speed-kt</input>
-		<output>/it-autoflight/internal/kts-asi-lag</output>
-		<filter-time>0.04</filter-time>
-	</filter>
-	
-	<filter>
 		<name>Mach Average</name>
 		<type>moving-average</type>
 		<input>/velocities/mach</input>
@@ -302,150 +293,6 @@
 		<input>/it-autoflight/internal/mach-input-lag</input>
 		<output>/it-autoflight/internal/mach-rate-raw</output>
 		<filter-time>1.0</filter-time>
-	</filter>
-	
-	<filter>
-		<name>Mach Rate Gain</name>
-		<type>gain</type>
-		<gain>650</gain>
-		<input>/it-autoflight/internal/mach-rate-raw</input>
-		<output>/it-autoflight/internal/mach-rate-gain</output>
-	</filter>
-	
-	<filter>
-		<name>Mach Rate Lag</name>
-		<type>exponential</type>
-		<input>
-			<condition>
-				<less-than>
-					<property>/velocities/airspeed-kt</property>
-					<value>1</value>
-				</less-than>
-			</condition>
-			<value>0</value>
-		</input>
-		<input>/it-autoflight/internal/mach-rate-gain</input>
-		<output>/it-autoflight/internal/mach-rate</output>
-		<filter-time>0.04</filter-time>
-	</filter>
-	
-	<filter>
-		<name>Mach ASI Lag</name>
-		<type>exponential</type>
-		<input>/instrumentation/airspeed-indicator/indicated-mach</input>
-		<output>/it-autoflight/internal/mach-asi-lag</output>
-		<filter-time>0.04</filter-time>
-	</filter>
-	
-	<filter>
-		<name>Flch Knots Rate Command</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<condition>
-				<equals>
-					<property>/it-autoflight/text/vert</property>
-					<value>T/O CLB</value>
-				</equals>
-			</condition>
-			<expression>
-				<product>
-					<difference>
-						<property>/it-autoflight/settings/toga-spd</property>
-						<property>/it-autoflight/internal/kts-asi-lag</property>
-					</difference>
-					<value>0.1</value>
-				</product>
-			</expression>
-		</input>
-		<input>
-			<condition>
-				<equals>
-					<property>/it-autoflight/input/kts-mach</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<expression>
-				<product>
-					<difference>
-						<max>
-							<min>
-								<property>/it-autoflight/input/mach</property>
-								<property>/FMGC/internal/vmax-mach</property>
-							</min>
-							<property>/FMGC/internal/vls-mach</property>
-						</max>
-						<property>/it-autoflight/internal/mach-asi-lag</property>
-					</difference>
-					<value>100</value>
-				</product>
-			</expression>
-		</input>
-		<input>
-			<expression>
-				<product>
-					<difference>
-						<max>
-							<min>
-								<property>/it-autoflight/input/kts</property>
-								<property>/FMGC/internal/vmax</property>
-							</min>
-							<property>/FMGC/internal/vls</property>
-						</max>
-						<property>/it-autoflight/internal/kts-asi-lag</property>
-					</difference>
-					<value>0.1</value>
-				</product>
-			</expression>
-		</input>
-		<output>/it-autoflight/internal/flch-kts-error-cmd</output>
-		<min>
-			<condition>
-				<equals>
-					<property>/it-autoflight/output/vert</property>
-					<value>7</value>
-				</equals>
-			</condition>
-			<value>-0.8</value>
-		</min>
-		<min>-1.2</min>
-		<max>1.2</max>
-	</filter>
-	
-	<filter>
-		<name>Flch Knots Rate Filter</name>
-		<type>noise-spike</type>
-		<feedback-if-disabled>true</feedback-if-disabled>
-		<initialize-to>output</initialize-to>
-		<input>/it-autoflight/internal/flch-kts-error-cmd</input>
-		<output>/it-autoflight/internal/flch-kts-error</output>
-		<max-rate-of-change>
-			<condition>
-				<and>
-					<or>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>4</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>7</value>
-						</equals>
-					</or>
-					<property>/it-autoflight/output/apfd-on</property>
-					<equals>
-						<property>/gear/gear[1]/wow</property>
-						<value>0</value>
-					</equals>
-					<equals>
-						<property>/gear/gear[2]/wow</property>
-						<value>0</value>
-					</equals>
-				</and>
-			</condition>
-			<value>1.5</value>
-		</max-rate-of-change>
-		<max-rate-of-change>100</max-rate-of-change>
 	</filter>
 	
 	<filter>
