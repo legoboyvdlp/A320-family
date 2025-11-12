@@ -249,11 +249,23 @@
 	</logic>
 	
 	<filter>
+		<name>Speed By Pitch Knots Rate Gain</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>/it-autoflight/internal/kts-rate-raw</input>
+		<output>/it-autoflight/internal/kts-rate-flch</output>
+		<min>-10</min>
+		<max>10</max>
+	</filter>
+	
+	<filter>
 		<name>Speed By Pitch Mach Rate Gain</name>
 		<type>gain</type>
-		<gain>650</gain>
+		<gain>700</gain>
 		<input>/it-autoflight/internal/mach-rate-raw</input>
 		<output>/it-autoflight/internal/mach-rate-flch</output>
+		<min>-10</min>
+		<max>10</max>
 	</filter>
 	
 	<filter>
@@ -287,7 +299,7 @@
 			</condition>
 			<property>/it-autoflight/internal/mach-rate-flch</property>
 		</input>
-		<input>/it-autoflight/internal/kts-rate-raw</input>
+		<input>/it-autoflight/internal/kts-rate-flch</input>
 		<output>/it-autoflight/internal/flch-rate</output>
 		<filter-time>0.04</filter-time>
 	</filter>
