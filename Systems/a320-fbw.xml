@@ -415,7 +415,7 @@
 		</lag_filter>
 		
 		<!-- Because we want to be attitude stable -->
-		<fcs_function name="/systems/fbw/roll/p-rad_sec">
+		<fcs_function name="/systems/fbw/roll/phidot-rad_sec">
 			<function>
 				<toradians>
 					<property>/orientation/roll-rate-degps</property>
@@ -1232,7 +1232,7 @@
 		</pure_gain>
 		
 		<switch name="/systems/fbw/roll/p-r_s-s">
-			<default value="/systems/fbw/roll/p-rad_sec"/>
+			<default value="/systems/fbw/roll/phidot-rad_sec"/>
 			<test value="0">
 				gear/unit[0]/WOW eq 1
 			</test>
