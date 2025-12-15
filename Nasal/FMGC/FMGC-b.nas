@@ -1027,8 +1027,8 @@ var ITAF = {
 			vs = Internal.targetFpmFlch.getValue();
 		}
 
-		if (vs < -4000) {
-			vs = -4000;
+		if (vs < Internal.targetFpmFlch.getValue()) {
+			vs = Internal.targetFpmFlch.getValue();
 		}
 		if (me.calculateVdev() > 800 and (Internal.enginesBothAtIdle.getValue())) {
 			Internal.moreDrag.setBoolValue(1);
