@@ -6,7 +6,36 @@
 <system name="A320: FCS">
 	
 	<property value="0">/controls/flight/flaps-input-last</property>
-	
+
+	<!-- CG %MAC computation -->
+    <channel name="CG Percent MAC">
+        <!-- Output: /fdm/jsbsim/inertia/cg-percent-mac -->
+        <fcs_function name="inertia/cg-percent-mac">
+            <function>
+                <product>
+                    <quotient>
+                        <difference>
+                            <!-- Convert CG X from inches (FG) to meters -->
+                            <product>
+                                <property>inertia/cg-x-in</property>
+                                <value>0.0254</value> <!-- in → m -->
+                            </product>
+
+                            <!-- LEMAC position in meters (calibrated to give ~25% MAC at empty CG) -->
+                            <value>-3.508</value>
+                        </difference>
+
+                        <!-- MAC length in meters -->
+                        <value>4.193</value>
+                    </quotient>
+
+                    <!-- Convert ratio to percent -->
+                    <value>100</value>
+                </product>
+            </function>
+        </fcs_function>
+    </channel>
+
 	<channel name="Surface Droop">
 		
 		<fcs_function name="/systems/fcs/aileron-droop">
@@ -1558,5 +1587,4 @@
 		</actuator>
 		
 	</channel>
-
 </system>
