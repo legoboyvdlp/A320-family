@@ -794,7 +794,6 @@ var completeVHF = func(freq) {
 	return freq;
 }
 
-
 # To comply with function call convention
 var lskbutton = func(btn, i) {
 	draimsPanel[i].lskbutton(btn);

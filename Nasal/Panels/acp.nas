@@ -69,11 +69,15 @@ var transmitButton = func(channel, i) {
 };
 
 var init = func() {
-	for (var i = 0; i <= 2; i += 1) {
-		ACP[i].receive.vhf[2].setValue(0);
-		ACP[i].volume.vhf[1].setValue(0.8);
-	}
-}
+	ACP[0].receive.vhf[0].setValue(1);
+	ACP[0].receive.vhf[1].setValue(1);
+	ACP[1].receive.vhf[0].setValue(1);
+	ACP[1].receive.vhf[1].setValue(1);
+	ACP[0].volume.vhf[0].setValue(1);
+	ACP[0].volume.vhf[1].setValue(0.8);
+	ACP[1].volume.vhf[0].setValue(0.8);
+	ACP[1].volume.vhf[1].setValue(1);
+};
 
 for (var i = 0; i <= 2; i += 1) {
 	ACP[i] = acpClass.new(i);
