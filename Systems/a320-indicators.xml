@@ -6,6 +6,116 @@
 
 	<channel name="Signs">
 
+		<switch name="/controls/indicators/ac-ess-feed-alt">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/electrical/switches/ac-ess-feed eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/ac-ess-feed-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/electrical/light/ac-ess-feed-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/adr1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/adr-1-off eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/adr1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/adr-1-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/adr2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/adr-2-off eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/adr2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/adr-2-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/adr3-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/adr-3-off eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/adr3-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/adr-3-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/aft-cargo-iso-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/aft-cargo-iso-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/apu-bleed-on">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -25,6 +135,67 @@
 					/controls/switches/annun-test eq 1
 				</test>
 				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/apu-fire-agent-disch">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/fire/apu/disch eq 1
+					/controls/fire/apu-test-btn eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/apu-fire-agent-squib">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/apu/fire-btn eq 1
+					/controls/fire/apu-test-btn eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/apu-gen-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/electrical/switches/apu eq 0
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/apu-gen-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/electrical/light/apu-fault eq 1
+						/controls/electrical/switches/apu eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
 			</test>
 		</switch>
 
@@ -188,6 +359,84 @@
 			</test>
 		</switch>
 
+		<switch name="/controls/indicators/bat1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/electrical/switches/bat-1 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/dc-bat ge 25
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/bat1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/electrical/light/bat-1-fault eq 1
+						/controls/electrical/switches/bat-1 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/bat2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/electrical/switches/bat-2 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/dc-bat ge 25
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/bat2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/electrical/light/bat-2-fault eq 1
+						/controls/electrical/switches/bat-2 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/blue-elec-pump-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/hydraulic/switches/blue-elec ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/blue-elec-pump-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/hydraulic/lights/blue-elec-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/brake-hot">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -210,6 +459,20 @@
 					/controls/switches/annun-test eq 1
 				</test>
 				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/bustie-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/electrical/switches/bus-tie ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
 			</test>
 		</switch>
 
@@ -238,6 +501,39 @@
 					/systems/electrical/bus/ac-si-bus ge 110
 					/systems/electrical/bus/ac-ess-shed ge 110
 				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/cargo-hot-air-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/cargo-hot-air-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/commercial-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
 			</test>
 		</switch>
 
@@ -508,6 +804,83 @@
 			</test>
 		</switch>
 
+		<switch name="/controls/indicators/efis-capt-range-zoom">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO not yet implemented -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-capt-range-10">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis/inputs/range-nm eq 10
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-capt-range-20">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis/inputs/range-nm eq 20
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-capt-range-40">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis/inputs/range-nm eq 40
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-capt-range-80">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis/inputs/range-nm eq 80
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-capt-range-160">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis/inputs/range-nm eq 160
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-capt-range-320">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis/inputs/range-nm eq 320
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/efis-fo-arpt">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -582,6 +955,139 @@
 					/controls/switches/annun-test eq 1
 				</test>
 				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-fo-range-zoom">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO not yet implemented -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-fo-range-10">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis[1]/inputs/range-nm eq 10
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-fo-range-20">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis[1]/inputs/range-nm eq 20
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-fo-range-40">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis[1]/inputs/range-nm eq 40
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-fo-range-80">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis[1]/inputs/range-nm eq 80
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-fo-range-160">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis[1]/inputs/range-nm eq 160
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/efis-fo-range-320">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/efis[1]/inputs/range-nm eq 320
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/elac1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/fctl/switches/elac1 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/elac1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/fctl/lights/elac1-fault eq 1
+						/controls/fctl/switches/elac1 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/elac2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/fctl/switches/elac2 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/elac2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/fctl/lights/elac2-fault eq 1
+						/controls/fctl/switches/elac2 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
 			</test>
 		</switch>
 
@@ -813,6 +1319,93 @@
 			</test>
 		</switch>
 
+		<!--switch name="/controls/indicators/ext-pwr-avail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND" value="1">
+					<test logic="OR" value="1">
+						/systems/electrical/bus/ac-si-bus ge 1
+						/systems/electrical/bus/ac-ess-shed ge 1
+					</test>
+					/systems/electrical/bus/ac-ess ge 1
+				</test>
+				<test logic="AND" value="1">
+					/systems/electrical/sources/ext/output-volt ge 110
+					/systems/electrical/bus/ac-ess lt 110
+				</test>
+			</test>
+		</switch-->
+
+		<switch name="/controls/indicators/ext-pwr-on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/electrical/relay/ext-epc/contact-pos eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-1 ge 110
+					/systems/electrical/bus/ac-ess ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/fac1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/fctl/switches/fac1 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/fac1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/controls/fctl/switches/fac1 eq 1
+						/systems/fctl/lights/fac1-fault eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/fac2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/fctl/switches/fac2 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/fac2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/controls/fctl/switches/fac2 eq 1
+						/systems/fctl/lights/fac2-fault eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/fcu-alt">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -1014,6 +1607,103 @@
 			</test>
 		</switch>
 
+		<switch name="/controls/indicators/fuel-tank-r1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/fuel/switches/pump-right-1 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/fuel-tank-r1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/failures/fuel/right-tank-pump-1 eq 1
+						/controls/fuel/switches/pump-right-1 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/fuel-tank-l1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/fuel/switches/pump-left-1 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/fuel-tank-l1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/failures/fuel/left-tank-pump-1 eq 1
+						/controls/fuel/switches/pump-left-1 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/fuel-x-feed-on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/fuel/switches/crossfeed eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/fuel-x-feed-open">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/fuel/valves/crossfeed-valve eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/galley-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/electrical/light/galley-fault eq 1
+						/controls/electrical/switches/galley eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/galley-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/electrical/switches/galley ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/gear-left-down">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -1095,6 +1785,56 @@
 					/systems/electrical/bus/ac-si-bus ge 110
 					/systems/electrical/bus/ac-ess-shed ge 110
 				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gen1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/electrical/switches/gen-1 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gen1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/electrical/light/gen-1-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/sources/idg-1/gcu-1-powered eq 1
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gen2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/electrical/switches/gen-2 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/gen2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/electrical/light/gen-2-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/sources/idg-2/gcu-2-powered eq 1
 			</test>
 		</switch>
 
@@ -1205,6 +1945,80 @@
 			</test>
 		</switch>
 
+		<switch name="/controls/indicators/ir1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/ir-1-off eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/ir1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/ir-1-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/ir2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/ir-2-off eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/ir2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/ir-2-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/ir3-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/ir-3-off eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/ir3-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/navigation/adirscp/lights/ir-3-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/irs-on-bat">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/controls/navigation/adirscp/lights/on-bat eq 1
+				/controls/switches/annun-test eq 1
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/master-caut">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -1239,6 +2053,34 @@
 					/controls/switches/annun-test eq 1
 				</test>
 				/systems/electrical/bus/ac-1 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/idg1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/electrical/light/idg-1-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/idg2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/electrical/light/idg-2-fault eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
 			</test>
 		</switch>
 
@@ -1484,6 +2326,87 @@
 			</test>
 		</switch>
 
+		<switch name="/controls/indicators/sec1-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/fctl/switches/sec1 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/sec1-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/fctl/lights/sec1-fault eq 1
+						/controls/fctl/switches/sec1 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/sec2-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/fctl/switches/sec2 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/sec2-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/fctl/lights/sec2-fault eq 1
+						/controls/fctl/switches/sec2 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/sec3-off">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/controls/fctl/switches/sec3 ne 1
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/sec3-fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/fctl/lights/sec3-fault eq 1
+						/controls/fctl/switches/sec3 eq 1
+					</test>
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/sidestick-prio-capt-arrow">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -1605,6 +2528,17 @@
 					/controls/switches/annun-test eq 1
 				</test>
 				/systems/electrical/bus/dc-ess ge 25
+			</test>
+		</switch>
+
+		<switch name="/controls/indicators/toilet-occu">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					<!-- TODO has no other condition yet -->
+					/controls/switches/annun-test eq 1
+				</test>
+				/systems/electrical/bus/ac-2 ge 110
 			</test>
 		</switch>
 
