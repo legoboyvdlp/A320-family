@@ -533,7 +533,7 @@
 		<actuator name="/instrumentation/iesi/power/power-transient-timer">
 			<input>/instrumentation/iesi/power/power-command</input>
 			<rate_limit sense="decr">5</rate_limit>
-			<rate_limit sene="incr">100</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
 		</actuator>
 		
 		<switch name="/instrumentation/iesi/power/power-on">
@@ -675,7 +675,7 @@
 		<actuator name="/instrumentation/displays/du3/power-transient-timer">
 			<input>/instrumentation/displays/du3/power-command</input>
 			<rate_limit sense="decr">5</rate_limit>
-			<rate_limit sene="incr">100</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
 		</actuator>
 		
 		<switch name="/instrumentation/displays/du3/power-on">
@@ -712,7 +712,7 @@
 		<actuator name="/instrumentation/displays/du4/power-transient-timer">
 			<input>/instrumentation/displays/du4/power-command</input>
 			<rate_limit sense="decr">5</rate_limit>
-			<rate_limit sene="incr">100</rate_limit>
+			<rate_limit sense="incr">100</rate_limit>
 		</actuator>
 		
 		<switch name="/instrumentation/displays/du4/power-on">
