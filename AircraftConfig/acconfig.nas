@@ -213,7 +213,7 @@ var RENDERING = {
 		me.modelSet = me.model.getValue() >= 3;
 		
 		if (!me.als.getBoolValue() or !me.landmassSet or !me.modelSet) {
-			fgcommand("dialog-show", props.Node.new({"dialog-name": "acconfig-rendering"}));
+			fgcommand("dialog-show", props.Node.new({"dialog-name": "aircraft-config-rendering"}));
 		}
 	},
 	fixAll: func() {
