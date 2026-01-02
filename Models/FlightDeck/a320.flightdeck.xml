@@ -36049,7 +36049,7 @@
 	</animation>
 	
 	<animation>
-		<type>pick</type>
+		<type>select</type>
 		<object-name>AftCargoIsoBtn1F</object-name>
 		<condition>
 			<property>/controls/indicators/aft-cargo-iso-fault</property>
@@ -36057,7 +36057,7 @@
 	</animation>
 	
 	<animation>
-		<type>pick</type>
+		<type>select</type>
 		<object-name>AftCargoIsoBtn2O</object-name>
 		<condition>
 			<property>/controls/indicators/aft-cargo-iso-off</property>
