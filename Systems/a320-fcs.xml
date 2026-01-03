@@ -19,7 +19,6 @@
 							<product>
 								<property>inertia/cg-x-in</property>
 								<value>0.0254</value>
-								<!-- in → m -->
 							</product>
 
 							<!-- LEMAC position in meters -->
@@ -1506,4 +1505,5 @@
 		</actuator>
 
 	</channel>
+
 </system>
