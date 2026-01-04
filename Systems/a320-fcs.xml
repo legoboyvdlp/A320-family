@@ -23,11 +23,11 @@
 							</product>
 
 							<!-- LEMAC position in meters -->
-							<value>-3.508</value>
+							<value>-3.6286475</value>
 						</difference>
 
 						<!-- MAC length in meters -->
-						<value>4.193</value>
+						<value>4.1935</value>
 					</quotient>
 
 					<!-- Convert ratio to percent -->
