@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2025 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2026 Josh Davidson (Octal450) -->
 <!-- IAE V2500 engine -->
 
 <PropertyList include="A320-main.xml">
@@ -212,6 +212,14 @@
 		</systems>
 
 	</sim>
+	
+	<fdm n="0">
+		<jsbsim n="0">
+			<inertia n="0">
+				<empty-weight-x-in type="double">-95.807087</empty-weight-x-in> <!-- -2.4335 meters, 28.5% MAC -->
+			</inertia>
+		</jsbsim>
+	</fdm>
 	
 	<limits>
 		<mass-and-balance> <!--Data source: TCDS WV 017-->

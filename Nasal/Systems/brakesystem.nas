@@ -1,7 +1,7 @@
 # A3XX Autobrake and Braking
 # Joshua Davidson (Octal450)
 
-# Copyright (c) 2025 Josh Davidson (Octal450)
+# Copyright (c) 2026 Josh Davidson (Octal450)
 
 
 ##########################################################################

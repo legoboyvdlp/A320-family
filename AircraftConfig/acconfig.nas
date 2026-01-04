@@ -1,5 +1,5 @@
 # Aircraft Config Center
-# Copyright (c) 2025 Josh Davidson (Octal450)
+# Copyright (c) 2026 Josh Davidson (Octal450)
 
 # THIS IS OLD AND SHOULD BE REPLACED WITH ACCONFIG V2!!!
 
