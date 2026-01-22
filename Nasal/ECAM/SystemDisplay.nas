@@ -283,6 +283,8 @@ var SystemDisplayController = {
 				if (me.mode == 1) {
 					me.lastDisplayedPage = me.displayedPage;
 					me.lastMode = me.mode;
+				} elsif (me.mode == 3) {
+    				me.lastMode = 3;
 				}
 				me.displayedPage = me.PageList[newPage];
 				me.mode = 0;
@@ -296,9 +298,11 @@ var SystemDisplayController = {
 					ECAMControlPanel.lightOn(me.displayedPage.name);
 					me.lastDisplayedPage = nil;
 					me.mode = 0;
+					me.lastMode = 3;
 				} else {
 					ECAMControlPanel.lightOff(me.displayedPage.name);
 					me.displayedPage = me.autoCall();
+					me.lastMode = 3;
 				}
 			} elsif (me.mode == 0) {
 				if (me.lastMode == 1) {
@@ -307,9 +311,11 @@ var SystemDisplayController = {
 					ECAMControlPanel.lightOn(me.displayedPage.name);
 					me.lastDisplayedPage = nil;
 					me.mode = 1;
+					me.lastMode = 3;
 				} else {
 					ECAMControlPanel.lightOff(me.displayedPage.name);
 					me.displayedPage = me.autoCall();
+					me.lastMode = 3;
 				}
 			}
 		} else {
