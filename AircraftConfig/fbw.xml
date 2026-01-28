@@ -13,7 +13,7 @@
         <layout>hbox</layout>
         <text>
             <halign>left</halign>
-            <label>FBW Settings</label>
+            <label>FBW Monitor</label>
         </text>
         <button>
             <halign>right</halign>
@@ -30,93 +30,14 @@
     <hrule/>
 	
 	<group>
+		<layout>hbox</layout>
+		<text>
+			<label>FBW Output</label>
+		</text>
+	</group>
+	
+	<group>
 		<layout>vbox</layout>
-		
-		<checkbox>
-			<label>Define Custom FBW Mode</label>
-			<halign>left</halign>
-			<property>/it-fbw/override</property>
-			<binding>
-				<command>dialog-apply</command>
-			</binding>
-			<live>true</live>
-		</checkbox>
-		<button>
-			<halign>center</halign>
-			<legend>Use NORMAL Law</legend>
-			<pref-width>140</pref-width>
-			<enable>
-				<property>/it-fbw/override</property>
-			</enable>
-			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/it-fbw/degrade-law", 0);
-				setprop("/it-fbw/law", 0);
-				setprop("/it-fbw/degrade-yaw-law", 0);
-				setprop("/it-fbw/yaw-law", 0);
-				fbw.FBW.apOff = 0;
-				gui.popupTip("Fly By Wire switched to NORMAL law!");
-				</script>
-			</binding>
-		</button>
-		<button>
-			<halign>center</halign>
-			<legend>Use ALTERNATE Law</legend>
-			<pref-width>140</pref-width>
-			<enable>
-				<property>/it-fbw/override</property>
-			</enable>
-			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/it-fbw/degrade-law", 1);
-				setprop("/it-fbw/law", 1);
-				setprop("/it-fbw/degrade-yaw-law", 1);
-				setprop("/it-fbw/yaw-law", 1);
-				fbw.FBW.apOff = 1;
-				gui.popupTip("Fly By Wire switched to ALTERNATE law!");
-				</script>
-			</binding>
-		</button>
-		<button>
-			<halign>center</halign>
-			<legend>Use DIRECT Law</legend>
-			<pref-width>140</pref-width>
-			<enable>
-				<property>/it-fbw/override</property>
-			</enable>
-			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/it-fbw/degrade-law", 2);
-				setprop("/it-fbw/law", 2);
-				setprop("/it-fbw/degrade-yaw-law", 2);
-				setprop("/it-fbw/yaw-law", 2);
-				fbw.FBW.apOff = 1;
-				gui.popupTip("Fly By Wire switched to DIRECT law!");
-				</script>
-			</binding>
-		</button>
-		<button>
-			<halign>center</halign>
-			<legend>Use BACKUP Law</legend>
-			<pref-width>140</pref-width>
-			<enable>
-				<property>/it-fbw/override</property>
-			</enable>
-			<binding>
-				<command>nasal</command>
-				<script>
-				setprop("/it-fbw/degrade-law", 3);
-				setprop("/it-fbw/law", 3);
-				setprop("/it-fbw/degrade-yaw-law", 2);
-				setprop("/it-fbw/yaw-law", 2);
-				fbw.FBW.apOff = 1;
-				gui.popupTip("Fly By Wire switched to MECHANICAL BACKUP law!");
-				</script>
-			</binding>
-		</button>
 		
 		<group>
 			<layout>hbox</layout>
