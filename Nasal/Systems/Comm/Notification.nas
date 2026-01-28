@@ -2,7 +2,7 @@
 # Jonathan Redpath
 
 # Copyright (c) 2025 Josh Davidson (Octal450)
-#var defaultServer = "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&mostRecent=true&hoursBeforeNow=12&stationString=";
+
 var defaultServer = "https://aviationweather.gov/api/data/metar?format=xml&taf=false&ids=";
 
 var result = nil;
@@ -171,7 +171,6 @@ var AOC = {
 		
 		var serverString = "";
 		if (me.server.getValue() == "vatsim") {
-			#serverString = "https://api.flybywiresim.com/metar/" ~ airport ~ "?source=vatsim";
 			serverString = "https://metar.vatsim.net/" ~ airport ;
 		} else {
 			serverString = defaultServer ~ airport;
@@ -200,7 +199,6 @@ var AOC = {
 			me.sent = 0;
 			return 1;
 		}
-		#http.load("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&timeType=issue&mostRecent=true&hoursBeforeNow=12&stationString=" ~ airport)
 		http.load("https://aviationweather.gov/api/data/taf?format=xml&taf=false&time=issue&ids=" ~ airport)
 			.fail(func(r) me.downloadFail(i))
 			.done(func(r) {
@@ -215,7 +213,7 @@ var AOC = {
 			});
 		return 0;
 	},
-	# Metar-Prozessieren
+
 	processMETAR: func(r, i) {
 		var raw = r.response;
 		if (find('"statusCode":404',raw) != -1) {
@@ -264,8 +262,6 @@ var AOC = {
 			return;
 		}
 		me.lastTAF = raw;
-		print("raw =" ~ raw);
-		debug.dump(raw);
 
 		settimer(func() {
 			me.received = 1;
@@ -374,7 +370,6 @@ var ATIS = {
 				raw = split('"}', raw)[0];
 			}
 		}
-		
 		var code = "";
 		if (find("INFO ", raw) != -1) {
 			code = split("INFO ", raw)[1];
@@ -410,14 +405,11 @@ var ATIS = {
 		}
 
 		# Sanity Check aginst allowed ATIS Code returns
-
 		# Fetch corresponding NATO codes for candidate from dictionary if present
 
 		var dictcode = atsu.DictionaryString.fetchString1(var scode = left(code, 1));
 
 		if ( dictcode != "" ) {
-			print("Wörterbuch gefunden");
-
 			if ((size(code) == 1)) {
 				print("Parsed ATIS string is valid single letter, information: " ~ code );
 				me.receivedCode = code;
@@ -428,7 +420,6 @@ var ATIS = {
 				print("ATIS Code is not in dictionary");
 				debug.dump(raw);
 			}
-
 		} else {
 			print("Failed to find a valid ATIS code for "  ~ me.station);
 			debug.dump(raw);
