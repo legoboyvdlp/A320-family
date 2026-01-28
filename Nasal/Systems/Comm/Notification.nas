@@ -1,7 +1,7 @@
 # A3XX Notification System
 # Jonathan Redpath
 
-# Copyright (c) 2025 Josh Davidson (Octal450)
+# Copyright (c) 2026 Josh Davidson (Octal450)
 
 var defaultServer = "https://aviationweather.gov/api/data/metar?format=xml&taf=false&ids=";
 var result = nil;
@@ -214,14 +214,12 @@ var AOC = {
 	},
 	processMETAR: func(r, i, airport) {
 		var raw = r.response;
-
 		if (find('"statusCode":404',raw) != -1) {
 			me.received = 0;
 			me.sent = 0;
 			mcdu.mcdu_message(i, "NO METAR AVAILABLE");
 			return;
 		}
-
 		if (me.server.getValue() == "vatsim") {
 			if (find(airport,raw) != -1) {
 				me.lastMETAR = ("METAR " ~ raw); # Add the missing "METAR" at the beginning of Vatsim API string
@@ -414,15 +412,14 @@ var ATIS = {
 		# Sanity Check aginst allowed ATIS Code returns
 		# Fetch corresponding NATO codes for candidate from dictionary if present
 
-		var dictcode = atsu.DictionaryString.fetchString1(var scode = left(code, 1));
-
-		if ( dictcode != "" ) {
+		var dictCode = atsu.DictionaryString.fetchString1(var sCode = left(code, 1));
+		if ( dictCode != "" ) {
 			if ((size(code) == 1)) {
 				print("Parsed ATIS string is valid single letter, information: " ~ code );
 				me.receivedCode = code;
-			} else if (dictcode.string2 == code) {
+			} else if (dictCode.string2 == code) {
 				print ("Parsed long string is valid ATIS code " ~ code );
-				me.receivedCode = scode ;
+				me.receivedCode = sCode ;
 			} else {
 				print("ATIS Code is not in dictionary");
 				debug.dump(raw);
