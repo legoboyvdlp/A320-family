@@ -4,7 +4,6 @@
 # Copyright (c) 2025 Josh Davidson (Octal450)
 
 var defaultServer = "https://aviationweather.gov/api/data/metar?format=xml&taf=false&ids=";
-
 var result = nil;
 
 var ATSU = {
@@ -180,7 +179,7 @@ var AOC = {
 			.fail(func(r) me.downloadFail(i, r))
 			.done(func(r) {
 				var errs = [];
-				call(me.processMETAR, [r, i], me, {}, errs); 
+				call(me.processMETAR, [r, i, airport], me, {}, errs);
 				if (size(errs) > 0) {
 					print("Failed to parse METAR for " ~ airport);
 					debug.dump(r.response);
@@ -213,9 +212,9 @@ var AOC = {
 			});
 		return 0;
 	},
-
-	processMETAR: func(r, i) {
+	processMETAR: func(r, i, airport) {
 		var raw = r.response;
+
 		if (find('"statusCode":404',raw) != -1) {
 			me.received = 0;
 			me.sent = 0;
@@ -224,7 +223,15 @@ var AOC = {
 		}
 
 		if (me.server.getValue() == "vatsim") {
-			me.lastMETAR = ("METAR " ~ raw); # Add the missing "METAR" at the beginning of Vatsim API string
+			if (find(airport,raw) != -1) {
+				me.lastMETAR = ("METAR " ~ raw); # Add the missing "METAR" at the beginning of Vatsim API string
+			}
+			else {
+				me.received = 0;
+				me.sent = 0;
+				mcdu.mcdu_message(i, "BAD SERVER RESPONSE");
+				return;
+			}
 		} else if (find("<raw_text>", raw) != -1) {
 			raw = split("<raw_text>", raw)[1];
 			raw = split("</raw_text>", raw)[0];
