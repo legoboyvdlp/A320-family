@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+
+<!-- Airbus A320-family CG Applet -->
+<!-- Copyright (c) 2026 Josh Davidson (Octal450) -->
+
+<PropertyList>
+	
+	<name>cg</name>
+	<layout>vbox</layout>
+	
+	<nasal>
+		<open>
+			setprop("/sim/gui/dialogs/cg/cg-percent-mac", sprintf("%4.1f", math.round(getprop("/fdm/jsbsim/inertia/cg-percent-mac"), 0.1)) ~ "% MAC");
+			setprop("/sim/gui/dialogs/cg/zfwcg-percent-mac", sprintf("%4.1f", math.round(getprop("/fdm/jsbsim/inertia/zfwcg-percent-mac"), 0.1)) ~ "% MAC");
+			
+			var loop = maketimer(0.1, func() {
+				setprop("/sim/gui/dialogs/cg/cg-percent-mac", sprintf("%4.1f", math.round(getprop("/fdm/jsbsim/inertia/cg-percent-mac"), 0.1)) ~ "% MAC");
+				setprop("/sim/gui/dialogs/cg/zfwcg-percent-mac", sprintf("%4.1f", math.round(getprop("/fdm/jsbsim/inertia/zfwcg-percent-mac"), 0.1)) ~ "% MAC");
+			});
+			loop.start();
+		</open>
+		<close>
+			loop.stop();
+		</close>
+	</nasal>
+	
+	<group>
+		<layout>hbox</layout>
+		
+		<text>
+			<halign>left</halign>
+			<label>CG Applet</label>
+		</text>
+		
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+	
+	<group>
+		<layout>table</layout>
+		
+		<text>
+			<row>0</row>
+			<col>0</col>
+			<label>CG: </label>
+		</text>
+		<text>
+			<row>0</row>
+			<col>1</col>
+			<label>9999999999</label>
+			<live>true</live>
+			<property>/sim/gui/dialogs/cg/cg-percent-mac</property>
+		</text>
+		<text>
+			<row>1</row>
+			<col>0</col>
+			<label>ZFWCG: </label>
+		</text>
+		<text>
+			<row>1</row>
+			<col>1</col>
+			<label>9999999999</label>
+			<live>true</live>
+			<property>/sim/gui/dialogs/cg/zfwcg-percent-mac</property>
+		</text>
+	</group>
+
+</PropertyList>

@@ -1,5 +1,5 @@
 # Airbus A3XX FBW/Flight Control Computer System
-# Copyright (c) 2025 Josh Davidson (Octal450)
+# Copyright (c) 2026 Josh Davidson (Octal450)
 
 var mmoIAS = 0;
 var cas = 0;

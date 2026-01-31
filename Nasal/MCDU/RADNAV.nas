@@ -1,5 +1,5 @@
 # A3XX mCDU by Joshua Davidson (Octal450), Jonathan Redpath, and Matthew Maring (mattmaring)
-# Copyright (c) 2025 Josh Davidson (Octal450)
+# Copyright (c) 2026 Josh Davidson (Octal450)
 
 var radNavScratchpad = nil;
 var radNavScratchpadSize = nil;
