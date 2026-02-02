@@ -367,8 +367,8 @@ var ITAF = {
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
 					if (vertTemp == 8 and Internal.altManaged.getBoolValue() and armDesOn == "False") { # If we are in V/S and managed alt, switch to ALT CAP
-						armDesOn = "True";
-						armDes();
+						# armDesOn = "True";
+						# armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
 					}
@@ -377,8 +377,8 @@ var ITAF = {
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
 					if (vertTemp == 8 and Internal.altManaged.getBoolValue() and armDesOn == "False") { # If we are in V/S and managed alt, switch to ALT CAP
-						armDesOn = "True";
-						armDes();
+						# armDesOn = "True";
+						# armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
 					}
@@ -1084,18 +1084,7 @@ var armClb = func {
 
 # To be called when in altitude acquire mode,
 # when the aircraft passes that waypoint the DES mode should resume
-var armDes = func {
-	if (armDesOn == "True") {
-		if (abs(Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[0]) >= 500) {
-			ITAF.updateVertText("DES");
-			ITAF.setVertMode(8); # DES mode
-			armDesOn = "False";
-		} else {
-			Internal.moreDrag.setBoolValue(0);
-			settimer(armDes, 1);
-		}
-	}
-};
+
 
 setlistener(Gear.wow1, func(val) {
 	if (!val.getBoolValue() and FPLN.currentWP.getValue() == 0) {
