@@ -20,7 +20,7 @@ var Transponder = {
 	activeADIRS: 1,
 	condition: 0,
 	failed: 0,
-	codeDigitsNodes: [props.globals.getNode("/instrumentation/transponder/inputs/digit[0]", 1), props.globals.getNode("/instrumentation/transponder/inputs/digit[1]", 1), props.globals.getNode("/instrumentation/transponder/inputs/digit[2]", 1), props.globals.getNode("instrumentation/transponder/inputs/digit[3]", 1)],
+	codeDigitsNodes: [props.globals.getNode("/instrumentation/transponder/inputs/digit[0]", 1), props.globals.getNode("/instrumentation/transponder/inputs/digit[1]", 1), props.globals.getNode("/instrumentation/transponder/inputs/digit[2]", 1), props.globals.getNode("/instrumentation/transponder/inputs/digit[3]", 1)],
 	serviceableNode: props.globals.getNode("/instrumentation/transponder/serviceable", 1),
 	knobNode: props.globals.getNode("/instrumentation/transponder/inputs/knob-mode", 1),
 	identNode: props.globals.getNode("/instrumentation/transponder/inputs/ident-btn", 1),

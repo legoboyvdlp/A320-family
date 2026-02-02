@@ -1,8 +1,9 @@
 # A3XX Notification System
 # Jonathan Redpath
 
-# Copyright (c) 2025 Josh Davidson (Octal450)
-var defaultServer = "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&mostRecent=true&hoursBeforeNow=12&stationString=";
+# Copyright (c) 2026 Josh Davidson (Octal450)
+
+var defaultServer = "https://aviationweather.gov/api/data/metar?format=xml&taf=false&ids=";
 var result = nil;
 
 var ATSU = {
@@ -169,7 +170,7 @@ var AOC = {
 		
 		var serverString = "";
 		if (me.server.getValue() == "vatsim") {
-			serverString = "https://api.flybywiresim.com/metar/" ~ airport ~ "?source=vatsim";
+			serverString = "https://metar.vatsim.net/" ~ airport ;
 		} else {
 			serverString = defaultServer ~ airport;
 		}
@@ -178,7 +179,7 @@ var AOC = {
 			.fail(func(r) me.downloadFail(i, r))
 			.done(func(r) {
 				var errs = [];
-				call(me.processMETAR, [r, i], me, {}, errs); 
+				call(me.processMETAR, [r, i, airport], me, {}, errs);
 				if (size(errs) > 0) {
 					print("Failed to parse METAR for " ~ airport);
 					debug.dump(r.response);
@@ -197,7 +198,7 @@ var AOC = {
 			me.sent = 0;
 			return 1;
 		}
-		http.load("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&timeType=issue&mostRecent=true&hoursBeforeNow=12&stationString=" ~ airport)
+		http.load("https://aviationweather.gov/api/data/taf?format=xml&taf=false&time=issue&ids=" ~ airport)
 			.fail(func(r) me.downloadFail(i))
 			.done(func(r) {
 				var errs = [];
@@ -211,7 +212,7 @@ var AOC = {
 			});
 		return 0;
 	},
-	processMETAR: func(r, i) {
+	processMETAR: func(r, i, airport) {
 		var raw = r.response;
 		if (find('"statusCode":404',raw) != -1) {
 			me.received = 0;
@@ -219,18 +220,16 @@ var AOC = {
 			mcdu.mcdu_message(i, "NO METAR AVAILABLE");
 			return;
 		}
-		
 		if (me.server.getValue() == "vatsim") {
-			if (find("metar", raw) != -1) {
-				raw = split('"metar":"', raw)[1];
-				raw = split('","source":"Vatsim"}', raw)[0];
-			} else {
+			if (find(airport,raw) != -1) {
+				me.lastMETAR = ("METAR " ~ raw); # Add the missing "METAR" at the beginning of Vatsim API string
+			}
+			else {
 				me.received = 0;
 				me.sent = 0;
 				mcdu.mcdu_message(i, "BAD SERVER RESPONSE");
 				return;
 			}
-			me.lastMETAR = raw;
 		} else if (find("<raw_text>", raw) != -1) {
 			raw = split("<raw_text>", raw)[1];
 			raw = split("</raw_text>", raw)[0];
@@ -256,7 +255,11 @@ var AOC = {
 		if (find("<raw_text>", raw) != -1) {
 			raw = split("<raw_text>", raw)[1];
 			raw = split("</raw_text>", raw)[0];
-			me.lastTAF = raw;
+			if (find("<![CDATA[", raw) != -1) {
+				raw = split("<![CDATA[", raw)[1];
+				raw = split("]]>", raw)[0];
+				me.lastTAF = raw;
+			}
 		} else {
 			me.received = 0;
 			me.sent = 0;
@@ -264,6 +267,7 @@ var AOC = {
 			return;
 		}
 		me.lastTAF = raw;
+
 		settimer(func() {
 			me.received = 1;
 			mcdu.mcdu_message(i, "WX UPLINK");
@@ -371,7 +375,6 @@ var ATIS = {
 				raw = split('"}', raw)[0];
 			}
 		}
-		
 		var code = "";
 		if (find("INFO ", raw) != -1) {
 			code = split("INFO ", raw)[1];
@@ -382,31 +385,50 @@ var ATIS = {
 		} else if (find("INFORMATION ", raw) != -1) {
 			code = split("INFORMATION ", raw)[1];
 			code = split(" ", code)[0];
+		} else if (find("info ", raw) != -1) {
+			code = split("info ", raw)[1];
+			code = split(" ", code)[0];
+		} else if (find(" METAR", raw) != -1) {
+			code = split(" METAR", raw)[0];
+			code = split(" ", code)[-1];
 		} else if  (find("ATIS ", raw) != -1) {
 			code = split("ATIS ", raw)[1];
-			code = split(" ", code)[0];
-		} else if  (find("info ", raw) != -1) {
-			code = split("info ", raw)[1];
 			code = split(" ", code)[0];
 		} else {
 			print("Failed to find a valid ATIS code for " ~ me.station);
 			debug.dump(raw);
 		}
-		
+
+		# Cleanup
+
 		if (find(".", code) != -1) {
 			code = split(".", code)[0];
 		}
-		
+
 		if (find(",", code) != -1) {
 			code = split(",", code)[0];
 		}
-		
-		if (size(code) > 1) {
-			code = left(code, 1);
+
+		# Sanity Check aginst allowed ATIS Code returns
+		# Fetch corresponding NATO codes for candidate from dictionary if present
+
+		var dictCode = atsu.DictionaryString.fetchString1(var sCode = left(code, 1));
+		if ( dictCode != "" ) {
+			if ((size(code) == 1)) {
+				print("Parsed ATIS string is valid single letter, information: " ~ code );
+				me.receivedCode = code;
+			} else if (dictCode.string2 == code) {
+				print ("Parsed long string is valid ATIS code " ~ code );
+				me.receivedCode = sCode ;
+			} else {
+				print("ATIS Code is not in dictionary");
+				debug.dump(raw);
+			}
+		} else {
+			print("Failed to find a valid ATIS code for "  ~ me.station);
+			debug.dump(raw);
 		}
-		
-		me.receivedCode = code;
-		
+
 		var time = "";
 		if (find("Time ", raw) != -1) {
 			time = split("Time ", raw)[1];
@@ -441,6 +463,9 @@ var ATIS = {
 		} else if (find("INFORMATION " ~ code ~ " AT ", raw) != -1) {
 			time = split("INFORMATION " ~ code ~ " AT ", raw)[1];
 			time = left(time, 4);
+		} else if (find("METAR ", raw) != -1) {
+			time = split("METAR ", raw)[1];
+			time = substr(time, 2, 4);
 		} else if (find((code ~ " "), raw) != -1) {
 			if (size(split(" ",split(code ~ " ", raw)[1])[0]) == 4) {
 				time = split(" ",split(code ~ " ", raw)[1])[0];

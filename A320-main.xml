@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 
-<!-- Copyright (c) 2025 Josh Davidson (Octal450) and Matthew Maring (mattmaring) -->
+<!-- Copyright (c) 2026 Josh Davidson (Octal450) and Matthew Maring (mattmaring) -->
 
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
 	<sim>
@@ -313,14 +313,83 @@
 					<enabled type="bool">false</enabled>
 				</menu>
 				<menu n="101">
-					<label>A320-family</label>
+					<label>Aircraft</label>
 					<item>
-						<label>Aircraft Config</label>
+						<label>Configuration Center</label>
 						<binding>
 							<command>nasal</command>
 							<script>
 							acconfig.main_dlg.open();
 							</script>
+						</binding>
+					</item>
+					<item>
+						<label>Select Livery</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							libraries.livery.dialog.toggle();
+							</script>
+						</binding>
+					</item>
+					<item>
+						<label>Ground Services</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							acconfig.groundservices_dlg.open();
+							</script>
+						</binding>
+					</item>
+					<item>
+						<label>Announcements</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							var announce_dlg = gui.Dialog.new("sim/gui/dialogs/announce/dialog", "Aircraft/A320-family/AircraftConfig/announce.xml");
+							announce_dlg.open();
+							</script>
+						</binding>
+					</item>
+					<item>
+						<label>Refuel Panel</label>
+						<binding>
+							<command>nasal</command>
+							<script><![CDATA[
+								Dialogs.refuelDialog.openDialog();
+							]]></script>
+						</binding>
+					</item>
+					<item>
+						<label>System Failures</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							acconfig.fail_dlg.open();
+							</script>
+						</binding>
+					</item>
+					<item>
+						<label>Canvas QRH</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+								canvas_qrh.createCanvasQRH();
+							</script>
+						</binding>
+					</item>
+					<item>
+						<label>CG Applet</label>
+						<binding>
+							<command>dialog-show</command>
+							<dialog-name>cg</dialog-name>
+						</binding>
+					</item>
+					<item>
+						<label>Pushback</label>
+						<binding>
+							<command>dialog-show</command>
+							<dialog-name>autopush</dialog-name>
 						</binding>
 					</item>
 				</menu>
@@ -475,71 +544,6 @@
 							</script>
 						</binding>
 					</item>					
-				</menu>
-				<menu n="105">
-					<label>Utilities</label>
-					<item>
-						<label>Select Livery</label>
-						<binding>
-							<command>nasal</command>
-							<script>
-							libraries.livery.dialog.toggle();
-							</script>
-						</binding>
-					</item>
-					<item>
-						<label>Ground Services</label>
-						<binding>
-							<command>nasal</command>
-							<script>
-							acconfig.groundservices_dlg.open();
-							</script>
-						</binding>
-					</item>
-					<item>
-						<label>Announcements</label>
-						<binding>
-							<command>nasal</command>
-							<script>
-							var announce_dlg = gui.Dialog.new("sim/gui/dialogs/announce/dialog", "Aircraft/A320-family/AircraftConfig/announce.xml");
-							announce_dlg.open();
-							</script>
-						</binding>
-					</item>
-					<item>
-						<label>Refuel Panel</label>
-						<binding>
-							<command>nasal</command>
-							<script><![CDATA[
-								Dialogs.refuelDialog.openDialog();
-							]]></script>
-						</binding>
-					</item>
-					<item>
-						<label>Pushback</label>
-						<binding>
-							<command>dialog-show</command>
-							<dialog-name>autopush</dialog-name>
-						</binding>
-					</item>
-					<item>
-						<label>System Failures</label>
-						<binding>
-							<command>nasal</command>
-							<script>
-							acconfig.fail_dlg.open();
-							</script>
-						</binding>
-					</item>
-					<item>
-						<label>Canvas QRH</label>
-						<binding>
-							<command>nasal</command>
-							<script>
-								canvas_qrh.createCanvasQRH();
-							</script>
-						</binding>
-					</item>
 				</menu>
 			</default>
 		</menubar>
@@ -712,44 +716,38 @@
 	
 	<payload>
 		<weight n="0">
-			<name>Cockpit Crew</name>
+			<name>Forward Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[0]"/>
-			<min-lb type="double">200</min-lb>
-			<max-lb type="double">776</max-lb>
+			<min-lb type="double">0</min-lb>
+			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="1">
-			<name>Forward Cabin</name>
+			<name>Center Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[1]"/>
 			<min-lb type="double">0</min-lb>
 			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="2">
-			<name>Center Cabin</name>
+			<name>Aft Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[2]"/>
 			<min-lb type="double">0</min-lb>
 			<max-lb type="double">11640</max-lb>
 		</weight>
 		<weight n="3">
-			<name>Aft Cabin</name>
-			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[3]"/>
-			<min-lb type="double">0</min-lb>
-			<max-lb type="double">11640</max-lb>
-		</weight>
-		<weight n="4">
 			<name>Forward Cargo</name>
-			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[4]"/>
+			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[3]"/>
 			<min-lb type="double">0</min-lb>
 			<max-lb type="double">7500</max-lb>
 		</weight>
-		<weight n="5">
+		<weight n="4">
 			<name>Aft Cargo</name>
-			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[5]"/>
+			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[4]"/>
 			<min-lb type="double">0</min-lb>
 			<max-lb type="double">10000</max-lb>
 		</weight>
-		<weight n="6">
+		<weight n="5">
 			<name>Aft Bulk Cargo</name>
-			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[6]"/>
+			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[5]"/>
 			<min-lb type="double">0</min-lb>
 			<max-lb type="double">3300</max-lb>
 		</weight>

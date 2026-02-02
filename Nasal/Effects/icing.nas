@@ -1,7 +1,7 @@
 # A3XX Icing System
 # Jonathan Redpath (legoboyvdlp)
 
-# Copyright (c) 2025 Josh Davidson (Octal450)
+# Copyright (c) 2026 Josh Davidson (Octal450)
 
 
 ### Ice sensitive components definition.

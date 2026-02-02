@@ -1,5 +1,5 @@
 # Aircraft Config Center
-# Copyright (c) 2025 Josh Davidson (Octal450)
+# Copyright (c) 2026 Josh Davidson (Octal450)
 
 # THIS IS OLD AND SHOULD BE REPLACED WITH ACCONFIG V2!!!
 
@@ -213,7 +213,7 @@ var RENDERING = {
 		me.modelSet = me.model.getValue() >= 3;
 		
 		if (!me.als.getBoolValue() or !me.landmassSet or !me.modelSet) {
-			fgcommand("dialog-show", props.Node.new({"dialog-name": "acconfig-rendering"}));
+			fgcommand("dialog-show", props.Node.new({"dialog-name": "aircraft-config-rendering"}));
 		}
 	},
 	fixAll: func() {

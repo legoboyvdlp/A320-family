@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Copyright (c) 2025 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2026 Josh Davidson (Octal450) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -95,7 +95,7 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Apply minimum settings</legend>
+			<legend>Yes, fix all settings</legend>
 			<pref-width>200</pref-width>
 			<binding>
 				<command>nasal</command>
@@ -110,21 +110,13 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Advanced: View Shader Settings</legend>
+			<legend>Yes, but I'll fix shaders myself</legend>
 			<pref-width>200</pref-width>
 			<binding>
 				<command>nasal</command>
 				<script>
 				acconfig.RENDERING.fixCore();
 				</script>
-			</binding>
-			<binding> <!-- Close the non-ALS shader dialog if it is open for some bizarre reason -->
-				<command>dialog-close</command>
-				<dialog-name>shaders</dialog-name>
-			</binding>
-			<binding>
-				<command>dialog-show</command>
-				<dialog-name>shaders-lightfield</dialog-name>
 			</binding>
 			<binding>
 				<command>dialog-close</command>
@@ -133,7 +125,7 @@
 		
 		<button>
 			<halign>center</halign>
-			<legend>Ignore</legend>
+			<legend>I don't care</legend>
 			<pref-width>150</pref-width>
 			<binding>
 				<command>dialog-close</command>

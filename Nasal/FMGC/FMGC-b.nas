@@ -1,4 +1,12 @@
 var vsAdjustment = 0;
+# A3XX FMGC Autopilot
+# Based off IT Autoflight System Controller V4.1.X
+# Copyright (c) 2026 Josh Davidson (Octal450)
+# This file DOES NOT integrate with Property Tree Setup
+# That way, we can update it from IT Autoflight Core easily
+
+# Initialize all used variables and property nodes
+# Sim
 var Controls = {
 	aileron: props.globals.getNode("/controls/flight/aileron", 1),
 	aileron2: props.globals.getNode("/controls/flight/aileron[1]", 1),

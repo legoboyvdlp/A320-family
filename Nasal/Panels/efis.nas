@@ -1,5 +1,5 @@
 # A3XX EFIS Controller
-# Copyright (c) 2025 Josh Davidson (Octal450)
+# Copyright (c) 2026 Josh Davidson (Octal450)
 
 var mode = "NAV";
 var rng = 20;
