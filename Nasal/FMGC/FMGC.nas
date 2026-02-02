@@ -1003,55 +1003,26 @@ var ManagedSPD = maketimer(0.25, func {
 					nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst()[0];
 					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(nextSpdConst)) : math.min(mng_alt_spd, nextSpdConst);
 				}
-			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + fmgc.flightPlanController.getTenThousandSlowDownAlt())) {
-				# Speed is maximum of greendot / descent speed limit
+			}  elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
 				if (FMGCInternal.decel) {
 					FMGCInternal.mngKtsMach = 0;
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-					output = fmgc.flightPlanController.getDesAltConst();
 					if (constraintSpeed != nil and constraintSpeed != 0) {
-						spdCstr = constraintSpeed
+						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 					} else {
-						for (var i = fmgc.flightPlanController.currentToWptIndex.getValue(); i < fmgc.flightPlanController.flightplans[2].getPlanSize(); i += 1) {
-							if (fmgc.flightPlanController.flightplans[2].getWP(i).speed_cstr != 0 and fmgc.flightPlanController.flightplans[2].getWP(i).speed_cstr != nil) {
-								spdCstr = fmgc.flightPlanController.flightplans[2].getWP(i).speed_cstr;
-								if (spdCstr != 0 and spdCstr != nil) {
-									break
-								}
-							}
-						}
+						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
 					}
-					# print("distance " ~ output[1] ~ " altitude " ~ output[0] ~ " constraintSpeed " ~ constraintSpeed ~ "diff " ~ (abs(Position.indicatedAltitudeFt.getValue()-output[0])) ~ " decel " ~ output[6]);
-					if ((output[1] == 0.1) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[5] < 0)) {
-						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(spdCstr)) : math.min(mng_alt_spd, spdCstr);
-						Internal.onSpeedConst.setBoolValue(1);
-						# print("TRIGGGG");
-						lastConstraintSpeed = spdCstr;
-					} else {
-						print("lastcstrspeed is " ~ lastConstraintSpeed);
-						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(ktsToMach(lastConstraintSpeed),mng_alt_mach) : math.min(mng_alt_spd, lastConstraintSpeed);
-					}
-
-
-					
 				}
-			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= (FMGCInternal.desSpdLimAlt + fmgc.flightPlanController.getTenThousandSlowDownAlt())) {
+			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
-				Internal.onSpeedConst.setBoolValue(1);
+				
 				if (constraintSpeed != nil and constraintSpeed != 0) {
-					output = fmgc.flightPlanController.getDesAltConst();
-					# if ((output[1] == 0.1 and output[3] == 0) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[3] == 1)) {
-					if ((output[1] == 0.1) or (abs(Position.indicatedAltitudeFt.getValue()-output[0]) <= 500) or (output[5] < 0)) {
-						FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.vls_min, 999);
-						lastConstraintSpeed = constraintSpeed;
-					} else {
-						FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, lastConstraintSpeed), FMGCInternal.vls_min, 999);
-					}
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 				} else {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, lastConstraintSpeed), FMGCInternal.vls_min, 999);
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
 				}
 			}
 			

@@ -479,28 +479,31 @@ var canvas_pfd = {
 			}),
 			# Control the movement of the vertical deviation dot
 			props.UpdateManager.FromHashList(["fmgcPhase","vdevDot"], 1, func(val) {
-				if (val.fmgcPhase == 4 or val.fmgcPhase == 5) {
-					obj["vdev_dot"].show();
-					vdevDotDev = val.vdevDot * 0.5;
-					if (vdevDotDev > 260) {
-						obj["vdev_dot"].hide();
-						obj["vdev_low"].hide();
-						obj["vdev_high"].show();
-					} elsif (vdevDotDev < -260) {
-						obj["vdev_dot"].hide();
-						obj["vdev_high"].hide();
-						obj["vdev_low"].show();
-					} else {
-						obj["vdev_low"].hide();
-						obj["vdev_high"].hide();
-						obj["vdev_dot"].show();
-						obj["vdev_dot"].setTranslation(0, vdevDotDev);
-					}
-				} else {
-					obj["vdev_dot"].hide();
-					obj["vdev_low"].hide();
-					obj["vdev_high"].hide();
-				}
+				obj["vdev_dot"].hide();
+				obj["vdev_low"].hide();
+				obj["vdev_high"].hide();
+				# if (val.fmgcPhase == 4 or val.fmgcPhase == 5) {
+					# obj["vdev_dot"].show();
+				# 	vdevDotDev = val.vdevDot * 0.5;
+				# 	if (vdevDotDev > 260) {
+				# 		obj["vdev_dot"].hide();
+				# 		obj["vdev_low"].hide();
+				# 		obj["vdev_high"].show();
+				# 	} elsif (vdevDotDev < -260) {
+				# 		obj["vdev_dot"].hide();
+				# 		obj["vdev_high"].hide();
+				# 		obj["vdev_low"].show();
+				# 	} else {
+				# 		obj["vdev_low"].hide();
+				# 		obj["vdev_high"].hide();
+				# 		obj["vdev_dot"].show();
+				# 		obj["vdev_dot"].setTranslation(0, vdevDotDev);
+				# 	}
+				# } else {
+				# 	obj["vdev_dot"].hide();
+				# 	obj["vdev_low"].hide();
+				# 	obj["vdev_high"].hide();
+				# }
 			}),
 			props.UpdateManager.FromHashValue("managedSpd", 1, func(val) {
 				if (val) {
@@ -777,32 +780,34 @@ var canvas_pfd = {
 			}),
 			#If the aircraft is in descent phase and managed speed is on then ECOn range is set +- 20 knots from managed speed target
 			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","onSpeedConst"],0.5, func(val) {
-				if (val.fmgcPhase == 4 and (val.managedSpd)) {
-					if (val.onSpeedConst) {
-						ECON_high_addition = 5;
-						ECON_low_subtraction = 10;
-					} else {
-						ECON_high_addition = 20;
-						ECON_low_subtraction = 20;
-					}
-					ECON_high_tranlation = (val.ASItrgt+ECON_high_addition) * -6.6;
-					ECON_low_translation = (val.ASItrgt-ECON_low_subtraction) * -6.6;
-					if (ECON_high_tranlation <= 260 and ECON_high_tranlation >= -260) {
-						obj["ECON_range_high"].show();
-						obj["ECON_range_high"].setTranslation(0, ECON_high_tranlation);
-					} else {
-						obj["ECON_range_high"].hide();
-					}
-					if (ECON_low_translation <= 260 and ECON_low_translation >= -260) {
-						obj["ECON_range_low"].show();
-						obj["ECON_range_low"].setTranslation(0, ECON_low_translation);
-					} else {
-						obj["ECON_range_low"].hide();
-					}
-				} else {
-					obj["ECON_range_high"].hide();
-					obj["ECON_range_low"].hide();
-				}
+				obj["ECON_range_high"].hide();
+				obj["ECON_range_low"].hide();
+				# if (val.fmgcPhase == 4 and (val.managedSpd)) {
+				# 	if (val.onSpeedConst) {
+				# 		ECON_high_addition = 5;
+				# 		ECON_low_subtraction = 10;
+				# 	} else {
+				# 		ECON_high_addition = 20;
+				# 		ECON_low_subtraction = 20;
+				# 	}
+				# 	ECON_high_tranlation = (val.ASItrgt+ECON_high_addition) * -6.6;
+				# 	ECON_low_translation = (val.ASItrgt-ECON_low_subtraction) * -6.6;
+				# 	if (ECON_high_tranlation <= 260 and ECON_high_tranlation >= -260) {
+				# 		obj["ECON_range_high"].show();
+				# 		obj["ECON_range_high"].setTranslation(0, ECON_high_tranlation);
+				# 	} else {
+				# 		obj["ECON_range_high"].hide();
+				# 	}
+				# 	if (ECON_low_translation <= 260 and ECON_low_translation >= -260) {
+				# 		obj["ECON_range_low"].show();
+				# 		obj["ECON_range_low"].setTranslation(0, ECON_low_translation);
+				# 	} else {
+				# 		obj["ECON_range_low"].hide();
+				# 	}
+				# } else {
+				# 	obj["ECON_range_high"].hide();
+				# 	obj["ECON_range_low"].hide();
+				# }
 			}),
 			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
 				if (!val.speedError) {
