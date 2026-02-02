@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 
-<!-- Copyright (c) 2025 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2026 Josh Davidson (Octal450) -->
 <!-- Copyright (c) 2025 Nia -->
 
 <PropertyList>
@@ -254,22 +254,6 @@
 		
 		<!-- Overhead panel -->
 		
-		<object-name>AftCargoIsoBtn1F</object-name>
-		<object-name>AftCargoIsoBtn2O</object-name>
-		<object-name>BlueElecPump1F</object-name>
-		<object-name>BlueElecPump2O</object-name>
-		<object-name>CargoHotAirBtn1F</object-name>
-		<object-name>CargoHotAirBtn2O</object-name>
-		<object-name>CommercialBtn2O</object-name>
-		<object-name>GalleyPwrBtn1F</object-name>
-		<object-name>GalleyPwrBtn2O</object-name>
-		<object-name>FuelXFeedBtn1O</object-name>
-		<object-name>FuelXFeedBtn2O</object-name>
-		<object-name>LFuelTank1Btn1F</object-name>
-		<object-name>LFuelTank1Btn2O</object-name>
-		<object-name>RFuelTank1Btn1F</object-name>
-		<object-name>RFuelTank1Btn2O</object-name>
-		
 		<object-name>OVH_button_labels.092</object-name>
 		<object-name>OVH_button_labels.093</object-name>
 		
@@ -322,15 +306,6 @@
 		
 		<!-- Overhead panel -->
 		
-		<object-name>APUFireAgtBtn1S</object-name>
-		<object-name>APUFireAgtBtn2D</object-name>
-		<object-name>APUGenBtn1F</object-name>
-		<object-name>APUGenBtn2O</object-name>
-		<object-name>BatteryBtn11F</object-name>
-		<object-name>BatteryBtn21F</object-name>
-		<object-name>BusTieBtn2O</object-name>
-		<object-name>ELAC1Btn1F</object-name>
-		<object-name>ELAC1Btn2O</object-name>
 		<object-name>Eng1FireAgt1Btn1S</object-name>
 		<object-name>Eng1FireAgt1Btn2D</object-name>
 		<object-name>Eng2FireAgt1Btn1S</object-name>
@@ -341,14 +316,6 @@
 		<object-name>Eng2FireAgt2Btn2D</object-name>
 		<object-name>Eng1ManStartBtn2O</object-name>
 		<object-name>Eng2ManStartBtn2O</object-name>
-		<object-name>FAC1Btn1F</object-name>
-		<object-name>FAC1Btn2O</object-name>
-		<object-name>Gen1Btn2O</object-name>
-		<object-name>Gen2Btn2O</object-name>
-		<object-name>IDG1Btn1F</object-name>
-		<object-name>IDG2Btn1F</object-name>
-		<object-name>SEC1Btn1F.001</object-name>
-		<object-name>SEC1Btn2O.001</object-name>
 		<object-name>VentBlowBtn1F</object-name>
 		<object-name>VentBlowBtn2O</object-name>
 		<object-name>VentExtractBtn1F</object-name>
@@ -367,52 +334,19 @@
 		</condition>
 	</animation>
 	
-	<animation>
-		<type>select</type>
-		<object-name>BatteryBtn12O</object-name>
-		<condition>
-			<greater-than-equals>
-				<property>systems/electrical/bus/dc-bat</property>
-				<value>25</value>
-			</greater-than-equals>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>select</type>
-		<object-name>BatteryBtn22O</object-name>
-		<condition>
-			<greater-than-equals>
-				<property>systems/electrical/bus/dc-bat</property>
-				<value>25</value>
-			</greater-than-equals>
-		</condition>
-	</animation>
-	
 	<!-- 36LP AC 2 202XP 5VAC transformer -->
 	<animation>
 		<type>select</type>
 		<!-- Overhead panel -->
 		
-		<object-name>ACESSFeedBtn1F</object-name>
-		<object-name>ACESSFeedBtn2A</object-name>
 		<object-name>CFuelTank1Btn1F</object-name>
 		<object-name>CFuelTank1Btn2O</object-name>
-		<object-name>ELAC2Btn1F</object-name>
-		<object-name>ELAC2Btn2O</object-name>
-		<object-name>FAC2Btn1F</object-name>
-		<object-name>FAC2Btn2O</object-name>
 		<object-name>LFuelTank2Btn1F</object-name>
 		<object-name>LFuelTank2Btn2O</object-name>
 		<object-name>PTU21F</object-name>
 		<object-name>PTU22O</object-name>
 		<object-name>RFuelTank2Btn1F</object-name>
 		<object-name>RFuelTank2Btn2O</object-name>
-		<object-name>SEC2Btn1F</object-name>
-		<object-name>SEC2Btn2O</object-name>
-		<object-name>SEC3Btn1F</object-name>
-		<object-name>SEC3Btn2O</object-name>
-		<object-name>ToiletBtn1O</object-name>
 		<object-name>YellowElecPump1F</object-name>
 		<object-name>YellowElecPump2O</object-name>
 		<object-name>YellowEngPump1F</object-name>
@@ -447,18 +381,11 @@
 		
 		<!-- Overhead panel -->
 		
-		<object-name>ADR1Btn1F</object-name>
-		<object-name>ADR1Btn2O</object-name>
-		<object-name>ADR2Btn1F</object-name>
-		<object-name>ADR2Btn2O</object-name>
-		<object-name>ADR3Btn1F</object-name>
-		<object-name>ADR3Btn2O</object-name>
 		<object-name>AftCargoSmkBtn1S</object-name>
 		<object-name>AftCargoSmkBtn2D</object-name>
 		<object-name>CabinFansBtn2O</object-name>
 		<object-name>CFuelTank2Btn1F</object-name>
 		<object-name>CFuelTank2Btn2O</object-name>
-		<object-name>ExtPwrBtn2O</object-name>
 		<object-name>FuelModeBtn1F</object-name>
 		<object-name>FuelModeBtn2O</object-name>
 		<object-name>FwdCargoSmokeBtn1S</object-name>
@@ -467,12 +394,6 @@
 		<object-name>GreenEngPump22O</object-name>
 		<object-name>HotAirBtn1F</object-name>
 		<object-name>HotAirBtn2O</object-name>
-		<object-name>IR1Btn1F</object-name>
-		<object-name>IR1Btn2O</object-name>
-		<object-name>IR2Btn1F</object-name>
-		<object-name>IR2Btn2O</object-name>
-		<object-name>IR3Btn1F</object-name>
-		<object-name>IR3Btn2O</object-name>
 		
 		<object-name>OVH_button_labels.051</object-name>
 		<object-name>OVH_button_labels.055</object-name>
@@ -490,7 +411,8 @@
 	<animation>
 		<type>select</type>
 		<object-name>ExtPwrBtn1A</object-name>
-		<condition>	
+		<condition>
+			<!--propertiy>/controls/indicators/ext-pwr-avail</property-->
 			<or>
 				<and>
 					<or>
@@ -567,12 +489,8 @@
 		
 		<!-- Overhead Panel -->
 		
-		<object-name>AftCargoIsoBtn1F</object-name>
-		<object-name>AftCargoIsoBtn2O</object-name>
 		<object-name>CargoHotAirBtn1F</object-name>
 		<object-name>CargoHotAirBtn2O</object-name>
-		<object-name>CommercialBtn2O</object-name>
-		<object-name>ToiletBtn1O</object-name>
 		<object-name>VentBlowBtn2O</object-name>
 		<object-name>VentExtractBtn1F</object-name>
 		<object-name>VentExtractBtn2O</object-name>
@@ -29037,20 +28955,14 @@
 		<type>select</type>
 		<object-name>IR1Btn1F</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/ir-1-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ir1-fault</property>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>IR1Btn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/ir-1-off</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ir1-off</property>
 		</condition>
 	</animation>
 
@@ -29110,20 +29022,14 @@
 		<type>select</type>
 		<object-name>IR2Btn1F</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/ir-2-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ir2-fault</property>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>IR2Btn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/ir-2-off</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ir2-off</property>
 		</condition>
 	</animation>
 
@@ -29183,20 +29089,14 @@
 		<type>select</type>
 		<object-name>IR3Btn1F</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/ir-3-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ir3-fault</property>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>IR3Btn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/ir-3-off</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ir3-off</property>
 		</condition>
 	</animation>
 
@@ -29205,10 +29105,7 @@
 		<type>select</type>
 		<object-name>IrsOnBatLightOB</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/on-bat</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/irs-on-bat</property>
 		</condition>
 	</animation>
 
@@ -29280,10 +29177,7 @@
 		<type>select</type>
 		<object-name>ADR1Btn1F</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/adr-1-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/adr1-fault</property>
 		</condition>
 	</animation>
 	
@@ -29291,10 +29185,7 @@
 		<type>select</type>
 		<object-name>ADR1Btn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/adr-1-off</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/adr1-off</property>
 		</condition>
 	</animation>
 
@@ -29366,10 +29257,7 @@
 		<type>select</type>
 		<object-name>ADR2Btn1F</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/adr-2-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/adr2-fault</property>
 		</condition>
 	</animation>
 	
@@ -29377,10 +29265,7 @@
 		<type>select</type>
 		<object-name>ADR2Btn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/adr-2-off</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/adr2-off</property>
 		</condition>
 	</animation>
 
@@ -29452,10 +29337,7 @@
 		<type>select</type>
 		<object-name>ADR3Btn1F</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/adr-3-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/adr3-fault</property>
 		</condition>
 	</animation>
 	
@@ -29463,10 +29345,7 @@
 		<type>select</type>
 		<object-name>ADR3Btn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/navigation/adirscp/lights/adr-3-off</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/adr3-off</property>
 		</condition>
 	</animation>
 	
@@ -29648,7 +29527,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.Sound.switch1();</script>
+				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
 		</action>
 		<hovered>
@@ -31075,11 +30954,7 @@
 		<type>select</type>
 		<object-name>APUFireAgtBtn1S</object-name>
 		<condition>
-			<or>
-				<property>controls/apu/fire-btn</property>
-				<property>controls/fire/apu-test-btn</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/apu-fire-agent-squib</property>
 		</condition>
 	</animation>
 
@@ -31087,11 +30962,7 @@
 		<type>select</type>
 		<object-name>APUFireAgtBtn2D</object-name>
 		<condition>
-			<or>
-				<property>systems/fire/apu/disch</property>
-				<property>controls/fire/apu-test-btn</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/apu-fire-agent-disch</property>
 		</condition>
 	</animation>
 
@@ -31916,10 +31787,7 @@
 		<type>select</type>
 		<object-name>BlueElecPump1F</object-name>
 		<condition>
-			<or>
-				<property>systems/hydraulic/lights/blue-elec-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/blue-elec-pump-fault</property>
 		</condition>
 	</animation>
 
@@ -31927,10 +31795,7 @@
 		<type>select</type>
 		<object-name>BlueElecPump2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/hydraulic/switches/blue-elec</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/blue-elec-pump-off</property>
 		</condition>
 	</animation>
 
@@ -32223,13 +32088,7 @@
 		<type>select</type>
 		<object-name>LFuelTank1Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/failures/fuel/left-tank-pump-1</property>
-					<property>controls/fuel/switches/pump-left-1</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-l1-fault</property>
 		</condition>
 	</animation>
 	
@@ -32237,10 +32096,7 @@
 		<type>select</type>
 		<object-name>LFuelTank1Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fuel/switches/pump-left-1</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-l1-off</property>
 		</condition>
 	</animation>
 	
@@ -32575,13 +32431,7 @@
 		<type>select</type>
 		<object-name>FuelXFeedBtn1O</object-name>
 		<condition>
-			<or>
-				<equals>
-					<property>systems/fuel/valves/crossfeed-valve</property>
-					<value>1</value>
-				</equals>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-x-feed-open</property>
 		</condition>
 	</animation>
 	
@@ -32589,10 +32439,7 @@
 		<type>select</type>
 		<object-name>FuelXFeedBtn2O</object-name>
 		<condition>
-			<or>
-				<property>controls/fuel/switches/crossfeed</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-x-feed-on</property>
 		</condition>
 	</animation>
 	
@@ -32751,13 +32598,7 @@
 		<type>select</type>
 		<object-name>RFuelTank1Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/failures/fuel/right-tank-pump-1</property>
-					<property>controls/fuel/switches/pump-right-1</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-r1-fault</property>
 		</condition>
 	</animation>
 	
@@ -32765,10 +32606,7 @@
 		<type>select</type>
 		<object-name>RFuelTank1Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fuel/switches/pump-right-1</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-r1-off</property>
 		</condition>
 	</animation>
 	
@@ -33770,6 +33608,14 @@
 	</animation>
 	
 	<animation>
+		<type>select</type>
+		<object-name>CommercialBtn2O</object-name>
+		<condition>
+			<property>/controls/indicators/commercial-off</property>
+		</condition>
+	</animation>
+	
+	<animation>
 		<type>translate</type>
 		<object-name>CommercialBtn</object-name>
 		<object-name>CommercialBtn2O</object-name>
@@ -33788,13 +33634,7 @@
 		<type>select</type>
 		<object-name>GalleyPwrBtn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/electrical/light/galley-fault</property>
-					<property>controls/electrical/switches/galley</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/galley-fault</property>
 		</condition>
 	</animation>
 
@@ -33802,10 +33642,7 @@
 		<type>select</type>
 		<object-name>GalleyPwrBtn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/electrical/switches/galley</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/galley-off</property>
 		</condition>
 	</animation>
 
@@ -33870,13 +33707,7 @@
 		<type>select</type>
 		<object-name>BatteryBtn11F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/electrical/light/bat-1-fault</property>
-					<property>controls/electrical/switches/bat-1</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/bat1-fault</property>
 		</condition>
 	</animation>
 
@@ -33884,10 +33715,7 @@
 		<type>select</type>
 		<object-name>BatteryBtn12O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/electrical/switches/bat-1</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/bat1-off</property>
 		</condition>
 	</animation>
 
@@ -33952,13 +33780,7 @@
 		<type>select</type>
 		<object-name>BatteryBtn21F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/electrical/light/bat-2-fault</property>
-					<property>controls/electrical/switches/bat-2</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/bat2-fault</property>
 		</condition>
 	</animation>
 
@@ -33966,10 +33788,7 @@
 		<type>select</type>
 		<object-name>BatteryBtn22O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/electrical/switches/bat-2</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/bat2-off</property>
 		</condition>
 	</animation>
 	
@@ -34073,10 +33892,7 @@
 		<type>select</type>
 		<object-name>IDG1Btn1F</object-name>
 		<condition>
-			<or>
-				<property>systems/electrical/light/idg-1-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/idg1-fault</property>
 		</condition>
 	</animation>
 
@@ -34144,13 +33960,7 @@
 		<type>select</type>
 		<object-name>Gen1Btn1F</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>systems/electrical/light/gen-1-fault</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-				<property>/systems/electrical/sources/idg-1/gcu-1-powered</property>
-			</and>
+			<property>/controls/indicators/gen1-fault</property>
 		</condition>
 	</animation>
 
@@ -34158,10 +33968,7 @@
 		<type>select</type>
 		<object-name>Gen1Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/electrical/switches/gen-1</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/gen1-off</property>
 		</condition>
 	</animation>
 
@@ -34238,10 +34045,7 @@
 		<type>select</type>
 		<object-name>ACESSFeedBtn1F</object-name>
 		<condition>
-			<or>
-				<property>systems/electrical/light/ac-ess-feed-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ac-ess-feed-fault</property>
 		</condition>
 	</animation>
 
@@ -34249,10 +34053,7 @@
 		<type>select</type>
 		<object-name>ACESSFeedBtn2A</object-name>
 		<condition>
-			<or>
-				<property>controls/electrical/switches/ac-ess-feed</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ac-ess-feed-alt</property>
 		</condition>
 	</animation>
 
@@ -34320,13 +34121,7 @@
 		<type>select</type>
 		<object-name>APUGenBtn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/electrical/light/apu-fault</property>
-					<property>controls/electrical/switches/apu</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/apu-gen-fault</property>
 		</condition>
 	</animation>
 
@@ -34334,10 +34129,7 @@
 		<type>select</type>
 		<object-name>APUGenBtn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/electrical/switches/apu</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/apu-gen-off</property>
 		</condition>
 	</animation>
 
@@ -34412,10 +34204,7 @@
 		<type>select</type>
 		<object-name>BusTieBtn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/electrical/switches/bus-tie</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/bustie-off</property>
 		</condition>
 	</animation>
 
@@ -34502,16 +34291,7 @@
 		<type>select</type>
 		<object-name>ExtPwrBtn2O</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>systems/electrical/relay/ext-epc/contact-pos</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-				<greater-than-equals>
-					<property>systems/electrical/bus/ac-ess</property>
-					<value>110</value>
-				</greater-than-equals>
-			</and>
+			<property>/controls/indicators/ext-pwr-on</property>
 		</condition>
 	</animation>
 
@@ -34579,13 +34359,7 @@
 		<type>select</type>
 		<object-name>Gen2Btn1F</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>systems/electrical/light/gen-2-fault</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-				<property>/systems/electrical/sources/idg-2/gcu-2-powered</property>
-			</and>
+			<property>/controls/indicators/gen2-fault</property>
 		</condition>
 	</animation>
 
@@ -34593,10 +34367,7 @@
 		<type>select</type>
 		<object-name>Gen2Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/electrical/switches/gen-2</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/gen2-off</property>
 		</condition>
 	</animation>
 	
@@ -34699,10 +34470,7 @@
 		<type>select</type>
 		<object-name>IDG2Btn1F</object-name>
 		<condition>
-			<or>
-				<property>systems/electrical/light/idg-2-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/idg1-fault</property>
 		</condition>
 	</animation>
 	
@@ -34776,13 +34544,7 @@
 		<type>select</type>
 		<object-name>ELAC1Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/fctl/lights/elac1-fault</property>
-					<property>controls/fctl/switches/elac1</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/elac1-fault</property>
 		</condition>
 	</animation>
 
@@ -34790,10 +34552,7 @@
 		<type>select</type>
 		<object-name>ELAC1Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fctl/switches/elac1</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/elac1-off</property>
 		</condition>
 	</animation>
 
@@ -34865,13 +34624,7 @@
 		<type>select</type>
 		<object-name>SEC1Btn1F.001</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/fctl/lights/sec1-fault</property>
-					<property>controls/fctl/switches/sec1</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/sec1-fault</property>
 		</condition>
 	</animation>
 
@@ -34879,10 +34632,7 @@
 		<type>select</type>
 		<object-name>SEC1Btn2O.001</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fctl/switches/sec1</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/sec1-off</property>
 		</condition>
 	</animation>
 
@@ -34954,13 +34704,7 @@
 		<type>select</type>
 		<object-name>FAC1Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/fctl/lights/fac1-fault</property>
-					<property>controls/fctl/switches/fac1</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fac1-fault</property>
 		</condition>
 	</animation>
 
@@ -34968,10 +34712,7 @@
 		<type>select</type>
 		<object-name>FAC1Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fctl/switches/fac1</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fac1-off</property>
 		</condition>
 	</animation>
 
@@ -35043,13 +34784,7 @@
 		<type>select</type>
 		<object-name>ELAC2Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/fctl/lights/elac2-fault</property>
-					<property>controls/fctl/switches/elac2</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/elac2-fault</property>
 		</condition>
 	</animation>
 
@@ -35057,10 +34792,7 @@
 		<type>select</type>
 		<object-name>ELAC2Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fctl/switches/elac2</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/elac2-off</property>
 		</condition>
 	</animation>
 
@@ -35132,13 +34864,7 @@
 		<type>select</type>
 		<object-name>SEC2Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/fctl/lights/sec2-fault</property>
-					<property>controls/fctl/switches/sec2</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/sec2-fault</property>
 		</condition>
 	</animation>
 
@@ -35146,10 +34872,7 @@
 		<type>select</type>
 		<object-name>SEC2Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fctl/switches/sec2</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/sec2-off</property>
 		</condition>
 	</animation>
 
@@ -35221,13 +34944,7 @@
 		<type>select</type>
 		<object-name>SEC3Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/fctl/lights/sec3-fault</property>
-					<property>controls/fctl/switches/sec3</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/sec3-fault</property>
 		</condition>
 	</animation>
 
@@ -35235,10 +34952,7 @@
 		<type>select</type>
 		<object-name>SEC3Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fctl/switches/sec3</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/sec3-off</property>
 		</condition>
 	</animation>
 
@@ -35310,13 +35024,7 @@
 		<type>select</type>
 		<object-name>FAC2Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/fctl/lights/fac2-fault</property>
-					<property>controls/fctl/switches/fac2</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fac2-fault</property>
 		</condition>
 	</animation>
 
@@ -35324,10 +35032,7 @@
 		<type>select</type>
 		<object-name>FAC2Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fctl/switches/fac2</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fac2-off</property>
 		</condition>
 	</animation>
 	
@@ -36273,6 +35978,22 @@
 			<z2-m>0.949416</z2-m>
 		</axis>
 	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>CargoHotAirBtn2O</object-name>
+		<condition>
+			<property>/controls/indicators/cargo-hot-air-off</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>CargoHotAirBtn1F</object-name>
+		<condition>
+			<property>/controls/indicators/cargo-hot-air-fault</property>
+		</condition>
+	</animation>
 	
 	<animation>
 		<type>pick</type>
@@ -36325,6 +36046,22 @@
 			<y2-m>0.187437</y2-m>
 			<z2-m>0.949416</z2-m>
 		</axis>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>AftCargoIsoBtn1F</object-name>
+		<condition>
+			<property>/controls/indicators/aft-cargo-iso-fault</property>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>AftCargoIsoBtn2O</object-name>
+		<condition>
+			<property>/controls/indicators/aft-cargo-iso-off</property>
+		</condition>
 	</animation>
 	
 	<!-- Manual Start -->
@@ -36846,6 +36583,16 @@
 				<property>systems/fadec/control-2/n1-mode-sw</property>
 				<property>controls/switches/annun-test</property>
 			</or>
+		</condition>
+	</animation>
+
+	<!-- Misc Pushbuttons-->
+	
+	<animation>
+		<type>select</type>
+		<object-name>ToiletBtn1O</object-name>
+		<condition>
+			<property>/controls/indicators/toilet-occu</property>
 		</condition>
 	</animation>
 

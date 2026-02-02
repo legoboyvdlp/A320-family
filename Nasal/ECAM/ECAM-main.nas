@@ -1,7 +1,7 @@
 # A3XX ECAM
 # Joshua Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
-# Copyright (c) 2025 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2026 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
 var ap_active = 0;
 var athr_active = 0;

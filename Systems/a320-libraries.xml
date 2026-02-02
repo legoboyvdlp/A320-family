@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- Airbus A320 Libraries -->
-<!-- Copyright (c) 2025 Josh Davidson (Octal450) -->
+<!-- Copyright (c) 2026 Josh Davidson (Octal450) -->
 
 <system name="A320: Libraries">
 	
@@ -42,6 +42,88 @@
 			<input>inertia/weight-lbs</input>
 			<gain>0.45359237</gain>
 		</pure_gain>
+		
+		<fcs_function name="inertia/cg-percent-mac">
+			<function>
+				<product>
+					<quotient>
+						<difference>
+							<product>
+								<property>inertia/cg-x-in</property>
+								<value>0.0254</value> <!-- Inches to meters -->
+							</product>
+							<value>-3.62865</value> <!-- Offset -->
+						</difference>
+						<value>4.1935</value> <!-- MAC length -->
+					</quotient>
+					<value>100</value>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="inertia/zfwcg-x-in">
+			<function>
+				<quotient> <!-- Weighted average -->
+					<sum>
+						<product>
+							<property>inertia/empty-weight-lbs</property>
+							<property>inertia/empty-weight-x-in</property>
+						</product>
+						<product>
+							<property>inertia/pointmass-weight-lbs[0]</property>
+							<property>inertia/pointmass-location-X-inches[0]</property>
+						</product>
+						<product>
+							<property>inertia/pointmass-weight-lbs[1]</property>
+							<property>inertia/pointmass-location-X-inches[1]</property>
+						</product>
+						<product>
+							<property>inertia/pointmass-weight-lbs[2]</property>
+							<property>inertia/pointmass-location-X-inches[2]</property>
+						</product>
+						<product>
+							<property>inertia/pointmass-weight-lbs[3]</property>
+							<property>inertia/pointmass-location-X-inches[3]</property>
+						</product>
+						<product>
+							<property>inertia/pointmass-weight-lbs[4]</property>
+							<property>inertia/pointmass-location-X-inches[4]</property>
+						</product>
+						<product>
+							<property>inertia/pointmass-weight-lbs[5]</property>
+							<property>inertia/pointmass-location-X-inches[5]</property>
+						</product>
+					</sum>
+					<sum>
+						<property>inertia/empty-weight-lbs</property>
+						<property>inertia/pointmass-weight-lbs[0]</property>
+						<property>inertia/pointmass-weight-lbs[1]</property>
+						<property>inertia/pointmass-weight-lbs[2]</property>
+						<property>inertia/pointmass-weight-lbs[3]</property>
+						<property>inertia/pointmass-weight-lbs[4]</property>
+						<property>inertia/pointmass-weight-lbs[5]</property>
+					</sum>
+				</quotient>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="inertia/zfwcg-percent-mac">
+			<function>
+				<product>
+					<quotient>
+						<difference>
+							<product>
+								<property>inertia/zfwcg-x-in</property>
+								<value>0.0254</value> <!-- Inches to meters -->
+							</product>
+							<value>-3.62865</value> <!-- Offset -->
+						</difference>
+						<value>4.1935</value> <!-- MAC length -->
+					</quotient>
+					<value>100</value>
+				</product>
+			</function>
+		</fcs_function>
 	
 	</channel>
 	

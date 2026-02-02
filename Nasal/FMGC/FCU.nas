@@ -1,5 +1,5 @@
 # A3XX FCU
-# Copyright (c) 2025 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
+# Copyright (c) 2026 Josh Davidson (Octal450), Jonathan Redpath (legoboyvdlp)
 
 # Nodes
 var altSetMode = props.globals.getNode("/it-autoflight/config/altitude-dial-mode", 1);
