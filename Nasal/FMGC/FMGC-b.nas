@@ -411,9 +411,9 @@ var ITAF = {
 				Custom.showHdg.setBoolValue(0);
 			}
 		}
-		if (FMGCInternal.phase == 4 or FMGCInternal.phase == 5) {
-			Internal.vdevDot.setValue(me.calculateVdev());
-		}
+		# if (FMGCInternal.phase == 4 or FMGCInternal.phase == 5) {
+		# 	Internal.vdevDot.setValue(me.calculateVdev());
+		# }
 	},
 	slowLoop: func() {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
