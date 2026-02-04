@@ -1,4 +1,5 @@
-var vsAdjustment = 0;
+var idleDescent = 0;
+armDesOn = "False";
 # A3XX FMGC Autopilot
 # Based off IT Autoflight System Controller V4.1.X
 # Copyright (c) 2026 Josh Davidson (Octal450)
@@ -167,7 +168,7 @@ var Output = {
 	lnavArm: props.globals.initNode("/it-autoflight/output/lnav-arm", 0, "BOOL"),
 	locArm: props.globals.initNode("/it-autoflight/output/loc-arm", 0, "BOOL"),
 	thrMode: props.globals.initNode("/it-autoflight/output/thr-mode", 2, "INT"),
-	showThrMode: props.globals.initNode("/it-autoflight/output/show-thr-mode", 2, "INT"),
+	# showThrMode: props.globals.initNode("/it-autoflight/output/show-thr-mode", 2, "INT"),
 	vert: props.globals.initNode("/it-autoflight/output/vert", 7, "INT"),
 	
 	vertTemp: 7,
@@ -243,7 +244,7 @@ var ITAF = {
 		Output.locArm.setBoolValue(0);
 		Output.gsArm.setBoolValue(0);
 		Output.thrMode.setValue(0);
-		Output.showThrMode.setValue(0);
+		# Output.showThrMode.setValue(0);
 		Output.lat.setValue(9);
 		Output.vert.setValue(9);
 		Internal.minVs.setValue(-500);
@@ -375,8 +376,8 @@ var ITAF = {
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
 					if (vertTemp == 8 and Internal.altManaged.getBoolValue() and armDesOn == "False") { # If we are in V/S and managed alt, switch to ALT CAP
-						# armDesOn = "True";
-						# armDes();
+						armDesOn = "True";
+						armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
 					}
@@ -385,8 +386,8 @@ var ITAF = {
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
 					if (vertTemp == 8 and Internal.altManaged.getBoolValue() and armDesOn == "False") { # If we are in V/S and managed alt, switch to ALT CAP
-						# armDesOn = "True";
-						# armDes();
+						armDesOn = "True";
+						armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
 					}
@@ -419,9 +420,9 @@ var ITAF = {
 				Custom.showHdg.setBoolValue(0);
 			}
 		}
-		# if (FMGCInternal.phase == 4 or FMGCInternal.phase == 5) {
-		# 	Internal.vdevDot.setValue(me.calculateVdev());
-		# }
+		if (FMGCInternal.phase == 4 or FMGCInternal.phase == 5) {
+			Internal.vdevDot.setValue(me.calculateVdev());
+		}
 	},
 	slowLoop: func() {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
@@ -650,6 +651,44 @@ var ITAF = {
 			Custom.showHdg.setBoolValue(1);
 		} 
 	},
+
+	calculateVdev: func() {
+		output = fmgc.flightPlanController.getDesAltConst();
+		nextManagedAlt = output[0];
+		distance = output[1];
+		deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+		print( "alt " ~ nextManagedAlt ~ " deltaalt: " ~ deltaAlt ~ " distance: " ~ distance);
+		properDeltaAlt = distance * 318;
+		difference = deltaAlt - properDeltaAlt;
+		return difference;
+
+	},
+
+	getVs: func(distance, deltaAlt) {
+		isGeo = 0;
+		if (isGeo) {
+			#will be added later
+		} else {
+			properDeltaAlt = distance * 318;
+			vs = Internal.targetFpmFlch.getValue();
+			idleDescent = 1;
+			if (deltaAlt >= properDeltaAlt) {
+				
+				
+			} else if (vs < -1000) {
+				vs = -1000;
+				idleDescent = 0;
+			}
+		}
+		return vs;
+	},
+
+	setVs: func(vs) {
+		Internal.vsTemp = vs;
+		Input.vs.setValue(vs);
+		Input.vsAbs.setValue(abs(vs));
+	},
+
 	setVertMode: func(n) {
 		Input.altDiff = Input.alt.getValue() - Position.indicatedAltitudeFt.getValue();
 		if (n == 0) { # ALT HLD
@@ -742,6 +781,8 @@ var ITAF = {
 				Internal.managedModeOn.setBoolValue(1);
 				managedClb();
 			} else {
+				Internal.managedModeOn.setBoolValue(1);
+				managedDes();
 			}
 		} else if (n == 9) { # NONE
 			# managedDeson = "False";
@@ -758,12 +799,12 @@ var ITAF = {
 		if (Output.athr.getBoolValue() and Output.vertTemp != 7 and (Output.ap1.getBoolValue() or Output.ap2.getBoolValue()) and Position.gearAglFt.getValue() <= 30 and (Output.vertTemp == 2 or Output.vertTemp == 6)) {
 			# Manual says 40 feet - but video reference shows 30!
 			Output.thrMode.setValue(1);
-			Output.showThrMode.setValue(1);
+			# Output.showThrMode.setValue(1);
 			Text.spd.setValue("RETARD");
 		} else if (Output.vertTemp == 4) {
 			if (Internal.alt.getValue() >= Position.indicatedAltitudeFt.getValue()) {
 				Output.thrMode.setValue(2);
-				Output.showThrMode.setValue(2);
+				# Output.showThrMode.setValue(2);
 				Text.spd.setValue("PITCH");
 				if (Internal.flchActive and Text.vert.getValue() != "SPD CLB" and Internal.managedModeOn.getValue() == 0) {
 					me.updateVertText("SPD CLB");
@@ -771,7 +812,7 @@ var ITAF = {
 			} else {
 				if (Internal.managedModeOn.getValue() == 0) {
 					Output.thrMode.setValue(1);
-					Output.showThrMode.setValue(1);
+					# Output.showThrMode.setValue(1);
 					Text.spd.setValue("PITCH");
 				}
 				if (Internal.flchActive and Text.vert.getValue() != "SPD DES" and Internal.managedModeOn.getValue() == 0) {
@@ -780,17 +821,15 @@ var ITAF = {
 			}
 		} else if (Output.vertTemp == 7) {
 			Output.thrMode.setValue(2);
-			Output.showThrMode.setValue(2);
+			# Output.showThrMode.setValue(2);
 			Text.spd.setValue("PITCH");
 		} else if (Output.vertTemp == 8 and idleDescent == 1) {
-			print("yesssss");
-
 			Output.thrMode.setValue(1);
-			Output.showThrMode.setValue(1);
+			# Output.showThrMode.setValue(1);
 			Text.spd.setValue("PITCH");
 		} else {
 			Output.thrMode.setValue(0);
-			Output.showThrMode.setValue(0);
+			# Output.showThrMode.setValue(0);
 			Text.spd.setValue("THRUST");
 		}
 	},
@@ -818,7 +857,6 @@ var ITAF = {
 	},
 	activateGs: func() {
 		if (Output.vert.getValue() != 2) {
-			managedDeson = "False";
 			armDesOn = "False";
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
@@ -1061,14 +1099,42 @@ var ITAF = {
 	},
 };
 
+
+var managedDes = func {
+	output = fmgc.flightPlanController.getDesAltConst();
+	nextManagedAlt = output[0];
+	distance = output[1];
+	
+
+	# nextManagedAlt = 20000;
+	next_selected_alt = Input.alt.getValue();
+
+	if (nextManagedAlt > next_selected_alt) {
+		alt = nextManagedAlt;
+		Internal.altManaged.setValue(1);
+	} else {
+		alt = next_selected_alt;
+		Internal.altManaged.setValue(0);
+	}
+	deltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
+
+	if (deltaAlt >= 500) {
+		Internal.alt.setValue(alt);
+		ITAF.setVs(ITAF.getVs(distance, deltaAlt));
+		Output.vert.setValue(8);
+		ITAF.updateThrustMode();
+		ITAF.updateVertText("DES");
+		settimer(managedDes, 2);
+	}
+};
 #To be called when engages into CLB mode, uses the same mechanisism as OP CLB,
 # only changing the target altitude and the mode shown on the FMA
 var managedClb = func {
-	next_managed_alt = fmgc.flightPlanController.getClbAltConst()[0];
+	nextManagedAlt = fmgc.flightPlanController.getClbAltConst()[0];
 	next_selected_alt = Input.alt.getValue();
-	# print("next managed alt is " ~ next_managed_alt ~ "next selected alt is " ~ next_selected_alt);
-	if (next_managed_alt < next_selected_alt) {
-		alt = next_managed_alt;
+	# print("next managed alt is " ~ nextManagedAlt ~ "next selected alt is " ~ next_selected_alt);
+	if (nextManagedAlt < next_selected_alt) {
+		alt = nextManagedAlt;
 		Internal.altManaged.setValue(1);
 	} else {
 		alt = next_selected_alt;
@@ -1082,7 +1148,7 @@ var managedClb = func {
 # To be called when in altitude acquire mode, 
 # when the aircraft passes that waypoint, the CLB mode should resume
 var armClb = func {
-	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 800) {
+	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300) {
 		ITAF.updateVertText("CLB");
 		ITAF.setVertMode(8); # CLB mode
 	} else {
@@ -1092,7 +1158,16 @@ var armClb = func {
 
 # To be called when in altitude acquire mode,
 # when the aircraft passes that waypoint the DES mode should resume
-
+var armDes = func {
+	if (fmgc.flightPlanController.getDesAltConst() == nil or abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300) {
+		ITAF.updateVertText("DES");
+		ITAF.setVertMode(8); # DES mode
+		armDesOn = "False";
+	} else {
+		print("armDes ");
+		settimer(armDes, 2);
+	}
+};
 
 setlistener(Gear.wow1, func(val) {
 	if (!val.getBoolValue() and FPLN.currentWP.getValue() == 0) {

@@ -150,7 +150,7 @@ var loopFMA = maketimer(0.05, func() {
 		vert = Output.vert.getValue();
 		if (vert == 4 or vert >= 6 or vert <= 8) {
 			if (Output.ap1.getBoolValue() or Output.ap2.getBoolValue() or Output.fd1.getBoolValue() or Output.fd2.getBoolValue()) {
-				thr = Output.showThrMode.getValue();
+				thr = Output.thrMode.getValue();
 				if (thr == 0) {
 					setFmaText("throttleMode", Input.ktsMach.getValue() ? "MACH" : "SPEED", throttleModeCallback, "throttleModeTime");
 				} else if (thr == 1) {
