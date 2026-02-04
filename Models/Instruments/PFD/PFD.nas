@@ -477,6 +477,31 @@ var canvas_pfd = {
 					obj["FMA_pitcharm2"].setColor(0.0901,0.6039,0.7176);
 				}
 			}),
+			# Control the movement of the vertical deviation dot
+			props.UpdateManager.FromHashList(["fmgcPhase","vdevDot"], 1, func(val) {
+				if (val.fmgcPhase == 4 or val.fmgcPhase == 5) {
+					obj["vdev_dot"].show();
+					vdevDotDev = val.vdevDot * 0.5;
+					if (vdevDotDev > 260) {
+						obj["vdev_dot"].hide();
+						obj["vdev_low"].hide();
+						obj["vdev_high"].show();
+					} elsif (vdevDotDev < -260) {
+						obj["vdev_dot"].hide();
+						obj["vdev_high"].hide();
+						obj["vdev_low"].show();
+					} else {
+						obj["vdev_low"].hide();
+						obj["vdev_high"].hide();
+						obj["vdev_dot"].show();
+						obj["vdev_dot"].setTranslation(0, vdevDotDev);
+					}
+				} else {
+					obj["vdev_dot"].hide();
+					obj["vdev_low"].hide();
+					obj["vdev_high"].hide();
+				}
+			}),
 			props.UpdateManager.FromHashValue("managedSpd", 1, func(val) {
 				if (val) {
 					obj["ASI_target"].setColor(0.6901,0.3333,0.7450);

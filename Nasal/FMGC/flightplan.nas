@@ -771,6 +771,28 @@ var flightPlanController = {
 
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
+
+
+	getDesAltConst: func() {
+		if (me.currentToWptIndex.getValue() < 0) {
+			return;
+		}
+		distanceToCstr = 0;
+		print("current waypoint index is " ~ me.currentToWptIndex.getValue());
+		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+			if (i == me.currentToWptIndex.getValue()) {
+				distanceToCstr += me.distToWpt.getValue();
+			} else {
+				distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
+			}
+			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and (me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach")) {
+				# print("clb alt const is " ~ int(me.flightplans[2].getWP(i).alt_cstr));
+				return [me.flightplans[2].getWP(i).alt_cstr, distanceToCstr];
+			}
+		}
+		return [1000000000000000,0];
+	},
+
 	# Get the next altitude constraint that is either at, or at or below
 	getClbAltConst: func() {
 		if (me.currentToWptIndex.getValue() < 0) {
