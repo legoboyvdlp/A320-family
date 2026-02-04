@@ -1159,12 +1159,13 @@ var armClb = func {
 # To be called when in altitude acquire mode,
 # when the aircraft passes that waypoint the DES mode should resume
 var armDes = func {
-	if (fmgc.flightPlanController.getDesAltConst() == nil or abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300) {
+	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300)) {
 		ITAF.updateVertText("DES");
 		ITAF.setVertMode(8); # DES mode
 		armDesOn = "False";
 	} else {
 		print("armDes ");
+		print(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue());
 		settimer(armDes, 2);
 	}
 };

@@ -778,13 +778,18 @@ var flightPlanController = {
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
 
+	getExtrapolatedDescentAltitude: func(distanceToCstr, vs) {
+		deltaAlt = vs * distanceToCstr * 60 / pts.Velocities.groundspeedKt.getValue();
+		currentAlt = Position.indicatedAltitudeFt.getValue();
+		altAtCstr = currentAlt + deltaAlt;
+		return altAtCstr;
+	},
 
 	getDesAltConst: func() {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
 		distanceToCstr = 0;
-		print("current waypoint index is " ~ me.currentToWptIndex.getValue());
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			if (i == me.currentToWptIndex.getValue()) {
 				distanceToCstr += me.distToWpt.getValue();
@@ -794,6 +799,11 @@ var flightPlanController = {
 			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and (me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach")) {
 				# print("clb alt const is " ~ int(me.flightplans[2].getWP(i).alt_cstr));
 				return [me.flightplans[2].getWP(i).alt_cstr, distanceToCstr];
+			} else if (me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and (me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach")) {
+				altCstr = me.flightplans[2].getWP(i).alt_cstr;
+				if (altCstr > me.getExtrapolatedDescentAltitude(distanceToCstr, -1000)) {
+					return [altCstr, distanceToCstr];
+				}
 			}
 		}
 		return [1000000000000000,0];
