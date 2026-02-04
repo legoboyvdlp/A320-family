@@ -657,7 +657,6 @@ var ITAF = {
 		nextManagedAlt = output[0];
 		distance = output[1];
 		deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
-		print( "alt " ~ nextManagedAlt ~ " deltaalt: " ~ deltaAlt ~ " distance: " ~ distance);
 		properDeltaAlt = distance * 318;
 		difference = deltaAlt - properDeltaAlt;
 		return difference;
@@ -671,13 +670,11 @@ var ITAF = {
 		} else {
 			properDeltaAlt = distance * 318;
 			vs = Internal.targetFpmFlch.getValue();
-			idleDescent = 1;
-			if (deltaAlt >= properDeltaAlt) {
-				
-				
-			} else if (vs < -1000) {
+			if (deltaAlt < properDeltaAlt and vs < -1000) {
 				vs = -1000;
 				idleDescent = 0;
+			} else if (vs < -1000) {
+				idleDescent = 1;
 			}
 		}
 		return vs;
@@ -1106,7 +1103,6 @@ var managedDes = func {
 	distance = output[1];
 	
 
-	# nextManagedAlt = 20000;
 	next_selected_alt = Input.alt.getValue();
 
 	if (nextManagedAlt > next_selected_alt) {
@@ -1118,7 +1114,7 @@ var managedDes = func {
 	}
 	deltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
 
-	if (deltaAlt >= 500) {
+	if (deltaAlt >= 300) {
 		Internal.alt.setValue(alt);
 		ITAF.setVs(ITAF.getVs(distance, deltaAlt));
 		Output.vert.setValue(8);
