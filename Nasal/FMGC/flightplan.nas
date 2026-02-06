@@ -796,9 +796,18 @@ var flightPlanController = {
 			} else {
 				distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
 			}
-			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and (me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach")) {
-				# print("clb alt const is " ~ int(me.flightplans[2].getWP(i).alt_cstr));
-				return [me.flightplans[2].getWP(i).alt_cstr, distanceToCstr];
+			# print("wp name is " ~ me.flightplans[2].getWP(i).wp_name);
+			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and (me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach" or me.flightplans[2].getWP(i).wp_type == "runway")) {
+				# print("des alt const is ");
+				# print(int(me.flightplans[2].getWP(i).alt_cstr));
+				# print(me.flightplans[2].getWP(i).alt_cstr, me.flightplans[2].getWP(i).alt_cstr_type);
+				if (me.flightplans[2].getWP(i).wp_type == "runway") {
+					runwayInfo = geodinfo(me.flightplans[2].getWP(i).lat, me.flightplans[2].getWP(i).lon);
+					return [runwayInfo[0] * 3.28084, distanceToCstr];
+				} else if (me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and (me.flightplans[2].getWP(i).alt_cstr_type == "at" or me.flightplans[2].getWP(i).alt_cstr_type == "between" or (me.flightplans[2].getWP(i).alt_cstr_type == "below" and (Position.indicatedAltitudeFt.getValue() - me.flightplans[2].getWP(i).alt_cstr >= -200)))) {
+					
+					return [me.flightplans[2].getWP(i).alt_cstr, distanceToCstr];
+				}
 			} else if (me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and (me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach")) {
 				altCstr = me.flightplans[2].getWP(i).alt_cstr;
 				if (altCstr > me.getExtrapolatedDescentAltitude(distanceToCstr, -1000)) {
