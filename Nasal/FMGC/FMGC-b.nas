@@ -643,10 +643,22 @@ var ITAF = {
 		} 
 	},
 
+	calculateSpeedDistance: func() {
+		speed = Velocities.indicatedAirspeedKt.getValue();
+		distance = (speed - 200)/10;
+		if (distance < 0) {
+			distance = 0;
+		}
+		return distance;
+	},
+
 	calculateVdev: func() {
 		output = fmgc.flightPlanController.getDesAltConst();
 		nextManagedAlt = output[0];
-		distance = output[1];
+		distance = output[1] - me.calculateSpeedDistance();
+		if (distance < 0) {
+			distance = 0;
+		}
 		deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
 		properDeltaAlt = distance * 318;
 		difference = deltaAlt - properDeltaAlt;
@@ -659,12 +671,15 @@ var ITAF = {
 		if (isGeo) {
 			#will be added later
 		} else {
-			properDeltaAlt = distance * 318;
+			properDeltaAlt = (distance - me.calculateSpeedDistance()) * 318 ;
+			if (properDeltaAlt < 0) {
+				properDeltaAlt = 0;
+			}
 			vs = Internal.targetFpmFlch.getValue();
 			if (deltaAlt < properDeltaAlt and vs < -1000) {
 				vs = -1000;
 				idleDescent = 0;
-			} else if (vs < -1000) {
+			} else {
 				idleDescent = 1;
 			}
 		}
@@ -770,6 +785,7 @@ var ITAF = {
 				managedClb();
 			} else {
 				Internal.managedModeOn.setBoolValue(1);
+				ITAF.updateVertText("DES");
 				managedDes();
 			}
 		} else if (n == 9) { # NONE
@@ -969,7 +985,7 @@ var ITAF = {
 	},
 	syncVs: func() {
 		Internal.vsTemp = math.clamp(math.round(Internal.vs.getValue(), 100), -6000, 6000);
-		Input.vs.setValue(Internal.vsTemp);
+		Input.vs.setValue(Internal.vsTemp);	
 		Input.vsAbs.setValue(abs(Internal.vsTemp));
 		fmgc.Custom.Output.vsFCU.setValue(left(sprintf("%+05.0f", Internal.vsTemp), 3));
 	},
@@ -1081,23 +1097,23 @@ var managedDes = func {
 	distance = output[1];
 	
 
-	next_selected_alt = Input.alt.getValue();
+	nextSelectedAlt = Input.alt.getValue();
 
-	if (nextManagedAlt > next_selected_alt) {
+	if (nextManagedAlt > nextSelectedAlt) {
 		alt = nextManagedAlt;
 		Internal.altManaged.setValue(1);
 	} else {
-		alt = next_selected_alt;
+		alt = nextSelectedAlt;
 		Internal.altManaged.setValue(0);
 	}
-	deltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
+	deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
 
-	if (deltaAlt >= 300) {
+	if (deltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
 		ITAF.setVs(ITAF.getVs(distance, deltaAlt));
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
-		ITAF.updateVertText("DES");
+		
 		settimer(managedDes, 2);
 	}
 };
@@ -1105,13 +1121,13 @@ var managedDes = func {
 # only changing the target altitude and the mode shown on the FMA
 var managedClb = func {
 	nextManagedAlt = fmgc.flightPlanController.getClbAltConst()[0];
-	next_selected_alt = Input.alt.getValue();
-	# print("next managed alt is " ~ nextManagedAlt ~ "next selected alt is " ~ next_selected_alt);
-	if (nextManagedAlt < next_selected_alt) {
+	nextSelectedAlt = Input.alt.getValue();
+	# print("next managed alt is " ~ nextManagedAlt ~ "next selected alt is " ~ nextSelectedAlt);
+	if (nextManagedAlt < nextSelectedAlt) {
 		alt = nextManagedAlt;
 		Internal.altManaged.setValue(1);
 	} else {
-		alt = next_selected_alt;
+		alt = nextSelectedAlt;
 		Internal.altManaged.setValue(0);
 	}
 	Internal.alt.setValue(alt);
@@ -1138,7 +1154,6 @@ var armDes = func {
 		ITAF.setVertMode(8); # DES mode
 		armDesOn = "False";
 	} else {
-		print("armDes ");
 		print(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue());
 		settimer(armDes, 2);
 	}
