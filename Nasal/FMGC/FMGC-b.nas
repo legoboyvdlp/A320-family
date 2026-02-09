@@ -367,7 +367,6 @@ var ITAF = {
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
 					if (vertTemp == 8 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
-						# armDesOn = "True";
 						armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
@@ -377,7 +376,6 @@ var ITAF = {
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
 					if (vertTemp == 8 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
-						# armDesOn = "True";
 						armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
@@ -1153,7 +1151,6 @@ var armDes = func {
 	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300)) {
 		ITAF.updateVertText("DES");
 		ITAF.setVertMode(8); # DES mode
-		# armDesOn = "False";
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
 		# print(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue());
 		settimer(armDes, 2);
