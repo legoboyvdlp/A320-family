@@ -67,16 +67,10 @@ var flightPlanController = {
 		me.lvlOffPoint = nil;
 		setprop("/autopilot/route-manager/vnav/ec/latitude-deg", 0); # necessary to prevent canvas glitching out because properties don't exist
 		setprop("/autopilot/route-manager/vnav/ed/latitude-deg", 0); 
-		# setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", 0);
-		# setprop("/autopilot/route-manager/vnav/ip/latitude-deg", 0);
 		setprop("/autopilot/route-manager/vnav/ec/longitude-deg", 0); 
 		setprop("/autopilot/route-manager/vnav/ed/longitude-deg", 0);
-		# setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg", 0);
-		# setprop("/autopilot/route-manager/vnav/ip/longitude-deg", 0);  
 		setprop("/autopilot/route-manager/vnav/ec/show", 0); 
 		setprop("/autopilot/route-manager/vnav/ed/show", 0); 
-		# setprop("/autopilot/route-manager/vnav/spdchng/show", 0); 
-		# setprop("/autopilot/route-manager/vnav/ip/show", 0); 
 		me.flightplans[2].activate();
 	},
 	

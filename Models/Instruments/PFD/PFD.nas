@@ -477,12 +477,6 @@ var canvas_pfd = {
 					obj["FMA_pitcharm2"].setColor(0.0901,0.6039,0.7176);
 				}
 			}),
-			# Control the movement of the vertical deviation dot
-			# props.UpdateManager.FromHashList(["fmgcPhase","vdevDot"], 1, func(val) {
-			# 	obj["vdev_dot"].hide();
-			# 	obj["vdev_low"].hide();
-			# 	obj["vdev_high"].hide();
-			# }),
 			props.UpdateManager.FromHashValue("managedSpd", 1, func(val) {
 				if (val) {
 					obj["ASI_target"].setColor(0.6901,0.3333,0.7450);
@@ -498,23 +492,6 @@ var canvas_pfd = {
 					obj["ASI_decimal_DN"].setColor(0.0901,0.6039,0.7176);
 				}
 			}),
-			# If the aircraft passes the top of descent but is still at the cruising altitude and moredrag is not already announced
-			# then announce DECELERATE on the FMA
-			# props.UpdateManager.FromHashList(["passTOD","altitude","moreDrag"], 1, func(val) {
-			# 	if (val.passTOD and (abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude) < 500) and (!val.moreDrag)) {
-			# 		obj["FMA_ctr_msg-10"].show();
-			# 	} else {
-			# 		obj["FMA_ctr_msg-10"].hide();
-			# 	}
-			# }),
-			# If FMGC is in descent phase and moreDrag is true (set in fmgc.ITAF.getVs()) then announce MORE DRAG on the FMA
-			# props.UpdateManager.FromHashList(["moreDrag","fmgcPhase"], 1, func(val) {
-			# 	if ((val.moreDrag) and( val.fmgcPhase == 4)) {
-			# 		obj["FMA_ctr_msg-11"].show();
-			# 	} else {
-			# 		obj["FMA_ctr_msg-11"].hide();
-			# 	}
-			# }),
 			props.UpdateManager.FromHashValue("dmeDistance", 0.025, func(val) {
 				if (val < 19.95) {
 					obj["dme_dist"].setText(sprintf("%1.1f", val));
@@ -756,11 +733,6 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashValue("ASItrgt", 0.1, func(val) {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
 			}),
-			#If the aircraft is in descent phase and managed speed is on then ECOn range is set +- 20 knots from managed speed target
-			# props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","onSpeedConst"],0.5, func(val) {
-			# 	obj["ECON_range_high"].hide();
-			# 	obj["ECON_range_low"].hide();
-			# }),
 			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
 				if (!val.speedError) {
 					if (abs(val.ASItrgtdiff) <= 42) {
@@ -2246,10 +2218,6 @@ var input = {
 	du6Lgt: "/controls/lighting/DU/du6",
 	attSwitch: "/controls/navigation/switching/att-hdg",
 	managedAlt: "/it-autoflight/internal/mng-alt",
-	# vdevDot: "/it-autoflight/internal/vdev-dot",
-	# passTOD: "/it-autoflight/internal/pass-tod",
-	# moreDrag: "/it-autoflight/internal/more-drag",
-	# onSpeedConst: "/it-autoflight/internal/on-speed-const",
 	
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",

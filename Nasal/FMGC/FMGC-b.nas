@@ -161,7 +161,6 @@ var Output = {
 	lnavArm: props.globals.initNode("/it-autoflight/output/lnav-arm", 0, "BOOL"),
 	locArm: props.globals.initNode("/it-autoflight/output/loc-arm", 0, "BOOL"),
 	thrMode: props.globals.initNode("/it-autoflight/output/thr-mode", 2, "INT"),
-	# showThrMode: props.globals.initNode("/it-autoflight/output/show-thr-mode", 2, "INT"),
 	vert: props.globals.initNode("/it-autoflight/output/vert", 7, "INT"),
 	
 	vertTemp: 7,
@@ -237,7 +236,6 @@ var ITAF = {
 		Output.locArm.setBoolValue(0);
 		Output.gsArm.setBoolValue(0);
 		Output.thrMode.setValue(0);
-		# Output.showThrMode.setValue(0);
 		Output.lat.setValue(9);
 		Output.vert.setValue(9);
 		Internal.minVs.setValue(-500);
@@ -747,12 +745,10 @@ var ITAF = {
 		if (Output.athr.getBoolValue() and Output.vertTemp != 7 and (Output.ap1.getBoolValue() or Output.ap2.getBoolValue()) and Position.gearAglFt.getValue() <= 30 and (Output.vertTemp == 2 or Output.vertTemp == 6)) {
 			# Manual says 40 feet - but video reference shows 30!
 			Output.thrMode.setValue(1);
-			# Output.showThrMode.setValue(1);
 			Text.spd.setValue("RETARD");
 		} else if (Output.vertTemp == 4) {
 			if (Internal.alt.getValue() >= Position.indicatedAltitudeFt.getValue()) {
 				Output.thrMode.setValue(2);
-				# Output.showThrMode.setValue(2);
 				Text.spd.setValue("PITCH");
 				if (Internal.flchActive and Text.vert.getValue() != "SPD CLB" and Internal.managedModeOn.getValue() == 0) {
 					me.updateVertText("SPD CLB");
@@ -760,7 +756,6 @@ var ITAF = {
 			} else {
 				if (Internal.managedModeOn.getValue() == 0) {
 					Output.thrMode.setValue(1);
-					# Output.showThrMode.setValue(1);
 					Text.spd.setValue("PITCH");
 				}
 				if (Internal.flchActive and Text.vert.getValue() != "SPD DES" and Internal.managedModeOn.getValue() == 0) {
@@ -769,11 +764,9 @@ var ITAF = {
 			}
 		} else if (Output.vertTemp == 7) {
 			Output.thrMode.setValue(2);
-			# Output.showThrMode.setValue(2);
 			Text.spd.setValue("PITCH");
 		} else {
 			Output.thrMode.setValue(0);
-			# Output.showThrMode.setValue(0);
 			Text.spd.setValue("THRUST");
 		}
 	},

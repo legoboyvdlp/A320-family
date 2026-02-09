@@ -986,7 +986,6 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
 				# Speed is maximum of greendot / climb speed limit
 				FMGCInternal.mngKtsMach = 0;
-				Internal.onSpeedConst.setBoolValue(0);
 				if (constraintSpeed != nil and constraintSpeed != 0) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.vls_min, 999);
 				} else {

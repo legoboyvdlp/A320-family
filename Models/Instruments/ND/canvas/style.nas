@@ -219,7 +219,7 @@ canvas.NDStyles["Airbus"] = {
 					ed: get_local_path("res/airbus_ed.svg"),
 					sc: get_local_path("res/airbus_sc.svg"),
 					sd: get_local_path("res/airbus_sd.svg"),
-					td: get_local_path("res/airbus_td.svg"),
+					td: get_local_path("res/airbus_td.svg")
 				},
 				listen: [
 					"fplan_active",
