@@ -275,8 +275,6 @@ var UpdateFma = {
 	vert: func() {
 		vertText = Text.vert.getValue();
 		if (vertText == "ALT HLD" or vertText == "ALT CAP") {
-			# altvert() call deals with this case
-			# print("hit alt cap");
 			if (Internal.altManaged.getBoolValue() == 0) {
 				setFmaText("pitchMode2Armed", " ", genericCallback, "pitchMode2ArmedTime");
 			} else {
