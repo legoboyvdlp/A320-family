@@ -150,7 +150,7 @@ var loopFMA = maketimer(0.05, func() {
 		vert = Output.vert.getValue();
 		if (vert == 4 or vert >= 6 or vert <= 8) {
 			if (Output.ap1.getBoolValue() or Output.ap2.getBoolValue() or Output.fd1.getBoolValue() or Output.fd2.getBoolValue()) {
-				thr = Output.showThrMode.getValue();
+				thr = Output.thrMode.getValue();
 				if (thr == 0) {
 					setFmaText("throttleMode", Input.ktsMach.getValue() ? "MACH" : "SPEED", throttleModeCallback, "throttleModeTime");
 				} else if (thr == 1) {
@@ -281,7 +281,7 @@ var UpdateFma = {
 				setFmaText("pitchMode2Armed", " ", genericCallback, "pitchMode2ArmedTime");
 			} else {
 				if (fmgc.FMGCInternal.phase >= 3 and fmgc.FMGCInternal.phase != 6) {
-					setFmaText("pitchMode2Armed", "DES", genericCallback, "pitchMode2ArmedTime");
+					# setFmaText("pitchMode2Armed", "DES", genericCallback, "pitchMode2ArmedTime");
 				} else {
 					setFmaText("pitchMode2Armed", "CLB", genericCallback, "pitchMode2ArmedTime");
 				}
@@ -306,8 +306,8 @@ var UpdateFma = {
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
 		} else if (vertText == "DES") {
 			# print("to set Fma text to DES");
-			setFmaText("pitchMode", "DES", genericCallback, "pitchModeTime");
-			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
+			# setFmaText("pitchMode", "DES", genericCallback, "pitchModeTime");
+			# setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
 		} else if (vertText == "FPA") {
 			setFmaText("pitchMode", "FPA", genericCallback, "pitchModeTime");
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");

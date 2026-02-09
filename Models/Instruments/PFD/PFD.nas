@@ -478,33 +478,11 @@ var canvas_pfd = {
 				}
 			}),
 			# Control the movement of the vertical deviation dot
-			props.UpdateManager.FromHashList(["fmgcPhase","vdevDot"], 1, func(val) {
-				obj["vdev_dot"].hide();
-				obj["vdev_low"].hide();
-				obj["vdev_high"].hide();
-				# if (val.fmgcPhase == 4 or val.fmgcPhase == 5) {
-					# obj["vdev_dot"].show();
-				# 	vdevDotDev = val.vdevDot * 0.5;
-				# 	if (vdevDotDev > 260) {
-				# 		obj["vdev_dot"].hide();
-				# 		obj["vdev_low"].hide();
-				# 		obj["vdev_high"].show();
-				# 	} elsif (vdevDotDev < -260) {
-				# 		obj["vdev_dot"].hide();
-				# 		obj["vdev_high"].hide();
-				# 		obj["vdev_low"].show();
-				# 	} else {
-				# 		obj["vdev_low"].hide();
-				# 		obj["vdev_high"].hide();
-				# 		obj["vdev_dot"].show();
-				# 		obj["vdev_dot"].setTranslation(0, vdevDotDev);
-				# 	}
-				# } else {
-				# 	obj["vdev_dot"].hide();
-				# 	obj["vdev_low"].hide();
-				# 	obj["vdev_high"].hide();
-				# }
-			}),
+			# props.UpdateManager.FromHashList(["fmgcPhase","vdevDot"], 1, func(val) {
+			# 	obj["vdev_dot"].hide();
+			# 	obj["vdev_low"].hide();
+			# 	obj["vdev_high"].hide();
+			# }),
 			props.UpdateManager.FromHashValue("managedSpd", 1, func(val) {
 				if (val) {
 					obj["ASI_target"].setColor(0.6901,0.3333,0.7450);
@@ -522,21 +500,21 @@ var canvas_pfd = {
 			}),
 			# If the aircraft passes the top of descent but is still at the cruising altitude and moredrag is not already announced
 			# then announce DECELERATE on the FMA
-			props.UpdateManager.FromHashList(["passTOD","altitude","moreDrag"], 1, func(val) {
-				if (val.passTOD and (abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude) < 500) and (!val.moreDrag)) {
-					obj["FMA_ctr_msg-10"].show();
-				} else {
-					obj["FMA_ctr_msg-10"].hide();
-				}
-			}),
+			# props.UpdateManager.FromHashList(["passTOD","altitude","moreDrag"], 1, func(val) {
+			# 	if (val.passTOD and (abs((fmgc.FMGCInternal.crzFl * 100) - val.altitude) < 500) and (!val.moreDrag)) {
+			# 		obj["FMA_ctr_msg-10"].show();
+			# 	} else {
+			# 		obj["FMA_ctr_msg-10"].hide();
+			# 	}
+			# }),
 			# If FMGC is in descent phase and moreDrag is true (set in fmgc.ITAF.getVs()) then announce MORE DRAG on the FMA
-			props.UpdateManager.FromHashList(["moreDrag","fmgcPhase"], 1, func(val) {
-				if ((val.moreDrag) and( val.fmgcPhase == 4)) {
-					obj["FMA_ctr_msg-11"].show();
-				} else {
-					obj["FMA_ctr_msg-11"].hide();
-				}
-			}),
+			# props.UpdateManager.FromHashList(["moreDrag","fmgcPhase"], 1, func(val) {
+			# 	if ((val.moreDrag) and( val.fmgcPhase == 4)) {
+			# 		obj["FMA_ctr_msg-11"].show();
+			# 	} else {
+			# 		obj["FMA_ctr_msg-11"].hide();
+			# 	}
+			# }),
 			props.UpdateManager.FromHashValue("dmeDistance", 0.025, func(val) {
 				if (val < 19.95) {
 					obj["dme_dist"].setText(sprintf("%1.1f", val));
@@ -779,36 +757,10 @@ var canvas_pfd = {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
 			}),
 			#If the aircraft is in descent phase and managed speed is on then ECOn range is set +- 20 knots from managed speed target
-			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","onSpeedConst"],0.5, func(val) {
-				obj["ECON_range_high"].hide();
-				obj["ECON_range_low"].hide();
-				# if (val.fmgcPhase == 4 and (val.managedSpd)) {
-				# 	if (val.onSpeedConst) {
-				# 		ECON_high_addition = 5;
-				# 		ECON_low_subtraction = 10;
-				# 	} else {
-				# 		ECON_high_addition = 20;
-				# 		ECON_low_subtraction = 20;
-				# 	}
-				# 	ECON_high_tranlation = (val.ASItrgt+ECON_high_addition) * -6.6;
-				# 	ECON_low_translation = (val.ASItrgt-ECON_low_subtraction) * -6.6;
-				# 	if (ECON_high_tranlation <= 260 and ECON_high_tranlation >= -260) {
-				# 		obj["ECON_range_high"].show();
-				# 		obj["ECON_range_high"].setTranslation(0, ECON_high_tranlation);
-				# 	} else {
-				# 		obj["ECON_range_high"].hide();
-				# 	}
-				# 	if (ECON_low_translation <= 260 and ECON_low_translation >= -260) {
-				# 		obj["ECON_range_low"].show();
-				# 		obj["ECON_range_low"].setTranslation(0, ECON_low_translation);
-				# 	} else {
-				# 		obj["ECON_range_low"].hide();
-				# 	}
-				# } else {
-				# 	obj["ECON_range_high"].hide();
-				# 	obj["ECON_range_low"].hide();
-				# }
-			}),
+			# props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","onSpeedConst"],0.5, func(val) {
+			# 	obj["ECON_range_high"].hide();
+			# 	obj["ECON_range_low"].hide();
+			# }),
 			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
 				if (!val.speedError) {
 					if (abs(val.ASItrgtdiff) <= 42) {
@@ -1173,15 +1125,15 @@ var canvas_pfd = {
 		return obj;
 	},
 	getKeys: func() {
-		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_ctr_msg-10","FMA_ctr_msg-11","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
+		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
 		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
-		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP","ECON_range_high","ECON_range_low",
+		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_tens","ALT_digit_UP","ALT_tapes","ALT_hundreds",
 		"ALT_thousands","ALT_thousands_zero","ALT_tenthousands","ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box",
-		"LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","vdev_dot","vdev_low","vdev_high","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError",
+		"LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError",
 		"ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground",
-		"ground_ref","FPV","FPD","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue","onSpeedConst"];
+		"ground_ref","FPV","FPD","spdLimError","vsFMArate","tailstrikeInd","Metric_box","Metric_letter","Metric_cur_alt","ASI_buss","ASI_buss_ref","ASI_buss_ref_blue"];
 	},
 	getKeysTest: func() {
 		return ["Test_white","Test_text"];
@@ -2294,10 +2246,10 @@ var input = {
 	du6Lgt: "/controls/lighting/DU/du6",
 	attSwitch: "/controls/navigation/switching/att-hdg",
 	managedAlt: "/it-autoflight/internal/mng-alt",
-	vdevDot: "/it-autoflight/internal/vdev-dot",
-	passTOD: "/it-autoflight/internal/pass-tod",
-	moreDrag: "/it-autoflight/internal/more-drag",
-	onSpeedConst: "/it-autoflight/internal/on-speed-const",
+	# vdevDot: "/it-autoflight/internal/vdev-dot",
+	# passTOD: "/it-autoflight/internal/pass-tod",
+	# moreDrag: "/it-autoflight/internal/more-drag",
+	# onSpeedConst: "/it-autoflight/internal/on-speed-const",
 	
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",

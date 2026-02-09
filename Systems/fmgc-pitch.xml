@@ -733,15 +733,15 @@
 		<input>
 			<condition>
 				<or>
-							<equals>
-								<property>/it-autoflight/output/vert</property>
-								<value>1</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/vert</property>
-								<value>8</value>
-							</equals>
-						</or>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/output/vert</property>
+						<value>8</value>
+					</equals>
+				</or>
 			</condition>
 			<property>/it-autoflight/internal/target-fpm-vs-fd</property>
 		</input>

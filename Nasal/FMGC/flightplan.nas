@@ -67,16 +67,16 @@ var flightPlanController = {
 		me.lvlOffPoint = nil;
 		setprop("/autopilot/route-manager/vnav/ec/latitude-deg", 0); # necessary to prevent canvas glitching out because properties don't exist
 		setprop("/autopilot/route-manager/vnav/ed/latitude-deg", 0); 
-		setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", 0);
-		setprop("/autopilot/route-manager/vnav/ip/latitude-deg", 0);
+		# setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", 0);
+		# setprop("/autopilot/route-manager/vnav/ip/latitude-deg", 0);
 		setprop("/autopilot/route-manager/vnav/ec/longitude-deg", 0); 
 		setprop("/autopilot/route-manager/vnav/ed/longitude-deg", 0);
-		setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg", 0);
-		setprop("/autopilot/route-manager/vnav/ip/longitude-deg", 0);  
+		# setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg", 0);
+		# setprop("/autopilot/route-manager/vnav/ip/longitude-deg", 0);  
 		setprop("/autopilot/route-manager/vnav/ec/show", 0); 
 		setprop("/autopilot/route-manager/vnav/ed/show", 0); 
-		setprop("/autopilot/route-manager/vnav/spdchng/show", 0); 
-		setprop("/autopilot/route-manager/vnav/ip/show", 0); 
+		# setprop("/autopilot/route-manager/vnav/spdchng/show", 0); 
+		# setprop("/autopilot/route-manager/vnav/ip/show", 0); 
 		me.flightplans[2].activate();
 	},
 	
@@ -842,67 +842,6 @@ var flightPlanController = {
 			setprop("/autopilot/route-manager/vnav/ed/show", 1);
 		}
 	},
-	# Calculate the point where the aircraft would decelerate, if it's not geometric path then it's the same point as the ED,
-	# if it is then it's the waypoint before.
-	# calculateSpdChangePoint: func() {
-	# 	if (Custom.Input.spdManaged.getBoolValue()) {
-	# 		if (fmgc.FMGCInternal.phase >= 3 and fmgc.FMGCInternal.phase != 6) {
-	# 			result = me.getDesAltConst();
-	# 			distanceToCstr = result[1];
-	# 			is_GEO = result[2];
-	# 			spdChangeDistance = result[4];
-	# 			distanceToDecelerate = result[5];
-	# 			if (distanceToDecelerate != result) {
-	# 				spdChangePoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToDecelerate);
-	# 				setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
-	# 				setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
-	# 				setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
-	# 			} elsif (spdChangeDistance != 0) {
-	# 				distanceToCstr = result[1];
-	# 				spdChangePoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToCstr);
-	# 				setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
-	# 				setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
-	# 				setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
-	# 			}
-	# 		} else {
-	# 			nextClbAltConstWptIndex = me.getNextClbSpdConst()[1];
-	# 			if (me.flightplans[2].getWP(nextClbAltConstWptIndex).speed_cstr != 0 and me.flightplans[2].getWP(nextClbAltConstWptIndex).speed_cstr != nil) {
-	# 				spdChangePoint = me.flightplans[2].pathGeod(nextClbAltConstWptIndex, 0); 
-	# 				setprop("/autopilot/route-manager/vnav/spdchng/latitude-deg", spdChangePoint.lat); 
-	# 				setprop("/autopilot/route-manager/vnav/spdchng/longitude-deg",spdChangePoint.lon);
-	# 				setprop("/autopilot/route-manager/vnav/spdchng/show", 1);
-	# 			}
-	# 		}
-	# 	}
-		
-	# },
-	# Calculate the point that at the current vertical speed would intercept the 3 deg descent profile. If it's on GEO descent path then don't display
-	# calculateDescentPathInterceptPoint: func() {
-	# 	if (me.currentToWptIndex.getValue() < 0 or fmgc.FMGCInternal.phase <= 2) {
-	# 		return;
-	# 	}
-	# 	result = me.getDesAltConst();
-	# 	if (result[2] == 1) {
-	# 		setprop("/autopilot/route-manager/vnav/ip/show", 0);
-	# 		return;
-	# 	}
-	# 	initialAlt = fmgc.Position.indicatedAltitudeFt.getValue();
-	# 	altCstr = result[0];
-	# 	distanceToCstr = result[1];
-	# 	gs = pts.Velocities.groundspeedKt.getValue();
-	# 	vs = -1*fmgc.Internal.vs.getValue();
-	# 	if (vs < 0) {
-	# 		vs = 0;
-	# 	}
-	# 	if (vs > -1100) {
-	# 		vs = 0;
-	# 	}
-	# 	distanceToIntercept = (gs*(altCstr - initialAlt) + (318*gs*distanceToCstr))/((318*gs) - (vs*60));
-	# 	DescentPathInterceptPoint = me.flightplans[2].pathGeod(me.currentToWptIndex.getValue() - 1, me.flightplans[2].getWP(me.currentToWptIndex.getValue()).leg_distance - me.distToWpt.getValue() + distanceToIntercept);
-	# 	setprop("/autopilot/route-manager/vnav/ip/latitude-deg", DescentPathInterceptPoint.lat); 
-	# 	setprop("/autopilot/route-manager/vnav/ip/longitude-deg",DescentPathInterceptPoint.lon);
-	# 	setprop("/autopilot/route-manager/vnav/ip/show", 1);
-	# },
 
 	# Calculate the point of the SC symbol to be placed on the ND
 	calculateClbPoint: func(isMng) {
@@ -1055,9 +994,6 @@ var flightPlanController = {
 			me.calculateDecelPoint();
 		}
 		isMng = Internal.altManaged.getBoolValue();
-		# me.calculateTopOfDescent(isMng);
-		# me.calculateSpdChangePoint();
-		# me.calculateDescentPathInterceptPoint();
 		
 		me.calculateClbPoint(isMng);
 		var deltaAltitude = fmgc.Internal.alt.getValue() - pts.Instrumentation.Altimeter.indicatedFt.getValue();

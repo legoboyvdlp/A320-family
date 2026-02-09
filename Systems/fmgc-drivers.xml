@@ -295,7 +295,7 @@
 		<filter-time>1.0</filter-time>
 	</filter>
 	<filter>
-		<name>Flch Knots Rate Command</name>
+		<!-- <name>Flch Knots Rate Command</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
@@ -407,7 +407,7 @@
 			<value>1.5</value>
 		</max-rate-of-change>
 		<max-rate-of-change>100</max-rate-of-change>
-	</filter>
+	</filter> -->
 	
 	<filter>
 		<name>Heading Deg</name>

@@ -34,7 +34,6 @@ var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
 var tempOverspeed = nil;
-var lastConstraintSpeed = 10000000000000000000000;
 
 setprop("/position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-ft", 1500); #eventually set to 1500 above runway
@@ -1003,7 +1002,7 @@ var ManagedSPD = maketimer(0.25, func {
 					nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst()[0];
 					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(nextSpdConst)) : math.min(mng_alt_spd, nextSpdConst);
 				}
-			}  elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
+			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
 				if (FMGCInternal.decel) {
 					FMGCInternal.mngKtsMach = 0;
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;

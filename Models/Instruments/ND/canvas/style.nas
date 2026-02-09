@@ -213,15 +213,13 @@ canvas.NDStyles["Airbus"] = {
 				# If ec and ed are altitude constraints, their node should have the 
 				# boolean "alt-cstr" property set to 1.
 				vnav_node: "/autopilot/route-manager/vnav/", 
-				types: ["ec","ed","sc","sd","td","spdchng","ip"],
+				types: ["ec","ed","sc","sd","td"],
 				svg_path: {
 					ec: get_local_path("res/airbus_ec.svg"),
 					ed: get_local_path("res/airbus_ed.svg"),
 					sc: get_local_path("res/airbus_sc.svg"),
 					sd: get_local_path("res/airbus_sd.svg"),
 					td: get_local_path("res/airbus_td.svg"),
-					spdchng: get_local_path("res/airbus_spdchng.svg"),
-					ip: get_local_path("res/airbus_ip.svg")
 				},
 				listen: [
 					"fplan_active",
@@ -249,12 +247,6 @@ canvas.NDStyles["Airbus"] = {
 						}
 					} elsif(name == "td" or name == "sd" or name == "sc"){
 						if (me.model.getValue("vnav-armed") and name != "td") {
-							grp.setColor(me.getStyle("armed_color"));
-						} else {
-							grp.setColor(me.getStyle("default_color"));
-						}
-					} elsif (name == "ip") {
-						if (fmgc.Output.vert.getValue() == 8) {
 							grp.setColor(me.getStyle("armed_color"));
 						} else {
 							grp.setColor(me.getStyle("default_color"));
