@@ -353,22 +353,6 @@
 				</table>
 			</product>
 		</function>
-		<!-- <function name="aero/coefficient/CDspd">
-			<description>Drag due to speed</description>
-			<min>
-				<value>4000</value>
-				<max>
-					<value>0</value>
-					<product>
-						<difference>
-							<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
-							<property>/FMGC/internal/clean</property>
-						</difference>
-						<value>20.5</value>
-					</product>
-				</max>
-			</min>
-		</function> -->
 		<function name="aero/coefficient/CDgear">
 			<description>Drag due to gear</description>
 			<product>
