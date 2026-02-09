@@ -1,4 +1,3 @@
-var vsAdjustment = 0;
 # A3XX FMGC Autopilot
 # Based off IT Autoflight System Controller V4.1.X
 # Copyright (c) 2026 Josh Davidson (Octal450)
@@ -366,7 +365,7 @@ var ITAF = {
 				if (Internal.altTemp >= Position.indicatedAltitudeFtTemp and Internal.vsTemp >= -25) { # Don't capture if we are going the wrong way
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
-					if (vertTemp == 8 and Internal.altManaged.getBoolValue() and armDesOn == "False") { # If we are in V/S and managed alt, switch to ALT CAP
+					if (vertTemp == 8 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
 						# armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
@@ -375,7 +374,7 @@ var ITAF = {
 				} else if (Internal.altTemp < Position.indicatedAltitudeFtTemp and Internal.vsTemp <= 25) { # Don't capture if we are going the wrong way
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
-					if (vertTemp == 8 and Internal.altManaged.getBoolValue() and armDesOn == "False") { # If we are in V/S and managed alt, switch to ALT CAP
+					if (vertTemp == 8 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
 						# armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
