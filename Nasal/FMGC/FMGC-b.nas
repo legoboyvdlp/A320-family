@@ -1,5 +1,5 @@
 var idleDescent = 0;
-armDesOn = "False";
+# armDesOn = "False";
 # A3XX FMGC Autopilot
 # Based off IT Autoflight System Controller V4.1.X
 # Copyright (c) 2026 Josh Davidson (Octal450)
@@ -375,8 +375,8 @@ var ITAF = {
 				if (Internal.altTemp >= Position.indicatedAltitudeFtTemp and Internal.vsTemp >= -25) { # Don't capture if we are going the wrong way
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
-					if (vertTemp == 8 and Internal.altManaged.getBoolValue() and armDesOn == "False") { # If we are in V/S and managed alt, switch to ALT CAP
-						armDesOn = "True";
+					if (vertTemp == 8 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
+						# armDesOn = "True";
 						armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
@@ -385,8 +385,8 @@ var ITAF = {
 				} else if (Internal.altTemp < Position.indicatedAltitudeFtTemp and Internal.vsTemp <= 25) { # Don't capture if we are going the wrong way
 					vertTemp = Output.vertTemp;
 					me.setVertMode(3);
-					if (vertTemp == 8 and Internal.altManaged.getBoolValue() and armDesOn == "False") { # If we are in V/S and managed alt, switch to ALT CAP
-						armDesOn = "True";
+					if (vertTemp == 8 and Internal.altManaged.getBoolValue()) { # If we are in V/S and managed alt, switch to ALT CAP
+						# armDesOn = "True";
 						armDes();
 					} elsif (vertTemp == 4 and Internal.altManaged.getBoolValue()) {
 						armClb();
@@ -686,8 +686,8 @@ var ITAF = {
 			}
 			vs = Internal.targetFpmFlch.getValue();
 			if (deltaAlt < properDeltaAlt and vs < -1000) {
-				vs = -1000;
 				idleDescent = 0;
+				vs = -1000;
 			} else {
 				idleDescent = 1;
 			}
@@ -870,7 +870,7 @@ var ITAF = {
 	},
 	activateGs: func() {
 		if (Output.vert.getValue() != 2) {
-			armDesOn = "False";
+			# armDesOn = "False";
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			Internal.altManaged.setValue(0);
@@ -1163,7 +1163,7 @@ var armClb = func {
 	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300) {
 		ITAF.updateVertText("CLB");
 		ITAF.setVertMode(8); # CLB mode
-	} else {
+	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
 		settimer(armClb, 2);
 	}
 };
@@ -1171,12 +1171,13 @@ var armClb = func {
 # To be called when in altitude acquire mode,
 # when the aircraft passes that waypoint the DES mode should resume
 var armDes = func {
+	# print("arming des " ~ Text.vert.getValue());
 	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300)) {
 		ITAF.updateVertText("DES");
 		ITAF.setVertMode(8); # DES mode
-		armDesOn = "False";
-	} else {
-		print(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue());
+		# armDesOn = "False";
+	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
+		# print(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue());
 		settimer(armDes, 2);
 	}
 };
