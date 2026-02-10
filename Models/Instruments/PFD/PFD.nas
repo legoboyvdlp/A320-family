@@ -782,32 +782,6 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","onSpeedConst"],0.5, func(val) {
 				obj["ECON_range_high"].hide();
 				obj["ECON_range_low"].hide();
-				# if (val.fmgcPhase == 4 and (val.managedSpd)) {
-				# 	if (val.onSpeedConst) {
-				# 		ECON_high_addition = 5;
-				# 		ECON_low_subtraction = 10;
-				# 	} else {
-				# 		ECON_high_addition = 20;
-				# 		ECON_low_subtraction = 20;
-				# 	}
-				# 	ECON_high_tranlation = (val.ASItrgt+ECON_high_addition) * -6.6;
-				# 	ECON_low_translation = (val.ASItrgt-ECON_low_subtraction) * -6.6;
-				# 	if (ECON_high_tranlation <= 260 and ECON_high_tranlation >= -260) {
-				# 		obj["ECON_range_high"].show();
-				# 		obj["ECON_range_high"].setTranslation(0, ECON_high_tranlation);
-				# 	} else {
-				# 		obj["ECON_range_high"].hide();
-				# 	}
-				# 	if (ECON_low_translation <= 260 and ECON_low_translation >= -260) {
-				# 		obj["ECON_range_low"].show();
-				# 		obj["ECON_range_low"].setTranslation(0, ECON_low_translation);
-				# 	} else {
-				# 		obj["ECON_range_low"].hide();
-				# 	}
-				# } else {
-				# 	obj["ECON_range_high"].hide();
-				# 	obj["ECON_range_low"].hide();
-				# }
 			}),
 			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
 				if (!val.speedError) {

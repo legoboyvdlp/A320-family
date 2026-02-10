@@ -4223,6 +4223,11 @@ var canvas_MCDU_base = {
 			}
 			if (page == "PROGDES" or page == "PROGAPPR") {			
 				var vdev = fmgc.ITAF.calculateVdev();
+				if (vdev < -9999) {
+					vdev = -9999;
+				} else if (vdev > 9999) {
+					vdev = 9999;
+				}
 				var vdev_sign = (vdev>=0) ? "+" : "-";			
 				me["Simple_C2"].setText(sprintf("%17s%4d   ",vdev_sign,abs(vdev)));
 				me["Simple_R2"].setText(sprintf("%30s","VDEV=       FT "));
