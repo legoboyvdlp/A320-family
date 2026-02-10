@@ -459,8 +459,8 @@ var canvas_pfd = {
 					obj["ALT_digit_DN"].setText(sprintf("%5d", val.altitudeAutopilot));
 				}
 			}),
-			# If managedAlt is true, then ALT related colors are magenta, otherwise blue.
-			props.UpdateManager.FromHashValue("managedAlt", 1, func(val) {
+			# If altManaged is true, then ALT related colors are magenta, otherwise blue.
+			props.UpdateManager.FromHashValue("altManaged", 1, func(val) {
 				if (val) {
 					obj["ALT_digit_UP"].setColor(0.6901,0.3333,0.7450);
 					obj["ALT_digit_DN"].setColor(0.6901,0.3333,0.7450);
@@ -762,6 +762,8 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","onSpeedConst"],0.5, func(val) {
 				obj["ECON_range_high"].hide();
 				obj["ECON_range_low"].hide();
+				obj["FMA_ctr_msg-10"].hide();
+				obj["FMA_ctr_msg-11"].hide();
 			}),
 			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
 				if (!val.speedError) {
@@ -1127,7 +1129,7 @@ var canvas_pfd = {
 		return obj;
 	},
 	getKeys: func() {
-		return ["vdev_dot","vdev_low","vdev_high", "ECON_range_low", "ECON_range_high","FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
+		return ["vdev_dot","vdev_low","vdev_high", "ECON_range_low", "ECON_range_high", "FMA_ctr_msg-10", "FMA_ctr_msg-11","FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
 		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
 		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
@@ -2247,7 +2249,8 @@ var input = {
 	du1Lgt: "/controls/lighting/DU/du1",
 	du6Lgt: "/controls/lighting/DU/du6",
 	attSwitch: "/controls/navigation/switching/att-hdg",
-	managedAlt: "/it-autoflight/internal/mng-alt",
+	altManaged: "/it-autoflight/internal/mng-alt",
+	vdevDot: "/it-autoflight/internal/vdev-dot",
 	
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",

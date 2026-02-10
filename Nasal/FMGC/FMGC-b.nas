@@ -143,6 +143,7 @@ var Internal = {
 	vdevDot: props.globals.initNode("/it-autoflight/internal/vdev-dot", 0, "DOUBLE"),
 	vs: props.globals.initNode("/it-autoflight/internal/vert-speed-fpm", 0, "DOUBLE"),
 	vsTemp: 0,
+	targetFpmFlch: props.globals.getNode("/it-autoflight/internal/target-fpm-flch", 0, "DOUBLE"),
 };
 
 var Output = {
