@@ -642,12 +642,13 @@ var ITAF = {
 	},
 
 	calculateSpeedDistance: func() {
-		speed = Velocities.indicatedAirspeedKt.getValue();
-		distance = (speed - 200)/10;
-		if (distance < 0) {
-			distance = 0;
-		}
-		return distance;
+		return 0;
+		# speed = Velocities.indicatedAirspeedKt.getValue();
+		# distance = (speed - 200)/10;
+		# if (distance < 0) {
+		# 	distance = 0;
+		# }
+		# return distance;
 	},
 
 	calculateVdev: func() {
@@ -660,14 +661,23 @@ var ITAF = {
 		deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
 		properDeltaAlt = distance * 318;
 		difference = deltaAlt - properDeltaAlt;
+		if (output[2] == 1 and difference < 0) {
+			difference = 0;
+		}
 		return difference;
 
 	},
 
-	getVs: func(distance, deltaAlt) {
-		isGeo = 0;
+	getVs: func(distance, deltaAlt, isGeo) {
 		if (isGeo) {
-			#will be added later
+			gs = Velocities.groundspeedKt.getValue();
+			vs = -(deltaAlt * gs) / (distance * 60);
+			print("first vs geo: " ~ vs);
+			if (vs < -2000) {
+				vs = -2000;
+			}
+			idleDescent = 0;
+			print("renewed vs geo: " ~ vs);
 		} else {
 			properDeltaAlt = (distance - me.calculateSpeedDistance()) * 318 ;
 			if (properDeltaAlt < 0) {
@@ -680,7 +690,10 @@ var ITAF = {
 			} else {
 				idleDescent = 1;
 			}
+		} if (vs > 0) {
+			vs = 0;
 		}
+		print("final vs: " ~ vs);
 		return vs;
 	},
 
@@ -778,7 +791,7 @@ var ITAF = {
 			me.updateThrustMode();
 		} else if (n == 8) { # CLB/DES
 			Internal.managedModeOn.setBoolValue(0);
-			if (fmgc.FMGCInternal.phase <= 3 or fmgc.FMGCInternal.phase == 6) {
+			if (Input.altDiff >= 0) {
 				Internal.managedModeOn.setBoolValue(1);
 				managedClb();
 			} else {
@@ -787,7 +800,6 @@ var ITAF = {
 				managedDes();
 			}
 		} else if (n == 9) { # NONE
-			# managedDeson = "False";
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			me.updateGsArm(0);
@@ -1093,7 +1105,7 @@ var managedDes = func {
 	output = fmgc.flightPlanController.getDesAltConst();
 	nextManagedAlt = output[0];
 	distance = output[1];
-	
+	isGeo = output[2];
 
 	nextSelectedAlt = Input.alt.getValue();
 
@@ -1108,7 +1120,7 @@ var managedDes = func {
 
 	if (deltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
-		ITAF.setVs(ITAF.getVs(distance, deltaAlt));
+		ITAF.setVs(ITAF.getVs(distance, deltaAlt, isGeo));
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
 		

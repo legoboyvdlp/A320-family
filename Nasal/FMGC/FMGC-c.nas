@@ -278,8 +278,8 @@ var UpdateFma = {
 			if (Internal.altManaged.getBoolValue() == 0) {
 				setFmaText("pitchMode2Armed", " ", genericCallback, "pitchMode2ArmedTime");
 			} else {
-				if (fmgc.FMGCInternal.phase >= 3 and fmgc.FMGCInternal.phase != 6) {
-					# setFmaText("pitchMode2Armed", "DES", genericCallback, "pitchMode2ArmedTime");
+				if (Input.altDiff < 0) {
+					setFmaText("pitchMode2Armed", "DES", genericCallback, "pitchMode2ArmedTime");
 				} else {
 					setFmaText("pitchMode2Armed", "CLB", genericCallback, "pitchMode2ArmedTime");
 				}

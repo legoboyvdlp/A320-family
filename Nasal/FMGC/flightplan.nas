@@ -1,6 +1,6 @@
 # A3XX FMGC Flightplan Driver
 # Copyright (c) 2026 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
-
+var geoWptIndex = nil;
 var wpDep = nil;
 var wpArr = nil;
 var pos = nil;
@@ -772,44 +772,156 @@ var flightPlanController = {
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
 
-	getExtrapolatedDescentAltitude: func(distanceToCstr, vs) {
-		deltaAlt = vs * distanceToCstr * 60 / pts.Velocities.groundspeedKt.getValue();
-		currentAlt = Position.indicatedAltitudeFt.getValue();
-		altAtCstr = currentAlt + deltaAlt;
-		return altAtCstr;
+	getExtrapolatedFirstAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
+		extrapolatedAlt = altCstr + (318 * (distanceToCstr - distanceToCstr2));
+		return extrapolatedAlt;
 	},
 
-	getDesAltConst: func() {
+	getExtrapolatedOneThousandVSDescent: func(distanceToCstr2) {
+		currentAlt = Position.indicatedAltitudeFt.getValue();
+		gs = pts.Velocities.groundspeedKt.getValue();
+		extrapolatedAlt = currentAlt - (distanceToCstr2 * 60 * 1000 / gs);
+		return extrapolatedAlt;
+	},
+
+	getExtrapolatedGeoAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
+		currentAlt = Position.indicatedAltitudeFt.getValue();
+		extrapolatedAlt = currentAlt + ((altCstr - currentAlt) * (distanceToCstr2 / distanceToCstr));
+		return extrapolatedAlt;
+	},
+
+	getAltConst: func(isGeo) {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
+		
 		distanceToCstr = 0;
+		wpIndex = 0;
+		altCstr = 0;
+		altCstr2 = 0;
+
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			if (i == me.currentToWptIndex.getValue()) {
 				distanceToCstr += me.distToWpt.getValue();
 			} else {
 				distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
 			}
-			# print("wp name is " ~ me.flightplans[2].getWP(i).wp_name);
-			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and (me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach" or me.flightplans[2].getWP(i).wp_type == "runway")) {
-				# print("des alt const is ");
-				# print(int(me.flightplans[2].getWP(i).alt_cstr));
-				# print(me.flightplans[2].getWP(i).alt_cstr, me.flightplans[2].getWP(i).alt_cstr_type);
+			
+			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and 
+				(me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach" or me.flightplans[2].getWP(i).wp_type == "runway")) {
+				
 				if (me.flightplans[2].getWP(i).wp_type == "runway") {
 					runwayInfo = geodinfo(me.flightplans[2].getWP(i).lat, me.flightplans[2].getWP(i).lon);
-					return [runwayInfo[0] * 3.28084, distanceToCstr];
-				} else if (me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and (me.flightplans[2].getWP(i).alt_cstr_type == "at" or me.flightplans[2].getWP(i).alt_cstr_type == "between" or (me.flightplans[2].getWP(i).alt_cstr_type == "below" and (Position.indicatedAltitudeFt.getValue() - me.flightplans[2].getWP(i).alt_cstr >= -200)))) {
-					
-					return [me.flightplans[2].getWP(i).alt_cstr, distanceToCstr];
-				}
-			} else if (me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and (me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach")) {
-				altCstr = me.flightplans[2].getWP(i).alt_cstr;
-				if (altCstr > me.getExtrapolatedDescentAltitude(distanceToCstr, -1000)) {
-					return [altCstr, distanceToCstr];
+					altCstr = runwayInfo[0] * 3.28084;
+					wpIndex = i;
+					break;
+				} else if (me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and 
+						(me.flightplans[2].getWP(i).alt_cstr_type == "at" or me.flightplans[2].getWP(i).alt_cstr_type == "between")) {
+					altCstr = me.flightplans[2].getWP(i).alt_cstr;
+					wpIndex = i;
+					break;
 				}
 			}
 		}
-		return [1000000000000000,0];
+
+		print((isGeo ? "Geo " : "First ") ~ "Alt Constraint found at WP index " ~ wpIndex ~ 
+			" named " ~ me.flightplans[2].getWP(wpIndex).wp_name ~ 
+			" is " ~ altCstr ~ " ft at distance " ~ distanceToCstr ~ " nm");
+
+		distanceToCstr2 = 0;
+		for (var j = me.currentToWptIndex.getValue(); j < wpIndex; j += 1) {
+			if (j == me.currentToWptIndex.getValue()) {
+				distanceToCstr2 += me.distToWpt.getValue();
+			} else {
+				distanceToCstr2 += me.flightplans[2].getWP(j).leg_distance;
+			}
+
+			if (me.flightplans[2].getWP(j).alt_cstr_type == "above" and 
+				(me.flightplans[2].getWP(j).wp_role == "star" or me.flightplans[2].getWP(j).wp_role == "approach") and 
+				me.flightplans[2].getWP(j).alt_cstr != nil and me.flightplans[2].getWP(j).alt_cstr != 0) {
+				
+				altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
+				if (isGeo) {
+					if (altCstr2 > me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr)) {
+						print("Geo Alt Constraint at WP index " ~ j ~ 
+							" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
+							" is " ~ altCstr2 ~ " ft, which is higher than extrapolated altitude " ~ 
+							me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
+							" ft at distance " ~ distanceToCstr2 ~ " nm");
+						return [altCstr2, distanceToCstr2, 1];
+					}
+				} else {
+					if (altCstr2 > me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) or 
+						altCstr2 > me.getExtrapolatedOneThousandVSDescent(distanceToCstr2)) {
+						print("First Alt Constraint at WP index " ~ j ~ 
+							" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
+							" is " ~ altCstr2 ~ " ft, which is higher than extrapolated altitude " ~ 
+							me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
+							" ft and extrapolated ten thousand of " ~ 
+							me.getExtrapolatedOneThousandVSDescent(distanceToCstr2) ~ " ft at distance " ~ distanceToCstr2 ~ " nm");
+						if (geoWptIndex == nil or geoWptIndex > j) {
+							geoWptIndex = j;
+						}
+						return [altCstr2, distanceToCstr2, 0];
+					}
+				}
+			} elsif (me.flightplans[2].getWP(j).alt_cstr_type == "below" and 
+					(me.flightplans[2].getWP(j).wp_role == "star" or me.flightplans[2].getWP(j).wp_role == "approach") and 
+					me.flightplans[2].getWP(j).alt_cstr != nil and me.flightplans[2].getWP(j).alt_cstr != 0) {
+				
+				altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
+				if (isGeo) {
+					if (altCstr2 < me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr)) {
+						print("Geo Alt Constraint at WP index " ~ j ~ 
+							" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
+							" is " ~ altCstr2 ~ " ft, which is lower than extrapolated altitude " ~ 
+							me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
+							" ft at distance " ~ distanceToCstr2 ~ " nm");
+						return [altCstr2, distanceToCstr2, 1];
+					}
+				} else {
+					if (altCstr2 < me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) or altCstr2 < me.getExtrapolatedOneThousandVSDescent(distanceToCstr2)) {
+						print("First Alt Constraint at WP index " ~ j ~ 
+							" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
+							" is " ~ altCstr2 ~ " ft, which is lower than extrapolated altitude " ~ 
+							me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
+							" ft and extrapolated ten thousand of " ~ 
+							me.getExtrapolatedOneThousandVSDescent(distanceToCstr2) ~ " ft at distance " ~ distanceToCstr2 ~ " nm");
+						if (geoWptIndex == nil or geoWptIndex > j) {
+							geoWptIndex = j;
+						}
+						return [altCstr2, distanceToCstr2, 0];
+					}
+				}
+			}
+		}
+		
+
+		print((isGeo ? "Geo " : "First ") ~ "Alt Constraint at WP index " ~ wpIndex ~ 
+			" named " ~ me.flightplans[2].getWP(wpIndex).wp_name ~ 
+			" is " ~ altCstr ~ " ft with no intervening constraints");
+		
+		if (geoWptIndex == nil or geoWptIndex > wpIndex) {
+			geoWptIndex = wpIndex;
+		}
+
+		return [altCstr, distanceToCstr, (isGeo ? 1 : 0)];
+	},
+
+	getDesAltConst: func() {
+		# if (geoWptIndex == nil or me.currentToWptIndex.getValue() <= geoWptIndex) {
+		# 	return me.getFirstAltConst();
+		# } else {
+		# 	return me.getGeoAltConst();
+		# }
+		print("currenttowptindex is " ~ me.currentToWptIndex.getValue());
+		print("geowptindex is ");
+		print(geoWptIndex);
+		if (geoWptIndex == nil or me.currentToWptIndex.getValue() <= geoWptIndex) {
+			return me.getAltConst(0);
+		} else {
+			return me.getAltConst(1);
+		}
 	},
 
 	# Get the next altitude constraint that is either at, or at or below
@@ -880,7 +992,7 @@ var flightPlanController = {
 
 	# Calculate the point of the SC symbol to be placed on the ND
 	calculateClbPoint: func(isMng) {
-		if (me.currentToWptIndex.getValue() < 0 or (fmgc.FMGCInternal.phase > 3 and fmgc.FMGCInternal.phase != 6)) {
+		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
 		wptIndex = me.getClbAltConst()[1];

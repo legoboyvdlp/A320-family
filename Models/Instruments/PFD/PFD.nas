@@ -758,6 +758,11 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashValue("ASItrgt", 0.1, func(val) {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
 			}),
+			#If the aircraft is in descent phase and managed speed is on then ECOn range is set +- 20 knots from managed speed target
+			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","onSpeedConst"],0.5, func(val) {
+				obj["ECON_range_high"].hide();
+				obj["ECON_range_low"].hide();
+			}),
 			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
 				if (!val.speedError) {
 					if (abs(val.ASItrgtdiff) <= 42) {
