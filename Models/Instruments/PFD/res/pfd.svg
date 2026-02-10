@@ -40,8 +40,8 @@
      inkscape:window-maximized="1"
      inkscape:window-y="-9"
      inkscape:window-x="-9"
-     inkscape:cy="795.5"
-     inkscape:cx="609.5"
+     inkscape:cy="237.5"
+     inkscape:cx="607.5"
      inkscape:zoom="1"
      showgrid="false"
      id="namedview371"
@@ -2089,6 +2089,32 @@
        x="505.48523"
        y="115.0584"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:center;text-anchor:middle;fill:#ff0000;fill-opacity:1;stroke-width:0.657577">MAN PITCH TRIM ONLY</tspan></text>
+  <text
+     inkscape:label="#text983"
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.657577"
+     x="507.87143"
+     y="117.95411"
+     id="FMA_ctr_msg-10"
+     transform="scale(0.87678236,1.1405339)"><tspan
+       sodipodi:role="line"
+       id="tspan4614-4"
+       x="507.87143"
+       y="117.95411"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.657577">DECELERATE</tspan></text>
+  <text
+     inkscape:label="#text983"
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.657577"
+     x="508.2131"
+     y="117.8877"
+     id="FMA_ctr_msg-11"
+     transform="scale(0.87678236,1.1405339)"><tspan
+       sodipodi:role="line"
+       id="tspan4614-4-4"
+       x="508.2131"
+       y="117.8877"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:34px;line-height:1.25;font-family:'FBW Display-EIS';-inkscape-font-specification:'FBW Display-EIS';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.657577">MORE DRAG</tspan></text>
   <path
      style="fill:none;fill-opacity:1;stroke:#515256;stroke-width:3.19995403;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
      d="m 432.8701,90.374503 0,-88.7230442"
@@ -7114,4 +7140,35 @@
        x="604.67737"
        id="tspan5116-2"
        sodipodi:role="line">10000M</tspan></text>
+  <circle
+     style="fill:#4fc794;fill-opacity:1;stroke-width:0.360972"
+     id="vdev_dot"
+     cx="-769.46893"
+     cy="-508.76147"
+     transform="matrix(-0.99999056,-0.00434464,0.00433625,-0.9999906,0,0)"
+     inkscape:highlight-color="#66eeaa"
+     r="9.6890001" />
+  <path
+     id="vdev_high"
+     style="fill:#4fc794;stroke-width:0.00357021;stroke-dasharray:none"
+     d="M 776.93956,779.53124 H 757.567 a 9.6890408,9.6889595 45.24869 0 0 9.64453,9.43652 9.6890408,9.6889595 45.24869 0 0 9.72803,-9.43652 z" />
+  <path
+     id="vdev_low"
+     style="fill:#4fc794;stroke-width:0.00357021;stroke-dasharray:none"
+     d="m 767.29808,237.18457 a 9.6890408,9.6889595 45.24869 0 0 -9.73096,9.646 9.6890408,9.6889595 45.24869 0 0 0.003,0.29443 h 19.37256 a 9.6890408,9.6889595 45.24869 0 0 0.003,-0.20947 9.6890408,9.6889595 45.24869 0 0 -9.64746,-9.73096 z"
+     inkscape:label="vdev_low" />
+  <rect
+     style="fill:#b055c0;stroke:#ad0061;stroke-width:0.0545429"
+     id="ECON_range_high"
+     width="37.902653"
+     height="5.9498677"
+     x="126.09415"
+     y="509.78796" />
+  <rect
+     style="fill:#b055c0;stroke:#ad0061;stroke-width:0.0545429"
+     id="ECON_range_low"
+     width="37.902653"
+     height="5.9498677"
+     x="126.09227"
+     y="509.70493" />
 </svg>
