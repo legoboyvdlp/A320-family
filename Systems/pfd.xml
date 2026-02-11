@@ -63,12 +63,6 @@
 		<name>Heading scale</name>
 		<type>gain</type>
 		<gain>1.0</gain>
-		<input>
-			<condition>
-				<property>/it-autoflight/custom/trk-fpa</property>
-			</condition>
-			<property>/instrumentation/pfd/track-deg</property>
-		</input>
 		<input>/instrumentation/pfd/heading-deg</input>
 		<output>/instrumentation/pfd/heading-scale</output>
 	</filter>

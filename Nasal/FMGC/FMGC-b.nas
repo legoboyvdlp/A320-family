@@ -938,8 +938,9 @@ var ITAF = {
 			Input.vert.setValue(5); # This way we only do this if all conditions are true
 		}
 		Input.trk.setBoolValue(1);
-		Custom.ndTrkSel[0].setBoolValue(1);
-		Custom.ndTrkSel[1].setBoolValue(1);
+		# Forces HDG UP even in TRK/FPA.
+		Custom.ndTrkSel[0].setBoolValue(0);
+		Custom.ndTrkSel[1].setBoolValue(0);
 		Input.hdgCalc = Input.hdg.getValue() + math.round(Internal.driftAngle.getValue());
 		if (Input.hdgCalc > 360) { # It's rounded, so this is ok. Otherwise do >= 360.5
 			Input.hdgCalc = Input.hdgCalc - 360;
