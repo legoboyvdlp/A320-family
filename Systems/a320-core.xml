@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
-<!-- Airbus A320 Libraries -->
+<!-- Airbus A320 JSBSim Core -->
 <!-- Copyright (c) 2026 Josh Davidson (Octal450) -->
 
-<system name="A320: Libraries">
+<system name="A320: Core">
 	
-	<channel name="FDM Rate Libraries">
+	<channel name="FDM Rate">
 		
 		<switch name="aero/alpha-deg-fixed">
 			<default value="0"/>
@@ -127,9 +127,9 @@
 	
 	</channel>
 	
-	<channel name="Execrate 8 Libraries" execrate="8">
+	<channel name="Execrate 8" execrate="8">
 		
-		<switch name="libraries/multi-engine-out">
+		<switch name="core/multi-engine-out">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine[0]/state ne 3
@@ -137,7 +137,7 @@
 			</test>
 		</switch>
 		
-		<switch name="libraries/dbmr">
+		<switch name="core/dbmr">
 			<default value="0"/>
 			<output>/sim/menubar/default/menu[3]/enabled</output>
 		</switch>

@@ -14,7 +14,7 @@
 	<ground_reactions file="FDE/Config/a320-ground-reactions"/>
 	<metrics file="FDE/Config/a320-metrics"/>
 	
-	<system file="a320-libraries"/>
+	<system file="a320-core"/>
 	<system file="glass-effect"/>
 	<system file="a320-fbw"/>
 	<system file="a320-fcs"/>

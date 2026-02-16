@@ -320,7 +320,7 @@ var colddark = func {
 		setprop("/controls/lighting/main-panel-knb", 0);
 		setprop("/controls/lighting/overhead-panel-knb", 0);
 		atc.transponderPanel.modeSwitch(1);
-		libraries.systemsInit();
+		core.systemsInit();
 		cockpit.variousReset();
 		failResetOld();
 		if (getprop("/engines/engine[1]/n2-actual") < 2) {
@@ -367,7 +367,7 @@ var beforestart = func {
 		setprop("/controls/flight/speedbrake", 0);
 		setprop("/controls/gear/lever", 1);
 		setprop("/controls/flight/elevator-trim", 0);
-		libraries.systemsInit();
+		core.systemsInit();
 		cockpit.variousReset();
 		setprop("/controls/oxygen/cockpit-oxygen-supply-pb", 1);
 		failResetOld();
@@ -464,7 +464,7 @@ var taxi = func {
 		setprop("/controls/flight/speedbrake", 0);
 		setprop("/controls/gear/lever", 1);
 		setprop("/controls/flight/elevator-trim", 0);
-		libraries.systemsInit();
+		core.systemsInit();
 		cockpit.variousReset();
 		setprop("/controls/oxygen/cockpit-oxygen-supply-pb", 1);
 		failResetOld();
@@ -540,7 +540,7 @@ var taxi_b = func {
 	setprop("/controls/switches/landing-lights-l", 0.5);
 	setprop("/controls/switches/landing-lights-r", 0.5);
 	if (pts.Instrumentation.Altimeter.std.getBoolValue()) {
-		libraries.toggleSTD();
+		core.toggleSTD();
 	}
 	setprop("/instrumentation/altimeter[0]/setting-inhg", getprop("/environment/metar[0]/pressure-inhg") or 29.92);
 	setprop("/instrumentation/altimeter[6]/setting-inhg", getprop("/environment/metar[0]/pressure-inhg") or 29.92);

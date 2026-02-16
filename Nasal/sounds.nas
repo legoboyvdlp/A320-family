@@ -1,4 +1,4 @@
-# A320 Main Libraries
+# A320 Main Core
 # Joshua Davidson (Octal450)
 
 # Copyright (c) 2026 Josh Davidson (Octal450)

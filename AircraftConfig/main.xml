@@ -71,7 +71,7 @@
 					<binding>
 						<command>nasal</command>
 						<script>
-						libraries.livery.dialog.toggle();
+						core.livery.dialog.toggle();
 						</script>
 					</binding>
 				</button>

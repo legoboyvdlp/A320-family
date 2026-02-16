@@ -246,7 +246,7 @@
 				<path>Aircraft/A320-family/Systems/fmgc-thrust.xml</path>
 			</autopilot>
 			<autopilot n="5">
-				<path>Aircraft/A320-family/Systems/libraries.xml</path>
+				<path>Aircraft/A320-family/Systems/core-rules.xml</path>
 			</autopilot>
 			<autopilot n="6">
 				<path>Aircraft/A320-family/Systems/upper-ecam.xml</path>
@@ -328,7 +328,7 @@
 						<binding>
 							<command>nasal</command>
 							<script>
-							libraries.livery.dialog.toggle();
+							core.livery.dialog.toggle();
 							</script>
 						</binding>
 					</item>
@@ -2134,7 +2134,7 @@
 								</and>
 							</condition>
 							<command>nasal</command>
-							<script>libraries.fovZoom(-1);</script>
+							<script>core.fovZoom(-1);</script>
 						</binding>
 					</button>
 					<button n="4">
@@ -2149,7 +2149,7 @@
 								</and>
 							</condition>
 							<command>nasal</command>
-							<script>libraries.fovZoom(1);</script>
+							<script>core.fovZoom(1);</script>
 						</binding>
 					</button>
 				</mode>
@@ -2230,7 +2230,7 @@
 				<desc>Reset zoom to default</desc>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.fovZoom(0);</script>
+					<script>core.fovZoom(0);</script>
 				</binding>
 			</key>
 			<key n="32">
@@ -2452,7 +2452,7 @@
 						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.setView(1);</script>
+					<script>core.setView(1);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2497,7 +2497,7 @@
 						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.setView(2);</script>
+					<script>core.setView(2);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2543,7 +2543,7 @@
 						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.setView(3);</script>
+					<script>core.setView(3);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2589,7 +2589,7 @@
 						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.setView(4);</script>
+					<script>core.setView(4);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2635,7 +2635,7 @@
 						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.setView(5);</script>
+					<script>core.setView(5);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -2683,7 +2683,7 @@
 						<not><property>/options/system/fgcamera-keys-enabled</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.setView(6);</script>
+					<script>core.setView(6);</script>
 				</binding>
 				<binding>
 					<condition>
@@ -3634,7 +3634,7 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.fovZoom(1);</script>
+					<script>core.fovZoom(1);</script>
 				</binding>
 			</key>
 			<key n="89">
@@ -3836,7 +3836,7 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.resetView();</script>
+					<script>core.resetView();</script>
 				</binding>
 			</key>
 			<key n="100">
@@ -4058,7 +4058,7 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.lightsView();</script>
+					<script>core.lightsView();</script>
 				</binding>
 			</key>
 			<key n="106">
@@ -4211,7 +4211,7 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.overheadView();</script>
+					<script>core.overheadView();</script>
 				</binding>
 			</key>
 			<key n="112">
@@ -4281,7 +4281,7 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.aftOverheadView();</script>
+					<script>core.aftOverheadView();</script>
 				</binding>
 			</key>
 			<key n="115">
@@ -4453,7 +4453,7 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.pedestalView();</script>
+					<script>core.pedestalView();</script>
 				</binding>
 			</key>
 			<key n="118">
@@ -4562,7 +4562,7 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.fovZoom(-1);</script>
+					<script>core.fovZoom(-1);</script>
 				</binding>
 			</key>
 			<key n="121">
@@ -4589,7 +4589,7 @@
 						<not><property>/FMGC/keyboard-right</property></not>
 					</condition>
 					<command>nasal</command>
-					<script>libraries.autopilotView();</script>
+					<script>core.autopilotView();</script>
 				</binding>
 			</key>
 			<key n="122">
@@ -4648,7 +4648,7 @@
 				<desc>Cycle speedbrake setting</desc>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.speedbrakeKey();</script>
+					<script>core.speedbrakeKey();</script>
 				</binding>
 			</key>
 			<key n="356">
@@ -4873,14 +4873,14 @@
 		<aircraft>
 			<file>Aircraft/A320-family/Nasal/canvasLiv.nas</file>
 		</aircraft>
-		<libraries>
-			<file>Aircraft/A320-family/Nasal/libraries.nas</file>
+		<core>
+			<file>Aircraft/A320-family/Nasal/aircraft.nas</file>
 			<file>Aircraft/A320-family/Nasal/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/controls-override.nas</file>
 			<file>Aircraft/A320-family/Nasal/shake.nas</file>
 			<file>Aircraft/A320-family/Nasal/sounds.nas</file>
 			<file>Aircraft/A320-family/Nasal/view-controller.nas</file>
-		</libraries>
+		</core>
 		<acconfig>
 			<file>Aircraft/A320-family/AircraftConfig/acconfig.nas</file>
 		</acconfig>
