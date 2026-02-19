@@ -459,6 +459,24 @@ var canvas_pfd = {
 					obj["ALT_digit_DN"].setText(sprintf("%5d", val.altitudeAutopilot));
 				}
 			}),
+			# If managedAlt is true, then ALT related colors are magenta, otherwise blue.
+			props.UpdateManager.FromHashValue("managedAlt", 1, func(val) {
+				if (val) {
+					obj["ALT_digit_UP"].setColor(0.6901,0.3333,0.7450);
+					obj["ALT_digit_DN"].setColor(0.6901,0.3333,0.7450);
+					obj["ALT_target"].setColor(0.6901,0.3333,0.7450);
+					if (fmgc.Modes.PFD.FMA.pitchMode2Armed == "ALT") {
+						obj["FMA_pitcharm2"].setColor(0.6901,0.3333,0.7450);
+					} else {
+						obj["FMA_pitcharm2"].setColor(0.0901,0.6039,0.7176);
+					}
+				} else {
+					obj["ALT_digit_UP"].setColor(0.0901,0.6039,0.7176);
+					obj["ALT_digit_DN"].setColor(0.0901,0.6039,0.7176);
+					obj["ALT_target"].setColor(0.0901,0.6039,0.7176);
+					obj["FMA_pitcharm2"].setColor(0.0901,0.6039,0.7176);
+				}
+			}),
 			props.UpdateManager.FromHashValue("managedSpd", 1, func(val) {
 				if (val) {
 					obj["ASI_target"].setColor(0.6901,0.3333,0.7450);
@@ -1929,6 +1947,7 @@ var canvas_pfd = {
 				} else {
 					me["FMA_pitch_box"].setColor(1,1,1);
 					me["FMA_pitch_box"].show();
+					me["FMA_pitch"].show();
 				}
 			} else {
 				me["FMA_pitch_box"].hide();
@@ -1949,6 +1968,7 @@ var canvas_pfd = {
 			}
 			
 			if (fmgc.Modes.PFD.FMA.rollModeBox == 1 and fmgc.Modes.PFD.FMA.rollMode != " "  and (notification.ap1 or notification.ap2 or notification.fd1 or notification.fd2)) {
+				me["FMA_roll"].show();
 				me["FMA_roll_box"].show();
 			} else {
 				me["FMA_roll_box"].hide();
@@ -2197,9 +2217,11 @@ var input = {
 	du1Lgt: "/controls/lighting/DU/du1",
 	du6Lgt: "/controls/lighting/DU/du6",
 	attSwitch: "/controls/navigation/switching/att-hdg",
+	managedAlt: "/it-autoflight/internal/mng-alt",
 	
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",
+	altitude: "/instrumentation/altimeter/indicated-altitude-ft",
 	pitchPFD: "/instrumentation/pfd/pitch-deg-non-linear",
 	horizonGround: "/instrumentation/pfd/horizon-ground",
 	horizonPitch: "/instrumentation/pfd/horizon-pitch",

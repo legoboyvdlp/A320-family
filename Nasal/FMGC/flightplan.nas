@@ -10,7 +10,6 @@ var courseDistanceFrom = nil;
 var sizeWP = nil;
 var magTrueError = 0;
 var storeCourse = nil;
-
 var DEBUG_DISCONT = 0;
 
 # Props.getNode
@@ -69,10 +68,9 @@ var flightPlanController = {
 		setprop("/autopilot/route-manager/vnav/ec/latitude-deg", 0); # necessary to prevent canvas glitching out because properties don't exist
 		setprop("/autopilot/route-manager/vnav/ed/latitude-deg", 0); 
 		setprop("/autopilot/route-manager/vnav/ec/longitude-deg", 0); 
-		setprop("/autopilot/route-manager/vnav/ed/longitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/ed/longitude-deg", 0);
 		setprop("/autopilot/route-manager/vnav/ec/show", 0); 
 		setprop("/autopilot/route-manager/vnav/ed/show", 0); 
-		
 		me.flightplans[2].activate();
 	},
 	
@@ -773,9 +771,30 @@ var flightPlanController = {
 
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
+	# Get the next altitude constraint that is either at, or at or below
+	getClbAltConst: func() {
+		if (me.currentToWptIndex.getValue() < 0) {
+			return;
+		}
+		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and me.flightplans[2].getWP(i).wp_role == "sid") {
+				# print("clb alt const is " ~ int(me.flightplans[2].getWP(i).alt_cstr));
+				return [me.flightplans[2].getWP(i).alt_cstr,i];
+			}
+		}
+		return [1000000000000000,0];
+	},
+	getNextClbSpdConst: func() {
+		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+			spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+			if (spdCstr != 0 and spdCstr != nil and me.flightplans[2].getWP(i).wp_role == "sid") {
+				return [spdCstr,i];
+			}
+		}
+		return [1000000000000000000,0];
+	},
 	
-	
-	calculateLvlOffPoint: func(deltaAltitude) {
+	calculateLvlOffPoint: func(deltaAltitude, isMng) {
 		me._verticalSpeedVal = fmgc.Internal.vs.getValue();
 		if (me._verticalSpeedVal != 0) {
 			me.distLvl = (deltaAltitude * pts.Velocities.groundspeedKt.getValue()) / (fmgc.Internal.vs.getValue() * 60);
@@ -796,18 +815,44 @@ var flightPlanController = {
 		}
 		
 		if (deltaAltitude >= 100 and me.lvlOffPoint != nil) {
+			if (isMng) {
+				setprop("/autopilot/route-manager/vnav/ec/alt-cstr", 1);
+			} else {
+				setprop("/autopilot/route-manager/vnav/ec/alt-cstr", 0);
+			}
 			setprop("/autopilot/route-manager/vnav/ec/latitude-deg", me.lvlOffPoint.lat); 
 			setprop("/autopilot/route-manager/vnav/ec/longitude-deg", me.lvlOffPoint.lon);
 			setprop("/autopilot/route-manager/vnav/ec/show", 1); 
 			setprop("/autopilot/route-manager/vnav/ed/show", 0); 
 		} elsif (deltaAltitude <= -100 and me.lvlOffPoint != nil) {
+			if (isMng) {
+				setprop("/autopilot/route-manager/vnav/ed/alt-cstr", 1);
+			} else {
+				setprop("/autopilot/route-manager/vnav/ed/alt-cstr", 0);
+			}
+			setprop("/autopilot/route-manager/vnav/ec/show", 0); 
 			setprop("/autopilot/route-manager/vnav/ed/latitude-deg", me.lvlOffPoint.lat); 
 			setprop("/autopilot/route-manager/vnav/ed/longitude-deg", me.lvlOffPoint.lon);
-			setprop("/autopilot/route-manager/vnav/ec/show", 0); 
-			setprop("/autopilot/route-manager/vnav/ed/show", 1); 
+			setprop("/autopilot/route-manager/vnav/ed/show", 1);
 		}
 	},
-	
+
+	# Calculate the point of the SC symbol to be placed on the ND
+	calculateClbPoint: func(isMng) {
+		if (me.currentToWptIndex.getValue() < 0 or (fmgc.FMGCInternal.phase > 3 and fmgc.FMGCInternal.phase != 6)) {
+			return;
+		}
+		wptIndex = me.getClbAltConst()[1];
+		clbPoint = me.flightplans[2].pathGeod(wptIndex,0);
+		if (isMng) {
+			setprop("/autopilot/route-manager/vnav/sc/vnav-armed", 1);
+		} else {
+			setprop("/autopilot/route-manager/vnav/sc/vnav-armed", 0);
+		}
+		setprop("/autopilot/route-manager/vnav/sc/latitude-deg", clbPoint.lat); 
+		setprop("/autopilot/route-manager/vnav/sc/longitude-deg",clbPoint.lon);
+		setprop("/autopilot/route-manager/vnav/sc/show", 1);
+	},
 	# insertPlaceBearingDistance - insert PBD waypoint at specified index,
 	# at some specified bearing, distance from a specified location
 	# args: wp, index, plan
@@ -942,10 +987,13 @@ var flightPlanController = {
 		if (runDecel) {
 			me.calculateDecelPoint();
 		}
+		isMng = Internal.altManaged.getBoolValue();
 		
-		var deltaAltitude = fmgc.Input.alt.getValue() - pts.Instrumentation.Altimeter.indicatedFt.getValue();
+		me.calculateClbPoint(isMng);
+		var deltaAltitude = fmgc.Internal.alt.getValue() - pts.Instrumentation.Altimeter.indicatedFt.getValue();
 		if (abs(deltaAltitude) >= 100) {
-			me.calculateLvlOffPoint(deltaAltitude);
+			me.calculateLvlOffPoint(deltaAltitude, isMng);
+			
 		} else {
 			setprop("/autopilot/route-manager/vnav/ec/show", 0); 
 			setprop("/autopilot/route-manager/vnav/ed/show", 0); 

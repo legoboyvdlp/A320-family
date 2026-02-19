@@ -703,10 +703,16 @@
 				<pref-height>25</pref-height>
 				<legend>&lt;&lt;</legend>
 				<enable>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
-					</equals>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>8</value>
+						</equals>
+					</or>
 				</enable>
 				<binding>
 					<command>nasal</command>
@@ -720,10 +726,16 @@
 				<pref-height>25</pref-height>
 				<legend>&lt;</legend>
 				<enable>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
-					</equals>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>8</value>
+						</equals>
+					</or>
 				</enable>
 				<binding>
 					<command>nasal</command>
@@ -738,10 +750,16 @@
 				<property>/it-autoflight/input/vs</property>
 				<live>true</live>
 				<enable>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
-					</equals>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>8</value>
+						</equals>
+					</or>
 				</enable>
 			</input>
 			
@@ -752,10 +770,16 @@
 				<pref-height>25</pref-height>
 				<legend>&gt;</legend>
 				<enable>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
-					</equals>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>1</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/output/vert</property>
+							<value>8</value>
+						</equals>
+					</or>
 				</enable>
 				<binding>
 					<command>nasal</command>
@@ -770,10 +794,16 @@
 				<pref-height>25</pref-height>
 				<legend>&gt;&gt;</legend>
 				<enable>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>1</value>
-					</equals>
+						<or>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>1</value>
+							</equals>
+							<equals>
+								<property>/it-autoflight/output/vert</property>
+								<value>8</value>
+							</equals>
+						</or>
 				</enable>
 				<binding>
 					<command>nasal</command>
