@@ -674,19 +674,17 @@ var ITAF = {
 		if (isGeo) {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
-			print("first vs geo: " ~ vs);
 			if (vs < -2000) {
 				vs = -2000;
 			}
 			idleDescent = 0;
-			print("renewed vs geo: " ~ vs);
 		} else {
 			properDeltaAlt = (distance - me.calculateSpeedDistance()) * 318 ;
 			if (properDeltaAlt < 0) {
 				properDeltaAlt = 0;
 			}
 			vs = Internal.targetFpmFlch.getValue();
-			if (deltaAlt < properDeltaAlt and vs < -1000) {
+			if (deltaAlt < properDeltaAlt) {
 				idleDescent = 0;
 				vs = -1000;
 			} else {
@@ -695,7 +693,6 @@ var ITAF = {
 		} if (vs > 0) {
 			vs = 0;
 		}
-		print("final vs: " ~ vs);
 		return vs;
 	},
 
@@ -714,6 +711,7 @@ var ITAF = {
 			# me.updateGsArm(0);
 			Output.vert.setValue(0);
 			me.resetClimbRateLim();
+			print("setvertmode ALT HLD");
 			me.updateVertText("ALT HLD");
 			me.syncAlt();
 			me.updateThrustMode();
@@ -792,7 +790,7 @@ var ITAF = {
 			Output.vert.setValue(7);
 			me.updateThrustMode();
 		} else if (n == 8) { # CLB/DES
-			Internal.managedModeOn.setBoolValue(0);
+			Internal.altCaptureActive = 0;
 			if (Input.altDiff >= 0) {
 				Internal.managedModeOn.setBoolValue(1);
 				managedClb();
@@ -1165,6 +1163,7 @@ var armClb = func {
 var armDes = func {
 	# print("arming des " ~ Text.vert.getValue());
 	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300)) {
+		print("set DES text");
 		ITAF.updateVertText("DES");
 		ITAF.setVertMode(8); # DES mode
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {

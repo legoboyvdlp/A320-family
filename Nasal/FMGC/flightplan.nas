@@ -897,8 +897,9 @@ var flightPlanController = {
 			" named " ~ me.flightplans[2].getWP(wpIndex).wp_name ~ 
 			" is " ~ altCstr ~ " ft with no intervening constraints");
 		
-		geoWptIndex = wpIndex;
-
+		if (!isGeo) {
+			geoWptIndex = wpIndex;
+		}
 		return [altCstr, distanceToCstr, (isGeo ? 1 : 0)];
 	},
 
