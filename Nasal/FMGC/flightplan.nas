@@ -859,9 +859,7 @@ var flightPlanController = {
 							me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
 							" ft and extrapolated ten thousand of " ~ 
 							me.getExtrapolatedOneThousandVSDescent(distanceToCstr2) ~ " ft at distance " ~ distanceToCstr2 ~ " nm");
-						if (geoWptIndex == nil or geoWptIndex > j) {
-							geoWptIndex = j;
-						}
+						geoWptIndex = j;
 						return [altCstr2, distanceToCstr2, 0];
 					}
 				}
@@ -887,9 +885,7 @@ var flightPlanController = {
 							me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
 							" ft and extrapolated ten thousand of " ~ 
 							me.getExtrapolatedOneThousandVSDescent(distanceToCstr2) ~ " ft at distance " ~ distanceToCstr2 ~ " nm");
-						if (geoWptIndex == nil or geoWptIndex > j) {
-							geoWptIndex = j;
-						}
+						geoWptIndex = j;
 						return [altCstr2, distanceToCstr2, 0];
 					}
 				}
@@ -901,9 +897,7 @@ var flightPlanController = {
 			" named " ~ me.flightplans[2].getWP(wpIndex).wp_name ~ 
 			" is " ~ altCstr ~ " ft with no intervening constraints");
 		
-		if (geoWptIndex == nil or geoWptIndex > wpIndex) {
-			geoWptIndex = wpIndex;
-		}
+		geoWptIndex = wpIndex;
 
 		return [altCstr, distanceToCstr, (isGeo ? 1 : 0)];
 	},
