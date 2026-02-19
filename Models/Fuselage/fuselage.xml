@@ -2503,7 +2503,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				 libraries.triggerDoor(libraries.cargofwd, "cargofwd", "forward cargo");
+				 core.triggerDoor(core.cargofwd, "cargofwd", "forward cargo");
 				</script>
 			</binding>
 		</action>
@@ -2540,7 +2540,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				 libraries.triggerDoor(libraries.cargoaft, "cargoaft", "aft cargo");
+				 core.triggerDoor(core.cargoaft, "cargoaft", "aft cargo");
 				</script>
 			</binding>
 		</action>
@@ -2577,7 +2577,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				 libraries.triggerDoor(libraries.cargobulk, "cargobulk", "bulk cargo");
+				 core.triggerDoor(core.cargobulk, "cargobulk", "bulk cargo");
 				</script>
 			</binding>
 		</action>
@@ -2635,7 +2635,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				 libraries.triggerDoor(libraries.doorl1, "doorl1", "L1");
+				 core.triggerDoor(core.doorl1, "doorl1", "L1");
 				</script>
 			</binding>
 		</action>
@@ -2732,7 +2732,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				 libraries.triggerDoor(libraries.doorl4, "doorl4", "L2");
+				 core.triggerDoor(core.doorl4, "doorl4", "L2");
 				</script>
 			</binding>
 		</action>
@@ -2829,7 +2829,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				 libraries.triggerDoor(libraries.doorr1, "doorr1", "R1");
+				 core.triggerDoor(core.doorr1, "doorr1", "R1");
 				</script>
 			</binding>
 		</action>
@@ -2926,7 +2926,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				 libraries.triggerDoor(libraries.doorr4, "doorr4", "R2");
+				 core.triggerDoor(core.doorr4, "doorr4", "R2");
 				</script>
 			</binding>
 		</action>

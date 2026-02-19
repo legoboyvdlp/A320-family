@@ -3260,7 +3260,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				 libraries.triggerDoor(libraries.windowLeft, "windowLeft", "left window");
+				 core.triggerDoor(core.windowLeft, "windowLeft", "left window");
 				</script>
 			</binding>
 		</action>
@@ -3275,7 +3275,7 @@
 			<binding>
 				<command>nasal</command>
 				<script>
-				 libraries.triggerDoor(libraries.windowRight, "windowRight", "right window");
+				 core.triggerDoor(core.windowRight, "windowRight", "right window");
 				</script>
 			</binding>
 		</action>
@@ -4101,7 +4101,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				libraries.toggleSTD();
+				core.toggleSTD();
 				</script>
 			</binding>
 			<binding>
@@ -4273,7 +4273,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				libraries.toggleSTD();
+				core.toggleSTD();
 				</script>
 			</binding>
 			<binding>
@@ -7940,7 +7940,7 @@
 				</condition>
 				<command>nasal</command>
 				<script>
-				libraries.toggleSTDIESI();
+				core.toggleSTDIESI();
 				</script>
 			</binding>
 			<binding>
@@ -8079,7 +8079,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -8142,7 +8142,7 @@
 				</binding>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.pushbutton();</script>
+					<script>core.pushbutton();</script>
 				</binding>
 			</mod-up>
 		</action>
@@ -8199,7 +8199,7 @@
 				</binding>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.pushbutton();</script>
+					<script>core.pushbutton();</script>
 				</binding>
 			</mod-up>
 		</action>
@@ -9142,7 +9142,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -9204,7 +9204,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -9295,7 +9295,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -9412,7 +9412,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -9481,7 +9481,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -9550,7 +9550,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -9879,7 +9879,7 @@
 			<button>0</button>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.lTray();</script>
+				<script>core.lTray();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -9903,7 +9903,7 @@
 			<button>0</button>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.rTray();</script>
+				<script>core.rTray();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -9928,7 +9928,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.lFootrest();</script>
+				<script>core.lFootrest();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -9963,7 +9963,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.rFootrest();</script>
+				<script>core.rFootrest();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -10627,7 +10627,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -10699,7 +10699,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -10959,7 +10959,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11165,7 +11165,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11230,7 +11230,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11295,7 +11295,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11360,7 +11360,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11425,7 +11425,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11490,7 +11490,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11555,7 +11555,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11620,7 +11620,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11685,7 +11685,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11750,7 +11750,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11815,7 +11815,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11870,7 +11870,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11934,7 +11934,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -11999,7 +11999,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -12067,7 +12067,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -12134,7 +12134,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -12189,13 +12189,13 @@
 		<increase>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.slewPitchWheel(1);</script>
+				<script>core.slewPitchWheel(1);</script>
 			</binding>
 		</increase>
 		<decrease>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.slewPitchWheel(-1);</script>
+				<script>core.slewPitchWheel(-1);</script>
 			</binding>
 		</decrease>
 		<hovered>
@@ -14465,7 +14465,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -14529,7 +14529,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -14592,7 +14592,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -14656,7 +14656,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -14719,7 +14719,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -14792,7 +14792,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -14855,7 +14855,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -15199,7 +15199,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -15264,7 +15264,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -15328,7 +15328,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -15392,7 +15392,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -15459,7 +15459,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -15586,7 +15586,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -15680,7 +15680,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -15747,7 +15747,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -15847,7 +15847,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -15947,7 +15947,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -16047,7 +16047,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -16147,7 +16147,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -16247,7 +16247,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -16347,7 +16347,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -16440,7 +16440,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -19163,7 +19163,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -19226,7 +19226,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -19289,7 +19289,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -19353,7 +19353,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -19416,7 +19416,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -19489,7 +19489,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -19552,7 +19552,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -19896,7 +19896,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -19961,7 +19961,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -20025,7 +20025,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -20089,7 +20089,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -20156,7 +20156,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -20265,7 +20265,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -20341,7 +20341,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -20408,7 +20408,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -20508,7 +20508,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -20608,7 +20608,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -20708,7 +20708,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -20808,7 +20808,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -20908,7 +20908,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -21008,7 +21008,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -21101,7 +21101,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -23657,7 +23657,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.retractSpeedbrake();</script>
+				<script>core.retractSpeedbrake();</script>
 			</binding>
 		</action>
 		<action>
@@ -23665,7 +23665,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.deploySpeedbrake();</script>
+				<script>core.deploySpeedbrake();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -23906,7 +23906,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -23947,7 +23947,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -24017,7 +24017,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -24082,7 +24082,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -24187,7 +24187,7 @@
 					<property>controls/cockpit/blue-ovrd-guard</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -24295,7 +24295,7 @@
 					<property>controls/cockpit/fadec-gnd-pwr-1-guard</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -24402,7 +24402,7 @@
 					<property>controls/cockpit/fadec-gnd-pwr-2-guard</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -24520,7 +24520,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -24601,7 +24601,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -24668,7 +24668,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -24768,7 +24768,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -24868,7 +24868,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -24968,7 +24968,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -25068,7 +25068,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -25168,7 +25168,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -25268,7 +25268,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -25361,7 +25361,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -27188,7 +27188,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -27350,7 +27350,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -27824,7 +27824,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -27909,7 +27909,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -28345,7 +28345,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -28425,7 +28425,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -28505,7 +28505,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -28586,7 +28586,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -28649,7 +28649,7 @@
 		<increase>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.increaseManVS();</script>
+				<script>core.increaseManVS();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -28660,7 +28660,7 @@
 		<decrease>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.decreaseManVS();</script>
+				<script>core.decreaseManVS();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -28711,7 +28711,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -28807,7 +28807,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -29130,7 +29130,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -29210,7 +29210,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -29290,7 +29290,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -29394,7 +29394,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -29647,7 +29647,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -29733,7 +29733,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>=
 			<mod-up>
 				<binding>
@@ -29934,7 +29934,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -30004,7 +30004,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -30123,7 +30123,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.CVR_test();</script>
+				<script>core.CVR_test();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -30173,7 +30173,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.MechCallFunc();</script>
+				<script>core.MechCallFunc();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -30232,7 +30232,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.CabinCallFunc();</script>
+				<script>core.CabinCallFunc();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -30291,7 +30291,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.CabinCallFunc();</script>
+				<script>core.CabinCallFunc();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -30350,7 +30350,7 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.CabinCallFunc();</script>
+				<script>core.CabinCallFunc();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -30459,7 +30459,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -30542,7 +30542,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -30661,7 +30661,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -30780,7 +30780,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -31069,7 +31069,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -31137,7 +31137,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -31193,7 +31193,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<mod-up>
 				<binding>
@@ -31253,7 +31253,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -31307,7 +31307,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -31361,7 +31361,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -31421,7 +31421,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -31475,7 +31475,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -31524,7 +31524,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -31603,7 +31603,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -31703,7 +31703,7 @@
 					<property>controls/OH/protectors/blueelec</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -31813,7 +31813,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -31892,7 +31892,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -31971,7 +31971,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -32057,7 +32057,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -32136,7 +32136,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -32224,7 +32224,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -32312,7 +32312,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -32400,7 +32400,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -32479,7 +32479,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -32567,7 +32567,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -32646,7 +32646,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -32914,7 +32914,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -32999,7 +32999,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33123,7 +33123,7 @@
 					<property>controls/OH/protectors/ramair</property>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33199,7 +33199,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33284,7 +33284,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33363,7 +33363,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33448,7 +33448,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33528,7 +33528,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33580,7 +33580,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33660,7 +33660,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33733,7 +33733,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33913,7 +33913,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -33998,7 +33998,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34074,7 +34074,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34158,7 +34158,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34228,7 +34228,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34312,7 +34312,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34497,7 +34497,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34577,7 +34577,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34657,7 +34657,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34737,7 +34737,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34817,7 +34817,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34897,7 +34897,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -34977,7 +34977,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -35104,7 +35104,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -35155,7 +35155,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -35217,7 +35217,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -35278,7 +35278,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -35339,7 +35339,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<command>property-assign</command>
@@ -35503,7 +35503,7 @@
 			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -35552,7 +35552,7 @@
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding><binding>
 				<command>property-assign</command>
 				<property>controls/cockpit/cargo-fire-test-translate</property>
@@ -35627,7 +35627,7 @@
 			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -35759,7 +35759,7 @@
 			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -35822,7 +35822,7 @@
 			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -35884,7 +35884,7 @@
 			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -35948,7 +35948,7 @@
 			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -36017,7 +36017,7 @@
 			</mod-up>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 		</action>
 		<hovered>
@@ -36164,7 +36164,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -36234,7 +36234,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -36425,7 +36425,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>
@@ -36495,7 +36495,7 @@
 					</equals>
 				</condition>
 				<command>nasal</command>
-				<script>libraries.pushbutton();</script>
+				<script>core.pushbutton();</script>
 			</binding>
 			<binding>
 				<condition>

@@ -1,4 +1,4 @@
-# A320 Main Libraries
+# Airbus A320 Aircraft Core
 # Copyright (c) 2026 Josh Davidson (Octal450)
 
 print("------------------------------------------------");
@@ -123,7 +123,7 @@ setlistener("/controls/doors/doorc-switch",func(a){
 # Systems #
 ###########
 var systemsInitialized = 0;
-var A320Libraries = nil;
+var A320Core = nil;
 
 var systemsInit = func() {
 	systemsInitialized = 0;
@@ -170,8 +170,8 @@ setlistener("/sim/signals/fdm-initialized", func() {
 	fmgc.flightPlanTimer.start();
 	fmgc.WaypointDatabase.read();
 
-	A320Libraries = LibrariesRecipient.new("A320 Libraries");
-	emesary.GlobalTransmitter.Register(A320Libraries);
+	A320Core = CoreRecipient.new("A320 Core");
+	emesary.GlobalTransmitter.Register(A320Core);
 });
 
 var systemsLoop = func(notification) {
@@ -187,7 +187,7 @@ var systemsLoop = func(notification) {
 	atc.Transponders.vector[atc.transponderPanel.atcSel - 1].update(notification);
 	dmc.DMController.loop();
 	atsu.ATSU.loop();
-	libraries.BUTTONS.update();
+	core.BUTTONS.update();
 	
 	pts.Services.Chocks.enableTemp = pts.Services.Chocks.enable.getBoolValue();
 	pts.Velocities.groundspeedKtTemp = pts.Velocities.groundspeedKt.getValue();
@@ -210,11 +210,11 @@ var systemsLoop = func(notification) {
 var ApPanel = {
 	apDisc: func() {
 		cockpit.ApPanel.apDisc();
-		gui.popupTip("libraries.ApPanel is deprecated. Please switch to cockpit.ApPanel.");
+		gui.popupTip("core.ApPanel is deprecated. Please switch to cockpit.ApPanel.");
 	},
 	atDisc: func() {
 		cockpit.ApPanel.atDisc();
-		gui.popupTip("libraries.ApPanel is deprecated. Please switch to cockpit.ApPanel.");
+		gui.popupTip("core.ApPanel is deprecated. Please switch to cockpit.ApPanel.");
 	},
 };
 
@@ -352,12 +352,12 @@ setlistener("/controls/flight/auto-coordination", func() {
 }, 0, 0);
 
 # Emesary
-var LibrariesRecipient =
+var CoreRecipient =
 {
 	new: func(_ident)
 	{
-		var NewLibrariesRecipient = emesary.Recipient.new(_ident);
-		NewLibrariesRecipient.Receive = func(notification)
+		var NewCoreRecipient = emesary.Recipient.new(_ident);
+		NewCoreRecipient.Receive = func(notification)
 		{
 			if (notification.NotificationType == "FrameNotification")
 			{
@@ -368,12 +368,12 @@ var LibrariesRecipient =
 			}
 			return emesary.Transmitter.ReceiptStatus_NotProcessed;
 		};
-		return NewLibrariesRecipient;
+		return NewCoreRecipient;
 	},
 };
 
 var input = {
-	# Libraries
+	# Core
 	"gearPosNorm": "/gear/gear[0]/position-norm",
 	"gearPosNorm1": "/gear/gear[1]/position-norm",
 	"gearPosNorm2": "/gear/gear[2]/position-norm",
@@ -383,7 +383,7 @@ var input = {
 };
 
 foreach (var name; keys(input)) {
-	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Libraries", name, input[name]));
+	emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("A320 Core", name, input[name]));
 }
 
 var hideCanvas = props.globals.getNode("/options/hide-canvas-outside");

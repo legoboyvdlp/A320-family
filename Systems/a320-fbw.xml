@@ -29,7 +29,7 @@
 	<property value="0">/systems/fbw/yaw/tc-p-gain</property>
 	<property value="0">/systems/fbw/yaw/tc-d-gain</property>
 	
-	<channel name="Libraries">
+	<channel name="Core">
 		
 		<switch name="/systems/fbw/roll/gain-switch">
 			<default value="0"/>
