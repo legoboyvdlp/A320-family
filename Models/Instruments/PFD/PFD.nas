@@ -459,8 +459,8 @@ var canvas_pfd = {
 					obj["ALT_digit_DN"].setText(sprintf("%5d", val.altitudeAutopilot));
 				}
 			}),
-			# If altManaged is true, then ALT related colors are magenta, otherwise blue.
-			props.UpdateManager.FromHashValue("altManaged", 1, func(val) {
+			# If managedAlt is true, then ALT related colors are magenta, otherwise blue.
+			props.UpdateManager.FromHashValue("managedAlt", 1, func(val) {
 				if (val) {
 					obj["ALT_digit_UP"].setColor(0.6901,0.3333,0.7450);
 					obj["ALT_digit_DN"].setColor(0.6901,0.3333,0.7450);
@@ -2249,7 +2249,7 @@ var input = {
 	du1Lgt: "/controls/lighting/DU/du1",
 	du6Lgt: "/controls/lighting/DU/du6",
 	attSwitch: "/controls/navigation/switching/att-hdg",
-	altManaged: "/it-autoflight/internal/mng-alt",
+	managedAlt: "/it-autoflight/internal/mng-alt",
 	vdevDot: "/it-autoflight/internal/vdev-dot",
 	
 	athr: "/it-autoflight/output/athr",
