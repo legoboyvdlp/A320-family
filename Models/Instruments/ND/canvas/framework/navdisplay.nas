@@ -721,7 +721,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.selHdgLine2.hide();
 		me.symbols.curHdgPtr.setVisible(staPtrVis);
 		me.symbols.HdgBugCRT.setVisible(staPtrVis and !dispLCD);
-		if (me.get_switch("toggle_track_heading")) {
+		if (getprop("/it-autoflight/custom/trk-fpa")) {
 			me.symbols.HdgBugLCD.hide();
 			if (hdg_bug_active) {
 				me.symbols.TrkBugLCD.setVisible(staPtrVis and dispLCD);
@@ -773,7 +773,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.selHdgLine.hide();
 		me.symbols.curHdgPtr2.setVisible(staPtrVis);
 		me.symbols.HdgBugCRT2.setVisible(staPtrVis and !dispLCD);
-		if (me.get_switch("toggle_track_heading")) {
+		if (getprop("/it-autoflight/custom/trk-fpa")) {
 			me.symbols.HdgBugLCD2.hide();
 			if (hdg_bug_active) {
 				me.symbols.TrkBugLCD2.setVisible(staPtrVis and dispLCD);
