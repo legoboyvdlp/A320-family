@@ -790,14 +790,24 @@ var ITAF = {
 			Output.vert.setValue(7);
 			me.updateThrustMode();
 		} else if (n == 8) { # CLB/DES
-			Internal.altCaptureActive = 0;
-			if (Input.altDiff >= 0) {
-				Internal.managedModeOn.setBoolValue(1);
-				managedClb();
-			} else {
-				Internal.managedModeOn.setBoolValue(1);
-				ITAF.updateVertText("DES");
-				managedDes();
+			
+			if (abs(Input.altDiff) >= 250) {
+				Internal.altCaptureActive = 0;
+				if (Input.altDiff >= 0) {
+					Internal.managedModeOn.setBoolValue(1);
+					managedClb();
+				} else {
+					Internal.managedModeOn.setBoolValue(1);
+					ITAF.updateVertText("DES");
+					managedDes();
+				}
+			} else { # ALT CAP
+				Internal.flchActive = 0;
+				Internal.alt.setValue(Input.alt.getValue());
+				Internal.altCaptureActive = 1;
+				Output.vert.setValue(0);
+				me.updateVertText("ALT CAP");
+				me.updateThrustMode();
 			}
 		} else if (n == 9) { # NONE
 			# managedDeson = "False";
@@ -1118,7 +1128,7 @@ var managedDes = func {
 		alt = nextSelectedAlt;
 		Internal.altManaged.setValue(0);
 	}
-	deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+	deltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
 
 	if (deltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
@@ -1163,8 +1173,6 @@ var armClb = func {
 var armDes = func {
 	# print("arming des " ~ Text.vert.getValue());
 	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300)) {
-		print("set DES text");
-		ITAF.updateVertText("DES");
 		ITAF.setVertMode(8); # DES mode
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
 		# print(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue());
