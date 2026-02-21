@@ -868,11 +868,11 @@ var flightPlanController = {
 				adjustedDistanceToCstr2 = math.max(adjustedDistanceToCstr2, 0.000000000000000000000000000000000000000000001);
 				
 				if (isGeo) {
-					if (altCstr2 > me.getExtrapolatedGeoAltitude(distanceToCstr, adjustedDistanceToCstr2, altCstr)) {
+					if (altCstr2 > me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr)) {
 						print("Geo Alt Constraint at WP index " ~ j ~ 
 							" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
 							" is " ~ altCstr2 ~ " ft, which is higher than extrapolated altitude " ~ 
-							me.getExtrapolatedGeoAltitude(distanceToCstr, adjustedDistanceToCstr2, altCstr) ~ 
+							me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
 							" ft at distance " ~ adjustedDistanceToCstr2 ~ " nm and speed cstr of " ~ speedCstr2);
 						return [altCstr2, adjustedDistanceToCstr2, 1];
 					} else {
@@ -884,12 +884,12 @@ var flightPlanController = {
 					}
 				} else {
 					
-					if (altCstr2 > me.getExtrapolatedFirstAltitude(distanceToCstr, adjustedDistanceToCstr2, altCstr) or 
+					if (altCstr2 > me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) or 
 						altCstr2 > me.getExtrapolatedOneThousandVSDescent(adjustedDistanceToCstr2)) {
 						print("First Alt Constraint at WP index " ~ j ~ 
 							" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
 							" is " ~ altCstr2 ~ " ft, which is higher than extrapolated altitude " ~ 
-							me.getExtrapolatedFirstAltitude(distanceToCstr, adjustedDistanceToCstr2, altCstr) ~ 
+							me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
 							" ft and extrapolated ten thousand of " ~ 
 							me.getExtrapolatedOneThousandVSDescent(adjustedDistanceToCstr2) ~ " ft at distance " ~ adjustedDistanceToCstr2 ~ " nm and speedcstr of " ~ speedCstr2);
 						geoWptIndex = j;
@@ -909,22 +909,22 @@ var flightPlanController = {
 				adjustedDistanceToCstr2 = distanceToCstr2 - (currentSpeed - speedCstr2)/10;
 				adjustedDistanceToCstr2 = math.max(adjustedDistanceToCstr2, 0.000000000000000000000000000000000000000000001);
 				if (isGeo) {
-					if (altCstr2 < me.getExtrapolatedGeoAltitude(distanceToCstr, adjustedDistanceToCstr2, altCstr)) {
+					if (altCstr2 < me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr)) {
 						
 						print("Geo Alt Constraint at WP index " ~ j ~ 
 							" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
 							" is " ~ altCstr2 ~ " ft, which is lower than extrapolated altitude " ~ 
-							me.getExtrapolatedGeoAltitude(distanceToCstr, adjustedDistanceToCstr2, altCstr) ~ 
+							me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
 							" ft at distance " ~ adjustedDistanceToCstr2 ~ " nm and speed cstr of " ~ speedCstr2);
 						return [altCstr2, adjustedDistanceToCstr2, 1];
 					}
 				} else {
-					if (altCstr2 < me.getExtrapolatedFirstAltitude(distanceToCstr, adjustedDistanceToCstr2, altCstr) or altCstr2 < me.getExtrapolatedOneThousandVSDescent(adjustedDistanceToCstr2)) {
+					if (altCstr2 < me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) or altCstr2 < me.getExtrapolatedOneThousandVSDescent(adjustedDistanceToCstr2)) {
 						
 						print("First Alt Constraint at WP index " ~ j ~ 
 							" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
 							" is " ~ altCstr2 ~ " ft, which is lower than extrapolated altitude " ~ 
-							me.getExtrapolatedFirstAltitude(distanceToCstr, adjustedDistanceToCstr2, altCstr) ~ 
+							me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
 							" ft and extrapolated ten thousand of " ~ 
 							me.getExtrapolatedOneThousandVSDescent(adjustedDistanceToCstr2) ~ " ft at distance " ~ adjustedDistanceToCstr2 ~ " nm and speed cstr of " ~ speedCstr2);
 						geoWptIndex = j;

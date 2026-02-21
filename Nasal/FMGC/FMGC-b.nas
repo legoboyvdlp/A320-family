@@ -643,20 +643,11 @@ var ITAF = {
 		} 
 	},
 
-	calculateSpeedDistance: func() {
-		return 0;
-		# speed = Velocities.indicatedAirspeedKt.getValue();
-		# distance = (speed - 200)/10;
-		# if (distance < 0) {
-		# 	distance = 0;
-		# }
-		# return distance;
-	},
 
 	calculateVdev: func() {
 		output = fmgc.flightPlanController.getDesAltConst();
 		nextManagedAlt = output[0];
-		distance = output[1] - me.calculateSpeedDistance();
+		distance = output[1];
 		if (distance < 0) {
 			distance = 0;
 		}
@@ -674,10 +665,13 @@ var ITAF = {
 		if (isGeo) {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
+			print("GEO VS: " ~ vs ~ "and gs*5: " ~ -1*gs*5);
 			vs = math.max(vs, -1*gs*5);
+			
 			idleDescent = 0;
+
 		} else {
-			properDeltaAlt = (distance - me.calculateSpeedDistance()) * 318 ;
+			properDeltaAlt = distance * 318;
 			properDeltaAlt = math.max(properDeltaAlt, 0);
 			vs = Internal.targetFpmFlch.getValue();
 			if (deltaAlt < properDeltaAlt) {
@@ -688,6 +682,7 @@ var ITAF = {
 			}
 		vs = math.min(vs, 0);
 		return vs;
+		}
 	},
 
 	setVs: func(vs) {
@@ -1121,11 +1116,11 @@ var managedDes = func {
 		alt = nextSelectedAlt;
 		Internal.altManaged.setValue(0);
 	}
-	deltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
-
-	if (deltaAlt >= 300 and Text.vert.getValue() == "DES") {
+	managedDeltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+	realDeltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
+	if (realDeltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
-		ITAF.setVs(ITAF.getVs(distance, deltaAlt, isGeo));
+		ITAF.setVs(ITAF.getVs(distance, managedDeltaAlt, isGeo));
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
 		
