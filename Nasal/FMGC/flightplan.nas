@@ -790,6 +790,26 @@ var flightPlanController = {
 		return extrapolatedAlt;
 	},
 
+	calculateManagedLvlOffAltitude: func() {
+		lastAltCstr = nil;
+		lastAltCstrType = nil;
+		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+			if ((me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach") and 
+				me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0) {
+				altCstr = me.flightplans[2].getWP(i).alt_cstr;
+				altCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
+				if (lastAltCstr != nil and lastAltCstr == altCstr and (((lastAltCstrType == "at" or lastAltCstrType == "between") and (altCstrType == "at" or altCstrType == "between" or altCstrType == "above")) or (lastAltCstrType == "below" and (altCstrType == "at" or altCstrType == "between" or altCstrType == "above")))) {
+					return altCstr;
+				} elsif (i <= geoWptIndex and (altCstrType == "above" or altCstrType == "between" or altCstrType == "at") and me.getExtrapolatedOneThousandVSDescent(distanceToCstr2) < altCstr) {
+					return altCstr;
+				}
+				lastAltCstr = altCstr;
+				lastAltCstrType = altCstrType;
+			}
+		}
+		return 0;
+	},
+
 	getAltConst: func(isGeo) {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
