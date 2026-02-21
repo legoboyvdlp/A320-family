@@ -800,8 +800,6 @@ var flightPlanController = {
 				altCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
 				if (lastAltCstr != nil and lastAltCstr == altCstr and (((lastAltCstrType == "at" or lastAltCstrType == "between") and (altCstrType == "at" or altCstrType == "between" or altCstrType == "above")) or (lastAltCstrType == "below" and (altCstrType == "at" or altCstrType == "between" or altCstrType == "above")))) {
 					return altCstr;
-				} elsif (i <= geoWptIndex and (altCstrType == "above" or altCstrType == "between" or altCstrType == "at") and me.getExtrapolatedOneThousandVSDescent(distanceToCstr2) < altCstr) {
-					return altCstr;
 				}
 				lastAltCstr = altCstr;
 				lastAltCstrType = altCstrType;
