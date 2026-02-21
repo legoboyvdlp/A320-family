@@ -674,8 +674,8 @@ var ITAF = {
 		if (isGeo) {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
-			if (vs < -2000) {
-				vs = -2000;
+			if (vs < -1*gs*5) {
+				vs = -1*gs*5;
 			}
 			idleDescent = 0;
 		} else {
@@ -711,7 +711,6 @@ var ITAF = {
 			# me.updateGsArm(0);
 			Output.vert.setValue(0);
 			me.resetClimbRateLim();
-			print("setvertmode ALT HLD");
 			me.updateVertText("ALT HLD");
 			me.syncAlt();
 			me.updateThrustMode();
