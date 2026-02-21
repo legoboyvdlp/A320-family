@@ -1127,14 +1127,13 @@ var managedDes = func {
 		alt = nextSelectedAlt;
 		Internal.altManaged.setValue(0);
 	}
-	deltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
-
-	if (deltaAlt >= 300 and Text.vert.getValue() == "DES") {
+	managedDeltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+	realDeltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
+	if (realDeltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
-		ITAF.setVs(ITAF.getVs(distance, deltaAlt, isGeo));
+		ITAF.setVs(ITAF.getVs(distance, managedDeltaAlt, isGeo));
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
-		
 		settimer(managedDes, 2);
 	}
 };
