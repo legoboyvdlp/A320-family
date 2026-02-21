@@ -674,15 +674,11 @@ var ITAF = {
 		if (isGeo) {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
-			if (vs < -2000) {
-				vs = -2000;
-			}
+			vs = math.max(vs, -1*gs*5);
 			idleDescent = 0;
 		} else {
 			properDeltaAlt = (distance - me.calculateSpeedDistance()) * 318 ;
-			if (properDeltaAlt < 0) {
-				properDeltaAlt = 0;
-			}
+			properDeltaAlt = math.max(properDeltaAlt, 0);
 			vs = Internal.targetFpmFlch.getValue();
 			if (deltaAlt < properDeltaAlt) {
 				idleDescent = 0;
@@ -690,9 +686,7 @@ var ITAF = {
 			} else {
 				idleDescent = 1;
 			}
-		} if (vs > 0) {
-			vs = 0;
-		}
+		vs = math.min(vs, 0);
 		return vs;
 	},
 
@@ -810,7 +804,6 @@ var ITAF = {
 				me.updateThrustMode();
 			}
 		} else if (n == 9) { # NONE
-			# managedDeson = "False";
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			me.updateGsArm(0);
@@ -1137,6 +1130,13 @@ var managedDes = func {
 		ITAF.updateThrustMode();
 		
 		settimer(managedDes, 2);
+	} elsif (Text.vert.getValue() == "DES") {
+		Internal.flchActive = 0;
+		Internal.alt.setValue(Input.alt.getValue());
+		Internal.altCaptureActive = 1;
+		Output.vert.setValue(0);
+		me.updateVertText("ALT CAP");
+		me.updateThrustMode();
 	}
 };
 #To be called when engages into CLB mode, uses the same mechanisism as OP CLB,
