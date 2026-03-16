@@ -1309,6 +1309,7 @@
 					<climb-b type="double">0.6</climb-b>
 					<climb-t type="double">0.65</climb-t>
 					<idle-t type="double">0.01</idle-t>
+					<idle-b type="double">0</idle-b>
 					<mct-b type="double">0.78</mct-b>
 					<mct-t type="double">0.83</mct-t>
 					<toga-b type="double">0.95</toga-b>
