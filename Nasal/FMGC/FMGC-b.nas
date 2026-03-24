@@ -700,7 +700,6 @@ var ITAF = {
 			# me.updateGsArm(0);
 			Output.vert.setValue(0);
 			me.resetClimbRateLim();
-			print("setvertmode ALT HLD");
 			me.updateVertText("ALT HLD");
 			me.syncAlt();
 			me.updateThrustMode();
@@ -1103,27 +1102,27 @@ var ITAF = {
 
 var managedDes = func {
 	output = fmgc.flightPlanController.getDesAltConst();
-	nextManagedAlt = output[0];
+	realNextManagedAlt = output[0];
+	showNextManagedAlt = fmgc.flightPlanController.calculateManagedLvlOffAltitude();
 	distance = output[1];
 	isGeo = output[2];
 
 	nextSelectedAlt = Input.alt.getValue();
 
-	if (nextManagedAlt > nextSelectedAlt) {
-		alt = nextManagedAlt;
+	if (showNextManagedAlt > nextSelectedAlt) {
+		alt = showNextManagedAlt;
 		Internal.altManaged.setValue(1);
 	} else {
 		alt = nextSelectedAlt;
 		Internal.altManaged.setValue(0);
 	}
-	managedDeltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+	managedDeltaAlt = Position.indicatedAltitudeFt.getValue() - realNextManagedAlt;
 	realDeltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
 	if (realDeltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
 		ITAF.setVs(ITAF.getVs(distance, managedDeltaAlt, isGeo));
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
-		
 		settimer(managedDes, 2);
 	} elsif (Text.vert.getValue() == "DES") {
 		Internal.flchActive = 0;

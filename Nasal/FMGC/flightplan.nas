@@ -799,6 +799,33 @@ var flightPlanController = {
 		return math.clamp(speed, 250, 345);
 	},
 
+	calculateManagedLvlOffAltitude: func() {
+		lastAltCstr = nil;
+		lastAltCstrType = nil;
+		distanceToCstr = 0;
+		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+			if (i == me.currentToWptIndex.getValue()) {
+				distanceToCstr += me.distToWpt.getValue();
+			} else {
+				distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
+			}
+			if ((me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach") and 
+				me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0) {
+				altCstr = me.flightplans[2].getWP(i).alt_cstr;
+				altCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
+				print("altcstr is " ~ altCstr ~ " and altcstrtype is " ~ altCstrType);
+				if (lastAltCstr != nil and lastAltCstr == altCstr and (((lastAltCstrType == "at" or lastAltCstrType == "between") and (altCstrType == "at" or altCstrType == "between" or altCstrType == "above")) or (lastAltCstrType == "below" and (altCstrType == "at" or altCstrType == "between" or altCstrType == "above")))) {
+					return altCstr;
+				} elsif ((geoWptIndex == nil or me.currentToWptIndex.getValue() <= geoWptIndex) and (altCstrType == "above" or altCstrType == "between" or altCstrType == "at") and me.getExtrapolatedOneThousandVSDescent(distanceToCstr) < altCstr) {
+					return altCstr;
+				}
+				lastAltCstr = altCstr;
+				lastAltCstrType = altCstrType;
+			}
+		}
+		return 0;
+	},
+
 
 
 	getAltConst: func(isGeo) {
@@ -935,9 +962,9 @@ var flightPlanController = {
 		}
 		
 
-		print((isGeo ? "Geo " : "First ") ~ "Alt Constraint at WP index " ~ wpIndex ~ 
-			" named " ~ me.flightplans[2].getWP(wpIndex).wp_name ~ 
-			" is " ~ altCstr ~ " ft with no intervening constraints");
+		# print((isGeo ? "Geo " : "First ") ~ "Alt Constraint at WP index " ~ wpIndex ~ 
+		# 	" named " ~ me.flightplans[2].getWP(wpIndex).wp_name ~ 
+		# 	" is " ~ altCstr ~ " ft with no intervening constraints");
 		
 		if (!isGeo) {
 			geoWptIndex = wpIndex;
@@ -946,14 +973,6 @@ var flightPlanController = {
 	},
 
 	getDesAltConst: func() {
-		# if (geoWptIndex == nil or me.currentToWptIndex.getValue() <= geoWptIndex) {
-		# 	return me.getFirstAltConst();
-		# } else {
-		# 	return me.getGeoAltConst();
-		# }
-		print("currenttowptindex is " ~ me.currentToWptIndex.getValue());
-		print("geowptindex is ");
-		print(geoWptIndex);
 		if (geoWptIndex == nil or me.currentToWptIndex.getValue() <= geoWptIndex) {
 			return me.getAltConst(0);
 		} else {
