@@ -60,34 +60,34 @@ setlistener("/engines/engine[1]/state", func() {
 var doIdleThrust = func {
 	# Idle does not respect selected engines, because it is used to respond
 	# to "Retard" and both engines must be idle for spoilers to deploy
-	ENGINES.throttle[0].setValue(0);
-	ENGINES.throttle[1].setValue(0);
+	ENGINES.throttle[0].setValue(math.avg(getprop("/systems/acconfig/options/fadec/idle-t"), getprop("/systems/acconfig/options/fadec/idle-b")));
+	ENGINES.throttle[1].setValue(math.avg(getprop("/systems/acconfig/options/fadec/idle-t"), getprop("/systems/acconfig/options/fadec/idle-b")));
 }
 
 var doClThrust = func {
 	if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
-		ENGINES.throttle[0].setValue(0.63);
+		ENGINES.throttle[0].setValue(math.avg(getprop("/systems/acconfig/options/fadec/climb-t"), getprop("/systems/acconfig/options/fadec/climb-b")));
 	}
 	if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
-		ENGINES.throttle[1].setValue(0.63);
+		ENGINES.throttle[1].setValue(math.avg(getprop("/systems/acconfig/options/fadec/climb-t"), getprop("/systems/acconfig/options/fadec/climb-b")));
 	}
 }
 
 var doMctThrust = func {
 	if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
-		ENGINES.throttle[0].setValue(0.8);
+		ENGINES.throttle[0].setValue(math.avg(getprop("/systems/acconfig/options/fadec/mct-t"), getprop("/systems/acconfig/options/fadec/mct-b")));
 	}
 	if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
-		ENGINES.throttle[1].setValue(0.8);
+		ENGINES.throttle[1].setValue(math.avg(getprop("/systems/acconfig/options/fadec/mct-t"), getprop("/systems/acconfig/options/fadec/mct-b")));
 	}
 }
 
 var doTogaThrust = func {
 	if (pts.Sim.Input.Selected.engine[0].getBoolValue()) {
-		ENGINES.throttle[0].setValue(1);
+		ENGINES.throttle[0].setValue(math.avg(1, getprop("/systems/acconfig/options/fadec/toga-b")));
 	}
 	if (pts.Sim.Input.Selected.engine[1].getBoolValue()) {
-		ENGINES.throttle[1].setValue(1);
+		ENGINES.throttle[1].setValue(math.avg(1, getprop("/systems/acconfig/options/fadec/toga-b")));
 	}
 }
 
