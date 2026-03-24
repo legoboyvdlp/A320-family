@@ -1126,13 +1126,6 @@ var managedDes = func {
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
 		settimer(managedDes, 2);
-	} elsif (Text.vert.getValue() == "DES") {
-		Internal.flchActive = 0;
-		Internal.alt.setValue(Input.alt.getValue());
-		Internal.altCaptureActive = 1;
-		Output.vert.setValue(0);
-		me.updateVertText("ALT CAP");
-		me.updateThrustMode();
 	}
 };
 #To be called when engages into CLB mode, uses the same mechanisism as OP CLB,

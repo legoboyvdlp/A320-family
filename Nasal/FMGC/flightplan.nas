@@ -863,7 +863,7 @@ var flightPlanController = {
 					} else {
 						speedCstr = me.getSpeedAtAltitude(altCstr);
 					}
-					distanceToCstr -= (currentSpeed - speedCstr)/10;
+					distanceToCstr -= math.max(0, (currentSpeed - speedCstr)/10);
 					print("current speed is " ~ currentSpeed ~ " and speedcstr is " ~ speedCstr ~ ", adjusting distance to constraint by " ~ (currentSpeed - speedCstr)/10 ~ " nm");
 					break;
 				}
@@ -891,7 +891,7 @@ var flightPlanController = {
 				} else {
 					speedCstr2 = me.getSpeedAtAltitude(altCstr2);
 				}
-				adjustedDistanceToCstr2 = distanceToCstr2 - (currentSpeed - speedCstr2)/10;
+				adjustedDistanceToCstr2 = distanceToCstr2 - math.max(0,(currentSpeed - speedCstr2)/10);
 				adjustedDistanceToCstr2 = math.max(adjustedDistanceToCstr2, 0.000000000000000000000000000000000000000000001);
 				
 				if (isGeo) {
@@ -933,7 +933,7 @@ var flightPlanController = {
 				} else {
 					speedCstr2 = me.getSpeedAtAltitude(altCstr2);
 				}
-				adjustedDistanceToCstr2 = distanceToCstr2 - (currentSpeed - speedCstr2)/10;
+				adjustedDistanceToCstr2 = distanceToCstr2 - math.max(0,(currentSpeed - speedCstr2)/10);
 				adjustedDistanceToCstr2 = math.max(adjustedDistanceToCstr2, 0.000000000000000000000000000000000000000000001);
 				if (isGeo) {
 					if (altCstr2 < me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr)) {

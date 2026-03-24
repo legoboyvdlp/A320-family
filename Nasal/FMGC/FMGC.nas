@@ -1007,7 +1007,9 @@ var ManagedSPD = maketimer(0.25, func {
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-					if (constraintSpeed != nil and constraintSpeed != 0) {
+					nextWptAltCstr = fmgc.flightPlanController.flightplans[2].getWP(fmgc.flightPlanController.currentToWptIndex.getValue()).alt_cstr;
+					nextDesAltCstr = fmgc.flightPlanController.getDesAltConst()[0];
+					if (constraintSpeed != nil and constraintSpeed != 0 and (nextWptAltCstr != nextDesAltCstr or abs(fmgc.Position.indicatedAltitudeFt.getValue() - nextDesAltCstr) <= 500)) {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 					} else {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
@@ -1016,9 +1018,10 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
-				
-				if (constraintSpeed != nil and constraintSpeed != 0) {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+				nextWptAltCstr = fmgc.flightPlanController.flightplans[2].getWP(fmgc.flightPlanController.currentToWptIndex.getValue()).alt_cstr;
+				nextDesAltCstr = fmgc.flightPlanController.getDesAltConst()[0];
+				if (constraintSpeed != nil and constraintSpeed != 0 and (nextWptAltCstr != nextDesAltCstr or abs(fmgc.Position.indicatedAltitudeFt.getValue() - nextDesAltCstr) <= 500)) {
+					FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 				} else {
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
 				}
