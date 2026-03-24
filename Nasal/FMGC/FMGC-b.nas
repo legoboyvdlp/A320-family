@@ -680,12 +680,14 @@ var ITAF = {
 			} else {
 				idleDescent = 1;
 			}
+		}
 		vs = math.min(vs, 0);
 		return vs;
-		}
 	},
 
 	setVs: func(vs) {
+		print("setting vs to ");
+		print(vs);
 		Internal.vsTemp = vs;
 		Input.vs.setValue(vs);
 		Input.vsAbs.setValue(abs(vs));
