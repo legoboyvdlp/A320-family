@@ -1788,6 +1788,20 @@
 			</test>
 		</switch>
 
+		<switch name="/controls/indicators/gear-warning-arrow">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/ECAM/warnings/landing-gear-warning-light eq 1
+					/controls/switches/annun-test eq 1
+				</test>
+				<test logic="OR" value="1">
+					/systems/electrical/bus/ac-si-bus ge 110
+					/systems/electrical/bus/ac-ess-shed ge 110
+				</test>
+			</test>
+		</switch>
+
 		<switch name="/controls/indicators/gen1-off">
 			<default value="0"/>
 			<test logic="AND" value="1">
