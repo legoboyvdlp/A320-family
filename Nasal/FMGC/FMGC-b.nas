@@ -643,20 +643,11 @@ var ITAF = {
 		} 
 	},
 
-	calculateSpeedDistance: func() {
-		return 0;
-		# speed = Velocities.indicatedAirspeedKt.getValue();
-		# distance = (speed - 200)/10;
-		# if (distance < 0) {
-		# 	distance = 0;
-		# }
-		# return distance;
-	},
 
 	calculateVdev: func() {
 		output = fmgc.flightPlanController.getDesAltConst();
 		nextManagedAlt = output[0];
-		distance = output[1] - me.calculateSpeedDistance();
+		distance = output[1];
 		if (distance < 0) {
 			distance = 0;
 		}
@@ -674,15 +665,11 @@ var ITAF = {
 		if (isGeo) {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
-			if (vs < -1*gs*5) {
-				vs = -1*gs*5;
-			}
+			vs = math.max(vs, -1*gs*5);
 			idleDescent = 0;
 		} else {
-			properDeltaAlt = (distance - me.calculateSpeedDistance()) * 318 ;
-			if (properDeltaAlt < 0) {
-				properDeltaAlt = 0;
-			}
+			properDeltaAlt = distance * 318 ;
+			properDeltaAlt = math.max(properDeltaAlt, 0);
 			vs = Internal.targetFpmFlch.getValue();
 			if (deltaAlt < properDeltaAlt) {
 				idleDescent = 0;
@@ -690,9 +677,8 @@ var ITAF = {
 			} else {
 				idleDescent = 1;
 			}
-		} if (vs > 0) {
-			vs = 0;
 		}
+		vs = math.min(vs, 0);
 		return vs;
 	},
 
@@ -809,7 +795,6 @@ var ITAF = {
 				me.updateThrustMode();
 			}
 		} else if (n == 9) { # NONE
-			# managedDeson = "False";
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			me.updateGsArm(0);
