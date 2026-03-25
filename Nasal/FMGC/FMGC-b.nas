@@ -666,10 +666,12 @@ var ITAF = {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
 			print("GEO VS: " ~ vs ~ "and gs*5: " ~ -1*gs*5);
-			vs = math.max(vs, -1*gs*5);
-			
+			currentSpd = Velocities.indicatedAirspeedKt.getValue();
+			targetSpd = Input.kts.getValue();
+			if (targetSpd - currentSpd <= 10) {
+				vs = math.max(vs, -1*gs*5);
+			}
 			idleDescent = 0;
-
 		} else {
 			properDeltaAlt = distance * 318;
 			properDeltaAlt = math.max(properDeltaAlt, 0);

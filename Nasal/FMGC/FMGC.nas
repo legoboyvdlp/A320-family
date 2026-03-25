@@ -34,6 +34,7 @@ var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
 var tempOverspeed = nil;
+var lastConstraintSpeed = 1000000000000000000000000000;
 
 setprop("/position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-ft", 1500); #eventually set to 1500 above runway
@@ -1007,24 +1008,33 @@ var ManagedSPD = maketimer(0.25, func {
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-					nextWptAltCstr = fmgc.flightPlanController.flightplans[2].getWP(fmgc.flightPlanController.currentToWptIndex.getValue()).alt_cstr;
-					nextDesAltCstr = fmgc.flightPlanController.getDesAltConst()[0];
-					if (constraintSpeed != nil and constraintSpeed != 0 and (nextWptAltCstr != nextDesAltCstr or abs(fmgc.Position.indicatedAltitudeFt.getValue() - nextDesAltCstr) <= 500)) {
+					distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
+					currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
+					if (constraintSpeed != nil and constraintSpeed != 0 and distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1) {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
+						lastConstraintSpeed = constraintSpeed;
+						print("new last constraint speed is" ~ lastConstraintSpeed);
 					} else {
-						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
+						print("no speed const, last constraint speed is" ~ lastConstraintSpeed);
+						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(lastConstraintSpeed)) : math.min(mng_alt_spd, lastConstraintSpeed);
 					}
 				}
 			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
-				nextWptAltCstr = fmgc.flightPlanController.flightplans[2].getWP(fmgc.flightPlanController.currentToWptIndex.getValue()).alt_cstr;
-				nextDesAltCstr = fmgc.flightPlanController.getDesAltConst()[0];
-				if (constraintSpeed != nil and constraintSpeed != 0 and (nextWptAltCstr != nextDesAltCstr or abs(fmgc.Position.indicatedAltitudeFt.getValue() - nextDesAltCstr) <= 500)) {
+				distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
+				currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
+				if (constraintSpeed != nil and constraintSpeed != 0 and distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1) {
 					FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+					lastConstraintSpeed = constraintSpeed;
+					print("new last constraint speed is" ~ lastConstraintSpeed);
 				} else {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+					print("no speed const, last constraint speed is" ~ lastConstraintSpeed);
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, lastConstraintSpeed), FMGCInternal.clean, 999);
 				}
+			} elsif (FMGCInternal.phase == 7) {
+				print("resetting last constraint speed");
+				lastConstraintSpeed = 1000000000000000000;
 			}
 			
 			# Clamp to maneouvering speed of current configuration and maxspeed

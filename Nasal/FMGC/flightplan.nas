@@ -800,36 +800,45 @@ var flightPlanController = {
 	},
 
 	calculateManagedLvlOffAltitude: func() {
-		lastAltCstr = nil;
-		lastAltCstrType = nil;
-		distanceToCstr = 0;
-		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
-			if (i == me.currentToWptIndex.getValue()) {
-				distanceToCstr += me.distToWpt.getValue();
-				
-			} else {
-				distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
-			}
-
-			if ((me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach") and 
-				me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0) {
-				altCstr = me.flightplans[2].getWP(i).alt_cstr;
-				altCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
-				print("altcstr is " ~ altCstr ~ " and altcstrtype is " ~ altCstrType);
-				spdCstr = me.flightplans[2].getWP(i).speed_cstr;
-				desAltCstr = me.getDesAltConst()[0];
-				if (altCstr == desAltCstr and spdCstr != 0 and spdCstr != nil) {
-					return altCstr;
-				} elsif (lastAltCstr != nil and lastAltCstr == altCstr and (((lastAltCstrType == "at" or lastAltCstrType == "between") and (altCstrType == "at" or altCstrType == "between" or altCstrType == "above")) or (lastAltCstrType == "below" and (altCstrType == "at" or altCstrType == "between" or altCstrType == "above")))) {
-					return altCstr;
-				} elsif ((geoWptIndex == nil or me.currentToWptIndex.getValue() <= geoWptIndex) and (altCstrType == "above" or altCstrType == "between" or altCstrType == "at") and me.getExtrapolatedOneThousandVSDescent(distanceToCstr) < altCstr) {
-					return altCstr;
-				}
-				lastAltCstr = altCstr;
-				lastAltCstrType = altCstrType;
-			}
+		result = me.getDesAltConst();
+		altCstr = result[0];
+		altCstrType = result[3];
+		if (altCstrType == "below") {
+			return 0;
 		}
-		return 0;
+		return altCstr;
+		# lastAltCstr = nil;
+		# lastAltCstrType = nil;
+		# distanceToCstr = 0;
+		# for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+		# 	if (i == me.currentToWptIndex.getValue()) {
+		# 		distanceToCstr += me.distToWpt.getValue();
+				
+		# 	} else {
+		# 		distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
+		# 	}
+
+		# 	if ((me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach") and 
+		# 		me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0) {
+		# 		altCstr = me.flightplans[2].getWP(i).alt_cstr;
+		# 		altCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
+		# 		print("altcstr is " ~ altCstr ~ " and altcstrtype is " ~ altCstrType);
+		# 		spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+		# 		desAltCstr = me.getDesAltConst()[0];
+		# 		if (altCstr == desAltCstr and spdCstr != 0 and spdCstr != nil and spdCstr != fmgc.lastConstraintSpeed) {
+		# 			return altCstr;
+		# 		} elsif (altCstr == desAltCstr and (altCstrType == "at" or altCstrType == "between")) {
+		# 			return altCstr;
+		# 		} elsif (lastAltCstr != nil and lastAltCstr == altCstr and (((lastAltCstrType == "at" or lastAltCstrType == "between") and (altCstrType == "at" or altCstrType == "between" or altCstrType == "above")) or (lastAltCstrType == "below" and (altCstrType == "at" or altCstrType == "between" or altCstrType == "above")))) {
+		# 			return altCstr;
+		# 		} elsif ((geoWptIndex == nil or me.currentToWptIndex.getValue() <= geoWptIndex) and (altCstrType == "above" or altCstrType == "between" or altCstrType == "at") and me.getExtrapolatedOneThousandVSDescent(distanceToCstr) < altCstr) {
+		# 			return altCstr;
+		# 		}
+		# 		lastAltCstr = altCstr;
+		# 		lastAltCstrType = altCstrType;
+		# 	}
+		# }
+		# return 0;
 	},
 
 
@@ -842,6 +851,7 @@ var flightPlanController = {
 		distanceToCstr = 0;
 		wpIndex = 0;
 		altCstr = 0;
+		altCstrType = nil;
 		altCstr2 = 0;
 		currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 
@@ -858,11 +868,13 @@ var flightPlanController = {
 				if (me.flightplans[2].getWP(i).wp_type == "runway") {
 					runwayInfo = geodinfo(me.flightplans[2].getWP(i).lat, me.flightplans[2].getWP(i).lon);
 					altCstr = runwayInfo[0] * 3.28084;
+					altCstrType = "runway";
 					wpIndex = i;
 					break;
 				} else if (me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and 
 						(me.flightplans[2].getWP(i).alt_cstr_type == "at" or me.flightplans[2].getWP(i).alt_cstr_type == "between")) {
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
+					altCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
 					wpIndex = i;
 					if (me.flightplans[2].getWP(i).speed_cstr != nil and me.flightplans[2].getWP(i).speed_cstr != 0) {
 						speedCstr = me.flightplans[2].getWP(i).speed_cstr;
@@ -892,6 +904,7 @@ var flightPlanController = {
 				(me.flightplans[2].getWP(j).wp_role == "star" or me.flightplans[2].getWP(j).wp_role == "approach") and 
 				me.flightplans[2].getWP(j).alt_cstr != nil and me.flightplans[2].getWP(j).alt_cstr != 0) {
 				altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
+				altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
 				if (me.flightplans[2].getWP(j).speed_cstr != nil and me.flightplans[2].getWP(j).speed_cstr != 0) {
 					speedCstr2 = me.flightplans[2].getWP(j).speed_cstr;
 				} else {
@@ -907,7 +920,7 @@ var flightPlanController = {
 							" is " ~ altCstr2 ~ " ft, which is higher than extrapolated altitude " ~ 
 							me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
 							" ft at distance " ~ adjustedDistanceToCstr2 ~ " nm and speed cstr of " ~ speedCstr2);
-						return [altCstr2, adjustedDistanceToCstr2, 1];
+						return [altCstr2, adjustedDistanceToCstr2, 1, altCstr2Type];
 					} else {
 						print("PASSED Geo Alt Constraint at WP index " ~ j ~ 
 							" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
@@ -926,7 +939,7 @@ var flightPlanController = {
 							" ft and extrapolated ten thousand of " ~ 
 							me.getExtrapolatedOneThousandVSDescent(adjustedDistanceToCstr2) ~ " ft at distance " ~ adjustedDistanceToCstr2 ~ " nm and speedcstr of " ~ speedCstr2);
 						geoWptIndex = j;
-						return [altCstr2, adjustedDistanceToCstr2, 0];
+						return [altCstr2, adjustedDistanceToCstr2, 0, altCstr2Type];
 					}
 				}
 			} elsif (me.flightplans[2].getWP(j).alt_cstr_type == "below" and 
@@ -934,6 +947,7 @@ var flightPlanController = {
 					me.flightplans[2].getWP(j).alt_cstr != nil and me.flightplans[2].getWP(j).alt_cstr != 0) {
 				
 				altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
+				altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
 				if (me.flightplans[2].getWP(j).speed_cstr != nil and me.flightplans[2].getWP(j).speed_cstr != 0) {
 					speedCstr2 = me.flightplans[2].getWP(j).speed_cstr;
 				} else {
@@ -949,7 +963,7 @@ var flightPlanController = {
 							" is " ~ altCstr2 ~ " ft, which is lower than extrapolated altitude " ~ 
 							me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
 							" ft at distance " ~ adjustedDistanceToCstr2 ~ " nm and speed cstr of " ~ speedCstr2);
-						return [altCstr2, adjustedDistanceToCstr2, 1];
+						return [altCstr2, adjustedDistanceToCstr2, 1, altCstr2Type];
 					}
 				} else {
 					if (altCstr2 < me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) or altCstr2 < me.getExtrapolatedOneThousandVSDescent(adjustedDistanceToCstr2)) {
@@ -961,7 +975,7 @@ var flightPlanController = {
 							" ft and extrapolated ten thousand of " ~ 
 							me.getExtrapolatedOneThousandVSDescent(adjustedDistanceToCstr2) ~ " ft at distance " ~ adjustedDistanceToCstr2 ~ " nm and speed cstr of " ~ speedCstr2);
 						geoWptIndex = j;
-						return [altCstr2, adjustedDistanceToCstr2, 0];
+						return [altCstr2, adjustedDistanceToCstr2, 0, altCstr2Type];
 					}
 				}
 			}
@@ -975,7 +989,7 @@ var flightPlanController = {
 		if (!isGeo) {
 			geoWptIndex = wpIndex;
 		}
-		return [altCstr, distanceToCstr, (isGeo ? 1 : 0)];
+		return [altCstr, distanceToCstr, (isGeo ? 1 : 0), altCstrType];
 	},
 
 	getDesAltConst: func() {
