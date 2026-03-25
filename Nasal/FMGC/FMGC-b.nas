@@ -668,7 +668,7 @@ var ITAF = {
 			vs = math.max(vs, -1*gs*5);
 			idleDescent = 0;
 		} else {
-			properDeltaAlt = distance * 318 ;
+			properDeltaAlt = distance * 318;
 			properDeltaAlt = math.max(properDeltaAlt, 0);
 			vs = Internal.targetFpmFlch.getValue();
 			if (deltaAlt < properDeltaAlt) {
