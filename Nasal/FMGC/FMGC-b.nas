@@ -1098,13 +1098,14 @@ var ITAF = {
 
 
 var managedDes = func {
-	output = fmgc.flightPlanController.getDesAltConst();
-	realNextManagedAlt = output[0];
-	showNextManagedAlt = fmgc.flightPlanController.calculateManagedLvlOffAltitude();
-	distance = output[1];
-	isGeo = output[2];
+	var output = fmgc.flightPlanController.getDesAltConst();
+	var realNextManagedAlt = output[0];
+	var showNextManagedAlt = fmgc.flightPlanController.calculateManagedLvlOffAltitude();
+	var distance = output[1];
+	var isGeo = output[2];
 
-	nextSelectedAlt = Input.alt.getValue();
+	var nextSelectedAlt = Input.alt.getValue();
+	var alt = 0;
 
 	if (showNextManagedAlt > nextSelectedAlt) {
 		alt = showNextManagedAlt;
@@ -1113,8 +1114,8 @@ var managedDes = func {
 		alt = nextSelectedAlt;
 		Internal.altManaged.setValue(0);
 	}
-	managedDeltaAlt = Position.indicatedAltitudeFt.getValue() - realNextManagedAlt;
-	realDeltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
+	var managedDeltaAlt = Position.indicatedAltitudeFt.getValue() - realNextManagedAlt;
+	var realDeltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
 	if (realDeltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
 		ITAF.setVs(ITAF.getVs(distance, managedDeltaAlt, isGeo));
@@ -1126,8 +1127,9 @@ var managedDes = func {
 #To be called when engages into CLB mode, uses the same mechanisism as OP CLB,
 # only changing the target altitude and the mode shown on the FMA
 var managedClb = func {
-	nextManagedAlt = fmgc.flightPlanController.getClbAltConst()[0];
-	nextSelectedAlt = Input.alt.getValue();
+	var nextManagedAlt = fmgc.flightPlanController.getClbAltConst()[0];
+	var nextSelectedAlt = Input.alt.getValue();
+	var alt = 0;
 	# print("next managed alt is " ~ nextManagedAlt ~ "next selected alt is " ~ nextSelectedAlt);
 	if (nextManagedAlt < nextSelectedAlt) {
 		alt = nextManagedAlt;

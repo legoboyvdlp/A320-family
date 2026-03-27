@@ -773,33 +773,33 @@ var flightPlanController = {
 	},
 
 	getExtrapolatedFirstAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
-		extrapolatedAlt = altCstr + (318 * (distanceToCstr - distanceToCstr2));
+		var extrapolatedAlt = altCstr + (318 * (distanceToCstr - distanceToCstr2));
 		return extrapolatedAlt;
 	},
 
 	getExtrapolatedOneThousandVSDescent: func(distanceToCstr2) {
-		currentAlt = Position.indicatedAltitudeFt.getValue();
-		gs = pts.Velocities.groundspeedKt.getValue();
-		extrapolatedAlt = currentAlt - (distanceToCstr2 * 60 * 1000 / gs);
+		var currentAlt = Position.indicatedAltitudeFt.getValue();
+		var gs = pts.Velocities.groundspeedKt.getValue();
+		var extrapolatedAlt = currentAlt - (distanceToCstr2 * 60 * 1000 / gs);
 		return extrapolatedAlt;
 	},
 
 	getExtrapolatedGeoAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
-		currentAlt = Position.indicatedAltitudeFt.getValue();
-		extrapolatedAlt = currentAlt + ((altCstr - currentAlt) * (distanceToCstr2 / distanceToCstr));
+		var currentAlt = Position.indicatedAltitudeFt.getValue();
+		var extrapolatedAlt = currentAlt + ((altCstr - currentAlt) * (distanceToCstr2 / distanceToCstr));
 		return extrapolatedAlt;
 	},
 
 	calculateManagedLvlOffAltitude: func() {
-		result = me.getDesAltConst();
-		altCstr = result[0];
-		altCstrType = result[3];
-		wptIndex = result[4];
+		var result = me.getDesAltConst();
+		var altCstr = result[0];
+		var altCstrType = result[3];
+		var wptIndex = result[4];
 		if (altCstrType == "below") {
 			for (var i = (wptIndex + 1); i < me.flightplans[2].getPlanSize(); i += 1) {
-				altCstr2 = me.flightplans[2].getWP(i).alt_cstr;
-				altCstr2Type = me.flightplans[2].getWP(i).alt_cstr_type;
-				wptRole = me.flightplans[2].getWP(i).wp_role;
+				var altCstr2 = me.flightplans[2].getWP(i).alt_cstr;
+				var altCstr2Type = me.flightplans[2].getWP(i).alt_cstr_type;
+				var wptRole = me.flightplans[2].getWP(i).wp_role;
 				if (altCstr2 != nil and altCstr2 != 0 and altCstr2Type != "below" and (wptRole == "star" or wptRole == "approach")) {
 					return altCstr2;
 				}
@@ -808,80 +808,92 @@ var flightPlanController = {
 		return altCstr;
 	},
 
+	getLegDistance: func(i) {
+	if (i == me.currentToWptIndex.getValue()) {
+			return me.distToWpt.getValue();
+		} else {
+			return me.flightplans[2].getWP(i).leg_distance;
+		}
+	},
+
 	getAltConst: func(isGeo) {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
-		distanceToCstr = 0;
-		wpIndex = 0;
-		altCstr = 0;
-		altCstrType = nil;
-		altCstr2 = 0;
+		var distanceToCstr = 0;
+		var wpIndex = 0;
+		var altCstr = 0;
+		var altCstrType = nil;
+		# altCstr2 = 0;
 
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
-			if (i == me.currentToWptIndex.getValue()) {
-				distanceToCstr += me.distToWpt.getValue();
-			} else {
-				distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
-			}
-			tempAltCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
-			tempWptRole = me.flightplans[2].getWP(i).wp_role;
-			tempWptType = me.flightplans[2].getWP(i).wp_type;
-			tempAltCstr = me.flightplans[2].getWP(i).alt_cstr;
-			if (tempAltCstrType != "above" and (tempWptRole == "star" or tempWptRole == "approach" or tempWptType == "runway")) {
-				if (tempWptType == "runway") {
-					runwayInfo = geodinfo(me.flightplans[2].getWP(i).lat, me.flightplans[2].getWP(i).lon);
+			# if (i == me.currentToWptIndex.getValue()) {
+			# 	distanceToCstr += me.distToWpt.getValue();
+			# } else {
+			# 	distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
+			# }
+			distanceToCstr += me.getLegDistance(i);
+			var wp = me.flightplans[2].getWP(i);
+			altCstrType = wp.alt_cstr_type;
+			var wptRole = wp.wp_role;
+			var wptType = wp.wp_type;
+			altCstr = wp.alt_cstr;
+			if (altCstrType != "above" and (wptRole == "star" or wptRole == "approach" or wptType == "runway")) {
+				if (wptType == "runway") {
+					runwayInfo = geodinfo(wp.lat, me.flightplans[2].getWP(i).lon);
 					altCstr = runwayInfo[0] * 3.28084;
 					altCstrType = "runway";
 					wpIndex = i;
 					break;
-				} else if (tempAltCstr != nil and tempAltCstr != 0 and (tempAltCstrType == "at" or tempAltCstrType == "between")) {
-					altCstr = me.flightplans[2].getWP(i).alt_cstr;
-					altCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
+				} else if (altCstr != nil and altCstr != 0 and (altCstrType == "at" or altCstrType == "between")) {
+					# altCstr = me.flightplans[2].getWP(i).alt_cstr;
+					# altCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
 					wpIndex = i;
 					break;
 				}
 			}
 		}
 
-		distanceToCstr2 = 0;
+		var distanceToCstr2 = 0;
 		for (var j = me.currentToWptIndex.getValue(); j < wpIndex; j += 1) {
-			if (j == me.currentToWptIndex.getValue()) {
-				distanceToCstr2 += me.distToWpt.getValue();
-			} else {
-				distanceToCstr2 += me.flightplans[2].getWP(j).leg_distance;
-			}
-			tempAltCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
-			tempWpt2Role = me.flightplans[2].getWP(j).wp_role;
-			tempAltCstr2 = me.flightplans[2].getWP(j).alt_cstr;
-			tempExtrapolatedFirstAltitude = me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr);
-			tempExtrapolatedGeoAltitude = me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr);
-			tempExtrapolatedOneThousandVSDescent = me.getExtrapolatedOneThousandVSDescent(distanceToCstr2);
-			if (tempAltCstr2Type == "above" and (tempWpt2Role == "star" or tempWpt2Role == "approach") and tempAltCstr2 != nil and tempAltCstr2 != 0) {
+			# if (j == me.currentToWptIndex.getValue()) {
+			# 	distanceToCstr2 += me.distToWpt.getValue();
+			# } else {
+			# 	distanceToCstr2 += me.flightplans[2].getWP(j).leg_distance;
+			# }
+			distanceToCstr2 += me.getLegDistance(j);
+			var altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
+			var wpt2Role = me.flightplans[2].getWP(j).wp_role;
+			var altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
+			var extrapolatedFirstAltitude = me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr);
+			var extrapolatedGeoAltitude = me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr);
+			var extrapolatedOneThousandVSDescent = me.getExtrapolatedOneThousandVSDescent(distanceToCstr2);
+
+			if (altCstr2Type == "above" and (wpt2Role == "star" or wpt2Role == "approach") and altCstr2 != nil and altCstr2 != 0) {
 				
-				altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
-				altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
+				# altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
+				# altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
 				if (isGeo) {
-					if (altCstr2 > tempExtrapolatedGeoAltitude) {
+					if (altCstr2 > extrapolatedGeoAltitude) {
 						return [altCstr2, distanceToCstr2, 1, altCstr2Type, j];
 					}
 				} else {
-					if (altCstr2 > tempExtrapolatedFirstAltitude or 
-						altCstr2 > tempExtrapolatedOneThousandVSDescent) {
+					if (altCstr2 > extrapolatedFirstAltitude or 
+						altCstr2 > extrapolatedOneThousandVSDescent) {
 						geoWptIndex = j;
 						return [altCstr2, distanceToCstr2, 0, altCstr2Type, j];
 					}
 				}
-			} elsif (tempAltCstr2Type == "below" and (tempWpt2Role == "star" or tempWpt2Role == "approach") and tempAltCstr2 != nil and tempAltCstr2 != 0) {
+			} elsif (altCstr2Type == "below" and (wpt2Role == "star" or wpt2Role == "approach") and altCstr2 != nil and altCstr2 != 0) {
 				
-				altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
-				altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
+				# altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
+				# altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
 				if (isGeo) {
-					if (altCstr2 < tempExtrapolatedGeoAltitude) {
+					if (altCstr2 < extrapolatedGeoAltitude) {
 						return [altCstr2, distanceToCstr2, 1, altCstr2Type, j];
 					}
 				} else {
-					if (altCstr2 < tempExtrapolatedFirstAltitude) {
+					if (altCstr2 < extrapolatedFirstAltitude) {
 						geoWptIndex = j;
 						return [altCstr2, distanceToCstr2, 0, altCstr2Type, j];
 					}
@@ -918,7 +930,7 @@ var flightPlanController = {
 	},
 	getNextClbSpdConst: func() {
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
-			spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+			var spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 			if (spdCstr != 0 and spdCstr != nil and me.flightplans[2].getWP(i).wp_role == "sid") {
 				return [spdCstr,i];
 			}
