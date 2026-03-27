@@ -1008,8 +1008,8 @@ var ManagedSPD = maketimer(0.25, func {
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-					distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
-					currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
+					var distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
+					var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 					if (constraintSpeed != nil and constraintSpeed != 0 and (distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1) and (distanceToWpt >= 2)) {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 						print("distance to wpt is " ~ distanceToWpt);
@@ -1027,8 +1027,8 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
-				distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
-				currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
+				var distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
+				var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 				if (constraintSpeed != nil and constraintSpeed != 0 and ((distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) or FMGCInternal.decel)) {
 					FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 					lastConstraintSpeed = constraintSpeed;

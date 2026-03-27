@@ -646,25 +646,25 @@ var ITAF = {
 
 
 	calculateVdev: func() {
-		output = fmgc.flightPlanController.getDesAltConst();
-		nextManagedAlt = output[0];
-		distance = output[1];
-		isGeo = output[2];
-		wptIndex = output[4];
+		var output = fmgc.flightPlanController.getDesAltConst();
+		var nextManagedAlt = output[0];
+		var distance = output[1];
+		var isGeo = output[2];
+		var wptIndex = output[4];
 		if (isGeo) {
-			idealSlope = fmgc.flightPlanController.getIdealSlope(nextManagedAlt,distance,wptIndex);
-			deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
-			properDeltaAlt = distance * idealSlope;
-			difference = deltaAlt - properDeltaAlt;
+			var idealSlope = fmgc.flightPlanController.getIdealSlope(nextManagedAlt,distance,wptIndex);
+			var deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+			var properDeltaAlt = distance * idealSlope;
+			var difference = deltaAlt - properDeltaAlt;
 			print("proper delta alt is " ~ properDeltaAlt ~ "and idealSlope is " ~ idealSlope);
 			return difference;
 		} else {
 			if (distance < 0) {
 				distance = 0;
 			}
-			deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
-			properDeltaAlt = distance * 318;
-			difference = deltaAlt - properDeltaAlt;
+			var deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+			var properDeltaAlt = distance * 318;
+			var difference = deltaAlt - properDeltaAlt;
 			# if (output[2] == 1 and difference < 0) {
 			# 	difference = 0;
 			# }
@@ -675,23 +675,23 @@ var ITAF = {
 	getVs: func(distance, deltaAlt, isGeo) {
 		print("getVs called");
 		if (Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 10) {
-			vs = Internal.targetFpmFlch.getValue();
+			var vs = Internal.targetFpmFlch.getValue();
 			idleDescent = 1;
 			print("vs down");
 		} elsif (isGeo) {
-			gs = Velocities.groundspeedKt.getValue();
-			vs = -(deltaAlt * gs) / (distance * 60);
+			var gs = Velocities.groundspeedKt.getValue();
+			var vs = -(deltaAlt * gs) / (distance * 60);
 			print("GEO VS: " ~ vs ~ "and gs*5: " ~ -1*gs*5);
-			currentSpd = Velocities.indicatedAirspeedKt.getValue();
-			targetSpd = Input.kts.getValue();
+			var currentSpd = Velocities.indicatedAirspeedKt.getValue();
+			var targetSpd = Input.kts.getValue();
 			if (targetSpd - currentSpd <= 10) {
 				vs = math.max(vs, -1*gs*5);
 			}
 			idleDescent = 0;
 		} else {
-			properDeltaAlt = distance * 318;
+			var properDeltaAlt = distance * 318;
 			properDeltaAlt = math.max(properDeltaAlt, 0);
-			vs = Internal.targetFpmFlch.getValue();
+			var vs = Internal.targetFpmFlch.getValue();
 			if (deltaAlt < properDeltaAlt) {
 				idleDescent = 0;
 				vs = -1000;
@@ -1126,13 +1126,14 @@ var ITAF = {
 
 
 var managedDes = func {
-	output = fmgc.flightPlanController.getDesAltConst();
-	realNextManagedAlt = output[0];
-	showNextManagedAlt = fmgc.flightPlanController.calculateManagedLvlOffAltitude();
-	distance = output[1];
-	isGeo = output[2];
+	var output = fmgc.flightPlanController.getDesAltConst();
+	var realNextManagedAlt = output[0];
+	var showNextManagedAlt = fmgc.flightPlanController.calculateManagedLvlOffAltitude();
+	var distance = output[1];
+	var isGeo = output[2];
 
-	nextSelectedAlt = Input.alt.getValue();
+	var nextSelectedAlt = Input.alt.getValue();
+	var alt = 0;
 
 	if (showNextManagedAlt > nextSelectedAlt) {
 		alt = showNextManagedAlt;
@@ -1141,8 +1142,8 @@ var managedDes = func {
 		alt = nextSelectedAlt;
 		Internal.altManaged.setValue(0);
 	}
-	managedDeltaAlt = Position.indicatedAltitudeFt.getValue() - realNextManagedAlt;
-	realDeltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
+	var managedDeltaAlt = Position.indicatedAltitudeFt.getValue() - realNextManagedAlt;
+	var realDeltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
 	if (realDeltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
 		print("managed des called");
@@ -1155,14 +1156,15 @@ var managedDes = func {
 #To be called when engages into CLB mode, uses the same mechanisism as OP CLB,
 # only changing the target altitude and the mode shown on the FMA
 var managedClb = func {
-	nextManagedAlt = fmgc.flightPlanController.getClbAltConst()[0];
-	nextSelectedAlt = Input.alt.getValue();
+	var nextManagedAlt = fmgc.flightPlanController.getClbAltConst()[0];
+	var nextSelectedAlt = Input.alt.getValue();
+	var alt = 0;
 	# print("next managed alt is " ~ nextManagedAlt ~ "next selected alt is " ~ nextSelectedAlt);
 	if (nextManagedAlt < nextSelectedAlt) {
-		alt = nextManagedAlt;
+		var alt = nextManagedAlt;
 		Internal.altManaged.setValue(1);
 	} else {
-		alt = nextSelectedAlt;
+		var alt = nextSelectedAlt;
 		Internal.altManaged.setValue(0);
 	}
 	Internal.alt.setValue(alt);
