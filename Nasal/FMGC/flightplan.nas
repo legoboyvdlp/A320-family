@@ -796,7 +796,6 @@ var flightPlanController = {
 		altCstrType = result[3];
 		wptIndex = result[4];
 		if (altCstrType == "below") {
-			# 
 			for (var i = (wptIndex + 1); i < me.flightplans[2].getPlanSize(); i += 1) {
 				altCstr2 = me.flightplans[2].getWP(i).alt_cstr;
 				altCstr2Type = me.flightplans[2].getWP(i).alt_cstr_type;
@@ -813,7 +812,6 @@ var flightPlanController = {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
-		
 		distanceToCstr = 0;
 		wpIndex = 0;
 		altCstr = 0;
@@ -846,10 +844,6 @@ var flightPlanController = {
 			}
 		}
 
-		# print((isGeo ? "Geo " : "First ") ~ "Alt Constraint found at WP index " ~ wpIndex ~ 
-		# 	" named " ~ me.flightplans[2].getWP(wpIndex).wp_name ~ 
-		# 	" is " ~ altCstr ~ " ft at distance " ~ distanceToCstr ~ " nm");
-
 		distanceToCstr2 = 0;
 		for (var j = me.currentToWptIndex.getValue(); j < wpIndex; j += 1) {
 			if (j == me.currentToWptIndex.getValue()) {
@@ -869,22 +863,11 @@ var flightPlanController = {
 				altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
 				if (isGeo) {
 					if (altCstr2 > tempExtrapolatedGeoAltitude) {
-						# print("Geo Alt Constraint at WP index " ~ j ~ 
-						# 	" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
-						# 	" is " ~ altCstr2 ~ " ft, which is higher than extrapolated altitude " ~ 
-						# 	me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
-						# 	" ft at distance " ~ distanceToCstr2 ~ " nm");
 						return [altCstr2, distanceToCstr2, 1, altCstr2Type, j];
 					}
 				} else {
 					if (altCstr2 > tempExtrapolatedFirstAltitude or 
 						altCstr2 > tempExtrapolatedOneThousandVSDescent) {
-						# print("First Alt Constraint at WP index " ~ j ~ 
-						# 	" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
-						# 	" is " ~ altCstr2 ~ " ft, which is higher than extrapolated altitude " ~ 
-						# 	me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
-						# 	" ft and extrapolated ten thousand of " ~ 
-						# 	me.getExtrapolatedOneThousandVSDescent(distanceToCstr2) ~ " ft at distance " ~ distanceToCstr2 ~ " nm");
 						geoWptIndex = j;
 						return [altCstr2, distanceToCstr2, 0, altCstr2Type, j];
 					}
@@ -895,32 +878,16 @@ var flightPlanController = {
 				altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
 				if (isGeo) {
 					if (altCstr2 < tempExtrapolatedGeoAltitude) {
-						# print("Geo Alt Constraint at WP index " ~ j ~ 
-						# 	" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
-						# 	" is " ~ altCstr2 ~ " ft, which is lower than extrapolated altitude " ~ 
-						# 	me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
-						# 	" ft at distance " ~ distanceToCstr2 ~ " nm");
 						return [altCstr2, distanceToCstr2, 1, altCstr2Type, j];
 					}
 				} else {
 					if (altCstr2 < tempExtrapolatedFirstAltitude) {
-						# print("First Alt Constraint at WP index " ~ j ~ 
-						# 	" named " ~ me.flightplans[2].getWP(j).wp_name ~ 
-						# 	" is " ~ altCstr2 ~ " ft, which is lower than extrapolated altitude " ~ 
-						# 	me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr) ~ 
-						# 	" ft and extrapolated ten thousand of " ~ 
-						# 	me.getExtrapolatedOneThousandVSDescent(distanceToCstr2) ~ " ft at distance " ~ distanceToCstr2 ~ " nm");
 						geoWptIndex = j;
 						return [altCstr2, distanceToCstr2, 0, altCstr2Type, j];
 					}
 				}
 			}
 		}
-		
-
-		# print((isGeo ? "Geo " : "First ") ~ "Alt Constraint at WP index " ~ wpIndex ~ 
-		# 	" named " ~ me.flightplans[2].getWP(wpIndex).wp_name ~ 
-		# 	" is " ~ altCstr ~ " ft with no intervening constraints");
 		
 		if (!isGeo) {
 			geoWptIndex = wpIndex;
