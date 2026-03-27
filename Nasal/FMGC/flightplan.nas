@@ -806,8 +806,17 @@ var flightPlanController = {
 		result = me.getDesAltConst();
 		altCstr = result[0];
 		altCstrType = result[3];
+		wptIndex = result[4];
 		if (altCstrType == "below") {
-			return 0;
+			# 
+			for (var i = (wptIndex + 1); i < me.flightplans[2].getPlanSize(); i += 1) {
+				altCstr2 = me.flightplans[2].getWP(i).alt_cstr;
+				altCstr2Type = me.flightplans[2].getWP(i).alt_cstr_type;
+				wptRole = me.flightplans[2].getWP(i).wp_role;
+				if (altCstr2 != nil and altCstr2 != 0 and altCstr2Type != "below" and (wptRole == "star" or wptRole == "approach")) {
+					return altCstr2;
+				}
+			}
 		}
 		return altCstr;
 	},
@@ -832,18 +841,18 @@ var flightPlanController = {
 			} else {
 				distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
 			}
-			
-			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and 
-				(me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach" or me.flightplans[2].getWP(i).wp_type == "runway")) {
-				
-				if (me.flightplans[2].getWP(i).wp_type == "runway") {
+			tempAltCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
+			tempWptRole = me.flightplans[2].getWP(i).wp_role;
+			tempWptType = me.flightplans[2].getWP(i).wp_type;
+			tempAltCstr = me.flightplans[2].getWP(i).alt_cstr;
+			if (tempAltCstrType != "above" and (tempWptRole == "star" or tempWptRole == "approach" or tempWptType == "runway")) {
+				if (tempWptType == "runway") {
 					runwayInfo = geodinfo(me.flightplans[2].getWP(i).lat, me.flightplans[2].getWP(i).lon);
 					altCstr = runwayInfo[0] * 3.28084;
 					altCstrType = "runway";
 					wpIndex = i;
 					break;
-				} else if (me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and 
-						(me.flightplans[2].getWP(i).alt_cstr_type == "at" or me.flightplans[2].getWP(i).alt_cstr_type == "between")) {
+				} else if (tempAltCstr != nil and tempAltCstr != 0 and (tempAltCstrType == "at" or tempAltCstrType == "between")) {
 					altCstr = me.flightplans[2].getWP(i).alt_cstr;
 					altCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
 					wpIndex = i;
@@ -900,9 +909,7 @@ var flightPlanController = {
 						return [altCstr2, adjustedDistanceToCstr2, 0, altCstr2Type, j];
 					}
 				}
-			} elsif (me.flightplans[2].getWP(j).alt_cstr_type == "below" and 
-					(me.flightplans[2].getWP(j).wp_role == "star" or me.flightplans[2].getWP(j).wp_role == "approach") and 
-					me.flightplans[2].getWP(j).alt_cstr != nil and me.flightplans[2].getWP(j).alt_cstr != 0) {
+			} elsif (tempAltCstr2Type == "below" and (tempWpt2Role == "star" or tempWpt2Role == "approach") and tempAltCstr2 != nil and tempAltCstr2 != 0) {
 				
 				altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
 				altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
