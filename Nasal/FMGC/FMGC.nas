@@ -993,7 +993,7 @@ var ManagedSPD = maketimer(0.25, func {
 					nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst()[0];
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, nextSpdConst), FMGCInternal.vls_min, 999);
 				}
-			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
+			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 600)) {
 				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 				
 				if (constraintSpeed != nil and constraintSpeed != 0) {
@@ -1002,7 +1002,7 @@ var ManagedSPD = maketimer(0.25, func {
 					nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst()[0];
 					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(nextSpdConst)) : math.min(mng_alt_spd, nextSpdConst);
 				}
-			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
+			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 600)) {
 				if (FMGCInternal.decel) {
 					FMGCInternal.mngKtsMach = 0;
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
@@ -1010,13 +1010,18 @@ var ManagedSPD = maketimer(0.25, func {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 					distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
 					currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
-					if (constraintSpeed != nil and constraintSpeed != 0 and distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1) {
+					if (constraintSpeed != nil and constraintSpeed != 0 and (distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1) and (distanceToWpt >= 2)) {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
+						print("distance to wpt is " ~ distanceToWpt);
 						lastConstraintSpeed = constraintSpeed;
 						print("new last constraint speed is" ~ lastConstraintSpeed);
+					} elsif (FMGCInternal.phase == 6) {
+						print("resetting last constraint speed");
+						lastConstraintSpeed = 1000000000000000000;
 					} else {
 						print("no speed const, last constraint speed is" ~ lastConstraintSpeed);
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(lastConstraintSpeed)) : math.min(mng_alt_spd, lastConstraintSpeed);
+					
 					}
 				}
 			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
@@ -1024,17 +1029,17 @@ var ManagedSPD = maketimer(0.25, func {
 				FMGCInternal.mngKtsMach = 0;
 				distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
 				currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
-				if (constraintSpeed != nil and constraintSpeed != 0 and distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1) {
+				if (constraintSpeed != nil and constraintSpeed != 0 and ((distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) or FMGCInternal.decel)) {
 					FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 					lastConstraintSpeed = constraintSpeed;
-					print("new last constraint speed is" ~ lastConstraintSpeed);
+					print("new last constraint speed is" ~ lastConstraintSpeed ~ "distanceToWpt is " ~ distanceToWpt);
+				} elsif (FMGCInternal.phase == 6) {
+					print("resetting last constraint speed");
+					lastConstraintSpeed = 1000000000000000000;
 				} else {
 					print("no speed const, last constraint speed is" ~ lastConstraintSpeed);
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, lastConstraintSpeed), FMGCInternal.clean, 999);
 				}
-			} elsif (FMGCInternal.phase == 7) {
-				print("resetting last constraint speed");
-				lastConstraintSpeed = 1000000000000000000;
 			}
 			
 			# Clamp to maneouvering speed of current configuration and maxspeed

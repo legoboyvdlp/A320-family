@@ -1,4 +1,5 @@
 var idleDescent = 0;
+
 # A3XX FMGC Autopilot
 # Based off IT Autoflight System Controller V4.1.X
 # Copyright (c) 2026 Josh Davidson (Octal450)
@@ -648,21 +649,36 @@ var ITAF = {
 		output = fmgc.flightPlanController.getDesAltConst();
 		nextManagedAlt = output[0];
 		distance = output[1];
-		if (distance < 0) {
-			distance = 0;
+		isGeo = output[2];
+		wptIndex = output[4];
+		if (isGeo) {
+			idealSlope = fmgc.flightPlanController.getIdealSlope(nextManagedAlt,distance,wptIndex);
+			deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+			properDeltaAlt = distance * idealSlope;
+			difference = deltaAlt - properDeltaAlt;
+			print("proper delta alt is " ~ properDeltaAlt ~ "and idealSlope is " ~ idealSlope);
+			return difference;
+		} else {
+			if (distance < 0) {
+				distance = 0;
+			}
+			deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+			properDeltaAlt = distance * 318;
+			difference = deltaAlt - properDeltaAlt;
+			# if (output[2] == 1 and difference < 0) {
+			# 	difference = 0;
+			# }
+			return difference;
 		}
-		deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
-		properDeltaAlt = distance * 318;
-		difference = deltaAlt - properDeltaAlt;
-		if (output[2] == 1 and difference < 0) {
-			difference = 0;
-		}
-		return difference;
-
 	},
 
 	getVs: func(distance, deltaAlt, isGeo) {
-		if (isGeo) {
+		print("getVs called");
+		if (Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 10) {
+			vs = Internal.targetFpmFlch.getValue();
+			idleDescent = 1;
+			print("vs down");
+		} elsif (isGeo) {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
 			print("GEO VS: " ~ vs ~ "and gs*5: " ~ -1*gs*5);
@@ -730,8 +746,11 @@ var ITAF = {
 			Output.vert.setValue(0);
 			me.setClimbRateLim();
 			Internal.altCaptureActive = 1;
+			idleDescent = 0;
+			print("idle descent false");
 			me.updateVertText("ALT CAP");
 			me.updateThrustMode();
+			
 		} else if (n == 4) { # FLCH
 			Internal.managedModeOn.setBoolValue(0);
 			me.updateGsArm(0);
@@ -797,6 +816,8 @@ var ITAF = {
 				Internal.flchActive = 0;
 				Internal.alt.setValue(Input.alt.getValue());
 				Internal.altCaptureActive = 1;
+				idleDescent = 0;
+				print("idle descent false");
 				Output.vert.setValue(0);
 				me.updateVertText("ALT CAP");
 				me.updateThrustMode();
@@ -1124,6 +1145,7 @@ var managedDes = func {
 	realDeltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
 	if (realDeltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
+		print("managed des called");
 		ITAF.setVs(ITAF.getVs(distance, managedDeltaAlt, isGeo));
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
