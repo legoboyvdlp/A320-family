@@ -771,9 +771,40 @@ var flightPlanController = {
 
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
+	getCurrentDescentCoefficient: func() {
+		var costIndex = fmgc.FMGCNodes.costIndex.getValue();
+		var tas = fmgc.Velocities.trueAirspeedKt.getValue();
+		var gs = fmgc.Velocities.groundspeedKt.getValue();
+		var altitude = fmgc.Position.indicatedAltitudeFt.getValue();
+
+		var wind = tas - gs;
+		var angleDeg = 3.3 + (costIndex / 999.0) * 0.7;
+
+		# Wind correction (0.0125 deg per unit)
+		angleDeg += wind * 0.0125;
+
+		# --- Altitude-based additive (linear interpolation) ---
+		var highAlt = 39000.0;
+		var lowAlt = 1000.0;
+
+		# Clamp altitude into range
+		altitude = math.clamp(altitude, lowAlt, highAlt);
+
+		var t = (highAlt - altitude) / (highAlt - lowAlt);
+
+		var altAdd = t * 1.3;
+
+		angleDeg += altAdd;
+
+		var angleRad = angleDeg * math.pi / 180.0;
+
+		var coeff = 6076.0 * math.tan(angleRad);
+		print("Descent Coefficient: " ~ coeff);
+		return coeff;
+	},
 
 	getExtrapolatedFirstAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
-		var extrapolatedAlt = altCstr + (318 * (distanceToCstr - distanceToCstr2));
+		var extrapolatedAlt = altCstr + (me.getCurrentDescentCoefficient() * (distanceToCstr - distanceToCstr2));
 		return extrapolatedAlt;
 	},
 

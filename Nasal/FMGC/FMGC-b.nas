@@ -652,7 +652,7 @@ var ITAF = {
 			distance = 0;
 		}
 		deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
-		properDeltaAlt = distance * 318;
+		properDeltaAlt = distance * fmgc.flightPlanController.getCurrentDescentCoefficient();
 		difference = deltaAlt - properDeltaAlt;
 		if (output[2] == 1 and difference < 0) {
 			difference = 0;
@@ -668,7 +668,7 @@ var ITAF = {
 			vs = math.max(vs, -1*gs*5);
 			idleDescent = 0;
 		} else {
-			properDeltaAlt = distance * 318;
+			properDeltaAlt = distance * fmgc.flightPlanController.getCurrentDescentCoefficient();
 			properDeltaAlt = math.max(properDeltaAlt, 0);
 			vs = Internal.targetFpmFlch.getValue();
 			if (deltaAlt < properDeltaAlt) {
