@@ -663,7 +663,8 @@ var ITAF = {
 				distance = 0;
 			}
 			var deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
-			var properDeltaAlt = distance * 318;
+			# var properDeltaAlt = distance * 318;
+			var properDeltaAlt =  distance * fmgc.flightPlanController.getCurrentDescentCoefficient();
 			var difference = deltaAlt - properDeltaAlt;
 			# if (output[2] == 1 and difference < 0) {
 			# 	difference = 0;
@@ -676,8 +677,8 @@ var ITAF = {
 		print("getVs called");
 		if (Velocities.indicatedAirspeedKt.getValue() - Input.kts.getValue() >= 10) {
 			var vs = Internal.targetFpmFlch.getValue();
-			idleDescent = 1;
-			print("vs down");
+			# idleDescent = 1;
+			print("vs down indicated airspeed is " ~ Velocities.indicatedAirspeedKt.getValue() ~ "input kts is " ~ Input.kts.getValue());
 		} elsif (isGeo) {
 			var gs = Velocities.groundspeedKt.getValue();
 			var vs = -(deltaAlt * gs) / (distance * 60);
@@ -689,7 +690,8 @@ var ITAF = {
 			}
 			idleDescent = 0;
 		} else {
-			var properDeltaAlt = distance * 318;
+			# var properDeltaAlt = distance * 318;
+			var properDeltaAlt = distance * fmgc.flightPlanController.getCurrentDescentCoefficient();
 			properDeltaAlt = math.max(properDeltaAlt, 0);
 			var vs = Internal.targetFpmFlch.getValue();
 			if (deltaAlt < properDeltaAlt) {
@@ -761,6 +763,7 @@ var ITAF = {
 			if (abs(Internal.altDiff) >= 250) { # SPD CLB or SPD DES
 				Internal.altCaptureActive = 0;
 				Output.vert.setValue(4);
+				printValues();
 				Internal.flchActive = 1;
 				Internal.alt.setValue(Input.alt.getValue());
 				me.updateThrustMode();
@@ -1147,10 +1150,14 @@ var managedDes = func {
 	if (realDeltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
 		print("managed des called");
-		ITAF.setVs(ITAF.getVs(distance, managedDeltaAlt, isGeo));
+		
+		ITAF.setVs(ITAF.getVs(distance, managedDeltaAlt, isGeo, realNextManagedAlt));
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
 		settimer(managedDes, 2);
+	} elsif (Text.vert.getValue() == "DES") {
+		ITAF.setVertMode(3);
+		armDes();
 	}
 };
 #To be called when engages into CLB mode, uses the same mechanisism as OP CLB,
@@ -1193,6 +1200,14 @@ var armDes = func {
 		# print(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue());
 		settimer(armDes, 2);
 	}
+};
+
+var printValues = func {
+	altitude = Position.indicatedAltitudeFt.getValue();
+	distance = fmgc.flightPlanController.distToWpt.getValue();
+	IAS = Velocities.indicatedAirspeedKt.getValue();
+	print("Values: " ~ altitude ~ "," ~ distance ~ "," ~ IAS);
+	settimer(printValues, 2);
 };
 
 setlistener(Gear.wow1, func(val) {
@@ -1326,3 +1341,145 @@ setlistener("/it-autoflight/internal/alt", func() {
 
 var loopTimer = maketimer(0.1, ITAF, ITAF.loop);
 var slowLoopTimer = maketimer(1, ITAF, ITAF.slowLoop);
+
+# var data = [
+#     [39000, 0.3272079632952649, 0.30173467257691877, -2.932768357525391, 1.0985039724052816, -0.06667176768856217, 0.2038828272393203],
+#     [38000, 4.579269492551761, 4.361255069995993, 4.153665359089664, 4.131660793198441, 3.873375224417694, 4.1790691916217675],
+#     [37000, 7.832427989765811, 8.354026291981649, 8.035664264706773, 8.251978897422063, 7.770296298706542, 8.415075746157195],
+#     [36000, 11.340984746389259, 12.035048848345166, 11.652957127864372, 11.86922774216502, 11.47784316018343, 12.084219429151752],
+#     [35000, 15.596051531937867, 16.020558207141004, 15.464221929033648, 15.701492332756345, 15.381912352892513, 16.053029352894278],
+#     [34000, 19.786185006420368, 19.830230321781972, 19.226594069143164, 19.274472154262313, 19.044740275679207, 19.782171449889212],
+#     [33000, 23.719184887627918, 23.488094164772956, 22.811950678928163, 22.76519900074531, 22.526196031703904, 23.309106133998643],
+#     [32000, 27.787647399859104, 27.50606086005269, 26.62746512164848, 26.376600198300522, 26.160039730163646, 27.034047897417235],
+#     [31000, 31.73392679255722, 31.201025389759113, 30.293944676743674, 29.74941690974956, 29.644371148059, 30.573732288731865],
+#     [30000, 35.44902505322697, 34.74403888907485, 33.76555304740528, 33.057361105750644, 32.93516861642798, 33.94643028303156],
+#     [29000, 39.108866279278075, 38.32100461948355, 37.266605075686854, 36.31516883161863, 36.28738029903964, 37.357707233876866],
+#     [28000, 42.93147652300029, 41.888983050782365, 40.77790595120431, 39.6853195341015, 39.56316861261404, 40.72009297506155],
+#     [27000, 46.44926743342256, 45.34821013722886, 44.14986049827883, 42.89737041786297, 42.635786819524505, 44.0128802449941],
+#     [26000, 50.0492314628516, 48.82114403034023, 47.427778214228525, 46.030387811890236, 45.528792276175466, 47.21152534418679],
+#     [25000, 53.67068576272728, 52.674293863950936, 51.28311056318175, 49.23787968442161, 48.76002322939798, 50.50145869277693],
+#     [24000, 57.014137527863525, 56.33508353360363, 54.83934515334654, 52.291040263814935, 51.78334530034459, 53.630515346199815],
+#     [23000, 60.19898363508056, 59.74254431838598, 58.20426050914031, 55.1938960457518, 54.7102444497007, 56.61497765031486],
+#     [22000, 63.57704818398341, 63.35526050357918, 61.73326440158525, 58.23300708215455, 57.75860422982677, 59.758393751788034],
+#     [21000, 66.80553242017238, 66.76382643045756, 65.07340656953721, 61.053005830754486, 60.677032171171376, 62.72431596087875],
+#     [20000, 69.94803311379331, 70.02049842372892, 68.25946334134471, 63.78142603151934, 63.578967967227946, 65.42483117309442],
+#     [19000, 73.06430202385101, 73.33219011110148, 71.51415100176818, 66.32952675914004, 66.1472419600599, 68.09785941794529],
+#     [18000, 76.17283883581615, 76.64515179609701, 74.73263021951992, 68.53854733428597, 68.36279141445529, 70.4103754673977],
+#     [17000, 79.35483035612947, 79.92816738518475, 77.99593768305832, 70.86202116902969, 70.59075278889964, 72.75691262813531],
+#     [16000, 82.45108196530754, 83.15166286151887, 81.17230430573147, 73.76576999289337, 73.58189588866215, 75.82984967982644],
+#     [15000, 85.43569936971889, 86.42622017858301, 84.29833095281163, 76.45631694376053, 76.3690908210414, 78.61515729988423],
+#     [14000, 88.45481194983215, 89.60168260606866, 87.42842652655813, 79.14935856942344, 79.06966355385735, 81.38889404089213],
+#     [13000, 91.44645147684663, 92.63892260567445, 90.44969862295284, 81.75725606744837, 81.68903816160443, 84.09421256535974],
+#     [12000, 94.34756678714554, 95.70915341935817, 93.46282106948084, 84.36026459775827, 84.30443038412216, 86.788914672832],
+#     [11000, 97.15501497895254, 98.73717343707035, 96.39673762892869, 86.92444738507305, 86.87368458716286, 89.42421074576013],
+#     [10000, 99.80235341542993, 101.65693404279494, 99.24977104787422, 89.47564339518117, 89.35421800940912, 92.02313451282933],
+#     [9000, 99.80235341542993, 104.6626909754127, 102.0292325577586, 92.00725909171246, 89.35421800940912, 94.59999280671724],
+#     [8000, 99.80235341542993, 107.66844790803046, 104.80869406764299, 94.53887478824376, 89.35421800940912, 97.17685110060515],
+#     [7000, 99.80235341542993, 110.67420484064822, 107.58815557752737, 97.07049048477505, 89.35421800940912, 99.75370939449304],
+#     [6000, 99.80235341542993, 113.67996177326597, 110.36761708741176, 99.60210618130634, 89.35421800940912, 102.33056768838095],
+#     [5000, 99.80235341542993, 116.68571870588373, 113.14707859729614, 102.13372187783764, 89.35421800940912, 104.90742598226885],
+#     [4000, 99.80235341542993, 119.69147563850149, 115.92654010718053, 104.66533757436893, 89.35421800940912, 107.48428427615676],
+#     [3000, 99.80235341542993, 122.69723257111924, 118.70600161706491, 107.19695327090022, 89.35421800940912, 110.06114257004467],
+#     [2000, 99.80235341542993, 125.702989503737, 121.4854631269493, 109.72856896743153, 89.35421800940912, 112.63800086393258],
+#     [1000, 99.80235341542993, 128.70874643635477, 124.26492463683368, 112.26018466396282, 89.35421800940912, 115.21485915782047],
+# ];
+
+# var lerp = func(x0, y0, x1, y1, x) {
+#     if(x1 == x0) return y0;
+#     return y0 + (y1 - y0) * (x - x0) / (x1 - x0);
+# };
+
+# var build_distance_profile = func(cost_index, wind) {
+#     var profile = [];
+
+#     print("=== BUILDING PROFILE ===");
+#     print("cost_index=" ~ cost_index ~ " wind=" ~ wind);
+
+#     for(var i = 0; i < size(data); i = i + 1) {
+#         var alt = data[i][0];
+
+#         # CI 0
+#         var dist_ci0 = 0;
+#         if(wind < 0)
+#             dist_ci0 = lerp(-10, data[i][2], 0, data[i][3], wind);
+#         else
+#             dist_ci0 = lerp(0, data[i][3], 10, data[i][1], wind);
+
+#         # CI 999
+#         var dist_ci999 = 0;
+#         if(wind < 0)
+#             dist_ci999 = lerp(-10, data[i][6], 0, data[i][4], wind);
+#         else
+#             dist_ci999 = lerp(0, data[i][4], 10, data[i][5], wind);
+
+#         # interpolate CI
+#         var dist = lerp(0, dist_ci0, 999, dist_ci999, cost_index);
+
+#         profile = append(profile, [alt, dist]);
+
+#         print("alt=" ~ alt ~ " dist=" ~ dist);
+#     }
+
+#     print("=== PROFILE READY ===");
+#     return profile;
+# };
+
+# var get_altitude_from_distance = func(target_distance, starting_altitude) {
+
+#     var cost_index = fmgc.FMGCNodes.costIndex.getValue();
+#     var wind = Velocities.trueAirspeedKt.getValue() - Velocities.groundspeedKt.getValue();
+#     wind = math.clamp(wind, -10, 10);
+
+#     print("=== INPUT ===");
+#     print("starting_altitude=" ~ starting_altitude ~ " target_distance=" ~ target_distance);
+#     print("cost_index=" ~ cost_index ~ " wind=" ~ wind);
+
+#     if(starting_altitude < 1000) starting_altitude = 1000;
+#     if(starting_altitude > 39000) starting_altitude = 39000;
+
+#     var profile = build_distance_profile(cost_index, wind);
+
+#     # --- Step 1: get distance at starting altitude ---
+#     var distance_at_start = 0;
+#     for(var i = 0; i < size(profile) - 1; i = i + 1) {
+#         var alt1 = profile[i][0];
+#         var alt2 = profile[i+1][0];
+#         if((alt1 - starting_altitude) * (alt2 - starting_altitude) <= 0) {
+#             distance_at_start = lerp(alt1, profile[i][1], alt2, profile[i+1][1], starting_altitude);
+#             break;
+#         }
+#     }
+
+#     print("distance_at_start=" ~ distance_at_start);
+
+#     # --- Step 2: compute target distance in profile ---
+#     var distance_target = distance_at_start - target_distance;
+#     print("distance_target=" ~ distance_target);
+
+#     if(distance_target < 0) {
+#         print("distance_target < 0 → returning 39000");
+#         return 39000;  # can't reach
+#     }
+
+#     # --- Step 3: search upward from next higher altitude ---
+#     for(var i = 0; i < size(profile) - 1; i = i + 1) {
+#         var alt1 = profile[i][0];
+#         var alt2 = profile[i+1][0];
+
+#         if(alt2 < starting_altitude) continue;  # only look above starting altitude
+
+#         var d1 = profile[i][1];
+#         var d2 = profile[i+1][1];
+
+#         print("checking bracket: alt1=" ~ alt1 ~ " alt2=" ~ alt2 ~ " d1=" ~ d1 ~ " d2=" ~ d2);
+
+#         if((d1 - distance_target) * (d2 - distance_target) <= 0) {
+#             var result = lerp(d1, alt1, d2, alt2, distance_target);
+#             print("FOUND BRACKET → returning alt=" ~ result);
+#             return result;
+#         }
+#     }
+
+#     print("no bracket found → returning 39000");
+#     return 39000;  # if we reach the top
+# };

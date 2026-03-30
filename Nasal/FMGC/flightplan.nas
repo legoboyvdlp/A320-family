@@ -14,6 +14,8 @@ var DEBUG_DISCONT = 0;
 var lastIdealSlope = 0;
 var lastIdealSlopeWptIndex = 0;
 var bufferCount = 0;
+var lastDescentCoefficient = 318;
+var coefficientBufferCount = 0;
 # Props.getNode
 var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
 var trueHDG = props.globals.getNode("/orientation/heading-deg", 1);
@@ -774,14 +776,47 @@ var flightPlanController = {
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
 
+	getCurrentDescentCoefficient: func() {
+		var costIndex = fmgc.FMGCNodes.costIndex.getValue();
+		var tas = fmgc.Velocities.trueAirspeedKt.getValue();
+		var gs = fmgc.Velocities.groundspeedKt.getValue();
+		var altitude = fmgc.Position.indicatedAltitudeFt.getValue();
+
+		var wind = tas - gs;
+		var angleDeg = 2.8 + (costIndex / 999.0) * 0.5;
+
+		# Wind correction (0.0125 deg per unit)
+		angleDeg += wind * 0.0125;
+
+		# --- Altitude-based additive (linear interpolation) ---
+		var highAlt = 39000.0;
+		var lowAlt = 1000.0;
+
+		# Clamp altitude into range
+		altitude = math.clamp(altitude, lowAlt, highAlt);
+
+		var t = (highAlt - altitude) / (highAlt - lowAlt);
+
+		var altAdd = t * 1.0;
+
+		angleDeg += altAdd;
+
+		var angleRad = angleDeg * math.pi / 180.0;
+
+		var coeff = 6076.0 * math.tan(angleRad);
+		print("Descent Coefficient: " ~ coeff);
+		return coeff;
+	},
+
 	getExtrapolatedFirstAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
-		var extrapolatedAlt = altCstr + (318 * (distanceToCstr - distanceToCstr2));
+		# var extrapolatedAlt = altCstr + (318 * (distanceToCstr - distanceToCstr2));
+		var extrapolatedAlt = altCstr + (me.getCurrentDescentCoefficient() * (distanceToCstr - distanceToCstr2));
 		return extrapolatedAlt;
 	},
 
 	getExtrapolatedOneThousandVSDescent: func(distanceToCstr2) {
 		var currentAlt = Position.indicatedAltitudeFt.getValue();
-		var gs = pts.Velocities.groundspeedKt.getValue();
+		var gs = fmgc.Velocities.groundspeedKt.getValue();
 		var extrapolatedAlt = currentAlt - (distanceToCstr2 * 60 * 1000 / gs);
 		return extrapolatedAlt;
 	},
@@ -855,7 +890,6 @@ var flightPlanController = {
 		var wptIndex = 0;
 		var altCstr = 0;
 		var altCstrType = nil;
-		# var altCstr2 = 0;
 		var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 
 		# --- First loop: find primary constraint ---
@@ -978,11 +1012,11 @@ var flightPlanController = {
 			lastIdealSlope = (currentAlt - altCstr)/distanceToCstr;
 			lastIdealSlopeWptIndex = wptIndex;
 			bufferCount = 0;
-			print("updated ideal slope to wpt index " ~ wptIndex ~ "current Alt is " ~ currentAlt ~ "altCstr is " ~ altCstr ~ "distanceToCstr is " ~ distanceToCstr ~ "last ideal slope is " ~ lastIdealSlope);
+			# print("updated ideal slope to wpt index " ~ wptIndex ~ "current Alt is " ~ currentAlt ~ "altCstr is " ~ altCstr ~ "distanceToCstr is " ~ distanceToCstr ~ "last ideal slope is " ~ lastIdealSlope);
 			return lastIdealSlope;
 		} else {
 			bufferCount += 1;
-			print("buffercount is " ~ bufferCount);
+			# print("buffercount is " ~ bufferCount);
 			return lastIdealSlope;
 		}
 	},
