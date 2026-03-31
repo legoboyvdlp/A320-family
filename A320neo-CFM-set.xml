@@ -228,6 +228,12 @@
 			<maximum-zero-fuel-mass-lbs>141800</maximum-zero-fuel-mass-lbs>
 		</mass-and-balance>
 	</limits>
+
+	<nasal n="0">
+		<setup>
+			<script>aircraft.livery.init("Aircraft/A320-family/Models/Liveries/CFM-NEO");</script>
+		</setup>
+	</nasal>
 	
 	<options n="0">
 		<config-name type="string">A320neo-CFM</config-name>

@@ -21,6 +21,95 @@
 
 	<animation>
 		<type>material</type>
+		<property-base>sim/model/livery/</property-base>
+		<texture-prop>texture-fuselage</texture-prop>
+		<texture>SAS-fuselage.png</texture>
+		<object-name>AileronL</object-name>
+		<object-name>AileronR</object-name>
+		<object-name>Antenna1</object-name>
+		<object-name>Antenna2</object-name>
+		<object-name>ApuFlap</object-name>
+		<object-name>AvionicsVentDoor</object-name>
+		<object-name>Cargo1</object-name>
+		<object-name>Cargo2</object-name>
+		<object-name>Cargo3</object-name>
+		<object-name>DoorL1</object-name>
+		<object-name>DoorL4</object-name>
+		<object-name>DoorR1</object-name>
+		<object-name>DoorR4</object-name>
+		<object-name>ElevatorL</object-name>
+		<object-name>ElevatorR</object-name>
+		<object-name>EngineFairingL</object-name>
+		<object-name>EngineFairingR</object-name>
+		<object-name>FairingL1</object-name>
+		<object-name>FairingL2</object-name>
+		<object-name>FairingL3</object-name>
+		<object-name>FairingR1</object-name>
+		<object-name>FairingR2</object-name>
+		<object-name>FairingR3</object-name>
+		<object-name>FlapL1</object-name>
+		<object-name>FlapL2</object-name>
+		<object-name>FlapR1</object-name>
+		<object-name>FlapR2</object-name>
+		<object-name>Fuselage</object-name>
+		<object-name>GPUServiceDoor</object-name>
+		<object-name>Hstabs</object-name>
+		<object-name>MLGGearDoorL</object-name>
+		<object-name>MLGGearDoorR</object-name>
+		<object-name>MLGWingDoorL1</object-name>
+		<object-name>MLGWingDoorL2</object-name>
+		<object-name>MLGWingDoorR1</object-name>
+		<object-name>MLGWingDoorR2</object-name>
+		<object-name>NLGAftDoorL</object-name>
+		<object-name>NLGAftDoorR</object-name>
+		<object-name>NLGFittingPanel</object-name>
+		<object-name>NLGForewardDoorL</object-name>
+		<object-name>NLGForewardDoorR</object-name>
+		<object-name>OutflowValveDoor1</object-name>
+		<object-name>OutflowValveDoor2</object-name>
+		<object-name>RatDoorL</object-name>
+		<object-name>RatDoorR</object-name>
+		<object-name>Rudder</object-name>
+		<object-name>Sharklet</object-name>
+		<object-name>SlatL1</object-name>
+		<object-name>SlatL2</object-name>
+		<object-name>SlatR1</object-name>
+		<object-name>SlatR2</object-name>
+		<object-name>SpoilerL1</object-name>
+		<object-name>SpoilerL2</object-name>
+		<object-name>SpoilerL3</object-name>
+		<object-name>SpoilerL4</object-name>
+		<object-name>SpoilerL5</object-name>
+		<object-name>SpoilerR1</object-name>
+		<object-name>SpoilerR2</object-name>
+		<object-name>SpoilerR3</object-name>
+		<object-name>SpoilerR4</object-name>
+		<object-name>SpoilerR5</object-name>
+		<object-name>Wings</object-name>
+		<object-name>WingtipFence</object-name>
+		<object-name>AOASensorL1</object-name>
+		<object-name>AOASensorL2</object-name>
+		<object-name>AOASensorR</object-name>
+	</animation>
+	
+	<animation>
+		<type>material</type>
+		<object-name>EngineIAEV2500.Placards</object-name>
+		<property-base>sim/model/livery/</property-base>
+		<texture-prop>texture-engine</texture-prop>
+		<texture>SAS-engine.png</texture>
+		<object-name>EngineIAEV2500L</object-name>
+		<object-name>EngineIAEV2500R</object-name>
+		<object-name>ReverserLDoor</object-name>
+		<object-name>ReverserRDoor</object-name>
+		<object-name>PylonIAEV2500L</object-name>
+		<object-name>PylonIAEV2500R</object-name>
+		<object-name>IntakeIAEV2500L</object-name>
+		<object-name>IntakeIAEV2500R</object-name>
+	</animation>
+
+	<animation>
+		<type>material</type>
 		<object-name>EngineIAEV2500.Placards</object-name>
 		<property-base>sim/model/livery/</property-base>
 		<texture-prop>texture-placards</texture-prop>
@@ -30,12 +119,7 @@
 	<!-- Nasal code -->
 	<nasal>
 		<load><![CDATA[
-			var livery_update = aircraft.canvas_livery_update.init("Models/Liveries//IAE", _module_id);
-			var elements = ["AileronL","AileronR","Antenna1","Antenna2","ApuFlap","AvionicsVentDoor","Cargo1","Cargo2","Cargo3","DoorL1","DoorL4","DoorR1","DoorR4","ElevatorL","ElevatorR","EngineFairingL","EngineFairingR","FairingL1","FairingL2","FairingL3","FairingR1","FairingR2","FairingR3","FlapL1","FlapL2","FlapR1","FlapR2","Fuselage","GPUServiceDoor","Hstabs","MLGGearDoorL","MLGGearDoorR","MLGWingDoorL1","MLGWingDoorL2","MLGWingDoorR1","MLGWingDoorR2","NLGAftDoorL","NLGAftDoorR","NLGFittingPanel","NLGForewardDoorL","NLGForewardDoorR","OutflowValveDoor1","OutflowValveDoor2","RatDoorL","RatDoorR","Rudder","Sharklet","SlatL1","SlatL2","SlatR1","SlatR2","SpoilerL1","SpoilerL2","SpoilerL3","SpoilerL4","SpoilerL5","SpoilerR1","SpoilerR2","SpoilerR3","SpoilerR4","SpoilerR5","Wings","WingtipFence","AOASensorL1","AOASensorL2","AOASensorR"];
-			livery_update.createTarget("fuselage", elements, "sim/model/livery/texture-fuselage", "Aircraft/A320-family/Models/Liveries//IAE/4k/QTR-fuselage.png", resolution=8192);
-
-			elements = ["EngineIAEV2500L","EngineIAEV2500R","ReverserLDoor","ReverserRDoor","PylonIAEV2500L","PylonIAEV2500R","IntakeIAEV2500L","IntakeIAEV2500R"];
-			livery_update.createTarget("engines", elements, "sim/model/livery/texture-engine", "Aircraft/A320-family/Models/Liveries//IAE/2k/QTR-engine.png");
+			var livery_update = aircraft.livery_update.new("Aircraft/A320-family/Models/Liveries/IAE");
 		]]></load>
 		<unload>
 			livery_update.stop();

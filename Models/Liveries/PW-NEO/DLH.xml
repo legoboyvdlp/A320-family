@@ -5,8 +5,8 @@
 		<model>
 			<livery>
 				<name>Lufthansa (D-AINK)</name>
-				<texture-fuselage>DLH-fuselage.png</texture-fuselage>
-				<texture-engine>PW1127-white.png</texture-engine>
+				<texture-fuselage>Liveries/PW-NEO/DLH-fuselage.png</texture-fuselage>
+				<texture-engine>Liveries/PW-NEO/PW1127-white.png</texture-engine>
 				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 		</model>

@@ -5,8 +5,8 @@
 		<model>
 			<livery>
 				<name>Delta Air Lines (N347NW)</name>
-				<texture-fuselage>DAL-fuselage.png</texture-fuselage>
-				<texture-engine>DAL-engine.png</texture-engine>
+				<texture-fuselage>Liveries/CFM/DAL-fuselage.png</texture-fuselage>
+				<texture-engine>Liveries/CFM/DAL-engine.png</texture-engine>
 				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 		</model>

@@ -5,8 +5,8 @@
 		<model>
 			<livery>
 				<name>Spirit Airlines (N903NK)</name>
-				<texture-fuselage>NKS-fuselage.png</texture-fuselage>
-				<texture-engine>NKS-engine.png</texture-engine>
+				<texture-fuselage>Liveries/PW-NEO/NKS-fuselage.png</texture-fuselage>
+				<texture-engine>Liveries/PW-NEO/NKS-engine.png</texture-engine>
 				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 		</model>

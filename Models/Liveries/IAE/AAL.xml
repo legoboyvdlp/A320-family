@@ -5,8 +5,8 @@
 		<model>
 			<livery>
 				<name>American Airlines (N654AW)</name>
-				<texture-fuselage>AAL-fuselage.png</texture-fuselage>
-				<texture-engine>AAL-engine.png</texture-engine>
+				<texture-fuselage>Liveries/IAE/AAL-fuselage.png</texture-fuselage>
+				<texture-engine>Liveries/IAE/AAL-engine.png</texture-engine>
 				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 		</model>

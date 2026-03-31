@@ -5,8 +5,8 @@
 		<model>
 			<livery>
 				<name>British Airways (G-TTNR)</name>
-				<texture-fuselage>BAW-fuselage.png</texture-fuselage>
-				<texture-engine>BAW-engine.png</texture-engine>
+				<texture-fuselage>Liveries/CFM-NEO/BAW-fuselage.png</texture-fuselage>
+				<texture-engine>Liveries/CFM-NEO/BAW-engine.png</texture-engine>
 				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 		</model>

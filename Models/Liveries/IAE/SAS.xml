@@ -5,8 +5,8 @@
 		<model>
 			<livery>
 				<name>Scandinavian (OY-KAM)</name>
-				<texture-fuselage>SAS-fuselage.png</texture-fuselage>
-				<texture-engine>SAS-engine.png</texture-engine>
+				<texture-fuselage>Liveries/IAE/SAS-fuselage.png</texture-fuselage>
+				<texture-engine>Liveries/IAE/SAS-engine.png</texture-engine>
 				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 		</model>
