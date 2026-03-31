@@ -832,12 +832,66 @@
 		<audio>
 			<acp n="0">
 				<int-rad type="int">1</int-rad>
+				<adf1-recive type="bool">0</adf1-recive>
+				<adf1-volume type="double">0</adf1-volume>
+				<adf2-recive type="bool">0</adf2-recive>
+				<adf2-volume type="double">0</adf2-volume>
+				<mkr-recive type="bool">0</mkr-recive>
+				<mkr-volume type="double">0</mkr-volume>
+				<ils-recive type="bool">0</ils-recive>
+				<ils-volume type="double">0</ils-volume>
+				<vor1-recive type="bool">0</vor1-recive>
+				<vor1-volume type="double">0</vor1-volume>
+				<vor2-recive type="bool">0</vor2-recive>
+				<vor2-volume type="double">0</vor2-volume>
+				<vhf1-recive type="bool">1</vhf1-recive>
+				<vhf1-volume type="double">1</vhf1-volume>
+				<vhf2-recive type="bool">1</vhf2-recive>
+				<vhf2-volume type="double">0.5</vhf2-volume>
+				<vhf3-recive type="bool">0</vhf3-recive>
+				<vhf3-volume type="double">0</vhf3-volume>
 			</acp>
 			<acp n="1">
 				<int-rad type="int">1</int-rad>
+				<adf1-recive type="bool">0</adf1-recive>
+				<adf1-volume type="double">0</adf1-volume>
+				<adf2-recive type="bool">0</adf2-recive>
+				<adf2-volume type="double">0</adf2-volume>
+				<mkr-recive type="bool">0</mkr-recive>
+				<mkr-volume type="double">0</mkr-volume>
+				<ils-recive type="bool">0</ils-recive>
+				<ils-volume type="double">0</ils-volume>
+				<vor1-recive type="bool">0</vor1-recive>
+				<vor1-volume type="double">0</vor1-volume>
+				<vor2-recive type="bool">0</vor2-recive>
+				<vor2-volume type="double">0</vor2-volume>
+				<vhf1-recive type="bool">1</vhf1-recive>
+				<vhf1-volume type="double">1</vhf1-volume>
+				<vhf2-recive type="bool">1</vhf2-recive>
+				<vhf2-volume type="double">0.5</vhf2-volume>
+				<vhf3-recive type="bool">0</vhf3-recive>
+				<vhf3-volume type="double">0</vhf3-volume>
 			</acp>
 			<acp n="2">
 				<int-rad type="int">1</int-rad>
+				<adf1-recive type="bool">0</adf1-recive>
+				<adf1-volume type="double">0</adf1-volume>
+				<adf2-recive type="bool">0</adf2-recive>
+				<adf2-volume type="double">0</adf2-volume>
+				<mkr-recive type="bool">0</mkr-recive>
+				<mkr-volume type="double">0</mkr-volume>
+				<ils-recive type="bool">0</ils-recive>
+				<ils-volume type="double">0</ils-volume>
+				<vor1-recive type="bool">0</vor1-recive>
+				<vor1-volume type="double">0</vor1-volume>
+				<vor2-recive type="bool">0</vor2-recive>
+				<vor2-volume type="double">0</vor2-volume>
+				<vhf1-recive type="bool">1</vhf1-recive>
+				<vhf1-volume type="double">1</vhf1-volume>
+				<vhf2-recive type="bool">1</vhf2-recive>
+				<vhf2-volume type="double">0.5</vhf2-volume>
+				<vhf3-recive type="bool">0</vhf3-recive>
+				<vhf3-volume type="double">0</vhf3-volume>
 			</acp>
 		</audio>
 		<autobrake>
