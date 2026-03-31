@@ -82,7 +82,7 @@
 		<object-name>AOASensorL1</object-name>
 		<object-name>AOASensorL2</object-name>
 		<object-name>AOASensorR</object-name>
-	<animation>
+	</animation>
 
 	<animation>
 		<type>material</type>
@@ -104,7 +104,7 @@
 		<object-name>PylonLEAPR</object-name>
 		<object-name>ReverserLDoorLEAP</object-name>
 		<object-name>ReverserRDoorLEAP</object-name>
-	<animation>
+	</animation>
 	
 	<model>
 		<name>EnginesCFMLEAP</name>
