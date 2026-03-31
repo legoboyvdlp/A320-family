@@ -1177,6 +1177,8 @@
 				<eng2-manstart type="int">0</eng2-manstart>
 				<eng1-n1 type="int">0</eng1-n1>
 				<eng2-n1 type="int">0</eng2-n1>
+				<eng1-n1mode type="int">0</eng1-n1mode>
+				<eng2-n1mode type="int">0</eng2-n1mode>
 				<evac type="int">0</evac>
 				<fwddisch type="int">0</fwddisch>
 				<idg1 type="int">0</idg1>
@@ -1221,6 +1223,17 @@
 				<x-bleed type="int">1</x-bleed> <!-- Auto -->
 			</switches>
 		</pneumatics>
+		<radio>
+			<rmp n="0">
+				<nav-protect type="int">0</nav-protect>
+			</rmp>
+			<rmp n="1">
+				<nav-protect type="int">0</nav-protect>
+			</rmp>
+			<rmp n="2">
+				<nav-protect type="int">0</nav-protect>
+			</rmp>
+		</radio>
 		<switches>
 			<annun-test type="int">0</annun-test>
 			<beacon type="bool">0</beacon>
