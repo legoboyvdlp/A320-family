@@ -123,6 +123,7 @@ var Internal = {
 	alt: props.globals.initNode("/it-autoflight/internal/alt", 10000, "INT"),
 	managedModeOn: props.globals.initNode("/it-autoflight/internal/managed-mode-on", 0, "BOOL"),
 	altCaptureActive: 0,
+	weightKgs: props.globals.getNode("/systems/acconfig/options/weight-kgs", 1),
 	altDiff: 0,
 	altTemp: 0,
 	altPredicted: props.globals.initNode("/it-autoflight/internal/altitude-predicted", 0, "DOUBLE"),

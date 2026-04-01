@@ -776,29 +776,39 @@ var flightPlanController = {
 		var tas = fmgc.Velocities.trueAirspeedKt.getValue();
 		var gs = fmgc.Velocities.groundspeedKt.getValue();
 		var altitude = fmgc.Position.indicatedAltitudeFt.getValue();
+		var weight = fmgc.Internal.weightKgs.getValue();
 
 		var wind = tas - gs;
-		var angleDeg = 3.3 + (costIndex / 999.0) * 0.7;
 
-		# Wind correction (0.0125 deg per unit)
+		# Base angle from cost index
+		var angleDeg = 3.5 + (costIndex / 999.0) * 0.5;
+
 		angleDeg += wind * 0.0125;
 
-		# --- Altitude-based additive (linear interpolation) ---
 		var highAlt = 39000.0;
 		var lowAlt = 1000.0;
 
-		# Clamp altitude into range
 		altitude = math.clamp(altitude, lowAlt, highAlt);
 
-		var t = (highAlt - altitude) / (highAlt - lowAlt);
-
-		var altAdd = t * 1.3;
+		var tAlt = (highAlt - altitude) / (highAlt - lowAlt);
+		var altAdd = tAlt * 1.3;
 
 		angleDeg += altAdd;
+
+		var minW = 44000.0;
+		var maxW = 78925.0;
+
+		weight = math.clamp(weight, minW, maxW);
+
+		var tW = (maxW - weight) / (maxW - minW);
+		var weightAdd = tW * 0.3;
+
+		angleDeg += weightAdd;
 
 		var angleRad = angleDeg * math.pi / 180.0;
 
 		var coeff = 6076.0 * math.tan(angleRad);
+
 		print("Descent Coefficient: " ~ coeff);
 		return coeff;
 	},
