@@ -783,6 +783,15 @@ var flightPlanController = {
 		# Base angle from cost index
 		var angleDeg = 3.5 + (costIndex / 999.0) * 0.5;
 
+		var minW = 44000.0;
+		var maxW = 78925.0;
+
+		weight = math.clamp(weight, minW, maxW);
+
+		var tW = (maxW - weight) / (maxW - minW);
+		var weightAdd = tW * 0.3;
+		var altAddAlteration = tW * 0.25;
+
 		angleDeg += wind * 0.0125;
 
 		var highAlt = 39000.0;
@@ -791,17 +800,11 @@ var flightPlanController = {
 		altitude = math.clamp(altitude, lowAlt, highAlt);
 
 		var tAlt = (highAlt - altitude) / (highAlt - lowAlt);
-		var altAdd = tAlt * 1.3;
+		var altAdd = tAlt * (1.3 - altAddAlteration);
 
 		angleDeg += altAdd;
 
-		var minW = 44000.0;
-		var maxW = 78925.0;
-
-		weight = math.clamp(weight, minW, maxW);
-
-		var tW = (maxW - weight) / (maxW - minW);
-		var weightAdd = tW * 0.3;
+		
 
 		angleDeg += weightAdd;
 
