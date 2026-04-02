@@ -798,7 +798,7 @@ var ITAF = {
 		} else if (n == 9) { # NONE
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			me.updateGsArm(0);
+			# me.updateGsArm(0);
 			Output.vert.setValue(9);
 			me.updateVertText("");
 			me.updateThrustMode();
