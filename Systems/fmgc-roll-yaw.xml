@@ -234,6 +234,45 @@
 		<max>0.33</max>
 	</filter>
 	
+	<filter>
+		<name>System Command: Aileron Rollout</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<sum>
+					<max>
+						<min>
+							<product>
+								<property>/orientation/roll-deg</property>
+								<value>-0.2</value>
+								<table>
+									<property>/velocities/airspeed-kt</property>
+									<entry><ind> 80</ind><dep>0.1</dep></entry>
+									<entry><ind>140</ind><dep>1.0</dep></entry>
+								</table>
+							</product>
+							<value>0.5</value>
+						</min>
+						<value>-0.5</value>
+					</max>
+					<product>
+						<property>/it-autoflight/internal/rudder-cmd</property>
+						<value>-0.5</value>
+						<table>
+							<property>/velocities/airspeed-kt</property>
+							<entry><ind> 80</ind><dep>0.1</dep></entry>
+							<entry><ind>140</ind><dep>1.0</dep></entry>
+						</table>
+					</product>
+				</sum>
+			</expression>
+		</input>
+		<output>/it-autoflight/internal/aileron-rollout</output>
+		<min>-1.0</min>
+		<max>1.0</max>
+	</filter>
+	
 	<!-- Yaw Axis -->
 	<filter>
 		<name>IT-CONTROLLER: Align/Rollout Yaw Rate Target</name>
