@@ -13,7 +13,7 @@
 				<table>
 					<property>/velocities/airspeed-kt</property>
 					<entry><ind>140</ind><dep>1.6</dep></entry>
-					<entry><ind>360</ind><dep>2.6</dep></entry>
+					<entry><ind>360</ind><dep>3.1</dep></entry>
 				</table>
 			</expression>
 		</gain>
@@ -174,7 +174,7 @@
 	</filter>
 	
 	<filter>
-		<name>System Command: Roll Target Inactive Sync</name>
+		<name>System Command: Target Roll Inactive Sync</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>
@@ -220,11 +220,11 @@
 			</condition>
 			<value>15</value>
 		</max-rate-of-change>
-		<max-rate-of-change>6</max-rate-of-change>
+		<max-rate-of-change>5</max-rate-of-change>
 	</filter>
 	
 	<filter>
-		<name>System Command: Roll Rate Target</name>
+		<name>System Command: Target Roll Rate</name>
 		<type>gain</type>
 		<gain>-0.06</gain>
 		<input>/orientation/roll-deg</input>
@@ -275,7 +275,7 @@
 	
 	<!-- Yaw Axis -->
 	<filter>
-		<name>IT-CONTROLLER: Align/Rollout Yaw Rate Target</name>
+		<name>IT-CONTROLLER: Align/Rollout Target Yaw Rate</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<input>
