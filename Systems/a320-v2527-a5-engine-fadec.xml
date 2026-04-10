@@ -850,16 +850,13 @@
 						<table>
 							<independentVar lookup="row">velocities/mach</independentVar>
 							<independentVar lookup="column">/controls/flight/flaps-input</independentVar>
-							<independentVar lookup="table">/position/altitude-ft</independentVar>
-							<tableData breakPoint="0">
+							<tableData>
 								      0     1
-								0.21  27.9  33.6
-								0.70  35.3  39.7
-							</tableData>
-							<tableData breakPoint="45000">
-								      0     1
-								0.55  44.2  50.0
-								0.90  49.7  51.8
+								0.08  22.4  22.4
+								0.21  27.9  31.2
+								0.50  33.5  37.9
+								0.70  35.7  39.9
+								0.90  36.9  40.8
 							</tableData>
 						</table>
 						<property>/systems/fadec/limit/mach-factor-schedule</property>
