@@ -761,6 +761,9 @@
 			<alt-managed type="bool">0</alt-managed>
 			<kts type="int">100</kts>
 		</input>
+		<internal n="0">
+			<aileron-rollout type="double">0</aileron-rollout>
+		</internal>
 		<settings n="0">
 			<accel-ft type="double">1500</accel-ft>
 		</settings>

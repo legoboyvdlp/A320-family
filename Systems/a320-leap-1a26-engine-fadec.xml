@@ -422,16 +422,13 @@
 					<table>
 						<independentVar lookup="row">velocities/mach</independentVar>
 						<independentVar lookup="column">/controls/flight/flaps-input</independentVar>
-						<independentVar lookup="table">/position/altitude-ft</independentVar>
-						<tableData breakPoint="0">
+						<tableData>
 							      0     1
-							0.21  25.8  31.8
-							0.70  33.6  38.2
-						</tableData>
-						<tableData breakPoint="45000">
-							      0     1
-							0.55  42.8  48.9
-							0.90  48.5  50.7
+							0.08  20.1  20.1
+							0.21  25.8  29.2
+							0.50  31.7  36.2
+							0.70  34.0  38.3
+							0.90  35.2  39.2
 						</tableData>
 					</table>
 					<value>0</value>
