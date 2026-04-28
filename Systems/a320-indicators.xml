@@ -1319,7 +1319,7 @@
 			</test>
 		</switch>
 
-		<!--switch name="/controls/indicators/ext-pwr-avail">
+		<switch name="/controls/indicators/ext-pwr-avail">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				<test logic="AND" value="1">
@@ -1334,7 +1334,7 @@
 					/systems/electrical/bus/ac-ess lt 110
 				</test>
 			</test>
-		</switch-->
+		</switch>
 
 		<switch name="/controls/indicators/ext-pwr-on">
 			<default value="0"/>

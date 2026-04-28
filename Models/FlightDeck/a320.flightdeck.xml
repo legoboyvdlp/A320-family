@@ -412,37 +412,7 @@
 		<type>select</type>
 		<object-name>ExtPwrBtn1A</object-name>
 		<condition>
-			<!--propertiy>/controls/indicators/ext-pwr-avail</property-->
-			<or>
-				<and>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-si-bus</property>
-							<value>110</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-ess-shed</property>
-							<value>110</value>
-						</greater-than-equals>
-					</or>
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-ess</property>
-						<value>110</value>
-					</greater-than-equals>
-				</and>
-				<and>
-					<greater-than>
-						<property>/systems/electrical/sources/ext/output-volt</property>
-						<value>110</value>
-					</greater-than>
-					<not>
-						<greater-than-equals>
-							<property>systems/electrical/bus/ac-ess</property>
-							<value>110</value>
-						</greater-than-equals>
-					</not>
-				</and>
-			</or>
+			<property>/controls/indicators/ext-pwr-avail</property>
 		</condition>
 	</animation>
 	
