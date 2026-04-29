@@ -43437,4 +43437,9 @@
 		<range-m>3.0</range-m>
 	</light>
 	
+	<!-- Checklist marker -->
+	<model>
+		<path>Aircraft/Generic/marker.xml</path>
+	</model>
+
 </PropertyList>
