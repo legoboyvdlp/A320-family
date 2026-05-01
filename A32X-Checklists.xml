@@ -320,8 +320,8 @@
           </marker>
         </item>
         <item> <!-- Await APU Start -->
-          <name>Await APU Available</name>
-          <value>ON</value>
+          <name>Await APU Status</name>
+          <value>AVAIL</value>
           <condition>
             <property>controls/indicators/apu-start-avail</property>
           </condition>
@@ -734,23 +734,27 @@
           <name>======&lt; MCDU FMGC Setup &gt;======</name>
         </item>
         <item> <!-- ZFW/ZFWCG -->
-          <name>ZFW/ZFWCG (MCDU: INIT -> Right)</name>
-          <value>Check Fuel and Payload Settings Window</value>
+          <name>ZFW/ZFWCG (INIT -> Right)</name>
+          <value>Check Fuel and Payload Settings + CG Applet</value>
         </item>
         <item> <!-- Block Fuel -->
-          <name>Block Fuel (MCDU: INIT -> Right)</name>
-          <value>Check Flight Plan</value>
+          <name>Block Fuel (INIT -> Right)</name>
+          <value>Check Fuel and Payload Settings</value>
         </item>
         <item> <!-- V1/VR/V2 -->
-          <name>V1/VR/V2 (MCDU: PERF)</name>
+          <name>V1/VR/V2 (PERF)</name>
           <value>Calculate (e.g. 130/140/142)</value>
         </item>
         <item> <!-- FLAPS/THS -->
-          <name>FLAPS/THS (MCDU: PERF)</name>
+          <name>FLAPS/THS (PERF)</name>
           <value>Calculate (typ. 1 or 2)</value>
         </item>
+        <item> <!-- FLEX Takeoff Temp -->
+          <name>FLEX TO TEMP (PERF)</name>
+          <value>Set (typ ~65)</value>
+        </item>
         <item> <!-- FROM/TO -->
-          <name>FROM/TO (MCDU: INIT)</name>
+          <name>FROM/TO (INIT)</name>
           <value>Set Departure + Arrival Airport (ICAO/ICAO)</value>
         </item>
         <item> <!-- Flightplan -->
@@ -1047,6 +1051,10 @@
             <z-m>-0.1140</z-m>
             <scale>1.0</scale>
           </marker>
+        </item>
+        <item> <!-- Monitor Engine Status -->
+          <name>Engine Status</name>
+          <value>Monitor</value>
         </item>
       </page>
     </checklist>
@@ -1929,18 +1937,30 @@
           <value>Released / Centered</value>
           <condition>
             <and>
-              <equals>
+              <less-than>
                 <property>controls/flight/elevator</property>
-                <value>0</value>
-              </equals>
-              <equals>
+                <value>0.2</value>
+              </less-than>
+              <greater-than>
+                <property>controls/flight/elevator</property>
+                <value>-0.2</value>
+              </greater-than>
+              <less-than>
                 <property>controls/flight/aileron</property>
-                <value>0</value>
-              </equals>
-              <equals>
+                <value>0.2</value>
+              </less-than>
+              <greater-than>
+                <property>controls/flight/aileron</property>
+                <value>-0.2</value>
+              </greater-than>
+              <less-than>
                 <property>controls/flight/rudder</property>
-                <value>0</value>
-              </equals>
+                <value>0.2</value>
+              </less-than>
+              <greater-than>
+                <property>controls/flight/rudder</property>
+                <value>-0.2</value>
+              </greater-than>
             </and>
           </condition>
           <binding>
@@ -2278,10 +2298,10 @@
           <name>EFIS</name>
           <value>CSTR</value>
           <condition>
-            <and>
+            <or>
               <property>instrumentation/efis[0]/inputs/CSTR</property>
               <property>instrumentation/efis[1]/inputs/CSTR</property>
-            </and>
+            </or>
           </condition>
           <binding>
             <condition>
@@ -2303,7 +2323,7 @@
             <scale>1.0</scale>
           </marker>
         </item>
-        <item>
+        <item> <!-- LS Switch -->
           <name>LS</name>
           <value>As Required</value>
           <marker>
@@ -2330,6 +2350,7 @@
               if (getprop("instrumentation/altimeter[0]/std")) {
                 libraries.toggleSTD();
               }
+              setprop("instrumentation/altimeter[0]/setting-inhg", getprop("environment/pressure-sea-level-inhg"));
             </script>
           </binding>
           <marker>
@@ -2353,6 +2374,7 @@
               if (getprop("instrumentation/altimeter[6]/std")) {
                 libraries.toggleSTDIESI();
               }
+              setprop("instrumentation/altimeter[6]/setting-inhg", getprop("environment/pressure-sea-level-inhg"));
             </script>
           </binding>
           <marker>
@@ -2376,7 +2398,7 @@
           <value>Green Dot</value>
         </item>
         <item> <!-- APPR Mode Enabled -->
-          <name>APPR</name>
+          <name>FCU: APPR</name>
           <value>Enabled</value>
           <condition>
             <equals>
@@ -2440,18 +2462,14 @@
           <name>Go Around Alt</name>
           <value>Set when GS captured</value>
         </item>
-        <item> <!-- S-Speed -->
-          <name>Speed</name>
-          <value>S-Speed</value>
-        </item>
         <item> <!-- Flaps 1 -->
           <name>Flaps</name>
           <value>1 (3NM from Final Descent Point)</value>
           <condition>
-            <equals>
+            <greater-than-equals>
               <property>controls/flight/flaps-input</property>
               <value>1</value>
-            </equals>
+            </greater-than-equals>
           </condition>
           <binding>
             <command>property-assign</command>
@@ -2467,16 +2485,16 @@
         </item>
         <item> <!-- S-Speed -->
           <name>Speed</name>
-          <value>F-Speed</value>
+          <value>S-Speed</value>
         </item>
         <item> <!-- Flaps 2 -->
           <name>Flaps</name>
           <value>2 (At Alt >= 2000 ft AGL)</value>
           <condition>
-            <equals>
+            <greater-than-equals>
               <property>controls/flight/flaps-input</property>
               <value>2</value>
-            </equals>
+            </greater-than-equals>
           </condition>
           <binding>
             <command>property-assign</command>
@@ -2489,6 +2507,10 @@
             <z-m>-0.1097</z-m>
             <scale>3.0</scale>
           </marker>
+        </item>
+        <item> <!-- F-Speed -->
+          <name>Speed</name>
+          <value>F-Speed</value>
         </item>
         <item> <!-- Gear Down -->
           <name>Landing Gear</name>
@@ -2612,10 +2634,10 @@
           <name>Flaps</name>
           <value>3 (When Gear Down)</value>
           <condition>
-            <equals>
+            <greater-than-equals>
               <property>controls/flight/flaps-input</property>
               <value>3</value>
-            </equals>
+            </greater-than-equals>
           </condition>
           <binding>
             <command>property-assign</command>
@@ -2629,13 +2651,9 @@
             <scale>3.0</scale>
           </marker>
         </item>
-        <item> <!-- S-Speed -->
-          <name>Speed</name>
-          <value>Target Speed</value>
-        </item>
         <item> <!-- Flaps 4 -->
           <name>Flaps</name>
-          <value>FULL</value>
+          <value>FULL (When flaps at 3)</value>
           <condition>
             <equals>
               <property>controls/flight/flaps-input</property>
@@ -2653,6 +2671,14 @@
             <z-m>-0.1097</z-m>
             <scale>3.0</scale>
           </marker>
+        </item>
+        <item> <!-- Target-Speed -->
+          <name>Speed</name>
+          <value>Target Speed</value>
+        </item>
+        <item> <!-- ECAM Landing Memo -->
+          <name>ECAM Landing Memo</name>
+          <value>No Blue</value>
         </item>
         <item> <!-- Autothrottle Speed or Off -->
           <name>A/THR</name>
@@ -2896,6 +2922,27 @@
             <y-m>-0.0862</y-m>
             <z-m>0.8719</z-m>
             <scale>2.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Nose Light -->
+          <name>Nose Light</name>
+          <value>TAXI</value>
+          <condition>
+            <equals>
+              <property>controls/lighting/taxi-light-switch</property>
+              <value>0.5</value>
+            </equals>
+          </condition>
+          <binding>
+            <command>property-assign</command>
+            <property>controls/lighting/taxi-light-switch</property>
+            <value>0.5</value>
+          </binding>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.0427</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
           </marker>
         </item>
         <item> <!-- Weather Radar Off -->
@@ -3364,7 +3411,7 @@
           </marker>
         </item>
         <item> <!-- Electric Hydraulic Pump (Yellow) -->
-          <name>ELEC HYD PUMP</name>
+          <name>YELLOW ELEC HYD PUMP</name>
           <value>OFF</value>
           <condition>
             <not>
