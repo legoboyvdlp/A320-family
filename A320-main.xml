@@ -4945,7 +4945,7 @@
 			<file>Aircraft/A320-family/Nasal/canvasLiv.nas</file>
 		</aircraft>
 		<core>
-			<file>Aircraft/A320-family/Nasal/aircraft.nas</file>
+			<file>Aircraft/A320-family/Nasal/core.nas</file>
 			<file>Aircraft/A320-family/Nasal/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/controls-override.nas</file>
 			<file>Aircraft/A320-family/Nasal/shake.nas</file>
