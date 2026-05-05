@@ -18,7 +18,7 @@
         </item>
         <item> <!-- Wipers off -->
           <name>Wipers</name>
-          <value>Off</value>
+          <value>OFF</value>
           <marker>
             <x-m>-0.1434</x-m>
             <y-m>-0.2124</y-m>
@@ -28,7 +28,7 @@
         </item>
         <item> <!-- Weather radar off -->
           <name>Weather Radar SYS</name>
-          <value>Off</value>
+          <value>OFF</value>
           <marker>
             <x-m>0.0218</x-m>
             <y-m>-0.2106</y-m>
@@ -48,7 +48,7 @@
         </item>
         <item> <!-- Engine cut-off switches off -->
           <name>ENG MASTER 1 + 2</name>
-          <value>Off</value>
+          <value>OFF</value>
           <marker>
             <x-m>-0.0112</x-m>
             <y-m>-0.0000</y-m>
@@ -1743,7 +1743,7 @@
         </item>
         <item> <!-- Engine cut-off switches off -->
           <name>ENG MASTER 1 + 2</name>
-          <value>Off</value>
+          <value>OFF</value>
           <marker>
             <x-m>-0.0112</x-m>
             <y-m>-0.0000</y-m>
