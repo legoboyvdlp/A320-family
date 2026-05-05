@@ -1131,8 +1131,11 @@
         <item>
           <name>------&lt; MCDU FMGC Setup &gt;------</name>
         </item>
+        <item>
+          <name>MCDU: RAD NAV</name>
+        </item>
         <item> <!-- ILS Freq -->
-          <name>ILS /FREQ (MCDU: RAD NAV)</name>
+          <name>ILS /FREQ</name>
           <value>Set</value>
         </item>
         <item>
