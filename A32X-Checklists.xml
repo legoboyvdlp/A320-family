@@ -611,6 +611,12 @@
         <item> <!-- Engine fire systems tested -->
           <name>ENG 1 + 2 Fire System</name>
           <value>Tested</value>
+          <marker>
+            <x-m>0.3073</x-m>
+            <y-m>-0.1426</y-m>
+            <z-m>1.0751</z-m>
+            <scale>1.0</scale>
+          </marker>
         </item>
         <item> <!-- Flap lever correct -->
           <name>Flap Lever</name>
@@ -2697,6 +2703,12 @@
             <property>controls/ice-protection/wing</property>
             <value>false</value>
           </binding>
+          <marker>
+            <x-m>-0.0932</x-m>
+            <y-m>-0.1300</y-m>
+            <z-m>0.9270</z-m>
+            <scale>1.0</scale>
+          </marker>
         </item>
         <item>
           <name>Mimimums</name>
