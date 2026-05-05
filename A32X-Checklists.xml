@@ -19,28 +19,6 @@
         <item> <!-- Wipers off -->
           <name>Wipers</name>
           <value>Off</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/switches/wiperLspd</property>
-                <value>0</value>
-              </equals>
-              <equals>
-                <property>controls/switches/wiperRspd</property>
-                <value>0</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/wiperLspd</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/wiperRspd</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.1434</x-m>
             <y-m>-0.2124</y-m>
@@ -51,17 +29,6 @@
         <item> <!-- Weather radar off -->
           <name>Weather Radar SYS</name>
           <value>Off</value>
-          <condition>
-            <equals>
-              <property>controls/wxradar/sys</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/wxradar/sys</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>0.0218</x-m>
             <y-m>-0.2106</y-m>
@@ -72,14 +39,6 @@
         <item> <!-- Landing gear lever down -->
           <name>Landing Gear Lever</name>
           <value>Down</value>
-          <condition>
-            <property>controls/gear/gear-down</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/gear/lever-cockpit</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.4970</x-m>
             <y-m>0.1435</y-m>
@@ -90,22 +49,6 @@
         <item> <!-- Engine cut-off switches off -->
           <name>ENG MASTER 1 + 2</name>
           <value>Off</value>
-          <condition>
-            <and>
-              <property>controls/engines/engine[0]/cutoff-switch</property>
-              <property>controls/engines/engine[1]/cutoff-switch</property>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[0]/cutoff-switch</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[1]/cutoff-switch</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.0112</x-m>
             <y-m>-0.0000</y-m>
@@ -116,17 +59,6 @@
         <item> <!-- Engine mode norm-->
           <name>ENG MODE</name>
           <value>NORM</value>
-          <condition>
-            <equals>
-                <property>controls/ignition/start-sw</property>
-                <value>1</value>
-              </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/ignition/start-sw</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>0.0148</x-m>
             <y-m>-0.0000</y-m>
@@ -137,28 +69,6 @@
         <item> <!-- Battery voltage check-->
           <name>BAT Voltage</name>
           <value>&gt; 25.5V</value>
-          <condition>
-            <and>
-              <greater-than>
-                <property>systems/electrical/sources/bat-1/volt</property>
-                  <value>25.5</value>
-              </greater-than>
-              <greater-than>
-                <property>systems/electrical/sources/bat-2/volt</property>
-                  <value>25.5</value>
-              </greater-than>
-              </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>systems/electrical/sources/bat-1/percent-calc</property>
-            <value>80</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>systems/electrical/sources/bat-2/percent-calc</property>
-            <value>80</value>
-          </binding>
           <marker>
             <x-m>0.1145</x-m>
             <y-m>-0.0541</y-m>
@@ -169,22 +79,6 @@
         <item> <!-- Battery enable -->
           <name>BAT 1 + 2</name>
           <value>On</value>
-          <condition>
-            <and>
-              <property>controls/electrical/switches/bat-1</property>
-              <property>controls/electrical/switches/bat-2</property>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/electrical/switches/bat-1</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/electrical/switches/bat-2</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>0.1134</x-m>
             <y-m>-0.0100</y-m>
@@ -195,32 +89,6 @@
         <item> <!-- External power cart -->
           <name>EXT PWR</name>
           <value>ON (if connected)</value>
-          <condition>
-            <or>
-              <and>
-                <not>
-                  <property>controls/electrical/switches/ground-cart</property>
-                </not>
-                <not>
-                   <property>controls/electrical/switches/ext-pwr</property>
-                </not>
-              </and>
-              <and>
-                <property>controls/electrical/switches/ground-cart</property>
-                <property>controls/electrical/switches/ext-pwr</property>
-              </and>
-            </or>
-          </condition>
-          <binding>
-            <condition>
-              <not>
-                <property>controls/electrical/switches/ground-cart</property>
-              </not>
-            </condition>
-            <command>property-assign</command>
-            <property>controls/electrical/switches/ext-pwr</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>0.0549</x-m>
             <y-m>0.0422</y-m>
@@ -232,22 +100,6 @@
           <!-- NOTE: rmp[2] panel is not installed in the default flightdeck -->
           <name>L + R Radio Panel</name>
           <value>ON</value>
-          <condition>
-            <and>
-              <property>controls/radio/rmp[0]/on</property>
-              <property>controls/radio/rmp[1]/on</property>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/radio/rmp[0]/on</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/radio/rmp[1]/on</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.1738</x-m>
             <y-m>-0.1326</y-m>
@@ -274,14 +126,6 @@
         <item> <!-- APU Master Switch -->
           <name>APU Master SW</name>
           <value>ON</value>
-          <condition>
-            <property>controls/apu/master</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/apu/master</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.1383</x-m>
             <y-m>0.0000</y-m>
@@ -292,26 +136,6 @@
         <item> <!-- APU Start -->
           <name>APU START</name>
           <value>ON</value>
-          <condition>
-            <or>
-              <property>controls/indicators/apu-start-on</property>
-              <property>controls/indicators/apu-start-avail</property>
-            </or>
-          </condition>
-          <binding> <!-- Same binding as APUStartBtn in a320.flightdeck.xml -->
-            <condition>
-              <greater-than-equals>
-                <property>systems/electrical/bus/dc-bat</property>
-                <value>25</value>
-              </greater-than-equals>
-            </condition>
-            <command>nasal</command>
-            <script>
-            if (systems.APUNodes.Controls.master.getBoolValue()) {
-            systems.APUController.APU.startCommand();
-            }
-            </script>
-          </binding>
           <marker>
             <x-m>-0.1836</x-m>
             <y-m>0.0000</y-m>
@@ -322,9 +146,6 @@
         <item> <!-- Await APU Start -->
           <name>Await APU Status</name>
           <value>AVAIL</value>
-          <condition>
-            <property>controls/indicators/apu-start-avail</property>
-          </condition>
           <marker>
             <x-m>-0.1836</x-m>
             <y-m>0.0000</y-m>
@@ -335,32 +156,6 @@
         <item> <!-- APU Bleed Air -->
           <name>APU Bleed</name>
           <value>ON (only if no ground air connected)</value>
-          <condition>
-            <or>
-              <and>
-                <not>
-                  <property>controls/pneumatics/switches/ground-air</property>
-                </not>
-                <property>controls/pneumatics/switches/apu</property>
-              </and>
-              <and>
-                <property>controls/pneumatics/switches/ground-air</property>
-                <not>
-                  <property>controls/pneumatics/switches/apu</property>
-                </not>
-              </and>
-            </or>
-          </condition>
-          <binding>
-            <condition>
-              <not>
-                <property>controls/pneumatics/switches/ground-air</property>
-              </not>
-            </condition>
-            <command>property-assign</command>
-            <property>controls/pneumatics/switches/apu</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.0531</x-m>
             <y-m>0.0000</y-m>
@@ -371,22 +166,6 @@
         <item> <!-- Pack Air -->
           <name>PACK AIR 1 + 2</name>
           <value>ON</value>
-          <condition>
-            <and>
-              <property>controls/pneumatics/switches/pack-1</property>
-              <property>controls/pneumatics/switches/pack-2</property>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/pneumatics/switches/pack-1</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/pneumatics/switches/pack-2</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.0253</x-m>
             <y-m>-0.1365</y-m>
@@ -397,46 +176,6 @@
         <item> <!-- Fuel Pumps -->
           <name>FUEL PUMPS</name>
           <value>All ON</value>
-          <condition>
-            <and>
-              <property>controls/fuel/switches/pump-left-1</property>
-              <property>controls/fuel/switches/pump-left-2</property>
-              <property>controls/fuel/switches/pump-center-1</property>
-              <property>controls/fuel/switches/pump-center-2</property>
-              <property>controls/fuel/switches/pump-right-1</property>
-              <property>controls/fuel/switches/pump-right-2</property>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-left-1</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-left-2</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-center-1</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-center-2</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-right-1</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-right-2</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>0.1522</x-m>
             <y-m>-0.1169</y-m>
@@ -447,14 +186,6 @@
         <item> <!-- Oxygen Crew Supply off -->
           <name>Oxygen Crew Supply</name>
           <value>ON</value>
-          <condition>
-            <property>controls/oxygen/cockpit-oxygen-supply-pb</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/oxygen/cockpit-oxygen-supply-pb</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.0544</x-m>
             <y-m>-0.1918</y-m>
@@ -475,40 +206,6 @@
         <item> <!-- ADIRS to NAV-->
           <name>ADIRS 1 + 2 + 3</name>
           <value>NAV</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/navigation/adirscp/switches/ir-1-mode</property>
-                <value>1</value>
-              </equals>
-              <equals>
-                <property>controls/navigation/adirscp/switches/ir-2-mode</property>
-                <value>1</value>
-              </equals>
-              <equals>
-                <property>controls/navigation/adirscp/switches/ir-3-mode</property>
-                <value>1</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              systems.ADIRSControlPanel.irModeSw(0, 1);
-            </script>
-          </binding>
-          <binding>
-            <command>nasal</command>
-            <script>
-              systems.ADIRSControlPanel.irModeSw(1, 1);
-            </script>
-          </binding>
-          <binding>
-            <command>nasal</command>
-            <script>
-              systems.ADIRSControlPanel.irModeSw(2, 1);
-            </script>
-          </binding>
           <marker>
             <x-m>0.2851</x-m>
             <y-m>-0.2802</y-m>
@@ -519,29 +216,10 @@
         <item> <!-- Await ADIRS ready -->
           <name>Await ADIRS Alignment</name>
           <value>Complete before engine start</value>
-          <binding>
-            <command>property-toggle</command>
-            <property>controls/adirs/skip</property>
-          </binding>
-          <binding>
-            <command>property-toggle</command>
-            <property>controls/adirs/skip</property>
-          </binding>
         </item>
         <item> <!-- Navigation lights -->
           <name>NAV &amp; LOGO LT</name>
           <value>1</value>
-          <condition>
-            <equals>
-              <property>controls/lighting/nav-lights-switch</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/nav-lights-switch</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>-0.1333</x-m>
             <y-m>-0.0427</y-m>
@@ -552,17 +230,6 @@
         <item> <!-- Emergency exit lights -->
           <name>EMER EXIT LT</name>
           <value>ARM</value>
-          <condition>
-            <equals>
-              <property>controls/switches/emer-lights</property>
-              <value>0.5</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/emer-lights</property>
-            <value>0.5</value>
-          </binding>
           <marker>
             <x-m>-0.1789</x-m>
             <y-m>0.1308</y-m>
@@ -573,28 +240,6 @@
         <item> <!-- Passenger signs (seat belts + no smoking) -->
           <name>SEAT BELTS + NO SMOKING</name>
           <value>AUTO</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/switches/seatbelt-sign</property>
-                <value>0.5</value>
-              </equals>
-              <equals>
-                <property>controls/switches/no-smoking-sign</property>
-                <value>0.5</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/seatbelt-sign</property>
-            <value>0.5</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/no-smoking-sign</property>
-            <value>0.5</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>0.0501</y-m>
@@ -631,17 +276,6 @@
         <item> <!-- Speed Brake retracted -->
           <name>Speed Brake</name>
           <value>Retracted</value>
-          <condition>
-            <equals>
-              <property>controls/flight/speedbrake</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/speedbrake</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>0.0518</x-m>
             <y-m>-0.0810</y-m>
@@ -652,17 +286,6 @@
         <item> <!-- Parking Brake enabled -->
           <name>Parking Brake</name>
           <value>ON</value>
-          <condition>
-            <equals>
-              <property>controls/gear/brake-parking</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/gear/brake-parking</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>0.2201</x-m>
             <y-m>0.0152</y-m>
@@ -776,28 +399,10 @@
         <item> <!-- Ground Air -->
           <name>Ground Air</name>
           <value>Disconnected</value>
-          <condition>
-            <not>
-              <property>controls/pneumatics/switches/ground-air</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/pneumatics/switches/ground-air</property>
-            <value>false</value>
-          </binding>
         </item>
         <item> <!-- Beacon Light -->
           <name>BEACON Light</name>
           <value>ON</value>
-          <condition>
-            <property>controls/switches/beacon</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/beacon</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.1333</x-m>
             <y-m>-0.1008</y-m>
@@ -818,46 +423,6 @@
         <item> <!-- Fuel Pump Check -->
           <name>FUEL PUMPS</name>
           <value>Check All ON</value>
-          <condition>
-            <and>
-              <property>controls/fuel/switches/pump-left-1</property>
-              <property>controls/fuel/switches/pump-left-2</property>
-              <property>controls/fuel/switches/pump-center-1</property>
-              <property>controls/fuel/switches/pump-center-2</property>
-              <property>controls/fuel/switches/pump-right-1</property>
-              <property>controls/fuel/switches/pump-right-2</property>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-left-1</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-left-2</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-center-1</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-center-2</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-right-1</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-right-2</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>0.1522</x-m>
             <y-m>-0.1169</y-m>
@@ -868,9 +433,6 @@
         <item> <!-- APU Running Check -->
           <name>APU</name>
           <value>Check AVAIL</value>
-          <condition>
-            <property>controls/indicators/apu-start-avail</property>
-          </condition>
           <marker>
             <x-m>-0.1836</x-m>
             <y-m>0.0000</y-m>
@@ -881,14 +443,6 @@
         <item> <!-- APU Bleed Air Check -->
           <name>APU Bleed Air</name>
           <value>Check ON</value>
-          <condition>
-            <property>controls/pneumatics/switches/apu</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/pneumatics/switches/apu</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.0531</x-m>
             <y-m>0.0000</y-m>
@@ -909,28 +463,6 @@
         <item> <!-- Throttle Idle -->
           <name>Throttle</name>
           <value>Idle</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/engines/engine[0]/throttle</property>
-                <value>0</value>
-              </equals>
-              <equals>
-                <property>controls/engines/engine[1]/throttle</property>
-                <value>0</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[0]/throttle</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[1]/throttle</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.0936</x-m>
             <y-m>0.0000</y-m>
@@ -947,42 +479,6 @@
         <item> <!-- Flight Director -->
           <name>FD</name>
           <value>Enabled</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/indicators/efis-capt-fd</property>
-                <value>1</value>
-              </equals>
-              <equals>
-                <property>controls/indicators/efis-fo-fd</property>
-                <value>1</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <condition>
-              <not-equals>
-                <property>controls/indicators/efis-capt-fd</property>
-                <value>1</value>
-              </not-equals>
-            </condition>
-            <command>nasal</command>
-            <script>
-              fcu.FCUController.FD1();
-            </script>
-          </binding>
-          <binding>
-            <condition>
-              <not-equals>
-                <property>controls/indicators/efis-fo-fd</property>
-                <value>1</value>
-              </not-equals>
-            </condition>
-            <command>nasal</command>
-            <script>
-              fcu.FCUController.FD2();
-            </script>
-          </binding>
           <marker>
             <x-m>-0.3603</x-m>
             <y-m>-0.2607</y-m>
@@ -1000,17 +496,6 @@
         <item> <!-- Engine Mode Selector -->
           <name>ENG MODE</name>
           <value>IGN/START</value>
-          <condition>
-            <equals>
-              <property>controls/ignition/start-sw</property>
-              <value>2</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/ignition/start-sw</property>
-            <value>2</value>
-          </binding>
           <marker>
             <x-m>0.0148</x-m>
             <y-m>-0.0000</y-m>
@@ -1021,16 +506,6 @@
         <item> <!-- Engine Cutoff 2 -->
           <name>ENG MASTER 2</name>
           <value>ON</value>
-          <condition>
-            <not>
-              <property>controls/engines/engine[1]/cutoff-switch</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[1]/cutoff-switch</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.0244</x-m>
             <y-m>0.0247</y-m>
@@ -1041,16 +516,6 @@
         <item> <!-- Engine Cutoff 1 -->
           <name>ENG MASTER 1</name>
           <value>ON</value>
-          <condition>
-            <not>
-              <property>controls/engines/engine[0]/cutoff-switch</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[0]/cutoff-switch</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.0244</x-m>
             <y-m>-0.0247</y-m>
@@ -1074,17 +539,6 @@
         <item> <!-- Engine Mode Selector -->
           <name>ENG MODE</name>
           <value>NORM</value>
-          <condition>
-            <equals>
-              <property>controls/ignition/start-sw</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/ignition/start-sw</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>0.0148</x-m>
             <y-m>-0.0000</y-m>
@@ -1115,14 +569,6 @@
         <item> <!-- Ground Spoilers Armed -->
           <name>Ground Spoilers</name>
           <value>Armed</value>
-          <condition>
-            <property>controls/flight/speedbrake-arm</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/speedbrake-arm</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>0.0518</x-m>
             <y-m>-0.0810</y-m>
@@ -1133,37 +579,6 @@
         <item> <!-- Flaps -->
           <name>Flaps</name>
           <value>Set</value>
-          <condition>
-            <and>
-              <greater-than-equals>
-                <property>controls/flight/flaps-input</property>
-                <value>1</value>
-              </greater-than-equals>
-              <less-than-equals>
-                <property>controls/flight/flaps-input</property>
-                <value>3</value>
-              </less-than-equals>
-            </and>
-          </condition>
-          <binding>
-            <condition>
-              <not>
-                <and>
-                  <greater-than-equals>
-                    <property>controls/flight/flaps-input</property>
-                    <value>1</value>
-                  </greater-than-equals>
-                  <less-than-equals>
-                    <property>controls/flight/flaps-input</property>
-                    <value>3</value>
-                  </less-than-equals>
-                </and>
-              </not>
-            </condition>
-            <command>property-assign</command>
-            <property>controls/flight/flaps</property>
-            <value>0.2</value>
-          </binding>
           <marker>
             <x-m>0.0456</x-m>
             <y-m>0.0800</y-m>
@@ -1174,17 +589,6 @@
         <item> <!-- Rudder Trim -->
           <name>Rudder Trim</name>
           <value>0.0</value>
-          <condition>
-            <equals>
-              <property>controls/flight/rudder-trim-display</property>
-              <value>0.0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/rudder-trim</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>0.1374</x-m>
             <y-m>-0.0188</y-m>
@@ -1199,17 +603,6 @@
         <item> <!-- Weather Radar -->
           <name>Weather Radar SYS</name>
           <value>1</value>
-          <condition>
-            <equals>
-              <property>controls/wxradar/sys</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/wxradar/sys</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>0.0218</x-m>
             <y-m>-0.2106</y-m>
@@ -1220,14 +613,6 @@
         <item> <!-- Predictive Windshear System (PWS) -->
           <name>PWS</name>
           <value>AUTO</value>
-          <condition>
-            <property>controls/wxradar/pws</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/wxradar/pws</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>0.0218</x-m>
             <y-m>-0.1546</y-m>
@@ -1238,17 +623,6 @@
         <item> <!-- Transponder TA/RA -->
           <name>Transponder</name>
           <value>TA/RA</value>
-          <condition>
-            <equals>
-              <property>controls/atc/mode-knob</property>
-              <value>4</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/atc/mode-knob</property>
-            <value>4</value>
-          </binding>
           <marker>
             <x-m>0.0129</x-m>
             <y-m>0.2147</y-m>
@@ -1259,16 +633,6 @@
         <item> <!-- APU Bleed Air Off -->
           <name>APU Bleed Air</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/pneumatics/switches/apu</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/pneumatics/switches/apu</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.0531</x-m>
             <y-m>0.0000</y-m>
@@ -1279,16 +643,6 @@
         <item> <!-- APU Off -->
           <name>APU Master SW</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/apu/master</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/apu/master</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.1383</x-m>
             <y-m>0.0000</y-m>
@@ -1299,16 +653,6 @@
         <item> <!-- Ground Power Disconnected -->
           <name>External Power</name>
           <value>Disconnected</value>
-          <condition>
-            <not>
-              <property>controls/electrical/switches/ground-cart</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/electrical/switches/ground-cart</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>0.0549</x-m>
             <y-m>0.0422</y-m>
@@ -1362,13 +706,6 @@
         <item> <!-- Altimeter QNH -->
           <name>Altimeter</name>
           <value>Local (QNH Set)</value>
-          <binding>
-            <command>nasal</command>
-            <script>
-              setprop("instrumentation/altimeter[0]/std", false);
-              setprop("instrumentation/altimeter[0]/setting-inhg", getprop("environment/pressure-sea-level-inhg"));
-            </script>
-          </binding>
           <marker>
             <x-m>-0.3455</x-m>
             <y-m>-0.2519</y-m>
@@ -1379,15 +716,6 @@
         <item> <!-- IESI Altimeter QNH -->
           <name>IESI Altimeter</name>
           <value>Local (QNH Set)</value>
-          <binding>
-            <command>nasal</command>
-            <script>
-              if (getprop("instrumentation/altimeter[6]/std")) {
-                libraries.toggleSTDIESI();
-              }
-              setprop("instrumentation/altimeter[6]/setting-inhg", getprop("environment/pressure-sea-level-inhg"));
-            </script>
-          </binding>
           <marker>
             <x-m>-0.5295</x-m>
             <y-m>-0.1045</y-m>
@@ -1411,17 +739,6 @@
         <item> <!-- Nose Light -->
           <name>Nose Light</name>
           <value>TAXI</value>
-          <condition>
-            <equals>
-              <property>controls/lighting/taxi-light-switch</property>
-              <value>0.5</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/taxi-light-switch</property>
-            <value>0.5</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.0427</y-m>
@@ -1432,14 +749,6 @@
         <item> <!-- Runway Turn Off Light -->
           <name>RWY TURN OFF</name>
           <value>ON</value>
-          <condition>
-            <property>controls/lighting/turnoff-light-switch</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/turnoff-light-switch</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.1301</y-m>
@@ -1450,28 +759,6 @@
         <item> <!-- Passenger signs (seat belts + no smoking) -->
           <name>SEAT BELTS + NO SMOKING</name>
           <value>ON</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/switches/seatbelt-sign</property>
-                <value>1</value>
-              </equals>
-              <equals>
-                <property>controls/switches/no-smoking-sign</property>
-                <value>1</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/seatbelt-sign</property>
-            <value>1</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/no-smoking-sign</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>0.0501</y-m>
@@ -1482,16 +769,6 @@
         <item> <!-- Gear Chocks -->
           <name>Gear Chocks</name>
           <value>Removed</value>
-          <condition>
-            <not>
-              <property>services/chocks/enable</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>services/chocks/enable</property>
-            <value>false</value>
-          </binding>
         </item>
         <item> <!-- Area Clearance -->
           <name>Area Clearance (Callout)</name>
@@ -1500,17 +777,6 @@
         <item> <!-- Parking Brake -->
           <name>Parking Brake</name>
           <value>OFF</value>
-          <condition>
-            <equals>
-              <property>controls/gear/brake-parking</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/gear/brake-parking</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>0.2201</x-m>
             <y-m>0.0152</y-m>
@@ -1541,24 +807,6 @@
         <item> <!-- Auto Brake -->
           <name>AUTO BRK</name>
           <value>MAX</value>
-          <condition>
-            <equals>
-              <property>controls/autobrake/mode</property>
-              <value>3</value>
-            </equals>
-          </condition>
-          <binding>
-            <condition>
-              <greater-than-equals>
-                <property>systems/electrical/bus/dc-ess</property>
-                <value>25</value>
-              </greater-than-equals>
-            </condition>
-            <command>nasal</command>
-            <script>
-              systems.Autobrake.arm_autobrake(3);
-            </script>
-          </binding>
           <marker>
             <x-m>-0.5705</x-m>
             <y-m>0.1962</y-m>
@@ -1588,16 +836,6 @@
         <item> <!-- Brake Fans Off -->
           <name>BRK FAN</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>control/gear/brake-fans</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/gear/brake-fans</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.5823</x-m>
             <y-m>0.2251</y-m>
@@ -1612,17 +850,6 @@
         <item> <!-- Transponder TA/RA -->
           <name>Transponder</name>
           <value>TA/RA</value>
-          <condition>
-            <equals>
-              <property>controls/atc/mode-knob</property>
-              <value>4</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/atc/mode-knob</property>
-            <value>4</value>
-          </binding>
           <marker>
             <x-m>0.0129</x-m>
             <y-m>0.2147</y-m>
@@ -1637,17 +864,6 @@
         <item> <!-- Strobe On -->
           <name>STROBE LT</name>
           <value>ON</value>
-          <condition>
-            <equals>
-              <property>controls/switches/strobe</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/strobe</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>-0.1333</x-m>
             <y-m>-0.1302</y-m>
@@ -1668,17 +884,6 @@
         <item> <!-- Nose Light -->
           <name>NOSE LT</name>
           <value>T.O</value>
-          <condition>
-            <equals>
-              <property>controls/lighting/taxi-light-switch</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/taxi-light-switch</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.0427</y-m>
@@ -1689,14 +894,6 @@
         <item> <!-- Runway Turn Off Lights -->
           <name>RNWY TURN OFF LT</name>
           <value>ON</value>
-          <condition>
-            <property>controls/lighting/turnoff-light-switch</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/turnoff-light-switch</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.1301</y-m>
@@ -1707,28 +904,6 @@
         <item> <!-- Landing Lights -->
           <name>L + R Landing LT</name>
           <value>ON</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/switches/landing-lights-l</property>
-                <value>1</value>
-              </equals>
-              <equals>
-                <property>controls/switches/landing-lights-r</property>
-                <value>1</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/landing-lights-l</property>
-            <value>1</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/landing-lights-r</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>-0.1766</x-m>
             <y-m>-0.0862</y-m>
@@ -1747,52 +922,10 @@
         <item> <!-- FLX / TOGA Thrust -->
           <name>Throttle</name>
           <value>FLX/TOGA</value>
-          <condition>
-            <and>
-              <or>
-                <equals>
-                  <property>systems/fadec/control-1/detent</property>
-                  <value>4</value>
-                </equals>
-                <equals>
-                  <property>systems/fadec/control-1/detent</property>
-                  <value>6</value>
-                </equals>
-              </or>
-              <or>
-                <equals>
-                  <property>systems/fadec/control-2/detent</property>
-                  <value>4</value>
-                </equals>
-                <equals>
-                  <property>systems/fadec/control-2/detent</property>
-                  <value>6</value>
-                </equals>
-              </or>
-            </and>
-          </condition>
         </item>
         <item> <!-- Chronometer Started -->
           <name>Chronometer</name>
           <value>Start</value>
-          <condition>
-            <and>
-              <property>instrumentation/clock/chrono/started</property>
-              <not>
-                <property>instrumentation/clock/chrono/paused</property>
-              </not>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>instrumentation/clock/chrono/chrono-btn</property>
-            <value>1</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>instrumentation/clock/chrono/chrono-btn</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.5497</x-m>
             <y-m>0.1901</y-m>
@@ -1809,17 +942,6 @@
         <item> <!-- Gear Up -->
           <name>Landing Gear</name>
           <value>UP</value>
-          <condition>
-            <equals>
-              <property>controls/gear/lever-cockpit</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/gear/lever-cockpit</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.4970</x-m>
             <y-m>0.1435</y-m>
@@ -1830,43 +952,10 @@
         <item> <!-- CL Thrust -->
           <name>Throttle</name>
           <value>CL</value>
-          <condition>
-            <and>
-              <equals>
-                <property>systems/fadec/control-1/detent</property>
-                <value>2</value>
-              </equals>
-              <equals>
-                <property>systems/fadec/control-2/detent</property>
-                <value>2</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[0]/throttle</property>
-            <value>0.62</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[1]/throttle</property>
-            <value>0.62</value>
-          </binding>
         </item>
         <item> <!-- Retract Flaps -->
           <name>Flaps</name>
           <value>Retract</value>
-          <condition>
-            <equals>
-              <property>controls/flight/flaps-input</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/flaps</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>0.0456</x-m>
             <y-m>0.0800</y-m>
@@ -1877,16 +966,6 @@
         <item> <!-- Spoilers Disarmed -->
           <name>Spoilers</name>
           <value>Disarmed</value>
-          <condition>
-            <not>
-              <property>controls/flight/speedbrake-arm</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/speedbrake-arm</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>0.0518</x-m>
             <y-m>-0.0810</y-m>
@@ -1897,17 +976,6 @@
         <item> <!-- Nose Light -->
           <name>NOSE LT</name>
           <value>OFF</value>
-          <condition>
-            <equals>
-              <property>controls/lighting/taxi-light-switch</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/taxi-light-switch</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.0427</y-m>
@@ -1918,16 +986,6 @@
         <item> <!-- Runway Turn Off Lights -->
           <name>RNWY TURN OFF LT</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/lighting/turnoff-light-switch</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/turnoff-light-switch</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.1301</y-m>
@@ -1941,49 +999,6 @@
         <item> <!-- Controls Centered -->
           <name>Controls</name>
           <value>Released / Centered</value>
-          <condition>
-            <and>
-              <less-than>
-                <property>controls/flight/elevator</property>
-                <value>0.2</value>
-              </less-than>
-              <greater-than>
-                <property>controls/flight/elevator</property>
-                <value>-0.2</value>
-              </greater-than>
-              <less-than>
-                <property>controls/flight/aileron</property>
-                <value>0.2</value>
-              </less-than>
-              <greater-than>
-                <property>controls/flight/aileron</property>
-                <value>-0.2</value>
-              </greater-than>
-              <less-than>
-                <property>controls/flight/rudder</property>
-                <value>0.2</value>
-              </less-than>
-              <greater-than>
-                <property>controls/flight/rudder</property>
-                <value>-0.2</value>
-              </greater-than>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/elevator</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/aileron</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/rudder</property>
-            <value>0</value>
-          </binding>
         </item>
         <item> <!-- Auto Pilot Engaged -->
           <name>Auto Pilot</name>
@@ -2010,17 +1025,6 @@
         <item> <!-- Altimeter STD -->
           <name>Altimeter</name>
           <value>STD</value>
-          <condition>
-            <property>instrumentation/altimeter[0]/std</property>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              if (!getprop("intrumentation/altimeter[0]/std")) {
-                libraries.toggleSTD();
-              }
-            </script>
-          </binding>
           <marker>
             <x-m>-0.3455</x-m>
             <y-m>-0.2519</y-m>
@@ -2031,17 +1035,6 @@
         <item> <!-- IESI Altimeter STD -->
           <name>IESI Altimeter</name>
           <value>STD</value>
-          <condition>
-            <property>instrumentation/altimeter[6]/std</property>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              if (!getprop("instrumentation/altimeter[6]/std")) {
-                libraries.toggleSTDIESI();
-              }
-            </script>
-          </binding>
           <marker>
             <x-m>-0.5295</x-m>
             <y-m>-0.1045</y-m>
@@ -2055,28 +1048,6 @@
         <item> <!-- Landing Lights -->
           <name>L + R Landing LT</name>
           <value>RETRACT</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/switches/landing-lights-l</property>
-                <value>0</value>
-              </equals>
-              <equals>
-                <property>controls/switches/landing-lights-r</property>
-                <value>0</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/landing-lights-l</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/landing-lights-r</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.1766</x-m>
             <y-m>-0.0862</y-m>
@@ -2150,36 +1121,6 @@
         <item> <!-- Auto Brake -->
           <name>AUTO BRK</name>
           <value>As Required</value>
-          <condition>
-            <or>
-              <equals>
-                <property>controls/autobrake/mode</property>
-                <value>1</value>
-              </equals>
-              <equals>
-                <property>controls/autobrake/mode</property>
-                <value>2</value>
-              </equals>
-            </or>
-          </condition>
-          <binding>
-            <condition>
-              <and>
-                <greater-than-equals>
-                  <property>systems/electrical/bus/dc-ess</property>
-                  <value>25</value>
-                </greater-than-equals>
-                <not-equals>
-                  <property>controls/autobrake/mode</property>
-                  <value>1</value>
-                </not-equals>
-              </and>
-            </condition>
-            <command>nasal</command>
-            <script>
-              systems.Autobrake.arm_autobrake(2);
-            </script>
-          </binding>
           <marker>
             <x-m>-0.5705</x-m>
             <y-m>0.1962</y-m>
@@ -2239,28 +1180,6 @@
         <item> <!-- Landing Lights -->
           <name>L + R Landing LT</name>
           <value>ON</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/switches/landing-lights-l</property>
-                <value>1</value>
-              </equals>
-              <equals>
-                <property>controls/switches/landing-lights-r</property>
-                <value>1</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/landing-lights-l</property>
-            <value>1</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/landing-lights-r</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>-0.1766</x-m>
             <y-m>-0.0862</y-m>
@@ -2271,28 +1190,6 @@
         <item> <!-- Passenger signs (seat belts + no smoking) -->
           <name>SEAT BELTS + NO SMOKING</name>
           <value>ON</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/switches/seatbelt-sign</property>
-                <value>1</value>
-              </equals>
-              <equals>
-                <property>controls/switches/no-smoking-sign</property>
-                <value>1</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/seatbelt-sign</property>
-            <value>1</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/no-smoking-sign</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>0.0501</y-m>
@@ -2303,25 +1200,6 @@
         <item> <!-- Enable CSTR on EFIS -->
           <name>EFIS</name>
           <value>CSTR</value>
-          <condition>
-            <or>
-              <property>instrumentation/efis[0]/inputs/CSTR</property>
-              <property>instrumentation/efis[1]/inputs/CSTR</property>
-            </or>
-          </condition>
-          <binding>
-            <condition>
-              <greater-than-equals>
-                <property>systems/electrical/bus/dc-ess</property>
-                <value>25</value>
-              </greater-than-equals>
-            </condition>
-            <command>nasal</command>
-            <script>
-              fcu.cpt_efis_btns("cstr");
-              fcu.fo_efis_btns("cstr");
-            </script>
-          </binding>
           <marker>
             <x-m>-0.3777</x-m>
             <y-m>-0.2182</y-m>
@@ -2345,20 +1223,6 @@
         <item> <!-- Altimeter QNH -->
           <name>Altimeter</name>
           <value>QNH</value>
-          <condition>
-            <not>
-              <property>instrumentation/altimeter[0]/std</property>
-            </not>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              if (getprop("instrumentation/altimeter[0]/std")) {
-                libraries.toggleSTD();
-              }
-              setprop("instrumentation/altimeter[0]/setting-inhg", getprop("environment/pressure-sea-level-inhg"));
-            </script>
-          </binding>
           <marker>
             <x-m>-0.3455</x-m>
             <y-m>-0.2519</y-m>
@@ -2369,20 +1233,6 @@
         <item> <!-- IESI Altimeter QNH -->
           <name>IESI Altimeter</name>
           <value>QNH</value>
-          <condition>
-            <not>
-              <property>instrumentation/altimeter[6]/std</property>
-            </not>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              if (getprop("instrumentation/altimeter[6]/std")) {
-                libraries.toggleSTDIESI();
-              }
-              setprop("instrumentation/altimeter[6]/setting-inhg", getprop("environment/pressure-sea-level-inhg"));
-            </script>
-          </binding>
           <marker>
             <x-m>-0.5295</x-m>
             <y-m>-0.1045</y-m>
@@ -2406,20 +1256,6 @@
         <item> <!-- APPR Mode Enabled -->
           <name>FCU: APPR</name>
           <value>Enabled</value>
-          <condition>
-            <equals>
-              <property>controls/indicators/fcu-appr</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              if (getprop("controls/indicators/fcu-appr") != 1) {
-                fcu.FCUController.APPRButton();
-              }
-            </script>
-          </binding>
           <marker>
             <x-m>-0.3606</x-m>
             <y-m>0.0961</y-m>
@@ -2430,29 +1266,6 @@
         <item> <!-- AP1 + AP2 Enabled -->
           <name>AP1 + AP2</name>
           <value>Enabled</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/indicators/fcu-ap1</property>
-                <value>1</value>
-              </equals>
-              <equals>
-                <property>controls/indicators/fcu-ap2</property>
-                <value>1</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              if (!getprop("controls/indicators/fcu-ap1")) {
-                fcu.FCUController.AP1();
-              }
-              if (!getprop("controls/indicators/fcu-ap2")) {
-                fcu.FCUController.AP2();
-              }
-              </script>
-          </binding>
           <marker>
             <x-m>-0.3692</x-m>
             <y-m>-0.0001</y-m>
@@ -2471,17 +1284,6 @@
         <item> <!-- Flaps 1 -->
           <name>Flaps</name>
           <value>1 (3NM from Final Descent Point)</value>
-          <condition>
-            <greater-than-equals>
-              <property>controls/flight/flaps-input</property>
-              <value>1</value>
-            </greater-than-equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/flaps</property>
-            <value>0.2</value>
-          </binding>
           <marker>
             <x-m>0.0456</x-m>
             <y-m>0.0800</y-m>
@@ -2496,17 +1298,6 @@
         <item> <!-- Flaps 2 -->
           <name>Flaps</name>
           <value>2 (At Alt >= 2000 ft AGL)</value>
-          <condition>
-            <greater-than-equals>
-              <property>controls/flight/flaps-input</property>
-              <value>2</value>
-            </greater-than-equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/flaps</property>
-            <value>0.4</value>
-          </binding>
           <marker>
             <x-m>0.0456</x-m>
             <y-m>0.0800</y-m>
@@ -2521,14 +1312,6 @@
         <item> <!-- Gear Down -->
           <name>Landing Gear</name>
           <value>Down</value>
-          <condition>
-            <property>controls/gear/gear-down</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/gear/lever-cockpit</property>
-            <value>3</value>
-          </binding>
           <marker>
             <x-m>-0.4970</x-m>
             <y-m>0.1435</y-m>
@@ -2539,36 +1322,6 @@
         <item> <!-- Auto Brake -->
           <name>AUTO BRK</name>
           <value>Check As Required</value>
-          <condition>
-            <or>
-              <equals>
-                <property>controls/autobrake/mode</property>
-                <value>1</value>
-              </equals>
-              <equals>
-                <property>controls/autobrake/mode</property>
-                <value>2</value>
-              </equals>
-            </or>
-          </condition>
-          <binding>
-            <condition>
-              <and>
-                <greater-than-equals>
-                  <property>systems/electrical/bus/dc-ess</property>
-                  <value>25</value>
-                </greater-than-equals>
-                <not-equals>
-                  <property>controls/autobrake/mode</property>
-                  <value>1</value>
-                </not-equals>
-              </and>
-            </condition>
-            <command>nasal</command>
-            <script>
-              systems.Autobrake.arm_autobrake(2);
-            </script>
-          </binding>
           <marker>
             <x-m>-0.5705</x-m>
             <y-m>0.1962</y-m>
@@ -2579,17 +1332,6 @@
         <item> <!-- Nose Light -->
           <name>NOSE LT</name>
           <value>T.O</value>
-          <condition>
-            <equals>
-              <property>controls/lighting/taxi-light-switch</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/taxi-light-switch</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.0427</y-m>
@@ -2600,14 +1342,6 @@
         <item> <!-- Runway Turn Off Lights -->
           <name>RNWY TURN OFF LT</name>
           <value>ON</value>
-          <condition>
-            <property>controls/lighting/turnoff-light-switch</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/turnoff-light-switch</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.1301</y-m>
@@ -2618,14 +1352,6 @@
         <item> <!-- Ground Spoilers Armed -->
           <name>Ground Spoilers</name>
           <value>Armed</value>
-          <condition>
-            <property>controls/flight/speedbrake-arm</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/speedbrake-arm</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>0.0518</x-m>
             <y-m>-0.0810</y-m>
@@ -2639,17 +1365,6 @@
         <item> <!-- Flaps 3 -->
           <name>Flaps</name>
           <value>3 (When Gear Down)</value>
-          <condition>
-            <greater-than-equals>
-              <property>controls/flight/flaps-input</property>
-              <value>3</value>
-            </greater-than-equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/flaps</property>
-            <value>0.6</value>
-          </binding>
           <marker>
             <x-m>0.0456</x-m>
             <y-m>0.0800</y-m>
@@ -2660,17 +1375,6 @@
         <item> <!-- Flaps 4 -->
           <name>Flaps</name>
           <value>FULL (When flaps at 3)</value>
-          <condition>
-            <equals>
-              <property>controls/flight/flaps-input</property>
-              <value>4</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/flaps</property>
-            <value>0.8</value>
-          </binding>
           <marker>
             <x-m>0.0456</x-m>
             <y-m>0.0800</y-m>
@@ -2693,16 +1397,6 @@
         <item> <!-- Wing Anti-Ice Off -->
           <name>ANTI ICE WING</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/ice-protection/wing</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/ice-protection/wing</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.0932</x-m>
             <y-m>-0.1300</y-m>
@@ -2729,28 +1423,6 @@
         <item> <!-- Thrust Idle -->
           <name>Throttle</name>
           <value>Idle</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/engines/engine[0]/throttle</property>
-                <value>0</value>
-              </equals>
-              <equals>
-                <property>controls/engines/engine[1]/throttle</property>
-                <value>0</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[0]/throttle</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[1]/throttle</property>
-            <value>0</value>
-          </binding>
         </item>
         <item>
           <name>Touchdown</name>
@@ -2758,25 +1430,6 @@
         <item> <!-- Reverse Thrust -->
           <name>Throttle</name>
           <value>Reverse</value>
-          <condition>
-            <and>
-              <property>systems/fadec/reverse-1/engage</property>
-              <property>systems/fadec/reverse-2/engage</property>
-            </and>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              if (!systems.FADEC.reverseEngage[0].getBoolValue()) {
-                systems.FADEC.reverseEngage[0].setBoolValue(1);
-                systems.ENGINES.throttle[0].setValue(0);
-              }
-              if (!systems.FADEC.reverseEngage[1].getBoolValue()) {
-                systems.FADEC.reverseEngage[1].setBoolValue(1);
-                systems.ENGINES.throttle[1].setValue(0);
-              }
-            </script>
-          </binding>
         </item>
         <item> <!-- Brakes As Required -->
           <name>Brakes</name>
@@ -2788,29 +1441,6 @@
         <item> <!-- Reverse Thrust Idle -->
           <name>Throttle</name>
           <value>Reverse Idle</value>
-          <condition>
-            <and>
-              <property>systems/fadec/reverse-1/engage</property>
-              <equals>
-                <property>controls/engines/engine[0]/throttle</property>
-                <value>0</value>
-              </equals>
-              <property>systems/fadec/reverse-2/engage</property>
-              <equals>
-                <property>controls/engines/engine[1]/throttle</property>
-                <value>0</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              systems.FADEC.reverseEngage[0].setBoolValue(1);
-              systems.ENGINES.throttle[0].setValue(0);
-              systems.FADEC.reverseEngage[1].setBoolValue(1);
-              systems.ENGINES.throttle[1].setValue(0);
-            </script>
-          </binding>
         </item>
         <item>
           <name>Taxi Speed</name>
@@ -2818,44 +1448,10 @@
         <item> <!-- Thrust Idle -->
           <name>Throttle</name>
           <value>Disengage Reverse</value>
-          <condition>
-            <and>
-              <not>
-                <property>systems/fadec/reverse-1/engage</property>
-              </not>
-              <not>
-                <property>systems/fadec/reverse-2/engage</property>
-              </not>
-            </and>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              if (systems.FADEC.reverseEngage[0].getBoolValue()) {
-                systems.FADEC.reverseEngage[0].setBoolValue(0);
-                systems.ENGINES.throttle[0].setValue(0);
-              }
-              if (systems.FADEC.reverseEngage[1].getBoolValue()) {
-                systems.FADEC.reverseEngage[1].setBoolValue(0);
-                systems.ENGINES.throttle[1].setValue(0);
-              }
-            </script>
-          </binding>
         </item>
         <item> <!-- Thrust Idle -->
           <name>Autobrake</name>
           <value>Disengage</value>
-          <condition>
-            <equals>
-              <property>controls/autobrake/mode</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/autobrake/mode</property>
-            <value>0</value>
-          </binding>
         </item>
       </page>
 
@@ -2866,16 +1462,6 @@
         <item> <!-- Ground Spoilers Disarmed -->
           <name>Ground Spoilers</name>
           <value>Disarmed</value>
-          <condition>
-            <not>
-              <property>controls/flight/speedbrake-arm</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/speedbrake-arm</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>0.0518</x-m>
             <y-m>-0.0810</y-m>
@@ -2886,17 +1472,6 @@
         <item> <!-- Strobe Auto -->
           <name>STROBE LT</name>
           <value>AUTO</value>
-          <condition>
-            <equals>
-              <property>controls/switches/strobe</property>
-              <value>0.5</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/strobe</property>
-            <value>0.5</value>
-          </binding>
           <marker>
             <x-m>-0.1333</x-m>
             <y-m>-0.1302</y-m>
@@ -2907,28 +1482,6 @@
         <item> <!-- Landing Lights Retract -->
           <name>L + R Landing LT</name>
           <value>RETRACT</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/switches/landing-lights-l</property>
-                <value>0</value>
-              </equals>
-              <equals>
-                <property>controls/switches/landing-lights-r</property>
-                <value>0</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/landing-lights-l</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/landing-lights-r</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.1766</x-m>
             <y-m>-0.0862</y-m>
@@ -2939,17 +1492,6 @@
         <item> <!-- Nose Light -->
           <name>Nose Light</name>
           <value>TAXI</value>
-          <condition>
-            <equals>
-              <property>controls/lighting/taxi-light-switch</property>
-              <value>0.5</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/taxi-light-switch</property>
-            <value>0.5</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.0427</y-m>
@@ -2960,17 +1502,6 @@
         <item> <!-- Weather Radar Off -->
           <name>Weather Radar SYS</name>
           <value>OFF</value>
-          <condition>
-            <equals>
-              <property>controls/wxradar/sys</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/wxradar/sys</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>0.0218</x-m>
             <y-m>-0.2106</y-m>
@@ -2981,16 +1512,6 @@
         <item> <!-- Predictive Windshear System (PWS) -->
           <name>PWS</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/wxradar/pws</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/wxradar/pws</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>0.0218</x-m>
             <y-m>-0.1546</y-m>
@@ -3001,17 +1522,6 @@
         <item> <!-- Engine Mode Selector -->
           <name>ENG MODE</name>
           <value>NORM</value>
-          <condition>
-            <equals>
-              <property>controls/ignition/start-sw</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/ignition/start-sw</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>0.0148</x-m>
             <y-m>-0.0000</y-m>
@@ -3022,17 +1532,6 @@
         <item> <!-- Retract Flaps -->
           <name>Flaps</name>
           <value>Retract</value>
-          <condition>
-            <equals>
-              <property>controls/flight/flaps-input</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/flaps</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>0.0456</x-m>
             <y-m>0.0800</y-m>
@@ -3043,17 +1542,6 @@
         <item> <!-- Transponder Standby -->
           <name>Transponder</name>
           <value>STBY</value>
-          <condition>
-            <equals>
-              <property>controls/atc/mode-knob</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/atc/mode-knob</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>0.0129</x-m>
             <y-m>0.2147</y-m>
@@ -3064,14 +1552,6 @@
         <item> <!-- APU Master Switch -->
           <name>APU Master SW</name>
           <value>ON</value>
-          <condition>
-            <property>controls/apu/master</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/apu/master</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.1383</x-m>
             <y-m>0.0000</y-m>
@@ -3082,26 +1562,6 @@
         <item> <!-- APU Start -->
           <name>APU START</name>
           <value>ON</value>
-          <condition>
-            <or>
-              <property>controls/indicators/apu-start-on</property>
-              <property>controls/indicators/apu-start-avail</property>
-            </or>
-          </condition>
-          <binding> <!-- Same binding as APUStartBtn in a320.flightdeck.xml -->
-            <condition>
-              <greater-than-equals>
-                <property>systems/electrical/bus/dc-bat</property>
-                <value>25</value>
-              </greater-than-equals>
-            </condition>
-            <command>nasal</command>
-            <script>
-              if (systems.APUNodes.Controls.master.getBoolValue()) {
-                systems.APUController.APU.startCommand();
-              }
-            </script>
-          </binding>
           <marker>
             <x-m>-0.1836</x-m>
             <y-m>0.0000</y-m>
@@ -3141,40 +1601,10 @@
         <item> <!-- Thrust TOGA -->
           <name>Throttle</name>
           <value>TOGA</value>
-          <condition>
-            <and>
-              <equals>
-                <property>systems/fadec/control-1/detent</property>
-                <value>6</value>
-              </equals>
-              <equals>
-                <property>systems/fadec/control-2/detent</property>
-                <value>6</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[0]/throttle</property>
-            <value>1</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[1]/throttle</property>
-            <value>1</value>
-          </binding>
         </item>
         <item> <!-- Reduce Flaps -->
           <name>Flaps</name>
           <value>Reduce by 1 step</value>
-          <binding>
-            <command>nasal</command>
-            <script>
-              if (getprop("controls/flight/flaps") >= 0.6) {
-                setprop("controls/flight/flaps", getprop("controls/flight/flaps") - 0.2);
-              }
-            </script>
-          </binding>
         </item>
         <item>
           <name>Positive Climb</name>
@@ -3182,17 +1612,6 @@
         <item> <!-- Gear Up -->
           <name>Landing Gear</name>
           <value>UP</value>
-          <condition>
-            <equals>
-              <property>controls/gear/lever-cockpit</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/gear/lever-cockpit</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.4970</x-m>
             <y-m>0.1435</y-m>
@@ -3206,28 +1625,6 @@
         <item> <!-- CL Thrust -->
           <name>Throttle</name>
           <value>CL</value>
-          <condition>
-            <and>
-              <equals>
-                <property>systems/fadec/control-1/detent</property>
-                <value>2</value>
-              </equals>
-              <equals>
-                <property>systems/fadec/control-2/detent</property>
-                <value>2</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[0]/throttle</property>
-            <value>0.62</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[1]/throttle</property>
-            <value>0.62</value>
-          </binding>
         </item>
         <item>
           <name>Acceleration Altitude</name>
@@ -3235,17 +1632,6 @@
         <item> <!-- Retract Flaps -->
           <name>Flaps</name>
           <value>Retract</value>
-          <condition>
-            <equals>
-              <property>controls/flight/flaps-input</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/flaps</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>0.0456</x-m>
             <y-m>0.0800</y-m>
@@ -3256,16 +1642,6 @@
         <item> <!-- Spoilers Disarmed -->
           <name>Spoilers</name>
           <value>Disarmed</value>
-          <condition>
-            <not>
-              <property>controls/flight/speedbrake-arm</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/flight/speedbrake-arm</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>0.0518</x-m>
             <y-m>-0.0810</y-m>
@@ -3276,17 +1652,6 @@
         <item> <!-- Nose Light -->
           <name>NOSE LT</name>
           <value>OFF</value>
-          <condition>
-            <equals>
-              <property>controls/lighting/taxi-light-switch</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/taxi-light-switch</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.0427</y-m>
@@ -3297,16 +1662,6 @@
         <item> <!-- Runway Turn Off Lights -->
           <name>RNWY TURN OFF LT</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/lighting/turnoff-light-switch</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/turnoff-light-switch</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>-0.1301</y-m>
@@ -3336,17 +1691,6 @@
         <item> <!-- Parking Brake enabled -->
           <name>Parking Brake</name>
           <value>ON</value>
-          <condition>
-            <equals>
-              <property>controls/gear/brake-parking</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/gear/brake-parking</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>0.2201</x-m>
             <y-m>0.0152</y-m>
@@ -3357,26 +1701,6 @@
         <item> <!-- Engine Anti-Ice Off-->
           <name>ANTI ICE ENG 1 + 2</name>
           <value>OFF</value>
-          <condition>
-            <and>
-              <not>
-                <property>controls/ice-protection/leng</property>
-              </not>
-              <not>
-                <property>controls/ice-protection/reng</property>
-              </not>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/ice-protection/leng</property>
-            <value>false</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/ice-protection/reng</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.0932</x-m>
             <y-m>-0.0560</y-m>
@@ -3387,16 +1711,6 @@
         <item> <!-- Wing Anti-Ice Off -->
           <name>ANTI ICE WING</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/ice-protection/wing</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/ice-protection/wing</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.0932</x-m>
             <y-m>-0.1300</y-m>
@@ -3407,14 +1721,6 @@
         <item> <!-- APU Bleed Air -->
           <name>APU Bleed</name>
           <value>ON</value>
-          <condition>
-            <property>controls/pneumatics/switches/apu</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/pneumatics/switches/apu</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.0531</x-m>
             <y-m>0.0000</y-m>
@@ -3425,16 +1731,6 @@
         <item> <!-- Electric Hydraulic Pump (Yellow) -->
           <name>YELLOW ELEC HYD PUMP</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/hydraulic/switches/yellow-elec</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/hydraulic/switches/yellow-elec</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>0.2220</x-m>
             <y-m>0.1351</y-m>
@@ -3445,22 +1741,6 @@
         <item> <!-- Engine cut-off switches off -->
           <name>ENG MASTER 1 + 2</name>
           <value>Off</value>
-          <condition>
-            <and>
-              <property>controls/engines/engine[0]/cutoff-switch</property>
-              <property>controls/engines/engine[1]/cutoff-switch</property>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[0]/cutoff-switch</property>
-            <value>true</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/engines/engine[1]/cutoff-switch</property>
-            <value>true</value>
-          </binding>
           <marker>
             <x-m>-0.0112</x-m>
             <y-m>-0.0000</y-m>
@@ -3471,16 +1751,6 @@
         <item> <!-- Beacon Light -->
           <name>BEACON Light</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/switches/beacon</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/beacon</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.1333</x-m>
             <y-m>-0.1008</y-m>
@@ -3491,16 +1761,6 @@
         <item> <!-- Wing Light -->
           <name>WING Light</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/switches/wing-lights</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/wing-lights</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.1323</x-m>
             <y-m>-0.0716</y-m>
@@ -3511,17 +1771,6 @@
         <item> <!-- Seat belt sign -->
           <name>SEAT BELTS</name>
           <value>OFF</value>
-          <condition>
-            <equals>
-              <property>controls/switches/seatbelt-sign</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/seatbelt-sign</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>0.0380</y-m>
@@ -3532,48 +1781,6 @@
         <item> <!-- Fuel Pumps -->
           <name>FUEL PUMPS</name>
           <value>All OFF</value>
-          <condition>
-            <not>
-              <or>
-                <property>controls/fuel/switches/pump-left-1</property>
-                <property>controls/fuel/switches/pump-left-2</property>
-                <property>controls/fuel/switches/pump-center-1</property>
-                <property>controls/fuel/switches/pump-center-2</property>
-                <property>controls/fuel/switches/pump-right-1</property>
-                <property>controls/fuel/switches/pump-right-2</property>
-              </or>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-left-1</property>
-            <value>false</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-left-2</property>
-            <value>false</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-center-1</property>
-            <value>false</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-center-2</property>
-            <value>false</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-right-1</property>
-            <value>false</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/fuel/switches/pump-right-2</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>0.1522</x-m>
             <y-m>-0.1169</y-m>
@@ -3594,14 +1801,6 @@
         <item> <!-- Gear Chocks -->
           <name>Gear Chocks</name>
           <value>In Place</value>
-          <condition>
-            <property>services/chocks/enable</property>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>services/chocks/enable</property>
-            <value>true</value>
-          </binding>
         </item>
       </page>
 
@@ -3612,17 +1811,6 @@
         <item> <!-- Parking Brake enabled -->
           <name>Parking Brake</name>
           <value>Check ON</value>
-          <condition>
-            <equals>
-              <property>controls/gear/brake-parking</property>
-              <value>1</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/gear/brake-parking</property>
-            <value>1</value>
-          </binding>
           <marker>
             <x-m>0.2201</x-m>
             <y-m>0.0152</y-m>
@@ -3633,40 +1821,6 @@
         <item> <!-- ADIRS Off-->
           <name>ADIRS 1 + 2 + 3</name>
           <value>OFF</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/navigation/adirscp/switches/ir-1-mode</property>
-                <value>0</value>
-              </equals>
-              <equals>
-                <property>controls/navigation/adirscp/switches/ir-2-mode</property>
-                <value>0</value>
-              </equals>
-              <equals>
-                <property>controls/navigation/adirscp/switches/ir-3-mode</property>
-                <value>0</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>nasal</command>
-            <script>
-              systems.ADIRSControlPanel.irModeSw(0, 0);
-            </script>
-          </binding>
-          <binding>
-            <command>nasal</command>
-            <script>
-              systems.ADIRSControlPanel.irModeSw(1, 0);
-            </script>
-          </binding>
-          <binding>
-            <command>nasal</command>
-            <script>
-              systems.ADIRSControlPanel.irModeSw(2, 0);
-            </script>
-          </binding>
           <marker>
             <x-m>0.2851</x-m>
             <y-m>-0.2802</y-m>
@@ -3677,16 +1831,6 @@
         <item> <!-- Oxygen Crew Supply off -->
           <name>Oxygen Crew Supply</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/oxygen/cockpit-oxygen-supply-pb</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/oxygen/cockpit-oxygen-supply-pb</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.0544</x-m>
             <y-m>-0.1918</y-m>
@@ -3697,79 +1841,6 @@
         <item> <!-- Exterior Lights off -->
           <name>EXT LT</name>
           <value>All OFF</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/switches/strobe</property>
-                <value>0</value>
-              </equals>
-              <not>
-                <property>controls/switches/beacon</property>
-              </not>
-              <not>
-                <property>controls/switches/wing-lights</property>
-              </not>
-              <equals>
-                <property>controls/lighting/nav-lights-switch</property>
-                <value>0</value>
-              </equals>
-              <not>
-                <property>controls/lighting/turnoff-light-switch</property>
-              </not>
-              <equals>
-                <property>controls/switches/landing-lights-l</property>
-                <value>0</value>
-              </equals>
-              <equals>
-                <property>controls/switches/landing-lights-r</property>
-                <value>0</value>
-              </equals>
-              <equals>
-                <property>controls/lighting/taxi-light-switch</property>
-                <value>0</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/strobe</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/beacon</property>
-            <value>false</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/wing-lights</property>
-            <value>false</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/nav-lights-switch</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/turnoff-light-switch</property>
-            <value>false</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/landing-lights-l</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/landing-lights-r</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/lighting/taxi-light-switch</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.1579</x-m>
             <y-m>-0.0864</y-m>
@@ -3780,16 +1851,6 @@
         <item> <!-- APU Bleed Air -->
           <name>APU Bleed</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/pneumatics/switches/apu</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/pneumatics/switches/apu</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.0531</x-m>
             <y-m>0.0000</y-m>
@@ -3800,16 +1861,6 @@
         <item> <!-- APU Master Switch -->
           <name>APU Master SW</name>
           <value>OFF</value>
-          <condition>
-            <not>
-              <property>controls/apu/master</property>
-            </not>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/apu/master</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>-0.1383</x-m>
             <y-m>0.0000</y-m>
@@ -3820,17 +1871,6 @@
         <item> <!-- Emergency exit lights -->
           <name>EMER EXIT LT</name>
           <value>OFF</value>
-          <condition>
-            <equals>
-              <property>controls/switches/emer-lights</property>
-              <value>0</value>
-            </equals>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/emer-lights</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.1789</x-m>
             <y-m>0.1308</y-m>
@@ -3841,28 +1881,6 @@
         <item> <!-- Passenger signs (seat belts + no smoking) -->
           <name>SEAT BELTS + NO SMOKING</name>
           <value>OFF</value>
-          <condition>
-            <and>
-              <equals>
-                <property>controls/switches/seatbelt-sign</property>
-                <value>0</value>
-              </equals>
-              <equals>
-                <property>controls/switches/no-smoking-sign</property>
-                <value>0</value>
-              </equals>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/seatbelt-sign</property>
-            <value>0</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/switches/no-smoking-sign</property>
-            <value>0</value>
-          </binding>
           <marker>
             <x-m>-0.1782</x-m>
             <y-m>0.0501</y-m>
@@ -3873,26 +1891,6 @@
         <item> <!-- Battery off -->
           <name>BAT 1 + 2</name>
           <value>OFF</value>
-          <condition>
-            <and>
-              <not>
-                <property>controls/electrical/switches/bat-1</property>
-              </not>
-              <not>
-                <property>controls/electrical/switches/bat-2</property>
-              </not>
-            </and>
-          </condition>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/electrical/switches/bat-1</property>
-            <value>false</value>
-          </binding>
-          <binding>
-            <command>property-assign</command>
-            <property>controls/electrical/switches/bat-2</property>
-            <value>false</value>
-          </binding>
           <marker>
             <x-m>0.1134</x-m>
             <y-m>-0.0100</y-m>
