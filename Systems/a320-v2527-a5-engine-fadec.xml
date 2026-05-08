@@ -341,7 +341,7 @@
 							<tableData>
 								   53194.6  0.03
 								10000000.0  1.00
-								15000000.0  1.50
+								15127219.3  1.50
 							</tableData>
 						</table>
 						<property>/systems/fadec/epr/c1</property>
@@ -392,7 +392,7 @@
 							<tableData>
 								0.03     53194.6
 								1.00  10000000.0
-								1.50  15000000.0
+								1.50  15127219.3
 							</tableData>
 						</table>
 						<quotient>
@@ -573,7 +573,7 @@
 							<tableData>
 								   53194.6  0.03
 								10000000.0  1.00
-								15000000.0  1.50
+								15127219.3  1.50
 							</tableData>
 						</table>
 						<property>/systems/fadec/epr/c1</property>
@@ -624,7 +624,7 @@
 							<tableData>
 								0.03     53194.6
 								1.00  10000000.0
-								1.50  15000000.0
+								1.50  15127219.3
 							</tableData>
 						</table>
 						<quotient>
@@ -738,7 +738,7 @@
 							<tableData>
 								   53194.6  0.03
 								10000000.0  1.00
-								15000000.0  1.50
+								15127219.3  1.50
 							</tableData>
 						</table>
 						<property>/systems/fadec/epr/c1</property>
@@ -789,7 +789,7 @@
 							<tableData>
 								0.03     53194.6
 								1.00  10000000.0
-								1.50  15000000.0
+								1.50  15127219.3
 							</tableData>
 						</table>
 						<quotient>
@@ -933,7 +933,7 @@
 							<tableData>
 								   53194.6  0.03
 								10000000.0  1.00
-								15000000.0  1.50
+								15127219.3  1.50
 							</tableData>
 						</table>
 						<property>/systems/fadec/epr/c1</property>
@@ -984,7 +984,7 @@
 							<tableData>
 								0.03     53194.6
 								1.00  10000000.0
-								1.50  15000000.0
+								1.50  15127219.3
 							</tableData>
 						</table>
 						<quotient>
@@ -1374,7 +1374,7 @@
 							<tableData>
 								   53194.6  0.03
 								10000000.0  1.00
-								15000000.0  1.50
+								15127219.3  1.50
 							</tableData>
 						</table>
 						<property>/systems/fadec/epr/c1</property>
@@ -1653,7 +1653,7 @@
 							<tableData>
 								   53194.6  0.03
 								10000000.0  1.00
-								15000000.0  1.50
+								15127219.3  1.50
 							</tableData>
 						</table>
 						<property>/systems/fadec/epr/c1</property>
@@ -2219,7 +2219,7 @@
 							<tableData>
 								   53194.6  0.03
 								10000000.0  1.00
-								15000000.0  1.50
+								15127219.3  1.50
 							</tableData>
 						</table>
 						<property>/systems/fadec/epr/c1</property>
@@ -2265,7 +2265,7 @@
 							<tableData>
 								   53194.6  0.03
 								10000000.0  1.00
-								15000000.0  1.50
+								15127219.3  1.50
 							</tableData>
 						</table>
 						<property>/systems/fadec/epr/c1</property>
