@@ -467,7 +467,7 @@
 					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
-						<value>113</value>
+						<value>111</value>
 					</less-than-equals>
 					<greater-than>
 						<property>/position/gear-agl-ft</property>
@@ -501,11 +501,11 @@
 					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
-						<value>55</value>
+						<value>54</value>
 					</less-than-equals>
 					<greater-than>
 						<property>/position/gear-agl-ft</property>
-						<value>42</value>
+						<value>46</value>
 					</greater-than>
 					<less-than>
 						<property>/position/gear-agl-ft-2-sec</property>
@@ -535,11 +535,11 @@
 					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
-						<value>45</value>
+						<value>44</value>
 					</less-than-equals>
 					<greater-than>
 						<property>/position/gear-agl-ft</property>
-						<value>32</value>
+						<value>36</value>
 					</greater-than>
 					<less-than>
 						<property>/position/gear-agl-ft-2-sec</property>
@@ -569,11 +569,11 @@
 					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
-						<value>35</value>
+						<value>36</value>
 					</less-than-equals>
 					<greater-than>
 						<property>/position/gear-agl-ft</property>
-						<value>22</value>
+						<value>26</value>
 					</greater-than>
 					<less-than>
 						<property>/position/gear-agl-ft-2-sec</property>
@@ -603,11 +603,11 @@
 					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
-						<value>25</value>
+						<value>26</value>
 					</less-than-equals>
 					<greater-than>
 						<property>/position/gear-agl-ft</property>
-						<value>14</value>
+						<value>18</value>
 					</greater-than>
 					<less-than>
 						<property>/position/gear-agl-ft-2-sec</property>
@@ -641,7 +641,7 @@
 					</not-equals>
 					<less-than-equals>
 						<property>/position/gear-agl-ft</property>
-						<value>13</value>
+						<value>15</value>
 					</less-than-equals>
 					<greater-than>
 						<property>/position/gear-agl-ft</property>
