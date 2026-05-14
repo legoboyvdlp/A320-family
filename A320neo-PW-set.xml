@@ -16,7 +16,6 @@
 				<file>DLH</file>
 				<texture-fuselage>DLH-fuselage.png</texture-fuselage>
 				<texture-engine>PW1127-white.png</texture-engine>
-				<texture-placards>Fuselage/res/placards.png</texture-placards>
 			</livery>
 			<livery-dir type="string">Aircraft/A320-family/Models/Liveries/PW-NEO</livery-dir>
 		</model>
