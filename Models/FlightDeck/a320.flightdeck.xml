@@ -306,14 +306,6 @@
 		
 		<!-- Overhead panel -->
 		
-		<object-name>Eng1FireAgt1Btn1S</object-name>
-		<object-name>Eng1FireAgt1Btn2D</object-name>
-		<object-name>Eng2FireAgt1Btn1S</object-name>
-		<object-name>Eng2FireAgt1Btn2D</object-name>
-		<object-name>Eng1FireAgt2Btn1S</object-name>
-		<object-name>Eng1FireAgt2Btn2D</object-name>
-		<object-name>Eng2FireAgt2Btn1S</object-name>
-		<object-name>Eng2FireAgt2Btn2D</object-name>
 		<object-name>Eng1ManStartBtn2O</object-name>
 		<object-name>Eng2ManStartBtn2O</object-name>
 		<object-name>VentBlowBtn1F</object-name>
@@ -339,21 +331,6 @@
 		<type>select</type>
 		<!-- Overhead panel -->
 		
-		<object-name>CFuelTank1Btn1F</object-name>
-		<object-name>CFuelTank1Btn2O</object-name>
-		<object-name>LFuelTank2Btn1F</object-name>
-		<object-name>LFuelTank2Btn2O</object-name>
-		<object-name>PTU21F</object-name>
-		<object-name>PTU22O</object-name>
-		<object-name>RFuelTank2Btn1F</object-name>
-		<object-name>RFuelTank2Btn2O</object-name>
-		<object-name>YellowElecPump1F</object-name>
-		<object-name>YellowElecPump2O</object-name>
-		<object-name>YellowEngPump1F</object-name>
-		<object-name>YellowEngPump2O</object-name>
-		
-		<object-name>OVH_button_labels.009</object-name>
-		<object-name>OVH_button_labels.012</object-name>
 		<object-name>OVH_button_labels.053</object-name>
 		<object-name>OVH_button_labels.059</object-name>
 		<object-name>OVH_button_labels.061</object-name>
@@ -384,14 +361,8 @@
 		<object-name>AftCargoSmkBtn1S</object-name>
 		<object-name>AftCargoSmkBtn2D</object-name>
 		<object-name>CabinFansBtn2O</object-name>
-		<object-name>CFuelTank2Btn1F</object-name>
-		<object-name>CFuelTank2Btn2O</object-name>
-		<object-name>FuelModeBtn1F</object-name>
-		<object-name>FuelModeBtn2O</object-name>
 		<object-name>FwdCargoSmokeBtn1S</object-name>
 		<object-name>FwdCargoSmokeBtn2D</object-name>
-		<object-name>GreenEngPump21F</object-name>
-		<object-name>GreenEngPump22O</object-name>
 		<object-name>HotAirBtn1F</object-name>
 		<object-name>HotAirBtn2O</object-name>
 		
@@ -404,15 +375,6 @@
 				<property>/systems/electrical/bus/ac-1</property>
 				<value>110</value>
 			</greater-than>
-		</condition>
-	</animation>
-	
-	<!-- Special for EXT pwr AVAIL light -->
-	<animation>
-		<type>select</type>
-		<object-name>ExtPwrBtn1A</object-name>
-		<condition>
-			<property>/controls/indicators/ext-pwr-avail</property>
 		</condition>
 	</animation>
 	
@@ -465,7 +427,6 @@
 		<object-name>VentExtractBtn1F</object-name>
 		<object-name>VentExtractBtn2O</object-name>
 		
-		<object-name>OVH_button_labels.012</object-name>
 		<object-name>OVH_button_labels.055</object-name>
 		<object-name>OVH_button_labels.059</object-name>
 		<object-name>OVH_button_labels.061</object-name>
@@ -7713,16 +7674,16 @@
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
        </action>
-        <!-- Release action, limit to 0 and 1. 2 is spring loaded reset position -->
+	<!-- Release action, limit to 0 and 1. 2 is spring loaded reset position -->
 		<release>
-            <binding>
-                <command>property-adjust</command>
-                <property>instrumentation/clock/et/et-selector</property>
-                <step>0</step>
-                <min>0</min>
-                <max>1</max>
-            </binding>
-        </release>
+	    <binding>
+		<command>property-adjust</command>
+		<property>instrumentation/clock/et/et-selector</property>
+		<step>0</step>
+		<min>0</min>
+		<max>1</max>
+	    </binding>
+	</release>
 		<hovered>
 			<binding>
 				<condition>
@@ -9841,11 +9802,11 @@
 	</animation>
 
 	 <animation>
-        <type>pick</type>
+	<type>pick</type>
 		<object-name>tray0-cpt</object-name>
 		<object-name>tray1-cpt</object-name>
 		<object-name>tray2-cpt</object-name>
-        <action>
+	<action>
 			<button>0</button>
 			<binding>
 				<command>nasal</command>
@@ -9865,11 +9826,11 @@
     </animation>
 
 	<animation>
-        <type>pick</type>
+	<type>pick</type>
 		<object-name>tray0-fo</object-name>
 		<object-name>tray1-fo</object-name>
 		<object-name>tray2-fo</object-name>
-        <action>
+	<action>
 			<button>0</button>
 			<binding>
 				<command>nasal</command>
@@ -9920,7 +9881,7 @@
 		<property>controls/footrest-cpt</property>
 		<factor>50</factor>
 		<axis>
-         <object-name>footrest_cpt.axis</object-name>
+	 <object-name>footrest_cpt.axis</object-name>
 		</axis>
 	</animation>
 	
@@ -9955,7 +9916,7 @@
 		<property>controls/footrest-fo</property>
 		<factor>50</factor>
 		<axis>
-         <object-name>footrest_cpt.axis</object-name>
+	 <object-name>footrest_cpt.axis</object-name>
 		</axis>
 	</animation>
 	
@@ -10425,8 +10386,8 @@
 	<!-- Console Lighting Switches -->
 	<animation>
 		<type>rotate</type>
-        <object-name>light_console_cpt_sw</object-name>
-        <property>controls/lighting/console-floor-light-sw-pos</property>
+	<object-name>light_console_cpt_sw</object-name>
+	<property>controls/lighting/console-floor-light-sw-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
 		<axis>
@@ -10435,39 +10396,39 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-        <object-name>light_console_cpt_sw</object-name>
-        <action>
+	<object-name>light_console_cpt_sw</object-name>
+	<action>
 			<button>0</button>
 			<button>3</button>
 			<repeatable>false</repeatable>
-            <binding>
-                <command>property-cycle</command>
-                <property>controls/lighting/console-floor-light-sw</property>
+	    <binding>
+		<command>property-cycle</command>
+		<property>controls/lighting/console-floor-light-sw</property>
 				<value>0</value>
 				<value>0.5</value>
 				<value>1</value>
-            </binding>
+	    </binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
-        </action>
-        <action>
+	</action>
+	<action>
 			<button>1</button>
 			<button>4</button>
 			<repeatable>false</repeatable>
-            <binding>
-                <command>property-cycle</command>
-                <property>controls/lighting/console-floor-light-sw</property>
+	    <binding>
+		<command>property-cycle</command>
+		<property>controls/lighting/console-floor-light-sw</property>
 				<value>1</value>
 				<value>0.5</value>
 				<value>0</value>
-            </binding>
+	    </binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -10482,8 +10443,8 @@
 
 	<animation>
 		<type>rotate</type>
-        <object-name>light_console_fo_sw</object-name>
-        <property>controls/lighting/console-floor-light-sw-right-pos</property>
+	<object-name>light_console_fo_sw</object-name>
+	<property>controls/lighting/console-floor-light-sw-right-pos</property>
 		<offset-deg>-30</offset-deg>
 		<factor>60</factor>
 		<axis>
@@ -10492,39 +10453,39 @@
 	</animation>
 	<animation>
 		<type>pick</type>
-        <object-name>light_console_fo_sw</object-name>
-        <action>
+	<object-name>light_console_fo_sw</object-name>
+	<action>
 			<button>0</button>
 			<button>3</button>
 			<repeatable>false</repeatable>
-            <binding>
-                <command>property-cycle</command>
-                <property>controls/lighting/console-floor-light-sw-right</property>
+	    <binding>
+		<command>property-cycle</command>
+		<property>controls/lighting/console-floor-light-sw-right</property>
 				<value>0</value>
 				<value>0.5</value>
 				<value>1</value>
-            </binding>
+	    </binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
-        </action>
-        <action>
+	</action>
+	<action>
 			<button>1</button>
 			<button>4</button>
 			<repeatable>false</repeatable>
-            <binding>
-                <command>property-cycle</command>
-                <property>controls/lighting/console-floor-light-sw-right</property>
+	    <binding>
+		<command>property-cycle</command>
+		<property>controls/lighting/console-floor-light-sw-right</property>
 				<value>1</value>
 				<value>0.5</value>
 				<value>0</value>
-            </binding>
+	    </binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -15506,31 +15467,31 @@
 			<object-name>audio_int_rad.axis.cpt</object-name>
 		</axis>
 		<action>
-            <binding>
-                <command>property-adjust</command>
+	    <binding>
+		<command>property-adjust</command>
 				<property>controls/audio/acp[0]/int-rad</property>
-                <min>0</min>
-                <max>2</max>
+		<min>0</min>
+		<max>2</max>
 				<wrap>false</wrap>
-            </binding>
+	    </binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
-        </action>
-        <release>
-            <binding>
-                <command>property-adjust</command>
+	</action>
+	<release>
+	    <binding>
+		<command>property-adjust</command>
 				<property>controls/audio/acp[0]/int-rad</property>
 				<step>0</step>
-                <min>1</min>
-                <max>2</max>
-            </binding>
+		<min>1</min>
+		<max>2</max>
+	    </binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
-        </release>
+	</release>
 		<hovered>
 			<binding>
 				<condition>
@@ -15592,15 +15553,18 @@
 		<type>select</type>
 		<object-name>OVH_button_labels.009</object-name>
 		<condition>
-			<or>
-				<property>systems/audio/acp[0]/pa</property>
-				<property>systems/audio/acp[1]/pa</property>
-				<property>systems/audio/acp[2]/pa</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/pa</property>
 		</condition>
 	</animation>
-	
+
+	<animation>
+		<type>select</type>
+		<object-name>OVH_button_labels.012</object-name>
+		<condition>
+			<property>/controls/indicators/door-video-off</property>
+		</condition>
+	</animation>
+
 	<animation>
 		<type>translate</type>
 		<object-name>audio_pa.cpt</object-name>
@@ -20180,31 +20144,31 @@
 			<object-name>audio_int_rad.axis.fo</object-name>
 		</axis>
 		<action>
-            <binding>
-                <command>property-adjust</command>
+	    <binding>
+		<command>property-adjust</command>
 				<property>controls/audio/acp[1]/int-rad</property>
-                <min>0</min>
-                <max>2</max>
+		<min>0</min>
+		<max>2</max>
 				<wrap>false</wrap>
-            </binding>
+	    </binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
-        </action>
-        <release>
-            <binding>
-                <command>property-adjust</command>
+	</action>
+	<release>
+	    <binding>
+		<command>property-adjust</command>
 				<property>controls/audio/acp[1]/int-rad</property>
 				<step>0</step>
-                <min>1</min>
-                <max>2</max>
-            </binding>
+		<min>1</min>
+		<max>2</max>
+	    </binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
-        </release>
+	</release>
 		<hovered>
 			<binding>
 				<condition>
@@ -22600,7 +22564,7 @@
 					<value>0.0</value>
 				</binding>
 			</mod-up>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -22653,7 +22617,7 @@
 					<value>0.0</value>
 				</binding>
 			</mod-up>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -22706,7 +22670,7 @@
 					<value>0.0</value>
 				</binding>
 			</mod-up>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -22759,7 +22723,7 @@
 					<value>0.0</value>
 				</binding>
 			</mod-up>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -22812,7 +22776,7 @@
 					<value>0.0</value>
 				</binding>
 			</mod-up>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -22865,7 +22829,7 @@
 					<value>0.0</value>
 				</binding>
 			</mod-up>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -22918,7 +22882,7 @@
 					<value>0.0</value>
 				</binding>
 			</mod-up>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -22971,7 +22935,7 @@
 					<value>0.0</value>
 				</binding>
 			</mod-up>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -23024,7 +22988,7 @@
 					<value>0.0</value>
 				</binding>
 			</mod-up>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -23062,18 +23026,18 @@
 			<object-name>atc_thrt.axis</object-name>
 		</axis>
 		<action>
-            <binding>
-                <command>property-cycle</command>
-                <property>controls/atc/thrt-all</property>
-                <value>1</value>
+	    <binding>
+		<command>property-cycle</command>
+		<property>controls/atc/thrt-all</property>
+		<value>1</value>
 				<value>0</value>
 				<wrap>false</wrap>
-            </binding>
+	    </binding>
 			<binding>
 				<command>nasal</command>
-                <script>setprop("sim/sound/knb1", 1);</script>
+		<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -23096,21 +23060,21 @@
 			<object-name>atc_sys.axis</object-name>
 		</axis>
 		<action>
-            <binding>
-                <command>property-cycle</command>
-                <property>controls/atc/system-knob</property>
-                <value>0</value>
+	    <binding>
+		<command>property-cycle</command>
+		<property>controls/atc/system-knob</property>
+		<value>0</value>
 				<value>1</value>
 				<wrap>false</wrap>
-            </binding>
+	    </binding>
 			<binding>
-                <command>nasal</command>
-                <script>
+		<command>nasal</command>
+		<script>
 					atc.transponderPanel.atcSwitch(getprop("controls/atc/system-knob") + 1);
 					setprop("sim/sound/knb1", 1);
 				</script>
-            </binding>
-        </action>
+	    </binding>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -23133,19 +23097,19 @@
 			<object-name>atc_abv.axis</object-name>
 		</axis>
 		<action>
-            <binding>
-                <command>property-cycle</command>
-                <property>controls/atc/abv-blw</property>
+	    <binding>
+		<command>property-cycle</command>
+		<property>controls/atc/abv-blw</property>
 				<value>-1</value>
-                <value>0</value>
+		<value>0</value>
 				<value>1</value>
 				<wrap>false</wrap>
-            </binding>
+	    </binding>
 			<binding>
 				<command>nasal</command>
-                <script>setprop("sim/sound/knb1", 1);</script>
+		<script>setprop("sim/sound/knb1", 1);</script>
 			</binding>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -23182,43 +23146,43 @@
 		</axis>
 		<property>controls/cockpit/atc-mode-knob-pos</property>
 		<increase>
-            <binding>
-                <command>property-cycle</command>
-                <property>controls/atc/mode-knob</property>
-                <value>0</value>
+	    <binding>
+		<command>property-cycle</command>
+		<property>controls/atc/mode-knob</property>
+		<value>0</value>
 				<value>1</value>
 				<value>2</value>
 				<value>3</value>
 				<value>4</value>
 				<wrap>false</wrap>
-            </binding>
+	    </binding>
 			<binding>
-                <command>nasal</command>
-                <script>
+		<command>nasal</command>
+		<script>
 					atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);
 					setprop("sim/sound/knb1", 1);
 				</script>
-            </binding>
-        </increase>
+	    </binding>
+	</increase>
 		<decrease>
-            <binding>
-                <command>property-cycle</command>
-                <property>controls/atc/mode-knob</property>
+	    <binding>
+		<command>property-cycle</command>
+		<property>controls/atc/mode-knob</property>
 				<value>4</value>
 				<value>3</value>
 				<value>2</value>
 				<value>1</value>
-                <value>0</value>
+		<value>0</value>
 				<wrap>false</wrap>
-            </binding>
+	    </binding>
 			<binding>
-                <command>nasal</command>
-                <script>
+		<command>nasal</command>
+		<script>
 					atc.transponderPanel.modeSwitch(getprop("controls/atc/mode-knob") + 1);
 					setprop("sim/sound/knb1", 1);
 				</script>
-            </binding>
-        </decrease>
+	    </binding>
+	</decrease>
 		<hovered>
 			<binding>
 				<condition>
@@ -23243,9 +23207,9 @@
 		<action>
 			<button>0</button>
 			<binding>
-                <command>nasal</command>
-                <script>atc.transponderPanel.identSwitch();</script>
-            </binding>
+		<command>nasal</command>
+		<script>atc.transponderPanel.identSwitch();</script>
+	    </binding>
 			<binding>
 				<command>property-assign</command>
 				<property>controls/cockpit/atc-ident-translate</property>
@@ -23262,7 +23226,7 @@
 					<value>0.0</value>
 				</binding>
 			</mod-up>
-        </action>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -23507,7 +23471,7 @@
 		<type>knob</type>
 		<object-name>CockpitDoorSwitch</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
-        <property>controls/doors/doorc-switch-pos</property>
+	<property>controls/doors/doorc-switch-pos</property>
 		<drag-direction>vertical</drag-direction>
 		<drag-scale-px>15</drag-scale-px>
 		<factor>25</factor>
@@ -24440,31 +24404,31 @@
 			<object-name>audio_int_rad.axis.ovh</object-name>
 		</axis>
 		<action>
-            <binding>
-                <command>property-adjust</command>
+	    <binding>
+		<command>property-adjust</command>
 				<property>controls/audio/acp[2]/int-rad</property>
-                <min>0</min>
-                <max>2</max>
+		<min>0</min>
+		<max>2</max>
 				<wrap>false</wrap>
-            </binding>
+	    </binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
-        </action>
-        <release>
-            <binding>
-                <command>property-adjust</command>
+	</action>
+	<release>
+	    <binding>
+		<command>property-adjust</command>
 				<property>controls/audio/acp[2]/int-rad</property>
 				<step>0</step>
-                <min>1</min>
-                <max>2</max>
-            </binding>
+		<min>1</min>
+		<max>2</max>
+	    </binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("sim/sound/switch1", 1);</script>
 			</binding>
-        </release>
+	</release>
 		<hovered>
 			<binding>
 				<condition>
@@ -26833,24 +26797,24 @@
 	<!-- Reading Light -->
 	<animation>
 		<type>knob</type>
-        <object-name>LReadingLtKnb</object-name>
+	<object-name>LReadingLtKnb</object-name>
 		<object-name>LReadingLtKnb.mark</object-name>
-        <property>controls/lighting/reading-light-left-knb</property>
+	<property>controls/lighting/reading-light-left-knb</property>
 		<factor>180</factor>
 		<offset-deg>-90</offset-deg>
-        <axis>
+	<axis>
 			<object-name>flood_lt_main.axis.005</object-name>
 		</axis>
-        <action>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/lighting/reading-light-left-knb</property>
-                <factor>0.05</factor>
-                <min>0</min>
-                <max>1</max>                
-                <wrap>false</wrap>
-            </binding>
-        </action>
+	<action>
+	    <binding>
+		<command>property-adjust</command>
+		<property>controls/lighting/reading-light-left-knb</property>
+		<factor>0.05</factor>
+		<min>0</min>
+		<max>1</max>		
+		<wrap>false</wrap>
+	    </binding>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -26865,24 +26829,24 @@
 	
 	<animation>
 		<type>knob</type>
-        <object-name>RReadingLtKnb</object-name>
+	<object-name>RReadingLtKnb</object-name>
 		<object-name>RReadingLtKnb.mark</object-name>
-        <property>controls/lighting/reading-light-right-knb</property>
+	<property>controls/lighting/reading-light-right-knb</property>
 		<factor>180</factor>
 		<offset-deg>-90</offset-deg>
-        <axis>
+	<axis>
 			<object-name>flood_lt_main.axis.001</object-name>
 		</axis>
-        <action>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/lighting/reading-light-right-knb</property>
-                <factor>0.05</factor>
-                <min>0</min>
-                <max>1</max>                
-                <wrap>false</wrap>
-            </binding>
-        </action>
+	<action>
+	    <binding>
+		<command>property-adjust</command>
+		<property>controls/lighting/reading-light-right-knb</property>
+		<factor>0.05</factor>
+		<min>0</min>
+		<max>1</max>		
+		<wrap>false</wrap>
+	    </binding>
+	</action>
 		<hovered>
 			<binding>
 				<condition>
@@ -30584,28 +30548,7 @@
 		<type>material</type>
 		<object-name>firebtn1</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>systems/fire/engine1/warning-active</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-				<or>
-					<!-- 35LP -->
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-si-bus</property>
-						<value>110</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-ess-shed</property>
-						<value>110</value>
-					</greater-than-equals>
-					<!-- 37LP -->
-					<greater-than>
-						<property>/systems/electrical/bus/ac-1</property>
-						<value>110</value>
-					</greater-than>
-				</or>
-			</and>
+			<property>/controls/indicators/fire-eng-1-button</property>
 		</condition>
 		<emission>
 			<red>1.0</red>
@@ -30703,28 +30646,7 @@
 		<type>material</type>
 		<object-name>firebtnapu</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>systems/fire/apu/warning-active</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-				<or>
-					<!-- 35LP -->
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-si-bus</property>
-						<value>110</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-ess-shed</property>
-						<value>110</value>
-					</greater-than-equals>
-					<!-- 37LP -->
-					<greater-than>
-						<property>/systems/electrical/bus/ac-1</property>
-						<value>110</value>
-					</greater-than>
-				</or>
-			</and>
+			<property>/controls/indicators/fire-apu-button</property>
 		</condition>
 		<emission>
 			<red>1.0</red>
@@ -30822,28 +30744,7 @@
 		<type>material</type>
 		<object-name>firebtn2</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>systems/fire/engine2/warning-active</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-				<or>
-					<!-- 35LP -->
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-si-bus</property>
-						<value>110</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>systems/electrical/bus/ac-ess-shed</property>
-						<value>110</value>
-					</greater-than-equals>
-					<!-- 37LP -->
-					<greater-than>
-						<property>/systems/electrical/bus/ac-1</property>
-						<value>110</value>
-					</greater-than>
-				</or>
-			</and>
+			<property>/controls/indicators/fire-eng-2-button</property>
 		</condition>
 		<emission>
 			<red>1.0</red>
@@ -30858,23 +30759,7 @@
 		<type>select</type>
 		<object-name>Eng1FireAgt1Btn1S</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>controls/engines/engine[0]/fire-btn</property>
-					<property>controls/fire/test-btn-1</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-				<or>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-hot-1</property>
-						<value>25</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-hot-2</property>
-						<value>25</value>
-					</greater-than-equals>
-				</or>
-			</and>
+			<property>/controls/indicators/fire-eng-1-agent-1-squib</property>
 		</condition>
 	</animation>
 	
@@ -30882,17 +30767,7 @@
 		<type>select</type>
 		<object-name>Eng1FireAgt2Btn1S</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>controls/engines/engine[0]/fire-btn</property>
-					<property>controls/fire/test-btn-1</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-2</property>
-					<value>25</value>
-				</greater-than-equals>
-			</and>
+			<property>/controls/indicators/fire-eng-1-agent-2-squib</property>
 		</condition>
 	</animation>
 
@@ -30900,11 +30775,7 @@
 		<type>select</type>
 		<object-name>Eng1FireAgt1Btn2D</object-name>
 		<condition>
-			<or>
-				<property>systems/fire/engine1/disch1</property>
-				<property>controls/fire/test-btn-1</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fire-eng-1-agent-1-disch</property>
 		</condition>
 	</animation>
 
@@ -30912,11 +30783,7 @@
 		<type>select</type>
 		<object-name>Eng1FireAgt2Btn2D</object-name>
 		<condition>
-			<or>
-				<property>systems/fire/engine1/disch2</property>
-				<property>controls/fire/test-btn-1</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fire-eng-1-agent-2-disch</property>
 		</condition>
 	</animation>
 
@@ -30924,7 +30791,7 @@
 		<type>select</type>
 		<object-name>APUFireAgtBtn1S</object-name>
 		<condition>
-			<property>/controls/indicators/apu-fire-agent-squib</property>
+			<property>/controls/indicators/fire-apu-agent-squib</property>
 		</condition>
 	</animation>
 
@@ -30932,7 +30799,7 @@
 		<type>select</type>
 		<object-name>APUFireAgtBtn2D</object-name>
 		<condition>
-			<property>/controls/indicators/apu-fire-agent-disch</property>
+			<property>/controls/indicators/fire-apu-agent-disch</property>
 		</condition>
 	</animation>
 
@@ -30940,23 +30807,7 @@
 		<type>select</type>
 		<object-name>Eng2FireAgt1Btn1S</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>controls/engines/engine[1]/fire-btn</property>
-					<property>controls/fire/test-btn-2</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-				<or>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-hot-1</property>
-						<value>25</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-hot-2</property>
-						<value>25</value>
-					</greater-than-equals>
-				</or>
-			</and>
+			<property>/controls/indicators/fire-eng-2-agent-1-squib</property>
 		</condition>
 	</animation>
 	
@@ -30964,17 +30815,7 @@
 		<type>select</type>
 		<object-name>Eng2FireAgt2Btn1S</object-name>
 		<condition>
-			<and>
-				<or>
-					<property>controls/engines/engine[1]/fire-btn</property>
-					<property>controls/fire/test-btn-2</property>
-					<property>controls/switches/annun-test</property>
-				</or>
-				<greater-than-equals>
-					<property>systems/electrical/bus/dc-2</property>
-					<value>25</value>
-				</greater-than-equals>
-			</and>
+			<property>/controls/indicators/fire-eng-2-agent-2-squib</property>
 		</condition>
 	</animation>
 
@@ -30982,11 +30823,7 @@
 		<type>select</type>
 		<object-name>Eng2FireAgt1Btn2D</object-name>
 		<condition>
-			<or>
-				<property>systems/fire/engine2/disch1</property>
-				<property>controls/fire/test-btn-2</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fire-eng-2-agent-1-disch</property>
 		</condition>
 	</animation>
 
@@ -30994,11 +30831,7 @@
 		<type>select</type>
 		<object-name>Eng2FireAgt2Btn2D</object-name>
 		<condition>
-			<or>
-				<property>systems/fire/engine2/disch2</property>
-				<property>controls/fire/test-btn-2</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fire-eng-2-agent-2-disch</property>
 		</condition>
 	</animation>
 	
@@ -31541,10 +31374,7 @@
 		<type>select</type>
 		<object-name>GreenEngPump21F</object-name>
 		<condition>
-			<or>
-				<property>systems/hydraulic/lights/green-edp-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/hyd-green-eng-pump-fault</property>
 		</condition>
 	</animation>
 
@@ -31552,10 +31382,7 @@
 		<type>select</type>
 		<object-name>GreenEngPump22O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/hydraulic/switches/green-edp</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/hyd-green-eng-pump-off</property>
 		</condition>
 	</animation>
 
@@ -31757,7 +31584,7 @@
 		<type>select</type>
 		<object-name>BlueElecPump1F</object-name>
 		<condition>
-			<property>/controls/indicators/blue-elec-pump-fault</property>
+			<property>/controls/indicators/hyd-blue-elec-pump-fault</property>
 		</condition>
 	</animation>
 
@@ -31765,7 +31592,7 @@
 		<type>select</type>
 		<object-name>BlueElecPump2O</object-name>
 		<condition>
-			<property>/controls/indicators/blue-elec-pump-off</property>
+			<property>/controls/indicators/hyd-blue-elec-pump-off</property>
 		</condition>
 	</animation>
 
@@ -31830,10 +31657,7 @@
 		<type>select</type>
 		<object-name>PTU21F</object-name>
 		<condition>
-			<or>
-				<property>systems/hydraulic/lights/ptu-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/hyd-ptu-fault</property>
 		</condition>
 	</animation>
 
@@ -31841,10 +31665,7 @@
 		<type>select</type>
 		<object-name>PTU22O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/hydraulic/switches/ptu</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/hyd-ptu-off</property>
 		</condition>
 	</animation>
 
@@ -31893,10 +31714,7 @@
 		<type>select</type>
 		<object-name>YellowEngPump1F</object-name>
 		<condition>
-			<or>
-				<property>systems/hydraulic/lights/yellow-edp-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/hyd-yellow-eng-pump-fault</property>
 		</condition>
 	</animation>
 
@@ -31904,10 +31722,7 @@
 		<type>select</type>
 		<object-name>YellowEngPump2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/hydraulic/switches/yellow-edp</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/hyd-yellow-eng-pump-off</property>
 		</condition>
 	</animation>
 	
@@ -31972,10 +31787,7 @@
 		<type>select</type>
 		<object-name>YellowElecPump1F</object-name>
 		<condition>
-			<or>
-				<property>systems/hydraulic/lights/yellow-elec-fault</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/hyd-yellow-elec-pump-fault</property>
 		</condition>
 	</animation>
 
@@ -31983,10 +31795,7 @@
 		<type>select</type>
 		<object-name>YellowElecPump2O</object-name>
 		<condition>
-			<or>
-				<property>controls/hydraulic/switches/yellow-elec</property>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/hyd-yellow-elec-pump-on</property>
 		</condition>
 	</animation>
 	
@@ -32137,13 +31946,7 @@
 		<type>select</type>
 		<object-name>LFuelTank2Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/failures/fuel/left-tank-pump-2</property>
-					<property>controls/fuel/switches/pump-left-2</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-l2-fault</property>
 		</condition>
 	</animation>
 	
@@ -32151,10 +31954,7 @@
 		<type>select</type>
 		<object-name>LFuelTank2Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fuel/switches/pump-left-2</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-l2-off</property>
 		</condition>
 	</animation>
 	
@@ -32225,13 +32025,7 @@
 		<type>select</type>
 		<object-name>CFuelTank1Btn1F</object-name>
 		<condition>
-			<or>
-				<and>>
-					<property>systems/failures/fuel/center-tank-pump-1</property>
-					<property>controls/fuel/switches/pump-center-1</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-cl-fault</property>
 		</condition>
 	</animation>
 	
@@ -32239,10 +32033,7 @@
 		<type>select</type>
 		<object-name>CFuelTank1Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fuel/switches/pump-center-1</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-cl-off</property>
 		</condition>
 	</animation>
 	
@@ -32313,13 +32104,7 @@
 		<type>select</type>
 		<object-name>FuelModeBtn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/fuel/mode-fault</property>
-					<property>controls/fuel/switches/center-mode</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-mode-fault</property>
 		</condition>
 	</animation>
 	
@@ -32327,10 +32112,7 @@
 		<type>select</type>
 		<object-name>FuelModeBtn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fuel/switches/center-mode</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-mode-man</property>
 		</condition>
 	</animation>
 	
@@ -32480,13 +32262,7 @@
 		<type>select</type>
 		<object-name>CFuelTank2Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/failures/fuel/center-tank-pump-2</property>
-					<property>controls/fuel/switches/pump-center-2</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-cr-fault</property>
 		</condition>
 	</animation>
 	
@@ -32494,10 +32270,7 @@
 		<type>select</type>
 		<object-name>CFuelTank2Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fuel/switches/pump-center-2</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-cr-off</property>
 		</condition>
 	</animation>
 	
@@ -32647,13 +32420,7 @@
 		<type>select</type>
 		<object-name>RFuelTank2Btn1F</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>systems/failures/fuel/right-tank-pump-2</property>
-					<property>controls/fuel/switches/pump-right-2</property>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-r2-fault</property>
 		</condition>
 	</animation>
 	
@@ -32661,10 +32428,7 @@
 		<type>select</type>
 		<object-name>RFuelTank2Btn2O</object-name>
 		<condition>
-			<or>
-				<not><property>controls/fuel/switches/pump-right-2</property></not>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/fuel-tank-r2-off</property>
 		</condition>
 	</animation>
 	
@@ -34245,15 +34009,7 @@
 		<type>select</type>
 		<object-name>ExtPwrBtn1A</object-name>
 		<condition>
-			<or>
-				<and>
-					<property>controls/electrical/switches/ground-cart</property>
-					<not>
-						<property>controls/electrical/switches/ext-pwr</property>
-					</not>
-				</and>
-				<property>controls/switches/annun-test</property>
-			</or>
+			<property>/controls/indicators/ext-pwr-avail</property>
 		</condition>
 	</animation>
 	
