@@ -9,6 +9,14 @@
 	<x>0</x>
 	<y>0</y>
 	
+	<nasal>
+		<close>
+			mcdu_canvas_dlg.del();
+			mcdu_canvas_dlg = nil;
+			root = nil;
+		</close>
+	</nasal>
+	
 	<group>
 		<row>0</row>
 		<col>0</col>
@@ -195,13 +203,6 @@
 						root.createChild("image").set("src", "canvas://by-index/texture[" ~ textureIndex ~ "]");
 					]]>
 				</load>
-				<unload>
-					<![CDATA[
-						mcdu_canvas_dlg.del();
-						mcdu_canvas_dlg = nil;
-						root = nil;
-					]]>
-				</unload>
 			</nasal>
 		</canvas>
 		

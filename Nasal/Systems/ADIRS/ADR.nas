@@ -394,7 +394,7 @@ setlistener("/controls/adirs/skip", func() {
 	if (ADIRS.skip.getBoolValue()) {
 		for (i = 0; i < 3; i = i + 1) {
 			if (ADIRS.ADIRunits[i].inAlign == 1) {
-				ADIRS.ADIRunits[i].stopAlignAligned();
+				ADIRS.ADIRunits[i].instAlign();
 			}
 		}
 	}

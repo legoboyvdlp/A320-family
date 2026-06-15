@@ -90,7 +90,7 @@
 					<pref-width>140</pref-width>
 					<binding>
 						<command>dialog-show</command>
-						<dialog-name>acconfig-help</dialog-name>
+						<dialog-name>aircraft-config-help</dialog-name>
 					</binding>
 				</button>
 				<button>

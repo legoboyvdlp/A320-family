@@ -208,9 +208,7 @@ var canvas_lowerECAMPageEng =
 		} else {
 			me["OilQT1"].hide();
 			me["OilQT1-XX"].show();
-			me["OilQT1"].setColor(0.7333,0.3803,0);
 			me["OilPSI1"].setColor(0.7333,0.3803,0);
-			me["OilQT1"].setText(" XX");
 			me["OilPSI1"].setText("XX");
 			
 			me["OilQT1-decimalpt"].hide();
