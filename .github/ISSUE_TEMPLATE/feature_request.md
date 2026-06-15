@@ -6,6 +6,8 @@ labels: Feature Request
 
 ---
 
+<!-- NOTE: We DO NOT accept issues written by "AI" or LLMs! Fill out this template by hand! -->
+
 **Is your feature request related to a problem or missing feature? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 

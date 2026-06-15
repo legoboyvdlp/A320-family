@@ -10,7 +10,8 @@
 
 ### Checklist:
 <!-- [ ] = Unchecked, [x] = Checked. -->
-* [ ] My changes follow the Contributing Guidelines. <!-- See CONTRIBUTING.md to verify. -->
+* [ ] My changes follow the Contributing Guidelines. <!-- See Docs/CONTRIBUTING.md to verify. -->
+* [ ] My changes have been created without the use of "AI" and LLMs.
 * [ ] My changes implement realistic features. <!-- Only aircraft changes require this. -->
 * [ ] Please have a main Developer test my changes before merging. <!-- We will always briefly test, but if it needs a "full" test, please check). -->
 
