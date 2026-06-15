@@ -123,7 +123,7 @@ var Internal = {
 	alt: props.globals.initNode("/it-autoflight/internal/alt", 10000, "INT"),
 	managedModeOn: props.globals.initNode("/it-autoflight/internal/managed-mode-on", 0, "BOOL"),
 	altCaptureActive: 0,
-	weightKgs: props.globals.getNode("/systems/acconfig/options/weight-kgs", 1),
+	weightKgs: props.globals.getNode("/fdm/jsbsim/inertia/weight-kg", 1),
 	altDiff: 0,
 	altTemp: 0,
 	altPredicted: props.globals.initNode("/it-autoflight/internal/altitude-predicted", 0, "DOUBLE"),
@@ -415,6 +415,7 @@ var ITAF = {
 		if (FMGCInternal.phase == 4 or FMGCInternal.phase == 5) {
 			Internal.vdevDot.setValue(me.calculateVdev());
 		}
+		print("Values: " ~ Position.indicatedAltitudeFt.getValue() ~ "," ~ fmgc.flightPlanController.distToWpt.getValue() ~ "," ~  fmgc.Internal.weightKgs.getValue());
 	},
 	slowLoop: func() {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
