@@ -973,7 +973,7 @@
 	</pid-controller>
 	
 	<filter>
-		<name>System Command: Pitch Target Inactive Sync</name>
+		<name>System Command: Target Pitch Inactive Sync</name>
 		<type>gain</type>
 		<gain>1.0</gain>
 		<enable>
@@ -1004,7 +1004,7 @@
 	</filter>
 	
 	<filter>
-		<name>System Command: Pitch Rate Target</name>
+		<name>System Command: Target Pitch Rate</name>
 		<type>gain</type>
 		<gain>0.12</gain>
 		<input>/orientation/pitch-deg</input>

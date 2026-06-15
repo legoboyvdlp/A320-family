@@ -761,6 +761,9 @@
 			<alt-managed type="bool">0</alt-managed>
 			<kts type="int">100</kts>
 		</input>
+		<internal n="0">
+			<aileron-rollout type="double">0</aileron-rollout>
+		</internal>
 		<settings n="0">
 			<accel-ft type="double">1500</accel-ft>
 		</settings>
@@ -835,12 +838,66 @@
 		<audio>
 			<acp n="0">
 				<int-rad type="int">1</int-rad>
+				<adf1-recive type="bool">0</adf1-recive>
+				<adf1-volume type="double">0</adf1-volume>
+				<adf2-recive type="bool">0</adf2-recive>
+				<adf2-volume type="double">0</adf2-volume>
+				<mkr-recive type="bool">0</mkr-recive>
+				<mkr-volume type="double">0</mkr-volume>
+				<ils-recive type="bool">0</ils-recive>
+				<ils-volume type="double">0</ils-volume>
+				<vor1-recive type="bool">0</vor1-recive>
+				<vor1-volume type="double">0</vor1-volume>
+				<vor2-recive type="bool">0</vor2-recive>
+				<vor2-volume type="double">0</vor2-volume>
+				<vhf1-recive type="bool">1</vhf1-recive>
+				<vhf1-volume type="double">1</vhf1-volume>
+				<vhf2-recive type="bool">1</vhf2-recive>
+				<vhf2-volume type="double">0.5</vhf2-volume>
+				<vhf3-recive type="bool">0</vhf3-recive>
+				<vhf3-volume type="double">0</vhf3-volume>
 			</acp>
 			<acp n="1">
 				<int-rad type="int">1</int-rad>
+				<adf1-recive type="bool">0</adf1-recive>
+				<adf1-volume type="double">0</adf1-volume>
+				<adf2-recive type="bool">0</adf2-recive>
+				<adf2-volume type="double">0</adf2-volume>
+				<mkr-recive type="bool">0</mkr-recive>
+				<mkr-volume type="double">0</mkr-volume>
+				<ils-recive type="bool">0</ils-recive>
+				<ils-volume type="double">0</ils-volume>
+				<vor1-recive type="bool">0</vor1-recive>
+				<vor1-volume type="double">0</vor1-volume>
+				<vor2-recive type="bool">0</vor2-recive>
+				<vor2-volume type="double">0</vor2-volume>
+				<vhf1-recive type="bool">1</vhf1-recive>
+				<vhf1-volume type="double">1</vhf1-volume>
+				<vhf2-recive type="bool">1</vhf2-recive>
+				<vhf2-volume type="double">0.5</vhf2-volume>
+				<vhf3-recive type="bool">0</vhf3-recive>
+				<vhf3-volume type="double">0</vhf3-volume>
 			</acp>
 			<acp n="2">
 				<int-rad type="int">1</int-rad>
+				<adf1-recive type="bool">0</adf1-recive>
+				<adf1-volume type="double">0</adf1-volume>
+				<adf2-recive type="bool">0</adf2-recive>
+				<adf2-volume type="double">0</adf2-volume>
+				<mkr-recive type="bool">0</mkr-recive>
+				<mkr-volume type="double">0</mkr-volume>
+				<ils-recive type="bool">0</ils-recive>
+				<ils-volume type="double">0</ils-volume>
+				<vor1-recive type="bool">0</vor1-recive>
+				<vor1-volume type="double">0</vor1-volume>
+				<vor2-recive type="bool">0</vor2-recive>
+				<vor2-volume type="double">0</vor2-volume>
+				<vhf1-recive type="bool">1</vhf1-recive>
+				<vhf1-volume type="double">1</vhf1-volume>
+				<vhf2-recive type="bool">1</vhf2-recive>
+				<vhf2-volume type="double">0.5</vhf2-volume>
+				<vhf3-recive type="bool">0</vhf3-recive>
+				<vhf3-volume type="double">0</vhf3-volume>
 			</acp>
 		</audio>
 		<autobrake>
@@ -1123,6 +1180,8 @@
 				<eng2-manstart type="int">0</eng2-manstart>
 				<eng1-n1 type="int">0</eng1-n1>
 				<eng2-n1 type="int">0</eng2-n1>
+				<eng1-n1mode type="int">0</eng1-n1mode>
+				<eng2-n1mode type="int">0</eng2-n1mode>
 				<evac type="int">0</evac>
 				<fwddisch type="int">0</fwddisch>
 				<idg1 type="int">0</idg1>
@@ -1167,6 +1226,17 @@
 				<x-bleed type="int">1</x-bleed> <!-- Auto -->
 			</switches>
 		</pneumatics>
+		<radio>
+			<rmp n="0">
+				<nav-protect type="int">0</nav-protect>
+			</rmp>
+			<rmp n="1">
+				<nav-protect type="int">0</nav-protect>
+			</rmp>
+			<rmp n="2">
+				<nav-protect type="int">0</nav-protect>
+			</rmp>
+		</radio>
 		<switches>
 			<annun-test type="int">0</annun-test>
 			<beacon type="bool">0</beacon>
@@ -4875,7 +4945,7 @@
 			<file>Aircraft/A320-family/Nasal/canvasLiv.nas</file>
 		</aircraft>
 		<core>
-			<file>Aircraft/A320-family/Nasal/aircraft.nas</file>
+			<file>Aircraft/A320-family/Nasal/core.nas</file>
 			<file>Aircraft/A320-family/Nasal/buttons.nas</file>
 			<file>Aircraft/A320-family/Nasal/controls-override.nas</file>
 			<file>Aircraft/A320-family/Nasal/shake.nas</file>
