@@ -37,8 +37,12 @@ var entered = {
 var vhf3DataStandby = props.globals.initNode("/systems/draims/vhf3-data-standby", 0, "BOOL", 1);
 var vhf3EmerStandby = props.globals.initNode("/systems/draims/vhf3-emer-standby", 0, "BOOL", 1);
 var hfEmerStandby = [props.globals.initNode("/systems/draims/hf1-emer-standby", 0, "BOOL", 1), props.globals.initNode("/systems/draims/hf2-emer-standby", 0, "BOOL", 1)];
-var telCallActive = [props.globals.initNode("/systems/draims/tel1-active", 0, "BOOL", 1), props.globals.initNode("/systems/draims/tel2-active", 0, "BOOL", 1)];
-var telCallIncoming = [props.globals.initNode("/systems/draims/tel1-incoming", 0, "BOOL", 1), props.globals.initNode("/systems/draims/tel2-incoming", 0, "BOOL", 1)];
+var telCallState = [props.globals.initNode("/systems/draims/tel1-state", 0, "INT", 1), props.globals.initNode("/systems/draims/tel2-state", 0, "INT", 1)];
+# Call States:
+# 0: No call
+# 1: Dialing
+# 2: Connected
+# 3: Incomming
 var draimsPanel = [nil, nil, nil];
 var SVGKeysFreq = ["Transmit1", "Transmit2", "Transmit3", "Select1", "Select2", "Select3", "Standby1", "Standby2", "Standby3", "Active1", "Active2", "Active3", "Channel1", "Channel3", "Channel2", "Volume1", "Volume2", "Volume3", "Mute1", "Mute2", "Mute3", "Label1", "Label2", "Label3", "ArrowUp1", "ArrowDown1", "ArrowUp2", "ArrowDown2", "ArrowUp3", "ArrowDown3", "AM1", "AM2", "AMMode", "AMModeOn", "AMModeOff", "AMModeOnBox", "AMModeOffBox"];
 var SVGKeysTel = ["Transmit1", "Transmit2", "Select1", "Select2", "Number1", "Number2", "Channel1", "Channel2", "Volume1", "Volume2", "Mute1", "Mute2", "Label1", "Label2", "ArrowUp1", "ArrowDown1", "ArrowUp2", "ArrowDown2", "Link_Name1", "Link_Name2", "Directory", "Directory_Arrow", "DAIL1", "DAIL2"];
@@ -363,6 +367,7 @@ var draimsPanelClass = {
 		var focus = me.focus.tel.getValue();
 		me.updateLower();
 		for (var j = 1; j <= 2; j += 1) {
+			var callState = telCallState[j - 1].getValue();
 			# Focus, Standby Color and Arrows
 			if (focus == j) {
 				me.elementsTel["Number" ~ j].setColor(BLUE);
@@ -372,9 +377,41 @@ var draimsPanelClass = {
 				me.elementsTel["Number" ~ j].setColor(WHITE);
 				me.elementsTel["Label" ~ j].setColor(WHITE);
 			}
-			me.elementsTel["Number" ~ j].setText(entered.tel[j - 1].getValue());
-			me.elementsTel["Number" ~ j].show();
-			me.elementsTel["Label" ~ j].show();
+			if (callState == 0) {
+				me.elementsTel["Number" ~ j].setText(entered.tel[j - 1].getValue());
+				me.elementsTel["Number" ~ j].show();
+				me.elementsTel["Label" ~ j].setText("MAN:");
+				me.elementsTel["Label" ~ j].show();
+				me.elementsTel["DAIL" ~ j].setText("DAIL");
+				me.elementsTel["DAIL" ~ j].show();
+			} else if (callState == 1) {
+				me.elementsTel["Number" ~ j].setText("CONNECTING");
+				me.elementsTel["Number" ~ j].setColor(WHITE);
+				me.elementsTel["Number" ~ j].show();
+				me.elementsTel["Label" ~ j].setText("MAN:");
+				me.elementsTel["Label" ~ j].setColor(BLUE);
+				me.elementsTel["Label" ~ j].show();
+				me.elementsTel["DAIL" ~ j].setText("END");
+				me.elementsTel["DAIL" ~ j].show();
+			} else if (callState == 2) {
+				me.elementsTel["Number" ~ j].setText("CONNECTED");
+				me.elementsTel["Number" ~ j].setColor(WHITE);
+				me.elementsTel["Number" ~ j].show();
+				me.elementsTel["Label" ~ j].setText("EXTERNAL");
+				me.elementsTel["Label" ~ j].setColor(GREEN);
+				me.elementsTel["Label" ~ j].show();
+				me.elementsTel["DAIL" ~ j].setText("END");
+				me.elementsTel["DAIL" ~ j].show();
+			} else if (callState == 3) {
+				me.elementsTel["Number" ~ j].setText("INCOMMING CALL");
+				me.elementsTel["Number" ~ j].setColor(WHITE);
+				me.elementsTel["Number" ~ j].show();
+				me.elementsTel["Label" ~ j].setText("EXTERNAL");
+				me.elementsTel["Label" ~ j].setColor(BLUE);
+				me.elementsTel["Label" ~ j].show();
+				me.elementsTel["DAIL" ~ j].setText("END");
+				me.elementsTel["DAIL" ~ j].show();
+			}
 			# TODO directory quick dialing
 			# TODO directory page
 			# Reception
@@ -581,7 +618,7 @@ var draimsPanelClass = {
 				updateAll();
 			}
 		} else if (page == "hf") {
-			if (btn == 1 and btn == 2) {
+			if (btn <= 2) {
 				# TODO
 				updateAll();
 			} else if (btn == 4) {
@@ -589,11 +626,17 @@ var draimsPanelClass = {
 				updateAll();
 			}
 		} else if (page == "tel") {
-			# TODO DAIL
-			if (btn == 4) {
+			if (btn <= 2) {
+				btn = btn - 1;
+				if (telCallState[btn].getValue() == 0) {
+					telCallState[btn].setValue(1);
+				} else {
+					telCallState[btn].setValue(0);
+				}
+			} else if (btn == 4) {
 				me.changeFocus("ATC");
-				updateAll();
 			}
+			updateAll();
 		} else if (page == "atc") {
 			if (btn == 1) {
 				if (getprop("/controls/atc/system-knob") == 0) {

@@ -60,6 +60,11 @@ var acpClass = {
 	transmitButton: func(channel) {
 		# TODO power check
 		me.transmitChannel.setValue(channel);
+		if (channel == "tel1" and getprop("/systems/draims/tel1-state") == 3) {
+			setprop("/systems/draims/tel1-state", 2);
+		} else if (channel == "tel2" and getprop("/systems/draims/tel2-state") == 3) {
+			setprop("/systems/draims/tel2-state", 2);
+		}
 	},
 };
 
