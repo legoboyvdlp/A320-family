@@ -11,8 +11,8 @@
 			<test logic="AND" value="1">
 				/controls/draims/rmp[0]/brightness-knob ge 0.05
 				<test logic="OR" value="1">
-					/systems/electrical/bus/dc-ess ge 28
-					/systems/electrical/bus/dc-bat ge 28
+					/systems/electrical/bus/dc-ess ge 25
+					/systems/electrical/bus/dc-bat ge 25
 				</test>
 			</test>
 		</switch>
@@ -22,8 +22,8 @@
 			<test logic="AND" value="1">
 				/controls/draims/rmp[1]/brightness-knob ge 0.05
 				<test logic="OR" value="1">
-					/systems/electrical/bus/dc-ess ge 28
-					/systems/electrical/bus/dc-2 ge 28
+					/systems/electrical/bus/dc-ess ge 25
+					/systems/electrical/bus/dc-2 ge 25
 				</test>
 			</test>
 		</switch>
@@ -33,8 +33,8 @@
 			<test logic="AND" value="1">
 				/controls/draims/rmp[2]/brightness-knob ge 0.05
 				<test logic="OR" value="1">
-					/systems/electrical/bus/dc-2 ge 28
-					/systems/electrical/bus/dc-bat ge 28
+					/systems/electrical/bus/dc-2 ge 25
+					/systems/electrical/bus/dc-bat ge 25
 				</test>
 			</test>
 		</switch>

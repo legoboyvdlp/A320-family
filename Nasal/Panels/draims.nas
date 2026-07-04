@@ -1,22 +1,49 @@
 # A3XX DRAIMS RMP by Nia
 
 # Copyright (c) 2025 Nia
-var enteringNode = [
-	props.globals.initNode("/systems/draims/fields[0]/entering", 1),
-	props.globals.initNode("/systems/draims/fields[1]/entering", 1),
-	props.globals.initNode("/systems/draims/fields[2]/entering", 1),
-	props.globals.initNode("/systems/draims/fields[3]/entering", 1)];
-var enteredNode = [
-	props.globals.getNode("/systems/draims/fields[0]/entered", 1),
-	props.globals.getNode("/systems/draims/fields[1]/entered", 1),
-	props.globals.getNode("/systems/draims/fields[2]/entered", 1),
-	props.globals.getNode("/systems/draims/fields[3]/entered", 1)];
+var entering = {
+	vhf: [
+		props.globals.initNode("/systems/draims/fieldsVHF[0]/entering", 0, "BOOL", 1),
+		props.globals.initNode("/systems/draims/fieldsVHF[1]/entering", 0, "BOOL", 1),
+		props.globals.initNode("/systems/draims/fieldsVHF[2]/entering", 0, "BOOL", 1),
+	],
+	hf: [
+		props.globals.initNode("/systems/draims/fieldsHF[0]/entering", 0, "BOOL", 1),
+		props.globals.initNode("/systems/draims/fieldsHF[1]/entering", 0, "BOOL", 1),
+	],
+	tel: [
+		props.globals.initNode("/systems/draims/fieldsTEL[0]/entering", 0, "BOOL", 1),
+		props.globals.initNode("/systems/draims/fieldsTFL[1]/entering", 0, "BOOL", 1),
+	],
+	atc: props.globals.initNode("/systems/draims/fieldsATC/entering", 0, "BOOL", 1)
+};
+var entered = {
+	vhf: [
+		props.globals.initNode("/systems/draims/fieldsVHF[0]/entered", "", "STRING", 1),
+		props.globals.initNode("/systems/draims/fieldsVHF[1]/entered", "", "STRING", 1),
+		props.globals.initNode("/systems/draims/fieldsVHF[2]/entered", "", "STRING", 1),
+	],
+	hf: [
+		props.globals.initNode("/systems/draims/fieldsHF[0]/entered", "", "STRING", 1),
+		props.globals.initNode("/systems/draims/fieldsHF[1]/entered", "", "STRING", 1),
+	],
+	tel: [
+		# Using drama numbers, those are reserved and will never be valid irl number assinged to folks
+		props.globals.initNode("/systems/draims/fieldsTEL[0]/entered", "00496990009320", "STRING", 1),
+		props.globals.initNode("/systems/draims/fieldsTFL[1]/entered", "", "STRING", 1),
+	],
+	atc: props.globals.initNode("/systems/draims/fieldsATC/entered", "", "STRING", 1)
+};
 var vhf3DataStandby = props.globals.initNode("/systems/draims/vhf3-data-standby", 0, "BOOL", 1);
 var vhf3EmerStandby = props.globals.initNode("/systems/draims/vhf3-emer-standby", 0, "BOOL", 1);
 var hfEmerStandby = [props.globals.initNode("/systems/draims/hf1-emer-standby", 0, "BOOL", 1), props.globals.initNode("/systems/draims/hf2-emer-standby", 0, "BOOL", 1)];
+var telCallActive = [props.globals.initNode("/systems/draims/tel1-active", 0, "BOOL", 1), props.globals.initNode("/systems/draims/tel2-active", 0, "BOOL", 1)];
+var telCallIncoming = [props.globals.initNode("/systems/draims/tel1-incoming", 0, "BOOL", 1), props.globals.initNode("/systems/draims/tel2-incoming", 0, "BOOL", 1)];
 var draimsPanel = [nil, nil, nil];
-var SVGKeysFreq = ["Transmit1", "Transmit2", "Transmit3", "Select1", "Select2", "Select3", "SelectATC", "Standby1", "Standby2", "Standby3", "Active1", "Active2", "Active3", "Channel1", "Channel3", "Channel2", "Volume1", "Volume2", "Volume3", "Mute1", "Mute2", "Mute3", "Label1", "Label2", "Label3", "SquawkLabel", "Squawk", "AboveBelow", "TARA", "Message1", "Message2", "Message3", "ArrowUp1", "ArrowDown1", "ArrowUp2", "ArrowDown2", "ArrowUp3", "ArrowDown3", "AM1", "AM2", "AMMode", "AMModeOn", "AMModeOff", "AMModeOnBox", "AMModeOffBox"];
+var SVGKeysFreq = ["Transmit1", "Transmit2", "Transmit3", "Select1", "Select2", "Select3", "Standby1", "Standby2", "Standby3", "Active1", "Active2", "Active3", "Channel1", "Channel3", "Channel2", "Volume1", "Volume2", "Volume3", "Mute1", "Mute2", "Mute3", "Label1", "Label2", "Label3", "ArrowUp1", "ArrowDown1", "ArrowUp2", "ArrowDown2", "ArrowUp3", "ArrowDown3", "AM1", "AM2", "AMMode", "AMModeOn", "AMModeOff", "AMModeOnBox", "AMModeOffBox"];
+var SVGKeysTel = ["Transmit1", "Transmit2", "Select1", "Select2", "Number1", "Number2", "Channel1", "Channel2", "Volume1", "Volume2", "Mute1", "Mute2", "Label1", "Label2", "ArrowUp1", "ArrowDown1", "ArrowUp2", "ArrowDown2", "Link_Name1", "Link_Name2", "Directory", "Directory_Arrow", "DAIL1", "DAIL2"];
 var SVGKeysATC = ["SquawkLabel", "Ident", "Squawk", "Message1", "Message2", "Message3", "AltRptgOnBox", "AltRptgOffBox", "AltRptgOn", "AltRptgOff", "TcasDisplayMode", "TcasDisplayThrtBox", "TcasDisplayBlwBox", "TcasDisplayThrt", "TcasDisplayBlw", "TcasDisplayAbvBox", "TcasDisplayAbv", "TcasDisplayNormBox", "TcasDisplayNorm", "TcasModeTaBox", "TcasModeTaRaBox", "TcasModeTa", "TcasModeTaRa", "TcasModeStbyBox", "TcasModeStby", "XPDR2Box", "XPDR1Box", "XPDR2", "XPDR1", "AtcModeAutoBox", "AtcModeStbyBox", "AtcModeAuto", "AtcModeStby"];
+var SVGKeysLower = ["SelectATC", "SquawkLabel", "Squawk", "AboveBelow", "TARA", "Message1", "Message2", "Message3", "TCAS_Bar"];
 var WHITE = [1.0000,1.0000,1.0000];
 var GREY = [0.3, 0.3, 0.3];
 var BLACK = [0, 0, 0];
@@ -48,6 +75,15 @@ var draimsPanelClass = {
 			m.elements[key].hide();
 		}
 
+		m.telPage = m.canvas.createGroup();
+		canvas.parsesvg(m.telPage, "Aircraft/A320-family/Models/Instruments/DRAIMS/res/tel.svg");
+		m.telPage.setSize(1024,624);
+		m.elementsTel = {};
+		foreach(var key; SVGKeysTel) {
+			m.elementsTel[key] = m.telPage.getElementById(key);
+		}
+		m.telPage.hide();
+
 		m.atcPage = m.canvas.createGroup();
 		canvas.parsesvg(m.atcPage, "Aircraft/A320-family/Models/Instruments/DRAIMS/res/atc.svg");
 		m.atcPage.setSize(1024,624);
@@ -57,20 +93,39 @@ var draimsPanelClass = {
 		}
 		m.atcPage.hide();
 
+		m.lowerPage = m.canvas.createGroup();
+		canvas.parsesvg(m.lowerPage, "Aircraft/A320-family/Models/Instruments/DRAIMS/res/lower.svg");
+		m.lowerPage.setSize(1024,624);
+		m.elementsLower = {};
+		foreach(var key; SVGKeysLower) {
+			m.elementsLower[key] = m.lowerPage.getElementById(key);
+		}
+
 		m.page = props.globals.getNode("/systems/draims/rmp[" ~ instance ~ "]/page", "vhf", "STRING", 1);
-		m.focus = props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/focus", "", "STRING", 1);
+		m.focus = {
+			vhf: props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/focusVHF", "1", "STRING", 1),
+			hf: props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/focusHF", "1", "STRING", 1),
+			tel: props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/focusTEL", "1", "STRING", 1),
+		};
 		m.on = props.globals.getNode("/systems/draims/rmp[" ~ instance ~ "]/on", 1);
 		return m;
 	},
 	switchPage: func(page) {
-		if (page == "vhf" or page == "hf" or page == "tel") {
-			me.changeFocus("");
+		if (page == "vhf" or page == "hf") {
 			me.freqPage.show();
+			me.telPage.hide();
 			me.atcPage.hide();
-		} else if (page == "atc") {
-			me.changeFocus("ATC");
+			me.lowerPage.show();
+		} else if (page == "tel") {
 			me.freqPage.hide();
+			me.telPage.show();
+			me.atcPage.hide();
+			me.lowerPage.show();
+		} else if (page == "atc") {
+			me.freqPage.hide();
+			me.telPage.hide();
 			me.atcPage.show();
+			me.lowerPage.hide();
 		}
 		me.page.setValue(page);
 		me.updatePage();
@@ -78,6 +133,7 @@ var draimsPanelClass = {
 	updatePage: func() {
 		if (!me.on.getValue()) {
 			me.freqPage.hide();
+			me.telPage.hide();
 			me.atcPage.hide();
 			return;
 		}
@@ -89,6 +145,8 @@ var draimsPanelClass = {
 			me.freqPage.show();
 			me.updateHF();
 		} else if (page == "tel") {
+			me.telPage.show();
+			me.updateTEL();
 		} else if (page == "atc") {
 			me.atcPage.show();
 			me.updateATC();
@@ -117,7 +175,7 @@ var draimsPanelClass = {
 				me.elements["Standby" ~ j].setText(sprintf("%3.3f", getprop("/instrumentation/comm[" ~ (j - 1) ~ "]/frequencies/standby-mhz")));
 			}
 			# Focus, Standby Color and Arrows
-			if (me.focus.getValue() == j) {
+			if (me.focus.vhf.getValue() == j) {
 				if (j == 3) {
 					if (vhf3DataStandby.getValue()) {
 						me.elements["ArrowUp3"].show();
@@ -142,36 +200,36 @@ var draimsPanelClass = {
 				me.elements["Standby" ~ j].setColor(WHITE);
 			}
 			# Standby entering content
-			if (enteringNode[j - 1].getValue()) {
+			if (entering.vhf[j - 1].getValue()) {
 				# Check for invalid entries
-				var entered = int(enteredNode[j - 1].getValue());
+				var entry = int(entered.vhf[j - 1].getValue());
 				var completionChar = "_";
-				if (!validateVHF(entered)) {
+				if (!validateVHF(entry)) {
 					me.elements["Standby" ~ j].setColor(AMBER);
 					me.elements["Label" ~ j].setText("INVALID");
 					me.elements["Label" ~ j].setColor(AMBER);
 					me.elements["Label" ~ j].show();
 					me.elements["Select" ~ j].show();
-				} else if (entered > 100) { # Completion possible starting at 3 digits entered
+				} else if (entry > 100) { # Completion possible starting at 3 digits entry
 					var completionChar = "o";
 				}
-				var entered = enteredNode[j - 1].getValue();
-				while (size(entered) < 3) {
-					entered = entered ~ completionChar;
+				var entry = entered.vhf[j - 1].getValue();
+				while (size(entry) < 3) {
+					entry = entry ~ completionChar;
 				}
-				if(size(entered) < 4) {
-					entered = entered ~ ".";
-				} else if (size(entered) == 4) {
-					entered = sprintf("%3.1f", int(entered) / 10);
-				} else if (size(entered) == 5){
-					entered = sprintf("%3.2f", int(entered) / 100);
+				if(size(entry) < 4) {
+					entry = entry ~ ".";
+				} else if (size(entry) == 4) {
+					entry = sprintf("%3.1f", int(entry) / 10);
+				} else if (size(entry) == 5){
+					entry = sprintf("%3.2f", int(entry) / 100);
 				} else {
-					entered = sprintf("%3.3f", int(entered) / 1000);
+					entry = sprintf("%3.3f", int(entry) / 1000);
 				}
-				while (size(entered) < 7) {
-					entered = entered ~ completionChar;
+				while (size(entry) < 7) {
+					entry = entry ~ completionChar;
 				}
-				me.elements["Standby" ~ j].setText(entered);
+				me.elements["Standby" ~ j].setText(entry);
 			}
 			# Reception
 			me.elements["Standby" ~ j].show();
@@ -197,7 +255,7 @@ var draimsPanelClass = {
 		foreach(var key; SVGKeysFreq) {
 			me.elements[key].hide();
 		}
-		var focus = me.focus.getValue();
+		var focus = me.focus.hf.getValue();
 		for (var j = 1; j <= 2; j += 1) {
 			# Active
 			me.elements["Active" ~ j].setText(sprintf("%2.3f", systems.HFS[j - 1].selectedChannelKhz / 1000));
@@ -226,9 +284,9 @@ var draimsPanelClass = {
 				me.elements["Standby" ~ j].setColor(WHITE);
 			}
 			# Standby entering content TODO
-			if (enteringNode[j - 1].getValue()) {
+			if (entering.hf[j - 1].getValue()) {
 				# Check for invalid entries
-				var entered = int(enteredNode[j - 1].getValue());
+				var entered = int(entered.hf[j - 1].getValue());
 				var completionChar = "_";
 				if (!validateVHF(entered)) {
 					me.elements["Standby" ~ j].setColor(AMBER);
@@ -239,7 +297,7 @@ var draimsPanelClass = {
 				} else if (entered > 100) { # Completion possible starting at 3 digits entered TODO
 					var completionChar = "o";
 				}
-				var entered = enteredNode[j - 1].getValue();
+				var entered = entered.hf[j - 1].getValue();
 				while (size(entered) < 3) {
 					entered = entered ~ completionChar;
 				}
@@ -298,55 +356,100 @@ var draimsPanelClass = {
 		}
 		me.updateLower();
 	},
+	updateTEL: func() {
+		foreach(var key; SVGKeysTel) {
+			me.elementsTel[key].hide();
+		}
+		var focus = me.focus.tel.getValue();
+		me.updateLower();
+		for (var j = 1; j <= 2; j += 1) {
+			# Focus, Standby Color and Arrows
+			if (focus == j) {
+				me.elementsTel["Number" ~ j].setColor(BLUE);
+				me.elementsTel["Label" ~ j].setColor(BLUE);
+				me.elementsTel["Select" ~ j].show();
+			} else {
+				me.elementsTel["Number" ~ j].setColor(WHITE);
+				me.elementsTel["Label" ~ j].setColor(WHITE);
+			}
+			me.elementsTel["Number" ~ j].setText(entered.tel[j - 1].getValue());
+			me.elementsTel["Number" ~ j].show();
+			me.elementsTel["Label" ~ j].show();
+			# TODO directory quick dialing
+			# TODO directory page
+			# Reception
+			if (acp.ACP[me.instance].receive.tel[j - 1].getValue()) {
+				me.elementsTel["Volume" ~ j].show();
+			}
+			# Transmission and Mute
+			me.elementsTel["Channel" ~ j].setColor(WHITE);
+			if (acp.ACP[me.instance].transmitChannel.getValue() == "tel" ~ j) {
+				me.elementsTel["Transmit" ~ j].show();
+				me.elementsTel["Channel" ~ j].setColor(BLACK);
+				if (!acp.ACP[me.instance].receive.tel[j - 1].getValue()) {
+					me.elementsTel["Volume" ~ j].show();
+					me.elementsTel["Mute" ~ j].show();
+				}
+			}
+		}
+	},
 	updateLower: func() {
 		var mode = getprop("/controls/atc/mode-knob");
 		if (mode == 4) {
-			me.elements["TARA"].setText("TA/RA");
-			me.elements["TARA"].setColor(GREEN);
-			me.elements["Squawk"].setColor(GREEN);
-			me.elements["AboveBelow"].setColor(GREEN);
-			me.elements["SquawkLabel"].setText("SQWK" ~ (getprop("/controls/atc/system-knob") + 1));
+			me.elementsLower["TARA"].setText("TA/RA");
+			me.elementsLower["TARA"].setColor(GREEN);
+			me.elementsLower["Squawk"].setColor(GREEN);
+			me.elementsLower["AboveBelow"].setColor(GREEN);
+			me.elementsLower["SquawkLabel"].setText("SQWK" ~ (getprop("/controls/atc/system-knob") + 1));
 		} else if (mode == 3) {
-			me.elements["TARA"].setText("TA");
-			me.elements["TARA"].setColor(GREEN);
-			me.elements["Squawk"].setColor(GREEN);
-			me.elements["AboveBelow"].setColor(GREEN);
-			me.elements["SquawkLabel"].setText("SQWK" ~ (getprop("/controls/atc/system-knob") + 1));
+			me.elementsLower["TARA"].setText("TA");
+			me.elementsLower["TARA"].setColor(GREEN);
+			me.elementsLower["Squawk"].setColor(GREEN);
+			me.elementsLower["AboveBelow"].setColor(GREEN);
+			me.elementsLower["SquawkLabel"].setText("SQWK" ~ (getprop("/controls/atc/system-knob") + 1));
 		} else {
 			# TODO STBY sometimes green and sometimes white, figure out reason
-			me.elements["TARA"].setText("STBY");
-			me.elements["TARA"].setColor(WHITE);
-			me.elements["Squawk"].setColor(WHITE);
-			me.elements["AboveBelow"].setColor(WHITE);
-			me.elements["SquawkLabel"].setText("STBY");
+			me.elementsLower["TARA"].setText("STBY");
+			me.elementsLower["TARA"].setColor(WHITE);
+			me.elementsLower["Squawk"].setColor(WHITE);
+			me.elementsLower["AboveBelow"].setColor(WHITE);
+			me.elementsLower["SquawkLabel"].setText("STBY");
 		}
-		me.elements["TARA"].show();
-		me.elements["SquawkLabel"].show();
-		me.elements["Squawk"].setText(sprintf("%04.0f", getprop("/systems/atc/transponder-code")));
-		if (enteringNode[3].getValue()) {
-			me.elements["Squawk"].setFontSize(45, 1.0);
-			var entered = enteredNode[3].getValue();
+		me.elementsLower["TARA"].show();
+		me.elementsLower["SquawkLabel"].show();
+		me.elementsLower["Squawk"].setText(sprintf("%04.0f", getprop("/systems/atc/transponder-code")));
+		if (entering.atc.getValue()) {
+			me.elementsLower["Squawk"].setFontSize(45, 1.0);
+			var entered = entered.atc.getValue();
 			while (size(entered) < 4) {
 				entered = entered ~ "_";
 			}
-			me.elements["Squawk"].setText(entered);
+			me.elementsLower["Squawk"].setText(entered);
 		} else {
-			me.elements["Squawk"].setFontSize(67, 1.0);
+			me.elementsLower["Squawk"].setFontSize(67, 1.0);
 		}
-		me.elements["Squawk"].show();
-		if (me.focus.getValue() == "ATC") {
-			me.elements["Squawk"].setColor(BLUE);
-			me.elements["SelectATC"].show();
+		me.elementsLower["Squawk"].show();
+		if ((me.page.getValue() == "vhf" and me.focus.vhf.getValue() == "ATC") or
+			(me.page.getValue() == "hf" and me.focus.hf.getValue() == "ATC") or
+			(me.page.getValue() == "tel" and me.focus.tel.getValue() == "ATC")) {
+			me.elementsLower["Squawk"].setColor(BLUE);
+			me.elementsLower["SelectATC"].show();
+		} else {
+			me.elementsLower["SelectATC"].hide();
 		}
+
 		var abvBlw = getprop("/controls/atc/abv-blw");
 		if (abvBlw == 0) {
-			me.elements["AboveBelow"].setText("NORM");
+			me.elementsLower["AboveBelow"].setText("NORM");
 		} else if (abvBlw == -1) {
-			me.elements["AboveBelow"].setText("ABV");
+			me.elementsLower["AboveBelow"].setText("ABV");
 		} else {
-			me.elements["AboveBelow"].setText("BLW");
+			me.elementsLower["AboveBelow"].setText("BLW");
 		}
-		me.elements["AboveBelow"].show();
+		me.elementsLower["AboveBelow"].show();
+		me.elementsLower["Message1"].hide();
+		me.elementsLower["Message2"].hide();
+		me.elementsLower["Message3"].hide();
 	},
 	updateATC: func() {
 		var tcasBoxes = ["TcasDisplayThrtBox", "TcasDisplayBlwBox", "TcasDisplayAbvBox", "TcasDisplayNormBox", "TcasModeTaBox", "TcasModeTaRaBox", "TcasModeStbyBox", "AltRptgOnBox", "AltRptgOffBox"];
@@ -377,15 +480,15 @@ var draimsPanelClass = {
 		}
 		me.elementsAtc["Squawk"].setColor(BLUE);
 		me.elementsAtc["Squawk"].setText(sprintf("%04.0f", getprop("/systems/atc/transponder-code")));
-		if (enteringNode[3].getValue()) {
-			me.elements["Squawk"].setFontSize(45, 1.0);
-			var entered = enteredNode[3].getValue();
+		if (entering.atc.getValue()) {
+			me.elementsAtc["Squawk"].setFontSize(45, 1.0);
+			var entered = entered.atc.getValue();
 			while (size(entered) < 4) {
 				entered = entered ~ "_";
 			}
-			me.elements["Squawk"].setText(entered);
+			me.elementsAtc["Squawk"].setText(entered);
 		} else {
-			me.elements["Squawk"].setFontSize(67, 1.0);
+			me.elementsAtc["Squawk"].setFontSize(67, 1.0);
 		}
 		if (getprop("/controls/atc/system-knob")) {
 			me.elementsAtc["XPDR1"].setColor(WHITE);
@@ -428,6 +531,9 @@ var draimsPanelClass = {
 			me.elementsAtc["TcasDisplayNorm"].setColor(tcasTextColor);
 			me.elementsAtc["TcasDisplayNormBox"].show();
 		}
+		me.elementsAtc["Message1"].hide();
+		me.elementsAtc["Message2"].hide();
+		me.elementsAtc["Message3"].hide();
 	},
 	lskbutton: func(btn) {
 		# No need if RMP is off/no power
@@ -437,18 +543,18 @@ var draimsPanelClass = {
 		var page = me.page.getValue();
 		if (page == "vhf") {
 			if (btn >= 1 and btn <= 3) {
-				rmpID = btn - 1;
-				if (enteringNode[rmpID].getValue()) {
-					if (validateVHF(enteredNode[rmpID].getValue()) and enteredNode[rmpID].getValue() >= 100) { # 100 check cause we need at least 3 digits to complete
-						setprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/standby-mhz", completeVHF(enteredNode[rmpID].getValue()) / 1000);
-						enteringNode[rmpID].setValue(0);
-						enteredNode[rmpID].setValue("");
+				vhfID = btn - 1;
+				if (entering.vhf[vhfID].getValue()) {
+					if (validateVHF(entered.vhf[vhfID].getValue()) and entered.vhf[vhfID].getValue() >= 100) { # 100 check cause we need at least 3 digits to complete
+						setprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/standby-mhz", completeVHF(entered.vhf[vhfID].getValue()) / 1000);
+						entering.vhf[vhfID].setValue(0);
+						entered.vhf[vhfID].setValue("");
 					} else {
 						return; # Abort if we wanna switch to an invalid frequency
 					}
 				}
-				var oldSelected = getprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/selected-mhz");
-				var oldStandby = getprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/standby-mhz");
+				var oldSelected = getprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/selected-mhz");
+				var oldStandby = getprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/standby-mhz");
 				var oldData = getprop("/systems/radio/vhf3-data-mode");
 				if (btn == 3 and getprop("/systems/radio/vhf3-data-mode")) {
 					setprop("/systems/radio/vhf3-data-mode", 0);
@@ -457,17 +563,17 @@ var draimsPanelClass = {
 					vhf3DataStandby.setValue(0);
 					setprop("/systems/radio/vhf3-data-mode", 1);
 					if (!oldData) {
-						setprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/standby-mhz", oldSelected);
+						setprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/standby-mhz", oldSelected);
 					}
 				} else if (btn == 3 and vhf3EmerStandby.getValue()) {
 					vhf3EmerStandby.setValue(0);
-					setprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/selected-mhz", 121.5);
+					setprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/selected-mhz", 121.5);
 					if (!oldData) {
-						setprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/standby-mhz", oldSelected);
+						setprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/standby-mhz", oldSelected);
 					}
 				} else {
-					setprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/selected-mhz", oldStandby);
-					setprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/standby-mhz", oldSelected);
+					setprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/selected-mhz", oldStandby);
+					setprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/standby-mhz", oldSelected);
 				}
 				updateAll();
 			} else if (btn == 4) {
@@ -483,6 +589,11 @@ var draimsPanelClass = {
 				updateAll();
 			}
 		} else if (page == "tel") {
+			# TODO DAIL
+			if (btn == 4) {
+				me.changeFocus("ATC");
+				updateAll();
+			}
 		} else if (page == "atc") {
 			if (btn == 1) {
 				if (getprop("/controls/atc/system-knob") == 0) {
@@ -503,15 +614,15 @@ var draimsPanelClass = {
 			return;
 		}
 		var page = me.page.getValue();
-		var focus = me.focus.getValue();
 		if (page == "vhf") {
+			var focus = me.focus.vhf.getValue();
 			if (btn >= 1 and btn <= 3) {
-				var rmpID = btn - 1;
-				if (btn == focus and enteringNode[rmpID].getValue()) {
-					if (validateVHF(enteredNode[rmpID].getValue()) and enteredNode[rmpID].getValue() >= 100) { # 100 check cause we need at least 3 digits to complete
-						setprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/standby-mhz", completeVHF(enteredNode[rmpID].getValue()) / 1000);
-						enteringNode[rmpID].setValue(0);
-						enteredNode[rmpID].setValue("");
+				var vhfID = btn - 1;
+				if (btn == focus and entering.vhf[vhfID].getValue()) {
+					if (validateVHF(entered.vhf[vhfID].getValue()) and entered.vhf[vhfID].getValue() >= 100) { # 100 check cause we need at least 3 digits to complete
+						setprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/standby-mhz", completeVHF(entered.vhf[vhfID].getValue()) / 1000);
+						entering.vhf[vhfID].setValue(0);
+						entered.vhf[vhfID].setValue("");
 					} else {
 						return; # Abort if we wanna complete to an invalid frequency
 					}
@@ -521,14 +632,15 @@ var draimsPanelClass = {
 				updateAll();
 			}
 		} else if (page == "hf") {
+			var focus = me.focus.hf.getValue();
 			if (btn == 1 or btn == 2) {
 			#	# TODO check how completion on HF works
-			#	var rmpID = btn - 1;
-			#	if (btn == me.focus.getValue() and enteringNode[rmpID].getValue()) {
-			#		if (validateVHF(enteredNode[rmpID].getValue()) and enteredNode[rmpID].getValue() >= 100) { # 100 check cause we need at least 3 digits to complete
-			#			setprop("/instrumentation/comm[" ~ rmpID ~ "]/frequencies/standby-mhz", completeVHF(enteredNode[rmpID].getValue()) / 1000);
-			#			enteringNode[rmpID].setValue(0);
-			#			enteredNode[rmpID].setValue("");
+			#	var hfID = btn - 1;
+			#	if (btn == me.focus.getValue() and enteringNode[hfID].getValue()) {
+			#		if (validateVHF(entered.hf[hfID].getValue()) and entered.hf[hfID].getValue() >= 100) { # 100 check cause we need at least 3 digits to complete
+			#			setprop("/instrumentation/comm[" ~ hfID ~ "]/frequencies/standby-mhz", completeVHF(entered.hf[hfID].getValue()) / 1000);
+			#			enteringNode[hfID].setValue(0);
+			#			entered.hf[hfID].setValue("");
 			#		} else {
 			#			return; # Abort if we wanna complete to an invalid frequency
 			#		}
@@ -545,6 +657,10 @@ var draimsPanelClass = {
 				updateAll();
 			}
 		} else if (page == "tel") {
+			if (btn == 1 or btn == 2) {
+				me.changeFocus(btn);
+				updateAll();
+			}
 		} else if (page == "atc") {
 			if (btn == 2) {
 				if (getprop("/controls/atc/thrt-all")) {
@@ -568,39 +684,66 @@ var draimsPanelClass = {
 		if (!me.on.getValue()) {
 			return;
 		}
-		var focus = me.focus.getValue();
 		var page = me.page.getValue();
-		if (focus == "ATC") {
+		# Entering Sqwak Code
+		if ((page == "vhf" and me.focus.vhf.getValue() == "ATC") or
+			(page == "hf" and me.focus.hf.getValue() == "ATC") or
+			(page == "tel" and me.focus.tel.getValue() == "ATC") or
+			page == "atc") {
 			if (btn < 8) {
-				enteringNode[3].setValue(1);
-				enteredNode[3].setValue(enteredNode[3].getValue() ~ btn);
-				if (size(enteredNode[3].getValue()) == 4) {
-					enteringNode[3].setValue(0);
-					setprop("/systems/atc/transponder-code", enteredNode[3].getValue());
-					enteredNode[3].setValue("");
+				entering.atc.setValue(1);
+				entered.atc.setValue(entered.atc.getValue() ~ btn);
+				if (size(entered.atc.getValue()) == 4) {
+					entering.atc.setValue(0);
+					setprop("/systems/atc/transponder-code", entered.atc.getValue());
+					entered.atc.setValue("");
 				}
 				updateAll();
 			}
 		} else if (page == "vhf") {
+			var focus = me.focus.vhf.getValue();
 			if (focus == 3) {
 				vhf3DataStandby.setValue(0);
 				vhf3EmerStandby.setValue(0);
 			}
 			focus = focus - 1;
-			if (enteredNode[focus].getValue() == "" and (btn == 2 or btn == 3)) {
-				enteredNode[focus].setValue("1");
+			if (entered.vhf[focus].getValue() == "" and (btn == 2 or btn == 3)) {
+				entered.vhf[focus].setValue("1");
 			}
-			enteringNode[focus].setValue(1);
-			if (size(enteredNode[focus].getValue()) < 6) {
-				enteredNode[focus].setValue(enteredNode[focus].getValue() ~ btn);
+			entering.vhf[focus].setValue(1);
+			if (size(entered.vhf[focus].getValue()) < 6) {
+				entered.vhf[focus].setValue(entered.vhf[focus].getValue() ~ btn);
 			}
-			if (size(enteredNode[focus].getValue()) == 6) {
-				if (validateVHF(enteredNode[focus].getValue())) {
-					enteringNode[focus].setValue(0);
-					setprop("/instrumentation/comm[" ~ focus ~ "]/frequencies/standby-mhz", enteredNode[focus].getValue() / 1000);
-					enteredNode[focus].setValue("");
+			if (size(entered.vhf[focus].getValue()) == 6) {
+				if (validateVHF(entered.vhf[focus].getValue())) {
+					entering.vhf[focus].setValue(0);
+					setprop("/instrumentation/comm[" ~ focus ~ "]/frequencies/standby-mhz", entered.vhf[focus].getValue() / 1000);
+					entered.vhf[focus].setValue("");
 				}
 			}
+			updateAll();
+		} else if (page == "hf") {
+# TODO
+#			var focus = me.focus.hf.getValue() - 1;
+#			if (entered.hf[focus].getValue() == "" and (btn == 2 or btn == 3)) {
+#				entered.hf[focus].setValue("1");
+#			}
+#			entering.hf[focus].setValue(1);
+#			if (size(entered.hf[focus].getValue()) < 6) {
+#				entered.hf[focus].setValue(entered.hf[focus].getValue() ~ btn);
+#			}
+#			if (size(entered.hf[focus].getValue()) == 6) {
+#				if (validateVHF(entered.hf[focus].getValue())) {
+#					entering.hf[focus].setValue(0);
+#					setprop("/instrumentation/comm[" ~ focus ~ "]/frequencies/standby-mhz", entered.hf[focus].getValue() / 1000);
+#					entered.hf[focus].setValue("");
+#				}
+#			}
+#			updateAll();
+		} else if (page == "tel") {
+			var focus = me.focus.tel.getValue() - 1;
+			entering.tel[focus].setValue(1);
+			entered.tel[focus].setValue(entered.tel[focus].getValue() ~ btn);
 			updateAll();
 		}
 	},
@@ -650,19 +793,35 @@ var draimsPanelClass = {
 		if (!me.on.getValue()) {
 			return;
 		}
-		var focus = me.focus.getValue();
 		var page = me.page.getValue();
-		if (focus == "ATC" or page == "vhf" ) {
-			if (focus == "ATC") {
-				focus = 3;
-			} else {
-				focus = focus - 1;
-			}
-			var s = size(enteredNode[focus].getValue());
+		if ((page == "vhf" and me.focus.vhf.getValue() == "ATC") or
+			(page == "hf" and me.focus.hf.getValue() == "ATC") or
+			(page == "tel" and me.focus.tel.getValue() == "ATC") or
+			page == "atc") {
+			var s = size(entered.atc.getValue());
 			if (s > 0) {
-				enteredNode[focus].setValue(left(enteredNode[focus].getValue(), s - 1));
+				entered.atc.setValue(left(entered.atc.getValue(), s - 1));
 				if (s == 1) {
-					enteringNode[focus].setValue(0);
+					entering.atc.setValue(0);
+				}
+			}
+		} else if (page == "vhf") {
+			var focus = me.focus.vhf.getValue() - 1;
+			var s = size(entered.vhf[focus].getValue());
+			if (s > 0) {
+				entered.vhf[focus].setValue(left(entered.vhf[focus].getValue(), s - 1));
+				if (s == 1) {
+					entering.vhf[focus].setValue(0);
+				}
+			}
+		# TODO HF
+		} else if (page == "tel") {
+			var focus = me.focus.tel.getValue() - 1;
+			var s = size(entered.tel[focus].getValue());
+			if (s > 0) {
+				entered.tel[focus].setValue(left(entered.tel[focus].getValue(), s - 1));
+				if (s == 1) {
+					entering.tel[focus].setValue(0);
 				}
 			}
 		}
@@ -676,18 +835,56 @@ var draimsPanelClass = {
 		# TODO figure out when this is used
 	},
 	changeFocus: func(item) {
-		var focus = me.focus.getValue();
-		if (item == focus) {
-			return 0;
+		var page = me.page.getValue();
+		if (page == "vhf") {
+			var focus = me.focus.vhf.getValue();
+			if (focus == "ATC") {
+				entering.atc.setValue(0);
+				entered.atc.setValue("");
+				me.focus.vhf.setValue(item);
+				return 0;
+			}
+			if (item == focus) {
+				return 0;
+			}
+			if (focus != "") {
+				entering.vhf[focus - 1].setValue(0);
+				entered.vhf[focus - 1].setValue("");
+			}
+			me.focus.vhf.setValue(item);
+		} else if (page == "hf") {
+			var focus = me.focus.hf.getValue();
+			if (focus == "ATC") {
+				entering.atc.setValue(0);
+				entered.atc.setValue("");
+				me.focus.hf.setValue(item);
+				return 0;
+			}
+			if (item == focus) {
+				return 0;
+			}
+			if (focus != "") {
+				entering.hf[focus - 1].setValue(0);
+				entered.hf[focus - 1].setValue("");
+			}
+			me.focus.hf.setValue(item);
+		} else if (page == "tel") {
+			var focus = me.focus.tel.getValue();
+			if (focus == "ATC") {
+				entering.atc.setValue(0);
+				entered.atc.setValue("");
+				me.focus.tel.setValue(item);
+				return 0;
+			}
+			if (item == focus) {
+				return 0;
+			}
+			if (focus != "") {
+				entering.tel[focus - 1].setValue(0);
+				entered.tel[focus - 1].setValue("");
+			}
+			me.focus.tel.setValue(item);
 		}
-		if (focus == "ATC") {
-			focus = 4;
-		}
-		if (focus != "") {
-			enteringNode[focus - 1].setValue(0);
-			enteredNode[focus - 1].setValue("");
-		}
-		me.focus.setValue(item);
 		return 1;
 	},
 	arrowButton: func(btn) {
@@ -695,9 +892,8 @@ var draimsPanelClass = {
 		if (!me.on.getValue()) {
 			return;
 		}
-		var focus = me.focus.getValue();
 		var page =  me.page.getValue();
-		if (focus == 3 and page == "vhf") {
+		if (page == "vhf" and me.focus.vhf.getValue() == 3) {
 			if (btn == "u") {
 				if (vhf3DataStandby.getValue()) {
 					vhf3DataStandby.setValue(0);
@@ -715,11 +911,11 @@ var draimsPanelClass = {
 			}
 			updateAll();
 		}
-		if ((focus == 1 or focus == 2) and page == "hf") {
+		if (page == "hf" and (me.focus.hf.getValue() == 1 or me.focus.hf.getValue() == 2)) {
 			if (btn == "u") {
-				hfEmerStandby[focus - 1].setValue(0);
+				hfEmerStandby[me.focus.hf.getValue() - 1].setValue(0);
 			} else {
-				hfEmerStandby[focus - 1].setValue(1);
+				hfEmerStandby[me.focus.hf.getValue() - 1].setValue(1);
 			}
 			updateAll();
 		}
@@ -728,13 +924,12 @@ var draimsPanelClass = {
 
 var init = func() {
 	setprop("/systems/atc/transponder-code", 2000);
-	for (var i = 0; i <= 3; i += 1) {
-		enteringNode[i].setValue(0);
-		enteredNode[i].setValue("");
-	}
 	for (var i = 0; i <= 2; i += 1) {
 		draimsPanel[i].switchPage("vhf");
 	}
+	for (var i = 0; i <= 1; i += 1) {
+	}
+	entering.atc.setValue(0);
 }
 
 
