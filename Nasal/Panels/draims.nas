@@ -1087,3 +1087,5 @@ for (var i = 0; i <= 2; i += 1) {
 		setlistener("/controls/audio/acp[" ~ i ~ "]/tel" ~ j ~ "-receive", updateAll, 0, 0);
 	}
 }
+setlistener("/systems/draims/tel1-state", updateAll, 0, 0);
+setlistener("/systems/draims/tel2-state", updateAll, 0, 0);
