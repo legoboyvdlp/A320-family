@@ -1092,21 +1092,15 @@
 						<property>/systems/fadec/reverse-1/engage</property>
 						<value>1</value>
 					</eq>
-					<sum>
-						<value>0.05</value>
-						<product>
-							<property>/systems/fadec/reverse-1/throttle-rev-cmd</property>
-							<difference>
-								<property>/systems/fadec/limit/mrev-norm</property>
-								<value>0.05</value>
-							</difference>
-						</product>
-					</sum>
+					<product>
+						<property>/systems/fadec/reverse-1/throttle-rev-cmd</property>
+						<property>/systems/fadec/limit/mrev-norm</property>
+					</product>
 					<value>0</value>
 				</ifthen>
 			</function>
 			<clipto>
-				<min>0.05</min>
+				<min>0</min>
 				<max>/systems/fadec/limit/mrev-norm</max>
 			</clipto>
 		</fcs_function>
@@ -1118,7 +1112,7 @@
 					<table>
 						<independentVar lookup="row">/controls/engines/engine[0]/throttle</independentVar>
 						<tableData>
-							0.05  0.25
+							0.00  0.25
 							1.00  1.00
 						</tableData>
 					</table>
@@ -1188,21 +1182,15 @@
 						<property>/systems/fadec/reverse-2/engage</property>
 						<value>1</value>
 					</eq>
-					<sum>
-						<value>0.05</value>
-						<product>
-							<property>/systems/fadec/reverse-2/throttle-rev-cmd</property>
-							<difference>
-								<property>/systems/fadec/limit/mrev-norm</property>
-								<value>0.05</value>
-							</difference>
-						</product>
-					</sum>
+					<product>
+						<property>/systems/fadec/reverse-2/throttle-rev-cmd</property>
+						<property>/systems/fadec/limit/mrev-norm</property>
+					</product>
 					<value>0</value>
 				</ifthen>
 			</function>
 			<clipto>
-				<min>0.05</min>
+				<min>0</min>
 				<max>/systems/fadec/limit/mrev-norm</max>
 			</clipto>
 		</fcs_function>
@@ -1214,7 +1202,7 @@
 					<table>
 						<independentVar lookup="row">/controls/engines/engine[1]/throttle</independentVar>
 						<tableData>
-							0.05  0.25
+							0.00  0.25
 							1.00  1.00
 						</tableData>
 					</table>
