@@ -771,53 +771,57 @@ var flightPlanController = {
 
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
-	getCurrentDescentCoefficient: func() {
-		var costIndex = fmgc.FMGCNodes.costIndex.getValue();
-		var tas = fmgc.Velocities.trueAirspeedKt.getValue();
-		var gs = fmgc.Velocities.groundspeedKt.getValue();
-		var altitude = fmgc.Position.indicatedAltitudeFt.getValue();
-		var weight = fmgc.Internal.weightKgs.getValue();
+	getAltitudeFromDistance: func(Distance) {
+		return 0.022610569678 * Distance*Distance*Distance + -1.9547336625 * Distance*Distance + 521.89480536 * Distance;
+	},
+	# getCurrentDescentCoefficient: func() {
+	# 	# return 318;
+	# 	var costIndex = fmgc.FMGCNodes.costIndex.getValue();
+	# 	var tas = fmgc.Velocities.trueAirspeedKt.getValue();
+	# 	var gs = fmgc.Velocities.groundspeedKt.getValue();
+	# 	var altitude = fmgc.Position.indicatedAltitudeFt.getValue();
+	# 	var weight = fmgc.Internal.weightKgs.getValue();
 
-		var wind = tas - gs;
+	# 	var wind = tas - gs;
 
-		# Base angle from cost index
-		var angleDeg = 3.5 + (costIndex / 999.0) * 0.5;
+	# 	# Base angle from cost index
+	# 	var angleDeg = 3.5 + (costIndex / 999.0) * 0.5;
 
-		var minW = 44000.0;
-		var maxW = 78925.0;
+	# 	var minW = 44000.0;
+	# 	var maxW = 78925.0;
 
-		weight = math.clamp(weight, minW, maxW);
+	# 	weight = math.clamp(weight, minW, maxW);
 
-		var tW = (maxW - weight) / (maxW - minW);
-		var weightAdd = tW * 0.3;
-		var altAddAlteration = tW * 0.25;
+	# 	var tW = (maxW - weight) / (maxW - minW);
+	# 	var weightAdd = tW * 0.3;
+	# 	var altAddAlteration = tW * 0.25;
 
-		angleDeg += wind * 0.0125;
+	# 	angleDeg += wind * 0.0125;
 
-		var highAlt = 39000.0;
-		var lowAlt = 1000.0;
+	# 	var highAlt = 39000.0;
+	# 	var lowAlt = 1000.0;
 
-		altitude = math.clamp(altitude, lowAlt, highAlt);
+	# 	altitude = math.clamp(altitude, lowAlt, highAlt);
 
-		var tAlt = (highAlt - altitude) / (highAlt - lowAlt);
-		var altAdd = tAlt * (1.3 - altAddAlteration);
+	# 	var tAlt = (highAlt - altitude) / (highAlt - lowAlt);
+	# 	var altAdd = tAlt * (1.3 - altAddAlteration);
 
-		angleDeg += altAdd;
+	# 	angleDeg += altAdd;
 
 		
 
-		angleDeg += weightAdd;
+	# 	angleDeg += weightAdd;
 
-		var angleRad = angleDeg * math.pi / 180.0;
+	# 	var angleRad = angleDeg * math.pi / 180.0;
 
-		var coeff = 6076.0 * math.tan(angleRad);
+	# 	var coeff = 6076.0 * math.tan(angleRad);
 
-		print("Descent Coefficient: " ~ coeff);
-		return coeff;
-	},
+	# 	print("Descent Coefficient: " ~ coeff);
+	# 	return coeff;
+	# },
 
 	getExtrapolatedFirstAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
-		var extrapolatedAlt = altCstr + (me.getCurrentDescentCoefficient() * (distanceToCstr - distanceToCstr2));
+		var extrapolatedAlt = altCstr + (me.getAltitudeFromDistance(distanceToCstr - distanceToCstr2));
 		return extrapolatedAlt;
 	},
 

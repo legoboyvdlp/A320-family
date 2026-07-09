@@ -1,4 +1,4 @@
-var idleDescent = 0;
+# var idleDescent = 0;
 # A3XX FMGC Autopilot
 # Based off IT Autoflight System Controller V4.1.X
 # Copyright (c) 2026 Josh Davidson (Octal450)
@@ -103,11 +103,14 @@ var Input = {
 	fpaAbs: props.globals.initNode("/it-autoflight/input/fpa-abs", 0, "DOUBLE"), # Set by property rule
 	hdg: props.globals.initNode("/it-autoflight/input/hdg", 0, "INT"),
 	hdgCalc: 0,
+	idleDescent: props.globals.initNode("/it-autoflight/input/idle-descent", 0, "BOOL"),
 	kts: props.globals.initNode("/it-autoflight/input/kts", 100, "INT"),
+	ktsShow: props.globals.initNode("/it-autoflight/input/kts-show", 100, "INT"),
 	ktsMach: props.globals.initNode("/it-autoflight/input/kts-mach", 0, "BOOL"),
 	lat: props.globals.initNode("/it-autoflight/input/lat", 5, "INT"),
 	latTemp: 5,
 	mach: props.globals.initNode("/it-autoflight/input/mach", 0.5, "DOUBLE"),
+	machShow: props.globals.initNode("/it-autoflight/input/mach-show", 0.5, "DOUBLE"),
 	toga: props.globals.initNode("/it-autoflight/input/toga", 0, "BOOL"),
 	trk: props.globals.initNode("/it-autoflight/input/trk", 0, "BOOL"),
 	trueCourse: props.globals.initNode("/it-autoflight/input/true-course", 0, "BOOL"),
@@ -415,7 +418,8 @@ var ITAF = {
 		if (FMGCInternal.phase == 4 or FMGCInternal.phase == 5) {
 			Internal.vdevDot.setValue(me.calculateVdev());
 		}
-		print("Values: " ~ Position.indicatedAltitudeFt.getValue() ~ "," ~ fmgc.flightPlanController.distToWpt.getValue() ~ "," ~  fmgc.Internal.weightKgs.getValue());
+		# print("Values: " ~ Position.indicatedAltitudeFt.getValue() ~ "," ~ fmgc.flightPlanController.distToWpt.getValue() ~ "," ~  fmgc.Internal.weightKgs.getValue());
+
 	},
 	slowLoop: func() {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();
@@ -654,7 +658,7 @@ var ITAF = {
 			distance = 0;
 		}
 		deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
-		properDeltaAlt = distance * fmgc.flightPlanController.getCurrentDescentCoefficient();
+		properDeltaAlt = fmgc.flightPlanController.getAltitudeFromDistance(distance);
 		difference = deltaAlt - properDeltaAlt;
 		if (output[2] == 1 and difference < 0) {
 			difference = 0;
@@ -668,16 +672,18 @@ var ITAF = {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
 			vs = math.max(vs, -1*gs*5);
-			idleDescent = 0;
+			Input.idleDescent.setBoolValue(0);
 		} else {
-			properDeltaAlt = distance * fmgc.flightPlanController.getCurrentDescentCoefficient();
+			properDeltaAlt = fmgc.flightPlanController.getAltitudeFromDistance(distance);
 			properDeltaAlt = math.max(properDeltaAlt, 0);
+			# vs = -(properDeltaAlt * gs)/(distance*60);
 			vs = Internal.targetFpmFlch.getValue();
-			if (deltaAlt < properDeltaAlt) {
-				idleDescent = 0;
+			if (properDeltaAlt - deltaAlt >= 200) {
+				Input.idleDescent.setBoolValue(0);
 				vs = -1000;
 			} else {
-				idleDescent = 1;
+				print("idle descent to 1");
+				Input.idleDescent.setBoolValue(1);
 			}
 		}
 		vs = math.min(vs, 0);
@@ -830,7 +836,7 @@ var ITAF = {
 		} else if (Output.vertTemp == 7) {
 			Output.thrMode.setValue(2);
 			Text.spd.setValue("PITCH");
-		} else if (Output.vertTemp == 8 and idleDescent == 1) {
+		} else if (Output.vertTemp == 8 and Input.idleDescent.getBoolValue()) {
 			Output.thrMode.setValue(1);
 			Text.spd.setValue("PITCH");
 		} else {

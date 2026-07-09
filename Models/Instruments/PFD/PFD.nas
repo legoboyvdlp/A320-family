@@ -1394,7 +1394,18 @@ var canvas_pfd = {
 			
 			
 			me.tgt_ias = notification.targetIasPFD;
-			me.tgt_kts = notification.targetKts;
+			print(me.tgt_ias);
+			print(fmgc.Input.kts.getValue());
+			print(fmgc.Input.idleDescent.getValue());
+			if (fmgc.Input.idleDescent.getValue()) {
+				me.tgt_kts = notification.targetKtsShow;
+				print("yes");
+				print(me.tgt_kts);
+			} else {
+				me.tgt_kts = notification.targetKts;
+			}
+			
+			
 
 			if (notification.managedSpd) {
 				if (fmgc.FMGCInternal.decel) {
@@ -2313,7 +2324,10 @@ var input = {
 	altimeterHpa: "/instrumentation/altimeter/setting-hpa",
 	targetIasPFD: "/FMGC/internal/target-ias-pfd",
 	targetMach: "/it-autoflight/input/mach",
+	targetMachShow: "/it-autoflight/input/mach-show",
 	targetKts: "/it-autoflight/input/kts",
+	targetKtsShow: "/it-autoflight/input/kts-show",
+	idleDescent: "/it-autoflight/input/idle-descent",
 	targetHeading: "/it-autoflight/input/hdg",
 	managedSpd: "/it-autoflight/input/spd-managed",
 	ktsMach: "/it-autoflight/input/kts-mach",
