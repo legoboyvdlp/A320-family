@@ -772,7 +772,7 @@ var flightPlanController = {
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
 	getAltitudeFromDistance: func(Distance) {
-		return 0.022610569678 * Distance*Distance*Distance + -1.9547336625 * Distance*Distance + 521.89480536 * Distance;
+		return 318*Distance;
 	},
 	# getCurrentDescentCoefficient: func() {
 	# 	# return 318;
