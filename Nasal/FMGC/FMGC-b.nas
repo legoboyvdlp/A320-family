@@ -669,7 +669,7 @@ var ITAF = {
 			}
 			var deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
 			# var properDeltaAlt = distance * 318;
-			var properDeltaAlt =  distance * fmgc.flightPlanController.getCurrentDescentCoefficient();
+			var properDeltaAlt =  fmgc.flightPlanController.getAltitudeFromDistance(distance);
 			var difference = deltaAlt - properDeltaAlt;
 			# if (output[2] == 1 and difference < 0) {
 			# 	difference = 0;
@@ -688,8 +688,10 @@ var ITAF = {
 		} else {
 			properDeltaAlt = fmgc.flightPlanController.getAltitudeFromDistance(distance);
 			properDeltaAlt = math.max(properDeltaAlt, 0);
-			# vs = -(properDeltaAlt * gs)/(distance*60);
 			vs = Internal.targetFpmFlch.getValue();
+			print("getVs");
+			print(properDeltaAlt);
+			print(deltaAlt);
 			if (properDeltaAlt - deltaAlt >= 200) {
 				Input.idleDescent.setBoolValue(0);
 				vs = -1000;
@@ -745,7 +747,7 @@ var ITAF = {
 			Output.vert.setValue(0);
 			me.setClimbRateLim();
 			Internal.altCaptureActive = 1;
-			idleDescent = 0;
+			Input.idleDescent.setBoolValue(0);
 			print("idle descent false");
 			me.updateVertText("ALT CAP");
 			me.updateThrustMode();
@@ -816,7 +818,7 @@ var ITAF = {
 				Internal.flchActive = 0;
 				Internal.alt.setValue(Input.alt.getValue());
 				Internal.altCaptureActive = 1;
-				idleDescent = 0;
+				Input.idleDescent.getBoolValue(0);
 				print("idle descent false");
 				Output.vert.setValue(0);
 				me.updateVertText("ALT CAP");
