@@ -1275,11 +1275,6 @@
 			</test>
 		</switch>
 		
-		<pure_gain name="/systems/fbw/roll/rollout-cmd">
-			<input>/orientation/roll-deg</input>
-			<gain>-0.1</gain>
-		</pure_gain>
-		
 		<pure_gain name="/systems/fbw/roll/mixer/computer-demand">
 			<input>/systems/fbw/roll/pid</input>
 			<gain>/systems/fbw/roll/mixer/computer-gain</gain>
@@ -1309,7 +1304,7 @@
 				/systems/fbw/fmgc/enabled eq 0
 				/systems/fbw/roll/gear-law-switch eq 1
 			</test>
-			<test logic="AND" value="/systems/fbw/roll/rollout-cmd">
+			<test logic="AND" value="/it-autoflight/internal/aileron-rollout">
 				/systems/fbw/fmgc/enabled eq 1
 				position/wow eq 1
 				/it-fbw/law eq 0

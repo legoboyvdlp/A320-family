@@ -6,6 +6,8 @@ labels: Bug
 
 ---
 
+<!-- NOTE: We DO NOT accept issues written by "AI" or LLMs! Fill out this template by hand! -->
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 

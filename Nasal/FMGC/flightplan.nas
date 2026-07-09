@@ -775,6 +775,54 @@ var flightPlanController = {
 
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
+	getAltitudeFromDistance: func(Distance) {
+		return 0.022610569678 * Distance*Distance*Distance + -1.9547336625 * Distance*Distance + 521.89480536 * Distance;
+	},
+	# getCurrentDescentCoefficient: func() {
+	# 	# return 318;
+	# 	var costIndex = fmgc.FMGCNodes.costIndex.getValue();
+	# 	var tas = fmgc.Velocities.trueAirspeedKt.getValue();
+	# 	var gs = fmgc.Velocities.groundspeedKt.getValue();
+	# 	var altitude = fmgc.Position.indicatedAltitudeFt.getValue();
+	# 	var weight = fmgc.Internal.weightKgs.getValue();
+
+	# 	var wind = tas - gs;
+
+	# 	# Base angle from cost index
+	# 	var angleDeg = 3.5 + (costIndex / 999.0) * 0.5;
+
+	# 	var minW = 44000.0;
+	# 	var maxW = 78925.0;
+
+	# 	weight = math.clamp(weight, minW, maxW);
+
+	# 	var tW = (maxW - weight) / (maxW - minW);
+	# 	var weightAdd = tW * 0.3;
+	# 	var altAddAlteration = tW * 0.25;
+
+	# 	angleDeg += wind * 0.0125;
+
+	# 	var highAlt = 39000.0;
+	# 	var lowAlt = 1000.0;
+
+	# 	altitude = math.clamp(altitude, lowAlt, highAlt);
+
+	# 	var tAlt = (highAlt - altitude) / (highAlt - lowAlt);
+	# 	var altAdd = tAlt * (1.3 - altAddAlteration);
+
+	# 	angleDeg += altAdd;
+
+		
+
+	# 	angleDeg += weightAdd;
+
+	# 	var angleRad = angleDeg * math.pi / 180.0;
+
+	# 	var coeff = 6076.0 * math.tan(angleRad);
+
+	# 	print("Descent Coefficient: " ~ coeff);
+	# 	return coeff;
+	# },
 
 	getCurrentDescentCoefficient: func() {
 		var costIndex = fmgc.FMGCNodes.costIndex.getValue();
@@ -809,8 +857,7 @@ var flightPlanController = {
 	},
 
 	getExtrapolatedFirstAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
-		# var extrapolatedAlt = altCstr + (318 * (distanceToCstr - distanceToCstr2));
-		var extrapolatedAlt = altCstr + (me.getCurrentDescentCoefficient() * (distanceToCstr - distanceToCstr2));
+		var extrapolatedAlt = altCstr + (me.getAltitudeFromDistance(distanceToCstr - distanceToCstr2));
 		return extrapolatedAlt;
 	},
 
@@ -843,7 +890,6 @@ var flightPlanController = {
 		var altCstrType = result[3];
 		var wptIndex = result[4];
 		if (altCstrType == "below") {
-			# 
 			for (var i = (wptIndex + 1); i < me.flightplans[2].getPlanSize(); i += 1) {
 				var altCstr2 = me.flightplans[2].getWP(i).alt_cstr;
 				var altCstr2Type = me.flightplans[2].getWP(i).alt_cstr_type;
@@ -885,6 +931,11 @@ var flightPlanController = {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
+		var distanceToCstr = 0;
+		var wpIndex = 0;
+		var altCstr = 0;
+		var altCstrType = nil;
+		# altCstr2 = 0;
 
 		var distanceToCstr = 0;
 		var wptIndex = 0;
@@ -996,7 +1047,6 @@ var flightPlanController = {
 				}
 			}
 		}
-
 		if (!isGeo) {
 			geoWptIndex = wpIndex;
 		}
