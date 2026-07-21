@@ -36,6 +36,8 @@
 	<system file="a320-oxygen"/>
 	<system file="a320-fmgc"/>
 	<system file="a320-misc"/>
+	<system file="a320-audio"/>
+	<system file="a320-draims"/>
 	<system file="a320-cockpit"/>
 	
 	<mass_balance>

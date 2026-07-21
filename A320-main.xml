@@ -512,7 +512,11 @@
 						<binding>
 							<command>nasal</command>
 							<script><![CDATA[
-								Dialogs.rmp1Dialog.openDialog();
+								if (getprop("/controls/draims/enabled")) {
+									Dialogs.draimsDialog[0].openDialog();
+								} else {
+									Dialogs.rmp1Dialog.openDialog();
+								}
 							]]></script>
 						</binding>
 					</item>
@@ -521,7 +525,11 @@
 						<binding>
 							<command>nasal</command>
 							<script><![CDATA[
-								Dialogs.rmp2Dialog.openDialog();
+								if (getprop("/controls/draims/enabled")) {
+									Dialogs.draimsDialog[1].openDialog();
+								} else {
+									Dialogs.rmp2Dialog.openDialog();
+								}
 							]]></script>
 						</binding>
 					</item>
@@ -530,7 +538,11 @@
 						<binding>
 							<command>nasal</command>
 							<script><![CDATA[
-								Dialogs.rmp3Dialog.openDialog();
+								if (getprop("/controls/draims/enabled")) {
+									Dialogs.draimsDialog[2].openDialog();
+								} else {
+									Dialogs.rmp3Dialog.openDialog();
+								}
 							]]></script>
 						</binding>
 					</item>
@@ -938,6 +950,18 @@
 		<doors>
 			<doorc-switch type="int">0</doorc-switch>
 		</doors>
+		<draims>
+			<enabled type="bool">0</enabled>
+			<rmp n="0">
+				<brightness-knob type="double">1</brightness-knob>
+			</rmp>
+			<rmp n="1">
+				<brightness-knob type="double">1</brightness-knob>
+			</rmp>
+			<rmp n="2">
+				<brightness-knob type="double">1</brightness-knob>
+			</rmp>
+		</draims>
 		<electric>
 			<avionics-switch type="bool">true</avionics-switch>
 		</electric>
@@ -2329,9 +2353,9 @@
 					<command>nasal</command>
 					<script>
 						space(1, modifiers.getValue());
-						if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
+						if (getprop("systems/audio/acp[0]/transmitChannel") == "hf1") {
 							systems.HFS[0].pttToggle();
-						} elsif (getprop("systems/audio/acp[0]/call_chan") == "hf2") {
+						} elsif (getprop("systems/audio/acp[0]/transmitChannel") == "hf2") {
 							systems.HFS[1].pttToggle();
 						}
 					</script>
@@ -2345,9 +2369,9 @@
 						<command>nasal</command>
 						<script>
 							space(0, modifiers.getValue());
-							if (getprop("systems/audio/acp[0]/call_chan") == "hf1") {
+							if (getprop("systems/audio/acp[0]/transmitChannel") == "hf1") {
 								systems.HFS[0].pttToggle();
-							} elsif (getprop("systems/audio/acp[0]/call_chan") == "hf2") {
+							} elsif (getprop("systems/audio/acp[0]/transmitChannel") == "hf2") {
 								systems.HFS[1].pttToggle();
 							}
 						</script>
@@ -5132,6 +5156,7 @@
 		<Dialogs>
 			<file>Aircraft/A320-family/gui/dialogs/refuel.nas</file>
 			<file>Aircraft/A320-family/gui/dialogs/rmp.nas</file>
+			<file>Aircraft/A320-family/gui/dialogs/draims.nas</file>
 		</Dialogs>
 		<save>
 			<file>Aircraft/A320-family/Nasal/Systems/save.nas</file>
@@ -5139,6 +5164,9 @@
 		<Simbrief>
 			<file>Aircraft/A320-family/Nasal/FMGC/SimbriefParser.nas</file>
 		</Simbrief>
+		<draims>
+			<file>Aircraft/A320-family/Nasal/Panels/draims.nas</file>
+		</draims>
 	</nasal>
 
 	<maintainance>

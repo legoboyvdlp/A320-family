@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<!-- Airbus A320 Audio -->
+<!-- Copyright (c) 2025 Nia -->
+<!-- Note, this is limited by flightgears current audio capabilities -->
+
+<system name="A320: Audio">
+
+	<channel name="Audio Channels" execrate="8">
+		<switch name="/instrumentation/comm[0]/volume">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/vhf1-volume">
+				/controls/audio/acp[0]/vhf1-receive eq 1
+			</test>
+		</switch>
+		<switch name="/instrumentation/comm[1]/volume">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/vhf2-volume">
+				/controls/audio/acp[0]/vhf2-receive eq 1
+			</test>
+		</switch>
+		<switch name="/instrumentation/comm[2]/volume">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/vhf3-volume">
+				/controls/audio/acp[0]/vhf3-receive eq 1
+			</test>
+		</switch>
+	</channel>
+
+</system>
