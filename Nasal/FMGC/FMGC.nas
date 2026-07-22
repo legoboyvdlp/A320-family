@@ -1042,12 +1042,21 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif (!ktsmach and FMGCInternal.mngKtsMach) {
 				Input.ktsMach.setValue(1);
 			}
-			var adjustment = fmgc.ITAF.calculateVdev()/50;
+			if (Input.vert.getValue() == 8) {
+				var adjustment = fmgc.ITAF.calculateVdev()/50;
+			} else {
+				var adjustment = 0;
+			}
+			
 			adjustment = math.clamp(adjustment, -20, 20);
 			if ((constraintSpeed != 0 and constraintSpeed != nil) or altitude <= FMGCInternal.desSpdLimAlt) {
-				adjustment = math.clamp(adjustment, -10, 5);
+				adjustment = math.clamp(adjustment, -20, 5);
+				Internal.econMarginReduced.setBoolValue(1);
+			} else {
+				Internal.econMarginReduced.setBoolValue(0);
 			}
-			# print(adjustment);
+			
+			
 			# Set target speed
 			if (((Input.kts.getValue() != FMGCInternal.mngSpd + adjustment and Input.idleDescent.getBoolValue()) or (Input.kts.getValue() != FMGCInternal.mngSpd and !Input.idleDescent.getBoolValue())) and !ktsmach) {
 				if (Input.idleDescent.getBoolValue()) {
@@ -1060,7 +1069,6 @@ var ManagedSPD = maketimer(0.25, func {
 				if (Input.idleDescent.getBoolValue()) {
 					Input.mach.setValue(FMGCInternal.mngSpd + ktsToMach(adjustment));
 					Input.machShow.setValue(FMGCInternal.mngSpd);
-					# print(adjustment);
 				} else {
 					Input.mach.setValue(FMGCInternal.mngSpd);
 				}

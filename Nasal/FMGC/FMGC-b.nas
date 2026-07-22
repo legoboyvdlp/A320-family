@@ -134,6 +134,7 @@ var Internal = {
 	captVs: 0,
 	driftAngle: props.globals.initNode("/it-autoflight/internal/drift-angle-deg", 0, "DOUBLE"),
 	driftAngleTemp: 0,
+	econMarginReduced: props.globals.initNode("/it-autoflight/internal/econ-margin-reduced", 0, "BOOL"),
 	flchActive: 0,
 	fpa: props.globals.initNode("/it-autoflight/internal/fpa", 0, "DOUBLE"),
 	hdgErrorDeg: props.globals.initNode("/it-autoflight/internal/heading-error-deg", 0, "DOUBLE"),
@@ -676,13 +677,11 @@ var ITAF = {
 		} else {
 			properDeltaAlt = fmgc.flightPlanController.getAltitudeFromDistance(distance);
 			properDeltaAlt = math.max(properDeltaAlt, 0);
-			# vs = -(properDeltaAlt * gs)/(distance*60);
 			vs = Internal.targetFpmFlch.getValue();
-			if (properDeltaAlt - deltaAlt >= 200) {
+			if (properDeltaAlt - deltaAlt >= 500) {
 				Input.idleDescent.setBoolValue(0);
 				vs = -1000;
 			} else {
-				print("idle descent to 1");
 				Input.idleDescent.setBoolValue(1);
 			}
 		}

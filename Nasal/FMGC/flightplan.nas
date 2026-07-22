@@ -11,6 +11,7 @@ var sizeWP = nil;
 var magTrueError = 0;
 var storeCourse = nil;
 var DEBUG_DISCONT = 0;
+var descent_coeff = 318;
 
 # Props.getNode
 var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
@@ -772,53 +773,8 @@ var flightPlanController = {
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
 	getAltitudeFromDistance: func(Distance) {
-		return 318*Distance;
+		return descent_coeff*Distance;
 	},
-	# getCurrentDescentCoefficient: func() {
-	# 	# return 318;
-	# 	var costIndex = fmgc.FMGCNodes.costIndex.getValue();
-	# 	var tas = fmgc.Velocities.trueAirspeedKt.getValue();
-	# 	var gs = fmgc.Velocities.groundspeedKt.getValue();
-	# 	var altitude = fmgc.Position.indicatedAltitudeFt.getValue();
-	# 	var weight = fmgc.Internal.weightKgs.getValue();
-
-	# 	var wind = tas - gs;
-
-	# 	# Base angle from cost index
-	# 	var angleDeg = 3.5 + (costIndex / 999.0) * 0.5;
-
-	# 	var minW = 44000.0;
-	# 	var maxW = 78925.0;
-
-	# 	weight = math.clamp(weight, minW, maxW);
-
-	# 	var tW = (maxW - weight) / (maxW - minW);
-	# 	var weightAdd = tW * 0.3;
-	# 	var altAddAlteration = tW * 0.25;
-
-	# 	angleDeg += wind * 0.0125;
-
-	# 	var highAlt = 39000.0;
-	# 	var lowAlt = 1000.0;
-
-	# 	altitude = math.clamp(altitude, lowAlt, highAlt);
-
-	# 	var tAlt = (highAlt - altitude) / (highAlt - lowAlt);
-	# 	var altAdd = tAlt * (1.3 - altAddAlteration);
-
-	# 	angleDeg += altAdd;
-
-		
-
-	# 	angleDeg += weightAdd;
-
-	# 	var angleRad = angleDeg * math.pi / 180.0;
-
-	# 	var coeff = 6076.0 * math.tan(angleRad);
-
-	# 	print("Descent Coefficient: " ~ coeff);
-	# 	return coeff;
-	# },
 
 	getExtrapolatedFirstAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
 		var extrapolatedAlt = altCstr + (me.getAltitudeFromDistance(distanceToCstr - distanceToCstr2));
