@@ -828,14 +828,8 @@ var flightPlanController = {
 		var wpIndex = 0;
 		var altCstr = 0;
 		var altCstrType = nil;
-		# altCstr2 = 0;
 
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
-			# if (i == me.currentToWptIndex.getValue()) {
-			# 	distanceToCstr += me.distToWpt.getValue();
-			# } else {
-			# 	distanceToCstr += me.flightplans[2].getWP(i).leg_distance;
-			# }
 			distanceToCstr += me.getLegDistance(i);
 			var wp = me.flightplans[2].getWP(i);
 			altCstrType = wp.alt_cstr_type;
@@ -850,8 +844,6 @@ var flightPlanController = {
 					wpIndex = i;
 					break;
 				} else if (altCstr != nil and altCstr != 0 and (altCstrType == "at" or altCstrType == "between")) {
-					# altCstr = me.flightplans[2].getWP(i).alt_cstr;
-					# altCstrType = me.flightplans[2].getWP(i).alt_cstr_type;
 					wpIndex = i;
 					break;
 				}
@@ -860,11 +852,6 @@ var flightPlanController = {
 
 		var distanceToCstr2 = 0;
 		for (var j = me.currentToWptIndex.getValue(); j < wpIndex; j += 1) {
-			# if (j == me.currentToWptIndex.getValue()) {
-			# 	distanceToCstr2 += me.distToWpt.getValue();
-			# } else {
-			# 	distanceToCstr2 += me.flightplans[2].getWP(j).leg_distance;
-			# }
 			distanceToCstr2 += me.getLegDistance(j);
 			var altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
 			var wpt2Role = me.flightplans[2].getWP(j).wp_role;
@@ -874,9 +861,6 @@ var flightPlanController = {
 			var extrapolatedOneThousandVSDescent = me.getExtrapolatedOneThousandVSDescent(distanceToCstr2);
 
 			if (altCstr2Type == "above" and (wpt2Role == "star" or wpt2Role == "approach") and altCstr2 != nil and altCstr2 != 0) {
-				
-				# altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
-				# altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
 				if (isGeo) {
 					if (altCstr2 > extrapolatedGeoAltitude) {
 						return [altCstr2, distanceToCstr2, 1, altCstr2Type, j];
@@ -889,9 +873,6 @@ var flightPlanController = {
 					}
 				}
 			} elsif (altCstr2Type == "below" and (wpt2Role == "star" or wpt2Role == "approach") and altCstr2 != nil and altCstr2 != 0) {
-				
-				# altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
-				# altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
 				if (isGeo) {
 					if (altCstr2 < extrapolatedGeoAltitude) {
 						return [altCstr2, distanceToCstr2, 1, altCstr2Type, j];
@@ -919,7 +900,6 @@ var flightPlanController = {
 		}
 	},
 
-	# Get the next altitude constraint that is either at, or at or below
 	getClbAltConst: func() {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
@@ -985,7 +965,6 @@ var flightPlanController = {
 		}
 	},
 
-	# Calculate the point of the SC symbol to be placed on the ND
 	calculateClbPoint: func(isMng) {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;

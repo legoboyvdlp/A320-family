@@ -1,4 +1,3 @@
-# var idleDescent = 0;
 # A3XX FMGC Autopilot
 # Based off IT Autoflight System Controller V4.1.X
 # Copyright (c) 2026 Josh Davidson (Octal450)
@@ -419,7 +418,6 @@ var ITAF = {
 		if (FMGCInternal.phase == 4 or FMGCInternal.phase == 5) {
 			Internal.vdevDot.setValue(me.calculateVdev());
 		}
-		# print("Values: " ~ Position.indicatedAltitudeFt.getValue() ~ "," ~ fmgc.flightPlanController.distToWpt.getValue() ~ "," ~  fmgc.Internal.weightKgs.getValue());
 
 	},
 	slowLoop: func() {
@@ -804,7 +802,6 @@ var ITAF = {
 		} else if (n == 9) { # NONE
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			# me.updateGsArm(0);
 			Output.vert.setValue(9);
 			me.updateVertText("");
 			me.updateThrustMode();
@@ -1137,7 +1134,6 @@ var managedClb = func {
 	var nextManagedAlt = fmgc.flightPlanController.getClbAltConst()[0];
 	var nextSelectedAlt = Input.alt.getValue();
 	var alt = 0;
-	# print("next managed alt is " ~ nextManagedAlt ~ "next selected alt is " ~ nextSelectedAlt);
 	if (nextManagedAlt < nextSelectedAlt) {
 		alt = nextManagedAlt;
 		Internal.altManaged.setValue(1);
@@ -1150,8 +1146,6 @@ var managedClb = func {
 	Internal.flchActive = 1;
 	ITAF.updateVertText("CLB");
 };
-# To be called when in altitude acquire mode, 
-# when the aircraft passes that waypoint, the CLB mode should resume
 var armClb = func {
 	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300) {
 		ITAF.updateVertText("CLB");
@@ -1161,14 +1155,10 @@ var armClb = func {
 	}
 };
 
-# To be called when in altitude acquire mode,
-# when the aircraft passes that waypoint the DES mode should resume
 var armDes = func {
-	# print("arming des " ~ Text.vert.getValue());
 	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300)) {
-		ITAF.setVertMode(8); # DES mode
+		ITAF.setVertMode(8);
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
-		# print(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue());
 		settimer(armDes, 2);
 	}
 };
