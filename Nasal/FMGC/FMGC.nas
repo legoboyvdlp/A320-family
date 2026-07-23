@@ -1042,7 +1042,7 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif (!ktsmach and FMGCInternal.mngKtsMach) {
 				Input.ktsMach.setValue(1);
 			}
-			if (Input.vert.getValue() == 8) {
+			if (Output.vert.getValue() == 8) {
 				var adjustment = fmgc.ITAF.calculateVdev()/50;
 			} else {
 				var adjustment = 0;
