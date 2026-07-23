@@ -13,6 +13,7 @@ var highFrequencyRadio = {
 		a.num = num;
 		a.receptionProp = props.globals.getNode("/systems/comm/hf/reception-" ~ (num + 1));
 		a.toneControl = props.globals.getNode("/systems/comm/hf/tone1000hz-" ~ (num + 1));
+		a.am = props.globals.initNode("/systems/comm/hf/am-" ~ (num + 1), 0, "BOOL", 1);
 		a._toneTime = nil;
 		a._transmitTime = nil;
 		a.transmit = 0;

@@ -911,12 +911,14 @@
 		<object-name>Second Nosegear landing light ALS</object-name>
 		<condition>
 			<and>
-				<not>
-					<equals>
-						<property>sim/model/lights/nose-lights</property>
-						<value>1</value>
-					</equals>
-				</not>
+				<greater-than>
+					<property>sim/model/lights/nose-lights</property>
+					<value>0</value>
+				</greater-than>
+				<less-than>
+					<property>sim/model/lights/nose-lights</property>
+					<value>1</value>
+				</less-than>
 				<greater-than>
 					<property>gear/gear/position-norm</property>
 					<value>0.1</value>
@@ -925,3 +927,4 @@
 		</condition>
 	</animation>
 </PropertyList>
+
