@@ -758,6 +758,7 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashValue("ASItrgt", 0.1, func(val) {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
 			}),
+			#Set the ECON range bar on descent and approach at +-20 knots normal and +5/-20 knots on speed constraints
 			props.UpdateManager.FromHashList(["ASItrgt", "ASI", "ASImax", "VLSmin","fmgcPhase","managedSpd","econMarginReduced"],0.5, func(val) {
 				if (val.fmgcPhase >= 4 and val.fmgcPhase <= 5) {
 					obj["ECON_range_high"].show();
@@ -1405,6 +1406,7 @@ var canvas_pfd = {
 			
 			
 			me.tgt_ias = notification.targetIasPFD;
+			#To show the original IAS during idle descent
 			if (fmgc.Input.idleDescent.getValue()) {
 				me.tgt_kts = notification.targetKtsShow;
 

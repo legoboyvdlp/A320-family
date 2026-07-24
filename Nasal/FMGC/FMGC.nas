@@ -34,6 +34,7 @@ var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
 var tempOverspeed = nil;
+var adjustment = 0;
 
 setprop("/position/gear-agl-ft", 0);
 setprop("/it-autoflight/settings/accel-ft", 1500); #eventually set to 1500 above runway
@@ -969,7 +970,8 @@ var ManagedSPD = maketimer(0.25, func {
 			# Phase: 0 is Preflight 1 is Takeoff 2 is Climb 3 is Cruise 4 is Descent 5 is Decel/Approach 6 is Go Around 7 is Done
 			if (pts.Instrumentation.AirspeedIndicator.indicatedMach.getValue() > mng_alt_mach and (FMGCInternal.phase == 2 or FMGCInternal.phase == 3)) {
 				FMGCInternal.machSwitchover = 1;
-			} elsif (pts.Instrumentation.AirspeedIndicator.indicatedSpdKt.getValue() > mng_alt_spd and (FMGCInternal.phase == 4 or FMGCInternal.phase == 5)) {
+			#minus adjustment is to counter managed descent ECON range, does not affect open descent
+			} elsif ((pts.Instrumentation.AirspeedIndicator.indicatedSpdKt.getValue() - adjustment > mng_alt_spd) and (FMGCInternal.phase == 4 or FMGCInternal.phase == 5)) {
 				FMGCInternal.machSwitchover = 0;
 			}
 			
@@ -1043,11 +1045,12 @@ var ManagedSPD = maketimer(0.25, func {
 				Input.ktsMach.setValue(1);
 			}
 			if (Output.vert.getValue() == 8) {
-				var adjustment = fmgc.ITAF.calculateVdev()/50;
+				adjustment = fmgc.ITAF.calculateVdev()/50;
 			} else {
-				var adjustment = 0;
+				adjustment = 0;
 			}
 			
+			#This is to set ECON range during descent to be equal to vdev/50.
 			adjustment = math.clamp(adjustment, -20, 20);
 			if ((constraintSpeed != 0 and constraintSpeed != nil) or altitude <= FMGCInternal.desSpdLimAlt) {
 				adjustment = math.clamp(adjustment, -20, 5);
@@ -1056,19 +1059,20 @@ var ManagedSPD = maketimer(0.25, func {
 				Internal.econMarginReduced.setBoolValue(0);
 			}
 			
-			
 			# Set target speed
-			if (((Input.kts.getValue() != FMGCInternal.mngSpd + adjustment and Input.idleDescent.getBoolValue()) or (Input.kts.getValue() != FMGCInternal.mngSpd and !Input.idleDescent.getBoolValue())) and !ktsmach) {
+			if (!ktsmach) {
 				if (Input.idleDescent.getBoolValue()) {
-					
+					#kts is the value to actually use for idle descent target FPM, ktsshow is to be displayed on the PFD
 					Input.kts.setValue(math.clamp(FMGCInternal.mngSpd + adjustment, FMGCNodes.minspeed.getValue(), FMGCInternal.maxspeed));
 					Input.ktsShow.setValue(FMGCInternal.mngSpd);
+					print("inside where it should be");
+
 				} else {
 					Input.kts.setValue(FMGCInternal.mngSpd);
 				}
-			} elsif (((Input.mach.getValue() != FMGCInternal.mngSpd + ktsToMach(adjustment) and Input.idleDescent.getBoolValue()) or (Input.mach.getValue() != FMGCInternal.mngSpd and !Input.idleDescent.getBoolValue())) and ktsmach) {
+			} elsif (ktsmach) {
 				if (Input.idleDescent.getBoolValue()) {
-					
+					#mach used for target FPM, machshow used for PFD display
 					Input.mach.setValue(math.clamp(FMGCInternal.mngSpd + ktsToMach(adjustment), ktsToMach(FMGCNodes.minspeed.getValue()), ktsToMach(FMGCInternal.maxspeed)));
 					Input.machShow.setValue(FMGCInternal.mngSpd);
 				} else {
