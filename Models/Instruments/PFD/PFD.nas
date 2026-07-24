@@ -758,16 +758,16 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashValue("ASItrgt", 0.1, func(val) {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
 			}),
-			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","econMarginReduced"],0.5, func(val) {
+			props.UpdateManager.FromHashList(["ASItrgt", "ASI", "ASImax", "VLSmin","fmgcPhase","managedSpd","econMarginReduced"],0.5, func(val) {
 				if (val.fmgcPhase >= 4 and val.fmgcPhase <= 5) {
 					obj["ECON_range_high"].show();
 					obj["ECON_range_low"].show();
 					if (val.econMarginReduced) {
-						obj["ECON_range_high"].setTranslation(0, (val.ASItrgt + 5) * -6.6);
-						obj["ECON_range_low"].setTranslation(0, (val.ASItrgt - 20) * -6.6);
+						obj["ECON_range_high"].setTranslation(0, math.clamp(val.ASItrgt + 5, val.VLSmin, val.ASImax) * -6.6);
+						obj["ECON_range_low"].setTranslation(0, math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6);
 					} else {
-						obj["ECON_range_high"].setTranslation(0, (val.ASItrgt + 20) * -6.6);
-						obj["ECON_range_low"].setTranslation(0, (val.ASItrgt - 20) * -6.6);
+						obj["ECON_range_high"].setTranslation(0, math.clamp(val.ASItrgt + 20, val.VLSmin, val.ASImax) * -6.6);
+						obj["ECON_range_low"].setTranslation(0, math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6);
 					}
 				} else {
 					obj["ECON_range_high"].hide();

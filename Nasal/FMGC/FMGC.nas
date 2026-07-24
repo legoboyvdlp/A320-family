@@ -1060,14 +1060,16 @@ var ManagedSPD = maketimer(0.25, func {
 			# Set target speed
 			if (((Input.kts.getValue() != FMGCInternal.mngSpd + adjustment and Input.idleDescent.getBoolValue()) or (Input.kts.getValue() != FMGCInternal.mngSpd and !Input.idleDescent.getBoolValue())) and !ktsmach) {
 				if (Input.idleDescent.getBoolValue()) {
-					Input.kts.setValue(FMGCInternal.mngSpd + adjustment);
+					
+					Input.kts.setValue(math.clamp(FMGCInternal.mngSpd + adjustment, FMGCNodes.minspeed.getValue(), FMGCInternal.maxspeed));
 					Input.ktsShow.setValue(FMGCInternal.mngSpd);
 				} else {
 					Input.kts.setValue(FMGCInternal.mngSpd);
 				}
 			} elsif (((Input.mach.getValue() != FMGCInternal.mngSpd + ktsToMach(adjustment) and Input.idleDescent.getBoolValue()) or (Input.mach.getValue() != FMGCInternal.mngSpd and !Input.idleDescent.getBoolValue())) and ktsmach) {
 				if (Input.idleDescent.getBoolValue()) {
-					Input.mach.setValue(FMGCInternal.mngSpd + ktsToMach(adjustment));
+					
+					Input.mach.setValue(math.clamp(FMGCInternal.mngSpd + ktsToMach(adjustment), ktsToMach(FMGCNodes.minspeed.getValue()), ktsToMach(FMGCInternal.maxspeed)));
 					Input.machShow.setValue(FMGCInternal.mngSpd);
 				} else {
 					Input.mach.setValue(FMGCInternal.mngSpd);
