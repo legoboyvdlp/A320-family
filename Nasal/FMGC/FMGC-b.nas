@@ -702,9 +702,9 @@ var ITAF = {
 			Internal.managedModeOn.setBoolValue(0);
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			# me.updateGsArm(0);
 			Output.vert.setValue(0);
 			me.resetClimbRateLim();
+			Input.idleDescent.setBoolValue(0);
 			me.updateVertText("ALT HLD");
 			me.syncAlt();
 			me.updateThrustMode();
@@ -731,6 +731,7 @@ var ITAF = {
 			Output.vert.setValue(0);
 			me.setClimbRateLim();
 			Internal.altCaptureActive = 1;
+			Input.idleDescent.setBoolValue(0);
 			me.updateVertText("ALT CAP");
 			me.updateThrustMode();
 		} else if (n == 4) { # FLCH
@@ -751,6 +752,7 @@ var ITAF = {
 				Internal.alt.setValue(Input.alt.getValue());
 				Internal.altCaptureActive = 1;
 				Output.vert.setValue(0);
+				Input.idleDescent.setBoolValue(0);
 				me.updateVertText("ALT CAP");
 				me.updateThrustMode();
 			}
@@ -799,6 +801,7 @@ var ITAF = {
 				Internal.alt.setValue(Input.alt.getValue());
 				Internal.altCaptureActive = 1;
 				Output.vert.setValue(0);
+				Input.idleDescent.setBoolValue(0);
 				me.updateVertText("ALT CAP");
 				me.updateThrustMode();
 			}
@@ -806,6 +809,7 @@ var ITAF = {
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			Output.vert.setValue(9);
+			Input.idleDescent.setBoolValue(0);
 			me.updateVertText("");
 			me.updateThrustMode();
 		}
@@ -1165,7 +1169,7 @@ var armClb = func {
 #Called when in alt cap/alt hold when DES mode is armed, it checks when the next descent constraint is lower than current to engage
 #DES mode again.
 var armDes = func {
-	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300)) {
+	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) >= 300)) {
 		ITAF.setVertMode(8);
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
 		settimer(armDes, 2);
