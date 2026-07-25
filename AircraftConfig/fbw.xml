@@ -35,7 +35,7 @@
 		<halign>center</halign>
 
 		<button>
-			<pref-width>160</pref-width>
+			<pref-width>140</pref-width>
 			<pref-height>28</pref-height>
 			<legend>NORMAL LAW</legend>
 			<binding>
@@ -49,7 +49,7 @@
 		</button>
 
 		<button>
-			<pref-width>160</pref-width>
+			<pref-width>140</pref-width>
 			<pref-height>28</pref-height>
 			<legend>ALTERNATE LAW</legend>
 			<binding>
@@ -63,7 +63,7 @@
 		</button>
 
 		<button>
-			<pref-width>160</pref-width>
+			<pref-width>140</pref-width>
 			<pref-height>28</pref-height>
 			<legend>DIRECT LAW</legend>
 			<binding>
