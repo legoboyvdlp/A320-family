@@ -1016,12 +1016,9 @@ var ManagedSPD = maketimer(0.25, func {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 						print("distance to wpt is " ~ distanceToWpt);
 						lastConstraintSpeed = constraintSpeed;
-						print("new last constraint speed is" ~ lastConstraintSpeed);
 					} elsif (FMGCInternal.phase == 6) {
-						print("resetting last constraint speed");
 						lastConstraintSpeed = 1000000000000000000;
 					} else {
-						print("no speed const, last constraint speed is" ~ lastConstraintSpeed);
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(lastConstraintSpeed)) : math.min(mng_alt_spd, lastConstraintSpeed);
 					
 					}
@@ -1035,6 +1032,9 @@ var ManagedSPD = maketimer(0.25, func {
 				} elsif (FMGCInternal.phase == 6) {
 					lastConstraintSpeed = 1000000000000000000;
 				} else {
+					if (lastConstraintSpeed > 250) {
+						lastConstraintSpeed = 250;
+					}
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, lastConstraintSpeed), FMGCInternal.clean, 999);
 				}
 			}
@@ -1077,7 +1077,6 @@ var ManagedSPD = maketimer(0.25, func {
 					#kts is the value to actually use for idle descent target FPM, ktsshow is to be displayed on the PFD
 					Input.kts.setValue(math.clamp(FMGCInternal.mngSpd + adjustment, FMGCNodes.minspeed.getValue(), FMGCInternal.maxspeed));
 					Input.ktsShow.setValue(FMGCInternal.mngSpd);
-					print("inside where it should be");
 
 				} else {
 					Input.kts.setValue(FMGCInternal.mngSpd);
