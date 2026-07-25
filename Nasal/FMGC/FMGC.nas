@@ -978,7 +978,8 @@ var ManagedSPD = maketimer(0.25, func {
 			
 			var waypoint = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue());
 			var constraintSpeed = nil;
-		
+			var distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
+			var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 			if (waypoint != nil) {
 				constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
 			}
@@ -1010,8 +1011,7 @@ var ManagedSPD = maketimer(0.25, func {
 					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-					var distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
-					var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
+					
 					if (constraintSpeed != nil and constraintSpeed != 0 and (distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1) and (distanceToWpt >= 2)) {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 						print("distance to wpt is " ~ distanceToWpt);
@@ -1029,17 +1029,12 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
-				var distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
-				var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 				if (constraintSpeed != nil and constraintSpeed != 0 and ((distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) or FMGCInternal.decel)) {
 					FMGCInternal.mngSpdCmd = math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 					lastConstraintSpeed = constraintSpeed;
-					print("new last constraint speed is" ~ lastConstraintSpeed ~ "distanceToWpt is " ~ distanceToWpt);
 				} elsif (FMGCInternal.phase == 6) {
-					print("resetting last constraint speed");
 					lastConstraintSpeed = 1000000000000000000;
 				} else {
-					print("no speed const, last constraint speed is" ~ lastConstraintSpeed);
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, lastConstraintSpeed), FMGCInternal.clean, 999);
 				}
 			}
@@ -1067,10 +1062,9 @@ var ManagedSPD = maketimer(0.25, func {
 			} else {
 				adjustment = 0;
 			}
-			
 			#This is to set ECON range during descent to be equal to vdev/50.
 			adjustment = math.clamp(adjustment, -20, 20);
-			if ((constraintSpeed != 0 and constraintSpeed != nil) or altitude <= FMGCInternal.desSpdLimAlt) {
+			if ((constraintSpeed != 0 and constraintSpeed != nil and distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) or FMGCInternal.decel or lastConstraintSpeed <= 346) {
 				adjustment = math.clamp(adjustment, -20, 5);
 				Internal.econMarginReduced.setBoolValue(1);
 			} else {

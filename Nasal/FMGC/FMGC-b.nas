@@ -685,6 +685,12 @@ var ITAF = {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
 			vs = math.max(vs, -1*gs*5);
+			constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
+			currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
+			distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
+			if (constraintSpeed != nil and constraintSpeed != 0 and currentSpeed - constraintSpeed > 10 and distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) {
+				vs = math.max(vs, Internal.targetFpmFlch.getValue());
+			}
 			Input.idleDescent.setBoolValue(0);
 		} else {
 			properDeltaAlt = fmgc.flightPlanController.getAltitudeFromDistance(distance);
@@ -1190,7 +1196,7 @@ var armClb = func {
 #Called when in alt cap/alt hold when DES mode is armed, it checks when the next descent constraint is lower than current to engage
 #DES mode again.
 var armDes = func {
-	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300)) {
+	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) >= 300)) {
 		ITAF.setVertMode(8);
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
 		settimer(armDes, 2);

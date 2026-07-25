@@ -992,11 +992,9 @@ var flightPlanController = {
 			lastIdealSlope = (currentAlt - altCstr)/distanceToCstr;
 			lastIdealSlopeWptIndex = wptIndex;
 			bufferCount = 0;
-			# print("updated ideal slope to wpt index " ~ wptIndex ~ "current Alt is " ~ currentAlt ~ "altCstr is " ~ altCstr ~ "distanceToCstr is " ~ distanceToCstr ~ "last ideal slope is " ~ lastIdealSlope);
 			return lastIdealSlope;
 		} else {
 			bufferCount += 1;
-			# print("buffercount is " ~ bufferCount);
 			return lastIdealSlope;
 		}
 	},
