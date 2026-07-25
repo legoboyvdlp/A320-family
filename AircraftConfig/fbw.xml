@@ -75,6 +75,18 @@
 				</script>
 			</binding>
 		</button>
+
+		<button>
+			<pref-width>140</pref-width>
+			<pref-height>28</pref-height>
+			<legend>AUTO / RESET</legend>
+			<binding>
+				<command>nasal</command>
+				<script>
+					setprop("/it-fbw/override", 0);
+				</script>
+			</binding>
+		</button>
 	</group>
 
 	<hrule/>
