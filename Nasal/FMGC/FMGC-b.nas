@@ -661,19 +661,14 @@ var ITAF = {
 			var deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
 			var properDeltaAlt = distance * idealSlope;
 			var difference = deltaAlt - properDeltaAlt;
-			print("proper delta alt is " ~ properDeltaAlt ~ "and idealSlope is " ~ idealSlope);
 			return difference;
 		} else {
 			if (distance < 0) {
 				distance = 0;
 			}
 			var deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
-			# var properDeltaAlt = distance * 318;
 			var properDeltaAlt =  fmgc.flightPlanController.getAltitudeFromDistance(distance);
 			var difference = deltaAlt - properDeltaAlt;
-			# if (output[2] == 1 and difference < 0) {
-			# 	difference = 0;
-			# }
 			return difference;
 		}
 
@@ -709,8 +704,6 @@ var ITAF = {
 
 	#Set the VS for managed descent mode
 	setVs: func(vs) {
-		print("setting vs to ");
-		print(vs);
 		Internal.vsTemp = vs;
 		Input.vs.setValue(vs);
 		Input.vsAbs.setValue(abs(vs));
@@ -752,7 +745,6 @@ var ITAF = {
 			me.setClimbRateLim();
 			Internal.altCaptureActive = 1;
 			Input.idleDescent.setBoolValue(0);
-			print("idle descent false");
 			me.updateVertText("ALT CAP");
 			me.updateThrustMode();
 			
@@ -766,7 +758,6 @@ var ITAF = {
 			if (abs(Internal.altDiff) >= 250) { # SPD CLB or SPD DES
 				Internal.altCaptureActive = 0;
 				Output.vert.setValue(4);
-				printValues();
 				Internal.flchActive = 1;
 				Internal.alt.setValue(Input.alt.getValue());
 				me.updateThrustMode();
@@ -823,7 +814,6 @@ var ITAF = {
 				Internal.alt.setValue(Input.alt.getValue());
 				Internal.altCaptureActive = 1;
 				Input.idleDescent.getBoolValue(0);
-				print("idle descent false");
 				Output.vert.setValue(0);
 				me.updateVertText("ALT CAP");
 				me.updateThrustMode();
@@ -1153,8 +1143,6 @@ var managedDes = func {
 	var realDeltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
 	if (realDeltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
-		print("managed des called");
-		
 		ITAF.setVs(ITAF.getVs(distance, managedDeltaAlt, isGeo, realNextManagedAlt));
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
@@ -1203,13 +1191,6 @@ var armDes = func {
 	}
 };
 
-var printValues = func {
-	altitude = Position.indicatedAltitudeFt.getValue();
-	distance = fmgc.flightPlanController.distToWpt.getValue();
-	IAS = Velocities.indicatedAirspeedKt.getValue();
-	print("Values: " ~ altitude ~ "," ~ distance ~ "," ~ IAS);
-	settimer(printValues, 2);
-};
 
 setlistener(Gear.wow1, func(val) {
 	if (!val.getBoolValue() and FPLN.currentWP.getValue() == 0) {

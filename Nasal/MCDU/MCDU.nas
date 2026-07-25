@@ -1418,7 +1418,7 @@ var arrowbutton = func(btn, i) {
 			pageNode[i].setValue("EMERGREQ1");
 		} 
 	} else if (btn == "up") {
-		if (page == "" or page == "F-PLNB") {
+		if (page == "F-PLNA" or page == "F-PLNB") {
 			canvas_mcdu.myFpln[i].scrollUp();
 		} else if (page == "DEPARTURE") {
 			canvas_mcdu.myDeparture[i].scrollUp();
