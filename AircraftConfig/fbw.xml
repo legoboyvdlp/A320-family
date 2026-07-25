@@ -28,6 +28,56 @@
     </group>
 	
     <hrule/>
+
+		<!-- Manual FBW law selection -->
+	<group>
+		<layout>vbox</layout>
+		<halign>center</halign>
+
+		<button>
+			<pref-width>160</pref-width>
+			<pref-height>28</pref-height>
+			<legend>NORMAL LAW</legend>
+			<binding>
+				<command>nasal</command>
+				<script>
+					setprop("/it-fbw/override", 1);
+					setprop("/it-fbw/law", 0);
+					setprop("/it-fbw/yaw-law", 0);
+				</script>
+			</binding>
+		</button>
+
+		<button>
+			<pref-width>160</pref-width>
+			<pref-height>28</pref-height>
+			<legend>ALTERNATE LAW</legend>
+			<binding>
+				<command>nasal</command>
+				<script>
+					setprop("/it-fbw/override", 1);
+					setprop("/it-fbw/law", 1);
+					setprop("/it-fbw/yaw-law", 1);
+				</script>
+			</binding>
+		</button>
+
+		<button>
+			<pref-width>160</pref-width>
+			<pref-height>28</pref-height>
+			<legend>DIRECT LAW</legend>
+			<binding>
+				<command>nasal</command>
+				<script>
+					setprop("/it-fbw/override", 1);
+					setprop("/it-fbw/law", 2);
+					setprop("/it-fbw/yaw-law", 2);
+				</script>
+			</binding>
+		</button>
+	</group>
+
+	<hrule/>
 	
 	<group>
 		<layout>hbox</layout>
