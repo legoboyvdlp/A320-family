@@ -71,6 +71,7 @@ setprop("/systems/acconfig/options/nd-rate", 1);
 setprop("/systems/acconfig/options/dcdu-rate", 1);
 setprop("/systems/acconfig/options/autopush/show-route", 1);
 setprop("/systems/acconfig/options/autopush/show-wingtip", 1);
+setprop("/systems/acconfig/options/controls/draims/enabled", 0);
 var main_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/main/dialog", "Aircraft/A320-family/AircraftConfig/main.xml");
 var welcome_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/welcome/dialog", "Aircraft/A320-family/AircraftConfig/welcome.xml");
 var ps_load_dlg = gui.Dialog.new("/sim/gui/dialogs/acconfig/psload/dialog", "Aircraft/A320-family/AircraftConfig/psload.xml");
@@ -255,6 +256,7 @@ var readSettings = func {
 	setprop("/systems/atsu/atis-server", getprop("/systems/acconfig/options/atis-server"));
 	setprop("/systems/atsu/wxr-server", getprop("/systems/acconfig/options/wxr-server"));
 	setprop("/options/hide-canvas-outside", getprop("/systems/acconfig/options/hide-canvas-outside"));
+	setprop("/controls/draims/enabled", getprop("/systems/acconfig/options/controls/draims/enabled"));
 }
 
 var writeSettings = func {
@@ -272,6 +274,7 @@ var writeSettings = func {
 	setprop("/systems/acconfig/options/atis-server", getprop("/systems/atsu/atis-server"));
 	setprop("/systems/acconfig/options/wxr-server", getprop("/systems/atsu/wxr-server"));
 	setprop("/systems/acconfig/options/hide-canvas-outside", getprop("/options/hide-canvas-outside"));
+	setprop("/systems/acconfig/options/controls/draims/enabled", getprop("/controls/draims/enabled"));
 	io.write_properties(pts.Sim.fgHome.getValue() ~ "/Export/A320-family-config.xml", "/systems/acconfig/options");
 }
 

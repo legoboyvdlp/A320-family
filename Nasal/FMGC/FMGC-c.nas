@@ -303,7 +303,6 @@ var UpdateFma = {
 			setFmaText("pitchMode", "CLB", genericCallback, "pitchModeTime");
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
 		} else if (vertText == "DES") {
-			# print("to set Fma text to DES");
 			setFmaText("pitchMode", "DES", genericCallback, "pitchModeTime");
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
 		} else if (vertText == "FPA") {

@@ -1,4 +1,3 @@
-# var idleDescent = 0;
 # A3XX FMGC Autopilot
 # Based off IT Autoflight System Controller V4.1.X
 # Copyright (c) 2026 Josh Davidson (Octal450)
@@ -134,6 +133,7 @@ var Internal = {
 	captVs: 0,
 	driftAngle: props.globals.initNode("/it-autoflight/internal/drift-angle-deg", 0, "DOUBLE"),
 	driftAngleTemp: 0,
+	econMarginReduced: props.globals.initNode("/it-autoflight/internal/econ-margin-reduced", 0, "BOOL"),
 	flchActive: 0,
 	fpa: props.globals.initNode("/it-autoflight/internal/fpa", 0, "DOUBLE"),
 	hdgErrorDeg: props.globals.initNode("/it-autoflight/internal/heading-error-deg", 0, "DOUBLE"),
@@ -418,7 +418,6 @@ var ITAF = {
 		if (FMGCInternal.phase == 4 or FMGCInternal.phase == 5) {
 			Internal.vdevDot.setValue(me.calculateVdev());
 		}
-		# print("Values: " ~ Position.indicatedAltitudeFt.getValue() ~ "," ~ fmgc.flightPlanController.distToWpt.getValue() ~ "," ~  fmgc.Internal.weightKgs.getValue());
 
 	},
 	slowLoop: func() {
@@ -649,7 +648,8 @@ var ITAF = {
 		} 
 	},
 
-
+	#Calculate the vertical deviation during cruise descent and approach mode. It is currently simplified for geometric descent,
+	#where if vdev is negative, it will show 0.
 	calculateVdev: func() {
 		var output = fmgc.flightPlanController.getDesAltConst();
 		var nextManagedAlt = output[0];
@@ -679,6 +679,7 @@ var ITAF = {
 
 	},
 
+	#get the VS for managed descent mode. In geometric descent it's the calculated smooth path, in idle descent it's idle descent.
 	getVs: func(distance, deltaAlt, isGeo) {
 		if (isGeo) {
 			gs = Velocities.groundspeedKt.getValue();
@@ -689,14 +690,10 @@ var ITAF = {
 			properDeltaAlt = fmgc.flightPlanController.getAltitudeFromDistance(distance);
 			properDeltaAlt = math.max(properDeltaAlt, 0);
 			vs = Internal.targetFpmFlch.getValue();
-			print("getVs");
-			print(properDeltaAlt);
-			print(deltaAlt);
-			if (properDeltaAlt - deltaAlt >= 200) {
+			if (properDeltaAlt - deltaAlt >= 500) {
 				Input.idleDescent.setBoolValue(0);
 				vs = -1000;
 			} else {
-				print("idle descent to 1");
 				Input.idleDescent.setBoolValue(1);
 			}
 		}
@@ -704,6 +701,7 @@ var ITAF = {
 		return vs;
 	},
 
+	#Set the VS for managed descent mode
 	setVs: func(vs) {
 		print("setting vs to ");
 		print(vs);
@@ -827,7 +825,6 @@ var ITAF = {
 		} else if (n == 9) { # NONE
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			# me.updateGsArm(0);
 			Output.vert.setValue(9);
 			me.updateVertText("");
 			me.updateThrustMode();
@@ -1126,7 +1123,9 @@ var ITAF = {
 	},
 };
 
-
+#The driver of the managed descent mode (vertmode 8), it calls getDesAltConst and calculateManagedLvlOffAltitude.
+#It compares the managed show altitude and the selected altitude and display whatever is higher in the correct color and
+#get the VS then set the VS to descend either idly or geometrically towards the next altitude constraint.
 var managedDes = func {
 	var output = fmgc.flightPlanController.getDesAltConst();
 	var realNextManagedAlt = output[0];
@@ -1165,7 +1164,6 @@ var managedClb = func {
 	var nextManagedAlt = fmgc.flightPlanController.getClbAltConst()[0];
 	var nextSelectedAlt = Input.alt.getValue();
 	var alt = 0;
-	# print("next managed alt is " ~ nextManagedAlt ~ "next selected alt is " ~ nextSelectedAlt);
 	if (nextManagedAlt < nextSelectedAlt) {
 		var alt = nextManagedAlt;
 		Internal.altManaged.setValue(1);
@@ -1178,8 +1176,9 @@ var managedClb = func {
 	Internal.flchActive = 1;
 	ITAF.updateVertText("CLB");
 };
-# To be called when in altitude acquire mode, 
-# when the aircraft passes that waypoint, the CLB mode should resume
+
+#Called when in alt cap/alt hold when CLB mode is armed, it checks when the next climb constraint is higher than current to engage
+#CLB mode again.
 var armClb = func {
 	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300) {
 		ITAF.updateVertText("CLB");
@@ -1188,15 +1187,12 @@ var armClb = func {
 		settimer(armClb, 2);
 	}
 };
-
-# To be called when in altitude acquire mode,
-# when the aircraft passes that waypoint the DES mode should resume
+#Called when in alt cap/alt hold when DES mode is armed, it checks when the next descent constraint is lower than current to engage
+#DES mode again.
 var armDes = func {
-	# print("arming des " ~ Text.vert.getValue());
 	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300)) {
-		ITAF.setVertMode(8); # DES mode
+		ITAF.setVertMode(8);
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
-		# print(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue());
 		settimer(armDes, 2);
 	}
 };

@@ -1,127 +1,89 @@
 # A3XX Audio Control Panel
-# merspieler
+# Nia
 
-############################
-# Copyright (c) merspieler #
-############################
+#####################
+# Copyright (c) Nia #
+#####################
 
 # NOTE: This is just temporary until FG allows a full implementation of the audio system.
 
-var mkr_capt_recive = props.globals.initNode("/controls/audio/acp[0]/mkr-recive", 0, "BOOL");
-var mkr_capt_volume = props.globals.initNode("/controls/audio/acp[0]/mkr-volume", 1, "DOUBLE");
-var mkr_fo_recive = props.globals.initNode("/controls/audio/acp[1]/mkr-recive", 0, "BOOL");
-var mkr_fo_volume = props.globals.initNode("/controls/audio/acp[1]/mkr-volume", 1, "DOUBLE");
-var ils_capt_recive = props.globals.initNode("/controls/audio/acp[0]/ils-recive", 0, "BOOL");
-var ils_capt_volume = props.globals.initNode("/controls/audio/acp[0]/ils-volume", 1, "DOUBLE");
-var ils_fo_recive = props.globals.initNode("/controls/audio/acp[1]/ils-recive", 0, "BOOL");
-var ils_fo_volume = props.globals.initNode("/controls/audio/acp[1]/ils-volume", 1, "DOUBLE");
+var ACP = [nil, nil, nil];
 
-var vhf1_capt_recive = props.globals.initNode("/controls/audio/acp[0]/vhf1-recive", 1, "BOOL");
-var vhf2_capt_recive = props.globals.initNode("/controls/audio/acp[0]/vhf2-recive", 1, "BOOL");
-var vhf1_capt_volume = props.globals.initNode("/controls/audio/acp[0]/vhf1-volume", 1, "DOUBLE");
-var vhf2_capt_volume = props.globals.initNode("/controls/audio/acp[0]/vhf2-volume", 1, "DOUBLE");
-var adf1_capt_receive = props.globals.initNode("/controls/audio/acp[0]/adf1-recive", 0, "BOOL");
-var adf1_capt_volume = props.globals.initNode("/controls/audio/acp[0]/adf1-volume", 1, "DOUBLE");
-var adf2_capt_receive = props.globals.initNode("/controls/audio/acp[0]/adf2-recive", 0, "BOOL");
-var adf2_capt_volume = props.globals.initNode("/controls/audio/acp[0]/adf2-volume", 1, "DOUBLE");
-var vor1_capt_receive = props.globals.initNode("/controls/audio/acp[0]/vor1-recive", 0, "BOOL");
-var vor1_capt_volume = props.globals.initNode("/controls/audio/acp[0]/vor1-volume", 1, "DOUBLE");
-var vor2_capt_receive = props.globals.initNode("/controls/audio/acp[0]/vor2-recive", 0, "BOOL");
-var vor2_capt_volume = props.globals.initNode("/controls/audio/acp[0]/vor2-volume", 1, "DOUBLE");
+var acpClass = {
+	new: func(instance) {
+		var m = {parents:[acpClass]};
+		m._instance = instance;
+		m.receive = {};
+		m.volume = {};
+		m.receive.vhf = {};
+		m.volume.vhf = {};
+		for (var i = 1; i <= 3; i += 1) {
+			m.receive.vhf[i - 1] = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/vhf" ~ i ~ "-receive", 1, "BOOL");
+			m.volume.vhf[i - 1] = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/vhf" ~ i ~ "-volume", 1, "DOUBLE");
+		}
+		m.receive.hf = {};
+		m.receive.tel = {};
+		m.receive.adf = {};
+		m.receive.vor = {};
+		m.volume.hf = {};
+		m.volume.tel = {};
+		m.volume.adf = {};
+		m.volume.vor = {};
+		for (var i = 1; i <= 2; i += 1) {
+			m.receive.hf[i - 1] = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/hf" ~ i ~ "-receive", 0, "BOOL");
+			m.receive.tel[i - 1] = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/tel" ~ i ~ "-receive", 0, "BOOL");
+			m.receive.adf[i - 1] = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/adf" ~ i ~ "-receive", 0, "BOOL");
+			m.receive.vor[i - 1] = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/vor" ~ i ~ "-receive", 0, "BOOL");
+			m.volume.hf[i - 1] = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/hf" ~ i ~ "-volume", 1, "DOUBLE");
+			m.volume.tel[i - 1] = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/tel" ~ i ~ "-volume", 1, "DOUBLE");
+			m.volume.adf[i - 1] = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/adf" ~ i ~ "-volume", 1, "DOUBLE");
+			m.volume.vor[i - 1] = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/vor" ~ i ~ "-volume", 1, "DOUBLE");
+		}
+		m.receive.nav = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/nav-receive", 0, "BOOL");
+		m.volume.nav = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/nav-volume", 0, "DOUBLE");
+		m.receive.mkr = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/mkr-receive", 0, "BOOL");
+		m.volume.mkr = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/mkr-volume", 0, "DOUBLE");
+		m.receive.ils = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/ils-receive", 0, "BOOL");
+		m.volume.ils = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/ils-volume", 0, "DOUBLE");
+		m.receive.cab = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/cab-receive", 0, "BOOL");
+		m.volume.cab = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/cab-volume", 0, "DOUBLE");
+		m.receive.int = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/int-receive", 0, "BOOL");
+		m.volume.int = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/int-volume", 0, "DOUBLE");
+		m.receive.mls = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/mls-receive", 0, "BOOL");
+		m.volume.mls = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/mls-volume", 0, "DOUBLE");
+		m.receive.pa = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/pa-receive", 0, "BOOL");
+		m.volume.pa = props.globals.initNode("/controls/audio/acp[" ~ instance ~ "]/pa-volume", 0, "DOUBLE");
 
-var vhf1_fo_recive = props.globals.initNode("/controls/audio/acp[1]/vhf1-recive", 1, "BOOL");
-var vhf2_fo_recive = props.globals.initNode("/controls/audio/acp[1]/vhf2-recive", 1, "BOOL");
-var vhf1_fo_volume = props.globals.initNode("/controls/audio/acp[1]/vhf1-volume", 1, "DOUBLE");
-var vhf2_fo_volume = props.globals.initNode("/controls/audio/acp[1]/vhf2-volume", 1, "DOUBLE");
-var adf1_fo_receive = props.globals.initNode("/controls/audio/acp[1]/adf1-recive", 0, "BOOL");
-var adf1_fo_volume = props.globals.initNode("/controls/audio/acp[1]/adf1-volume", 1, "DOUBLE");
-var adf2_fo_receive = props.globals.initNode("/controls/audio/acp[1]/adf2-recive", 0, "BOOL");
-var adf2_fo_volume = props.globals.initNode("/controls/audio/acp[1]/adf2-volume", 1, "DOUBLE");
-var vor1_fo_receive = props.globals.initNode("/controls/audio/acp[1]/vor1-recive", 0, "BOOL");
-var vor1_fo_volume = props.globals.initNode("/controls/audio/acp[1]/vor1-volume", 1, "DOUBLE");
-var vor2_fo_receive = props.globals.initNode("/controls/audio/acp[1]/vor2-recive", 0, "BOOL");
-var vor2_fo_volume = props.globals.initNode("/controls/audio/acp[1]/vor2-volume", 1, "DOUBLE");
+		m.transmitChannel = props.globals.initNode("/systems/audio/acp[" ~ instance ~ "]/transmitChannel", "", "STRING");
+		return m;
+	},
+	transmitButton: func(channel) {
+		# TODO power check
+		me.transmitChannel.setValue(channel);
+		if (channel == "tel1" and getprop("/systems/draims/tel1-state") == 3) {
+			setprop("/systems/draims/tel1-state", 2);
+		} else if (channel == "tel2" and getprop("/systems/draims/tel2-state") == 3) {
+			setprop("/systems/draims/tel2-state", 2);
+		}
+	},
+};
 
-var com1_volume = props.globals.getNode("instrumentation/comm[0]/volume");
-var com2_volume = props.globals.getNode("instrumentation/comm[1]/volume");
+# To comply with function call convention
+var transmitButton = func(channel, i) {
+	ACP[i].transmitButton(channel);
+};
 
 var init = func() {
-	vhf1_capt_recive.setValue(1);
-	vhf2_capt_recive.setValue(1);
-	vhf1_capt_volume.setValue(1);
-	vhf2_capt_volume.setValue(0.8);
-	vhf1_fo_recive.setValue(1);
-	vhf2_fo_recive.setValue(1);
-	vhf1_fo_volume.setValue(0.8);
-	vhf2_fo_volume.setValue(1);
+	ACP[0].receive.vhf[0].setValue(1);
+	ACP[0].receive.vhf[1].setValue(1);
+	ACP[1].receive.vhf[0].setValue(1);
+	ACP[1].receive.vhf[1].setValue(1);
+	ACP[0].volume.vhf[0].setValue(1);
+	ACP[0].volume.vhf[1].setValue(0.8);
+	ACP[1].volume.vhf[0].setValue(0.8);
+	ACP[1].volume.vhf[1].setValue(1);
+};
+
+for (var i = 0; i <= 2; i += 1) {
+	ACP[i] = acpClass.new(i);
 }
-
-var update_com1 = func() {	
-	if (acconfig.foViewNode.getValue() == 1) {
-		if (vhf1_fo_recive.getValue()) {
-			com1_volume.setValue(vhf1_fo_volume.getValue());
-		} else {
-			com1_volume.setValue(0);
-		}
-	} else {
-		if (vhf1_capt_recive.getValue()) {
-			com1_volume.setValue(vhf1_capt_volume.getValue());
-		} else {
-			com1_volume.setValue(0);
-		}
-	}
-}
-
-var update_com2 = func() {	
-	if (acconfig.foViewNode.getValue() == 1) {
-		if (vhf2_fo_recive.getValue()) {
-			com2_volume.setValue(vhf2_fo_volume.getValue());
-		} else {
-			com2_volume.setValue(0);
-		}
-	} else {
-		if (vhf2_capt_recive.getValue()) {
-			com2_volume.setValue(vhf2_capt_volume.getValue());
-		} else {
-			com2_volume.setValue(0);
-		}
-	}
-}
-
-setlistener("/controls/audio/acp[0]/vhf1-recive", func {
-	update_com1();
-});
-
-setlistener("/controls/audio/acp[0]/vhf1-volume", func {
-	update_com1();
-});
-
-setlistener("/controls/audio/acp[0]/vhf2-recive", func {
-	update_com2();
-});
-
-setlistener("/controls/audio/acp[0]/vhf2-volume", func {
-	update_com2();
-});
-
-setlistener("/controls/audio/acp[1]/vhf1-recive", func {
-	update_com1();
-});
-
-setlistener("/controls/audio/acp[1]/vhf1-volume", func {
-	update_com1();
-});
-
-setlistener("/controls/audio/acp[1]/vhf2-recive", func {
-	update_com2();
-});
-
-setlistener("/controls/audio/acp[1]/vhf2-volume", func {
-	update_com2();
-});
-
-setlistener("/systems/acconfig/options/fo-view", func {
-	update_com1();
-	update_com2();
-});
-

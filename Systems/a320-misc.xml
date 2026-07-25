@@ -268,16 +268,16 @@
 		<switch name="/instrumentation/adf[0]/volume-norm">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/adf1-volume">
-				/controls/audio/acp[0]/adf1-recive eq 1
+				/controls/audio/acp[0]/adf1-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[1]/adf1-recive eq 0
+					/controls/audio/acp[1]/adf1-receive eq 0
 					/controls/audio/acp[0]/adf1-volume ge /controls/audio/acp[1]/adf1-volume
 				</test>
 			</test>
 			<test logic="AND" value="/controls/audio/acp[1]/adf1-volume">
-				/controls/audio/acp[1]/adf1-recive eq 1
+				/controls/audio/acp[1]/adf1-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[0]/adf1-recive eq 0
+					/controls/audio/acp[0]/adf1-receive eq 0
 					/controls/audio/acp[0]/adf1-volume lt /controls/audio/acp[1]/adf1-volume
 				</test>
 			</test>
@@ -286,16 +286,16 @@
 		<switch name="/instrumentation/adf[1]/volume-norm">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/adf2-volume">
-				/controls/audio/acp[0]/adf2-recive eq 1
+				/controls/audio/acp[0]/adf2-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[1]/adf2-recive eq 0
+					/controls/audio/acp[1]/adf2-receive eq 0
 					/controls/audio/acp[0]/adf2-volume ge /controls/audio/acp[1]/adf2-volume
 				</test>
 			</test>
 			<test logic="AND" value="/controls/audio/acp[1]/adf2-volume">
-				/controls/audio/acp[1]/adf2-recive eq 1
+				/controls/audio/acp[1]/adf2-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[0]/adf2-recive eq 0
+					/controls/audio/acp[0]/adf2-receive eq 0
 					/controls/audio/acp[0]/adf2-volume lt /controls/audio/acp[1]/adf2-volume
 				</test>
 			</test>
@@ -304,16 +304,16 @@
 		<switch name="/instrumentation/marker-beacon/volume">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/mkr-volume">
-				/controls/audio/acp[0]/mkr-recive eq 1
+				/controls/audio/acp[0]/mkr-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[1]/mkr-recive eq 0
+					/controls/audio/acp[1]/mkr-receive eq 0
 					/controls/audio/acp[0]/mkr-volume ge /controls/audio/acp[1]/mkr-volume
 				</test>
 			</test>
 			<test logic="AND" value="/controls/audio/acp[1]/mkr-volume">
-				/controls/audio/acp[1]/mkr-recive eq 1
+				/controls/audio/acp[1]/mkr-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[0]/mkr-recive eq 0
+					/controls/audio/acp[0]/mkr-receive eq 0
 					/controls/audio/acp[0]/mkr-volume lt /controls/audio/acp[1]/mkr-volume
 				</test>
 			</test>
@@ -322,16 +322,16 @@
 		<switch name="/instrumentation/nav[0]/volume">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/ils-volume">
-				/controls/audio/acp[0]/ils-recive eq 1
+				/controls/audio/acp[0]/ils-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[1]/ils-recive eq 0
+					/controls/audio/acp[1]/ils-receive eq 0
 					/controls/audio/acp[0]/ils-volume ge /controls/audio/acp[1]/ils-volume
 				</test>
 			</test>
 			<test logic="AND" value="/controls/audio/acp[1]/ils-volume">
-				/controls/audio/acp[1]/ils-recive eq 1
+				/controls/audio/acp[1]/ils-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[0]/ils-recive eq 0
+					/controls/audio/acp[0]/ils-receive eq 0
 					/controls/audio/acp[0]/ils-volume lt /controls/audio/acp[1]/ils-volume
 				</test>
 			</test>
@@ -340,16 +340,16 @@
 		<switch name="/instrumentation/nav[2]/volume">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/vor1-volume">
-				/controls/audio/acp[0]/vor1-recive eq 1
+				/controls/audio/acp[0]/vor1-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[1]/vor1-recive eq 0
+					/controls/audio/acp[1]/vor1-receive eq 0
 					/controls/audio/acp[0]/vor1-volume ge /controls/audio/acp[1]/vor1-volume
 				</test>
 			</test>
 			<test logic="AND" value="/controls/audio/acp[1]/vor1-volume">
-				/controls/audio/acp[1]/vor1-recive eq 1
+				/controls/audio/acp[1]/vor1-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[0]/vor1-recive eq 0
+					/controls/audio/acp[0]/vor1-receive eq 0
 					/controls/audio/acp[0]/vor1-volume lt /controls/audio/acp[1]/vor1-volume
 				</test>
 			</test>
@@ -358,16 +358,16 @@
 		<switch name="/instrumentation/nav[3]/volume">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/vor2-volume">
-				/controls/audio/acp[0]/vor2-recive eq 1
+				/controls/audio/acp[0]/vor2-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[1]/vor2-recive eq 0
+					/controls/audio/acp[1]/vor2-receive eq 0
 					/controls/audio/acp[0]/vor2-volume ge /controls/audio/acp[1]/vor2-volume
 				</test>
 			</test>
 			<test logic="AND" value="/controls/audio/acp[1]/vor2-volume">
-				/controls/audio/acp[1]/vor2-recive eq 1
+				/controls/audio/acp[1]/vor2-receive eq 1
 				<test logic="OR">
-					/controls/audio/acp[0]/vor2-recive eq 0
+					/controls/audio/acp[0]/vor2-receive eq 0
 					/controls/audio/acp[0]/vor2-volume lt /controls/audio/acp[1]/vor2-volume
 				</test>
 			</test>
@@ -619,27 +619,27 @@
 					/systems/elt/elt-horn-cmd eq 1
 					/instrumentation/comm/frequencies/selected-mhz eq 121.5
 					<test logic="OR">
-						/controls/audio/acp/vhf1-recive eq 1
-						/controls/audio/acp[1]/vhf1-recive eq 1
-						/controls/audio/acp[2]/vhf1-recive eq 1
+						/controls/audio/acp/vhf1-receive eq 1
+						/controls/audio/acp[1]/vhf1-receive eq 1
+						/controls/audio/acp[2]/vhf1-receive eq 1
 					</test>
 				</test>
 				<test logic="AND">
 					/systems/elt/elt-horn-cmd eq 1
 					/instrumentation/comm[1]/frequencies/selected-mhz eq 121.5
 					<test logic="OR">
-						/controls/audio/acp/vhf2-recive eq 1
-						/controls/audio/acp[1]/vhf2-recive eq 1
-						/controls/audio/acp[2]/vhf2-recive eq 1
+						/controls/audio/acp/vhf2-receive eq 1
+						/controls/audio/acp[1]/vhf2-receive eq 1
+						/controls/audio/acp[2]/vhf2-receive eq 1
 					</test>
 				</test>
 				<test logic="AND">
 					/systems/elt/elt-horn-cmd eq 1
 					/instrumentation/comm[2]/frequencies/selected-mhz eq 121.5
 					<test logic="OR">
-						/controls/audio/acp/vhf3-recive eq 1
-						/controls/audio/acp[1]/vhf3-recive eq 1
-						/controls/audio/acp[2]/vhf3-recive eq 1
+						/controls/audio/acp/vhf3-receive eq 1
+						/controls/audio/acp[1]/vhf3-receive eq 1
+						/controls/audio/acp[2]/vhf3-receive eq 1
 					</test>
 				</test>
 			</test>

@@ -16,6 +16,8 @@ var lastIdealSlopeWptIndex = 0;
 var bufferCount = 0;
 var lastDescentCoefficient = 318;
 var coefficientBufferCount = 0;
+var descent_coeff = 318;
+
 # Props.getNode
 var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
 var trueHDG = props.globals.getNode("/orientation/heading-deg", 1);
@@ -775,55 +777,24 @@ var flightPlanController = {
 
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
+	#Calculate the altitude from distance using a 3 deg angle exactly
 	getAltitudeFromDistance: func(Distance) {
-		return 318*Distance;
-		# return 0.0226105697*Distance*Distance*Distance - 3.0421646392*Distance*Distance + 602.0016179117*Distance + 1000;
+		return descent_coeff*Distance;
 	},
-
-	# getCurrentDescentCoefficient: func() {
-	# 	var costIndex = fmgc.FMGCNodes.costIndex.getValue();
-	# 	var tas = fmgc.Velocities.trueAirspeedKt.getValue();
-	# 	var gs = fmgc.Velocities.groundspeedKt.getValue();
-	# 	var altitude = fmgc.Position.indicatedAltitudeFt.getValue();
-
-	# 	var wind = tas - gs;
-	# 	var angleDeg = 2.8 + (costIndex / 999.0) * 0.5;
-
-	# 	# Wind correction (0.0125 deg per unit)
-	# 	angleDeg += wind * 0.0125;
-
-	# 	# --- Altitude-based additive (linear interpolation) ---
-	# 	var highAlt = 39000.0;
-	# 	var lowAlt = 1000.0;
-
-	# 	# Clamp altitude into range
-	# 	altitude = math.clamp(altitude, lowAlt, highAlt);
-
-	# 	var t = (highAlt - altitude) / (highAlt - lowAlt);
-
-	# 	var altAdd = t * 1.0;
-
-	# 	angleDeg += altAdd;
-
-	# 	var angleRad = angleDeg * math.pi / 180.0;
-
-	# 	var coeff = 6076.0 * math.tan(angleRad);
-	# 	print("Descent Coefficient: " ~ coeff);
-	# 	return coeff;
-	# },
-
+	#Get the extrapolated altitude from the function above
 	getExtrapolatedFirstAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
 		var extrapolatedAlt = altCstr + (me.getAltitudeFromDistance(distanceToCstr - distanceToCstr2));
 		return extrapolatedAlt;
 	},
-
+	#Get the altitude that the aircraft would descent to at 1000 fpm (standard descent rate when DES mode is engaged)
+	#at a certain distance.
 	getExtrapolatedOneThousandVSDescent: func(distanceToCstr2) {
 		var currentAlt = Position.indicatedAltitudeFt.getValue();
 		var gs = fmgc.Velocities.groundspeedKt.getValue();
 		var extrapolatedAlt = currentAlt - (distanceToCstr2 * 60 * 1000 / gs);
 		return extrapolatedAlt;
 	},
-
+	#Get the alttiude the aircraft would be at a certaain distance when descending smoothly towards a geometric descent waypoint
 	getExtrapolatedGeoAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
 		var currentAlt = Position.indicatedAltitudeFt.getValue();
 		var extrapolatedAlt = currentAlt + ((altCstr - currentAlt) * (distanceToCstr2 / distanceToCstr));
@@ -840,6 +811,7 @@ var flightPlanController = {
 		return math.clamp(speed, 250, 345);
 	},
 
+	#Calculate what the managed show altitude should be. Calculated from trying to find the first non below altitude constraint
 	calculateManagedLvlOffAltitude: func() {
 		var result = me.getDesAltConst();
 		var altCstr = result[0];
@@ -858,6 +830,7 @@ var flightPlanController = {
 		return altCstr;
 	},
 
+	#Get the leg distance to the waypoint index in question, if it's the next one it returns the to distance, if it's not then it's the leg distance
 	getLegDistance: func(i) {
 		if (i == me.currentToWptIndex.getValue()) {
 			return me.distToWpt.getValue();
@@ -883,6 +856,8 @@ var flightPlanController = {
 		return math.max(adjustedDistanceToCstr, 1e-45);
 	},
 
+	#Calculate what the next managed descent altitude constraint would be by looping through the next AT or BETWEEN alt constraint first,
+	#then trying to find a ABOVE or BELOW alt constraint that would conflict with the path to the former waypoint second.
 	getAltConst: func(isGeo) {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
@@ -891,7 +866,6 @@ var flightPlanController = {
 		var wpIndex = 0;
 		var altCstr = 0;
 		var altCstrType = nil;
-		# altCstr2 = 0;
 
 		var distanceToCstr = 0;
 		var wptIndex = 0;
@@ -899,7 +873,7 @@ var flightPlanController = {
 		var altCstrType = nil;
 		var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 
-		# --- First loop: find primary constraint ---
+		
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			var wp = me.flightplans[2].getWP(i);
 
@@ -1027,6 +1001,7 @@ var flightPlanController = {
 		}
 	},
 
+	#Call getAltConst depending on whether the aircraft has passed the geometric waypoint or not
 	getDesAltConst: func() {
 		if (geoWptIndex == nil or me.currentToWptIndex.getValue() <= geoWptIndex) {
 			return me.getAltConst(0);
@@ -1035,20 +1010,19 @@ var flightPlanController = {
 		}
 	},
 
-
-	# Get the next altitude constraint that is either at, or at or below
+	#Get the next alt constraint in managed climb mode by finding the next alt constraint that isn't ABOVE
 	getClbAltConst: func() {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and me.flightplans[2].getWP(i).wp_role == "sid") {
-				# print("clb alt const is " ~ int(me.flightplans[2].getWP(i).alt_cstr));
 				return [me.flightplans[2].getWP(i).alt_cstr,i];
 			}
 		}
 		return [1000000000000000,0];
 	},
+	#Find the next speed constraint in managed climb mode
 	getNextClbSpdConst: func() {
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			var spdCstr = me.flightplans[2].getWP(i).speed_cstr;
@@ -1101,8 +1075,7 @@ var flightPlanController = {
 			setprop("/autopilot/route-manager/vnav/ed/show", 1);
 		}
 	},
-
-	# Calculate the point of the SC symbol to be placed on the ND
+	#Set the climb symbol on the ND from getClbAltConst method
 	calculateClbPoint: func(isMng) {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;

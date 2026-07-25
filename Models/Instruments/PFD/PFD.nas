@@ -758,10 +758,22 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashValue("ASItrgt", 0.1, func(val) {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
 			}),
-			#If the aircraft is in descent phase and managed speed is on then ECOn range is set +- 20 knots from managed speed target
-			props.UpdateManager.FromHashList(["ASItrgt","fmgcPhase","managedSpd","onSpeedConst"],0.5, func(val) {
-				obj["ECON_range_high"].hide();
-				obj["ECON_range_low"].hide();
+			#Set the ECON range bar on descent and approach at +-20 knots normal and +5/-20 knots on speed constraints
+			props.UpdateManager.FromHashList(["ASItrgt", "ASI", "ASImax", "VLSmin","fmgcPhase","managedSpd","econMarginReduced"],0.5, func(val) {
+				if (val.fmgcPhase >= 4 and val.fmgcPhase <= 5) {
+					obj["ECON_range_high"].show();
+					obj["ECON_range_low"].show();
+					if (val.econMarginReduced) {
+						obj["ECON_range_high"].setTranslation(0, math.clamp(val.ASItrgt + 5, val.VLSmin, val.ASImax) * -6.6);
+						obj["ECON_range_low"].setTranslation(0, math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6);
+					} else {
+						obj["ECON_range_high"].setTranslation(0, math.clamp(val.ASItrgt + 20, val.VLSmin, val.ASImax) * -6.6);
+						obj["ECON_range_low"].setTranslation(0, math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6);
+					}
+				} else {
+					obj["ECON_range_high"].hide();
+					obj["ECON_range_low"].hide();
+				}
 				obj["FMA_ctr_msg-10"].hide();
 				obj["FMA_ctr_msg-11"].hide();
 			}),
@@ -1394,13 +1406,10 @@ var canvas_pfd = {
 			
 			
 			me.tgt_ias = notification.targetIasPFD;
-			print(me.tgt_ias);
-			print(fmgc.Input.kts.getValue());
-			print(fmgc.Input.idleDescent.getValue());
+			#To show the original IAS during idle descent
 			if (fmgc.Input.idleDescent.getValue()) {
 				me.tgt_kts = notification.targetKtsShow;
-				print("yes");
-				print(me.tgt_kts);
+
 			} else {
 				me.tgt_kts = notification.targetKts;
 			}
@@ -2262,7 +2271,8 @@ var input = {
 	attSwitch: "/controls/navigation/switching/att-hdg",
 	managedAlt: "/it-autoflight/internal/mng-alt",
 	vdevDot: "/it-autoflight/internal/vdev-dot",
-	
+	econMarginReduced: "/it-autoflight/internal/econ-margin-reduced",
+
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",
 	altitude: "/instrumentation/altimeter/indicated-altitude-ft",
