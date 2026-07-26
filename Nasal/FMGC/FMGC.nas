@@ -1065,8 +1065,6 @@ var ManagedSPD = maketimer(0.25, func {
 					#kts is the value to actually use for idle descent target FPM, ktsshow is to be displayed on the PFD
 					Input.kts.setValue(math.clamp(FMGCInternal.mngSpd + adjustment, FMGCNodes.minspeed.getValue(), FMGCInternal.maxspeed));
 					Input.ktsShow.setValue(FMGCInternal.mngSpd);
-					print("inside where it should be");
-
 				} else {
 					Input.kts.setValue(FMGCInternal.mngSpd);
 				}
