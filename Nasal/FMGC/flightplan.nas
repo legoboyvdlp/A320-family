@@ -790,7 +790,7 @@ var flightPlanController = {
 	#at a certain distance.
 	getExtrapolatedOneThousandVSDescent: func(distanceToCstr2) {
 		var currentAlt = Position.indicatedAltitudeFt.getValue();
-		var gs = fmgc.Velocities.groundspeedKt.getValue();
+		var gs = pts.Velocities.groundspeedKt.getValue();
 		var extrapolatedAlt = currentAlt - (distanceToCstr2 * 60 * 1000 / gs);
 		return extrapolatedAlt;
 	},
@@ -800,10 +800,9 @@ var flightPlanController = {
 		var extrapolatedAlt = currentAlt + ((altCstr - currentAlt) * (distanceToCstr2 / distanceToCstr));
 		return extrapolatedAlt;
 	},
-
+	#Get the normal managed speed at altitude
 	getSpeedAtAltitude: func(altitude) {
 		if (altitude <= 10000) {
-			# altitude = 10000;
 			return 250;
 		}
 		var costIndex = fmgc.FMGCNodes.costIndex.getValue();
@@ -912,7 +911,6 @@ var flightPlanController = {
 
 		distanceToCstr = math.max(distanceToCstr, 1e-45);
 
-		# --- Second loop: check intervening constraints ---
 		var distanceToCstr2 = 0;
 
 		for (var j = me.currentToWptIndex.getValue(); j < wpIndex; j += 1) {
