@@ -760,7 +760,7 @@ var canvas_pfd = {
 			}),
 			#Set the ECON range bar on descent and approach at +-20 knots normal and +5/-20 knots on speed constraints
 			props.UpdateManager.FromHashList(["ASItrgt", "ASI", "ASImax", "VLSmin","fmgcPhase","managedSpd","econMarginReduced"],0.5, func(val) {
-				if (val.fmgcPhase >= 4 and val.fmgcPhase <= 5) {
+				if (val.fmgcPhase >= 4 and val.fmgcPhase <= 5 and fmgc.Output.vert.getValue() == 8) {
 					obj["ECON_range_high"].show();
 					obj["ECON_range_low"].show();
 					if (val.econMarginReduced) {
