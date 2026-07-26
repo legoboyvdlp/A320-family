@@ -41,7 +41,6 @@ var FBW = {
 	degradeYawLaw: props.globals.getNode("/it-fbw/degrade-yaw-law"),
 	activeLaw: props.globals.getNode("/it-fbw/law"),
 	activeYawLaw: props.globals.getNode("/it-fbw/yaw-law"),
-	override: props.globals.getNode("/it-fbw/override"),
 	yawdamper: props.globals.getNode("/systems/fctl/yawdamper-active"),
 	Computers: {
 		elac1: props.globals.getNode("/systems/fctl/elac1"),
@@ -130,7 +129,6 @@ var FBW = {
 		me.Sidestick.active[1].setBoolValue(1); # Change to reset stick priority?
 		me.degradeLaw.setValue(0);
 		me.activeLaw.setValue(0);
-		me.override.setValue(0);
 		me.apOff = 0;
 		
 		if (!updatet.isRunning) {
@@ -246,41 +244,39 @@ var update_loop = func {
 }
 	
 var fbw_loop = func {
-	if (!FBW.override.getBoolValue()) {
-		var active = FBW.activeLaw.getValue();
-		var degrade = FBW.degradeLaw.getValue();
-		if (degrade == 0) {
-			if (active != 0) {
-				FBW.activeLaw.setValue(0);
-			}
-		} else if (degrade == 1) {
-			if (active != 1) {
-				FBW.activeLaw.setValue(1);
-			}
-		} else if (degrade == 2) {
-			if (active != 2) {
-				FBW.activeLaw.setValue(2);
-			}
-		} else if (degrade == 3) {
-			if (active != 3) {
-				FBW.activeLaw.setValue(3);
-			}
+	var active = FBW.activeLaw.getValue();
+	var degrade = FBW.degradeLaw.getValue();
+	if (degrade == 0) {
+		if (active != 0) {
+			FBW.activeLaw.setValue(0);
 		}
-		
-		active = FBW.activeYawLaw.getValue();
-		degrade = FBW.degradeYawLaw.getValue();
-		if (degrade == 0) {
-			if (active != 0) {
-				FBW.activeYawLaw.setValue(0);
-			}
-		} else if (degrade == 1) {
-			if (active != 1) {
-				FBW.activeYawLaw.setValue(1);
-			}
-		} else if (degrade == 2) {
-			if (active != 2) {
-				FBW.activeYawLaw.setValue(2);
-			}
+	} else if (degrade == 1) {
+		if (active != 1) {
+			FBW.activeLaw.setValue(1);
+		}
+	} else if (degrade == 2) {
+		if (active != 2) {
+			FBW.activeLaw.setValue(2);
+		}
+	} else if (degrade == 3) {
+		if (active != 3) {
+			FBW.activeLaw.setValue(3);
+		}
+	}
+	
+	active = FBW.activeYawLaw.getValue();
+	degrade = FBW.degradeYawLaw.getValue();
+	if (degrade == 0) {
+		if (active != 0) {
+			FBW.activeYawLaw.setValue(0);
+		}
+	} else if (degrade == 1) {
+		if (active != 1) {
+			FBW.activeYawLaw.setValue(1);
+		}
+	} else if (degrade == 2) {
+		if (active != 2) {
+			FBW.activeYawLaw.setValue(2);
 		}
 	}
 	
