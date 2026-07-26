@@ -985,6 +985,7 @@ var ManagedSPD = maketimer(0.25, func {
 			if (nextApproachSpdConst > minSpeed and nextApproachSpdConst <= 346) {
 				minSpeed = nextApproachSpdConst;
 			}
+			Input.minSpeed.setValue(minSpeed);
 			if (waypoint != nil) {
 				constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
 			}

@@ -1418,8 +1418,8 @@ var canvas_pfd = {
 
 			if (notification.managedSpd) {
 				if (fmgc.FMGCInternal.decel) {
-					me.tgt_ias = fmgc.FMGCInternal.minspeed;
-					me.tgt_kts = fmgc.FMGCInternal.minspeed;
+					me.tgt_ias = notification.minSpeed;
+					me.tgt_kts = notification.minSpeed;
 				} else if (fmgc.FMGCInternal.phase == 6) {
 					me.tgt_ias = fmgc.FMGCInternal.clean;
 					me.tgt_kts = fmgc.FMGCInternal.clean;
@@ -2334,9 +2334,9 @@ var input = {
 	altimeterHpa: "/instrumentation/altimeter/setting-hpa",
 	targetIasPFD: "/FMGC/internal/target-ias-pfd",
 	targetMach: "/it-autoflight/input/mach",
-	targetMachShow: "/it-autoflight/input/mach-show",
 	targetKts: "/it-autoflight/input/kts",
 	targetKtsShow: "/it-autoflight/input/kts-show",
+	minSpeed: "/it-autoflight/input/minSpeed",
 	idleDescent: "/it-autoflight/input/idle-descent",
 	targetHeading: "/it-autoflight/input/hdg",
 	managedSpd: "/it-autoflight/input/spd-managed",

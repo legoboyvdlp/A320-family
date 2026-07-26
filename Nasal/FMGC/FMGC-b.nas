@@ -105,6 +105,7 @@ var Input = {
 	idleDescent: props.globals.initNode("/it-autoflight/input/idle-descent", 0, "BOOL"),
 	kts: props.globals.initNode("/it-autoflight/input/kts", 100, "INT"),
 	ktsShow: props.globals.initNode("/it-autoflight/input/kts-show", 100, "INT"),
+	minSpeed: props.globals.initNode("/it-autoflight/input/minSpeed",100,"INT"),
 	ktsMach: props.globals.initNode("/it-autoflight/input/kts-mach", 0, "BOOL"),
 	lat: props.globals.initNode("/it-autoflight/input/lat", 5, "INT"),
 	latTemp: 5,
@@ -679,7 +680,7 @@ var ITAF = {
 		if (isGeo) {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
-			vs = math.max(vs, -1*gs*5);
+			vs = math.max(vs, -1*gs*6);
 			constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
 			currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 			distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
@@ -1174,7 +1175,7 @@ var managedClb = func {
 #Called when in alt cap/alt hold when CLB mode is armed, it checks when the next climb constraint is higher than current to engage
 #CLB mode again.
 var armClb = func {
-	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300) {
+	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) >= 300) {
 		ITAF.updateVertText("CLB");
 		ITAF.setVertMode(8); # CLB mode
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
