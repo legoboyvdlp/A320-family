@@ -1020,11 +1020,12 @@ var flightPlanController = {
 		}
 		return [1000000000000000,0];
 	},
-	#Find the next speed constraint in managed climb mode
-	getNextClbSpdConst: func() {
+	#Find the next speed constraint in managed climb/approach mode
+	getNextSpdConst: func(wp_type) {
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			var spdCstr = me.flightplans[2].getWP(i).speed_cstr;
-			if (spdCstr != 0 and spdCstr != nil and me.flightplans[2].getWP(i).wp_role == "sid") {
+			var wp_role = me.flightplans[2].getWP(i).wp_role;
+			if (spdCstr != 0 and spdCstr != nil and ((wp_role == "sid" and wp_type) or ((wp_role == "approach" or wp_role == "star") and !wp_type))) {
 				return [spdCstr,i];
 			}
 		}
