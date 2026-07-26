@@ -715,9 +715,9 @@ var ITAF = {
 			Internal.managedModeOn.setBoolValue(0);
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
-			# me.updateGsArm(0);
 			Output.vert.setValue(0);
 			me.resetClimbRateLim();
+			Input.idleDescent.setBoolValue(0);
 			me.updateVertText("ALT HLD");
 			me.syncAlt();
 			me.updateThrustMode();
@@ -766,6 +766,7 @@ var ITAF = {
 				Internal.alt.setValue(Input.alt.getValue());
 				Internal.altCaptureActive = 1;
 				Output.vert.setValue(0);
+				Input.idleDescent.setBoolValue(0);
 				me.updateVertText("ALT CAP");
 				me.updateThrustMode();
 			}
@@ -815,6 +816,7 @@ var ITAF = {
 				Internal.altCaptureActive = 1;
 				Input.idleDescent.getBoolValue(0);
 				Output.vert.setValue(0);
+				Input.idleDescent.setBoolValue(0);
 				me.updateVertText("ALT CAP");
 				me.updateThrustMode();
 			}
@@ -822,6 +824,7 @@ var ITAF = {
 			Internal.flchActive = 0;
 			Internal.altCaptureActive = 0;
 			Output.vert.setValue(9);
+			Input.idleDescent.setBoolValue(0);
 			me.updateVertText("");
 			me.updateThrustMode();
 		}
