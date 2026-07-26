@@ -1143,13 +1143,10 @@ var managedDes = func {
 	var realDeltaAlt = Position.indicatedAltitudeFt.getValue() - alt;
 	if (realDeltaAlt >= 300 and Text.vert.getValue() == "DES") {
 		Internal.alt.setValue(alt);
-		ITAF.setVs(ITAF.getVs(distance, managedDeltaAlt, isGeo, realNextManagedAlt));
+		ITAF.setVs(ITAF.getVs(distance, managedDeltaAlt, isGeo));
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
 		settimer(managedDes, 2);
-	} elsif (Text.vert.getValue() == "DES") {
-		ITAF.setVertMode(3);
-		armDes();
 	}
 };
 #To be called when engages into CLB mode, uses the same mechanisism as OP CLB,
@@ -1184,7 +1181,7 @@ var armClb = func {
 #Called when in alt cap/alt hold when DES mode is armed, it checks when the next descent constraint is lower than current to engage
 #DES mode again.
 var armDes = func {
-	if (fmgc.flightPlanController.getDesAltConst() == nil or (abs(fmgc.flightPlanController.getDesAltConst()[0] - Position.indicatedAltitudeFt.getValue()) >= 300)) {
+	if (fmgc.flightPlanController.getDesAltConst() == nil or (Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[0] > 300)) {
 		ITAF.setVertMode(8);
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
 		settimer(armDes, 2);
