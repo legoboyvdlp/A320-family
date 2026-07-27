@@ -843,8 +843,12 @@ var flightPlanController = {
 			altCstr = wp.alt_cstr;
 			if (altCstrType != "above" and (wptRole == "star" or wptRole == "approach" or wptType == "runway")) {
 				if (wptType == "runway") {
-					runwayInfo = geodinfo(wp.lat, me.flightplans[2].getWP(i).lon);
-					altCstr = runwayInfo[0] * 3.28084;
+					var runwayInfo = geodinfo(wp.lat, wp.lon);
+					if (!runwayInfo) {
+						altCstr = 0;
+					} else {
+						altCstr = runwayInfo[0] * 3.28084;
+					}
 					altCstrType = "runway";
 					wpIndex = i;
 					break;
