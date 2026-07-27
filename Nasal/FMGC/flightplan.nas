@@ -14,8 +14,6 @@ var DEBUG_DISCONT = 0;
 var lastIdealSlope = 0;
 var lastIdealSlopeWptIndex = 0;
 var bufferCount = 0;
-var lastDescentCoefficient = 318;
-var coefficientBufferCount = 0;
 var descent_coeff = 318;
 
 # Props.getNode
@@ -887,7 +885,11 @@ var flightPlanController = {
 
 				if (wptType == "runway") {
 					var runwayInfo = geodinfo(wp.lat, wp.lon);
-					altCstr = runwayInfo[0] * 3.28084;
+					if (!runwayInfo) {
+						altCstr = 0;
+					} else {
+						altCstr = runwayInfo[0] * 3.28084;
+					}
 					altCstrType = "runway";
 					wpIndex = i;
 					break;

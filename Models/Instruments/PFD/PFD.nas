@@ -1416,15 +1416,6 @@ var canvas_pfd = {
 			
 			
 
-			if (notification.managedSpd) {
-				if (fmgc.FMGCInternal.decel) {
-					me.tgt_ias = notification.minSpeed;
-					me.tgt_kts = notification.minSpeed;
-				} else if (fmgc.FMGCInternal.phase == 6) {
-					me.tgt_ias = fmgc.FMGCInternal.clean;
-					me.tgt_kts = fmgc.FMGCInternal.clean;
-				}
-			}
 
 			notification.tgt_kts = me.tgt_kts;
 			
