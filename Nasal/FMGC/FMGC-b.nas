@@ -678,13 +678,14 @@ var ITAF = {
 	#get the VS for managed descent mode. In geometric descent it's the calculated smooth path, in idle descent it's idle descent.
 	getVs: func(distance, deltaAlt, isGeo) {
 		if (isGeo) {
-			gs = Velocities.groundspeedKt.getValue();
-			vs = -(deltaAlt * gs) / (distance * 60);
+			var gs = Velocities.groundspeedKt.getValue();
+			var vs = -(deltaAlt * gs) / (distance * 60);
 			vs = math.max(vs, -1*gs*6);
-			constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
-			currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
-			distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
-			if (constraintSpeed != nil and constraintSpeed != 0 and currentSpeed - constraintSpeed > 10 and distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) {
+			var constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
+			var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
+			var distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
+			var addition = fmgc.flightPlanController.getTurnDistAddition();
+			if (constraintSpeed != nil and constraintSpeed != 0 and currentSpeed - constraintSpeed >= 7 and distanceToWpt - math.max((currentSpeed - constraintSpeed + addition)/10,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) {
 				vs = math.max(vs, Internal.targetFpmFlch.getValue());
 			}
 			Input.idleDescent.setBoolValue(0);
@@ -751,7 +752,6 @@ var ITAF = {
 			
 		} else if (n == 4) { # FLCH
 			Internal.managedModeOn.setBoolValue(0);
-			me.updateGsArm(0);
 			Output.vert.setValue(1);
 			Internal.alt.setValue(Input.alt.getValue());
 			Internal.altDiff = Internal.alt.getValue() - Position.indicatedAltitudeFt.getValue();

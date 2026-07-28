@@ -990,6 +990,7 @@ var ManagedSPD = maketimer(0.25, func {
 				minSpeed = nextApproachSpdConst;
 			}
 			Input.minSpeed.setValue(minSpeed);
+			var addition = fmgc.flightPlanController.getTurnDistAddition();
 			if (waypoint != nil) {
 				constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
 			}
@@ -1012,10 +1013,7 @@ var ManagedSPD = maketimer(0.25, func {
 					FMGCInternal.mngSpdCmd = minSpeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-					var addition = 0;
-					if (abs(FPLN.deltaAngle) < 120 and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
-						addition = FPLN.turnDist;
-					}
+					
 					if (constraintSpeed != nil and constraintSpeed != 0 and (distanceToWpt - math.max((currentSpeed - constraintSpeed)/10 + addition,0) <= 1) and (distanceToWpt >= 2)) {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 						lastConstraintSpeed = constraintSpeed;
@@ -1027,10 +1025,6 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt + 1000) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
-				var addition = 0;
-				if (abs(FPLN.deltaAngle) < 120 and !Gear.wow1.getBoolValue() and fmgc.flightPlanController.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
-					addition = FPLN.turnDist;
-				}
 				if (constraintSpeed != nil and constraintSpeed != 0 and ((distanceToWpt - math.max((currentSpeed - constraintSpeed)/10 + addition,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) or FMGCInternal.decel)) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? minSpeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 					lastConstraintSpeed = constraintSpeed;

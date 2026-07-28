@@ -808,6 +808,13 @@ var flightPlanController = {
 		return math.clamp(speed, 250, 345);
 	},
 
+
+	getTurnDistAddition: func() {
+		if (abs(FPLN.deltaAngle) < 120 and !Gear.wow1.getBoolValue() and me.flightplans[2].getWP(FPLN.currentWPTemp).fly_type == "flyBy") {
+			return FPLN.turnDist;
+		} return 0;
+	},
+
 	#Calculate what the managed show altitude should be. Calculated from trying to find the first non below altitude constraint
 	calculateManagedLvlOffAltitude: func() {
 		var result = me.getDesAltConst();
@@ -830,7 +837,7 @@ var flightPlanController = {
 	#Get the leg distance to the waypoint index in question, if it's the next one it returns the to distance, if it's not then it's the leg distance
 	getLegDistance: func(i) {
 		if (i == me.currentToWptIndex.getValue()) {
-			return me.distToWpt.getValue();
+			return math.max(1e-45,me.distToWpt.getValue() - me.getTurnDistAddition());
 		} else {
 			return me.flightplans[2].getWP(i).leg_distance;
 		}
