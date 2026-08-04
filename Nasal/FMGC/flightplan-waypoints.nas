@@ -191,15 +191,15 @@ var WaypointDatabase = {
 			if (childNode == nil) { 
 				continue; 
 			}
-			
-			var wpt = createWP({lat: num(childNode.getChild("latitude").getValue()), lon: num(childNode.getChild("longitude").getValue())},childNode.getChild("ident").getValue());
-			
-			if (left(childNode.getChild("ident").getValue(), 3) == "PBD") {
-				pilotWP = pilotWaypoint.newAtPosition(wpt, "PBD", right(childNode.getChild("ident").getValue(), 1));
+            var ident = childNode.getChild("ident").getValue();
+            var indexer = string.replace(ident,string.trim(ident,1, string.isdigit),"");
+			var wpt = createWP({lat: num(childNode.getChild("latitude").getValue()), lon: num(childNode.getChild("longitude").getValue())},ident);
+			if (left(ident, 3) == "PBD") {
+				pilotWP = pilotWaypoint.newAtPosition(wpt, "PBD", indexer);
 			} else {
-				pilotWP = pilotWaypoint.newAtPosition(wpt, "LL", right(childNode.getChild("ident").getValue(), 1));
+				pilotWP = pilotWaypoint.newAtPosition(wpt, "LL", indexer);
 			}
-			me.addWPToPos(pilotWP, right(childNode.getChild("ident").getValue(), 1));
+			me.addWPToPos(pilotWP, indexer);
 		}
 	},
 	# addWPToPos - helper for reading - inserts at specific index
@@ -225,7 +225,6 @@ var pilotWaypoint = {
 		# Figure out what the first index is we can use
 		var nilIndex = WaypointDatabase.getNilIndex();
 		var position = nil;
-		
 		if (nilIndex == -1) {
 			position = WaypointDatabase.getSize() + 1;
 		} else {
