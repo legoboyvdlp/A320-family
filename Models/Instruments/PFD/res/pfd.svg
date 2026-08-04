@@ -1413,6 +1413,14 @@
      width="21.356052"
      id="ASI_max_clip"
      style="opacity:0.46000001;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:1.27696717;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       inkscape:label="#rect9211"
+       y="237.03366"
+       x="82"
+       height="552.00073"
+       width="66"
+       id="VPROT_MAX_clip"
+       style="opacity:0.46000001;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:1.27696717;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <rect
      style="opacity:0.46000001;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:1.27696717;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="ALT_target_clip"
@@ -6565,7 +6573,18 @@
          x="80.506668"
          id="tspan4696"
          sodipodi:role="line">.</tspan></text>
-  </g>
+
+      <g
+         id="VPROT_MAX"
+         style="display:inline">
+        <path
+           d="m 91.5,509.5 h 22"
+           style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:3.2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           d="m 91.5,517.5 h 22"
+           style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:3.2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      </g>
+    </g>
   <path
      inkscape:label="#rect902"
      sodipodi:nodetypes="cccc"
