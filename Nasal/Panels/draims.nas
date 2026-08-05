@@ -46,8 +46,10 @@ var telCallState = [props.globals.initNode("/systems/draims/tel1-state", 0, "INT
 var draimsPanel = [nil, nil, nil];
 var SVGKeysFreq = ["Transmit1", "Transmit2", "Transmit3", "Select1", "Select2", "Select3", "Standby1", "Standby2", "Standby3", "Active1", "Active2", "Active3", "Channel1", "Channel3", "Channel2", "Volume1", "Volume2", "Volume3", "Mute1", "Mute2", "Mute3", "Label1", "Label2", "Label3", "ArrowUp1", "ArrowDown1", "ArrowUp2", "ArrowDown2", "ArrowUp3", "ArrowDown3", "AM1", "AM2", "AMMode", "AMModeOn", "AMModeOff", "AMModeOnBox", "AMModeOffBox"];
 var SVGKeysTel = ["Transmit1", "Transmit2", "Select1", "Select2", "Number1", "Number2", "Channel1", "Channel2", "Volume1", "Volume2", "Mute1", "Mute2", "Label1", "Label2", "ArrowUp1", "ArrowDown1", "ArrowUp2", "ArrowDown2", "Link_Name1", "Link_Name2", "Directory", "Directory_Arrow", "DAIL1", "DAIL2"];
-var SVGKeysATC = ["SquawkLabel", "Ident", "Squawk", "Message1", "Message2", "Message3", "AltRptgOnBox", "AltRptgOffBox", "AltRptgOn", "AltRptgOff", "TcasDisplayMode", "TcasDisplayThrtBox", "TcasDisplayBlwBox", "TcasDisplayThrt", "TcasDisplayBlw", "TcasDisplayAbvBox", "TcasDisplayAbv", "TcasDisplayNormBox", "TcasDisplayNorm", "TcasModeTaBox", "TcasModeTaRaBox", "TcasModeTa", "TcasModeTaRa", "TcasModeStbyBox", "TcasModeStby", "XPDR2Box", "XPDR1Box", "XPDR2", "XPDR1", "AtcModeAutoBox", "AtcModeStbyBox", "AtcModeAuto", "AtcModeStby"];
-var SVGKeysLower = ["SelectATC", "SquawkLabel", "Squawk", "AboveBelow", "TARA", "Message1", "Message2", "Message3", "TCAS_Bar"];
+var SVGKeysATC = ["SquawkLabel", "Ident", "Squawk", "Message1", "Message2", "Message3", "AltRptgOnBox", "AltRptgOffBox", "AltRptgOn", "AltRptgOff", "TcasDisplayMode", "TcasDisplayThrtBox", "TcasDisplayBlwBox", "TcasDisplayThrt", "TcasDisplayBlw", "TcasDisplayAbvBox", "TcasDisplayAbv", "TcasDisplayNormBox", "TcasDisplayNorm", "TcasModeTaBox", "TcasModeTaRaBox", "TcasModeTa", "TcasModeTaRa", "TcasModeStbyBox", "TcasModeStby", "XPDR2Box", "XPDR1Box", "XPDR2", "XPDR1", "AtcModeAutoBox", "AtcModeStbyBox", "AtcModeAuto", "AtcModeStby", "STBY_NAV"];
+var SVGKeysNAV = ["Option_VOR", "Option_LS", "Auto_Box", "STBY_NAV_Box", "Auto", "STBY_NAV", "NAV_VOR2_Box", "NAV_VOR2", "VOR_Arrow", "LS_Arrow", "NAV_VOR1_Box", "NAV_VOR1", "NAV_MKR_Box", "NAV_MKR", "NAV_LS_Box", "NAV_LS", "Voice_On_Box", "Voice_On", "Voice_Off_Box", "Voice_Off", "Voice_Label"];
+var SVGKeysMENU = ["Satcom_Settings", "SELCAL_Label", "SELCAL", "Settings_Arrow"];
+var SVGKeysLower = ["SelectATC", "SquawkLabel", "Squawk", "AboveBelow", "TARA", "Message1", "Message2", "Message3", "TCAS_Bar", "STBY_NAV"];
 var WHITE = [1.0000,1.0000,1.0000];
 var GREY = [0.3, 0.3, 0.3];
 var BLACK = [0, 0, 0];
@@ -57,7 +59,7 @@ var AMBER = [0.7333,0.3803,0.0000];
 var YELLOW = [0.9333,0.9333,0.0000];
 var MAGENTA = [0.6902,0.3333,0.7541];
 
-# TODO is there a power on self test?
+# TODO power on self test
 # TODO messages such as vhf1 reverted
 var draimsPanelClass = {
 	new: func(instance) {
@@ -97,6 +99,24 @@ var draimsPanelClass = {
 		}
 		m.atcPage.hide();
 
+		m.navPage = m.canvas.createGroup();
+		canvas.parsesvg(m.navPage, "Aircraft/A320-family/Models/Instruments/DRAIMS/res/nav.svg");
+		m.navPage.setSize(1024,624);
+		m.elementsNav = {};
+		foreach(var key; SVGKeysNAV) {
+			m.elementsNav[key] = m.navPage.getElementById(key);
+		}
+		m.navPage.hide();
+
+		m.menuPage = m.canvas.createGroup();
+		canvas.parsesvg(m.menuPage, "Aircraft/A320-family/Models/Instruments/DRAIMS/res/menu.svg");
+		m.menuPage.setSize(1024,624);
+		m.elementsMenu = {};
+		foreach(var key; SVGKeysMENU) {
+			m.elementsMenu[key] = m.menuPage.getElementById(key);
+		}
+		m.menuPage.hide();
+
 		m.lowerPage = m.canvas.createGroup();
 		canvas.parsesvg(m.lowerPage, "Aircraft/A320-family/Models/Instruments/DRAIMS/res/lower.svg");
 		m.lowerPage.setSize(1024,624);
@@ -112,6 +132,7 @@ var draimsPanelClass = {
 			tel: props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/focusTEL", "1", "STRING", 1),
 		};
 		m.on = props.globals.getNode("/systems/draims/rmp[" ~ instance ~ "]/on", 1);
+		m.audioNavSelected = props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/audioNavSelected", 0, "INT", 1);
 		return m;
 	},
 	switchPage: func(page) {
@@ -119,16 +140,36 @@ var draimsPanelClass = {
 			me.freqPage.show();
 			me.telPage.hide();
 			me.atcPage.hide();
+			me.navPage.hide();
+			me.menuPage.hide();
 			me.lowerPage.show();
 		} else if (page == "tel") {
 			me.freqPage.hide();
 			me.telPage.show();
 			me.atcPage.hide();
+			me.navPage.hide();
+			me.menuPage.hide();
 			me.lowerPage.show();
 		} else if (page == "atc") {
 			me.freqPage.hide();
 			me.telPage.hide();
 			me.atcPage.show();
+			me.navPage.hide();
+			me.menuPage.hide();
+			me.lowerPage.hide();
+		} else if (page == "nav") {
+			me.freqPage.hide();
+			me.telPage.hide();
+			me.atcPage.hide();
+			me.navPage.show();
+			me.menuPage.hide();
+			me.lowerPage.hide();
+		} else if (page == "menu") {
+			me.freqPage.hide();
+			me.telPage.hide();
+			me.atcPage.hide();
+			me.navPage.hide();
+			me.menuPage.show();
 			me.lowerPage.hide();
 		}
 		me.page.setValue(page);
@@ -139,6 +180,9 @@ var draimsPanelClass = {
 			me.freqPage.hide();
 			me.telPage.hide();
 			me.atcPage.hide();
+			me.navPage.hide();
+			me.menuPage.hide();
+			me.lowerPage.hide();
 			return;
 		}
 		page = me.page.getValue();
@@ -154,8 +198,12 @@ var draimsPanelClass = {
 		} else if (page == "atc") {
 			me.atcPage.show();
 			me.updateATC();
-		} else if (page == "menu") {
 		} else if (page == "nav") {
+			me.navPage.show();
+			me.updateNAV();
+		} else if (page == "menu") {
+			me.menuPage.show();
+			me.updateMENU();
 		}
 	},
 	updateVHF: func() {
@@ -484,6 +532,11 @@ var draimsPanelClass = {
 			me.elementsLower["AboveBelow"].setText("BLW");
 		}
 		me.elementsLower["AboveBelow"].show();
+		if (getprop("/systems/radio/rmp[0]/nav")) {
+			me.elementsLower["STBY_NAV"].show();
+		} else {
+			me.elementsLower["STBY_NAV"].hide();
+		}
 		me.elementsLower["Message1"].hide();
 		me.elementsLower["Message2"].hide();
 		me.elementsLower["Message3"].hide();
@@ -568,9 +621,77 @@ var draimsPanelClass = {
 			me.elementsAtc["TcasDisplayNorm"].setColor(tcasTextColor);
 			me.elementsAtc["TcasDisplayNormBox"].show();
 		}
+		if (getprop("/systems/radio/rmp[0]/nav")) {
+			me.elementsAtc["STBY_NAV"].show();
+		} else {
+			me.elementsAtc["STBY_NAV"].hide();
+		}
 		me.elementsAtc["Message1"].hide();
 		me.elementsAtc["Message2"].hide();
 		me.elementsAtc["Message3"].hide();
+	},
+	updateNAV: func() {
+		if (getprop("/systems/radio/rmp[0]/nav")) {
+			me.elementsNav["Auto"].setColor(WHITE);
+			me.elementsNav["Auto_Box"].hide();
+			me.elementsNav["STBY_NAV"].setColor(BLACK);
+			me.elementsNav["STBY_NAV_Box"].show();
+			me.elementsNav["Option_LS"].setColor(WHITE);
+			me.elementsNav["LS_Arrow"].setColor(WHITE);
+			me.elementsNav["LS_Arrow"].setColorFill(WHITE);
+			me.elementsNav["Option_VOR"].setColor(WHITE);
+			me.elementsNav["VOR_Arrow"].setColor(WHITE);
+			me.elementsNav["VOR_Arrow"].setColorFill(WHITE);
+		} else {
+			me.elementsNav["Auto"].setColor(BLACK);
+			me.elementsNav["Auto_Box"].show();
+			me.elementsNav["STBY_NAV"].setColor(WHITE);
+			me.elementsNav["STBY_NAV_Box"].hide();
+			me.elementsNav["Option_LS"].setColor(GREY);
+			me.elementsNav["LS_Arrow"].setColor(GREY);
+			me.elementsNav["LS_Arrow"].setColorFill(GREY);
+			me.elementsNav["Option_VOR"].setColor(GREY);
+			me.elementsNav["VOR_Arrow"].setColor(GREY);
+			me.elementsNav["VOR_Arrow"].setColorFill(GREY);
+		}
+		var audioNavBoxes = ["NAV_LS_Box", "NAV_MKR_Box", "NAV_VOR1_Box", "NAV_VOR2_Box"];
+		var audioNavLabels = ["NAV_LS", "NAV_MKR", "NAV_VOR1", "NAV_VOR2"];
+		var selected = me.audioNavSelected.getValue();
+		for (var i = 0; i < 4; i += 1) {
+			if (i == selected) {
+				me.elementsNav[audioNavBoxes[i]].show();
+				me.elementsNav[audioNavLabels[i]].setColor(BLACK);
+			} else {
+				me.elementsNav[audioNavBoxes[i]].hide();
+				me.elementsNav[audioNavLabels[i]].setColor(WHITE);
+			}
+		}
+		if (selected > 1) {
+			me.elementsNav["Voice_Label"].show();
+			if (getprop("/systems/audio/acp[" ~ me.instance ~ "]/on_voice")) {
+				me.elementsNav["Voice_On"].setColor(BLACK);
+				me.elementsNav["Voice_Off"].setColor(WHITE);
+				me.elementsNav["Voice_On_Box"].show();
+				me.elementsNav["Voice_Off_Box"].hide();
+			} else {
+				me.elementsNav["Voice_On"].setColor(WHITE);
+				me.elementsNav["Voice_Off"].setColor(BLACK);
+				me.elementsNav["Voice_On_Box"].hide();
+				me.elementsNav["Voice_Off_Box"].show();
+			}
+			me.elementsNav["Voice_On"].show();
+			me.elementsNav["Voice_Off"].show();
+		} else {
+			me.elementsNav["Voice_Label"].hide();
+			me.elementsNav["Voice_On"].hide();
+			me.elementsNav["Voice_Off"].hide();
+			me.elementsNav["Voice_On_Box"].hide();
+			me.elementsNav["Voice_Off_Box"].hide();
+		}
+	},
+	updateMENU: func() {
+		foreach(var key; SVGKeysMENU) {
+		}
 	},
 	lskbutton: func(btn) {
 		# No need if RMP is off/no power
@@ -612,18 +733,14 @@ var draimsPanelClass = {
 					setprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/selected-mhz", oldStandby);
 					setprop("/instrumentation/comm[" ~ vhfID ~ "]/frequencies/standby-mhz", oldSelected);
 				}
-				updateAll();
 			} else if (btn == 4) {
 				me.changeFocus("ATC");
-				updateAll();
 			}
 		} else if (page == "hf") {
 			if (btn <= 2) {
 				# TODO
-				updateAll();
 			} else if (btn == 4) {
 				me.changeFocus("ATC");
-				updateAll();
 			}
 		} else if (page == "tel") {
 			if (btn <= 2) {
@@ -636,7 +753,6 @@ var draimsPanelClass = {
 			} else if (btn == 4) {
 				me.changeFocus("ATC");
 			}
-			updateAll();
 		} else if (page == "atc") {
 			if (btn == 1) {
 				if (getprop("/controls/atc/system-knob") == 0) {
@@ -646,10 +762,24 @@ var draimsPanelClass = {
 				}
 			} else if (btn == 2) {
 			}
-			updateAll();
-		} else if (page == "menu") {
 		} else if (page == "nav") {
+			if (btn == 2) {
+				if (getprop("/systems/radio/rmp[0]/nav")) {
+					setprop("/systems/radio/rmp[0]/nav", 0);
+					setprop("/systems/radio/rmp[1]/nav", 0);
+				} else {
+					setprop("/systems/radio/rmp[0]/nav", 1);
+					setprop("/systems/radio/rmp[1]/nav", 1);
+				}
+			} else if (btn == 4 and me.audioNavSelected.getValue() > 1) {
+				if (getprop("/systems/audio/acp[" ~ me.instance ~ "]/on_voice")) {
+					setprop("/systems/audio/acp[" ~ me.instance ~ "]/on_voice", 0)
+				} else {
+					setprop("/systems/audio/acp[" ~ me.instance ~ "]/on_voice", 1)
+				}
+			}
 		}
+		updateAll();
 	},
 	rskbutton: func(btn) {
 		# No need if RMP is off/no power
@@ -718,8 +848,18 @@ var draimsPanelClass = {
 				}
 			}
 			updateAll();
-		} else if (page == "menu") {
 		} else if (page == "nav") {
+			if (btn == 1) {
+			} else if (btn == 2) {
+			} else if (btn == 4) {
+				var selected = me.audioNavSelected.getValue();
+				if (selected == 3) {
+					me.audioNavSelected.setValue(0);
+				} else {
+					me.audioNavSelected.setValue(selected + 1);
+				}
+			}
+			updateAll();
 		}
 	},
 	numberbutton: func(btn) {
@@ -952,7 +1092,6 @@ var draimsPanelClass = {
 					vhf3DataStandby.setValue(1);
 				}
 			}
-			updateAll();
 		}
 		if (page == "hf" and (me.focus.hf.getValue() == 1 or me.focus.hf.getValue() == 2)) {
 			if (btn == "u") {
@@ -960,8 +1099,8 @@ var draimsPanelClass = {
 			} else {
 				hfEmerStandby[me.focus.hf.getValue() - 1].setValue(1);
 			}
-			updateAll();
 		}
+		updateAll();
 	},
 };
 
@@ -1089,3 +1228,4 @@ for (var i = 0; i <= 2; i += 1) {
 }
 setlistener("/systems/draims/tel1-state", updateAll, 0, 0);
 setlistener("/systems/draims/tel2-state", updateAll, 0, 0);
+updateAll();
