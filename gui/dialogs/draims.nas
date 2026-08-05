@@ -91,7 +91,7 @@ var draimsDialogClass = {
 		me._elements["RSK3"].addEventListener("click", func() {draims.rskbutton(3, me._instance);});
 		me._elements["RSK4"].addEventListener("click", func() {draims.rskbutton(4, me._instance);});
 
-		# Volume Knobs
+		# Volume Knobs, receive
 		me._elements["VHF1Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/vhf1-receive");});
 		me._elements["VHF2Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/vhf2-receive");});
 		me._elements["VHF3Vol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/vhf3-receive");});
@@ -103,6 +103,19 @@ var draimsDialogClass = {
 		me._elements["CABVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/cab-receive");});
 		me._elements["NAVVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/nav-receive");});
 		me._elements["PAVol"].addEventListener("click", func() {toggle("/controls/audio/acp[" ~ me._instance ~ "]/pa-receive");});
+
+		# Volume Knobs, volume
+		me._elements["VHF1Vol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf1-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf1-volume") + e.deltaY/20, 0, 1))});
+		me._elements["VHF2Vol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf2-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf2-volume") + e.deltaY/20, 0, 1))});
+		me._elements["VHF3Vol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf3-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf3-volume") + e.deltaY/20, 0, 1))});
+		me._elements["HF1Vol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/hf1-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/hf1-volume") + e.deltaY/20, 0, 1))});
+		me._elements["HF2Vol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/hf2-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/hf2-volume") + e.deltaY/20, 0, 1))});
+		me._elements["TEL1Vol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/tel1-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/tel1-volume") + e.deltaY/20, 0, 1))});
+		me._elements["TEL2Vol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/tel2-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/tel2-volume") + e.deltaY/20, 0, 1))});
+		me._elements["INTVol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/int-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/int-volume") + e.deltaY/20, 0, 1))});
+		me._elements["CABVol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/cab-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/cab-volume") + e.deltaY/20, 0, 1))});
+		me._elements["NAVVol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/nav-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/nav-volume") + e.deltaY/20, 0, 1))});
+		me._elements["PAVol"].addEventListener("wheel", func(e) {setprop("/controls/audio/acp[" ~ me._instance ~ "]/pa-volume", math.clamp(getprop("/controls/audio/acp[" ~ me._instance ~ "]/pa-volume") + e.deltaY/20, 0, 1))});
 
 		# Transmit Buttons
 		me._elements["VHF1Transmit"].addEventListener("click", func() {acp.transmitButton("vhf1", me._instance);});
@@ -215,6 +228,18 @@ var draimsDialogClass = {
 		} else {
 			me._elements["CABTransmitLight"].setColor(colors["transmitOff"]);
 		}
+
+		me._elements["VHF1Vol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf1-volume") * 270 * D2R);
+		me._elements["VHF2Vol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf2-volume") * 270 * D2R);
+		me._elements["VHF3Vol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/vhf3-volume") * 270 * D2R);
+		me._elements["HF1Vol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/hf1-volume") * 270 * D2R);
+		me._elements["HF2Vol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/hf2-volume") * 270 * D2R);
+		me._elements["TEL1Vol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/tel1-volume") * 270 * D2R);
+		me._elements["TEL2Vol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/tel2-volume") * 270 * D2R);
+		me._elements["INTVol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/int-volume") * 270 * D2R);
+		me._elements["CABVol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/cab-volume") * 270 * D2R);
+		me._elements["NAVVol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/nav-volume") * 270 * D2R);
+		me._elements["PAVol"].setRotation(getprop("/controls/audio/acp[" ~ me._instance ~ "]/pa-volume") * 270 * D2R);
 	},
 	_onClose: func() {
 		me.close();
