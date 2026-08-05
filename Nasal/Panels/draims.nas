@@ -80,6 +80,7 @@ var draimsPanelClass = {
 			m.elements[key] = m.freqPage.getElementById(key);
 			m.elements[key].hide();
 		}
+		m.freqPage.hide();
 
 		m.telPage = m.canvas.createGroup();
 		canvas.parsesvg(m.telPage, "Aircraft/A320-family/Models/Instruments/DRAIMS/res/tel.svg");
@@ -124,58 +125,40 @@ var draimsPanelClass = {
 		foreach(var key; SVGKeysLower) {
 			m.elementsLower[key] = m.lowerPage.getElementById(key);
 		}
+		m.lowerPage.hide();
 
-		m.page = props.globals.getNode("/systems/draims/rmp[" ~ instance ~ "]/page", "vhf", "STRING", 1);
+		m.testPage = m.canvas.createGroup();
+		canvas.parsesvg(m.testPage, "Aircraft/A320-family/Models/Instruments/DRAIMS/res/test.svg");
+		m.testPage.setSize(1024,624);
+		m.testPage.hide();
+
+		m.page = props.globals.getNode("/systems/draims/rmp[" ~ instance ~ "]/page", "test", "STRING", 1);
 		m.focus = {
 			vhf: props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/focusVHF", "1", "STRING", 1),
 			hf: props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/focusHF", "1", "STRING", 1),
 			tel: props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/focusTEL", "1", "STRING", 1),
 		};
 		m.on = props.globals.getNode("/systems/draims/rmp[" ~ instance ~ "]/on", 1);
-		m.audioNavSelected = props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/audioNavSelected", 0, "INT", 1);
+		m.audioNavSelected = props.globals.getNode("/systems/draims/rmp[" ~ instance ~ "]/audioNavSelected", 0, "INT", 1);
+		m.testing = props.globals.initNode("/systems/draims/rmp[" ~ instance ~ "]/testing", 0, "INT", 1);
+		m.testTimer = 0;
+		m.lastPower = 0;
 		return m;
 	},
 	switchPage: func(page) {
-		if (page == "vhf" or page == "hf") {
-			me.freqPage.show();
-			me.telPage.hide();
-			me.atcPage.hide();
-			me.navPage.hide();
-			me.menuPage.hide();
-			me.lowerPage.show();
-		} else if (page == "tel") {
-			me.freqPage.hide();
-			me.telPage.show();
-			me.atcPage.hide();
-			me.navPage.hide();
-			me.menuPage.hide();
-			me.lowerPage.show();
-		} else if (page == "atc") {
-			me.freqPage.hide();
-			me.telPage.hide();
-			me.atcPage.show();
-			me.navPage.hide();
-			me.menuPage.hide();
-			me.lowerPage.hide();
-		} else if (page == "nav") {
-			me.freqPage.hide();
-			me.telPage.hide();
-			me.atcPage.hide();
-			me.navPage.show();
-			me.menuPage.hide();
-			me.lowerPage.hide();
-		} else if (page == "menu") {
-			me.freqPage.hide();
-			me.telPage.hide();
-			me.atcPage.hide();
-			me.navPage.hide();
-			me.menuPage.show();
-			me.lowerPage.hide();
-		}
+		me.freqPage.hide();
+		me.telPage.hide();
+		me.atcPage.hide();
+		me.navPage.hide();
+		me.menuPage.hide();
+		me.lowerPage.hide();
+		me.testPage.hide();
+
 		me.page.setValue(page);
 		me.updatePage();
 	},
 	updatePage: func() {
+		# RMP off
 		if (!me.on.getValue()) {
 			me.freqPage.hide();
 			me.telPage.hide();
@@ -183,17 +166,43 @@ var draimsPanelClass = {
 			me.navPage.hide();
 			me.menuPage.hide();
 			me.lowerPage.hide();
+			me.testPage.hide();
+			me.lastPower = 0;
 			return;
+		}
+		# RMP just got turned on
+		if (me.lastPower == 0) {
+			me.testPage.show();
+			me.testTimer = pts.Sim.Time.elapsedSec.getValue();
+			me.testing.setValue(1);
+			me.lastPower = 1;
+			me.page.setValue("test");
+		}
+		if (me.testing.getValue()) {
+			if (me.testTimer + 15 < pts.Sim.Time.elapsedSec.getValue())
+			{
+				me.testing.setValue(0);
+				me.switchPage("vhf");
+			} else {
+# TODO this breaks cause fg bug
+#				settimer(draimsPanel[me.instance].updatePage, 1);
+# TODO so for now we also let it pass in this case, remove when fixed in fg
+me.testing.setValue(0);
+me.switchPage("vhf");
+			}
 		}
 		page = me.page.getValue();
 		if (page == "vhf") {
 			me.freqPage.show();
+			me.lowerPage.show();
 			me.updateVHF();
 		} else if (page == "hf") {
 			me.freqPage.show();
+			me.lowerPage.show();
 			me.updateHF();
 		} else if (page == "tel") {
 			me.telPage.show();
+			me.lowerPage.show();
 			me.updateTEL();
 		} else if (page == "atc") {
 			me.atcPage.show();
@@ -1106,11 +1115,6 @@ var draimsPanelClass = {
 
 var init = func() {
 	setprop("/systems/atc/transponder-code", 2000);
-	for (var i = 0; i <= 2; i += 1) {
-		draimsPanel[i].switchPage("vhf");
-	}
-	for (var i = 0; i <= 1; i += 1) {
-	}
 	entering.atc.setValue(0);
 }
 
@@ -1224,8 +1228,6 @@ for (var i = 0; i <= 2; i += 1) {
 	for (var j = 1; j <= 2; j += 1) {
 		setlistener("/controls/audio/acp[" ~ i ~ "]/hf" ~ j ~ "-receive", updateAll, 0, 0);
 		setlistener("/controls/audio/acp[" ~ i ~ "]/tel" ~ j ~ "-receive", updateAll, 0, 0);
+		setlistener("/systems/draims/tel" ~ i ~ "-state", updateAll, 0, 0);
 	}
 }
-setlistener("/systems/draims/tel1-state", updateAll, 0, 0);
-setlistener("/systems/draims/tel2-state", updateAll, 0, 0);
-updateAll();

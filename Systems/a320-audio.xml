@@ -6,6 +6,10 @@
 
 <system name="A320: Audio">
 
+	<property value="0">/systems/draims/rmp[0]/audioNavSelected</property>
+	<property value="0">/systems/draims/rmp[1]/audioNavSelected</property>
+	<property value="0">/systems/draims/rmp[2]/audioNavSelected</property>
+
 	<channel name="Audio Channels" execrate="8">
 		<switch name="/instrumentation/comm[0]/volume">
 			<default value="0"/>
