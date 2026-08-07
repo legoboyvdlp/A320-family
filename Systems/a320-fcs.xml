@@ -1218,9 +1218,16 @@
 				</tableData>
 			</table>
 		</scheduled_gain>
-		
-		<switch name="/systems/fcs/tiller/rudder-cmd-input">
+
+		<switch name="/systems/fcs/tiller/rudder-cmd-connected">
 			<default value="/systems/fbw/sidestick/yaw-input"/>
+			<test value="0">
+				/controls/gear/pedal-disc eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/fcs/tiller/rudder-cmd-input">
+			<default value="/systems/fcs/tiller/rudder-cmd-connected"/>
 			<test value="/systems/fbw/sidestick/roll-input">
 				/controls/flight/aileron-drives-tiller eq 1
 			</test>
