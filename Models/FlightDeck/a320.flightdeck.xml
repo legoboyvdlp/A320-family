@@ -3515,6 +3515,23 @@
 		<type>pick</type>
 		<object-name>tiller</object-name>
 		<object-name>tillerFo</object-name>
+		<!-- Temporary PEDAL DISC functional test -->
+		<action>
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/gear/pedal-disc</property>
+				<value type="bool">true</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/gear/pedal-disc</property>
+					<value type="bool">false</value>
+				</binding>
+			</mod-up>
+		</action>
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
@@ -43421,4 +43438,3 @@
 	</light>
 	
 </PropertyList>
-
