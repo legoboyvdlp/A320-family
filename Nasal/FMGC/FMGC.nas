@@ -1014,7 +1014,7 @@ var ManagedSPD = maketimer(0.25, func {
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
 					
-					if (constraintSpeed != nil and constraintSpeed != 0 and (distanceToWpt - math.max((currentSpeed - constraintSpeed)/10 + addition,0) <= 1) and (distanceToWpt >= 2)) {
+					if (constraintSpeed != nil and constraintSpeed != 0 and (distanceToWpt - math.max((currentSpeed - constraintSpeed)/10 + addition,0) <= 2) and (distanceToWpt >= 2)) {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
 						lastConstraintSpeed = constraintSpeed;
 					} else {
@@ -1025,7 +1025,7 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt + 1000) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
-				if (constraintSpeed != nil and constraintSpeed != 0 and ((distanceToWpt - math.max((currentSpeed - constraintSpeed)/10 + addition,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) or FMGCInternal.decel)) {
+				if (constraintSpeed != nil and constraintSpeed != 0 and ((distanceToWpt - math.max((currentSpeed - constraintSpeed)/10 + addition,0) <= 2 and distanceToWpt >= 1 and distanceToWpt <= 1000) or FMGCInternal.decel)) {
 					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? minSpeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
 					lastConstraintSpeed = constraintSpeed;
 				} else {
