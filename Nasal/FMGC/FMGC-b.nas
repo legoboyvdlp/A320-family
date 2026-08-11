@@ -672,7 +672,7 @@ var ITAF = {
 		if (isGeo) {
 			gs = Velocities.groundspeedKt.getValue();
 			vs = -(deltaAlt * gs) / (distance * 60);
-			vs = math.max(vs, -1*gs*5);
+			vs = math.max(vs, -1*gs*6);
 			Input.idleDescent.setBoolValue(0);
 		} else {
 			properDeltaAlt = fmgc.flightPlanController.getAltitudeFromDistance(distance);
