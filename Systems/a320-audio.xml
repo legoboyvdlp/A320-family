@@ -10,37 +10,37 @@
 		<switch name="/instrumentation/comm[0]/volume">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/vhf1-volume">
-				/controls/audio/acp[0]/vhf1-receive eq 1
 				/options/system/fo-view eq 0
+				/controls/audio/acp[0]/vhf1-receive eq 1
 			</test>
 				<!-- If FO's ACP is set as main instrument -->
 			<test logic="AND" value="/controls/audio/acp[1]/vhf1-volume">
-				/controls/audio/acp[1]/vhf1-receive eq 1
 				/options/system/fo-view eq 1
+				/controls/audio/acp[1]/vhf1-receive eq 1
 			</test>
 		</switch>
 		<switch name="/instrumentation/comm[1]/volume">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/vhf2-volume">
-				/controls/audio/acp[0]/vhf2-receive eq 1
 				/options/system/fo-view eq 0
+				/controls/audio/acp[0]/vhf2-receive eq 1
 			</test>
 				<!-- If FO's ACP is set as main instrument -->
 			<test logic="AND" value="/controls/audio/acp[1]/vhf2-volume">
-				/controls/audio/acp[1]/vhf2-receive eq 1
 				/options/system/fo-view eq 1
+				/controls/audio/acp[1]/vhf2-receive eq 1
 			</test>
 		</switch>
 		<switch name="/instrumentation/comm[2]/volume">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/vhf3-volume">
-				/controls/audio/acp[0]/vhf3-receive eq 1
 				/options/system/fo-view eq 0
+				/controls/audio/acp[0]/vhf3-receive eq 1
 			</test>
 				<!-- If FO's ACP is set as main instrument -->
 			<test logic="AND" value="/controls/audio/acp[1]/vhf3-volume">
-				/controls/audio/acp[1]/vhf3-receive eq 1
 				/options/system/fo-view eq 1
+				/controls/audio/acp[1]/vhf3-receive eq 1
 			</test>
 		</switch>
 	</channel>
