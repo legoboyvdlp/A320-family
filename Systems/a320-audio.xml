@@ -4,6 +4,8 @@
 <!-- Copyright (c) 2025 Nia -->
 <!-- Note, this is limited by flightgears current audio capabilities -->
 
+<!-- ABILITY TO SWITCH ACP'S ACCORDING TO FO SETTING IS A WORKAROUND AND SHOULD BE REMOVED ONCE MOVED UPWARDS (swift-plugin, Swift itself) -->
+
 <system name="A320: Audio">
 
 	<property value="0">/systems/draims/rmp[0]/audioNavSelected</property>
