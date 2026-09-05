@@ -148,6 +148,7 @@ var canvas_pfd = {
 		# init hidden objects
 		obj["LOC_scale"].hide();
 		obj["GS_scale"].hide();
+		obj["FD_yaw"].hide();
 		
 		obj.temporaryNodes = {
 			showGroundReferenceAGL: 0,
@@ -200,6 +201,12 @@ var canvas_pfd = {
 			}),
 			props.UpdateManager.FromHashValue("FDRollBar", 0.1, func(val) {
 				obj["FD_roll"].setTranslation(val * 2.2, 0);
+			}),
+			props.UpdateManager.FromHashValue("FDYawBar", 0.001, func(val) {
+				obj["FD_yaw"].setTranslation(
+					math.clamp(val, -5, 5) * 20,
+					0
+				);
 			}),
 			props.UpdateManager.FromHashValue("FDPitchBar", 0.1, func(val) {
 				obj["FD_pitch"].setTranslation(0, val * -11.825);
@@ -1116,7 +1123,7 @@ var canvas_pfd = {
 		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
 		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VPROT_MAX","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
-		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_tens","ALT_digit_UP","ALT_tapes","ALT_hundreds",
+		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","FD_yaw","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_tens","ALT_digit_UP","ALT_tapes","ALT_hundreds",
 		"ALT_thousands","ALT_thousands_zero","ALT_tenthousands","ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box",
 		"LOC_pointer","LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer","machError",
 		"ilsError","ils_code","ils_freq","dme_dist","dme_dist_legend","ILS_HDG_R","ILS_HDG_L","ILS_right","ILS_left","outerMarker","middleMarker","innerMarker","v1_group","v1_text","vr_speed","F_target","S_target","FS_targets","flap_max","clean_speed","ground",
@@ -2017,25 +2024,61 @@ var canvas_pfd = {
 			me["FMA_thrust_box"].setColor(0.8078,0.8039,0.8078);
 		}
 		
-		if (((me.number == 0 and notification.fd1) or (me.number == 1 and notification.fd2)) and notification.pitchPFD < 25 and notification.pitchPFD > -13 and notification.roll < 45 and notification.roll > -45) {
-			if (notification.trkFpa) {
+		var fdActive =
+			((me.number == 0 and notification.fd1) or
+			(me.number == 1 and notification.fd2));
+
+		var yawBarActive =
+			notification.agl <= 30 and
+			notification.hasLocalizer and
+			(
+				fmgc.Modes.PFD.FMA.rollMode == "RWY" or
+				fmgc.Modes.PFD.FMA.pitchMode == "FLARE" or
+				fmgc.Modes.PFD.FMA.pitchMode == "ROLL OUT"
+			);
+
+		if (fdActive and
+			notification.pitchPFD < 25 and
+			notification.pitchPFD > -13 and
+			notification.roll < 45 and
+			notification.roll > -45) {
+
+			if (yawBarActive) {
+				me["FPD"].hide();
+				me["FD_roll"].hide();
+				me["FD_yaw"].show();
+
+				if (fmgc.Modes.PFD.FMA.pitchMode != " " and
+					fmgc.Modes.PFD.FMA.pitchMode != "ROLL OUT") {
+					me["FD_pitch"].show();
+				} else {
+					me["FD_pitch"].hide();
+				}
+
+			} else if (notification.trkFpa) {
 				me["FD_roll"].hide();
 				me["FD_pitch"].hide();
-				
-				if (fmgc.Modes.PFD.FMA.rollMode != " " and fmgc.Modes.PFD.FMA.pitchMode != " " and !notification.gear1Wow) {
+				me["FD_yaw"].hide();
+
+				if (fmgc.Modes.PFD.FMA.rollMode != " " and
+					fmgc.Modes.PFD.FMA.pitchMode != " " and
+					!notification.gear1Wow) {
 					me["FPD"].show();
 				} else {
 					me["FPD"].hide();
 				}
+
 			} else {
 				me["FPD"].hide();
-				
-				if (fmgc.Modes.PFD.FMA.rollMode != " " and !notification.gear1Wow) {
+				me["FD_yaw"].hide();
+
+				if (fmgc.Modes.PFD.FMA.rollMode != " " and
+					!notification.gear1Wow) {
 					me["FD_roll"].show();
 				} else {
 					me["FD_roll"].hide();
 				}
-				
+
 				if (fmgc.Modes.PFD.FMA.pitchMode != " ") {
 					me["FD_pitch"].show();
 				} else {
@@ -2046,6 +2089,7 @@ var canvas_pfd = {
 			me["FPD"].hide();
 			me["FD_roll"].hide();
 			me["FD_pitch"].hide();
+			me["FD_yaw"].hide();
 		}
 		
 		foreach(var update_item; me.update_items)
@@ -2243,6 +2287,7 @@ var input = {
 	du6Lgt: "/controls/lighting/DU/du6",
 	attSwitch: "/controls/navigation/switching/att-hdg",
 	managedAlt: "/it-autoflight/internal/mng-alt",
+	agl: "/position/gear-agl-ft",
 	
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",
@@ -2253,6 +2298,7 @@ var input = {
 	slipSkid: "/instrumentation/pfd/slip-skid",
 	fbwLaw: "/it-fbw/law",
 	FDRollBar: "/it-autoflight/fd/roll-bar",
+	FDYawBar: "/it-autoflight/fd/yaw-bar",
 	FDPitchBar: "/it-autoflight/fd/pitch-bar",
 	FPDPitch: "/it-autoflight/fd/fpd-pitch",
 	vsAutopilot: "/it-autoflight/internal/vert-speed-fpm",

@@ -986,6 +986,11 @@
        x="437.25876"
        y="504.91898"
        inkscape:label="#rect4741" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#0dc04b;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="FD_yaw"
+         d="m 445.257,522 5,9 v 90 h -10 v -90 z"
+         inkscape:label="#FD_yaw" />
     <g
        id="g4844"
        transform="matrix(1.0666667,0,0,1.066636,1.9196363,-0.50381959)">
