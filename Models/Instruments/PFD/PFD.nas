@@ -202,6 +202,7 @@ var canvas_pfd = {
 			props.UpdateManager.FromHashValue("FDRollBar", 0.1, func(val) {
 				obj["FD_roll"].setTranslation(val * 2.2, 0);
 			}),
+			# Ground-roll guidance needs to respond quickly to yaw corrections.
 			props.UpdateManager.FromHashValue("FDYawBar", 0.001, func(val) {
 				obj["FD_yaw"].setTranslation(
 					math.clamp(val, -5, 5) * 20,
@@ -2028,6 +2029,7 @@ var canvas_pfd = {
 			((me.number == 0 and notification.fd1) or
 			(me.number == 1 and notification.fd2));
 
+		# Below 30 ft, RWY/FLARE/ROLL OUT use the yaw command bar instead of the roll FD bar.
 		var yawBarActive =
 			notification.agl <= 30 and
 			notification.hasLocalizer and
