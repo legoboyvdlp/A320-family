@@ -670,8 +670,9 @@
 		<gain>1.0</gain>
 		<input>
 			<property>/instrumentation/nav[0]/radials/selected-deg</property>
+			<!-- NAV selected course is true-referenced; compare against true aircraft heading. -->
 			<offset>
-				<property>/orientation/heading-magnetic-deg</property>
+				<property>/orientation/heading-deg</property>
 				<scale>-1.0</scale>
 			</offset>
 		</input>
