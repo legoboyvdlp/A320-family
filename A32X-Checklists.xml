@@ -16,16 +16,6 @@
         <item>
           <name>======&lt; Power On &gt;======</name>
         </item>
-        <item> <!-- Wipers off -->
-          <name>Wipers</name>
-          <value>OFF</value>
-          <marker>
-            <x-m>-0.1434</x-m>
-            <y-m>-0.2124</y-m>
-            <z-m>0.8860</z-m>
-            <scale>1.5</scale>
-          </marker>
-        </item>
         <item> <!-- Weather radar off -->
           <name>Weather Radar SYS</name>
           <value>OFF</value>
@@ -34,16 +24,6 @@
             <y-m>-0.2106</y-m>
             <z-m>-0.1311</z-m>
             <scale>1.0</scale>
-          </marker>
-        </item>
-        <item> <!-- Landing gear lever down -->
-          <name>Landing Gear Lever</name>
-          <value>Down</value>
-          <marker>
-            <x-m>-0.4970</x-m>
-            <y-m>0.1435</y-m>
-            <z-m>0.1142</z-m>
-            <scale>3.0</scale>
           </marker>
         </item>
         <item> <!-- Engine cut-off switches off -->
@@ -64,6 +44,36 @@
             <y-m>-0.0000</y-m>
             <z-m>-0.1295</z-m>
             <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Parking Brake enabled -->
+          <name>Parking Brake</name>
+          <value>ON</value>
+          <marker>
+            <x-m>0.2201</x-m>
+            <y-m>0.0152</y-m>
+            <z-m>-0.1170</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Landing gear lever down -->
+          <name>Landing Gear Lever</name>
+          <value>Down</value>
+          <marker>
+            <x-m>-0.4970</x-m>
+            <y-m>0.1435</y-m>
+            <z-m>0.1142</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Wipers off -->
+          <name>Wipers</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1434</x-m>
+            <y-m>-0.2124</y-m>
+            <z-m>0.8860</z-m>
+            <scale>1.5</scale>
           </marker>
         </item>
         <item> <!-- Battery voltage check-->
@@ -153,6 +163,80 @@
             <scale>1.0</scale>
           </marker>
         </item>
+        <item> <!-- Internal Lighting -->
+          <name>Internal Lighting</name>
+          <value>As Required/Desired</value>
+        </item>
+      </page>
+
+      <page> <!-- Overhead Panel Setup -->
+        <item>
+          <name>Overhead Panel Setup</name>
+        </item>
+        <item> <!-- Oxygen Crew Supply on -->
+          <name>Oxygen Crew Supply</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.0544</x-m>
+            <y-m>-0.1918</y-m>
+            <z-m>0.9366</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- CVR Test -->
+          <name>CVR TEST</name>
+          <value>Tested</value>
+          <marker>
+            <x-m>-0.0136</x-m>
+            <y-m>-0.1911</y-m>
+            <z-m>0.9474</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- ADIRS to NAV-->
+          <name>ADIRS 1 + 2 + 3</name>
+          <value>NAV</value>
+          <marker>
+            <x-m>0.2851</x-m>
+            <y-m>-0.2802</y-m>
+            <z-m>1.0451</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Await ADIRS ready -->
+          <name>Await ADIRS Alignment</name>
+          <value>Complete before engine start</value>
+        </item>
+        <item> <!-- Navigation lights -->
+          <name>NAV &amp; LOGO LT</name>
+          <value>1</value>
+          <marker>
+            <x-m>-0.1333</x-m>
+            <y-m>-0.0427</y-m>
+            <z-m>0.8964</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Passenger signs (seat belts + no smoking) -->
+          <name>SEAT BELTS + NO SMOKING</name>
+          <value>AUTO</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>0.0501</y-m>
+            <z-m>0.8758</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Emergency exit lights -->
+          <name>EMER EXIT LT</name>
+          <value>ARM</value>
+          <marker>
+            <x-m>-0.1789</x-m>
+            <y-m>0.1308</y-m>
+            <z-m>0.8779</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
         <item> <!-- APU Bleed Air -->
           <name>APU Bleed</name>
           <value>ON (only if no ground air connected)</value>
@@ -183,76 +267,6 @@
             <scale>1.0</scale>
           </marker>
         </item>
-        <item> <!-- Oxygen Crew Supply off -->
-          <name>Oxygen Crew Supply</name>
-          <value>ON</value>
-          <marker>
-            <x-m>-0.0544</x-m>
-            <y-m>-0.1918</y-m>
-            <z-m>0.9366</z-m>
-            <scale>1.0</scale>
-          </marker>
-        </item>
-        <item> <!-- White Light Check -->
-          <name>White Lights</name>
-          <value>None</value>
-        </item>
-      </page>
-
-      <page> <!-- ADIRS and Signs -->
-        <item>
-          <name>======&lt; ADIRS and Signs &gt;======</name>
-        </item>
-        <item> <!-- ADIRS to NAV-->
-          <name>ADIRS 1 + 2 + 3</name>
-          <value>NAV</value>
-          <marker>
-            <x-m>0.2851</x-m>
-            <y-m>-0.2802</y-m>
-            <z-m>1.0451</z-m>
-            <scale>1.0</scale>
-          </marker>
-        </item>
-        <item> <!-- Await ADIRS ready -->
-          <name>Await ADIRS Alignment</name>
-          <value>Complete before engine start</value>
-        </item>
-        <item> <!-- Navigation lights -->
-          <name>NAV &amp; LOGO LT</name>
-          <value>1</value>
-          <marker>
-            <x-m>-0.1333</x-m>
-            <y-m>-0.0427</y-m>
-            <z-m>0.8964</z-m>
-            <scale>1.0</scale>
-          </marker>
-        </item>
-        <item> <!-- Emergency exit lights -->
-          <name>EMER EXIT LT</name>
-          <value>ARM</value>
-          <marker>
-            <x-m>-0.1789</x-m>
-            <y-m>0.1308</y-m>
-            <z-m>0.8779</z-m>
-            <scale>1.0</scale>
-          </marker>
-        </item>
-        <item> <!-- Passenger signs (seat belts + no smoking) -->
-          <name>SEAT BELTS + NO SMOKING</name>
-          <value>AUTO</value>
-          <marker>
-            <x-m>-0.1782</x-m>
-            <y-m>0.0501</y-m>
-            <z-m>0.8758</z-m>
-            <scale>2.5</scale>
-          </marker>
-        </item>
-      </page>
-
-      <page> <!-- Additional Checks (Optional) -->
-        <item>
-          <name>======&lt; Additional Checks (Optional) &gt;======</name>
-        </item>
         <item> <!-- Engine fire systems tested -->
           <name>ENG 1 + 2 Fire System</name>
           <value>Tested</value>
@@ -262,6 +276,16 @@
             <z-m>1.0751</z-m>
             <scale>1.0</scale>
           </marker>
+        </item>
+        <item> <!-- White Light Check -->
+          <name>Overhead Panels</name>
+          <value>Check No White Lights Remaining</value>
+        </item>
+      </page>
+
+      <page> <!-- Additional Checks -->
+        <item>
+          <name>======&lt; Additional Checks &gt;======</name>
         </item>
         <item> <!-- Flap lever correct -->
           <name>Flap Lever</name>
@@ -280,16 +304,6 @@
             <x-m>0.0518</x-m>
             <y-m>-0.0810</y-m>
             <z-m>-0.1147</z-m>
-            <scale>3.0</scale>
-          </marker>
-        </item>
-        <item> <!-- Parking Brake enabled -->
-          <name>Parking Brake</name>
-          <value>ON</value>
-          <marker>
-            <x-m>0.2201</x-m>
-            <y-m>0.0152</y-m>
-            <z-m>-0.1170</z-m>
             <scale>3.0</scale>
           </marker>
         </item>
@@ -353,6 +367,10 @@
             <scale>1.0</scale>
           </marker>
         </item>
+        <item> <!-- ECAM Empty -->
+          <name>ECAM</name>
+          <value>No page selected</value>
+        </item>
       </page>
     </checklist>
 
@@ -361,6 +379,14 @@
       <page> <!-- MCDU Setup -->
         <item>
           <name>======&lt; MCDU FMGC Setup &gt;======</name>
+        </item>
+        <item> <!-- FROM/TO -->
+          <name>FROM/TO (INIT)</name>
+          <value>Set Departure + Arrival Airport (ICAO/ICAO)</value>
+        </item>
+        <item> <!-- Flightplan -->
+          <name>Flightplan</name>
+          <value>Insert / Load From File</value>
         </item>
         <item> <!-- ZFW/ZFWCG -->
           <name>ZFW/ZFWCG (INIT -> Right)</name>
@@ -372,23 +398,15 @@
         </item>
         <item> <!-- V1/VR/V2 -->
           <name>V1/VR/V2 (PERF)</name>
-          <value>Calculate (e.g. 130/140/142)</value>
+          <value>Calculate + Set</value>
         </item>
         <item> <!-- FLAPS/THS -->
           <name>FLAPS/THS (PERF)</name>
-          <value>Calculate (typ. 1 or 2)</value>
+          <value>Calculate + Set</value>
         </item>
         <item> <!-- FLEX Takeoff Temp -->
           <name>FLEX TO TEMP (PERF)</name>
-          <value>Set (typ ~65)</value>
-        </item>
-        <item> <!-- FROM/TO -->
-          <name>FROM/TO (INIT)</name>
-          <value>Set Departure + Arrival Airport (ICAO/ICAO)</value>
-        </item>
-        <item> <!-- Flightplan -->
-          <name>Flightplan</name>
-          <value>Insert / Load From File</value>
+          <value>Calculate + Set</value>
         </item>
       </page>
 
@@ -407,16 +425,6 @@
             <x-m>-0.1333</x-m>
             <y-m>-0.1008</y-m>
             <z-m>0.8964</z-m>
-            <scale>1.0</scale>
-          </marker>
-        </item>
-        <item> <!-- ECAM CLR -->
-          <name>ECAM</name>
-          <value>CLR</value>
-          <marker>
-            <x-m>-0.3435</x-m>
-            <y-m>-0.0511</y-m>
-            <z-m>-0.0723</z-m>
             <scale>1.0</scale>
           </marker>
         </item>
@@ -460,14 +468,24 @@
             <scale>1.0</scale>
           </marker>
         </item>
-        <item> <!-- Throttle Idle -->
-          <name>Throttle</name>
+        <item> <!-- Thrust Levers Idle -->
+          <name>Thrust Levers</name>
           <value>Idle</value>
           <marker>
             <x-m>-0.0936</x-m>
             <y-m>0.0000</y-m>
             <z-m>0.0146</z-m>
             <scale>5.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Passenger signs (seat belts + no smoking) -->
+          <name>SEAT BELTS + NO SMOKING</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>0.0501</y-m>
+            <z-m>0.8758</z-m>
+            <scale>2.5</scale>
           </marker>
         </item>
       </page>
@@ -513,6 +531,10 @@
             <scale>1.0</scale>
           </marker>
         </item>
+        <item> <!-- Await engine 2 started -->
+          <name>ENG 2 Status</name>
+          <value>Monitor (Await started)</value>
+        </item>
         <item> <!-- Engine Cutoff 1 -->
           <name>ENG MASTER 1</name>
           <value>ON</value>
@@ -523,9 +545,9 @@
             <scale>1.0</scale>
           </marker>
         </item>
-        <item> <!-- Monitor Engine Status -->
-          <name>Engine Status</name>
-          <value>Monitor</value>
+        <item> <!-- Await engine 2 started -->
+          <name>ENG 1 Status</name>
+          <value>Monitor (Await started)</value>
         </item>
       </page>
     </checklist>
@@ -677,15 +699,15 @@
           <name>======&lt; Flight Control Check &gt;======</name>
         </item>
         <item> <!-- Pitch test -->
-          <name>Pitch</name>
-          <value>Fore/Aft</value>
+          <name>Elevator</name>
+          <value>Up/Down</value>
         </item>
         <item> <!-- Roll test -->
-          <name>Roll</name>
+          <name>Ailerons</name>
           <value>Left/Right</value>
         </item>
         <item> <!-- Yaw test -->
-          <name>Yaw</name>
+          <name>Rudder</name>
           <value>Left/Right</value>
         </item>
         <item>
@@ -756,23 +778,13 @@
             <scale>1.0</scale>
           </marker>
         </item>
-        <item> <!-- Passenger signs (seat belts + no smoking) -->
-          <name>SEAT BELTS + NO SMOKING</name>
-          <value>ON</value>
-          <marker>
-            <x-m>-0.1782</x-m>
-            <y-m>0.0501</y-m>
-            <z-m>0.8758</z-m>
-            <scale>2.5</scale>
-          </marker>
-        </item>
         <item> <!-- Gear Chocks -->
           <name>Gear Chocks</name>
           <value>Removed</value>
         </item>
-        <item> <!-- Area Clearance -->
-          <name>Area Clearance (Callout)</name>
-          <value>Clear</value>
+        <item> <!-- Surrounding Area Clear -->
+          <name>Surrounding Area</name>
+          <value>Check Clear</value>
         </item>
         <item> <!-- Parking Brake -->
           <name>Parking Brake</name>
@@ -785,23 +797,13 @@
           </marker>
         </item>
         <item> <!-- Brake Pressure Check -->
-          <name>Brake Pressure</name>
-          <value>Check Zero Pressure</value>
+          <name>Brake Check</name>
+          <value>Check Brake Action</value>
           <marker>
             <x-m>-0.5189</x-m>
             <y-m>0.2144</y-m>
             <z-m>0.0794</z-m>
             <scale>3.0</scale>
-          </marker>
-        </item>
-        <item> <!-- Brake Fan -->
-          <name>BRK FAN</name>
-          <value>As Required</value>
-          <marker>
-            <x-m>-0.5823</x-m>
-            <y-m>0.2251</y-m>
-            <z-m>0.2974</z-m>
-            <scale>1.0</scale>
           </marker>
         </item>
         <item> <!-- Auto Brake -->
@@ -847,16 +849,6 @@
           <name>Lineup Clearance</name>
           <value>Received</value>
         </item>
-        <item> <!-- Transponder TA/RA -->
-          <name>Transponder</name>
-          <value>TA/RA</value>
-          <marker>
-            <x-m>0.0129</x-m>
-            <y-m>0.2147</y-m>
-            <z-m>-0.1317</z-m>
-            <scale>1.0</scale>
-          </marker>
-        </item>
         <item> <!-- Confirm Runway Clear-->
           <name>Runway + Approach</name>
           <value>Confirm Clear of Traffic</value>
@@ -871,16 +863,6 @@
             <scale>1.0</scale>
           </marker>
         </item>
-      </page>
-
-      <page> <!-- Takeoff Checklist -->
-        <item>
-          <name>======&lt; Takeoff &gt;======</name>
-        </item>
-        <item> <!-- Takeoff Clearance Received -->
-          <name>Takeoff Clearance</name>
-          <value>Received</value>
-        </item>
         <item> <!-- Nose Light -->
           <name>NOSE LT</name>
           <value>T.O</value>
@@ -892,7 +874,7 @@
           </marker>
         </item>
         <item> <!-- Runway Turn Off Lights -->
-          <name>RNWY TURN OFF LT</name>
+          <name>RWY TURN OFF LT</name>
           <value>ON</value>
           <marker>
             <x-m>-0.1782</x-m>
@@ -900,6 +882,16 @@
             <z-m>0.8758</z-m>
             <scale>1.0</scale>
           </marker>
+        </item>
+      </page>
+
+      <page> <!-- Takeoff Checklist -->
+        <item>
+          <name>======&lt; Takeoff &gt;======</name>
+        </item>
+        <item> <!-- Takeoff Clearance Received -->
+          <name>Takeoff Clearance</name>
+          <value>Received</value>
         </item>
         <item> <!-- Landing Lights -->
           <name>L + R Landing LT</name>
@@ -911,16 +903,16 @@
             <scale>2.0</scale>
           </marker>
         </item>
-        <item> <!-- N1 50% Thrust-->
-          <name>Throttle</name>
-          <value>N1 50%</value>
+        <item> <!-- EPR / N1-->
+          <name>EPR / N1 (Depending on engine)</name>
+          <value>Stabilised at: 1.05 / 50%</value>
         </item>
         <item> <!-- Release Brake -->
           <name>Brake</name>
           <value>Release</value>
         </item>
         <item> <!-- FLX / TOGA Thrust -->
-          <name>Throttle</name>
+          <name>Thrust Levers</name>
           <value>FLX/TOGA</value>
         </item>
         <item> <!-- Chronometer Started -->
@@ -932,6 +924,10 @@
             <z-m>0.2195</z-m>
             <scale>1.0</scale>
           </marker>
+        </item>
+        <item> <!-- Airspeed Crosscheck -->
+          <name>Airspeed Indicator</name>
+          <value>Crosscheck (at 100 kt IAS)</value>
         </item>
       </page>
 
@@ -950,7 +946,7 @@
           </marker>
         </item>
         <item> <!-- CL Thrust -->
-          <name>Throttle</name>
+          <name>Thrust Levers</name>
           <value>CL</value>
         </item>
         <item> <!-- Retract Flaps -->
@@ -984,7 +980,7 @@
           </marker>
         </item>
         <item> <!-- Runway Turn Off Lights -->
-          <name>RNWY TURN OFF LT</name>
+          <name>RWY TURN OFF LT</name>
           <value>OFF</value>
           <marker>
             <x-m>-0.1782</x-m>
@@ -1250,7 +1246,7 @@
       <title>Approach</title>
       <page> <!-- ILS Approach -->
         <item>
-          <name>======&lt; ILS Approach &gt;======</name>
+          <name>======&lt; ILS Approach (Autoland) &gt;======</name>
         </item>
         <item> <!-- Green Dot Speed -->
           <name>Speed</name>
@@ -1300,7 +1296,7 @@
         </item>
         <item> <!-- Flaps 2 -->
           <name>Flaps</name>
-          <value>2 (At Alt >= 2000 ft AGL)</value>
+          <value>2 (At Distance to RWY >= 6.3 NM)</value>
           <marker>
             <x-m>0.0456</x-m>
             <y-m>0.0800</y-m>
@@ -1343,7 +1339,7 @@
           </marker>
         </item>
         <item> <!-- Runway Turn Off Lights -->
-          <name>RNWY TURN OFF LT</name>
+          <name>RWY TURN OFF LT</name>
           <value>ON</value>
           <marker>
             <x-m>-0.1782</x-m>
@@ -1395,7 +1391,7 @@
         </item>
         <item> <!-- Autothrottle Speed or Off -->
           <name>A/THR</name>
-          <value>Speed Mode or OFF</value>
+          <value>Speed Mode (maintaining set speed) or OFF</value>
         </item>
         <item> <!-- Wing Anti-Ice Off -->
           <name>ANTI ICE WING</name>
@@ -1407,9 +1403,25 @@
             <scale>1.0</scale>
           </marker>
         </item>
+        <item> <!-- Established at 1000ft (3NM) -->
+          <name>At 3NM (~1000ft above RWY)</name>
+          <value>Fully established on approach path</value>
+        </item>
         <item>
           <name>Mimimums</name>
           <value>Continue / Go Around (Announce)</value>
+        </item>
+        <item>
+          <name></name>
+        </item>
+        <item>
+          <name>Note 1: For Final Descent Point location, see airport approach charts</name>
+        </item>
+        <item>
+          <name>Note 2: The timing of flaps 2 is often determined by altitude above the RWY. This checklist instead</name>
+        </item>
+        <item>
+          <name>gives it in DME distance for a standard 3 deg slope for ease of use (DME is visible on PFD).</name>
         </item>
       </page>
     </checklist>
@@ -1424,14 +1436,14 @@
           <name>Alt. 30 ft</name>
         </item>
         <item> <!-- Thrust Idle -->
-          <name>Throttle</name>
+          <name>Thrust Levers</name>
           <value>Idle</value>
         </item>
         <item>
           <name>Touchdown</name>
         </item>
         <item> <!-- Reverse Thrust -->
-          <name>Throttle</name>
+          <name>Thrust Levers</name>
           <value>Reverse</value>
         </item>
         <item> <!-- Brakes As Required -->
@@ -1439,17 +1451,17 @@
           <value>As Required</value>
         </item>
         <item>
-          <name>70 kts</name>
+          <name>70 kt</name>
         </item>
         <item> <!-- Reverse Thrust Idle -->
-          <name>Throttle</name>
+          <name>Thrust Levers</name>
           <value>Reverse Idle</value>
         </item>
         <item>
           <name>Taxi Speed</name>
         </item>
         <item> <!-- Thrust Idle -->
-          <name>Throttle</name>
+          <name>Thrust Levers</name>
           <value>Disengage Reverse</value>
         </item>
         <item> <!-- Thrust Idle -->
@@ -1542,16 +1554,6 @@
             <scale>3.0</scale>
           </marker>
         </item>
-        <item> <!-- Transponder Standby -->
-          <name>Transponder</name>
-          <value>STBY</value>
-          <marker>
-            <x-m>0.0129</x-m>
-            <y-m>0.2147</y-m>
-            <z-m>-0.1317</z-m>
-            <scale>1.0</scale>
-          </marker>
-        </item>
         <item> <!-- APU Master Switch -->
           <name>APU Master SW</name>
           <value>ON</value>
@@ -1602,7 +1604,7 @@
           <name>======&lt; Go Around &gt;======</name>
         </item>
         <item> <!-- Thrust TOGA -->
-          <name>Throttle</name>
+          <name>Thrust Levers</name>
           <value>TOGA</value>
         </item>
         <item> <!-- Reduce Flaps -->
@@ -1626,7 +1628,7 @@
           <name>Thrust Reduction Altitude</name>
         </item>
         <item> <!-- CL Thrust -->
-          <name>Throttle</name>
+          <name>Thrust Levers</name>
           <value>CL</value>
         </item>
         <item>
@@ -1663,7 +1665,7 @@
           </marker>
         </item>
         <item> <!-- Runway Turn Off Lights -->
-          <name>RNWY TURN OFF LT</name>
+          <name>RWY TURN OFF LT</name>
           <value>OFF</value>
           <marker>
             <x-m>-0.1782</x-m>
@@ -1701,6 +1703,16 @@
             <scale>3.0</scale>
           </marker>
         </item>
+        <item> <!-- Transponder Standby -->
+          <name>Transponder</name>
+          <value>STBY</value>
+          <marker>
+            <x-m>0.0129</x-m>
+            <y-m>0.2147</y-m>
+            <z-m>-0.1317</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
         <item> <!-- Engine Anti-Ice Off-->
           <name>ANTI ICE ENG 1 + 2</name>
           <value>OFF</value>
@@ -1728,16 +1740,6 @@
             <x-m>-0.0531</x-m>
             <y-m>0.0000</y-m>
             <z-m>0.9428</z-m>
-            <scale>1.0</scale>
-          </marker>
-        </item>
-        <item> <!-- Electric Hydraulic Pump (Yellow) -->
-          <name>YELLOW ELEC HYD PUMP</name>
-          <value>OFF</value>
-          <marker>
-            <x-m>0.2220</x-m>
-            <y-m>0.1351</y-m>
-            <z-m>1.0507</z-m>
             <scale>1.0</scale>
           </marker>
         </item>
@@ -1805,21 +1807,21 @@
           <name>Gear Chocks</name>
           <value>In Place</value>
         </item>
-      </page>
-
-      <page>
-        <item>
-          <name>======&lt; Securing &gt;======</name>
-        </item>
-        <item> <!-- Parking Brake enabled -->
+        <item> <!-- Parking Brake disabled -->
           <name>Parking Brake</name>
-          <value>Check ON</value>
+          <value>OFF</value>
           <marker>
             <x-m>0.2201</x-m>
             <y-m>0.0152</y-m>
             <z-m>-0.1170</z-m>
             <scale>3.0</scale>
           </marker>
+        </item>
+      </page>
+
+      <page>
+        <item>
+          <name>======&lt; Securing &gt;======</name>
         </item>
         <item> <!-- ADIRS Off-->
           <name>ADIRS 1 + 2 + 3</name>
