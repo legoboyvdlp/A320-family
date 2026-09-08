@@ -1124,6 +1124,16 @@
             <scale>1.0</scale>
           </marker>
         </item>
+        <item> <!-- Enable CSTR on EFIS -->
+          <name>EFIS</name>
+          <value>CSTR</value>
+          <marker>
+            <x-m>-0.3777</x-m>
+            <y-m>-0.2182</y-m>
+            <z-m>0.5006</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
         <item>
           <name>------&lt; MCDU FMGC Setup &gt;------</name>
         </item>
@@ -1196,16 +1206,6 @@
             <scale>2.5</scale>
           </marker>
         </item>
-        <item> <!-- Enable CSTR on EFIS -->
-          <name>EFIS</name>
-          <value>CSTR</value>
-          <marker>
-            <x-m>-0.3777</x-m>
-            <y-m>-0.2182</y-m>
-            <z-m>0.5006</z-m>
-            <scale>1.0</scale>
-          </marker>
-        </item>
         <item> <!-- LS Switch -->
           <name>LS</name>
           <value>As Required</value>
@@ -1217,7 +1217,7 @@
           </marker>
         </item>
         <item>
-          <name>------&lt; Transition Alt &gt;------</name>
+          <name>------&lt; Transition Level &gt;------</name>
         </item>
         <item> <!-- Altimeter QNH -->
           <name>Altimeter</name>
