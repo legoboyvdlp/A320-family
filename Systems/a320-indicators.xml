@@ -1518,7 +1518,7 @@
 		<switch name="/controls/indicators/fcu-spd-dash">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/it-autoflight/input/spd-managed eq 1
+				/it-autoflight/custom/show-spd ne 1
 				/controls/switches/annun-test ne 1
 				/systems/electrical/bus/ac-ess-shed ge 110
 			</test>
@@ -1532,6 +1532,27 @@
 					/controls/switches/annun-test eq 1
 				</test>
 				/systems/electrical/bus/ac-ess-shed ge 110
+			</test>
+		</switch>
+
+		<!-- Speed display properties: show preview when managed, otherwise show actual -->
+		<switch name="/it-autoflight/input/kts-display">
+			<default value="0"/>
+			<test value="/it-autoflight/input/kts-preview">
+				/it-autoflight/input/spd-managed eq 1
+			</test>
+			<test value="/it-autoflight/input/kts">
+				/it-autoflight/input/spd-managed ne 1
+			</test>
+		</switch>
+
+		<switch name="/it-autoflight/input/mach-display">
+			<default value="0"/>
+			<test value="/it-autoflight/input/mach-preview">
+				/it-autoflight/input/spd-managed eq 1
+			</test>
+			<test value="/it-autoflight/input/mach">
+				/it-autoflight/input/spd-managed ne 1
 			</test>
 		</switch>
 
