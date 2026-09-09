@@ -216,6 +216,8 @@ var FCUController = {
 			if (fmgc.FMGCInternal.crzSet and fmgc.FMGCInternal.costIndexSet) {
 				fmgc.Custom.Input.spdManaged.setBoolValue(1);
 				fmgc.ManagedSPD.start();
+				# Reset showSpd so dashes appear immediately
+				fmgc.Custom.showSpd.setBoolValue(0);
 			}
 		}
 	},
@@ -225,32 +227,88 @@ var FCUController = {
 		if (me.FCUworking) {
 			fmgc.Custom.Input.spdManaged.setBoolValue(0);
 			fmgc.ManagedSPD.stop();
-			me.ias = fmgc.Velocities.indicatedAirspeedKt.getValue();
-			me.mach = fmgc.Velocities.indicatedMach.getValue();
-			if (!fmgc.Input.ktsMach.getBoolValue()) {
-				if (me.ias >= 100 and me.ias <= 399) {
-					fmgc.Input.kts.setValue(math.round(me.ias));
-				} else if (me.ias < 100) {
-					fmgc.Input.kts.setValue(100);
-				} else if (me.ias > 399) {
-					fmgc.Input.kts.setValue(399);
+
+			# If user was previewing a value, use that; otherwise use current airspeed
+			if (fmgc.Custom.showSpd.getBoolValue()) {
+				# Use preview value that was dialed in
+				if (!fmgc.Input.ktsMach.getBoolValue()) {
+					fmgc.Input.kts.setValue(fmgc.Input.ktsPreview.getValue());
+				} else {
+					fmgc.Input.mach.setValue(fmgc.Input.machPreview.getValue());
 				}
-			} else if (fmgc.Input.ktsMach.getBoolValue()) {
-				if (me.mach >= 0.10 and me.mach <= 0.99) {
-					fmgc.Input.mach.setValue(math.round(me.mach, 0.001));
-				} else if (me.mach < 0.10) {
-					fmgc.Input.mach.setValue(0.10);
-				} else if (me.mach > 0.99) {
-					fmgc.Input.mach.setValue(0.99);
+			} else {
+				# Use current indicated airspeed
+				me.ias = fmgc.Velocities.indicatedAirspeedKt.getValue();
+				me.mach = fmgc.Velocities.indicatedMach.getValue();
+				if (!fmgc.Input.ktsMach.getBoolValue()) {
+					if (me.ias >= 100 and me.ias <= 399) {
+						fmgc.Input.kts.setValue(math.round(me.ias));
+					} else if (me.ias < 100) {
+						fmgc.Input.kts.setValue(100);
+					} else if (me.ias > 399) {
+						fmgc.Input.kts.setValue(399);
+					}
+				} else if (fmgc.Input.ktsMach.getBoolValue()) {
+					if (me.mach >= 0.10 and me.mach <= 0.99) {
+						fmgc.Input.mach.setValue(math.round(me.mach, 0.001));
+					} else if (me.mach < 0.10) {
+						fmgc.Input.mach.setValue(0.10);
+					} else if (me.mach > 0.99) {
+						fmgc.Input.mach.setValue(0.99);
+					}
 				}
 			}
+
+			# Switch to selected mode - show value (not dashes)
+			fmgc.Custom.showSpd.setBoolValue(1);
 		}
 	},
 	machTemp: nil,
 	iasTemp: nil,
 	SPDAdjust: func(d) {
 		if (me.FCUworking) {
-			if (!fmgc.Custom.Input.spdManaged.getBoolValue()) {
+			if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
+				spdInput();
+				# In managed mode, adjust preview properties
+				if (fmgc.Input.ktsMach.getBoolValue()) {
+					me.machTemp = fmgc.Input.machPreview.getValue();
+					if (d == 1) {
+						me.machTemp = math.round(me.machTemp + 0.001, 0.001); # Kill floating point error
+					} else if (d == -1) {
+						me.machTemp = math.round(me.machTemp - 0.001, 0.001); # Kill floating point error
+					} else if (d == 10) {
+						me.machTemp = math.round(me.machTemp + 0.01, 0.01); # Kill floating point error
+					} else if (d == -10) {
+						me.machTemp = math.round(me.machTemp - 0.01, 0.01); # Kill floating point error
+					}
+					if (me.machTemp < 0.10) {
+						fmgc.Input.machPreview.setValue(0.10);
+					} else if (me.machTemp > 0.99) {
+						fmgc.Input.machPreview.setValue(0.99);
+					} else {
+						fmgc.Input.machPreview.setValue(me.machTemp);
+					}
+				} else {
+					me.iasTemp = fmgc.Input.ktsPreview.getValue();
+					if (d == 1) {
+						me.iasTemp = me.iasTemp + 1;
+					} else if (d == -1) {
+						me.iasTemp = me.iasTemp - 1;
+					} else if (d == 10) {
+						me.iasTemp = me.iasTemp + 10;
+					} else if (d == -10) {
+						me.iasTemp = me.iasTemp - 10;
+					}
+					if (me.iasTemp < 100) {
+						fmgc.Input.ktsPreview.setValue(100);
+					} else if (me.iasTemp > 399) {
+						fmgc.Input.ktsPreview.setValue(399);
+					} else {
+						fmgc.Input.ktsPreview.setValue(me.iasTemp);
+					}
+				}
+			} else {
+				# In selected mode, adjust actual properties
 				if (fmgc.Input.ktsMach.getBoolValue()) {
 					me.machTemp = fmgc.Input.mach.getValue();
 					if (d == 1) {
@@ -563,5 +621,13 @@ var hdgInput = func {
 	if (fmgc.Output.lat.getValue() != 0) {
 		fmgc.Custom.showHdg.setBoolValue(1);
 		fmgc.Custom.hdgTime = pts.Sim.Time.elapsedSec.getValue();
+	}
+}
+
+# If the speed knob is turned while in managed mode, it will display speed for a period of time
+var spdInput = func {
+	if (fmgc.Custom.Input.spdManaged.getBoolValue()) {
+		fmgc.Custom.showSpd.setBoolValue(1);
+		fmgc.Custom.spdTime = pts.Sim.Time.elapsedSec.getValue();
 	}
 }

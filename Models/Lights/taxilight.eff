@@ -15,7 +15,7 @@
    <light_color_center_r type="float">1.00</light_color_center_r> <!-- aviation white converted from 5500 K temp -->
     <light_color_center_g type="float">0.93</light_color_center_g>
     <light_color_center_b type="float">0.87</light_color_center_b>
-    <intensity_scale type="float"><use>/sim/model/lights/nose-lights</use></intensity_scale>
+    <intensity_scale type="float"><use>sim/multiplay/generic/float[10]</use></intensity_scale>
     <pointing_x type="float">1</pointing_x>
     <pointing_y type="float">0.0</pointing_y>
     <pointing_z type="float">0.0</pointing_z>

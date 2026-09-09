@@ -4,27 +4,251 @@
 <!-- Copyright (c) 2025 Nia -->
 <!-- Note, this is limited by flightgears current audio capabilities -->
 
+<!-- ABILITY TO SWITCH ACP'S ACCORDING TO FO SETTING IS A WORKAROUND AND SHOULD BE REMOVED ONCE MOVED UPWARDS (swift-plugin, Swift itself) -->
+
 <system name="A320: Audio">
+
+	<property value="0">/systems/draims/rmp[0]/audioNavSelected</property>
+	<property value="0">/systems/draims/rmp[1]/audioNavSelected</property>
+	<property value="0">/systems/draims/rmp[2]/audioNavSelected</property>
 
 	<channel name="Audio Channels" execrate="8">
 		<switch name="/instrumentation/comm[0]/volume">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/vhf1-volume">
+				/options/system/fo-view eq 0
 				/controls/audio/acp[0]/vhf1-receive eq 1
+			</test>
+				<!-- If FO's ACP is set as main instrument -->
+			<test logic="AND" value="/controls/audio/acp[1]/vhf1-volume">
+				/options/system/fo-view eq 1
+				/controls/audio/acp[1]/vhf1-receive eq 1
 			</test>
 		</switch>
 		<switch name="/instrumentation/comm[1]/volume">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/vhf2-volume">
+				/options/system/fo-view eq 0
 				/controls/audio/acp[0]/vhf2-receive eq 1
+			</test>
+				<!-- If FO's ACP is set as main instrument -->
+			<test logic="AND" value="/controls/audio/acp[1]/vhf2-volume">
+				/options/system/fo-view eq 1
+				/controls/audio/acp[1]/vhf2-receive eq 1
 			</test>
 		</switch>
 		<switch name="/instrumentation/comm[2]/volume">
 			<default value="0"/>
 			<test logic="AND" value="/controls/audio/acp[0]/vhf3-volume">
+				/options/system/fo-view eq 0
 				/controls/audio/acp[0]/vhf3-receive eq 1
 			</test>
+				<!-- If FO's ACP is set as main instrument -->
+			<test logic="AND" value="/controls/audio/acp[1]/vhf3-volume">
+				/options/system/fo-view eq 1
+				/controls/audio/acp[1]/vhf3-receive eq 1
+			</test>
 		</switch>
+	</channel>
+
+	<channel name="ACP" execrate="8">
+
+		<switch name="/instrumentation/adf[0]/volume-norm">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/adf1-volume">
+				/controls/audio/acp[0]/adf1-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/adf1-receive eq 0
+					/controls/audio/acp[0]/adf1-volume ge /controls/audio/acp[1]/adf1-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/adf1-volume">
+				/controls/audio/acp[1]/adf1-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/adf1-receive eq 0
+					/controls/audio/acp[0]/adf1-volume lt /controls/audio/acp[1]/adf1-volume
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/instrumentation/adf[1]/volume-norm">
+			<default value="0"/>
+			<test logic="AND" value="/controls/audio/acp[0]/adf2-volume">
+				/controls/audio/acp[0]/adf2-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/adf2-receive eq 0
+					/controls/audio/acp[0]/adf2-volume ge /controls/audio/acp[1]/adf2-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/adf2-volume">
+				/controls/audio/acp[1]/adf2-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/adf2-receive eq 0
+					/controls/audio/acp[0]/adf2-volume lt /controls/audio/acp[1]/adf2-volume
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/instrumentation/marker-beacon/volume">
+			<default value="0"/>
+			<!-- legacy ACP -->
+			<test logic="AND" value="/controls/audio/acp[0]/mkr-volume">
+				/controls/draims/enabled ne 1
+				/controls/audio/acp[0]/mkr-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/mkr-receive eq 0
+					/controls/audio/acp[0]/mkr-volume ge /controls/audio/acp[1]/mkr-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/mkr-volume">
+				/controls/draims/enabled ne 1
+				/controls/audio/acp[1]/mkr-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/mkr-receive eq 0
+					/controls/audio/acp[0]/mkr-volume lt /controls/audio/acp[1]/mkr-volume
+				</test>
+			</test>
+			<!-- With DRAIMS -->
+			<test logic="AND" value="/controls/audio/acp[0]/nav-volume">
+				/controls/draims/enabled eq 1
+				/systems/draims/rmp[0]/audioNavSelected eq 1
+				/controls/audio/acp[0]/nav-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/nav-receive eq 0
+					/controls/audio/acp[0]/nav-volume ge /controls/audio/acp[1]/nav-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/nav-volume">
+				/controls/draims/enabled eq 1
+				/systems/draims/rmp[1]/audioNavSelected eq 1
+				/controls/audio/acp[1]/nav-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/nav-receive eq 0
+					/controls/audio/acp[0]/nav-volume lt /controls/audio/acp[1]/nav-volume
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/instrumentation/nav[0]/volume">
+			<default value="0"/>
+			<!-- legacy ACP -->
+			<test logic="AND" value="/controls/audio/acp[0]/ils-volume">
+				/controls/draims/enabled ne 1
+				/controls/audio/acp[0]/ils-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/ils-receive eq 0
+					/controls/audio/acp[0]/ils-volume ge /controls/audio/acp[1]/ils-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/ils-volume">
+				/controls/draims/enabled ne 1
+				/controls/audio/acp[1]/ils-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/ils-receive eq 0
+					/controls/audio/acp[0]/ils-volume lt /controls/audio/acp[1]/ils-volume
+				</test>
+			</test>
+			<!-- With DRAIMS -->
+			<test logic="AND" value="/controls/audio/acp[0]/nav-volume">
+				/controls/draims/enabled eq 1
+				/systems/draims/rmp[0]/audioNavSelected eq 0
+				/controls/audio/acp[0]/nav-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/nav-receive eq 0
+					/controls/audio/acp[0]/nav-volume ge /controls/audio/acp[1]/nav-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/nav-volume">
+				/controls/draims/enabled eq 1
+				/systems/draims/rmp[1]/audioNavSelected eq 0
+				/controls/audio/acp[1]/nav-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/nav-receive eq 0
+					/controls/audio/acp[0]/nav-volume lt /controls/audio/acp[1]/nav-volume
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/instrumentation/nav[2]/volume">
+			<default value="0"/>
+			<!-- legacy ACP -->
+			<test logic="AND" value="/controls/audio/acp[0]/vor1-volume">
+				/controls/draims/enabled ne 1
+				/controls/audio/acp[0]/vor1-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/vor1-receive eq 0
+					/controls/audio/acp[0]/vor1-volume ge /controls/audio/acp[1]/vor1-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/vor1-volume">
+				/controls/draims/enabled ne 1
+				/controls/audio/acp[1]/vor1-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/vor1-receive eq 0
+					/controls/audio/acp[0]/vor1-volume lt /controls/audio/acp[1]/vor1-volume
+				</test>
+			</test>
+			<!-- With DRAIMS -->
+			<test logic="AND" value="/controls/audio/acp[0]/nav-volume">
+				/controls/draims/enabled eq 1
+				/systems/draims/rmp[0]/audioNavSelected eq 2
+				/controls/audio/acp[0]/nav-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/nav-receive eq 0
+					/controls/audio/acp[0]/nav-volume ge /controls/audio/acp[1]/nav-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/nav-volume">
+				/controls/draims/enabled eq 1
+				/systems/draims/rmp[1]/audioNavSelected eq 2
+				/controls/audio/acp[1]/nav-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/nav-receive eq 0
+					/controls/audio/acp[0]/nav-volume lt /controls/audio/acp[1]/nav-volume
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/instrumentation/nav[3]/volume">
+			<default value="0"/>
+			<!-- legacy ACP -->
+			<test logic="AND" value="/controls/audio/acp[0]/vor2-volume">
+				/controls/draims/enabled ne 1
+				/controls/audio/acp[0]/vor2-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/vor2-receive eq 0
+					/controls/audio/acp[0]/vor2-volume ge /controls/audio/acp[1]/vor2-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/vor2-volume">
+				/controls/draims/enabled ne 1
+				/controls/audio/acp[1]/vor2-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/vor2-receive eq 0
+					/controls/audio/acp[0]/vor2-volume lt /controls/audio/acp[1]/vor2-volume
+				</test>
+			</test>
+			<!-- With DRAIMS -->
+			<test logic="AND" value="/controls/audio/acp[0]/nav-volume">
+				/controls/draims/enabled eq 1
+				/systems/draims/rmp[0]/audioNavSelected eq 3
+				/controls/audio/acp[0]/nav-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[1]/nav-receive eq 0
+					/controls/audio/acp[0]/nav-volume ge /controls/audio/acp[1]/nav-volume
+				</test>
+			</test>
+			<test logic="AND" value="/controls/audio/acp[1]/nav-volume">
+				/controls/draims/enabled eq 1
+				/systems/draims/rmp[1]/audioNavSelected eq 3
+				/controls/audio/acp[1]/nav-receive eq 1
+				<test logic="OR">
+					/controls/audio/acp[0]/nav-receive eq 0
+					/controls/audio/acp[0]/nav-volume lt /controls/audio/acp[1]/nav-volume
+				</test>
+			</test>
+		</switch>
+
 	</channel>
 
 </system>

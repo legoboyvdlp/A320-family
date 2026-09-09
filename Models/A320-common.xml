@@ -160,10 +160,6 @@
 		</offsets>
 	</model>
 	
-	<model>
-		<path>Aircraft/Generic/marker.xml</path>
-	</model>
-	
 	<!-- Firetruck -->
 
 	<model>
@@ -794,13 +790,13 @@
 			<and>
 				<not>
 					<equals>
-						<property>sim/model/lights/nose-lights</property>
+						<property>sim/multiplay/generic/float[10]</property>
 						<value>1.0</value>
 					</equals>
 				</not>
 				<not>
 					<equals>
-						<property>sim/model/lights/nose-lights</property>
+						<property>sim/multiplay/generic/float[10]</property>
 						<value>0.0</value>
 					</equals>
 				</not>
@@ -818,7 +814,7 @@
 		<condition>
 			<and>
 				<equals>
-					<property>sim/model/lights/nose-lights</property>
+					<property>sim/multiplay/generic/float[10]</property>
 					<value>1.0</value>
 				</equals>
 				<greater-than>
@@ -895,7 +891,7 @@
 		<condition>
 			<and>
 				<equals>
-					<property>sim/model/lights/nose-lights</property>
+					<property>sim/multiplay/generic/float[10]</property>
 					<value>1</value>
 				</equals>
 				<greater-than>
@@ -912,11 +908,11 @@
 		<condition>
 			<and>
 				<greater-than>
-					<property>sim/model/lights/nose-lights</property>
+					<property>sim/multiplay/generic/float[10]</property>
 					<value>0</value>
 				</greater-than>
 				<less-than>
-					<property>sim/model/lights/nose-lights</property>
+					<property>sim/multiplay/generic/float[10]</property>
 					<value>1</value>
 				</less-than>
 				<greater-than>
@@ -927,4 +923,3 @@
 		</condition>
 	</animation>
 </PropertyList>
-

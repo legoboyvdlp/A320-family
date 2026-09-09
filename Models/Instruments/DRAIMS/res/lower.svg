@@ -41,7 +41,7 @@
      id="namedview371"
      showgrid="true"
      inkscape:zoom="0.64726874"
-     inkscape:cx="529.91899"
+     inkscape:cx="529.14652"
      inkscape:cy="298.94847"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -202,5 +202,36 @@
        d="M 814.69414,115.14873 V 1.0429174"
        id="path1-2-0-0"
        inkscape:label="Divider3" />
+    <rect
+       style="fill:#a9ff00;fill-opacity:1;stroke:none;stroke-width:3.04784;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:7;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="STBY_NAV"
+       width="106.27667"
+       height="68.772202"
+       x="430.25308"
+       y="388.65311" />
+    <text
+       xml:space="preserve"
+       style="font-size:26.6666px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
+       x="483.50278"
+       y="417.54767"
+       id="TARA-3"
+       inkscape:label="TARA"><tspan
+         sodipodi:role="line"
+         id="tspan1-3-9-73-2-5"
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
+         x="483.50278"
+         y="417.54767">STBY</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26.6666px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
+       x="483.5463"
+       y="449.56436"
+       id="TARA-3-2"
+       inkscape:label="TARA"><tspan
+         sodipodi:role="line"
+         id="tspan1-3-9-73-2-5-9"
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.8;stroke-opacity:1"
+         x="483.5463"
+         y="449.56436">NAV</tspan></text>
   </g>
 </svg>

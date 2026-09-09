@@ -1306,6 +1306,7 @@ var rskbutton = func(btn, i) {
 				if (fmgc.WaypointDatabase.confirm[i]) {
 					fmgc.WaypointDatabase.confirm[i] = 0;
 					canvas_mcdu.myPilotWP[i].deleteCmd();
+					pageNode[i].setValue("DATA2");
 				} else {
 					fmgc.WaypointDatabase.confirm[i] = 1;
 					canvas_mcdu.myPilotWP[i].deleteCmd();

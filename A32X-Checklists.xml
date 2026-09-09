@@ -4,514 +4,2444 @@
 
 <!-- Sven Seipp, Oct 2017 -->
 
+<!-- Jarno de Wit, 2026 -->
+
 <PropertyList>
-	<checklist>
-		<title>BEFORE START</title>
-		<item>
-			<name>COCKPIT PREP</name>
-			<value>COMPLETED(BOTH)</value>
-		</item>
-		<item>
-			<name>GEAR PINS AND COVERS</name>
-			<value>REMOVED</value>
-		</item>
-		<item>
-			<name>SIGNS</name>
-			<value>ON/AUTO</value>
-			<marker>
-				<x-m>4.6733</x-m>
-				<y-m>0.0300</y-m>
-				<z-m>0.8825</z-m>
-				<scale>2.5500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>ADIRS</name>
-			<value>NAV</value>
-			<marker>
-				<x-m>5.1067</x-m>
-				<y-m>-0.2625</y-m>
-				<z-m>1.0325</z-m>
-				<scale>4.5500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>FUEL QUANTITY</name>
-			<value>____KG/LB</value>
-			<marker>
-				<x-m>4.5067</x-m>
-				<y-m>-0.1458</y-m>
-				<z-m>0.3317</z-m>
-				<scale>1.4333</scale>
-			</marker>
-		</item>
-		<item>
-			<name>TO DATA</name>
-			<value>____SET(BOTH)</value>
-			<marker>
-				<x-m>4.4683</x-m>
-				<y-m>-0.1975</y-m>
-				<z-m>-0.0592</z-m>
-				<scale>1.0000</scale>
-			</marker>
-		</item>
-		<item>
-			<name>BARO REF</name>
-			<value>____SET(BOTH)</value>
-			<marker>
-				<x-m>4.5000</x-m>
-				<y-m>-0.2592</y-m>
-				<z-m>0.4783</z-m>
-				<scale>1.5333</scale>
-			</marker>
-		</item>
-		<item>
-			<name>WINDOWS and DOORS</name>		
-			<value>CLOSED(BOTH)</value>
-			<marker>
-				<x-m>4.4658</x-m>
-				<y-m>-0.0100</y-m>
-				<z-m>-0.0583</z-m>
-				<scale>0.9667</scale>
-			</marker>
-		</item>
-		<item>
-			<name>BEACON</name>
-			<value>ON</value>
-			<marker>
-				<x-m>4.7067</x-m>
-				<y-m>-0.1225</y-m>
-				<z-m>0.8958</z-m>
-				<scale>1.9333</scale>
-			</marker>
-		</item>
-		<item>
-			<name>THRUST LEVERS</name>
-			<value>IDLE</value>
-			<marker>
-				<x-m>4.7200</x-m>
-				<y-m>-0.0533</y-m>
-				<z-m>-0.0292</z-m>
-				<scale>1.3667</scale>
-			</marker>
-		</item>
-		<item>
-			<name>PARKING BRAKE</name>
-			<value>AS RQRD</value>
-			<marker>
-				<x-m>5.0500</x-m>
-				<y-m>-0.0325</y-m>
-				<z-m>-0.0567</z-m>
-				<scale>3.3667</scale>
-			</marker>
-		</item>
-	</checklist>
-	<checklist>
-		<title>AFTER START</title>
-		<item>
-			<name>ANTI-ICE</name>
-			<value>AS RQRD</value>
-			<marker>
-				<x-m>4.7650</x-m>
-				<y-m>-0.1208</y-m>
-				<z-m>0.9042</z-m>
-				<scale>4.4500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>ECAM STATUS</name>
-			<value>CHECKED</value>
-			<marker>
-				<x-m>4.6650</x-m>
-				<y-m>-0.2308</y-m>
-				<z-m>0.3975</z-m>
-				<scale>1.7500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>PITCH TRIM</name>
-			<value>____SET</value>
-			<marker>
-				<x-m>4.6850</x-m>
-				<y-m>-0.1075</y-m>
-				<z-m>-0.0142</z-m>
-				<scale>3.0333</scale>
-			</marker>
-		</item>
-		<item>
-			<name>RUDDER TRIM</name>
-			<value>ZERO</value>
-			<marker>
-				<x-m>4.9583</x-m>
-				<y-m>-0.0142</y-m>
-				<z-m>-0.1042</z-m>
-				<scale>3.0333</scale>
-			</marker>
-		</item>
-	</checklist>
-	<checklist>
-		<title>TAXI/BEFORE TAKEOFF</title>
-		<item>
-			<name>FLIGHT CONTROLS</name>
-			<value>CHECKED(BOTH)</value>
-			<marker>
-				<x-m>4.4625</x-m>
-				<y-m>0.0342</y-m>
-				<z-m>-0.0617</z-m>
-				<scale>1.0000</scale>
-			</marker>
-		</item>
-		<item>
-			<name>FLT INST</name>
-			<value>CHECKED(BOTH)</value>
-		</item>
-		<item>
-			<name>BRIEFING</name>
-			<value>CONFIRMED</value>
-		</item>
-		<item>
-			<name>FLAPS SETTING</name>
-			<value>CONF__(BOTH)</value>
-			<marker>
-				<x-m>4.8950</x-m>
-				<y-m>0.0683</y-m>
-				<z-m>-0.0892</z-m>
-				<scale>2.5500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>V1. VR. V2/FLX TEMP</name>
-			<value>CONF__(BOTH)</value>
-			<marker>
-				<x-m>4.4683</x-m>
-				<y-m>-0.1975</y-m>
-				<z-m>-0.0592</z-m>
-				<scale>1.0000</scale>
-			</marker>
-		</item>
-		<item>
-			<name>ATC</name>
-			<value>SET</value>
-		</item>
-		<item>
-			<name>ECAM MEMO</name>
-			<value>TO NO BLUE</value>
-			<marker>
-				<x-m>4.6650</x-m>
-				<y-m>-0.2308</y-m>
-				<z-m>0.3975</z-m>
-				<scale>1.7500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>CABIN CREW</name>
-			<value>ADVISED</value>
-		</item>
-		<item>
-			<name>ENG MODE SEL</name>
-			<value>AS RQRD</value>
-			<marker>
-				<x-m>4.8617</x-m>
-				<y-m>-0.0333</y-m>
-				<z-m>-0.0708</z-m>
-				<scale>2.0000</scale>
-			</marker>
-		</item>
-		<item>
-			<name>PACKS</name>
-			<value>AS RQRD</value>
-			<marker>
-				<x-m>4.8175</x-m>
-				<y-m>-0.1317</y-m>
-				<z-m>0.9492</z-m>
-				<scale>1.6667</scale>
-			</marker>
-		</item>
-	</checklist>
-	<checklist>
-		<title>AFTER TAKEOFF/CLIMB</title>
-		<item>
-			<name>LDG GEAR</name>
-			<value>UP</value>
-			<marker>
-				<x-m>4.3483</x-m>
-				<y-m>0.1142</y-m>
-				<z-m>0.1300</z-m>
-				<scale>3.4833</scale>
-			</marker>
-		</item>
-		<item>
-			<name>FLAPS</name>
-			<value>RETRACTED</value>
-			<marker>
-				<x-m>4.8950</x-m>
-				<y-m>0.0683</y-m>
-				<z-m>-0.0892</z-m>
-				<scale>2.5500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>PACKS</name>
-			<value>ON</value>
-			<marker>
-				<x-m>4.8175</x-m>
-				<y-m>-0.1317</y-m>
-				<z-m>0.9492</z-m>
-				<scale>1.6667</scale>
-			</marker>
-		</item>
-		<item>
-			<name>BARO REF</name>
-			<value>SET(BOTH)</value>
-			<marker>
-				<x-m>4.5000</x-m>
-				<y-m>-0.2592</y-m>
-				<z-m>0.4783</z-m>
-				<scale>1.5333</scale>
-			</marker>
-		</item>
-	</checklist>
-	<checklist>
-		<title>APPROACH</title>
-		<item>
-			<name>BRIEFING</name>
-			<value>CONFIRMED</value>
-		</item>
-		<item>
-			<name>ECAM STATUS</name>
-			<value>CHECKED</value>
-			<marker>
-				<x-m>4.6650</x-m>
-				<y-m>-0.2308</y-m>
-				<z-m>0.3975</z-m>
-				<scale>1.7500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>SEAT BELTS</name>
-			<value>ON</value>
-			<marker>
-				<x-m>4.6733</x-m>
-				<y-m>0.0300</y-m>
-				<z-m>0.8825</z-m>
-				<scale>2.5500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>BARO REF</name>
-			<value>____SET(BOTH)</value>
-			<marker>
-				<x-m>4.5000</x-m>
-				<y-m>-0.2592</y-m>
-				<z-m>0.4783</z-m>
-				<scale>1.5333</scale>
-			</marker>
-		</item>
-		<item>
-			<name>MDA/DH</name>
-			<value>____SET(BOTH)</value>
-			<marker>
-				<x-m>4.5000</x-m>
-				<y-m>-0.2592</y-m>
-				<z-m>0.4783</z-m>
-				<scale>1.5333</scale>
-			</marker>
-		</item>
-		<item>
-			<name>ENG MODE SEL</name>
-			<value>AS RQRD</value>
-			<marker>
-				<x-m>4.8617</x-m>
-				<y-m>-0.0333</y-m>
-				<z-m>-0.0708</z-m>
-				<scale>2.0000</scale>
-			</marker>
-		</item>
-	</checklist>
-	<checklist>
-		<title>LANDING</title>
-		<item>
-			<name>CABIN CREW</name>
-			<value>ADVISED</value>
-		</item>
-		<item>
-			<name>A/THR</name>
-			<value>SPEED/OFF</value>
-			<marker>
-				<x-m>4.2525</x-m>
-				<y-m>-0.6108</y-m>
-				<z-m>0.2933</z-m>
-				<scale>2.1167</scale>
-			</marker>
-		</item>
-		<item>
-			<name>ECAM MEMO</name>
-			<value>LDG NO BLUE</value>
-			<marker>
-				<x-m>4.6650</x-m>
-				<y-m>-0.2308</y-m>
-				<z-m>0.3975</z-m>
-				<scale>1.7500</scale>
-			</marker>
-		</item>
-	</checklist>
-	<checklist>
-		<title>AFTER LANDING</title>
-		<item>
-			<name>FLAPS</name>
-			<value>RETRACTED</value>
-			<marker>
-				<x-m>4.8950</x-m>
-				<y-m>0.0683</y-m>
-				<z-m>-0.0892</z-m>
-				<scale>2.5500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>SPOILERS</name>
-			<value>DISARMED</value>
-			<marker>
-				<x-m>4.9083</x-m>
-				<y-m>-0.0967</y-m>
-				<z-m>-0.0833</z-m>
-				<scale>2.3000</scale>
-			</marker>
-		</item>
-		<item>
-			<name>APU</name>
-			<value>AS RQRD</value>
-			<marker>
-				<x-m>4.6817</x-m>
-				<y-m>0.0000</y-m>
-				<z-m>0.9017</z-m>
-				<scale>2.6167</scale>
-			</marker>
-		</item>
-		<item>
-			<name>TCAS</name>
-			<value>OFF/STBY</value>
-		</item>
-		<item>
-			<name>RADAR</name>
-			<value>OFF</value>
-		</item>
-		<item>
-			<name>PREDICTIVE WINDSHEAR SYSTEM</name>
-			<value>OFF</value>
-		</item>
-	</checklist>
-	<checklist>
-		<title>PARKING</title>
-		<item>
-			<name>APU BLEED</name>
-			<value>ON</value>
-			<marker>
-				<x-m>4.7958</x-m>
-				<y-m>-0.0091</y-m>
-				<z-m>0.9375</z-m>
-				<scale>1.6333</scale>
-			</marker>
-		</item>
-		<item>
-			<name>ENGINES</name>
-			<value>OFF</value>
-			<marker>
-				<x-m>4.8592</x-m>
-				<y-m>-0.0633</y-m>
-				<z-m>0.0000</z-m>
-				<scale>3.0000</scale>
-			</marker>
-		</item>
-		<item>
-			<name>SEAT BELTS</name>
-			<value>OFF</value>
-			<marker>
-				<x-m>4.6692</x-m>
-				<y-m>0.0275</y-m>
-				<z-m>0.8917</z-m>
-				<scale>1.5500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>EXT LT</name>
-			<value>AS RQRD</value>
-		</item>
-		<item>
-			<name>FUEL PUMPS</name>
-			<value>OFF</value>
-			<marker>
-				<x-m>5.0000</x-m>
-				<y-m>-0.0300</y-m>
-				<z-m>1.0017</z-m>
-				<scale>2.6833</scale>
-			</marker>
-		</item>
-		<item>
-			<name>PARK BRK AND CHOCKS</name>
-			<value>AS RQRD</value>
-			<marker>
-				<x-m>5.0500</x-m>
-				<y-m>-0.0325</y-m>
-				<z-m>-0.0567</z-m>
-				<scale>3.3667</scale>
-			</marker>
-		</item>
-	</checklist>
-	<checklist>
-		<title>SECURING THE AIRCRAFT</title>
-		<item>
-			<name>ADIRS</name>
-			<value>OFF</value>
-			<marker>
-				<x-m>5.1067</x-m>
-				<y-m>-0.2625</y-m>
-				<z-m>1.0325</z-m>
-				<scale>4.5500</scale>
-			</marker>
-		</item>
-		<item>
-			<name>OXYGEN</name>
-			<value>OFF</value>
-			<marker>
-				<x-m>4.7958</x-m>
-				<y-m>-0.2041</y-m>
-				<z-m>0.9242</z-m>
-				<scale>1.6333</scale>
-			</marker>
-		</item>
-		<item>
-			<name>APU BLEED</name>
-			<value>OFF</value>
-			<marker>
-				<x-m>4.7958</x-m>
-				<y-m>-0.0091</y-m>
-				<z-m>0.9375</z-m>
-				<scale>1.6333</scale>
-			</marker>
-		</item>
-		<item>
-			<name>EMER EXIT LT</name>
-			<value>OFF</value>
-		</item>
-		<item>
-			<name>SIGNS</name>
-			<value>OFF</value>
-			<marker>
-				<x-m>4.6958</x-m>
-				<y-m>0.0275</y-m>
-				<z-m>0.8775</z-m>
-				<scale>1.4000</scale>
-			</marker>
-		</item>
-		<item>
-			<name>APU AND BAT</name>
-			<value>OFF</value>
-			<marker>
-				<x-m>4.7175</x-m>
-				<y-m>-0.0225</y-m>
-				<z-m>0.8958</z-m>
-				<scale>1.4000</scale>
-			</marker>
-		</item>
-	</checklist>
+  <group> <!-- Full procedures -->
+    <name>Procedures</name>
+    <auto-tutorial>true</auto-tutorial>
+    <checklist> <!-- Power On -->
+      <title>Power-On</title>
+      <page> <!-- Power on -->
+        <item>
+          <name>======&lt; Power On &gt;======</name>
+        </item>
+        <item> <!-- Weather radar off -->
+          <name>Weather Radar SYS</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>0.0218</x-m>
+            <y-m>-0.2106</y-m>
+            <z-m>-0.1311</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine cut-off switches off -->
+          <name>ENG MASTER 1 + 2</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.0112</x-m>
+            <y-m>-0.0000</y-m>
+            <z-m>-0.1140</z-m>
+            <scale>3.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine mode norm-->
+          <name>ENG MODE</name>
+          <value>NORM</value>
+          <marker>
+            <x-m>0.0148</x-m>
+            <y-m>-0.0000</y-m>
+            <z-m>-0.1295</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Parking Brake enabled -->
+          <name>Parking Brake</name>
+          <value>ON</value>
+          <marker>
+            <x-m>0.2201</x-m>
+            <y-m>0.0152</y-m>
+            <z-m>-0.1170</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Landing gear lever down -->
+          <name>Landing Gear Lever</name>
+          <value>Down</value>
+          <marker>
+            <x-m>-0.4970</x-m>
+            <y-m>0.1435</y-m>
+            <z-m>0.1142</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Wipers off -->
+          <name>Wipers</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1434</x-m>
+            <y-m>-0.2124</y-m>
+            <z-m>0.8860</z-m>
+            <scale>1.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Battery voltage check-->
+          <name>BAT Voltage</name>
+          <value>&gt; 25.5V</value>
+          <marker>
+            <x-m>0.1145</x-m>
+            <y-m>-0.0541</y-m>
+            <z-m>1.0051</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Battery enable -->
+          <name>BAT 1 + 2</name>
+          <value>On</value>
+          <marker>
+            <x-m>0.1134</x-m>
+            <y-m>-0.0100</y-m>
+            <z-m>1.0081</z-m>
+            <scale>2.0</scale>
+          </marker>
+        </item>
+        <item> <!-- External power cart -->
+          <name>EXT PWR</name>
+          <value>ON (if connected)</value>
+          <marker>
+            <x-m>0.0549</x-m>
+            <y-m>0.0422</y-m>
+            <z-m>0.9851</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Enable Radio Panels -->
+          <!-- NOTE: rmp[2] panel is not installed in the default flightdeck -->
+          <name>L + R Radio Panel</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1738</x-m>
+            <y-m>-0.1326</y-m>
+            <z-m>-0.0953</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+      </page>
+
+      <page> <!-- APU Start -->
+        <item>
+          <name>======&lt; APU Start &gt;======</name>
+        </item>
+        <item> <!-- APU Fire test -->
+          <name>APU Fire System</name>
+          <value>Tested</value>
+          <marker>
+            <x-m>0.2935</x-m>
+            <y-m>0.0264</y-m>
+            <z-m>1.0697</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Master Switch -->
+          <name>APU Master SW</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1383</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.9094</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Start -->
+          <name>APU START</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1836</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.8916</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Await APU Start -->
+          <name>Await APU Status</name>
+          <value>AVAIL</value>
+          <marker>
+            <x-m>-0.1836</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.8916</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Internal Lighting -->
+          <name>Internal Lighting</name>
+          <value>As Required/Desired</value>
+        </item>
+      </page>
+
+      <page> <!-- Overhead Panel Setup -->
+        <item>
+          <name>Overhead Panel Setup</name>
+        </item>
+        <item> <!-- Oxygen Crew Supply on -->
+          <name>Oxygen Crew Supply</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.0544</x-m>
+            <y-m>-0.1918</y-m>
+            <z-m>0.9366</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- CVR Test -->
+          <name>CVR TEST</name>
+          <value>Tested</value>
+          <marker>
+            <x-m>-0.0136</x-m>
+            <y-m>-0.1911</y-m>
+            <z-m>0.9474</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- ADIRS to NAV-->
+          <name>ADIRS 1 + 2 + 3</name>
+          <value>NAV</value>
+          <marker>
+            <x-m>0.2851</x-m>
+            <y-m>-0.2802</y-m>
+            <z-m>1.0451</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Await ADIRS ready -->
+          <name>Await ADIRS Alignment</name>
+          <value>Complete before engine start</value>
+        </item>
+        <item> <!-- Navigation lights -->
+          <name>NAV &amp; LOGO LT</name>
+          <value>1</value>
+          <marker>
+            <x-m>-0.1333</x-m>
+            <y-m>-0.0427</y-m>
+            <z-m>0.8964</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Passenger signs (seat belts + no smoking) -->
+          <name>SEAT BELTS + NO SMOKING</name>
+          <value>AUTO</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>0.0501</y-m>
+            <z-m>0.8758</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Emergency exit lights -->
+          <name>EMER EXIT LT</name>
+          <value>ARM</value>
+          <marker>
+            <x-m>-0.1789</x-m>
+            <y-m>0.1308</y-m>
+            <z-m>0.8779</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Bleed Air -->
+          <name>APU Bleed</name>
+          <value>ON (only if no ground air connected)</value>
+          <marker>
+            <x-m>-0.0531</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.9428</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Pack Air -->
+          <name>PACK AIR 1 + 2</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.0253</x-m>
+            <y-m>-0.1365</y-m>
+            <z-m>0.9537</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Fuel Pumps -->
+          <name>FUEL PUMPS</name>
+          <value>All ON</value>
+          <marker>
+            <x-m>0.1522</x-m>
+            <y-m>-0.1169</y-m>
+            <z-m>1.0233</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine fire systems tested -->
+          <name>ENG 1 + 2 Fire System</name>
+          <value>Tested</value>
+          <marker>
+            <x-m>0.3073</x-m>
+            <y-m>-0.1426</y-m>
+            <z-m>1.0751</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- White Light Check -->
+          <name>Overhead Panels</name>
+          <value>Check No White Lights Remaining</value>
+        </item>
+      </page>
+
+      <page> <!-- Additional Checks -->
+        <item>
+          <name>======&lt; Additional Checks &gt;======</name>
+        </item>
+        <item> <!-- Flap lever correct -->
+          <name>Flap Lever</name>
+          <value>Same as flap position</value>
+          <marker>
+            <x-m>0.0456</x-m>
+            <y-m>0.0800</y-m>
+            <z-m>-0.1097</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Speed Brake retracted -->
+          <name>Speed Brake</name>
+          <value>Retracted</value>
+          <marker>
+            <x-m>0.0518</x-m>
+            <y-m>-0.0810</y-m>
+            <z-m>-0.1147</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Brake Accumulator Pressure -->
+          <name>Accumulator Pressure</name>
+          <value>Sufficient</value>
+          <marker>
+            <x-m>-0.5189</x-m>
+            <y-m>0.2144</y-m>
+            <z-m>0.0794</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine Oil -->
+          <name>Engine Oil</name>
+          <value>Sufficient</value>
+          <marker>
+            <x-m>-0.3755</x-m>
+            <y-m>-0.0511</y-m>
+            <z-m>-0.0671</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Hydraulic Oil -->
+          <name>Hydraulic Oil</name>
+          <value>Sufficient</value>
+          <marker>
+            <x-m>-0.3755</x-m>
+            <y-m>0.0349</y-m>
+            <z-m>-0.0671</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Oxygen Pressure -->
+          <name>Oxygen Pressure</name>
+          <value>Sufficient</value>
+          <marker>
+            <x-m>-0.3617</x-m>
+            <y-m>-0.0081</y-m>
+            <z-m>-0.0694</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- ECAM Status -->
+          <name>ECAM Status</name>
+          <value>NORMAL</value>
+          <marker>
+            <x-m>-0.3435</x-m>
+            <y-m>-0.0081</y-m>
+            <z-m>-0.0724</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- ECAM Warnings -->
+          <name>ECAM Warnings (RCL)</name>
+          <value>NORMAL</value>
+          <marker>
+            <x-m>-0.3435</x-m>
+            <y-m>0.0134</y-m>
+            <z-m>-0.0724</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- ECAM Empty -->
+          <name>ECAM</name>
+          <value>No page selected</value>
+        </item>
+      </page>
+    </checklist>
+
+    <checklist> <!-- Pre-Start / Engine-Start -->
+      <title>Pre-Start / Engine-Start</title>
+      <page> <!-- MCDU Setup -->
+        <item>
+          <name>======&lt; MCDU FMGC Setup &gt;======</name>
+        </item>
+        <item> <!-- FROM/TO -->
+          <name>FROM/TO (INIT)</name>
+          <value>Set Departure + Arrival Airport (ICAO/ICAO)</value>
+        </item>
+        <item> <!-- Flightplan -->
+          <name>Flightplan</name>
+          <value>Insert / Load From File</value>
+        </item>
+        <item> <!-- ZFW/ZFWCG -->
+          <name>ZFW/ZFWCG (INIT -> Right)</name>
+          <value>Check Fuel and Payload Settings + CG Applet</value>
+        </item>
+        <item> <!-- Block Fuel -->
+          <name>Block Fuel (INIT -> Right)</name>
+          <value>Check Fuel and Payload Settings</value>
+        </item>
+        <item> <!-- V1/VR/V2 -->
+          <name>V1/VR/V2 (PERF)</name>
+          <value>Calculate + Set</value>
+        </item>
+        <item> <!-- FLAPS/THS -->
+          <name>FLAPS/THS (PERF)</name>
+          <value>Calculate + Set</value>
+        </item>
+        <item> <!-- FLEX Takeoff Temp -->
+          <name>FLEX TO TEMP (PERF)</name>
+          <value>Calculate + Set</value>
+        </item>
+      </page>
+
+      <page> <!-- System Preparations -->
+        <item>
+          <name>======&lt; Preparations &gt;======</name>
+        </item>
+        <item> <!-- Ground Air -->
+          <name>Ground Air</name>
+          <value>Disconnected</value>
+        </item>
+        <item> <!-- Beacon Light -->
+          <name>BEACON Light</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1333</x-m>
+            <y-m>-0.1008</y-m>
+            <z-m>0.8964</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Fuel Pump Check -->
+          <name>FUEL PUMPS</name>
+          <value>Check All ON</value>
+          <marker>
+            <x-m>0.1522</x-m>
+            <y-m>-0.1169</y-m>
+            <z-m>1.0233</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Running Check -->
+          <name>APU</name>
+          <value>Check AVAIL</value>
+          <marker>
+            <x-m>-0.1836</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.8916</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Bleed Air Check -->
+          <name>APU Bleed Air</name>
+          <value>Check ON</value>
+          <marker>
+            <x-m>-0.0531</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.9428</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Door Check -->
+          <name>Doors</name>
+          <value>Check All Closed</value>
+          <marker>
+            <x-m>-0.3617</x-m>
+            <y-m>-0.0081</y-m>
+            <z-m>-0.0694</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Thrust Levers Idle -->
+          <name>Thrust Levers</name>
+          <value>Idle</value>
+          <marker>
+            <x-m>-0.0936</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.0146</z-m>
+            <scale>5.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Passenger signs (seat belts + no smoking) -->
+          <name>SEAT BELTS + NO SMOKING</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>0.0501</y-m>
+            <z-m>0.8758</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+      </page>
+
+      <page> <!-- FCU + Start -->
+        <item>
+          <name>======&lt; Flight Control Unit &gt;======</name>
+        </item>
+        <item> <!-- Flight Director -->
+          <name>FD</name>
+          <value>Enabled</value>
+          <marker>
+            <x-m>-0.3603</x-m>
+            <y-m>-0.2607</y-m>
+            <z-m>0.4440</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Initial climb alt -->
+          <name>ALT</name>
+          <value>As Required</value>
+        </item>
+        <item>
+          <name>======&lt; Engine Start &gt;======</name>
+        </item>
+        <item> <!-- Engine Mode Selector -->
+          <name>ENG MODE</name>
+          <value>IGN/START</value>
+          <marker>
+            <x-m>0.0148</x-m>
+            <y-m>-0.0000</y-m>
+            <z-m>-0.1295</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine Cutoff 2 -->
+          <name>ENG MASTER 2</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.0244</x-m>
+            <y-m>0.0247</y-m>
+            <z-m>-0.1140</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Await engine 2 started -->
+          <name>ENG 2 Status</name>
+          <value>Monitor (Await started)</value>
+        </item>
+        <item> <!-- Engine Cutoff 1 -->
+          <name>ENG MASTER 1</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.0244</x-m>
+            <y-m>-0.0247</y-m>
+            <z-m>-0.1140</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Await engine 2 started -->
+          <name>ENG 1 Status</name>
+          <value>Monitor (Await started)</value>
+        </item>
+      </page>
+    </checklist>
+
+    <checklist> <!-- After start checklist -->
+      <title>After-Start</title>
+      <page> <!-- System Setup -->
+        <item>
+          <name>======&lt; After Start &gt;======</name>
+        </item>
+        <item> <!-- Engine Mode Selector -->
+          <name>ENG MODE</name>
+          <value>NORM</value>
+          <marker>
+            <x-m>0.0148</x-m>
+            <y-m>-0.0000</y-m>
+            <z-m>-0.1295</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine Anti-Ice -->
+          <name>ANTI ICE ENG 1 + 2</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.0932</x-m>
+            <y-m>-0.0560</y-m>
+            <z-m>0.9270</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Wing Anti-Ice -->
+          <name>ANTI ICE WING</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.0932</x-m>
+            <y-m>-0.1300</y-m>
+            <z-m>0.9270</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Ground Spoilers Armed -->
+          <name>Ground Spoilers</name>
+          <value>Armed</value>
+          <marker>
+            <x-m>0.0518</x-m>
+            <y-m>-0.0810</y-m>
+            <z-m>-0.1147</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Flaps -->
+          <name>Flaps</name>
+          <value>Set</value>
+          <marker>
+            <x-m>0.0456</x-m>
+            <y-m>0.0800</y-m>
+            <z-m>-0.1097</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Rudder Trim -->
+          <name>Rudder Trim</name>
+          <value>0.0</value>
+          <marker>
+            <x-m>0.1374</x-m>
+            <y-m>-0.0188</y-m>
+            <z-m>-0.1330</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Pitch Trim -->
+          <name>Pitch Trim</name>
+          <value>Set</value>
+        </item>
+        <item> <!-- Weather Radar -->
+          <name>Weather Radar SYS</name>
+          <value>1</value>
+          <marker>
+            <x-m>0.0218</x-m>
+            <y-m>-0.2106</y-m>
+            <z-m>-0.1311</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Predictive Windshear System (PWS) -->
+          <name>PWS</name>
+          <value>AUTO</value>
+          <marker>
+            <x-m>0.0218</x-m>
+            <y-m>-0.1546</y-m>
+            <z-m>-0.1311</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Transponder TA/RA -->
+          <name>Transponder</name>
+          <value>TA/RA</value>
+          <marker>
+            <x-m>0.0129</x-m>
+            <y-m>0.2147</y-m>
+            <z-m>-0.1317</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Bleed Air Off -->
+          <name>APU Bleed Air</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.0531</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.9428</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Off -->
+          <name>APU Master SW</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1383</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.9094</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Ground Power Disconnected -->
+          <name>External Power</name>
+          <value>Disconnected</value>
+          <marker>
+            <x-m>0.0549</x-m>
+            <y-m>0.0422</y-m>
+            <z-m>0.9851</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Check ECAM -->
+          <name>ECAM RCL + STS</name>
+          <value>NORMAL</value>
+          <marker>
+            <x-m>-0.3435</x-m>
+            <y-m>0.0027</y-m>
+            <z-m>-0.0724</z-m>
+            <scale>2.0</scale>
+          </marker>
+        </item>
+      </page>
+
+      <page> <!-- Flight Control Check -->
+        <item>
+          <name>======&lt; Flight Control Check &gt;======</name>
+        </item>
+        <item> <!-- Pitch test -->
+          <name>Elevator</name>
+          <value>Up/Down</value>
+        </item>
+        <item> <!-- Roll test -->
+          <name>Ailerons</name>
+          <value>Left/Right</value>
+        </item>
+        <item> <!-- Yaw test -->
+          <name>Rudder</name>
+          <value>Left/Right</value>
+        </item>
+        <item>
+          <name>Validate response on ECAM F/CTL</name>
+          <marker>
+            <x-m>-0.3617</x-m>
+            <y-m>0.0349</y-m>
+            <z-m>-0.0694</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item>
+          <name></name>
+        </item>
+        <item>
+          <name>======&lt; Instrument Setup &gt;======</name>
+        </item>
+        <item> <!-- Altimeter QNH -->
+          <name>Altimeter</name>
+          <value>Local (QNH Set)</value>
+          <marker>
+            <x-m>-0.3455</x-m>
+            <y-m>-0.2519</y-m>
+            <z-m>0.4703</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- IESI Altimeter QNH -->
+          <name>IESI Altimeter</name>
+          <value>Local (QNH Set)</value>
+          <marker>
+            <x-m>-0.5295</x-m>
+            <y-m>-0.1045</y-m>
+            <z-m>0.1726</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+      </page>
+    </checklist>
+
+    <checklist> <!-- Taxi checklist -->
+      <title>Taxi</title>
+      <page>
+        <item>
+          <name>======&lt; Before Taxi &gt;======</name>
+        </item>
+        <item> <!-- Taxi Clearance -->
+          <name>Taxi Clearance</name>
+          <value>Received</value>
+        </item>
+        <item> <!-- Nose Light -->
+          <name>Nose Light</name>
+          <value>TAXI</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.0427</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Runway Turn Off Light -->
+          <name>RWY TURN OFF</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.1301</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Gear Chocks -->
+          <name>Gear Chocks</name>
+          <value>Removed</value>
+        </item>
+        <item> <!-- Surrounding Area Clear -->
+          <name>Surrounding Area</name>
+          <value>Check Clear</value>
+        </item>
+        <item> <!-- Parking Brake -->
+          <name>Parking Brake</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>0.2201</x-m>
+            <y-m>0.0152</y-m>
+            <z-m>-0.1170</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Brake Pressure Check -->
+          <name>Brake Check</name>
+          <value>Check Brake Action</value>
+          <marker>
+            <x-m>-0.5189</x-m>
+            <y-m>0.2144</y-m>
+            <z-m>0.0794</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Auto Brake -->
+          <name>AUTO BRK</name>
+          <value>MAX</value>
+          <marker>
+            <x-m>-0.5705</x-m>
+            <y-m>0.1962</y-m>
+            <z-m>0.2595</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- ECAM T/O Config Check -->
+          <name>ECAM T.O CONFIG</name>
+          <value>Checked (No BLue)</value>
+          <marker>
+            <x-m>-0.3933</x-m>
+            <y-m>-0.0296</y-m>
+            <z-m>-0.0642</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+      </page>
+    </checklist>
+
+    <checklist> <!-- Takeoff -->
+      <title>Takeoff</title>
+      <page> <!-- Before Takeoff Checklist -->
+        <item>
+          <name>======&lt; Before Takeoff &gt;======</name>
+        </item>
+        <item> <!-- Brake Fans Off -->
+          <name>BRK FAN</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.5823</x-m>
+            <y-m>0.2251</y-m>
+            <z-m>0.2974</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Lineup Clearance Received -->
+          <name>Lineup Clearance</name>
+          <value>Received</value>
+        </item>
+        <item> <!-- Confirm Runway Clear-->
+          <name>Runway + Approach</name>
+          <value>Confirm Clear of Traffic</value>
+        </item>
+        <item> <!-- Strobe On -->
+          <name>STROBE LT</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1333</x-m>
+            <y-m>-0.1302</y-m>
+            <z-m>0.8964</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Nose Light -->
+          <name>NOSE LT</name>
+          <value>T.O</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.0427</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Runway Turn Off Lights -->
+          <name>RWY TURN OFF LT</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.1301</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+      </page>
+
+      <page> <!-- Takeoff Checklist -->
+        <item>
+          <name>======&lt; Takeoff &gt;======</name>
+        </item>
+        <item> <!-- Takeoff Clearance Received -->
+          <name>Takeoff Clearance</name>
+          <value>Received</value>
+        </item>
+        <item> <!-- Landing Lights -->
+          <name>L + R Landing LT</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1766</x-m>
+            <y-m>-0.0862</y-m>
+            <z-m>0.8719</z-m>
+            <scale>2.0</scale>
+          </marker>
+        </item>
+        <item> <!-- EPR / N1-->
+          <name>EPR / N1 (Depending on engine)</name>
+          <value>Stabilised at: 1.05 / 50%</value>
+        </item>
+        <item> <!-- Release Brake -->
+          <name>Brake</name>
+          <value>Release</value>
+        </item>
+        <item> <!-- FLX / TOGA Thrust -->
+          <name>Thrust Levers</name>
+          <value>FLX/TOGA</value>
+        </item>
+        <item> <!-- Chronometer Started -->
+          <name>Chronometer</name>
+          <value>Start</value>
+          <marker>
+            <x-m>-0.5497</x-m>
+            <y-m>0.1901</y-m>
+            <z-m>0.2195</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Airspeed Crosscheck -->
+          <name>Airspeed Indicator</name>
+          <value>Crosscheck (at 100 kt IAS)</value>
+        </item>
+      </page>
+
+      <page> <!-- After Takeoff -->
+        <item>
+          <name>======&lt; After Takeoff &gt;======</name>
+        </item>
+        <item> <!-- Gear Up -->
+          <name>Landing Gear</name>
+          <value>UP</value>
+          <marker>
+            <x-m>-0.4970</x-m>
+            <y-m>0.1435</y-m>
+            <z-m>0.1142</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- CL Thrust -->
+          <name>Thrust Levers</name>
+          <value>CL</value>
+        </item>
+        <item> <!-- Retract Flaps -->
+          <name>Flaps</name>
+          <value>Retract</value>
+          <marker>
+            <x-m>0.0456</x-m>
+            <y-m>0.0800</y-m>
+            <z-m>-0.1097</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Spoilers Disarmed -->
+          <name>Spoilers</name>
+          <value>Disarmed</value>
+          <marker>
+            <x-m>0.0518</x-m>
+            <y-m>-0.0810</y-m>
+            <z-m>-0.1147</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Nose Light -->
+          <name>NOSE LT</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.0427</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Runway Turn Off Lights -->
+          <name>RWY TURN OFF LT</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.1301</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item>
+          <name>======&lt; Engage Autopilot (Optional) &gt;======</name>
+        </item>
+        <item> <!-- Controls Centered -->
+          <name>Controls</name>
+          <value>Released / Centered</value>
+        </item>
+        <item> <!-- Auto Pilot Engaged -->
+          <name>Auto Pilot</name>
+          <value>Engaged</value>
+          <marker>
+            <x-m>-0.3692</x-m>
+            <y-m>-0.0105</y-m>
+            <z-m>0.4675</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+      </page>
+    </checklist>
+
+    <checklist> <!-- Climb / Cruise -->
+      <title>Climb / Cruise</title>
+      <page>
+        <item>
+          <name>======&lt; Climb &gt;======</name>
+        </item>
+        <item>
+          <name>------&lt; Transition Alt &gt;------</name>
+        </item>
+        <item> <!-- Altimeter STD -->
+          <name>Altimeter</name>
+          <value>STD</value>
+          <marker>
+            <x-m>-0.3455</x-m>
+            <y-m>-0.2519</y-m>
+            <z-m>0.4703</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- IESI Altimeter STD -->
+          <name>IESI Altimeter</name>
+          <value>STD</value>
+          <marker>
+            <x-m>-0.5295</x-m>
+            <y-m>-0.1045</y-m>
+            <z-m>0.1726</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item>
+          <name>------&lt; 10_000 ft &gt;------</name>
+        </item>
+        <item> <!-- Landing Lights -->
+          <name>L + R Landing LT</name>
+          <value>RETRACT</value>
+          <marker>
+            <x-m>-0.1766</x-m>
+            <y-m>-0.0862</y-m>
+            <z-m>0.8719</z-m>
+            <scale>2.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Passenger signs (seat belts + no smoking) -->
+          <name>SEAT BELTS + NO SMOKING</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>0.0501</y-m>
+            <z-m>0.8758</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+        <item>
+          <name></name>
+        </item>
+        <item>
+          <name>======&lt; Cruise &gt;======</name>
+        </item>
+        <item> <!-- Monitor Instruments -->
+          <name>Instruments</name>
+          <value>Monitor</value>
+        </item>
+        <item> <!-- Passenger signs (seat belts + no smoking) -->
+          <name>SEAT BELTS + NO SMOKING</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>0.0501</y-m>
+            <z-m>0.8758</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine Anti-Ice -->
+          <name>ANTI ICE ENG 1 + 2</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.0932</x-m>
+            <y-m>-0.0560</y-m>
+            <z-m>0.9270</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Wing Anti-Ice -->
+          <name>ANTI ICE WING</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.0932</x-m>
+            <y-m>-0.1300</y-m>
+            <z-m>0.9270</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+      </page>
+    </checklist>
+
+    <checklist> <!-- Descent -->
+      <title>Descent</title>
+      <page> <!-- Descent Preparations -->
+        <item>
+          <name>======&lt; Descent Preparations &gt;======</name>
+        </item>
+        <item> <!-- Prepare Nav Charts -->
+          <name>Navigation Charts</name>
+          <value>Prepared</value>
+        </item>
+        <item> <!-- Auto Brake -->
+          <name>AUTO BRK</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.5705</x-m>
+            <y-m>0.1962</y-m>
+            <z-m>0.2595</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Enable CSTR on EFIS -->
+          <name>EFIS</name>
+          <value>CSTR</value>
+          <marker>
+            <x-m>-0.3777</x-m>
+            <y-m>-0.2182</y-m>
+            <z-m>0.5006</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item>
+          <name>------&lt; MCDU FMGC Setup &gt;------</name>
+        </item>
+        <item>
+          <name>MCDU: RAD NAV</name>
+        </item>
+        <item> <!-- ILS Freq -->
+          <name>ILS /FREQ</name>
+          <value>Set</value>
+        </item>
+        <item>
+          <name>MCDU: PERF -> APPR</name>
+        </item>
+        <item> <!-- QNH -->
+          <name>QNH</name>
+          <value>Set</value>
+        </item>
+        <item> <!-- Temp -->
+          <name>TEMP</name>
+          <value>Set</value>
+        </item>
+        <item> <!-- Wind -->
+          <name>MAG WIND</name>
+          <value>Set</value>
+        </item>
+        <item> <!-- Transition Level -->
+          <name>TRANS FL</name>
+          <value>Set</value>
+        </item>
+        <item>
+          <name>MCDU: PERF -> GO AROUND</name>
+        </item>
+        <item> <!-- Thrust Reduction + Acceleration Altitude` -->
+          <name>THR RED/ACC Altitude</name>
+          <value>Set</value>
+        </item>
+        <item>
+          <name>------&lt; Clearance &gt;------</name>
+        </item>
+        <item> <!-- Descent Clearance -->
+          <name>Descent Clearance</name>
+          <value>Received</value>
+        </item>
+      </page>
+
+      <page>
+        <item> <!-- Descent Phase -->
+          <name>======&lt; Descent &gt;======</name>
+        </item>
+        <item>
+          <name>------&lt; 10_000 ft &gt;------</name>
+        </item>
+        <item> <!-- Landing Lights -->
+          <name>L + R Landing LT</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1766</x-m>
+            <y-m>-0.0862</y-m>
+            <z-m>0.8719</z-m>
+            <scale>2.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Passenger signs (seat belts + no smoking) -->
+          <name>SEAT BELTS + NO SMOKING</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>0.0501</y-m>
+            <z-m>0.8758</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+        <item> <!-- LS Switch -->
+          <name>LS</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.3603</x-m>
+            <y-m>-0.2417</y-m>
+            <z-m>0.4440</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item>
+          <name>------&lt; Transition Level &gt;------</name>
+        </item>
+        <item> <!-- Altimeter QNH -->
+          <name>Altimeter</name>
+          <value>QNH</value>
+          <marker>
+            <x-m>-0.3455</x-m>
+            <y-m>-0.2519</y-m>
+            <z-m>0.4703</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- IESI Altimeter QNH -->
+          <name>IESI Altimeter</name>
+          <value>QNH</value>
+          <marker>
+            <x-m>-0.5295</x-m>
+            <y-m>-0.1045</y-m>
+            <z-m>0.1726</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+      </page>
+    </checklist>
+
+    <checklist> <!-- Approach -->
+      <title>Approach</title>
+      <page> <!-- ILS Approach -->
+        <item>
+          <name>======&lt; ILS Approach (Autoland) &gt;======</name>
+        </item>
+        <item> <!-- Green Dot Speed -->
+          <name>Speed</name>
+          <value>Green Dot</value>
+        </item>
+        <item> <!-- APPR Mode Enabled -->
+          <name>FCU: APPR</name>
+          <value>Enabled</value>
+          <marker>
+            <x-m>-0.3606</x-m>
+            <y-m>0.0961</y-m>
+            <z-m>0.4448</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- AP1 + AP2 Enabled -->
+          <name>AP1 + AP2</name>
+          <value>Enabled</value>
+          <marker>
+            <x-m>-0.3692</x-m>
+            <y-m>-0.0001</y-m>
+            <z-m>0.4675</z-m>
+            <scale>2.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Check LOC / GS Armed / Captured -->
+          <name>LOC / Glide Slope</name>
+          <value>Check Armed / Captured</value>
+        </item>
+        <item> <!-- GA Alt when GS -->
+          <name>Go Around Alt</name>
+          <value>Set when GS captured</value>
+        </item>
+        <item> <!-- Flaps 1 -->
+          <name>Flaps</name>
+          <value>1 (3NM from Final Descent Point)</value>
+          <marker>
+            <x-m>0.0456</x-m>
+            <y-m>0.0800</y-m>
+            <z-m>-0.1097</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- S-Speed -->
+          <name>Speed</name>
+          <value>S-Speed</value>
+        </item>
+        <item> <!-- Flaps 2 -->
+          <name>Flaps</name>
+          <value>2 (At Distance to RWY >= 6.3 NM)</value>
+          <marker>
+            <x-m>0.0456</x-m>
+            <y-m>0.0800</y-m>
+            <z-m>-0.1097</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- F-Speed -->
+          <name>Speed</name>
+          <value>F-Speed</value>
+        </item>
+        <item> <!-- Gear Down -->
+          <name>Landing Gear</name>
+          <value>Down</value>
+          <marker>
+            <x-m>-0.4970</x-m>
+            <y-m>0.1435</y-m>
+            <z-m>0.1142</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Auto Brake -->
+          <name>AUTO BRK</name>
+          <value>Check As Required</value>
+          <marker>
+            <x-m>-0.5705</x-m>
+            <y-m>0.1962</y-m>
+            <z-m>0.2595</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Nose Light -->
+          <name>NOSE LT</name>
+          <value>T.O</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.0427</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Runway Turn Off Lights -->
+          <name>RWY TURN OFF LT</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.1301</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Ground Spoilers Armed -->
+          <name>Ground Spoilers</name>
+          <value>Armed</value>
+          <marker>
+            <x-m>0.0518</x-m>
+            <y-m>-0.0810</y-m>
+            <z-m>-0.1147</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+      </page>
+
+      <page> <!-- ILS Approach Part 2 -->
+        <item> <!-- Flaps 3 -->
+          <name>Flaps</name>
+          <value>3 (When Gear Down)</value>
+          <marker>
+            <x-m>0.0456</x-m>
+            <y-m>0.0800</y-m>
+            <z-m>-0.1097</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Flaps 4 -->
+          <name>Flaps</name>
+          <value>FULL (When flaps at 3)</value>
+          <marker>
+            <x-m>0.0456</x-m>
+            <y-m>0.0800</y-m>
+            <z-m>-0.1097</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Target-Speed -->
+          <name>Speed</name>
+          <value>Target Speed</value>
+        </item>
+        <item> <!-- ECAM Landing Memo -->
+          <name>ECAM Landing Memo</name>
+          <value>No Blue</value>
+        </item>
+        <item> <!-- Autothrottle Speed or Off -->
+          <name>A/THR</name>
+          <value>Speed Mode (maintaining set speed) or OFF</value>
+        </item>
+        <item> <!-- Wing Anti-Ice Off -->
+          <name>ANTI ICE WING</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.0932</x-m>
+            <y-m>-0.1300</y-m>
+            <z-m>0.9270</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Established at 1000ft (3NM) -->
+          <name>At 3NM (~1000ft above RWY)</name>
+          <value>Fully established on approach path</value>
+        </item>
+        <item>
+          <name>Mimimums</name>
+          <value>Continue / Go Around (Announce)</value>
+        </item>
+        <item>
+          <name></name>
+        </item>
+        <item>
+          <name>Note 1: For Final Descent Point location, see airport approach charts</name>
+        </item>
+        <item>
+          <name>Note 2: The timing of flaps 2 is often determined by altitude above the RWY. This checklist instead</name>
+        </item>
+        <item>
+          <name>gives it in DME distance for a standard 3 deg slope for ease of use (DME is visible on PFD).</name>
+        </item>
+      </page>
+    </checklist>
+
+    <checklist> <!-- Landing Checklist -->
+      <title>Landing</title>
+      <page> <!-- Landing -->
+        <item>
+          <name>======&lt; Landing &gt;======</name>
+        </item>
+        <item>
+          <name>Alt. 30 ft</name>
+        </item>
+        <item> <!-- Thrust Idle -->
+          <name>Thrust Levers</name>
+          <value>Idle</value>
+        </item>
+        <item>
+          <name>Touchdown</name>
+        </item>
+        <item> <!-- Reverse Thrust -->
+          <name>Thrust Levers</name>
+          <value>Reverse</value>
+        </item>
+        <item> <!-- Brakes As Required -->
+          <name>Brakes</name>
+          <value>As Required</value>
+        </item>
+        <item>
+          <name>70 kt</name>
+        </item>
+        <item> <!-- Reverse Thrust Idle -->
+          <name>Thrust Levers</name>
+          <value>Reverse Idle</value>
+        </item>
+        <item>
+          <name>Taxi Speed</name>
+        </item>
+        <item> <!-- Thrust Idle -->
+          <name>Thrust Levers</name>
+          <value>Disengage Reverse</value>
+        </item>
+        <item> <!-- Thrust Idle -->
+          <name>Autobrake</name>
+          <value>Disengage</value>
+        </item>
+      </page>
+
+      <page> <!-- After Landing -->
+        <item>
+          <name>======&lt; After Landing &gt;======</name>
+        </item>
+        <item> <!-- Ground Spoilers Disarmed -->
+          <name>Ground Spoilers</name>
+          <value>Disarmed</value>
+          <marker>
+            <x-m>0.0518</x-m>
+            <y-m>-0.0810</y-m>
+            <z-m>-0.1147</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Strobe Auto -->
+          <name>STROBE LT</name>
+          <value>AUTO</value>
+          <marker>
+            <x-m>-0.1333</x-m>
+            <y-m>-0.1302</y-m>
+            <z-m>0.8964</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Landing Lights Retract -->
+          <name>L + R Landing LT</name>
+          <value>RETRACT</value>
+          <marker>
+            <x-m>-0.1766</x-m>
+            <y-m>-0.0862</y-m>
+            <z-m>0.8719</z-m>
+            <scale>2.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Nose Light -->
+          <name>Nose Light</name>
+          <value>TAXI</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.0427</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Weather Radar Off -->
+          <name>Weather Radar SYS</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>0.0218</x-m>
+            <y-m>-0.2106</y-m>
+            <z-m>-0.1311</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Predictive Windshear System (PWS) -->
+          <name>PWS</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>0.0218</x-m>
+            <y-m>-0.1546</y-m>
+            <z-m>-0.1311</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine Mode Selector -->
+          <name>ENG MODE</name>
+          <value>NORM</value>
+          <marker>
+            <x-m>0.0148</x-m>
+            <y-m>-0.0000</y-m>
+            <z-m>-0.1295</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Retract Flaps -->
+          <name>Flaps</name>
+          <value>Retract</value>
+          <marker>
+            <x-m>0.0456</x-m>
+            <y-m>0.0800</y-m>
+            <z-m>-0.1097</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Master Switch -->
+          <name>APU Master SW</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1383</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.9094</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Start -->
+          <name>APU START</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.1836</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.8916</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine Anti-Ice -->
+          <name>ANTI ICE ENG 1 + 2</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.0932</x-m>
+            <y-m>-0.0560</y-m>
+            <z-m>0.9270</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Wing Anti-Ice -->
+          <name>ANTI ICE WING</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.0932</x-m>
+            <y-m>-0.1300</y-m>
+            <z-m>0.9270</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+      </page>
+    </checklist>
+
+    <checklist> <!-- Go Around Checklist -->
+      <title>Go-Around</title>
+      <page> <!-- Go Around -->
+        <item>
+          <name>======&lt; Go Around &gt;======</name>
+        </item>
+        <item> <!-- Thrust TOGA -->
+          <name>Thrust Levers</name>
+          <value>TOGA</value>
+        </item>
+        <item> <!-- Reduce Flaps -->
+          <name>Flaps</name>
+          <value>Reduce by 1 step</value>
+        </item>
+        <item>
+          <name>Positive Climb</name>
+        </item>
+        <item> <!-- Gear Up -->
+          <name>Landing Gear</name>
+          <value>UP</value>
+          <marker>
+            <x-m>-0.4970</x-m>
+            <y-m>0.1435</y-m>
+            <z-m>0.1142</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item>
+          <name>Thrust Reduction Altitude</name>
+        </item>
+        <item> <!-- CL Thrust -->
+          <name>Thrust Levers</name>
+          <value>CL</value>
+        </item>
+        <item>
+          <name>Acceleration Altitude</name>
+        </item>
+        <item> <!-- Retract Flaps -->
+          <name>Flaps</name>
+          <value>Retract</value>
+          <marker>
+            <x-m>0.0456</x-m>
+            <y-m>0.0800</y-m>
+            <z-m>-0.1097</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Spoilers Disarmed -->
+          <name>Spoilers</name>
+          <value>Disarmed</value>
+          <marker>
+            <x-m>0.0518</x-m>
+            <y-m>-0.0810</y-m>
+            <z-m>-0.1147</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Nose Light -->
+          <name>NOSE LT</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.0427</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Runway Turn Off Lights -->
+          <name>RWY TURN OFF LT</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>-0.1301</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+      </page>
+    </checklist>
+
+    <checklist> <!-- Parking Checklist -->
+      <title>Parking</title>
+      <page>
+        <item>
+          <name>======&lt; Parking &gt;======</name>
+        </item>
+        <item> <!-- Brake Accumulator Pressure -->
+          <name>Accumulator Pressure</name>
+          <value>Sufficient</value>
+          <marker>
+            <x-m>-0.5189</x-m>
+            <y-m>0.2144</y-m>
+            <z-m>0.0794</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Parking Brake enabled -->
+          <name>Parking Brake</name>
+          <value>ON</value>
+          <marker>
+            <x-m>0.2201</x-m>
+            <y-m>0.0152</y-m>
+            <z-m>-0.1170</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Transponder Standby -->
+          <name>Transponder</name>
+          <value>STBY</value>
+          <marker>
+            <x-m>0.0129</x-m>
+            <y-m>0.2147</y-m>
+            <z-m>-0.1317</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine Anti-Ice Off-->
+          <name>ANTI ICE ENG 1 + 2</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.0932</x-m>
+            <y-m>-0.0560</y-m>
+            <z-m>0.9270</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Wing Anti-Ice Off -->
+          <name>ANTI ICE WING</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.0932</x-m>
+            <y-m>-0.1300</y-m>
+            <z-m>0.9270</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Bleed Air -->
+          <name>APU Bleed</name>
+          <value>ON</value>
+          <marker>
+            <x-m>-0.0531</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.9428</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Engine cut-off switches off -->
+          <name>ENG MASTER 1 + 2</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.0112</x-m>
+            <y-m>-0.0000</y-m>
+            <z-m>-0.1140</z-m>
+            <scale>3.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Beacon Light -->
+          <name>BEACON Light</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1333</x-m>
+            <y-m>-0.1008</y-m>
+            <z-m>0.8964</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Wing Light -->
+          <name>WING Light</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1323</x-m>
+            <y-m>-0.0716</y-m>
+            <z-m>0.8939</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Seat belt sign -->
+          <name>SEAT BELTS</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>0.0380</y-m>
+            <z-m>0.8758</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Fuel Pumps -->
+          <name>FUEL PUMPS</name>
+          <value>All OFF</value>
+          <marker>
+            <x-m>0.1522</x-m>
+            <y-m>-0.1169</y-m>
+            <z-m>1.0233</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Brake Fans Off -->
+          <name>BRK FAN</name>
+          <value>As Required</value>
+          <marker>
+            <x-m>-0.5823</x-m>
+            <y-m>0.2251</y-m>
+            <z-m>0.2974</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Gear Chocks -->
+          <name>Gear Chocks</name>
+          <value>In Place</value>
+        </item>
+        <item> <!-- Parking Brake disabled -->
+          <name>Parking Brake</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>0.2201</x-m>
+            <y-m>0.0152</y-m>
+            <z-m>-0.1170</z-m>
+            <scale>3.0</scale>
+          </marker>
+        </item>
+      </page>
+
+      <page>
+        <item>
+          <name>======&lt; Securing &gt;======</name>
+        </item>
+        <item> <!-- ADIRS Off-->
+          <name>ADIRS 1 + 2 + 3</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>0.2851</x-m>
+            <y-m>-0.2802</y-m>
+            <z-m>1.0451</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Oxygen Crew Supply off -->
+          <name>Oxygen Crew Supply</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.0544</x-m>
+            <y-m>-0.1918</y-m>
+            <z-m>0.9366</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Exterior Lights off -->
+          <name>EXT LT</name>
+          <value>All OFF</value>
+          <marker>
+            <x-m>-0.1579</x-m>
+            <y-m>-0.0864</y-m>
+            <z-m>0.8851</z-m>
+            <scale>4.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Bleed Air -->
+          <name>APU Bleed</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.0531</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.9428</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- APU Master Switch -->
+          <name>APU Master SW</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1383</x-m>
+            <y-m>0.0000</y-m>
+            <z-m>0.9094</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Emergency exit lights -->
+          <name>EMER EXIT LT</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1789</x-m>
+            <y-m>0.1308</y-m>
+            <z-m>0.8779</z-m>
+            <scale>1.0</scale>
+          </marker>
+        </item>
+        <item> <!-- Passenger signs (seat belts + no smoking) -->
+          <name>SEAT BELTS + NO SMOKING</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>-0.1782</x-m>
+            <y-m>0.0501</y-m>
+            <z-m>0.8758</z-m>
+            <scale>2.5</scale>
+          </marker>
+        </item>
+        <item> <!-- Battery off -->
+          <name>BAT 1 + 2</name>
+          <value>OFF</value>
+          <marker>
+            <x-m>0.1134</x-m>
+            <y-m>-0.0100</y-m>
+            <z-m>1.0081</z-m>
+            <scale>2.0</scale>
+          </marker>
+        </item>
+      </page>
+    </checklist>
+  </group>
+
+  <group> <!-- Standard -->
+    <name>Standard</name>
+    <auto-tutorial>false</auto-tutorial>
+    <checklist>
+      <title>BEFORE START</title>
+      <item>
+       <name>COCKPIT PREP</name>
+       <value>COMPLETED(BOTH)</value>
+      </item>
+      <item>
+       <name>GEAR PINS AND COVERS</name>
+       <value>REMOVED</value>
+      </item>
+      <item>
+        <name>SIGNS</name>
+        <value>ON/AUTO</value>
+        <marker>
+          <x-m>-0.1782</x-m>
+          <y-m>0.0501</y-m>
+          <z-m>0.8758</z-m>
+          <scale>2.5</scale>
+        </marker>
+      </item>
+      <item>
+        <name>ADIRS</name>
+        <value>NAV</value>
+        <marker>
+          <x-m>0.2830</x-m>
+          <y-m>-0.2349</y-m>
+          <z-m>1.0504</z-m>
+          <scale>4.5</scale>
+        </marker>
+      </item>
+      <item>
+        <name>FUEL QUANTITY</name>
+        <value>____KG/LB</value>
+        <marker>
+          <x-m>-0.3755</x-m>
+          <y-m>0.0564</y-m>
+          <z-m>-0.0671</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>TO DATA</name>
+        <value>____SET(BOTH)</value>
+        <marker>
+          <x-m>-0.3525</x-m>
+          <y-m>-0.1959</y-m>
+          <z-m>-0.0692</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>BARO REF</name>
+        <value>____SET(BOTH)</value>
+        <marker>
+          <x-m>-0.3455</x-m>
+          <y-m>-0.2519</y-m>
+          <z-m>0.4703</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>WINDOWS and DOORS</name>
+        <value>CLOSED(BOTH)</value>
+        <marker>
+          <x-m>-0.3617</x-m>
+          <y-m>-0.0081</y-m>
+          <z-m>-0.0694</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>BEACON</name>
+        <value>ON</value>
+        <marker>
+          <x-m>-0.1333</x-m>
+          <y-m>-0.1008</y-m>
+          <z-m>0.8964</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>THRUST LEVERS</name>
+        <value>IDLE</value>
+        <marker>
+          <x-m>-0.0936</x-m>
+          <y-m>0.0000</y-m>
+          <z-m>0.0146</z-m>
+          <scale>5.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>PARKING BRAKE</name>
+        <value>AS RQRD</value>
+        <marker>
+          <x-m>0.2201</x-m>
+          <y-m>0.0152</y-m>
+          <z-m>-0.1170</z-m>
+          <scale>3.0</scale>
+        </marker>
+      </item>
+    </checklist>
+    <checklist>
+      <title>AFTER START</title>
+      <item>
+        <name>ANTI-ICE</name>
+        <value>AS RQRD</value>
+        <marker>
+          <x-m>-0.0932</x-m>
+          <y-m>-0.0848</y-m>
+          <z-m>0.9270</z-m>
+          <scale>4.5</scale>
+        </marker>
+      </item>
+      <item>
+        <name>ECAM STATUS</name>
+        <value>CHECKED</value>
+        <marker>
+          <x-m>-0.3435</x-m>
+          <y-m>-0.0081</y-m>
+          <z-m>-0.0724</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>PITCH TRIM</name>
+        <value>____SET</value>
+        <marker>
+          <x-m>-0.1607</x-m>
+          <y-m>0.0004</y-m>
+          <z-m>-0.1289</z-m>
+          <scale>12.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>RUDDER TRIM</name>
+        <value>ZERO</value>
+        <marker>
+          <x-m>0.1374</x-m>
+          <y-m>-0.0188</y-m>
+          <z-m>-0.1330</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+    </checklist>
+    <checklist>
+      <title>TAXI/BEFORE TAKEOFF</title>
+      <item>
+        <name>FLIGHT CONTROLS</name>
+        <value>CHECKED(BOTH)</value>
+        <marker>
+          <x-m>-0.3617</x-m>
+          <y-m>0.0349</y-m>
+          <z-m>-0.0694</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>FLT INST</name>
+        <value>CHECKED(BOTH)</value>
+      </item>
+      <item>
+        <name>BRIEFING</name>
+        <value>CONFIRMED</value>
+      </item>
+      <item>
+        <name>FLAPS SETTING</name>
+        <value>CONF__(BOTH)</value>
+        <marker>
+          <x-m>0.0456</x-m>
+          <y-m>0.0800</y-m>
+          <z-m>-0.1097</z-m>
+          <scale>3.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>V1. VR. V2/FLX TEMP</name>
+        <value>CONF__(BOTH)</value>
+        <marker>
+          <x-m>-0.3525</x-m>
+          <y-m>-0.1959</y-m>
+          <z-m>-0.0692</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>ATC</name>
+        <value>SET</value>
+      </item>
+      <item>
+        <name>ECAM MEMO</name>
+        <value>TO NO BLUE</value>
+        <marker>
+          <x-m>-0.3933</x-m>
+          <y-m>-0.0296</y-m>
+          <z-m>-0.0642</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>CABIN CREW</name>
+        <value>ADVISED</value>
+      </item>
+      <item>
+        <name>ENG MODE SEL</name>
+        <value>AS RQRD</value>
+        <marker>
+          <x-m>0.0148</x-m>
+          <y-m>-0.0000</y-m>
+          <z-m>-0.1295</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>PACKS</name>
+        <value>AS RQRD</value>
+        <marker>
+          <x-m>-0.0253</x-m>
+          <y-m>-0.1365</y-m>
+          <z-m>0.9537</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+    </checklist>
+    <checklist>
+      <title>AFTER TAKEOFF/CLIMB</title>
+      <item>
+        <name>LDG GEAR</name>
+        <value>UP</value>
+        <marker>
+          <x-m>-0.4970</x-m>
+          <y-m>0.1435</y-m>
+          <z-m>0.1142</z-m>
+          <scale>3.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>FLAPS</name>
+        <value>RETRACTED</value>
+        <marker>
+          <x-m>0.0456</x-m>
+          <y-m>0.0800</y-m>
+          <z-m>-0.1097</z-m>
+          <scale>3.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>PACKS</name>
+        <value>ON</value>
+        <marker>
+          <x-m>-0.0253</x-m>
+          <y-m>-0.1365</y-m>
+          <z-m>0.9537</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>BARO REF</name>
+        <value>SET(BOTH)</value>
+        <marker>
+          <x-m>-0.3455</x-m>
+          <y-m>-0.2519</y-m>
+          <z-m>0.4703</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+    </checklist>
+    <checklist>
+      <title>APPROACH</title>
+      <item>
+        <name>BRIEFING</name>
+        <value>CONFIRMED</value>
+      </item>
+      <item>
+        <name>ECAM STATUS</name>
+        <value>CHECKED</value>
+        <marker>
+          <x-m>-0.3435</x-m>
+          <y-m>-0.0081</y-m>
+          <z-m>-0.0724</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>SEAT BELTS</name>
+        <value>ON</value>
+        <marker>
+          <x-m>-0.1782</x-m>
+          <y-m>0.0380</y-m>
+          <z-m>0.8758</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>BARO REF</name>
+        <value>____SET(BOTH)</value>
+        <marker>
+          <x-m>-0.3455</x-m>
+          <y-m>-0.2519</y-m>
+          <z-m>0.4703</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>MDA/DH</name>
+        <value>____SET(BOTH)</value>
+        <marker>
+          <x-m>-0.3525</x-m>
+          <y-m>-0.1959</y-m>
+          <z-m>-0.0692</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>ENG MODE SEL</name>
+        <value>AS RQRD</value>
+        <marker>
+          <x-m>0.0148</x-m>
+          <y-m>-0.0000</y-m>
+          <z-m>-0.1295</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+    </checklist>
+    <checklist>
+      <title>LANDING</title>
+      <item>
+        <name>CABIN CREW</name>
+        <value>ADVISED</value>
+      </item>
+      <item>
+        <name>A/THR</name>
+        <value>SPEED/OFF</value>
+        <marker>
+          <x-m>-0.3628</x-m>
+          <y-m>-0.0001</y-m>
+          <z-m>0.4470</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>ECAM MEMO</name>
+        <value>LDG NO BLUE</value>
+        <marker>
+          <x-m>-0.3435</x-m>
+          <y-m>-0.0511</y-m>
+          <z-m>-0.0723</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+    </checklist>
+    <checklist>
+      <title>AFTER LANDING</title>
+      <item>
+        <name>FLAPS</name>
+        <value>RETRACTED</value>
+        <marker>
+          <x-m>0.0456</x-m>
+          <y-m>0.0800</y-m>
+          <z-m>-0.1097</z-m>
+          <scale>3.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>SPOILERS</name>
+        <value>DISARMED</value>
+        <marker>
+          <x-m>0.0518</x-m>
+          <y-m>-0.0810</y-m>
+          <z-m>-0.1147</z-m>
+          <scale>3.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>APU</name>
+        <value>AS RQRD</value>
+        <marker>
+          <x-m>-0.1383</x-m>
+          <y-m>0.0000</y-m>
+          <z-m>0.9094</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>TCAS</name>
+        <value>OFF/STBY</value>
+        <marker>
+          <x-m>0.0129</x-m>
+          <y-m>0.2147</y-m>
+          <z-m>-0.1317</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>RADAR</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>0.0218</x-m>
+          <y-m>-0.2106</y-m>
+          <z-m>-0.1311</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>PREDICTIVE WINDSHEAR SYSTEM</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>0.0218</x-m>
+          <y-m>-0.1546</y-m>
+          <z-m>-0.1311</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+    </checklist>
+    <checklist>
+      <title>PARKING</title>
+      <item>
+        <name>APU BLEED</name>
+        <value>ON</value>
+        <marker>
+          <x-m>-0.0531</x-m>
+          <y-m>0.0000</y-m>
+          <z-m>0.9428</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>ENGINES</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>-0.0112</x-m>
+          <y-m>-0.0000</y-m>
+          <z-m>-0.1140</z-m>
+          <scale>3.5</scale>
+        </marker>
+      </item>
+      <item>
+        <name>SEAT BELTS</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>-0.1782</x-m>
+          <y-m>0.0380</y-m>
+          <z-m>0.8758</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>EXT LT</name>
+        <value>AS RQRD</value>
+      </item>
+      <item>
+        <name>FUEL PUMPS</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>0.1522</x-m>
+          <y-m>-0.1169</y-m>
+          <z-m>1.0233</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>PARK BRK AND CHOCKS</name>
+        <value>AS RQRD</value>
+        <marker>
+          <x-m>0.2201</x-m>
+          <y-m>0.0152</y-m>
+          <z-m>-0.1170</z-m>
+          <scale>3.0</scale>
+        </marker>
+      </item>
+    </checklist>
+    <checklist>
+      <title>SECURING THE AIRCRAFT</title>
+      <item>
+        <name>ADIRS</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>0.2830</x-m>
+          <y-m>-0.2349</y-m>
+          <z-m>1.0504</z-m>
+          <scale>4.5</scale>
+        </marker>
+      </item>
+      <item>
+        <name>OXYGEN</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>-0.0544</x-m>
+          <y-m>-0.1918</y-m>
+          <z-m>0.9366</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>APU BLEED</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>-0.0531</x-m>
+          <y-m>0.0000</y-m>
+          <z-m>0.9428</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>EMER EXIT LT</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>-0.1789</x-m>
+          <y-m>0.1308</y-m>
+          <z-m>0.8779</z-m>
+          <scale>1.0</scale>
+        </marker>
+      </item>
+      <item>
+        <name>SIGNS</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>-0.1782</x-m>
+          <y-m>0.0501</y-m>
+          <z-m>0.8758</z-m>
+          <scale>2.5</scale>
+        </marker>
+      </item>
+      <item>
+        <name>APU AND BAT</name>
+        <value>OFF</value>
+        <marker>
+          <x-m>0.1134</x-m>
+          <y-m>-0.0100</y-m>
+          <z-m>1.0081</z-m>
+          <scale>2.0</scale>
+        </marker>
+      </item>
+    </checklist>
+  </group>
 </PropertyList>

@@ -88,9 +88,9 @@ var pilotWaypointPage = {
 	deleteCmd: func() {
 		if (!fmgc.WaypointDatabase.confirm[me.computer]) {
 			fmgc.WaypointDatabase.delete(me.computer);
-			me.scroll = fmgc.WaypointDatabase.getNonNilIndex();
+		} else {
+			me._setupPageWithData();
+			canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 		}
-		me._setupPageWithData();
-		canvas_mcdu.pageSwitch[me.computer].setBoolValue(0);
 	},
 };

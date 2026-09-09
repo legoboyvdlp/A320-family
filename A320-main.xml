@@ -1075,6 +1075,7 @@
 			<brake-parking type="bool">0</brake-parking>
 			<lever-cockpit type="int">3</lever-cockpit>
 			<nws-switch type="double">1</nws-switch>
+			<pedal-disc type="bool">0</pedal-disc>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
 			<tiller-enabled type="bool">0</tiller-enabled>
 		</gear>
@@ -5175,4 +5176,3 @@
 	</maintainance>
 
 </PropertyList>
-
