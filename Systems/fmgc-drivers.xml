@@ -953,6 +953,22 @@
 		<max>30</max>
 		<max-rate-of-change>20</max-rate-of-change>
 	</filter>
+
+	<!-- Ground-roll FD yaw guidance: target yaw rate minus actual yaw rate. -->
+	<filter>
+		<name>FD Yaw</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<property>/it-autoflight/internal/yaw-rate</property>
+					<property>/orientation/yaw-rate-degps</property>
+				</difference>
+			</expression>
+		</input>
+		<output>/it-autoflight/fd/yaw-bar</output>
+	</filter>
 	
 	<filter>
 		<name>FD Pitch Takeoff Schedule</name>
