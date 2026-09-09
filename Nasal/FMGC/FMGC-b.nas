@@ -106,10 +106,12 @@ var Input = {
 	kts: props.globals.initNode("/it-autoflight/input/kts", 100, "INT"),
 	#Used for showing the correct IAS on the idle descent ECON range segment
 	ktsShow: props.globals.initNode("/it-autoflight/input/kts-show", 100, "INT"),
+	ktsPreview: props.globals.initNode("/it-autoflight/input/kts-preview", 100, "INT"),
 	ktsMach: props.globals.initNode("/it-autoflight/input/kts-mach", 0, "BOOL"),
 	lat: props.globals.initNode("/it-autoflight/input/lat", 5, "INT"),
 	latTemp: 5,
 	mach: props.globals.initNode("/it-autoflight/input/mach", 0.5, "DOUBLE"),
+	machPreview: props.globals.initNode("/it-autoflight/input/mach-preview", 0.5, "DOUBLE"),
 	machShow: props.globals.initNode("/it-autoflight/input/mach-show", 0.5, "DOUBLE"),
 	toga: props.globals.initNode("/it-autoflight/input/toga", 0, "BOOL"),
 	trk: props.globals.initNode("/it-autoflight/input/trk", 0, "BOOL"),
