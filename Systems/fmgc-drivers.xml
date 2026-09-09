@@ -146,21 +146,51 @@
 		<name>FMGC Target Knots PFD</name>
 		<type>gain</type>
 		<gain>1.0</gain>
+
 		<input>
 			<condition>
-				<equals>
-					<property>/it-autoflight/input/kts-mach</property>
-					<value>0</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/it-autoflight/input/kts-mach</property>
+						<value>0</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/input/idle-descent</property>
+						<value>0</value>
+					</equals>
+				</and>
 			</condition>
 			<property>/it-autoflight/input/kts</property>
 		</input>
+
 		<input>
 			<condition>
-				<equals>
-					<property>/it-autoflight/input/kts-mach</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/it-autoflight/input/kts-mach</property>
+						<value>0</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/input/idle-descent</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</condition>
+			<property>/it-autoflight/input/kts-show</property>
+		</input>
+
+		<input>
+			<condition>
+				<and>
+					<equals>
+						<property>/it-autoflight/input/kts-mach</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/input/idle-descent</property>
+						<value>0</value>
+					</equals>
+				</and>
 			</condition>
 			<expression>
 				<product>
@@ -172,9 +202,34 @@
 				</product>
 			</expression>
 		</input>
+
+		<input>
+			<condition>
+				<and>
+					<equals>
+						<property>/it-autoflight/input/kts-mach</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/input/idle-descent</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</condition>
+			<expression>
+				<product>
+					<div>
+						<property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+						<property>/instrumentation/airspeed-indicator/indicated-mach</property>
+					</div>
+					<property>/it-autoflight/input/mach-show</property>
+				</product>
+			</expression>
+		</input>
+
 		<output>/FMGC/internal/target-ias-pfd</output>
 	</filter>
-	
+		
 	<filter>
 		<name>Knots Sync</name>
 		<type>gain</type>

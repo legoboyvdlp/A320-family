@@ -477,6 +477,31 @@ var canvas_pfd = {
 					obj["FMA_pitcharm2"].setColor(0.0901,0.6039,0.7176);
 				}
 			}),
+			# Control the movement of the vertical deviation dot
+			props.UpdateManager.FromHashList(["fmgcPhase","vdevDot"], 1, func(val) {
+				if (val.fmgcPhase == 4 or val.fmgcPhase == 5) {
+					obj["vdev_dot"].show();
+					vdevDotDev = val.vdevDot * 0.5;
+					if (vdevDotDev > 260) {
+						obj["vdev_dot"].hide();
+						obj["vdev_low"].hide();
+						obj["vdev_high"].show();
+					} elsif (vdevDotDev < -260) {
+						obj["vdev_dot"].hide();
+						obj["vdev_high"].hide();
+						obj["vdev_low"].show();
+					} else {
+						obj["vdev_low"].hide();
+						obj["vdev_high"].hide();
+						obj["vdev_dot"].show();
+						obj["vdev_dot"].setTranslation(0, vdevDotDev);
+					}
+				} else {
+					obj["vdev_dot"].hide();
+					obj["vdev_low"].hide();
+					obj["vdev_high"].hide();
+				}
+			}),
 			props.UpdateManager.FromHashValue("managedSpd", 1, func(val) {
 				if (val) {
 					obj["ASI_target"].setColor(0.6901,0.3333,0.7450);
@@ -747,6 +772,49 @@ var canvas_pfd = {
 			}),
 			props.UpdateManager.FromHashValue("ASItrgt", 0.1, func(val) {
 				obj["ASI_target"].setTranslation(0, val * -6.6);
+			}),
+			#Set the ECON range bar on descent and approach at +-20 knots normal and +5/-20 knots on speed constraints
+			props.UpdateManager.FromHashList(["ASItrgt", "ASI", "ASImax", "VLSmin","fmgcPhase","managedSpd","econMarginReduced"],0.5, func(val) {
+				if (val.fmgcPhase >= 4 and val.fmgcPhase <= 5 and fmgc.Output.vert.getValue() == 8 and val.managedSpd) {
+					
+					
+					low_translation = math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6;
+					if (val.econMarginReduced) {
+						high_translation = math.clamp(val.ASItrgt + 5, val.VLSmin, val.ASImax) * -6.6;
+
+						if (high_translation <= 260 and high_translation >= -260) {
+							obj["ECON_range_high"].show();
+							obj["ECON_range_high"].setTranslation(0, high_translation);
+						} else {
+							obj["ECON_range_high"].hide();
+						}
+						if (low_translation <= 260 and low_translation >= -260) {
+							obj["ECON_range_low"].show();
+							obj["ECON_range_low"].setTranslation(0, low_translation);
+						} else {
+							obj["ECON_range_low"].hide();
+						}
+					} else {
+						high_translation = math.clamp(val.ASItrgt + 20, val.VLSmin, val.ASImax) * -6.6;
+						if (high_translation <= 260 and high_translation >= -260) {
+							obj["ECON_range_high"].show();
+							obj["ECON_range_high"].setTranslation(0, high_translation);
+						} else {
+							obj["ECON_range_high"].hide();
+						}
+						if (low_translation <= 260 and low_translation >= -260) {
+							obj["ECON_range_low"].show();
+							obj["ECON_range_low"].setTranslation(0, low_translation);
+						} else {
+							obj["ECON_range_low"].hide();
+						}
+					}
+				} else {
+					obj["ECON_range_high"].hide();
+					obj["ECON_range_low"].hide();
+				}
+				obj["FMA_ctr_msg-10"].hide();
+				obj["FMA_ctr_msg-11"].hide();
 			}),
 			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
 				if (!val.speedError) {
@@ -1112,7 +1180,7 @@ var canvas_pfd = {
 		return obj;
 	},
 	getKeys: func() {
-		return ["FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
+		return ["vdev_dot","vdev_low","vdev_high", "ECON_range_low", "ECON_range_high", "FMA_ctr_msg-10", "FMA_ctr_msg-11","FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
 		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
 		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VPROT_MAX","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
@@ -1386,7 +1454,15 @@ var canvas_pfd = {
 			
 			
 			me.tgt_ias = notification.targetIasPFD;
-			me.tgt_kts = notification.targetKts;
+			#To show the original IAS during idle descent
+			if (fmgc.Input.idleDescent.getValue() and notification.managedSpd) {
+				me.tgt_kts = notification.targetKtsShow;
+
+			} else {
+				me.tgt_kts = notification.targetKts;
+			}
+			
+			
 
 			if (notification.managedSpd) {
 				if (fmgc.FMGCInternal.decel) {
@@ -2243,7 +2319,9 @@ var input = {
 	du6Lgt: "/controls/lighting/DU/du6",
 	attSwitch: "/controls/navigation/switching/att-hdg",
 	managedAlt: "/it-autoflight/internal/mng-alt",
-	
+	vdevDot: "/it-autoflight/internal/vdev-dot",
+	econMarginReduced: "/it-autoflight/internal/econ-margin-reduced",
+
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",
 	altitude: "/instrumentation/altimeter/indicated-altitude-ft",
@@ -2306,6 +2384,8 @@ var input = {
 	targetIasPFD: "/FMGC/internal/target-ias-pfd",
 	targetMach: "/it-autoflight/input/mach",
 	targetKts: "/it-autoflight/input/kts",
+	targetKtsShow: "/it-autoflight/input/kts-show",
+	idleDescent: "/it-autoflight/input/idle-descent",
 	targetHeading: "/it-autoflight/input/hdg",
 	managedSpd: "/it-autoflight/input/spd-managed",
 	ktsMach: "/it-autoflight/input/kts-mach",

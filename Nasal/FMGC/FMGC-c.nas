@@ -275,13 +275,11 @@ var UpdateFma = {
 	vert: func() {
 		vertText = Text.vert.getValue();
 		if (vertText == "ALT HLD" or vertText == "ALT CAP") {
-			# altvert() call deals with this case
-			# print("hit alt cap");
 			if (Internal.altManaged.getBoolValue() == 0) {
 				setFmaText("pitchMode2Armed", " ", genericCallback, "pitchMode2ArmedTime");
 			} else {
-				if (fmgc.FMGCInternal.phase >= 3 and fmgc.FMGCInternal.phase != 6) {
-					# setFmaText("pitchMode2Armed", "DES", genericCallback, "pitchMode2ArmedTime");
+				if (Input.altDiff < 0) {
+					setFmaText("pitchMode2Armed", "DES", genericCallback, "pitchMode2ArmedTime");
 				} else {
 					setFmaText("pitchMode2Armed", "CLB", genericCallback, "pitchMode2ArmedTime");
 				}
@@ -305,9 +303,8 @@ var UpdateFma = {
 			setFmaText("pitchMode", "CLB", genericCallback, "pitchModeTime");
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
 		} else if (vertText == "DES") {
-			# print("to set Fma text to DES");
-			# setFmaText("pitchMode", "DES", genericCallback, "pitchModeTime");
-			# setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
+			setFmaText("pitchMode", "DES", genericCallback, "pitchModeTime");
+			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");
 		} else if (vertText == "FPA") {
 			setFmaText("pitchMode", "FPA", genericCallback, "pitchModeTime");
 			setFmaText("pitchMode2Armed", "ALT", genericCallback, "pitchMode2ArmedTime");

@@ -1,6 +1,6 @@
 # A3XX FMGC Flightplan Driver
 # Copyright (c) 2026 Josh Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
-
+var geoWptIndex = nil;
 var wpDep = nil;
 var wpArr = nil;
 var pos = nil;
@@ -11,6 +11,7 @@ var sizeWP = nil;
 var magTrueError = 0;
 var storeCourse = nil;
 var DEBUG_DISCONT = 0;
+var descent_coeff = 318;
 
 # Props.getNode
 var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
@@ -771,22 +772,160 @@ var flightPlanController = {
 
 		setprop("/instrumentation/nd/symbols/decel/index", me.indexTemp);
 	},
-	# Get the next altitude constraint that is either at, or at or below
+	#Calculate the altitude from distance using a 3 deg angle exactly
+	getAltitudeFromDistance: func(Distance) {
+		return descent_coeff*Distance;
+	},
+	#Get the extrapolated altitude from the function above
+	getExtrapolatedFirstAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
+		var extrapolatedAlt = altCstr + (me.getAltitudeFromDistance(distanceToCstr - distanceToCstr2));
+		return extrapolatedAlt;
+	},
+	#Get the altitude that the aircraft would descent to at 1000 fpm (standard descent rate when DES mode is engaged)
+	#at a certain distance.
+	getExtrapolatedOneThousandVSDescent: func(distanceToCstr2) {
+		var currentAlt = Position.indicatedAltitudeFt.getValue();
+		var gs = pts.Velocities.groundspeedKt.getValue();
+		var extrapolatedAlt = currentAlt - (distanceToCstr2 * 60 * 1000 / gs);
+		return extrapolatedAlt;
+	},
+	#Get the alttiude the aircraft would be at a certaain distance when descending smoothly towards a geometric descent waypoint
+	getExtrapolatedGeoAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
+		var currentAlt = Position.indicatedAltitudeFt.getValue();
+		var extrapolatedAlt = currentAlt + ((altCstr - currentAlt) * (distanceToCstr2 / distanceToCstr));
+		return extrapolatedAlt;
+	},
+	#Calculate what the managed show altitude should be. Calculated from trying to find the first non below altitude constraint
+	calculateManagedLvlOffAltitude: func() {
+		var result = me.getDesAltConst();
+		var altCstr = result[0];
+		var altCstrType = result[3];
+		var wptIndex = result[4];
+		if (altCstrType == "below") {
+			for (var i = (wptIndex + 1); i < me.flightplans[2].getPlanSize(); i += 1) {
+				var altCstr2 = me.flightplans[2].getWP(i).alt_cstr;
+				var altCstr2Type = me.flightplans[2].getWP(i).alt_cstr_type;
+				var wptRole = me.flightplans[2].getWP(i).wp_role;
+				if (altCstr2 != nil and altCstr2 != 0 and altCstr2Type != "below" and (wptRole == "star" or wptRole == "approach")) {
+					return altCstr2;
+				}
+			}
+		}
+		return altCstr;
+	},
+
+	#Get the leg distance to the waypoint index in question, if it's the next one it returns the to distance, if it's not then it's the leg distance
+	getLegDistance: func(i) {
+	if (i == me.currentToWptIndex.getValue()) {
+			return me.distToWpt.getValue();
+		} else {
+			return me.flightplans[2].getWP(i).leg_distance;
+		}
+	},
+
+	#Calculate what the next managed descent altitude constraint would be by looping through the next AT or BETWEEN alt constraint first,
+	#then trying to find a ABOVE or BELOW alt constraint that would conflict with the path to the former waypoint second.
+	getAltConst: func(isGeo) {
+		if (me.currentToWptIndex.getValue() < 0) {
+			return;
+		}
+		var distanceToCstr = 0;
+		var wpIndex = 0;
+		var altCstr = 0;
+		var altCstrType = nil;
+
+		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+			distanceToCstr += me.getLegDistance(i);
+			var wp = me.flightplans[2].getWP(i);
+			altCstrType = wp.alt_cstr_type;
+			var wptRole = wp.wp_role;
+			var wptType = wp.wp_type;
+			altCstr = wp.alt_cstr;
+			if (altCstrType != "above" and (wptRole == "star" or wptRole == "approach" or wptType == "runway")) {
+				if (wptType == "runway") {
+					var runwayInfo = geodinfo(wp.lat, wp.lon);
+					if (!runwayInfo) {
+						altCstr = 0;
+					} else {
+						altCstr = runwayInfo[0] * 3.28084;
+					}
+					altCstrType = "runway";
+					wpIndex = i;
+					break;
+				} else if (altCstr != nil and altCstr != 0 and (altCstrType == "at" or altCstrType == "between")) {
+					wpIndex = i;
+					break;
+				}
+			}
+		}
+
+		var distanceToCstr2 = 0;
+		for (var j = me.currentToWptIndex.getValue(); j < wpIndex; j += 1) {
+			distanceToCstr2 += me.getLegDistance(j);
+			var altCstr2Type = me.flightplans[2].getWP(j).alt_cstr_type;
+			var wpt2Role = me.flightplans[2].getWP(j).wp_role;
+			var altCstr2 = me.flightplans[2].getWP(j).alt_cstr;
+			var extrapolatedFirstAltitude = me.getExtrapolatedFirstAltitude(distanceToCstr, distanceToCstr2, altCstr);
+			var extrapolatedGeoAltitude = me.getExtrapolatedGeoAltitude(distanceToCstr, distanceToCstr2, altCstr);
+			var extrapolatedOneThousandVSDescent = me.getExtrapolatedOneThousandVSDescent(distanceToCstr2);
+
+			if (altCstr2Type == "above" and (wpt2Role == "star" or wpt2Role == "approach") and altCstr2 != nil and altCstr2 != 0) {
+				if (isGeo) {
+					if (altCstr2 > extrapolatedGeoAltitude) {
+						return [altCstr2, distanceToCstr2, 1, altCstr2Type, j];
+					}
+				} else {
+					if (altCstr2 > extrapolatedFirstAltitude or 
+						altCstr2 > extrapolatedOneThousandVSDescent) {
+						geoWptIndex = j;
+						return [altCstr2, distanceToCstr2, 0, altCstr2Type, j];
+					}
+				}
+			} elsif (altCstr2Type == "below" and (wpt2Role == "star" or wpt2Role == "approach") and altCstr2 != nil and altCstr2 != 0) {
+				if (isGeo) {
+					if (altCstr2 < extrapolatedGeoAltitude) {
+						return [altCstr2, distanceToCstr2, 1, altCstr2Type, j];
+					}
+				} else {
+					if (altCstr2 < extrapolatedFirstAltitude) {
+						geoWptIndex = j;
+						return [altCstr2, distanceToCstr2, 0, altCstr2Type, j];
+					}
+				}
+			}
+		}
+		
+		if (!isGeo) {
+			geoWptIndex = wpIndex;
+		}
+		return [altCstr, distanceToCstr, (isGeo ? 1 : 0), altCstrType, wpIndex];
+	},
+
+	#Call getAltConst depending on whether the aircraft has passed the geometric waypoint or not
+	getDesAltConst: func() {
+		if (geoWptIndex == nil or me.currentToWptIndex.getValue() <= geoWptIndex) {
+			return me.getAltConst(0);
+		} else {
+			return me.getAltConst(1);
+		}
+	},
+
+	#Get the next alt constraint in managed climb mode by finding the next alt constraint that isn't ABOVE
 	getClbAltConst: func() {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
 			if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and me.flightplans[2].getWP(i).wp_role == "sid") {
-				# print("clb alt const is " ~ int(me.flightplans[2].getWP(i).alt_cstr));
 				return [me.flightplans[2].getWP(i).alt_cstr,i];
 			}
 		}
 		return [1000000000000000,0];
 	},
+	#Find the next speed constraint in managed climb mode
 	getNextClbSpdConst: func() {
 		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
-			spdCstr = me.flightplans[2].getWP(i).speed_cstr;
+			var spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 			if (spdCstr != 0 and spdCstr != nil and me.flightplans[2].getWP(i).wp_role == "sid") {
 				return [spdCstr,i];
 			}
@@ -836,10 +975,9 @@ var flightPlanController = {
 			setprop("/autopilot/route-manager/vnav/ed/show", 1);
 		}
 	},
-
-	# Calculate the point of the SC symbol to be placed on the ND
+	#Set the climb symbol on the ND from getClbAltConst method
 	calculateClbPoint: func(isMng) {
-		if (me.currentToWptIndex.getValue() < 0 or (fmgc.FMGCInternal.phase > 3 and fmgc.FMGCInternal.phase != 6)) {
+		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
 		wptIndex = me.getClbAltConst()[1];
