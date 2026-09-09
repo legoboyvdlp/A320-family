@@ -775,15 +775,39 @@ var canvas_pfd = {
 			}),
 			#Set the ECON range bar on descent and approach at +-20 knots normal and +5/-20 knots on speed constraints
 			props.UpdateManager.FromHashList(["ASItrgt", "ASI", "ASImax", "VLSmin","fmgcPhase","managedSpd","econMarginReduced"],0.5, func(val) {
-				if (val.fmgcPhase >= 4 and val.fmgcPhase <= 5 and fmgc.Output.vert.getValue() == 8) {
-					obj["ECON_range_high"].show();
-					obj["ECON_range_low"].show();
+				if (val.fmgcPhase >= 4 and val.fmgcPhase <= 5 and fmgc.Output.vert.getValue() == 8 and val.managedSpd) {
+					
+					
+					low_translation = math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6;
 					if (val.econMarginReduced) {
-						obj["ECON_range_high"].setTranslation(0, math.clamp(val.ASItrgt + 5, val.VLSmin, val.ASImax) * -6.6);
-						obj["ECON_range_low"].setTranslation(0, math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6);
+						high_translation = math.clamp(val.ASItrgt + 5, val.VLSmin, val.ASImax) * -6.6;
+
+						if (high_translation <= 260 and high_translation >= -260) {
+							obj["ECON_range_high"].show();
+							obj["ECON_range_high"].setTranslation(0, high_translation);
+						} else {
+							obj["ECON_range_high"].hide();
+						}
+						if (low_translation <= 260 and low_translation >= -260) {
+							obj["ECON_range_low"].show();
+							obj["ECON_range_low"].setTranslation(0, low_translation);
+						} else {
+							obj["ECON_range_low"].hide();
+						}
 					} else {
-						obj["ECON_range_high"].setTranslation(0, math.clamp(val.ASItrgt + 20, val.VLSmin, val.ASImax) * -6.6);
-						obj["ECON_range_low"].setTranslation(0, math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6);
+						high_translation = math.clamp(val.ASItrgt + 20, val.VLSmin, val.ASImax) * -6.6;
+						if (high_translation <= 260 and high_translation >= -260) {
+							obj["ECON_range_high"].show();
+							obj["ECON_range_high"].setTranslation(0, high_translation);
+						} else {
+							obj["ECON_range_high"].hide();
+						}
+						if (low_translation <= 260 and low_translation >= -260) {
+							obj["ECON_range_low"].show();
+							obj["ECON_range_low"].setTranslation(0, low_translation);
+						} else {
+							obj["ECON_range_low"].hide();
+						}
 					}
 				} else {
 					obj["ECON_range_high"].hide();
@@ -1431,7 +1455,7 @@ var canvas_pfd = {
 			
 			me.tgt_ias = notification.targetIasPFD;
 			#To show the original IAS during idle descent
-			if (fmgc.Input.idleDescent.getValue()) {
+			if (fmgc.Input.idleDescent.getValue() and notification.managedSpd) {
 				me.tgt_kts = notification.targetKtsShow;
 
 			} else {
@@ -2359,7 +2383,6 @@ var input = {
 	altimeterHpa: "/instrumentation/altimeter/setting-hpa",
 	targetIasPFD: "/FMGC/internal/target-ias-pfd",
 	targetMach: "/it-autoflight/input/mach",
-	targetMachShow: "/it-autoflight/input/mach-show",
 	targetKts: "/it-autoflight/input/kts",
 	targetKtsShow: "/it-autoflight/input/kts-show",
 	idleDescent: "/it-autoflight/input/idle-descent",
