@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1024"
+   height="624"
+   viewBox="0 0 819.2 499.2"
+   version="1.1"
+   id="svg2"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="menu.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadata375">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs373" />
+  <sodipodi:namedview
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="20"
+     gridtolerance="20"
+     guidetolerance="20"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="768"
+     id="namedview371"
+     showgrid="true"
+     inkscape:zoom="1.3096589"
+     inkscape:cx="800.20836"
+     inkscape:cy="229.44906"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     showguides="false"
+     inkscape:snap-global="false"
+     units="px"
+     inkscape:document-rotation="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:showpageshadow="0"
+     inkscape:deskcolor="#505050">
+    <inkscape:grid
+       type="xygrid"
+       id="grid5153"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px" />
+  </sodipodi:namedview>
+  <text
+     xml:space="preserve"
+     style="font-size:32px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+     x="477.89062"
+     y="191.75"
+     id="Satcom_Settings"><tspan
+       sodipodi:role="line"
+       id="tspan2-7-5-7"
+       style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="477.89062"
+       y="191.75">SATCOM SETTINGS</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:32px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+     x="409.42032"
+     y="36.550003"
+     id="ATC"><tspan
+       sodipodi:role="line"
+       style="font-size:32px;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="409.42032"
+       y="36.550003"
+       id="tspan1">MENU</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:28.8px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+     x="94.101562"
+     y="247.22197"
+     id="SELCAL_Label"><tspan
+       sodipodi:role="line"
+       id="tspan2-7-5-8"
+       style="font-size:28.8px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="94.101562"
+       y="247.22197">SELCAL</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:32px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+     x="95.75"
+     y="281.47406"
+     id="SELCAL"><tspan
+       sodipodi:role="line"
+       id="tspan2-7-5-8-7"
+       style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="95.75"
+       y="281.47406">AB-CD</tspan></text>
+  <path
+     style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:2.70357;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:26.2;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+     d="m 791.32462,170.60776 v 19.50629 l 11.70377,-9.75314 z"
+     id="Settings_Arrow"
+     sodipodi:nodetypes="cccc"
+     inkscape:label="Settings Arrow" />
+  <path
+     style="fill:none;stroke:#ffffff;stroke-width:11.5869;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:0"
+     d="M 817.60006,498.73551 V 10.230168"
+     id="path1-2-0-0"
+     inkscape:label="Divider3" />
+</svg>

@@ -1085,6 +1085,15 @@ var ManagedSPD = maketimer(0.25, func {
 					Input.mach.setValue(FMGCInternal.mngSpd);
 				}
 			}
+
+			# Update preview properties to track the managed target (only when not actively adjusting the knob)
+			if (!Custom.showSpd.getBoolValue()) {
+				if (Input.ktsPreview.getValue() != FMGCInternal.mngSpd and !ktsmach) {
+					Input.ktsPreview.setValue(FMGCInternal.mngSpd);
+				} elsif (Input.machPreview.getValue() != FMGCInternal.mngSpd and ktsmach) {
+					Input.machPreview.setValue(FMGCInternal.mngSpd);
+				}
+			}
 		} else {
 			ManagedSPD.stop();
 		}

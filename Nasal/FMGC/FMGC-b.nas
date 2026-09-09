@@ -104,12 +104,15 @@ var Input = {
 	hdgCalc: 0,
 	idleDescent: props.globals.initNode("/it-autoflight/input/idle-descent", 0, "BOOL"),
 	kts: props.globals.initNode("/it-autoflight/input/kts", 100, "INT"),
+	#Used for showing the correct IAS on the idle descent ECON range segment
 	ktsShow: props.globals.initNode("/it-autoflight/input/kts-show", 100, "INT"),
 	minSpeed: props.globals.initNode("/it-autoflight/input/minSpeed",100,"INT"),
+	ktsPreview: props.globals.initNode("/it-autoflight/input/kts-preview", 100, "INT"),
 	ktsMach: props.globals.initNode("/it-autoflight/input/kts-mach", 0, "BOOL"),
 	lat: props.globals.initNode("/it-autoflight/input/lat", 5, "INT"),
 	latTemp: 5,
 	mach: props.globals.initNode("/it-autoflight/input/mach", 0.5, "DOUBLE"),
+	machPreview: props.globals.initNode("/it-autoflight/input/mach-preview", 0.5, "DOUBLE"),
 	machShow: props.globals.initNode("/it-autoflight/input/mach-show", 0.5, "DOUBLE"),
 	toga: props.globals.initNode("/it-autoflight/input/toga", 0, "BOOL"),
 	trk: props.globals.initNode("/it-autoflight/input/trk", 0, "BOOL"),
@@ -193,8 +196,10 @@ var Sound = {
 var Custom = {
 	apFdOn: 0,
 	hdgTime: -45,
+	spdTime: -10,
 	ndTrkSel: [props.globals.getNode("/instrumentation/efis[0]/trk-selected", 1), props.globals.getNode("/instrumentation/efis[1]/trk-selected", 1)],
 	showHdg: props.globals.initNode("/it-autoflight/custom/show-hdg", 1, "BOOL"),
+	showSpd: props.globals.initNode("/it-autoflight/custom/show-spd", 1, "BOOL"),
 	trkFpa: props.globals.initNode("/it-autoflight/custom/trk-fpa", 0, "BOOL"),
 	Input: {
 		spdManaged: props.globals.getNode("/it-autoflight/input/spd-managed", 1),
@@ -257,6 +262,7 @@ var ITAF = {
 		me.updateLatText("");
 		me.updateVertText("");
 		Custom.showHdg.setBoolValue(1);
+		Custom.showSpd.setBoolValue(1);
 		Custom.Output.fmaPower = 1;
 		
 		# Sync FMA
@@ -420,6 +426,15 @@ var ITAF = {
 			Internal.vdevDot.setValue(me.calculateVdev());
 		}
 
+
+		# Preselect Speed
+		if (Custom.Input.spdManaged.getBoolValue()) { # In managed speed mode
+			if (Custom.spdTime + 10 >= Misc.elapsedSec.getValue()) {
+				Custom.showSpd.setBoolValue(1);
+			} else {
+				Custom.showSpd.setBoolValue(0);
+			}
+		}
 	},
 	slowLoop: func() {
 		Velocities.trueAirspeedKtTemp = Velocities.trueAirspeedKt.getValue();

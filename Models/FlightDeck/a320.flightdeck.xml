@@ -1365,7 +1365,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%3.0f</format>
-		<property>it-autoflight/input/kts</property>
+		<property>it-autoflight/input/kts-display</property>
 		<truncate>false</truncate>
 		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
@@ -1391,7 +1391,7 @@
 		<axis-alignment>xy-plane</axis-alignment>
 		<type type="string">number-value</type>
 		<format type="string">%0.3f</format>
-		<property>it-autoflight/input/mach</property>
+		<property>it-autoflight/input/mach-display</property>
 		<truncate>false</truncate>
 		<font type="string">Airbus7Seg.ttf</font>
 		<draw-text>true</draw-text>
@@ -2746,7 +2746,7 @@
 			<and>
 				<not><property>controls/switches/annun-test</property></not>
 				<not><property>it-autoflight/input/kts-mach</property></not>
-				<not><property>it-autoflight/input/spd-managed</property></not>
+				<property>it-autoflight/custom/show-spd</property>
 				<property>FMGC/FCU-working</property>
 			</and>
 		</condition>
@@ -2759,7 +2759,7 @@
 			<and>
 				<not><property>controls/switches/annun-test</property></not>
 				<property>it-autoflight/input/kts-mach</property>
-				<not><property>it-autoflight/input/spd-managed</property></not>
+				<property>it-autoflight/custom/show-spd</property>
 				<property>FMGC/FCU-working</property>
 			</and>
 		</condition>
@@ -3515,6 +3515,23 @@
 		<type>pick</type>
 		<object-name>tiller</object-name>
 		<object-name>tillerFo</object-name>
+		<!-- Temporary PEDAL DISC functional test -->
+		<action>
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/gear/pedal-disc</property>
+				<value type="bool">true</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/gear/pedal-disc</property>
+					<value type="bool">false</value>
+				</binding>
+			</mod-up>
+		</action>
 		<action>
 			<button>3</button>
 			<repeatable>true</repeatable>
@@ -43420,5 +43437,9 @@
 		<range-m>3.0</range-m>
 	</light>
 	
-</PropertyList>
+	<!-- Checklist marker -->
+	<model>
+		<path>Aircraft/Generic/marker.xml</path>
+	</model>
 
+</PropertyList>

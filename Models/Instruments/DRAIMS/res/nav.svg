@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1024"
+   height="624"
+   viewBox="0 0 819.2 499.2"
+   version="1.1"
+   id="svg2"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="nav.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadata375">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs373" />
+  <sodipodi:namedview
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="20"
+     gridtolerance="20"
+     guidetolerance="20"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="743"
+     id="namedview371"
+     showgrid="true"
+     inkscape:zoom="0.57970151"
+     inkscape:cx="531.30792"
+     inkscape:cy="301.8795"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Simple"
+     showguides="false"
+     inkscape:snap-global="false"
+     units="px"
+     inkscape:document-rotation="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:showpageshadow="0"
+     inkscape:deskcolor="#505050">
+    <inkscape:grid
+       type="xygrid"
+       id="grid5153"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px" />
+  </sodipodi:namedview>
+  <g
+     inkscape:groupmode="layer"
+     id="Simple"
+     inkscape:label="Frequency">
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:5.6;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 816.31829,379.6 H 2.081711"
+       id="path1-2"
+       inkscape:label="Divider3" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:5.6;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 206.98312,495.70925 V 381.60344"
+       id="path1-2-0"
+       inkscape:label="Divider3" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;fill:#757573;fill-opacity:1;stroke-width:0.8"
+       x="705.41174"
+       y="191.75"
+       id="Option_VOR"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-5-7"
+         style="font-size:32px;fill:#757573;fill-opacity:1;stroke-width:0.8"
+         x="705.41174"
+         y="191.75">VOR</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;fill:#757573;fill-opacity:1;stroke-width:0.8"
+       x="733.32672"
+       y="71.75"
+       id="Option_LS"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-5-70"
+         style="font-size:32px;fill:#757573;fill-opacity:1;stroke-width:0.8"
+         x="733.32672"
+         y="71.75">LS</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="444.51562"
+       y="36.550003"
+       id="RAD_NAV_Label"><tspan
+         sodipodi:role="line"
+         style="font-size:32px;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="444.51562"
+         y="36.550003"
+         id="tspan1">RAD NAV</tspan></text>
+    <rect
+       style="fill:#00c0d6;fill-opacity:1;stroke-width:5.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;paint-order:fill markers stroke"
+       id="Auto_Box"
+       width="91.923882"
+       height="31.678385"
+       x="39.180225"
+       y="164" />
+    <rect
+       style="fill:#00c0d6;fill-opacity:1;stroke-width:7.76034;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;paint-order:fill markers stroke"
+       id="STBY_NAV_Box"
+       width="157.64131"
+       height="31.678385"
+       x="140.21095"
+       y="164" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="40.206478"
+       y="190.98798"
+       id="Auto"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-31"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="40.206478"
+         y="190.98798">AUTO</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="140.774"
+       y="190.82108"
+       id="STBY_NAV"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-7-4"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="140.774"
+         y="190.82108">STBY NAV</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="629.14832"
+       y="416.03513"
+       id="Audio_NAV_Label"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-7-4-9"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="629.14832"
+         y="416.03513">AUDIO NAV</tspan></text>
+    <rect
+       style="fill:#00c0d6;fill-opacity:1;stroke-width:5.96617;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;paint-order:fill markers stroke"
+       id="NAV_VOR2_Box"
+       width="93.174805"
+       height="31.678385"
+       x="715.58862"
+       y="430.98529" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="718.86603"
+       y="457.80637"
+       id="NAV_VOR2"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-7-4-0"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="718.86603"
+         y="457.80637">VOR2</tspan></text>
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:5.6;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:0"
+       d="M 814.69416,115.14873 V 1.0429174"
+       id="path1-2-0-0"
+       inkscape:label="Divider3" />
+    <path
+       style="fill:#757573;fill-opacity:1;stroke:#757573;stroke-width:2.70357;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:26.2;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       d="m 791.32462,170.60776 v 19.50629 l 11.70377,-9.75314 z"
+       id="VOR_Arrow"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="VOR Arrow" />
+    <path
+       style="fill:#757573;fill-opacity:1;stroke:#757573;stroke-width:2.70357;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:26.2;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       d="m 791.32462,50.802871 v 19.50629 l 11.70377,-9.75314 z"
+       id="LS_Arrow"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="LS_Arrow" />
+    <rect
+       style="fill:#00c0d6;fill-opacity:1;stroke-width:5.96617;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;paint-order:fill markers stroke"
+       id="NAV_VOR1_Box"
+       width="93.174805"
+       height="31.678385"
+       x="615.83521"
+       y="430.98529" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="619.11261"
+       y="457.80637"
+       id="NAV_VOR1"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-7-4-0-1"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="619.11261"
+         y="457.80637">VOR1</tspan></text>
+    <rect
+       style="fill:#00c0d6;fill-opacity:1;stroke-width:5.46735;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;paint-order:fill markers stroke"
+       id="NAV_MKR_Box"
+       width="78.24572"
+       height="31.678385"
+       x="531.68939"
+       y="430.98529" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="534.9668"
+       y="457.80637"
+       id="NAV_MKR"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-7-4-0-2"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="534.9668"
+         y="457.80637">MKR</tspan></text>
+    <rect
+       style="fill:#00c0d6;fill-opacity:1;stroke-width:4.08297;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;paint-order:fill markers stroke"
+       id="NAV_LS_Box"
+       width="43.637386"
+       height="31.678385"
+       x="481.47342"
+       y="430.98529" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="484.75082"
+       y="457.80637"
+       id="NAV_LS"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-7-4-0-5"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="484.75082"
+         y="457.80637">LS</tspan></text>
+    <rect
+       style="fill:#00c0d6;fill-opacity:1;stroke-width:5.07586;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;paint-order:fill markers stroke"
+       id="Voice_On_Box"
+       width="53.953079"
+       height="31.678385"
+       x="39.144005"
+       y="440.27481" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="42.42141"
+       y="467.09589"
+       id="Voice_On"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-7-4-0-5-2"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="42.42141"
+         y="467.09589">ON</tspan></text>
+    <rect
+       style="fill:#00c0d6;fill-opacity:1;stroke-width:7.06161;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;paint-order:fill markers stroke"
+       id="Voice_Off_Box"
+       width="66.832123"
+       height="31.678385"
+       x="103.11489"
+       y="440.27481" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="106.3923"
+       y="467.09589"
+       id="Voice_Off"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-7-4-0-5-2-9"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="106.3923"
+         y="467.09589">OFF</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32px;line-height:1.25;font-family:sans-serif;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+       x="44.731617"
+       y="416.03513"
+       id="Voice_Label"><tspan
+         sodipodi:role="line"
+         id="tspan2-7-9-7-4-9-7"
+         style="font-size:32px;fill:#ffffff;fill-opacity:1;stroke-width:0.8"
+         x="44.731617"
+         y="416.03513">VOICE</tspan></text>
+  </g>
+</svg>

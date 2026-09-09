@@ -47,6 +47,31 @@ var canvas_IESI = {
 			}
 		};
 		
+		# ALT_digits is authored as "00" in the SVG. Measure it before
+		# changing the text so we can reserve exactly one digit column for
+		# the rolling hundreds drum.
+		var altDigitBounds = obj["ALT_digits"].getTransformedBounds();
+		obj._altDigitWidth = (altDigitBounds[2] - altDigitBounds[0]) / 2;
+		obj._altDigitHeight = altDigitBounds[3] - altDigitBounds[1];
+
+		# ALT_digits now renders only the thousands-and-above prefix.
+		obj["ALT_digits"].setTranslation(-obj._altDigitWidth, 0);
+
+		# Keep the next hundreds digit one row above the current digit.
+		obj["ALT_hundreds_next"].setTranslation(0, -obj._altDigitHeight);
+
+		# Clip the rolling hundreds drum to the original right-most
+		# ALT_digits column.
+		var altHundredsClip = sprintf(
+			"rect(%d,%d,%d,%d)",
+			altDigitBounds[1] + 2,
+			altDigitBounds[2] + 2,
+			altDigitBounds[3] - 2,
+			altDigitBounds[2] - obj._altDigitWidth - 2
+		);
+		obj["ALT_hundreds"].set("clip", altHundredsClip);
+		obj["ALT_hundreds"].set("clip-frame", canvas.Element.PARENT);
+
 		obj.AI_horizon_trans = obj["AI_horizon"].createTransform();
 		obj.AI_horizon_rot = obj["AI_horizon"].createTransform();
 		
@@ -109,9 +134,27 @@ var canvas_IESI = {
 				obj["ALT_scale"].update();
 				
 				obj["ALT_tens"].setTranslation(0, num(right(sprintf("%02d", val), 2)) * 3.16);
-			}),
-			props.UpdateManager.FromHashValue("altitude_indIESI", 0.5, func(val) {
-				obj["ALT_digits"].setText(sprintf("%s", math.clamp(val, -20, 500)));
+
+				# Carry the hundreds digit with the 20 ft numerical drum.
+				# The carry occurs over the final 20 ft of each hundred:
+				# x80 -> next x00.
+				var absAlt = abs(val);
+				var hundredsTotal = int(absAlt / 100);
+				var upperDigits = int(absAlt / 1000);
+				var hundredsDigit = hundredsTotal - upperDigits * 10;
+				var next_hundredsDigit = hundredsDigit == 9 ? 0 : hundredsDigit + 1;
+				var altRemainder = absAlt - hundredsTotal * 100;
+				var hundredsProgress = math.clamp((altRemainder - 80) / 20, 0, 1);
+
+				if (upperDigits > 0) {
+					obj["ALT_digits"].setText(sprintf("%d", upperDigits));
+				} else {
+					obj["ALT_digits"].setText("");
+				}
+
+				obj["ALT_hundreds_current"].setText(sprintf("%d", hundredsDigit));
+				obj["ALT_hundreds_next"].setText(sprintf("%d", next_hundredsDigit));
+				obj["ALT_hundreds"].setTranslation(0, hundredsProgress * obj._altDigitHeight);
 			}),
 			props.UpdateManager.FromHashValue("showMach", 1, func(val) {
 				if (val) {
@@ -239,7 +282,7 @@ var canvas_IESI = {
 		return obj;
 	},
 	getKeys: func() {
-		return ["IESI","IESI_Init","attRst","attRstRect","att90s","ATTflag","ATTflag_rect","ATTflag_text","ALTwarn","SPDwarn","ASI_scale","ASI_mach","ASI_mach_decimal","AI_center","AI_index","AI_horizon","AI_sky_bank","AI_bank","AI_bank_center","AI_slipskid","ALT_scale","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_meters","QNH_setting","QNH_std","negText","negText2","AI_bank_scale","metricM","metricBox"];
+		return ["IESI","IESI_Init","attRst","attRstRect","att90s","ATTflag","ATTflag_rect","ATTflag_text","ALTwarn","SPDwarn","ASI_scale","ASI_mach","ASI_mach_decimal","AI_center","AI_index","AI_horizon","AI_sky_bank","AI_bank","AI_bank_center","AI_slipskid","ALT_scale","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_hundreds","ALT_hundreds_current","ALT_hundreds_next","ALT_tens","ALT_meters","QNH_setting","QNH_std","negText","negText2","AI_bank_scale","metricM","metricBox"];
 	},
 	update: func(notification) {
 		me.updatePower(notification);

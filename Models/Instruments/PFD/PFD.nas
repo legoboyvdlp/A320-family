@@ -562,6 +562,18 @@ var canvas_pfd = {
 					obj["ASI_max"].hide();
 				}
 			}),
+			# Display the high-speed protection marker only when it is valid.
+			props.UpdateManager.FromHashList(["speedError","fac1","fac2","fbwLaw"], 1, func(val) {
+				if (
+					val.speedError or
+					(!val.fac1 and !val.fac2) or
+					val.fbwLaw != 0
+				) {
+					obj["VPROT_MAX"].hide();
+				} else {
+					obj["VPROT_MAX"].show();
+				}
+			}),
 			props.UpdateManager.FromHashList(["speedError","fac1","fac2","ASItrendIsShown"], 1, func(val) {
 				if (!val.speedError and (val.fac1 or val.fac2)) {
 					if (val.ASItrendIsShown == 1) {
@@ -584,6 +596,9 @@ var canvas_pfd = {
 			}),
 			props.UpdateManager.FromHashValue("ASImax", 0.1, func(val) {
 				obj["ASI_max"].setTranslation(0, val * -6.6);
+			}),
+			props.UpdateManager.FromHashValue("vprotMax", 0.1, func(val) {
+				obj["VPROT_MAX"].setTranslation(0, val * -6.6);
 			}),
 			props.UpdateManager.FromHashValue("ASItrend", 0.1, func(val) {
 				obj["ASI_trend_up"].setTranslation(0, math.clamp(val, 0, 50) * -6.6);
@@ -760,15 +775,39 @@ var canvas_pfd = {
 			}),
 			#Set the ECON range bar on descent and approach at +-20 knots normal and +5/-20 knots on speed constraints
 			props.UpdateManager.FromHashList(["ASItrgt", "ASI", "ASImax", "VLSmin","fmgcPhase","managedSpd","econMarginReduced"],0.5, func(val) {
-				if (val.fmgcPhase >= 4 and val.fmgcPhase <= 5 and fmgc.Output.vert.getValue() == 8) {
-					obj["ECON_range_high"].show();
-					obj["ECON_range_low"].show();
+				if (val.fmgcPhase >= 4 and val.fmgcPhase <= 5 and fmgc.Output.vert.getValue() == 8 and val.managedSpd) {
+					
+					
+					low_translation = math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6;
 					if (val.econMarginReduced) {
-						obj["ECON_range_high"].setTranslation(0, math.clamp(val.ASItrgt + 5, val.VLSmin, val.ASImax) * -6.6);
-						obj["ECON_range_low"].setTranslation(0, math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6);
+						high_translation = math.clamp(val.ASItrgt + 5, val.VLSmin, val.ASImax) * -6.6;
+
+						if (high_translation <= 260 and high_translation >= -260) {
+							obj["ECON_range_high"].show();
+							obj["ECON_range_high"].setTranslation(0, high_translation);
+						} else {
+							obj["ECON_range_high"].hide();
+						}
+						if (low_translation <= 260 and low_translation >= -260) {
+							obj["ECON_range_low"].show();
+							obj["ECON_range_low"].setTranslation(0, low_translation);
+						} else {
+							obj["ECON_range_low"].hide();
+						}
 					} else {
-						obj["ECON_range_high"].setTranslation(0, math.clamp(val.ASItrgt + 20, val.VLSmin, val.ASImax) * -6.6);
-						obj["ECON_range_low"].setTranslation(0, math.clamp(val.ASItrgt - 20, val.VLSmin, val.ASImax) * -6.6);
+						high_translation = math.clamp(val.ASItrgt + 20, val.VLSmin, val.ASImax) * -6.6;
+						if (high_translation <= 260 and high_translation >= -260) {
+							obj["ECON_range_high"].show();
+							obj["ECON_range_high"].setTranslation(0, high_translation);
+						} else {
+							obj["ECON_range_high"].hide();
+						}
+						if (low_translation <= 260 and low_translation >= -260) {
+							obj["ECON_range_low"].show();
+							obj["ECON_range_low"].setTranslation(0, low_translation);
+						} else {
+							obj["ECON_range_low"].hide();
+						}
 					}
 				} else {
 					obj["ECON_range_high"].hide();
@@ -1143,7 +1182,7 @@ var canvas_pfd = {
 	getKeys: func() {
 		return ["vdev_dot","vdev_low","vdev_high", "ECON_range_low", "ECON_range_high", "FMA_ctr_msg-10", "FMA_ctr_msg-11","FMA_man","FMA_manmode","FMA_flxmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap",
 		"FMA_fd","FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box",
-		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
+		"FMA_athr_box","FMA_Middle1","FMA_Middle2","ALPHA_MAX","ALPHA_PROT","ALPHA_SW","ALPHA_bars","VPROT_MAX","VLS_min","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP",
 		"ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim","AI_bank_lim_X","AI_pitch_lim","AI_pitch_lim_X","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading",
 		"AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_box_flash","ALT_box","ALT_box_amber","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_tens","ALT_digit_UP","ALT_tapes","ALT_hundreds",
 		"ALT_thousands","ALT_thousands_zero","ALT_tenthousands","ALT_digit_DN","ALT_digit_UP_metric","ALT_error","ALT_neg","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box",
@@ -1262,6 +1301,15 @@ var canvas_pfd = {
 				notification.ASImax = 390 - notification.ASI;
 			} else {
 				notification.ASImax = fmgc.FMGCInternal.maxspeed - 30 - notification.ASI;
+			}
+
+			# Position the VMO+6/MMO+0.01 marker relative to the moving speed tape.
+			if (notification.vmoMmoPlus6 <= 30) {
+				notification.vprotMax = 0 - notification.ASI;
+			} else if (notification.vmoMmoPlus6 >= 420) {
+				notification.vprotMax = 390 - notification.ASI;
+			} else {
+				notification.vprotMax = notification.vmoMmoPlus6 - 30 - notification.ASI;
 			}
 			
 			if (fmgc.FMGCInternal.v1set) {
@@ -1407,7 +1455,7 @@ var canvas_pfd = {
 			
 			me.tgt_ias = notification.targetIasPFD;
 			#To show the original IAS during idle descent
-			if (fmgc.Input.idleDescent.getValue()) {
+			if (fmgc.Input.idleDescent.getValue() and notification.managedSpd) {
 				me.tgt_kts = notification.targetKtsShow;
 
 			} else {
@@ -1467,6 +1515,7 @@ var canvas_pfd = {
 			
 			notification.ASI = 0;
 			notification.ASImax = 0;
+			notification.vprotMax = 0;
 			notification.ASItrgt = 0;
 			notification.ASItrgtdiff = 0;
 			notification.ASItrend = 0;
@@ -2356,6 +2405,7 @@ var input = {
 	bussTranslate: "/instrumentation/pfd/buss/translate",
 	overspeedVsProt: "/it-autoflight/internal/overspeed-vs-prot",
 	underspeedVsProt: "/it-autoflight/internal/underspeed-vs-prot",
+	vmoMmoPlus6: "/FMGC/internal/vmo-mmo-plus-6",
 	valphaMax: "/FMGC/internal/valpha-max",
 	valphaProt: "/FMGC/internal/valpha-prot",
 	vls: "/FMGC/internal/vls",
