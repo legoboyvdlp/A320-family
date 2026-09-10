@@ -698,8 +698,8 @@ var ITAF = {
 			vs = math.max(vs, -1*gs*6);
 			var constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
 			var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
-			var distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
-			var addition = fmgc.flightPlanController.getTurnDistAddition();
+			# var distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
+			# var addition = fmgc.flightPlanController.getTurnDistAddition();
 			if (currentSpeed  - lastConstraintSpeed >= 7) {
 				vs = math.max(vs, Internal.targetFpmFlch.getValue());
 			}
