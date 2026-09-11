@@ -106,6 +106,7 @@ var Input = {
 	kts: props.globals.initNode("/it-autoflight/input/kts", 100, "INT"),
 	#Used for showing the correct IAS on the idle descent ECON range segment
 	ktsShow: props.globals.initNode("/it-autoflight/input/kts-show", 100, "INT"),
+	minSpeed: props.globals.initNode("/it-autoflight/input/minSpeed",100,"INT"),
 	ktsPreview: props.globals.initNode("/it-autoflight/input/kts-preview", 100, "INT"),
 	ktsMach: props.globals.initNode("/it-autoflight/input/kts-mach", 0, "BOOL"),
 	lat: props.globals.initNode("/it-autoflight/input/lat", 5, "INT"),
@@ -666,33 +667,47 @@ var ITAF = {
 	#Calculate the vertical deviation during cruise descent and approach mode. It is currently simplified for geometric descent,
 	#where if vdev is negative, it will show 0.
 	calculateVdev: func() {
-		output = fmgc.flightPlanController.getDesAltConst();
-		nextManagedAlt = output[0];
-		distance = output[1];
-		if (distance < 0) {
-			distance = 0;
+		var output = fmgc.flightPlanController.getDesAltConst();
+		var nextManagedAlt = output[0];
+		var distance = output[1];
+		var isGeo = output[2];
+		var wptIndex = output[4];
+		if (isGeo) {
+			var idealSlope = fmgc.flightPlanController.getIdealSlope(nextManagedAlt,distance,wptIndex);
+			var deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+			var properDeltaAlt = distance * idealSlope;
+			var difference = deltaAlt - properDeltaAlt;
+			return difference;
+		} else {
+			if (distance < 0) {
+				distance = 0;
+			}
+			var deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
+			var properDeltaAlt =  fmgc.flightPlanController.getAltitudeFromDistance(distance);
+			var difference = deltaAlt - properDeltaAlt;
+			return difference;
 		}
-		deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
-		properDeltaAlt = fmgc.flightPlanController.getAltitudeFromDistance(distance);
-		difference = deltaAlt - properDeltaAlt;
-		if (output[2] == 1 and difference < 0) {
-			difference = 0;
-		}
-		return difference;
 
 	},
 
 	#get the VS for managed descent mode. In geometric descent it's the calculated smooth path, in idle descent it's idle descent.
 	getVs: func(distance, deltaAlt, isGeo) {
 		if (isGeo) {
-			gs = Velocities.groundspeedKt.getValue();
-			vs = -(deltaAlt * gs) / (distance * 60);
+			var gs = Velocities.groundspeedKt.getValue();
+			var vs = -(deltaAlt * gs) / (distance * 60);
 			vs = math.max(vs, -1*gs*6);
+			var constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
+			var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
+			if (currentSpeed  - lastConstraintSpeed >= 7) {
+				vs = math.max(vs, Internal.targetFpmFlch.getValue());
+				vs = math.max(-50, vs);
+			}
 			Input.idleDescent.setBoolValue(0);
 		} else {
 			properDeltaAlt = fmgc.flightPlanController.getAltitudeFromDistance(distance);
 			properDeltaAlt = math.max(properDeltaAlt, 0);
 			vs = Internal.targetFpmFlch.getValue();
+			var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 			if (properDeltaAlt - deltaAlt >= 500) {
 				Input.idleDescent.setBoolValue(0);
 				vs = -1000;
@@ -749,9 +764,9 @@ var ITAF = {
 			Input.idleDescent.setBoolValue(0);
 			me.updateVertText("ALT CAP");
 			me.updateThrustMode();
+			
 		} else if (n == 4) { # FLCH
 			Internal.managedModeOn.setBoolValue(0);
-			me.updateGsArm(0);
 			Output.vert.setValue(1);
 			Internal.alt.setValue(Input.alt.getValue());
 			Internal.altDiff = Internal.alt.getValue() - Position.indicatedAltitudeFt.getValue();
@@ -815,8 +830,8 @@ var ITAF = {
 				Internal.flchActive = 0;
 				Internal.alt.setValue(Input.alt.getValue());
 				Internal.altCaptureActive = 1;
-				Output.vert.setValue(0);
 				Input.idleDescent.setBoolValue(0);
+				Output.vert.setValue(0);
 				me.updateVertText("ALT CAP");
 				me.updateThrustMode();
 			}
@@ -1150,6 +1165,10 @@ var managedDes = func {
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
 		settimer(managedDes, 2);
+	} else if (Text.vert.getValue() == "DES") {
+		Internal.alt.setValue(alt);
+		ITAF.setVertMode(3);
+		armDes();
 	}
 };
 #To be called when engages into CLB mode, uses the same mechanisism as OP CLB,
@@ -1159,10 +1178,10 @@ var managedClb = func {
 	var nextSelectedAlt = Input.alt.getValue();
 	var alt = 0;
 	if (nextManagedAlt < nextSelectedAlt) {
-		alt = nextManagedAlt;
+		var alt = nextManagedAlt;
 		Internal.altManaged.setValue(1);
 	} else {
-		alt = nextSelectedAlt;
+		var alt = nextSelectedAlt;
 		Internal.altManaged.setValue(0);
 	}
 	Internal.alt.setValue(alt);
@@ -1174,7 +1193,7 @@ var managedClb = func {
 #Called when in alt cap/alt hold when CLB mode is armed, it checks when the next climb constraint is higher than current to engage
 #CLB mode again.
 var armClb = func {
-	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) > 300) {
+	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) >= 300) {
 		ITAF.updateVertText("CLB");
 		ITAF.setVertMode(8); # CLB mode
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
@@ -1184,12 +1203,13 @@ var armClb = func {
 #Called when in alt cap/alt hold when DES mode is armed, it checks when the next descent constraint is lower than current to engage
 #DES mode again.
 var armDes = func {
-	if (fmgc.flightPlanController.getDesAltConst() == nil or (Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[0]) >= 300) {
+	if ((fmgc.flightPlanController.getDesAltConst() == nil or (Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[0] >= 300)) and (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP")) {
 		ITAF.setVertMode(8);
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
 		settimer(armDes, 2);
 	}
 };
+
 
 setlistener(Gear.wow1, func(val) {
 	if (!val.getBoolValue() and FPLN.currentWP.getValue() == 0) {

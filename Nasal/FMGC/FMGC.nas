@@ -34,6 +34,7 @@ var windHdg = 0;
 var windSpeed = 0;
 var windsDidChange = 0;
 var tempOverspeed = nil;
+var lastConstraintSpeed = 1000000000000000000000000000;
 var adjustment = 0;
 
 setprop("/position/gear-agl-ft", 0);
@@ -641,6 +642,8 @@ var masterFMGC = maketimer(0.2, func {
 			systems.PNEU.pressMode.setValue("TO");
 		}
 	} elsif (FMGCInternal.phase == 2) {
+		fmgc.geoWptIndex = nil;
+		lastConstraintSpeed = 1000000000;
 		if ((Modes.PFD.FMA.pitchMode == "ALT CRZ" or Modes.PFD.FMA.pitchMode == "ALT CRZ*")) {
 			newphase = 3;
 			systems.PNEU.pressMode.setValue("CR");
@@ -668,6 +671,8 @@ var masterFMGC = maketimer(0.2, func {
 			Input.toga.setValue(1);
 		}
 	} elsif (FMGCInternal.phase == 6) {
+		fmgc.geoWptIndex = nil;
+		lastConstraintSpeed = 1000000000;
 		if (alt >= accel_agl_ft) { # todo when insert altn or new dest
 			newphase = 2;
 		}
@@ -977,7 +982,15 @@ var ManagedSPD = maketimer(0.25, func {
 			
 			var waypoint = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue());
 			var constraintSpeed = nil;
-		
+			var distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
+			var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
+			var nextApproachSpdConst = fmgc.flightPlanController.getNextSpdConst(0)[0];
+			var minSpeed = FMGCInternal.minspeed;
+			if (nextApproachSpdConst > minSpeed and nextApproachSpdConst <= 346) {
+				minSpeed = nextApproachSpdConst;
+			}
+			Input.minSpeed.setValue(minSpeed);
+			var addition = fmgc.flightPlanController.getTurnDistAddition();
 			if (waypoint != nil) {
 				constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
 			}
@@ -988,41 +1001,38 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
 				# Speed is maximum of greendot / climb speed limit
 				FMGCInternal.mngKtsMach = 0;
-				if (constraintSpeed != nil and constraintSpeed != 0) {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, constraintSpeed), FMGCInternal.vls_min, 999);
-				} else {
-					nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst()[0];
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.clbSpdLim, nextSpdConst), FMGCInternal.vls_min, 999);
-				}
-			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt + 20)) {
+				nextSpdConst = fmgc.flightPlanController.getNextSpdConst(1)[0];
+				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? minSpeed : math.clamp(math.min(FMGCInternal.clbSpdLim, nextSpdConst), FMGCInternal.vls_min, 999);
+			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt)) {
 				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-				
-				if (constraintSpeed != nil and constraintSpeed != 0) {
-					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
-				} else {
-					nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst()[0];
-					FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(nextSpdConst)) : math.min(mng_alt_spd, nextSpdConst);
-				}
-			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 20)) {
+				nextSpdConst = fmgc.flightPlanController.getNextSpdConst(1)[0];
+				FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(nextSpdConst)) : math.min(mng_alt_spd, nextSpdConst);
+			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 1000)) {
 				if (FMGCInternal.decel) {
 					FMGCInternal.mngKtsMach = 0;
-					FMGCInternal.mngSpdCmd = FMGCInternal.minspeed;
+					FMGCInternal.mngSpdCmd = minSpeed;
 				} else {
 					FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-					if (constraintSpeed != nil and constraintSpeed != 0) {
+					
+					if (constraintSpeed != nil and constraintSpeed != 0 and (distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 2) and (distanceToWpt >= 2)) {
 						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(constraintSpeed)) : math.min(mng_alt_spd, constraintSpeed);
+						lastConstraintSpeed = constraintSpeed;
 					} else {
-						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? mng_alt_mach : mng_alt_spd;
+						FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(lastConstraintSpeed)) : math.min(mng_alt_spd, lastConstraintSpeed);
+					
 					}
 				}
-			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt) {
+			} elsif ((FMGCInternal.phase >= 4 and FMGCInternal.phase <= 6) and altitude <= FMGCInternal.desSpdLimAlt + 1000) {
 				# Speed is maximum of greendot / descent speed limit
 				FMGCInternal.mngKtsMach = 0;
-				
-				if (constraintSpeed != nil and constraintSpeed != 0) {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+				if (constraintSpeed != nil and constraintSpeed != 0 and ((distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 2 and distanceToWpt >= 1 and distanceToWpt <= 1000) or FMGCInternal.decel)) {
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? minSpeed : math.clamp(math.min(FMGCInternal.desSpdLim, constraintSpeed), FMGCInternal.clean, 999);
+					lastConstraintSpeed = constraintSpeed;
 				} else {
-					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? FMGCInternal.minspeed : math.clamp(FMGCInternal.desSpdLim, FMGCInternal.clean, 999);
+					if (lastConstraintSpeed > 250) {
+						lastConstraintSpeed = 250;
+					}
+					FMGCInternal.mngSpdCmd = FMGCInternal.decel ? minSpeed : math.clamp(math.min(FMGCInternal.desSpdLim, lastConstraintSpeed), FMGCInternal.clean, 999);
 				}
 			}
 			
@@ -1049,16 +1059,14 @@ var ManagedSPD = maketimer(0.25, func {
 			} else {
 				adjustment = 0;
 			}
-			
 			#This is to set ECON range during descent to be equal to vdev/50.
 			adjustment = math.clamp(adjustment, -20, 20);
-			if ((constraintSpeed != 0 and constraintSpeed != nil) or altitude <= FMGCInternal.desSpdLimAlt) {
+			if ((constraintSpeed != 0 and constraintSpeed != nil and distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) or FMGCInternal.decel or lastConstraintSpeed <= 346) {
 				adjustment = math.clamp(adjustment, -20, 5);
 				Internal.econMarginReduced.setBoolValue(1);
 			} else {
 				Internal.econMarginReduced.setBoolValue(0);
 			}
-			
 			# Set target speed
 			if (!ktsmach) {
 				if (Input.idleDescent.getBoolValue()) {
