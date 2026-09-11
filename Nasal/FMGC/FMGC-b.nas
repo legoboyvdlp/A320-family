@@ -698,16 +698,16 @@ var ITAF = {
 			vs = math.max(vs, -1*gs*6);
 			var constraintSpeed = flightPlanController.flightplans[2].getWP(FPLN.currentWP.getValue()).speed_cstr;
 			var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
-			# var distanceToWpt = fmgc.flightPlanController.distToWpt.getValue();
-			# var addition = fmgc.flightPlanController.getTurnDistAddition();
 			if (currentSpeed  - lastConstraintSpeed >= 7) {
 				vs = math.max(vs, Internal.targetFpmFlch.getValue());
+				vs = math.max(-50, vs);
 			}
 			Input.idleDescent.setBoolValue(0);
 		} else {
 			properDeltaAlt = fmgc.flightPlanController.getAltitudeFromDistance(distance);
 			properDeltaAlt = math.max(properDeltaAlt, 0);
 			vs = Internal.targetFpmFlch.getValue();
+			var currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 			if (properDeltaAlt - deltaAlt >= 500) {
 				Input.idleDescent.setBoolValue(0);
 				vs = -1000;
@@ -830,9 +830,8 @@ var ITAF = {
 				Internal.flchActive = 0;
 				Internal.alt.setValue(Input.alt.getValue());
 				Internal.altCaptureActive = 1;
-				Input.idleDescent.getBoolValue(0);
-				Output.vert.setValue(0);
 				Input.idleDescent.setBoolValue(0);
+				Output.vert.setValue(0);
 				me.updateVertText("ALT CAP");
 				me.updateThrustMode();
 			}
@@ -1166,6 +1165,10 @@ var managedDes = func {
 		Output.vert.setValue(8);
 		ITAF.updateThrustMode();
 		settimer(managedDes, 2);
+	} else if (Text.vert.getValue() == "DES") {
+		Internal.alt.setValue(alt);
+		ITAF.setVertMode(3);
+		armDes();
 	}
 };
 #To be called when engages into CLB mode, uses the same mechanisism as OP CLB,
@@ -1200,7 +1203,7 @@ var armClb = func {
 #Called when in alt cap/alt hold when DES mode is armed, it checks when the next descent constraint is lower than current to engage
 #DES mode again.
 var armDes = func {
-	if (fmgc.flightPlanController.getDesAltConst() == nil or (Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[0] > 300)) {
+	if ((fmgc.flightPlanController.getDesAltConst() == nil or (Position.indicatedAltitudeFt.getValue() - fmgc.flightPlanController.getDesAltConst()[0] >= 300)) and (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP")) {
 		ITAF.setVertMode(8);
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {
 		settimer(armDes, 2);
