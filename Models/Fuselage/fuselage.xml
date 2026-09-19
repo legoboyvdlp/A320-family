@@ -1386,7 +1386,7 @@
 		<property>/systems/hydraulic/gear/door-nose</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>1.0</ind><dep>-55.0</dep></entry>
+			<entry><ind>1.0</ind><dep>-73.0</dep></entry>
 		</interpolation>
 		<axis>
             <x1-m>-15.6204</x1-m>
@@ -1460,7 +1460,7 @@
 		<property>/systems/hydraulic/gear/door-nose</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>1.0</ind><dep>55.0</dep></entry>
+			<entry><ind>1.0</ind><dep>73.0</dep></entry>
 		</interpolation>
 		<axis>
             <x1-m>-15.6204</x1-m>
