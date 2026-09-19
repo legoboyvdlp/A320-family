@@ -644,12 +644,10 @@
 		<type>rotate</type>
 		<object-name>MLGGearDoorL</object-name>
 		<object-name>MLGGearDoorL.Inner</object-name>
-		<property>gear/gear[1]/position-norm</property>
+		<property>/systems/hydraulic/gear/door-left</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.2</ind><dep>-90.0</dep></entry>
-			<entry><ind>0.8</ind><dep>-90.0</dep></entry>
-			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+			<entry><ind>1.0</ind><dep>-90.0</dep></entry>
 		</interpolation>
 		<axis>
 			<x1-m>-0.959303</x1-m>
@@ -968,12 +966,10 @@
 		<type>rotate</type>
 		<object-name>MLGGearDoorR</object-name>
 		<object-name>MLGGearDoorR.Inner</object-name>
-		<property>gear/gear[2]/position-norm</property>
+		<property>/systems/hydraulic/gear/door-right</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.2</ind><dep>90.0</dep></entry>
-			<entry><ind>0.8</ind><dep>90.0</dep></entry>
-			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+			<entry><ind>1.0</ind><dep>90.0</dep></entry>
 		</interpolation>
 		<axis>
 			<x1-m>-0.959303</x1-m>
@@ -1387,12 +1383,10 @@
 		<type>rotate</type>
 		<object-name>NLGForewardDoorL</object-name>
 		<object-name>NLGForewardDoorL.Inner</object-name>
-		<property>gear/gear[0]/position-norm</property>
+		<property>/systems/hydraulic/gear/door-nose</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.2</ind><dep>-55.0</dep></entry>
-			<entry><ind>0.8</ind><dep>-55.0</dep></entry>
-			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+			<entry><ind>1.0</ind><dep>-55.0</dep></entry>
 		</interpolation>
 		<axis>
             <x1-m>-15.6204</x1-m>
@@ -1408,12 +1402,10 @@
 		<type>translate</type>
 		<object-name>NLGForewardDoorL</object-name>
 		<object-name>NLGForewardDoorL.Inner</object-name>
-		<property>gear/gear[0]/position-norm</property>
+		<property>/systems/hydraulic/gear/door-nose</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.2</ind><dep>0.04</dep></entry>
-			<entry><ind>0.8</ind><dep>0.04</dep></entry>
-			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.04</dep></entry>
 		</interpolation>
 		<axis>
 			<x>0</x>
@@ -1465,12 +1457,10 @@
 		<type>rotate</type>
 		<object-name>NLGForewardDoorR</object-name>
 		<object-name>NLGForewardDoorR.Inner</object-name>
-		<property>gear/gear[0]/position-norm</property>
+		<property>/systems/hydraulic/gear/door-nose</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.2</ind><dep>55.0</dep></entry>
-			<entry><ind>0.8</ind><dep>55.0</dep></entry>
-			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+			<entry><ind>1.0</ind><dep>55.0</dep></entry>
 		</interpolation>
 		<axis>
             <x1-m>-15.6204</x1-m>
@@ -1486,12 +1476,10 @@
 		<type>translate</type>
 		<object-name>NLGForewardDoorR</object-name>
 		<object-name>NLGForewardDoorR.Inner</object-name>
-		<property>gear/gear[0]/position-norm</property>
+		<property>/systems/hydraulic/gear/door-nose</property>
 		<interpolation>
 			<entry><ind>0.0</ind><dep>0.0</dep></entry>
-			<entry><ind>0.2</ind><dep>0.04</dep></entry>
-			<entry><ind>0.8</ind><dep>0.04</dep></entry>
-			<entry><ind>1.0</ind><dep>0.0</dep></entry>
+			<entry><ind>1.0</ind><dep>0.04</dep></entry>
 		</interpolation>
 		<axis>
 			<x>0</x>
