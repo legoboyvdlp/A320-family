@@ -681,18 +681,21 @@
 	
 	<filter>
 		<name>Left Door</name>
-		<type>gain</type>
-		<gain>1.0</gain>
+		<type>noise-spike</type>
+		<max-rate-of-change>0.6</max-rate-of-change>
 		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
-				<table>
-					<property>/gear/gear[1]/position-norm</property>
-					<entry><ind>0.00</ind><dep>0</dep></entry>
-					<entry><ind>0.19</ind><dep>1</dep></entry>
-					<entry><ind>0.81</ind><dep>1</dep></entry>
-					<entry><ind>1.00</ind><dep>0</dep></entry>
-				</table>
+				<max>
+					<property>/controls/hydraulic/switches/gear-gravity-ext</property>
+					<table>
+						<property>/gear/gear[1]/position-norm</property>
+						<entry><ind>0.00</ind><dep>0</dep></entry>
+						<entry><ind>0.19</ind><dep>1</dep></entry>
+						<entry><ind>0.81</ind><dep>1</dep></entry>
+						<entry><ind>1.00</ind><dep>0</dep></entry>
+					</table>
+				</max>
 			</expression>
 		</input>
 		<output>/systems/hydraulic/gear/door-left</output>
@@ -717,18 +720,21 @@
 	
 	<filter>
 		<name>Right Door</name>
-		<type>gain</type>
-		<gain>1.0</gain>
+		<type>noise-spike</type>
+		<max-rate-of-change>0.6</max-rate-of-change>
 		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
-				<table>
-					<property>/gear/gear[2]/position-norm</property>
-					<entry><ind>0.00</ind><dep>0</dep></entry>
-					<entry><ind>0.19</ind><dep>1</dep></entry>
-					<entry><ind>0.81</ind><dep>1</dep></entry>
-					<entry><ind>1.00</ind><dep>0</dep></entry>
-				</table>
+				<max>
+					<property>/controls/hydraulic/switches/gear-gravity-ext</property>
+					<table>
+						<property>/gear/gear[2]/position-norm</property>
+						<entry><ind>0.00</ind><dep>0</dep></entry>
+						<entry><ind>0.19</ind><dep>1</dep></entry>
+						<entry><ind>0.81</ind><dep>1</dep></entry>
+						<entry><ind>1.00</ind><dep>0</dep></entry>
+					</table>
+				</max>
 			</expression>
 		</input>
 		<output>/systems/hydraulic/gear/door-right</output>
@@ -753,18 +759,21 @@
 	
 	<filter>
 		<name>Nose Door</name>
-		<type>gain</type>
-		<gain>1.0</gain>
+		<type>noise-spike</type>
+		<max-rate-of-change>0.6</max-rate-of-change>
 		<update-interval-secs>0.05</update-interval-secs>
 		<input>
 			<expression>
-				<table>
-					<property>/gear/gear[0]/position-norm</property>
-					<entry><ind>0.00</ind><dep>0</dep></entry>
-					<entry><ind>0.19</ind><dep>1</dep></entry>
-					<entry><ind>0.81</ind><dep>1</dep></entry>
-					<entry><ind>1.00</ind><dep>0</dep></entry>
-				</table>
+				<max>
+					<property>/controls/hydraulic/switches/gear-gravity-ext</property>
+					<table>
+						<property>/gear/gear[0]/position-norm</property>
+						<entry><ind>0.00</ind><dep>0</dep></entry>
+						<entry><ind>0.19</ind><dep>1</dep></entry>
+						<entry><ind>0.81</ind><dep>1</dep></entry>
+						<entry><ind>1.00</ind><dep>0</dep></entry>
+					</table>
+				</max>
 			</expression>
 		</input>
 		<output>/systems/hydraulic/gear/door-nose</output>
