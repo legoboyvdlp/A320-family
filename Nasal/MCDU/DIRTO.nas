@@ -260,6 +260,7 @@ var dirTo = {
 		if (fmgc.flightPlanController.temporaryFlag[me.computer] and dirToFlag) {
 			dirToFlag = 0;
 			fmgc.flightPlanController.destroyTemporaryFlightPlan(me.computer, 1);
+			fmgc.Input.lat.setValue(1);
 			me.L1 = [" [       ]", " WAYPOINT", "blu"];
 			me.R1 = ["----   ---  ", "UTC   DIST  ", "wht"];
 			setprop("MCDU[" ~ me.computer ~ "]/page", "F-PLNA"); # todo - remember horizontal srcoll of f-plna?
