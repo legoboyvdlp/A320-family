@@ -1463,12 +1463,8 @@ var canvas_pfd = {
 			}
 			
 			
-
 			if (notification.managedSpd) {
-				if (fmgc.FMGCInternal.decel) {
-					me.tgt_ias = fmgc.FMGCInternal.minspeed;
-					me.tgt_kts = fmgc.FMGCInternal.minspeed;
-				} else if (fmgc.FMGCInternal.phase == 6) {
+				if (fmgc.FMGCInternal.phase == 6) {
 					me.tgt_ias = fmgc.FMGCInternal.clean;
 					me.tgt_kts = fmgc.FMGCInternal.clean;
 				}
@@ -2385,6 +2381,7 @@ var input = {
 	targetMach: "/it-autoflight/input/mach",
 	targetKts: "/it-autoflight/input/kts",
 	targetKtsShow: "/it-autoflight/input/kts-show",
+	minSpeed: "/it-autoflight/input/minSpeed",
 	idleDescent: "/it-autoflight/input/idle-descent",
 	targetHeading: "/it-autoflight/input/hdg",
 	managedSpd: "/it-autoflight/input/spd-managed",
