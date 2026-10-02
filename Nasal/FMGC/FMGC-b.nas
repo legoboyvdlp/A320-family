@@ -682,19 +682,22 @@ var ITAF = {
 		}
 		var destQNH = getprop("/FMGC/internal/dest-qnh");
 		var altitudeAdjustment = 0;
-		if (destQNH > 900 and destQNH < 1100) {
+		if (nextManagedAlt < fmgc.FMGCInternal.transAlt) {
+			if (destQNH > 900 and destQNH < 1100) {
 			altitudeAdjustment = 27*(destQNH - Inhg * 33.8639);
-		} else if (destQNH > 29 and destQNH < 31) {
-			altitudeAdjustment = 27*(destQNH * 33.8639 - Inhg * 33.8639);
+			} else if (destQNH > 29 and destQNH < 31) {
+				altitudeAdjustment = 27*(destQNH * 33.8639 - Inhg * 33.8639);
+			}
 		}
+		
 		# print("current Inhg is " ~ Inhg ~ "destQNH is " ~ destQNH ~ "alt adjustment is " ~ altitudeAdjustment);
 		if (isGeo) {
 			if (distance < 0) {
 				distance = 0;
 			}
 			var deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
-			var properDeltaAlt =  fmgc.flightPlanController.getAltitudeFromDistance(distance) + altitudeAdjustment;
-			var difference = deltaAlt - properDeltaAlt;
+			var properDeltaAlt =  fmgc.flightPlanController.getAltitudeFromDistance(distance);
+			var difference = deltaAlt + altitudeAdjustment - properDeltaAlt;
 			if (difference < 0) {
 				difference = 0;
 			}
@@ -705,7 +708,7 @@ var ITAF = {
 			}
 			var deltaAlt = Position.indicatedAltitudeFt.getValue() - nextManagedAlt;
 			var properDeltaAlt =  fmgc.flightPlanController.getAltitudeFromDistance(distance) + altitudeAdjustment;
-			var difference = deltaAlt - properDeltaAlt;
+			var difference = deltaAlt + altitudeAdjustment - properDeltaAlt;
 			return difference;
 		}
 
