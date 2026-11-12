@@ -301,6 +301,18 @@ canvas.Element.setVisible = func(vis) {
 	me.setBool("visible", vis);
 };
 
+var increaseManVS = func() {
+	var pos = getprop("/systems/pressurization/outflowpos-man");
+	pos = math.clamp(pos + 0.05, 0.0, 1.0);
+	setprop("/systems/pressurization/outflowpos-man", pos);
+};
+
+var decreaseManVS = func() {
+	var pos = getprop("/systems/pressurization/outflowpos-man");
+	pos = math.clamp(pos - 0.05, 0.0, 1.0);
+	setprop("/systems/pressurization/outflowpos-man", pos);
+};
+
 # Misc
 var pilotComfortTwoPos = func(prop) {
 	var item = getprop(prop);
