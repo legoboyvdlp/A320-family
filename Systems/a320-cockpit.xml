@@ -41,12 +41,7 @@
 			<input>/controls/flight/speedbrake-arm</input>
 			<c1>20</c1>
 		</lag_filter>
-		
-		<lag_filter name="/controls/cockpit/tiller-handle">
-			<input>/systems/fbw/tiller-handle-cmd</input>
-			<c1>20</c1>
-		</lag_filter>
-		
+	
 		<lag_filter name="/controls/switches/rudder-trim-knob">
 			<input>/controls/switches/rudder-trim</input>
 			<c1>20</c1>
