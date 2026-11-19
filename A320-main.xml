@@ -67,7 +67,7 @@
 			<door>
 				<position-x-m type="float">-13.8008</position-x-m>
 				<position-y-m type="float">-1.91254</position-y-m>
-				<position-z-m type="float">-0.57991</position-z-m>
+				<position-z-m type="float">0.57991</position-z-m>
 				<jetway-hood-deg type="float">5</jetway-hood-deg>
 			</door>
 			<icing>
@@ -619,9 +619,7 @@
 			<surveillance type="string">S</surveillance>
 		</icao>
 		<performance>
-			<!-- explicitly force the category to be 'E' instead of using tag heuristics
-			Although the A320 is a category 'C' aircraft, category 'E's profile fits better -->
-			<icao-category type="string">E</icao-category>
+			<icao-category type="string">C</icao-category>
 			<minimum>
 				<takeoff-length-ft type="int">4500</takeoff-length-ft>
 				<landing-length-ft type="int">4500</landing-length-ft>
@@ -632,6 +630,12 @@
 				<airspeed-knots type="int">350</airspeed-knots>
 			</maximum>
 		</performance>
+		<jetway-pos>
+			<x-tra>-2.1</x-tra>
+			<y-rot>-.5</y-rot>
+			<z-rot>22</z-rot>
+			<hood-rot>12</hood-rot>
+		</jetway-pos>
 	</aircraft>
 
 	<consumables>
