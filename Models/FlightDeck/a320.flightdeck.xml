@@ -3570,7 +3570,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>tiller</object-name>
-		<property>controls/cockpit/tiller-handle</property>
+		<property>controls/gear/steering</property>
 		<factor>-75</factor>
 		<axis>
 			<object-name>tiller.axis</object-name>
@@ -3580,7 +3580,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>tillerFo</object-name>
-		<property>controls/cockpit/tiller-handle</property>
+		<property>controls/gear/steering[1]</property>
 		<factor>-75</factor>
 		<axis>
 			<object-name>tillerFo.axis</object-name>
