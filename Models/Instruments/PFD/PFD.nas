@@ -813,8 +813,20 @@ var canvas_pfd = {
 					obj["ECON_range_high"].hide();
 					obj["ECON_range_low"].hide();
 				}
-				obj["FMA_ctr_msg-10"].hide();
-				obj["FMA_ctr_msg-11"].hide();
+			}),
+			props.UpdateManager.FromHashValue("decelerate", 0.1, func(val) {
+				if (val) {
+					obj["FMA_ctr_msg-10"].show();
+				} else {
+					obj["FMA_ctr_msg-10"].hide();
+				}
+			}),
+			props.UpdateManager.FromHashValue("moreDrag", 0.1, func(val) {
+				if (val) {
+					obj["FMA_ctr_msg-11"].show();
+				} else {
+					obj["FMA_ctr_msg-11"].hide();
+				}
 			}),
 			props.UpdateManager.FromHashList(["speedError","ASItrgtdiff","targetMach","tgt_kts","ktsMach"], 0.5, func(val) {
 				if (!val.speedError) {
@@ -2317,7 +2329,8 @@ var input = {
 	managedAlt: "/it-autoflight/internal/mng-alt",
 	vdevDot: "/it-autoflight/internal/vdev-dot",
 	econMarginReduced: "/it-autoflight/internal/econ-margin-reduced",
-
+	decelerate: "/it-autoflight/internal/decelerate",
+	moreDrag: "/it-autoflight/internal/more-drag",
 	athr: "/it-autoflight/output/athr",
 	altitudeAutopilot: "/it-autoflight/internal/alt",
 	altitude: "/instrumentation/altimeter/indicated-altitude-ft",

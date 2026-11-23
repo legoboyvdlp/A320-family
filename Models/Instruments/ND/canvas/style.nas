@@ -213,13 +213,14 @@ canvas.NDStyles["Airbus"] = {
 				# If ec and ed are altitude constraints, their node should have the 
 				# boolean "alt-cstr" property set to 1.
 				vnav_node: "/autopilot/route-manager/vnav/", 
-				types: ["ec","ed","sc","sd","td"],
+				types: ["ec","ed","sc","sd","ip","spd_chng"],
 				svg_path: {
 					ec: get_local_path("res/airbus_ec.svg"),
 					ed: get_local_path("res/airbus_ed.svg"),
 					sc: get_local_path("res/airbus_sc.svg"),
 					sd: get_local_path("res/airbus_sd.svg"),
-					td: get_local_path("res/airbus_td.svg")
+					ip: get_local_path("res/airbus_ip.svg"),
+					spd_chng: get_local_path("res/airbus_spd_chng.svg")
 				},
 				listen: [
 					"fplan_active",
@@ -245,20 +246,20 @@ canvas.NDStyles["Airbus"] = {
 						} else {
 							grp.setColor(me.getStyle("armed_color"));
 						}
-					} elsif(name == "td" or name == "sd" or name == "sc"){
-						if (me.model.getValue("vnav-armed") and name != "td") {
+					} elsif(name == "sd" or name == "sc" or name == "ip"){
+						if (me.model.getValue("vnav-armed")) {
 							grp.setColor(me.getStyle("armed_color"));
 						} else {
 							grp.setColor(me.getStyle("default_color"));
 						}
+					} elsif (name == "spd_chng") {
+						grp.setColor(me.getStyle("managed_color"));
 					}
 				},
 				init_after_callback: func{
 					var name = me.model.getName();
-					if (name != "td" and name != "sd" and name != "sc") {
-						me.element.getElementById(name~"_symbol").setTranslation(-66,0);
-					} 
-				}
+				},
+				"z-index": 5,
 			}
 		},
 		{ 

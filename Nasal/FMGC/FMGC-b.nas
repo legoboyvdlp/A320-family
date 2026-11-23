@@ -135,6 +135,7 @@ var Internal = {
 	altPredicted: props.globals.initNode("/it-autoflight/internal/altitude-predicted", 0, "DOUBLE"),
 	bankLimit: props.globals.initNode("/it-autoflight/internal/bank-limit", 0, "DOUBLE"),
 	captVs: 0,
+	decelerate: props.globals.initNode("/it-autoflight/internal/decelerate", 0, "BOOL"),
 	driftAngle: props.globals.initNode("/it-autoflight/internal/drift-angle-deg", 0, "DOUBLE"),
 	driftAngleTemp: 0,
 	econMarginReduced: props.globals.initNode("/it-autoflight/internal/econ-margin-reduced", 0, "BOOL"),
@@ -146,6 +147,7 @@ var Internal = {
 	lnavAdvanceNm: props.globals.initNode("/it-autoflight/internal/lnav-advance-nm", 0, "DOUBLE"),
 	minVs: props.globals.initNode("/it-autoflight/internal/min-vs", -500, "INT"),
 	maxVs: props.globals.initNode("/it-autoflight/internal/max-vs", 500, "INT"),
+	moreDrag: props.globals.initNode("/it-autoflight/internal/more-drag", 0, "BOOL"),
 	navHeadingErrorDeg: props.globals.initNode("/it-autoflight/internal/nav-heading-error-deg", 0, "DOUBLE"),
 	navHeadingErrorDegTemp: 0,
 	vdevDot: props.globals.initNode("/it-autoflight/internal/vdev-dot", 0, "DOUBLE"),
@@ -717,6 +719,7 @@ var ITAF = {
 	#get the VS for managed descent mode. In geometric descent it's the calculated smooth path, in idle descent it's idle descent.
 	getVs: func(distance, deltaAlt, isGeo) {
 		if (isGeo) {
+			fmgc.flightPlanController.interceptArrowLow = 0;
 			var gs = Velocities.groundspeedKt.getValue();
 			var vs = -(deltaAlt * gs) / (distance * 60);
 			vs = math.max(vs, -1*gs*6);
@@ -735,7 +738,13 @@ var ITAF = {
 			if (properDeltaAlt - deltaAlt >= 500) {
 				Input.idleDescent.setBoolValue(0);
 				vs = -1000;
+				fmgc.flightPlanController.interceptArrowLow = 1;
+				if (currentSpeed  - lastConstraintSpeed >= 7) {
+					vs = math.max(vs, Internal.targetFpmFlch.getValue());
+					vs = math.max(-50, vs);
+				}
 			} else {
+				fmgc.flightPlanController.interceptArrowLow = 0;
 				Input.idleDescent.setBoolValue(1);
 			}
 		}
@@ -1198,7 +1207,7 @@ var managedDes = func {
 #To be called when engages into CLB mode, uses the same mechanisism as OP CLB,
 # only changing the target altitude and the mode shown on the FMA
 var managedClb = func {
-	var nextManagedAlt = fmgc.flightPlanController.getClbAltConst()[0];
+	var nextManagedAlt = fmgc.flightPlanController.getClbAltConst(-1)[0];
 	var nextSelectedAlt = Input.alt.getValue();
 	var alt = 0;
 	if (nextManagedAlt < nextSelectedAlt) {
@@ -1217,7 +1226,7 @@ var managedClb = func {
 #Called when in alt cap/alt hold when CLB mode is armed, it checks when the next climb constraint is higher than current to engage
 #CLB mode again.
 var armClb = func {
-	if (fmgc.flightPlanController.getClbAltConst() == nil or abs(fmgc.flightPlanController.getClbAltConst()[0] - Position.indicatedAltitudeFt.getValue()) >= 300) {
+	if (fmgc.flightPlanController.getClbAltConst(-1) == nil or abs(fmgc.flightPlanController.getClbAltConst(-1)[0] - Position.indicatedAltitudeFt.getValue()) >= 300) {
 		ITAF.updateVertText("CLB");
 		ITAF.setVertMode(8); # CLB mode
 	} else if (Text.vert.getValue() == "ALT HLD" or Text.vert.getValue() == "ALT CAP") {

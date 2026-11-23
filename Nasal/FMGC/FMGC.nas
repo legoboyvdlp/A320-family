@@ -999,11 +999,11 @@ var ManagedSPD = maketimer(0.25, func {
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude <= FMGCInternal.clbSpdLimAlt) {
 				# Speed is maximum of greendot / climb speed limit
 				FMGCInternal.mngKtsMach = 0;
-				nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst(1)[0];
+				nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst(-1)[0];
 				FMGCInternal.mngSpdCmd = FMGCInternal.decel ? minSpeed : math.clamp(math.min(FMGCInternal.clbSpdLim, nextSpdConst), FMGCInternal.vls_min, 999);
 			} elsif ((FMGCInternal.phase == 2 or FMGCInternal.phase == 3) and altitude > (FMGCInternal.clbSpdLimAlt)) {
 				FMGCInternal.mngKtsMach = FMGCInternal.machSwitchover ? 1 : 0;
-				nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst(1)[0];
+				nextSpdConst = fmgc.flightPlanController.getNextClbSpdConst(-1)[0];
 				FMGCInternal.mngSpdCmd = FMGCInternal.machSwitchover ? math.min(mng_alt_mach, ktsToMach(nextSpdConst)) : math.min(mng_alt_spd, nextSpdConst);
 			} elsif ((FMGCInternal.phase >= 4  and FMGCInternal.phase <= 6) and altitude > (FMGCInternal.desSpdLimAlt + 1000)) {
 				if (FMGCInternal.decel) {
@@ -1059,6 +1059,11 @@ var ManagedSPD = maketimer(0.25, func {
 			}
 			#This is to set ECON range during descent to be equal to vdev/50.
 			adjustment = math.clamp(adjustment, -20, 20);
+			if (adjustment == 20) {
+				fmgc.flightPlanController.interceptArrowHigh = 1;
+			} else {
+				fmgc.flightPlanController.interceptArrowHigh = 0;
+			} 
 			if ((constraintSpeed != 0 and constraintSpeed != nil and distanceToWpt - math.max((currentSpeed - constraintSpeed)/10,0) <= 1 and distanceToWpt >= 1 and distanceToWpt <= 1000) or FMGCInternal.decel or lastConstraintSpeed <= 346) {
 				adjustment = math.clamp(adjustment, -20, 5);
 				Internal.econMarginReduced.setBoolValue(1);

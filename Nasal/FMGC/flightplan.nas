@@ -11,10 +11,8 @@ var sizeWP = nil;
 var magTrueError = 0;
 var storeCourse = nil;
 var DEBUG_DISCONT = 0;
-var lastIdealSlope = 0;
-var lastIdealSlopeWptIndex = 0;
 var bufferCount = 0;
-var descent_coeff = 318;
+var descentCoeff = 318;
 
 # Props.getNode
 var magHDG = props.globals.getNode("/orientation/heading-magnetic-deg", 1);
@@ -70,11 +68,24 @@ var flightPlanController = {
 		
 		me.lvlOffPoint = nil;
 		setprop("/autopilot/route-manager/vnav/ec/latitude-deg", 0); # necessary to prevent canvas glitching out because properties don't exist
+		setprop("/autopilot/route-manager/vnav/ec/latitude-deg", 0);
 		setprop("/autopilot/route-manager/vnav/ed/latitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/sc/latitude-deg", 0);
+		setprop("/autopilot/route-manager/vnav/sd/latitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/ip/latitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/spd_chng/latitude-deg", 0);
 		setprop("/autopilot/route-manager/vnav/ec/longitude-deg", 0); 
 		setprop("/autopilot/route-manager/vnav/ed/longitude-deg", 0);
+		setprop("/autopilot/route-manager/vnav/sc/longitude-deg", 0);
+		setprop("/autopilot/route-manager/vnav/sd/longitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/ip/longitude-deg", 0); 
+		setprop("/autopilot/route-manager/vnav/spd_chng/longitude-deg", 0);
 		setprop("/autopilot/route-manager/vnav/ec/show", 0); 
 		setprop("/autopilot/route-manager/vnav/ed/show", 0); 
+		setprop("/autopilot/route-manager/vnav/sc/show", 0); 
+		setprop("/autopilot/route-manager/vnav/sd/show", 0); 
+		setprop("/autopilot/route-manager/vnav/ip/show", 0); 
+		setprop("/autopilot/route-manager/vnav/spd_chng/show", 0); 
 		me.flightplans[2].activate();
 	},
 	
@@ -777,7 +788,7 @@ var flightPlanController = {
 	},
 	#Calculate the altitude from distance using a 3 deg angle exactly
 	getAltitudeFromDistance: func(Distance) {
-		return descent_coeff*Distance;
+		return descentCoeff*Distance;
 	},
 	#Get the extrapolated altitude from the function above
 	getExtrapolatedFirstAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
@@ -786,15 +797,13 @@ var flightPlanController = {
 	},
 	#Get the altitude that the aircraft would descent to at 1000 fpm (standard descent rate when DES mode is engaged)
 	#at a certain distance.
-	getExtrapolatedOneThousandVSDescent: func(distanceToCstr2) {
-		var currentAlt = Position.indicatedAltitudeFt.getValue();
+	getExtrapolatedOneThousandVSDescent: func(currentAlt, distanceToCstr2) {
 		var gs = pts.Velocities.groundspeedKt.getValue();
 		var extrapolatedAlt = currentAlt - (distanceToCstr2 * 60 * 1000 / gs);
 		return extrapolatedAlt;
 	},
 	#Get the alttiude the aircraft would be at a certaain distance when descending smoothly towards a geometric descent waypoint
-	getExtrapolatedGeoAltitude: func(distanceToCstr, distanceToCstr2, altCstr) {
-		var currentAlt = Position.indicatedAltitudeFt.getValue();
+	getExtrapolatedGeoAltitude: func(currentAlt, distanceToCstr, distanceToCstr2, altCstr) {
 		var extrapolatedAlt = currentAlt + ((altCstr - currentAlt) * (distanceToCstr2 / distanceToCstr));
 		return extrapolatedAlt;
 	},
@@ -804,7 +813,7 @@ var flightPlanController = {
 			return 250;
 		}
 		var costIndex = fmgc.FMGCNodes.costIndex.getValue();
-		var speed = 266 + 0.4217*math.clamp(costIndex,0,12);
+		var speed = 266 + 0.4217*math.clamp(costIndex,0,120);
 		return math.clamp(speed, 250, 345);
 	},
 
@@ -875,17 +884,14 @@ var flightPlanController = {
 		var altCstr = 0;
 		var altCstrType = nil;
 		var currentSpeed = currentIAS;
-		print("currentspeed is " ~ currentIAS);
 		if (currentAlt == -1) currentAlt = fmgc.Position.indicatedAltitudeFt.getValue();
 		if (currentSpeed == -1) currentSpeed = fmgc.Velocities.indicatedAirspeedKt.getValue();
 		var starting_index = starting;
 		if (starting_index == -1) starting_index = me.currentToWptIndex.getValue();
-		# print("isGEO status: " ~ isGeo);
 		for (var i = starting_index; i < me.flightplans[2].getPlanSize(); i += 1) {
 			var wp = me.flightplans[2].getWP(i);
 
 			distanceToCstr += me.getLegDistance(i);
-			# print("added distance " ~ distanceToCstr ~ "index" ~ i);
 			altCstrType = wp.alt_cstr_type;
 			var wptRole = wp.wp_role;
 			var wptType = wp.wp_type;
@@ -1006,11 +1012,13 @@ var flightPlanController = {
 	},
 
 	#Get the next alt constraint in managed climb mode by finding the next alt constraint that isn't ABOVE
-	getClbAltConst: func() {
+	getClbAltConst: func(starting) {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
-		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+		var starting_index = starting;
+		if (starting_index == -1) starting_index = me.currentToWptIndex.getValue();
+		for (var i = starting_index; i < me.flightplans[2].getPlanSize(); i += 1) {
 			if (me.flightplans[2].getWP(i).wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach") {
 				return [1000000000000000,0];
 			} else if (me.flightplans[2].getWP(i).alt_cstr_type != "above" and me.flightplans[2].getWP(i).alt_cstr != nil and me.flightplans[2].getWP(i).alt_cstr != 0 and (me.flightplans[2].getWP(i).wp_role == "sid" or me.flightplans[2].getWP(i).wp_role == "missed")) {
@@ -1020,24 +1028,26 @@ var flightPlanController = {
 		return [1000000000000000,0];
 	},
 	#Find the next speed constraint in managed climb mode
-	getNextClbSpdConst: func(wp_type) {
-		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+	getNextClbSpdConst: func(wptIndex) {
+		if (wptIndex == -1) wptIndex = me.currentToWptIndex.getValue();
+		for (var i = wptIndex; i < me.flightplans[2].getPlanSize(); i += 1) {
 			var spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 			var wp_role = me.flightplans[2].getWP(i).wp_role;
 			if (wp_role == "star" or me.flightplans[2].getWP(i).wp_role == "approach" or me.flightplans[2].getWP(i).wp_type == "runway") {
 				return [1000000000000000000,0];
-			} if (spdCstr != 0 and spdCstr != nil and (wp_role == "sid" or wp_role == "missed") and wp_type) {
+			} if (spdCstr != 0 and spdCstr != nil and (wp_role == "sid" or wp_role == "missed")) {
 				return [spdCstr,i];
 			}
 		}
 		return [1000000000000000000,0];
 	},
 	#Find the next speed constraint in approach mode
-	getNextDecelSpdConst: func(wp_type) {
-		for (var i = me.currentToWptIndex.getValue(); i < me.flightplans[2].getPlanSize(); i += 1) {
+	getNextDecelSpdConst: func(wptIndex) {
+		if (wptIndex == -1) wptIndex = me.currentToWptIndex.getValue();
+		for (var i = wptIndex; i < me.flightplans[2].getPlanSize(); i += 1) {
 			var spdCstr = me.flightplans[2].getWP(i).speed_cstr;
 			var wp_role = me.flightplans[2].getWP(i).wp_role;
-			if (spdCstr != 0 and spdCstr != nil and (wp_role == "approach" or wp_role == "star") and !wp_type) {
+			if (spdCstr != 0 and spdCstr != nil and (wp_role == "approach" or wp_role == "star")) {
 				return [spdCstr,i];
 			}
 		}
@@ -1347,7 +1357,6 @@ var flightPlanController = {
 		if (runDecel) {
 			me.calculateDecelPoint();
 		}
-		isMng = Internal.altManaged.getBoolValue();
 		isMng = Internal.managedModeOn.getBoolValue();
 		managedAlt = Internal.altManaged.getBoolValue();
 		me.calculateClbPoint();
@@ -1355,7 +1364,7 @@ var flightPlanController = {
 		me.calculateInterceptPoint(isMng);
 		var deltaAltitude = fmgc.Internal.alt.getValue() - pts.Instrumentation.Altimeter.indicatedFt.getValue();
 		if (abs(deltaAltitude) >= 100) {
-			me.calculateLvlOffPoint(deltaAltitude, isMng);
+			me.calculateLvlOffPoint(deltaAltitude, managedAlt);
 			
 		} else {
 			setprop("/autopilot/route-manager/vnav/ec/show", 0); 
