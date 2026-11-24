@@ -39,6 +39,8 @@ var flightPlanController = {
 	
 	# Temporary flightplan will use flightplan[0] and flightplan[1]
 	num: [props.globals.initNode("/FMGC/flightplan[0]/num", 0, "INT"), props.globals.initNode("/FMGC/flightplan[1]/num", 0, "INT"), props.globals.initNode("/autopilot/route-manager/route/num", 0, "INT")],
+	interceptArrowHigh: 0,
+	interceptArrowLow: 0,
 	arrivalIndex: [0, 0, 0],
 	arrivalDist: props.globals.getNode("/autopilot/route-manager/distance-remaining-nm"),
 	fromWptTime: nil,
@@ -826,7 +828,7 @@ var flightPlanController = {
 
 	#Calculate what the managed show altitude should be. Calculated from trying to find the first non below altitude constraint
 	calculateManagedLvlOffAltitude: func() {
-		var result = me.getDesAltConst(-1,-1,-1,-1);
+		var result = me.getDesAltConst(-1,-1,-1,-1, 1);
 		var altCstr = result[0];
 		var altCstrType = result[3];
 		var wptIndex = result[4];
@@ -871,7 +873,7 @@ var flightPlanController = {
 
 	#Calculate what the next managed descent altitude constraint would be by looping through the next AT or BETWEEN alt constraint first,
 	#then trying to find a ABOVE or BELOW alt constraint that would conflict with the path to the former waypoint second.
-	getAltConst: func(isGeo, starting, currentIAS, currentAlt) {
+	getAltConst: func(isGeo, starting, currentIAS, currentAlt, considerOneThousandVSDescent) {
 		if (me.currentToWptIndex.getValue() < 0) {
 			return;
 		}
@@ -969,7 +971,7 @@ var flightPlanController = {
 						}
 					} else {
 						if (altCstr2 > extrapolatedFirstAltitude
-							or (altCstr2 > extrapolatedOneThousandVSDescent and starting == -1)) {
+							or (altCstr2 > extrapolatedOneThousandVSDescent and considerOneThousandVSDescent and starting == -1)) {
 							if (starting == -1)
 								geoWptIndex = j;
 							return [altCstr2, adjustedDistanceToCstr2, 0, altCstr2Type, j];
@@ -984,7 +986,7 @@ var flightPlanController = {
 						}
 					} else {
 						if (altCstr2 < extrapolatedFirstAltitude
-							or altCstr2 < extrapolatedOneThousandVSDescent) {
+							or (altCstr2 < extrapolatedOneThousandVSDescent and considerOneThousandVSDescent)) {
 
 							if (starting == -1)
 								geoWptIndex = j;
@@ -1003,11 +1005,11 @@ var flightPlanController = {
 	},
 
 	#Call getAltConst depending on whether the aircraft has passed the geometric waypoint or not
-	getDesAltConst: func(starting, isGeo, currentIAS, currentAlt) {
+	getDesAltConst: func(starting, isGeo, currentIAS, currentAlt, considerOneThousandVSDescent) {
 		if (((geoWptIndex == nil or me.currentToWptIndex.getValue() <= geoWptIndex) and isGeo == -1) or !isGeo) {
-			return me.getAltConst(0, starting, currentIAS, currentAlt);
+			return me.getAltConst(0, starting, currentIAS, currentAlt, considerOneThousandVSDescent);
 		} else {
-			return me.getAltConst(1, starting, currentIAS, currentAlt);
+			return me.getAltConst(1, starting, currentIAS, currentAlt, considerOneThousandVSDescent);
 		}
 	},
 
@@ -1136,7 +1138,7 @@ var flightPlanController = {
 			return;
 		}
 		var isArmed = (vertText == "ALT HLD" or vertText == "ALT CAP") and Internal.altManaged.getBoolValue() == 1;
-		var info = me.getDesAltConst(-1,-1,-1,-1);
+		var info = me.getDesAltConst(-1,-1,-1,-1, 0);
 		var wptIndex = info[4];
 		var altCstr = info[0];
 		var distanceToCstr = info[1];
@@ -1194,7 +1196,7 @@ var flightPlanController = {
 			return;
 		}
 		if (me.interceptArrowHigh or me.interceptArrowLow) {
-			var info = me.getDesAltConst(-1,-1,-1,-1);
+			var info = me.getDesAltConst(-1,-1,-1,-1, 1);
 			var altCstr = info[0];
 			var distanceToCstr = info[1];
 			var currentAlt = Position.indicatedAltitudeFt.getValue();
